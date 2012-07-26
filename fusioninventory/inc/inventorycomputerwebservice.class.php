@@ -71,7 +71,7 @@ class PluginFusioninventoryInventoryComputerWebservice {
       $pfInventoryComputerImportXML = new PluginFusioninventoryInventoryComputerImportXML();
       $pfInventoryComputerImportXML->importXMLContent($content);
 
-      $msg = _('Computer injected into GLPI');
+      $msg = __('Computer injected into GLPI');
 
       return PluginWebservicesMethodCommon::Error($protocol, WEBSERVICES_ERROR_FAILED, '', $msg);
    }

@@ -48,7 +48,7 @@ class PluginFusinvdeployAction_Commandenvvariable extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('Environment variable');
+      return __('Environment variable');
 
    }
 

@@ -59,11 +59,11 @@ function plugin_init_fusinvdeploy() {
             AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
          switch ($_GET['action']) {
             case 'activate':
-                Session::addMessageAfterRedirect(_('Plugin FusionInventory DEPLOY needs FusionInventory plugin activated before activation.'));
+                Session::addMessageAfterRedirect(__('Plugin FusionInventory DEPLOY needs FusionInventory plugin activated before activation.'));
 
                break;
             case 'uninstall':
-                Session::addMessageAfterRedirect(_('Plugin FusionInventory DEPLOY needs FusionInventory plugin activated before uninstall.'));
+                Session::addMessageAfterRedirect(__('Plugin FusionInventory DEPLOY needs FusionInventory plugin activated before uninstall.'));
 
                Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
                break;
@@ -102,10 +102,10 @@ function plugin_init_fusinvdeploy() {
    $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
 
    if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']
-                           ['fusinvdeploy'][_('1')])) {
+                           ['fusinvdeploy'][__('1')])) {
 
       $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']
-                           ['fusinvdeploy'][_('1')] =
+                           ['fusinvdeploy'][__('1')] =
 
                               array('class'        => 'PluginFusinvdeployConfig',
                                     'submitbutton' => 'plugin_fusinvdeploy_config_set',
@@ -145,31 +145,31 @@ function plugin_init_fusinvdeploy() {
 
    // Breadcrumbs
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['title'] =
-      _('Package management');
+      __('Package management');
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['packages']['page'] =
       '/plugins/fusinvdeploy/front/package.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['title'] =
-      _('Mirror servers');
+      __('Mirror servers');
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['mirror']['page'] =
       '/plugins/fusinvdeploy/front/mirror.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['title'] =
-      _('Deployment tasks');
+      __('Deployment tasks');
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['task']['page'] =
       '/plugins/fusinvdeploy/front/task.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['title'] =
-      _('Groups of computers');
+      __('Groups of computers');
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['group']['page'] =
       '/plugins/fusinvdeploy/front/group.php';
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['title'] =
-      _('Deployment status');
+      __('Deployment status');
 
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['page'] =
       '/plugins/fusinvdeploy/front/deploystate.php';
@@ -199,7 +199,7 @@ function plugin_version_fusinvdeploy() {
 function plugin_fusinvdeploy_check_prerequisites() {
 
    if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
-      echo _('Your GLPI version not compatible, require 0.83.3');
+      echo __('Your GLPI version not compatible, require 0.83.3');
 
    } else {
       $plugin = new Plugin;
@@ -207,11 +207,11 @@ function plugin_fusinvdeploy_check_prerequisites() {
         return false;
       }
       if (!$plugin->isActivated("fusioninventory")) {
-         print _('Plugin FusionInventory DEPLOY needs FusionInventory plugin activated before activation.')."<br />\n";
+         print __('Plugin FusionInventory DEPLOY needs FusionInventory plugin activated before activation.')."<br />\n";
          return false;
       }
       if (!$plugin->isActivated("fusinvinventory")) {
-         print _('Plugin FusionInventory DEPLOY needs FusionInventory INVENTORY plugin installed before activation.')."<br />\n";
+         print __('Plugin FusionInventory DEPLOY needs FusionInventory INVENTORY plugin installed before activation.')."<br />\n";
          return false;
       }
       return true;

@@ -47,7 +47,7 @@ $DBCONNECTION_REQUIRED=0;
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
-Html::header(_('FusionInventory'),$_SERVER['PHP_SELF'],"utils","report");
+Html::header(__('FusionInventory'),$_SERVER['PHP_SELF'],"utils","report");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp","reportnetworkequipment","r");
 
@@ -60,7 +60,7 @@ echo "<table class='tab_cadre' cellpadding='5'>";
 echo "<tr class='tab_bg_1' align='center'>";
 
 echo "<td>";
-echo _('Hardware ports')." :&nbsp;";
+echo __('Hardware ports')." :&nbsp;";
 
 $query = "SELECT `glpi_networkequipments`.`name` as `name`, `glpi_networkports`.`name` as `pname`,
                  `glpi_networkports`.`id` as `id`

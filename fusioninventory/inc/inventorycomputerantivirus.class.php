@@ -48,7 +48,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('Antivirus');
+      return __('Antivirus');
 
    }
 
@@ -66,7 +66,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
    function getSearchOptions() {
 
       $tab = array();
-      $tab['common'] = _('Characteristics');
+      $tab['common'] = __('Characteristics');
 
 
       $tab[1]['table']         = $this->getTable();
@@ -86,7 +86,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
          if (Session::haveRight('computer', "r")) {
             $a_antivirus = $this->find("`computers_id`='".$item->getID()."'", '', 1);
             if (count($a_antivirus) > 0) {
-               return self::createTabEntry(_('Antivirus'));
+               return self::createTabEntry(__('Antivirus'));
 
             }
          }
@@ -147,32 +147,32 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
       if (count($antivirusData) == '0') {
          echo "<tr>";
-         echo "<th>"._('Antivirus');
+         echo "<th>".__('Antivirus');
 
          echo "</th>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'><br/><strong>";
-         echo _('This computer is not a Windows XP and later or no antivirus is installed')."<br/>";
+         echo __('This computer is not a Windows XP and later or no antivirus is installed')."<br/>";
          echo "</strong><br/></td>";
          echo "</tr>";
       } else {
          echo "<tr>";
-         echo "<th colspan='4'>"._('Antivirus');
+         echo "<th colspan='4'>".__('Antivirus');
 
          echo "</th>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
          echo "<td>";
-         echo _('Name')."&nbsp;:";
+         echo __('Name')."&nbsp;:";
          echo "</td>";
          echo "<td>";
          echo $antivirusData['name'];
          echo "</td>";
          echo "<td>";
-         echo _('Active')."&nbsp;:";
+         echo __('Active')."&nbsp;:";
          echo "</td>";
          echo "<td>";
          echo Dropdown::getYesNo($antivirusData['is_active']);
@@ -181,13 +181,13 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
          echo "<tr class='tab_bg_1'>";
          echo "<td>";
-         echo _('Manufacturer')."&nbsp;:";
+         echo __('Manufacturer')."&nbsp;:";
          echo "</td>";
          echo "<td>";
          echo Dropdown::getDropdownName('glpi_manufacturers', $antivirusData["manufacturers_id"]);
          echo "</td>";
          echo "<td>";
-         echo _('Up to date')."&nbsp;:";
+         echo __('Up to date')."&nbsp;:";
          echo "</td>";
          echo "<td>";
          echo Dropdown::getYesNo($antivirusData['uptodate']);
@@ -196,7 +196,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
          echo "<tr class='tab_bg_1'>";
          echo "<td>";
-         echo _('Version')."&nbsp;:";
+         echo __('Version')."&nbsp;:";
          echo "</td>";
          echo "<td>";
          echo $antivirusData['version'];

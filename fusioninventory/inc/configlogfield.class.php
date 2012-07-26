@@ -128,26 +128,26 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='2'>";
-      echo _('History configuration');
+      echo __('History configuration');
 
       echo "</th>";
       echo "</tr>";
 
       echo "<tr>";
       echo "<th>";
-      echo _('List of fields for which to keep history');
+      echo __('List of fields for which to keep history');
 
       echo "</th>";
       echo "<th>";
-      echo _('Retention in days');
+      echo __('Retention in days');
 
       echo "</th>";
       echo "</tr>";
 
       $days = array();
-      $days[-1] = _('Never');
+      $days[-1] = __('Never');
 
-      $days[0]  = _('Always');
+      $days[0]  = __('Always');
 
       for ($i = 1 ; $i < 366 ; $i++) {
          $days[$i]  = "$i";
@@ -178,7 +178,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
                <input type='hidden' name='tabs' value='history'/>
                <input class='submit' type='submit' name='update'
-                      value='" . _('Update') . "'></td></tr>";
+                      value='" . __('Update') . "'></td></tr>";
       }
       echo "</table>";
 
@@ -187,7 +187,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
       echo "<tr class='tab_bg_2'>";
       echo "<td colspan='1' class='center' height='30'>";
       if (PluginFusioninventoryProfile::haveRight('fusioninventory',"configuration","w")) {
-         echo "<input type='submit' class=\"submit\" name='Clean_history' value='"._('Clean')."' >";
+         echo "<input type='submit' class=\"submit\" name='Clean_history' value='".__('Clean')."' >";
       }
       echo "</td>";
       echo "</tr>";

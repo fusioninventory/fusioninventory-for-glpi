@@ -167,7 +167,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       global $CFG_GLPI,$LANG;
 
       $param = array();
-      $param['title']=_('Progress');
+      $param['title']=__('Progress');
 
       $param['simple']=false;
       $param['forcepadding']=false;

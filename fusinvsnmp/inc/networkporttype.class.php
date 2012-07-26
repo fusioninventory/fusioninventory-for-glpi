@@ -353,7 +353,7 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='3'>"._('Ports types to import (for network equipments)')."</th>";
+      echo "<th colspan='3'>".__('Ports types to import (for network equipments)')."</th>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
 
@@ -376,7 +376,7 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
 
          if (count($a_notimports)) {
             echo "<input type='submit' class='submit' name='type_add' value='".
-                  _('Add')." >>'>";
+                  __('Add')." >>'>";
          }
          echo "<br><br>";
 
@@ -384,7 +384,7 @@ class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
 
          if (count($a_imports)) {
             echo "<input type='submit' class='submit' name='type_delete' value='<< ".
-                  _('Delete')."'>";
+                  __('Delete')."'>";
          }
          echo "</td><td>";
 

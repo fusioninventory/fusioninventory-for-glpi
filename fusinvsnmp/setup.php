@@ -62,11 +62,11 @@ function plugin_init_fusinvsnmp() {
             AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
          switch ($_GET['action']) {
             case 'activate':
-                Session::addMessageAfterRedirect(_('Plugin FusionInventory SNMP needs FusionInventory plugin activated before activation.'));
+                Session::addMessageAfterRedirect(__('Plugin FusionInventory SNMP needs FusionInventory plugin activated before activation.'));
 
                break;
             case 'uninstall':
-                Session::addMessageAfterRedirect(_('Plugin FusionInventory SNMP needs FusionInventory plugin activated before uninstall.'));
+                Session::addMessageAfterRedirect(__('Plugin FusionInventory SNMP needs FusionInventory plugin activated before uninstall.'));
 
                Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
                break;
@@ -111,9 +111,9 @@ function plugin_init_fusinvsnmp() {
 
 
 
-   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp'][_('1')])) {
+   if (!isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp'][__('1')])) {
 
-      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp'][_('1')] = array('class'=>'PluginFusinvSNMPConfig',
+      $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms']['fusinvsnmp'][__('1')] = array('class'=>'PluginFusinvSNMPConfig',
                                                                 'submitbutton'=>'plugin_fusinvsnmp_config_set',
                                                                 'submitmethod'=>'putForm');
    }
@@ -152,15 +152,15 @@ function plugin_init_fusinvsnmp() {
 
          $report_list = array();
          if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "reportprinter","r")) {
-            $report_list["front/printerlogreport.php"] = _('Printed page counter');
+            $report_list["front/printerlogreport.php"] = __('Printed page counter');
 
          }
          if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "reportnetworkequipment","r")) {
-            $report_list["report/switch_ports.history.php"] = _('Switchs ports history');
+            $report_list["report/switch_ports.history.php"] = __('Switchs ports history');
 
-            $report_list["report/ports_date_connections.php"] = _('Unused switchs ports');
+            $report_list["report/ports_date_connections.php"] = __('Unused switchs ports');
 
-            $report_list["report/not_queried_recently.php"] = _('Number of days since last inventory');
+            $report_list["report/not_queried_recently.php"] = __('Number of days since last inventory');
 
          }
          $PLUGIN_HOOKS['reports']['fusinvsnmp'] = $report_list;
@@ -202,15 +202,15 @@ function plugin_init_fusinvsnmp() {
          }
 
          // Fil ariane
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['models']['title'] = _('SNMP models');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['models']['title'] = __('SNMP models');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['models']['page']  = '/plugins/fusinvsnmp/front/model.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['title'] = _('SNMP authentication');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['title'] = __('SNMP authentication');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['page']  = '/plugins/fusinvsnmp/front/configsecurity.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['title'] = _('Discovery status');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['title'] = __('Discovery status');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['page']  = '/plugins/fusinvsnmp/front/statediscovery.php';
 
@@ -240,7 +240,7 @@ function plugin_version_fusinvsnmp() {
 function plugin_fusinvsnmp_check_prerequisites() {
 
    if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
-      echo _('Your GLPI version not compatible, require 0.83.3');
+      echo __('Your GLPI version not compatible, require 0.83.3');
 
       return false;
    }

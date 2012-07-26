@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 require_once GLPI_ROOT."/inc/includes.php";
 
-Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
+Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
 

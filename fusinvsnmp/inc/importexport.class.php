@@ -129,7 +129,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
       echo "<br>";
       echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
-      echo _('SNMP model import')." :</th></tr>";
+      echo __('SNMP model import')." :</th></tr>";
 
       echo "   <tr class='tab_bg_1'>";
       echo "      <td align='center'>";
@@ -138,7 +138,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       echo "<input type='file' name='importfile' value=''/>";
 
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
-    echo "&nbsp;<input type='submit' value='"._('Import')."' class='submit'/>";
+    echo "&nbsp;<input type='submit' value='".__('Import')."' class='submit'/>";
       }
       echo "</td>";
       echo "</tr>";
@@ -156,14 +156,14 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 
       echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th>";
-      echo _('Mass import of models')." :</th></tr>";
+      echo __('Mass import of models')." :</th></tr>";
 
       echo "   <tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo _('Mass import of models in folder plugins/fusinvsnmp/models/')."<br/>";
+      echo __('Mass import of models in folder plugins/fusinvsnmp/models/')."<br/>";
       echo "<input type='hidden' name='massimport' value='1'/>";
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
-    echo "&nbsp;<input type='submit' value='"._('Import')."' class='submit'/>";
+    echo "&nbsp;<input type='submit' value='".__('Import')."' class='submit'/>";
       }
       echo "</td>";
       echo "</tr>";
@@ -210,7 +210,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $pfMapping = new PluginFusioninventoryMapping();
 
       if ($message == '1') {
-         $_SESSION["MESSAGE_AFTER_REDIRECT"] = _('Model already exists');
+         $_SESSION["MESSAGE_AFTER_REDIRECT"] = __('Model already exists');
 
       }
 

@@ -53,12 +53,12 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
   function getSearchOptions() {
 
       $tab = array();
-      $tab['common'] = _('Characteristics');
+      $tab['common'] = __('Characteristics');
 
 
       $tab[1]['table']         = "glpi_computers";
       $tab[1]['field']         = 'name';
-      $tab[1]['name']          = _('Name');
+      $tab[1]['name']          = __('Name');
 
       $tab[1]['datatype']      = 'itemlink';
       $tab[1]['itemlink_type'] = $this->getType();
@@ -79,7 +79,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                LIMIT 1";
             $result = $DB->query($query);
             if ($DB->numrows($result) > 0) {
-               return self::createTabEntry(_('Data integrity check'));
+               return self::createTabEntry(__('Data integrity check'));
 
             }
          }
@@ -120,7 +120,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
       echo "<td align='left'>";
       echo "<form method='post' action=''>";
       echo "<input type='hidden' name='clean' value='1'/>";
-      echo "<input type='submit' class='submit' value='"._('Clean')."'/>";
+      echo "<input type='submit' class='submit' value='".__('Clean')."'/>";
       Html::closeForm();
       echo "</td>";
       echo "</tr>";
@@ -166,26 +166,26 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='4'>";
-      echo _('Data integrity check');
+      echo __('Data integrity check');
 
       echo "</th>";
       echo "</tr>";
 
       echo "<tr>";
       echo "<th>";
-      echo _('Type');
+      echo __('Type');
 
       echo "</th>";
       echo "<th>";
-      echo _('Name');
+      echo __('Name');
 
       echo "</th>";
       echo "<th>";
-      echo _('Only in GLPI (check to delete)');
+      echo __('Only in GLPI (check to delete)');
 
       echo "</th>";
       echo "<th>";
-      echo _('Only in last inventory (check to import)');
+      echo __('Only in last inventory (check to import)');
 
       echo "</th>";
       echo "</tr>";
@@ -211,7 +211,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                   case 'CONTROLLERS':
                      $DeviceControl = new Computer_Device('DeviceControl');
                      if (!$a_lists = $DeviceControl->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
-                        $text .= $this->displaySectionNotValid($computer_id, $name, _('Controllers'), $a_sectiontmp['NAME']);
+                        $text .= $this->displaySectionNotValid($computer_id, $name, __('Controllers'), $a_sectiontmp['NAME']);
                      } else {
                         $a_list = current($a_lists);
                         $a_sections_lib['CONTROLLERS'][$a_list['id']] = 1;
@@ -221,7 +221,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                   case 'CPUS':
                      $DeviceProcessor = new Computer_Device('DeviceProcessor');
                      if (!$a_lists = $DeviceProcessor->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
-                        $text .= $this->displaySectionNotValid($computer_id, $name, _('Processor'), $a_sectiontmp['NAME']);
+                        $text .= $this->displaySectionNotValid($computer_id, $name, __('Processor'), $a_sectiontmp['NAME']);
                      } else {
                         $a_list = current($a_lists);
                         $a_sections_lib['CPUS'][$a_list['id']] = 1;
@@ -241,7 +241,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                         } else if (isset($a_sectiontmp['VOLUMN'])) {
                            $name=$a_sectiontmp['VOLUMN'];
                         }
-                        $text .= $this->displaySectionNotValid($computer_id, $name, _('Drives'), $a_sectiontmp['TYPE']." (".$name.")");
+                        $text .= $this->displaySectionNotValid($computer_id, $name, __('Drives'), $a_sectiontmp['TYPE']." (".$name.")");
                      } else {
                         $a_list = current($a_lists);
                         $a_sections_lib['DRIVES'][$a_list['id']] = 1;
@@ -251,7 +251,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                   case 'MEMORIES':
                      $DeviceMemory = new Computer_Device('DeviceMemory');
                      if (!$a_lists = $DeviceMemory->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
-                        $text .= $this->displaySectionNotValid($computer_id, $name, _('Memory'), $a_sectiontmp['DESCRIPTION']);
+                        $text .= $this->displaySectionNotValid($computer_id, $name, __('Memory'), $a_sectiontmp['DESCRIPTION']);
                      } else {
                         $a_list = current($a_lists);
                         $a_sections_lib['MEMORIES'][$a_list['id']] = 1;
@@ -263,7 +263,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      if (!$a_lists = $NetworkPort->find("`id`='".$split[1]."'
                                              AND `items_id`='".$computer_id."'
                                              AND `itemtype`='Computer'")) {
-                        $text .= $this->displaySectionNotValid($computer_id, $name, _('Network port'), $a_sectiontmp['NAME']);
+                        $text .= $this->displaySectionNotValid($computer_id, $name, __('Network port'), $a_sectiontmp['NAME']);
                      } else {
                         $a_list = current($a_lists);
                         $a_sections_lib['NETWORKS'][$a_list['id']] = 1;
@@ -273,7 +273,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                   case 'SOFTWARES':
                      $Computer_SoftwareVersion = new Computer_SoftwareVersion();
                      if (!$a_lists = $Computer_SoftwareVersion->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
-                        $text .= $this->displaySectionNotValid($computer_id, $name, _('Software'), $a_sectiontmp['NAME']);
+                        $text .= $this->displaySectionNotValid($computer_id, $name, __('Software'), $a_sectiontmp['NAME']);
                      } else {
                         $a_list = current($a_lists);
                         $a_sections_lib['SOFTWARES'][$a_list['id']] = 1;
@@ -283,7 +283,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                   case 'SOUNDS':
                      $DeviceSoundCard = new Computer_Device('DeviceSoundCard');
                      if (!$a_lists = $DeviceSoundCard->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
-                        $text .= $this->displaySectionNotValid($computer_id, $name, _('Soundcard'), $a_sectiontmp['NAME']);
+                        $text .= $this->displaySectionNotValid($computer_id, $name, __('Soundcard'), $a_sectiontmp['NAME']);
                      } else {
                         $a_list = current($a_lists);
                         $a_sections_lib['SOUNDS'][$a_list['id']] = 1;
@@ -298,7 +298,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                         $DeviceDrive = new Computer_Device('DeviceDrive');
                         $split[1] = str_replace("d", "", $split[1]);
                         if (!$a_lists = $DeviceDrive->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
-                           $text .= $this->displaySectionNotValid($computer_id, $name, _('Drives'), $a_sectiontmp['NAME']);
+                           $text .= $this->displaySectionNotValid($computer_id, $name, __('Drives'), $a_sectiontmp['NAME']);
                         } else {
                            $a_list = current($a_lists);
                            $a_sections_lib['Drive'][$a_list['id']] = 1;
@@ -306,7 +306,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      } else {
                         $DeviceHardDrive = new Computer_Device('DeviceHardDrive');
                         if (!$a_lists = $DeviceHardDrive->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
-                           $text .= $this->displaySectionNotValid($computer_id, $name, _('Hard Drive'), $a_sectiontmp['NAME']);
+                           $text .= $this->displaySectionNotValid($computer_id, $name, __('Hard Drive'), $a_sectiontmp['NAME']);
                         } else {
                            $a_list = current($a_lists);
                            $a_sections_lib['STORAGES'][$a_list['id']] = 1;
@@ -317,7 +317,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                   case 'VIDEOS':
                      $DeviceGraphicCard = new Computer_Device('DeviceGraphicCard');
                      if (!$a_lists = $DeviceGraphicCard->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
-                        $text .= $this->displaySectionNotValid($computer_id, $name, _('Graphics Card'), $a_sectiontmp['NAME']);
+                        $text .= $this->displaySectionNotValid($computer_id, $name, __('Graphics Card'), $a_sectiontmp['NAME']);
                      } else {
                            $a_list = current($a_lists);
                            $a_sections_lib['VIDEOS'][$a_list['id']] = 1;
@@ -338,7 +338,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                            $serialtmp = $a_sectiontmp['SERIAL'];
                         }
 
-                        $text .= $this->displaySectionNotValid($computer_id, $name, _('Printer'),
+                        $text .= $this->displaySectionNotValid($computer_id, $name, __('Printer'),
 
                                 $a_sectiontmp['CAPTION'].", ".$descriptiontmp." (".$serialtmp.")");
                      } else {
@@ -352,7 +352,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      if (!$a_lists = $Computer_Item->find("`id`='".$split[1]."'
                                                 AND `computers_id`='".$computer_id."'
                                                 AND `itemtype`='Printer'")) {
-                        $text .= $this->displaySectionNotValid($computer_id, $name, _('Printer'), $a_sectiontmp['NAME']);
+                        $text .= $this->displaySectionNotValid($computer_id, $name, __('Printer'), $a_sectiontmp['NAME']);
                      } else {
                         $a_list = current($a_lists);
                         $a_sections_lib['PRINTERS'][$a_list['id']] = 1;
@@ -364,7 +364,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      if (!$a_lists = $Computer_Item->find("`id`='".$split[1]."'
                                                 AND `computers_id`='".$computer_id."'
                                                 AND `itemtype`='Peripheral'")) {
-                        $text .= $this->displaySectionNotValid($computer_id, $name, _('Device'), $a_sectiontmp['NAME']);
+                        $text .= $this->displaySectionNotValid($computer_id, $name, __('Device'), $a_sectiontmp['NAME']);
                      } else {
                         $a_list = current($a_lists);
                         $a_sections_lib['USBDEVICES'][$a_list['id']] = 1;
@@ -407,7 +407,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                            $result_monitor = $DB->query($query_monitor);
                            if ($result_monitor) {
                               if ($DB->numrows($result_monitor) == 0) {
-                                 $text .= $this->displaySectionNotValid($computer_id, $name, _('Printer'), $a_sectiontmp['NAME']);
+                                 $text .= $this->displaySectionNotValid($computer_id, $name, __('Printer'), $a_sectiontmp['NAME']);
                               }
                            }
                         }
@@ -422,7 +422,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                         $result_monitor = $DB->query($query_monitor);
                         if ($result_monitor) {
                            if ($DB->numrows($result_monitor) == 0) {
-                              $text .= $this->displaySectionNotValid($computer_id, $name, _('Printer'), $a_sectiontmp['NAME']);
+                              $text .= $this->displaySectionNotValid($computer_id, $name, __('Printer'), $a_sectiontmp['NAME']);
                            }
                         }
                      }
@@ -447,7 +447,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                            $result_printer = $DB->query($query_printer);
                            if ($result_printer) {
                               if ($DB->numrows($result_printer) == 0) {
-                                 $text .= $this->displaySectionNotValid($computer_id, $name, _('Printer'), $a_sectiontmp['NAME']);
+                                 $text .= $this->displaySectionNotValid($computer_id, $name, __('Printer'), $a_sectiontmp['NAME']);
                               }
                            }
                         }
@@ -462,7 +462,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                         $result_printer = $DB->query($query_printer);
                         if ($result_printer) {
                            if ($DB->numrows($result_printer) == 0) {
-                              $text .= $this->displaySectionNotValid($computer_id, $name, _('Printer'), $a_sectiontmp['NAME']);
+                              $text .= $this->displaySectionNotValid($computer_id, $name, __('Printer'), $a_sectiontmp['NAME']);
                            }
                         }
                      }
@@ -487,7 +487,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                            $result_peripheral = $DB->query($query_peripheral);
                            if ($result_peripheral) {
                               if ($DB->numrows($result_peripheral) == 0) {
-                                 $text .= $this->displaySectionNotValid($computer_id, $name, _('Printer'), $a_sectiontmp['NAME']);
+                                 $text .= $this->displaySectionNotValid($computer_id, $name, __('Printer'), $a_sectiontmp['NAME']);
                               }
                            }
                         }
@@ -502,7 +502,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                         $result_peripheral = $DB->query($query_peripheral);
                         if ($result_peripheral) {
                            if ($DB->numrows($result_peripheral) == 0) {
-                              $text .= $this->displaySectionNotValid($computer_id, $name, _('Printer'), $a_sectiontmp['NAME']);
+                              $text .= $this->displaySectionNotValid($computer_id, $name, __('Printer'), $a_sectiontmp['NAME']);
                            }
                         }
                      }
@@ -560,28 +560,28 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
 
                case "CONTROLLERS":
                   $a_sectionsGLPI = $computerDeviceControl->find("`computers_id`='".$computer_id."'");
-                  $name = _('Controllers');
+                  $name = __('Controllers');
 
                   $itemtype = "DeviceControl";
                   break;
 
                case 'CPUS':
                   $a_sectionsGLPI = $computerDeviceProcessor->find("`computers_id`='".$computer_id."'");
-                  $name = _('Processor');
+                  $name = __('Processor');
 
                   $itemtype = "DeviceProcessor";
                   break;
 
                case 'DRIVES':
                   $a_sectionsGLPI = $ComputerDisk->find("`computers_id`='".$computer_id."'");
-                  $name = _('Drives');
+                  $name = __('Drives');
 
                   $itemtype = "ComputerDisk";
                   break;
 
                case 'MEMORIES':
                   $a_sectionsGLPI = $computerDeviceMemory->find("`computers_id`='".$computer_id."'");
-                  $name = _('Memory');
+                  $name = __('Memory');
 
                   $itemtype = "DeviceMemory";
                   break;
@@ -589,42 +589,42 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                case 'NETWORKS':
                   $a_sectionsGLPI = $NetworkPort->find("`items_id`='".$computer_id."'
                                              AND `itemtype`='Computer'");
-                  $name = _('Network port');
+                  $name = __('Network port');
 
                   $itemtype = "NetworkPort";
                   break;
 
                case 'SOFTWARES':
                   $a_sectionsGLPI = $Computer_SoftwareVersion->find("`computers_id`='".$computer_id."'");
-                  $name = _('Software');
+                  $name = __('Software');
 
                   $itemtype = "Computer_SoftwareVersion";
                   break;
 
                case 'SOUNDS':
                   $a_sectionsGLPI = $computerDeviceSoundCard->find("`computers_id`='".$computer_id."'");
-                  $name = _('Soundcard');
+                  $name = __('Soundcard');
 
                   $itemtype = "DeviceSoundCard";
                   break;
 
                case 'Drive':
                   $a_sectionsGLPI = $computerDeviceDrive->find("`computers_id`='".$computer_id."'");
-                  $name = _('Drives');
+                  $name = __('Drives');
 
                   $itemtype = "DeviceDrive";
                   break;
 
                case 'STORAGES':
                   $a_sectionsGLPI = $computerDeviceHardDrive->find("`computers_id`='".$computer_id."'");
-                  $name= _('Hard Drive');
+                  $name= __('Hard Drive');
 
                   $itemtype = "DeviceHardDrive";
                   break;
 
                case 'VIDEOS':
                   $a_sectionsGLPI = $computerDeviceGraphicCard->find("`computers_id`='".$computer_id."'");
-                  $name= _('Graphics Card');
+                  $name= __('Graphics Card');
 
                   $itemtype = "DeviceGraphicCard";
                   break;
@@ -632,7 +632,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                case 'MONITORS':
                   $a_sectionsGLPI = $Computer_Item->find("`computers_id`='".$computer_id."'
                                                 AND `itemtype`='Monitor'");
-                  $name = _('Printer');
+                  $name = __('Printer');
 
                   $itemtype = "Computer_Item";
                   break;
@@ -640,7 +640,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                case "PRINTERS":
                   $a_sectionsGLPI = $Computer_Item->find("`computers_id`='".$computer_id."'
                                                 AND `itemtype`='Printer'");
-                  $name = _('Printer');
+                  $name = __('Printer');
 
                   $itemtype = "Computer_Item";
                   break;
@@ -648,7 +648,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                case 'USBDEVICES':
                   $a_sectionsGLPI = $Computer_Item->find("`computers_id`='".$computer_id."'
                                                 AND `itemtype`='Peripheral'");
-                  $name = _('Device');
+                  $name = __('Device');
 
                   $itemtype = "Computer_Item";
                   break;
@@ -758,10 +758,10 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
          echo "<table align='center'>";
          echo "<tr>";
          echo "<td align='center'><a onclick= \"if ( markCheckboxes('integritylist') ) return false;\"
-                   href='".$_SERVER['PHP_SELF']."?select=all'>"._('Check All')."</a></td>";
+                   href='".$_SERVER['PHP_SELF']."?select=all'>".__('Check All')."</a></td>";
          echo "<td>/</td><td align='center'><a onclick= \"if ( unMarkCheckboxes('integritylist') )
                return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
-               _('Uncheck All')."</a>";
+               __('Uncheck All')."</a>";
          echo "</td>";
          echo "</tr>";
          echo "</table>";
@@ -771,7 +771,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
       echo "<tr>";
       echo "<th colspan='4'>";
       echo "<input class='submit' type='submit' name='actionimport'
-                      value='" . _('Update') . "'>";
+                      value='" . __('Update') . "'>";
       echo "</th>";
       echo "</tr>";
       echo "</table>";

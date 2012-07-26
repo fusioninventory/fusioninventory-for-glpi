@@ -56,28 +56,28 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
 
       echo "<th>";
-      echo _('PID');
+      echo __('PID');
 
-      echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/agentprocess.form.php'>("._('All').")</a>";
+      echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/agentprocess.form.php'>(".__('All').")</a>";
       echo "</th>";
 
       echo "<th>";
-      echo _('Date');
-
-      echo "</th>";
-
-      echo "<th>";
-      echo _('Item');
+      echo __('Date');
 
       echo "</th>";
 
       echo "<th>";
-      echo _('Status');
+      echo __('Item');
 
       echo "</th>";
 
       echo "<th>";
-      echo _('Item');
+      echo __('Status');
+
+      echo "</th>";
+
+      echo "<th>";
+      echo __('Item');
 
       echo "</th>";
 
@@ -123,10 +123,10 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
             if (rtrim($NetworkPort->fields["name"]) != "")
                $link .= $NetworkPort->fields["name"];
             else
-               $link .= _('Without name');
+               $link .= __('Without name');
 
             $link .= "</a>";
-            echo $link." "._('on')." ".$link1;
+            echo $link." ".__('on')." ".$link1;
             echo "</td>";
 
             echo "<td>";
@@ -146,10 +146,10 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
             if (rtrim($NetworkPort->fields["name"]) != "")
                $link .= $NetworkPort->fields["name"];
             else
-               $link .= _('Without name');
+               $link .= __('Without name');
 
             $link .= "</a>";
-            echo $link." "._('on')." ".$link1;
+            echo $link." ".__('on')." ".$link1;
             echo "</td>";
 
             echo "</tr>";

@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 include (GLPI_ROOT."/inc/includes.php");
 Session::checkLoginUser();
 
-Html::header(_('Mirror servers'),$_SERVER["PHP_SELF"],"plugins",
+Html::header(__('Mirror servers'),$_SERVER["PHP_SELF"],"plugins",
              "fusioninventory","mirror");
 
 //PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","r");

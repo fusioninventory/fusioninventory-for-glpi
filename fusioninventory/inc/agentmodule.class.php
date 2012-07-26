@@ -60,7 +60,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
-         return _('Agents modules');
+         return __('Agents modules');
 
       }
       return '';
@@ -106,9 +106,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             echo "<form name='form_ic' method='post' action='". Toolbox::getItemTypeFormURL(__CLASS__)."'>";
             echo "<table class='tab_cadre_fixe'>";
             echo "<tr>";
-            echo "<th width='130'>"._('Module')."</th>";
-            echo "<th width='180'>"._('Activation (by default)')."</th>";
-            echo "<th>"._('Exceptions')."</th>";
+            echo "<th width='130'>".__('Module')."</th>";
+            echo "<th width='180'>".__('Activation (by default)')."</th>";
+            echo "<th>".__('Exceptions')."</th>";
             echo "</tr>";
 
             echo "<tr class='tab_bg_1'>";
@@ -132,7 +132,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             }
             // Hack for snmpquery
                if ($modulename == 'SNMPQUERY') {
-                  $modulename = _('Network inventory (SNMP)');
+                  $modulename = __('Network inventory (SNMP)');
 
                }
             echo "<td align='center'><strong>".$modulename."</strong></td>";
@@ -178,7 +178,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             if ($use_rest) {
                echo "<tr>";
                echo "<td class='tab_bg_2 center'>";
-               echo _('Service URL');
+               echo __('Service URL');
 
                echo "</td><td colspan='2'>";
                echo "<input type='text' name='url' value='".$data['url']."' size='70'>";
@@ -226,9 +226,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
-      echo "<th>"._('Module')."</th>";
+      echo "<th>".__('Module')."</th>";
       echo "<th>Activation</th>";
-      echo "<th>"._('Module')."</th>";
+      echo "<th>".__('Module')."</th>";
       echo "<th>Activation</th>";
       echo "</tr>";
 
@@ -249,7 +249,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             }
             // Hack for snmpquery
                if ($modulename == 'SNMPQUERY') {
-                  $modulename = _('Network inventory (SNMP)');
+                  $modulename = __('Network inventory (SNMP)');
 
                }
             echo "<td width='50%'>".$modulename." :</td>";
@@ -284,7 +284,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='4'>";
          echo "<input type='hidden' name='id' value=\"".$items_id."\">";
-         echo "<input type='submit' name='updateexceptions' value=\""._('Update')."\" class='submit'>";
+         echo "<input type='submit' name='updateexceptions' value=\"".__('Update')."\" class='submit'>";
          echo "</td>";
          echo "</tr>";
          echo "</table>";

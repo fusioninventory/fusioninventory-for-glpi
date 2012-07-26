@@ -48,7 +48,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('Packages');
+      return __('Packages');
 
    }
 
@@ -89,13 +89,13 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    function getSearchOptions() {
 
       $tab = array();
-      $tab['common']           = _('Characteristics');;
+      $tab['common']           = __('Characteristics');;
 
 
       $tab[1]['table']         = $this->getTable();
       $tab[1]['field']         = 'name';
       $tab[1]['linkfield']     = 'name';
-      $tab[1]['name']          = _('Name');
+      $tab[1]['name']          = __('Name');
 
       $tab[1]['datatype']      = 'itemlink';
       $tab[1]['itemlink_link'] = $this->getType();
@@ -103,40 +103,40 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       $tab[2]['table']     = $this->getTable();
       $tab[2]['field']     = 'id';
       $tab[2]['linkfield'] = '';
-      $tab[2]['name']      = _('ID');
+      $tab[2]['name']      = __('ID');
 
 
       $tab[16]['table']     = $this->getTable();
       $tab[16]['field']     = 'comment';
       $tab[16]['linkfield'] = 'comment';
-      $tab[16]['name']      = _('Comments');
+      $tab[16]['name']      = __('Comments');
 
       $tab[16]['datatype']  = 'text';
 
       $tab[19]['table']     = $this->getTable();
       $tab[19]['field']     = 'date_mod';
       $tab[19]['linkfield'] = '';
-      $tab[19]['name']      = _('Last update');
+      $tab[19]['name']      = __('Last update');
 
       $tab[19]['datatype']  = 'datetime';
 
       $tab[80]['table']     = 'glpi_entities';
       $tab[80]['field']     = 'completename';
       $tab[80]['linkfield'] = 'entities_id';
-      $tab[80]['name']      = _('Entity');
+      $tab[80]['name']      = __('Entity');
 
 
       $tab[86]['table']     = $this->getTable();
       $tab[86]['field']     = 'is_recursive';
       $tab[86]['linkfield'] = 'is_recursive';
-      $tab[86]['name']      = _('Child entities');
+      $tab[86]['name']      = __('Child entities');
 
       $tab[86]['datatype']  = 'bool';
 
       $tab[19]['table']     = $this->getTable();
       $tab[19]['field']     = 'date_mod';
       $tab[19]['linkfield'] = '';
-      $tab[19]['name']      = _('Last update');
+      $tab[19]['name']      = __('Last update');
 
       $tab[19]['datatype']  = 'datetime';
 
@@ -158,11 +158,11 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    function title() {
 
       $buttons = array();
-      $title = _('Packages');
+      $title = __('Packages');
 
 
       if ($this->canCreate()) {
-         $buttons["package.form.php?new=1"] = _('Add a package');
+         $buttons["package.form.php?new=1"] = __('Add a package');
 
          $title = "";
       }
@@ -209,12 +209,12 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._('Name')."&nbsp;:</td>";
+      echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
 
-      echo "<td>"._('Comments')."&nbsp;:</td>";
+      echo "<td>".__('Comments')."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<textarea cols='40' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
@@ -297,7 +297,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
 
          Session::addMessageAfterRedirect(str_replace('#task#',
-               $tasks_url, _('One or more active tasks (#task#) use this package. Deletion denied.')));
+               $tasks_url, __('One or more active tasks (#task#) use this package. Deletion denied.')));
 
          Html::redirect(GLPI_ROOT."/plugins/fusioninventory/front/task.form.php?id="
                .$this->getField('id'));
@@ -598,7 +598,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       }
 
       if (($name=$new_package->getName()) == NOT_AVAILABLE) {
-         $new_package->fields['name'] = $new_package->getTypeName()." : "._('ID')
+         $new_package->fields['name'] = $new_package->getTypeName()." : ".__('ID')
 
                                  ." ".$new_package->fields['id'];
       }
@@ -606,7 +606,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
                                                          :$new_package->getLink());
 
       // Do not display quotes
-      Session::addMessageAfterRedirect(_('Item successfully added')."&nbsp;: ".stripslashes($display));
+      Session::addMessageAfterRedirect(__('Item successfully added')."&nbsp;: ".stripslashes($display));
 
       unset($_SESSION['tmp_clone_package']);
 

@@ -68,11 +68,11 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       $array_ret = array();
       if ($item->getType() == 'PluginFusioninventoryAgent') {
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "r")) {
-             $array_ret[0] = self::createTabEntry(_('Import informations'));
+             $array_ret[0] = self::createTabEntry(__('Import informations'));
 
          }
       } else {
-         $array_ret[1] = self::createTabEntry(_('Import informations'));
+         $array_ret[1] = self::createTabEntry(__('Import informations'));
 
       }
       return $array_ret;
@@ -123,26 +123,26 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='4'>";
-      echo _('Rule import logs');
+      echo __('Rule import logs');
 
       echo "</th>";
       echo "</tr>";
 
       echo "<tr>";
       echo "<th>";
-      echo _('Date');
+      echo __('Date');
 
       echo "</th>";
       echo "<th>";
-      echo _('Rule name');
+      echo __('Rule name');
 
       echo "</th>";
       echo "<th>";
-      echo _('Agent');
+      echo __('Agent');
 
       echo "</th>";
       echo "<th>";
-      echo _('Module');
+      echo __('Module');
 
       echo "</th>";
       echo "</tr>";
@@ -190,30 +190,30 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='5'>";
-      echo _('Rule import logs');
+      echo __('Rule import logs');
 
       echo "</th>";
       echo "</tr>";
 
       echo "<tr>";
       echo "<th>";
-      echo _('Date');
+      echo __('Date');
 
       echo "</th>";
       echo "<th>";
-      echo _('Rule name');
+      echo __('Rule name');
 
       echo "</th>";
       echo "<th>";
-      echo _('Item type');
+      echo __('Item type');
 
       echo "</th>";
       echo "<th>";
-      echo _('Item');
+      echo __('Item');
 
       echo "</th>";
       echo "<th>";
-      echo _('Module');
+      echo __('Module');
 
       echo "</th>";
       echo "</tr>";

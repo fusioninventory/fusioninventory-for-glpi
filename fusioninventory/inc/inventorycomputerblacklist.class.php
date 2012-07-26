@@ -48,7 +48,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('BlackList');
+      return __('BlackList');
 
    }
 
@@ -68,20 +68,20 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = _('BlackList');
+      $tab['common'] = __('BlackList');
 
 
       $tab[1]['table']     = $this->getTable();
       $tab[1]['field']     = 'value';
       $tab[1]['linkfield'] = 'value';
-      $tab[1]['name']      = _('blacklisted value');
+      $tab[1]['name']      = __('blacklisted value');
 
       $tab[1]['datatype']  = 'itemlink';
 
       $tab[2]['table']     = 'glpi_plugin_fusinvinventory_criterias';
       $tab[2]['field']     = 'name';
       $tab[2]['linkfield'] = 'plugin_fusioninventory_criterium_id';
-      $tab[2]['name']      = _('Name');
+      $tab[2]['name']      = __('Name');
 
       $tab[2]['datetype']  = "itemlink";
 
@@ -126,11 +126,11 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       $this->showFormHeader();
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._('blacklisted value')."</td>";
+      echo "<td>".__('blacklisted value')."</td>";
       echo "<td>";
       echo "<input type='text' name='value' value='".$this->fields['value']."' />";
       echo "</td>";
-      echo "<td>"._('Name')."</td>";
+      echo "<td>".__('Name')."</td>";
       echo "<td>";
       Dropdown::show('PluginFusioninventoryInventoryComputerCriteria', array('name' => 'plugin_fusioninventory_criterium_id',
                                                             'value' => $this->fields['plugin_fusioninventory_criterium_id']));

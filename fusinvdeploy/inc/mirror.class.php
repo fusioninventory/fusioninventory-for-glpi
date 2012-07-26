@@ -50,7 +50,7 @@ class PluginFusinvdeployMirror extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('Mirror servers');
+      return __('Mirror servers');
 
    }
 
@@ -65,11 +65,11 @@ class PluginFusinvdeployMirror extends CommonDBTM {
    function defineTabs($options=array()) {
 
       $ong=array();
-      $ong[1]=_('Main');
+      $ong[1]=__('Main');
 
 
       if ($this->fields['id'] > 0) {
-         $ong[12]=_('Historical');
+         $ong[12]=__('Historical');
 
       }
       $ong['no_all_tab'] = true;
@@ -90,17 +90,17 @@ class PluginFusinvdeployMirror extends CommonDBTM {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._('Name')."&nbsp;:</td>";
+      echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
 
-      echo "<td rowspan='2' class='middle right'>"._('Comments')."&nbsp;: </td>";
+      echo "<td rowspan='2' class='middle right'>".__('Comments')."&nbsp;: </td>";
       echo "<td class='center middle' rowspan='2'><textarea cols='45'
       rows='4' name='comment' >".$this->fields["comment"]."</textarea></td></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._('Mirror server address')."&nbsp;:</td>";
+      echo "<td>".__('Mirror server address')."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='url' size='40' value='".$this->fields["url"]."'/>";
       echo "</td></tr>";
@@ -120,7 +120,7 @@ class PluginFusinvdeployMirror extends CommonDBTM {
       $tab[1]['table']         = $this->getTable();
       $tab[1]['field']         = 'name';
       $tab[1]['linkfield']     = 'name';
-      $tab[1]['name']          = _('Name');
+      $tab[1]['name']          = __('Name');
 
       $tab[1]['datatype']      = 'itemlink';
       $tab[1]['itemlink_type'] = $this->getType();
@@ -128,34 +128,34 @@ class PluginFusinvdeployMirror extends CommonDBTM {
       $tab[19]['table']     = $this->getTable();
       $tab[19]['field']     = 'date_mod';
       $tab[19]['linkfield'] = '';
-      $tab[19]['name']      = _('Last update');
+      $tab[19]['name']      = __('Last update');
 
       $tab[19]['datatype']  = 'datetime';
 
       $tab[2]['table']     = $this->getTable();
       $tab[2]['field']     = 'url';
       $tab[2]['linkfield'] = 'url';
-      $tab[2]['name']      = _('Mirror server address');
+      $tab[2]['name']      = __('Mirror server address');
 
       $tab[2]['datatype']  = 'string';
 
       $tab[16]['table']     = $this->getTable();
       $tab[16]['field']     = 'comment';
       $tab[16]['linkfield'] = 'comment';
-      $tab[16]['name']      = _('Comments');
+      $tab[16]['name']      = __('Comments');
 
       $tab[16]['datatype']  = 'text';
 
       $tab[80]['table']     = 'glpi_entities';
       $tab[80]['field']     = 'completename';
       $tab[80]['linkfield'] = 'entities_id';
-      $tab[80]['name']      = _('Entity');
+      $tab[80]['name']      = __('Entity');
 
 
       $tab[86]['table']     = $this->getTable();
       $tab[86]['field']     = 'is_recursive';
       $tab[86]['linkfield'] = 'is_recursive';
-      $tab[86]['name']      = _('Child entities');
+      $tab[86]['name']      = __('Child entities');
 
       $tab[86]['datatype']  = 'bool';
 

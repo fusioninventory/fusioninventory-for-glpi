@@ -108,7 +108,7 @@ if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", 
 
    }
 } else {
-   echo _('You don't have permission to perform this action.')."<br/>";
+   echo __('You don't have permission to perform this action.')."<br/>";
 }
 Html::ajaxFooter();
 

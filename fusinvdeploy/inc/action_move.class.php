@@ -48,7 +48,7 @@ class PluginFusinvdeployAction_Move extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('Move a file');
+      return __('Move a file');
 
    }
 

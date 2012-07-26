@@ -50,7 +50,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    **/
    static function getTypeName($nb=0) {
 
-      return _('Task management');
+      return __('Task management');
 
    }
 
@@ -71,46 +71,46 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       $sopt = array();
 
-      $sopt['common'] = _('Task');
+      $sopt['common'] = __('Task');
 
 
       $sopt[1]['table']          = $this->getTable();
       $sopt[1]['field']          = 'name';
       $sopt[1]['linkfield']      = 'name';
-      $sopt[1]['name']           = _('Name');
+      $sopt[1]['name']           = __('Name');
 
       $sopt[1]['datatype']       = 'itemlink';
 
       $sopt[2]['table']          = $this->getTable();
       $sopt[2]['field']          = 'date_scheduled';
       $sopt[2]['linkfield']      = 'date_scheduled';
-      $sopt[2]['name']           = _('Scheduled date');
+      $sopt[2]['name']           = __('Scheduled date');
 
       $sopt[2]['datatype']       = 'datetime';
 
       $sopt[3]['table']          = 'glpi_entities';
       $sopt[3]['field']          = 'completename';
       $sopt[3]['linkfield']      = 'entities_id';
-      $sopt[3]['name']           = _('Entity');
+      $sopt[3]['name']           = __('Entity');
 
 
       $sopt[4]['table']          = $this->getTable();
       $sopt[4]['field']          = 'comment';
       $sopt[4]['linkfield']      = 'comment';
-      $sopt[4]['name']           = _('Comments');
+      $sopt[4]['name']           = __('Comments');
 
 
       $sopt[5]['table']          = $this->getTable();
       $sopt[5]['field']          = 'is_active';
       $sopt[5]['linkfield']      = 'is_active';
-      $sopt[5]['name']           = _('Active');
+      $sopt[5]['name']           = __('Active');
 
       $sopt[5]['datatype']       = 'bool';
 
       $sopt[6]['table']          = $this->getTable();
       $sopt[6]['field']          = 'communication';
       $sopt[6]['linkfield']      = '';
-      $sopt[6]['name']           = _('Communication type');
+      $sopt[6]['name']           = __('Communication type');
 
 
       $sopt[8]['table']          = $this->getTable();
@@ -121,7 +121,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $sopt[30]['table']          = $this->getTable();
       $sopt[30]['field']          = 'id';
       $sopt[30]['linkfield']      = '';
-      $sopt[30]['name']           = _('ID');
+      $sopt[30]['name']           = __('ID');
 
 
       return $sopt;
@@ -133,7 +133,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $CFG_GLPI;
 
       $ong = array();
-      $ong[1] = _('Main');
+      $ong[1] = __('Main');
 
 
       if ($this->fields['id'] > 0) {
@@ -144,11 +144,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
             $i = 1;
             foreach($a_taskjob as $datas) {
                $i++;
-               $ong[$i] = _('Job')." ".($i-1);
+               $ong[$i] = __('Job')." ".($i-1);
             }
 
             $i++;
-            $ong[$i] = _('New action')." <img src='".$CFG_GLPI['root_doc']."/pics/add_dropdown.png'/>";
+            $ong[$i] = __('New action')." <img src='".$CFG_GLPI['root_doc']."/pics/add_dropdown.png'/>";
          }
       }
       return $ong;
@@ -181,7 +181,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._('Name')."&nbsp;:</td>";
+      echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
       echo "</td>";
@@ -189,7 +189,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $pfTaskjob = new PluginFusioninventoryTaskjob;
       $a_taskjob = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'", "id");
       echo "<td>";
-      echo _('Active')."&nbsp;:";
+      echo __('Active')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       if (count($a_taskjob) > 0) {
@@ -212,7 +212,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
             }
             if ($forcerundisplay == '1') {
                echo '<th colspan="2">';
-               echo '<input name="forcestart" value="'._('Force start').'"
+               echo '<input name="forcestart" value="'.__('Force start').'"
                       class="submit" type="submit">';
                echo '</th>';
                $display_but = 1;
@@ -232,7 +232,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          }
          if ($reset == '1') {
             echo '<th colspan="2">';
-            echo '<input name="reset" value="'._('Reinitialization').'"
+            echo '<input name="reset" value="'.__('Reinitialization').'"
                    class="submit" type="submit">';
             echo '</th>';
             $display_but = 1;
@@ -242,7 +242,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          echo "<td colspan='2'></td>";
       }
 
-      echo "<td>"._('Scheduled date')."&nbsp;:</td>";
+      echo "<td>".__('Scheduled date')."&nbsp;:</td>";
       echo "<td>";
       if ($id) {
          Html::showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
@@ -253,34 +253,34 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td rowspan='2'>"._('Comments')."&nbsp;:</td>";
+      echo "<td rowspan='2'>".__('Comments')."&nbsp;:</td>";
       echo "<td rowspan='2'>";
       echo "<textarea cols='39' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
-      echo "<td>"._('Communication type')."&nbsp;:</td>";
+      echo "<td>".__('Communication type')."&nbsp;:</td>";
       echo "<td>";
       $com = array();
-      $com['push'] = _('Server contacts the agent (push)');
+      $com['push'] = __('Server contacts the agent (push)');
 
-      $com['pull'] = _('Agent contacts the server (pull)');
+      $com['pull'] = __('Agent contacts the server (pull)');
 
       Dropdown::showFromArray("communication", $com, array('value'=>$this->fields["communication"]));
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._('Periodicity')."&nbsp;:</td>";
+      echo "<td>".__('Periodicity')."&nbsp;:</td>";
       echo "<td>";
       Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
       $a_time = array();
       $a_time[] = "------";
-      $a_time['minutes'] = _('Minute(s)');
+      $a_time['minutes'] = __('Minute(s)');
 
-      $a_time['hours'] = ucfirst(_('hour(s)'));
+      $a_time['hours'] = ucfirst(__('hour(s)'));
 
-      $a_time['days'] = ucfirst(_('day(s)'));
+      $a_time['days'] = ucfirst(__('day(s)'));
 
-      $a_time['months'] = ucfirst(_('month(s)'));
+      $a_time['months'] = ucfirst(__('month(s)'));
 
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
       echo "</td>";
@@ -288,7 +288,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td>"._('Advanced mode')."&nbsp;:</td>";
+      echo "<td>".__('Advanced mode')."&nbsp;:</td>";
       echo "<td>";
       Dropdown::showYesNo("is_advancedmode",$this->fields["is_advancedmode"]);
       echo "</td>";
@@ -417,7 +417,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $cell = 'th';
       }
       echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=next'>".
-              _('Planned for running')."<sup>(".
+              __('Planned for running')."<sup>(".
               $DB->numrows($resultTasksPlanned).")</sup></a></".$cell.">";
 
       // ** Get task running
@@ -426,7 +426,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $cell = 'th';
       }
       echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=running'>".
-              _('Running')."<sup>(".
+              __('Running')."<sup>(".
               $DB->numrows($resultTasksRunning).")</sup></a></".$cell.">";
 
       // ** Get task in error
@@ -435,7 +435,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $cell = 'th';
       }
       echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=inerror'>".
-              _('In error')."<sup>(".
+              __('In error')."<sup>(".
               $DB->numrows($resultTasksInerror).")</sup></a></".$cell.">";
 
       // ** Get task active
@@ -443,7 +443,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       if ($_GET['see'] == 'actives') {
          $cell = 'th';
       }
-      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=actives'>"._('Active')."<sup>(".
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=actives'>".__('Active')."<sup>(".
               count($a_tasksActives).")</sup></a></".$cell.">";
 
       // ** Get task inactive
@@ -451,7 +451,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       if ($_GET['see'] == 'inactives') {
          $cell = 'th';
       }
-      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=inactives'>"._('Inactive')."<sup>(".
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=inactives'>".__('Inactive')."<sup>(".
               count($a_tasksInactives).")</sup></a></".$cell.">";
 
       // ** Get all task
@@ -459,7 +459,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       if ($_GET['see'] == 'all') {
          $cell = 'th';
       }
-      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=all'>"._('All')."<sup>(".
+      echo "<".$cell." align='center'><a href='".$_SERVER['PHP_SELF']."?see=all'>".__('All')."<sup>(".
               count($a_tasksAll).")</sup></a></".$cell.">";
 
       echo "</tr>";
@@ -548,10 +548,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
             <a href='".$this->getFormURL()."?id=".$data_task['id']."' style='font-size: 16px; '>"
                  .$this->getName()."</a> (".ucfirst($data_task['communication'])." ";
          if ($data_task['communication'] == "push") {
-            Html::showToolTip(_('Server contacts the agent (push)'));
+            Html::showToolTip(__('Server contacts the agent (push)'));
 
          } else if ($data_task['communication'] == "pull") {
-            Html::showToolTip(_('Agent contacts the server (pull)'));
+            Html::showToolTip(__('Agent contacts the server (pull)'));
 
          }
          echo ")<br/>&nbsp;";
@@ -567,7 +567,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          }
          echo "</td>";
 
-         echo "<td>"._('Next run')." : <br/>".$data_task['date_scheduled']."</td>";
+         echo "<td>".__('Next run')." : <br/>".$data_task['date_scheduled']."</td>";
 
          $queryt = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates`
             LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
@@ -580,8 +580,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
               $datat = $DB->fetch_assoc($resultt);
               $pfTaskjoblog->displayShortLogs($datat['plugin_fusioninventory_taskjobs_id'], 1);
           } else {
-             echo "<td>"._('Last run')." :<br/>
-                "._('Never')."</td>";
+             echo "<td>".__('Last run')." :<br/>
+                ".__('Never')."</td>";
           }
 
          echo "</tr>";
@@ -673,7 +673,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       }
       echo "<".$cell." align='center' width='33%'>";
       echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/tasksummary.php'>".
-              _('Task management')." ("._('Summary').")</a>";
+              __('Task management')." (".__('Summary').")</a>";
       echo "</".$cell.">";
 
       $cell = 'td';
@@ -682,7 +682,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       }
       echo "<".$cell." align='center' width='33%'>";
       echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/task.php'>".
-              _('Task management')." ("._('Normal').")</a>";
+              __('Task management')." (".__('Normal').")</a>";
       echo "</".$cell.">";
 
       $cell = 'td';
@@ -690,7 +690,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $cell ='th';
       }
       echo "<".$cell." align='center'>";
-      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php'>"._('Logs')."</a>";
+      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php'>".__('Logs')."</a>";
       echo "</".$cell.">";
       echo "</tr>";
       echo "</table>";

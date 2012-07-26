@@ -46,7 +46,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $pfConstructDevice = new PluginFusioninventorySnmpmodelConstructDevice();
 
-Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
+Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
 Session::checkLoginUser();
 
 PluginFusioninventoryMenu::displayMenu("mini");

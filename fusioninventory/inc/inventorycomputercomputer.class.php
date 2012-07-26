@@ -70,7 +70,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
             $a_computers = $this->find("`computers_id`='".$item->getID()."'", '', 1);
             if (count($a_computers) > 0) {
                // Bios/other informations
-               $array_ret[0] = self::createTabEntry(_('Advanced informations'));
+               $array_ret[0] = self::createTabEntry(__('Advanced informations'));
 
             }
 
@@ -80,7 +80,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
                $folder = '0';
             }
             if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id)) {
-               $array_ret[1] = self::createTabEntry(_('Import informations'));
+               $array_ret[1] = self::createTabEntry(__('Import informations'));
 
             }
          }
@@ -128,45 +128,45 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '<div align="center">';
       echo '<table class="tab_cadre_fixe" style="margin: 0; margin-top: 5px;">';
       echo '<tr>';
-      echo '<th colspan="4">'._('Advanced informations').'</th>';
+      echo '<th colspan="4">'.__('Advanced informations').'</th>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
-      echo '<th colspan="2" width="50%">'._('BIOS').'</th>';
-      echo '<th colspan="2">'._('Others').'</th>';
+      echo '<th colspan="2" width="50%">'.__('BIOS').'</th>';
+      echo '<th colspan="2">'.__('Others').'</th>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
-      echo '<td>'._('Date').'&nbsp;:</td>';
+      echo '<td>'.__('Date').'&nbsp;:</td>';
       echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
       if (Html::convDate($a_computerextend['operatingsystem_installationdate']) == '') {
          echo "<td colspan='2'></td>";
       } else {
-         echo "<td>"._("Operating system")." - "._('Installation')." (".strtolower(_('Date')).")&nbsp;:</td>";
+         echo "<td>"._("Operating system")." - ".__('Installation')." (".strtolower(__('Date')).")&nbsp;:</td>";
          echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
       }
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
-      echo '<td>'._('Version').'&nbsp;:</td>';
+      echo '<td>'.__('Version').'&nbsp;:</td>';
       echo '<td>'.$a_computerextend['bios_version'].'</td>';
       if ($a_computerextend['winowner'] == '') {
          echo "<td colspan='2'></td>";
       } else {
-         echo '<td>'._('Owner').'&nbsp;:</td>';
+         echo '<td>'.__('Owner').'&nbsp;:</td>';
          echo '<td>'.$a_computerextend['winowner'].'</td>';
       }
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
-      echo '<td>'._('Manufacturer').'&nbsp;:</td>';
+      echo '<td>'.__('Manufacturer').'&nbsp;:</td>';
       echo '<td>';
       echo Dropdown::getDropdownName("glpi_manufacturers", $a_computerextend['bios_manufacturers_id']);
       echo '</td>';
       if ($a_computerextend['wincompany'] == '') {
          echo "<td colspan='2'></td>";
       } else {
-         echo '<td>'._('Company').'&nbsp;:</td>';
+         echo '<td>'.__('Company').'&nbsp;:</td>';
          echo '<td>'.$a_computerextend['wincompany'].'</td>';
       }
       echo '</tr>';
@@ -194,10 +194,10 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 //         $xml = str_replace("\n", "<br/>", $xml);
          echo "<table class='tab_cadre_fixe' cellpadding='1'>";
          echo "<tr>";
-         echo "<th>"._('FusInv')." ".
-            _('XML');
+         echo "<th>".__('FusInv')." ".
+            __('XML');
 
-         echo " ("._('Last inventory')."&nbsp;: " .
+         echo " (".__('Last inventory')."&nbsp;: " .
             Html::convDateTime(date("Y-m-d H:i:s",
                          filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
          echo "</th>";
@@ -205,7 +205,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
          echo "<tr class='tab_bg_1'>";
          echo "<td width='130' align='center'>";
-         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/send_xml.php?pluginname=fusinvinventory&file=".$folder."/".$id."'>"._('Download')."</a>";
+         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/send_xml.php?pluginname=fusinvinventory&file=".$folder."/".$id."'>".__('Download')."</a>";
          echo "</td>";
          echo "</tr>";
 

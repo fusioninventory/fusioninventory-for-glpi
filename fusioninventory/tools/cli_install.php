@@ -219,7 +219,7 @@ if ($_SERVER['argv'][1] == 'fusinvsnmp') {
 
 if (in_array('--optimize', $_SERVER['argv'])) {
 
-   $migration->displayTitle(_('Optimizing tables'));
+   $migration->displayTitle(__('Optimizing tables'));
 
    DBmysql::optimize_tables($migration);
 

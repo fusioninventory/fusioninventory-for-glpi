@@ -46,7 +46,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $pft = new PluginFusioninventoryTask();
 
-Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
+Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","tasks");
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
 

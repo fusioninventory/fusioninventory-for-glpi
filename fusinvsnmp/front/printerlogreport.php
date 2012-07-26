@@ -46,7 +46,7 @@ $DBCONNECTION_REQUIRED=0;
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
-Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","printerlog");
+Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","printerlog");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp","reportprinter","r");
 
@@ -84,14 +84,14 @@ function displaySearchForm() {
    echo "<table class='tab_cadre' cellpadding='5'>";
    echo "<tr class='tab_bg_1' align='center'>";
    echo "<td>";
-   echo _('Starting date')." :";
+   echo __('Starting date')." :";
    echo "</td>";
    echo "<td width='120'>";
    Html::showDateFormItem("glpi_plugin_fusioninventory_date_start",$_SESSION['glpi_plugin_fusioninventory_date_start']);
    echo "</td>";
 
    echo "<td>";
-   echo _('Ending date')." :";
+   echo __('Ending date')." :";
    echo "</td>";
    echo "<td width='120'>";
    Html::showDateFormItem("glpi_plugin_fusioninventory_date_end",$_SESSION['glpi_plugin_fusioninventory_date_end']);

@@ -86,10 +86,10 @@ if (Session::haveRight("config","w") && Session::haveRight("profile","w")) {
    Html::back();
 } else {
 
-   Html::header(_('Access denied'),$_SERVER['PHP_SELF'],"plugins","fusioninventory");
+   Html::header(__('Access denied'),$_SERVER['PHP_SELF'],"plugins","fusioninventory");
    echo "<div align='center'><br><br><img src=\"".$CFG_GLPI['root_doc']."/pics/warning.png\"
               alt=\"warning\"><br><br>";
-   echo "<b>"._('Access denied')."</b></div>";
+   echo "<b>".__('Access denied')."</b></div>";
    Html::footer();
 }
 

@@ -202,7 +202,7 @@ class PluginFusioninventoryCommunication {
                  $this->message->CONTENT,
                  $p_xml);
       } else {
-         $errors.=_('Unattended element in').' QUERY : *'.$xmltag."*\n";
+         $errors.=__('Unattended element in').' QUERY : *'.$xmltag."*\n";
       }
       $result=true;
       if ($errors != '') {

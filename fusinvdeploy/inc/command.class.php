@@ -48,7 +48,7 @@ class PluginFusinvdeployCommand extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('Execute a command');
+      return __('Execute a command');
 
    }
 

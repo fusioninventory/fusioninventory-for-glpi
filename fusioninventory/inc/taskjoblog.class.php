@@ -64,19 +64,19 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    function dropdownStateValues() {
 
       $elements = array();
-      $elements[7] = _('Prepared');
+      $elements[7] = __('Prepared');
 
-      $elements[1] = _('Started');
+      $elements[1] = __('Started');
 
-      $elements[6] = _('Running');
+      $elements[6] = __('Running');
 
-      $elements[2] = _('Ok');
+      $elements[2] = __('Ok');
 
-      $elements[3] = _('Error / rescheduled');
+      $elements[3] = __('Error / rescheduled');
 
-      $elements[4] = _('Error');
+      $elements[4] = __('Error');
 
-      $elements[5] = _('unknown');
+      $elements[5] = __('unknown');
 
 
       return $elements;
@@ -102,51 +102,51 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       $sopt = array();
 
-      $sopt['common'] = _('Logs');
+      $sopt['common'] = __('Logs');
 
 
       $sopt[1]['table']         = $this->getTable();
       $sopt[1]['field']         = 'id';
-      $sopt[1]['name']          = _('ID');
+      $sopt[1]['name']          = __('ID');
 
       $sopt[1]['massiveaction'] = false; // implicit field is id
 
       $sopt[2]['table']          = 'glpi_plugin_fusioninventory_tasks';
       $sopt[2]['field']          = 'name';
-      $sopt[2]['name']           = _('Tasks');
+      $sopt[2]['name']           = __('Tasks');
 
       $sopt[2]['datatype']       = 'itemlink';
       $sopt[2]['itemlink_type']  = "PluginFusioninventoryTask";
 
       $sopt[3]['table']          = 'glpi_plugin_fusioninventory_taskjobs';
       $sopt[3]['field']          = 'name';
-      $sopt[3]['name']           = _('Job');
+      $sopt[3]['name']           = __('Job');
 
       $sopt[3]['datatype']       = 'itemlink';
       $sopt[3]['itemlink_type']  = "PluginFusioninventoryTaskjob";
 
       $sopt[4]['table']          = $this->getTable();
       $sopt[4]['field']          = 'state';
-      $sopt[4]['name']           = _('Status');
+      $sopt[4]['name']           = __('Status');
 
       $sopt[4]['searchtype']     = 'equals';
 
       $sopt[5]['table']         = $this->getTable();
       $sopt[5]['field']         = 'date';
-      $sopt[5]['name']          = _('Date');
+      $sopt[5]['name']          = __('Date');
 
       $sopt[5]['datatype']      = 'datetime';
       $sopt[5]['massiveaction'] = false;
 
       $sopt[6]['table']          = 'glpi_plugin_fusioninventory_taskjobstates';
       $sopt[6]['field']          = 'uniqid';
-      $sopt[6]['name']           = _('Unique id');
+      $sopt[6]['name']           = __('Unique id');
 
       $sopt[6]['datatype']       = 'string';
 
       $sopt[7]['table']          = $this->getTable();
       $sopt[7]['field']          = 'comment';
-      $sopt[7]['name']           = _('Comments');
+      $sopt[7]['name']           = __('Comments');
 
       $sopt[7]['datatype']       = 'string';
 
@@ -211,19 +211,19 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "<table class='tab_cadre'>";
             echo "<tr>";
             echo "<th></th>";
-            echo "<th>"._('Unique id')."</th>";
-            echo "<th>"._('Process number')."</th>";
-            echo "<th>"._('Agent')."</th>";
+            echo "<th>".__('Unique id')."</th>";
+            echo "<th>".__('Process number')."</th>";
+            echo "<th>".__('Agent')."</th>";
             echo "<th>";
-            echo _('Date');
+            echo __('Date');
 
             echo "</th>";
             echo "<th>";
-            echo _('Status');
+            echo __('Status');
 
             echo "</th>";
             echo "<th>";
-            echo _('Comments');
+            echo __('Comments');
 
             echo "</th>";
             echo "</tr>";
@@ -278,14 +278,14 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             $result = $DB->query($query);
             echo "<tr>";
             echo "<th></th>";
-            echo "<th>"._('Unique id')."</th>";
-            echo "<th>"._('Agent')."</th>";
+            echo "<th>".__('Unique id')."</th>";
+            echo "<th>".__('Agent')."</th>";
             echo "<th>";
-            echo _('Date');
+            echo __('Date');
 
             echo "</th>";
             echo "<th>";
-            echo _('Status');
+            echo __('Status');
 
             echo "</th>";
             echo "</tr>";
@@ -404,7 +404,7 @@ function appear_array(id){
          echo "<form name='form' method='post' action='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjob.form.php'>";
          echo "<input type='hidden' name='taskjobstates_id' value='".$pfTaskjobstate->fields['id']."' />";
          echo "<input type='hidden' name='taskjobs_id' value='".$pfTaskjobstate->fields['plugin_fusioninventory_taskjobs_id']."' />";
-         echo '<input name="forceend" value="'._('Force the end').'"
+         echo '<input name="forceend" value="'.__('Force the end').'"
              class="submit" type="submit">';
          Html::closeForm();
          echo "</td>";
@@ -452,23 +452,23 @@ function appear_array(id){
             $a_devices_merged[] = $Class->getLink(1)."&nbsp;(".$Class->getTypeName().")";
          } else {
             $text .= "<tr>";
-            $text .= "<th colspan='2'><img src='".$CFG_GLPI['root_doc']."/pics/puce.gif' />"._('Process number')."&nbsp;: ".$data['id']."</th>";
+            $text .= "<th colspan='2'><img src='".$CFG_GLPI['root_doc']."/pics/puce.gif' />".__('Process number')."&nbsp;: ".$data['id']."</th>";
             $text .= "<th>";
-            $text .= _('Date');
+            $text .= __('Date');
 
             $text .= "</th>";
             $text .= "<th>";
-            $text .= _('Status');
+            $text .= __('Status');
 
             $text .= "</th>";
             $text .= "<th>";
-            $text .= _('Comments');
+            $text .= __('Comments');
 
             $text .= "</th>";
             $text .= "</tr>";
             $text .= "<tr class='tab_bg_1'>";
             $text .= "<th colspan='2'>";
-            $text .= _('Agent');
+            $text .= __('Agent');
 
             $text .= "</th>";
             $a_return = $this->displayHistoryDetail(array_shift($a_history));
@@ -490,7 +490,7 @@ function appear_array(id){
 
             $text .= "<tr class='tab_bg_1'>";
             $text .= "<th colspan='2'>";
-            $text .= _('Definition');
+            $text .= __('Definition');
 
             $text .= "<sup>(".(count($a_devices_merged) + 1).")</sup>";
             $text .= "</th>";
@@ -594,43 +594,43 @@ function appear_array(id){
 
          case 7:
             $text .= "<td align='center'>";
-            $text .= _('Prepared');
+            $text .= __('Prepared');
 
             break;
 
          case 1:
             $text .= "<td align='center'>";
-            $text .= _('Started');
+            $text .= __('Started');
 
             break;
 
          case 2:
             $text .= "<td style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
-            $text .= "<strong>"._('Ok')."</strong>";
+            $text .= "<strong>".__('Ok')."</strong>";
             $finish++;
             break;
 
          case 3:
             $text .= "<td style='background-color: rgb(255, 120, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
-            $text .= "<strong>"._('Error / rescheduled')."</strong>";
+            $text .= "<strong>".__('Error / rescheduled')."</strong>";
             $finish++;
             break;
 
          case 4:
             $text .= "<td style='background-color: rgb(255, 0, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
-            $text .= "<strong>"._('Error')."</strong>";
+            $text .= "<strong>".__('Error')."</strong>";
             $finish++;
             break;
 
          case 5:
             $text .= "<td style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
-            $text .= "<strong>"._('unknown')."</strong>";
+            $text .= "<strong>".__('unknown')."</strong>";
             $finish++;
             break;
 
          case 6:
             $text .= "<td style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
-            $text .= "<strong>"._('Running')."</strong>";
+            $text .= "<strong>".__('Running')."</strong>";
             break;
 
          default:
@@ -822,10 +822,10 @@ function appear_array(id){
          echo $this->getDivState($state, 'td');
          echo "<td align='center'>";
          echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?sort=1&order=DESC&field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-            _('View logs of this execution')."</a>";
+            __('View logs of this execution')."</a>";
          echo "<input type='hidden' name='taskjobstates_id' value='".$taskstates_id."' />";
          echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
-         echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'._('Force the end').'"
+         echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.__('Force the end').'"
              class="submit" type="submit">';
          echo "</td>";
          if ($veryshort == '0') {
@@ -836,7 +836,7 @@ function appear_array(id){
             echo "</th>";
             echo "<td colspan='2' align='center'>";
             echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?sort=1&order=DESC&field[0]=3&searchtype[0]=equals&contains[0]=".$taskjobs_id."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-               _('See all executions')."</a>";
+               __('See all executions')."</a>";
             echo "</td>";
             echo "</tr>";
          }
@@ -853,16 +853,16 @@ function appear_array(id){
             echo "<td>";
          }
          if ($taskstates_id == '0') {
-            echo _('Last run')."&nbsp;:&nbsp;"._('Never');
+            echo __('Last run')."&nbsp;:&nbsp;".__('Never');
 
          } else {
 
             if ($veryshort == '0') {
-               echo _('Last run')." (".Html::convDateTime($date).")";
+               echo __('Last run')." (".Html::convDateTime($date).")";
                echo " : <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-                  _('View logs of this execution')."</a>";
+                  __('View logs of this execution')."</a>";
             } else {
-               echo _('Last run')." :<br/> ".Html::convDateTime($date)."";
+               echo __('Last run')." :<br/> ".Html::convDateTime($date)."";
             }
          }
          echo "</td>";
@@ -871,7 +871,7 @@ function appear_array(id){
             echo "<tr class='tab_bg_3'>";
             echo "<td colspan='2' align='center'>";
             echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=3&searchtype[0]=equals&contains[0]=".$taskjobs_id."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-               _('See all executions')."</a>";
+               __('See all executions')."</a>";
             echo "</td>";
             echo "</tr>";
          }
@@ -898,36 +898,36 @@ function appear_array(id){
       switch ($state) {
 
          case 7:
-            return "<".$type." align='center' width='".$width."'>"._('Prepared')."</".$type.">";
+            return "<".$type." align='center' width='".$width."'>".__('Prepared')."</".$type.">";
             break;
 
          case 1:
-            return "<".$type." align='center' width='".$width."'>"._('Started')."</".$type.">";
+            return "<".$type." align='center' width='".$width."'>".__('Started')."</".$type.">";
             break;
 
          case 2:
             return "<".$type." style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
-               "<strong>"._('Ok')."</strong></".$type.">";
+               "<strong>".__('Ok')."</strong></".$type.">";
             break;
 
          case 3:
             return "<".$type." style='background-color: rgb(255, 120, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
-               "<strong>"._('Error / rescheduled')."</strong></".$type.">";
+               "<strong>".__('Error / rescheduled')."</strong></".$type.">";
             break;
 
          case 4:
             return "<".$type." style='background-color: rgb(255, 0, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
-               "<strong>"._('Error')."</strong></".$type.">";
+               "<strong>".__('Error')."</strong></".$type.">";
             break;
 
          case 5:
             return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
-               "<strong>"._('unknown')."</strong></".$type.">";
+               "<strong>".__('unknown')."</strong></".$type.">";
             break;
 
          case 6:
             return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
-               "<strong>"._('Running')."</strong></".$type.">";
+               "<strong>".__('Running')."</strong></".$type.">";
             break;
 
       }
@@ -960,7 +960,7 @@ function appear_array(id){
       }
       if ($uniqid == '0') {
          if ($action == '') {
-            echo "<center><strong>"._('No agent allowed to run ESX inventory')."</strong></center>";
+            echo "<center><strong>".__('No agent allowed to run ESX inventory')."</strong></center>";
          }
       } else {
          $params = array();

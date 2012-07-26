@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 include (GLPI_ROOT."/inc/includes.php");
 Session::checkLoginUser();
 
-Html::header(_('Groups of computers'),$_SERVER["PHP_SELF"],"plugins",
+Html::header(__('Groups of computers'),$_SERVER["PHP_SELF"],"plugins",
              "fusioninventory","group");
 
 

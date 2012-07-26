@@ -53,13 +53,13 @@ class PluginFusinvdeployStaticmisc {
 
       return array(array('module'         => 'fusinvdeploy',
                          'method'         => self::DEPLOYMETHOD_INSTALL,
-                         'name'           => _('Package deployment'),
+                         'name'           => __('Package deployment'),
 
                          'task'           => "DEPLOY",
                          'use_rest'       => true),
                    array('module'         => 'fusinvdeploy',
                          'method'         => self::DEPLOYMETHOD_UNINSTALL,
-                         'name'           => _('Package uninstall'),
+                         'name'           => __('Package uninstall'),
 
                          'task'           => "DEPLOY",
                          'use_rest'       => true)
@@ -82,17 +82,17 @@ class PluginFusinvdeployStaticmisc {
 
    static function getDefinitionType() {
       return array(0 => Dropdown::EMPTY_VALUE,
-                   'PluginFusinvdeployPackage' => _('Package'));
+                   'PluginFusinvdeployPackage' => __('Package'));
 
    }
 
    static function getActionType() {
       return array(0 => Dropdown::EMPTY_VALUE,
-                   'PluginFusinvdeployGroup' => _('Group of computers'),
+                   'PluginFusinvdeployGroup' => __('Group of computers'),
 
-                   'Computer' => _('Computers'),
+                   'Computer' => __('Computers'),
 
-                   'Group' => _('Group')
+                   'Group' => __('Group')
 
                   );
    }
@@ -191,18 +191,18 @@ class PluginFusinvdeployStaticmisc {
 
       $a_menu = array();
       if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "packages", "r")) {
-         $a_menu[0]['name'] = _('Package management');
+         $a_menu[0]['name'] = __('Package management');
 
          $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_package.png";
          $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/package.php";
       }
 
-      $a_menu[1]['name'] = _('Mirror servers');
+      $a_menu[1]['name'] = __('Mirror servers');
 
       $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_files.png";
       $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/mirror.php";
 
-      $a_menu[2]['name'] = _('Groups of computers');
+      $a_menu[2]['name'] = __('Groups of computers');
 
       $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_group.png";
       $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/group.php";
@@ -214,10 +214,10 @@ class PluginFusinvdeployStaticmisc {
    static function profiles() {
 
       return array(array('profil'  => 'packages',
-                         'name'    => _('Manage packages')),
+                         'name'    => __('Manage packages')),
 
                    array('profil'  => 'status',
-                         'name'    => _('Deployment status')));
+                         'name'    => __('Deployment status')));
 
    }
 

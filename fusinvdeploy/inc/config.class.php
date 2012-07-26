@@ -73,10 +73,10 @@ class PluginFusinvdeployConfig extends CommonDBTM {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
          if ($_SESSION['glpishow_count_on_tabs']) {
-            return self::createTabEntry(_('FusionInventory DEPLOY'));
+            return self::createTabEntry(__('FusionInventory DEPLOY'));
 
          }
-         return _('FusionInventory DEPLOY');
+         return __('FusionInventory DEPLOY');
 
       }
       return '';
@@ -112,7 +112,7 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
 //      echo "<tr class='tab_bg_1'>";
-//      echo "<td>"._('Address of the GLPI server (without http://)')."&nbsp;:</td>";
+//      echo "<td>".__('Address of the GLPI server (without http://)')."&nbsp;:</td>";
 //      echo "<td>";
 //      Html::autocompletionTextField($config, 'glpi_path', array(
 //         'name'   => 'glpi_path',
@@ -124,7 +124,7 @@ class PluginFusinvdeployConfig extends CommonDBTM {
 //      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._('Root folder for sending files from server')."&nbsp;:</td>";
+      echo "<td>".__('Root folder for sending files from server')."&nbsp;:</td>";
       echo "<td>";
       echo "<input type='text' name='server_upload_path' value='".$config->getValue($plugins_id, 'server_upload_path')."' size='60' />";
       echo "</td>";
@@ -134,7 +134,7 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
                <input class='submit' type='submit' name='plugin_fusinvdeploy_config_set'
-                      value='" . _('Update') . "'></td></tr>";
+                      value='" . __('Update') . "'></td></tr>";
       }
       echo "</table>";
       Html::closeForm();

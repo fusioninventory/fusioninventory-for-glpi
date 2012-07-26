@@ -61,14 +61,14 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
 
       echo "<br>";
       echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
-      echo _('Import XML file from an Agent')." :</th></tr>";
+      echo __('Import XML file from an Agent')." :</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       echo "</td>";
       echo "<td align='center'>";
       echo "<input type='file' name='importfile' value=''/>";
-      echo "&nbsp;<input type='submit' value='"._('Import')."' class='submit'/>";
+      echo "&nbsp;<input type='submit' value='".__('Import')."' class='submit'/>";
       echo "</td>";
       echo "</tr>";
 

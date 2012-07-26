@@ -97,44 +97,44 @@ var {$render}msg = function(title, msg){
 //define colums for grid
 var {$render}fileColumns =  [{
    id: '{$render}id',
-   header: '{_('Id')}',
+   header: '{__('Id')}',
    width: {$column_width[0]},
    dataIndex: '{$render}id',
    hidden: true
 }, {
    id: '{$render}file',
-   header: '{_('File')}',
+   header: '{__('File')}',
    width: {$column_width[1]},
    dataIndex: '{$render}file',
 }, {
    id: '{$render}mimetype',
-   header: '{_('Type')}',
+   header: '{__('Type')}',
    width: {$column_width[2]},
    dataIndex: '{$render}mimetype',
    renderer: {$render}renderMimetype
 }, {
-   header: '{_('Filesize')}',
+   header: '{__('Filesize')}',
    width: {$column_width[3]},
    dataIndex: '{$render}filesize'
 }, {
    id: '{$render}p2p',
-   header: '{_('P2P deployment')}',
+   header: '{__('P2P deployment')}',
    width: {$column_width[4]},
    dataIndex: '{$render}p2p',
    renderer: {$render}renderBool
 }, {
    id: '{$render}dateadd',
-   header: '{_('Date added')}',
+   header: '{__('Date added')}',
    width: {$column_width[5]},
    dataIndex: '{$render}dateadd'
 }, {
    id: '{$render}validity',
-   header: '{_('Validity time')}',
+   header: '{__('Validity time')}',
    width: {$column_width[6]},
    dataIndex: '{$render}validity'
 }, {
    id: '{$render}uncompress',
-   header: '{_('Uncompress')}',
+   header: '{__('Uncompress')}',
    width: {$column_width[7]},
    dataIndex: '{$render}uncompress',
    renderer: {$render}renderBool
@@ -150,8 +150,8 @@ function {$render}badImage(img) {
 }
 
 function {$render}renderBool(val) {
-   if (val == 1) return '{_('Yes')}';
-   else if (val == 0) return '{_('No')}';
+   if (val == 1) return '{__('Yes')}';
+   else if (val == 0) return '{__('No')}';
    else return '';
 }
 
@@ -207,7 +207,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
    height: $height_left,
    width: $width_left,
    style:'margin-bottom:5px',
-   title: '{_('Files to copy on computer')}',
+   title: '{__('Files to copy on computer')}',
    stateId: '{$render}fileGrid',
    view: new Ext.grid.GroupingView({
       forceFit:true,
@@ -219,7 +219,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
       emptyGroupText: ''
    }),
    tbar: [{
-      text: '{_('Add file')}',
+      text: '{__('Add file')}',
       iconCls: 'exticon-add',
       handler: function(btn, ev) {
          {$render}fileForm.newFileMode(true);
@@ -238,7 +238,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
          var {$render}rec = {$render}fileGrid.getSelectionModel().getSelected();
          {$render}fileForm.loadData({$render}rec);
          //{$render}unlockForm();
-         {$render}fileForm.setTitle('{_('Add file')}');
+         {$render}fileForm.setTitle('{__('Add file')}');
 
          Ext.getCmp('{$render}p2p_t').setValue(false);
          Ext.getCmp('{$render}p2p_f').setValue(true);
@@ -246,7 +246,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
          Ext.getCmp('{$render}uncompress_f').setValue(true);
       }
    }, '-', {
-      text: '{_('Delete file')}',
+      text: '{__('Delete file')}',
       iconCls: 'exticon-delete',
       handler: function(btn, ev) {
          var selection = {$render}fileGrid.getSelectionModel().getSelected();
@@ -306,7 +306,7 @@ var {$render}fileGrid = new Ext.grid.GridPanel({
 
                Ext.getCmp('{$render}file').setValue('');
                //Ext.getCmp('{$render}url').setValue('');
-               {$render}fileForm.setTitle('{_('Edit file')}');
+               {$render}fileForm.setTitle('{__('Edit file')}');
             }
          }
       }
@@ -330,7 +330,7 @@ var {$render}fileForm = new Ext.FormPanel({
    method            :'POST',
    enctype           :'multipart/form-data',
    frame: true,
-   title: '{_('Edit file')}',
+   title: '{__('Edit file')}',
    bodyStyle:' padding:5px 5px 0',
    style:'margin-left:5px;margin-bottom:5px',
    width: $width_right,
@@ -340,7 +340,7 @@ var {$render}fileForm = new Ext.FormPanel({
          name: '{$render}id',
          xtype: 'hidden'
       }, new Ext.form.ComboBox({
-         fieldLabel:'{_('Upload From')}',
+         fieldLabel:'{__('Upload From')}',
          id: '{$render}type',
          name: '{$render}type',
          valueField: 'name',
@@ -350,8 +350,8 @@ var {$render}fileForm = new Ext.FormPanel({
          store: new Ext.data.ArrayStore({
             fields: ['name', 'value'],
             data: [
-               ['filehttp', '{_('This computer')}'],
-               ['fileserver', '{_('The server')}']
+               ['filehttp', '{__('This computer')}'],
+               ['fileserver', '{__('The server')}']
             ]
          }),
          mode: 'local',
@@ -375,9 +375,9 @@ var {$render}fileForm = new Ext.FormPanel({
          id: '{$render}file',
          hidden: true,
          width:180,
-         fieldLabel: '{_('File')}',
+         fieldLabel: '{__('File')}',
          buttonText: '',
-         emptyText: '{_('Select the file')}',
+         emptyText: '{__('Select the file')}',
          buttonCfg: {
             iconCls: 'exticon-file'
          },
@@ -396,7 +396,7 @@ var {$render}fileForm = new Ext.FormPanel({
          hidden:true,
          style: 'font-size:8px'
       }, {
-         fieldLabel: '{_('File')}',
+         fieldLabel: '{__('File')}',
          name: '{$render}file_server',
          id: '{$render}file_server',
          hidden: true,
@@ -404,14 +404,14 @@ var {$render}fileForm = new Ext.FormPanel({
          xtype:'trigger',
          triggerClass: 'x-form-file-trigger',
          editable:false,
-         emptyText: '{_('Select the file')}',
+         emptyText: '{__('Select the file')}',
          onTriggerClick: function() {
             chooser = new FileChooser({
                width: 615,
                height: 400,
                url_ls: '../ajax/package_file.ls.php',
                url_actions: '../ajax/package_file.actions.php',
-               title: '{_('Use a FTP installed file')}'
+               title: '{__('Use a FTP installed file')}'
             });
 
             chooser.show(this, function(el, data) {
@@ -421,7 +421,7 @@ var {$render}fileForm = new Ext.FormPanel({
             });
          }
       }, {
-         fieldLabel: '{_('P2P deployment')}',
+         fieldLabel: '{__('P2P deployment')}',
          name: '{$render}p2p',
          id: '{$render}p2p',
          xtype: 'radiogroup',
@@ -435,17 +435,17 @@ var {$render}fileForm = new Ext.FormPanel({
             }
          }},
          items: [
-            {boxLabel: '{_('Yes')}', name: '{$render}p2p', inputValue: 'true', checked: true, id : '{$render}p2p_t'},
-            {boxLabel: '{_('No')}', name: '{$render}p2p', inputValue: 'false',id : '{$render}p2p_f'}
+            {boxLabel: '{__('Yes')}', name: '{$render}p2p', inputValue: 'true', checked: true, id : '{$render}p2p_t'},
+            {boxLabel: '{__('No')}', name: '{$render}p2p', inputValue: 'false',id : '{$render}p2p_f'}
          ]
       }, new Ext.ux.form.SpinnerField({
-         fieldLabel: '{_('Data retention duration (days)')}',
+         fieldLabel: '{__('Data retention duration (days)')}',
          name: '{$render}validity',
          id: '{$render}validity',
          width: 50,
          hidden: true
       }), {
-         fieldLabel: '{_('Extract the file after the download')}',
+         fieldLabel: '{__('Extract the file after the download')}',
          name: '{$render}uncompress',
          id: '{$render}uncompress',
          allowBlank: false,
@@ -453,8 +453,8 @@ var {$render}fileForm = new Ext.FormPanel({
          width: 100,
          hidden: true,
          items: [
-            {boxLabel: '{_('Yes')}', name: '{$render}uncompress', inputValue: 'true', id : '{$render}uncompress_t'},
-            {boxLabel: '{_('No')}', name: '{$render}uncompress', inputValue: 'false', id : '{$render}uncompress_f'}
+            {boxLabel: '{__('Yes')}', name: '{$render}uncompress', inputValue: 'true', id : '{$render}uncompress_t'},
+            {boxLabel: '{__('No')}', name: '{$render}uncompress', inputValue: 'false', id : '{$render}uncompress_f'}
          ],
          tooltip:{
             tip:'Enter the customer\'s name',
@@ -463,18 +463,18 @@ var {$render}fileForm = new Ext.FormPanel({
       }
    ],
    buttons: [{
-      text: '{_('OK')}',
+      text: '{__('OK')}',
       iconCls: 'exticon-save',
       name : '{$render}savebtn',
       id : '{$render}savebtn',
       hidden: true,
       handler: function(btn, ev) {
          if ({$render}fileForm.record == null) {
-            Ext.MessageBox.alert('Erreur', '{_('Empty form')}');
+            Ext.MessageBox.alert('Erreur', '{__('Empty form')}');
             return;
          }
          if (!{$render}fileForm.getForm().isValid()) {
-            Ext.MessageBox.alert('Erreur', '{_('Empty form')}');
+            Ext.MessageBox.alert('Erreur', '{__('Empty form')}');
             return false;
          }
 
@@ -505,7 +505,7 @@ var {$render}fileForm = new Ext.FormPanel({
          });
       }
    }, {
-      text: '{_('Update')}',
+      text: '{__('Update')}',
       iconCls: 'exticon-save',
       name : '{$render}updatebtn',
       id : '{$render}updatebtn',
@@ -513,11 +513,11 @@ var {$render}fileForm = new Ext.FormPanel({
       handler: function(btn, ev) {
             Ext.MessageBox.alert('Erreur', "update");
             if ({$render}fileForm.record == null) {
-               Ext.MessageBox.alert('Erreur 1 ', '{_('Empty form')}');
+               Ext.MessageBox.alert('Erreur 1 ', '{__('Empty form')}');
                return;
             }
             if (!{$render}fileForm.getForm().isValid()) {
-               Ext.MessageBox.alert('Erreur 2', '{_('Empty form')}');
+               Ext.MessageBox.alert('Erreur 2', '{__('Empty form')}');
                return false;
             }
             {$render}fileForm.getForm().updateRecord({$render}fileForm.record);
@@ -549,7 +549,7 @@ var {$render}fileForm = new Ext.FormPanel({
             });
          }
    }, {
-      text: '{_('Cancel')}',
+      text: '{__('Cancel')}',
       iconCls: 'exticon-cancel',
       name : '{$render}cancelbtn',
       id : '{$render}cancelbtn',
@@ -625,8 +625,8 @@ var {$render}AddActionsAuto = function(filename) {
    if (ext in files_autoactions) {
       //show question to automatically add actions for this file
       Ext.Msg.show({
-         title: "{_('Attention')}",
-         msg: "{_('Wish to the command to install and uninstall is automatically added for your file?')}",
+         title: "{__('Attention')}",
+         msg: "{__('Wish to the command to install and uninstall is automatically added for your file?')}",
          buttons: Ext.Msg.YESNO,
          icon: Ext.MessageBox.QUESTION,
          minWidth: 350,

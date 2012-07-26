@@ -54,7 +54,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
 
    function getTitle() {
-      return _('Entity rules');
+      return __('Entity rules');
 
    }
 
@@ -123,27 +123,27 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $criterias = array ();
 
       $criterias['tag']['field']     = 'name';
-      $criterias['tag']['name']      = _('Tag');
+      $criterias['tag']['name']      = __('Tag');
 
 
       $criterias['domain']['field']     = 'name';
-      $criterias['domain']['name']      = _('Domain');
+      $criterias['domain']['name']      = __('Domain');
 
 
       $criterias['subnet']['field']     = 'name';
-      $criterias['subnet']['name']      = _('Subnet');
+      $criterias['subnet']['name']      = __('Subnet');
 
 
       $criterias['ip']['field']     = 'name';
-      $criterias['ip']['name']      = _('Address')." "._('IP');
+      $criterias['ip']['name']      = __('Address')." ".__('IP');
 
 
       $criterias['name']['field']     = 'name';
-      $criterias['name']['name']      = _('Computer's name');
+      $criterias['name']['name']      = __('Computer's name');
 
 
       $criterias['serial']['field']     = 'name';
-      $criterias['serial']['name']      = _('Serial Number');
+      $criterias['serial']['name']      = __('Serial Number');
 
 
       return $criterias;
@@ -154,22 +154,22 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    function getActions() {
 
       $actions = array();
-      $actions['entities_id']['name']  = _('Entity');
+      $actions['entities_id']['name']  = __('Entity');
 
       $actions['entities_id']['type']  = 'dropdown';
       $actions['entities_id']['table'] = 'glpi_entities';
 
-      $actions['locations_id']['name']  = _('Location');
+      $actions['locations_id']['name']  = __('Location');
 
       $actions['locations_id']['type']  = 'dropdown';
       $actions['locations_id']['table'] = 'glpi_locations';
 
-      $actions['_affect_entity_by_tag']['name'] = _('Entity from TAG');
+      $actions['_affect_entity_by_tag']['name'] = __('Entity from TAG');
 
       $actions['_affect_entity_by_tag']['type'] = 'text';
       $actions['_affect_entity_by_tag']['force_actions'] = array('regex_result');
 
-      $actions['_ignore_import']['name'] = _('Ignore in FusionInventory import');
+      $actions['_ignore_import']['name'] = __('Ignore in FusionInventory import');
 
       $actions['_ignore_import']['type'] = 'yesonly';
 

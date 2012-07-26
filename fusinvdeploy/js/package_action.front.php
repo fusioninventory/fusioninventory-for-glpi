@@ -72,7 +72,7 @@ $form_message4 = str_replace(
    GLPI_ROOT."/plugins/fusioninventory/front/config.form.php"
             ."?itemtype=pluginfusioninventoryconfig"
             ."&glpi_tab=PluginFusinvdeployConfig$1",
-   _('Paths on MS Windows do not accept more than 255 characters, the value you entered exceeds the limit.<br /><br /><b>Do you want to continue?</b><br /><br /><div class='message_smalltext right'>You can disable this message in the <a href='##URL##'>plugin configuration</a></div>')
+   __('Paths on MS Windows do not accept more than 255 characters, the value you entered exceeds the limit.<br /><br /><b>Do you want to continue?</b><br /><br /><div class='message_smalltext right'>You can disable this message in the <a href='##URL##'>plugin configuration</a></div>')
 
 );
 
@@ -81,12 +81,12 @@ if(isset($_POST["glpi_tab"])) {
    switch($_POST["glpi_tab"]){
       case 2 :
          $render = "install";
-         $title2 = _('during installation');
+         $title2 = __('during installation');
 
          break;
       case 3 :
          $render = "uninstall";
-         $title2 = _('during uninstallation');
+         $title2 = __('during uninstallation');
 
          break;
    }
@@ -98,61 +98,61 @@ $JS = <<<JS
 //define colums for grid
 var {$render}actionColumns =  [{
    id: '{$render}id',
-   header: '{_('Id')}',
+   header: '{__('Id')}',
    width: {$column_width[0]},
    dataIndex: '{$render}id',
    hidden: true
 }, {
    id: '{$render}itemtype',
-   header: '{_('Type')}',
+   header: '{__('Type')}',
    width: {$column_width[1]},
    dataIndex: '{$render}itemtype',
    renderer: {$render}renderType
 }, {
    id: '{$render}value',
-   header: '{_('Value')}',
+   header: '{__('Value')}',
    width: {$column_width[2]},
    dataIndex: '{$render}value'
 }, {
    id: '{$render}exec',
    hidden:true,
-   header: '{_('Command')}',
+   header: '{__('Command')}',
    width: {$column_width[3]},
    dataIndex: '{$render}exec'
 }, {
    id: '{$render}from',
    hidden:true,
-   header: '{_('From')}',
+   header: '{__('From')}',
    width: {$column_width[4]},
    dataIndex: '{$render}from'
 }, {
    id: '{$render}to',
    hidden:true,
-   header: '{_('To')}',
+   header: '{__('To')}',
    width: {$column_width[5]},
    dataIndex: '{$render}to'
 }, {
    id: '{$render}path',
    hidden:true,
-   header: '{_('File name')}',
+   header: '{__('File name')}',
    width: {$column_width[6]},
    dataIndex: '{$render}path'
 }, {
    id: '{$render}messagename',
    hidden:true,
-   header: '{_('Title')}',
+   header: '{__('Title')}',
    width: {$column_width[10]},
    dataIndex: '{$render}messagename'
 }, {
    id: '{$render}messagevalue',
    hidden:true,
-   header: '{_('Content')}',
+   header: '{__('Content')}',
    width: {$column_width[11]},
    dataIndex: '{$render}messagevalue'
 }, {
    id: '{$render}messagetype',
    hidden:true,
-   header: '{_('Type')}',
+   header: '{__('Type')}',
    width: {$column_width[12]},
    dataIndex: '{$render}messagetype'
 }, {
@@ -165,17 +165,17 @@ var {$render}actionColumns =  [{
 function {$render}renderType(val) {
    switch(val) {
       case 'PluginFusinvdeployAction_Command':
-         return '{_('Execute a command')}';
+         return '{__('Execute a command')}';
       case 'PluginFusinvdeployAction_Move':
-         return '{_('Move a file')}';
+         return '{__('Move a file')}';
       case 'PluginFusinvdeployAction_Copy':
-         return '{_('Copy a file')}';
+         return '{__('Copy a file')}';
       case 'PluginFusinvdeployAction_Delete':
-         return '{_('Delete a file')}';
+         return '{__('Delete a file')}';
       case 'PluginFusinvdeployAction_Mkdir':
-         return '{_('Make a directory')}';
+         return '{__('Make a directory')}';
       case 'PluginFusinvdeployAction_Message':
-         return '{_('Show dialog')}';
+         return '{__('Show dialog')}';
       default:
          return '';
    }
@@ -207,10 +207,10 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
    height: {$height_left},
    width: {$width_left},
    style:'margin-bottom:5px',
-   title: '{_('Actions to achieve')} ({$title2})',
+   title: '{__('Actions to achieve')} ({$title2})',
    stateId: '{$render}actionGrid',
    tbar: [{
-      text: '{_('Add command')}',
+      text: '{__('Add command')}',
       iconCls: 'exticon-add',
       handler: function(btn,ev) {
          var u = new {$render}actionGridStore.recordType({
@@ -228,10 +228,10 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
          {$render}actionGrid.getSelectionModel().selectFirstRow();
          {$render}actionGrid.setDisabled(true);
          {$render}actionForm.buttons[1].setVisible(true);
-         {$render}actionForm.setTitle('{_('Add command')}');
+         {$render}actionForm.setTitle('{__('Add command')}');
       }
    }, '-', {
-      text: '{_('Delete command')}',
+      text: '{__('Delete command')}',
       iconCls: 'exticon-delete',
       handler: function(btn,ev) {
          var selection = {$render}actionGrid.getSelectionModel().getSelections();
@@ -263,7 +263,7 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
             if (!{$disabled}) {
                var rec = {$render}actionGrid.store.getAt(index);
                {$render}actionForm.loadData(rec);
-               {$render}actionForm.setTitle('{_('Edit command')}');
+               {$render}actionForm.setTitle('{__('Edit command')}');
                {$render}actionForm.expand();
                {$render}actionForm.buttons[0].setDisabled(false);
 
@@ -348,7 +348,7 @@ var {$render}actionGridProxyRetChecks = {
 {$render}actionGridRetChecksConfig = Ext.extend( Ext.grid.EditorGridPanel, {
    width: 295,
    height: 120,
-   /*title: '{_('Return codes')}',*/
+   /*title: '{__('Return codes')}',*/
    /*style : 'margin:10px 0 0',*/
    initComponent: function( config ) {
       Ext.apply( this, {
@@ -361,15 +361,15 @@ var {$render}actionGridProxyRetChecks = {
                dataIndex: 'id',
                hidden: true
             }, {
-               header: '{_('Type')}',
+               header: '{__('Type')}',
                dataIndex: 'type',
                width: 180,
                renderer: function(val) {
                   switch(val) {
-                     case 'RETURNCODE_OK': return '{_('Expected return code')}';
-                     case 'RETURNCODE_KO': return '{_('Invalid return code')}';
-                     case 'REGEX_OK': return '{_('Expected regular expression')}';
-                     case 'REGEX_KO': return '{_('Invalid regular expression')}';
+                     case 'RETURNCODE_OK': return '{__('Expected return code')}';
+                     case 'RETURNCODE_KO': return '{__('Invalid return code')}';
+                     case 'REGEX_OK': return '{__('Expected regular expression')}';
+                     case 'REGEX_KO': return '{__('Invalid regular expression')}';
                   }
                   return "";
                },
@@ -384,15 +384,15 @@ var {$render}actionGridProxyRetChecks = {
                   store: new Ext.data.ArrayStore({
                      fields: ['name', 'value'],
                      data: [
-                        ['RETURNCODE_OK', '{_('Expected return code')}'],
-                        ['RETURNCODE_KO', '{_('Invalid return code')}'],
-                        ['REGEX_OK',      '{_('Expected regular expression')}'],
-                        ['REGEX_KO',      '{_('Invalid regular expression')}']
+                        ['RETURNCODE_OK', '{__('Expected return code')}'],
+                        ['RETURNCODE_KO', '{__('Invalid return code')}'],
+                        ['REGEX_OK',      '{__('Expected regular expression')}'],
+                        ['REGEX_KO',      '{__('Invalid regular expression')}']
                      ]
                   })
                })
             }, {
-               header: '{_('Value')}',
+               header: '{__('Value')}',
                dataIndex: 'value',
                allowBlank: false,
                width: 100,
@@ -405,7 +405,7 @@ var {$render}actionGridProxyRetChecks = {
          }),
          tbar: new Ext.Toolbar({
             items: [{
-               text: '{_('Add return code')}',
+               text: '{__('Add return code')}',
                iconCls: 'exticon-add',
                handler: function(btn,ev) {
                   var u = new {$render}ActionGridRetChecks.store.recordType({
@@ -418,7 +418,7 @@ var {$render}actionGridProxyRetChecks = {
                   {$render}ActionGridRetChecks.getSelectionModel().selectFirstRow();
                }
             }, '-', {
-               text: '{_('Delete return code')}',
+               text: '{__('Delete return code')}',
                iconCls: 'exticon-delete',
                handler: function(btn,ev) {
                   var selection = {$render}ActionGridRetChecks.getSelectionModel().getSelections();
@@ -439,7 +439,7 @@ var {$render}actionGridProxyRetChecks = {
 
 /**** DEFINE DYNAMIC FIELDSETS ****/
 var {$render}Command_fieldset_item_default = [{
-      fieldLabel: '{_('Command')}',
+      fieldLabel: '{__('Command')}',
       name: '{$render}exec',
       xtype:  'textarea',
       width: {$field_width},
@@ -448,7 +448,7 @@ var {$render}Command_fieldset_item_default = [{
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Command = [{
-      fieldLabel: '{_('Command')}',
+      fieldLabel: '{__('Command')}',
       name: '{$render}exec',
       xtype:  'textarea',
       width: {$field_width},
@@ -457,12 +457,12 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Command = [{
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Move = [{
-      fieldLabel: '{_('From')}',
+      fieldLabel: '{__('From')}',
       name: '{$render}from',
       xtype: 'textarea',
       width: {$field_width}
    } , {
-      fieldLabel:'{_('To')}',
+      fieldLabel:'{__('To')}',
       name: '{$render}to',
       xtype: 'textarea',
       width: {$field_width}
@@ -470,12 +470,12 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Move = [{
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Copy = [{
-      fieldLabel: '{_('From')}',
+      fieldLabel: '{__('From')}',
       name: '{$render}from',
       xtype: 'textarea',
       width: {$field_width}
    } , {
-      fieldLabel:'{_('To')}',
+      fieldLabel:'{__('To')}',
       name: '{$render}to',
       xtype: 'textarea',
       width: {$field_width}
@@ -483,7 +483,7 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Copy = [{
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Delete = [{
-      fieldLabel: '{_('File')}',
+      fieldLabel: '{__('File')}',
       name: '{$render}path',
       xtype: 'textarea',
       width: {$field_width},
@@ -492,7 +492,7 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Delete = [{
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Mkdir = [{
-      fieldLabel: '{_('Name')}',
+      fieldLabel: '{__('Name')}',
       name: '{$render}path',
       xtype: 'textarea',
       width: {$field_width},
@@ -501,29 +501,29 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Mkdir = [{
 ];
 
 var {$render}Command_fieldset_item_PluginFusinvdeployAction_Message = [{
-      fieldLabel: '{_('Title')}',
+      fieldLabel: '{__('Title')}',
       name: '{$render}messagename',
       xtype: 'textfield'
    } , {
-      fieldLabel: '{_('Content')}',
+      fieldLabel: '{__('Content')}',
       name: '{$render}messagevalue',
       xtype:  'textarea',
       width: {$field_width},
       height : {$field_height}
    } , {
-      fieldLabel: '{_('Type')}',
+      fieldLabel: '{__('Type')}',
       name: '{$render}messagetype',
       hiddenName : '{$render}messagetype',
       xtype : 'combo',
       valueField: 'name',
       displayField: 'value',
       width: 215,
-      emptyText : '{_('Type')}',
+      emptyText : '{__('Type')}',
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['INFO',       '{_('Informations')}'],
-            ['POSTPONE',   '{_('report of the install')}']
+            ['INFO',       '{__('Informations')}'],
+            ['POSTPONE',   '{__('report of the install')}']
          ]
       }),
       mode: 'local',
@@ -615,7 +615,7 @@ var {$render}actionForm = new Ext.FormPanel({
    collapsed: true,
    labelWidth: {$label_width},
    frame: true,
-   title: '{_('Edit command')}',
+   title: '{__('Edit command')}',
    bodyStyle:'padding:5px 10px',
    style:'margin-left:5px;margin-bottom:5px',
    width: {$width_right},
@@ -625,7 +625,7 @@ var {$render}actionForm = new Ext.FormPanel({
       xtype: 'hidden'
    },
    new Ext.form.ComboBox({
-      fieldLabel:'{_('Type')}',
+      fieldLabel:'{__('Type')}',
       name: 'type_name',
       valueField: 'name',
       width: {$field_width},
@@ -635,12 +635,12 @@ var {$render}actionForm = new Ext.FormPanel({
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['PluginFusinvdeployAction_Command', '{_('Execute a command')}'],
-            ['PluginFusinvdeployAction_Move',    '{_('Move a file')}'],
-            ['PluginFusinvdeployAction_Copy',    '{_('Copy a file')}'],
-            ['PluginFusinvdeployAction_Delete',  '{_('Delete a file')}'],
-            ['PluginFusinvdeployAction_Mkdir',   '{_('Make a directory')}']/*,
-            ['PluginFusinvdeployAction_Message', '{_('Show dialog')}']*/
+            ['PluginFusinvdeployAction_Command', '{__('Execute a command')}'],
+            ['PluginFusinvdeployAction_Move',    '{__('Move a file')}'],
+            ['PluginFusinvdeployAction_Copy',    '{__('Copy a file')}'],
+            ['PluginFusinvdeployAction_Delete',  '{__('Delete a file')}'],
+            ['PluginFusinvdeployAction_Mkdir',   '{__('Make a directory')}']/*,
+            ['PluginFusinvdeployAction_Message', '{__('Show dialog')}']*/
          ]
       }),
       mode: 'local',
@@ -653,7 +653,7 @@ var {$render}actionForm = new Ext.FormPanel({
    {$render}Command_dynFieldset
    ],
    buttons: [{
-      text: '{_('OK')}',
+      text: '{__('OK')}',
       iconCls: 'exticon-save',
       disabled:true,
       handler: function(btn,ev) {
@@ -662,7 +662,7 @@ var {$render}actionForm = new Ext.FormPanel({
          {$render}actionForm.buttons[1].setVisible(false);
       }
    }, {
-      text: '{_('Cancel')}',
+      text: '{__('Cancel')}',
       iconCls: 'exticon-cancel',
       name : '{$render}cancelbtn',
       id : '{$render}Actioncancelbtn',
@@ -701,11 +701,11 @@ var {$render}actionForm = new Ext.FormPanel({
 
 var {$render}actionFormSave = function() {
    if ({$render}actionForm.record == null) {
-      Ext.MessageBox.alert('Erreur', '{_('Empty form')}');
+      Ext.MessageBox.alert('Erreur', '{__('Empty form')}');
       return;
    }
    if (!{$render}actionForm.getForm().isValid()) {
-      Ext.MessageBox.alert('Erreur', '{_('Empty form')}');
+      Ext.MessageBox.alert('Erreur', '{__('Empty form')}');
       return false;
    }
 
@@ -723,7 +723,7 @@ var {$render}actionFormSubmit = function() {
 
    {$render}actionForm.getForm().submit({
       url : '../ajax/package_action.save.php?package_id={$id}&render={$render}',
-      waitMsg: '{_('Loading...')}',
+      waitMsg: '{__('Loading...')}',
       success: function(fileForm, o){
          {$render}actionGridStore.reload({
             callback: function() {
@@ -772,7 +772,7 @@ var {$render}checkActionValue = function(data) {
    //show alert
    if (alert_user && {$alert_winpath}) {
       Ext.Msg.show({
-         title: "{_('Attention')}",
+         title: "{__('Attention')}",
          msg: "{$form_message4}",
          buttons: Ext.Msg.YESNO,
          icon: Ext.MessageBox.WARNING,

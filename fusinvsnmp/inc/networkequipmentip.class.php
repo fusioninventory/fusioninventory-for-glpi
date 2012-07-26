@@ -75,7 +75,7 @@ class PluginFusinvsnmpNetworkEquipmentIP extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='8'>";
-      echo _('IP');
+      echo __('IP');
 
       echo "</th>";
       echo "</tr>";

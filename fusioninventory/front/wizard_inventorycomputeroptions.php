@@ -46,13 +46,13 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
+Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
 
 Session::checkLoginUser();
 
 $pfWizard = new PluginFusioninventoryWizard();
 
-$a_button = array('name' => _('Next'),
+$a_button = array('name' => __('Next'),
 
                   'link' => $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php');
 

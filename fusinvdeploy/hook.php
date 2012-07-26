@@ -85,7 +85,7 @@ function plugin_fusinvdeploy_MassiveActions($type) {
       case 'Computer':
          //TODO: this should be renamed into targetTask and moved in FusionInventory hook
          return array('plugin_fusinvdeploy_targetDeployTask'
-                  => _('Target a task')
+                  => __('Target a task')
 
          );
          break;
@@ -100,7 +100,7 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
       case 'Computer' :
          switch ($options['action']) {
              case 'plugin_fusinvdeploy_targetDeployTask' :
-               echo "<br/>". _('Task').":&nbsp;";
+               echo "<br/>". __('Task').":&nbsp;";
                $rand = mt_rand();
                Dropdown::show('PluginFusinvdeployTask', array(
                      'name'      => "tasks_id",
@@ -112,7 +112,7 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
                   )
                ));
 
-               echo "<br/>"."&nbsp;"._('Package').":&nbsp;";
+               echo "<br/>"."&nbsp;".__('Package').":&nbsp;";
                Dropdown::show('PluginFusinvdeployPackage', array(
                         'name'      => "packages_id"
                ));
@@ -120,14 +120,14 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
                echo "<br/>";
                echo "<input type='checkbox' name='separate_jobs' value='1'>";
                if ($options['itemtype'] == 'Computer') {
-                     echo "&nbsp;"._('Create a job for each computer')."&nbsp;";
+                     echo "&nbsp;".__('Create a job for each computer')."&nbsp;";
                } else if ($options['itemtype'] == 'PluginFusinvdeployGroup') {
-                     echo "&nbsp;"._('Create a job for each group')."&nbsp;";
+                     echo "&nbsp;".__('Create a job for each group')."&nbsp;";
                }
                echo "</input>";
 
                echo "<br/>"."&nbsp;<input type='submit' name='massiveaction' class='submit' value='".
-                     _('Post')."'>&nbsp;";
+                     __('Post')."'>&nbsp;";
             break;
          }
          break;

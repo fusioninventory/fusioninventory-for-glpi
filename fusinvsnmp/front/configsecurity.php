@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","configsecurity");
+Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","configsecurity");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","r");
 
@@ -68,7 +68,7 @@ if ($pfConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
 
    Search::show('PluginFusinvsnmpConfigSecurity');
 } else {
-   echo _('Please configure the SNMP authentication in the setup of the plugin');
+   echo __('Please configure the SNMP authentication in the setup of the plugin');
 
 }
 

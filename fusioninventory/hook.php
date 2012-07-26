@@ -48,8 +48,8 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5150]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerlibserialization';
          $sopt[5150]['field']     = 'last_fusioninventory_update';
          $sopt[5150]['linkfield'] = '';
-         $sopt[5150]['name']      = _('FusInv')." - ".
-            _('Last inventory');
+         $sopt[5150]['name']      = __('FusInv')." - ".
+            __('Last inventory');
 
          $sopt[5150]['datatype']  = 'datetime';
          $sopt[5150]['itemlink_type'] = 'PluginFusioninventoryInventoryComputerLib';
@@ -81,32 +81,32 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5155]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5155]['field']     = 'bios_date';
          $sopt[5155]['linkfield'] = '';
-         $sopt[5155]['name']      = _('BIOS')."-"._('Date');
+         $sopt[5155]['name']      = __('BIOS')."-".__('Date');
 
          $sopt[5155]['datatype']  = 'date';
 
          $sopt[5156]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5156]['field']     = 'bios_version';
          $sopt[5156]['linkfield'] = '';
-         $sopt[5156]['name']      = _('BIOS')."-"._('Version');
+         $sopt[5156]['name']      = __('BIOS')."-".__('Version');
 
 
          $sopt[5157]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5157]['field']     = 'operatingsystem_installationdate';
          $sopt[5157]['linkfield'] = '';
-         $sopt[5157]['name']      = _("Operating system")." - "._('Installation')." (".strtolower(_('Date')).")";
+         $sopt[5157]['name']      = _("Operating system")." - ".__('Installation')." (".strtolower(__('Date')).")";
          $sopt[5157]['datatype']  = 'date';
 
          $sopt[5158]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5158]['field']     = 'winowner';
          $sopt[5158]['linkfield'] = '';
-         $sopt[5158]['name']      = _('Owner');
+         $sopt[5158]['name']      = __('Owner');
 
 
          $sopt[5159]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5159]['field']     = 'wincompany';
          $sopt[5159]['linkfield'] = '';
-         $sopt[5159]['name']      = _('Company');
+         $sopt[5159]['name']      = __('Company');
 
 
    }
@@ -287,7 +287,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
 
 //            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-//               $array[3] = _('FusInv')." "._('Tasks');
+//               $array[3] = __('FusInv')." ".__('Tasks');
 
 //            }
 
@@ -302,7 +302,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-               $array[2] = _('FusInv')." "._('Tasks');
+               $array[2] = __('FusInv')." ".__('Tasks');
 
             }
             return $array;
@@ -315,7 +315,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-               $array[2] = _('FusInv')." "._('Tasks');
+               $array[2] = __('FusInv')." ".__('Tasks');
 
             }
             return $array;
@@ -328,7 +328,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[1] = _('FusionInventory');
+               $array[1] = __('FusionInventory');
 
             }
             return $array;
@@ -339,7 +339,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          $array = array ();
          if ($_GET['id'] > 0) {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","r")) {
-               $array[1] = _('FusInv')." "._('XML');
+               $array[1] = __('FusInv')." ".__('XML');
 
             }
          }
@@ -349,7 +349,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
       case 'PluginFusioninventoryCredentialIp':
          $array = array();
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-            $array[1] = _('FusInv')." "._('Tasks');
+            $array[1] = __('FusInv')." ".__('Tasks');
 
          }
          return $array;
@@ -461,9 +461,9 @@ function plugin_headings_fusioninventory_xml($item) {
       $xml = str_replace("\n", "<br/>", $xml);
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
-      echo "<th>"._('XML');
+      echo "<th>".__('XML');
 
-      echo " ("._('Last inventory')."&nbsp;: " . Html::convDateTime(date("Y-m-d H:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$id))).")";
+      echo " (".__('Last inventory')."&nbsp;: " . Html::convDateTime(date("Y-m-d H:i:s", filemtime(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$id))).")";
       echo "</th>";
       echo "</tr>";
 
@@ -484,21 +484,21 @@ function plugin_fusioninventory_MassiveActions($type) {
 
       case "Computer":
          return array (
-            "plugin_fusioninventory_manage_locks" => _('Locks')
+            "plugin_fusioninventory_manage_locks" => __('Locks')
 
          );
          break;
 
       case "NetworkEquipment":
          return array (
-            "plugin_fusioninventory_manage_locks" => _('Locks')
+            "plugin_fusioninventory_manage_locks" => __('Locks')
 
          );
          break;
 
       case "Printer":
          return array (
-            "plugin_fusioninventory_manage_locks" => _('Locks')
+            "plugin_fusioninventory_manage_locks" => __('Locks')
 
          );
          break;
@@ -508,23 +508,23 @@ function plugin_fusioninventory_MassiveActions($type) {
          $a_modules = $pfAgentmodule->find();
          $array = array();
          foreach ($a_modules as $data) {
-            $array["plugin_fusioninventory_agentmodule".$data["modulename"]] = _('Module')." - ".$data['modulename'];
+            $array["plugin_fusioninventory_agentmodule".$data["modulename"]] = __('Module')." - ".$data['modulename'];
          }
-         $array['plugin_fusioninventory_transfert'] = _('Transfer');
+         $array['plugin_fusioninventory_transfert'] = __('Transfer');
 
          return $array;
          break;
 
       case "PluginFusioninventoryUnknownDevice";
          return array (
-            "plugin_fusioninventory_unknown_import" => _('Import')
+            "plugin_fusioninventory_unknown_import" => __('Import')
 
          );
          break;
 
       case "PluginFusioninventoryTask";
          return array (
-            'plugin_fusioninventory_transfert' => _('Transfer')
+            'plugin_fusioninventory_transfert' => __('Transfer')
 
          );
          break;
@@ -532,7 +532,7 @@ function plugin_fusioninventory_MassiveActions($type) {
       case 'PluginFusioninventoryTaskjob':
          return array(
             'plugin_fusioninventory_task_forceend' =>
-               _('Force the end')
+               __('Force the end')
 
          );
          break;
@@ -619,7 +619,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
             foreach ($a_modules as $data) {
                if ($options['action'] == "plugin_fusioninventory_agentmodule".$data['modulename']) {
                   Dropdown::showYesNo($options['action']);
-                  echo "&nbsp;<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . _('Post') . "\" >";
+                  echo "&nbsp;<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . __('Post') . "\" >";
                }
             }
             break;
@@ -627,7 +627,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          if ($options['action'] == "plugin_fusioninventory_transfert") {
                Dropdown::show('Entity');
                echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
-                     "value='"._('Post')."'>";
+                     "value='".__('Post')."'>";
                break;
          }
          break;
@@ -635,7 +635,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
       case "PluginFusioninventoryUnknownDevice";
          if ($options['action'] == "plugin_fusioninventory_unknown_import") {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
-               echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . _('Post') . "\" >";
+               echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . __('Post') . "\" >";
             }
          }
          break;
@@ -644,14 +644,14 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          if ($options['action'] == "plugin_fusioninventory_transfert") {
                Dropdown::show('Entity');
                echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
-                     "value='"._('Post')."'>";
+                     "value='".__('Post')."'>";
                break;
          }
          break;
 
       case 'PluginFusioninventoryTaskjob':
          echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
-               "value='"._('Post')."'>";
+               "value='".__('Post')."'>";
          break;
 
    }
@@ -687,8 +687,8 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                   list($Import, $NoImport) = $pfUnknownDevice->import($key,$Import,$NoImport);
                }
             }
-             Session::addMessageAfterRedirect(_('Number of imported devices')." : ".$Import);
-             Session::addMessageAfterRedirect(_('Number of devices not imported because type not defined')." : ".$NoImport);
+             Session::addMessageAfterRedirect(__('Number of imported devices')." : ".$Import);
+             Session::addMessageAfterRedirect(__('Number of devices not imported because type not defined')." : ".$NoImport);
          }
          break;
 
@@ -797,11 +797,11 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 //
 //      case 'glpi_plugin_fusioninventory_agents.logs' :
 //         $ArrayValues = array();
-//         $ArrayValues[]= _('No');
+//         $ArrayValues[]= __('No');
 
-//         $ArrayValues[]= _('Yes');
+//         $ArrayValues[]= __('Yes');
 
-//         $ArrayValues[]= _('Debug');
+//         $ArrayValues[]= __('Debug');
 
 //         Dropdown::showFromArray('logs', $ArrayValues,
 //                                 array('value'=>$linkfield));

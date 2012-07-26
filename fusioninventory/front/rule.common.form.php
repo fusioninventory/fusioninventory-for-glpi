@@ -107,7 +107,7 @@ if (isset($_POST["delete_criteria"])) {
    $rulecollection->checkGlobal('w');
    $rule->update($_POST);
 
-   Event::log($_POST['id'], "rules", 4, "setup", $_SESSION["glpiname"]." "._('Update the item'));
+   Event::log($_POST['id'], "rules", 4, "setup", $_SESSION["glpiname"]." ".__('Update the item'));
 
    Html::back();
 
@@ -115,7 +115,7 @@ if (isset($_POST["delete_criteria"])) {
    $rulecollection->checkGlobal('w');
 
    $newID = $rule->add($_POST);
-   Event::log($newID, "rules", 4, "setup", $_SESSION["glpiname"]." "._('Add the item'));
+   Event::log($newID, "rules", 4, "setup", $_SESSION["glpiname"]." ".__('Add the item'));
 
    Html::redirect($_SERVER['HTTP_REFERER']."?id=$newID");
 
@@ -124,12 +124,12 @@ if (isset($_POST["delete_criteria"])) {
    $rulecollection->deleteRuleOrder($_POST["ranking"]);
    $rule->delete($_POST);
 
-   Event::log($_POST["id"], "rules", 4, "setup", $_SESSION["glpiname"]." "._('item's deletion'));
+   Event::log($_POST["id"], "rules", 4, "setup", $_SESSION["glpiname"]." ".__('item's deletion'));
 
    Html::redirect(str_replace('.form','',$_SERVER['PHP_SELF']));
 }
 
-Html::header(_('Setup'), $_SERVER['PHP_SELF'], "admin",
+Html::header(__('Setup'), $_SERVER['PHP_SELF'], "admin",
              $rulecollection->menu_type, $rulecollection->menu_option);
 
 $rule->showForm($_GET["id"]);

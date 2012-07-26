@@ -48,7 +48,7 @@ class PluginFusinvdeployAction_Delete extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('Delete a file');
+      return __('Delete a file');
 
    }
 

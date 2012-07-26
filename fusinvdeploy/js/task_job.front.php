@@ -57,8 +57,8 @@ $label_width = 140;
 $field_width = 170;
 
 $JS_method = "var methods = new Array();".
-   "methods['deployinstall']= \""._('Package deployment')."\";".
-   "methods['deployuninstall']= \""._('Package uninstall')."\";";
+   "methods['deployinstall']= \"".__('Package deployment')."\";".
+   "methods['deployuninstall']= \"".__('Package uninstall')."\";";
 
 $JS = <<<JS
 
@@ -88,13 +88,13 @@ var taskJobColumns =  [{
    hidden: true
 }, {
    id: 'package_id',
-   header: '{_('Package')}',
+   header: '{__('Package')}',
    dataIndex: 'package_id',
    renderer: renderPackage,
    groupable: false
 }, {
    id: 'method',
-   header: '{_('Module')}',
+   header: '{__('Module')}',
    dataIndex: 'method',
    renderer: renderMethod,
    groupable: false
@@ -225,7 +225,7 @@ var taskJobGrid = new Ext.grid.GridPanel({
    style: 'margin-bottom:5px',
    columns: taskJobColumns,
    store: taskJobStore,
-   title: '{_('Order list')}',
+   title: '{__('Order list')}',
    view: new Ext.grid.GroupingView({
       forceFit:true,
       groupTextTpl: '<b>{text}</b>',
@@ -235,7 +235,7 @@ var taskJobGrid = new Ext.grid.GridPanel({
       emptyGroupText: ''
    }),
    tbar: [{
-      text: '{_('Add order')}',
+      text: '{__('Add order')}',
       iconCls: 'exticon-add',
       handler: function(btn,ev) {
          var u = new taskJobStore.recordType({
@@ -250,10 +250,10 @@ var taskJobGrid = new Ext.grid.GridPanel({
          });
          taskJobStore.insert(0,u);
          taskJobGrid.getSelectionModel().selectFirstRow();
-         taskJobForm.setTitle('{_('Add order')}');
+         taskJobForm.setTitle('{__('Add order')}');
       }
    }, '-', {
-      text: '{_('Delete order')}',
+      text: '{__('Delete order')}',
       iconCls: 'exticon-delete',
       handler: function(btn,ev) {
          var selection = taskJobGrid.getSelectionModel().getSelections();
@@ -292,7 +292,7 @@ var taskJobGrid = new Ext.grid.GridPanel({
          rowselect: function(g,index,ev) {
             var rec = taskJobGrid.store.getAt(index);
             taskJobForm.loadData(rec);
-            taskJobForm.setTitle('{_('Edit order')}');
+            taskJobForm.setTitle('{__('Edit order')}');
             taskJobForm.buttons[0].setDisabled(false);
 
             taskJobForm.expand();
@@ -321,10 +321,10 @@ var taskJobForm = new Ext.FormPanel({
    bodyStyle:'padding:5px 10px',
    style:'margin-left:5px;margin-bottom:5px',
    width: {$width_right},
-   title: '{_('Edit task')}',
+   title: '{__('Edit task')}',
    items: [
       new Ext.form.ComboBox({
-         fieldLabel: '{_('Module')}',
+         fieldLabel: '{__('Module')}',
          name: 'method',
          hiddenName: 'method',
          valueField: 'value',
@@ -334,15 +334,15 @@ var taskJobForm = new Ext.FormPanel({
          store: new Ext.data.ArrayStore({
             fields: ['value', 'name'],
             data: [
-               ['deployinstall', "{_('Installation')}"],
-               ['deployuninstall', "{_('Uninstallation')}"]
+               ['deployinstall', "{__('Installation')}"],
+               ['deployuninstall', "{__('Uninstallation')}"]
             ]
          }),
          mode: 'local',
          triggerAction: 'all'
       }),
       new Ext.form.ComboBox({
-         fieldLabel: '{_('Package')}',
+         fieldLabel: '{__('Package')}',
          name: 'package_id',
          valueField: 'package_id',
          displayField: 'package_name',
@@ -398,7 +398,7 @@ var taskJobForm = new Ext.FormPanel({
          }),
          width: {$field_width}
       }), {
-         fieldLabel: '{_('Comments')}',
+         fieldLabel: '{__('Comments')}',
          xtype: 'textarea',
          name: 'comment',
          hiddenName: 'comment',
@@ -406,20 +406,20 @@ var taskJobForm = new Ext.FormPanel({
          height:45
       }, {
          xtype:'fieldset',
-         title: '{_('Advanced options')}',
+         title: '{__('Advanced options')}',
          collapsed: true,
          checkboxToggle:true,
          autoHeight:true,
          style:'margin-top:5px',
          items :[
             new Ext.ux.form.SpinnerField({
-               fieldLabel: "{_('Number of trials')}",
+               fieldLabel: "{__('Number of trials')}",
                name: 'retry_nb',
                hiddenName: 'retry_nb',
                allowBlank: false,
                width:50
             }), new Ext.ux.form.SpinnerField({
-               fieldLabel: '{_('Time between 2 trials (in minutes)')}',
+               fieldLabel: '{__('Time between 2 trials (in minutes)')}',
                name: 'retry_time',
                hiddenName: 'retry_time',
                allowBlank: false,
@@ -429,7 +429,7 @@ var taskJobForm = new Ext.FormPanel({
       }
    ],
    buttons: [{
-      text: '{_('OK')}',
+      text: '{__('OK')}',
       iconCls: 'exticon-save',
       disabled:true,
       handler: function(btn,ev) {
@@ -445,11 +445,11 @@ var taskJobForm = new Ext.FormPanel({
 
 function taskJobFormSave() {
    if (taskJobForm.record == null) {
-      Ext.MessageBox.alert('Erreur', '{_('Empty form')}');
+      Ext.MessageBox.alert('Erreur', '{__('Empty form')}');
       return;
    }
    if (!taskJobForm.getForm().isValid()) {
-      Ext.MessageBox.alert('Erreur', '{_('Empty form')}');
+      Ext.MessageBox.alert('Erreur', '{__('Empty form')}');
       return false;
    }
 

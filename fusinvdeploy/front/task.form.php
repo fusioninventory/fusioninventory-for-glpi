@@ -92,7 +92,7 @@ if (isset($_POST['forcestart'])) {
    Html::back();
 
 } else {
-   Html::header(_('FusionInventory DEPLOY'),$_SERVER["PHP_SELF"],"plugins",
+   Html::header(__('FusionInventory DEPLOY'),$_SERVER["PHP_SELF"],"plugins",
    "fusioninventory","task");
 
    PluginFusioninventoryMenu::displayMenu("mini");

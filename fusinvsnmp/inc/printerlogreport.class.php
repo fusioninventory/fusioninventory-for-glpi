@@ -57,7 +57,7 @@ class PluginFusinvsnmpPrinterLogReport extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = _('History meter printer');
+      $tab['common'] = __('History meter printer');
 
 
       $tab[1]['table'] = $this->getTable();
@@ -67,7 +67,7 @@ class PluginFusinvsnmpPrinterLogReport extends CommonDBTM {
       $tab[2]['table'] = "glpi_printers";
       $tab[2]['field'] = 'name';
       $tab[2]['linkfield'] = 'printers_id';
-      $tab[2]['name'] = _('Name');
+      $tab[2]['name'] = __('Name');
 
       $tab[2]['datatype'] = 'itemlink';
       $tab[2]['itemlink_type']  = 'Printer';
@@ -75,7 +75,7 @@ class PluginFusinvsnmpPrinterLogReport extends CommonDBTM {
       $tab[24]['table'] = 'glpi_locations';
       $tab[24]['field'] = 'name';
       $tab[24]['linkfield'] = 'locations_id';
-      $tab[24]['name'] = _('Location');
+      $tab[24]['name'] = __('Location');
 
       $tab[24]['datatype'] = 'itemlink';
       $tab[24]['itemlink_type'] = 'Location';
@@ -83,7 +83,7 @@ class PluginFusinvsnmpPrinterLogReport extends CommonDBTM {
       $tab[19]['table'] = 'glpi_printertypes';
       $tab[19]['field'] = 'name';
       $tab[19]['linkfield'] = 'printertypes_id';
-      $tab[19]['name'] = _('Type');
+      $tab[19]['name'] = __('Type');
 
       $tab[19]['datatype'] = 'itemlink';
       $tab[19]['itemlink_type'] = 'PrinterType';
@@ -91,134 +91,134 @@ class PluginFusinvsnmpPrinterLogReport extends CommonDBTM {
 //      $tab[2]['table'] = 'glpi_printermodels';
 //      $tab[2]['field'] = 'name';
 //      $tab[2]['linkfield'] = 'printermodels_id';
-//      $tab[2]['name'] = _('Model');
+//      $tab[2]['name'] = __('Model');
 
 //      $tab[2]['datatype']='itemptype';
 //
       $tab[18]['table'] = 'glpi_states';
       $tab[18]['field'] = 'name';
       $tab[18]['linkfield'] = 'states_id';
-      $tab[18]['name'] = _('Status');
+      $tab[18]['name'] = __('Status');
 
       $tab[18]['datatype']='itemptype';
 
       $tab[20]['table'] = 'glpi_printers';
       $tab[20]['field'] = 'serial';
       $tab[20]['linkfield'] = 'printers_id';
-      $tab[20]['name'] = _('Serial Number');
+      $tab[20]['name'] = __('Serial Number');
 
 
       $tab[23]['table'] = 'glpi_printers';
       $tab[23]['field'] = 'otherserial';
       $tab[23]['linkfield'] = 'printers_id';
-      $tab[23]['name'] = _('Inventory number');
+      $tab[23]['name'] = __('Inventory number');
 
 
       $tab[21]['table'] = 'glpi_users';
       $tab[21]['field'] = 'name';
       $tab[21]['linkfield'] = 'users_id';
-      $tab[21]['name'] = _('User');
+      $tab[21]['name'] = __('User');
 
 
       $tab[3]['table'] = 'glpi_manufacturers';
       $tab[3]['field'] = 'name';
       $tab[3]['linkfield'] = 'manufacturers_id';
-      $tab[3]['name'] = _('Manufacturer');
+      $tab[3]['name'] = __('Manufacturer');
 
 
       $tab[5]['table'] = 'glpi_networkports';
       $tab[5]['field'] = 'ip';
       $tab[5]['linkfield'] = 'printers_id';
-      $tab[5]['name'] = _('IP');
+      $tab[5]['name'] = __('IP');
 
 
 //      $tab[4]['table'] = 'glpi_infocoms';
 //      $tab[4]['field'] = 'budget';
 //      $tab[4]['linkfield'] = '';
-//      $tab[4]['name'] = _('Budget');
+//      $tab[4]['name'] = __('Budget');
 
 
       $tab[6]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[6]['field'] = 'pages_total';
       $tab[6]['linkfield'] = 'printers_id';
-      $tab[6]['name'] = _('Total number of printed pages');
+      $tab[6]['name'] = __('Total number of printed pages');
 
       $tab[6]['forcegroupby']='1';
 
       $tab[7]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[7]['field'] = 'pages_n_b';
       $tab[7]['linkfield'] = 'printers_id';
-      $tab[7]['name'] = _('Number of printed black and white pages');
+      $tab[7]['name'] = __('Number of printed black and white pages');
 
       $tab[7]['forcegroupby']='1';
 
       $tab[8]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[8]['field'] = 'pages_color';
       $tab[8]['linkfield'] = 'printers_id';
-      $tab[8]['name'] = _('Number of printed color pages');
+      $tab[8]['name'] = __('Number of printed color pages');
 
       $tab[8]['forcegroupby']='1';
 
       $tab[9]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[9]['field'] = 'pages_recto_verso';
       $tab[9]['linkfield'] = 'printers_id';
-      $tab[9]['name'] = _('Number of pages printed duplex');
+      $tab[9]['name'] = __('Number of pages printed duplex');
 
       $tab[9]['forcegroupby']='1';
 
       $tab[10]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[10]['field'] = 'scanned';
       $tab[10]['linkfield'] = 'printers_id';
-      $tab[10]['name'] = _('Number of scanned pages');
+      $tab[10]['name'] = __('Number of scanned pages');
 
       $tab[10]['forcegroupby']='1';
 
       $tab[11]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[11]['field'] = 'pages_total_print';
       $tab[11]['linkfield'] = 'printers_id';
-      $tab[11]['name'] = _('Total number of printed pages (print)');
+      $tab[11]['name'] = __('Total number of printed pages (print)');
 
       $tab[11]['forcegroupby']='1';
 
       $tab[12]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[12]['field'] = 'pages_n_b_print';
       $tab[12]['linkfield'] = 'printers_id';
-      $tab[12]['name'] = _('Number of printed black and white pages (print)');
+      $tab[12]['name'] = __('Number of printed black and white pages (print)');
 
       $tab[12]['forcegroupby']='1';
 
       $tab[13]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[13]['field'] = 'pages_color_print';
       $tab[13]['linkfield'] = 'printers_id';
-      $tab[13]['name'] = _('Number of printed color pages (print)');
+      $tab[13]['name'] = __('Number of printed color pages (print)');
 
       $tab[13]['forcegroupby']='1';
 
       $tab[14]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[14]['field'] = 'pages_total_copy';
       $tab[14]['linkfield'] = 'printers_id';
-      $tab[14]['name'] = _('Total number of printed pages (copy)');
+      $tab[14]['name'] = __('Total number of printed pages (copy)');
 
       $tab[14]['forcegroupby']='1';
 
       $tab[15]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[15]['field'] = 'pages_n_b_copy';
       $tab[15]['linkfield'] = 'printers_id';
-      $tab[15]['name'] = _('Number of printed black and white pages (copy)');
+      $tab[15]['name'] = __('Number of printed black and white pages (copy)');
 
       $tab[15]['forcegroupby']='1';
 
       $tab[16]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[16]['field'] = 'pages_color_copy';
       $tab[16]['linkfield'] = 'printers_id';
-      $tab[16]['name'] = _('Number of printed color pages (copy)');
+      $tab[16]['name'] = __('Number of printed color pages (copy)');
 
       $tab[16]['forcegroupby']='1';
 
       $tab[17]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[17]['field'] = 'pages_total_fax';
       $tab[17]['linkfield'] = 'printers_id';
-      $tab[17]['name'] = _('Total number of printed pages (fax)');
+      $tab[17]['name'] = __('Total number of printed pages (fax)');
 
       $tab[17]['forcegroupby']='1';
 

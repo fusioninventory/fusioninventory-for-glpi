@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 include (GLPI_ROOT."/inc/includes.php");
 Session::checkLoginUser();
 
-Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins",
+Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"],"plugins",
              "fusioninventory","packages");
 
 PluginFusioninventoryMenu::displayMenu("mini");

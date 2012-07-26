@@ -59,7 +59,7 @@ if ($rulecollection->isRuleRecursive()) {
 $rulecollection->checkGlobal('r');
 
 if (!strpos($_SERVER['PHP_SELF'],"popup")) {
-   Html::header(_('Setup'),$_SERVER['PHP_SELF'],"config","display");
+   Html::header(__('Setup'),$_SERVER['PHP_SELF'],"config","display");
 }
 
 // Need for RuleEngines

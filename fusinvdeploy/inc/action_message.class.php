@@ -48,7 +48,7 @@ class PluginFusinvdeployAction_Message extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('Show dialog');
+      return __('Show dialog');
 
    }
 

@@ -48,7 +48,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('Files');
+      return __('Files');
 
    }
 
@@ -416,9 +416,9 @@ class PluginFusinvdeployFile extends CommonDBTM {
       $max_post = (int)(ini_get('post_max_size'));
       $memory_limit = (int)(ini_get('memory_limit'));
 
-      return _('Maximum file size')
+      return __('Maximum file size')
 
-         ." : ".min($max_upload, $max_post, $memory_limit)._('Mio');
+         ." : ".min($max_upload, $max_post, $memory_limit).__('Mio');
 
    }
 
@@ -466,7 +466,7 @@ class PluginFusinvdeployFile extends CommonDBTM {
             switch ($_FILES['file']['error']) {
                case UPLOAD_ERR_INI_SIZE:
                case UPLOAD_ERR_FORM_SIZE:
-                  print "{success:false, file:'{$filename}',msg:\"{_('Transfer error: the file size is too big')}\"}";
+                  print "{success:false, file:'{$filename}',msg:\"{__('Transfer error: the file size is too big')}\"}";
                   exit;
                case UPLOAD_ERR_PARTIAL:
                   print "{success:false, file:'{$filename}',msg:\"The uploaded file was only partially uploaded.\"}";
@@ -502,14 +502,14 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
-            print "{success:true, file:'{$filename}',msg:\"{_('File saved!')}\"}";
+            print "{success:true, file:'{$filename}',msg:\"{__('File saved!')}\"}";
             exit;
          } else {
-            print "{success:false, file:'{$filename}',msg:\"{_('File missing')}\"}";
+            print "{success:false, file:'{$filename}',msg:\"{__('File missing')}\"}";
             exit;
          }
       }
-      print "{success:false, file:'none',msg:\"{_('File missing')}\"}";
+      print "{success:false, file:'none',msg:\"{__('File missing')}\"}";
    }
 
    function uploadFileFromServer() {
@@ -549,13 +549,13 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
-            print "{success:true, file:'{$filename}',msg:\"{_('File saved!')}\"}";
+            print "{success:true, file:'{$filename}',msg:\"{__('File saved!')}\"}";
             exit;
          } else {
-            print "{success:false, file:'{$filename}',msg:\"{_('Failed to copy file')}\"}";
+            print "{success:false, file:'{$filename}',msg:\"{__('Failed to copy file')}\"}";
             exit;
          }
-      } print "{success:false, file:'none',msg:\"{_('File missing')}\"}";
+      } print "{success:false, file:'none',msg:\"{__('File missing')}\"}";
    }
 
    static function processFilesize($filesize) {

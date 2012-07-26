@@ -82,35 +82,35 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
       echo "<tr>";
       echo "<th>";
-      echo _('Name');
+      echo __('Name');
 
       echo "</th>";
       echo "<th>";
-      echo _('Rule name');
+      echo __('Rule name');
 
       echo "</th>";
       echo "<th>";
-      echo _('Date');
+      echo __('Date');
 
       echo "</th>";
       echo "<th>";
-      echo _('Type');
+      echo __('Type');
 
       echo "</th>";
       echo "<th>";
-      echo _('Entity');
+      echo __('Entity');
 
       echo "</th>";
       echo "<th>";
-      echo _('IP');
+      echo __('IP');
 
       echo "</th>";
       echo "<th>";
-      echo _('MAC');
+      echo __('MAC');
 
       echo "</th>";
       echo "<th>";
-      echo _('Module');
+      echo __('Module');
 
       echo "</th>";
       echo "</tr>";

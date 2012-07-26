@@ -59,7 +59,7 @@ class PluginFusinvdeployCheck extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('Audits');
+      return __('Audits');
 
    }
 

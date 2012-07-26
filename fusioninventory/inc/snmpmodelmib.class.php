@@ -90,20 +90,20 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                $nb_col++;
             }
             echo "<table class='tab_cadre_fixe'><tr><th colspan='".$nb_col."'>";
-            echo _('OID list')."</th></tr>";
+            echo __('OID list')."</th></tr>";
 
             echo "<tr class='tab_bg_1'>";
             echo "<th align='center'></th>";
-            echo "<th align='center'>"._('MIB Label')."</th>";
-            echo "<th align='center'>"._('Object')."</th>";
-            echo "<th align='center'>"._('OID')."</th>";
-            echo "<th align='center'>"._('Port Counters')."</th>";
-            echo "<th align='center'>"._('Dynamic port (.x)')."</th>";
-            echo "<th align='center' width='250'>"._('Linked fields')."</th>";
+            echo "<th align='center'>".__('MIB Label')."</th>";
+            echo "<th align='center'>".__('Object')."</th>";
+            echo "<th align='center'>".__('OID')."</th>";
+            echo "<th align='center'>".__('Port Counters')."</th>";
+            echo "<th align='center'>".__('Dynamic port (.x)')."</th>";
+            echo "<th align='center' width='250'>".__('Linked fields')."</th>";
             if ($type_model == NETWORKING_TYPE) {
-               echo "<th align='center'>"._('VLAN')."</th>";
+               echo "<th align='center'>".__('VLAN')."</th>";
             }
-            echo "<th align='center'>"._('is_active')."</th>";
+            echo "<th align='center'>".__('is_active')."</th>";
 
             echo "</tr>";
             while ($data=$DB->fetch_array($result)) {
@@ -194,14 +194,14 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
             echo "<tr>";
             echo "<td><img src=\"".$CFG_GLPI["root_doc"]."/pics/arrow-left.png\" alt=''></td>
                   <td align='center'><a onclick= \"if ( markCheckboxes('oid_list') ) return false;\"
-                      href='".$_SERVER['PHP_SELF']."?select=all'>"._('Check All')."</a></td>";
+                      href='".$_SERVER['PHP_SELF']."?select=all'>".__('Check All')."</a></td>";
             echo "<td>/</td><td align='center'><a onclick= \"if ( unMarkCheckboxes('oid_list') )
                      return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
-                     _('Uncheck All')."</a>";
+                     __('Uncheck All')."</a>";
             echo "</td><td align='left' colspan='6' width='80%'>";
             if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
                echo "<input class='submit' type='submit' name='delete_oid' value='" .
-                     _('Delete') . "'>";
+                     __('Delete') . "'>";
             }
             echo "</td>";
             echo "</tr>";
@@ -232,19 +232,19 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
       echo "<br/>";
       echo "<table class='tab_cadre_fixe'>";
 
-      echo "<tr class='tab_bg_1'><th colspan='7'>"._('add an OID...').
+      echo "<tr class='tab_bg_1'><th colspan='7'>".__('add an OID...').
 
                "</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th align='center'>"._('MIB Label')."</th>";
-      echo "<th align='center'>"._('Object')."</th>";
-      echo "<th align='center'>"._('OID')."</th>";
-      echo "<th align='center'>"._('Port Counters')."</th>";
-      echo "<th align='center'>"._('Dynamic port (.x)')."</th>";
-      echo "<th align='center' width='250'>"._('Linked fields')."</th>";
+      echo "<th align='center'>".__('MIB Label')."</th>";
+      echo "<th align='center'>".__('Object')."</th>";
+      echo "<th align='center'>".__('OID')."</th>";
+      echo "<th align='center'>".__('Port Counters')."</th>";
+      echo "<th align='center'>".__('Dynamic port (.x)')."</th>";
+      echo "<th align='center' width='250'>".__('Linked fields')."</th>";
       if ($type_model == NETWORKING_TYPE) {
-         echo "<th align='center'>"._('VLAN')."</th>";
+         echo "<th align='center'>".__('VLAN')."</th>";
       }
       echo "</tr>";
 
@@ -299,7 +299,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
       echo "<tr class='tab_bg_1'><td colspan='7' align='center'>";
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
          echo "<input type='hidden' name='plugin_fusioninventory_snmpmodels_id' value='".$id."'/>";
-         echo "<input type='submit' name='add_oid' value=\""._('Post').
+         echo "<input type='submit' name='add_oid' value=\"".__('Post').
 
                "\" class='submit' >";
       }

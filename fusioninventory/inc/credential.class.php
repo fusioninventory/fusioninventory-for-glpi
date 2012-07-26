@@ -51,7 +51,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
    static function getTypeName($nb=0) {
 
-      return _('Authentication for remote devices (VMware)');
+      return __('Authentication for remote devices (VMware)');
 
    }
 
@@ -68,15 +68,15 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    function getAdditionalFields() {
 
       return array(array('name'  => 'itemtype',
-                         'label' => _('Type'),
+                         'label' => __('Type'),
 
                          'type'  => 'credential_itemtype'),
                    array('name'  => 'username',
-                         'label' => _('Login'),
+                         'label' => __('Login'),
 
                          'type'  => 'text'),
                    array('name'  => 'password',
-                         'label' => _('Password'),
+                         'label' => __('Password'),
 
                          'type'  => 'password'));
    }
@@ -151,29 +151,29 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       $tab = array();
 
-      $tab['common'] = _('Authentication for remote devices (VMware)');
+      $tab['common'] = __('Authentication for remote devices (VMware)');
 
 
       $tab[1]['table'] = $this->getTable();
       $tab[1]['field'] = 'name';
-      $tab[1]['name'] = _('Name');
+      $tab[1]['name'] = __('Name');
 
       $tab[1]['datatype'] = 'itemlink';
 
       $tab[2]['table'] = 'glpi_entities';
       $tab[2]['field'] = 'completename';
-      $tab[2]['name'] = _('Entity');
+      $tab[2]['name'] = __('Entity');
 
 
       $tab[3]['table']         = $this->getTable();
       $tab[3]['field']         = 'itemtype';
-      $tab[3]['name']          = _('Type');
+      $tab[3]['name']          = __('Type');
 
       $tab[3]['massiveaction'] = false;
 
       $tab[4]['table'] = $this->getTable();
       $tab[4]['field'] = 'username';
-      $tab[4]['name'] = _('Login');
+      $tab[4]['name'] = __('Login');
 
 
       return $tab;
@@ -195,7 +195,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       }
 
       if (!$input['itemtype']) {
-          Session::addMessageAfterRedirect(_('It\'s mandatory to select a type and at least one field'), true, ERROR);
+          Session::addMessageAfterRedirect(__('It\'s mandatory to select a type and at least one field'), true, ERROR);
          $input = array();
 
       }
@@ -357,7 +357,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
                                          array('value' => $value));
 
          if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'w')) {
-            echo "<img alt='' title=\""._('Add')."\" src='".$CFG_GLPI["root_doc"].
+            echo "<img alt='' title=\"".__('Add')."\" src='".$CFG_GLPI["root_doc"].
                "/pics/add_dropdown.png' style='cursor:pointer; margin-left:2px;'
                onClick=\"var w = window.open('".
                Toolbox::getItemTypeFormURL('PluginFusioninventoryCredential')."?popup=1&amp;rand=".
@@ -385,7 +385,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       $buttons = array();
       if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r')) {
-         $buttons["credentialip.php"] = _('Remote devices to inventory (VMware)');
+         $buttons["credentialip.php"] = __('Remote devices to inventory (VMware)');
 
       }
    }

@@ -46,7 +46,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 Session::checkRight("config","w");
 
-Html::header(_('Features'), $_SERVER["PHP_SELF"],
+Html::header(__('Features'), $_SERVER["PHP_SELF"],
              "plugins", "fusinvdeploy", "configuration");
 
 if (isset($_POST['plugin_fusinvdeploy_config_set'])) {

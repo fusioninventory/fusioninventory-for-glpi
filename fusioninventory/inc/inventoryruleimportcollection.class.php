@@ -54,7 +54,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
    function getTitle() {
 
-      return _('Equipment import and link rules');
+      return __('Equipment import and link rules');
 
    }
 
@@ -97,22 +97,22 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
       //If ticket is assign to an object, display this information first
       if (isset($output["action"])) {
          echo "<tr class='tab_bg_2'>";
-         echo "<td>"._('Action type')."</td>";
+         echo "<td>".__('Action type')."</td>";
          echo "<td>";
 
          switch ($output["action"]) {
             case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_LINK :
-               echo _('Link');
+               echo __('Link');
 
                break;
 
             case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE:
-               echo _('Device created');
+               echo __('Device created');
 
                break;
 
             case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED:
-               echo _('Import denied');
+               echo __('Import denied');
 
                break;
 
@@ -126,7 +126,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
             $className = $output["found_equipment"][1];
             $class = new $className;
             if ($class->getFromDB($output["found_equipment"][0])) {
-               echo "<td>"._('Link')."</td>";
+               echo "<td>".__('Link')."</td>";
                echo "<td>".$class->getLink(true)."</td>";
             }
             echo "</tr>";

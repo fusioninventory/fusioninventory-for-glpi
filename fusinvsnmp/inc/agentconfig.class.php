@@ -93,11 +93,11 @@ class PluginFusinvsnmpAgentconfig extends CommonDBTM {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._('Threads number')."&nbsp;(".strtolower(_('Network discovery')).")&nbsp;:</td>";
+      echo "<td>".__('Threads number')."&nbsp;(".strtolower(__('Network discovery')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("threads_netdiscovery", $this->fields["threads_netdiscovery"],1,400);
       echo "</td>";
-      echo "<td>"._('Threads number')."&nbsp;(".strtolower(_('Network inventory (SNMP)')).")&nbsp;:</td>";
+      echo "<td>".__('Threads number')."&nbsp;(".strtolower(__('Network inventory (SNMP)')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("threads_snmpquery", $this->fields["threads_snmpquery"],1,400);
       echo "</td>";

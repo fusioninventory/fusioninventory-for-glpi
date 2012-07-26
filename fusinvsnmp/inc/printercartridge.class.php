@@ -59,7 +59,7 @@ class PluginFusinvsnmpPrinterCartridge extends CommonDBTM {
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th align='center' colspan='3'>";
-      echo _('Cartridge(s)');
+      echo __('Cartridge(s)');
 
       echo "</th>";
       echo "</tr>";

@@ -103,24 +103,24 @@ class PluginFusinvdeployState extends CommonDBTM {
       if ($comment == "") {
          switch ($state) {
             case PluginFusioninventoryTaskjoblog::TASK_OK:
-               $comment = _('Ok');
+               $comment = __('Ok');
 
                break;
             case PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED:
-               $comment = _('Error / rescheduled');
+               $comment = __('Error / rescheduled');
 
                break;
             case PluginFusioninventoryTaskjoblog::TASK_ERROR:
-               $comment = _('Error');
+               $comment = __('Error');
 
                break;
             case PluginFusioninventoryTaskjoblog::TASK_PREPARED:
-               $comment = _('Prepared');
+               $comment = __('Prepared');
 
                break;
          }
       } elseif ($state == PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED) {
-         $comment = _('Error / rescheduled');
+         $comment = __('Error / rescheduled');
 
       }
       return $comment;

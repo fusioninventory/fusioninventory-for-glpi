@@ -3654,13 +3654,13 @@ function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
    static $deb;
 
    if ($created != $id) {
-      if (empty($msg)) $msg=_('Work in progress...');
+      if (empty($msg)) $msg=__('Work in progress...');
 
       echo "<div id='migration_message_$id'><p class='center'>$msg</p></div>";
       $created = $id;
       $deb = time();
    } else {
-      if (empty($msg)) $msg=_('Task completed.');
+      if (empty($msg)) $msg=__('Task completed.');
 
       $fin = time();
       $tps = Html::timestampToString($fin-$deb);

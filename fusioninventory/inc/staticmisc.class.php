@@ -58,7 +58,7 @@ class PluginFusioninventoryStaticmisc {
       $a_tasks = array();
       $a_tasks[] = array('module'               => 'fusioninventory',
                          'method'               => 'wakeonlan',
-                         'name'                 => _('Wake On LAN'),
+                         'name'                 => __('Wake On LAN'),
 
                          'use_rest'             => false);
 
@@ -66,14 +66,14 @@ class PluginFusioninventoryStaticmisc {
                           'method'         => 'inventory',
                           'selection_type' => 'devices',
                           'hidetask'       => 1,
-                          'name'           => _('Computer Inventory'),
+                          'name'           => __('Computer Inventory'),
 
                           'use_rest'       => false);
 
       $a_tasks[] = array('module'        => 'fusioninventory',
                          'method'         => 'ESX',
                          'selection_type' => 'devices',
-                         'name'           => _('VMware host remote inventory'),
+                         'name'           => __('VMware host remote inventory'),
 
                          'use_rest'       => true);
 
@@ -154,45 +154,45 @@ class PluginFusioninventoryStaticmisc {
    static function profiles() {
 
       return array(array('profil'  => 'agent',
-                         'name'    => _('Agents')),
+                         'name'    => __('Agents')),
 
                    array('profil'  => 'remotecontrol',
-                         'name'    => _('Agent remote control')),
+                         'name'    => __('Agent remote control')),
 
                    array('profil'  => 'configuration',
-                         'name'    => _('Configuration')),
+                         'name'    => __('Configuration')),
 
                    array('profil'  => 'wol',
-                         'name'    => _('Wake On LAN')),
+                         'name'    => __('Wake On LAN')),
 
                    array('profil'  => 'unknowndevice',
-                         'name'    => _('Unknown devices')),
+                         'name'    => __('Unknown devices')),
 
                    array('profil'  => 'task',
-                         'name'    => _('Tasks')),
+                         'name'    => __('Tasks')),
 
                    array('profil'  => 'iprange',
-                         'name'    => _('IP range configuration')),
+                         'name'    => __('IP range configuration')),
 
                    array('profil'  => 'credential',
-                         'name'    => _('Authentication for remote devices (VMware)')),
+                         'name'    => __('Authentication for remote devices (VMware)')),
 
                    array('profil'  => 'credentialip',
-                         'name'    => _('Remote devices to inventory (VMware)')),
+                         'name'    => __('Remote devices to inventory (VMware)')),
 
 
 
                    array('profil'  => 'existantrule',
-                         'name'    => _('Existance criteria')),
+                         'name'    => __('Existance criteria')),
 
                    array('profil'  => 'importxml',
-                         'name'    => _('XML file manual import')),
+                         'name'    => __('XML file manual import')),
 
                    array('profil'  => 'blacklist',
-                         'name'    => _('Fields blacklist')),
+                         'name'    => __('Fields blacklist')),
 
                    array('profil'  => 'ESX',
-                         'name'    => _('VMware host')));
+                         'name'    => __('VMware host')));
 
    }
 
@@ -246,7 +246,7 @@ class PluginFusioninventoryStaticmisc {
       $results = $DB->query($query);
 
       $agents = array();
-      //$agents['.1'] = _('All');
+      //$agents['.1'] = __('All');
 
       while ($data = $DB->fetch_array($results)) {
          $agents[$data['id']] = $data['name'];
@@ -261,7 +261,7 @@ class PluginFusioninventoryStaticmisc {
 
    static function task_actiontype_ESX($a_itemtype) {
       return array ('' => Dropdown::EMPTY_VALUE ,
-                    'PluginFusioninventoryAgent' => _('Agents'));
+                    'PluginFusioninventoryAgent' => __('Agents'));
 
    }
 

@@ -164,14 +164,14 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='4'>";
-      echo _('SNMP information');
+      echo __('SNMP information');
 
       echo "</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo _('Sysdescr');
+      echo __('Sysdescr');
 
       echo "</td>";
       echo "<td>";
@@ -180,7 +180,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "</textarea>";
       echo "</td>";
       echo "<td align='center'>";
-      echo _('Last inventory')."&nbsp;:";
+      echo __('Last inventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       echo Html::convDateTime($this->oFusionInventory_printer->fields['last_fusioninventory_update']);
@@ -188,7 +188,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' rowspan='2'>"._('SNMP models')."&nbsp;:</td>";
+      echo "<td align='center' rowspan='2'>".__('SNMP models')."&nbsp;:</td>";
       echo "<td align='center'>";
       $query_models = "SELECT *
                        FROM `glpi_plugin_fusioninventory_snmpmodels`
@@ -205,7 +205,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
                            'comment'=>false,
                            'used'=>$exclude_models));
       echo "</td>";
-      echo "<td align='center'>"._('SNMP authentication')."&nbsp;:</td>";
+      echo "<td align='center'>".__('SNMP authentication')."&nbsp;:</td>";
       echo "<td align='center'>";
       PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_printer->fields["plugin_fusinvsnmp_configsecurities_id"]);
       echo "</td>";
@@ -214,7 +214,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       echo "<input type='submit' name='GetRightModel'
-              value='"._('Load the correct model')."' class='submit'/>";
+              value='".__('Load the correct model')."' class='submit'/>";
       echo "</td>";
       echo "<td colspan='2'>";
       echo "</td>";
@@ -224,7 +224,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       echo "<td colspan='4'>";
       echo "<div align='center'>";
       echo "<input type='hidden' name='id' value='".$id."'>";
-      echo "<input type='submit' name='update' value=\""._('Update')."\" class='submit' >";
+      echo "<input type='submit' name='update' value=\"".__('Update')."\" class='submit' >";
       echo "</td>";
       echo "</tr>";
 

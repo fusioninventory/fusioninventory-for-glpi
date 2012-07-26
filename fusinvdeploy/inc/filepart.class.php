@@ -49,7 +49,7 @@ class PluginFusinvdeployFilepart extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('pieces of files');
+      return __('pieces of files');
 
    }
 

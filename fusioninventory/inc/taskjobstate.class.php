@@ -140,21 +140,21 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
          case 'running':
             $search = " AND `state`!='".self::FINISHED."'";
-            $title = _('Running tasks');
+            $title = __('Running tasks');
 
             $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_running.png'/>";
             break;
 
          case 'finished':
             $search = " AND `state`='".self::FINISHED."'";
-            $title = _('Finished tasks');
+            $title = __('Finished tasks');
 
             $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
             break;
 
          case 'all':
             $search = "";
-            $title = _('Tasks');
+            $title = __('Tasks');
 
             $icon = "";
             break;
@@ -190,22 +190,22 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          echo "<table class='tab_cadre' width='950'>";
          echo "<tr>";
          echo "<th></th>";
-         echo "<th>"._('Unique id')."</th>";
-         echo "<th>"._('Job')."</th>";
-         echo "<th>"._('Agent')."</th>";
+         echo "<th>".__('Unique id')."</th>";
+         echo "<th>".__('Job')."</th>";
+         echo "<th>".__('Agent')."</th>";
          echo "<th>";
-         echo _('Date');
+         echo __('Date');
 
          echo "</th>";
          echo "<th>";
-         echo _('Status');
+         echo __('Status');
 
          echo "</th>";
          $nb_td = 6;
          if ($state == 'running') {
             $nb_td++;
             echo "<th>";
-            echo _('Comments');
+            echo __('Comments');
 
             echo "</th>";
          }

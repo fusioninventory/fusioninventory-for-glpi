@@ -48,7 +48,7 @@ class PluginFusinvdeployAction_Copy extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('Copy a file');
+      return __('Copy a file');
 
    }
 

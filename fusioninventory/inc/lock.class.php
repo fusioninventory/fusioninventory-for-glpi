@@ -50,7 +50,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
    static function getTypeName($nb=0) {
 
-      return _('Locks');
+      return __('Locks');
 
    }
 
@@ -87,9 +87,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       if (Session::haveRight(strtolower($itemtype), "w")) {
          if ($_SESSION['glpishow_count_on_tabs']) {
-            return self::createTabEntry(_('Locks'), self::countForLock($item));
+            return self::createTabEntry(__('Locks'), self::countForLock($item));
          }
-         return _('Locks');
+         return __('Locks');
 
       }
       return '';
@@ -160,11 +160,11 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<input type='hidden' name='id' value='$p_items_id'>";
       echo "<input type='hidden' name='type' value='$p_itemtype'>";
       echo "<table class='tab_cadre'>";
-      echo "<tr><th>&nbsp;"._('Fields')."&nbsp;</th>";
+      echo "<tr><th>&nbsp;".__('Fields')."&nbsp;</th>";
       if ($p_items_id != '0') {
-         echo "<th>&nbsp;"._('Values')."&nbsp;</th>";
+         echo "<th>&nbsp;".__('Values')."&nbsp;</th>";
       }
-      echo "<th>&nbsp;"._('Locks')."&nbsp;</th></tr>";
+      echo "<th>&nbsp;".__('Locks')."&nbsp;</th></tr>";
 
       $checked = '';
       $a_exclude = $this->excludeFields();
@@ -191,27 +191,27 @@ class PluginFusioninventoryLock extends CommonDBTM{
             switch($key) {
 
                case 'users_id_tech':
-                  $key1 = _('Technician in charge of the hardware');
+                  $key1 = __('Technician in charge of the hardware');
 
                   break;
 
                case 'computermodels_id':
-                  $key1 = _('Model');
+                  $key1 = __('Model');
 
                   break;
 
                case 'computertypes_id':
-                  $key1 = _('Type');
+                  $key1 = __('Type');
 
                   break;
 
                case 'states_id':
-                  $key1 = _('Status');
+                  $key1 = __('Status');
 
                   break;
 
                case 'ticket_tco':
-                  $key1 = _('TCO');
+                  $key1 = __('TCO');
 
                   break;
 
@@ -249,16 +249,16 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if ($p_items_id == '0') {
          // add option selection for add theses lock filed or remove them
          echo "<tr>";
-         echo "<th colspan='2'>"._('Job')."</th>";
+         echo "<th colspan='2'>".__('Job')."</th>";
          echo "<tr>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>"._('Add locks')."</td>";
+         echo "<td>".__('Add locks')."</td>";
          echo "<td align='center'><input type='radio' name='actionlock' value='addLock' checked/></td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>"._('Delete locks')."</td>";
+         echo "<td>".__('Delete locks')."</td>";
          echo "<td align='center'><input type='radio' name='actionlock' value='deleteLock' /></td>";
          echo "</tr>";
 
@@ -267,7 +267,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
          echo "<tr class='tab_bg_2'>";
          echo "<td align='center' colspan='".$colspan."'>";
          echo "<input class='submit' type='submit' name='unlock_field_fusioninventory'
-                         value='" . _('Update') . "'>";
+                         value='" . __('Update') . "'>";
          echo "</td>";
          echo "</tr>";
       }

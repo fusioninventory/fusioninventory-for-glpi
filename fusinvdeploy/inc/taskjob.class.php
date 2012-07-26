@@ -159,17 +159,17 @@ class PluginFusinvdeployTaskjob extends CommonDBTM {
 
       return array(
          array(
-            'name' => _('Computers'),
+            'name' => __('Computers'),
 
             'value' => 'Computer',
          ),
          array(
-            'name' => _('Group'),
+            'name' => __('Group'),
 
             'value' => 'Group',
          ),
          array(
-            'name' => _('Groups of computers'),
+            'name' => __('Groups of computers'),
 
             'value' => 'PluginFusinvdeployGroup',
          )

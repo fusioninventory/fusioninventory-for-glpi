@@ -52,7 +52,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    **/
    static function getTypeName($nb=0) {
 
-      return _('Unknown device');
+      return __('Unknown device');
 
    }
 
@@ -71,13 +71,13 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = _('Unknown device');
+      $tab['common'] = __('Unknown device');
 
 
       $tab[1]['table']         = $this->getTable();
       $tab[1]['field']         =  'name';
       $tab[1]['linkfield']     ='name';
-      $tab[1]['name']          = _('Name');
+      $tab[1]['name']          = __('Name');
 
       $tab[1]['datatype']      = 'itemlink';
       $tab[1]['itemlink_type'] = $this->getType();
@@ -85,88 +85,88 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[2]['table']     = $this->getTable();
       $tab[2]['field']     = 'id';
       $tab[2]['linkfield'] = '';
-      $tab[2]['name']      = _('ID');
+      $tab[2]['name']      = __('ID');
 
 
       $tab[3]['table']     = 'glpi_locations';
       $tab[3]['field']     = 'name';
       $tab[3]['linkfield'] = 'locations_id';
-      $tab[3]['name']      = _('Location');
+      $tab[3]['name']      = __('Location');
 
       $tab[3]['datatype']  = 'text';
 
       $tab[4]['table']     = $this->getTable();
       $tab[4]['field']     = 'serial';
       $tab[4]['linkfield'] = 'serial';
-      $tab[4]['name']      = _('Serial Number');
+      $tab[4]['name']      = __('Serial Number');
 
       $tab[4]['datatype']  = 'text';
 
       $tab[5]['table']     = $this->getTable();
       $tab[5]['field']     = 'otherserial';
       $tab[5]['linkfield'] = 'otherserial';
-      $tab[5]['name']      = _('Inventory number');
+      $tab[5]['name']      = __('Inventory number');
 
       $tab[5]['datatype']  = 'text';
 
       $tab[6]['table']     = $this->getTable();
       $tab[6]['field']     = 'contact';
       $tab[6]['linkfield'] = 'contact';
-      $tab[6]['name']      = _('Contact');
+      $tab[6]['name']      = __('Contact');
 
       $tab[6]['datatype']  = 'text';
 
       $tab[7]['table']     = $this->getTable();
       $tab[7]['field']     = 'hub';
       $tab[7]['linkfield'] = 'hub';
-      $tab[7]['name']      = _('Network hub');
+      $tab[7]['name']      = __('Network hub');
 
       $tab[7]['datatype']  = 'bool';
 
       $tab[8]['table']     = 'glpi_entities';
       $tab[8]['field']     = 'completename';
       $tab[8]['linkfield'] = 'entities_id';
-      $tab[8]['name']      = _('Entity');
+      $tab[8]['name']      = __('Entity');
 
 
       $tab[9]['table']     = 'glpi_domains';
       $tab[9]['field']     = 'name';
       $tab[9]['linkfield'] = 'domain';
-      $tab[9]['name']      = _('Domain');
+      $tab[9]['name']      = __('Domain');
 
 
       $tab[10]['table']     = $this->getTable();
       $tab[10]['field']     = 'comment';
       $tab[10]['linkfield'] = 'comment';
-      $tab[10]['name']      = _('Comments');
+      $tab[10]['name']      = __('Comments');
 
       $tab[10]['datatype']  = 'text';
 
       $tab[11]['table']     = $this->getTable();
       $tab[11]['field']     = 'ip';
       $tab[11]['linkfield'] = 'ip';
-      $tab[11]['name']      = _('IP');
+      $tab[11]['name']      = __('IP');
 
       $tab[11]['datatype']  = 'text';
 
       $tab[12]['table']     = $this->getTable();
       $tab[12]['field']     = 'mac';
       $tab[12]['linkfield'] = 'mac';
-      $tab[12]['name']      = _('MAC');
+      $tab[12]['name']      = __('MAC');
 
       $tab[12]['datatype']  = 'text';
 
       $tab[13]['table']     = $this->getTable();
       $tab[13]['field']     = 'item_type';
       $tab[13]['linkfield'] = 'item_type';
-      $tab[13]['name']      = _('Type');
+      $tab[13]['name']      = __('Type');
 
 //      $tab[13]['datatype']  = 'text';
 
       $tab[14]['table']     = $this->getTable();
       $tab[14]['field']     = 'date_mod';
       $tab[14]['linkfield'] = '';
-      $tab[14]['name']      = _('Last update');
+      $tab[14]['name']      = __('Last update');
 
       $tab[14]['datatype']  = 'datetime';
 
@@ -182,16 +182,16 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $ong = array();
       if ($this->fields['id'] > 0){
-         $ong[1]=_('Connections');
+         $ong[1]=__('Connections');
 
-         $ong[2]=_('Import');
+         $ong[2]=__('Import');
 
          $ptc = new PluginFusioninventoryConfig;
          if (($ptc->isActive('fusioninventory', 'remotehttpagent', '')) AND(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
-            $ong[3]=_('Job');
+            $ong[3]=__('Job');
 
          }
-         $ong[4]=_('Historical');
+         $ong[4]=__('Historical');
 
       }
       return $ong;
@@ -221,11 +221,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $this->showTabs($options);
       $this->showFormHeader($options);
 
-      $datestring = _('Last update').": ";
+      $datestring = __('Last update').": ";
       $date = Html::convDateTime($this->fields["date_mod"]);
       echo "<tr>";
       echo "<th align='center' width='450' colspan='2'>";
-      echo _('ID')." ".$this->fields["id"];
+      echo __('ID')." ".$this->fields["id"];
       echo "</th>";
 
       echo "<th align='center' colspan='2' width='50'>";
@@ -234,13 +234,13 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . _('Name') . "&nbsp;:</td>";
+      echo "<td align='center'>" . __('Name') . "&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' value='" . $this->fields["name"] . "' size='35'/>";
       echo "</td>";
 
       if (Session::isMultiEntitiesMode()) {
-         echo "<td align='center'>" . _('Entity') . "&nbsp;:</td>";
+         echo "<td align='center'>" . __('Entity') . "&nbsp;:</td>";
          echo "</td>";
          echo "<td align='center'>";
          Dropdown::show("Entity",
@@ -258,7 +258,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . _('Type') . "&nbsp;:</td>";
+      echo "<td align='center'>" . __('Type') . "&nbsp;:</td>";
       echo "<td align='center'>";
          $type_list = array();
          $type_list[] = 'Computer';
@@ -268,7 +268,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $type_list[] = 'Phone';
       Dropdown::dropdownTypes('item_type',$this->fields["item_type"],$type_list);
       echo "</td>";
-      echo "<td align='center'>" . _('Alternate username') . "&nbsp;:</td>";
+      echo "<td align='center'>" . __('Alternate username') . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='contact' value='" . $this->fields["contact"] . "' size='35'/>";
@@ -276,13 +276,13 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . _('Location') . "&nbsp;:</td>";
+      echo "<td align='center'>" . __('Location') . "&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::show("Location",
                      array('name'=>"locations_id",
                            'value'=>$this->fields["locations_id"]));
       echo "</td>";
-      echo "<td align='center'>" . _('Domain') . "&nbsp;:</td>";
+      echo "<td align='center'>" . __('Domain') . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
       Dropdown::show("Domain",
@@ -292,11 +292,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . _('Approved devices') . " :</td>";
+      echo "<td align='center'>" . __('Approved devices') . " :</td>";
       echo "<td align='center'>";
       Dropdown::showYesNo("accepted", $this->fields["accepted"]);
       echo "</td>";
-      echo "<td align='center'>" . _('Serial Number') . "&nbsp;:</td>";
+      echo "<td align='center'>" . __('Serial Number') . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='serial' value='" . $this->fields["serial"] . "' size='35'/>";
@@ -304,11 +304,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . _('Network hub') . " :</td>";
+      echo "<td align='center'>" . __('Network hub') . " :</td>";
       echo "<td align='center'>";
       echo Dropdown::getYesNo($this->fields["hub"]);
       echo "</td>";
-      echo "<td align='center'>" . _('Inventory number') . "&nbsp;:</td>";
+      echo "<td align='center'>" . __('Inventory number') . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='otherserial' value='" . $this->fields["otherserial"] . "' size='35'/>";
@@ -317,12 +317,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       if ((!empty($this->fields["ip"])) OR (!empty($this->fields["mac"]))) {
          echo "<tr class='tab_bg_1'>";
-         echo "<td align='center'>" . _('IP') . " :</td>";
+         echo "<td align='center'>" . __('IP') . " :</td>";
          echo "<td align='center'>";
          echo "<input type='text' name='ip' value='" . $this->fields["ip"] . "' size='35'/>";
          echo "</td>";
 
-         echo "<td align='center'>" . _('MAC') . "&nbsp;:</td>";
+         echo "<td align='center'>" . __('MAC') . "&nbsp;:</td>";
          echo "</td>";
          echo "<td align='center'>";
          echo "<input type='text' name='mac' value='" . $this->fields["mac"] . "' size='35'/>";
@@ -331,7 +331,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . _('Comments') . " : </td>";
+      echo "<td align='center'>" . __('Comments') . " : </td>";
       echo "</td>";
       echo "<td align='middle' colspan='3'>";
       echo "<textarea  cols='80' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
@@ -364,7 +364,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<table  class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th align='center'>";
-      echo _('Import unknown device into asset');
+      echo __('Import unknown device into asset');
 
       echo "</th>";
       echo "</tr>";
@@ -373,7 +373,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $this->getFromDB($id);
       if ($this->fields["item_type"] != '0') {
          echo "<input type='hidden' name='id' value=$id>";
-         echo "<input type='submit' name='import' value=\""._('Import')."\" class='submit'>";
+         echo "<input type='submit' name='import' value=\"".__('Import')."\" class='submit'>";
       }
       echo "</td>";
       echo "</table>";

@@ -86,16 +86,16 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th>"._('Unique id')."</th>";
-      echo "<th>"._('Agent')."</th>";
-      echo "<th>"._('Status')."</th>";
-      echo "<th>"._('Starting date')."</th>";
-      echo "<th>"._('Ending date')."</th>";
-      echo "<th>"._('Total duration')."</th>";
-      echo "<th>"._('Number per second')."</th>";
-      echo "<th>"._('Threads number')."</th>";
-      echo "<th>"._('To inventory')."</th>";
-      echo "<th>"._('Error(s)')."</th>";
+      echo "<th>".__('Unique id')."</th>";
+      echo "<th>".__('Agent')."</th>";
+      echo "<th>".__('Status')."</th>";
+      echo "<th>".__('Starting date')."</th>";
+      echo "<th>".__('Ending date')."</th>";
+      echo "<th>".__('Total duration')."</th>";
+      echo "<th>".__('Number per second')."</th>";
+      echo "<th>".__('Threads number')."</th>";
+      echo "<th>".__('To inventory')."</th>";
+      echo "<th>".__('Error(s)')."</th>";
       echo "</tr>";
 
       $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.*
@@ -145,18 +145,18 @@ class PluginFusinvsnmpStateInventory extends CommonDBTM {
          switch ($data['state']) {
 
             case 0:
-               echo _('Prepared');
+               echo __('Prepared');
 
                break;
 
             case 1:
             case 2:
-               echo _('Started');
+               echo __('Started');
 
                break;
 
             case 3:
-               echo _('Finished tasks');
+               echo __('Finished tasks');
 
                break;
 

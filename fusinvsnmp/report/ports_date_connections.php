@@ -47,7 +47,7 @@ $DBCONNECTION_REQUIRED=0;
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
-Html::header(_('FusionInventory'),$_SERVER['PHP_SELF'],"utils","report");
+Html::header(__('FusionInventory'),$_SERVER['PHP_SELF'],"utils","report");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp","reportnetworkequipment","r");
 
@@ -86,7 +86,7 @@ function displaySearchForm() {
    echo "<table class='tab_cadre' cellpadding='5'>";
    echo "<tr class='tab_bg_1' align='center'>";
    echo "<td>";
-   echo _('Initial contract period')." :";
+   echo __('Initial contract period')." :";
 
    $values=array();
    $values["sup"]=">";
@@ -130,7 +130,7 @@ function displaySearchForm() {
    Html::showDateFormItem("dropdown_calendar",(isset($_GET["dropdown_calendar"])?$_GET["dropdown_calendar"]:0));
    echo "</td>";
 
-   echo "<td>"._('Location')."</td>";
+   echo "<td>".__('Location')."</td>";
    echo "<td>";
    Dropdown::show("Location",
                   array('name' => "location",
@@ -139,7 +139,7 @@ function displaySearchForm() {
 
    // Display Reset search
    echo "<td>";
-   echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/report/ports_date_connections.php?reset_search=reset_search' ><img title=\""._('Blank')."\" alt=\""._('Blank')."\" src='".$CFG_GLPI["root_doc"]."/pics/reset.png' class='calendrier'></a>";
+   echo "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/report/ports_date_connections.php?reset_search=reset_search' ><img title=\"".__('Blank')."\" alt=\"".__('Blank')."\" src='".$CFG_GLPI["root_doc"]."/pics/reset.png' class='calendrier'></a>";
    echo "</td>";
 
    echo "<td>";

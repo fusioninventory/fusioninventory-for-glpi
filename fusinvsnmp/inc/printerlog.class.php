@@ -50,7 +50,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = _('History meter printer');
+      $tab['common'] = __('History meter printer');
 
 
       $tab[1]['table'] = $this->getTable();
@@ -60,7 +60,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       $tab[2]['table'] = "glpi_printers";
       $tab[2]['field'] = 'name';
       $tab[2]['linkfield'] = 'printers_id';
-      $tab[2]['name'] = _('Name');
+      $tab[2]['name'] = __('Name');
 
       $tab[2]['datatype'] = 'itemlink';
       $tab[2]['itemlink_type']  = 'Printer';
@@ -70,7 +70,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 //      $tab[1]['table'] = "glpi_printers";
 //      $tab[1]['field'] = 'name';
 //      $tab[1]['linkfield'] = 'printers_id';
-//      $tab[1]['name'] = _('Name');
+//      $tab[1]['name'] = __('Name');
 
 //      $tab[1]['datatype'] = 'itemlink';
 //      $tab[1]['itemlink_type']  = 'Printer';
@@ -79,7 +79,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       $tab[24]['table'] = 'glpi_locations';
       $tab[24]['field'] = 'name';
       $tab[24]['linkfield'] = 'locations_id';
-      $tab[24]['name'] = _('Location');
+      $tab[24]['name'] = __('Location');
 
       $tab[24]['datatype'] = 'itemlink';
       $tab[24]['itemlink_type'] = 'Location';
@@ -87,7 +87,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       $tab[19]['table'] = 'glpi_printertypes';
       $tab[19]['field'] = 'name';
       $tab[19]['linkfield'] = 'printertypes_id';
-      $tab[19]['name'] = _('Type');
+      $tab[19]['name'] = __('Type');
 
       $tab[19]['datatype'] = 'itemlink';
       $tab[19]['itemlink_type'] = 'PrinterType';
@@ -95,123 +95,123 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 //      $tab[2]['table'] = 'glpi_printermodels';
 //      $tab[2]['field'] = 'name';
 //      $tab[2]['linkfield'] = 'printermodels_id';
-//      $tab[2]['name'] = _('Model');
+//      $tab[2]['name'] = __('Model');
 
 //      $tab[2]['datatype']='itemptype';
 //
       $tab[18]['table'] = 'glpi_states';
       $tab[18]['field'] = 'name';
       $tab[18]['linkfield'] = 'states_id';
-      $tab[18]['name'] = _('Status');
+      $tab[18]['name'] = __('Status');
 
       $tab[18]['datatype']='itemptype';
 
       $tab[20]['table'] = 'glpi_printers';
       $tab[20]['field'] = 'serial';
       $tab[20]['linkfield'] = 'printers_id';
-      $tab[20]['name'] = _('Serial Number');
+      $tab[20]['name'] = __('Serial Number');
 
 
       $tab[23]['table'] = 'glpi_printers';
       $tab[23]['field'] = 'otherserial';
       $tab[23]['linkfield'] = 'printers_id';
-      $tab[23]['name'] = _('Inventory number');
+      $tab[23]['name'] = __('Inventory number');
 
 
       $tab[21]['table'] = 'glpi_users';
       $tab[21]['field'] = 'name';
       $tab[21]['linkfield'] = 'users_id';
-      $tab[21]['name'] = _('User');
+      $tab[21]['name'] = __('User');
 
 
       $tab[3]['table'] = 'glpi_manufacturers';
       $tab[3]['field'] = 'name';
       $tab[3]['linkfield'] = 'manufacturers_id';
-      $tab[3]['name'] = _('Manufacturer');
+      $tab[3]['name'] = __('Manufacturer');
 
 
       $tab[5]['table'] = 'glpi_networkports';
       $tab[5]['field'] = 'ip';
       $tab[5]['linkfield'] = 'printers_id';
-      $tab[5]['name'] = _('IP');
+      $tab[5]['name'] = __('IP');
 
 
 //      $tab[4]['table'] = 'glpi_infocoms';
 //      $tab[4]['field'] = 'budget';
 //      $tab[4]['linkfield'] = '';
-//      $tab[4]['name'] = _('Budget');
+//      $tab[4]['name'] = __('Budget');
 
 
       $tab[6]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[6]['field'] = 'pages_total';
       $tab[6]['linkfield'] = 'id';
-      $tab[6]['name'] = _('Total number of printed pages');
+      $tab[6]['name'] = __('Total number of printed pages');
 
 
       $tab[7]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[7]['field'] = 'pages_n_b';
       $tab[7]['linkfield'] = 'id';
-      $tab[7]['name'] = _('Number of printed black and white pages');
+      $tab[7]['name'] = __('Number of printed black and white pages');
 
 
       $tab[8]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[8]['field'] = 'pages_color';
       $tab[8]['linkfield'] = 'id';
-      $tab[8]['name'] = _('Number of printed color pages');
+      $tab[8]['name'] = __('Number of printed color pages');
 
 
       $tab[9]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[9]['field'] = 'pages_recto_verso';
       $tab[9]['linkfield'] = 'id';
-      $tab[9]['name'] = _('Number of pages printed duplex');
+      $tab[9]['name'] = __('Number of pages printed duplex');
 
 
       $tab[10]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[10]['field'] = 'scanned';
       $tab[10]['linkfield'] = 'id';
-      $tab[10]['name'] = _('Number of scanned pages');
+      $tab[10]['name'] = __('Number of scanned pages');
 
 
       $tab[11]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[11]['field'] = 'pages_total_print';
       $tab[11]['linkfield'] = 'id';
-      $tab[11]['name'] = _('Total number of printed pages (print)');
+      $tab[11]['name'] = __('Total number of printed pages (print)');
 
 
       $tab[12]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[12]['field'] = 'pages_n_b_print';
       $tab[12]['linkfield'] = 'id';
-      $tab[12]['name'] = _('Number of printed black and white pages (print)');
+      $tab[12]['name'] = __('Number of printed black and white pages (print)');
 
 
       $tab[13]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[13]['field'] = 'pages_color_print';
       $tab[13]['linkfield'] = 'id';
-      $tab[13]['name'] = _('Number of printed color pages (print)');
+      $tab[13]['name'] = __('Number of printed color pages (print)');
 
 
       $tab[14]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[14]['field'] = 'pages_total_copy';
       $tab[14]['linkfield'] = 'id';
-      $tab[14]['name'] = _('Total number of printed pages (copy)');
+      $tab[14]['name'] = __('Total number of printed pages (copy)');
 
 
       $tab[15]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[15]['field'] = 'pages_n_b_copy';
       $tab[15]['linkfield'] = 'id';
-      $tab[15]['name'] = _('Number of printed black and white pages (copy)');
+      $tab[15]['name'] = __('Number of printed black and white pages (copy)');
 
 
       $tab[16]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[16]['field'] = 'pages_color_copy';
       $tab[16]['linkfield'] = 'id';
-      $tab[16]['name'] = _('Number of printed color pages (copy)');
+      $tab[16]['name'] = __('Number of printed color pages (copy)');
 
 
       $tab[17]['table'] = 'glpi_plugin_fusinvsnmp_printerlogs';
       $tab[17]['field'] = 'pages_total_fax';
       $tab[17]['linkfield'] = 'id';
-      $tab[17]['name'] = _('Total number of printed pages (fax)');
+      $tab[17]['name'] = __('Total number of printed pages (fax)');
 
 
       return $tab;
@@ -299,11 +299,11 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
          $this->showFormHeader($options);
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>"._('Total printed pages')." : </td>";
+         echo "<td>".__('Total printed pages')." : </td>";
          echo "<td>".$stats["num_pages"]."</td></tr>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>"._('Pages / day')." : </td>";
+         echo "<td>".__('Pages / day')." : </td>";
          echo "<td>".$stats["pages_per_day"]."</td></tr>";
 
          echo "</table></div>";
@@ -335,12 +335,12 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
                  id='printer_history_form'  action=\"".Toolbox::getItemTypeFormURL(__CLASS__)."\">";
 
       echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='3'>";
-      echo _('History meter printer')." :</th></tr>";
+      echo __('History meter printer')." :</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<th></th>";
-      echo "<th>"._('Date')." :</th>";
-      echo "<th>"._('Meter')." :</th></tr>";
+      echo "<th>".__('Date')." :</th>";
+      echo "<th>".__('Meter')." :</th></tr>";
 
       for ($i=0 ; $i<$limit ; $i++) {
          echo "<tr class='tab_bg_1'>";
@@ -361,10 +361,10 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "<tr class='tab_bg_1'><td colspan='3'>";
       echo "<div align='center'><a onclick= \"if (markAllRows('printer_history_form'))
                  return false;\"
-                 href='".$_SERVER['PHP_SELF']."?select=all'>"._('Check All')."</a>";
+                 href='".$_SERVER['PHP_SELF']."?select=all'>".__('Check All')."</a>";
       echo " - <a onclick= \"if ( unMarkAllRows('printer_history_form') ) return false;\"
-                  href='".$_SERVER['PHP_SELF']."?select=none'>"._('Uncheck All')."</a> ";
-      echo "<input type='submit' name='delete' value=\""._('Delete')."\" class='submit' >
+                  href='".$_SERVER['PHP_SELF']."?select=none'>".__('Uncheck All')."</a> ";
+      echo "<input type='submit' name='delete' value=\"".__('Delete')."\" class='submit' >
             </div></td></tr>";
       echo "</table>";
       Html::closeForm();
@@ -476,25 +476,25 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='4'>";
-      echo _('Printed page counter');
+      echo __('Printed page counter');
 
       echo "</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td class='left'>"._('Start date')."&nbsp;:</td>";
+      echo "<td class='left'>".__('Start date')."&nbsp;:</td>";
       echo "<td class='left'>";
       Html::showDateFormItem("graph_begin", $begin);
       echo "</td>";
-      echo "<td class='left'>"._('Time unit')."&nbsp;:</td>";
+      echo "<td class='left'>".__('Time unit')."&nbsp;:</td>";
       echo "<td class='left'>";
-      $elementsTime=array('day'=>_('day'),
+      $elementsTime=array('day'=>__('day'),
 
-                          'week'=>_('week'),
+                          'week'=>__('week'),
 
-                          'month'=>_('month'),
+                          'month'=>__('month'),
 
-                          'year'=>_('year'));
+                          'year'=>__('year'));
 
       Dropdown::showFromArray('graph_timeUnit', $elementsTime,
                               array('value'=>$timeUnit));
@@ -502,15 +502,15 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td class='left'>"._('End date')."&nbsp;:</td>";
+      echo "<td class='left'>".__('End date')."&nbsp;:</td>";
       echo "<td class='left'>";
       Html::showDateFormItem("graph_end", $end);
       echo "</td>";
-      echo "<td class='left'>"._('Display')."&nbsp;:</td>";
+      echo "<td class='left'>".__('Display')."&nbsp;:</td>";
       echo "<td class='left'>";
-      $elements=array('total'=>_('Total counter'),
+      $elements=array('total'=>__('Total counter'),
 
-                    'day'=>_('pages per day'));
+                    'day'=>__('pages per day'));
 
       Dropdown::showFromArray('graph_type', $elements,
                               array('value'=>$graphType));
@@ -520,20 +520,20 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       echo "<tr class='tab_bg_2'>";
       echo "<td class='center' colspan='4'>
                <input type='submit' class='submit' name='graph_plugin_fusioninventory_printer_period'
-                      value='" . _('Update') . "'/>";
+                      value='" . __('Update') . "'/>";
       echo "</td>";
       echo "</tr>\n";
 
       echo "<tr>";
-      echo "<th colspan='4'>"._('Printers to compare')."</th>";
+      echo "<th colspan='4'>".__('Printers to compare')."</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td class='left' rowspan='3'>"._('Printers')."&nbsp;:</td>";
+      echo "<td class='left' rowspan='3'>".__('Printers')."&nbsp;:</td>";
       echo "<td class='left' rowspan='3'>";
       echo $printersList;
       echo "</td>";
-      echo "<td class='left'>"._('Add a printer')."&nbsp;:</td>";
+      echo "<td class='left'>".__('Add a printer')."&nbsp;:</td>";
       echo "<td class='left'>";
       $printersused = array();
       foreach($printersView as $printer_id=>$name) {
@@ -542,18 +542,18 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
       Dropdown::show('Printer', array('name'    =>'graph_printerCompAdd',
                                       'entiry'  => $_SESSION['glpiactive_entity'],
                                       'used'    => $printersused));
-      echo "&nbsp;<input type='submit' value=\""._('Add')."\" class='submit' name='graph_plugin_fusioninventory_printer_add'>";
+      echo "&nbsp;<input type='submit' value=\"".__('Add')."\" class='submit' name='graph_plugin_fusioninventory_printer_add'>";
       echo "</td>";
       echo "</tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td class='left'>"._('Remove a printer')."&nbsp;:</td>";
+      echo "<td class='left'>".__('Remove a printer')."&nbsp;:</td>";
       echo "<td class='left'>";
       $printersTmp = $printersView;
       $printersTmp[0] = "-----";
       asort($printersTmp);
       Dropdown::showFromArray('graph_printerCompRemove', $printersTmp);
-      echo "&nbsp;<input type='submit' value=\""._('Delete')."\" class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
+      echo "&nbsp;<input type='submit' value=\"".__('Delete')."\" class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
       echo "</td>";
       echo "</tr>\n";
 
@@ -696,7 +696,7 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='center'>";
             if ($continue == '0') {
-               echo _('Too datas to display');
+               echo __('Too datas to display');
 
             }
             echo "</td>";

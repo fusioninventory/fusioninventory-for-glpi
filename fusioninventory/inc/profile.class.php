@@ -299,8 +299,8 @@ class PluginFusioninventoryProfile extends CommonDBTM {
             $a_profil = call_user_func(array($class, "profiles"));
 
             echo "<tr>";
-            echo "<th colspan='4'>"._('Rights management')." ";
-            echo _('FusionInventory')." :</th>";
+            echo "<th colspan='4'>".__('Rights management')." ";
+            echo __('FusionInventory')." :</th>";
             echo "</tr>";
 
             $i = 0;
@@ -332,7 +332,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       echo "<tr>";
       echo "<th colspan='4'>";
       echo "<input type='hidden' name='profile_id' value='".$items_id."'/>";
-      echo "<input type='submit' value='"._('Post')."' class='submit' >";
+      echo "<input type='submit' value='".__('Post')."' class='submit' >";
       echo "</td>";
       echo "</tr>";
 

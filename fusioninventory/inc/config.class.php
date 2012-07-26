@@ -113,7 +113,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     **/
    static function getTypeName($nb=0) {
 
-      return _('General configuration');
+      return __('General configuration');
 
    }
 
@@ -192,9 +192,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       if ($item->getType()==__CLASS__) {
          $array_ret = array();
-         $array_ret[0] = _('General configuration');
+         $array_ret[0] = __('General configuration');
 
-         $array_ret[1] = _('Computer Inventory');
+         $array_ret[1] = __('Computer Inventory');
 
          return $array_ret;
       }
@@ -279,11 +279,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._('SSL-only for agent')."&nbsp;:</td>";
+      echo "<td>".__('SSL-only for agent')."&nbsp;:</td>";
       echo "<td width='20%'>";
       Dropdown::showYesNo("ssl_only", $this->isActive($plugin_id, 'ssl_only', ''));
       echo "</td>";
-      echo "<td>"._('Inventory frequency (in hours)')."&nbsp;:</td>";
+      echo "<td>".__('Inventory frequency (in hours)')."&nbsp;:</td>";
       echo "<td width='20%'>";
       Dropdown::showInteger("inventory_frequence",
                             $this->getValue($plugin_id, 'inventory_frequence', ''),1,240);
@@ -291,7 +291,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._('Delete tasks after')." :</td>";
+      echo "<td>".__('Delete tasks after')." :</td>";
       echo "<td>";
       Dropdown::showInteger("delete_task",
                             $this->getValue($plugin_id, 'delete_task', ''),1,240, 1,
@@ -300,14 +300,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "</td>";
 
-      echo "<td>"._('Agent port')." :</td>";
+      echo "<td>".__('Agent port')." :</td>";
       echo "<td>";
       echo "<input type='text' name='agent_port' value='".$this->getValue($plugin_id, 'agent_port', '')."'/>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._('Extra-debug')." :</td>";
+      echo "<td>".__('Extra-debug')." :</td>";
       echo "<td>";
       Dropdown::showYesNo("extradebug", $this->isActive($plugin_id, 'extradebug', ''));
       echo "</td>";
@@ -341,7 +341,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $pfsnmpConfig->showFormHeader($options);
 
       echo "<tr>";
-      echo "<th colspan='4'>"._('Import options');
+      echo "<th colspan='4'>".__('Import options');
 
       echo "</th>";
       echo "</tr>";
@@ -352,31 +352,31 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       $array = array();
-      $array[0] = _('No import');
+      $array[0] = __('No import');
 
-      $array[1] = _('Global import');
+      $array[1] = __('Global import');
 
-      $array[2] = _('Unique import');
+      $array[2] = __('Unique import');
 
-      $array[3] = _('Unique import on serial number');
+      $array[3] = __('Unique import on serial number');
 
       Dropdown::showFromArray("import_monitor", $array,
                               array('value' =>
                                  $pfConfig->getValue($plugins_id, 'import_monitor', 'inventory')));
       echo "&nbsp;";
-      $text = "* "._('No import')."&nbsp;:&nbsp;".
-      _('This option will not import this item')."<br/><br/>".
-      "* "._('Global import')."&nbsp;:&nbsp;".
-      _('This option will merge items with same name to reduce number of items if this management isn\'t important')."<br/><br/>".
-      "* "._('Unique import')."&nbsp;:&nbsp;".
-      _('This option will create one item for each item found')."<br/><br/>".
-      "* "._('Unique import on serial number')."&nbsp;:&nbsp;".
-      _('This option will create one item for each item have serial number');
+      $text = "* ".__('No import')."&nbsp;:&nbsp;".
+      __('This option will not import this item')."<br/><br/>".
+      "* ".__('Global import')."&nbsp;:&nbsp;".
+      __('This option will merge items with same name to reduce number of items if this management isn\'t important')."<br/><br/>".
+      "* ".__('Unique import')."&nbsp;:&nbsp;".
+      __('This option will create one item for each item found')."<br/><br/>".
+      "* ".__('Unique import on serial number')."&nbsp;:&nbsp;".
+      __('This option will create one item for each item have serial number');
 
       Html::showToolTip($text);
       echo "</td>";
       echo "<th colspan='2'>";
-      echo _('Components');
+      echo __('Components');
 
       echo "</th>";
       echo "</tr>";
@@ -387,13 +387,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       $array = array();
-      $array[0] = _('No import');
+      $array[0] = __('No import');
 
-      $array[1] = _('Global import');
+      $array[1] = __('Global import');
 
-      $array[2] = _('Unique import');
+      $array[2] = __('Unique import');
 
-      $array[3] = _('Unique import on serial number');
+      $array[3] = __('Unique import on serial number');
 
       Dropdown::showFromArray("import_printer", $array,
                               array('value' =>
@@ -416,13 +416,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       $array = array();
-      $array[0] = _('No import');
+      $array[0] = __('No import');
 
-      $array[1] = _('Global import');
+      $array[1] = __('Global import');
 
-      $array[2] = _('Unique import');
+      $array[2] = __('Unique import');
 
-      $array[3] = _('Unique import on serial number');
+      $array[3] = __('Unique import on serial number');
 
       Dropdown::showFromArray("import_peripheral", $array,
                               array('value' =>
@@ -475,14 +475,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo _('Antivirus')."&nbsp;:";
+      echo __('Antivirus')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("import_antivirus",
                           $pfConfig->getValue($plugins_id, 'import_antivirus', 'inventory'));
       echo "</td>";
       echo "<td>";
-      echo _('Virtual network card')."&nbsp;:";
+      echo __('Virtual network card')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_networkcardvirtual",
@@ -538,13 +538,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showFromArray("location",
                               array("0"=>"------",
-                                    "1"=>_('Tag')),
+                                    "1"=>__('Tag')),
 
                               array('value'=>$pfConfig->getValue($plugins_id, 'location', 'inventory')));
 
       echo "</td>";
       echo "<td>";
-      echo _('Network drives')."&nbsp;:";
+      echo __('Network drives')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_networkdrive",
@@ -559,7 +559,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showFromArray("group",
                               array("0"=>"------",
-                                    "1"=>_('Tag')),
+                                    "1"=>__('Tag')),
 
                               array('value'=>$pfConfig->getValue($plugins_id, 'group', 'inventory')));
       echo "</td>";
@@ -573,7 +573,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._('Default status')."&nbsp;:</td>";
+      echo "<td>".__('Default status')."&nbsp;:</td>";
       echo "<td>";
       Dropdown::show('State',
                      array('name'   => 'states_id_default',
@@ -584,13 +584,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
       echo "<tr>";
-      echo "<th colspan='4'>"._('Automatic computers transfer');
+      echo "<th colspan='4'>".__('Automatic computers transfer');
 
       echo "</th>";
       echo "</tr>";
 
       echo "<td colspan='2'>";
-      echo _('Model for automatic computers transfer in an other entity')."&nbsp:";
+      echo __('Model for automatic computers transfer in an other entity')."&nbsp:";
       echo "</td>";
       echo "<td colspan='2'>";
       Dropdown::show("Transfer",

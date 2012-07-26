@@ -48,7 +48,7 @@ class PluginFusinvdeployAction_Mkdir extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('Make a directory');
+      return __('Make a directory');
 
    }
 

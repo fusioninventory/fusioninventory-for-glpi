@@ -54,7 +54,7 @@ if ((isset($_GET['action'])
 //Fusioninventory plugin pages
 } else {
    include (GLPI_ROOT."/inc/includes.php");
-   Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"], "plugins",
+   Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"], "plugins",
                 "fusioninventory");
 
    Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/wizard.php");

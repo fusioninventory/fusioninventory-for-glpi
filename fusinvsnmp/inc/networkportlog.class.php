@@ -85,7 +85,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='3'>";
-      echo _('List of fields to history')." :";
+      echo __('List of fields to history')." :";
       echo "</td>";
       echo "</tr>";
 
@@ -142,13 +142,13 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       if (count($listName)) {
          if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","w")) {
-            echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_add' value='" . _('Add') . " >>'>";
+            echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_add' value='" . __('Add') . " >>'>";
          }
       }
       echo "<br /><br />";
       if (!empty($options)) {
          if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","w")) {
-            echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_delete' value='<< " . _('Delete') . "'>";
+            echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_delete' value='<< " . __('Delete') . "'>";
          }
       }
       echo "</td><td class='left'>";
@@ -167,14 +167,14 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='3'>";
-      echo _('Clean history')." :";
+      echo __('Clean history')." :";
       echo "</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='3' class='center'>";
       if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","w")) {
-         echo "<input type='submit' class=\"submit\" name='Clean_history' value='"._('Clean')."' >";
+         echo "<input type='submit' class=\"submit\" name='Clean_history' value='".__('Clean')."' >";
       }
       echo "</td>";
       echo "</tr>";
@@ -396,13 +396,13 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       $text .= "</tr>";
 
       $text .= "<tr class='tab_bg_1'>";
-      $text .= "<th>"._('Connection')."</th>";
-      $text .= "<th>"._('Item')."</th>";
-      $text .= "<th>"._('Field')."</th>";
+      $text .= "<th>".__('Connection')."</th>";
+      $text .= "<th>".__('Item')."</th>";
+      $text .= "<th>".__('Field')."</th>";
       $text .= "<th></th>";
       $text .= "<th></th>";
       $text .= "<th></th>";
-      $text .= "<th>"._('Date')."</th>";
+      $text .= "<th>".__('Date')."</th>";
       $text .= "</tr>";
 
       $result=$DB->query($query);
@@ -430,12 +430,12 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                      if (rtrim($np->fields["name"]) != "")
                         $link .= $np->fields["name"];
                      else
-                        $link .= _('Without name');
+                        $link .= __('Without name');
 
                      $link .= "</a>";
-                     $text .= "<td align='center'>".$link." "._('on')." ".$link1."</td>";
+                     $text .= "<td align='center'>".$link." ".__('on')." ".$link1."</td>";
                   } else {
-                     $text .= "<td align='center'><font color='#ff0000'>"._('Deleted')."</font></td>";
+                     $text .= "<td align='center'><font color='#ff0000'>".__('Deleted')."</font></td>";
                   }
 
                } else if ($ID_port == $data["networkports_id_destination"]) {
@@ -448,12 +448,12 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
                      if (rtrim($np->fields["name"]) != "")
                         $link .= $np->fields["name"];
                      else
-                        $link .= _('Without name');
+                        $link .= __('Without name');
 
                      $link .= "</a>";
-                     $text .= "<td align='center'>".$link." "._('on')." ".$link1."</td>";
+                     $text .= "<td align='center'>".$link." ".__('on')." ".$link1."</td>";
                   } else {
-                     $text .= "<td align='center'><font color='#ff0000'>"._('Deleted')."</font></td>";
+                     $text .= "<td align='center'><font color='#ff0000'>".__('Deleted')."</font></td>";
                   }
                }
                $text .= "<td align='center' colspan='4'></td>";

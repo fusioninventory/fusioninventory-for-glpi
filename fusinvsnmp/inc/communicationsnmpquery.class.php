@@ -194,7 +194,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
 
             default :
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '._('Unattended element in').' CONTENT : '.$child->getName();
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.__('Unattended element in').' CONTENT : '.$child->getName();
                $this->addtaskjoblog();
          }
       }
@@ -245,7 +245,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             break;
 
          default:
-            $errors.=_('Unattended element in').' TYPE : '
+            $errors.=__('Unattended element in').' TYPE : '
                               .$p_xml->INFO->TYPE."\n";
       }
       if (!isset($p_xml->ERROR)) {
@@ -274,7 +274,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                      }
 
                   default:
-                     $errors.=_('Unattended element in').' DEVICE : '
+                     $errors.=__('Unattended element in').' DEVICE : '
                               .$child->getName()."\n";
                }
             }
@@ -421,7 +421,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
 
             default:
-               $errors.=_('Unattended element in').' INFO : '.$child->getName()."\n";
+               $errors.=__('Unattended element in').' INFO : '.$child->getName()."\n";
 
          }
       }
@@ -522,7 +522,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
 
             default:
-               $errors.=_('Unattended element in').' INFO : '.$child->getName()."\n";
+               $errors.=__('Unattended element in').' INFO : '.$child->getName()."\n";
 
          }
       }
@@ -564,7 +564,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
 
             default:
-               $errors.=_('Unattended element in').' IPs : '.$child->getName()."\n";
+               $errors.=__('Unattended element in').' IPs : '.$child->getName()."\n";
 
          }
       }
@@ -598,7 +598,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
 
             default:
-               $errors.=_('Unattended element in').' PORTS : '.$child->getName()."\n";
+               $errors.=__('Unattended element in').' PORTS : '.$child->getName()."\n";
 
          }
       }
@@ -737,7 +737,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   break;
 
                default:
-                  $errors.=_('Unattended element in').' PORT : '.$name."\n";
+                  $errors.=__('Unattended element in').' PORT : '.$name."\n";
             }
          }
          if ($trunk == "0") {
@@ -833,7 +833,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   break;
 
                default:
-                  $errors.=_('Unattended element in').' PORT : '.$name."\n";
+                  $errors.=__('Unattended element in').' PORT : '.$name."\n";
             }
          }
          // Update
@@ -888,7 +888,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                $pfPrinterCartridge->add($input);
             }
          } else {
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '._('Unattended element in').' CARTRIDGES : '.$name;
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.__('Unattended element in').' CARTRIDGES : '.$name;
             $this->addtaskjoblog();
          }
       }
@@ -974,7 +974,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
 
             default:
-               $errors.=_('Unattended element in').' PAGECOUNTERS : '.$name."\n";
+               $errors.=__('Unattended element in').' PAGECOUNTERS : '.$name."\n";
 
          }
       }
@@ -1002,7 +1002,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          if ($cdp==1) {
             $pfNetworkPort->setCDP();
          } else {
-            $errors.=_('Unattended element in').' CONNECTIONS : CDP='.$cdp."\n";
+            $errors.=__('Unattended element in').' CONNECTIONS : CDP='.$cdp."\n";
          }
       }
       $count = 0;
@@ -1042,7 +1042,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
 
             default:
-               $errors.=_('Unattended element in').' CONNECTIONS : '
+               $errors.=__('Unattended element in').' CONNECTIONS : '
                         .$child->getName()."\n";
          }
       }
@@ -1082,7 +1082,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   break;
 
                default:
-                  $errors.=_('Unattended element in').' CONNECTION (CDP='.$p_cdp.') : '
+                  $errors.=__('Unattended element in').' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
 
             }
@@ -1107,7 +1107,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   break;
 
                default:
-                  $errors.=_('Unattended element in').' CONNECTION (CDP='.$p_cdp.') : '
+                  $errors.=__('Unattended element in').' CONNECTION (CDP='.$p_cdp.') : '
                            .$child->getName()."\n";
 
             }
@@ -1136,7 +1136,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
 
             default :
-               $errors.=_('Unattended element in').' VLANS : '.$child->getName()."\n";
+               $errors.=__('Unattended element in').' VLANS : '.$child->getName()."\n";
 
          }
       }
@@ -1168,7 +1168,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
 
             default:
-               $errors.=_('Unattended element in').' VLAN : '.$child->getName()."\n";
+               $errors.=__('Unattended element in').' VLAN : '.$child->getName()."\n";
 
          }
       }

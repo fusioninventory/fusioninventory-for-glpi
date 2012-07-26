@@ -135,16 +135,16 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th>"._('Unique id')."</th>";
-      echo "<th>"._('Agent')."</th>";
-      echo "<th>"._('Status')."</th>";
-      echo "<th>"._('Starting date')."</th>";
-      echo "<th>"._('Ending date')."</th>";
-      echo "<th>"._('Total duration')."</th>";
-      echo "<th>"._('Total discovery devices')."</th>";
-      echo "<th>"._('Devices not imported')."</th>";
-      echo "<th>"._('Devices linked')."</th>";
-      echo "<th>"._('Devices imported')."</th>";
+      echo "<th>".__('Unique id')."</th>";
+      echo "<th>".__('Agent')."</th>";
+      echo "<th>".__('Status')."</th>";
+      echo "<th>".__('Starting date')."</th>";
+      echo "<th>".__('Ending date')."</th>";
+      echo "<th>".__('Total duration')."</th>";
+      echo "<th>".__('Total discovery devices')."</th>";
+      echo "<th>".__('Devices not imported')."</th>";
+      echo "<th>".__('Devices linked')."</th>";
+      echo "<th>".__('Devices imported')."</th>";
       echo "</tr>";
 
       $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.*
@@ -201,18 +201,18 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
          switch ($data['state']) {
 
             case 0:
-               echo _('Prepared');
+               echo __('Prepared');
 
                break;
 
             case 1:
             case 2:
-               echo _('Started');
+               echo __('Started');
 
                break;
 
             case 3:
-               echo _('Finished tasks');
+               echo __('Finished tasks');
 
                break;
 

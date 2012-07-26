@@ -48,14 +48,14 @@ class PluginFusinvdeployInstall extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('Installation');
+      return __('Installation');
 
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       switch(get_class($item)) {
-         case 'PluginFusinvdeployPackage': return _('Installation');
+         case 'PluginFusinvdeployPackage': return __('Installation');
 
       }
    }
@@ -76,7 +76,7 @@ class PluginFusinvdeployInstall extends CommonDBTM {
       if (!PluginFusinvdeployPackage::canEdit($id)) {
          $disabled = "true";
          PluginFusinvdeployPackage::showEditDeniedMessage($id,
-               _('One or more active tasks (#task#) use this package. Edition denied.'));
+               __('One or more active tasks (#task#) use this package. Edition denied.'));
 
       }
 

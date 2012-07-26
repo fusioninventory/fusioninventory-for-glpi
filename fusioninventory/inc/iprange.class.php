@@ -53,18 +53,18 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
          if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 1)) {
             // Permanent task discovery
-            return _('Communication mode');
+            return __('Communication mode');
 
          } else if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 2)) {
             // Permanent task inventory
-            return _('See all informations of task');
+            return __('See all informations of task');
 
          } else {
-            return _('IP Ranges');
+            return __('IP Ranges');
 
          }
       } else {
-         return _('IP Ranges');
+         return __('IP Ranges');
 
       }
    }
@@ -91,32 +91,32 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = _('IP range configuration');
+      $tab['common'] = __('IP range configuration');
 
 
       $tab[1]['table'] = $this->getTable();
       $tab[1]['field'] = 'name';
       $tab[1]['linkfield'] = 'name';
-      $tab[1]['name'] = _('Name');
+      $tab[1]['name'] = __('Name');
 
       $tab[1]['datatype'] = 'itemlink';
 
       $tab[2]['table'] = 'glpi_entities';
       $tab[2]['field'] = 'completename';
       $tab[2]['linkfield'] = 'entities_id';
-      $tab[2]['name'] = _('Entity');
+      $tab[2]['name'] = __('Entity');
 
 
       $tab[3]['table'] = $this->getTable();
       $tab[3]['field'] = 'ip_start';
       $tab[3]['linkfield'] = 'ip_start';
-      $tab[3]['name'] = _('Start of IP range');
+      $tab[3]['name'] = __('Start of IP range');
 
 
        $tab[4]['table'] = $this->getTable();
       $tab[4]['field'] = 'ip_end';
       $tab[4]['linkfield'] = 'ip_end';
-      $tab[4]['name'] = _('End of IP range');
+      $tab[4]['name'] = __('End of IP range');
 
 
       return $tab;
@@ -128,7 +128,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       $ong = array();
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
-         $ong[1] = _('Tasks');
+         $ong[1] = __('Tasks');
 
       }
       return $ong;
@@ -148,14 +148,14 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . _('Name') . "</td>";
+      echo "<td align='center' colspan='2'>" . __('Name') . "</td>";
       echo "<td align='center' colspan='2'>";
       echo "<input type='text' name='name' value='".$this->fields["name"]."'/>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . _('Start of IP range') . "</td>";
+      echo "<td align='center' colspan='2'>" . __('Start of IP range') . "</td>";
       echo "<td align='center' colspan='2'>";
       if (empty($this->fields["ip_start"]))
          $this->fields["ip_start"] = "...";
@@ -175,7 +175,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . _('End of IP range') . "</td>";
+      echo "<td align='center' colspan='2'>" . __('End of IP range') . "</td>";
       echo "<td align='center' colspan='2'>";
       unset($ipexploded);
       if (empty($this->fields["ip_end"]))
@@ -210,7 +210,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       if (Session::isMultiEntitiesMode()) {
-         echo "<td align='center' colspan='2'>"._('Entity')."</td>";
+         echo "<td align='center' colspan='2'>".__('Entity')."</td>";
          echo "<td align='center' colspan='2'>";
          Dropdown::show('Entity',
                         array('name'=>'entities_id',
@@ -249,13 +249,13 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       if ($count == '0') {
          return true;
       } else {
-          Session::addMessageAfterRedirect("<font color='#ff0000'>"._('Bad IP').
+          Session::addMessageAfterRedirect("<font color='#ff0000'>".__('Bad IP').
 
             "</font><br/>".
-            _('Start of IP range')." : ".
+            __('Start of IP range')." : ".
             $a_input['ip_start0'].".".$a_input['ip_start1'].".".
             $a_input['ip_start2'].".".$a_input['ip_start3']."<br/>".
-            _('End of IP range')." : ".
+            __('End of IP range')." : ".
             $a_input['ip_end0'].".".$a_input['ip_end1'].".".
             $a_input['ip_end2'].".".$a_input['ip_end3']);
          return false;

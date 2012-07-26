@@ -67,11 +67,11 @@ $label_width = 95;
 if(isset($_POST["glpi_tab"])) {
    if (strpos($_POST["glpi_tab"], 'PluginFusinvdeployInstall') !== false) {
       $render = "install";
-      $title2 = _('before installation');
+      $title2 = __('before installation');
 
    } elseif (strpos($_POST["glpi_tab"], 'PluginFusinvdeployUninstall') !== false) {
       $render = "uninstall";
-      $title2 = _('before uninstallation');
+      $title2 = __('before uninstallation');
 
    }
 }
@@ -82,24 +82,24 @@ $JS = <<<JS
 //define colums for grid
 var {$render}checkColumns =  [{
    id: '{$render}id',
-   header: '{_('Id')}',
+   header: '{__('Id')}',
    width: {$column_width[0]},
    dataIndex: '{$render}id',
    hidden: true
 }, {
    id: '{$render}type',
-   header: '{_('Type')}',
+   header: '{__('Type')}',
    width: {$column_width[1]},
    dataIndex: '{$render}type',
    renderer: {$render}renderType
 }, {
    id: '{$render}path',
-   header: '{_('Name')}',
+   header: '{__('Name')}',
    width: {$column_width[2]},
    dataIndex: '{$render}path'
 }, {
    id: '{$render}value',
-   header: '{_('Value')}',
+   header: '{__('Value')}',
    width: {$column_width[3]},
    dataIndex: '{$render}value',
    renderer: {$render}renderValue
@@ -114,25 +114,25 @@ var {$render}checkColumns =  [{
 function {$render}renderType(val) {
    switch(val) {
       case '{$chkConst['WINKEY_EXISTS']}':
-         return '{_('Register key exist')}';
+         return '{__('Register key exist')}';
       case '{$chkConst['WINKEY_MISSING']}':
-         return '{_('Register key missing')}';
+         return '{__('Register key missing')}';
       case '{$chkConst['WINKEY_EQUAL']}':
-         return '{_('Register key value')}';
+         return '{__('Register key value')}';
       case '{$chkConst['FILE_EXISTS']}':
-         return '{_('File exist')}';
+         return '{__('File exist')}';
       case '{$chkConst['FILE_MISSING']}':
-         return '{_('File missing')}';
+         return '{__('File missing')}';
       case '{$chkConst['FILE_SIZEGREATER']}':
-         return '{_('File size greater')}';
+         return '{__('File size greater')}';
       case '{$chkConst['FILE_SIZEEQUAL']}':
-         return '{_('Filesize equal to')}';
+         return '{__('Filesize equal to')}';
       case '{$chkConst['FILE_SIZELOWER']}':
-         return '{_('Filesize lower than')}';
+         return '{__('Filesize lower than')}';
       case '{$chkConst['FILE_SHA512']}':
-         return '{_('SHA-512 hash value')}';
+         return '{__('SHA-512 hash value')}';
       case '{$chkConst['FREE_SPACE']}':
-         return '{_('Free space')}';
+         return '{__('Free space')}';
       default:
          return '';
    }
@@ -179,10 +179,10 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
    height: {$height_left},
    width: {$width_left},
    style:'margin-bottom:5px',
-   title: '{_('List of checks')} ({$title2})',
+   title: '{__('List of checks')} ({$title2})',
    stateId: '{$render}checkGrid',
    tbar: [{
-      text: '{_('Add check')}',
+      text: '{__('Add check')}',
       iconCls: 'exticon-add',
       handler: function(btn,ev) {
          var u = new {$render}checkGridStore.recordType({
@@ -195,10 +195,10 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
          {$render}checkGrid.getSelectionModel().selectFirstRow();
          {$render}checkGrid.setDisabled(true);
          {$render}checkForm.buttons[1].setVisible(true);
-         {$render}checkForm.setTitle('{_('Add check')}');
+         {$render}checkForm.setTitle('{__('Add check')}');
       }
    }, '-', {
-      text: '{_('Delete a check')}',
+      text: '{__('Delete a check')}',
       iconCls: 'exticon-delete',
       handler: function(btn,ev) {
          var selection = {$render}checkGrid.getSelectionModel().getSelections();
@@ -233,7 +233,7 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
                {$render}checkForm.show();
                {$render}checkForm.enable();
                {$render}checkForm.loadData({$render}rec);
-               {$render}checkForm.setTitle('{_('Edit check')}');
+               {$render}checkForm.setTitle('{__('Edit check')}');
                {$render}checkForm.expand();
                {$render}checkForm.buttons[0].setDisabled(false);
             }
@@ -272,7 +272,7 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
 
 //define group item
 var {$render}fieldset_item_default = [{
-      fieldLabel: '{_('File')}',
+      fieldLabel: '{__('File')}',
       name: '{$render}path',
       allowBlank: false,
    }, {
@@ -285,11 +285,11 @@ var {$render}fieldset_item_default = [{
 ];
 
 var {$render}fieldset_item_FileSHA512 = [{
-      fieldLabel: '{_('File')}',
+      fieldLabel: '{__('File')}',
       name: '{$render}path',
       allowBlank: false
    }, {
-      fieldLabel: '{_('Value')}',
+      fieldLabel: '{__('Value')}',
       name: '{$render}value',
       xtype: 'textarea',
       allowBlank: false
@@ -300,16 +300,16 @@ var {$render}fieldset_item_FileSHA512 = [{
 ];
 
 var {$render}fieldset_item_FreespaceGreater = [{
-      fieldLabel: '{_('Disk or directory')}',
+      fieldLabel: '{__('Disk or directory')}',
       name: '{$render}path',
       allowBlank: false
    }, {
-      fieldLabel:'{_('Value')}',
+      fieldLabel:'{__('Value')}',
       name: '{$render}value',
       allowBlank: false
    }, {
       xtype: 'combo',
-      fieldLabel:'{_('Unit')}',
+      fieldLabel:'{__('Unit')}',
       name: '{$render}unit',
       valueField: 'value',
       allowBlank: false,
@@ -328,16 +328,16 @@ var {$render}fieldset_item_FreespaceGreater = [{
 ];
 
 var {$render}fieldset_item_FileSize = [{
-      fieldLabel: '{_('File')}',
+      fieldLabel: '{__('File')}',
       name: '{$render}path',
       allowBlank: false
    }, {
-      fieldLabel:'{_('Value')}',
+      fieldLabel:'{__('Value')}',
       name: '{$render}value',
       allowBlank: false
    }, {
       xtype: 'combo',
-      fieldLabel:'{_('Unit')}',
+      fieldLabel:'{__('Unit')}',
       name: '{$render}unit',
       valueField: 'value',
       displayField: 'name',
@@ -356,11 +356,11 @@ var {$render}fieldset_item_FileSize = [{
 ];
 
 var {$render}fieldset_item_Winkey_1 = [{
-      fieldLabel: '{_('Key')}',
+      fieldLabel: '{__('Key')}',
       name: '{$render}path',
       allowBlank: false
    }, {
-      fieldLabel:'{_('Key value')}',
+      fieldLabel:'{__('Key value')}',
       name: '{$render}value',
       allowBlank: false
    }, {
@@ -370,7 +370,7 @@ var {$render}fieldset_item_Winkey_1 = [{
 ];
 
 var {$render}fieldset_item_Winkey_2 = [{
-      fieldLabel: '{_('Key')}',
+      fieldLabel: '{__('Key')}',
       name: '{$render}path',
       allowBlank: false
    }, {
@@ -436,7 +436,7 @@ var {$render}checkForm = new Ext.FormPanel({
    collapsed: true,
    labelWidth: {$label_width},
    frame: true,
-   title: '{_('Edit check')}',
+   title: '{__('Edit check')}',
    bodyStyle:'padding:5px 5px',
    style:'margin-left:5px;margin-bottom:5px',
    width: {$width_right},
@@ -447,7 +447,7 @@ var {$render}checkForm = new Ext.FormPanel({
       xtype: 'hidden'
    },
    new Ext.form.ComboBox({
-      fieldLabel:'{_('Type')}',
+      fieldLabel:'{__('Type')}',
       name: 'type_name',
       valueField: 'name',
       allowBlank: false,
@@ -456,16 +456,16 @@ var {$render}checkForm = new Ext.FormPanel({
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['{$chkConst['WINKEY_EXISTS']}',  '{_('Register key exist')}'],
-            ['{$chkConst['WINKEY_MISSING']}',  '{_('Register key missing')}'],
-            ['{$chkConst['WINKEY_EQUAL']}',    '{_('Register key value')}'],
-            ['{$chkConst['FILE_EXISTS']}',    '{_('File exist')}'],
-            ['{$chkConst['FILE_MISSING']}',    '{_('File missing')}'],
-            ['{$chkConst['FILE_SIZEGREATER']}','{_('File size greater')}'],
-            ['{$chkConst['FILE_SIZEEQUAL']}',  '{_('Filesize equal to')}'],
-            ['{$chkConst['FILE_SIZELOWER']}',  '{_('Filesize lower than')}'],
-            ['{$chkConst['FILE_SHA512']}',     '{_('SHA-512 hash value')}'],
-            ['{$chkConst['FREE_SPACE']}',      '{_('Free space')}']
+            ['{$chkConst['WINKEY_EXISTS']}',  '{__('Register key exist')}'],
+            ['{$chkConst['WINKEY_MISSING']}',  '{__('Register key missing')}'],
+            ['{$chkConst['WINKEY_EQUAL']}',    '{__('Register key value')}'],
+            ['{$chkConst['FILE_EXISTS']}',    '{__('File exist')}'],
+            ['{$chkConst['FILE_MISSING']}',    '{__('File missing')}'],
+            ['{$chkConst['FILE_SIZEGREATER']}','{__('File size greater')}'],
+            ['{$chkConst['FILE_SIZEEQUAL']}',  '{__('Filesize equal to')}'],
+            ['{$chkConst['FILE_SIZELOWER']}',  '{__('Filesize lower than')}'],
+            ['{$chkConst['FILE_SHA512']}',     '{__('SHA-512 hash value')}'],
+            ['{$chkConst['FREE_SPACE']}',      '{__('Free space')}']
          ]
       }),
       mode: 'local',
@@ -477,22 +477,22 @@ var {$render}checkForm = new Ext.FormPanel({
    {$render}dynFieldset
    ],
    buttons: [{
-      text: '{_('OK')}',
+      text: '{__('OK')}',
       iconCls: 'exticon-save',
       disabled:true,
       handler: function(btn,ev) {
          if ({$render}checkForm.record == null) {
-            Ext.MessageBox.alert('Erreur', '{_('Empty form')}');
+            Ext.MessageBox.alert('Erreur', '{__('Empty form')}');
             return;
          }
          if (!{$render}checkForm.getForm().isValid()) {
-            Ext.MessageBox.alert('Erreur', '{_('Empty form')}');
+            Ext.MessageBox.alert('Erreur', '{__('Empty form')}');
             return false;
          }
          {$render}checkForm.getForm().updateRecord({$render}checkForm.record);
          {$render}checkForm.getForm().submit({
             url : '../ajax/package_check.save.php?package_id={$id}&render={$render}',
-            waitMsg: '{_('Loading...')}',
+            waitMsg: '{__('Loading...')}',
             success: function(fileForm, o){
                {$render}checkGridStore.reload();
                {$render}checkGrid.setDisabled(false);
@@ -514,7 +514,7 @@ var {$render}checkForm = new Ext.FormPanel({
          });
       }
    }, {
-      text: '{_('Cancel')}',
+      text: '{__('Cancel')}',
       iconCls: 'exticon-cancel',
       name : '{$render}cancelbtn',
       id : '{$render}Checkcancelbtn',

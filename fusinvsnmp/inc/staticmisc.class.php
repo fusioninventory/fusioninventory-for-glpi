@@ -52,12 +52,12 @@ class PluginFusinvsnmpStaticmisc {
 
       $a_tasks[] = array('module'         => 'fusinvsnmp',
                          'method'         => 'netdiscovery',
-                         'name'           => _('Network discovery'));
+                         'name'           => __('Network discovery'));
 
 
       $a_tasks[] = array('module'         => 'fusinvsnmp',
                          'method'         => 'snmpinventory',
-                         'name'           => _('Network inventory (SNMP)'));
+                         'name'           => __('Network inventory (SNMP)'));
 
 
       return $a_tasks;
@@ -68,7 +68,7 @@ class PluginFusinvsnmpStaticmisc {
    // *** NETDISCOVERY ***
    static function task_definitiontype_netdiscovery($a_itemtype) {
 
-      $a_itemtype['PluginFusioninventoryIPRange'] = _('IP Ranges');
+      $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges');
 
 
       return $a_itemtype;
@@ -91,7 +91,7 @@ class PluginFusinvsnmpStaticmisc {
    // *** SNMPINVENTORY ***
    static function task_definitiontype_snmpinventory($a_itemtype) {
 
-      $a_itemtype['PluginFusioninventoryIPRange'] = _('IP Ranges');
+      $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges');
 
       $a_itemtype['NetworkEquipment'] = NetworkEquipment::getTypeName();
       $a_itemtype['Printer'] = Printer::getTypeName();
@@ -138,12 +138,12 @@ class PluginFusinvsnmpStaticmisc {
    static function task_netdiscovery_agents() {
 
       $array = array();
-      $array["-.1"] = _('Auto managenement dynamic of agents');
+      $array["-.1"] = __('Auto managenement dynamic of agents');
 
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $array1 = $pfAgentmodule->getAgentsCanDo('NETDISCOVERY');
       foreach ($array1 as $id => $data) {
-         $array["PluginFusioninventoryAgent-".$id] = _('Auto managenement dynamic of agents')." - ".$data['name'];
+         $array["PluginFusioninventoryAgent-".$id] = __('Auto managenement dynamic of agents')." - ".$data['name'];
       }
       return $array;
    }
@@ -189,7 +189,7 @@ class PluginFusinvsnmpStaticmisc {
             $selection_type = 'iprange';
             break;
 
-         // _('Auto managenement dynamic of agents')
+         // __('Auto managenement dynamic of agents')
 
 
       }
@@ -204,26 +204,26 @@ class PluginFusinvsnmpStaticmisc {
 
       $a_menu = array();
       if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "r")) {
-         $a_menu[0]['name'] = _('SNMP models');
+         $a_menu[0]['name'] = __('SNMP models');
 
          $a_menu[0]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/menu_models.png";
          $a_menu[0]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/model.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "r")) {
-         $a_menu[1]['name'] = _('SNMP authentication');
+         $a_menu[1]['name'] = __('SNMP authentication');
 
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/menu_authentification.png";
          $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/configsecurity.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-         $a_menu[5]['name'] = _('Discovery status');
+         $a_menu[5]['name'] = __('Discovery status');
 
          $a_menu[5]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/menu_discovery_status.png";
          $a_menu[5]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/statediscovery.php";
 
-         $a_menu[6]['name'] = _('Network inventory status');
+         $a_menu[6]['name'] = __('Network inventory status');
 
          $a_menu[6]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/menu_inventory_status.png";
          $a_menu[6]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/stateinventory.php";
@@ -238,28 +238,28 @@ class PluginFusinvsnmpStaticmisc {
 
       $a_profil = array();
       $a_profil[] = array('profil'  => 'configuration',
-                          'name'    => _('Configuration'));
+                          'name'    => __('Configuration'));
 
       $a_profil[] = array('profil'  => 'configsecurity',
-                          'name'    => _('SNMP authentication'));
+                          'name'    => __('SNMP authentication'));
 
       //$a_profil[] = array('profil'  => 'iprange',
-      //                    'name'    => _('IP Range'));
+      //                    'name'    => __('IP Range'));
 
       $a_profil[] = array('profil'  => 'networkequipment',
-                          'name'    => _('Network equipment SNMP'));
+                          'name'    => __('Network equipment SNMP'));
 
       $a_profil[] = array('profil'  => 'printer',
-                          'name'    => _('Printer SNMP'));
+                          'name'    => __('Printer SNMP'));
 
       $a_profil[] = array('profil'  => 'model',
-                          'name'    => _('SNMP model'));
+                          'name'    => __('SNMP model'));
 
       $a_profil[] = array('profil'  => 'reportprinter',
-                          'name'    => _('Printers report'));
+                          'name'    => __('Printers report'));
 
       $a_profil[] = array('profil'  => 'reportnetworkequipment',
-                          'name'    => _('Network report'));
+                          'name'    => __('Network report'));
 
       return $a_profil;
    }

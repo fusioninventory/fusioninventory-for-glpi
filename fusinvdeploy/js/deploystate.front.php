@@ -71,35 +71,35 @@ function displayState(val, full) {
    switch (val) {
       case '0':
          var img_name = 'bullet-blue.png';
-         val = '{_('Prepared')}';
+         val = '{__('Prepared')}';
          break
       case '1':
          var img_name = 'bullet-yellow.png';
-         val = '{_('Started')}';
+         val = '{__('Started')}';
          break
       case '2':
          var img_name = 'bullet-green.png';
-         val = '{_('Ok')}';
+         val = '{__('Ok')}';
          break
       case '3':
          var img_name = 'bullet-red.png';
-         val = '{_('Error / rescheduled')}';
+         val = '{__('Error / rescheduled')}';
          break
       case '4':
          var img_name = 'bullet-red.png';
-         val = '{_('Error')}';
+         val = '{__('Error')}';
          break
       case '5':
          var img_name = 'bullet-red.png';
-         val = '{_('unknown')}';
+         val = '{__('unknown')}';
          break
       case '6':
          var img_name = 'bullet-yellow.png';
-         val = '{_('Running')}';
+         val = '{__('Running')}';
          break
       case '7':
          var img_name = 'bullet-blue.png';
-         val = '{_('Prepared')}';
+         val = '{__('Prepared')}';
          break
       default:
          var img_name = 'bullet-grey.png';
@@ -147,7 +147,7 @@ function createGridTooltip(value, contentid, message) {
 }
 
 var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
-   title: "{_('Deployment status')}",
+   title: "{__('Deployment status')}",
    height: {$height_left},
    width: {$width_left},
    region: 'center',
@@ -171,7 +171,7 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
          renderProgressBar: function(val) {
             if (val == "null" || val == null) return '';
             if (val.indexOf('%') != -1)
-               return '<div class="c_progress">{_('Progress')} :&nbsp;<div class="progress-container"><div style="width: '+val+'">'+val+'</div></div></div>';
+               return '<div class="c_progress">{__('Progress')} :&nbsp;<div class="progress-container"><div style="width: '+val+'">'+val+'</div></div></div>';
             else {
                return displayState(val);
             }
@@ -220,7 +220,7 @@ var taskJobsTreeGrid = new Ext.ux.tree.TreeGrid({
 
 
 var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
-   title: "{_('Associated logs')}",
+   title: "{__('Associated logs')}",
    height: {$height_right},
    width: {$width_right},
    region: 'east',
@@ -259,16 +259,16 @@ var taskJobLogsTreeGrid = new Ext.ux.tree.TreeGrid({
                   message = val;
             else switch(values.comment) {
                case '{$stateConst['RECEIVED']}':
-                  message = "{_('The agent received the job request')}"
+                  message = "{__('The agent received the job request')}"
                   break;
                case '{$stateConst['DOWNLOADING']}':
-                  message = "{_('The agent started to check the mirror to download the file')}"
+                  message = "{__('The agent started to check the mirror to download the file')}"
                   break;
                case '{$stateConst['EXTRACTING']}':
-                  message = "{_('Preparing the working directory')}"
+                  message = "{__('Preparing the working directory')}"
                   break;
                case '{$stateConst['PROCESSING']}':
-                  message = "{_('The agent is processing the job')}"
+                  message = "{__('The agent is processing the job')}"
                   break;
               default:
                   break

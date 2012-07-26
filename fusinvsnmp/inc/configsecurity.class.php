@@ -71,14 +71,14 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . _('Name') . "</td>";
+      echo "<td align='center' colspan='2'>" . __('Name') . "</td>";
       echo "<td align='center' colspan='2'>";
       echo "<input type='text' name='name' value='" . $this->fields["name"] . "'/>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . _('SNMP version') . "</td>";
+      echo "<td align='center' colspan='2'>" . __('SNMP version') . "</td>";
       echo "<td align='center' colspan='2'>";
          $this->showDropdownSNMPVersion($this->fields["snmpversion"]);
       echo "</td>";
@@ -90,12 +90,12 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . _('Community') . "</td>";
+      echo "<td align='center'>" . __('Community') . "</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='community' value='" . $this->fields["community"] . "'/>";
       echo "</td>";
 
-      echo "<td align='center'>" . _('User') . "</td>";
+      echo "<td align='center'>" . __('User') . "</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='username' value='" . $this->fields["username"] . "'/>";
       echo "</td>";
@@ -103,7 +103,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . _('Encryption protocol for authentication ') . "</td>";
+      echo "<td align='center'>" . __('Encryption protocol for authentication ') . "</td>";
       echo "<td align='center'>";
          $this->showDropdownSNMPAuth($this->fields["authentication"]);
       echo "</td>";
@@ -111,7 +111,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . _('Password') . "</td>";
+      echo "<td align='center'>" . __('Password') . "</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='auth_passphrase'
                    value='".$this->fields["auth_passphrase"]."'/>";
@@ -120,7 +120,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . _('Encryption protocol for data') . "</td>";
+      echo "<td align='center'>" . __('Encryption protocol for data') . "</td>";
       echo "<td align='center'>";
          $this->showDropdownSNMPEncryption($this->fields["encryption"]);
       echo "</td>";
@@ -128,7 +128,7 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . _('Password') . "</td>";
+      echo "<td align='center'>" . __('Password') . "</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='priv_passphrase'
                    value='" . $this->fields["priv_passphrase"] . "'/>";
@@ -151,17 +151,17 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
       if ($array == '0') {
          echo "<div align='center'><table class='tab_cadre_fixe'>";
-         echo "<tr><th colspan='10'>"._('1')." :</th></tr>";
-         echo "<tr><th>"._('ID')."</th>";
-         echo "<th>"._('Name')."</th>";
-         echo "<th>"._('1')."</th>";
-         echo "<th>"._('1')."</th>";
-         echo "<th>"._('1')."</th>";
-         echo "<th>"._('1')."</th>";
-         echo "<th>"._('1')."</th>";
-         echo "<th>"._('1')."</th>";
-         echo "<th>"._('1')."</th>";
-         echo "<th>"._('1')."</th>";
+         echo "<tr><th colspan='10'>".__('1')." :</th></tr>";
+         echo "<tr><th>".__('ID')."</th>";
+         echo "<th>".__('Name')."</th>";
+         echo "<th>".__('1')."</th>";
+         echo "<th>".__('1')."</th>";
+         echo "<th>".__('1')."</th>";
+         echo "<th>".__('1')."</th>";
+         echo "<th>".__('1')."</th>";
+         echo "<th>".__('1')."</th>";
+         echo "<th>".__('1')."</th>";
+         echo "<th>".__('1')."</th>";
          echo "</tr>";
       }
 

@@ -46,7 +46,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $pfStateDiscovery = new PluginFusinvsnmpStateDiscovery();
 
-Html::header(_('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","statediscovery");
+Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","statediscovery");
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
 

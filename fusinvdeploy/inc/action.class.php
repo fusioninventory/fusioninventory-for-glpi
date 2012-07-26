@@ -48,7 +48,7 @@ class PluginFusinvdeployAction extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return _('Actions');
+      return __('Actions');
 
    }
 
@@ -107,49 +107,49 @@ class PluginFusinvdeployAction extends CommonDBTM {
          $action->getFromDB($row[$render.'items_id']);
 
          if($action instanceof PluginFusinvdeployAction_Command) {
-            $row[$render.'value'] = "<b>"._('Value')." : </b> ";
+            $row[$render.'value'] = "<b>".__('Value')." : </b> ";
             $row[$render.'value'].= $action->getField('exec');
 
             $row[$render.'exec'] = $action->getField('exec');
 
          } else if($action instanceof PluginFusinvdeployAction_Move) {
-            $row[$render.'value'] = "<b>"._('From')." : </b> ";
+            $row[$render.'value'] = "<b>".__('From')." : </b> ";
             $row[$render.'value'].= $action->getField('from');
-            $row[$render.'value'].= " <b>"._('To')." : </b> ";
+            $row[$render.'value'].= " <b>".__('To')." : </b> ";
             $row[$render.'value'].= $action->getField('to');
 
             $row[$render.'from'] = $action->getField('from');
             $row[$render.'to']   = $action->getField('to');
 
          } else if($action instanceof PluginFusinvdeployAction_Copy) {
-            $row[$render.'value'] = "<b>"._('From')." : </b> ";
+            $row[$render.'value'] = "<b>".__('From')." : </b> ";
             $row[$render.'value'].= $action->getField('from');
-            $row[$render.'value'].= " <b>"._('To')." : </b> ";
+            $row[$render.'value'].= " <b>".__('To')." : </b> ";
             $row[$render.'value'].= $action->getField('to');
 
             $row[$render.'from'] = $action->getField('from');
             $row[$render.'to']   = $action->getField('to');
 
          }  else if($action instanceof PluginFusinvdeployAction_Delete) {
-            $row[$render.'value'] = "<b>"._('Value')." : </b> ";
+            $row[$render.'value'] = "<b>".__('Value')." : </b> ";
             $row[$render.'value'].= $action->getField('path');
             $row[$render.'path']  = $action->getField('path');
 
          }  else if($action instanceof PluginFusinvdeployAction_Mkdir) {
-            $row[$render.'value'] = "<b>"._('Name')." : </b> ";
+            $row[$render.'value'] = "<b>".__('Name')." : </b> ";
             $row[$render.'value'].= $action->getField('path');
             $row[$render.'path']  = $action->getField('path');
 
          }  else if($action instanceof PluginFusinvdeployAction_Message) {
-            $row[$render.'value'] = "<b>"._('Title').
+            $row[$render.'value'] = "<b>".__('Title').
 
                " : </b> ";
             $row[$render.'value'].= $action->getField('name');
-            $row[$render.'value'].= " <b>"._('Content').
+            $row[$render.'value'].= " <b>".__('Content').
 
                " : </b> ";
             $row[$render.'value'].= $action->getField('message');
-            $row[$render.'value'].= " <b>"._('Type').
+            $row[$render.'value'].= " <b>".__('Type').
 
                " : </b> ";
             $row[$render.'value'].= $action->getField('type');
@@ -192,49 +192,49 @@ class PluginFusinvdeployAction extends CommonDBTM {
       $row[$render.'ranking'] = $action->getField('ranking');
 
       if($action instanceof PluginFusinvdeployAction_Command) {
-         $row[$render.'value'] = "<b>"._('Value')." : </b> ";
+         $row[$render.'value'] = "<b>".__('Value')." : </b> ";
          $row[$render.'value'].= $action->getField('exec');
 
          $row[$render.'exec'] = $action->getField('exec');
 
       } else if($action instanceof PluginFusinvdeployAction_Move) {
-         $row[$render.'value'] = "<b>"._('From')." : </b> ";
+         $row[$render.'value'] = "<b>".__('From')." : </b> ";
          $row[$render.'value'].= $action->getField('from');
-         $row[$render.'value'].= " <b>"._('To')." : </b> ";
+         $row[$render.'value'].= " <b>".__('To')." : </b> ";
          $row[$render.'value'].= $action->getField('to');
 
          $row[$render.'from'] = $action->getField('from');
          $row[$render.'to']   = $action->getField('to');
 
       } else if($action instanceof PluginFusinvdeployAction_Copy) {
-         $row[$render.'value'] = "<b>"._('From')." : </b> ";
+         $row[$render.'value'] = "<b>".__('From')." : </b> ";
          $row[$render.'value'].= $action->getField('from');
-         $row[$render.'value'].= " <b>"._('To')." : </b> ";
+         $row[$render.'value'].= " <b>".__('To')." : </b> ";
          $row[$render.'value'].= $action->getField('to');
 
          $row[$render.'from'] = $action->getField('from');
          $row[$render.'to']   = $action->getField('to');
 
       }  else if($action instanceof PluginFusinvdeployAction_Delete) {
-         $row[$render.'value'] = "<b>"._('Value')." : </b> ";
+         $row[$render.'value'] = "<b>".__('Value')." : </b> ";
          $row[$render.'value'].= $action->getField('path');
          $row[$render.'path']  = $action->getField('path');
 
       }  else if($action instanceof PluginFusinvdeployAction_Mkdir) {
-         $row[$render.'value'] = "<b>"._('Name')." : </b> ";
+         $row[$render.'value'] = "<b>".__('Name')." : </b> ";
          $row[$render.'value'].= $action->getField('path');
          $row[$render.'path']  = $action->getField('path');
 
       }  else if($action instanceof PluginFusinvdeployAction_Message) {
-         $row[$render.'value'] = "<b>"._('Title').
+         $row[$render.'value'] = "<b>".__('Title').
 
             " : </b> ";
          $row[$render.'value'].= $action->getField('name');
-         $row[$render.'value'].= " <b>"._('Content').
+         $row[$render.'value'].= " <b>".__('Content').
 
             " : </b> ";
          $row[$render.'value'].= $action->getField('message');
-         $row[$render.'value'].= " <b>"._('Type').
+         $row[$render.'value'].= " <b>".__('Type').
 
             " : </b> ";
          $row[$render.'value'].= $action->getField('type');

@@ -65,10 +65,10 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
          if ($_SESSION['glpishow_count_on_tabs']) {
-            return self::createTabEntry(_('FusionInventory SNMP'));
+            return self::createTabEntry(__('FusionInventory SNMP'));
 
          }
-         return _('FusionInventory SNMP');
+         return __('FusionInventory SNMP');
 
       }
       return '';
@@ -115,12 +115,12 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._('SNMP authentication')."&nbsp;:</td>";
+      echo "<td>".__('SNMP authentication')."&nbsp;:</td>";
       echo "<td>";
       $ArrayValues = array();
-      $ArrayValues['DB']= _('Database');
+      $ArrayValues['DB']= __('Database');
 
-      $ArrayValues['file']= _('Files');
+      $ArrayValues['file']= __('Files');
 
       Dropdown::showFromArray('storagesnmpauth', $ArrayValues,
                               array('value'=>$pfConfig->getValue($plugins_id, 'storagesnmpauth')));
@@ -129,11 +129,11 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>"._('Threads number')."&nbsp;(".strtolower(_('Network discovery')).")&nbsp;:</td>";
+      echo "<td>".__('Threads number')."&nbsp;(".strtolower(__('Network discovery')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("threads_netdiscovery", $pfConfig->getValue($plugins_id, 'threads_netdiscovery'),1,400);
       echo "</td>";
-      echo "<td>"._('Threads number')."&nbsp;(".strtolower(_('Network inventory (SNMP)')).")&nbsp;:</td>";
+      echo "<td>".__('Threads number')."&nbsp;(".strtolower(__('Network inventory (SNMP)')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("threads_snmpquery", $pfConfig->getValue($plugins_id, 'threads_snmpquery'),1,400);
       echo "</td>";
@@ -143,7 +143,7 @@ class PluginFusinvsnmpConfig extends CommonDBTM {
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
                <input class='submit' type='submit' name='plugin_fusinvsnmp_config_set'
-                      value='" . _('Update') . "'></td></tr>";
+                      value='" . __('Update') . "'></td></tr>";
       }
       echo "</table>";
       Html::closeForm();
