@@ -233,7 +233,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          $pfConfig = new PluginFusioninventoryConfig();
          $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
 
-         if ($pfConfig->getValue($plugins_id, 'transfers_id_auto') == '0') {
+         if ($pfConfig->getValue($plugins_id, 'transfers_id_auto', 'inventory') == '0') {
             $inputent = $input;
             if ((isset($xml->CONTENT->HARDWARE->WORKGROUP)) AND (!empty($xml->CONTENT->HARDWARE->WORKGROUP))) {
                $inputent['domain'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->WORKGROUP);
@@ -272,7 +272,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          if (isset($input['serial'])) {
             $input['serialnumber'] = $input['serial'];
          }
-         if ($pfConfig->getValue($plugins_id, 'transfers_id_auto') != '0') {
+         if ($pfConfig->getValue($plugins_id, 'transfers_id_auto', 'inventory') != '0') {
             $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
             $dataEntity = array ();
             $dataEntity = $ruleEntity->processAllRules($input, array());
