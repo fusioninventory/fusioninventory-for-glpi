@@ -297,7 +297,7 @@ class PluginFusioninventoryCommunication {
 
       ob_start();
       $module_id = $module->getModuleId("fusioninventory");
-      $users_id  = $config->getValue($module_id, 'users_id');
+      $users_id  = $config->getValue($module_id, 'users_id', '');
       $_SESSION['glpiID'] = $users_id;
       $user->getFromDB($users_id);
       Session::changeActiveEntities();
