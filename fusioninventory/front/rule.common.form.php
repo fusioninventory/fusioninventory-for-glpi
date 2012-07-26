@@ -124,7 +124,7 @@ if (isset($_POST["delete_criteria"])) {
    $rulecollection->deleteRuleOrder($_POST["ranking"]);
    $rule->delete($_POST);
 
-   Event::log($_POST["id"], "rules", 4, "setup", $_SESSION["glpiname"]." ".__('item's deletion'));
+   Event::log($_POST["id"], "rules", 4, "setup", $_SESSION["glpiname"]." ".__('item\'s deletion'));
 
    Html::redirect(str_replace('.form','',$_SERVER['PHP_SELF']));
 }

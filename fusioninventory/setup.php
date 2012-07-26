@@ -52,8 +52,6 @@ function plugin_init_fusioninventory() {
       
    $PLUGIN_HOOKS['csrf_compliant']['fusioninventory'] = true;
 
-
-   $PLUGIN_HOOKS['csrf_compliant']['fusioninventory'] = true;
    $moduleId = 0;
    if (class_exists('PluginFusioninventoryModule')) { // check if plugin is active
       // ##### 1. (Not required here) #####
@@ -348,7 +346,7 @@ function plugin_fusioninventory_check_prerequisites() {
    global $DB;
 
    if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
-      echo __('Your GLPI version not compatible, require 0.83.3');
+      echo __('Your GLPI version not compatible, require 0.84');
 
       return false;
    }

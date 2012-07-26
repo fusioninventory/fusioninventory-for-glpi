@@ -348,8 +348,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                               foreach ($maps as $mapfields) {
                                  if (($type_model == $type) OR ($type_model == "0")) {
                                     $types[$type."||".$mapfields['name']]=
-                                       __('1')
-
+                                       $LANG['plugin_fusinvsnmp']['mapping']
                                           [$mapfields["locale"]].
                                        " (".$mapfields['name'].")";
                                  }
@@ -449,9 +448,8 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                   foreach ($maps as $mapfields) {
                      if (($type_model == $type) OR ($type_model == "0")) {
                         $types[$type."||".$mapfields['name']]=
-                           __('1')
-
-                              [$mapfields["locale"]].
+                           $LANG['plugin_fusinvsnmp']['mapping']
+                                          [$mapfields["locale"]].
                            " (".$mapfields['name'].")";
                      }
                   }

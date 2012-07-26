@@ -53,10 +53,6 @@ class PluginFusioninventoryToolbox {
     * Log when extra-debug is activated
     */
    static function logIfExtradebug($file, $message) {
-      if ($_ENV['GLPI_ROOT']) {
-         return;
-      }
-
       $config = new PluginFusioninventoryConfig();
       if ($config->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug', '')) {
          Toolbox::logInFile($file, $message);

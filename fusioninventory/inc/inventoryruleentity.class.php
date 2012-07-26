@@ -139,7 +139,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
 
       $criterias['name']['field']     = 'name';
-      $criterias['name']['name']      = __('Computer's name');
+      $criterias['name']['name']      = __('Computer\'s name');
 
 
       $criterias['serial']['field']     = 'name';

@@ -71,7 +71,7 @@ if (isset($_GET["action"])) {
                $rulecollection->deleteRuleOrder($rule->fields["ranking"]);
                $rule->delete(array('id' => $key));
             }
-            Event::log(0, "rules", 4, "setup", $_SESSION["glpiname"]." ".__('item's deletion'));
+            Event::log(0, "rules", 4, "setup", $_SESSION["glpiname"]." ".__('item\'s deletion'));
 
             Html::back();
          }

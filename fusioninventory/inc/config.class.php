@@ -687,7 +687,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     */
    static function isExtradebugActive() {
       $fConfig = new self();
-      return $fConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug');
+      return $fConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug', 'fusioninventory');
    }
 
 

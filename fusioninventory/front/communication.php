@@ -40,20 +40,20 @@
    ------------------------------------------------------------------------
  */
 
-ob_start();
-ini_set("memory_limit", "-1");
-ini_set("max_execution_time", "0");
-ini_set('display_errors', 1);
+//ob_start();
+//ini_set("memory_limit", "-1");
+//ini_set("max_execution_time", "0");
+//ini_set('display_errors', 1);
 
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../..');
 }
 
-if (session_id()=="") {
-   session_start();
-}
-
-$_SESSION['glpi_use_mode'] = 2;
+//if (session_id()=="") {
+//   session_start();
+//}
+//
+//$_SESSION['glpi_use_mode'] = 2;
 include_once(GLPI_ROOT."/inc/includes.php");
 if (!isset($_SESSION['glpilanguage'])) {
    $_SESSION['glpilanguage'] = 'fr_FR';
@@ -66,6 +66,7 @@ $_SESSION['glpi_use_mode'] = 2;
 
 ob_end_clean();
 header("server-type: glpi/fusioninventory ".PLUGIN_FUSIONINVENTORY_VERSION);
+$c = new Computer();
 $pfConfig = new PluginFusioninventoryConfig();
 if (!class_exists("PluginFusioninventoryConfig")) {
    header("Content-Type: application/xml");

@@ -94,7 +94,8 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
       libxml_use_internal_errors(true);
       if ($pxml = @simplexml_load_string($p_xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
          libxml_clear_errors();
-         $pxml = PluginFusioninventoryToolbox::cleanXML($pxml);
+         $pfToolbox = new PluginFusioninventoryToolbox();
+         $pxml = $pfToolbox->cleanXML($pxml);
          $pfInventory->sendCriteria("", "", $pxml);
          return true;
       } else {

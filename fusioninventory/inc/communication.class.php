@@ -398,7 +398,8 @@ class PluginFusioninventoryCommunication {
       }
 
       // Clean for XSS and other in XML
-      $pxml = $communication->cleanXML($pxml);
+      $pfToolbox = new PluginFusioninventoryToolbox();
+      $pxml = $pfToolbox->cleanXML($pxml);
 
       $agent = new PluginFusioninventoryAgent();
       $agents_id = $agent->importToken($pxml);
