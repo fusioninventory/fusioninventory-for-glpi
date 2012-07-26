@@ -455,7 +455,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $this->ptd->load($this->deviceId);
 
       $_SESSION["plugin_fusinvinventory_entity"] = $this->ptd->getValue('entities_id');
-
+      if (!isset($_SESSION['glpiactiveentities_string'])) {
+         $_SESSION['glpiactiveentities_string'] = "'".$this->ptd->getValue('entities_id')."'";
+      }
+      
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_printers', $this->ptd->getValue('id'));
 
       foreach ($p_info->children() as $child) {
