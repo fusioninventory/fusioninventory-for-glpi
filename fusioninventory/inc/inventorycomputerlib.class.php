@@ -161,7 +161,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $xmlSections = $this->_getXMLSections($xml);
          $internalId = uniqid("", true);
 
-         try {
+         //try {
             $pfInventoryComputerLibhook = new PluginFusioninventoryInventoryComputerLibhook();
             $pfInventoryComputerLibhook->createMachine($items_id);
 
@@ -188,9 +188,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
             $this->updateLibMachine($xmlSections, $internalId);
 
-         } catch (MyException $e) {
+         //} catch (MyException $e) {
              // $log->error('created machine stage: error');
-         }
+         //}
       }
    }
 
@@ -257,11 +257,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    *
    */
    public function addLibMachine($internalId, $externalId) {
+      global $DB;
 
       $queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
                       ( `internal_id`, `computers_id`)
                       VALUES ('" . $internalId . "', '".$externalId."')";
-      mysql_query($queryInsert);
+      $DB->query($queryInsert);
   }
 
 

@@ -115,8 +115,8 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
            LIMIT 1";
       $resultSelect = $DB->query($query_select);
       if ($DB->numrows($resultSelect) > 0) {
-         $rowSelect = mysql_fetch_row($resultSelect);
-         $vendors_name = html_entity_decode($rowSelect[1]);
+         $data = $DB->fetch_assoc($resultSelect);
+         $vendors_name = html_entity_decode($data['name']);
          return $vendors_name;
       } else {
          return "";

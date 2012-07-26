@@ -63,6 +63,7 @@ ini_set('display_errors','On');
 error_reporting(E_ALL | E_STRICT);
 set_error_handler(array('Toolbox','userErrorHandlerDebug'));
 $_SESSION['glpi_use_mode'] = 2;
+$_SESSION['glpiparententities'] = '';
 
 ob_end_clean();
 header("server-type: glpi/fusioninventory ".PLUGIN_FUSIONINVENTORY_VERSION);

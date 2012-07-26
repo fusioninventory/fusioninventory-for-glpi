@@ -1030,15 +1030,15 @@ class PluginFusioninventoryInventoryComputerLibhook {
    **/
     function writeXMLFusion($items_id,$xml='') {
       if ($xml != '') {
-         // TODO : Write in _plugins/fusinvinventory/xxx/idmachine.xml
+
          $folder = substr($items_id,0,-1);
          if (empty($folder)) {
             $folder = '0';
          }
-         if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder)) {
-            mkdir(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder);
+         if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/computer/".$folder)) {
+            mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/computer/".$folder);
          }
-         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$items_id, 'w');
+         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/computer/".$folder."/".$items_id, 'w');
          fwrite($fileopen, $xml);
          fclose($fileopen);
        }

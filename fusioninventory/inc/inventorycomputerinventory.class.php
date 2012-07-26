@@ -358,7 +358,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                   $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
                }
             } else {
-               $_SESSION["plugin_fusinvinventory_entity"] = "N/A";
+               $_SESSION["plugin_fusinvinventory_entity"] = 0;
             }
 
 
