@@ -77,11 +77,11 @@ function plugin_init_fusinvdeploy() {
             AND strstr($_SERVER['HTTP_REFERER'], "front/plugin.php")) {
          switch ($_GET['action']) {
             case 'activate':
-                Session::addMessageAfterRedirect(_('Plugin FusionInventory DEPLOY needs FusionInventory INVENTORY plugin installed before activation.'));
+                Session::addMessageAfterRedirect(__('Plugin FusionInventory DEPLOY needs FusionInventory INVENTORY plugin installed before activation.'));
 
                break;
             case 'uninstall':
-                Session::addMessageAfterRedirect(_('Plugin FusionInventory DEPLOY needs FusionInventory INVENTORY plugin installed before uninstall.'));
+                Session::addMessageAfterRedirect(__('Plugin FusionInventory DEPLOY needs FusionInventory INVENTORY plugin installed before uninstall.'));
 
                Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
                break;
@@ -184,7 +184,7 @@ function plugin_init_fusinvdeploy() {
 function plugin_version_fusinvdeploy() {
 
    return array(
-      'name'           => _('FusionInventory DEPLOY'),
+      'name'           => __('FusionInventory DEPLOY'),
 
       'shortname'      => 'fusinvdeploy',
       'version'        => PLUGIN_FUSINVDEPLOY_VERSION,
