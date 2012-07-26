@@ -148,9 +148,9 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
         LIMIT 1";
       $resultSelect = $DB->query($query_select);
       if ($DB->numrows($resultSelect) > 0) {
-         $rowSelect = mysql_fetch_row($resultSelect);
-         $vendors_id = $rowSelect[0];
-         $vendors_name = html_entity_decode($rowSelect[1]);
+         $data = $DB->fetch_assoc($resultSelect);
+         $vendors_id = $data['id'];
+         $vendors_name = html_entity_decode($data['name']);
 
          $query_selectd = "SELECT name FROM `glpi_plugin_fusinvinventory_usbdevices`
            WHERE `deviceid`='".$deviceId."'
@@ -158,8 +158,8 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
            LIMIT 1";
          $resultSelectd = $DB->query($query_selectd);
          if ($DB->numrows($resultSelectd) > 0) {
-            $rowSelectd = mysql_fetch_row($resultSelectd);
-            $devices_name = html_entity_decode($rowSelectd[0]);
+            $data = $DB->fetch_assoc($resultSelectd);
+            $devices_name = html_entity_decode($data['name']);
          }
       }
       return array($vendors_name, $devices_name);

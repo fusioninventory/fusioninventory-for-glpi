@@ -1035,10 +1035,10 @@ class PluginFusioninventoryInventoryComputerLibhook {
          if (empty($folder)) {
             $folder = '0';
          }
-         if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/computer/".$folder)) {
-            mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/computer/".$folder);
+         if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder)) {
+            mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder);
          }
-         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/computer/".$folder."/".$items_id, 'w');
+         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$items_id, 'w');
          fwrite($fileopen, $xml);
          fclose($fileopen);
        }

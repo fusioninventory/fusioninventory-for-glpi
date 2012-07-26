@@ -827,9 +827,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             FROM `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
          WHERE `internal_id` = '$internalId'";
       $resultSelect = $DB->query($querySelect);
-      $rowSelect = mysql_fetch_row($resultSelect);
-      $infoSections["externalId"] = $rowSelect[0];
-      $serializedSections = $rowSelect[1].$rowSelect[2].$rowSelect[3];
+      $data = $DB->fetch_assoc($resultSelect);
+      $infoSections["externalId"] = $data['computers_id'];
+      $serializedSections = $data['serialized_sections1'].$data['serialized_sections2'].$data['serialized_sections3'];
       $arraySerializedSections = explode("\n", $serializedSections); // Recovering a table with one line per entry
       $previous_infosection = array();
       foreach ($arraySerializedSections as $valeur) {
