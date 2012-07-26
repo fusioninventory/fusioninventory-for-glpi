@@ -66,6 +66,7 @@ $_SESSION['glpi_use_mode'] = 2;
 
 ob_end_clean();
 header("server-type: glpi/fusioninventory ".PLUGIN_FUSIONINVENTORY_VERSION);
+$pfConfig = new PluginFusioninventoryConfig();
 if (!class_exists("PluginFusioninventoryConfig")) {
    header("Content-Type: application/xml");
    echo "<?xml version='1.0' encoding='UTF-8'?>
