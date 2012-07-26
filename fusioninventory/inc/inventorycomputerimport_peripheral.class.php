@@ -62,7 +62,7 @@ class PluginFusioninventoryInventoryComputerImport_Peripheral extends CommonDBTM
    function AddUpdateItem($type, $items_id, $dataSection) {
 
       $pfConfig = new PluginFusioninventoryConfig();
-      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+      if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
               "import_peripheral", 'inventory') == '0') {
          return;
       }
@@ -77,7 +77,7 @@ class PluginFusioninventoryInventoryComputerImport_Peripheral extends CommonDBTM
          $a_Peripheral = $Peripheral->getFromDB($Computer_Item->fields['items_id']);
       } else {
          // Search if a peripheral yet exist
-         if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+         if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                  "import_peripheral", 'inventory') == '2') {
 
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
@@ -88,7 +88,7 @@ class PluginFusioninventoryInventoryComputerImport_Peripheral extends CommonDBTM
                   }
                }
             }
-         } else if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+         } else if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                  "import_peripheral", 'inventory') == '3') {
 
             if ((isset($dataSection['SERIAL'])) AND (!empty($dataSection['SERIAL']))) {
@@ -101,7 +101,7 @@ class PluginFusioninventoryInventoryComputerImport_Peripheral extends CommonDBTM
             } else {
                return;
             }
-         } else if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+         } else if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                  "import_peripheral", 'inventory') == '1') {
             // GLOBAL
             $name = '';
@@ -154,7 +154,7 @@ class PluginFusioninventoryInventoryComputerImport_Peripheral extends CommonDBTM
       if ($type == "update") {
          $Peripheral->update($a_Peripheral);
       } else if ($type == "add") {
-         if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+         if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                  "import_peripheral", 'inventory') == '1') {
             $a_Peripheral['is_global'] = 1;
          }
@@ -201,7 +201,7 @@ class PluginFusioninventoryInventoryComputerImport_Peripheral extends CommonDBTM
    **/
    function deleteItem($items_id, $idmachine) {
       $pfConfig = new PluginFusioninventoryConfig();
-      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+      if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                  "import_peripheral", 'inventory') != '0') {
          $Computer_Item = new Computer_Item();
          if ($Computer_Item->getFromDB($items_id)) {

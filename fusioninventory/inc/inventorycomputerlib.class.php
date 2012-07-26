@@ -99,7 +99,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $Transfer = new Transfer();
             // get value in Config ($config['transfers_id_auto'])
             $Transfer->getFromDB(
-                $pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                $pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                                                        'transfers_id_auto', 'inventory'));
 
             $item_to_transfer = array("Computer" => array($items_id=>$items_id));
@@ -445,10 +445,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                         case "MONITORS":
                            $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-                           if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                           if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                                                                       "import_monitor") == '0') {
                               // Monitors not managed
-                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                                                                               "import_monitor") == '2') {
                               // Unique import
                               if (((isset($arrSectionToAdd["SERIAL"])) AND (isset($arrSectionToRemove["SERIAL"]))
@@ -463,7 +463,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                                  $boolUpdate = true;
                               }
-                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                                                                              "import_monitor") == '3') {
                               // Import only with serial number
                               if ((isset($arrSectionToAdd["SERIAL"])) AND (isset($arrSectionToRemove["SERIAL"]))
@@ -471,7 +471,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                                  $boolUpdate = true;
                               }
-                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                                                                              "import_monitor") == '1') {
                               // GLOBAL
                               if ((isset($arrSectionToAdd["CAPTION"])) AND (isset($arrSectionToRemove["CAPTION"]))
@@ -513,10 +513,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         case "PRINTERS":
 
                            $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-                           if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                           if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                                                                       "import_printer") == '0') {
                               // Printers not managed
-                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                                                                               "import_printer") == '2') {
                               // Unique import
                               if (((isset($arrSectionToAdd["SERIAL"])) AND (isset($arrSectionToRemove["SERIAL"]))
@@ -531,7 +531,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                                  $boolUpdate = true;
                               }
-                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                                                                              "import_printer") == '3') {
                               // Import only with serial number
                               if ((isset($arrSectionToAdd["SERIAL"])) AND (isset($arrSectionToRemove["SERIAL"]))
@@ -539,7 +539,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                                  $boolUpdate = true;
                               }
-                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                           } else if ($PluginFusioninventoryConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                                                                              "import_printer") == '1') {
                               // GLOBAL
                               if ((isset($arrSectionToAdd["DESCRIPTION"]) AND isset($arrSectionToRemove["DESCRIPTION"])

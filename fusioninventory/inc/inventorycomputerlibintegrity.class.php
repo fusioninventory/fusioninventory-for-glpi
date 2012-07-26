@@ -392,7 +392,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      // Monitors must be created  but not created (in case
                      // of changes configuration of monitor import)
                      $pfConfig = new PluginFusioninventoryConfig();
-                     if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                     if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                              "import_monitor", 'inventory') == '3') { //Import on serial number
 
                         $unserializedsection = unserialize($section);
@@ -411,7 +411,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                               }
                            }
                         }
-                     } else if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                     } else if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                              "import_monitor", 'inventory') == '2') { //Import on serial number
 
                         // Search in DB if exist
@@ -432,7 +432,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      // Printers must be created  but not created (in case
                      // of changes configuration of printer import)
                      $pfConfig = new PluginFusioninventoryConfig();
-                     if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                     if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                              "import_printer", 'inventory') == '3') { //Import on serial number
 
                         $unserializedsection = unserialize($section);
@@ -451,7 +451,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                               }
                            }
                         }
-                     } else if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                     } else if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                              "import_printer", 'inventory') == '2') { //Import on serial number
 
                         // Search in DB if exist
@@ -472,7 +472,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      // Printers must be created  but not created (in case
                      // of changes configuration of printer import)
                      $pfConfig = new PluginFusioninventoryConfig();
-                     if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                     if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                              "import_peripheral", 'inventory') == '3') { //Import on serial number
 
                         $unserializedsection = unserialize($section);
@@ -491,7 +491,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                               }
                            }
                         }
-                     } else if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+                     } else if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                              "import_periheral", 'inventory') == '2') { //Import on serial number
 
                         // Search in DB if exist

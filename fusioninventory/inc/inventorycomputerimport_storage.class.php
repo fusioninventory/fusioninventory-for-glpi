@@ -71,7 +71,7 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
       $type_tmp = $this->getTypeDrive($dataSection);
       if ($type_tmp == "Drive") {
          // it's cd-rom / dvd
-         if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+         if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
               "component_drive", 'inventory') == '0') {
             return;
          }
@@ -81,7 +81,7 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
          $drive_idfield = 'devicedrives_id';
       } else {
          // it's harddisk
-         if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+         if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
               "component_harddrive", 'inventory') == '0') {
             return;
          }

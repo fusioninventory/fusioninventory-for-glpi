@@ -62,11 +62,11 @@ class PluginFusioninventoryInventoryComputerImport_Drive extends CommonDBTM {
    function AddUpdateItem($type, $items_id, $dataSection) {
 
       $pfConfig = new PluginFusioninventoryConfig();
-      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+      if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
               "component_drive", 'inventory') == '0') {
          return;
       }
-      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+      if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
               "component_networkdrive", 'inventory') == '0') {
          if (isset($dataSection['TYPE'])
                  AND $dataSection['TYPE'] == 'Network Drive') {

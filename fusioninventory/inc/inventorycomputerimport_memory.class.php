@@ -62,7 +62,7 @@ class PluginFusioninventoryInventoryComputerImport_Memory extends CommonDBTM {
    function AddUpdateItem($type, $items_id, $dataSection) {
 
       $pfConfig = new PluginFusioninventoryConfig();
-      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+      if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
               "component_memory", 'inventory') == '0') {
          return;
       }

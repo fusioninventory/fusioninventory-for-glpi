@@ -60,7 +60,7 @@ class PluginFusioninventoryInventoryComputerImport_Software extends CommonDBTM  
       global $DB;
 
       $pfConfig = new PluginFusioninventoryConfig();
-      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+      if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
               "import_software", 'inventory') == '0') {
          return;
       }

@@ -473,7 +473,7 @@ class PluginFusioninventoryInventoryComputerInventory {
     */
    static function addDefaultStateIfNeeded(&$input, $check_management = false, $management_value = 0) {
       $config = new PluginFusioninventoryConfig();
-      $state = $config->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+      $state = $config->getValue($_SESSION["plugin_fusioninventory_moduleid"],
               "states_id_default", 'inventory');
       if ($state) {
          if (!$check_management || ($check_management && !$management_value)) {
