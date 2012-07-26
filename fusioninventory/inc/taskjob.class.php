@@ -356,9 +356,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='4'>";
       if ($type == 'definition') {
-         echo _("Definition");
+         echo __('Definition');
       } else if ($type == 'action') {
-         echo _("Action");
+         echo __('Action');
       }
       echo "</th>";
       echo "</tr>";

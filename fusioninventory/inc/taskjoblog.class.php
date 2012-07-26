@@ -723,10 +723,10 @@ function appear_array(id){
          }
       }
       $input = array();
-      $input[_("Started")] = $finishState[2];
-      $input[_("Ok")] = $finishState[3];
-      $input[_("Error / rescheduled")] = $finishState[4];
-      $input[_("Error")] = $finishState[5];
+      $input[__('Started')] = $finishState[2];
+      $input[__('Ok')] = $finishState[3];
+      $input[__('Error / rescheduled')] = $finishState[4];
+      $input[__('Error')] = $finishState[5];
       Stat::showGraph(array('status'=>$input),
                array('title'  => '',
                   'unit'      => '',

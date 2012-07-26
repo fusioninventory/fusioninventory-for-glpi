@@ -94,7 +94,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5157]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5157]['field']     = 'operatingsystem_installationdate';
          $sopt[5157]['linkfield'] = '';
-         $sopt[5157]['name']      = _("Operating system")." - ".__('Installation')." (".strtolower(__('Date')).")";
+         $sopt[5157]['name']      = __('Operating system')." - ".__('Installation')." (".strtolower(__('Date')).")";
          $sopt[5157]['datatype']  = 'date';
 
          $sopt[5158]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';

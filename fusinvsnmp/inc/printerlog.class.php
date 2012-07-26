@@ -591,29 +591,29 @@ class PluginFusinvsnmpPrinterLog extends CommonDBTM {
          $result = $DB->query($query);
 
          $calendarDay = array (
-               _("Monday"),
-               _("Tuesday"),
-               _("Wednesday"),
-               _("Thursday"),
-               _("Friday"),
-               _("Saturday"),
-               _("Sunday"),
-               _("Sunday")
+               __('Monday'),
+               __('Tuesday'),
+               __('Wednesday'),
+               __('Thursday'),
+               __('Friday'),
+               __('Saturday'),
+               __('Sunday'),
+               __('Sunday')
          );
 
          $calendarMonth = array (
-               _("January"),
-               _("February"),
-               _("March"),
-               _("April"),
-               _("May"),
-               _("June"),
-               _("July"),
-               _("August"),
-               _("September"),
-               _("October"),
-               _("November"),
-               _("December")
+               __('January'),
+               __('February'),
+               __('March'),
+               __('April'),
+               __('May'),
+               __('June'),
+               __('July'),
+               __('August'),
+               __('September'),
+               __('October'),
+               __('November'),
+               __('December')
          );
 
          if ($result) {

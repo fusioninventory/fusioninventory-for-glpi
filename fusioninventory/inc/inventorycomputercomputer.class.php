@@ -142,7 +142,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       if (Html::convDate($a_computerextend['operatingsystem_installationdate']) == '') {
          echo "<td colspan='2'></td>";
       } else {
-         echo "<td>"._("Operating system")." - ".__('Installation')." (".strtolower(__('Date')).")&nbsp;:</td>";
+         echo "<td>".__('Operating system')." - ".__('Installation')." (".strtolower(__('Date')).")&nbsp;:</td>";
          echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
       }
       echo '</tr>';
