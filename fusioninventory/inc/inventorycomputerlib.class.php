@@ -184,7 +184,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
             $this->addLibMachine($internalId, $items_id);
 
-            $pfLibhook->writeXMLFusion($items_id, $xml->asXML());
+            $pfInventoryComputerLibhook->writeXMLFusion($items_id, $xml->asXML());
 
             $this->updateLibMachine($xmlSections, $internalId);
 
