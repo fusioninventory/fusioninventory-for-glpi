@@ -304,6 +304,8 @@ class PluginFusioninventoryCommunication {
       $_SESSION["glpiname"] = $user->fields['name'];
       $_SESSION['glpiactiveprofile'] = array();
       $_SESSION['glpiactiveprofile']['interface'] = '';
+      $_SESSION['glpiactiveprofile']['internet'] = 'w';
+      $_SESSION['glpiactiveprofile']['computer'] = 'w';
       $plugin = new Plugin();
       $plugin->init();
       $LOADED_PLUGINS = array();

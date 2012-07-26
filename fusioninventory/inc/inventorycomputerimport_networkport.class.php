@@ -62,6 +62,9 @@ class PluginFusioninventoryInventoryComputerImport_Networkport extends CommonDBT
    **/
    function AddUpdateItem($type, $items_id, $dataSection, $itemtype='Computer') {
 
+      $computer = new Computer();
+      $computer->getFromDB($items_id);
+      
       if ((!isset($dataSection['DESCRIPTION'])) AND
               (!isset($dataSection['IPADDRESS']))
              AND (!isset($dataSection['MACADDR']))
@@ -80,50 +83,96 @@ class PluginFusioninventoryInventoryComputerImport_Networkport extends CommonDBT
       }
 
       $NetworkPort = new NetworkPort();
+      $networkName = new NetworkName();
 
       $a_NetworkPort = array();
+      $a_NetworkName = array();
 
       if ($type == 'update') {
-         $NetworkPort->getFromDB($items_id);
-         $a_NetworkPort = array();
-         $a_NetworkPort['id'] = $NetworkPort->fields['id'];
+         $networkName->getFromDB($items_id);
+         $a_NetworkName = array();
+         $a_NetworkName['id'] = $networkName->fields['id'];
+         $a_NetworkName['items_id'] = $networkName->fields['items_id'];
+//         $a_NetworkName['_ipaddresses'] = explode('\n', $networkName->fields['ip_addresses']);
       } else {
          $a_NetworkPort['items_id']=$items_id;
+         
+         if (!isset($a_NetworkName['items_id'])) {
+            // Find if this networkport yet exist
+            $a_networkports_find = current($NetworkPort->find("`items_id`='".$items_id."'
+                                                       AND `itemtype`='Computer'
+                                                       AND `name`='".$dataSection["DESCRIPTION"]."'", "", 1));
+            if (isset($a_networkports_find['id'])) {
+               $a_networknames_find = current($networkName->find("`items_id`='".$a_networkports_find['id']."'
+                                                                AND `itemtype`='NetworkPort'
+                                                                AND `name`='".$computer->fields['name']."'", "", 1));
+               if (isset($a_networknames_find['id'])) {
+                  $a_NetworkName = array();
+                  $a_NetworkName['id'] = $a_networknames_find['id'];
+                  $a_NetworkName['items_id'] = $a_networknames_find['items_id'];
+//                  $a_NetworkName['_ipaddresses'] = explode('\n', $a_networknames_find['ip_addresses']);
+               }
+            } else {
+               // Create networkport
+
+               $a_NetworkPort['itemtype'] = $itemtype;
+               if (isset($dataSection["DESCRIPTION"])) {
+                  $a_NetworkPort['name'] = $dataSection["DESCRIPTION"];
+               }
+   //            if (isset($dataSection["IPADDRESS"])) {
+   //               $a_NetworkPort['ip'] = $dataSection["IPADDRESS"];
+   //            }
+               if (isset($dataSection["MACADDR"])) {
+                  $a_NetworkPort['mac'] = $dataSection["MACADDR"];
+               }
+   //            if (isset($dataSection["TYPE"])) {
+   //               $a_NetworkPort["networkinterfaces_id"]
+   //                           = Dropdown::importExternal('NetworkInterface',
+   //                                                      $dataSection["TYPE"],
+   //                                                      $_SESSION["plugin_fusinvinventory_entity"]);
+   //            }
+   //            if (isset($dataSection["IPMASK"]))
+   //               $a_NetworkPort['netmask'] = $dataSection["IPMASK"];
+   //            if (isset($dataSection["IPGATEWAY"]))
+   //               $a_NetworkPort['gateway'] = $dataSection["IPGATEWAY"];
+   //            if (isset($dataSection["IPSUBNET"]))
+   //               $a_NetworkPort['subnet'] = $dataSection["IPSUBNET"];
+
+               $a_NetworkPort['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+
+               if (isset($dataSection["TYPE"])
+                       AND $dataSection["TYPE"] == 'Ethernet') {
+                  $a_NetworkPort['instantiation_type'] = 'NetworkPortEthernet';
+               } else {
+                  $a_NetworkPort['instantiation_type'] = 'NetworkPortLocal';
+               }
+               if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
+                  $a_NetworkPort['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+               }
+               $a_NetworkName['items_id'] = $NetworkPort->add($a_NetworkPort, array(), $_SESSION["plugin_fusinvinventory_history_add"]);
+            }
+         }         
       }
 
-      $a_NetworkPort['itemtype'] = $itemtype;
-      if (isset($dataSection["DESCRIPTION"])) {
-         $a_NetworkPort['name'] = $dataSection["DESCRIPTION"];
-      }
-      if (isset($dataSection["IPADDRESS"])) {
-         $a_NetworkPort['ip'] = $dataSection["IPADDRESS"];
-      }
-      if (isset($dataSection["MACADDR"])) {
-         $a_NetworkPort['mac'] = $dataSection["MACADDR"];
-      }
-      if (isset($dataSection["TYPE"])) {
-         $a_NetworkPort["networkinterfaces_id"]
-                     = Dropdown::importExternal('NetworkInterface',
-                                                $dataSection["TYPE"],
-                                                $_SESSION["plugin_fusinvinventory_entity"]);
-      }
-      if (isset($dataSection["IPMASK"]))
-         $a_NetworkPort['netmask'] = $dataSection["IPMASK"];
-      if (isset($dataSection["IPGATEWAY"]))
-         $a_NetworkPort['gateway'] = $dataSection["IPGATEWAY"];
-      if (isset($dataSection["IPSUBNET"]))
-         $a_NetworkPort['subnet'] = $dataSection["IPSUBNET"];
 
-      $a_NetworkPort['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+      
+      $a_NetworkName['name'] = $computer->fields['name'];
+      $a_NetworkName['itemtype'] = 'NetworkPort';
+
+      if (isset($dataSection['IPADDRESS'])) {
+         $a_NetworkName['_ipaddresses'][-100] = $dataSection['IPADDRESS'];
+      } else if (isset($dataSection['IPADDRESS6'])) {
+         $a_NetworkName['_ipaddresses'][-100] = $dataSection['IPADDRESS6'];
+      }
 
       $devID = 0;
-      if ($type == 'update') {
-         $NetworkPort->update($a_NetworkPort, $_SESSION["plugin_fusinvinventory_history_add"]);
+      if (isset($a_NetworkName['id'])) { // Update
+         $networkName->update($a_NetworkName, $_SESSION["plugin_fusinvinventory_history_add"]);
       } else {
          if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
-            $a_NetworkPort['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+            $a_NetworkName['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
          }
-         $devID = $NetworkPort->add($a_NetworkPort, array(), $_SESSION["plugin_fusinvinventory_history_add"]);
+         $devID = $networkName->add($a_NetworkName, array(), $_SESSION["plugin_fusinvinventory_history_add"]);
       }
       return $devID;
    }

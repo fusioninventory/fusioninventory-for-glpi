@@ -88,6 +88,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $input['autoupdatesystems_id'] = Dropdown::importExternal('AutoUpdateSystem',
                                                                    'FusionInventory',
                                                                    $_SESSION["plugin_fusinvinventory_entity"]);
+         $_SESSION['glpiactiveentities'] = array($Computer->fields['entities_id']);
          $_SESSION['glpiactiveentities_string'] = $Computer->fields['entities_id'];
          $input['is_ocs_import'] = 0;
          $Computer->update($input);
@@ -156,7 +157,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
             $_SESSION["plugin_fusinvinventory_entity"] = 0;
          }
-
+         $_SESSION['glpiactiveentities'] = array($_SESSION["plugin_fusinvinventory_entity"]);
+         $_SESSION['glpiactiveentities_string'] = $_SESSION["plugin_fusinvinventory_entity"];
+         
          //We launch CreateMachine() hook and provide an InternalId
          $xmlSections = $this->_getXMLSections($xml);
          $internalId = uniqid("", true);
