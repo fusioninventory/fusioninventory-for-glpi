@@ -157,6 +157,8 @@ class PluginFusioninventoryInventoryComputerImport_Networkport extends CommonDBT
 
       
       $a_NetworkName['name'] = $computer->fields['name'];
+      $a_NetworkName['entities_id'] = $computer->fields['entities_id'];
+      $a_NetworkName['is_recursive'] = 0;
       $a_NetworkName['itemtype'] = 'NetworkPort';
 
       if (isset($dataSection['IPADDRESS'])) {
