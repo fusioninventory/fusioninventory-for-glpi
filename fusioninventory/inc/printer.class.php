@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
+class PluginFusioninventoryPrinter extends PluginFusinvsnmpCommonDBTM {
    private $oFusionInventory_printer;
 
 
@@ -52,8 +52,8 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
    function __construct() {
       parent::__construct("glpi_printers");
       $this->dohistory=true;
-      $this->oFusionInventory_printer = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
-      $this->oFusionInventory_printer->type = 'PluginFusinvsnmpPrinter';
+      $this->oFusionInventory_printer = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
+      $this->oFusionInventory_printer->type = 'PluginFusioninventoryPrinter';
    }
 
 
@@ -102,7 +102,7 @@ class PluginFusinvsnmpPrinter extends PluginFusinvsnmpCommonDBTM {
       parent::load($p_id);
 
       $query = "SELECT `id`
-                FROM `glpi_plugin_fusinvsnmp_printers`
+                FROM `glpi_plugin_fusioninventory_printers`
                 WHERE `printers_id` = '".$this->getValue('id')."';";
       $result = $DB->query($query);
       if ($result) {

@@ -48,7 +48,7 @@ class PluginFusinvsnmpPrinterLogReport extends CommonDBTM {
 
    function __construct() {
       global $CFG_GLPI;
-      $this->table = "glpi_plugin_fusinvsnmp_printers";
+      $this->table = "glpi_plugin_fusioninventory_printers";
       $CFG_GLPI['glpitablesitemtype']["PluginFusinvsnmpPrinterLogReport"] = $this->table;
    }
 

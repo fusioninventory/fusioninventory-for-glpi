@@ -44,27 +44,27 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","r");
+PluginFusioninventoryProfile::checkRight("fusioninventory", "printer","r");
 
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
-      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","w");
+      PluginFusioninventoryProfile::checkRight("fusioninventory", "printer","w");
 
-   $plugin_fusioninventory_printer = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+   $plugin_fusioninventory_printer = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
 
    $_POST['printers_id'] = $_POST['id'];
    unset($_POST['id']);
 
    $query = "SELECT *
-             FROM `glpi_plugin_fusinvsnmp_printers`
+             FROM `glpi_plugin_fusioninventory_printers`
              WHERE `printers_id`='".$_POST['printers_id']."' ";
    $result = $DB->query($query);
 
    if ($DB->numrows($result) == "0") {
-      $queryInsert = "INSERT INTO `glpi_plugin_fusinvsnmp_printers`(`printers_id`)
+      $queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_printers`(`printers_id`)
                       VALUES('".$_POST['printers_id']."');";
       $DB->query($queryInsert);
       $query = "SELECT *
-                FROM `glpi_plugin_fusinvsnmp_printers`
+                FROM `glpi_plugin_fusioninventory_printers`
                 WHERE `printers_id`='".$_POST['printers_id']."' ";
       $result = $DB->query($query);
    }

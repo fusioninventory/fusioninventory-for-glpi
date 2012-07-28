@@ -443,7 +443,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importInfoPrinter().');
 
       $errors='';
-      $this->ptd = new PluginFusinvsnmpPrinter();
+      $this->ptd = new PluginFusioninventoryPrinter();
       $this->ptd->load($this->deviceId);
 
       $_SESSION["plugin_fusinvinventory_entity"] = $this->ptd->getValue('entities_id');

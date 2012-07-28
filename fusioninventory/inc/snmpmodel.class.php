@@ -205,12 +205,12 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
             break;
 
          case PRINTER_TYPE :
-            $query = "SELECT `glpi_plugin_fusinvsnmp_printers`.*,
+            $query = "SELECT `glpi_plugin_fusioninventory_printers`.*,
                         `glpi_plugin_fusioninventory_snmpmodelmibs`.*,
                         `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
-                      FROM `glpi_plugin_fusinvsnmp_printers`
+                      FROM `glpi_plugin_fusioninventory_printers`
                            LEFT JOIN `glpi_plugin_fusioninventory_snmpmodelmibs`
-                              ON `glpi_plugin_fusinvsnmp_printers`.`plugin_fusioninventory_snmpmodels_id`=
+                              ON `glpi_plugin_fusioninventory_printers`.`plugin_fusioninventory_snmpmodels_id`=
                                  `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_snmpmodels_id`
                            LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                               ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_mappings_id`=
@@ -261,7 +261,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
                break;
 
             case 'Printer':
-               $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+               $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
                $Printer = new Printer();
                if($Printer->getFromDB($device_id)) {
                   $Printer->check($device_id,'r');
@@ -319,7 +319,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
                      break;
 
                   case 'Printer':
-                     $query = "UPDATE `glpi_plugin_fusinvsnmp_printers`
+                     $query = "UPDATE `glpi_plugin_fusioninventory_printers`
                                SET `plugin_fusioninventory_snmpmodels_id`='".$plugin_fusinvsnmp_models_id."'
                                WHERE `printers_id`='".$device_id."'";
                      $DB->query($query);
@@ -412,7 +412,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
          $pfModel->getrightmodel($a_networkequipment['networkequipments_id'], "NetworkEquipment");
       }
       // Reload model for printers have sysdescr
-      $printerext = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+      $printerext = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
       $a_printers = $printerext->find("`sysdescr`!=''");
       foreach ($a_printers as $a_printer) {
          $pfModel->getrightmodel($a_printer['printers_id'], "Printer");

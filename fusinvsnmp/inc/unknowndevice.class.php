@@ -156,10 +156,10 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
       switch ($item_type) {
 
          case 'Printer':
-            $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
-            $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusinvsnmp_printers";
+            $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
+            $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusioninventory_printers";
             $query = "SELECT *
-                      FROM `glpi_plugin_fusinvsnmp_printers`
+                      FROM `glpi_plugin_fusioninventory_printers`
                       WHERE `printers_id`='".$items_id."' ";
             $result = $DB->query($query);
             if ($DB->numrows($result) > 0) {

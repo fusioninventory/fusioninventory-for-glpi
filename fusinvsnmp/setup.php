@@ -80,7 +80,7 @@ function plugin_init_fusinvsnmp() {
 
    Plugin::registerClass('PluginFusioninventorySnmpmodel');
    Plugin::registerClass('PluginFusioninventoryNetworkEquipment');
-   Plugin::registerClass('PluginFusinvsnmpPrinter');
+   Plugin::registerClass('PluginFusioninventoryPrinter');
    Plugin::registerClass('PluginFusinvsnmpPrinterCartridge');
    Plugin::registerClass('PluginFusinvsnmpConfigSecurity');
    Plugin::registerClass('PluginFusinvsnmpNetworkPortLog');
@@ -90,7 +90,7 @@ function plugin_init_fusinvsnmp() {
    Plugin::registerClass('PluginFusinvsnmpStateDiscovery');
    Plugin::registerClass('PluginFusinvsnmpPrinterLogReport');
 
-   $CFG_GLPI['glpitablesitemtype']["PluginFusinvsnmpPrinterLogReport"] = "glpi_plugin_fusinvsnmp_printers";
+   $CFG_GLPI['glpitablesitemtype']["PluginFusinvsnmpPrinterLogReport"] = "glpi_plugin_fusioninventory_printers";
 
    // ##### 3. get informations of the plugin #####
 

@@ -587,6 +587,30 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkporttypes` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_printers`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_printers` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `printers_id` int(11) NOT NULL DEFAULT '0',
+   `sysdescr` text COLLATE utf8_unicode_ci DEFAULT NULL,
+   `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+   `frequence_days` int(5) NOT NULL DEFAULT '1',
+   `last_fusioninventory_update` datetime DEFAULT NULL,
+   PRIMARY KEY (`id`),
+   UNIQUE KEY `unicity` (`printers_id`),
+   KEY `plugin_fusinvsnmp_configsecurities_id` (`plugin_fusinvsnmp_configsecurities_id`),
+   KEY `printers_id` (`printers_id`),
+   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+
+
+
+
+
 
 
 

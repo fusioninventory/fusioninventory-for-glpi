@@ -118,7 +118,7 @@ UNION
 SELECT `glpi_printers`.`name`, `last_fusioninventory_update`, `serial`, `otherserial`,
    `printermodels_id`, 0 as `network_id`, `glpi_printers`.`id` as `printer_id`,
    `plugin_fusioninventory_snmpmodels_id`, `plugin_fusinvsnmp_configsecurities_id`, `ip`
-   FROM `glpi_plugin_fusinvsnmp_printers`
+   FROM `glpi_plugin_fusioninventory_printers`
 JOIN `glpi_printers` on `printers_id` = `glpi_printers`.`id`
 LEFT JOIN `glpi_networkports` on `glpi_networkports`.`items_id` = `glpi_printers`.`id`
 WHERE (NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL)

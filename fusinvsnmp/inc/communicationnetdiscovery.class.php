@@ -596,7 +596,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             }
 
             // Update SNMP informations
-            $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+            $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
             $a_snmpprinters = $pfPrinter->find("`printers_id`='".$item->getID()."'");
             if (count($a_snmpprinters) > 0) {
                $a_snmpprinter = current($a_snmpprinters);

@@ -117,7 +117,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                          `glpi_networkports`.`ip` AS `gnifaddr`,
                          `plugin_fusinvsnmp_configsecurities_id`, `plugin_fusioninventory_snmpmodels_id`
                   FROM `glpi_printers`
-                  LEFT JOIN `glpi_plugin_fusinvsnmp_printers`
+                  LEFT JOIN `glpi_plugin_fusioninventory_printers`
                           ON `printers_id`=`glpi_printers`.`id`
                   LEFT JOIN `glpi_networkports`
                           ON `items_id`=`glpi_printers`.`id`
@@ -173,7 +173,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
                          `glpi_networkports`.`ip` AS `gnifaddr`,
                          `plugin_fusinvsnmp_configsecurities_id`, `plugin_fusioninventory_snmpmodels_id`
                   FROM `glpi_printers`
-                  LEFT JOIN `glpi_plugin_fusinvsnmp_printers`
+                  LEFT JOIN `glpi_plugin_fusioninventory_printers`
                           ON `printers_id`=`glpi_printers`.`id`
                   LEFT JOIN `glpi_networkports`
                           ON `items_id`=`glpi_printers`.`id`
@@ -500,7 +500,7 @@ class PluginFusinvsnmpSnmpinventory extends PluginFusioninventoryCommunication {
       $NetworkEquipment = new NetworkEquipment();
       $NetworkPort = new NetworkPort();
       $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
-      $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusinvsnmp_printers");
+      $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
 
       $modelslistused = array();
       $current = current($a_Taskjobstates);
