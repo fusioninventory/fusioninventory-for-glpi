@@ -46,7 +46,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 Session::checkRight("config","w");
 
-$pfNetworkporttype = new PluginFusinvsnmpNetworkporttype();
+$pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
 
 if (isset($_POST['type_to_add'])) {
    foreach ($_POST['type_to_add'] as $id) {

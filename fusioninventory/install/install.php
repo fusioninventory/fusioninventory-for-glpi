@@ -327,7 +327,9 @@ function pluginFusioninventoryInstall($version, $migration='') {
    $migration->displayMessage("Create rules");
    $pfSetup = new PluginFusioninventorySetup();
    $pfSetup->initRules();
-
+   
+   $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
+   $pfNetworkporttype->init();
 
    // Import models
    PluginFusioninventorySnmpmodel::importAllModels();

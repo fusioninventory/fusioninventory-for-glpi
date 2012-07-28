@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginFusinvsnmpNetworkporttype extends CommonDBTM {
+class PluginFusioninventoryNetworkporttype extends CommonDBTM {
 
 
    function init() {

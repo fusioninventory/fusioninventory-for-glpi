@@ -1,27 +1,216 @@
+## obsolete tables
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_mac`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computers`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_snmp_networking`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_connection_history`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_connection_stats`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_discovery`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_errors`;
+#DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol`;
+#DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol`;
+#DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_version`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_walks`;
+
+## renamed tables
+#DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_mib_label`;
+#DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_mib_object`;
+#DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_mib_oid`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents_inventory_state`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_modules`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_snmp_history`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_construct_device`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_construct_walks`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_construct_mibs`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lock`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lockable`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_mib_networking`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_model_infos`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networking`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networking_ifaddr`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networking_ports`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_printers_history`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_rangeip`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmp_history_connections`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmp_connection`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmp_history`;
+#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_task`;
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_miblabels`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_miblabels` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_mibobjects`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_mibobjects` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_miboids`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_miboids` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_configlogfields`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_configlogfields` (
+   `id` int(8) NOT NULL AUTO_INCREMENT,
+   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
+   `days` int(255) NOT NULL DEFAULT '-1',
+   PRIMARY KEY ( `id` ) ,
+   KEY `plugin_fusioninventory_mappings_id` ( `plugin_fusioninventory_mappings_id` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_constructdevices`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevices` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `manufacturers_id` int(11) NOT NULL DEFAULT '0',
+   `sysdescr` text DEFAULT NULL,
+   `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
+   `networkmodel_id` int(11) NOT NULL DEFAULT '0',
+   `printermodel_id` int(11) NOT NULL DEFAULT '0',
+   `have_someinformations` tinyint(1) NOT NULL DEFAULT '0',
+   `have_importantinformations` tinyint(1) NOT NULL DEFAULT '0',
+   `have_ports` tinyint(1) NOT NULL DEFAULT '0',
+   `have_portsconnections` tinyint(1) NOT NULL DEFAULT '0',
+   `have_vlan` tinyint(1) NOT NULL DEFAULT '0',
+   `have_trunk` tinyint(1) NOT NULL DEFAULT '0',
+   `released` tinyint(1) NOT NULL DEFAULT '0',
+   `releasedsnmpmodel_id` int(11) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`),
+   KEY `plugin_fusinvsnmp_models_id` ( `manufacturers_id`, `plugin_fusinvsnmp_models_id` ),
+   KEY `itemtype` ( `itemtype` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_constructdevicewalks`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevicewalks` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `plugin_fusinvsnmp_constructdevices_id` int(11) NOT NULL DEFAULT '0',
+   `log` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `plugin_fusinvsnmp_constructdevices_id` ( `plugin_fusinvsnmp_constructdevices_id` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_constructdevice_miboids`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `plugin_fusinvsnmp_miboids_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusinvsnmp_constructdevices_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
+   `oid_port_counter` tinyint(1) NOT NULL DEFAULT '0',
+   `oid_port_dyn` tinyint(1) NOT NULL DEFAULT '0',
+   `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+   `vlan` tinyint(1) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`),
+   UNIQUE KEY `unicity` (`plugin_fusinvsnmp_miboids_id`, `plugin_fusinvsnmp_constructdevices_id`, `plugin_fusioninventory_mappings_id`),
+   KEY `itemtype` ( `itemtype` )
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkportconnectionlogs`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_networkportconnectionlogs` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `date_mod` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+   `creation` tinyint(1) NOT NULL DEFAULT '0',
+   `networkports_id_source` int(11) NOT NULL DEFAULT '0',
+   `networkports_id_destination` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_agentprocesses_id` int(11) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`),
+   KEY `networkports_id_source` ( `networkports_id_source`, `networkports_id_destination`, `plugin_fusioninventory_agentprocesses_id` ),
+   KEY `date_mod` (`date_mod`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_modelmibs`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_modelmibs` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusinvsnmp_miblabels_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusinvsnmp_miboids_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusinvsnmp_mibobjects_id` int(11) NOT NULL DEFAULT '0',
+   `oid_port_counter` tinyint(1) NOT NULL DEFAULT '0',
+   `oid_port_dyn` tinyint(1) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
+   `is_active` tinyint(1) NOT NULL DEFAULT '1',
+   `vlan` tinyint(1) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`),
+   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`),
+   KEY `plugin_fusinvsnmp_models_id_2` (`plugin_fusinvsnmp_models_id`,`oid_port_dyn`),
+   KEY `plugin_fusinvsnmp_models_id_3` (`plugin_fusinvsnmp_models_id`,`oid_port_counter`,`plugin_fusioninventory_mappings_id`),
+   KEY `plugin_fusinvsnmp_models_id_4` (`plugin_fusinvsnmp_models_id`,`plugin_fusioninventory_mappings_id`),
+   KEY `oid_port_dyn` (`oid_port_dyn`),
+   KEY `is_active` (`is_active`),
+   KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_models`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_models` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+   `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+   `discovery_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
+   PRIMARY KEY (`id`),
+   KEY `name` (`name`),
+   KEY `itemtype` (`itemtype`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_networkequipments`;
+
+CREATE TABLE `glpi_plugin_fusinvsnmp_networkequipments` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `networkequipments_id` int(11) NOT NULL DEFAULT '0',
+   `sysdescr` text COLLATE utf8_unicode_ci DEFAULT NULL,
+   `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+   `uptime` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+   `cpu` int(3) NOT NULL DEFAULT '0' COMMENT '%',
+   `memory` int(11) NOT NULL DEFAULT '0',
+   `last_fusioninventory_update` datetime DEFAULT NULL,
+   `last_PID_update` int(11) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`),
+   KEY `networkequipments_id` (`networkequipments_id`),
+   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`,`plugin_fusinvsnmp_configsecurities_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 
@@ -94,7 +283,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_printers` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `printers_id` int(11) NOT NULL DEFAULT '0',
    `sysdescr` text COLLATE utf8_unicode_ci DEFAULT NULL,
-   `plugin_fusioninventory_snmpmodels_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `frequence_days` int(5) NOT NULL DEFAULT '1',
    `last_fusioninventory_update` datetime DEFAULT NULL,
@@ -102,7 +291,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_printers` (
    UNIQUE KEY `unicity` (`printers_id`),
    KEY `plugin_fusinvsnmp_configsecurities_id` (`plugin_fusinvsnmp_configsecurities_id`),
    KEY `printers_id` (`printers_id`),
-   KEY `plugin_fusioninventory_snmpmodels_id` (`plugin_fusioninventory_snmpmodels_id`)
+   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
@@ -179,7 +368,7 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_unknowndevices` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `plugin_fusioninventory_unknowndevices_id` int(11) NOT NULL DEFAULT '0',
    `sysdescr` text DEFAULT NULL,
-   `plugin_fusioninventory_snmpmodels_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `plugin_fusioninventory_unknowndevices_id` (`plugin_fusioninventory_unknowndevices_id`)
@@ -244,19 +433,19 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL, 'PluginFusinvsnmpConfigSecurity', '9', '6', '0'),
           (NULL, 'PluginFusinvsnmpConfigSecurity', '10', '7', '0'),
 
-          (NULL,'PluginFusioninventoryNetworkEquipment', '2', '1', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '3', '2', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '4', '3', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '5', '4', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '6', '5', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '7', '6', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '8', '7', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '9', '8', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '10', '9', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '11', '10', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '14', '11', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '12', '12', '0'),
-          (NULL,'PluginFusioninventoryNetworkEquipment', '13', '13', '0'),
+          (NULL,'PluginFusinvsnmpNetworkEquipment', '2', '1', '0'),
+          (NULL,'PluginFusinvsnmpNetworkEquipment', '3', '2', '0'),
+          (NULL,'PluginFusinvsnmpNetworkEquipment', '4', '3', '0'),
+          (NULL,'PluginFusinvsnmpNetworkEquipment', '5', '4', '0'),
+          (NULL,'PluginFusinvsnmpNetworkEquipment', '6', '5', '0'),
+          (NULL,'PluginFusinvsnmpNetworkEquipment', '7', '6', '0'),
+          (NULL,'PluginFusinvsnmpNetworkEquipment', '8', '7', '0'),
+          (NULL,'PluginFusinvsnmpNetworkEquipment', '9', '8', '0'),
+          (NULL,'PluginFusinvsnmpNetworkEquipment', '10', '9', '0'),
+          (NULL,'PluginFusinvsnmpNetworkEquipment', '11', '10', '0'),
+          (NULL,'PluginFusinvsnmpNetworkEquipment', '14', '11', '0'),
+          (NULL,'PluginFusinvsnmpNetworkEquipment', '12', '12', '0'),
+          (NULL,'PluginFusinvsnmpNetworkEquipment', '13', '13', '0'),
 
           (NULL,'PluginFusinvsnmpAgent', '8', '1', '0'),
           (NULL,'PluginFusinvsnmpAgent', '9', '2', '0'),
@@ -309,19 +498,19 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           ('NetworkEquipment','firmware2','','',2,NULL),
           ('NetworkEquipment','contact','glpi_networkequipments','contact',403,NULL),
           ('NetworkEquipment','comments','glpi_networkequipments','comment',404,NULL),
-          ('NetworkEquipment','uptime','glpi_plugin_fusioninventory_networkequipments',
+          ('NetworkEquipment','uptime','glpi_plugin_fusinvsnmp_networkequipments',
              'uptime',3,NULL),
-          ('NetworkEquipment','cpu','glpi_plugin_fusioninventory_networkequipments',
+          ('NetworkEquipment','cpu','glpi_plugin_fusinvsnmp_networkequipments',
              'cpu',12,NULL),
-          ('NetworkEquipment','cpuuser','glpi_plugin_fusioninventory_networkequipments',
+          ('NetworkEquipment','cpuuser','glpi_plugin_fusinvsnmp_networkequipments',
              'cpu',401,NULL),
-          ('NetworkEquipment','cpusystem','glpi_plugin_fusioninventory_networkequipments',
+          ('NetworkEquipment','cpusystem','glpi_plugin_fusinvsnmp_networkequipments',
              'cpu',402,NULL),
           ('NetworkEquipment','serial','glpi_networkequipments','serial',13,NULL),
           ('NetworkEquipment','otherserial','glpi_networkequipments','otherserial',419,NULL),
           ('NetworkEquipment','name','glpi_networkequipments','name',20,NULL),
           ('NetworkEquipment','ram','glpi_networkequipments','ram',21,NULL),
-          ('NetworkEquipment','memory','glpi_plugin_fusioninventory_networkequipments',
+          ('NetworkEquipment','memory','glpi_plugin_fusinvsnmp_networkequipments',
              'memory',22,NULL),
           ('NetworkEquipment','vtpVlanName','','',19,NULL),
           ('NetworkEquipment','vmvlan','','',430,NULL),

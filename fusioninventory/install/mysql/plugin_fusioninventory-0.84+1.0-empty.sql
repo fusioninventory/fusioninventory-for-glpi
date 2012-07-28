@@ -574,6 +574,20 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkequipments` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkporttypes`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_networkporttypes` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(255) DEFAULT NULL,
+   `number` int(4) NOT NULL DEFAULT '0',
+   `othername` varchar(255) DEFAULT NULL,
+   `import` tinyint(1) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+
 
 
 
