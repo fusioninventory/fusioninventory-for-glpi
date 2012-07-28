@@ -72,7 +72,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       foreach ($input as $key => $value) {
          $this->addValues($plugin_id, array($key => $value), '');
       }
-
+      
+      $input = array();
       $input['import_monitor']         = 2;
       $input['import_printer']         = 2;
       $input['import_peripheral']      = 2;
@@ -100,6 +101,16 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       foreach ($input as $key => $value) {
          $this->addValues($plugin_id, array($key => $value), 'inventory');
       }
+      
+      $input = array();
+      $input['threads_netdiscovery'] = 1;
+      $input['threads_snmpquery'] = 1;
+
+      foreach ($input as $key => $value) {
+         $this->addValues($plugin_id, array($key => $value), 'network');
+      }
+      
+      
    }
 
 
@@ -195,6 +206,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          $array_ret[0] = __('General configuration');
 
          $array_ret[1] = __('Computer Inventory');
+         
+         $array_ret[2] = __('Network Inventory');
 
          return $array_ret;
       }
@@ -218,6 +231,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          $item->showForm();
       } else if ($tabnum == '1') {
          $item->showFormInventory();
+      } else if ($tabnum == '2') {
+         $item->showFormNetworkInventory();
       }
       return true;
    }
@@ -606,6 +621,58 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       return true;
    }
 
+
+   
+   /**
+   * Display form for config tab in network inventory config form
+   *
+   * @param $options array
+   *
+   * @return bool true if form is ok
+   *
+   **/
+   static function showFormNetworkInventory($options=array()) {
+      global $CFG_GLPI;
+
+      $pfConfig = new PluginFusioninventoryConfig();
+      $pfsnmpConfig = new self();
+
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
+
+      $pfsnmpConfig->fields['id'] = 1;
+      $pfsnmpConfig->showFormHeader($options);
+
+      echo "<tr>";
+      echo "<th colspan='4'>";
+      echo __('Network options');
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Threads number')."&nbsp;(".strtolower(__('Network discovery')).")&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("threads_netdiscovery", 
+                            $pfConfig->getValue($plugins_id, 'threads_netdiscovery', 'network'),1,400);
+      echo "</td>";
+      echo "<td>".__('Threads number')."&nbsp;(".strtolower(__('Network inventory (SNMP)')).")&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("threads_snmpquery", 
+                            $pfConfig->getValue($plugins_id, 'threads_snmpquery', 'network'),1,400);
+      echo "</td>";
+      echo "</tr>";
+      
+      $options['candel'] = false;
+      $pfsnmpConfig->showFormButtons($options);
+
+      $pfConfigLogField = new PluginFusioninventoryConfigLogField();
+      $pfConfigLogField->showForm(array('target'=>$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/functionalities.form.php"));
+
+      $pfNetworkporttype = new PluginFusinvsnmpNetworkporttype();
+      $pfNetworkporttype->showNetworkporttype();
+      
+      return true;
+   }
+   
 
 
    /**
