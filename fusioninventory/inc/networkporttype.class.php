@@ -289,7 +289,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       $input['234'] = 'atmbond';
 
       $install = 1;
-      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkporttypes`
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_networkporttypes`
          WHERE `import`='1'";
       $result=$DB->query($query);
       if ($DB->numrows($result) > 0) {
@@ -297,7 +297,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       }
 
       foreach ($input as $number=>$name) {
-         $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_networkporttypes`
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_networkporttypes`
             WHERE `number`='".$number."'";
          $result=$DB->query($query);
          if ($DB->numrows($result) == '0') {
@@ -317,7 +317,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
 
                }
             }
-            $queryi = "INSERT INTO `glpi_plugin_fusinvsnmp_networkporttypes`
+            $queryi = "INSERT INTO `glpi_plugin_fusioninventory_networkporttypes`
                (`id`, `name`, `number`, `othername`, `import`)
                VALUES (NULL, '".$name."', '".$number."', '".$name."(".$number.")', '".$import."')";
             $DB->query($queryi);
