@@ -12,7 +12,7 @@ $snmpwalkCmd = "snmpwalk";
 # you can launch snmpwalk on a remote machine through ssh:
 #tunnel="0",command="/usr/bin/snmpwalk $SSH_ORIGINAL_COMMAND" ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA0FqlGjmx6IxuPihc1B1zN1gTnGZoQs1SenUaRkmUD+gbUWbfhUBbPRJIIFicNjsr6toerAQM/YKfZnmYG5BnYKgJPbKdkpdrSTMwSUqccDFH8tu6lIoRFiqZgajIznUls3Mhz5B4JXErapbQN/7cWnpvuG8vdZu56N19T0/gYdlTf8a71liva20zBk+y+pdWWsd4l2zBLm6tkmMWqYL/Xj/jY92gLzY0Dm0IFiBfV9gk4UBWh6jycLBZGbdqx25XqK8L8Ob9oyhJhtsCNeft1c6xzNAM21WYH4/trtwYgHaEA1LLN4IbY9+lJfJamN9ii4acyfMz/J+lQsnw3yTlOw== root@mysnmpmachine
 
-$outputDir = GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/walk';
+$outputDir = GLPI_PLUGIN_DOC_DIR.'/fusioninventory/walk';
 
 if (mkdir($outputDir) && !is_dir($outputDir)) {
   echo("Failed to create $outputDir\n");
