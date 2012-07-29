@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpPrinterCartridge extends CommonDBTM {
+class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
 
 
 

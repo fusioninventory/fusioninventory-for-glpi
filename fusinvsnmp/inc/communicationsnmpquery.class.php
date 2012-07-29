@@ -865,7 +865,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       foreach ($p_cartridges->children() as $name=>$child) {
          $plugin_fusioninventory_mappings = $pfMapping->get("Printer", strtolower($name));
          if ($plugin_fusioninventory_mappings) {
-            $pfPrinterCartridge = new PluginFusinvsnmpPrinterCartridge();
+            $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
             $a_cartridges = $pfPrinterCartridge->find("`printers_id`='".$this->deviceId."'
                AND `plugin_fusioninventory_mappings_id`='".$plugin_fusioninventory_mappings['id']."'",
                "", 1);

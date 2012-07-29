@@ -861,7 +861,7 @@ function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
                array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_info.form.php'));
    echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
 
-   $pfPrinterCartridge = new PluginFusinvsnmpPrinterCartridge();
+   $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
    $pfPrinterCartridge->showForm($_POST['id'],
                array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_info.form.php'));
 
@@ -2307,7 +2307,7 @@ function plugin_item_purge_fusinvsnmp($parm) {
          $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printers`
                           WHERE `printers_id`='".$parm->fields["id"]."';";
          $DB->query($query_delete);
-         $query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_printercartridges`
+         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printercartridges`
                           WHERE `printers_id`='".$parm->fields["id"]."';";
          $DB->query($query_delete);
          $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printerlogs`

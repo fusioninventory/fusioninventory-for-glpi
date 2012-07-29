@@ -630,6 +630,23 @@ CREATE TABLE `glpi_plugin_fusioninventory_printerlogs` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printercartridges`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_printercartridges` (
+   `id` bigint(100) NOT NULL AUTO_INCREMENT,
+   `printers_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
+   `cartridges_id` int(11) NOT NULL DEFAULT '0',
+   `state` int(3) NOT NULL DEFAULT '100',
+   PRIMARY KEY (`id`),
+   KEY `printers_id` (`printers_id`),
+   KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`),
+   KEY `cartridges_id` (`cartridges_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+
 
 
 
