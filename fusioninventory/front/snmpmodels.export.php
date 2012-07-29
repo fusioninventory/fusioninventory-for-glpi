@@ -50,7 +50,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
 
-$pfImportExport = new PluginFusinvsnmpImportExport();
+$pfImportExport = new PluginFusioninventorySnmpmodelImportExport();
 
 header("Expires: 0");
 header("Cache-control: private");

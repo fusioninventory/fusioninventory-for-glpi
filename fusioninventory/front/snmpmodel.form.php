@@ -48,7 +48,7 @@ PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
 
 $pfModel = new PluginFusioninventorySnmpmodel();
 $pfModelMib = new PluginFusioninventorySnmpmodelMib();
-$pfImportExport = new PluginFusinvsnmpImportExport();
+$pfImportExport = new PluginFusioninventorySnmpmodelImportExport();
 
 Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
 

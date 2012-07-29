@@ -818,7 +818,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
    function exportmodels() {
       global $DB;
 
-      $pfiie = new PluginFusinvsnmpImportExport();
+      $pfiie = new PluginFusioninventorySnmpmodelImportExport();
 
       $query_models = "SELECT * FROM glpi_plugin_fusioninventory_snmpmodels";
       if ($result_models = $DB->query($query_models)) {

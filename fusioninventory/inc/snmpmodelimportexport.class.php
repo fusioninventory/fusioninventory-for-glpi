@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpImportExport extends CommonGLPI {
+class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
 
    /**
@@ -447,7 +447,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
    function import_netdiscovery($p_xml, $agentKey) {
 
       PluginFusioninventoryCommunication::addLog(
-         'Function PluginFusinvsnmpImportExport->import_netdiscovery().');
+         'Function PluginFusioninventorySnmpmodelImportExport->import_netdiscovery().');
 
       $ptap = new PluginFusinvsnmpStateDiscovery();
       $pta  = new PluginFusioninventoryAgent();

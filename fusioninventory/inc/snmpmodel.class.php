@@ -378,7 +378,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       }
 
       // Import models
-      $importexport = new PluginFusinvsnmpImportExport();
+      $importexport = new PluginFusioninventorySnmpmodelImportExport();
 
       $nb = 0;
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {

@@ -94,7 +94,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
 
       if ($pfTaskjobstate->getFromDB($p_CONTENT->PROCESSNUMBER)) {
          if ($pfTaskjobstate->fields['state'] != "3") {
-            $pfImportExport = new PluginFusinvsnmpImportExport();
+            $pfImportExport = new PluginFusioninventorySnmpmodelImportExport();
             $errors.=$pfImportExport->import_netdiscovery($p_CONTENT, $p_DEVICEID);
             if (isset($p_CONTENT->AGENT->END)) {
                if ((isset($p_CONTENT->DICO)) AND ($p_CONTENT->DICO == "REQUEST")) {
