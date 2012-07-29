@@ -3496,6 +3496,158 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       
       
+   /*
+    * glpi_plugin_fusioninventory_networkports
+    */
+      $newTable = "glpi_plugin_fusioninventory_networkports";
+      $migration->renameTable("glpi_plugin_fusinvsnmp_networkports",
+                              $newTable);
+      $migration->renameTable("glpi_plugin_tracker_networking_ports",
+                              $newTable);
+      if (!TableExists($newTable)) {
+         $DB->query('CREATE TABLE `'.$newTable.'` (
+                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        PRIMARY KEY (`id`)
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "networkports_id",
+                                 "networkports_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "ifmtu",
+                                 "ifmtu",
+                                 "int(8) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "ifspeed",
+                                 "ifspeed",
+                                 "bigint(50) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "ifinternalstatus",
+                                 "ifinternalstatus",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "ifconnectionstatus",
+                                 "ifconnectionstatus",
+                                 "int(8) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "iflastchange",
+                                 "iflastchange",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "ifinoctets",
+                                 "ifinoctets",
+                                 "bigint(50) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "ifinerrors",
+                                 "ifinerrors",
+                                 "bigint(50) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "ifoutoctets",
+                                 "ifoutoctets",
+                                 "bigint(50) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "ifouterrors",
+                                 "ifouterrors",
+                                 "bigint(50) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "ifstatus",
+                                 "ifstatus",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "mac",
+                                 "mac",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "ifdescr",
+                                 "ifdescr",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "portduplex",
+                                 "portduplex",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "trunk",
+                                 "trunk",
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "lastup",
+                                 "lastup",
+                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+      $migration->migrationOneTable($newTable);
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "FK_networking_ports",
+                                 "networkports_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "ifmac",
+                                 "mac",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->dropKey($newTable,
+                             "FK_networking_ports");
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "networkports_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "ifmtu",
+                                 "int(8) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "ifspeed",
+                                 "bigint(50) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "ifinternalstatus",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "ifconnectionstatus",
+                                 "int(8) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "iflastchange",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "ifinoctets",
+                                 "bigint(50) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "ifinerrors",
+                                 "bigint(50) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "ifoutoctets",
+                                 "bigint(50) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "ifouterrors",
+                                 "bigint(50) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "ifstatus",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "mac",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "ifdescr",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "portduplex",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "trunk",
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "lastup",
+                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+         $migration->addKey($newTable,
+                            "networkports_id");
+      $migration->migrationOneTable($newTable);
       
       
       

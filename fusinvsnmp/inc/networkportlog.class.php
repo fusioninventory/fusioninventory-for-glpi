@@ -260,7 +260,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
 
    static function networkport_addLog($port_id, $value_new, $field) {
-      $pfNetworkPort = new PluginFusinvsnmpNetworkPort;
+      $pfNetworkPort = new PluginFusioninventoryNetworkPort();
       $pfNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
       $pfConfigLogField = new PluginFusioninventoryConfigLogField();
       $pfMapping = new PluginFusioninventoryMapping();

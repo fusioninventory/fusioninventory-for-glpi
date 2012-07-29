@@ -502,35 +502,35 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
 
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'ifmtu';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
    $a_input['tablefield']  = 'ifmtu';
    $a_input['locale']      = 4;
    $pFusioninventoryMapping->set($a_input);
 
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'ifspeed';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
    $a_input['tablefield']  = 'ifspeed';
    $a_input['locale']      = 5;
    $pFusioninventoryMapping->set($a_input);
 
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'ifinternalstatus';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
    $a_input['tablefield']  = 'ifinternalstatus';
    $a_input['locale']      = 6;
    $pFusioninventoryMapping->set($a_input);
 
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'iflastchange';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
    $a_input['tablefield']  = 'iflastchange';
    $a_input['locale']      = 7;
 
    $pFusioninventoryMapping->set($a_input);
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'ifinoctets';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
    $a_input['tablefield']  = 'ifinoctets';
    $a_input['locale']      = 8;
    $pFusioninventoryMapping->set($a_input);
@@ -538,7 +538,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $pFusioninventoryMapping->set($a_input);
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'ifoutoctets';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
    $a_input['tablefield']  = 'ifoutoctets';
    $a_input['locale']      = 9;
    $pFusioninventoryMapping->set($a_input);
@@ -546,7 +546,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $pFusioninventoryMapping->set($a_input);
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'ifinerrors';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
    $a_input['tablefield']  = 'ifinerrors';
    $a_input['locale']      = 10;
    $pFusioninventoryMapping->set($a_input);
@@ -554,7 +554,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $pFusioninventoryMapping->set($a_input);
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'ifouterrors';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
    $a_input['tablefield']  = 'ifouterrors';
    $a_input['locale']      = 11;
    $pFusioninventoryMapping->set($a_input);
@@ -562,7 +562,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $pFusioninventoryMapping->set($a_input);
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'ifstatus';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
    $a_input['tablefield']  = 'ifstatus';
    $a_input['locale']      = 14;
    $pFusioninventoryMapping->set($a_input);
@@ -594,7 +594,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $pFusioninventoryMapping->set($a_input);
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'ifdescr';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
    $a_input['tablefield']  = 'ifdescr';
    $a_input['locale']      = 23;
    $pFusioninventoryMapping->set($a_input);
@@ -602,7 +602,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $pFusioninventoryMapping->set($a_input);
    $a_input['itemtype']    = 'NetworkEquipment';
    $a_input['name']        = 'portDuplex';
-   $a_input['table']       = 'glpi_plugin_fusinvsnmp_networkports';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
    $a_input['tablefield']  = 'portduplex';
    $a_input['locale']      = 33;
    $pFusioninventoryMapping->set($a_input);
@@ -1544,156 +1544,6 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       $migration->migrationOneTable($newTable);
 
 
-   /*
-    * glpi_plugin_fusinvsnmp_networkports
-    */
-      $newTable = "glpi_plugin_fusinvsnmp_networkports";
-      $migration->renameTable("glpi_plugin_tracker_networking_ports",
-                              $newTable);
-      if (!TableExists($newTable)) {
-         $DB->query('CREATE TABLE `'.$newTable.'` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
-                        PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
-      }
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "networkports_id",
-                                 "networkports_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "ifmtu",
-                                 "ifmtu",
-                                 "int(8) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "ifspeed",
-                                 "ifspeed",
-                                 "bigint(50) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "ifinternalstatus",
-                                 "ifinternalstatus",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "ifconnectionstatus",
-                                 "ifconnectionstatus",
-                                 "int(8) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "iflastchange",
-                                 "iflastchange",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "ifinoctets",
-                                 "ifinoctets",
-                                 "bigint(50) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "ifinerrors",
-                                 "ifinerrors",
-                                 "bigint(50) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "ifoutoctets",
-                                 "ifoutoctets",
-                                 "bigint(50) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "ifouterrors",
-                                 "ifouterrors",
-                                 "bigint(50) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "ifstatus",
-                                 "ifstatus",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "mac",
-                                 "mac",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "ifdescr",
-                                 "ifdescr",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "portduplex",
-                                 "portduplex",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "trunk",
-                                 "trunk",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "lastup",
-                                 "lastup",
-                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
-      $migration->migrationOneTable($newTable);
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "FK_networking_ports",
-                                 "networkports_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "ifmac",
-                                 "mac",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->dropKey($newTable,
-                             "FK_networking_ports");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                                 "networkports_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "ifmtu",
-                                 "int(8) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "ifspeed",
-                                 "bigint(50) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "ifinternalstatus",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "ifconnectionstatus",
-                                 "int(8) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "iflastchange",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "ifinoctets",
-                                 "bigint(50) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "ifinerrors",
-                                 "bigint(50) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "ifoutoctets",
-                                 "bigint(50) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "ifouterrors",
-                                 "bigint(50) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "ifstatus",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "mac",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "ifdescr",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "portduplex",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "trunk",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "lastup",
-                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
-         $migration->addKey($newTable,
-                            "networkports_id");
-      $migration->migrationOneTable($newTable);
 
 
 

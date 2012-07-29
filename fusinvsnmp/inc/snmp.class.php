@@ -108,9 +108,9 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
          $data = $DB->fetch_assoc($result);
 
          $queryPort = "SELECT *
-                       FROM `glpi_plugin_fusinvsnmp_networkports`
+                       FROM `glpi_plugin_fusioninventory_networkports`
                             LEFT JOIN `glpi_networkports`
-                                      ON `glpi_plugin_fusinvsnmp_networkports`.`networkports_id`=
+                                      ON `glpi_plugin_fusioninventory_networkports`.`networkports_id`=
                                          `glpi_networkports`.`id`
                        WHERE (`ifdescr`='".$ifDescr."'
                                 OR `glpi_networkports`.`name`='".$ifDescr."')
@@ -292,9 +292,9 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
 
       $PortID = '';
       $queryPort = "SELECT *
-         FROM `glpi_plugin_fusinvsnmp_networkports`
+         FROM `glpi_plugin_fusioninventory_networkports`
          LEFT JOIN `glpi_networkports`
-            ON `glpi_plugin_fusinvsnmp_networkports`.`networkports_id`=
+            ON `glpi_plugin_fusioninventory_networkports`.`networkports_id`=
                `glpi_networkports`.`id`
          WHERE `glpi_networkports`.`mac`='".$sysmac."'
             AND `glpi_networkports`.`itemtype`='NetworkEquipment'
@@ -309,9 +309,9 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
       if ($PortID == '') {
          // case where mac is of switch and not of the port (like Procurve)
          $queryPort = "SELECT *
-            FROM `glpi_plugin_fusinvsnmp_networkports`
+            FROM `glpi_plugin_fusioninventory_networkports`
             LEFT JOIN `glpi_networkports`
-               ON `glpi_plugin_fusinvsnmp_networkports`.`networkports_id`=
+               ON `glpi_plugin_fusioninventory_networkports`.`networkports_id`=
                   `glpi_networkports`.`id`
             LEFT JOIN `glpi_networkequipments`
                ON `glpi_networkports`.`items_id`=

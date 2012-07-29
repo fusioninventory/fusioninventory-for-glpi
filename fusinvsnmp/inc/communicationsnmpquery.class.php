@@ -627,7 +627,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationSNMPQuery->importPortNetworking().');
       $errors='';
-      $pfNetworkPort = new PluginFusinvsnmpNetworkPort("NetworkEquipment");
+      $pfNetworkPort = new PluginFusioninventoryNetworkPort("NetworkEquipment");
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
       $ifType = $p_port->IFTYPE;
       // not virtual port
@@ -772,7 +772,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importPortPrinter($p_port) {
 
       $errors='';
-      $pfNetworkPort = new PluginFusinvsnmpNetworkPort('Printer');
+      $pfNetworkPort = new PluginFusioninventoryNetworkPort('Printer');
       $networkPort = new NetworkPort();
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
       $ifType = $p_port->IFTYPE;

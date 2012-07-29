@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpNetworkPort extends CommonDBTM {
+class PluginFusioninventoryNetworkPort extends CommonDBTM {
    private $glpi_type = "NetworkEquipment"; // NetworkEquipment, Printer...
    private $portDB = array();
    private $portModif = array();

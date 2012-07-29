@@ -646,6 +646,32 @@ CREATE TABLE `glpi_plugin_fusioninventory_printercartridges` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkports`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_networkports` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `networkports_id` int(11) NOT NULL DEFAULT '0',
+   `ifmtu` int(8) NOT NULL DEFAULT '0',
+   `ifspeed` bigint(50) NOT NULL DEFAULT '0',
+   `ifinternalstatus` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `ifconnectionstatus` int(8) NOT NULL DEFAULT '0',
+   `iflastchange` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `ifinoctets` bigint(50) NOT NULL DEFAULT '0',
+   `ifinerrors` bigint(50) NOT NULL DEFAULT '0',
+   `ifoutoctets` bigint(50) NOT NULL DEFAULT '0',
+   `ifouterrors` bigint(50) NOT NULL DEFAULT '0',
+   `ifstatus` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `mac` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `ifdescr` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `portduplex` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `trunk` tinyint(1) NOT NULL DEFAULT '0',
+   `lastup` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+   PRIMARY KEY (`id`),
+   KEY `networkports_id` (`networkports_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
 
 
 
