@@ -44,12 +44,12 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpStateInventory extends CommonDBTM {
+class PluginFusioninventoryStateInventory extends CommonDBTM {
 
    function __construct() {
       global $CFG_GLPI;
 
-      $CFG_GLPI['glpitablesitemtype']['PluginFusinvsnmpStateInventory'] = 'glpi_plugin_fusioninventory_taskjobstates';
+      $CFG_GLPI['glpitablesitemtype']['PluginFusioninventoryStateInventory'] = 'glpi_plugin_fusioninventory_taskjobstates';
    }
 
 

@@ -111,7 +111,7 @@ class PluginFusinvsnmpStateDiscovery extends CommonDBTM {
       $pfAgent = new PluginFusioninventoryAgent();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $pfStateInventory = new PluginFusinvsnmpStateInventory();
+      $pfStateInventory = new PluginFusioninventoryStateInventory();
 
       $start = 0;
       if (isset($_REQUEST["start"])) {
