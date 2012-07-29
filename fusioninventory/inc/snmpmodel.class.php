@@ -362,8 +362,8 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
        * Manage models migration
        */
       $NewModelList = array();
-      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
-         $file = str_replace("../plugins/fusinvsnmp/models/", "", $file);
+      foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) {
+         $file = str_replace("../plugins/fusioninventory/snmpmodels/", "", $file);
          $NewModelList[$file] = 1;
       }
 
@@ -381,7 +381,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       $importexport = new PluginFusioninventorySnmpmodelImportExport();
 
       $nb = 0;
-      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
+      foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) {
          $nb++;
       }
       $i = 0;
@@ -394,7 +394,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       Html::createProgressBar("Importing SNMP models, please wait...");
-      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
+      foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) {
          $importexport->import($file,0,1);
          $i++;
          if (substr($i, -1) == '0') {

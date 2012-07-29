@@ -824,7 +824,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
       if ($result_models = $DB->query($query_models)) {
          while ($data = $DB->fetch_array($result_models)) {
             $xml = $pfiie->export($data['id']);
-            file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/models/".$data['name'].".xml", $xml);
+            file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/snmpmodels/".$data['name'].".xml", $xml);
          }
       }
    }

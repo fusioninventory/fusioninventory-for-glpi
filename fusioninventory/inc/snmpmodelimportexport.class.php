@@ -160,7 +160,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
       echo "   <tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo __('Mass import of models in folder plugins/fusinvsnmp/models/')."<br/>";
+      echo __('Mass import of models in folder plugins/fusioninventory/snmpmodels/')."<br/>";
       echo "<input type='hidden' name='massimport' value='1'/>";
       if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
     echo "&nbsp;<input type='submit' value='".__('Import')."' class='submit'/>";
@@ -435,11 +435,11 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
 
    /**
-    * This function is used to import in one time all SNMP model in folder fusinvsnmp/models/
+    * This function is used to import in one time all SNMP model in folder fusioninventory/snmpmodels/
     */
    function importMass() {
       ini_set("max_execution_time", "0");
-      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $this->import($file,0,1);
+      foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) $this->import($file,0,1);
    }
 
 
