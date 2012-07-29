@@ -56,27 +56,33 @@ class PluginFusioninventoryStaticmisc {
    static function task_methods() {
 
       $a_tasks = array();
-      $a_tasks[] = array('module'               => 'fusioninventory',
-                         'method'               => 'wakeonlan',
-                         'name'                 => __('Wake On LAN'),
-
-                         'use_rest'             => false);
+      $a_tasks[] = array('module'          => 'fusioninventory',
+                         'method'          => 'wakeonlan',
+                         'name'            => __('Wake On LAN'),
+                         'use_rest'        => false);
 
       $a_tasks[] =  array('module'         => 'fusioninventory',
                           'method'         => 'inventory',
                           'selection_type' => 'devices',
                           'hidetask'       => 1,
                           'name'           => __('Computer Inventory'),
-
                           'use_rest'       => false);
 
-      $a_tasks[] = array('module'        => 'fusioninventory',
+      $a_tasks[] = array('module'         => 'fusioninventory',
                          'method'         => 'ESX',
                          'selection_type' => 'devices',
                          'name'           => __('VMware host remote inventory'),
-
                          'use_rest'       => true);
 
+      $a_tasks[] = array('module'         => 'fusioninventory',
+                         'method'         => 'networkdiscovery',
+                         'name'           => __('Network discovery'));
+
+
+      $a_tasks[] = array('module'         => 'fusioninventory',
+                         'method'         => 'networkinventory',
+                         'name'           => __('Network inventory (SNMP)'));
+      
       return $a_tasks;
    }
 
@@ -180,8 +186,6 @@ class PluginFusioninventoryStaticmisc {
                    array('profil'  => 'credentialip',
                          'name'    => __('Remote devices to inventory (VMware)')),
 
-
-
                    array('profil'  => 'existantrule',
                          'name'    => __('Existance criteria')),
 
@@ -192,7 +196,26 @@ class PluginFusioninventoryStaticmisc {
                          'name'    => __('Fields blacklist')),
 
                    array('profil'  => 'ESX',
-                         'name'    => __('VMware host')));
+                         'name'    => __('VMware host')),
+          
+                   array('profil'  => 'configsecurity',
+                          'name'    => __('SNMP authentication')),
+
+                   array('profil'  => 'networkequipment',
+                          'name'    => __('Network equipment SNMP')),
+
+                   array('profil'  => 'printer',
+                          'name'    => __('Printer SNMP')),
+
+                   array('profil'  => 'model',
+                          'name'    => __('SNMP model')),
+
+                   array('profil'  => 'reportprinter',
+                          'name'    => __('Printers report')),
+
+                   array('profil'  => 'reportnetworkequipment',
+                          'name'    => __('Network report')));
+
 
    }
 
@@ -331,6 +354,140 @@ class PluginFusioninventoryStaticmisc {
       return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX',
                     'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('ESX'));
    }
+   
+   
+   //------------------------------- Network tools ------------------------------------//
+
+   // *** NETWORKDISCOVERY ***
+   static function task_definitiontype_networkdiscovery($a_itemtype) {
+
+      $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges');
+
+
+      return $a_itemtype;
+   }
+
+
+
+   static function task_definitionselection_PluginFusioninventoryIPRange_networkdiscovery($title) {
+
+      $options = array();
+      $options['entity'] = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name'] = 'definitionselectiontoadd';
+      $rand = Dropdown::show("PluginFusioninventoryIPRange", $options);
+      return $rand;
+   }
+
+
+
+   // *** NETWORKINVENTORY ***
+   static function task_definitiontype_networkinventory($a_itemtype) {
+
+      $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges');
+
+      $a_itemtype['NetworkEquipment'] = NetworkEquipment::getTypeName();
+      $a_itemtype['Printer'] = Printer::getTypeName();
+
+      return $a_itemtype;
+   }
+
+
+
+   static function task_definitionselection_PluginFusioninventoryIPRange_networkinventory($title) {
+      $rand = PluginFusinvsnmpStaticmisc::task_definitionselection_PluginFusioninventoryIPRange_netdiscovery($title);
+      return $rand;
+   }
+
+
+
+   static function task_definitionselection_NetworkEquipment_networkinventory($title) {
+
+      $options = array();
+      $options['entity'] = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name'] = 'definitionselectiontoadd';
+      $rand = Dropdown::show("NetworkEquipment", $options);
+      return $rand;
+   }
+
+
+
+   static function task_definitionselection_Printer_networkinventory($title) {
+
+      $options = array();
+      $options['entity'] = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name'] = 'definitionselectiontoadd';
+      $rand = Dropdown::show("Printer", $options);
+      return $rand;
+   }
+
+
+
+
+   static function task_networkdiscovery_agents() {
+
+      $array = array();
+      $array["-.1"] = __('Auto managenement dynamic of agents');
+
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $array1 = $pfAgentmodule->getAgentsCanDo('NETWORKDISCOVERY');
+      foreach ($array1 as $id => $data) {
+         $array["PluginFusioninventoryAgent-".$id] = __('Auto managenement dynamic of agents')." - ".$data['name'];
+      }
+      return $array;
+   }
+
+   # Actions with itemtype autorized
+   static function task_action_networkinventory() {
+      $a_itemtype = array();
+      $a_itemtype[] = "Printer";
+      $a_itemtype[] = "NetworkEquipment";
+      $a_itemtype[] = 'PluginFusioninventoryIPRange';
+
+      return $a_itemtype;
+   }
+
+
+
+   # Selection type for actions
+   static function task_selection_type_networkinventory($itemtype) {
+      $selection_type = '';
+      switch ($itemtype) {
+
+         case 'PluginFusioninventoryIPRange':
+            $selection_type = 'iprange';
+            break;
+
+         case "Printer";
+         case "NetworkEquipment";
+            $selection_type = 'devices';
+            break;
+
+      }
+      return $selection_type;
+   }
+
+
+
+   static function task_selection_type_networkdiscovery($itemtype) {
+      $selection_type = '';
+      switch ($itemtype) {
+
+         case 'PluginFusioninventoryIPRange':
+            $selection_type = 'iprange';
+            break;
+
+         // __('Auto managenement dynamic of agents')
+
+
+      }
+
+      return $selection_type;
+   }
+
+
 
 
 }
