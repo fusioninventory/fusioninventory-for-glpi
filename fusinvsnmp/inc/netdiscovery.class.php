@@ -129,7 +129,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryCommunication {
 
       if ($dynagent == '2') {
          // Dynamic with subnet
-         $pfSnmpinventory = new PluginFusinvsnmpSnmpinventory();
+         $pfSnmpinventory = new PluginFusioninventoryNetworkinventory();
          $taskvalid = 0;
          foreach($a_subnet_nbip as $iprange_id=>$nbips) {
             //$maxagentpossible = $nbips/10;
