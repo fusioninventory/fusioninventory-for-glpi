@@ -50,8 +50,8 @@ class PluginFusinvsnmpStaticmisc {
 
       $a_tasks = array();
 
-      $a_tasks[] = array('module'         => 'fusinvsnmp',
-                         'method'         => 'netdiscovery',
+      $a_tasks[] = array('module'         => 'fusioninventory',
+                         'method'         => 'networkdiscovery',
                          'name'           => __('Network discovery'));
 
 
