@@ -192,7 +192,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>".__('SNMP authentication')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusinvsnmpSNMP::auth_dropdown($this->oFusionInventory_networkequipment->fields['plugin_fusinvsnmp_configsecurities_id']);
+      PluginFusinvsnmpConfigSecurity::auth_dropdown($this->oFusionInventory_networkequipment->fields['plugin_fusinvsnmp_configsecurities_id']);
       echo "</td>";
       echo "</tr>";
 
@@ -836,6 +836,34 @@ function appear_array(id){
       }
       echo "</table>";
    }
+   
+   
+   
+   function update_network_infos($id, $plugin_fusinvsnmp_models_id, $plugin_fusinvsnmp_configsecurities_id, $sysdescr) {
+      global $DB;
+
+      $query = "SELECT *
+                FROM `glpi_plugin_fusioninventory_networkequipments`
+                WHERE `networkequipments_id`='".$id."';";
+      $result = $DB->query($query);
+      if ($DB->numrows($result) == "0") {
+         $queryInsert = "INSERT INTO `glpi_plugin_fusioninventory_networkequipments`(`networkequipments_id`)
+                         VALUES('".$id."');";
+
+         $DB->query($queryInsert);
+      }
+      if (empty($plugin_fusinvsnmp_configsecurities_id)) {
+         $plugin_fusinvsnmp_configsecurities_id = 0;
+      }
+      $query = "UPDATE `glpi_plugin_fusioninventory_networkequipments`
+                SET `plugin_fusioninventory_snmpmodels_id`='".$plugin_fusinvsnmp_models_id."',
+                    `plugin_fusinvsnmp_configsecurities_id`='".$plugin_fusinvsnmp_configsecurities_id."',
+                    `sysdescr`='".$sysdescr."'
+                WHERE `networkequipments_id`='".$id."';";
+
+      $DB->query($query);
+   }
+   
 }
 
 ?>

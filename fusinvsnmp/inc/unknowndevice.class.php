@@ -110,7 +110,7 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>".__('SNMP authentication')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusinvsnmpSNMP::auth_dropdown($this->fields['plugin_fusinvsnmp_configsecurities_id']);
+      PluginFusinvsnmpConfigSecurity::auth_dropdown($this->fields['plugin_fusinvsnmp_configsecurities_id']);
       echo "</td>";
       echo "</tr>";
 

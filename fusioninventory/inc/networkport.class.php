@@ -363,7 +363,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             foreach ($a_cdp as $key=>$value) {
                $param[$key] = $value;
             }
-            $portID = $pfSNMP->getPortIDfromDeviceIP($a_cdp['ip'],
+            $portID = $this->getPortIDfromDeviceIP($a_cdp['ip'],
                                                      $param['ifdescr'],
                                                      $param['sysdescr'],
                                                      $param['sysname'],
@@ -374,7 +374,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             $a_cdp = current($this->portMacs);
             if (isset($a_cdp['sysmac'])) {
                $ifnumber = $a_cdp['ifnumber'];
-               $portID = $pfSNMP->getPortIDfromSysmacandPortnumber($a_cdp['sysmac'],
+               $portID = $this->getPortIDfromSysmacandPortnumber($a_cdp['sysmac'],
                                                                    $ifnumber,
                                                                    $a_cdp);
             }
@@ -588,6 +588,382 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       return false;
    }
 
+   
+   
+   function getPortIDfromDeviceIP($IP, $ifDescr, $sysdescr, $sysname, $model) {
+      global $DB;
+
+      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $pfsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+
+      $NetworkPort = new NetworkPort();
+
+      $PortID = "";
+      $query = "SELECT *
+                FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
+                WHERE `ip`='".$IP."';";
+      $result = $DB->query($query);
+      if ($DB->numrows($result) == "1") {
+         $data = $DB->fetch_assoc($result);
+
+         $queryPort = "SELECT *
+                       FROM `glpi_plugin_fusioninventory_networkports`
+                            LEFT JOIN `glpi_networkports`
+                                      ON `glpi_plugin_fusioninventory_networkports`.`networkports_id`=
+                                         `glpi_networkports`.`id`
+                       WHERE (`ifdescr`='".$ifDescr."'
+                                OR `glpi_networkports`.`name`='".$ifDescr."')
+                             AND `glpi_networkports`.`items_id`='".$data["networkequipments_id"]."'
+                             AND `glpi_networkports`.`itemtype`='NetworkEquipment'";
+         $resultPort = $DB->query($queryPort);
+         $dataPort = $DB->fetch_assoc($resultPort);
+         if ($DB->numrows($resultPort) == "0") {
+            // Search in other devices
+            $queryPort = "SELECT *
+                          FROM `glpi_networkports`
+                          WHERE `ip`='".$IP."'
+                          ORDER BY `itemtype`
+                          LIMIT 0,1";
+            $resultPort = $DB->query($queryPort);
+            $dataPort = $DB->fetch_assoc($resultPort);
+            if (isset($dataPort['id'])) {
+               $PortID = $dataPort["id"];
+            }
+         } else {
+            $PortID = $dataPort['networkports_id'];
+         }
+      }
+
+      // Detect IP Phone
+      if ($PortID == "") {
+         if (strstr($model, "Phone")) {
+            $queryPort = "SELECT glpi_networkports.*
+                           FROM `glpi_phones`
+                              LEFT JOIN `glpi_networkports`
+                                 ON `glpi_phones`.`id`=`glpi_networkports`.`items_id`
+                          WHERE `ip`='".$IP."'
+                                AND `glpi_networkports`.`itemtype`='Phone'
+                                AND `glpi_phones`.`name`='".$sysname."'
+                          LIMIT 1";
+            $resultPort = $DB->query($queryPort);
+            $dataPort = $DB->fetch_assoc($resultPort);
+            if (isset($dataPort['id'])) {
+               $PortID = $dataPort["id"];
+            }
+         }
+      }
+
+      if ($PortID == "") {
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_unknowndevices`
+            WHERE `ip`='".$IP."'
+            LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == "1") {
+            $data = $DB->fetch_assoc($result);
+            // Search port and add if required
+            $query1 = "SELECT *
+                FROM `glpi_networkports`
+                WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
+                   AND `items_id`='".$data['id']."'
+                   AND `name`='".$ifDescr."'
+                LIMIT 1";
+            $result1 = $DB->query($query1);
+            if ($DB->numrows($result1) == "1") {
+               $data1 = $DB->fetch_assoc($result1);
+               $PortID = $data1['id'];
+            } else {
+               // Add port
+               $input = array();
+               $input['items_id'] = $data['id'];
+               $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
+               $input['ip'] = $IP;
+               $input['name'] = $ifDescr;
+               $PortID = $NetworkPort->add($input);
+            }
+            // Update unknown device
+            $input = array();
+            $input['id'] = $data['id'];
+            $input['ip'] = $IP;
+            if (strstr($model, "Phone")) {
+               $input['item_type'] = 'Phone';
+            }
+            if ($sysname != '') {
+               $input['name'] = $sysname;
+            }
+            $pfUnknownDevice->update($input);
+            // Add SNMP informations of unknown device
+            if ($sysdescr != '') {
+               $a_list = $pfsnmpUnknownDevice->find("plugin_fusioninventory_unknowndevices_id='".$data['id']."'");
+               $input = array();
+               $input['sysdescr'] = $sysdescr;
+               if (count($a_list == '0')) {
+                  $input['plugin_fusioninventory_unknowndevices_id'] = $data['id'];
+                  $pfsnmpUnknownDevice->add($input);
+               } else {
+                  $snmpunknow = current($a_list);
+                  $input['id'] = $snmpunknow['id'];
+                  $pfsnmpUnknownDevice->update($input);
+               }
+            }
+            return $PortID;
+         }
+
+         $query = "SELECT *
+             FROM `glpi_networkports`
+             WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
+               AND`ip`='".$IP."'
+             LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == "1") {
+            $data = $DB->fetch_assoc($result);
+            if ($pfUnknownDevice->convertUnknownToUnknownNetwork($data['items_id'])) {
+               // Add port
+               $input = array();
+               $input['items_id'] = $data['items_id'];
+               $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
+               $input['ip'] = $IP;
+               $input['name'] = $ifDescr;
+               $PortID = $NetworkPort->add($input);
+               // Update unknown device
+               $input = array();
+               $input['id'] = $data['id'];
+               $input['ip'] = $IP;
+               if (strstr($model, "Phone")) {
+                  $input['item_type'] = 'Phone';
+               }
+               if ($sysname != '') {
+                  $input['name'] = $sysname;
+               }
+               $pfUnknownDevice->update($input);
+               // Add SNMP informations of unknown device
+               if ($sysdescr != '') {
+                  $a_list = $pfsnmpUnknownDevice->find("plugin_fusioninventory_unknowndevices_id='".$data['id']."'");
+                  $input = array();
+                  $input['sysdescr'] = $sysdescr;
+                  if (count($a_list == '0')) {
+                     $input['plugin_fusioninventory_unknowndevices_id'] = $data['id'];
+                     $pfsnmpUnknownDevice->add($input);
+                  } else {
+                     $snmpunknow = current($a_list);
+                     $input['id'] = $snmpunknow['id'];
+                     $pfsnmpUnknownDevice->update($input);
+                  }
+               }
+               return $PortID;
+            }
+         }
+         // Add unknown device
+         $input = array();
+         $input['ip'] = $IP;
+         if (strstr($model, "Phone")) {
+            $input['item_type'] = 'Phone';
+         }
+         if ($sysname != '') {
+            $input['name'] = $sysname;
+         }
+         if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
+            $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+         }
+         $unkonwn_id = $pfUnknownDevice->add($input);
+         // Add port
+         $input = array();
+         $input['items_id'] = $unkonwn_id;
+         $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
+         $input['ip'] = $IP;
+         $input['name'] = $ifDescr;
+         $PortID = $NetworkPort->add($input);
+         // Add SNMP informations of unknown device
+         if ($sysdescr != '') {
+            $input = array();
+            $input['plugin_fusioninventory_unknowndevices_id'] = $unkonwn_id;
+            $input['sysdescr'] = $sysdescr;
+            $pfsnmpUnknownDevice->add($input);
+         }
+         return($PortID);
+      }
+      return($PortID);
+   }
+   
+   
+
+   
+   function getPortIDfromSysmacandPortnumber($sysmac, $ifnumber, $params = array()) {
+      global $DB;
+
+      $PortID = '';
+      $queryPort = "SELECT *
+         FROM `glpi_plugin_fusioninventory_networkports`
+         LEFT JOIN `glpi_networkports`
+            ON `glpi_plugin_fusioninventory_networkports`.`networkports_id`=
+               `glpi_networkports`.`id`
+         WHERE `glpi_networkports`.`mac`='".$sysmac."'
+            AND `glpi_networkports`.`itemtype`='NetworkEquipment'
+            AND `logical_number`='".$ifnumber."'
+         LIMIT 1";
+      $resultPort = $DB->query($queryPort);
+      $dataPort = $DB->fetch_assoc($resultPort);
+      if ($DB->numrows($resultPort) == "1") {
+         $PortID = $dataPort['networkports_id'];
+      }
+
+      if ($PortID == '') {
+         // case where mac is of switch and not of the port (like Procurve)
+         $queryPort = "SELECT *
+            FROM `glpi_plugin_fusioninventory_networkports`
+            LEFT JOIN `glpi_networkports`
+               ON `glpi_plugin_fusioninventory_networkports`.`networkports_id`=
+                  `glpi_networkports`.`id`
+            LEFT JOIN `glpi_networkequipments`
+               ON `glpi_networkports`.`items_id`=
+                  `glpi_networkequipments`.`id`
+            WHERE `glpi_networkequipments`.`mac`='".$sysmac."'
+               AND `glpi_networkports`.`itemtype`='NetworkEquipment'
+               AND `logical_number`='".$ifnumber."'
+            LIMIT 1";
+         $resultPort = $DB->query($queryPort);
+         $dataPort = $DB->fetch_assoc($resultPort);
+         if ($DB->numrows($resultPort) == "1") {
+            $PortID = $dataPort['networkports_id'];
+         }
+      }
+
+      if ($PortID == "") {
+         $NetworkPort = new NetworkPort();
+         $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+         $pluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
+
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_unknowndevices`
+            WHERE `mac`='".$sysmac."'
+            LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == "1") {
+            $data = $DB->fetch_assoc($result);
+            // Search port and add if required
+            $query1 = "SELECT *
+                FROM `glpi_networkports`
+                WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
+                   AND `items_id`='".$data['id']."'
+                   AND `logical_number`='".$ifnumber."'
+                LIMIT 1";
+            $result1 = $DB->query($query1);
+            if ($DB->numrows($result1) == "1") {
+               $data1 = $DB->fetch_assoc($result1);
+               $PortID = $data1['id'];
+            } else {
+               // Add port
+               $input = array();
+               $input['items_id'] = $data['id'];
+               $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
+               $input['mac'] = $sysmac;
+               $input['logical_number'] = $ifnumber;
+               if (isset($params['ifdescr'])) {
+                  $input['name'] = $params['ifdescr'];
+               }
+               $PortID = $NetworkPort->add($input);
+            }
+            // Update unknown device
+            $input = array();
+            $input['id'] = $data['id'];
+            $input['ip'] = $sysmac;
+            $PluginFusioninventoryUnknownDevice->update($input);
+            // Add SNMP informations of unknown device
+            if (isset($params['sysdescr'])) {
+               $a_list = $pluginFusinvsnmpUnknownDevice->find("plugin_fusioninventory_unknowndevices_id='".$data['id']."'");
+               $input = array();
+               $input['sysdescr'] = $params['sysdescr'];
+               if (count($a_list == '0')) {
+                  $input['plugin_fusioninventory_unknowndevices_id'] = $data['id'];
+                  $pluginFusinvsnmpUnknownDevice->add($input);
+               } else {
+                  $snmpunknow = current($a_list);
+                  $input['id'] = $snmpunknow['id'];
+                  $pluginFusinvsnmpUnknownDevice->update($input);
+               }
+            }
+            return $PortID;
+         }
+
+         $query = "SELECT *
+             FROM `glpi_networkports`
+             WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
+               AND `mac`='".$sysmac."'
+             LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == "1") {
+            $data = $DB->fetch_assoc($result);
+            if ($PluginFusioninventoryUnknownDevice->convertUnknownToUnknownNetwork($data['items_id'])) {
+               // Add port
+               $input = array();
+               $input['items_id'] = $data['items_id'];
+               $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
+               $input['mac'] = $sysmac;
+               if (isset($params['ifdescr'])) {
+                  $input['name'] = $params['ifdescr'];
+               }
+               $PortID = $NetworkPort->add($input);
+               // Update unknown device
+               $input = array();
+               $input['id'] = $data['id'];
+               $input['mac'] = $sysmac;
+               if (isset($params['sysname'])) {
+                  $input['name'] = $params['sysname'];
+               }
+               $PluginFusioninventoryUnknownDevice->update($input);
+               // Add SNMP informations of unknown device
+               if (isset($params['sysdescr'])) {
+                  $a_list = $pluginFusinvsnmpUnknownDevice->find("plugin_fusioninventory_unknowndevices_id='".$data['id']."'");
+                  $input = array();
+                  $input['sysdescr'] = $params['sysdescr'];
+                  if (count($a_list == '0')) {
+                     $input['plugin_fusioninventory_unknowndevices_id'] = $data['id'];
+                     $pluginFusinvsnmpUnknownDevice->add($input);
+                  } else {
+                     $snmpunknow = current($a_list);
+                     $input['id'] = $snmpunknow['id'];
+                     $pluginFusinvsnmpUnknownDevice->update($input);
+                  }
+               }
+               return $PortID;
+            }
+         }
+         // Add unknown device
+         $input = array();
+         $input['mac'] = $sysmac;
+         if (isset($params['sysname'])) {
+            $input['name'] = $params['sysname'];
+         }
+         if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
+            $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+         }
+         $unkonwn_id = $PluginFusioninventoryUnknownDevice->add($input);
+         // Add port
+         $input = array();
+         $input['items_id'] = $unkonwn_id;
+         $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
+         $input['mac'] = $sysmac;
+         if (isset($params['ifdescr'])) {
+            $input['name'] = $params['ifdescr'];
+         }
+         $PortID = $NetworkPort->add($input);
+         // Add SNMP informations of unknown device
+         if (isset($params['sysdescr'])) {
+            $input = array();
+            $input['plugin_fusioninventory_unknowndevices_id'] = $unkonwn_id;
+            $input['sysdescr'] = $params['sysdescr'];
+            $pluginFusinvsnmpUnknownDevice->add($input);
+         }
+         return($PortID);
+      }
+
+
+      return($PortID);
+
+   }
+
+   
+
+
+   
 }
 
 ?>

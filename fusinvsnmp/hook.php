@@ -1025,7 +1025,7 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
 
             case "plugin_fusinvsnmp_assign_auth" :
                if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity","w")) {
-                  PluginFusinvsnmpSNMP::auth_dropdown();
+                  PluginFusinvsnmpConfigSecurity::auth_dropdown();
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
                      __('Post') . "\" >";
                }
