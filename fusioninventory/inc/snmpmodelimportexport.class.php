@@ -341,7 +341,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       $input['itemtype']      = $type;
       $input['discovery_key'] = (string)$xml->key;
       $input['comment']       = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep((string)$xml->comments));
-      $plugin_fusinvsnmp_models_id = $pfModel->add($input);
+      $plugin_fusioninventory_snmpmodels_id = $pfModel->add($input);
 
       foreach($xml->oidlist->oidobject as $child) {
          $plugin_fusioninventory_snmpmodelmibobjects_id = 0;
@@ -418,7 +418,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
                 `is_active`
              )
              VALUES(
-                '".$plugin_fusinvsnmp_models_id."',
+                '".$plugin_fusioninventory_snmpmodels_id."',
                 '".$plugin_fusioninventory_snmpmodelmiboids_id."',
                 '".$plugin_fusioninventory_snmpmodelmibobjects_id."',
                 '".$oid_port_counter."',
