@@ -753,7 +753,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
       }
       $sxml = $this->formatXmlString($sxml);
       echo $sxml->asXML();
-      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml", $sxml->asXML());
+      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/tools/networkdiscovery.xml", $sxml->asXML());
 
    }
 
