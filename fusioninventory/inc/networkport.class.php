@@ -600,7 +600,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
       $PortID = "";
       $query = "SELECT *
-                FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
+                FROM `glpi_plugin_fusioninventory_networkequipmentips`
                 WHERE `ip`='".$IP."';";
       $result = $DB->query($query);
       if ($DB->numrows($result) == "1") {

@@ -542,7 +542,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importIps($p_ips, $networkequipments_id) {
 
       $errors='';
-      $pfNetworkEquipmentIP = new PluginFusinvsnmpNetworkEquipmentIP();
+      $pfNetworkEquipmentIP = new PluginFusioninventoryNetworkEquipmentIP();
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
 
       $pfNetworkEquipmentIP->loadIPs($networkequipments_id);

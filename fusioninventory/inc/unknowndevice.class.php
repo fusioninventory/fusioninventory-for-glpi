@@ -762,7 +762,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       global $DB;
 
       $query = "SELECT `glpi_plugin_fusioninventory_unknowndevices`.* FROM `glpi_plugin_fusioninventory_unknowndevices`
-         INNER JOIN `glpi_plugin_fusinvsnmp_networkequipmentips` ON `glpi_plugin_fusioninventory_unknowndevices`.`ip` = `glpi_plugin_fusinvsnmp_networkequipmentips`.`ip`
+         INNER JOIN `glpi_plugin_fusioninventory_networkequipmentips` ON `glpi_plugin_fusioninventory_unknowndevices`.`ip` = `glpi_plugin_fusioninventory_networkequipmentips`.`ip`
          WHERE `glpi_plugin_fusioninventory_unknowndevices`.`ip` IS NOT NULL
             AND `glpi_plugin_fusioninventory_unknowndevices`.`ip` != '' ";
       $result=$DB->query($query);

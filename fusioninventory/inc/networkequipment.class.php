@@ -284,7 +284,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
 
 
       // ***** IP list ***** //
-      PluginFusinvsnmpNetworkEquipmentIP::showIP($id);
+      PluginFusioninventoryNetworkEquipmentIP::showIP($id);
       echo "<br/>";
 
 // ********************************************************************************************** //

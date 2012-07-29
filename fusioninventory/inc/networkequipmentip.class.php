@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpNetworkEquipmentIP extends CommonDBTM {
+class PluginFusioninventoryNetworkEquipmentIP extends CommonDBTM {
    private $ifaddrs=array();
    private $ifaddrsPresent=array();
 

@@ -2297,7 +2297,7 @@ function plugin_item_purge_fusinvsnmp($parm) {
             $DB->query($query_delete);
          }
 
-         $query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
+         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkequipmentips`
                           WHERE `networkequipments_id`='".$parm->fields["id"]."';";
          $DB->query($query_delete);
 

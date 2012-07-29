@@ -3651,6 +3651,62 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
       
+   /*
+    * glpi_plugin_fusioninventory_networkequipmentips
+    */
+      $newTable = "glpi_plugin_fusioninventory_networkequipmentips";
+      $migration->renameTable("glpi_plugin_fusinvsnmp_networkequipmentips",
+                              $newTable);
+      $migration->renameTable("glpi_plugin_tracker_networking_ifaddr",
+                              $newTable);
+      if (!TableExists($newTable)) {
+         $DB->query('CREATE TABLE `'.$newTable.'` (
+                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        PRIMARY KEY (`id`)
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "networkequipments_id",
+                                 "networkequipments_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "ip",
+                                 "ip",
+                                 "varchar(255) DEFAULT NULL");
+      $migration->migrationOneTable($newTable);
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "FK_networking",
+                                 "networkequipments_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "ifaddr",
+                                 "ip",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->dropKey($newTable,
+                             "ifaddr");
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "networkequipments_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "ip",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->addKey($newTable,
+                            "ip");
+         $migration->addKey($newTable,
+                            "networkequipments_id");
+      $migration->migrationOneTable($newTable);
       
       
       
