@@ -411,7 +411,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
             $text .= "<tr class='tab_bg_1'>";
             if (!empty($data["networkports_id_destination"])) {
                // Connections and disconnections
-               $imgfolder = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics";
+               $imgfolder = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics";
                if (strstr($_SERVER['PHP_SELF'], 'fusinvsnmp/ajax/showporthistory.php')) {
                   $imgfolder = "../plugins/fusinvsnmp/pics";
                }

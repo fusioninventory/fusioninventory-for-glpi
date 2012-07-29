@@ -355,11 +355,11 @@ function appear_array(id){
          <ul>
             <li>".__('Connection with a switch or a server in trunk or tagged mode')."&nbsp;:</li>
          </ul>
-         <img src='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/port_trunk.png' width='750' />
+         <img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/port_trunk.png' width='750' />
          <ul>
             <li>".__('Other connections (with a computer, a printer...)')."&nbsp;:</li>
          </ul>
-         <img src='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/connected_trunk.png' width='750' />
+         <img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/connected_trunk.png' width='750' />
          </td>
       </tr>";
       echo "<script>Ext.get('legend').setVisibilityMode(Ext.Element.DISPLAY);</script>";
@@ -458,14 +458,14 @@ function appear_array(id){
             if (($data["trunk"] == "1") AND (strstr($data["ifstatus"], "up")
                   OR strstr($data["ifstatus"], "1"))) {
                $background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
-                                    "/plugins/fusinvsnmp/pics/port_trunk.png\"); '";
+                                    "/plugins/fusioninventory/pics/port_trunk.png\"); '";
             } else if (($data["trunk"] == "-1") AND (strstr($data["ifstatus"], "up")
                         OR strstr($data["ifstatus"], "1"))) {
                $background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
-                                    "/plugins/fusinvsnmp/pics/multiple_mac_addresses.png\"); '";
+                                    "/plugins/fusioninventory/pics/multiple_mac_addresses.png\"); '";
             } else if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")) {
                $background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
-                                    "/plugins/fusinvsnmp/pics/connected_trunk.png\"); '";
+                                    "/plugins/fusioninventory/pics/connected_trunk.png\"); '";
             }
             echo "<tr class='tab_bg_1 center' height='40'".$background_img.">";
             echo "<td id='plusmoins".$data["id"]."'><img src='".$CFG_GLPI['root_doc'].
@@ -643,10 +643,10 @@ function appear_array(id){
                      // ** Connection status
                      echo "<td>";
                      if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")) {
-                        echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/wired_on.png'/>";
+                        echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/wired_on.png'/>";
                      } else if (strstr($data["ifstatus"], "down")
                                 OR strstr($data["ifstatus"], "2")) {
-                        echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/pics/wired_off.png'/>";
+                        echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/wired_off.png'/>";
                      } else if (strstr($data["ifstatus"], "testing")
                                 OR strstr($data["ifstatus"], "3")) {
                         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/yellowbutton.png'/>";
