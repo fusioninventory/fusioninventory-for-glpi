@@ -905,7 +905,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     **/
    function importPageCounters($p_pagecounters) {
 
-      $pfPrinterLog = new PluginFusinvsnmpPrinterLog();
+      $pfPrinterLog = new PluginFusioninventoryPrinterLog();
       //See if have an entry today
       $a_entires = $pfPrinterLog->find("`printers_id`='".$this->deviceId."'
          AND LEFT(`date`, 10)='".date("Y-m-d")."'", "", 1);

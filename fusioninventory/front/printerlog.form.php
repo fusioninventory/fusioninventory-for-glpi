@@ -45,14 +45,14 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
 Session::checkRight("printer","r");
-PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","r");
+PluginFusioninventoryProfile::checkRight("fusioninventory", "printer","r");
 
-$pfPrinterLog = new PluginFusinvsnmpPrinterLog();
+$pfPrinterLog = new PluginFusioninventoryPrinterLog();
 print_r($_POST);
 exit;
 if ((isset($_POST['delete']))) {
 
-   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "printer","w");
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "printer","w");
 
    if (isset($_POST['limit'])) {
       for ($i=0 ; $i<$_POST['limit'] ; $i++) {

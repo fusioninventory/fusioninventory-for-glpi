@@ -574,7 +574,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
          }
          break;
 
-      case "PluginFusinvsnmpPrinterLog":
+      case "PluginFusioninventoryPrinterLog":
          switch ($table.'.'.$field) {
 
             case 'glpi_printers.name':
@@ -589,7 +589,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
                if ((isset($_SESSION['glpi_plugin_fusioninventory_date_start']))
                        AND (isset($_SESSION['glpi_plugin_fusioninventory_date_end']))) {
 
-                  $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_printerlogs`
+                  $query = "SELECT * FROM `glpi_plugin_fusioninventory_printerlogs`
                      WHERE `printers_id`='".$data['ITEM_0_2']."'
                         AND `date`>= '".$_SESSION['glpi_plugin_fusioninventory_date_start']."'
                         AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59'
@@ -599,7 +599,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
                   while ($data2=$DB->fetch_array($result)) {
                      $_SESSION['glpi_plugin_fusioninventory_history_start'] = $data2;
                   }
-                  $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_printerlogs`
+                  $query = "SELECT * FROM `glpi_plugin_fusioninventory_printerlogs`
                      WHERE `printers_id`='".$data['ITEM_0_2']."'
                         AND `date`>= '".$_SESSION['glpi_plugin_fusioninventory_date_start']."'
                         AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59'
@@ -617,7 +617,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
 
          switch($table) {
 
-            case 'glpi_plugin_fusinvsnmp_printerlogs':
+            case 'glpi_plugin_fusioninventory_printerlogs':
                if ((isset($_SESSION['glpi_plugin_fusioninventory_history_start'][$field]))
                       AND (isset($_SESSION['glpi_plugin_fusioninventory_history_end'][$field]))) {
                   $counter_start = $_SESSION['glpi_plugin_fusioninventory_history_start'][$field];
@@ -865,7 +865,7 @@ function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
    $pfPrinterCartridge->showForm($_POST['id'],
                array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_info.form.php'));
 
-   $pfPrinterLog = new PluginFusinvsnmpPrinterLog();
+   $pfPrinterLog = new PluginFusioninventoryPrinterLog();
    $pfPrinterLog->showGraph($_POST['id'],
                array('target'=>$CFG_GLPI['root_doc'] . '/plugins/fusinvsnmp/front/printer_info.form.php'));
 
@@ -874,7 +874,7 @@ function plugin_headings_fusinvsnmp_printerInfo($type, $id) {
 function plugin_headings_fusinvsnmp_printerHistory($type, $id) {
    global $CFG_GLPI;
 
-   $print_history = new PluginFusinvsnmpPrinterLog();
+   $print_history = new PluginFusioninventoryPrinterLog();
    $print_history->showForm($_GET["id"],
                array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/printer_history.form.php'));
 }
@@ -1426,7 +1426,7 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
          }
          break;
 
-      case "PluginFusinvsnmpPrinterLog":
+      case "PluginFusioninventoryPrinterLog":
 //         if ($table.".".$field == "$table.".".$field") {
 //            return " `glpi_printers`.`name` AS ITEM_".$num.", DISTINCT `glpi_printers`.`id` AS ITEM_".$num."_2,";
 //         }
@@ -1437,13 +1437,13 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
 
       case 'PluginFusinvsnmpPrinterLogReport':
 
-         if ($table == 'glpi_plugin_fusinvsnmp_printerlogs') {
+         if ($table == 'glpi_plugin_fusioninventory_printerlogs') {
             if (strstr($field, 'pages_') OR $field == 'scanned') {
                return " (
-                  (SELECT ".$field." from glpi_plugin_fusinvsnmp_printerlogs where printers_id = glpi_printers.id
+                  (SELECT ".$field." from glpi_plugin_fusioninventory_printerlogs where printers_id = glpi_printers.id
                   AND date <= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59' ORDER BY date DESC LIMIT 1)
                   -
-                  (SELECT ".$field." from glpi_plugin_fusinvsnmp_printerlogs where printers_id = glpi_printers.id
+                  (SELECT ".$field." from glpi_plugin_fusioninventory_printerlogs where printers_id = glpi_printers.id
                   AND date >= '".$_SESSION['glpi_plugin_fusioninventory_date_start']." 00:00:00'  ORDER BY date  LIMIT 1)
                   )  AS ITEM_$num, ";
             }
@@ -1721,7 +1721,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
          return;
          break;
 
-      case "PluginFusinvsnmpPrinterLog":
+      case "PluginFusioninventoryPrinterLog":
          if ($new_table == "glpi_infocoms") {
             return " LEFT JOIN glpi_infocoms ON (glpi_printers.ID = glpi_infocoms.FK_device AND glpi_infocoms.device_type='".PRINTER_TYPE."')
                     LEFT JOIN glpi_dropdown_budget ON glpi_dropdown_budget.ID = glpi_infocoms.budget ";
@@ -1780,8 +1780,8 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
                return " LEFT JOIN `glpi_networkports` ON (`glpi_printers`.`id` = `glpi_networkports`.`items_id` AND `glpi_networkports`.`itemtype` = 'Printer') ";
                break;
 
-            case 'glpi_plugin_fusinvsnmp_printerlogs.printers_id':
-               return " LEFT JOIN `glpi_plugin_fusinvsnmp_printerlogs` ON (`glpi_plugin_fusinvsnmp_printerlogs`.`printers_id` = `glpi_printers`.`id`) ";
+            case 'glpi_plugin_fusioninventory_printerlogs.printers_id':
+               return " LEFT JOIN `glpi_plugin_fusioninventory_printerlogs` ON (`glpi_plugin_fusioninventory_printerlogs`.`printers_id` = `glpi_printers`.`id`) ";
                break;
 
          }
@@ -1941,7 +1941,7 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
          }
          break;
 
-      case "PluginFusinvsnmpPrinterLog":
+      case "PluginFusioninventoryPrinterLog":
 //         return " GROUP BY ITEM_0_2
 //            ORDER BY ITEM_".$key." $order ";
          break;
@@ -2310,7 +2310,7 @@ function plugin_item_purge_fusinvsnmp($parm) {
          $query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_printercartridges`
                           WHERE `printers_id`='".$parm->fields["id"]."';";
          $DB->query($query_delete);
-         $query_delete = "DELETE FROM `glpi_plugin_fusinvsnmp_printerlogs`
+         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_printerlogs`
                           WHERE `printers_id`='".$parm->fields["id"]."';";
          $DB->query($query_delete);
          break;

@@ -3264,6 +3264,157 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       
       
+   /*
+    * Table glpi_plugin_fusioninventory_printerlogs
+    */
+      $newTable = "glpi_plugin_fusioninventory_printerlogs";
+      $migration->renameTable("glpi_plugin_fusinvsnmp_printerlogs",
+                              $newTable);
+      $migration->renameTable("glpi_plugin_tracker_printers_history",
+                              $newTable);
+      if (!TableExists($newTable)) {
+         $DB->query('CREATE TABLE `'.$newTable.'` (
+                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        PRIMARY KEY (`id`)
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "printers_id",
+                                 "printers_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "date",
+                                 "date",
+                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+         $migration->changeField($newTable,
+                                 "pages_total",
+                                 "pages_total",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "pages_n_b",
+                                 "pages_n_b",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "pages_color",
+                                 "pages_color",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "pages_recto_verso",
+                                 "pages_recto_verso",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "scanned",
+                                 "scanned",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "pages_total_print",
+                                 "pages_total_print",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "pages_n_b_print",
+                                 "pages_n_b_print",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "pages_color_print",
+                                 "pages_color_print",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "pages_total_copy",
+                                 "pages_total_copy",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "pages_n_b_copy",
+                                 "pages_n_b_copy",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "pages_color_copy",
+                                 "pages_color_copy",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "pages_total_fax",
+                                 "pages_total_fax",
+                                 "int(11) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "FK_printers",
+                                 "printers_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "printers_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "date",
+                                 "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+         $migration->addField($newTable,
+                                 "pages_total",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "pages_n_b",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "pages_color",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "pages_recto_verso",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "scanned",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "pages_total_print",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "pages_n_b_print",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "pages_color_print",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "pages_total_copy",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "pages_n_b_copy",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "pages_color_copy",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "pages_total_fax",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addKey($newTable,
+                            array("printers_id", "date"),
+                            "printers_id");
+      $migration->migrationOneTable($newTable);
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
       
       

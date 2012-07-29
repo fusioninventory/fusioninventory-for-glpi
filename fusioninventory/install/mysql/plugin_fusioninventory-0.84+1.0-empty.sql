@@ -587,7 +587,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkporttypes` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_printers`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printers`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_printers` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -603,6 +603,31 @@ CREATE TABLE `glpi_plugin_fusioninventory_printers` (
    KEY `printers_id` (`printers_id`),
    KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_printerlogs`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_printerlogs` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `printers_id` int(11) NOT NULL DEFAULT '0',
+   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+   `pages_total` int(11) NOT NULL DEFAULT '0',
+   `pages_n_b` int(11) NOT NULL DEFAULT '0',
+   `pages_color` int(11) NOT NULL DEFAULT '0',
+   `pages_recto_verso` int(11) NOT NULL DEFAULT '0',
+   `scanned` int(11) NOT NULL DEFAULT '0',
+   `pages_total_print` int(11) NOT NULL DEFAULT '0',
+   `pages_n_b_print` int(11) NOT NULL DEFAULT '0',
+   `pages_color_print` int(11) NOT NULL DEFAULT '0',
+   `pages_total_copy` int(11) NOT NULL DEFAULT '0',
+   `pages_n_b_copy` int(11) NOT NULL DEFAULT '0',
+   `pages_color_copy` int(11) NOT NULL DEFAULT '0',
+   `pages_total_fax` int(11) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`),
+   KEY `printers_id` (`printers_id`,`date`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
 
 
 
