@@ -1435,7 +1435,7 @@ function plugin_fusinvsnmp_addSelect($type,$id,$num) {
          }
          break;
 
-      case 'PluginFusinvsnmpPrinterLogReport':
+      case 'PluginFusioninventoryPrinterLogReport':
 
          if ($table == 'glpi_plugin_fusioninventory_printerlogs') {
             if (strstr($field, 'pages_') OR $field == 'scanned') {
@@ -1752,7 +1752,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
 
          break;
 
-      case 'PluginFusinvsnmpPrinterLogReport':
+      case 'PluginFusioninventoryPrinterLogReport':
 
          switch ($new_table.".".$linkfield) {
 

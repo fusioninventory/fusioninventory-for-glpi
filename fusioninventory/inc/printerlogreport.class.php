@@ -44,12 +44,12 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpPrinterLogReport extends CommonDBTM {
+class PluginFusioninventoryPrinterLogReport extends CommonDBTM {
 
    function __construct() {
       global $CFG_GLPI;
       $this->table = "glpi_plugin_fusioninventory_printers";
-      $CFG_GLPI['glpitablesitemtype']["PluginFusinvsnmpPrinterLogReport"] = $this->table;
+      $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] = $this->table;
    }
 
 

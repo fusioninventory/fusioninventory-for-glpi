@@ -668,6 +668,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_printercartridges` (
 
 
 
+
+
+
 ## INSERT
 ## glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 

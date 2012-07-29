@@ -88,9 +88,9 @@ function plugin_init_fusinvsnmp() {
    Plugin::registerClass('PluginFusinvsnmpNetworkport',
                          array('classname'=>'glpi_networkports'));
    Plugin::registerClass('PluginFusinvsnmpStateDiscovery');
-   Plugin::registerClass('PluginFusinvsnmpPrinterLogReport');
+   Plugin::registerClass('PluginFusioninventoryPrinterLogReport');
 
-   $CFG_GLPI['glpitablesitemtype']["PluginFusinvsnmpPrinterLogReport"] = "glpi_plugin_fusioninventory_printers";
+   $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] = "glpi_plugin_fusioninventory_printers";
 
    // ##### 3. get informations of the plugin #####
 

@@ -74,7 +74,7 @@ displaySearchForm();
 
 $_GET['target']="printer_counter.php";
 
-Search::show('PluginFusinvsnmpPrinterLogReport');
+Search::show('PluginFusioninventoryPrinterLogReport');
 
 
 function displaySearchForm() {
