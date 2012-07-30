@@ -42,7 +42,7 @@
 
 define ("PLUGIN_FUSINVSNMP_VERSION","0.84+1.0");
 
-include_once ("includes.php");
+//include_once ("includes.php");
 
 // Init the hooks of fusinvsnmp
 function plugin_init_fusinvsnmp() {

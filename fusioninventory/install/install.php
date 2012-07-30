@@ -70,7 +70,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmibobject.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmiboid.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelimportexport.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/networkcommondbtm.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/configlogfield.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/networkporttype.class.php");
 
