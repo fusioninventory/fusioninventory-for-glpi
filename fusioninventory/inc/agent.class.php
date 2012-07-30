@@ -284,24 +284,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Useragent')."&nbsp:</td>";
-      echo "<td align='center'>";
-      echo $this->fields["useragent"];
-      echo "</td>";
-      echo "<td>".__('Last contact')."&nbsp:</td>";
-      echo "<td align='center'>";
-      echo Html::convDateTime($this->fields["last_contact"]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Threads number')."&nbsp;(".strtolower(__('Network discovery')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("threads_networkdiscovery", $this->fields["threads_networkdiscovery"],1,400);
       echo "</td>";
-      echo "<td>".__('FusionInventory tag')."&nbsp:</td>";
+      echo "<td>".__('Useragent')."&nbsp:</td>";
       echo "<td align='center'>";
-      echo $this->fields["tag"];
+      echo $this->fields["useragent"];
       echo "</td>";
       echo "</tr>";
 
@@ -310,7 +299,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       Dropdown::showInteger("threads_networkinventory", $this->fields["threads_networkinventory"],1,400);
       echo "</td>";
+      echo "<td>".__('Last contact')."&nbsp:</td>";
+      echo "<td align='center'>";
+      echo Html::convDateTime($this->fields["last_contact"]);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
+      echo "<td>".__('FusionInventory tag')."&nbsp:</td>";
+      echo "<td align='center'>";
+      echo $this->fields["tag"];
+      echo "</td>";
       echo "</tr>";
       
       $this->showFormButtons($options);
