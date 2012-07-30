@@ -149,7 +149,7 @@ function plugin_init_fusinvsnmp() {
                                                            'PluginFusioninventoryUnknownDevice' =>'plugin_item_purge_fusinvsnmp');
 
          $report_list = array();
-         if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "reportprinter","r")) {
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "reportprinter","r")) {
             $report_list["front/printerlogreport.php"] = __('Printed page counter');
 
          }
