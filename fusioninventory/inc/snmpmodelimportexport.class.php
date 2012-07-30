@@ -449,7 +449,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       PluginFusioninventoryCommunication::addLog(
          'Function PluginFusioninventorySnmpmodelImportExport->import_netdiscovery().');
 
-      $ptap = new PluginFusinvsnmpStateDiscovery();
+      $ptap = new PluginFusioninventoryStateDiscovery();
       $pta  = new PluginFusioninventoryAgent();
 
       $agent = $pta->InfosByKey($agentKey);

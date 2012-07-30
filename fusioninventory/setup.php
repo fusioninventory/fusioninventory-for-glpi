@@ -301,6 +301,20 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['title'] = __('Import agent XML file');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['page']  = '/plugins/fusinvinventory/front/importxml.php';
+         
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['models']['title'] = __('SNMP models');
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['models']['page']  = '/plugins/fusioninventory/front/snmpmodel.php';
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['title'] = __('SNMP authentication');
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['page']  = '/plugins/fusioninventory/front/configsecurity.php';
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['title'] = __('Discovery status');
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['page']  = '/plugins/fusioninventory/front/statediscovery.php';
+         
+         
       }
    } else { // plugin not active, need $moduleId for uninstall check
       include_once(GLPI_ROOT.'/plugins/fusioninventory/inc/module.class.php');

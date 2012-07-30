@@ -44,15 +44,13 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-$pfStateDiscovery = new PluginFusinvsnmpStateDiscovery();
-
 Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","statediscovery");
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "task","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$pfStateDiscovery = new PluginFusinvsnmpStateDiscovery();
+$pfStateDiscovery = new PluginFusioninventoryStateDiscovery();
 $pfStateDiscovery->display();
 
 Html::footer();

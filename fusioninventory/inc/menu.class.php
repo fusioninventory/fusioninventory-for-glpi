@@ -198,26 +198,26 @@ class PluginFusioninventoryMenu {
          $a_menu[0]['name'] = __('SNMP models');
 
          $a_menu[0]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_models.png";
-         $a_menu[0]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/model.php";
+         $a_menu[0]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/snmpmodel.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configsecurity", "r")) {
          $a_menu[1]['name'] = __('SNMP authentication');
 
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_authentification.png";
-         $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/configsecurity.php";
+         $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/configsecurity.php";
       }
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
          $a_menu[5]['name'] = __('Discovery status');
 
          $a_menu[5]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_discovery_status.png";
-         $a_menu[5]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/statediscovery.php";
+         $a_menu[5]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/statediscovery.php";
 
          $a_menu[6]['name'] = __('Network inventory status');
 
          $a_menu[6]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_inventory_status.png";
-         $a_menu[6]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/stateinventory.php";
+         $a_menu[6]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/stateinventory.php";
       }
 
       if (!empty($a_menu)) {

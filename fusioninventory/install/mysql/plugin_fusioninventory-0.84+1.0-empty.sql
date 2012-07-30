@@ -711,6 +711,23 @@ CREATE TABLE `glpi_plugin_fusioninventory_configsecurities` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_statediscoveries`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_statediscoveries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_taskjob_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
+  `start_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_mod` datetime DEFAULT NULL,
+  `threads` int(11) NOT NULL DEFAULT '0',
+  `nb_ip` int(11) NOT NULL DEFAULT '0',
+  `nb_found` int(11) NOT NULL DEFAULT '0',
+  `nb_error` int(11) NOT NULL DEFAULT '0',
+  `nb_exists` int(11) NOT NULL DEFAULT '0',
+  `nb_import` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 

@@ -87,7 +87,7 @@ function plugin_init_fusinvsnmp() {
    Plugin::registerClass('PluginFusinvsnmpAgentconfig');
    Plugin::registerClass('PluginFusioninventoryNetworkPort',
                          array('classname'=>'glpi_networkports'));
-   Plugin::registerClass('PluginFusinvsnmpStateDiscovery');
+   Plugin::registerClass('PluginFusioninventoryStateDiscovery');
    Plugin::registerClass('PluginFusioninventoryPrinterLogReport');
 
    $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] = "glpi_plugin_fusioninventory_printers";
@@ -200,17 +200,6 @@ function plugin_init_fusinvsnmp() {
          }
 
          // Fil ariane
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['models']['title'] = __('SNMP models');
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['models']['page']  = '/plugins/fusinvsnmp/front/model.php';
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['title'] = __('SNMP authentication');
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['page']  = '/plugins/fusinvsnmp/front/configsecurity.php';
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['title'] = __('Discovery status');
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['page']  = '/plugins/fusinvsnmp/front/statediscovery.php';
 
       }
 
