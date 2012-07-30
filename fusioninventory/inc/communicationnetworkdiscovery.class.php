@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
 
-class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunicationSNMP {
+class PluginFusioninventoryCommunicationNetworkDiscovery extends PluginFusinvsnmpCommunicationSNMP {
 
 
    /**
@@ -64,7 +64,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $pfAgent = new PluginFusioninventoryAgent();
 
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationNetDiscovery->import().');
+              'Function PluginFusioninventoryCommunicationNetworkDiscovery->import().');
 
       $errors = '';
 
@@ -129,7 +129,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
    function sendCriteria($p_xml) {
 
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationNetDiscovery->sendCriteria().');
+              'Function PluginFusioninventoryCommunicationNetworkDiscovery->sendCriteria().');
 
       if ((isset($p_xml->MAC)) AND ($p_xml->MAC == "00:00:00:00:00:00")) {
          unset($p_xml->MAC);
@@ -180,7 +180,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       }
 
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationNetDiscovery";
+      $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusioninventoryCommunicationNetworkDiscovery";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array ();
       $data = $rule->processAllRules($input, array());
@@ -249,7 +249,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationNetDiscovery->rulepassed().');
+              'Function PluginFusioninventoryCommunicationNetworkDiscovery->rulepassed().');
 
       $item = new $itemtype();
       if ($items_id == "0") {
@@ -298,7 +298,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
    function importDevice($item) {
 
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationNetDiscovery->importDevice().');
+              'Function PluginFusioninventoryCommunicationNetworkDiscovery->importDevice().');
 
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
       $input = array();

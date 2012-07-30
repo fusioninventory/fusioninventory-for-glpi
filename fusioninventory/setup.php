@@ -114,7 +114,10 @@ function plugin_init_fusioninventory() {
 
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['WAKEONLAN'] = '';
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['INVENTORY']
-                                 = 'PluginFusioninventoryInventoryComputerInventory';
+                                             = 'PluginFusioninventoryInventoryComputerInventory';
+      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETDISCOVERY'] 
+                                             = 'PluginFusioninventoryCommunicationNetworkDiscovery';
+
 
       $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
          PluginFusioninventoryProfile::changeprofile($moduleId);

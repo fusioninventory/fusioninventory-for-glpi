@@ -104,7 +104,6 @@ function plugin_init_fusinvsnmp() {
    // ##### 5. Set in session XMLtags of methods #####
 
    $_SESSION['glpi_plugin_fusioninventory']['xmltags']['SNMPQUERY'] = 'PluginFusinvsnmpCommunicationSNMPQuery';
-   $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETDISCOVERY'] = 'PluginFusinvsnmpCommunicationNetDiscovery';
 
 
 
