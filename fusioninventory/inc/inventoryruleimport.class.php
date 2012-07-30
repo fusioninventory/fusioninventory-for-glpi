@@ -272,7 +272,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          case Rule::PATTERN_EXISTS:
          case Rule::PATTERN_DOES_NOT_EXISTS:
          case Rule::PATTERN_FIND:
-         case PluginFusioninventoryRuleImportEquipment::PATTERN_IS_EMPTY:
+         case PluginFusioninventoryInventoryRuleImport::PATTERN_IS_EMPTY:
             Dropdown::showYesNo($name, 1, 0);
             return true;
 
