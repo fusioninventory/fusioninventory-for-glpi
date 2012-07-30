@@ -94,6 +94,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `periodicity_count` int(6) NOT NULL DEFAULT '0',
   `periodicity_type` varchar(255) DEFAULT NULL,
   `execution_id` bigint(20) NOT NULL DEFAULT '0',
+  `is_advancedmode` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `is_active` (`is_active`)
