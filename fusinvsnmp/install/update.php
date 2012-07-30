@@ -1645,63 +1645,6 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
 
 
    /*
-    * Table glpi_plugin_fusinvsnmp_unknowndevices
-    */
-      $newTable = "glpi_plugin_fusinvsnmp_unknowndevices";
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_unknowndevices_id",
-                                 "plugin_fusioninventory_unknowndevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "sysdescr",
-                                 "sysdescr",
-                                 "text DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_models_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_configsecurities_id",
-                                 "plugin_fusinvsnmp_configsecurities_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_unknowndevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "sysdescr",
-                                 "text DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "plugin_fusinvsnmp_configsecurities_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addKey($newTable,
-                            "plugin_fusioninventory_unknowndevices_id");
-      $migration->migrationOneTable($newTable);
-
-
-
-   /*
     * Table glpi_plugin_fusinvsnmp_agentconfigs
     */
       $newTable = "glpi_plugin_fusinvsnmp_agentconfigs";

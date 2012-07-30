@@ -330,6 +330,32 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
       }
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center' rowspan='2'>";
+      echo __('Sysdescr')."&nbsp;:";
+      echo "</td>";
+      echo "<td rowspan='2'>";
+      echo "<textarea name='sysdescr'  cols='45' rows='5' />".$this->fields["sysdescr"]."</textarea>";
+
+      echo "<td align='center'>".__('SNMP models')."&nbsp;:</td>";
+      echo "<td align='center'>";
+      if (!empty($pfUnknownDevice->fields['item_type'])) {
+         Dropdown::show("PluginFusioninventorySnmpmodel",
+                     array('name'=>"plugin_fusioninventory_snmpmodels_id",
+                           'value'=>$this->fields['plugin_fusioninventory_snmpmodels_id'],
+                           'comment'=>1,
+                           'condition'=>"`itemtype`='".$pfUnknownDevice->fields['item_type']."'"));
+      }
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>".__('SNMP authentication')."&nbsp;:</td>";
+      echo "<td align='center'>";
+      PluginFusinvsnmpConfigSecurity::auth_dropdown($this->fields['plugin_fusinvsnmp_configsecurities_id']);
+      echo "</td>";
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>" . __('Comments') . " : </td>";
@@ -859,6 +885,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
     *
    **/
    function import($items_id,$Import=0, $NoImport=0) {
+      global $DB;
 
       $NetworkPort = new NetworkPort();
 
@@ -889,10 +916,25 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $NetworkPort->update($data_Port);
             }
 
-            // Import SNMP if enable
-            if (PluginFusioninventoryModule::getModuleId("fusinvsnmp")) {
-               $pfUnknownDevice = new PluginFusinvsnmpUnknownDevice();
-               $pfUnknownDevice->import($items_id, $printer_id, 'Printer');
+            // Import SNMP
+            $pfPrinter = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
+            $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusioninventory_printers";
+            $query = "SELECT *
+                      FROM `glpi_plugin_fusioninventory_printers`
+                      WHERE `printers_id`='".$printer_id."' ";
+            $result = $DB->query($query);
+            $data = array();
+            if ($DB->numrows($result) > 0) {
+               $data = $DB->fetch_assoc($result);
+            }            
+            $data['sysdescr'] = $this->fields['sysdescr'];
+            $data['plugin_fusioninventory_snmpmodels_id'] = $this->fields['plugin_fusioninventory_snmpmodels_id'];
+            $data['plugin_fusinvsnmp_configsecurities_id'] = $this->fields['plugin_fusinvsnmp_configsecurities_id'];
+            if ($DB->numrows($result) == 0) {
+               $data['printers_id'] = $printer_id;
+               $pfPrinter->add($data);
+            } else {
+               $pfPrinter->update($data);
             }
 
             $this->deleteFromDB($items_id,1);
@@ -928,7 +970,27 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $pfUnknownDevice = new PluginFusinvsnmpUnknownDevice();
                $pfUnknownDevice->import($items_id, $NetworkEquipment_id, 'NetworkEquipment');
             }
+            $pfNetworkEquipment = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+            $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusioninventory_networkequipments";
+            $query = "SELECT *
+                      FROM `glpi_plugin_fusioninventory_networkequipments`
+                      WHERE `networkequipments_id`='".$NetworkEquipment_id."' ";
+            $result = $DB->query($query);
+            $data = array();
+            if ($DB->numrows($result) > 0) {
+               $data = $DB->fetch_assoc($result);
+            }
 
+            $data['sysdescr'] = $this->fields['sysdescr'];
+            $data['plugin_fusioninventory_snmpmodels_id'] = $this->fields['plugin_fusioninventory_snmpmodels_id'];
+            $data['plugin_fusinvsnmp_configsecurities_id'] = $this->fields['plugin_fusinvsnmp_configsecurities_id'];
+            if ($DB->numrows($result) == 0) {
+               $data['networkequipments_id'] = $NetworkEquipment_id;
+               $pfNetworkEquipment->add($data);
+            } else {
+               $pfNetworkEquipment->update($data);
+            }
+            
             $this->deleteFromDB($items_id,1);
             $Import++;
             break;

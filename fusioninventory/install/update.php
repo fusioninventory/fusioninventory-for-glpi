@@ -1756,6 +1756,22 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'deleted',
                                  'is_deleted',
                                  "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "sysdescr",
+                                 "sysdescr",
+                                 "text DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "plugin_fusinvsnmp_models_id",
+                                 "plugin_fusioninventory_snmpmodels_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "plugin_fusioninventory_snmpmodels_id",
+                                 "plugin_fusioninventory_snmpmodels_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "plugin_fusinvsnmp_configsecurities_id",
+                                 "plugin_fusinvsnmp_configsecurities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
       $migration->migrationOneTable($newTable);
          $migration->dropField($newTable, "dnsname");
          $migration->dropField($newTable, "snmp");
@@ -1817,6 +1833,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                               'states_id',
                               "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "sysdescr",
+                                 "text DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "plugin_fusioninventory_snmpmodels_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "plugin_fusinvsnmp_configsecurities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
          $migration->addKey($newTable,
                             "entities_id");
          $migration->addKey($newTable,
