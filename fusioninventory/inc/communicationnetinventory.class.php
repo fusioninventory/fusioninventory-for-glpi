@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpCommunicationSNMPQuery {
+class PluginFusioninventoryCommunicationNetworkInventory {
 //   private $sxml, $deviceId, $ptd, $type='', $logFile;
    private $sxml, $ptd, $logFile, $agent, $unknownDeviceCDP;
    private $a_ports = array();
@@ -73,7 +73,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       $result = false;
 
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->import().');
+              'Function PluginFusioninventoryCommunicationNetworkInventory->import().');
 
       $pfAgent = new PluginFusioninventoryAgent();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
@@ -139,7 +139,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importContent($p_content) {
 
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importContent().');
+              'Function PluginFusioninventoryCommunicationNetworkInventory->importContent().');
       $pfAgent = new PluginFusioninventoryAgent();
 
       $errors='';
@@ -214,7 +214,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importDevice($itemtype, $items_id) {
 
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importDevice().');
+              'Function PluginFusioninventoryCommunicationNetworkInventory->importDevice().');
 
       $p_xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
 
@@ -299,7 +299,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importInfo($itemtype, $items_id) {
 
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importInfo().');
+              'Function PluginFusioninventoryCommunicationNetworkInventory->importInfo().');
       $errors='';
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
       if ($itemtype == 'NetworkEquipment') {
@@ -440,7 +440,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importInfoPrinter($p_info) {
 
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importInfoPrinter().');
+              'Function PluginFusioninventoryCommunicationNetworkInventory->importInfoPrinter().');
 
       $errors='';
       $this->ptd = new PluginFusioninventoryPrinter();
@@ -584,7 +584,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importPorts($p_ports) {
 
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importPorts().');
+              'Function PluginFusioninventoryCommunicationNetworkInventory->importPorts().');
       $errors='';
       foreach ($p_ports->children() as $child) {
          switch ($child->getName()) {
@@ -625,7 +625,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
     **/
    function importPortNetworking($p_port) {
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importPortNetworking().');
+              'Function PluginFusioninventoryCommunicationNetworkInventory->importPortNetworking().');
       $errors='';
       $pfNetworkPort = new PluginFusioninventoryNetworkPort("NetworkEquipment");
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
@@ -994,7 +994,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function importConnections($p_connections, $pfNetworkPort) {
 
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importConnections().');
+              'Function PluginFusioninventoryCommunicationNetworkInventory->importConnections().');
       $errors='';
       $cdp = 0;
       if (isset($p_connections->CDP)) {
@@ -1063,7 +1063,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function  importConnection($p_connection, $pfNetworkPort, $p_cdp) {
 
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->importConnection().');
+              'Function PluginFusioninventoryCommunicationNetworkInventory->importConnection().');
 
       $errors  = '';
       if ($p_cdp==1) {
@@ -1230,7 +1230,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
    function sendCriteria($p_DEVICEID, $p_CONTENT) {
 
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->sendCriteria().');
+              'Function PluginFusioninventoryCommunicationNetworkInventory->sendCriteria().');
 
       $errors = '';
 
@@ -1275,7 +1275,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          }
 
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationSNMPQuery";
+      $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusioninventoryCommunicationNetworkInventory";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array();
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
@@ -1354,7 +1354,7 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    "Rule passed : ".$items_id.", ".$itemtype."\n");
       PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusinvsnmpCommunicationSNMPQuery->rulepassed().');
+              'Function PluginFusioninventoryCommunicationNetworkInventory->rulepassed().');
 
       $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
 

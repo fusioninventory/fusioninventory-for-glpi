@@ -117,6 +117,8 @@ function plugin_init_fusioninventory() {
                                              = 'PluginFusioninventoryInventoryComputerInventory';
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETDISCOVERY'] 
                                              = 'PluginFusioninventoryCommunicationNetworkDiscovery';
+      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['SNMPQUERY'] 
+                                             = 'PluginFusioninventoryCommunicationNetworkInventory';
 
 
       $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
