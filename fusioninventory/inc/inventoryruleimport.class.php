@@ -801,8 +801,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             case "dropdown_itemtype":
                $types = $this->getTypes();
                ksort($types);
-
-               Dropdown::dropdownTypes($name, $value,array_keys($types));
+               Dropdown::showItemTypes($name, array_keys($types),
+                                          array('value' => $value));
                $display = true;
                break;
 

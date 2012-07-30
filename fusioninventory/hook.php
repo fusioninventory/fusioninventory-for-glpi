@@ -557,7 +557,8 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
          $type_list[] = 'Printer';
          $type_list[] = 'Peripheral';
          $type_list[] = 'Phone';
-         Dropdown::dropdownTypes($linkfield,0,$type_list);
+         Dropdown::showItemTypes($linkfield, $type_list,
+                                          array('value' => 0));
          return true;
          break;
 

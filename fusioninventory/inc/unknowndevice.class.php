@@ -266,7 +266,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $type_list[] = 'Printer';
          $type_list[] = 'Peripheral';
          $type_list[] = 'Phone';
-      Dropdown::dropdownTypes('item_type',$this->fields["item_type"],$type_list);
+      Dropdown::showItemTypes('item_type', $type_list,
+                                          array('value' => $this->fields["item_type"]));
       echo "</td>";
       echo "<td align='center'>" . __('Alternate username') . "&nbsp;:</td>";
       echo "</td>";
