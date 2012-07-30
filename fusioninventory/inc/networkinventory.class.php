@@ -493,7 +493,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
-      $pfCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP();
+      $pfToolbox = new PluginFusioninventoryToolbox();
       $pfModel = new PluginFusioninventorySnmpmodel();
 
       $NetworkEquipment = new NetworkEquipment();
@@ -573,7 +573,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $snmpauthlist=$pfConfigSecurity->find();
       if (count($snmpauthlist)){
          foreach ($snmpauthlist as $snmpauth){
-            $pfCommunicationSNMP->addAuth($sxml_option, $snmpauth['id']);
+            $pfToolbox->addAuth($sxml_option, $snmpauth['id']);
          }
       }
       // Add models
@@ -581,7 +581,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       if (count($modelslist)){
          foreach ($modelslist as $model){
             if (isset($modelslistused[$model['id']])) {
-               $pfCommunicationSNMP->addModel($sxml_option, $model['id']);
+               $pfToolbox->addModel($sxml_option, $model['id']);
             }
          }
       }

@@ -311,7 +311,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfIPRange = new PluginFusioninventoryIPRange();
       $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
-      $pfCommunicationSNMP = new PluginFusinvsnmpCommunicationSNMP();
+      $pfToolbox = new PluginFusioninventoryToolbox();
 
 
       $current = current($a_Taskjobstates);
@@ -386,7 +386,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $snmpauthlist=$pfConfigSecurity->find();
       if (count($snmpauthlist)){
          foreach ($snmpauthlist as $snmpauth){
-            $pfCommunicationSNMP->addAuth($sxml_option, $snmpauth['id']);
+            $pfToolbox->addAuth($sxml_option, $snmpauth['id']);
          }
       }
       return $this->message;

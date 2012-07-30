@@ -346,7 +346,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
    function oidList($p_sxml_node,$p_id) {
       global $DB;
 
-      $ptc = new PluginFusinvsnmpCommunicationSNMP();
+      $pfToolbox = new PluginFusioninventoryToolbox();
 
       // oid GET
       $query = "SELECT `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
@@ -363,14 +363,14 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
       while ($data=$DB->fetch_array($result)) {
          switch ($data['oid_port_dyn']) {
             case 0:
-               $ptc->addGet($p_sxml_node,
+               $pfToolbox->addGet($p_sxml_node,
                   $data['mapping_name'],
                   Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',$data['plugin_fusioninventory_snmpmodelmiboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
 
             case 1:
-               $ptc->addWalk($p_sxml_node,
+               $pfToolbox->addWalk($p_sxml_node,
                   $data['mapping_name'],
                   Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',$data['plugin_fusioninventory_snmpmodelmiboids_id']),
                   $data['mapping_name'], $data['vlan']);

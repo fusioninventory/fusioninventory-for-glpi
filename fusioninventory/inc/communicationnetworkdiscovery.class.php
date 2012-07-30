@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
 
-class PluginFusioninventoryCommunicationNetworkDiscovery extends PluginFusinvsnmpCommunicationSNMP {
+class PluginFusioninventoryCommunicationNetworkDiscovery {
 
 
    /**
