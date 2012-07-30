@@ -490,7 +490,6 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
    function run($a_Taskjobstates) {
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $pfAgentconfig = new  PluginFusinvsnmpAgentconfig();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
@@ -506,12 +505,11 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $current = current($a_Taskjobstates);
       $pfAgent->getFromDB($current['plugin_fusioninventory_agents_id']);
 
-      $pfAgentconfig->loadAgentconfig($pfAgent->fields['id']);
       $sxml_option = $this->message->addChild('OPTION');
       $sxml_option->addChild('NAME', 'SNMPQUERY');
       $sxml_param = $sxml_option->addChild('PARAM');
          $sxml_param->addAttribute('CORE_QUERY', "1");
-         $sxml_param->addAttribute('THREADS_QUERY', $pfAgentconfig->fields["threads_snmpquery"]);
+         $sxml_param->addAttribute('THREADS_QUERY', $pfAgent->fields["threads_networkinventory"]);
          $sxml_param->addAttribute('PID', $current['id']);
 
 
@@ -561,7 +559,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                                        '0',
                                        'PluginFusioninventoryAgent',
                                        '1',
-                                       $pfAgentconfig->fields["threads_snmpquery"].' threads');
+                                       $pfAgent->fields["threads_networkinventory"].' threads');
                $changestate = $pfTaskjobstate->fields['id'];
             } else {
                $pfTaskjobstate->changeStatusFinish($taskjobstatedatas['id'],

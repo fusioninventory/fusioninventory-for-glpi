@@ -306,7 +306,6 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
    function run($a_Taskjobstates) {
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $pfAgentconfig = new  PluginFusinvsnmpAgentconfig();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
@@ -318,7 +317,6 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $current = current($a_Taskjobstates);
       $pfAgent->getFromDB($current['plugin_fusioninventory_agents_id']);
 
-      $pfAgentconfig->loadAgentconfig($pfAgent->fields['id']);
       $sxml_option = $this->message->addChild('OPTION');
       $sxml_option->addChild('NAME', 'NETDISCOVERY');
 
@@ -327,7 +325,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
               OR !isset($a_versions["NETDISCOVERY"])) {
          $sxml_option->addChild('DICOHASH', md5_file(GLPI_ROOT."/plugins/fusioninventory/tools/networkdiscovery.xml"));
       }
-      if (($pfAgentconfig->fields["senddico"] == "1")) {
+      if (($pfAgent->fields["senddico"] == "1")) {
 
          if (((isset($a_versions["NETDISCOVERY"]))
                  AND ($a_versions["NETDISCOVERY"] >= 1.3))) {
@@ -335,14 +333,14 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
             $sxml_option->addChild('DICO', file_get_contents(GLPI_ROOT."/plugins/fusioninventory/tools/networkdiscovery.xml"));
          }
          $input = array();
-         $input['id'] = $pfAgentconfig->fields['id'];
+         $input['id'] = $pfAgent->fields['id'];
          $input["senddico"] = "0";
-         $pfAgentconfig->update($input);
+         $pfAgent->update($input);
       }
 
       $sxml_param = $sxml_option->addChild('PARAM');
          $sxml_param->addAttribute('CORE_DISCOVERY', "1");
-         $sxml_param->addAttribute('THREADS_DISCOVERY', $pfAgentconfig->fields["threads_netdiscovery"]);
+         $sxml_param->addAttribute('THREADS_DISCOVERY', $pfAgent->fields["threads_networkdiscovery"]);
          $sxml_param->addAttribute('PID', $current['id']);
 
       $changestate = 0;

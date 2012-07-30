@@ -226,6 +226,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $this->getFromDB($items_id);
       } else {
          $this->getEmpty();
+         $pfConfig = new PluginFusioninventoryConfig();
+         $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
+         unset($this->fields['id']);
+         $this->fields['threads_networkdiscovery'] =
+                 $pfConfig->getValue($plugins_id, 'threads_networkdiscovery');
+         $this->fields['threads_networkinventory'] =
+                 $pfConfig->getValue($plugins_id, 'threads_networkinventory');
+         $this->fields['senddico'] = 0;
       }
 
       $this->showTabs($options);
@@ -287,15 +295,24 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Threads number')."&nbsp;(".strtolower(__('Network discovery')).")&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("threads_networkdiscovery", $this->fields["threads_networkdiscovery"],1,400);
+      echo "</td>";
       echo "<td>".__('FusionInventory tag')."&nbsp:</td>";
       echo "<td align='center'>";
       echo $this->fields["tag"];
       echo "</td>";
-      echo "<td></td>";
-      echo "<td align='center'>";
-      echo "</td>";
       echo "</tr>";
 
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Threads number')."&nbsp;(".strtolower(__('Network inventory (SNMP)')).")&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showInteger("threads_networkinventory", $this->fields["threads_networkinventory"],1,400);
+      echo "</td>";
+      echo "<td colspan='2'></td>";
+      echo "</tr>";
+      
       $this->showFormButtons($options);
       $this->addDivForTabs();
 

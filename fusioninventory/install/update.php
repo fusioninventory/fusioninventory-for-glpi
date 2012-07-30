@@ -479,6 +479,18 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "lock",
                                  "lock",
                                  "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "threads_networkdiscovery",
+                                 "threads_networkdiscovery",
+                                 "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'");
+         $migration->changeField($newTable,
+                                 "threads_networkinventory",
+                                 "threads_networkinventory",
+                                 "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'");
+         $migration->changeField($newTable,
+                                 "senddico",
+                                 "senddico",
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
          $migration->dropField($newTable,
                                "module_snmpquery");
          $migration->dropField($newTable,
@@ -541,6 +553,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                               "tag",
                               "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "threads_networkdiscovery",
+                                 "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'");
+         $migration->addField($newTable,
+                                 "threads_networkinventory",
+                                 "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'");
+         $migration->addField($newTable,
+                                 "senddico",
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
          $migration->addKey($newTable,
                             "name");
          $migration->addKey($newTable,

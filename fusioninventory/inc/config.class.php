@@ -103,8 +103,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       }
       
       $input = array();
-      $input['threads_netdiscovery'] = 1;
-      $input['threads_snmpquery'] = 1;
+      $input['threads_networkdiscovery'] = 1;
+      $input['threads_networkinventory'] = 1;
 
       foreach ($input as $key => $value) {
          $this->addValues($plugin_id, array($key => $value), 'network');
@@ -651,13 +651,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Threads number')."&nbsp;(".strtolower(__('Network discovery')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_netdiscovery", 
-                            $pfConfig->getValue($plugins_id, 'threads_netdiscovery', 'network'),1,400);
+      Dropdown::showInteger("threads_networkdiscovery", 
+                            $pfConfig->getValue($plugins_id, 'threads_networkdiscovery', 'network'),1,400);
       echo "</td>";
       echo "<td>".__('Threads number')."&nbsp;(".strtolower(__('Network inventory (SNMP)')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_snmpquery", 
-                            $pfConfig->getValue($plugins_id, 'threads_snmpquery', 'network'),1,400);
+      Dropdown::showInteger("threads_networkinventory", 
+                            $pfConfig->getValue($plugins_id, 'threads_networkinventory', 'network'),1,400);
       echo "</td>";
       echo "</tr>";
       

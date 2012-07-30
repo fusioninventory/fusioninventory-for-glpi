@@ -237,20 +237,6 @@ function plugin_fusinvsnmp_getAddSearchOptions($itemtype) {
 
       $sopt[5196]['datatype']      = 'text';
    }
-   if ($itemtype == 'PluginFusioninventoryAgent') {
-      $sopt[5197]['table']         = 'glpi_plugin_fusinvsnmp_agentconfigs';
-      $sopt[5197]['field']         = 'threads_netdiscovery';
-      $sopt[5197]['linkfield']     = '';
-      $sopt[5197]['name']          = __('Threads number')."&nbsp;(".strtolower(__('Network discovery')).")";
-      $sopt[5197]['itemlink_type'] = 'PluginFusinvsnmpAgentconfig';
-
-      $sopt[5198]['table']         = 'glpi_plugin_fusinvsnmp_agentconfigs';
-      $sopt[5198]['field']         = 'threads_snmpquery';
-      $sopt[5198]['linkfield']     = '';
-      $sopt[5198]['name']          = __('Threads number')."&nbsp;(".strtolower(__('Network inventory (SNMP)')).")";
-      $sopt[5198]['itemlink_type'] = 'PluginFusinvsnmpAgentconfig';
-
-   }
 
    return $sopt;
 }
@@ -835,7 +821,6 @@ function plugin_headings_actions_fusinvsnmp($item) {
 
       case 'PluginFusioninventoryAgent' :
          $array = array ();
-         $array[1] = "plugin_headings_fusinvsnmp_agents";
          // $array[1] = "plugin_headings_fusinvsnmp_agents";  => $array[1] = array('taclasse', 'taméthode');
          $array[2] = "plugin_headings_fusinvsnmp_xml";
          return $array;
@@ -885,12 +870,6 @@ function plugin_headings_fusinvsnmp_networkingInfo($type, $id) {
    $snmp = new PluginFusioninventoryNetworkEquipment();
    $snmp->showForm($_POST['id'],
            array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/switch_info.form.php'));
-}
-
-
-function plugin_headings_fusinvsnmp_agents($type,$id) {
-   $pfAgentconfig = new PluginFusinvsnmpAgentconfig;
-   $pfAgentconfig->showForm($_POST['id']);
 }
 
 
@@ -1038,13 +1017,13 @@ function plugin_fusinvsnmp_MassiveActionsDisplay($options=array()) {
          switch ($options['action']) {
 
             case 'plugin_fusinvsnmp_set_discovery_threads':
-               echo Dropdown::showInteger('threads_netdiscovery', '10');
+               echo Dropdown::showInteger('threads_networkdiscovery', '10');
                echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
                      __('Post') . "\" >";
                break;
 
             case 'plugin_fusinvsnmp_set_snmpinventory_threads':
-               echo Dropdown::showInteger('threads_snmpquery', '5');
+               echo Dropdown::showInteger('threads_networkinventory', '5');
                echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
                      __('Post') . "\" >";
                break;
@@ -1205,11 +1184,11 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
                $input = array();
                if (count($a_agents) > 0) {
                   $input = current($a_agents);
-                  $input['threads_netdiscovery'] = $data['threads_netdiscovery'];
+                  $input['threads_networkdiscovery'] = $data['threads_networkdiscovery'];
                   $pfAgentconfig->update($input);
                } else {
                   $input['plugin_fusioninventory_agents_id'] = $items_id;
-                  $input['threads_netdiscovery'] = $data['threads_netdiscovery'];
+                  $input['threads_networkdiscovery'] = $data['threads_networkdiscovery'];
                   $pfAgentconfig->add($input);
                }
             }
@@ -1224,11 +1203,11 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
                $input = array();
                if (count($a_agents) > 0) {
                   $input = current($a_agents);
-                  $input['threads_snmpquery'] = $data['threads_snmpquery'];
+                  $input['threads_networkinventory'] = $data['threads_networkinventory'];
                   $pfAgentconfig->update($input);
                } else {
                   $input['plugin_fusioninventory_agents_id'] = $items_id;
-                  $input['threads_snmpquery'] = $data['threads_snmpquery'];
+                  $input['threads_networkinventory'] = $data['threads_networkinventory'];
                   $pfAgentconfig->add($input);
                }
             }
@@ -1743,13 +1722,6 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
                return " LEFT JOIN `glpi_networkports` ON (`glpi_printers`.`id` = `glpi_networkports`.`items_id` AND `glpi_networkports`.`itemtype` = 'Printer') ";
                break;
          }
-         break;
-
-      case 'PluginFusioninventoryAgent';
-         if ($new_table.".".$linkfield == 'glpi_plugin_fusinvsnmp_agentconfigs.plugin_fusinvsnmp_agentconfigs_id') {
-            return " LEFT JOIN `glpi_plugin_fusinvsnmp_agentconfigs` ON (`glpi_plugin_fusioninventory_agents`.`id` = `glpi_plugin_fusinvsnmp_agentconfigs`.`plugin_fusioninventory_agents_id`) ";
-         }
-
          break;
 
       case 'PluginFusioninventoryPrinterLogReport':

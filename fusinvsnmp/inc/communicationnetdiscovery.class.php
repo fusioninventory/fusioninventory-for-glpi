@@ -62,8 +62,6 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
    function import($p_DEVICEID, $p_CONTENT, $p_xml) {
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfAgent = new PluginFusioninventoryAgent();
-      $pfAgentconfig = new PluginFusinvsnmpAgentconfig();
-
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusinvsnmpCommunicationNetDiscovery->import().');
@@ -99,11 +97,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             if (isset($p_CONTENT->AGENT->END)) {
                if ((isset($p_CONTENT->DICO)) AND ($p_CONTENT->DICO == "REQUEST")) {
                   $pfAgent->getFromDB($pfTaskjobstate->fields["plugin_fusioninventory_agents_id"]);
-                  $pfAgentconfig->loadAgentconfig($pfAgent->fields['id']);
                   $input = array();
-                  $input['id'] = $pfAgentconfig->fields['id'];
+                  $input['id'] = $pfAgent->fields['id'];
                   $input["senddico"] = "1";
-                  $pfAgentconfig->update($input);
+                  $pfAgent->update($input);
 
                   $pfTaskjobstate->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
                                                                           $a_agent['id'],

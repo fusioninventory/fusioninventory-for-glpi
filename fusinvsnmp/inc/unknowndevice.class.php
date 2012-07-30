@@ -121,26 +121,6 @@ class PluginFusinvsnmpUnknownDevice extends CommonDBTM {
 
 
 
-   function loadAgentconfig($agents_id) {
-
-      $a_agent = $this->find("`plugin_fusioninventory_agents_id`='".$agents_id."'");
-      if (count($a_agent) > 0) {
-         foreach ($a_agent as $data) {
-            $this->getFromDB($data['id']);
-            return;
-         }
-      }
-      // If we are here, agentconfig has been not found
-      $this->getEmpty();
-      $this->fields['plugin_fusioninventory_agents_id'] = $agents_id;
-      $this->fields['threads_netdiscovery'] = 1;
-      $this->fields['threads_snmpquery'] = 1;
-      unset($this->fields['id']);
-      $this->add($this->fields);
-   }
-
-
-
    function import($unknown_id, $items_id, $item_type) {
       global $DB;
 
