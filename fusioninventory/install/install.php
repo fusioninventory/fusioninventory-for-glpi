@@ -270,6 +270,20 @@ function pluginFusioninventoryInstall($version, $migration='') {
                                                                                  'esx');
       $PluginFusioninventoryAgentmodule->add($input);
 
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "SNMPQUERY";
+      $input['is_active']  = 0;
+      $input['exceptions'] = exportArrayToDB(array());
+      $PluginFusioninventoryAgentmodule->add($input);
+
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "NETDISCOVERY";
+      $input['is_active']  = 0;
+      $input['exceptions'] = exportArrayToDB(array());
+      $PluginFusioninventoryAgentmodule->add($input);
+
 
 
    /*
