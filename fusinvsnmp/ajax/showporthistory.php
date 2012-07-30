@@ -52,6 +52,6 @@ if (!defined('GLPI_ROOT')) {
 
 Session::checkCentralAccess();
 
-echo PluginFusinvsnmpNetworkPortLog::showHistory($_POST["ports_id"]);
+echo PluginFusioninventoryNetworkPortLog::showHistory($_POST["ports_id"]);
 
 ?>

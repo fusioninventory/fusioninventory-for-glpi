@@ -113,9 +113,6 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
       $input['exceptions'] = exportArrayToDB(array());
       $pfAgentmodule->add($input);
 
-
-
-      Crontask::Register('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs', (3600 * 24), array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
    }
 }
 

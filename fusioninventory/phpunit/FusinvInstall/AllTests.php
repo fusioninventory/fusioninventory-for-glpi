@@ -250,7 +250,7 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
               'Cron taskscheduler not created');
       $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstate', 'cleantaskjob'),
               'Cron cleantaskjob not created');
-      $this->assertTrue($crontask->getFromDBbyName('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs'),
+      $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs'),
               'Cron cleannetworkportlogs not created');
 
 

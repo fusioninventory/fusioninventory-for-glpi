@@ -83,7 +83,7 @@ function plugin_init_fusinvsnmp() {
    Plugin::registerClass('PluginFusioninventoryPrinter');
    Plugin::registerClass('PluginFusioninventoryPrinterCartridge');
    Plugin::registerClass('PluginFusinvsnmpConfigSecurity');
-   Plugin::registerClass('PluginFusinvsnmpNetworkPortLog');
+   Plugin::registerClass('PluginFusioninventoryNetworkPortLog');
    Plugin::registerClass('PluginFusinvsnmpAgentconfig');
    Plugin::registerClass('PluginFusioninventoryNetworkPort',
                          array('classname'=>'glpi_networkports'));

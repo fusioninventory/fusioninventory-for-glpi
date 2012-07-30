@@ -506,7 +506,7 @@ function plugin_fusinvsnmp_giveItem($type,$id,$data,$num) {
          break;
 
       // * Detail of ports history (plugins/fusinvsnmp/report/switch_ports.history.php)
-      case 'PluginFusinvsnmpNetworkPortLog' :
+      case 'PluginFusioninventoryNetworkPortLog' :
          switch ($table.'.'.$field) {
 
             // ** Display switch and Port
@@ -654,7 +654,7 @@ function cron_plugin_fusinvsnmp() {
 //   $ptud->CleanOrphelinsConnections();
 // $ptud->FusionUnknownKnownDevice();
 //   #Clean server script processes history
-//   $pfisnmph = new PluginFusinvsnmpNetworkPortLog;
+//   $pfisnmph = new PluginFusioninventoryNetworkPortLog;
 //   $pfisnmph->cronCleanHistory();
    return 1;
 }
@@ -1880,7 +1880,7 @@ function plugin_fusinvsnmp_addOrderBy($type,$id,$order,$key=0) {
          break;
 
       // * Detail of ports history (plugins/fusinvsnmp/report/switch_ports.history.php)
-      case 'PluginFusinvsnmpNetworkPortLog' :
+      case 'PluginFusioninventoryNetworkPortLog' :
          switch ($table.".".$field) {
 
             // ** Display switch and Port
@@ -2176,7 +2176,7 @@ function plugin_fusinvsnmp_addWhere($link,$nott,$type,$id,$val) {
          break;
 
       // * Detail of ports history (plugins/fusinvsnmp/report/switch_ports.history.php)
-      case 'PluginFusinvsnmpNetworkPortLog' :
+      case 'PluginFusioninventoryNetworkPortLog' :
          switch ($table.".".$field) {
 
             // ** Display switch and Port
@@ -2227,11 +2227,11 @@ function plugin_pre_item_purge_fusinvsnmp($parm) {
       $networkPort = new NetworkPort();
       if ($networkPort->getFromDB($parm->fields['networkports_id_1'])) {
          if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
-            PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$parm->fields['networkports_id_1']);
+            PluginFusioninventoryNetworkPortLog::addLogConnection("remove",$parm->fields['networkports_id_1']);
          } else {
             $networkPort->getFromDB($parm->fields['networkports_id_2']);
             if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
-               PluginFusinvsnmpNetworkPortLog::addLogConnection("remove",$parm->fields['networkports_id_2']);
+               PluginFusioninventoryNetworkPortLog::addLogConnection("remove",$parm->fields['networkports_id_2']);
             }
          }
       }
@@ -2326,11 +2326,11 @@ function plugin_item_add_fusinvsnmp($parm) {
       $networkPort = new NetworkPort();
       $networkPort->getFromDB($parm->fields['networkports_id_1']);
       if ($networkPort->fields['itemtype'] == 'NetworkEquipment') {
-         PluginFusinvsnmpNetworkPortLog::addLogConnection("make",$parm->fields['networkports_id_1']);
+         PluginFusioninventoryNetworkPortLog::addLogConnection("make",$parm->fields['networkports_id_1']);
       } else {
          $networkPort->getFromDB($parm->fields['networkports_id_2']);
          if ($networkPort->fields['itemtype'] == 'NetworkEquipment') {
-            PluginFusinvsnmpNetworkPortLog::addLogConnection("make",$parm->fields['networkports_id_2']);
+            PluginFusioninventoryNetworkPortLog::addLogConnection("make",$parm->fields['networkports_id_2']);
          }
       }
       break;

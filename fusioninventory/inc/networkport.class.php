@@ -332,13 +332,13 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       foreach ($vlanDB as $vlans_id) {
          if (!isset($vlanfound[$vlans_id])) {
             $networkPort_Vlan->unassignVlan($this->portModif['networkports_id'], $vlans_id);
-            PluginFusinvsnmpNetworkPortLog::networkport_addLog($this->portModif['networkports_id'], '', 'vmvlan');
+            PluginFusioninventoryNetworkPortLog::networkport_addLog($this->portModif['networkports_id'], '', 'vmvlan');
          }
       }
       foreach ($vlanfound as $vlans_id) {
          if (!isset($vlanDB[$vlans_id])) {
             $networkPort_Vlan->assignVlan($this->portModif['networkports_id'], $vlans_id);
-            PluginFusinvsnmpNetworkPortLog::networkport_addLog($this->portModif['networkports_id'], $number." [".$name."]", 'vmvlan');
+            PluginFusioninventoryNetworkPortLog::networkport_addLog($this->portModif['networkports_id'], $number." [".$name."]", 'vmvlan');
          }
       }
    }

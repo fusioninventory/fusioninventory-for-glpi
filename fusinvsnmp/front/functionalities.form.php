@@ -80,7 +80,7 @@ if (isset($_POST['update'])) {
    }
    Html::back();
 } else if ((isset($_POST['Clean_history']))) {
-   $pfNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
+   $pfNetworkPortLog = new PluginFusioninventoryNetworkPortLog();
    $pfNetworkPortLog->cronCleannetworkportlogs();
    Html::back();
 }

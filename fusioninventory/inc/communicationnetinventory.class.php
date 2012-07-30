@@ -686,21 +686,21 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                   break;
 
                case 'IFNAME':
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
                   if ((string)$child != '') {
                      $pfNetworkPort->setValue('name', (string)$child);
                   }
                   break;
 
                case 'MAC':
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
                   if (!strstr($child, '00:00:00:00:00:00')) {
                      $pfNetworkPort->setValue('mac', (string)$child);
                   }
                   break;
 
                case 'IFNUMBER':
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
                   $pfNetworkPort->setValue('logical_number', (string)$child);
                   break;
 
@@ -709,7 +709,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
                case 'TRUNK':
                   if ((string)$child == '1') {
-                     PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
+                     PluginFusioninventoryNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
                      $pfNetworkPort->setValue('trunk', 1);
                      $trunk = 1;
                   }
@@ -732,7 +732,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                case 'IFOUTOCTETS':
                case 'IFSPEED':
                case 'IFSTATUS':
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
                   $pfNetworkPort->setValue(strtolower($name), (string)$p_port->$name);
                   break;
 
@@ -742,7 +742,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          }
          if ($trunk == "0") {
             if ($pfNetworkPort->getValue('trunk') == '1') {
-               PluginFusinvsnmpNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), '0', 'trunk');
+               PluginFusioninventoryNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), '0', 'trunk');
                $pfNetworkPort->setValue('trunk', 0);
             }
          }
@@ -802,28 +802,28 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             switch ($name) {
 
                case 'IFNAME':
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
                   if ($portDB['name'] != (string)$child) {
                      $portModif['name'] = (string)$child;
                   }
                   break;
 
                case 'MAC':
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
                   if ($portDB['mac'] != (string)$child) {
                      $portModif['mac'] = (string)$child;
                   }
                   break;
 
                case 'IP':
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
                   if ($portDB['ip'] != (string)$child) {
                      $portModif['ip'] = (string)$child;
                   }
                   break;
 
                case 'IFNUMBER':
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
+                  PluginFusioninventoryNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
                   if ($portDB['logical_number'] != (string)$child) {
                      $portModif['logical_number'] = (string)$child;
                   }

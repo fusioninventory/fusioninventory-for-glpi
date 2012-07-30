@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
+class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
    /**
@@ -199,7 +199,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
       global $DB;
 
       $pfConfigLogField = new PluginFusioninventoryConfigLogField();
-      $pfNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
+      $pfNetworkPortLog = new PluginFusioninventoryNetworkPortLog();
 
       $a_list = $pfConfigLogField->find();
       if (count($a_list)){
@@ -233,7 +233,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
    static function addLog($port,$field,$value_old,$value_new,$mapping,$plugin_fusioninventory_agentprocesses_id=0) {
       global $DB;
 
-      $pfNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
+      $pfNetworkPortLog = new PluginFusioninventoryNetworkPortLog();
       $doHistory = 1;
       if ($mapping != "") {
          $query = "SELECT *
@@ -261,7 +261,7 @@ class PluginFusinvsnmpNetworkPortLog extends CommonDBTM {
 
    static function networkport_addLog($port_id, $value_new, $field) {
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
-      $pfNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
+      $pfNetworkPortLog = new PluginFusioninventoryNetworkPortLog();
       $pfConfigLogField = new PluginFusioninventoryConfigLogField();
       $pfMapping = new PluginFusioninventoryMapping();
 

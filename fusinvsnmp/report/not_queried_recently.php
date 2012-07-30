@@ -97,7 +97,7 @@ Html::closeForm();
 
 
 if(isset($_GET["FK_networking_ports"])) {
-   echo PluginFusinvsnmpNetworkPortLog::showHistory($_GET["FK_networking_ports"]);
+   echo PluginFusioninventoryNetworkPortLog::showHistory($_GET["FK_networking_ports"]);
 }
 
 Html::closeForm();
