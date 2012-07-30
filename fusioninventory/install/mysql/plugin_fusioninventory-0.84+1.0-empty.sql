@@ -732,25 +732,15 @@ CREATE TABLE `glpi_plugin_fusioninventory_statediscoveries` (
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## INSERT
+## glpi_plugin_fusioninventory_configsecurities
+INSERT INTO `glpi_plugin_fusioninventory_configsecurities`
+      (`id`, `name`, `snmpversion`, `community`, `username`, `authentication`, `auth_passphrase`, `encryption`, `priv_passphrase`, `is_deleted`)
+   VALUES (1, 'Public community v1', '1', 'public', '', '0', '', '0', '', '0'),
+          (2, 'Public community v2c', '2', 'public', '', '0', '', '0', '', '0');
+
+
+
 ## glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 
    VALUES (NULL,'PluginFusioninventoryAgent', '2', '1', '0'),
@@ -790,7 +780,53 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusioninventoryTaskjob', '3', '3', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '4', '4', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '5', '5', '0'),
-          (NULL,'PluginFusioninventoryInventoryComputerBlacklist', '2', '1', '0');
+          (NULL,'PluginFusioninventoryInventoryComputerBlacklist', '2', '1', '0'),
+
+          (NULL, 'PluginFusioninventorysnmpModel', '3', '1', '0'),
+          (NULL, 'PluginFusioninventorysnmpModel', '5', '2', '0'),
+
+          (NULL, 'PluginFusioninventoryConfigSecurity', '3', '1', '0'),
+          (NULL, 'PluginFusioninventoryConfigSecurity', '4', '2', '0'),
+          (NULL, 'PluginFusioninventoryConfigSecurity', '5', '3', '0'),
+          (NULL, 'PluginFusioninventoryConfigSecurity', '7', '4', '0'),
+          (NULL, 'PluginFusioninventoryConfigSecurity', '8', '5', '0'),
+          (NULL, 'PluginFusioninventoryConfigSecurity', '9', '6', '0'),
+          (NULL, 'PluginFusioninventoryConfigSecurity', '10', '7', '0'),
+
+          (NULL,'PluginFusioninventoryNetworkEquipment', '2', '1', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '3', '2', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '4', '3', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '5', '4', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '6', '5', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '7', '6', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '8', '7', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '9', '8', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '10', '9', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '11', '10', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '14', '11', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '12', '12', '0'),
+          (NULL,'PluginFusioninventoryNetworkEquipment', '13', '13', '0'),
+
+          (NULL,'PluginFusioninventoryNetworkPortLog', '2', '1', '0'),
+          (NULL,'PluginFusioninventoryNetworkPortLog', '3', '2', '0'),
+          (NULL,'PluginFusioninventoryNetworkPortLog', '4', '3', '0'),
+          (NULL,'PluginFusioninventoryNetworkPortLog', '5', '4', '0'),
+          (NULL,'PluginFusioninventoryNetworkPortLog', '6', '5', '0'),
+
+          (NULL,'PluginFusioninventoryNetworkPort', '2', '1', '0'),
+          (NULL,'PluginFusioninventoryNetworkPort', '3', '2', '0'),
+
+          (NULL,'PluginFusioninventoryStateDiscovery', '2', '1', '0'),
+          (NULL,'PluginFusioninventoryStateDiscovery', '4', '2', '0'),
+          (NULL,'PluginFusioninventoryStateDiscovery', '5', '3', '0'),
+          (NULL,'PluginFusioninventoryStateDiscovery', '6', '4', '0'),
+          (NULL,'PluginFusioninventoryStateDiscovery', '7', '5', '0'),
+          (NULL,'PluginFusioninventoryStateDiscovery', '8', '6', '0'),
+          (NULL,'PluginFusioninventoryStateDiscovery', '9', '7', '0'),
+          (NULL,'PluginFusioninventoryStateDiscovery', '10', '8', '0'),
+          (NULL,'PluginFusioninventoryStateDiscovery', '11', '9', '0'),
+          (NULL,'PluginFusioninventoryStateDiscovery', '12', '10', '0');
+
 
 
 INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercriterias` 
@@ -867,3 +903,182 @@ INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerblacklists`
 (57, 3, '00:50:56:C0:00:08'),
 (58, 3, '02:80:37:EC:02:00'),
 (59, 1, 'MB-1234567890');
+
+
+
+## glpi_plugin_fusioninventory_mappings
+INSERT INTO `glpi_plugin_fusioninventory_mappings`
+      (`itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
+   VALUES ('NetworkEquipment','location','glpi_networkequipments','locations_id',1,NULL),
+          ('NetworkEquipment','firmware','glpi_networkequipments',
+             'networkequipmentfirmwares_id',2,NULL),
+          ('NetworkEquipment','firmware1','','',2,NULL),
+          ('NetworkEquipment','firmware2','','',2,NULL),
+          ('NetworkEquipment','contact','glpi_networkequipments','contact',403,NULL),
+          ('NetworkEquipment','comments','glpi_networkequipments','comment',404,NULL),
+          ('NetworkEquipment','uptime','glpi_plugin_fusioninventory_networkequipments',
+             'uptime',3,NULL),
+          ('NetworkEquipment','cpu','glpi_plugin_fusioninventory_networkequipments',
+             'cpu',12,NULL),
+          ('NetworkEquipment','cpuuser','glpi_plugin_fusioninventory_networkequipments',
+             'cpu',401,NULL),
+          ('NetworkEquipment','cpusystem','glpi_plugin_fusioninventory_networkequipments',
+             'cpu',402,NULL),
+          ('NetworkEquipment','serial','glpi_networkequipments','serial',13,NULL),
+          ('NetworkEquipment','otherserial','glpi_networkequipments','otherserial',419,NULL),
+          ('NetworkEquipment','name','glpi_networkequipments','name',20,NULL),
+          ('NetworkEquipment','ram','glpi_networkequipments','ram',21,NULL),
+          ('NetworkEquipment','memory','glpi_plugin_fusioninventory_networkequipments',
+             'memory',22,NULL),
+          ('NetworkEquipment','vtpVlanName','','',19,NULL),
+          ('NetworkEquipment','vmvlan','','',430,NULL),
+          ('NetworkEquipment','entPhysicalModelName','glpi_networkequipments',
+             'networkequipmentmodels_id',17,NULL),
+          ('NetworkEquipment','macaddr','glpi_networkequipments','ip',417,NULL),
+## Network CDP (Walk)
+          ('NetworkEquipment','cdpCacheAddress','','',409,NULL),
+          ('NetworkEquipment','cdpCacheDevicePort','','',410,NULL),
+          ('NetworkEquipment','cdpCacheVersion','','',435,NULL),
+          ('NetworkEquipment','cdpCacheDeviceId','','',436,NULL),
+          ('NetworkEquipment','cdpCachePlatform','','',437,NULL),
+          ('NetworkEquipment','lldpRemChassisId','','',431,NULL),
+          ('NetworkEquipment','lldpRemPortId','','',432,NULL),
+          ('NetworkEquipment','lldpLocChassisId','','',432,NULL),
+          ('NetworkEquipment','lldpRemSysDesc','','',438,NULL),
+          ('NetworkEquipment','lldpRemSysName','','',439,NULL),
+          ('NetworkEquipment','lldpRemPortDesc','','',440,NULL),
+          ('NetworkEquipment','vlanTrunkPortDynamicStatus','','',411,NULL),
+          ('NetworkEquipment','dot1dTpFdbAddress','','',412,NULL),
+          ('NetworkEquipment','ipNetToMediaPhysAddress','','',413,NULL),
+          ('NetworkEquipment','dot1dTpFdbPort','','',414,NULL),
+          ('NetworkEquipment','dot1dBasePortIfIndex','','',415,NULL),
+          ('NetworkEquipment','ipAdEntAddr','','',421,NULL),
+          ('NetworkEquipment','PortVlanIndex','','',422,NULL),
+## NetworkPorts
+          ('NetworkEquipment','ifIndex','','',408,NULL),
+          ('NetworkEquipment','ifmtu','glpi_plugin_fusioninventory_networkports',
+             'ifmtu',4,NULL),
+          ('NetworkEquipment','ifspeed','glpi_plugin_fusioninventory_networkports',
+             'ifspeed',5,NULL),
+          ('NetworkEquipment','ifinternalstatus','glpi_plugin_fusioninventory_networkports',
+             'ifinternalstatus',6,NULL),
+          ('NetworkEquipment','iflastchange','glpi_plugin_fusioninventory_networkports',
+             'iflastchange',7,NULL),
+          ('NetworkEquipment','ifinoctets','glpi_plugin_fusioninventory_networkports',
+             'ifinoctets',8,NULL),
+          ('NetworkEquipment','ifoutoctets','glpi_plugin_fusioninventory_networkports',
+             'ifoutoctets',9,NULL),
+          ('NetworkEquipment','ifinerrors','glpi_plugin_fusioninventory_networkports',
+             'ifinerrors',10,NULL),
+          ('NetworkEquipment','ifouterrors','glpi_plugin_fusioninventory_networkports',
+             'ifouterrors',11,NULL),
+          ('NetworkEquipment','ifstatus','glpi_plugin_fusioninventory_networkports',
+             'ifstatus',14,NULL),
+          ('NetworkEquipment','ifPhysAddress','glpi_networkports','mac',15,NULL),
+          ('NetworkEquipment','ifName','glpi_networkports','name',16,NULL),
+          ('NetworkEquipment','ifType','','',18,NULL),
+          ('NetworkEquipment','ifdescr','glpi_plugin_fusioninventory_networkports',
+             'ifdescr',23,NULL),
+          ('NetworkEquipment','portDuplex','glpi_plugin_fusioninventory_networkports',
+             'portduplex',33,NULL),
+## Printers
+          ('Printer','model','glpi_printers','printermodels_id',25,NULL),
+          ('Printer','enterprise','glpi_printers','manufacturers_id',420,NULL),
+          ('Printer','serial','glpi_printers','serial',27,NULL),
+          ('Printer','contact','glpi_printers','contact',405,NULL),
+          ('Printer','comments','glpi_printers','comment',406,NULL),
+          ('Printer','name','glpi_printers','comment',24,NULL),
+          ('Printer','otherserial','glpi_printers','otherserial',418,NULL),
+          ('Printer','memory','glpi_printers','memory_size',26,NULL),
+          ('Printer','location','glpi_printers','locations_id',56,NULL),
+          ('Printer','informations','','',165,165),
+## Cartridges
+          ('Printer','tonerblack','','',157,157),
+          ('Printer','tonerblackmax','','',166,166),
+          ('Printer','tonerblackused','','',167,167),
+          ('Printer','tonerblackremaining','','',168,168),
+          ('Printer','tonerblack2','','',157,157),
+          ('Printer','tonerblack2max','','',166,166),
+          ('Printer','tonerblack2used','','',167,167),
+          ('Printer','tonerblack2remaining','','',168,168),
+          ('Printer','tonercyan','','',158,158),
+          ('Printer','tonercyanmax','','',169,169),
+          ('Printer','tonercyanused','','',170,170),
+          ('Printer','tonercyanremaining','','',171,171),
+          ('Printer','tonermagenta','','',159,159),
+          ('Printer','tonermagentamax','','',172,172),
+          ('Printer','tonermagentaused','','',173,173),
+          ('Printer','tonermagentaremaining','','',174,174),
+          ('Printer','toneryellow','','',160,160),
+          ('Printer','toneryellowmax','','',175,175),
+          ('Printer','toneryellowused','','',176,176),
+          ('Printer','toneryellowremaining','','',177,177),
+          ('Printer','wastetoner','','',151,151),
+          ('Printer','wastetonermax','','',190,190),
+          ('Printer','wastetonerused','','',191,191),
+          ('Printer','wastetonerremaining','','',192,192),
+          ('Printer','cartridgeblack','','',134,134),
+          ('Printer','cartridgeblackphoto','','',135,135),
+          ('Printer','cartridgecyan','','',136,136),
+          ('Printer','cartridgecyanlight','','',139,139),
+          ('Printer','cartridgemagenta','','',138,138),
+          ('Printer','cartridgemagentalight','','',140,140),
+          ('Printer','cartridgeyellow','','',137,137),
+          ('Printer','cartridgegrey','','',196,196),
+          ('Printer','maintenancekit','','',156,156),
+          ('Printer','maintenancekitmax','','',193,193),
+          ('Printer','maintenancekitused','','',194,194),
+          ('Printer','maintenancekitremaining','','',195,195),
+          ('Printer','drumblack','','',161,161),
+          ('Printer','drumblackmax','','',178,178),
+          ('Printer','drumblackused','','',179,179),
+          ('Printer','drumblackremaining','','',180,180),
+          ('Printer','drumcyan','','',162,162),
+          ('Printer','drumcyanmax','','',181,181),
+          ('Printer','drumcyanused','','',182,182),
+          ('Printer','drumcyanremaining','','',183,183),
+          ('Printer','drummagenta','','',163,163),
+          ('Printer','drummagentamax','','',184,184),
+          ('Printer','drummagentaused','','',185,185),
+          ('Printer','drummagentaremaining','','',186,186),
+          ('Printer','drumyellow','','',164,164),
+          ('Printer','drumyellowmax','','',187,187),
+          ('Printer','drumyellowused','','',188,188),
+          ('Printer','drumyellowremaining','','',189,189),
+## Printers : Counter pages
+          ('Printer','pagecountertotalpages','glpi_plugin_fusioninventory_printerlogs',
+             'pages_total',28,128),
+          ('Printer','pagecounterblackpages','glpi_plugin_fusioninventory_printerlogs',
+             'pages_n_b',29,129),
+          ('Printer','pagecountercolorpages','glpi_plugin_fusioninventory_printerlogs',
+             'pages_color',30,130),
+          ('Printer','pagecounterrectoversopages','glpi_plugin_fusioninventory_printerlogs',
+             'pages_recto_verso',54,154),
+          ('Printer','pagecounterscannedpages','glpi_plugin_fusioninventory_printerlogs',
+             'scanned',55,155),
+          ('Printer','pagecountertotalpages_print','glpi_plugin_fusioninventory_printerlogs',
+             'pages_total_print',423,1423),
+          ('Printer','pagecounterblackpages_print','glpi_plugin_fusioninventory_printerlogs',
+             'pages_n_b_print',424,1424),
+          ('Printer','pagecountercolorpages_print','glpi_plugin_fusioninventory_printerlogs',
+             'pages_color_print',425,1425),
+          ('Printer','pagecountertotalpages_copy','glpi_plugin_fusioninventory_printerlogs',
+             'pages_total_copy',426,1426),
+          ('Printer','pagecounterblackpages_copy','glpi_plugin_fusioninventory_printerlogs',
+             'pages_n_b_copy',427,1427),
+          ('Printer','pagecountercolorpages_copy','glpi_plugin_fusioninventory_printerlogs',
+             'pages_color_copy',428,1428),
+          ('Printer','pagecountertotalpages_fax','glpi_plugin_fusioninventory_printerlogs',
+             'pages_total_fax',429,1429),
+          ('Printer','pagecounterlargepages','glpi_plugin_fusioninventory_printerlogs',
+             'pages_total_large',434,1434),
+## Printers : NetworkPort
+          ('Printer','ifPhysAddress','glpi_networkports','mac',58,NULL),
+          ('Printer','ifName','glpi_networkports','name',57,NULL),
+          ('Printer','ifaddr','glpi_networkports','ip',407,NULL),
+          ('Printer','ifType','','',97,NULL),
+          ('Printer','ifIndex','','',416,NULL),
+## Computer
+          ('Computer','serial','','serial',13,NULL),
+          ('Computer','ifPhysAddress','','mac',15,NULL),
+          ('Computer','ifaddr','','ip',407,NULL);
