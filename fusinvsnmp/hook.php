@@ -1082,7 +1082,7 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
             foreach ($data['item'] as $items_id => $val) {
                if ($val == 1) {
                   $pfNetworkEquipment =
-                     new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+                     new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
                   $a_networkequipments =
                      $pfNetworkEquipment->find("`networkequipments_id`='".$items_id."'");
                   $input = array();
@@ -1102,7 +1102,7 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
          } else if($data['itemtype'] == 'Printer') {
             foreach ($data['item'] as $items_id => $val) {
                if ($val == 1) {
-                  $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
+                  $pfPrinter = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
                   $a_printers = $pfPrinter->find("`printers_id`='".$items_id."'");
                   $input = array();
                   if (count($a_printers) > 0) {
@@ -1142,7 +1142,7 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
          if ($data['itemtype'] == 'NetworkEquipment') {
             foreach ($data['item'] as $items_id => $val) {
                if ($val == 1) {
-                  $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+                  $pfNetworkEquipment = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
                   $a_networkequipments = $pfNetworkEquipment->find("`networkequipments_id`='".$items_id."'");
                   $input = array();
                   if (count($a_networkequipments) > 0) {
@@ -1161,7 +1161,7 @@ function plugin_fusinvsnmp_MassiveActionsProcess($data) {
          } else if($data['itemtype'] == 'Printer') {
             foreach ($data['item'] as $items_id => $val) {
                if ($val == 1) {
-                  $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
+                  $pfPrinter = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
                   $a_printers = $pfPrinter->find("`printers_id`='".$items_id."'");
                   $input = array();
                   if (count($a_printers) > 0) {

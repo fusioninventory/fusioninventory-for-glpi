@@ -499,8 +499,8 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
       $NetworkEquipment = new NetworkEquipment();
       $NetworkPort = new NetworkPort();
-      $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
-      $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
+      $pfNetworkEquipment = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+      $pfPrinter = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
 
       $modelslistused = array();
       $current = current($a_Taskjobstates);

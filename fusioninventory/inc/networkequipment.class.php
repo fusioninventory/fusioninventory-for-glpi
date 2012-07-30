@@ -46,14 +46,14 @@ if (!defined('GLPI_ROOT')) {
 
 require_once(GLPI_ROOT.'/plugins/fusinvsnmp/inc/commondbtm.class.php');
 
-class PluginFusioninventoryNetworkEquipment extends PluginFusinvsnmpCommonDBTM {
+class PluginFusioninventoryNetworkEquipment extends PluginFusioninventorySnmpCommonDBTM {
    private $oFusionInventory_networkequipment;
    private $newPorts=array(), $updatesPorts=array();
 
    function __construct() {
       parent::__construct("glpi_networkequipments");
       $this->dohistory=true;
-      $this->oFusionInventory_networkequipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+      $this->oFusionInventory_networkequipment = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
       $this->oFusionInventory_networkequipment->type = 'PluginFusioninventoryNetworkEquipment';
    }
 

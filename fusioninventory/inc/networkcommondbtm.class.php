@@ -48,7 +48,7 @@ if (!defined('GLPI_ROOT')) {
  * Class to manage generic multi-tables objects
  * Adds field management to core CommonDBTM class.
  **/
-class PluginFusinvsnmpCommonDBTM extends CommonDBTM {
+class PluginFusioninventorySnmpCommonDBTM extends CommonDBTM {
    private $ptcdFields=array();
    private $ptcdLockFields=array();
    protected $ptcdUpdates=array();

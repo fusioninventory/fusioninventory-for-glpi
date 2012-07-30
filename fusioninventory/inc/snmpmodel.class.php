@@ -244,7 +244,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
          switch($type) {
 
             case 'NetworkEquipment':
-               $pfNetworkEquipment = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+               $pfNetworkEquipment = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
                $NetworkEquipment = new NetworkEquipment();
                if($NetworkEquipment->getFromDB($device_id)) {
                   $NetworkEquipment->check($device_id,'r');
@@ -261,7 +261,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
                break;
 
             case 'Printer':
-               $pfPrinter = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
+               $pfPrinter = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
                $Printer = new Printer();
                if($Printer->getFromDB($device_id)) {
                   $Printer->check($device_id,'r');
@@ -406,13 +406,13 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "</table>";
 
       // Reload model for networkequipment have sysdescr
-      $networkequipmentext = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+      $networkequipmentext = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
       $a_networkequipments = $networkequipmentext->find("`sysdescr`!=''");
       foreach ($a_networkequipments as $a_networkequipment) {
          $pfModel->getrightmodel($a_networkequipment['networkequipments_id'], "NetworkEquipment");
       }
       // Reload model for printers have sysdescr
-      $printerext = new PluginFusinvsnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
+      $printerext = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
       $a_printers = $printerext->find("`sysdescr`!=''");
       foreach ($a_printers as $a_printer) {
          $pfModel->getrightmodel($a_printer['printers_id'], "Printer");
