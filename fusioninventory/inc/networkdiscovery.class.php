@@ -310,7 +310,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfIPRange = new PluginFusioninventoryIPRange();
-      $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
+      $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
       $pfToolbox = new PluginFusioninventoryToolbox();
 
 

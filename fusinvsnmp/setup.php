@@ -82,7 +82,7 @@ function plugin_init_fusinvsnmp() {
    Plugin::registerClass('PluginFusioninventoryNetworkEquipment');
    Plugin::registerClass('PluginFusioninventoryPrinter');
    Plugin::registerClass('PluginFusioninventoryPrinterCartridge');
-   Plugin::registerClass('PluginFusinvsnmpConfigSecurity');
+   Plugin::registerClass('PluginFusioninventoryConfigSecurity');
    Plugin::registerClass('PluginFusioninventoryNetworkPortLog');
    Plugin::registerClass('PluginFusinvsnmpAgentconfig');
    Plugin::registerClass('PluginFusioninventoryNetworkPort',
@@ -259,7 +259,7 @@ function plugin_fusinvsnmp_check_config() {
 
 function plugin_fusinvsnmp_haveTypeRight($type,$right) {
    switch ($type) {
-      case 'PluginFusinvsnmpConfigSecurity' :
+      case 'PluginFusioninventoryConfigSecurity' :
 //         return PluginFusinvsnmpAuth::haveRight("configsecurity",$right);
          return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity",$right);
          break;

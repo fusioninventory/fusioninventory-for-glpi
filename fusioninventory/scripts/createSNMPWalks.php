@@ -32,7 +32,7 @@ SELECT
 FROM
   glpi_plugin_fusinvsnmp_unknowndevices,
   glpi_networkports,
-  glpi_plugin_fusinvsnmp_configsecurities
+  glpi_plugin_fusioninventory_configsecurities
 WHERE
   glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusioninventory_snmpmodels_id<1
  AND
@@ -44,7 +44,7 @@ WHERE
  AND
   length(glpi_networkports.ip)>1
  AND
-  glpi_plugin_fusinvsnmp_configsecurities.id=glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusinvsnmp_configsecurities_id
+  glpi_plugin_fusioninventory_configsecurities.id=glpi_plugin_fusinvsnmp_unknowndevices.plugin_fusinvsnmp_configsecurities_id
 
 ";
 $result = $DB->query($sql);

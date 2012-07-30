@@ -292,7 +292,7 @@ class PluginFusioninventoryToolbox {
     *@return nothing
     **/
    function addAuth($p_sxml_node, $p_id) {
-      $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
+      $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
       if ($pfConfigSecurity->getFromDB($p_id)) {
 
          $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');

@@ -207,7 +207,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventorySnmpCommonDBTM {
       echo "</td>";
       echo "<td align='center'>".__('SNMP authentication')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusinvsnmpConfigSecurity::auth_dropdown($this->oFusionInventory_printer->fields["plugin_fusinvsnmp_configsecurities_id"]);
+      PluginFusioninventoryConfigSecurity::auth_dropdown($this->oFusionInventory_printer->fields["plugin_fusinvsnmp_configsecurities_id"]);
       echo "</td>";
       echo "</tr>";
 

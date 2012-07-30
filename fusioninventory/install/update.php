@@ -1851,9 +1851,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "date_mod");
       $migration->migrationOneTable($newTable);
-
-
-
+      
+      
 
 
    /*
@@ -3969,6 +3968,118 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       
       
+   /*
+    * Table glpi_plugin_fusioninventory_configsecurities
+    */
+      // TODO get info to create SNMP authentification with old values of Tracker plugin
+      $newTable = "glpi_plugin_fusioninventory_configsecurities";
+      $migration->renameTable("glpi_plugin_fusinvsnmp_configsecurities",
+                              $newTable);
+      $migration->renameTable("glpi_plugin_tracker_snmp_connection",
+                              $newTable);
+      if (!TableExists($newTable)) {
+         $DB->query('CREATE TABLE `'.$newTable.'` (
+                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        PRIMARY KEY (`id`)
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+          $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "snmpversion",
+                                 "snmpversion",
+                                 "varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'");
+         $migration->changeField($newTable,
+                                 "community",
+                                 "community",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "username",
+                                 "username",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "authentication",
+                                 "authentication",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "auth_passphrase",
+                                 "auth_passphrase",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "encryption",
+                                 "encryption",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "priv_passphrase",
+                                 "priv_passphrase",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "is_deleted",
+                                 "is_deleted",
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "FK_snmp_version",
+                                 "snmpversion",
+                                 "varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'");
+         $migration->changeField($newTable,
+                                 "sec_name",
+                                 "username",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->dropField($newTable,
+                               "sec_level");
+         $migration->dropField($newTable,
+                               "auth_protocol");
+         $migration->dropField($newTable,
+                               "priv_protocol");
+         $migration->dropField($newTable,
+                               "deleted");
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "name",
+                                 "varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "snmpversion",
+                                 "varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'");
+         $migration->addField($newTable,
+                                 "community",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "username",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "authentication",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "auth_passphrase",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "encryption",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "priv_passphrase",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "is_deleted",
+                                 "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->addKey($newTable,
+                            "snmpversion");
+         $migration->addKey($newTable,
+                            "is_deleted");
+      $migration->migrationOneTable($newTable);
       
       
       

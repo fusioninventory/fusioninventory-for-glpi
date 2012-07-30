@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
+class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
    function canCreate() {
@@ -514,13 +514,13 @@ class PluginFusinvsnmpConfigSecurity extends CommonDBTM {
 
    static function auth_dropdown($selected="") {
 
-      $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
+      $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
       $config = new PluginFusioninventoryConfig();
 
       if ($config->getValue($_SESSION["plugin_fusinvsnmp_moduleid"], "storagesnmpauth") == "file") {
          echo $pfConfigSecurity->selectbox($selected);
       } else  if ($config->getValue($_SESSION["plugin_fusinvsnmp_moduleid"], "storagesnmpauth") == "DB") {
-         Dropdown::show("PluginFusinvsnmpConfigSecurity",
+         Dropdown::show("PluginFusioninventoryConfigSecurity",
                         array('name' => "plugin_fusinvsnmp_configsecurities_id",
                               'value' => $selected,
                               'comment' => false));

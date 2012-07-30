@@ -691,6 +691,26 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkequipmentips` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configsecurities`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_configsecurities` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `snmpversion` varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1',
+   `community` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `authentication` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `auth_passphrase` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `encryption` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `priv_passphrase` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`),
+   KEY `snmpversion` (`snmpversion`),
+   KEY `is_deleted` (`is_deleted`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
 
 
 

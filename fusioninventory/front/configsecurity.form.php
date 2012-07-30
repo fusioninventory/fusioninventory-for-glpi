@@ -40,37 +40,46 @@
    ------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
-}
+define('GLPI_ROOT', '../../..');
 
-include (GLPI_ROOT."/inc/includes.php");
+include (GLPI_ROOT . "/inc/includes.php");
+
+PluginFusioninventoryProfile::checkRight("fusioninventory", "configsecurity","r");
+
+$pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
+$config = new PluginFusioninventoryConfig();
 
 Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","configsecurity");
 
-PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","r");
-
-$pfConfig = new PluginFusioninventoryConfig();
-
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
-// Forms for FILE
-if ($pfConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
-   if (!isset($_GET["id"])) {
-      $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
-      echo $pfConfigSecurity->plugin_fusioninventory_snmp_connections();
-   }
-} else if ($pfConfig->getValue($plugins_id, "storagesnmpauth") == "DB") {
-   // Forms for DB
 
-   $_GET['target']="configsecurity.php";
-
-   Search::show('PluginFusinvsnmpConfigSecurity');
-} else {
-   echo __('Please configure the SNMP authentication in the setup of the plugin');
-
+if (isset ($_POST["add"])) {
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "configsecurity","w");
+   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+   $new_ID = 0;
+   $new_ID = $pfConfigSecurity->add($_POST);
+   Html::back();
+} else if (isset ($_POST["update"])) {
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "configsecurity","w");
+   $pfConfigSecurity->update($_POST);
+   Html::back();
+} else if (isset ($_POST["delete"])) {
+   PluginFusioninventoryProfile::checkRight("fusioninventory", "configsecurity","w");
+   $pfConfigSecurity->delete($_POST);
+   Html::redirect("configsecurity.php");
 }
+
+$id = "";
+if (isset($_GET["id"])) {
+   $id = $_GET["id"];
+}
+
+if (strstr($_SERVER['HTTP_REFERER'], "wizard.php")) {
+   Html::redirect($_SERVER['HTTP_REFERER']."&id=".$id);
+}
+
+$pfConfigSecurity->showForm($id);
 
 Html::footer();
 

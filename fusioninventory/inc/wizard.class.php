@@ -512,7 +512,7 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_authsnmp($ariane='') {
-      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusinvsnmpConfigSecurity");
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryConfigSecurity");
    }
 
 

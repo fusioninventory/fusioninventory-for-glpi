@@ -124,8 +124,8 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                              AND `itemtype`='Printer'
                   INNER join `glpi_plugin_fusioninventory_snmpmodels`
                        ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
-                  INNER join `glpi_plugin_fusinvsnmp_configsecurities`
-                       ON `plugin_fusinvsnmp_configsecurities_id`=`glpi_plugin_fusinvsnmp_configsecurities`.`id`
+                  INNER join `glpi_plugin_fusioninventory_configsecurities`
+                       ON `plugin_fusinvsnmp_configsecurities_id`=`glpi_plugin_fusioninventory_configsecurities`.`id`
                   WHERE `glpi_printers`.`is_deleted`=0
                         AND `plugin_fusioninventory_snmpmodels_id`!='0'
                         AND `plugin_fusinvsnmp_configsecurities_id`!='0'
@@ -180,8 +180,8 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                              AND `itemtype`='Printer'
                   INNER join `glpi_plugin_fusioninventory_snmpmodels`
                        ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
-                  INNER join `glpi_plugin_fusinvsnmp_configsecurities`
-                       ON `plugin_fusinvsnmp_configsecurities_id`=`glpi_plugin_fusinvsnmp_configsecurities`.`id`
+                  INNER join `glpi_plugin_fusioninventory_configsecurities`
+                       ON `plugin_fusinvsnmp_configsecurities_id`=`glpi_plugin_fusioninventory_configsecurities`.`id`
                   WHERE `glpi_printers`.`is_deleted`=0
                         AND `plugin_fusioninventory_snmpmodels_id`!='0'
                         AND `plugin_fusinvsnmp_configsecurities_id`!='0'
@@ -492,7 +492,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $pfAgent = new PluginFusioninventoryAgent();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $pfConfigSecurity = new PluginFusinvsnmpConfigSecurity();
+      $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
       $pfToolbox = new PluginFusioninventoryToolbox();
       $pfModel = new PluginFusioninventorySnmpmodel();
 

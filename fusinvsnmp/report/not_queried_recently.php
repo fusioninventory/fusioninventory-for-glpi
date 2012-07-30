@@ -174,7 +174,7 @@ if ($result=$DB->query($query)) {
       echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodels", $data['plugin_fusioninventory_snmpmodels_id']);
       echo "</td>";
       echo "<td>";
-      echo Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_configsecurities', $data['plugin_fusinvsnmp_configsecurities_id']);
+      echo Dropdown::getDropdownName('glpi_plugin_fusioninventory_configsecurities', $data['plugin_fusinvsnmp_configsecurities_id']);
       echo "</td>";
       echo "</tr>";
    }
