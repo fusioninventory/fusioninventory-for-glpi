@@ -206,23 +206,11 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
 
-      if ($pfConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
-         $sopt[5191]['table'] = 'glpi_plugin_fusioninventory_networkequipments';
-         $sopt[5191]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
-         $sopt[5191]['linkfield'] = '';
-         $sopt[5191]['name'] = __('FusInv')." - ".
-            __('SNMP authentication');
-
-         $sopt[5191]['massiveaction'] = false;
-      } else {
-         $sopt[5191]['table']='glpi_plugin_fusioninventory_configsecurities';
-         $sopt[5191]['field']='name';
-         $sopt[5191]['linkfield']='plugin_fusinvsnmp_configsecurities_id';
-         $sopt[5191]['name']=__('FusInv')." - ".
-            __('SNMP authentication');
-
-         $sopt[5191]['massiveaction'] = false;
-      }
+      $sopt[5191]['table']='glpi_plugin_fusioninventory_configsecurities';
+      $sopt[5191]['field']='name';
+      $sopt[5191]['linkfield']='plugin_fusinvsnmp_configsecurities_id';
+      $sopt[5191]['name']=__('FusInv')." - ".__('SNMP authentication');
+      $sopt[5191]['massiveaction'] = false;
 
       $sopt[5194]['table']='glpi_plugin_fusioninventory_networkequipments';
       $sopt[5194]['field']='last_fusioninventory_update';

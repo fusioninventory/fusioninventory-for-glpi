@@ -502,19 +502,57 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             break;
 
          case 'NetworkEquipment':
-            if (isset($xml->MAC) AND !empty($xml->MAC)) {
-               if (!in_array('mac', $a_lockable)) {
+            $item->update($input);
+            
+            $NetworkPort = new NetworkPort();
+            $a_networkPortAggregates = current($NetworkPort->find(
+                    "`itemtype`='NetworkEquipment' AND `items_id`='".$item->getID()."'
+                       AND `instantiation_type`='NetworkPortAggregate'"
+                    , ""
+                    , 1));
+            $networkports_id = 0;
+            if (isset($a_networkPortAggregates['id'])) {
+               if (isset($xml->MAC) AND !empty($xml->MAC)) {
+                  $input = array();
+                  $input['id'] = $a_networkPortAggregates['id'];
+                  $input['mac'] = $xml->MAC;
+                  $NetworkPort->update($input);
+               }
+               $networkports_id = $a_networkPortAggregates['id'];
+            } else {
+               $input = array();
+               $input['itemtype'] = 'NetworkEquipment';
+               $input['items_id'] = $item->getID();
+               $input['instantiation_type'] = 'NetworkPortAggregate';
+               if (isset($xml->MAC) AND !empty($xml->MAC)) {
                   $input['mac'] = $xml->MAC;
                }
+               $networkports_id = $NetworkPort->add($input);
+            }
+            
+            $networkName = new NetworkName();
+            $a_networknames = current($networkName->find(
+                    "`itemtype`='NetworkPort' AND `items_id`='".$networkports_id."'"
+                    , ""
+                    , 1));
+            $networknames_id = 0;
+            if (isset($a_networknames['id'])) {
+               $networknames_id = $a_networknames['id'];
+            } else {
+               $input = array();
+               $input['itemtype'] = 'NetworkPort';
+               $input['items_id'] = $networkports_id;
+               $networknames_id = $networkName->add($input);
             }
             if (isset($xml->IP)) {
-               if (!in_array('ip', $a_lockable)) {
-                  $input['ip'] = $xml->IP;
-               }
+               $iPAddress = new IPAddress();
+               $input = array();
+               $input['itemtype'] = 'NetworkName';
+               $input['items_id'] = $networknames_id;
+               $input['name'] = $xml->IP;
+               $iPAddress->add($input);
             }
-
-            $item->update($input);
-
+            
             // Update SNMP informations
             $pfNetworkEquipment = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
             $a_snmpnetworkequipments = $pfNetworkEquipment->find("`networkequipments_id`='".$item->getID()."'");
