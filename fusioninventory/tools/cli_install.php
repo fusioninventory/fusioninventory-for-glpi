@@ -152,50 +152,9 @@ $migration = new CliMigration($current_version);
    $plugin->activate($plugin->fields['id']);
    $plugin->load("fusioninventory");
 
-   system("php -q cli_install.php fusinvsnmp");
-   system("php -q cli_install.php fusinvinventory");
    system("php -q cli_install.php fusinvdeploy");
 
-if ($_SERVER['argv'][1] == 'fusinvsnmp') {
-
-   // ** Install / update too plugin fusinvsnmp
-   if ($plugin->getFromDBbyDir("fusinvsnmp")) {
-      include_once(GLPI_ROOT . "/plugins/fusinvsnmp/install/update.php");
-      include_once(GLPI_ROOT . "/plugins/fusinvsnmp/locales/en_GB.php");
-      $current_version = pluginFusinvsnmpGetCurrentVersion(PLUGIN_FUSINVSNMP_VERSION);
-
-      $migration = new CliMigration($current_version);
-
-      if (!isset($current_version)) {
-         $current_version = 0;
-      }
-      if ($current_version == '0') {
-         $migration->displayWarning("***** Install process of plugin FUSINVSNMP *****");
-      } else {
-         $migration->displayWarning("***** Update process of plugin FUSINVSNMP *****");
-      }
-
-      $migration->displayWarning("Current FusinvSNMP version: $current_version");
-      $migration->displayWarning("Version to update: ".PLUGIN_FUSINVSNMP_VERSION);
-
-      if (($current_version != PLUGIN_FUSINVSNMP_VERSION)
-           AND $current_version!='0') {
-      pluginFusinvsnmpUpdate($current_version, $migration);
-         $migration->displayWarning("Update done.");
-      } else if ($current_version == PLUGIN_FUSINVSNMP_VERSION) {
-         $migration->displayWarning("No migration needed.");
-      } else {
-         include (GLPI_ROOT . "/plugins/fusinvsnmp/install/install.php");
-         pluginFusinvsnmpInstall(PLUGIN_FUSINVSNMP_VERSION, $migration);
-         $migration->displayWarning("installation done.");
-      }
-
-      $plugin->getFromDBbyDir("fusinvsnmp");
-      $plugin->load("fusinvsnmp");
-      $plugin->activate($plugin->fields['id']);
-      $plugin->load("fusinvsnmp");
-   }
-} else if ($_SERVER['argv'][1] == 'fusinvdeploy') {
+if ($_SERVER['argv'][1] == 'fusinvdeploy') {
 
    // ** Install / update too plugin fusinvdeploy
    if ($plugin->getFromDBbyDir("fusinvdeploy")) {
