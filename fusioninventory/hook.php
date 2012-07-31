@@ -1786,7 +1786,7 @@ function plugin_fusioninventory_addSelect($type,$id,$num) {
          break;
 
       case 'PluginFusioninventoryIPRange' :
-         switch ($table.".".$SEARCH_OPTION[$type][$id]["linkfield"]) {
+         switch ($table.".".$searchopt[$id]["linkfield"]) {
 
             case "glpi_plugin_fusioninventory_agents.plugin_fusinvsnmp_agents_id_query" :
                return "GROUP_CONCAT( DISTINCT CONCAT(gpta.name,'$$',gpta.id) SEPARATOR '$$$$') AS ITEM_$num, ";
