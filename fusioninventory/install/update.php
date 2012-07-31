@@ -168,8 +168,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    ini_set("max_execution_time", "0");
 
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodel.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusinvsnmp/inc/importexport.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelimportexport.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/networkcommondbtm.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmib.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/configlogfield.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
@@ -184,7 +184,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/ignoredimportdevice.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/networkporttype.class.php");
-   
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/printerlogreport.class.php");
+
    
    $migration = new $migrationname($current_version);
    $prepare_task = array();
@@ -627,7 +628,39 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $DB->query($query_ins);
    }
 
+   /*
+    * Add SNMPQUERY module if not present
+    */
+   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='SNMPQUERY'";
+   $result = $DB->query($query);
+   if (!$DB->numrows($result)) {
+      $agentmodule = new PluginFusioninventoryAgentmodule;
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "SNMPQUERY";
+      $input['is_active']  = 0;
+      $input['exceptions'] = exportArrayToDB(array());
+      $agentmodule->add($input);
+   }
 
+   /*
+    * Add NETDISCOVERY module if not present
+    */
+   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='NETDISCOVERY'";
+   $result = $DB->query($query);
+   if (!$DB->numrows($result)) {
+      $agentmodule = new PluginFusioninventoryAgentmodule;
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "NETDISCOVERY";
+      $input['is_active']  = 0;
+      $input['exceptions'] = exportArrayToDB(array());
+      $agentmodule->add($input);
+   }
+
+  
+   pluginFusioninventoryUpdatemapping();
+   
 
    /*
     * Table glpi_plugin_fusioninventory_configs
@@ -2418,9 +2451,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $query = "SELECT * FROM `".$newTable."`";
             $result=$DB->query($query);
             while ($data=$DB->fetch_array($result)) {
-               $pFusioninventoryMapping = new PluginFusioninventoryMapping();
+               $pfMapping = new PluginFusioninventoryMapping();
                $mapping = 0;
-               if ($mapping = $pFusioninventoryMapping->get("NetworkEquipment", $data['field'])) {
+               if ($mapping = $pfMapping->get("NetworkEquipment", $data['field'])) {
                   $queryu = "UPDATE `".$newTable."`
                      SET `field`='".$mapping['id']."'
                      WHERE `field`='".$data['field']."'";
@@ -2661,7 +2694,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $result=$DB->query($query);
             while ($data=$DB->fetch_array($result)) {
                if (!is_numeric($data['mapping_name'])) {
-                  $pFusioninventoryMapping = new PluginFusioninventoryMapping();
+                  $pfMapping = new PluginFusioninventoryMapping();
                   $mapping = 0;
                   $mapping_type = '';
                   if ($data['itemtype'] == 'glpi_networkequipments') {
@@ -2669,7 +2702,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   } else if ($data['itemtype'] == 'glpi_printers') {
                      $mapping_type = 'Printer';
                   }
-                  if ($mapping = $pFusioninventoryMapping->get($mapping_type, $data['mapping_name'])) {
+                  if ($mapping = $pfMapping->get($mapping_type, $data['mapping_name'])) {
                      $data['mapping_name'] = $mapping['id'];
                      $queryu = "UPDATE `".$newTable."`
                         SET `mapping_name`='".$mapping['id']."',
@@ -2987,7 +3020,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                GROUP BY `mapping_type`, `mapping_name`";
             $result=$DB->query($query);
             while ($data=$DB->fetch_array($result)) {
-               $pFusioninventoryMapping = new PluginFusioninventoryMapping();
+               $pfMapping = new PluginFusioninventoryMapping();
                $mapping = 0;
                $mapping_type = '';
                if ($data['mapping_type'] == '2') {
@@ -2995,7 +3028,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                } else if ($data['mapping_type'] == '3') {
                   $mapping_type == 'Printer';
                }
-               if ($mapping = $pFusioninventoryMapping->get($mapping_type, $data['mapping_name'])) {
+               if ($mapping = $pfMapping->get($mapping_type, $data['mapping_name'])) {
                   $data['mapping_name'] = $mapping['id'];
                   $queryu = "UPDATE `".$newTable."`
                      SET `plugin_fusioninventory_mappings_id`='".$mapping['id']."',
@@ -3512,9 +3545,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                GROUP BY `object_name`";
             $result=$DB->query($query);
             while ($data=$DB->fetch_array($result)) {
-               $pFusioninventoryMapping = new PluginFusioninventoryMapping();
+               $pfMapping = new PluginFusioninventoryMapping();
                $mapping = 0;
-               if ($mapping = $pFusioninventoryMapping->get("Printer", $data['object_name'])) {
+               if ($mapping = $pfMapping->get("Printer", $data['object_name'])) {
                   $DB->query("UPDATE `".$newTable."`
                      SET `plugin_fusioninventory_mappings_id`='".$mapping['id']."'
                         WHERE `object_name`='".$data['object_name']."'");
@@ -3702,6 +3735,129 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             "networkports_id");
       $migration->migrationOneTable($newTable);
       
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_networkequipments
+    */
+      $newTable = "glpi_plugin_fusioninventory_networkequipments";
+      $migration->renameTable("glpi_plugin_fusinvsnmp_networkequipments",
+                              $newTable);
+      $migration->renameTable("glpi_plugin_tracker_networking",
+                              $newTable);
+      if (!TableExists($newTable)) {
+         $DB->query('CREATE TABLE `'.$newTable.'` (
+                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        PRIMARY KEY (`id`)
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "networkequipments_id",
+                                 "networkequipments_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "sysdescr",
+                                 "sysdescr",
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "plugin_fusinvsnmp_models_id",
+                                 "plugin_fusioninventory_snmpmodels_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "plugin_fusioninventory_snmpmodels_id",
+                                 "plugin_fusioninventory_snmpmodels_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "plugin_fusinvsnmp_configsecurities_id",
+                                 "plugin_fusinvsnmp_configsecurities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "uptime",
+                                 "uptime",
+                                 "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "cpu",
+                                 "cpu",
+                                 "int(3) NOT NULL DEFAULT '0' COMMENT '%'");
+         $migration->changeField($newTable,
+                                 "memory",
+                                 "memory",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "last_fusioninventory_update",
+                                 "last_fusioninventory_update",
+                                 "datetime DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "last_PID_update",
+                                 "last_PID_update",
+                                 "int(11) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+         $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "FK_networking",
+                                 "networkequipments_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "FK_model_infos",
+                                 "plugin_fusioninventory_snmpmodels_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "FK_snmp_connection",
+                                 "plugin_fusinvsnmp_configsecurities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "last_tracker_update",
+                                 "last_fusioninventory_update",
+                                 "datetime DEFAULT NULL");
+         $migration->dropKey($newTable,
+                             "FK_networking");
+         $migration->dropKey($newTable,
+                             "FK_model_infos");
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                                 "networkequipments_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "sysdescr",
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "plugin_fusioninventory_snmpmodels_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "plugin_fusinvsnmp_configsecurities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "uptime",
+                                 "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "cpu",
+                                 "int(3) NOT NULL DEFAULT '0' COMMENT '%'");
+         $migration->addField($newTable,
+                                 "memory",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                                 "last_fusioninventory_update",
+                                 "datetime DEFAULT NULL");
+         $migration->addField($newTable,
+                                 "last_PID_update",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addKey($newTable,
+                            "networkequipments_id");
+         $migration->addKey($newTable,
+                            array("plugin_fusioninventory_snmpmodels_id", "plugin_fusinvsnmp_configsecurities_id"),
+                            "plugin_fusioninventory_snmpmodels_id");
+      $migration->migrationOneTable($newTable);
+
       
       
    /*
@@ -3897,13 +4053,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          // Update with mapping
          if (FieldExists($newTable, "Field")) {
             $pFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
-            $pFusioninventoryMapping = new PluginFusioninventoryMapping();
+            $pfMapping = new PluginFusioninventoryMapping();
             $query = "SELECT * FROM `".$newTable."`
                GROUP BY `Field`";
             $result=$DB->query($query);
             while ($data=$DB->fetch_array($result)) {
                $mapping = 0;
-               if ($mapping = $pFusioninventoryMapping->get("NetworkEquipment", $data['Field'])) {
+               if ($mapping = $pfMapping->get("NetworkEquipment", $data['Field'])) {
                   $DB->query("UPDATE `".$newTable."`
                      SET `plugin_fusioninventory_mappings_id`='".$mapping['id']."'
                      WHERE `Field`='".$data['Field']."'
@@ -4354,59 +4510,112 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
    }
 
+   
+   /*
+    * Migrate data of table glpi_plugin_fusinvsnmp_agentconfigs into glpi_plugin_fusioninventory_agents
+    */
+   if (TableExists("glpi_plugin_fusinvsnmp_agentconfigs")) {
 
+      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_agentconfigs`";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $queryu = "UPDATE `glpi_plugin_fusioninventory_agents`
+            SET `threads_netdiscovery`='".$data['threads_networkdiscovery']."', 
+                `threads_snmpquery`='".$data['threads_networkinventory ']."',
+                `senddico`='".$data['senddico']."'
+            WHERE `id`='".$data['plugin_fusioninventory_agents_id']."'";
+         $DB->query($queryu);
+      }      
+   } 
+   
+   
+   
+   // Update profiles
+   if (TableExists("glpi_plugin_tracker_profiles")) {
+      $profile = new Profile();
+      $pFusioninventoryProfile = new PluginFusioninventoryProfile();
+      $query = "SELECT * FROM `glpi_plugin_tracker_profiles`";
+      $result=$DB->query($query_select);
+      while ($data=$DB->fetch_array($result)) {
+         $profiledata = current($profile->find("`name`='".$data['name']."'", "", 1));
+         if (!empty($profiledata)) {
+            $newprofile = array();
+            $newprofile['snmp_networking'] = "networkequipment";
+            $newprofile['snmp_printers'] = "printer";
+            $newprofile['snmp_models'] = "model";
+            $newprofile['snmp_authentification'] = "configsecurity";
+            $newprofile['general_config'] = "configuration";
+            $newprofile['snmp_report'] = "reportprinter";
+
+            foreach ($newprofile as $old=>$new) {
+               if (isset($profiledata[$old])) {
+                  $pFusioninventoryProfile->addProfile($plugins_id,
+                                                       $new,
+                                                       $profiledata[$old],
+                                                       $profiledata['id']);
+               }
+            }
+            if (isset($profiledata["snmp_report"])) {
+               $pFusioninventoryProfile->addProfile($plugins_id,
+                                                    "reportnetworkequipment",
+                                                    $profiledata["snmp_report"],
+                                                    $profiledata['id']);
+            }
+         }
+      }
+      $DB->query("DROP TABLE `glpi_plugin_tracker_profiles`");
+   }
+
+   update213to220_ConvertField($migration);
+   
 
    /*
     * Table Delete old table not used
     */
-      if (TableExists("glpi_plugin_tracker_computers")) {
-         $DB->query("DROP TABLE `glpi_plugin_tracker_computers`");
-      }
-      if (TableExists("glpi_plugin_tracker_connection_history")) {
-         $DB->query("DROP TABLE `glpi_plugin_tracker_connection_history`");
-      }
-      if (TableExists("glpi_plugin_tracker_agents_processes")) {
-         $DB->query("DROP TABLE `glpi_plugin_tracker_agents_processes`");
-      }
-      if (TableExists("glpi_plugin_tracker_config_snmp_history")) {
-         $DB->query("DROP TABLE `glpi_plugin_tracker_config_snmp_history`");
-      }
-      if (TableExists("glpi_plugin_tracker_config_snmp_networking")) {
-         $DB->query("DROP TABLE `glpi_plugin_tracker_config_snmp_networking`");
-      }
-      if (TableExists("glpi_plugin_tracker_config_snmp_printer")) {
-         $DB->query("DROP TABLE `glpi_plugin_tracker_config_snmp_printer`");
-      }
-      if (TableExists("glpi_plugin_tracker_config_snmp_script")) {
-         $DB->query("DROP TABLE `glpi_plugin_tracker_config_snmp_script`");
-      }
-      if (TableExists("glpi_plugin_tracker_connection_stats")) {
-         $DB->query("DROP TABLE `glpi_plugin_tracker_connection_stats`");
-      }
-      if (TableExists("glpi_plugin_tracker_discovery")) {
-         $DB->query("DROP TABLE `glpi_plugin_tracker_discovery`");
-      }
-      if (TableExists("glpi_plugin_tracker_errors")) {
-         $DB->query("DROP TABLE `glpi_plugin_tracker_errors`");
-      }
-      if (TableExists("glpi_plugin_tracker_model_infos")) {
-         $DB->query("DROP TABLE `glpi_plugin_tracker_model_infos`");
-      }
-      if (TableExists("glpi_plugin_tracker_processes")) {
-         $DB->query("DROP TABLE `glpi_plugin_tracker_processes`");
-      }
-      if (TableExists("glpi_plugin_tracker_processes_values")) {
-         $DB->query("DROP TABLE `glpi_plugin_tracker_processes_values`");
-      }
-      if (TableExists("glpi_plugin_fusioninventory_agents_errors")) {
-         $DB->query("DROP TABLE `glpi_plugin_fusioninventory_agents_errors`");
-      }
-      if (TableExists("glpi_plugin_fusioninventory_agents_processes")) {
-         $DB->query("DROP TABLE `glpi_plugin_fusioninventory_agents_processes`");
-      }
-      if (TableExists("glpi_plugin_fusioninventory_computers")) {
-         $DB->query("DROP TABLE `glpi_plugin_fusioninventory_computers`");
-      }
+   $a_drop = array();
+   $a_drop[] = 'glpi_plugin_tracker_computers';
+   $a_drop[] = 'glpi_plugin_tracker_connection_history';
+   $a_drop[] = 'glpi_plugin_tracker_agents_processes';
+   $a_drop[] = 'glpi_plugin_tracker_config_snmp_history';
+   $a_drop[] = 'glpi_plugin_tracker_config_snmp_networking';
+   $a_drop[] = 'glpi_plugin_tracker_config_snmp_printer';
+   $a_drop[] = 'glpi_plugin_tracker_config_snmp_script';
+   $a_drop[] = 'glpi_plugin_tracker_connection_stats';
+   $a_drop[] = 'glpi_plugin_tracker_discovery';
+   $a_drop[] = 'glpi_plugin_tracker_errors';
+   $a_drop[] = 'glpi_plugin_tracker_model_infos';
+   $a_drop[] = 'glpi_plugin_tracker_processes';
+   $a_drop[] = 'glpi_plugin_tracker_processes_values';
+   $a_drop[] = 'glpi_plugin_fusioninventory_agents_errors';
+   $a_drop[] = 'glpi_plugin_fusioninventory_agents_processes';
+   $a_drop[] = 'glpi_plugin_fusioninventory_computers';
+   $a_drop[] = 'glpi_dropdown_plugin_tracker_snmp_auth_auth_protocol';
+   $a_drop[] = 'glpi_dropdown_plugin_tracker_snmp_auth_priv_protocol';
+   $a_drop[] = 'glpi_dropdown_plugin_tracker_snmp_auth_sec_level';
+   $a_drop[] = 'glpi_dropdown_plugin_tracker_snmp_version';
+   $a_drop[] = 'glpi_plugin_fusioninventory_config_snmp_networking';
+   $a_drop[] = 'glpi_plugin_fusioninventory_config_snmp_history';
+   $a_drop[] = 'glpi_plugin_fusinvsnmp_agentconfigs';
+   $a_drop[] = 'glpi_plugin_tracker_computers';
+   $a_drop[] = 'glpi_plugin_tracker_config';
+   $a_drop[] = 'glpi_plugin_tracker_config_discovery';
+   $a_drop[] = 'glpi_dropdown_plugin_fusioninventory_mib_label';
+   $a_drop[] = 'glpi_dropdown_plugin_fusioninventory_mib_object';
+   $a_drop[] = 'glpi_dropdown_plugin_fusioninventory_mib_oid';
+   $a_drop[] = 'glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol';
+   $a_drop[] = 'glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol';
+   $a_drop[] = 'glpi_dropdown_plugin_fusioninventory_snmp_version';
+   $a_drop[] = 'glpi_plugin_fusinvsnmp_temp_profiles';
+   $a_drop[] = 'glpi_plugin_fusinvsnmp_tmp_agents';
+   $a_drop[] = 'glpi_plugin_fusinvsnmp_tmp_configs';
+   $a_drop[] = 'glpi_plugin_fusinvsnmp_tmp_tasks';
+   
+   foreach ($a_drop as $droptable) {
+      if (TableExists($droptable)) {
+         $DB->query("DROP TABLE `".$droptable."`");
+      }      
+   }
+      
    $migration->executeMigration();
 
 
@@ -4446,6 +4655,148 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $NetworkPort_Vlan->delete($a_vlan);
       }
       $NetworkPort->delete($data, 1);
+   }
+
+   
+   /*
+    *  Clean old ports deleted but have some informations in SNMP tables
+    */
+   echo "Clean ports purged\n";
+   $query_select = "SELECT `glpi_plugin_fusioninventory_networkports`.`id`
+                    FROM `glpi_plugin_fusioninventory_networkports`
+                          LEFT JOIN `glpi_networkports`
+                                    ON `glpi_networkports`.`id` = `networkports_id`
+                          LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `glpi_networkports`.`items_id`
+                    WHERE `glpi_networkequipments`.`id` IS NULL";
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
+      $query_del = "DELETE FROM `glpi_plugin_fusioninventory_networkports`
+         WHERE `id`='".$data["id"]."'";
+      $DB->query($query_del);
+   }
+   
+   
+   
+   /*
+    *  Clean for multiple IP of a switch when this switch is purged but not these IPs
+    */
+   echo "Clean for multiple IP of a switch when this switch is purged but not these IPs\n";
+   $query_select = "SELECT `glpi_plugin_fusioninventory_networkequipmentips`.`id`
+                    FROM `glpi_plugin_fusioninventory_networkequipmentips`
+                          LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
+                    WHERE `glpi_networkequipments`.`id` IS NULL";
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
+      $query_del = "DELETE FROM `glpi_plugin_fusioninventory_networkequipmentips`
+         WHERE `id`='".$data["id"]."'";
+      $DB->query($query_del);
+   }
+   
+   
+   
+   /*
+    * Clean for switch more informations again in DB when switch is purged
+    */
+   echo "Clean for switch more informations again in DB when switch is purged\n";
+   $query_select = "SELECT `glpi_plugin_fusioninventory_networkequipments`.`id`
+                    FROM `glpi_plugin_fusioninventory_networkequipments`
+                          LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
+                    WHERE `glpi_networkequipments`.`id` IS NULL";
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
+       $query_del = "DELETE FROM `glpi_plugin_fusioninventory_networkequipments`
+         WHERE `id`='".$data["id"]."'";
+      $DB->query($query_del);
+   }
+
+
+
+   /*
+    * Clean for printer more informations again in DB when printer is purged
+    */
+   "Clean for printer more informations again in DB when printer is purged\n";
+   $query_select = "SELECT `glpi_plugin_fusioninventory_printers`.`id`
+                    FROM `glpi_plugin_fusioninventory_printers`
+                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
+                    WHERE `glpi_printers`.`id` IS NULL";
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
+      $query_del = "DELETE FROM `glpi_plugin_fusioninventory_printers`
+         WHERE `id`='".$data["id"]."'";
+      $DB->query($query_del);
+   }
+
+   
+   
+   /*
+    *  Clean printer cartridge not deleted with the printer associated
+    */
+   echo "Clean printer cartridge not deleted with the printer associated\n";
+   $query_select = "SELECT `glpi_plugin_fusioninventory_printercartridges`.`id`
+                    FROM `glpi_plugin_fusioninventory_printercartridges`
+                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
+                    WHERE `glpi_printers`.`id` IS NULL";
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
+      $query_del = "DELETE FROM `glpi_plugin_fusioninventory_printercartridges`
+         WHERE `id`='".$data["id"]."'";
+      $DB->query($query_del);
+   }
+
+   
+   
+   /*
+    *  Clean printer history not deleted with printer associated
+    */
+   echo "Clean printer history not deleted with printer associated\n";
+   $query_select = "SELECT `glpi_plugin_fusioninventory_printerlogs`.`id`
+                    FROM `glpi_plugin_fusioninventory_printerlogs`
+                          LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
+                    WHERE `glpi_printers`.`id` IS NULL";
+   $result=$DB->query($query_select);
+   while ($data=$DB->fetch_array($result)) {
+      $query_del = "DELETE FROM `glpi_plugin_fusioninventory_printerlogs`
+         WHERE `id`='".$data["id"]."'";
+      $DB->query($query_del);
+   }
+
+   
+   
+   /*
+    * Fix problem with mapping with many entries with same mapping
+    */
+   $a_mapping = array();
+   $a_mappingdouble = array();
+   $query = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`
+      ORDER BY `id`";
+   $result=$DB->query($query);
+   while ($data=$DB->fetch_array($result)) {
+      if (!isset($a_mapping[$data['itemtype'].".".$data['name']])) {
+         $a_mapping[$data['itemtype'].".".$data['name']] = $data['id'];
+      } else {
+         $a_mappingdouble[$data['id']] = $data['itemtype'].".".$data['name'];
+      }
+   }
+   foreach($a_mappingdouble as $mapping_id=>$mappingkey) {
+      $query = "UPDATE `glpi_plugin_fusionmodel_snmpmodelmibs`
+         SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
+         WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
+      $DB->query($query);
+      $query = "UPDATE `glpi_plugin_fusioninventory_printercartridges`
+         SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
+         WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
+      $DB->query($query);
+      $query = "UPDATE `glpi_plugin_fusioninventory_networkportlogs`
+         SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
+         WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
+      $DB->query($query);
+      $query = "UPDATE `glpi_plugin_fusioninventory_configlogfields`
+         SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
+         WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
+      $DB->query($query);
+      $query = "DELETE FROM `glpi_plugin_fusioninventory_mappings`
+         WHERE `id` = '".$mapping_id."'";
+      $DB->query($query);
    }
 
 
@@ -4489,7 +4840,94 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    changeDisplayPreference("5153", "PluginFusioninventoryUnknownDevice");
    changeDisplayPreference("5158", "PluginFusioninventoryAgent");
    changeDisplayPreference("PluginFusinvinventoryBlacklist", "PluginFusioninventoryInventoryComputerBlacklist");
+   changeDisplayPreference("5151", "PluginFusinvsnmpModel");
+   changeDisplayPreference("PluginFusinvsnmpModel", "PluginFusioninventorySnmpmodel");
+   changeDisplayPreference("5152", "PluginFusinvsnmpConfigSecurity");
+   changeDisplayPreference("5156", "PluginFusinvsnmpPrinterCartridge");
+   changeDisplayPreference("5157", "PluginFusinvsnmpNetworkEquipment");
+   changeDisplayPreference("PluginFusinvsnmpNetworkEquipment", "PluginFusioninventoryNetworkEquipment");
+   changeDisplayPreference("5159", "PluginFusinvsnmpIPRange");
+   changeDisplayPreference("5162", "PluginFusinvsnmpNetworkPortLog");
+   changeDisplayPreference("5167", "PluginFusioninventorySnmpmodelConstructDevice");
+   changeDisplayPreference("PluginFusinvsnmpConstructDevice",
+                           "PluginFusioninventorySnmpmodelConstructDevice");
+   changeDisplayPreference("5168", "PluginFusinvsnmpPrinterLog");
+   changeDisplayPreference("PluginFusinvsnmpPrinterLogReport", "PluginFusioninventoryPrinterLogReport");
 
+   
+   /*
+    * Modify displaypreference for PluginFusinvsnmpPrinterLogReport
+    */
+      $pfPrinterLogReport = new PluginFusinvsnmpPrinterLogReport();
+      $a_searchoptions = $pfPrinterLogReport->getSearchOptions();
+      $query = "SELECT * FROM `glpi_displaypreferences`
+      WHERE `itemtype` = 'PluginFusioninventoryPrinterLogReport'
+         AND `users_id`='0'";
+      $result=$DB->query($query);
+      if ($DB->numrows($result) == '0') {
+         $query = "INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`)
+                     VALUES (NULL,'PluginFusioninventoryPrinterLogReport', '2', '1', '0'),
+             (NULL,'PluginFusioninventoryPrinterLogReport', '18', '2', '0'),
+             (NULL,'PluginFusioninventoryPrinterLogReport', '20', '3', '0'),
+             (NULL,'PluginFusioninventoryPrinterLogReport', '5', '4', '0'),
+             (NULL,'PluginFusioninventoryPrinterLogReport', '6', '5', '0')";
+         $DB->query($query);
+      } else {
+         while ($data=$DB->fetch_array($result)) {
+            if (!isset($a_searchoptions[$data['num']])) {
+               $queryd = "DELETE FROM `glpi_displaypreferences`
+                  WHERE `id`='".$data['id']."'";
+               $DB->query($queryd);
+            }
+         }
+      }
+   
+      
+      
+   /*
+    * Modify displaypreference for PluginFusinvsnmpNetworkEquipment
+    */
+      $a_check = array();
+      $a_check["2"] = 1;
+      $a_check["3"] = 2;
+      $a_check["4"] = 3;
+      $a_check["5"] = 4;
+      $a_check["6"] = 5;
+      $a_check["7"] = 6;
+      $a_check["8"] = 7;
+      $a_check["9"] = 8;
+      $a_check["10"] = 9;
+      $a_check["11"] = 10;
+      $a_check["14"] = 11;
+      $a_check["12"] = 12;
+      $a_check["13"] = 13;
+
+      foreach ($a_check as $num=>$rank) {
+         $query = "SELECT * FROM `glpi_displaypreferences`
+         WHERE `itemtype` = 'PluginFusioninventoryNetworkEquipment'
+         AND `num`='".$num."'
+            AND `users_id`='0'";
+         $result=$DB->query($query);
+         if ($DB->numrows($result) == '0') {
+            $query = "INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`)
+                        VALUES (NULL,'PluginFusioninventoryNetworkEquipment', '".$num."', '".$rank."', '0')";
+            $DB->query($query);
+         }
+      }
+      $query = "SELECT * FROM `glpi_displaypreferences`
+      WHERE `itemtype` = 'PluginFusioninventoryNetworkEquipment'
+         AND `users_id`='0'";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         if (!isset($a_check[$data['num']])) {
+            $queryd = "DELETE FROM `glpi_displaypreferences`
+               WHERE `id`='".$data['id']."'";
+            $DB->query($queryd);
+         }
+      }
+
+   
+   
    /*
     * Convert taskjob definition from PluginFusinvsnmpIPRange to PluginFusioninventoryIPRange
     */
@@ -4711,7 +5149,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       Crontask::Register('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs', (3600 * 24), 
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
    }
-
+   
+   
 //   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
 //   $pfIgnoredimportdevice->install();
 
@@ -4791,5 +5230,1766 @@ function changeDisplayPreference($olditemtype, $newitemtype) {
       WHERE `itemtype`='".$olditemtype."' ";
    $DB->query($sql);
 }
+
+
+
+function pluginFusioninventoryUpdatemapping() {
+   
+   /*
+    * Udpate mapping
+    */
+   $pfMapping = new PluginFusioninventoryMapping();
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'location';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'locations_id';
+   $a_input['locale']      = 1;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'firmware';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'networkequipmentfirmwares_id';
+   $a_input['locale']      = 2;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'firmware1';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 2;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'firmware2';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 2;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'contact';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'contact';
+   $a_input['locale']      = 403;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'comments';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'comment';
+   $a_input['locale']      = 404;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'uptime';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkequipments';
+   $a_input['tablefield']  = 'uptime';
+   $a_input['locale']      = 3;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cpu';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkequipments';
+   $a_input['tablefield']  = 'cpu';
+   $a_input['locale']      = 12;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cpuuser';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkequipments';
+   $a_input['tablefield']  = 'cpu';
+   $a_input['locale']      = 401;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cpusystem';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkequipments';
+   $a_input['tablefield']  = 'cpu';
+   $a_input['locale']      = 402;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'serial';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'serial';
+   $a_input['locale']      = 13;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'otherserial';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'otherserial';
+   $a_input['locale']      = 419;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'name';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'name';
+   $a_input['locale']      = 20;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ram';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'ram';
+   $a_input['locale']      = 21;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'memory';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkequipments';
+   $a_input['tablefield']  = 'memory';
+   $a_input['locale']      = 22;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'vtpVlanName';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 19;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'vmvlan';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 430;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'entPhysicalModelName';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'networkequipmentmodels_id';
+   $a_input['locale']      = 17;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'macaddr';
+   $a_input['table']       = 'glpi_networkequipments';
+   $a_input['tablefield']  = 'ip';
+   $a_input['locale']      = 417;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cdpCacheAddress';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 409;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cdpCacheDevicePort';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 410;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cdpCacheVersion';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 435;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cdpCacheDeviceId';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 436;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'cdpCachePlatform';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 437;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'lldpRemChassisId';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 431;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'lldpRemPortId';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 432;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'lldpLocChassisId';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 432;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'lldpRemSysDesc';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 438;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'lldpRemSysName';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 439;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'lldpRemPortDesc';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 440;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'vlanTrunkPortDynamicStatus';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 411;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'dot1dTpFdbAddress';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 412;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ipNetToMediaPhysAddress';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 413;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'dot1dTpFdbPort';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 414;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'dot1dBasePortIfIndex';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 415;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ipAdEntAddr';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 421;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'PortVlanIndex';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 422;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifIndex';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 408;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifmtu';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
+   $a_input['tablefield']  = 'ifmtu';
+   $a_input['locale']      = 4;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifspeed';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
+   $a_input['tablefield']  = 'ifspeed';
+   $a_input['locale']      = 5;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifinternalstatus';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
+   $a_input['tablefield']  = 'ifinternalstatus';
+   $a_input['locale']      = 6;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'iflastchange';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
+   $a_input['tablefield']  = 'iflastchange';
+   $a_input['locale']      = 7;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifinoctets';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
+   $a_input['tablefield']  = 'ifinoctets';
+   $a_input['locale']      = 8;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifoutoctets';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
+   $a_input['tablefield']  = 'ifoutoctets';
+   $a_input['locale']      = 9;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifinerrors';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
+   $a_input['tablefield']  = 'ifinerrors';
+   $a_input['locale']      = 10;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifouterrors';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
+   $a_input['tablefield']  = 'ifouterrors';
+   $a_input['locale']      = 11;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifstatus';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
+   $a_input['tablefield']  = 'ifstatus';
+   $a_input['locale']      = 14;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifPhysAddress';
+   $a_input['table']       = 'glpi_networkports';
+   $a_input['tablefield']  = 'mac';
+   $a_input['locale']      = 15;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifName';
+   $a_input['table']       = 'glpi_networkports';
+   $a_input['tablefield']  = 'name';
+   $a_input['locale']      = 16;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifType';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 18;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifdescr';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
+   $a_input['tablefield']  = 'ifdescr';
+   $a_input['locale']      = 23;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'portDuplex';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
+   $a_input['tablefield']  = 'portduplex';
+   $a_input['locale']      = 33;
+   $pfMapping->set($a_input);
+
+   // Printers
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'model';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'printermodels_id';
+   $a_input['locale']      = 25;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'enterprise';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'manufacturers_id';
+   $a_input['locale']      = 420;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'serial';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'serial';
+   $a_input['locale']      = 27;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'contact';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'contact';
+   $a_input['locale']      = 405;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'comments';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'comment';
+   $a_input['locale']      = 406;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'name';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'comment';
+   $a_input['locale']      = 24;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'otherserial';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'otherserial';
+   $a_input['locale']      = 418;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'memory';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'memory_size';
+   $a_input['locale']      = 26;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'location';
+   $a_input['table']       = 'glpi_printers';
+   $a_input['tablefield']  = 'locations_id';
+   $a_input['locale']      = 56;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'informations';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 165;
+   $a_input['shortlocale'] = 165;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblack';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 157;
+   $a_input['shortlocale'] = 157;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblackmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 166;
+   $a_input['shortlocale'] = 166;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblackused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 167;
+   $a_input['shortlocale'] = 167;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblackremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 168;
+   $a_input['shortlocale'] = 168;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblack2';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 157;
+   $a_input['shortlocale'] = 157;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblack2max';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 166;
+   $a_input['shortlocale'] = 166;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblack2used';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 167;
+   $a_input['shortlocale'] = 167;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonerblack2remaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 168;
+   $a_input['shortlocale'] = 168;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonercyan';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 158;
+   $a_input['shortlocale'] = 158;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonercyanmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 169;
+   $a_input['shortlocale'] = 169;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonercyanused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 170;
+   $a_input['shortlocale'] = 170;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonercyanremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 171;
+   $a_input['shortlocale'] = 171;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonermagenta';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 159;
+   $a_input['shortlocale'] = 159;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonermagentamax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 172;
+   $a_input['shortlocale'] = 172;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonermagentaused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 173;
+   $a_input['shortlocale'] = 173;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'tonermagentaremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 174;
+   $a_input['shortlocale'] = 174;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'toneryellow';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 160;
+   $a_input['shortlocale'] = 160;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'toneryellowmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 175;
+   $a_input['shortlocale'] = 175;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'toneryellowused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 176;
+   $a_input['shortlocale'] = 176;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'toneryellowused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 177;
+   $a_input['shortlocale'] = 177;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'wastetoner';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 151;
+   $a_input['shortlocale'] = 151;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'wastetonermax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 190;
+   $a_input['shortlocale'] = 190;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'wastetonerused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 191;
+   $a_input['shortlocale'] = 191;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'wastetonerremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 192;
+   $a_input['shortlocale'] = 192;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgeblack';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 134;
+   $a_input['shortlocale'] = 134;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgeblackphoto';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 135;
+   $a_input['shortlocale'] = 135;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgecyan';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 136;
+   $a_input['shortlocale'] = 136;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgecyanlight';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 139;
+   $a_input['shortlocale'] = 139;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgemagenta';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 138;
+   $a_input['shortlocale'] = 138;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgemagentalight';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 140;
+   $a_input['shortlocale'] = 140;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgeyellow';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 137;
+   $a_input['shortlocale'] = 137;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'cartridgegrey';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 196;
+   $a_input['shortlocale'] = 196;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'maintenancekit';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 156;
+   $a_input['shortlocale'] = 156;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'maintenancekitmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 193;
+   $a_input['shortlocale'] = 193;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'maintenancekitused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 194;
+   $a_input['shortlocale'] = 194;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'maintenancekitremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 195;
+   $a_input['shortlocale'] = 195;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumblack';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 161;
+   $a_input['shortlocale'] = 161;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumblackmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 178;
+   $a_input['shortlocale'] = 178;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumblackused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 179;
+   $a_input['shortlocale'] = 179;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumblackremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 180;
+   $a_input['shortlocale'] = 180;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumcyan';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 162;
+   $a_input['shortlocale'] = 162;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumcyanmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 181;
+   $a_input['shortlocale'] = 181;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumcyanused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 182;
+   $a_input['shortlocale'] = 182;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumcyanremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 183;
+   $a_input['shortlocale'] = 183;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drummagenta';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 163;
+   $a_input['shortlocale'] = 163;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drummagentamax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 184;
+   $a_input['shortlocale'] = 184;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drummagentaused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 185;
+   $a_input['shortlocale'] = 185;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drummagentaremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 186;
+   $a_input['shortlocale'] = 186;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumyellow';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 164;
+   $a_input['shortlocale'] = 164;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumyellowmax';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 187;
+   $a_input['shortlocale'] = 187;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumyellowused';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 188;
+   $a_input['shortlocale'] = 188;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'drumyellowremaining';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 189;
+   $a_input['shortlocale'] = 189;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecountertotalpages';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_printerlogs';
+   $a_input['tablefield']  = 'pages_total';
+   $a_input['locale']      = 28;
+   $a_input['shortlocale'] = 128;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecounterblackpages';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_printerlogs';
+   $a_input['tablefield']  = 'pages_n_b';
+   $a_input['locale']      = 29;
+   $a_input['shortlocale'] = 129;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecountercolorpages';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_printerlogs';
+   $a_input['tablefield']  = 'pages_color';
+   $a_input['locale']      = 30;
+   $a_input['shortlocale'] = 130;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecounterrectoversopages';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_printerlogs';
+   $a_input['tablefield']  = 'pages_recto_verso';
+   $a_input['locale']      = 54;
+   $a_input['shortlocale'] = 154;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecounterscannedpages';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_printerlogs';
+   $a_input['tablefield']  = 'scanned';
+   $a_input['locale']      = 55;
+   $a_input['shortlocale'] = 155;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecountertotalpages_print';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_printerlogs';
+   $a_input['tablefield']  = 'pages_total_print';
+   $a_input['locale']      = 423;
+   $a_input['shortlocale'] = 1423;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecounterblackpages_print';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_printerlogs';
+   $a_input['tablefield']  = 'pages_n_b_print';
+   $a_input['locale']      = 424;
+   $a_input['shortlocale'] = 1424;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecountercolorpages_print';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_printerlogs';
+   $a_input['tablefield']  = 'pages_color_print';
+   $a_input['locale']      = 425;
+   $a_input['shortlocale'] = 1425;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecountertotalpages_copy';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_printerlogs';
+   $a_input['tablefield']  = 'pages_total_copy';
+   $a_input['locale']      = 426;
+   $a_input['shortlocale'] = 1426;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecounterblackpages_copy';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_printerlogs';
+   $a_input['tablefield']  = 'pages_n_b_copy';
+   $a_input['locale']      = 427;
+   $a_input['shortlocale'] = 1427;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecountercolorpages_copy';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_printerlogs';
+   $a_input['tablefield']  = 'pages_color_copy';
+   $a_input['locale']      = 428;
+   $a_input['shortlocale'] = 1428;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecountertotalpages_fax';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_printerlogs';
+   $a_input['tablefield']  = 'pages_total_fax';
+   $a_input['locale']      = 429;
+   $a_input['shortlocale'] = 1429;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'pagecounterlargepages';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_printerlogs';
+   $a_input['tablefield']  = 'pages_total_large';
+   $a_input['locale']      = 434;
+   $a_input['shortlocale'] = 1434;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'ifPhysAddress';
+   $a_input['table']       = 'glpi_networkports';
+   $a_input['tablefield']  = 'mac';
+   $a_input['locale']      = 48;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'ifName';
+   $a_input['table']       = 'glpi_networkports';
+   $a_input['tablefield']  = 'name';
+   $a_input['locale']      = 57;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'ifaddr';
+   $a_input['table']       = 'glpi_networkports';
+   $a_input['tablefield']  = 'ip';
+   $a_input['locale']      = 407;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'ifType';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 97;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Printer';
+   $a_input['name']        = 'ifIndex';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = '';
+   $a_input['locale']      = 416;
+   $pfMapping->set($a_input);
+
+
+   // ** Computer
+   $a_input = array();
+   $a_input['itemtype']    = 'Computer';
+   $a_input['name']        = 'serial';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = 'serial';
+   $a_input['locale']      = 13;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Computer';
+   $a_input['name']        = 'ifPhysAddress';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = 'mac';
+   $a_input['locale']      = 15;
+   $pfMapping->set($a_input);
+   
+   $a_input = array();
+   $a_input['itemtype']    = 'Computer';
+   $a_input['name']        = 'ifaddr';
+   $a_input['table']       = '';
+   $a_input['tablefield']  = 'ip';
+   $a_input['locale']      = 407;
+   $pfMapping->set($a_input);
+   
+}
+
+
+
+function update213to220_ConvertField($migration) {
+   global $FUSIONINVENTORY_MAPPING,$FUSIONINVENTORY_MAPPING_DISCOVERY,$DB;
+
+   // ----------------------------------------------------------------------
+   //NETWORK MAPPING MAPPING
+   // ----------------------------------------------------------------------
+   $constantsfield = array();
+
+   $constantsfield['reseaux > lieu'] = 'location';
+   $constantsfield['networking > location'] = 'location';
+   $constantsfield['Netzwerk > Standort'] = 'location';
+
+   $constantsfield['réseaux > firmware'] = 'firmware';
+   $constantsfield['networking > firmware'] = 'firmware';
+   $constantsfield['Netzwerk > Firmware'] = 'firmware';
+
+   $constantsfield['réseaux > firmware'] = 'firmware1';
+   $constantsfield['networking > firmware'] = 'firmware1';
+   $constantsfield['Netzwerk > Firmware'] = 'firmware1';
+
+   $constantsfield['réseaux > firmware'] = 'firmware2';
+   $constantsfield['networking > firmware'] = 'firmware2';
+   $constantsfield['Netzwerk > Firmware'] = 'firmware2';
+
+   $constantsfield['réseaux > contact'] = 'contact';
+   $constantsfield['networking > contact'] = 'contact';
+   $constantsfield['Netzwerk > Kontakt'] = 'contact';
+
+   $constantsfield['réseaux > description'] = 'comments';
+   $constantsfield['networking > comments'] = 'comments';
+   $constantsfield['Netzwerk > Kommentar'] = 'comments';
+
+   $constantsfield['réseaux > uptime'] = 'uptime';
+   $constantsfield['networking > uptime'] = 'uptime';
+   $constantsfield['Netzwerk > Uptime'] = 'uptime';
+
+   $constantsfield['réseaux > utilisation du CPU'] = 'cpu';
+   $constantsfield['networking > CPU usage'] = 'cpu';
+   $constantsfield['Netzwerk > CPU Auslastung'] = 'cpu';
+
+   $constantsfield['réseaux > CPU user'] = 'cpuuser';
+   $constantsfield['networking > CPU usage (user)'] = 'cpuuser';
+   $constantsfield['Netzwerk > CPU Benutzer'] = 'cpuuser';
+
+   $constantsfield['réseaux > CPU système'] = 'cpusystem';
+   $constantsfield['networking > CPU usage (system)'] = 'cpusystem';
+   $constantsfield['Netzwerk > CPU System'] = 'cpusystem';
+
+   $constantsfield['réseaux > numéro de série'] = 'serial';
+   $constantsfield['networking > serial number'] = 'serial';
+   $constantsfield['Netzwerk > Seriennummer'] = 'serial';
+
+   $constantsfield['réseaux > numéro d\'inventaire'] = 'otherserial';
+   $constantsfield['networking > Inventory number'] = 'otherserial';
+   $constantsfield['Netzwerk > Inventarnummer'] = 'otherserial';
+
+   $constantsfield['réseaux > nom'] = 'name';
+   $constantsfield['networking > name'] = 'name';
+   $constantsfield['Netzwerk > Name'] = 'name';
+
+   $constantsfield['réseaux > mémoire totale'] = 'ram';
+   $constantsfield['networking > total memory'] = 'ram';
+   $constantsfield['Netzwerk > Gesamter Speicher'] = 'ram';
+
+   $constantsfield['réseaux > mémoire libre'] = 'memory';
+   $constantsfield['networking > free memory'] = 'memory';
+   $constantsfield['Netzwerk > Freier Speicher'] = 'memory';
+
+   $constantsfield['réseaux > VLAN'] = 'vtpVlanName';
+   $constantsfield['networking > VLAN'] = 'vtpVlanName';
+   $constantsfield['Netzwerk > VLAN'] = 'vtpVlanName';
+
+   $constantsfield['réseaux > port > vlan'] = 'vmvlan';
+   $constantsfield['networking > port > vlan'] = 'vmvlan';
+
+   $constantsfield['réseaux > modèle'] = 'entPhysicalModelName';
+   $constantsfield['networking > model'] = 'entPhysicalModelName';
+   $constantsfield['Netzwerk > Modell'] = 'entPhysicalModelName';
+
+   $constantsfield['réseaux > adresse MAC'] = 'macaddr';
+   $constantsfield['networking > MAC address'] = 'macaddr';
+   $constantsfield['Netzwerk > MAC Adresse'] = 'macaddr';
+
+   $constantsfield['réseaux > Adresse CDP'] = 'cdpCacheAddress';
+   $constantsfield['networking > CDP address'] = 'cdpCacheAddress';
+   $constantsfield['Netzwerk > Adresse CDP'] = 'cdpCacheAddress';
+
+   $constantsfield['réseaux > port CDP'] = 'cdpCacheDevicePort';
+   $constantsfield['networking > CDP port'] = 'cdpCacheDevicePort';
+   $constantsfield['Netzwerk > Port CDP'] = 'cdpCacheDevicePort';
+
+   $constantsfield['réseaux > chassis id distant LLDP'] = 'lldpRemChassisId';
+   $constantsfield['networking > remote chassis id LLDP'] = 'lldpRemChassisId';
+
+   $constantsfield['réseaux > port distant LLDP'] = 'lldpRemPortId';
+   $constantsfield['networking > remote port LLDP'] = 'lldpRemPortId';
+
+   $constantsfield['réseaux > chassis id local LLDP'] = 'lldpLocChassisId';
+   $constantsfield['networking > localchassis id LLDP'] = 'lldpLocChassisId';
+
+   $constantsfield['réseaux > port > trunk/tagged'] = 'vlanTrunkPortDynamicStatus';
+   $constantsfield['networking > port > trunk/tagged'] = 'vlanTrunkPortDynamicStatus';
+   $constantsfield['Netzwerk > Port > trunk/tagged'] = 'vlanTrunkPortDynamicStatus';
+
+   $constantsfield['trunk'] = 'vlanTrunkPortDynamicStatus';
+
+   $constantsfield['réseaux > Adresses mac filtrées (dot1dTpFdbAddress)'] = 'dot1dTpFdbAddress';
+   $constantsfield['networking > MAC address filters (dot1dTpFdbAddress)'] = 'dot1dTpFdbAddress';
+   $constantsfield['Netzwerk > MAC Adressen Filter (dot1dTpFdbAddress)'] = 'dot1dTpFdbAddress';
+
+   $constantsfield['réseaux > adresses physiques mémorisées (ipNetToMediaPhysAddress)'] = 'ipNetToMediaPhysAddress';
+   $constantsfield['networking > Physical addresses in memory (ipNetToMediaPhysAddress)'] = 'ipNetToMediaPhysAddress';
+   $constantsfield['Netzwerk > Physikalische Adressen im Speicher (ipNetToMediaPhysAddress)'] = 'ipNetToMediaPhysAddress';
+
+   $constantsfield['réseaux > instances de ports (dot1dTpFdbPort)'] = 'dot1dTpFdbPort';
+   $constantsfield['networking > Port instances (dot1dTpFdbPort)'] = 'dot1dTpFdbPort';
+   $constantsfield['Netzwerk > Instanzen des Ports (dot1dTpFdbPort)'] = 'dot1dTpFdbPort';
+
+   $constantsfield['réseaux > numéro de ports associé ID du port (dot1dBasePortIfIndex)'] = 'dot1dBasePortIfIndex';
+   $constantsfield['networking > Port number associated with port ID (dot1dBasePortIfIndex)'] = 'dot1dBasePortIfIndex';
+   $constantsfield['Netzwerk > Verkn&uuml;pfung der Portnummerierung mit der ID des Ports (dot1dBasePortIfIndex)'] = 'dot1dBasePortIfIndex';
+
+   $constantsfield['réseaux > addresses IP'] = 'ipAdEntAddr';
+   $constantsfield['networking > IP addresses'] = 'ipAdEntAddr';
+   $constantsfield['Netzwerk > IP Adressen'] = 'ipAdEntAddr';
+
+   $constantsfield['réseaux > portVlanIndex'] = 'PortVlanIndex';
+   $constantsfield['networking > portVlanIndex'] = 'PortVlanIndex';
+   $constantsfield['Netzwerk > portVlanIndex'] = 'PortVlanIndex';
+
+   $constantsfield['réseaux > port > numéro index'] = 'ifIndex';
+   $constantsfield['networking > port > index number'] = 'ifIndex';
+   $constantsfield['Netzwerk > Port > Nummerischer Index'] = 'ifIndex';
+
+   $constantsfield['réseaux > port > mtu'] = 'ifmtu';
+   $constantsfield['networking > port > mtu'] = 'ifmtu';
+   $constantsfield['Netzwerk > Port > MTU'] = 'ifmtu';
+
+   $constantsfield['réseaux > port > vitesse'] = 'ifspeed';
+   $constantsfield['networking > port > speed'] = 'ifspeed';
+   $constantsfield['Netzwerk > Port > Geschwindigkeit'] = 'ifspeed';
+
+   $constantsfield['réseaux > port > statut interne'] = 'ifinternalstatus';
+   $constantsfield['networking > port > internal status'] = 'ifinternalstatus';
+   $constantsfield['Netzwerk > Port > Interner Zustand'] = 'ifinternalstatus';
+
+   $constantsfield['réseaux > port > Dernier changement'] = 'iflastchange';
+   $constantsfield['networking > ports > Last change'] = 'iflastchange';
+   $constantsfield['Netzwerk > Ports > Letzte &Auml;nderung'] = 'iflastchange';
+
+   $constantsfield['réseaux > port > nombre d\'octets entrés'] = 'ifinoctets';
+   $constantsfield['networking > port > number of bytes in'] = 'ifinoctets';
+   $constantsfield['Netzwerk > Port > Anzahl eingegangene Bytes'] = 'ifinoctets';
+
+   $constantsfield['réseaux > port > nombre d\'octets sortis'] = 'ifoutoctets';
+   $constantsfield['networking > port > number of bytes out'] = 'ifoutoctets';
+   $constantsfield['Netzwerk > Port > Anzahl ausgehende Bytes'] = 'ifoutoctets';
+
+   $constantsfield['réseaux > port > nombre d\'erreurs entrées'] = 'ifinerrors';
+   $constantsfield['networking > port > number of input errors'] = 'ifinerrors';
+   $constantsfield['Netzwerk > Port > Anzahl Input Fehler'] = 'ifinerrors';
+
+   $constantsfield['réseaux > port > nombre d\'erreurs sorties'] = 'ifouterrors';
+   $constantsfield['networking > port > number of output errors'] = 'ifouterrors';
+   $constantsfield['Netzwerk > Port > Anzahl Fehler Ausgehend'] = 'ifouterrors';
+
+   $constantsfield['réseaux > port > statut de la connexion'] = 'ifstatus';
+   $constantsfield['networking > port > connection status'] = 'ifstatus';
+   $constantsfield['Netzwerk > Port > Verbingungszustand'] = 'ifstatus';
+
+   $constantsfield['réseaux > port > adresse MAC'] = 'ifPhysAddress';
+   $constantsfield['networking > port > MAC address'] = 'ifPhysAddress';
+   $constantsfield['Netzwerk > Port > MAC Adresse'] = 'ifPhysAddress';
+
+   $constantsfield['réseaux > port > nom'] = 'ifName';
+   $constantsfield['networking > port > name'] = 'ifName';
+   $constantsfield['Netzwerk > Port > Name'] = 'ifName';
+
+   $constantsfield['réseaux > port > type'] = 'ifType';
+   $constantsfield['networking > ports > type'] = 'ifType';
+   $constantsfield['Netzwerk > Ports > Typ'] = 'ifType';
+
+   $constantsfield['réseaux > port > description du port'] = 'ifdescr';
+   $constantsfield['networking > port > port description'] = 'ifdescr';
+   $constantsfield['Netzwerk > Port > Port Bezeichnung'] = 'ifdescr';
+
+   $constantsfield['réseaux > port > type de duplex'] = 'portDuplex';
+   $constantsfield['networking > port > duplex type'] = 'portDuplex';
+   $constantsfield['Netzwerk > Port > Duplex Typ'] = 'portDuplex';
+
+   $constantsfield['imprimante > modèle'] = 'model';
+   $constantsfield['printer > model'] = 'model';
+   $constantsfield['Drucker > Modell'] = 'model';
+
+   $constantsfield['imprimante > fabricant'] = 'enterprise';
+   $constantsfield['printer > manufacturer'] = 'enterprise';
+   $constantsfield['Drucker > Hersteller'] = 'enterprise';
+
+   $constantsfield['imprimante > numéro de série'] = 'serial';
+   $constantsfield['printer > serial number'] = 'serial';
+   $constantsfield['Drucker > Seriennummer'] = 'serial';
+
+   $constantsfield['imprimante > contact'] = 'contact';
+   $constantsfield['printer > contact'] = 'contact';
+   $constantsfield['Drucker > Kontakt'] = 'contact';
+
+   $constantsfield['imprimante > description'] = 'comments';
+   $constantsfield['printer > comments'] = 'comments';
+   $constantsfield['Drucker > Kommentar'] = 'comments';
+
+   $constantsfield['imprimante > nom'] = 'name';
+   $constantsfield['printer > name'] = 'name';
+   $constantsfield['Drucker > Name'] = 'name';
+
+   $constantsfield['imprimante > numéro d\'inventaire'] = 'otherserial';
+   $constantsfield['printer > Inventory number'] = 'otherserial';
+   $constantsfield['Drucker > Inventarnummer'] = 'otherserial';
+
+   $constantsfield['imprimante > mémoire totale'] = 'memory';
+   $constantsfield['printer > total memory'] = 'memory';
+   $constantsfield['Drucker > Gesamter Speicher'] = 'memory';
+
+   $constantsfield['imprimante > lieu'] = 'location';
+   $constantsfield['printer > location'] = 'location';
+   $constantsfield['Drucker > Standort'] = 'location';
+
+   $constantsfield['Informations diverses regroupées'] = 'informations';
+   $constantsfield['Many informations grouped'] = 'informations';
+   $constantsfield['Many informations grouped'] = 'informations';
+
+   $constantsfield['Toner Noir'] = 'tonerblack';
+   $constantsfield['Black toner'] = 'tonerblack';
+
+   $constantsfield['Toner Noir Max'] = 'tonerblackmax';
+   $constantsfield['Black toner Max'] = 'tonerblackmax';
+
+   $constantsfield['Toner Noir Utilisé'] = 'tonerblackused';
+
+   $constantsfield['Toner Noir Restant'] = 'tonerblackremaining';
+
+   $constantsfield['Toner Noir'] = 'tonerblack2';
+   $constantsfield['Black toner'] = 'tonerblack2';
+
+   $constantsfield['Toner Noir Max'] = 'tonerblack2max';
+   $constantsfield['Black toner Max'] = 'tonerblack2max';
+
+   $constantsfield['Toner Noir Utilisé'] = 'tonerblack2used';
+
+   $constantsfield['Toner Noir Restant'] = 'tonerblack2remaining';
+
+   $constantsfield['Toner Cyan'] = 'tonercyan';
+   $constantsfield['Cyan toner'] = 'tonercyan';
+
+   $constantsfield['Toner Cyan Max'] = 'tonercyanmax';
+   $constantsfield['Cyan toner Max'] = 'tonercyanmax';
+
+   $constantsfield['Toner Cyan Utilisé'] = 'tonercyanused';
+
+   $constantsfield['Toner Cyan Restant'] = 'tonercyanremaining';
+
+   $constantsfield['Toner Magenta'] = 'tonermagenta';
+   $constantsfield['Magenta toner'] = 'tonermagenta';
+
+   $constantsfield['Toner Magenta Max'] = 'tonermagentamax';
+   $constantsfield['Magenta toner Max'] = 'tonermagentamax';
+
+   $constantsfield['Toner Magenta Utilisé'] = 'tonermagentaused';
+   $constantsfield['Magenta toner Utilisé'] = 'tonermagentaused';
+
+   $constantsfield['Toner Magenta Restant'] = 'tonermagentaremaining';
+   $constantsfield['Magenta toner Restant'] = 'tonermagentaremaining';
+
+   $constantsfield['Toner Jaune'] = 'toneryellow';
+   $constantsfield['Yellow toner'] = 'toneryellow';
+
+   $constantsfield['Toner Jaune Max'] = 'toneryellowmax';
+   $constantsfield['Yellow toner Max'] = 'toneryellowmax';
+
+   $constantsfield['Toner Jaune Utilisé'] = 'toneryellowused';
+   $constantsfield['Yellow toner Utilisé'] = 'toneryellowused';
+
+   $constantsfield['Toner Jaune Restant'] = 'toneryellowremaining';
+   $constantsfield['Yellow toner Restant'] = 'toneryellowremaining';
+
+   $constantsfield['Bac récupérateur de déchet'] = 'wastetoner';
+   $constantsfield['Waste bin'] = 'wastetoner';
+   $constantsfield['Abfalleimer'] = 'wastetoner';
+
+   $constantsfield['Bac récupérateur de déchet Max'] = 'wastetonermax';
+   $constantsfield['Waste bin Max'] = 'wastetonermax';
+
+   $constantsfield['Bac récupérateur de déchet Utilisé'] = 'wastetonerused';
+   $constantsfield['Waste bin Utilisé'] = 'wastetonerused';
+
+   $constantsfield['Bac récupérateur de déchet Restant'] = 'wastetonerremaining';
+   $constantsfield['Waste bin Restant'] = 'wastetonerremaining';
+
+   $constantsfield['Cartouche noir'] = 'cartridgeblack';
+   $constantsfield['Black ink cartridge'] = 'cartridgeblack';
+   $constantsfield['Schwarze Kartusche'] = 'cartridgeblack';
+
+   $constantsfield['Cartouche noir photo'] = 'cartridgeblackphoto';
+   $constantsfield['Photo black ink cartridge'] = 'cartridgeblackphoto';
+   $constantsfield['Photoschwarz Kartusche'] = 'cartridgeblackphoto';
+
+   $constantsfield['Cartouche cyan'] = 'cartridgecyan';
+   $constantsfield['Cyan ink cartridge'] = 'cartridgecyan';
+   $constantsfield['Cyan Kartusche'] = 'cartridgecyan';
+
+   $constantsfield['Cartouche cyan clair'] = 'cartridgecyanlight';
+   $constantsfield['Light cyan ink cartridge'] = 'cartridgecyanlight';
+   $constantsfield['Leichtes Cyan Kartusche'] = 'cartridgecyanlight';
+
+   $constantsfield['Cartouche magenta'] = 'cartridgemagenta';
+   $constantsfield['Magenta ink cartridge'] = 'cartridgemagenta';
+   $constantsfield['Magenta Kartusche'] = 'cartridgemagenta';
+
+   $constantsfield['Cartouche magenta clair'] = 'cartridgemagentalight';
+   $constantsfield['Light ink magenta cartridge'] = 'cartridgemagentalight';
+   $constantsfield['Leichtes Magenta Kartusche'] = 'cartridgemagentalight';
+
+   $constantsfield['Cartouche jaune'] = 'cartridgeyellow';
+   $constantsfield['Yellow ink cartridge'] = 'cartridgeyellow';
+   $constantsfield['Gelbe Kartusche'] = 'cartridgeyellow';
+
+   $constantsfield['Cartouche grise'] = 'cartridgegrey';
+   $constantsfield['Grey ink cartridge'] = 'cartridgegrey';
+   $constantsfield['Grey ink cartridge'] = 'cartridgegrey';
+
+   $constantsfield['Kit de maintenance'] = 'maintenancekit';
+   $constantsfield['Maintenance kit'] = 'maintenancekit';
+   $constantsfield['Wartungsmodul'] = 'maintenancekit';
+
+   $constantsfield['Kit de maintenance Max'] = 'maintenancekitmax';
+   $constantsfield['Maintenance kit Max'] = 'maintenancekitmax';
+
+   $constantsfield['Kit de maintenance Utilisé'] = 'maintenancekitused';
+   $constantsfield['Maintenance kit Utilisé'] = 'maintenancekitused';
+
+   $constantsfield['Kit de maintenance Restant'] = 'maintenancekitremaining';
+   $constantsfield['Maintenance kit Restant'] = 'maintenancekitremaining';
+
+   $constantsfield['Tambour Noir'] = 'drumblack';
+   $constantsfield['Black drum'] = 'drumblack';
+
+   $constantsfield['Tambour Noir Max'] = 'drumblackmax';
+   $constantsfield['Black drum Max'] = 'drumblackmax';
+
+   $constantsfield['Tambour Noir Utilisé'] = 'drumblackused';
+   $constantsfield['Black drum Utilisé'] = 'drumblackused';
+
+   $constantsfield['Tambour Noir Restant'] = 'drumblackremaining';
+   $constantsfield['Black drum Restant'] = 'drumblackremaining';
+
+   $constantsfield['Tambour Cyan'] = 'drumcyan';
+   $constantsfield['Cyan drum'] = 'drumcyan';
+
+   $constantsfield['Tambour Cyan Max'] = 'drumcyanmax';
+   $constantsfield['Cyan drum Max'] = 'drumcyanmax';
+
+   $constantsfield['Tambour Cyan Utilisé'] = 'drumcyanused';
+   $constantsfield['Cyan drum Utilisé'] = 'drumcyanused';
+
+   $constantsfield['Tambour Cyan Restant'] = 'drumcyanremaining';
+   $constantsfield['Cyan drumRestant'] = 'drumcyanremaining';
+
+   $constantsfield['Tambour Magenta'] = 'drummagenta';
+   $constantsfield['Magenta drum'] = 'drummagenta';
+
+   $constantsfield['Tambour Magenta Max'] = 'drummagentamax';
+   $constantsfield['Magenta drum Max'] = 'drummagentamax';
+
+   $constantsfield['Tambour Magenta Utilisé'] = 'drummagentaused';
+   $constantsfield['Magenta drum Utilisé'] = 'drummagentaused';
+
+   $constantsfield['Tambour Magenta Restant'] = 'drummagentaremaining';
+   $constantsfield['Magenta drum Restant'] = 'drummagentaremaining';
+
+   $constantsfield['Tambour Jaune'] = 'drumyellow';
+   $constantsfield['Yellow drum'] = 'drumyellow';
+
+   $constantsfield['Tambour Jaune Max'] = 'drumyellowmax';
+   $constantsfield['Yellow drum Max'] = 'drumyellowmax';
+
+   $constantsfield['Tambour Jaune Utilisé'] = 'drumyellowused';
+   $constantsfield['Yellow drum Utilisé'] = 'drumyellowused';
+
+   $constantsfield['Tambour Jaune Restant'] = 'drumyellowremaining';
+   $constantsfield['Yellow drum Restant'] = 'drumyellowremaining';
+
+   $constantsfield['imprimante > compteur > nombre total de pages imprimées'] = 'pagecountertotalpages';
+   $constantsfield['printer > meter > total number of printed pages'] = 'pagecountertotalpages';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten'] = 'pagecountertotalpages';
+
+   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées'] = 'pagecounterblackpages';
+   $constantsfield['printer > meter > number of printed black and white pages'] = 'pagecounterblackpages';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedrucker Schwarz/Wei&szlig; Seiten'] = 'pagecounterblackpages';
+
+   $constantsfield['imprimante > compteur > nombre de pages couleur imprimées'] = 'pagecountercolorpages';
+   $constantsfield['printer > meter > number of printed color pages'] = 'pagecountercolorpages';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Farbseiten'] = 'pagecountercolorpages';
+
+   $constantsfield['imprimante > compteur > nombre de pages recto/verso imprimées'] = 'pagecounterrectoversopages';
+   $constantsfield['printer > meter > number of printed duplex pages'] = 'pagecounterrectoversopages';
+   $constantsfield['Drucker > Messung > Anzahl der gedruckten Duplex Seiten'] = 'pagecounterrectoversopages';
+
+   $constantsfield['imprimante > compteur > nombre de pages scannées'] = 'pagecounterscannedpages';
+   $constantsfield['printer > meter > nomber of scanned pages'] = 'pagecounterscannedpages';
+   $constantsfield['Drucker > Messung > Anzahl der gescannten Seiten'] = 'pagecounterscannedpages';
+
+   $constantsfield['imprimante > compteur > nombre total de pages imprimées (impression)'] = 'pagecountertotalpages_print';
+   $constantsfield['printer > meter > total number of printed pages (print mode)'] = 'pagecountertotalpages_print';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Druck)'] = 'pagecountertotalpages_print';
+
+   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées (impression)'] = 'pagecounterblackpages_print';
+   $constantsfield['printer > meter > number of printed black and white pages (print mode)'] = 'pagecounterblackpages_print';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seiten (Druck)'] = 'pagecounterblackpages_print';
+
+   $constantsfield['imprimante > compteur > nombre de pages couleur imprimées (impression)'] = 'pagecountercolorpages_print';
+   $constantsfield['printer > meter > number of printed color pages (print mode)'] = 'pagecountercolorpages_print';
+   $constantsfield['Drucker > Messung > Gesamtanzahl farbig gedruckter Seiten (Druck)'] = 'pagecountercolorpages_print';
+
+   $constantsfield['imprimante > compteur > nombre total de pages imprimées (copie)'] = 'pagecountertotalpages_copy';
+   $constantsfield['printer > meter > total number of printed pages (copy mode)'] = 'pagecountertotalpages_copy';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Kopie)'] = 'pagecountertotalpages_copy';
+
+   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées (copie)'] = 'pagecounterblackpages_copy';
+   $constantsfield['printer > meter > number of printed black and white pages (copy mode)'] = 'pagecounterblackpages_copy';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seite (Kopie)'] = 'pagecounterblackpages_copy';
+
+   $constantsfield['imprimante > compteur > nombre de pages couleur imprimées (copie)'] = 'pagecountercolorpages_copy';
+   $constantsfield['printer > meter > number of printed color pages (copy mode)'] = 'pagecountercolorpages_copy';
+   $constantsfield['Drucker > Messung > Gesamtanzahl farbig gedruckter Seiten (Kopie)'] = 'pagecountercolorpages_copy';
+
+   $constantsfield['imprimante > compteur > nombre total de pages imprimées (fax)'] = 'pagecountertotalpages_fax';
+   $constantsfield['printer > meter > total number of printed pages (fax mode)'] = 'pagecountertotalpages_fax';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Fax)'] = 'pagecountertotalpages_fax';
+
+   $constantsfield['imprimante > compteur > nombre total de pages larges imprimées'] = 'pagecounterlargepages';
+   $constantsfield['printer > meter > total number of large printed pages'] = 'pagecounterlargepages';
+
+   $constantsfield['imprimante > port > adresse MAC'] = 'ifPhysAddress';
+   $constantsfield['printer > port > MAC address'] = 'ifPhysAddress';
+   $constantsfield['Drucker > Port > MAC Adresse'] = 'ifPhysAddress';
+
+   $constantsfield['imprimante > port > nom'] = 'ifName';
+   $constantsfield['printer > port > name'] = 'ifName';
+   $constantsfield['Drucker > Port > Name'] = 'ifName';
+
+   $constantsfield['imprimante > port > adresse IP'] = 'ifaddr';
+   $constantsfield['printer > port > IP address'] = 'ifaddr';
+   $constantsfield['Drucker > Port > IP Adresse'] = 'ifaddr';
+
+   $constantsfield['imprimante > port > type'] = 'ifType';
+   $constantsfield['printer > port > type'] = 'ifType';
+   $constantsfield['Drucker > port > Typ'] = 'ifType';
+
+   $constantsfield['imprimante > port > numéro index'] = 'ifIndex';
+   $constantsfield['printer > port > index number'] = 'ifIndex';
+   $constantsfield['Drucker > Port > Indexnummer'] = 'ifIndex';
+
+   echo "Converting history port ...\n";
+   $i = 0;
+   $nb = count($constantsfield);
+   $migration->addKey("glpi_plugin_tracker_snmp_history",
+                      "Field");
+   $migration->addKey("glpi_plugin_tracker_snmp_history",
+                      array("Field", "old_value"),
+                      "Field_2");
+   $migration->addKey("glpi_plugin_tracker_snmp_history",
+                      array("Field", "new_value"),
+                      "Field_3");
+   $migration->migrationOneTable("glpi_plugin_tracker_snmp_history");
+
+   foreach($constantsfield as $langvalue=>$mappingvalue) {
+      $i++;
+      $query_update = "UPDATE `glpi_plugin_tracker_snmp_history`
+         SET `Field`='".$mappingvalue."'
+         WHERE `Field`=\"".$langvalue."\" ";
+      $DB->query($query_update);
+      $migration->displayMessage("$i / $nb");
+   }
+   $migration->displayMessage("$i / $nb");
+
+   // Move connections from glpi_plugin_fusioninventory_snmp_history to glpi_plugin_fusioninventory_snmp_history_connections
+   echo "Moving creation connections history\n";
+   $query = "SELECT *
+             FROM `glpi_plugin_tracker_snmp_history`
+             WHERE `Field` = '0'
+               AND ((`old_value` NOT LIKE '%:%')
+                     OR (`old_value` IS NULL))";
+   if ($result=$DB->query($query)) {
+      $nb = $DB->numrows($result);
+      $i = 0;
+      $migration->displayMessage("$i / $nb");
+      while ($data=$DB->fetch_array($result)) {
+         $i++;
+
+         // Search port from mac address
+         $query_port = "SELECT * FROM `glpi_networkports`
+            WHERE `mac`='".$data['new_value']."' ";
+         if ($result_port=$DB->query($query_port)) {
+            if ($DB->numrows($result_port) == '1') {
+               $input = array();
+               $data_port = $DB->fetch_assoc($result_port);
+               $input['FK_port_source'] = $data_port['id'];
+
+               $query_port2 = "SELECT * FROM `glpi_networkports`
+                  WHERE `items_id` = '".$data['new_device_ID']."'
+                     AND `itemtype` = '".$data['new_device_type']."' ";
+               if ($result_port2=$DB->query($query_port2)) {
+                  if ($DB->numrows($result_port2) == '1') {
+                     $data_port2 = $DB->fetch_assoc($result_port2);
+                     $input['FK_port_destination'] = $data_port2['id'];
+
+                     $input['date'] = $data['date_mod'];
+                     $input['creation'] = 1;
+                     $input['process_number'] = $data['FK_process'];
+                     $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
+                        (`date_mod`, `creation`, `networkports_id_source`, `networkports_id_destination`)
+                        VALUES ('".$input['date']."',
+                                '".$input['creation']."',
+                                '".$input['FK_port_source']."',
+                                '".$input['FK_port_destination']."')";
+                     $DB->query($query_ins);
+                  }
+               }
+            }
+         }
+
+         $query_delete = "DELETE FROM `glpi_plugin_tracker_snmp_history`
+               WHERE `ID`='".$data['ID']."' ";
+         $DB->query($query_delete);
+         if (preg_match("/000$/", $i)) {
+            $migration->displayMessage("$i / $nb");
+         }
+      }
+      $migration->displayMessage("$i / $nb");
+   }
+
+   echo "Moving deleted connections history\n";
+   $query = "SELECT *
+             FROM `glpi_plugin_tracker_snmp_history`
+             WHERE `Field` = '0'
+               AND ((`new_value` NOT LIKE '%:%')
+                     OR (`new_value` IS NULL))";
+   if ($result=$DB->query($query)) {
+      $nb = $DB->numrows($result);
+      $i = 0;
+      $migration->displayMessage("$i / $nb");
+      while ($data=$DB->fetch_array($result)) {
+         $i++;
+
+         // Search port from mac address
+         $query_port = "SELECT * FROM `glpi_networkports`
+            WHERE `mac`='".$data['old_value']."' ";
+         if ($result_port=$DB->query($query_port)) {
+            if ($DB->numrows($result_port) == '1') {
+               $input = array();
+               $data_port = $DB->fetch_assoc($result_port);
+               $input['FK_port_source'] = $data_port['id'];
+
+               $query_port2 = "SELECT * FROM `glpi_networkports`
+                  WHERE `items_id` = '".$data['old_device_ID']."'
+                     AND `itemtype` = '".$data['old_device_type']."' ";
+               if ($result_port2=$DB->query($query_port2)) {
+                  if ($DB->numrows($result_port2) == '1') {
+                     $data_port2 = $DB->fetch_assoc($result_port2);
+                     $input['FK_port_destination'] = $data_port2['id'];
+
+                     $input['date'] = $data['date_mod'];
+                     $input['creation'] = 1;
+                     $input['process_number'] = $data['FK_process'];
+                     if ($input['FK_port_source'] != $input['FK_port_destination']) {
+                        $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
+                           (`date_mod`, `creation`, `networkports_id_source`, `networkports_id_destination`)
+                           VALUES ('".$input['date']."',
+                                   '".$input['creation']."',
+                                   '".$input['FK_port_source']."',
+                                   '".$input['FK_port_destination']."')";
+                        $DB->query($query_ins);
+                     }
+                  }
+               }
+            }
+         }
+
+         $query_delete = "DELETE FROM `glpi_plugin_tracker_snmp_history`
+               WHERE `ID`='".$data['ID']."' ";
+         $DB->query($query_delete);
+         if (preg_match("/000$/", $i)) {
+            $migration->displayMessage("$i / $nb");
+         }
+      }
+      $migration->displayMessage("$i / $nb");
+   }
+}
+
 
 ?>
