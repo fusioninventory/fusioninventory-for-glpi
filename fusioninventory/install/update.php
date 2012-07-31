@@ -393,7 +393,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                               "threads_snmpquery"    => $data['threads_query'],
                                               "threads_netdiscovery" => $data['threads_discovery'],
                                               "SNMPQUERY" => $data['module_snmpquery'],
-                                              "NETDISCOVERY" => $data['module_netdiscovery'],
+                                              "NETWORKDISCOVERY" => $data['module_netdiscovery'],
                                               "INVENTORY" => $data['module_inventory'],
                                               "WAKEONLAN" => $data['module_wakeonlan']);
             }
@@ -646,13 +646,18 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Add NETDISCOVERY module if not present
     */
-   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='NETDISCOVERY'";
+   $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
+      SET `modulename`='NETWORKDISCOVERY'
+      WHERE `modulename`='NETDISCOVERY'";
+   $DB->query($query);
+   
+   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='NETWORKDISCOVERY'";
    $result = $DB->query($query);
    if (!$DB->numrows($result)) {
       $agentmodule = new PluginFusioninventoryAgentmodule;
       $input = array();
       $input['plugins_id'] = $plugins_id;
-      $input['modulename'] = "NETDISCOVERY";
+      $input['modulename'] = "NETWORKDISCOVERY";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $agentmodule->add($input);

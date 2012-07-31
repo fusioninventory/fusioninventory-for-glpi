@@ -279,7 +279,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
 
       $input = array();
       $input['plugins_id'] = $plugins_id;
-      $input['modulename'] = "NETDISCOVERY";
+      $input['modulename'] = "NETWORKDISCOVERY";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
