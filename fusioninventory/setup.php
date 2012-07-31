@@ -99,6 +99,22 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryInventoryRuleImportCollection',
                             array('rulecollections_types'=>true));
       Plugin::registerClass('PluginFusioninventoryConstructDevice');
+      
+      // Networkinventory and networkdiscovery
+      Plugin::registerClass('PluginFusioninventorySnmpmodel');
+      Plugin::registerClass('PluginFusioninventoryNetworkEquipment');
+      Plugin::registerClass('PluginFusioninventoryPrinter');
+      Plugin::registerClass('PluginFusioninventoryPrinterCartridge');
+      Plugin::registerClass('PluginFusioninventoryConfigSecurity');
+      Plugin::registerClass('PluginFusioninventoryNetworkPortLog');
+      Plugin::registerClass('PluginFusinvsnmpAgentconfig');
+      Plugin::registerClass('PluginFusioninventoryNetworkPort',
+                            array('classname'=>'glpi_networkports'));
+      Plugin::registerClass('PluginFusioninventoryStateDiscovery');
+      Plugin::registerClass('PluginFusioninventoryPrinterLogReport');
+
+      
+      $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] = "glpi_plugin_fusioninventory_printers";
 
 
       // ##### 3. get informations of the plugin #####
@@ -121,9 +137,9 @@ function plugin_init_fusioninventory() {
                                              = 'PluginFusioninventoryCommunicationNetworkInventory';
 
 
-      $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
-         PluginFusioninventoryProfile::changeprofile($moduleId);
+      $PLUGIN_HOOKS['change_profile']['fusioninventory'] = PluginFusioninventoryProfile::changeprofile($moduleId);
 
+      
       if (isset($_SESSION["glpiID"])) {
 
          $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
@@ -132,21 +148,12 @@ function plugin_init_fusioninventory() {
             $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/config.form.php?glpi_tab=1';
          }
 
-         $PLUGIN_HOOKS['use_massive_action']['fusioninventory']=1;
+         $PLUGIN_HOOKS['use_massive_action']['fusioninventory'] = 1;
+         
+         $PLUGIN_HOOKS['item_add']['fusioninventory'] = array('NetworkPort_NetworkPort'=>'plugin_item_add_fusinvsnmp');
+
+         
          $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = array('Plugin' => 'plugin_pre_item_update_fusioninventory');
-
-         $p = array('NetworkPort_NetworkPort'            =>'plugin_item_purge_fusioninventory',
-                    'PluginFusioninventoryTask'          => array('PluginFusioninventoryTask',
-                                                                  'purgeTask'),
-                    'PluginFusioninventoryTaskjob'       => array('PluginFusioninventoryTaskjob',
-                                                                  'purgeTaskjob'),
-                    'PluginFusioninventoryUnknownDevice' => array('PluginFusioninventoryUnknownDevice',
-                                                                  'purgeUnknownDevice'));
-         $PLUGIN_HOOKS['pre_item_purge']['fusioninventory'] = array('Computer' =>'plugin_pre_item_purge_fusinvinventory');
-
-         $PLUGIN_HOOKS['item_purge']['fusioninventory'] = $p;
-
-
          $PLUGIN_HOOKS['item_update']['fusioninventory'] =
                                  array('Computer'         => 'plugin_item_update_fusioninventory',
                                        'NetworkEquipment' => 'plugin_item_update_fusioninventory',
@@ -158,6 +165,18 @@ function plugin_init_fusioninventory() {
                                        'PluginFusioninventoryInventoryComputerAntivirus' => array('PluginFusioninventoryInventoryComputerAntivirus', 'addhistory'));
 
 
+         $PLUGIN_HOOKS['pre_item_purge']['fusioninventory'] = array('Computer' =>'plugin_pre_item_purge_fusinvinventory',
+                                                                    'NetworkPort_NetworkPort'=>'plugin_pre_item_purge_fusinvsnmp');
+         $p = array('NetworkPort_NetworkPort'            => 'plugin_item_purge_fusioninventory',
+                    'PluginFusioninventoryTask'          => array('PluginFusioninventoryTask', 'purgeTask'),
+                    'PluginFusioninventoryTaskjob'       => array('PluginFusioninventoryTaskjob', 'purgeTaskjob'),
+                    'PluginFusioninventoryUnknownDevice' => array('PluginFusioninventoryUnknownDevice', 'purgeUnknownDevice'),
+                    'NetworkEquipment'                   => 'plugin_item_purge_fusinvsnmp',
+                    'Printer'                            => 'plugin_item_purge_fusinvsnmp',
+                    'PluginFusioninventoryUnknownDevice' => 'plugin_item_purge_fusinvsnmp');
+         $PLUGIN_HOOKS['item_purge']['fusioninventory'] = $p;
+
+         
          $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
 
          $Plugin = new Plugin();
@@ -218,7 +237,12 @@ function plugin_init_fusioninventory() {
                         = '../fusioninventory/front/inventorycomputerblacklist.form.php';
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-blacklist']
                         = '../fusioninventory/front/inventorycomputerblacklist.php';
+         
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['models'] = '../fusioninventory/front/snmpmodel.form.php?add=1';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['models'] = '../fusioninventory/front/snmpmodel.php';
 
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['configsecurity'] = '../fusioninventory/front/configsecurity.form.php?add=1';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['configsecurity'] = '../fusioninventory/front/configsecurity.php';
 
 
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent","r")) {
