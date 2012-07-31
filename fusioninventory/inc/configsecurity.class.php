@@ -517,14 +517,10 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
       $config = new PluginFusioninventoryConfig();
 
-      if ($config->getValue($_SESSION["plugin_fusioninventory_moduleid"], "storagesnmpauth") == "file") {
-         echo $pfConfigSecurity->selectbox($selected);
-      } else  if ($config->getValue($_SESSION["plugin_fusioninventory_moduleid"], "storagesnmpauth") == "DB") {
-         Dropdown::show("PluginFusioninventoryConfigSecurity",
-                        array('name' => "plugin_fusinvsnmp_configsecurities_id",
-                              'value' => $selected,
-                              'comment' => false));
-      }
+      Dropdown::show("PluginFusioninventoryConfigSecurity",
+                      array('name' => "plugin_fusinvsnmp_configsecurities_id",
+                           'value' => $selected,
+                           'comment' => false));
    }
 }
 
