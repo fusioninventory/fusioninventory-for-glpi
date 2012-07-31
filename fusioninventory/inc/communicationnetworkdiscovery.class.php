@@ -525,7 +525,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $input['items_id'] = $item->getID();
                $input['instantiation_type'] = 'NetworkPortAggregate';
                if (isset($xml->MAC) AND !empty($xml->MAC)) {
-                  $input['mac'] = $xml->MAC;
+                  $input['mac'] = (string)$xml->MAC;
                }
                $networkports_id = $NetworkPort->add($input);
             }
@@ -549,7 +549,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $input = array();
                $input['itemtype'] = 'NetworkName';
                $input['items_id'] = $networknames_id;
-               $input['name'] = $xml->IP;
+               $input['name'] = (string)$xml->IP;
                $iPAddress->add($input);
             }
             
