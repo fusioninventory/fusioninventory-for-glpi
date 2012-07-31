@@ -44,8 +44,6 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-require_once GLPI_ROOT.'/plugins/fusinvsnmp/inc/communicationsnmp.class.php';
-
 class PluginFusioninventoryCommunicationNetworkDiscovery {
 
 

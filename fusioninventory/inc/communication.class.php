@@ -176,6 +176,10 @@ class PluginFusioninventoryCommunication {
       $errors = '';
 
       $xmltag = (string)$this->message->QUERY;
+      if ($xmltag == "NETDISCOVERY") {
+         $xmltag = "NETWORKDISCOVERY";
+      }
+      
       $agent = $pfAgent->InfosByKey($this->message->DEVICEID);
       if ($xmltag == "PROLOG") {
          return false;
