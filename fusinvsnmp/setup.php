@@ -148,20 +148,7 @@ function plugin_init_fusinvsnmp() {
                                                            'Printer' =>'plugin_item_purge_fusinvsnmp',
                                                            'PluginFusioninventoryUnknownDevice' =>'plugin_item_purge_fusinvsnmp');
 
-         $report_list = array();
-         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "reportprinter","r")) {
-            $report_list["front/printerlogreport.php"] = __('Printed page counter');
 
-         }
-         if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "reportnetworkequipment","r")) {
-            $report_list["report/switch_ports.history.php"] = __('Switchs ports history');
-
-            $report_list["report/ports_date_connections.php"] = __('Unused switchs ports');
-
-            $report_list["report/not_queried_recently.php"] = __('Number of days since last inventory');
-
-         }
-         $PLUGIN_HOOKS['reports']['fusinvsnmp'] = $report_list;
 
 
          // Tabs for each type

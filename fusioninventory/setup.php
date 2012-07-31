@@ -173,6 +173,23 @@ function plugin_init_fusioninventory() {
                $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
             }
          }
+         
+         
+         $report_list = array();
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "reportprinter","r")) {
+            $report_list["front/printerlogreport.php"] = __('Printed page counter');
+
+         }
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "reportnetworkequipment","r")) {
+            $report_list["report/switch_ports.history.php"] = __('Switchs ports history');
+
+            $report_list["report/ports_date_connections.php"] = __('Unused switchs ports');
+
+            $report_list["report/not_queried_recently.php"] = __('Number of days since last inventory');
+
+         }
+         $PLUGIN_HOOKS['reports']['fusioninventory'] = $report_list;
+         
 
          // Tabs for each type
          $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
