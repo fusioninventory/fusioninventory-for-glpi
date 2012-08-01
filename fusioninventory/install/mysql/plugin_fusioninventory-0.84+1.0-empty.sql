@@ -728,6 +728,25 @@ CREATE TABLE `glpi_plugin_fusioninventory_configsecurities` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_networkportlogs`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_networkportlogs` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `networkports_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
+   `date_mod` datetime DEFAULT NULL,
+   `value_old` varchar(255) DEFAULT NULL,
+   `value_new` varchar(255) DEFAULT NULL,
+   `plugin_fusioninventory_agentprocesses_id` int(11) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`),
+   KEY `networkports_id` (`networkports_id`,`date_mod`),
+   KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`),
+   KEY `plugin_fusioninventory_agentprocesses_id` (`plugin_fusioninventory_agentprocesses_id`),
+   KEY `date_mod` (`date_mod`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_statediscoveries`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_statediscoveries` (

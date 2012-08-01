@@ -310,6 +310,22 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          $this->portModif['id'] = $this->plugin_fusinvsnmp_networkports_id;
          $this->update($this->portModif);
       }
+      // Update glpi_networkportethernets
+      $networkPortEthernet = new NetworkPortEthernet();
+      if (isset($this->portModif['ifspeed'])) {
+         unset($this->portModif['id']);
+         $this->portModif['speed'] = $this->portModif['ifspeed'] / 1000000;
+         $a_networportethernets = current($networkPortEthernet->find(
+                        "`networkports_id`='".$this->portModif['networkports_id']."'", 
+                        "", 
+                        1));
+         if (isset($a_networportethernets['id'])) {
+            $networkPortEthernet->update($this->portModif);
+         } else {
+            $networkPortEthernet->add($this->portModif);
+         }
+      }
+      
       $tagged = 0;
       if (isset($this->portModif['trunk'])) {
          $tagged = $this->portModif['trunk'];
