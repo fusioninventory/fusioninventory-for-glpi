@@ -554,7 +554,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             
             // Update SNMP informations
-            $pfNetworkEquipment = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+            $pfNetworkEquipment = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
             $a_snmpnetworkequipments = $pfNetworkEquipment->find("`networkequipments_id`='".$item->getID()."'");
             if (count($a_snmpnetworkequipments) > 0) {
                $a_snmpnetworkequipment = current($a_snmpnetworkequipments);
@@ -629,7 +629,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
 
             // Update SNMP informations
-            $pfPrinter = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
+            $pfPrinter = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
             $a_snmpprinters = $pfPrinter->find("`printers_id`='".$item->getID()."'");
             if (count($a_snmpprinters) > 0) {
                $a_snmpprinter = current($a_snmpprinters);

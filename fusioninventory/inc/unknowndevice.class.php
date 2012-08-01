@@ -917,7 +917,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             }
 
             // Import SNMP
-            $pfPrinter = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
+            $pfPrinter = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
             $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusioninventory_printers";
             $query = "SELECT *
                       FROM `glpi_plugin_fusioninventory_printers`
@@ -970,7 +970,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $pfUnknownDevice = new PluginFusinvsnmpUnknownDevice();
                $pfUnknownDevice->import($items_id, $NetworkEquipment_id, 'NetworkEquipment');
             }
-            $pfNetworkEquipment = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+            $pfNetworkEquipment = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
             $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusioninventory_networkequipments";
             $query = "SELECT *
                       FROM `glpi_plugin_fusioninventory_networkequipments`

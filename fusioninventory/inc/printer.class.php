@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusioninventoryPrinter extends PluginFusioninventorySnmpCommonDBTM {
+class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBTM {
    private $oFusionInventory_printer;
 
 
@@ -52,7 +52,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventorySnmpCommonDBTM {
    function __construct() {
       parent::__construct("glpi_printers");
       $this->dohistory=true;
-      $this->oFusionInventory_printer = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
+      $this->oFusionInventory_printer = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
       $this->oFusionInventory_printer->type = 'PluginFusioninventoryPrinter';
    }
 

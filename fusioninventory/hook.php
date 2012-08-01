@@ -808,10 +808,9 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment", "r")) {
-               $array[1] = __('FusInv')." ".
-                  __('SNMP');
-            }
+            //if (PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment", "r")) {
+               $array[1] = __('FusInv')." ".__('SNMP');
+            //}
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
                $array[2] = __('FusInv')." ".__('Tasks');
             }
@@ -902,9 +901,9 @@ function plugin_headings_actions_fusioninventory($item) {
 
       case 'NetworkEquipment' :
          $array = array();
-         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment", "r")) {
+//         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment", "r")) {
             $array[1] = "plugin_headings_fusioninventory_networkingInfo";
-         }
+//         }
          $array[2] = "plugin_headings_fusioninventory_tasks";
          $array[3] = "plugin_headings_fusinvsnmp_xml";
          return $array;
@@ -1442,7 +1441,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
             foreach ($data['item'] as $items_id => $val) {
                if ($val == 1) {
                   $pfNetworkEquipment =
-                     new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+                     new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
                   $a_networkequipments =
                      $pfNetworkEquipment->find("`networkequipments_id`='".$items_id."'");
                   $input = array();
@@ -1462,7 +1461,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          } else if($data['itemtype'] == 'Printer') {
             foreach ($data['item'] as $items_id => $val) {
                if ($val == 1) {
-                  $pfPrinter = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
+                  $pfPrinter = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
                   $a_printers = $pfPrinter->find("`printers_id`='".$items_id."'");
                   $input = array();
                   if (count($a_printers) > 0) {
@@ -1502,7 +1501,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          if ($data['itemtype'] == 'NetworkEquipment') {
             foreach ($data['item'] as $items_id => $val) {
                if ($val == 1) {
-                  $pfNetworkEquipment = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+                  $pfNetworkEquipment = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
                   $a_networkequipments = $pfNetworkEquipment->find("`networkequipments_id`='".$items_id."'");
                   $input = array();
                   if (count($a_networkequipments) > 0) {
@@ -1521,7 +1520,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          } else if($data['itemtype'] == 'Printer') {
             foreach ($data['item'] as $items_id => $val) {
                if ($val == 1) {
-                  $pfPrinter = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
+                  $pfPrinter = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
                   $a_printers = $pfPrinter->find("`printers_id`='".$items_id."'");
                   $input = array();
                   if (count($a_printers) > 0) {

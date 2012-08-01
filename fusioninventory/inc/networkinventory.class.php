@@ -44,8 +44,6 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
-
 class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommunication {
 
    // Get all devices and put in taskjobstate each task for each device for each agent
@@ -513,8 +511,8 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
       $NetworkEquipment = new NetworkEquipment();
       $NetworkPort = new NetworkPort();
-      $pfNetworkEquipment = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
-      $pfPrinter = new PluginFusioninventorySnmpCommonDBTM("glpi_plugin_fusioninventory_printers");
+      $pfNetworkEquipment = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+      $pfPrinter = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
 
       $modelslistused = array();
       $current = current($a_Taskjobstates);
