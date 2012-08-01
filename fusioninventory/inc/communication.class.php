@@ -179,6 +179,11 @@ class PluginFusioninventoryCommunication {
       if ($xmltag == "NETDISCOVERY") {
          $xmltag = "NETWORKDISCOVERY";
       }
+      if ($xmltag == "SNMPQUERY"
+              OR $xmltag == "SNMPINVENTORY") {
+         $xmltag = "NETWORKINVENTORY";
+      }
+
       
       $agent = $pfAgent->InfosByKey($this->message->DEVICEID);
       if ($xmltag == "PROLOG") {

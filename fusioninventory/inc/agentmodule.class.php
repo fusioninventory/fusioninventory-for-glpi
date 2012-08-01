@@ -386,9 +386,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    **/
    function getAgentCanDo($module_name, $items_id) {
 
-      if ($module_name == 'SNMPINVENTORY') {
-         $module_name = 'SNMPQUERY';
-      }
       $agentModule = $this->getActivationExceptions($module_name);
 
       if ($agentModule['is_active'] == 0) {

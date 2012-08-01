@@ -272,7 +272,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
 
       $input = array();
       $input['plugins_id'] = $plugins_id;
-      $input['modulename'] = "SNMPQUERY";
+      $input['modulename'] = "NETWORKINVENTORY";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);

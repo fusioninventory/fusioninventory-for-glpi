@@ -392,7 +392,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                $prepare_agentConfig[] = array("id" => $data["ID"],
                                               "threads_snmpquery"    => $data['threads_query'],
                                               "threads_netdiscovery" => $data['threads_discovery'],
-                                              "SNMPQUERY" => $data['module_snmpquery'],
+                                              "NETORKINVENTORY" => $data['module_snmpquery'],
                                               "NETWORKDISCOVERY" => $data['module_netdiscovery'],
                                               "INVENTORY" => $data['module_inventory'],
                                               "WAKEONLAN" => $data['module_wakeonlan']);
@@ -631,13 +631,18 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Add SNMPQUERY module if not present
     */
-   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='SNMPQUERY'";
+   $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
+      SET `modulename`='NETWORKINVENTORY'
+      WHERE `modulename`='SNMPQUERY'";
+   $DB->query($query);
+   
+   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='NETWORKINVENTORY'";
    $result = $DB->query($query);
    if (!$DB->numrows($result)) {
       $agentmodule = new PluginFusioninventoryAgentmodule;
       $input = array();
       $input['plugins_id'] = $plugins_id;
-      $input['modulename'] = "SNMPQUERY";
+      $input['modulename'] = "NETWORKINVENTORY";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $agentmodule->add($input);
