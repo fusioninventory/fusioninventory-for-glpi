@@ -705,6 +705,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                   break;
 
                case 'IFTYPE': // already managed
+                  $pfNetworkPort->setValue('instantiation_type', 'NetworkPortEthernet');
                   break;
 
                case 'TRUNK':
