@@ -44,8 +44,6 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-require_once(GLPI_ROOT.'/plugins/fusinvsnmp/inc/commondbtm.class.php');
-
 class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetworkCommonDBTM {
    private $oFusionInventory_networkequipment;
    private $newPorts=array(), $updatesPorts=array();
@@ -56,6 +54,30 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
       $this->oFusionInventory_networkequipment = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
       $this->oFusionInventory_networkequipment->type = 'PluginFusioninventoryNetworkEquipment';
    }
+   
+   
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $DB,$LANG;
+
+      return self::createTabEntry(__('FusionInventory SNMP'));
+   }
+
+
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      global $CFG_GLPI;
+
+      if ($item->getID() > 0) {
+         $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+         $pfNetworkEquipment->showForm($item->getID(),
+              array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/switch_info.form.php'));
+      }
+
+      return true;
+   }
+
+   
 
 
    function getType() {

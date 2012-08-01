@@ -808,9 +808,6 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            //if (PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment", "r")) {
-               $array[1] = __('FusInv')." ".__('SNMP');
-            //}
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
                $array[2] = __('FusInv')." ".__('Tasks');
             }
@@ -901,9 +898,6 @@ function plugin_headings_actions_fusioninventory($item) {
 
       case 'NetworkEquipment' :
          $array = array();
-//         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment", "r")) {
-            $array[1] = "plugin_headings_fusioninventory_networkingInfo";
-//         }
          $array[2] = "plugin_headings_fusioninventory_tasks";
          $array[3] = "plugin_headings_fusinvsnmp_xml";
          return $array;
