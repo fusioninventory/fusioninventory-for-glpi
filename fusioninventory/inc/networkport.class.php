@@ -310,7 +310,13 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          $this->portModif['id'] = $this->plugin_fusinvsnmp_networkports_id;
          $this->update($this->portModif);
       }
-
+      $tagged = 0;
+      if (isset($this->portModif['trunk'])) {
+         $tagged = $this->portModif['trunk'];
+      } else if (isset($this->portDB['trunk'])) {
+         $tagged = $this->portDB['trunk'];
+      } 
+      
       // ** save VLAN
       $vlan = new Vlan();
       $vlanfound = array();
@@ -337,7 +343,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       }
       foreach ($vlanfound as $vlans_id) {
          if (!isset($vlanDB[$vlans_id])) {
-            $networkPort_Vlan->assignVlan($this->portModif['networkports_id'], $vlans_id);
+            $networkPort_Vlan->assignVlan($this->portModif['networkports_id'], $vlans_id, $tagged);
             PluginFusioninventoryNetworkPortLog::networkport_addLog($this->portModif['networkports_id'], $number." [".$name."]", 'vmvlan');
          }
       }

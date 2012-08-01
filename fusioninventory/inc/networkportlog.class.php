@@ -66,7 +66,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       if ($status == "field") {
 
-         $query = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportlogs` (
+         $query = "INSERT INTO `glpi_plugin_fusioninventory_networkportlogs` (
                                `networkports_id`,`plugin_fusioninventory_mappings_id`,`value_old`,`value_new`,`date_mod`)
                    VALUES('".$array["networkports_id"]."','".$array["plugin_fusioninventory_mappings_id"]."',
                           '".$array["value_old"]."','".$array["value_new"]."',
@@ -369,14 +369,14 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
             AS `DerivedTable1`
             UNION ALL
             SELECT * FROM (
-               SELECT `glpi_plugin_fusinvsnmp_networkportlogs`.`id`,
+               SELECT `glpi_plugin_fusioninventory_networkportlogs`.`id`,
                   `date_mod` as `date_mod`, `plugin_fusioninventory_agentprocesses_id`,
                   `networkports_id` AS `networkports_id_source`,
                   NULL as `networkports_id_destination`,
                   `name` AS `field`, `value_old`, `value_new`
-               FROM `glpi_plugin_fusinvsnmp_networkportlogs`
+               FROM `glpi_plugin_fusioninventory_networkportlogs`
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                     ON `glpi_plugin_fusinvsnmp_networkportlogs`.`plugin_fusioninventory_mappings_id` =
+                     ON `glpi_plugin_fusioninventory_networkportlogs`.`plugin_fusioninventory_mappings_id` =
                         `glpi_plugin_fusioninventory_mappings`.`id`
                WHERE `networkports_id`='".$ID_port."'
                ORDER BY `date_mod` DESC

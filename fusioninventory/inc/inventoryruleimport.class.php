@@ -415,12 +415,16 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
 
       $sql_where = " `[typetable]`.`is_template` = '0' ";
-      $sql_where_networkequipment = $sql_where;
       $sql_from = "`[typetable]`";
-      $sql_from_networkequipment = $sql_from;
       $sql_from .= " LEFT JOIN `glpi_networkports`
-                  ON (`[typetable]`.`id` = `glpi_networkports`.`items_id`
-                      AND `glpi_networkports`.`itemtype` = '[typename]') ";
+                        ON (`[typetable]`.`id` = `glpi_networkports`.`items_id`
+                            AND `glpi_networkports`.`itemtype` = '[typename]') 
+                     LEFT JOIN `glpi_networknames`
+                          ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
+                             AND `glpi_networknames`.`itemtype`='NetworkPort'
+                     LEFT JOIN `glpi_ipaddresses`
+                          ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
+                             AND `glpi_ipaddresses`.`itemtype`='NetworkName'";
 
       foreach ($complex_criterias as $criteria) {
          switch ($criteria->fields['criteria']) {
@@ -433,39 +437,28 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
                $sql_from .= $sql_from_temp;
                $sql_where  .= $sql_where_temp;
-               $sql_from_networkequipment .= $sql_from_temp;
-               $sql_where_networkequipment .= $sql_where_temp;
                break;
 
             case 'mac':
                $sql_where_temp = " AND `glpi_networkports`.`mac` IN ('";
-               $sql_where_networkequipment_temp = " AND `[typetable]`.`mac` IN ('";
                if (is_array($input['mac'])) {
                   $sql_where_temp .= implode("', '",$input['mac']);
-                  $sql_where_networkequipment_temp .= implode("', '",$input['mac']);
                } else {
                   $sql_where_temp .= $input['mac'];
-                  $sql_where_networkequipment_temp .= $input['mac'];
                }
                $sql_where_temp .= "')";
-               $sql_where_networkequipment_temp .= "')";
 
-               $sql_where  .= $sql_where_temp;
-               $sql_where_networkequipment .= $sql_where_networkequipment_temp;
+               $sql_where .= $sql_where_temp;
                break;
 
             case 'ip':
-               $sql_where .= " AND `glpi_networkports`.`ip` IN ('";
-               $sql_where_networkequipment .= " AND `[typetable]`.`ip` IN ('";
+               $sql_where .= " AND `glpi_ipaddresses`.`ip` IN ('";
                if (is_array($input['ip'])) {
                   $sql_where .= implode("', '",$input['ip']);
-                  $sql_where_networkequipment .= implode("', '",$input['ip']);
                } else {
                   $sql_where .= $input['ip'];
-                  $sql_where_networkequipment .= $input['ip'];
                }
                $sql_where .= "')";
-               $sql_where_networkequipment .= "')";
                break;
 
             case 'serial':
@@ -484,7 +477,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                }
 
                $sql_where .= $sql_where_temp;
-               $sql_where_networkequipment .= $sql_where_temp;
                break;
 
             case 'name':
@@ -495,7 +487,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                   $sql_where_temp = " AND (`[typetable]`.`name`='".$input['name']."') ";
                }
                $sql_where .= $sql_where_temp;
-               $sql_where_networkequipment .= $sql_where_temp;
                break;
 
             case 'hdserial':
@@ -538,16 +529,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       foreach ($itemtypeselected as $itemtype) {
          $sql_from_temp = "";
          $sql_where_temp = "";
-         if ($itemtype == "NetworkEquipment") {
-            $sql_from_temp = $sql_from_networkequipment;
-            $sql_where_temp = $sql_where_networkequipment;
-         } else {
-            $sql_from_temp = $sql_from;
-            $sql_where_temp = $sql_where;
-            if ($itemtype == "Computer") {
-               $sql_from_temp .= $sql_from_computer;
-               $sql_where_temp .= $sql_where_computer;
-            }
+         $sql_from_temp = $sql_from;
+         $sql_where_temp = $sql_where;
+         if ($itemtype == "Computer") {
+            $sql_from_temp .= $sql_from_computer;
+            $sql_where_temp .= $sql_where_computer;
          }
 
          if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
