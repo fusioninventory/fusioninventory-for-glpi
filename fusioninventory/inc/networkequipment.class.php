@@ -67,11 +67,11 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       global $CFG_GLPI;
-
+      
       if ($item->getID() > 0) {
          $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
          $pfNetworkEquipment->showForm($item->getID(),
-              array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/switch_info.form.php'));
+              array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/switch_info.form.php'));
       }
 
       return true;
@@ -138,11 +138,11 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
    function showForm($id, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
-      if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networkequipment","r")) {
+      if (!PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment","r")) {
          return false;
       }
       $canedit = false;
-      if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "networkequipment","w")) {
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment","w")) {
          $canedit = true;
       }
 
@@ -214,7 +214,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>".__('SNMP authentication')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::auth_dropdown($this->oFusionInventory_networkequipment->fields['plugin_fusinvsnmp_configsecurities_id']);
+      PluginFusioninventoryConfigSecurity::auth_dropdown($this->oFusionInventory_networkequipment->fields['plugin_fusioninventory_configsecurities_id']);
       echo "</td>";
       echo "</tr>";
 
@@ -356,7 +356,7 @@ function appear_array(id){
                             AND `users_id`='0'
                       ORDER BY `rank`;";
       $result_array=$DB->query($query_array);
-      echo "<th colspan='".(mysql_num_rows($result_array) + 2)."'>";
+      echo "<th colspan='".($DB->numrows($result_array) + 2)."'>";
       echo __('Ports array');
 
       $result=$DB->query($query);
@@ -373,7 +373,7 @@ function appear_array(id){
       // Display legend
       echo "
       <tr class='tab_bg_1' style='display: none;' id='legend'>
-         <td colspan='".(mysql_num_rows($result_array) + 2)."'>
+         <td colspan='".($DB->numrows($result_array) + 2)."'>
          <ul>
             <li>".__('Connection with a switch or a server in trunk or tagged mode')."&nbsp;:</li>
          </ul>
@@ -727,7 +727,7 @@ function appear_array(id){
 
             echo "
             <tr style='display: none;' id='viewfollowup".$data["id"]."'>";
-            echo "<td colspan='".(mysql_num_rows($result_array) + 2)."' id='viewfollowuphistory".$data["id"]."'></td>";
+            echo "<td colspan='".($DB->numrows($result_array) + 2)."' id='viewfollowuphistory".$data["id"]."'></td>";
             Ajax::UpdateItemOnEvent('plusmoinsl'.$data["id"],
                                   'viewfollowuphistory'.$data["id"],
                                   $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/ajax/showporthistory.php",
