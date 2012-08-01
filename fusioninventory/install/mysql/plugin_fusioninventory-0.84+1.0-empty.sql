@@ -226,8 +226,8 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
    `hub` tinyint(1) NOT NULL DEFAULT '0',
    `states_id` int(11) NOT NULL DEFAULT '0',
    `sysdescr` text DEFAULT NULL,
-   `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_snmpmodels_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `entities_id` (`entities_id`),
    KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`),
@@ -585,7 +585,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkequipments` (
    `networkequipments_id` int(11) NOT NULL DEFAULT '0',
    `sysdescr` text COLLATE utf8_unicode_ci DEFAULT NULL,
    `plugin_fusioninventory_snmpmodels_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `uptime` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
    `cpu` int(3) NOT NULL DEFAULT '0' COMMENT '%',
    `memory` int(11) NOT NULL DEFAULT '0',
@@ -593,7 +593,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkequipments` (
    `last_PID_update` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
    KEY `networkequipments_id` (`networkequipments_id`),
-   KEY `plugin_fusioninventory_snmpmodels_id` (`plugin_fusioninventory_snmpmodels_id`,`plugin_fusinvsnmp_configsecurities_id`)
+   KEY `plugin_fusioninventory_snmpmodels_id` (`plugin_fusioninventory_snmpmodels_id`,`plugin_fusioninventory_configsecurities_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
@@ -616,15 +616,15 @@ CREATE TABLE `glpi_plugin_fusioninventory_printers` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `printers_id` int(11) NOT NULL DEFAULT '0',
    `sysdescr` text COLLATE utf8_unicode_ci DEFAULT NULL,
-   `plugin_fusinvsnmp_models_id` int(11) NOT NULL DEFAULT '0',
-   `plugin_fusinvsnmp_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_snmpmodels_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `frequence_days` int(5) NOT NULL DEFAULT '1',
    `last_fusioninventory_update` datetime DEFAULT NULL,
    PRIMARY KEY (`id`),
    UNIQUE KEY `unicity` (`printers_id`),
-   KEY `plugin_fusinvsnmp_configsecurities_id` (`plugin_fusinvsnmp_configsecurities_id`),
+   KEY `plugin_fusioninventory_configsecurities_id` (`plugin_fusioninventory_configsecurities_id`),
    KEY `printers_id` (`printers_id`),
-   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`)
+   KEY `plugin_fusioninventory_snmpmodels_id` (`plugin_fusioninventory_snmpmodels_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
