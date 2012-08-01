@@ -395,7 +395,7 @@ class PluginFusioninventoryStaticmisc {
 
 
    static function task_definitionselection_PluginFusioninventoryIPRange_networkinventory($title) {
-      $rand = PluginFusinvsnmpStaticmisc::task_definitionselection_PluginFusioninventoryIPRange_netdiscovery($title);
+      $rand = PluginFusioninventoryStaticmisc::task_definitionselection_PluginFusioninventoryIPRange_networkdiscovery($title);
       return $rand;
    }
 
