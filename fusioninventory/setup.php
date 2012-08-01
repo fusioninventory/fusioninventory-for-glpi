@@ -134,7 +134,7 @@ function plugin_init_fusioninventory() {
                                              = 'PluginFusioninventoryInventoryComputerInventory';
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETWORKDISCOVERY'] 
                                              = 'PluginFusioninventoryCommunicationNetworkDiscovery';
-      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['SNMPQUERY'] 
+      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETWORKINVENTORY'] 
                                              = 'PluginFusioninventoryCommunicationNetworkInventory';
 
 

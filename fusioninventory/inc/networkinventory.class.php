@@ -55,7 +55,9 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfIPRange = new PluginFusioninventoryIPRange();
-
+      $a_specificity = array();
+      $a_specificity['DEVICE'] = array();
+      
       $uniqid = uniqid();
 
       $pfTaskjob->getFromDB($taskjobs_id);
@@ -146,7 +148,8 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       // Search NetworkEquipment
          $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                             `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                            `plugin_fusioninventory_configsecurities_id`, `plugin_fusioninventory_snmpmodels_id`
+                            `plugin_fusioninventory_configsecurities_id`, 
+                            `plugin_fusioninventory_snmpmodels_id`
                      FROM `glpi_networkequipments`
                      LEFT JOIN `glpi_plugin_fusioninventory_networkequipments`
                           ON `networkequipments_id`=`glpi_networkequipments`.`id`
@@ -173,12 +176,20 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                          AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
         $result=$DB->query($query);
         while ($data=$DB->fetch_array($result)) {
+           $input = array();
+           $input['TYPE'] = 'NETWORKING';
+           $input['ID'] = $data['gID'];
+           $input['IP'] = $data['gnifaddr'];
+           $input['AUTHSNMP_ID'] = $data['plugin_fusioninventory_configsecurities_id'];
+           $input['MODELSNMP_ID'] = $data['plugin_fusioninventory_snmpmodels_id'];
+           $a_specificity['DEVICE']['NetworkEquipment'.$data['gID']] = $input;
            $a_NetworkEquipment[] = $data['gID'];
         }
      // Search Printer
         $query = "SELECT `glpi_printers`.`id` AS `gID`,
                          `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                         `plugin_fusioninventory_configsecurities_id`, `plugin_fusioninventory_snmpmodels_id`
+                         `plugin_fusioninventory_configsecurities_id`, 
+                         `plugin_fusioninventory_snmpmodels_id`
                   FROM `glpi_printers`
                   LEFT JOIN `glpi_plugin_fusioninventory_printers`
                           ON `printers_id`=`glpi_printers`.`id`
@@ -207,6 +218,13 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                       AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
+            $input = array();
+            $input['TYPE'] = 'PRINTER';
+            $input['ID'] = $data['gID'];
+            $input['IP'] = $data['gnifaddr'];
+            $input['AUTHSNMP_ID'] = $data['plugin_fusioninventory_configsecurities_id'];
+            $input['MODELSNMP_ID'] = $data['plugin_fusioninventory_snmpmodels_id'];
+            $a_specificity['DEVICE']['Printer'.$data['gID']] = $input;
             $a_Printer[] = $data['gID'];
          }
       }
@@ -464,10 +482,12 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
                         case 'NetworkEquipment':
                            $a_input['items_id'] = array_pop($a_NetworkEquipment);
+                           $a_input['specificity'] = exportArrayToDB($a_specificity['DEVICE']['NetworkEquipment'.$a_input['items_id']]);
                            break;
 
                         case 'Printer':
                            $a_input['items_id'] = array_pop($a_Printer);
+                           $a_input['specificity'] = exportArrayToDB($a_specificity['DEVICE']['Printer'.$a_input['items_id']]);
                            break;
 
                      }
@@ -529,58 +549,28 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $changestate = 0;
       foreach ($a_Taskjobstates as $taskjobstatedatas) {
          $sxml_device = $sxml_option->addChild('DEVICE');
-            switch ($taskjobstatedatas['itemtype']) {
+         $a_specificity = importArrayFromDB($taskjobstatedatas['specificity']);
+         foreach($a_specificity as $key=>$value) {
+            $sxml_device->addAttribute($key, $value);
+         }
+         $modelslistused[$a_specificity['MODELSNMP_ID']] = 1;
+         
 
-               case 'NetworkEquipment':
-                  $NetworkEquipment->getFromDB($taskjobstatedatas['items_id']);
-                  $sxml_device->addAttribute('TYPE', 'NETWORKING');
-                  $sxml_device->addAttribute('ID', $taskjobstatedatas['items_id']);
-                  $sxml_device->addAttribute('IP', $NetworkEquipment->fields['ip']);
-                  $a_data = $pfNetworkEquipment->find("`networkequipments_id`='".$taskjobstatedatas['items_id']."'", "", "1");
-                  $data = current($a_data);
-                  $sxml_device->addAttribute('AUTHSNMP_ID', $data['plugin_fusioninventory_configsecurities_id']);
-                  $sxml_device->addAttribute('MODELSNMP_ID', $data['plugin_fusioninventory_snmpmodels_id']);
-                  $modelslistused[$data['plugin_fusioninventory_snmpmodels_id']] = 1;
-                  break;
-
-               case 'Printer':
-                  $a_Printerport = $NetworkPort->find("`itemtype`='Printer' AND `items_id`='".$taskjobstatedatas['items_id']."'");
-                  $port_ip = '';
-                  foreach($a_Printerport as $portdata) {
-                     if ($portdata['ip'] != '' AND ($portdata['ip'] != '127.0.0.1')) {
-                        $port_ip = $portdata['ip'];
-                        break;
-                     }
-                  }
-                  if ($port_ip != '') {
-                     $sxml_device->addAttribute('TYPE', 'PRINTER');
-                     $sxml_device->addAttribute('ID', $taskjobstatedatas['items_id']);
-                     $sxml_device->addAttribute('IP', $port_ip);
-                     $a_data = $pfPrinter->find("`printers_id`='".$taskjobstatedatas['items_id']."'", "", "1");
-                     $data = current($a_data);
-                     $sxml_device->addAttribute('AUTHSNMP_ID', $data['plugin_fusioninventory_configsecurities_id']);
-                     $sxml_device->addAttribute('MODELSNMP_ID', $data['plugin_fusioninventory_snmpmodels_id']);
-                     $modelslistused[$data['plugin_fusioninventory_snmpmodels_id']] = 1;
-                  }
-                  break;
-
-            }
-
-            if ($changestate == '0') {
-               $pfTaskjobstate->changeStatus($taskjobstatedatas['id'], 1);
-               $pfTaskjoblog->addTaskjoblog($taskjobstatedatas['id'],
-                                       '0',
-                                       'PluginFusioninventoryAgent',
-                                       '1',
-                                       $pfAgent->fields["threads_networkinventory"].' threads');
-               $changestate = $pfTaskjobstate->fields['id'];
-            } else {
-               $pfTaskjobstate->changeStatusFinish($taskjobstatedatas['id'],
-                                                                 $taskjobstatedatas['items_id'],
-                                                                 $taskjobstatedatas['itemtype'],
-                                                                 0,
-                                                                 "Merged with ".$changestate);
-            }
+         if ($changestate == '0') {
+            $pfTaskjobstate->changeStatus($taskjobstatedatas['id'], 1);
+            $pfTaskjoblog->addTaskjoblog($taskjobstatedatas['id'],
+                                    '0',
+                                    'PluginFusioninventoryAgent',
+                                    '1',
+                                    $pfAgent->fields["threads_networkinventory"].' threads');
+            $changestate = $pfTaskjobstate->fields['id'];
+         } else {
+            $pfTaskjobstate->changeStatusFinish($taskjobstatedatas['id'],
+                                                              $taskjobstatedatas['items_id'],
+                                                              $taskjobstatedatas['itemtype'],
+                                                              0,
+                                                              "Merged with ".$changestate);
+         }
       }
       // Add auth
       $snmpauthlist=$pfConfigSecurity->find();
