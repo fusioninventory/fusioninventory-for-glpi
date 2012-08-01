@@ -1642,7 +1642,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->changeField($newTable,
                                  "specificity",
                                  "specificity",
-                                 "varchar(255) DEFAULT NULL");
+                                 "text DEFAULT NULL");
          $migration->changeField($newTable,
                                  "uniqid",
                                  "uniqid",
@@ -1668,7 +1668,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                               "specificity",
-                              "varchar(255) DEFAULT NULL");
+                              "text DEFAULT NULL");
          $migration->addField($newTable,
                               "uniqid",
                               "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
