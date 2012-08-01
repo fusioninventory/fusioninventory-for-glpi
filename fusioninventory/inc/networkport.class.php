@@ -62,8 +62,74 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       }
    }
 
+  
+   
+   function getSearchOptions() {
 
+      $tab                     = array();
+      $tab['common']           = __('Characteristics');
 
+      $tab[1]['table']         = 'glpi_networkports';
+      $tab[1]['field']         = 'name';
+      $tab[1]['name']          = __('Name');
+      $tab[1]['type']          = 'text';
+      $tab[1]['massiveaction'] = false;
+
+//      $tab[2]['table']         = $this->getTable();
+//      $tab[2]['field']         = 'id';
+//      $tab[2]['name']          = __('ID');
+//      $tab[2]['massiveaction'] = false;
+//      $tab[2]['datatype']      = 'number';
+
+      $tab[3]['table']         = $this->getTable();
+      $tab[3]['field']         = 'ifmtu';
+      $tab[3]['name']          = __('MTU');
+
+      $tab[5]['table']         = $this->getTable();
+      $tab[5]['field']         = 'ifspeed ';
+      $tab[5]['name']          = __('Speed');
+
+      $tab[6]['table']         = $this->getTable();
+      $tab[6]['field']         = 'ifinternalstatus';
+      $tab[6]['name']          = __('Internal status');
+
+      $tab[7]['table']         = $this->getTable();
+      $tab[7]['field']         = 'iflastchange';
+      $tab[7]['name']          = __('Last change');
+
+      $tab[8]['table']         = $this->getTable();
+      $tab[8]['field']         = 'ifinoctets';
+      $tab[8]['name']          = __('Number of bytes received / Number of bytes sent');
+
+      $tab[9]['table']         = $this->getTable();
+      $tab[9]['field']         = 'ifinerrors';
+      $tab[9]['name']          = __('Number of input errors / Number of errors in reception');
+
+      $tab[10]['table']         = $this->getTable();
+      $tab[10]['field']         = 'portduplex';
+      $tab[10]['name']          = __('Duplex');
+
+      $tab[11]['table']         = $this->getTable();
+      $tab[11]['field']         = 'mac';
+      $tab[11]['name']          = __('Internal MAC address');
+
+      $tab[12]['table']         = $this->getTable();
+      $tab[12]['field']         = 'vlan';
+      $tab[12]['name']          = __('VLAN');
+
+      $tab[13]['table']         = $this->getTable();
+      $tab[13]['field']         = 'connectedto';
+      $tab[13]['name']          = __('Connected to');
+
+      $tab[14]['table']         = $this->getTable();
+      $tab[14]['field']         = 'ifconnectionstatus';
+      $tab[14]['name']          = __('Connection');
+     
+      return $tab;
+   }
+   
+
+   
    /**
     * Load an optionnaly existing port
     *

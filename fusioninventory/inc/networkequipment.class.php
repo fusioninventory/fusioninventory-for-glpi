@@ -77,7 +77,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
       return true;
    }
 
-   
+  
 
 
    function getType() {
@@ -356,11 +356,23 @@ function appear_array(id){
                             AND `users_id`='0'
                       ORDER BY `rank`;";
       $result_array=$DB->query($query_array);
+      
       echo "<th colspan='".($DB->numrows($result_array) + 2)."'>";
       echo __('Ports array');
-
+  
       $result=$DB->query($query);
       echo ' ('.$DB->numrows($result).')';
+      
+      $tmp = " class='pointer' onClick=\"var w = window.open('".$CFG_GLPI["root_doc"].
+             "/front/popup.php?popup=search_config&amp;itemtype=PluginFusioninventoryNetworkPort' ,'glpipopup', ".
+             "'height=400, width=1000, top=100, left=100, scrollbars=yes'); w.focus();\"";
+
+      echo " <img alt=\"".__s('Select default items to show')."\" title=\"".
+                          __s('Select default items to show')."\" src='".
+                          $CFG_GLPI["root_doc"]."/pics/options_search.png' ";
+      echo $tmp.">";
+
+      
       $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/En_VI_visualisationsdonnees_2_reseau";
       if ($_SESSION["glpilanguage"] == "fr_FR") {
          $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/Fr_VI_visualisationsdonnees_2_reseau";
@@ -391,85 +403,64 @@ function appear_array(id){
       echo '<th>';
       echo "<th>".__('Name')."</th>";
       if ($monitoring == '1') {
-         echo "<th>".__('1')."</th>";
+         echo "<th>".__('Monitoring')."</th>";
       }
 
       $query_array = "SELECT *
                       FROM `glpi_displaypreferences`
-                      WHERE `itemtype`='PluginFusioninventoryNetworkEquipment'
+                      WHERE `itemtype`='PluginFusioninventoryNetworkport'
                              AND `users_id`='0'
-                      ORDER BY `rank`;";
+                      ORDER BY `rank`";
       $result_array=$DB->query($query_array);
       while ($data_array=$DB->fetch_array($result_array)) {
-         if ($data_array['num'] != '8'
-                 AND $data_array['num'] != '9') {
             echo "<th>";
             switch ($data_array['num']) {
-               case 2 :
+               case 3:
                   echo __('MTU');
-
                   break;
 
-               case 3 :
+               case 5:
                   echo __('Speed');
-
                   break;
 
-               case 4 :
+               case 6:
                   echo __('Internal status');
-
                   break;
 
-               case 5 :
+               case 7:
                   echo __('Last Change');
-
                   break;
 
-               case 6 :
-                  echo __('Number of bytes received')." / ".
-                        __('Number of bytes sent');
-
+               case 8:
+                  echo __('Number of bytes received')." / ".__('Number of bytes sent');
                   break;
 
-               case 7 :
-                  echo __('Number of input errors')." / ".
-                          __('Number of errors in reception');
-
+               case 9:
+                  echo __('Number of input errors')." / ".__('Number of errors in reception');
                   break;
 
                case 10 :
                   echo __('Duplex');
-
                   break;
 
                case 11 :
                   echo __('Internal MAC address');
-
                   break;
-
-               case 12 :
-                  echo __('Connected to');
-
-                  break;
-
-               case 13 :
-                  echo __('Connection');
-
-                  break;
-
-               case 14 :
+               
+               case 12:
                   echo __('VLAN');
-
                   break;
 
-               case 15 :
-                  echo __('Port description');
+               case 13:
+                  echo __('Connected to');
+                  break;
 
+               case 14:
+                  echo __('Connection');
                   break;
 
             }
             echo "</th>";
-         }
       }
       echo "</tr>";
       // Fin de l'entête du tableau
@@ -516,21 +507,21 @@ function appear_array(id){
 
             $query_array = "SELECT *
                             FROM `glpi_displaypreferences`
-                            WHERE `itemtype`='PluginFusioninventoryNetworkEquipment'
+                            WHERE `itemtype`='PluginFusioninventoryNetworkport'
                                   AND `users_id`='0'
                             ORDER BY `rank`;";
             $result_array=$DB->query($query_array);
             while ($data_array=$DB->fetch_array($result_array)) {
                switch ($data_array['num']) {
-                  case 2 :
+                  case 3:
                      echo "<td>".$data["ifmtu"]."</td>";
                      break;
 
-                  case 3 :
+                  case 5:
                      echo "<td>".$this->byteSize($data["ifspeed"],1000)."bps</td>";
                      break;
 
-                  case 4 :
+                  case 6:
                      echo "<td>";
                      if (strstr($data["ifstatus"], "up") OR strstr($data["ifinternalstatus"],"1")) {
                         echo "<img src='".$CFG_GLPI['root_doc']."/pics/greenbutton.png'/>";
@@ -544,11 +535,11 @@ function appear_array(id){
                      echo "</td>";
                      break;
 
-                  case 5 :
+                  case 7:
                      echo "<td>".$data["iflastchange"]."</td>";
                      break;
 
-                  case 6 :
+                  case 8:
                      echo "<td>";
                      if ($data["ifinoctets"] == "0") {
                         echo "-";
@@ -565,7 +556,7 @@ function appear_array(id){
                      echo "</td>";
                      break;
 
-                  case 7 :
+                  case 9:
                      $color = '';
                      if ($data["ifinerrors"] != "0"
                              OR $data["ifouterrors"] != "0") {
@@ -586,16 +577,16 @@ function appear_array(id){
                      echo "</td>";
                      break;
 
-                  case 10 :
+                  case 10:
                      echo "<td>".$data["portduplex"]."</td>";
                      break;
 
-                  case 11 :
+                  case 11:
                      // ** internal mac
                      echo "<td>".$data["mac"]."</td>";
                      break;
 
-                  case 12 :
+                  case 13:
                      // ** Mac address and link to device which are connected to this port
                      $opposite_port = $nw->getOppositeContact($data["networkports_id"]);
                      if ($opposite_port != "") {
@@ -661,7 +652,7 @@ function appear_array(id){
                      }
                      break;
 
-                  case 13 :
+                  case 14:
                      // ** Connection status
                      echo "<td>";
                      if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")) {
@@ -679,7 +670,7 @@ function appear_array(id){
                      echo "</td>";
                      break;
 
-                  case 14 :
+                  case 12:
                      echo "<td>";
 
                      $canedit = Session::haveRight("networking", "w");
@@ -713,10 +704,6 @@ function appear_array(id){
                      echo "</td>";
                      break;
 
-                  case 15 :
-                     //Port description
-                     echo "<td>".$data["ifdescr"]."</td>";
-                     break;
                }
             }
 

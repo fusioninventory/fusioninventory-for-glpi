@@ -65,6 +65,12 @@ if (isset($_SESSION["glpipopup"]["name"])) {
          Html::popHeader(__('Cache informations'),$_SERVER['PHP_SELF']);
          include "../../../front/rule.cache.php";
          break;
+      
+      case "pluginfusioninventory_networkport_display_options" :
+         Html::popHeader(__('Network ports display options'), $_SERVER['PHP_SELF']);
+         include "networkport.display.php";
+         break;
+      
    }
    echo "<div class='center'><br><a href='javascript:window.close()'>".__('Back')."</a>";
    echo "</div>";
