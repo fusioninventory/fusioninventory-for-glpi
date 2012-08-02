@@ -95,9 +95,7 @@ function pluginFusinvinventoryInstall($version, $migration='') {
    if (isset($_SERVER['HTTP_REFERER'])) {
       $url = $_SERVER['HTTP_REFERER'];
    }
-   $input['url'] = PluginFusioninventoryFusionCommunication::getDefaultRestURL($url, 
-                                                                             'fusinvinventory', 
-                                                                             'esx');
+   $input['url'] = '';
    $pfAgentmodule->add($input);
 
     include(GLPI_ROOT . "/plugins/fusinvinventory/inc/config.class.php");

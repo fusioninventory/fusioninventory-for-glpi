@@ -95,9 +95,7 @@ function pluginFusinvdeployInstall($version, $migration='') {
       if (isset($_SERVER['HTTP_REFERER'])) {
          $url = $_SERVER['HTTP_REFERER'];
       }
-      $input['url']        = PluginFusioninventoryFusionCommunication:: getDefaultRestURL($url,
-                                                                                        'fusinvdeploy',
-                                                                                        'deploy');
+      $input['url'] = '';
 
       $agentmodule->add($input);
    }
