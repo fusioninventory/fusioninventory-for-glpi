@@ -141,7 +141,7 @@ $LANG['plugin_fusinvdeploy']['label'][3]="Unité";
 $LANG['plugin_fusinvdeploy']['label'][4]="Activé";
 $LANG['plugin_fusinvdeploy']['label'][5]="Fichier";
 $LANG['plugin_fusinvdeploy']['label'][6]="Déploiement P2P";
-$LANG['plugin_fusinvdeploy']['label'][7]="Date d&#145";
+$LANG['plugin_fusinvdeploy']['label'][7]="Date d'ajout";
 $LANG['plugin_fusinvdeploy']['label'][8]="Durée de validité";
 $LANG['plugin_fusinvdeploy']['label'][9]="Rétention des données durant (jours)";
 
