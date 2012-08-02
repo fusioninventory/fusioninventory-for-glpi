@@ -940,7 +940,7 @@ function appear_array(id){
       }
       if ($uniqid == '0') {
          if ($action == '') {
-            echo "<center><strong>".$LANG['plugin_fusioninventory']['task'][55]."</strong></center>";
+            echo "<center><strong>No agent found for this task</strong></center>";
          }
       } else {
          $params = array();
