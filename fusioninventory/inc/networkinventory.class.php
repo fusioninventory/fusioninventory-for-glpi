@@ -93,11 +93,21 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
             case 'NetworkEquipment':
                $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
-                         `glpi_networkequipments`.`ip` AS `gnifaddr`,
-                         `plugin_fusioninventory_configsecurities_id`, `plugin_fusioninventory_snmpmodels_id`
+                         `glpi_ipaddresses`.`name` AS `gnifaddr`,
+                         `plugin_fusioninventory_configsecurities_id`, 
+                         `plugin_fusioninventory_snmpmodels_id`
                   FROM `glpi_networkequipments`
                   LEFT JOIN `glpi_plugin_fusioninventory_networkequipments`
                        ON `networkequipments_id`=`glpi_networkequipments`.`id`
+                  LEFT JOIN `glpi_networkports`
+                       ON `glpi_networkports`.`items_id`=`glpi_networkequipments`.`id`
+                          AND `glpi_networkports`.`itemtype`='NetworkEquipment'
+                  LEFT JOIN `glpi_networknames`
+                       ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
+                          AND `glpi_networknames`.`itemtype`='NetworkPort'
+                  LEFT JOIN `glpi_ipaddresses`
+                       ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
+                          AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                   INNER join `glpi_plugin_fusioninventory_snmpmodels`
                        ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
                   WHERE `glpi_networkequipments`.`is_deleted`='0'
@@ -105,23 +115,41 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                        AND `plugin_fusioninventory_configsecurities_id`!='0'
                        AND `glpi_plugin_fusioninventory_snmpmodels`.`itemtype`='NetworkEquipment'
                        AND `glpi_networkequipments`.`id` = '".$items_id."'
-                       AND `glpi_networkequipments`.`ip`!=''";
+                       AND `glpi_networkequipments`.`ip`!=''
+                  LIMIT 1";
                $result=$DB->query($query);
-               if ($DB->numrows($result) == '1') {
+               while ($data=$DB->fetch_array($result)) {
+                  $input = array();
+                  $input['TYPE'] = 'NETWORKING';
+                  $input['ID'] = $data['gID'];
+                  $input['IP'] = $data['gnifaddr'];
+                  $input['AUTHSNMP_ID'] = $data['plugin_fusioninventory_configsecurities_id'];
+                  $input['MODELSNMP_ID'] = $data['plugin_fusioninventory_snmpmodels_id'];
+                  $a_specificity['DEVICE']['NetworkEquipment'.$data['gID']] = $input;
                   $a_NetworkEquipment[] = $items_id;
                }
                break;
 
             case 'Printer':
                $query = "SELECT `glpi_printers`.`id` AS `gID`,
-                         `glpi_networkports`.`ip` AS `gnifaddr`,
-                         `plugin_fusioninventory_configsecurities_id`, `plugin_fusioninventory_snmpmodels_id`
+                         `glpi_ipaddresses`.`name` AS `gnifaddr`,
+                         `plugin_fusioninventory_configsecurities_id`, 
+                         `plugin_fusioninventory_snmpmodels_id`
                   FROM `glpi_printers`
                   LEFT JOIN `glpi_plugin_fusioninventory_printers`
                           ON `printers_id`=`glpi_printers`.`id`
                   LEFT JOIN `glpi_networkports`
                           ON `items_id`=`glpi_printers`.`id`
                              AND `itemtype`='Printer'
+                  LEFT JOIN `glpi_networkports`
+                       ON `glpi_networkports`.`items_id`=`glpi_printers`.`id`
+                          AND `glpi_networkports`.`itemtype`='Printer'
+                  LEFT JOIN `glpi_networknames`
+                       ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
+                          AND `glpi_networknames`.`itemtype`='NetworkPort'
+                  LEFT JOIN `glpi_ipaddresses`
+                       ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
+                          AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                   INNER join `glpi_plugin_fusioninventory_snmpmodels`
                        ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
                   INNER join `glpi_plugin_fusioninventory_configsecurities`
@@ -132,9 +160,17 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                         AND `glpi_plugin_fusioninventory_snmpmodels`.`itemtype`='Printer'
                         AND `glpi_printers`.`id` = '".$items_id."'
                         AND `glpi_networkports`.`ip` IS NOT NULL
-                        AND `glpi_networkports`.`ip`!=''";
+                        AND `glpi_networkports`.`ip`!=''
+                  LIMIT 1";
                $result=$DB->query($query);
-               if ($DB->numrows($result) == '1') {
+               while ($data=$DB->fetch_array($result)) {
+                  $input = array();
+                  $input['TYPE'] = 'PRINTER';
+                  $input['ID'] = $data['gID'];
+                  $input['IP'] = $data['gnifaddr'];
+                  $input['AUTHSNMP_ID'] = $data['plugin_fusioninventory_configsecurities_id'];
+                  $input['MODELSNMP_ID'] = $data['plugin_fusioninventory_snmpmodels_id'];
+                  $a_specificity['DEVICE']['Printer'.$data['gID']] = $input;
                   $a_Printer[] = $items_id;
                }
                break;
@@ -193,15 +229,15 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   FROM `glpi_printers`
                   LEFT JOIN `glpi_plugin_fusioninventory_printers`
                           ON `printers_id`=`glpi_printers`.`id`
-                     LEFT JOIN `glpi_networkports`
-                          ON `glpi_networkports`.`items_id`=`glpi_printers`.`id`
-                             AND `glpi_networkports`.`itemtype`='Printer'
-                     LEFT JOIN `glpi_networknames`
-                          ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
-                             AND `glpi_networknames`.`itemtype`='NetworkPort'
-                     LEFT JOIN `glpi_ipaddresses`
-                          ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
-                             AND `glpi_ipaddresses`.`itemtype`='NetworkName'
+                  LEFT JOIN `glpi_networkports`
+                       ON `glpi_networkports`.`items_id`=`glpi_printers`.`id`
+                          AND `glpi_networkports`.`itemtype`='Printer'
+                  LEFT JOIN `glpi_networknames`
+                       ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
+                          AND `glpi_networknames`.`itemtype`='NetworkPort'
+                  LEFT JOIN `glpi_ipaddresses`
+                       ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
+                          AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                   INNER join `glpi_plugin_fusioninventory_snmpmodels`
                        ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
                   INNER join `glpi_plugin_fusioninventory_configsecurities`
@@ -293,6 +329,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                      foreach($a_devicesubnet[$subnet][$itemtype] as $items_id=>$num) {
                         $a_input['itemtype'] = $itemtype;
                         $a_input['items_id'] = $items_id;
+                        $a_input['specificity'] = exportArrayToDB($a_specificity['DEVICE'][$itemtype.$items_id]);
                         $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                            //Add log of taskjob
                            $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
@@ -333,6 +370,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                      foreach($a_devicesubnet[$subnet][$itemtype] as $items_id=>$num) {
                         $a_input['itemtype'] = $itemtype;
                         $a_input['items_id'] = $items_id;
+                        $a_input['specificity'] = exportArrayToDB($a_specificity['DEVICE'][$itemtype.$items_id]);
                         if ($nbagent == $nb_devicebyagent) {
                            $agent_id = array_pop($a_agentList);
                            $nbagent = 0;
@@ -372,9 +410,15 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
                   $query = '';
                   if ($communication == 'push') {
-                     $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token FROM `glpi_plugin_fusioninventory_agents`
-                        LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-                        LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+                     $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, 
+                                       `ip`, 
+                                       `subnet`, 
+                                       `token`
+                               FROM `glpi_plugin_fusioninventory_agents`
+                        LEFT JOIN `glpi_networkports` 
+                           ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+                        LEFT JOIN `glpi_computers` 
+                           ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
                         WHERE `glpi_networkports`.`itemtype`='Computer'
                            AND `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'
                            AND `glpi_networkports`.`ip`!='127.0.0.1'
