@@ -194,7 +194,7 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
          {$render}checkGrid.getSelectionModel().selectFirstRow();
          {$render}checkGrid.setDisabled(true);
          {$render}checkForm.buttons[1].setVisible(true);
-         {$render}checkForm.setTitle('{$LANG['plugin_fusinvdeploy']['ftitle'][1]}');
+         {$render}checkForm.setTitle("{$LANG['plugin_fusinvdeploy']['ftitle'][1]}");
       }
    }, '-', {
       text: "{$LANG['plugin_fusinvdeploy']['ftitle'][9]}",
@@ -232,7 +232,7 @@ var {$render}checkGrid = new Ext.grid.GridPanel({
                {$render}checkForm.show();
                {$render}checkForm.enable();
                {$render}checkForm.loadData({$render}rec);
-               {$render}checkForm.setTitle('{$LANG['plugin_fusinvdeploy']['ftitle'][0]}');
+               {$render}checkForm.setTitle("{$LANG['plugin_fusinvdeploy']['ftitle'][0]}");
                {$render}checkForm.expand();
                {$render}checkForm.buttons[0].setDisabled(false);
             }
@@ -491,7 +491,7 @@ var {$render}checkForm = new Ext.FormPanel({
          {$render}checkForm.getForm().updateRecord({$render}checkForm.record);
          {$render}checkForm.getForm().submit({
             url : '../ajax/package_check.save.php?package_id={$id}&render={$render}',
-            waitMsg: '{$LANG['plugin_fusinvdeploy']['message'][2]}',
+            waitMsg: "{$LANG['plugin_fusinvdeploy']['message'][2]}",
             success: function(fileForm, o){
                {$render}checkGridStore.reload();
                {$render}checkGrid.setDisabled(false);
@@ -513,7 +513,7 @@ var {$render}checkForm = new Ext.FormPanel({
          });
       }
    }, {
-      text: '{$LANG['buttons'][34]}',
+      text: "{$LANG['buttons'][34]}",
       iconCls: 'exticon-cancel',
       name : '{$render}cancelbtn',
       id : '{$render}Checkcancelbtn',

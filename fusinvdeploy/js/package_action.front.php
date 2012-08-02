@@ -226,7 +226,7 @@ var {$render}actionGrid = new Ext.grid.GridPanel({
          {$render}actionGrid.getSelectionModel().selectFirstRow();
          {$render}actionGrid.setDisabled(true);
          {$render}actionForm.buttons[1].setVisible(true);
-         {$render}actionForm.setTitle('{$LANG['plugin_fusinvdeploy']['ftitle'][6]}');
+         {$render}actionForm.setTitle("{$LANG['plugin_fusinvdeploy']['ftitle'][6]}");
       }
    }, '-', {
       text: "{$LANG['plugin_fusinvdeploy']['ftitle'][14]}",
@@ -346,7 +346,7 @@ var {$render}actionGridProxyRetChecks = {
 {$render}actionGridRetChecksConfig = Ext.extend( Ext.grid.EditorGridPanel, {
    width: 295,
    height: 120,
-   /*title: '{$LANG['plugin_fusinvdeploy']['package'][22]}',*/
+   /*title: "{$LANG['plugin_fusinvdeploy']['package'][22]}",*/
    /*style : 'margin:10px 0 0',*/
    initComponent: function( config ) {
       Ext.apply( this, {
@@ -359,7 +359,7 @@ var {$render}actionGridProxyRetChecks = {
                dataIndex: 'id',
                hidden: true
             }, {
-               header: '{$LANG['plugin_fusinvdeploy']['label'][0]}',
+               header: "{$LANG['plugin_fusinvdeploy']['label'][0]}",
                dataIndex: 'type',
                width: 180,
                renderer: function(val) {
@@ -416,7 +416,7 @@ var {$render}actionGridProxyRetChecks = {
                   {$render}ActionGridRetChecks.getSelectionModel().selectFirstRow();
                }
             }, '-', {
-               text: '{$LANG['plugin_fusinvdeploy']['action'][7]}',
+               text: "{$LANG['plugin_fusinvdeploy']['action'][7]}",
                iconCls: 'exticon-delete',
                handler: function(btn,ev) {
                   var selection = {$render}ActionGridRetChecks.getSelectionModel().getSelections();
@@ -509,14 +509,14 @@ var {$render}Command_fieldset_item_PluginFusinvdeployAction_Message = [{
       width: {$field_width},
       height : {$field_height}
    } , {
-      fieldLabel: '{$LANG['plugin_fusinvdeploy']['label'][0]}',
+      fieldLabel: "{$LANG['plugin_fusinvdeploy']['label'][0]}",
       name: '{$render}messagetype',
       hiddenName : '{$render}messagetype',
       xtype : 'combo',
       valueField: 'name',
       displayField: 'value',
       width: 215,
-      emptyText : '{$LANG['plugin_fusinvdeploy']['label'][0]}',
+      emptyText : "{$LANG['plugin_fusinvdeploy']['label'][0]}",
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
@@ -613,7 +613,7 @@ var {$render}actionForm = new Ext.FormPanel({
    collapsed: true,
    labelWidth: {$label_width},
    frame: true,
-   title: '{$LANG['plugin_fusinvdeploy']['ftitle'][7]}',
+   title: "{$LANG['plugin_fusinvdeploy']['ftitle'][7]}",
    bodyStyle:'padding:5px 10px',
    style:'margin-left:5px;margin-bottom:5px',
    width: {$width_right},
@@ -651,7 +651,7 @@ var {$render}actionForm = new Ext.FormPanel({
    {$render}Command_dynFieldset
    ],
    buttons: [{
-      text: '{$LANG['plugin_fusinvdeploy']['action'][2]}',
+      text: "{$LANG['plugin_fusinvdeploy']['action'][2]}",
       iconCls: 'exticon-save',
       disabled:true,
       handler: function(btn,ev) {
@@ -660,7 +660,7 @@ var {$render}actionForm = new Ext.FormPanel({
          {$render}actionForm.buttons[1].setVisible(false);
       }
    }, {
-      text: '{$LANG['buttons'][34]}',
+      text: "{$LANG['buttons'][34]}",
       iconCls: 'exticon-cancel',
       name : '{$render}cancelbtn',
       id : '{$render}Actioncancelbtn',
@@ -699,11 +699,11 @@ var {$render}actionForm = new Ext.FormPanel({
 
 var {$render}actionFormSave = function() {
    if ({$render}actionForm.record == null) {
-      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['message'][0]}');
+      Ext.MessageBox.alert('Erreur', "{$LANG['plugin_fusinvdeploy']['message'][0]}");
       return;
    }
    if (!{$render}actionForm.getForm().isValid()) {
-      Ext.MessageBox.alert('Erreur', '{$LANG['plugin_fusinvdeploy']['message'][0]}');
+      Ext.MessageBox.alert('Erreur', "{$LANG['plugin_fusinvdeploy']['message'][0]}");
       return false;
    }
 
@@ -721,7 +721,7 @@ var {$render}actionFormSubmit = function() {
 
    {$render}actionForm.getForm().submit({
       url : '../ajax/package_action.save.php?package_id={$id}&render={$render}',
-      waitMsg: '{$LANG['plugin_fusinvdeploy']['message'][2]}',
+      waitMsg: "{$LANG['plugin_fusinvdeploy']['message'][2]}",
       success: function(fileForm, o){
          {$render}actionGridStore.reload({
             callback: function() {
