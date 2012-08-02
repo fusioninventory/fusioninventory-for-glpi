@@ -200,18 +200,18 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, 'ESX module not registered');
       
-      $query = "SELECT `url` FROM `glpi_plugin_fusioninventory_agentmodules` 
-         WHERE `modulename`='ESX'";
-      $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         $url = 0;
-         if (!empty($data['url'])
-                 AND strstr($data['url'], "http")
-                 AND strstr($data['url'], "/esx")) {
-            $url = 1;
-         }
-         $this->assertEquals($url, 1, 'ESX module url not right');
-      }
+//      $query = "SELECT `url` FROM `glpi_plugin_fusioninventory_agentmodules` 
+//         WHERE `modulename`='ESX'";
+//      $result = $DB->query($query);
+//      while ($data=$DB->fetch_array($result)) {
+//         $url = 0;
+//         if (!empty($data['url'])
+//                 AND strstr($data['url'], "http")
+//                 AND strstr($data['url'], "/esx")) {
+//            $url = 1;
+//         }
+//         $this->assertEquals($url, 1, 'ESX module url not right');
+//      }
       
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
          WHERE `modulename`='SNMPQUERY'";
