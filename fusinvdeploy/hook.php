@@ -151,7 +151,7 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
             case 'PluginFusinvdeployGroup':
             case 'Computer':
 
-               logDebug(
+               Toolbox::logDebug(
                   "MASSIVEACTION DEBUG:\n".
                   print_r($data,true).
                   "\n"

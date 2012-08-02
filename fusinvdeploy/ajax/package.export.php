@@ -42,7 +42,7 @@
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
-checkLoginUser();
+Session::checkLoginUser();
 
 
 if ( !isset($_GET['package_id'])) exit();
@@ -68,3 +68,5 @@ $config['uninstall'] =
 $json =
    json_encode( $config );
 print($json);
+
+?>
