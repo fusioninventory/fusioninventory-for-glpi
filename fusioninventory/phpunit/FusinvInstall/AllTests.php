@@ -350,4 +350,5 @@ class FusinvInstall_AllTests  {
       return $suite;
    }
 }
+
 ?>

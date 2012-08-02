@@ -215,4 +215,5 @@ $LANG['plugin_fusinvdeploy']['task'][3]="Add task";
 $LANG['plugin_fusinvdeploy']['task'][8]="Actions list";
 
 $LANG['plugin_fusinvdeploy']['title'][0]="FusionInventory DEPLOY";
+
 ?>
