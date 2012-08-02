@@ -271,6 +271,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          'fusioninventorycommunication',
          'Function PluginFusinvsnmpCommunicationNetDiscovery->rulepassed().'
       );
+      
+      if (!isset($_SESSION['glpiactiveentities_string'])) {
+         $_SESSION['glpiactiveentities_string'] = "'".$entities_id."'";
+      }
 
       $item = new $itemtype();
       if ($items_id == "0") {
