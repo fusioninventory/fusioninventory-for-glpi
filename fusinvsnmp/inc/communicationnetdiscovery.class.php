@@ -235,6 +235,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          unset($_SESSION['plugin_fusioninventory_rules_id']);
       }
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
+         if (!isset($_SESSION['glpiactiveentities_string'])) {
+            $_SESSION['glpiactiveentities_string'] = "'".$input['entities_id']."'";
+         }
          if (isset($input['itemtype'])
               AND isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_CREATE)) {
