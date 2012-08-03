@@ -573,11 +573,6 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $pfToolbox = new PluginFusioninventoryToolbox();
       $pfModel = new PluginFusioninventorySnmpmodel();
 
-      $NetworkEquipment = new NetworkEquipment();
-      $NetworkPort = new NetworkPort();
-      $pfNetworkEquipment = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
-      $pfPrinter = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
-
       $modelslistused = array();
       $current = current($a_Taskjobstates);
       $pfAgent->getFromDB($current['plugin_fusioninventory_agents_id']);
