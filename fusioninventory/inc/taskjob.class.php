@@ -1108,6 +1108,9 @@ return namelist;
             WHERE `is_active`='1'
                AND `status` = '0' 
                AND `glpi_plugin_fusioninventory_tasks`.`id`='".$tasks_id."'
+               AND `".$pfTaskjob->getTable()."`.`plugins_id` != '0'
+               AND `".$pfTaskjob->getTable()."`.`method` IS NOT NULL
+               AND `".$pfTaskjob->getTable()."`.`method` != ''
             ORDER BY `id`";
          $result = $DB->query($query);
          while ($data=$DB->fetch_array($result)) {
