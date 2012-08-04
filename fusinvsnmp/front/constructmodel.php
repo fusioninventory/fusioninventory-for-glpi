@@ -118,6 +118,8 @@ if ($pfConstructmodel->connect()) {
       } else if (isset($_GET['action'])) {
          if ($_GET['action'] == "checksysdescr") {
             $pfConstructmodel->showFormDefineSysdescr();
+         } else if ($_GET['action'] == "seemodels") {
+            $pfConstructmodel->showAllModels();
          }
       } else {
          $pfConstructmodel->menu();

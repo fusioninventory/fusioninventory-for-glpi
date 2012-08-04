@@ -48,7 +48,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    private $fp;
 
    function connect() {
-      $this->fp = @fsockopen("93.93.45.69", "9000");
+//      $this->fp = @fsockopen("93.93.45.69", "9000");
+      $this->fp = @fsockopen("127.0.0.1", "9000");
       if ($this->fp) {
          return true;
       }
@@ -130,6 +131,14 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<a href='".$this->getSearchURL()."?action=checksysdescr'>Check a sysdescr</a>";
       echo "</td>";
       echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      echo "<a href='".$this->getSearchURL()."?action=seemodels''>See All SNMP models</a>";
+      echo "</td>";
+      echo "</tr>";
+      
+      
       
 //      echo "<tr class='tab_bg_1'>";
 //      echo "<td align='center'>";
@@ -538,7 +547,11 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    function getSendModel() {
       $singleModel = array();
-      $singleModel['createSingleModel']['id'] = $_GET['id'];
+      if (isset($_GET['id'])) {
+         $singleModel['createSingleModel']['id'] = $_GET['id'];
+      } else if (isset($_GET['models_id'])) {
+         $singleModel['getSingleModel']['id'] = $_GET['models_id'];
+      }
       
       $buffer = json_encode($singleModel);
       $buffer .= "\n";
@@ -556,6 +569,93 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       //header("Content-type: ".$mime);
       
       echo $data->snmpmodel->model;
+   }
+   
+   
+   
+   function showAllModels() {
+      global $CFG_GLPI;
+      
+      $getsysdescr = array();
+      $getsysdescr['getallmodels'] = array(
+         'type' => 'all'); // all, stable, devel
+      
+      $buffer = json_encode($getsysdescr);
+      $buffer .= "\n";
+      fputs ($this->fp, $buffer);
+      $ret = fgets ($this->fp, 1024000);
+      $data = json_decode($ret, true);
+      
+      echo  "<table class='tab_cadre_fixe'>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<th rowspan='2'>";
+      echo "</th>";
+      echo "<th rowspan='2'>";
+      echo "Model name";
+      echo "</th>";
+      echo "<th rowspan='2'>";
+      echo "itemtype";
+      echo "</th>";
+      echo "<th colspan='2'>";
+      echo "Equipements";
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th>";
+      echo "sysdescr";
+      echo "</th>";
+      echo "<th>";
+      echo "Stable/devel";
+      echo "</th>";
+      echo "</tr>";
+      ksort($data);
+      foreach ($data as $a_models) {
+         $nbdevices = count($a_models['devices']);
+         $colormodel = '00d50f';
+         foreach ($a_models['devices'] as $a_devices) {
+            if ($a_devices['stable'] == '0') {
+               $colormodel = 'ff0000';
+            }
+         }
+         echo "<tr class='tab_bg_3'>";
+         echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
+         echo "<input type='checkbox'/>";
+         echo "</td>";
+         echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
+         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".$a_models['id']."'>";
+         echo "<font color='#000000'>".$a_models['name']."</font>";
+         echo "</a>";
+         echo "</td>";
+         echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
+         echo $a_models['itemtype'];
+         echo "</td>";
+         $i = 0;
+         foreach ($a_models['devices'] as $a_devices) {
+            if ($i > 0) {
+               echo "<tr class='tab_bg_3'>";
+            }
+            $i = 1;
+            $color = '00d50f';
+            if ($a_devices['stable'] == '0') {
+               $color = 'ff0000';
+            }
+            echo "<td style='background-color:#".$color."'>";
+            echo $a_devices['sysdescr'];
+            echo "</td>";
+            if ($a_devices['stable'] == '0') {
+               echo "<td align='center' style='background-color:#".$color."'>";
+               echo "devel";
+            } else {
+               echo "<td align='center' style='background-color:#".$color."'>";
+               echo "stable";
+            }
+            echo "</td>";
+            echo "</tr>";
+         }
+      }
+      echo "</table>";
    }
    
 }
