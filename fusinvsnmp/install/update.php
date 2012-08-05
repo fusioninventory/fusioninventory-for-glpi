@@ -1760,6 +1760,44 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
                               "text DEFAULT NULL");
       $migration->migrationOneTable($newTable);
       
+
+      
+   /*
+    * Table glpi_plugin_fusioninventory_construct_walks
+    */
+      $newTable = "glpi_plugin_fusioninventory_construct_walks";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "construct_device_id",
+                                 "construct_device_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "log",
+                                 "log",
+                                 "varchar(255) DEFAULT NULL");          
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                              "construct_device_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                              "log",
+                              "varchar(255) DEFAULT NULL");          
+      $migration->migrationOneTable($newTable);
+      
+      
       
    /*
     * Table glpi_plugin_fusinvsnmp_constructdevice_miboids

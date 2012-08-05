@@ -233,6 +233,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       fputs ($this->fp, $buffer);
       $ret = fgets ($this->fp, 102400);
       $data = json_decode($ret);
+      
       $_SESSION['plugin_fusioninventory_sysdescr'] = $data->device->sysdescr;
       echo  "<table width='950' align='center'>
          <tr>
@@ -276,8 +277,12 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "</th>";
          echo "<th colspan='2'>";
          echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php'>Edit oids</a>";
-         echo "&nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp;";
+         echo "&nbsp; &nbsp; | &nbsp; &nbsp;";
          echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?id=".$data->device->id."' target='_blank'>Get SNMP model</a>";
+         if ($data->device->snmpmodels_id > 0) {
+            echo "&nbsp; &nbsp; | &nbsp; &nbsp;";
+            echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".$data->device->snmpmodels_id."' target='_blank'>Import SNMP model</a>";
+         }
          echo "</th>";
          echo "</tr>";
          
@@ -590,7 +595,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    function showAllModels() {
-      global $CFG_GLPI,$LANG;
+      global $CFG_GLPI,$LANG,$DB;
       
       $getsysdescr = array();
       $getsysdescr['getallmodels'] = array(
@@ -615,7 +620,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<th rowspan='2'>";
       echo "itemtype";
       echo "</th>";
-      echo "<th colspan='2'>";
+      echo "<th colspan='3'>";
       echo "Equipements";
       echo "</th>";
       echo "</tr>";
@@ -627,7 +632,11 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<th>";
       echo "Stable/devel";
       echo "</th>";
+      echo "<th>";
+      echo "In local GLPI";
+      echo "</th>";
       echo "</tr>";
+      
       ksort($data);
       foreach ($data as $a_models) {
          $nbdevices = count($a_models['devices']);
@@ -672,6 +681,26 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             } else {
                echo "<td align='center' style='background-color:#".$color."'>";
                echo "stable";
+            }
+            echo "</td>";
+            $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_modeldevices`
+                      LEFT JOIN `glpi_plugin_fusinvsnmp_models`
+                         ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
+                      WHERE `sysdescr` = '".$a_devices['sysdescr']."'
+                      LIMIT 1";
+            $result = $DB->query($query);
+            if ($DB->numrows($result) != 0) {
+               $datam = $DB->fetch_assoc($result);
+               if ($datam['name'] == $a_models['name']) {
+                  echo "<td style='background-color:#00d50f' align='center'>";
+                  echo "Yes";
+               } else {
+                  echo "<td style='background-color:#ff9000' align='center'>";
+                  echo "Older";
+               }
+            } else {
+               echo "<td style='background-color:#ff0000' align='center'>";
+               echo "No";
             }
             echo "</td>";
             echo "</tr>";

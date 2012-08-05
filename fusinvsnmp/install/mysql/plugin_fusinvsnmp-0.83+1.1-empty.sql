@@ -120,6 +120,17 @@ CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevicewalks` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_construct_walks`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_construct_walks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `construct_device_id` int(11) NOT NULL DEFAULT '0',
+  `log` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_fusinvsnmp_constructdevice_miboids`;
 
 CREATE TABLE `glpi_plugin_fusinvsnmp_constructdevice_miboids` (
