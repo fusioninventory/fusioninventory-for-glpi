@@ -63,7 +63,7 @@ class PluginFusioninventoryMenu {
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta.png'/></a>";
 //         echo "&nbsp;<a href='https://www.transifex.net/projects/p/FusionInventory/resources/'>";
 //         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/></a>";
-         echo "</center><br/>";
+         echo "<H1>Version '".PLUGIN_FUSIONINVENTORY_REALVERSION."'</H1></center><br/>";
       }
 
 
