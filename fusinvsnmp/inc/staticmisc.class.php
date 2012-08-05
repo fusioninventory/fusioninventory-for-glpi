@@ -224,9 +224,9 @@ class PluginFusinvsnmpStaticmisc {
       }
       
       if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "r")) {
-         $a_menu[0]['name'] = "SNMP models creation";
-         $a_menu[0]['pic']  = "";
-         $a_menu[0]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php";
+         $a_menu[7]['name'] = "SNMP models creation";
+         $a_menu[7]['pic']  = "";
+         $a_menu[7]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php";
       }
       
       return $a_menu;
