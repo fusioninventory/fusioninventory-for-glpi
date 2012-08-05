@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvsnmpModeldevice extends CommonDBTM {
+class PluginFusinvsnmpConstructdevice_User extends CommonDBTM {
 
    function canCreate() {
       return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "w");
@@ -55,58 +55,71 @@ class PluginFusinvsnmpModeldevice extends CommonDBTM {
       return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "r");
    }
 
+   
 
-   function updateDevicesForModel($models_id, $a_devices) {
-      $a_devicesDBtmp = $this->find("`plugin_fusinvsnmp_models_id`='".$models_id."'");
-      $a_devicesDB = array();
-      foreach ($a_devicesDBtmp as $data) {
-         $a_devicesDB[$data['sysdescr']] = $data['id'];
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      if ($this->canView()) {
+         return self::createTabEntry('SNMP model tool account');
       }
-      foreach ($a_devices as $sysdescr) {
-         if (!isset($a_devicesDB[$sysdescr])) {
-            $input = array();
-            $input['plugin_fusinvsnmp_models_id'] = $models_id;
-            $input['sysdescr'] = $sysdescr;
-            $this->add($input);
-         } else {
-            unset($a_devicesDB[$sysdescr]);
-         }         
-      }
-      foreach ($a_devicesDB as $id) {
-         $input = array();
-         $input['id'] = $id;
-         $this->delete($input);
-      }
+      return '';
    }
 
    
    
-   function showDevices($models_id) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getID() > 0) {
+         $pfConstructdevice_User = new self();
+         $pfConstructdevice_User->showForm($item->getID());
+      }
+      return true;
+   }
+   
+
+   
+   function showForm($users_id, $options=array()) {
       
-      echo "<table class='tab_cadre_fixe'>";
+      $a_constructdeviceusers = current($this->find("`users_id`='".$users_id."'", '', 1));
+      if (isset($a_constructdeviceusers['id'])) {
+         $this->getFromDB($a_constructdeviceusers['id']);
+      } else {
+         $this->getEmpty();
+      }
+      
+      $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th>";
-      echo "Devices";
-      echo "</th>";
+      echo "<td>Login&nbsp;:</td>";
+      echo "<td align='center'>";
+      echo "<input type='hidden' name='users_id' value='$users_id' />";
+      echo "<input type='text' name='login' value='".$this->fields['login']."' />";
+      echo "</td>";
+      echo "<td>Password&nbsp;:</td>";
+      echo "<td align='center'>";
+      echo "<input type='password' name='password' value='".$this->fields['password']."' />";
+      echo "</td>";
       echo "</tr>";
-
-      $a_devices = $this->find("`plugin_fusinvsnmp_models_id`='".$models_id."'");
-      foreach ($a_devices as $data) {
-         echo "<tr class='tab_bg_3'>";
-         echo "<td>";
-         echo $data['sysdescr'];
-         echo "</td>";
-         echo "</tr>";
-      }
       
-      echo "</table>";      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>Key&nbsp;:</td>";
+      echo "<td align='center'>";
+      echo "<input type='text' name='key' value='".$this->fields['key']."' />";
+      echo "</td>";
+      echo "<td colspan='2'></td>";
+      echo "</tr>";
+      
+      $this->showFormButtons($options);
+
+      return true;
    }
    
    
    
-   function generateDico() {
-      
+   static function getUserAccount($users_id) {
+      $pfConstructdevice_User = new self();
+      return current($pfConstructdevice_User->find("`users_id`='".$users_id."'", '', 1));
    }
 }
 

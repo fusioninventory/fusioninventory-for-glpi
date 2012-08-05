@@ -177,17 +177,17 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    
    
    // Create folder in GLPI_PLUGIN_DOC_DIR
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/tmp')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/tmp');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmp')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmp');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/walks')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/walks');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/walks')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/walks');
    }
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/tmpmodels')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/tmpmodels');
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels');
    }
    
    
@@ -1758,6 +1758,59 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->addField($newTable,
                               "log",
                               "text DEFAULT NULL");
+      $migration->migrationOneTable($newTable);
+
+      
+      
+   /*
+    * Table glpi_plugin_fusinvsnmp_constructdevices_users
+    */
+      $newTable = "glpi_plugin_fusinvsnmp_constructdevices_users";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "users_id",
+                                 "users_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "login",
+                                 "login",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");         
+         $migration->changeField($newTable,
+                                 "password",
+                                 "password",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");         
+         $migration->changeField($newTable,
+                                 "key",
+                                 "key",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");         
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                              "users_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                              "login",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");         
+         $migration->addField($newTable,
+                              "password",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");         
+         $migration->addField($newTable,
+                              "key",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");         
+         $migration->addKey($newTable,
+                            "users_id");
       $migration->migrationOneTable($newTable);
       
 

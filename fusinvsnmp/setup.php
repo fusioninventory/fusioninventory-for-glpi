@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSINVSNMP_VERSION","0.83+1.0");
+define ("PLUGIN_FUSINVSNMP_VERSION","0.83+2.0");
 
 include_once ("includes.php");
 
@@ -87,7 +87,9 @@ function plugin_init_fusinvsnmp() {
                          array('classname'=>'glpi_networkports'));
    Plugin::registerClass('PluginFusinvsnmpStateDiscovery');
    Plugin::registerClass('PluginFusinvsnmpPrinterLogReport');
-  
+   Plugin::registerClass('PluginFusinvsnmpConstructdevice_User',
+              array('addtabon' => array('User')));
+      
    $CFG_GLPI['glpitablesitemtype']["PluginFusinvsnmpPrinterLogReport"] = "glpi_plugin_fusinvsnmp_printers";
 
    // ##### 3. get informations of the plugin #####

@@ -35,7 +35,7 @@
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
+   @since     2012
  
    ------------------------------------------------------------------------
  */
@@ -46,67 +46,22 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
 
-$pfModel = new PluginFusinvsnmpModel();
-$pfModelMib = new PluginFusinvsnmpModelMib();
-$pfImportExport = new PluginFusinvsnmpImportExport();
+$pfConstructdevice_User = new PluginFusinvsnmpConstructdevice_User();
 
 Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
 
-PluginFusioninventoryMenu::displayMenu("mini");
-
-//if (isset ($_POST["add"]) && isset($_POST["id"])) {
 if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-   $pfModel->add($_POST);
+   $pfConstructdevice_User->add($_POST);
    Html::back();
 } else if (isset ($_POST["update"])) {
    PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-   $pfModel->update($_POST);
+   $pfConstructdevice_User->update($_POST);
    Html::back();
-} else if (isset ($_POST["delete"])) {
+} else if (isset ($_POST["purge"])) {
    PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-   $pfModel->delete($_POST);
-   Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/model.php");
-} else if (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
-   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-   $pfImportExport->import($_FILES['importfile']['tmp_name']);
-   PluginFusinvsnmpImportExport::exportDictionnaryFile();
+   $pfConstructdevice_User->delete($_POST);
    Html::back();
-} else if (isset($_GET["is_active"])) {
-   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-   $pfModelMib->activation($_GET["is_active"]);
-   Html::back();
-} else if (isset($_POST['massimport'])) {
-   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-   $pfImportExport->importMass();
-   Html::back();
-}
-if (isset ($_POST["add_oid"])) {
-   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-   $pfModelMib->add($_POST);
-   Html::back();
-}
-if(!empty($_POST["item_coche"])) {
-   PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
-   $pfModelMib->deleteMib($_POST["item_coche"]);
-   Html::back();
-}
-
-if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
-   if (!isset($_GET["id"])) {
-      $pfImportExport->showForm($_SERVER["PHP_SELF"]);
-      $pfImportExport->showFormMassImport($_SERVER["PHP_SELF"]);
-   }
-}
-
-if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
-   $id = "";
-   if (isset($_GET["id"])) {
-      $id = $_GET["id"];
-   }
-   $pfModel->showForm($id);
-   $pfModelMib->showFormList($id, array('create'=>true));
-
 }
 Html::footer();
 

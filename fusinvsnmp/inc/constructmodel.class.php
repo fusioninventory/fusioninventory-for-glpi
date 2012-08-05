@@ -85,14 +85,23 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       if ($ret == "Hello\n") {
 
          $auth = array();
-         $auth["auth"] = array(  "login" => "ddurieux",
-                                 "password" => "touch",
-                                 "key" => "3167429");
-         $buffer = json_encode($auth);
-         $buffer .= "\n";
-         fputs ($this->fp, $buffer);
-         $ret = fgets ($this->fp, 102400);
-         if ($ret == "Authentication error\n") {
+         $a_userinfos = PluginFusinvsnmpConstructdevice_User::getUserAccount($_SESSION['glpiID']);
+         $auth_error = 0;
+         if (!isset($a_userinfos['login'])) {
+            $auth_error = 1;
+         } else {
+            $auth["auth"] = array(  "login" => $a_userinfos['login'],
+                                    "password" => $a_userinfos['password'],
+                                    "key" => $a_userinfos['key']);
+            $buffer = json_encode($auth);
+            $buffer .= "\n";
+            fputs ($this->fp, $buffer);
+            $ret = fgets ($this->fp, 102400);
+            if ($ret == "Authentication error\n") {
+               $auth_error = 1;            
+            }
+         }
+         if ($auth_error == '1') {
             echo "<table class='tab_cadre_fixe'>";
 
             echo "<tr class='tab_bg_1'>";
@@ -243,6 +252,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          </tr>
          </table>";
       $a_lock = explode("-", $data->device->lock);
+      $a_userinfos = PluginFusinvsnmpConstructdevice_User::getUserAccount($_SESSION['glpiID']);
       if ($data->device->id == '0') {
          echo "<table class='tab_cadre_fixe'>";
 
@@ -259,7 +269,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          // send to server (it add sysdescr and lock for this user)
          // server return oids, mapping, oids most used for this kind of device (check with sysdescr)
       } else if ($data->device->lock != '0'
-              AND $a_lock[0] != 'ddurieux') {
+              AND $a_lock[0] != $a_userinfos['login']) {
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr class='tab_bg_1 center'>";
          echo "<th>";
@@ -717,12 +727,33 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    function importModels() {
 
+      echo "<table class='tab_cadre_fixe'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th>";
+      echo "Download SNMP models, please wait...";
+      echo "</th>";
+      echo "</tr>";      
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      Html::createProgressBar("Download SNMP models, please wait...");
+      $i = 0;
+      $nb = count($_POST['models']);
       foreach ($_POST['models'] as $models_id) {
          $this->connect();
          $this->showAuth();
          $this->getSendModel(1, $models_id);
          $this->closeConnection();
+         
+         $i++;
+         Html::changeProgressBarPosition($i,$nb,"$i / $nb");
       }
+      Html::changeProgressBarPosition($nb,$nb,"$nb / $nb");
+      echo "</td>";
+      echo "</tr>";      
+
+      echo "</table>";
       
       if (count($_POST['models']) == $_POST['nbmodels']) {
          // Import all models
@@ -735,7 +766,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          foreach (glob(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/*.xml') as $file) {
             $pfImportExport->import($file, 0);
          }
-         
+         PluginFusinvsnmpImportExport::exportDictionnaryFile();
       }
       $dir = GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/';
       $objects = scandir($dir);

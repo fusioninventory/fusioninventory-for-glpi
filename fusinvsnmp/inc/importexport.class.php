@@ -229,8 +229,10 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $pfModel->update($input);
       
       $a_devices = array();
-      foreach ($xml->devices->sysdescr as $child) {
-         $a_devices[] = (string)$child;
+      if (isset($xml->devices)) {
+         foreach ($xml->devices->sysdescr as $child) {
+            $a_devices[] = (string)$child;
+         }
       }
       $pfModeldevice->updateDevicesForModel($pfModel->fields['id'], $a_devices);
 
@@ -456,6 +458,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
    function importMass() {
       ini_set("max_execution_time", "0");
       foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $this->import($file,0,1);
+      PluginFusinvsnmpImportExport::exportDictionnaryFile();
    }
 
 
@@ -500,6 +503,71 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             }
          }
       }
+   }
+   
+   
+   
+   static function exportDictionnaryFile() {
+      global $DB;
+
+      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
+
+      $xmlstr = "<?xml version='1.0' encoding='UTF-8'?>
+<SNMPDISCOVERY>
+</SNMPDISCOVERY>";
+      $xml = new SimpleXMLElement($xmlstr);
+
+      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_modeldevices`
+                LEFT JOIN `glpi_plugin_fusinvsnmp_models`
+                   ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`";
+
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $device = $xml->addChild('DEVICE');
+            $device->addChild('SYSDESCR', "<![CDATA[".$data['sysdescr']."]]>");
+//            $device->addChild('MANUFACTURER', $data['manufacturers_id']);
+            $device->addChild('TYPE', $data['itemtype']);
+            $device->addChild('MODELSNMP', $data['discovery_key']);
+
+            $query_serial = "SELECT * FROM `glpi_plugin_fusinvsnmp_modelmibs`
+                  LEFT JOIN `glpi_plugin_fusioninventory_mappings`
+                     ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=
+                        `glpi_plugin_fusioninventory_mappings`.`id`
+               WHERE `plugin_fusinvsnmp_models_id`='".$data['plugin_fusinvsnmp_models_id']."'
+                  AND `name`='serial'
+               LIMIT 1";
+            $result_serial=$DB->query($query_serial);
+            if ($DB->numrows($result_serial)) {
+               $line = mysql_fetch_assoc($result_serial);
+               $device->addChild('SERIAL', Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',
+                                            $line['plugin_fusinvsnmp_miboids_id']));
+            }
+
+            $query_serial = "SELECT * FROM `glpi_plugin_fusinvsnmp_modelmibs`
+                  LEFT JOIN `glpi_plugin_fusioninventory_mappings`
+                     ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=
+                        `glpi_plugin_fusioninventory_mappings`.`id`
+               WHERE `plugin_fusinvsnmp_models_id`='".$data['plugin_fusinvsnmp_models_id']."'
+                  AND ((`name`='macaddr' AND `itemtype`='NetworkEquipment')
+                        OR ( `name`='ifPhysAddress' AND `itemtype`='Printer')
+                        OR ( `name`='ifPhysAddress' AND `itemtype`='Computer'))
+               LIMIT 1";
+            $result_serial=$DB->query($query_serial);
+            if ($DB->numrows($result_serial)) {
+               $line = mysql_fetch_assoc($result_serial);
+               if ($line['name'] == "macaddr") {
+                  $device->addChild('MAC', Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',
+                                                $line['plugin_fusinvsnmp_miboids_id']));
+               } else {
+                  $device->addChild('MACDYN', Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',
+                                                $line['plugin_fusinvsnmp_miboids_id']));
+               }
+            }
+      }
+      $pfOCSCommunication = new PluginFusioninventoryOCSCommunication();
+      
+      $xmlprint = $pfOCSCommunication->formatXML($xml);
+      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/discovery.xml", $xmlprint);
    }
 }
 

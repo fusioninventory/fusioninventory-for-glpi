@@ -281,7 +281,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       $sysdescr = trim($sysdescr);
       $modelgetted = '';
       if (!empty($sysdescr)) {
-         $xml = @simplexml_load_file(GLPI_ROOT.'/plugins/fusinvsnmp/tool/discovery.xml','SimpleXMLElement', LIBXML_NOCDATA);
+         $xml = @simplexml_load_file(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/discovery.xml','SimpleXMLElement', LIBXML_NOCDATA);
          foreach ($xml->DEVICE as $device) {
             $device->SYSDESCR = str_replace("\r", "", $device->SYSDESCR);
             $device->SYSDESCR = str_replace("\n", "", $device->SYSDESCR);
@@ -420,6 +420,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       foreach ($a_printers as $a_printer) {
          $pfModel->getrightmodel($a_printer['printers_id'], "Printer");
       }
+      PluginFusinvsnmpImportExport::exportDictionnaryFile();
    }
 }
 
