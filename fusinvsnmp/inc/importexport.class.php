@@ -526,7 +526,21 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $device = $xml->addChild('DEVICE');
             $device->addChild('SYSDESCR', "<![CDATA[".$data['sysdescr']."]]>");
 //            $device->addChild('MANUFACTURER', $data['manufacturers_id']);
-            $device->addChild('TYPE', $data['itemtype']);
+            switch ($data['itemtype']) {
+
+               case 'Computer':
+                  $device->addChild('TYPE', '1');
+                  break;
+
+               case 'NetworkEquipment':
+                  $device->addChild('TYPE', '2');
+                  break;
+
+               case 'Printer':
+                  $device->addChild('TYPE', '3');
+                  break;
+
+            }
             $device->addChild('MODELSNMP', $data['discovery_key']);
 
             $query_serial = "SELECT * FROM `glpi_plugin_fusinvsnmp_modelmibs`

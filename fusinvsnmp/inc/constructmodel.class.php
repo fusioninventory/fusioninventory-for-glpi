@@ -48,8 +48,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    private $fp;
 
    function connect() {
-//      $this->fp = @fsockopen("93.93.45.69", "9000");
-      $this->fp = @fsockopen("127.0.0.1", "9000");
+      $this->fp = @fsockopen("93.93.45.69", "9000");
       if ($this->fp) {
          return true;
       }
@@ -658,7 +657,11 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          }
          echo "<tr class='tab_bg_3'>";
          echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
-         echo "<input type='checkbox' name='models[]' value='".$a_models['id']."'/>";
+         if ($colormodel == '00d50f') {
+            echo "<input type='checkbox' name='models[]' value='".$a_models['id']."' checked/>";
+         } else {
+            echo "<input type='checkbox' name='models[]' value='".$a_models['id']."'/>";
+         }
          echo "</td>";
          echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
          echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".$a_models['id']."'>";
@@ -751,8 +754,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       }
       Html::changeProgressBarPosition($nb,$nb,"$nb / $nb");
       echo "</td>";
-      echo "</tr>";      
-
+      echo "</tr>";  
       echo "</table>";
       
       if (count($_POST['models']) == $_POST['nbmodels']) {
@@ -763,16 +765,37 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       } else {
          // Import each model
          $pfImportExport = new PluginFusinvsnmpImportExport();
+         echo "<table class='tab_cadre_fixe'>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<th align='center'>";
+         echo "Importing SNMP models, please wait...";
+         echo "</th>";
+         echo "</tr>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'>";
+         Html::createProgressBar("Importing SNMP models, please wait...");
+         $nb = 0;
+         foreach (glob(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/*.xml') as $file) {
+            $nb++;
+         }
+         $i = 0;
          foreach (glob(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/*.xml') as $file) {
             $pfImportExport->import($file, 0);
+            
+            $i++;
+            Html::changeProgressBarPosition($i,$nb,"$i / $nb");
          }
+         Html::changeProgressBarPosition($nb,$nb,"$nb / $nb");
+         echo "</td>";
+         echo "</tr>";  
+         echo "</table>";
          PluginFusinvsnmpImportExport::exportDictionnaryFile();
       }
       $dir = GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/';
       $objects = scandir($dir);
       foreach ($objects as $object) {
          if ($object != "." && $object != "..") {
-            unlink($dir."/".$object);
+            //unlink($dir."/".$object);
          }
       }
    }
