@@ -77,10 +77,8 @@ class PluginFusinvsnmpModelMib extends CommonDBTM {
             $object_used = array();
             $mappings_used = array();
 
-            echo "<br>";
             $this->getFromDB($id);
 
-            echo "<br>";
             $target = $CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/model.form.php';
             echo "<div align='center'><form method='post' name='oid_list' id='oid_list'
                        action=\"".$target."\">";

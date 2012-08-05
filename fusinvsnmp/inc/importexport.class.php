@@ -220,11 +220,19 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $models_data = $DB->fetch_assoc($result);
       $pfModelMib = new PluginFusinvsnmpModelMib();
       $pfModel = new PluginFusinvsnmpModel();
+      $pfModeldevice = new PluginFusinvsnmpModeldevice();      
+      
       $pfModel->getFromDB($models_data['id']);
       $input = array();
       $input['id'] = $pfModel->fields['id'];
       $input['comment'] = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep((string)$xml->comments));
       $pfModel->update($input);
+      
+      $a_devices = array();
+      foreach ($xml->devices->sysdescr as $child) {
+         $a_devices[] = (string)$child;
+      }
+      $pfModeldevice->updateDevicesForModel($pfModel->fields['id'], $a_devices);
 
       $a_oids = $pfModelMib->find("`plugin_fusinvsnmp_models_id`='".$models_data['id']."'");
       foreach ($a_oids as $data) {
@@ -318,7 +326,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
       $pfMapping = new PluginFusioninventoryMapping();
       $pfModel = new PluginFusinvsnmpModel();
-
+      $pfModeldevice = new PluginFusinvsnmpModeldevice();      
+      
       $type = (string)$xml->type;
       switch ($type) {
          
@@ -342,6 +351,13 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $input['discovery_key'] = (string)$xml->key;
       $input['comment']       = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep((string)$xml->comments));
       $plugin_fusinvsnmp_models_id = $pfModel->add($input);
+      
+      $a_devices = array();
+      foreach ($xml->devices->sysdescr as $child) {
+         $a_devices[] = (string)$child;
+      }
+      $pfModeldevice->updateDevicesForModel($plugin_fusinvsnmp_models_id, $a_devices);
+
 
       foreach($xml->oidlist->oidobject as $child) {
          $plugin_fusinvsnmp_mibobjects_id = 0;

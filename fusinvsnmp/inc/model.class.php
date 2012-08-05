@@ -166,6 +166,10 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       echo "</table>";
       Html::closeForm();
       echo "</div>";
+      
+      echo "<br/>";
+      $pfModeldevice = new PluginFusinvsnmpModeldevice();
+      $pfModeldevice->showDevices($id);
    }
    
    

@@ -2242,6 +2242,45 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
          $migration->addKey($newTable,
                             "itemtype");   
       $migration->migrationOneTable($newTable);
+
+      
+      
+   /*
+    * glpi_plugin_fusinvsnmp_modeldevices
+    */
+      $newTable = "glpi_plugin_fusinvsnmp_modeldevices";
+      if (!TableExists($newTable)) {
+         $DB->query('CREATE TABLE `'.$newTable.'` (
+                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        PRIMARY KEY (`id`)
+                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+      }
+         $migration->changeField($newTable, 
+                                 "id", 
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable, 
+                                 "plugin_fusinvsnmp_models_id", 
+                                 "plugin_fusinvsnmp_models_id", 
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable, 
+                                 "sysdescr", 
+                                 "sysdescr", 
+                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable, 
+                              "id", 
+                              "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable, 
+                              "plugin_fusinvsnmp_models_id", 
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable, 
+                              "sysdescr", 
+                              "text COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addKey($newTable,
+                            "plugin_fusinvsnmp_models_id");      
+      $migration->migrationOneTable($newTable);
+
       
       
    /*
