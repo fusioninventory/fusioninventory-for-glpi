@@ -175,6 +175,22 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    $configSNMP = new PluginFusinvSNMPConfig();
    $configSNMP->initConfigModule();
    
+   
+   // Create folder in GLPI_PLUGIN_DOC_DIR
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'])) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname']);
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/tmp')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/tmp');
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/walks')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/walks');
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/tmpmodels')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/'.$a_plugin['shortname'].'/tmpmodels');
+   }
+   
+   
    /*
     * Add SNMPQUERY module if not present 
     */

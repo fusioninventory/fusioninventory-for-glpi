@@ -545,12 +545,16 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    
-   function getSendModel() {
+   function getSendModel($write=0, $models_id=0) {
       $singleModel = array();
-      if (isset($_GET['id'])) {
-         $singleModel['createSingleModel']['id'] = $_GET['id'];
+      if (is_array($models_id)) {
+         $singleModel['getMultipleModel'] = $models_id;
       } else if (isset($_GET['models_id'])) {
          $singleModel['getSingleModel']['id'] = $_GET['models_id'];
+      } else if ($models_id > 0) {
+         $singleModel['getSingleModel']['id'] = $models_id;
+      } else if (isset($_GET['id'])) {
+         $singleModel['createSingleModel']['id'] = $_GET['id'];
       }
       
       $buffer = json_encode($singleModel);
@@ -559,22 +563,34 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $ret = fgets ($this->fp);
       $data = json_decode($ret);
       
-      $mime = "text/xml";
-      
-      header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
-      header('Pragma: private'); /// IE BUG + SSL
-      header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
-      header("Content-disposition: filename=\"".$data->snmpmodel->name.".xml\"");
-      header("Content-Type: application/force-download");
-      //header("Content-type: ".$mime);
-      
-      echo $data->snmpmodel->model;
+      if ($write == '0') {
+         $mime = "text/xml";
+
+         header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
+         header('Pragma: private'); /// IE BUG + SSL
+         header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
+         header("Content-disposition: filename=\"".$data->snmpmodel->name.".xml\"");
+         header("Content-Type: application/force-download");
+         //header("Content-type: ".$mime);
+
+         echo $data->snmpmodel->model;
+      } else {
+         if (is_array($models_id)) {
+            foreach ($data->snmpmodel as $model) {
+               file_put_contents(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/'.$model->name.'.xml', 
+                                 trim($model->model));
+            }            
+         } else {
+            file_put_contents(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/'.$data->snmpmodel->name.'.xml', 
+                              trim($data->snmpmodel->model));
+         }
+      }
    }
    
    
    
    function showAllModels() {
-      global $CFG_GLPI;
+      global $CFG_GLPI,$LANG;
       
       $getsysdescr = array();
       $getsysdescr['getallmodels'] = array(
@@ -586,6 +602,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $ret = fgets ($this->fp, 1024000);
       $data = json_decode($ret, true);
       
+      echo "<form name='form_model' id='form_model' method='post'>";
+      echo "<input type='hidden' name='nbmodels' value='".count($data)."' />";
       echo  "<table class='tab_cadre_fixe'>";
       
       echo "<tr class='tab_bg_1'>";
@@ -621,7 +639,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          }
          echo "<tr class='tab_bg_3'>";
          echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
-         echo "<input type='checkbox'/>";
+         echo "<input type='checkbox' name='models[]' value='".$a_models['id']."'/>";
          echo "</td>";
          echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
          echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".$a_models['id']."'>";
@@ -629,7 +647,11 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "</a>";
          echo "</td>";
          echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
-         echo $a_models['itemtype'];
+         $a_itemtypes = array();
+         $a_itemtypes[1] = $LANG['Menu'][0];
+         $a_itemtypes[2] = $LANG['Menu'][1];
+         $a_itemtypes[3] = $LANG['Menu'][2];
+         echo $a_itemtypes[$a_models['itemtype']];
          echo "</td>";
          $i = 0;
          foreach ($a_models['devices'] as $a_devices) {
@@ -656,6 +678,43 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          }
       }
       echo "</table>";
+      Html::openArrowMassives("form_model", true);
+      Html::closeArrowMassives(array('import' => $LANG['buttons'][37]),
+                               array('import' => 'Import will update existing models'));
+      Html::closeForm();
+   }
+   
+   
+   
+   function importModels() {
+
+      foreach ($_POST['models'] as $models_id) {
+         $this->connect();
+         $this->showAuth();
+         $this->getSendModel(1, $models_id);
+         $this->closeConnection();
+      }
+      
+      if (count($_POST['models']) == $_POST['nbmodels']) {
+         // Import all models
+         $pfModel = new PluginFusinvsnmpModel();
+         $pfModel->importAllModels(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels');
+         
+      } else {
+         // Import each model
+         $pfImportExport = new PluginFusinvsnmpImportExport();
+         foreach (glob(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/*.xml') as $file) {
+            $pfImportExport->import($file, 0);
+         }
+         
+      }
+      $dir = GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/';
+      $objects = scandir($dir);
+      foreach ($objects as $object) {
+         if ($object != "." && $object != "..") {
+            unlink($dir."/".$object);
+         }
+      }
    }
    
 }

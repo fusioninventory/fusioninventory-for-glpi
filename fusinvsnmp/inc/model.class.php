@@ -350,13 +350,19 @@ class PluginFusinvsnmpModel extends CommonDBTM {
    
 
 
-   static function importAllModels() {
+   static function importAllModels($folder='') {
       /*
        * Manage models migration
        */
+      
+      if ($folder == '') {
+         $folder = GLPI_ROOT.'/plugins/fusinvsnmp/models';
+      }
+      
       $NewModelList = array();
-      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
-         $file = str_replace("../plugins/fusinvsnmp/models/", "", $file);
+      foreach (glob($folder.'/*.xml') as $file) {
+         $split = explode("/", $file);
+         $file = end($split);
          $NewModelList[$file] = 1;
       }
 
@@ -374,7 +380,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       $importexport = new PluginFusinvsnmpImportExport();
 
       $nb = 0;
-      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
+      foreach (glob($folder.'/*.xml') as $file) {
          $nb++;
       }
       $i = 0;
@@ -387,7 +393,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       Html::createProgressBar("Importing SNMP models, please wait...");
-      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) {
+      foreach (glob($folder.'/*.xml') as $file) {
          $importexport->import($file,0,1);
          $i++;
          if (substr($i, -1) == '0') {
