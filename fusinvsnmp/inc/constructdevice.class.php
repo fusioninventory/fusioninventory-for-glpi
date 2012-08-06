@@ -45,6 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvsnmpConstructDevice extends CommonDBTM {
+   private $suggest = 1;
 
    function showForm($id, $data) {
       global $DB,$LANG,$CFG_GLPI;
@@ -304,9 +305,6 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       } else {
          $this->displayOid($json->oids->$portcounteroid, 0, array(), $json->device->sysdescr, "blue");
       }
-      
-//      Html::closeForm();
-//      echo "</div><br/>";
    }
    
    
@@ -316,10 +314,12 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
       $style = " style='border-color: #ff0000; border-width: 1px' ";
       $checked = '';
-      if ($color == 'blue') {
+      if ($color == 'blue'
+              AND $this->suggest == '1') {
          $style = " style='border-color: #0000ff; border-width: 3px' "; // 0000ff
          $checked = 'checked';
       } else if ($color == 'green') {
+         $this->suggest = 0;
          $style = " style='border-color: #00d50f; border-width: 3px' ";
          $checked = 'checked';
       }
