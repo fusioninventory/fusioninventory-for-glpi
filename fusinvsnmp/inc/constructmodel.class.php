@@ -62,7 +62,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo "The server is not available !";
+      echo "The server is not available!<br/>
+         verify you have opened port 9000 to IP 93.93.45.69 !";
       echo "</td>";
       echo "</tr>";
 
@@ -285,7 +286,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "This device exist";
          echo "</th>";
          echo "<th colspan='2'>";
-         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php'>Edit oids</a>";
+         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?editoid=1'>Edit oids</a>";
          echo "&nbsp; &nbsp; | &nbsp; &nbsp;";
          echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?id=".$data->device->id."' target='_blank'>Get SNMP model</a>";
          if ($data->device->snmpmodels_id > 0) {
@@ -657,11 +658,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          }
          echo "<tr class='tab_bg_3'>";
          echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
-         if ($colormodel == '00d50f') {
-            echo "<input type='checkbox' name='models[]' value='".$a_models['id']."' checked/>";
-         } else {
-            echo "<input type='checkbox' name='models[]' value='".$a_models['id']."'/>";
-         }
+         echo "<input type='checkbox' name='models[]' value='".$a_models['id']."'/>";
          echo "</td>";
          echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
          echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".$a_models['id']."'>";

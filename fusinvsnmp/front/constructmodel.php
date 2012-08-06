@@ -104,7 +104,8 @@ if ($pfConstructmodel->connect()) {
          $pfConstructmodel->sendGetsysdescr($_SESSION['plugin_fusioninventory_sysdescr'], 
                                             $_SESSION['plugin_fusioninventory_itemtype']);
       
-      } else if (isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])
+      } else if ((isset($_GET['editoid'])
+              OR isset($_GET['id']))
               AND $_SESSION['plugin_fusioninventory_snmpwalks_id'] > 0) {
          
          $pfConstructDevice = new PluginFusinvsnmpConstructDevice();
@@ -115,6 +116,8 @@ if ($pfConstructmodel->connect()) {
       } else if (isset($_POST['sendsnmpwalk'])
               AND $_POST['sysdescr'] != '') {
          $pfConstructmodel->sendGetsysdescr($_POST['sysdescr'], $_POST['itemtype']);
+//      } else if (isset($_GET['devices_id'])) {
+//         $pfConstructmodel->sendGetsysdescr($_POST['sysdescr'], $_GET['devices_id']);
       } else if (isset($_GET['action'])) {
          if ($_GET['action'] == "checksysdescr") {
             $pfConstructmodel->showFormDefineSysdescr();

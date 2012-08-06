@@ -304,6 +304,9 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       } else {
          $this->displayOid($json->oids->$portcounteroid, 0, array(), $json->device->sysdescr, "blue");
       }
+      
+//      Html::closeForm();
+//      echo "</div><br/>";
    }
    
    
@@ -416,8 +419,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo "</tr>";
 
       echo "</table>";
-      Html::closeForm();
-      echo "</div><br/>";
+
       
    }
 
