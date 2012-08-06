@@ -792,7 +792,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $objects = scandir($dir);
       foreach ($objects as $object) {
          if ($object != "." && $object != "..") {
-            //unlink($dir."/".$object);
+            unlink($dir."/".$object);
          }
       }
    }

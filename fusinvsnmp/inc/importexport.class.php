@@ -524,7 +524,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $device = $xml->addChild('DEVICE');
-            $device->addChild('SYSDESCR', "<![CDATA[".$data['sysdescr']."]]>");
+            $device->addChild('SYSDESCR', $data['sysdescr']);
 //            $device->addChild('MANUFACTURER', $data['manufacturers_id']);
             switch ($data['itemtype']) {
 
@@ -579,8 +579,9 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
             }
       }
       $pfOCSCommunication = new PluginFusioninventoryOCSCommunication();
-      
       $xmlprint = $pfOCSCommunication->formatXML($xml);
+      $xmlprint = str_replace("<SYSDESCR>", "<SYSDESCR><![CDATA[", $xmlprint);
+      $xmlprint = str_replace("</SYSDESCR>", "]]></SYSDESCR>", $xmlprint);
       file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/discovery.xml", $xmlprint);
    }
 }
