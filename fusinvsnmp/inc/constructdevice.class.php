@@ -72,7 +72,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo "</tr>";
       echo "</table>";
       
-      echo "</form>";
+      Html::closeForm();
       
       return;
       
