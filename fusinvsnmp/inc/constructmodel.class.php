@@ -49,6 +49,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
 
    function connect() {
       $this->fp = @fsockopen("93.93.45.69", "9000");
+      //$this->fp = @fsockopen("127.0.0.1", "9000");
       if ($this->fp) {
          return true;
       }
@@ -143,21 +144,13 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo "<a href='".$this->getSearchURL()."?action=seemodels''>See All SNMP models</a>";
+      echo "<a href='".$this->getSearchURL()."?action=seemodels'>See All SNMP models</a>";
       echo "</td>";
       echo "</tr>";
       
-      
-      
 //      echo "<tr class='tab_bg_1'>";
 //      echo "<td align='center'>";
-//      echo "<a href=''>Get All SNMP models (devel)</a>";
-//      echo "</td>";
-//      echo "</tr>";
-//      
-//      echo "<tr class='tab_bg_1'>";
-//      echo "<td align='center'>";
-//      echo "<a href=''>Get All SNMP models (stable)</a>";
+//      echo "<a href='".$this->getSearchURL()."?action=walksmanaged'>Devices managed (snmpwalk)</a>";
 //      echo "</td>";
 //      echo "</tr>";
 
@@ -228,15 +221,20 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    
-   function sendGetsysdescr($sysdescr, $itemtype) {
+   function sendGetsysdescr($sysdescr, $itemtype, $devices_id = 0) {
       global $CFG_GLPI;
       
       $getsysdescr = array();
-      $getsysdescr['getsysdescr'] = array(
-         "sysdescr" => $sysdescr,
-         "itemtype" => $itemtype);
-      
-      $_SESSION['plugin_fusioninventory_itemtype'] = $itemtype;
+      if ($devices_id > 0) {
+         $getsysdescr['getdeviceid'] = array(
+            "id" => $devices_id);
+      } else {
+         $getsysdescr['getsysdescr'] = array(
+            "sysdescr" => $sysdescr,
+            "itemtype" => $itemtype);
+
+         $_SESSION['plugin_fusioninventory_itemtype'] = $itemtype;
+      }
       $buffer = json_encode($getsysdescr);
       $buffer .= "\n";
       fputs ($this->fp, $buffer);
@@ -630,7 +628,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<th rowspan='2'>";
       echo "itemtype";
       echo "</th>";
-      echo "<th colspan='3'>";
+      echo "<th colspan='4'>";
       echo "Equipements";
       echo "</th>";
       echo "</tr>";
@@ -638,6 +636,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<th>";
       echo "sysdescr";
+      echo "</th>";
+      echo "<th>";
       echo "</th>";
       echo "<th>";
       echo "Stable/devel";
@@ -684,6 +684,12 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             }
             echo "<td style='background-color:#".$color."'>";
             echo $a_devices['sysdescr'];
+            echo "</td>";
+            echo "<td align='center' style='background-color:#".$color."'>";
+            echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$a_devices['id']."'>";
+            echo "<img src='".$CFG_GLPI["root_doc"]."/pics/rapports.png' width='18' height='18' />";
+
+            echo "</a>";
             echo "</td>";
             if ($a_devices['stable'] == '0') {
                echo "<td align='center' style='background-color:#".$color."'>";

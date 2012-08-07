@@ -116,8 +116,8 @@ if ($pfConstructmodel->connect()) {
       } else if (isset($_POST['sendsnmpwalk'])
               AND $_POST['sysdescr'] != '') {
          $pfConstructmodel->sendGetsysdescr($_POST['sysdescr'], $_POST['itemtype']);
-//      } else if (isset($_GET['devices_id'])) {
-//         $pfConstructmodel->sendGetsysdescr($_POST['sysdescr'], $_GET['devices_id']);
+      } else if (isset($_GET['devices_id'])) {
+         $pfConstructmodel->sendGetsysdescr('', '', $_GET['devices_id']);
       } else if (isset($_GET['action'])) {
          if ($_GET['action'] == "checksysdescr") {
             $pfConstructmodel->showFormDefineSysdescr();
