@@ -55,7 +55,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo  "<table width='950' align='center'>
          <tr>
          <td>
-         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?reset=reset'>Revenir au menu principal</a>
+         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$id."'>Back to device form information</a>
          </td>
          </tr>
          </table>";

@@ -245,7 +245,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo  "<table width='950' align='center'>
          <tr>
          <td>
-         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?reset=reset'>Revenir au menu principal</a>
+         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?reset=reset'>Back to main menu</a>
          </td>
          </tr>
          </table>";
@@ -291,9 +291,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          } else {
             $id = $data->device->id;
          }
-
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
-                   WHERE `construct_device_id`='".$devices_id."'
+                   WHERE `construct_device_id`='".$id."'
                    LIMIT 1";
          $result=$DB->query($query);
          if ($DB->numrows($result) == '0') {
@@ -418,25 +417,25 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "</table><br/>";
 
          // * Manage SNMPWALK file
-         echo "<table class='tab_cadre' width='900'>";
+         if ($edit == '0') {
+            $this->showUploadSnmpwalk($data->device->sysdescr, $data->device->itemtype);
+         } else {        
+            echo "<table class='tab_cadre' width='900'>";
 
-         echo "<tr class='tab_bg_1 center'>";
-         echo "<th>";
-         echo "Snmpwalk file";
-         echo "</th>";
-         echo "</tr>";
+            echo "<tr class='tab_bg_1 center'>";
+            echo "<th>";
+            echo "Snmpwalk file";
+            echo "</th>";
+            echo "</tr>";
 
-         echo "<tr class='tab_bg_1'>";
-         echo "<td class='center'>";
-         if ($edit == '1') {
+            echo "<tr class='tab_bg_1'>";
+            echo "<td class='center'>";
             echo "snmpwalk file present";
-         } else {
-            echo "snmpwalk file not present.";
-         }
-         echo "</td>";
-         echo "</tr>";
+            echo "</td>";
+            echo "</tr>";
 
-         echo "</table><br/>";
+            echo "</table><br/>";
+         }
          
          // * Manage Logs
          echo "<table class='tab_cadre' width='900'>";

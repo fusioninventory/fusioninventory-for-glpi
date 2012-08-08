@@ -95,7 +95,7 @@ if ($pfConstructmodel->connect()) {
          move_uploaded_file($_FILES['snmpwalkfile']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$md5);
 
          $_SESSION['plugin_fusioninventory_snmpwalks_id'] = $jsonret->device->id;
-         Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?id=".$id_ins);
+         Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?editoid=".$jsonret->device->id);
       } else if (isset($_GET['action'])
               AND $_GET['action'] == 'displaydevice'
               AND isset($_SESSION['plugin_fusioninventory_sysdescr'])
