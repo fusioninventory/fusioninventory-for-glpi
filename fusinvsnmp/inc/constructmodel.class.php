@@ -222,7 +222,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    function sendGetsysdescr($sysdescr, $itemtype, $devices_id = 0) {
-      global $CFG_GLPI;
+      global $CFG_GLPI,$DB;
       
       $getsysdescr = array();
       if ($devices_id > 0) {
@@ -284,7 +284,29 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "This device exist";
          echo "</th>";
          echo "<th colspan='2'>";
-         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?editoid=1'>Edit oids</a>";
+         $edit = 1;
+         $id = 0;
+         if ($devices_id > 0) {
+            $id = $devices_id;
+         } else {
+            $id = $data->device->id;
+         }
+
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
+                   WHERE `construct_device_id`='".$devices_id."'
+                   LIMIT 1";
+         $result=$DB->query($query);
+         if ($DB->numrows($result) == '0') {
+            $edit = 0;
+         }
+            
+         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?editoid=".$data->device->id."'>";
+         if ($edit == '1') {
+            echo "Edit oids";
+         } else {
+            echo "See oids";
+         }
+         echo "</a>";
          echo "&nbsp; &nbsp; | &nbsp; &nbsp;";
          echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?id=".$data->device->id."' target='_blank'>Get SNMP model</a>";
          if ($data->device->snmpmodels_id > 0) {
@@ -393,9 +415,30 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "</td>";
          echo "</tr>";       
          
-         
+         echo "</table><br/>";
+
+         // * Manage SNMPWALK file
+         echo "<table class='tab_cadre' width='900'>";
+
+         echo "<tr class='tab_bg_1 center'>";
+         echo "<th>";
+         echo "Snmpwalk file";
+         echo "</th>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td class='center'>";
+         if ($edit == '1') {
+            echo "snmpwalk file present";
+         } else {
+            echo "snmpwalk file not present.";
+         }
+         echo "</td>";
+         echo "</tr>";
+
          echo "</table><br/>";
          
+         // * Manage Logs
          echo "<table class='tab_cadre' width='900'>";
 
          echo "<tr class='tab_bg_1 center'>";

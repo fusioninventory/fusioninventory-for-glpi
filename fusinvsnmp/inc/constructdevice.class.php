@@ -62,15 +62,17 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       
       echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
       
-      $this->manageWalks($data);
+      $ret = $this->manageWalks($data);
 
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<th align='center'>";
-      echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit'>";
-      echo "</th>";
-      echo "</tr>";
-      echo "</table>";
+      if ($ret) {
+         echo "<table class='tab_cadre_fixe'>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<th align='center'>";
+         echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit'>";
+         echo "</th>";
+         echo "</tr>";
+         echo "</table>";
+      }
       
       Html::closeForm();
       
@@ -152,13 +154,16 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
    function manageWalks($json) {
       global $DB,$CFG_GLPI,$LANG;
 
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
-                WHERE `construct_device_id`='".$_SESSION['plugin_fusioninventory_snmpwalks_id']."'
-                LIMIT 1";
+      $snmpwalk = '';
+      if (isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])) {
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
+                   WHERE `construct_device_id`='".$_SESSION['plugin_fusioninventory_snmpwalks_id']."'
+                   LIMIT 1";
 
-      $result=$DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         $snmpwalk = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$data['log']);
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $snmpwalk = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$data['log']);
+         }
       }
 
       $a_mapping = array();
@@ -205,7 +210,9 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          echo $data->name;
          echo "</th>";
          echo "<td width='130' align='center'>";
-         echo "<img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />&nbsp;add a new oid";
+         if ($snmpwalk != '') {
+            echo "<img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />&nbsp;add a new oid";
+         }
          echo "</td>";
          echo "</tr>";
          
@@ -305,6 +312,10 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       } else {
          $this->displayOid($json->oids->$portcounteroid, 0, array(), $json->device->sysdescr, "blue");
       }
+      if ($snmpwalk == '') {
+         return false;
+      }
+      return true;
    }
    
    

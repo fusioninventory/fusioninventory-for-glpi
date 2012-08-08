@@ -106,12 +106,16 @@ if ($pfConstructmodel->connect()) {
       
       } else if ((isset($_GET['editoid'])
               OR isset($_GET['id']))
+              AND isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])
               AND $_SESSION['plugin_fusioninventory_snmpwalks_id'] > 0) {
          
          $pfConstructDevice = new PluginFusinvsnmpConstructDevice();
          $dataret = $pfConstructmodel->sendGetDevice($_SESSION['plugin_fusioninventory_snmpwalks_id']);
          $pfConstructDevice->showForm($_SESSION['plugin_fusioninventory_snmpwalks_id'], $dataret);
-         
+      } else if (isset($_GET['editoid'])) {
+         $pfConstructDevice = new PluginFusinvsnmpConstructDevice();
+         $dataret = $pfConstructmodel->sendGetDevice($_GET['editoid']);
+         $pfConstructDevice->showForm($_GET['editoid'], $dataret);
       
       } else if (isset($_POST['sendsnmpwalk'])
               AND $_POST['sysdescr'] != '') {
