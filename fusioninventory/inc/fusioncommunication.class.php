@@ -173,35 +173,6 @@ class PluginFusioninventoryFusionCommunication {
    }
  
    
-   
-   /**
-    * Get default URL for a REST servie
-    * 
-    * @param url REFERER url
-    * @param plugin the plugin hosts the service
-    * @param task the task to access
-    * 
-    * @return the url of the REST service
-    */
-   static function getDefaultRestURL($url, $plugin, $task) {
-      global $DB;
-      
-      $task = strtolower($task);
-      $values = array();
-      if (preg_match("/(.*)\/(plugins|front)/",$url,$values)) {
-         return $values[1].'/plugins/'.$plugin.'/b/'.$task.'/';
-      } else {
-         $query = "SELECT url_base FROM `glpi_configs`
-            LIMIT 1";
-         $result = $DB->query($query);
-         $data = $DB->fetch_assoc($result);
-         return $data['url_base'].'/plugins/'.$plugin.'/b/'.$task.'/';
-         return "";
-      }
-   }
-
-   
-   
    /**
     * Test a given url
     * 
