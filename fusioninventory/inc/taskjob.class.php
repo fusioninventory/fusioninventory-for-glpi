@@ -210,6 +210,19 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<td height='18'>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
       echo "<td align='center'>";
       $randmethod = $this->dropdownMethod("method", $this->fields['method']);
+      if ($id != '') {
+         echo "<div style='display:none' id='methodupdate' >";
+         $params = array('method' => '__VALUE__',
+                         'rand'      => $randmethod,
+                         'myname'    => 'method',
+                         'name'      => 'methodupdate',
+                         'taskjobs_id'=>$id );
+         Ajax::updateItemOnEvent("dropdown_method".$randmethod,
+                                 "methodupdate",
+                                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskmethodupdate.php",
+                                 $params);
+         echo "</div>";
+      }
       echo "</td>";
       echo "</tr>";
             
@@ -2174,6 +2187,23 @@ return namelist;
       echo "</tr>";
          
       echo "</table>";
+   }
+   
+   
+   
+   function updateMethod($method, $taskjobs_id) {
+      
+      $a_methods = array();
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+      foreach ($a_methods as $datas) {
+         if ($method == $datas['method']) {
+            $input = array();
+            $input['id'] = $taskjobs_id;
+            $input['method'] = $method;
+            $input['plugins_id'] = PluginFusioninventoryModule::getModuleId($datas['module']);
+            $this->update($input);
+         }
+      }
    }
 }
 
