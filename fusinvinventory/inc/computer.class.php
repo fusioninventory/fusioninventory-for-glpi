@@ -175,6 +175,7 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
       echo '<tr class="tab_bg_1">';
       echo '<td>Asset TAG&nbsp;:</td>';
       echo '<td>'.$a_computerextend['bios_assettag'].'</td>';
+      echo "<td colspan='2'></td>";
       echo '</tr>';
 
       echo '</table>';
