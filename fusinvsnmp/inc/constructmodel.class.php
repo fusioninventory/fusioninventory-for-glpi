@@ -710,6 +710,12 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<form name='form_model' id='form_model' method='post'>";
       echo "<input type='hidden' name='nbmodels' value='".count($data)."' />";
       echo  "<table class='tab_cadre_fixe'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='7'>";
+      echo count($data)." models !";
+      echo "</th>";
+      echo "</tr>";
       
       echo "<tr class='tab_bg_1'>";
       echo "<th rowspan='2'>";
