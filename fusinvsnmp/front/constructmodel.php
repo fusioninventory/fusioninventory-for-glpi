@@ -56,6 +56,11 @@ Session::checkLoginUser();
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
+if (isset($_POST['updatesort'])) {
+   $_SESSION['glpi_plugin_fusioninventory_constructmodelsort'] = $_POST['sort'];
+   Html::back();
+}
+
 $pfConstructmodel = new PluginFusinvsnmpConstructmodel();
 if ($pfConstructmodel->connect()) {
    if ($pfConstructmodel->showAuth()) {

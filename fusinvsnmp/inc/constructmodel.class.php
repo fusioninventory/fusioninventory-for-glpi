@@ -656,6 +656,56 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       fputs ($this->fp, $buffer);
       $ret = fgets ($this->fp, 1024000);
       $data = json_decode($ret, true);
+
+      echo "<center>";
+      if (!isset($_SESSION['glpi_plugin_fusioninventory_constructmodelsort'])) {
+         $_SESSION['glpi_plugin_fusioninventory_constructmodelsort'] = 'itemtype';
+      }
+      echo "<form name='sortform' id='sortform' method='post'>";
+      echo $LANG['search'][4]."&nbsp;: ";
+      $array_sort = array();
+      $array_sort['name'] = 'Model name';
+      $array_sort['itemtype'] = 'Itemtype';
+      $array_sort['stabledevel'] = 'Stable/devel';
+      $array_sort['localglpi'] = 'In local GLPI';
+      Dropdown::showFromArray('sort', $array_sort, array('value' => $_SESSION['glpi_plugin_fusioninventory_constructmodelsort']));
+      echo "&nbsp;<input type='submit' name='updatesort' class='submit' value=\"".$LANG['buttons'][7]."\" >";
+      Html::closeForm();
+      echo "</center>";
+      
+      $a_sort = array();
+      $a_sort['name'] = array();
+      $a_sort['itemtype'] = array();
+      $a_sort['stabledevel'] = array();
+      $a_sort['localglpi'] = array();
+      foreach ($data as $key => $a_models) {
+         $a_sort['name'][$key] = $a_models['name'];
+         $a_sort['itemtype'][$key] = $a_models['itemtype'];
+         $stable = 1;
+         $local = 2;
+         foreach ($a_models['devices'] as $a_devices) {
+            if ($a_devices['stable'] == '0') {
+               $stable = 0;
+            }
+            $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_modeldevices`
+                      LEFT JOIN `glpi_plugin_fusinvsnmp_models`
+                         ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
+                      WHERE `sysdescr` = '".$a_devices['sysdescr']."'
+                      LIMIT 1";
+            $result = $DB->query($query);
+            if ($DB->numrows($result) != 0) {
+               $datam = $DB->fetch_assoc($result);
+               if ($datam['name'] != $a_models['name']) {
+                  $local = 1;
+               }
+            } else {
+               $local = 0;
+            }
+         }
+         $a_sort['stabledevel'][$key] = $stable;
+         $a_sort['localglpi'][$key] = $local; 
+      }
+      
       
       echo "<form name='form_model' id='form_model' method='post'>";
       echo "<input type='hidden' name='nbmodels' value='".count($data)."' />";
@@ -668,7 +718,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "Model name";
       echo "</th>";
       echo "<th rowspan='2'>";
-      echo "itemtype";
+      echo "Itemtype";
       echo "</th>";
       echo "<th colspan='4'>";
       echo "Equipements";
@@ -689,14 +739,15 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
       
-      ksort($data);
-      foreach ($data as $a_models) {
+      array_multisort($a_sort[$_SESSION['glpi_plugin_fusioninventory_constructmodelsort']], SORT_ASC, 
+                      $a_sort['itemtype'], SORT_ASC, 
+                      $a_sort['name'], SORT_ASC, 
+                      $data);
+      foreach ($data as $key => $a_models) {
          $nbdevices = count($a_models['devices']);
          $colormodel = '00d50f';
-         foreach ($a_models['devices'] as $a_devices) {
-            if ($a_devices['stable'] == '0') {
-               $colormodel = 'ff0000';
-            }
+         if ($a_sort['stabledevel'][$key] == '0') {
+            $colormodel = 'ff0000';
          }
          echo "<tr class='tab_bg_3'>";
          echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
