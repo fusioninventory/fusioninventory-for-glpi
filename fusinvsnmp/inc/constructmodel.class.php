@@ -668,6 +668,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $array_sort['itemtype'] = 'Itemtype';
       $array_sort['stabledevel'] = 'Stable/devel';
       $array_sort['localglpi'] = 'In local GLPI';
+      $array_sort['snmpfile'] = 'Snmpfile';
       Dropdown::showFromArray('sort', $array_sort, array('value' => $_SESSION['glpi_plugin_fusioninventory_constructmodelsort']));
       echo "&nbsp;<input type='submit' name='updatesort' class='submit' value=\"".$LANG['buttons'][7]."\" >";
       Html::closeForm();
@@ -683,6 +684,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          $a_sort['itemtype'][$key] = $a_models['itemtype'];
          $stable = 1;
          $local = 2;
+         $snmpfile = 1;
          foreach ($a_models['devices'] as $a_devices) {
             if ($a_devices['stable'] == '0') {
                $stable = 0;
@@ -701,9 +703,18 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             } else {
                $local = 0;
             }
+            
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
+                      WHERE `construct_device_id` = '".$a_devices['id']."'
+                      LIMIT 1";
+            $result = $DB->query($query);
+            if ($DB->numrows($result) == "1") {
+               $snmpfile = 0;
+            }            
          }
          $a_sort['stabledevel'][$key] = $stable;
          $a_sort['localglpi'][$key] = $local; 
+         $a_sort['snmpfile'][$key] = $snmpfile;
       }
       
       
@@ -712,7 +723,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo  "<table class='tab_cadre_fixe'>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='7'>";
+      echo "<th colspan='8'>";
       echo count($data)." models !";
       echo "</th>";
       echo "</tr>";
@@ -726,7 +737,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<th rowspan='2'>";
       echo "Itemtype";
       echo "</th>";
-      echo "<th colspan='4'>";
+      echo "<th colspan='5'>";
       echo "Equipements";
       echo "</th>";
       echo "</tr>";
@@ -742,6 +753,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "</th>";
       echo "<th>";
       echo "In local GLPI";
+      echo "</th>";
+      echo "<th>";
+      echo "Snmp file";
       echo "</th>";
       echo "</tr>";
       
@@ -816,6 +830,19 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             } else {
                echo "<td style='background-color:#ff0000' align='center'>";
                echo "No";
+            }
+            echo "</td>";
+            
+            
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
+                      WHERE `construct_device_id` = '".$a_devices['id']."'
+                      LIMIT 1";
+            $result = $DB->query($query);
+            if ($DB->numrows($result) == "1") {
+               echo "<td style='background-color:#00d50f' align='center'>";
+               echo "<img src='".$CFG_GLPI["root_doc"]."/pics/ok.png' width='14' height='14'/>";
+            } else {
+               echo "<td style='background-color:#ff0000' align='center'>";
             }
             echo "</td>";
             echo "</tr>";
