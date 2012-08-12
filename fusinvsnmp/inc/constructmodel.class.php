@@ -589,6 +589,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       
       echo "<tr class='tab_bg_3 center'>";
       echo "<td colspan='2'>";
+      echo "<input type='hidden' name='sysdescr' value='".$sysdescr."' />";
+      echo "<input type='hidden' name='itemtype' value='".$itemtype."' />";
       echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
                  "\" class='submit' >";
       echo "</td>";
@@ -679,6 +681,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $a_sort['itemtype'] = array();
       $a_sort['stabledevel'] = array();
       $a_sort['localglpi'] = array();
+      $nb_devices = 0;
       foreach ($data as $key => $a_models) {
          $a_sort['name'][$key] = $a_models['name'];
          $a_sort['itemtype'][$key] = $a_models['itemtype'];
@@ -686,6 +689,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          $local = 2;
          $snmpfile = 1;
          foreach ($a_models['devices'] as $a_devices) {
+            $nb_devices++;
             if ($a_devices['stable'] == '0') {
                $stable = 0;
             }
@@ -724,7 +728,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='8'>";
-      echo count($data)." models !";
+      echo count($data)." models ! ".$nb_devices." devices supported !";
       echo "</th>";
       echo "</tr>";
       

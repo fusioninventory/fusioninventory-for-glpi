@@ -79,8 +79,13 @@ if ($pfConstructmodel->connect()) {
          Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php");
       
       } else if (isset($_FILES['snmpwalkfile'])) {
-         $jsonret = $pfConstructmodel->setLock($_SESSION['plugin_fusioninventory_sysdescr'], 
-                                               $_SESSION['plugin_fusioninventory_itemtype']);
+         if (isset($_POST['sysdescr'])) {
+            $jsonret = $pfConstructmodel->setLock($_POST['sysdescr'], 
+                                                  $_POST['itemtype']);
+         } else {
+            $jsonret = $pfConstructmodel->setLock($_SESSION['plugin_fusioninventory_sysdescr'], 
+                                                  $_SESSION['plugin_fusioninventory_itemtype']);
+         }
          $i = 1;
          $md5 = '';
          while ($i == '1') {
