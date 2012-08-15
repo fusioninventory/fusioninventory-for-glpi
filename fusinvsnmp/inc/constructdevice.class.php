@@ -76,6 +76,11 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       
       Html::closeForm();
       
+      echo '<script language="JavaScript">
+      function popUpClosed() {
+          window.location.reload();
+      }
+      </script>';
       return;
    }
 
@@ -140,7 +145,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          echo "</th>";
          echo "<td width='130' align='center'>";
          if ($snmpwalk != '') {
-            echo "<img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />&nbsp;add a new oid";
+            echo "<a onclick=\"var w = window.open('".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/front/constructmodel.form.php?mapping=".$data->name."' ,'glpipopup', 'height=400, width=1000, top=100, left=100, scrollbars=yes' );w.focus();\"><img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />&nbsp;add a new oid</a>";
          }
          echo "</td>";
          echo "</tr>";

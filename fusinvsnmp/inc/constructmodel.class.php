@@ -948,6 +948,112 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       }
    }
    
+   
+   
+   function showFormAddOid($mapping_name) {
+      global $LANG;
+      
+      echo "<form name='form' method='post' action=''>";
+      echo "<table class='tab_cadre_fixe'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='3'>";
+      echo "Add a new oid";
+      echo "</th>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_3'>";
+      echo "<td>";
+      echo "Mapping&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      echo $mapping_name;
+      echo "<input type='hidden' name='mapping' value='".$mapping_name."' />";
+      echo "</td>";
+      echo "<td>";
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_3'>";
+      echo "<td>";
+      echo "Numeric oid&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      echo "<input type='text' name='numeric_oid' value='' size='35'/>";
+      echo "</td>";
+      echo "<td>";
+      echo "For example we use this oid to get <i>name</i> :<br/> <strong>.1.3.6.1.2.1.1.5.0</strong>";
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_3'>";
+      echo "<td>";
+      echo "Mib oid&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      echo "<input type='text' name='mib_oid' value='' size='35'/>";
+      echo "</td>";
+      echo "<td>";
+      echo "For example we use this mib oid to get <i>name</i> :<br/> <strong>SNMPv2-MIB::sysName.0</strong>";
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_3'>";
+      echo "<td>";
+      echo "Number numeric groups after&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showInteger("nboids_after", 0, 0, 20);
+      echo "</td>";
+      echo "<td>";
+      echo "* For the oid for <i>name</i> there is no other thing after .1.3.6.1.2.1.1.5.0, so it's <strong>0</strong><br/>
+            * For the oid for <i>ifName</i>, we get the port id like .1.3.6.1.2.1.31.1.1.1.1<strong>.10001</strong>, 
+            .1.3.6.1.2.1.31.1.1.1.1<strong>.10002</strong>... so it's <strong>1</strong>";
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='3' align='center'>";
+      echo "<input type='submit' name='add' value=\"".$LANG['buttons'][8]."\" class='submit'>";
+      echo "</td>";
+      echo "</table>";
+      Html::closeForm();
+   }
+   
+   
+   
+   function sendNewOid($data) {
+      $addOid = array();
+      $addOid['addOid']['mapping'] = $_POST['mapping'];
+      $addOid['addOid']['numeric_oid'] = $_POST['numeric_oid'];
+      $addOid['addOid']['mib_oid'] = $_POST['mib_oid'];
+      $addOid['addOid']['nboids_after'] = $_POST['nboids_after'];
+      
+      $buffer = json_encode($addOid);
+      $buffer .= "\n";
+      fputs ($this->fp, $buffer);
+      $ret = fgets ($this->fp);
+      $data = json_decode($ret, true);
+      
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th align='center'>";
+      if ($data['oidcreation'] == 'succesfull') {
+         echo "This oid is right created on server :)";
+         echo '<script language="JavaScript">
+         window.onunload = function() {
+             if (window.opener && !window.opener.closed) {
+                 window.opener.popUpClosed();
+             }
+         };
+         </script>';
+      } else if ($data['oidcreation'] == 'yetexist') {
+         echo "This oid yet exist on server !";
+      }
+      echo "</th>";
+      echo "</tr>";
+      echo "</table>";
+   }
 }
 
 ?>
