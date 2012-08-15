@@ -297,6 +297,14 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          $result=$DB->query($query);
          if ($DB->numrows($result) == '0') {
             $edit = 0;
+         } else {
+            $sqldata = $DB->fetch_assoc($result);
+            if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$sqldata['log'])) {
+               $edit = 0;
+               $querydel = "DELETE * FROM `glpi_plugin_fusioninventory_construct_walks`
+                   WHERE `construct_device_id`='".$id."'";
+               $DB->query($querydel);
+            }
          }
             
          echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?editoid=".$data->device->id."'>";
@@ -713,7 +721,14 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
                       LIMIT 1";
             $result = $DB->query($query);
             if ($DB->numrows($result) == "1") {
-               $snmpfile = 0;
+               $sqldata = $DB->fetch_assoc($result);
+               if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$sqldata['log'])) {
+                  $querydel = "DELETE * FROM `glpi_plugin_fusioninventory_construct_walks`
+                      WHERE `construct_device_id`='".$a_devices['id']."'";
+                  $DB->query($querydel);
+               } else {
+                  $snmpfile = 0;
+               }
             }            
          }
          $a_sort['stabledevel'][$key] = $stable;
