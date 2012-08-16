@@ -438,13 +438,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    static function getUrlForModule($modulename) {
       global $DB;
 
-      # Is a module specific URL defined (undocumented feature)
-      $agentmodule = new PluginFusioninventoryAgentmodule();
-      $modules = $agentmodule->find("`modulename`='".strtoupper($modulename)."'", "", 1);
-      if ($t = array_shift($modules))
-         if ($t['url'])
-            return $t['url'];
-
       $query = "SELECT url_base FROM `glpi_configs` LIMIT 1";
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
