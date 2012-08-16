@@ -231,6 +231,9 @@ class PluginFusinvinventoryLibhook {
                if (isset($dataSection['BVERSION'])) {
                   $inputCext['bios_version'] = $dataSection['BVERSION'];
                }
+               if (isset($dataSection['ASSETTAG'])) {
+                  $inputCext['bios_assettag'] = $dataSection['ASSETTAG'];
+               }
                
                if (isset($dataSection['BMANUFACTURER'])) {
                   $inputCext['bios_manufacturers_id'] = Dropdown::importExternal('Manufacturer',
@@ -871,6 +874,9 @@ class PluginFusinvinventoryLibhook {
                   }
                   if (isset($dataSection['BVERSION'])) {
                      $inputCext['bios_version'] = $dataSection['BVERSION'];
+                  }
+                  if (isset($dataSection['ASSETTAG'])) {
+                     $inputCext['bios_assettag'] = $dataSection['ASSETTAG'];
                   }
 
                   if (isset($dataSection['BMANUFACTURER'])) {

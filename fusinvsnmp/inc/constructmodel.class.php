@@ -245,7 +245,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo  "<table width='950' align='center'>
          <tr>
          <td>
-         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?reset=reset'>Revenir au menu principal</a>
+         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?reset=reset'>Back to main menu</a>
          </td>
          </tr>
          </table>";
@@ -291,13 +291,20 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          } else {
             $id = $data->device->id;
          }
-
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
-                   WHERE `construct_device_id`='".$devices_id."'
+                   WHERE `construct_device_id`='".$id."'
                    LIMIT 1";
          $result=$DB->query($query);
          if ($DB->numrows($result) == '0') {
             $edit = 0;
+         } else {
+            $sqldata = $DB->fetch_assoc($result);
+            if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$sqldata['log'])) {
+               $edit = 0;
+               $querydel = "DELETE * FROM `glpi_plugin_fusioninventory_construct_walks`
+                   WHERE `construct_device_id`='".$id."'";
+               $DB->query($querydel);
+            }
          }
             
          echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?editoid=".$data->device->id."'>";
@@ -418,25 +425,25 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "</table><br/>";
 
          // * Manage SNMPWALK file
-         echo "<table class='tab_cadre' width='900'>";
+         if ($edit == '0') {
+            $this->showUploadSnmpwalk($data->device->sysdescr, $data->device->itemtype);
+         } else {        
+            echo "<table class='tab_cadre' width='900'>";
 
-         echo "<tr class='tab_bg_1 center'>";
-         echo "<th>";
-         echo "Snmpwalk file";
-         echo "</th>";
-         echo "</tr>";
+            echo "<tr class='tab_bg_1 center'>";
+            echo "<th>";
+            echo "Snmpwalk file";
+            echo "</th>";
+            echo "</tr>";
 
-         echo "<tr class='tab_bg_1'>";
-         echo "<td class='center'>";
-         if ($edit == '1') {
+            echo "<tr class='tab_bg_1'>";
+            echo "<td class='center'>";
             echo "snmpwalk file present";
-         } else {
-            echo "snmpwalk file not present.";
-         }
-         echo "</td>";
-         echo "</tr>";
+            echo "</td>";
+            echo "</tr>";
 
-         echo "</table><br/>";
+            echo "</table><br/>";
+         }
          
          // * Manage Logs
          echo "<table class='tab_cadre' width='900'>";
@@ -590,6 +597,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       
       echo "<tr class='tab_bg_3 center'>";
       echo "<td colspan='2'>";
+      echo "<input type='hidden' name='sysdescr' value='".$sysdescr."' />";
+      echo "<input type='hidden' name='itemtype' value='".$itemtype."' />";
       echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
                  "\" class='submit' >";
       echo "</td>";
@@ -657,10 +666,86 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       fputs ($this->fp, $buffer);
       $ret = fgets ($this->fp, 1024000);
       $data = json_decode($ret, true);
+
+      echo "<center>";
+      if (!isset($_SESSION['glpi_plugin_fusioninventory_constructmodelsort'])) {
+         $_SESSION['glpi_plugin_fusioninventory_constructmodelsort'] = 'itemtype';
+      }
+      echo "<form name='sortform' id='sortform' method='post'>";
+      echo $LANG['search'][4]."&nbsp;: ";
+      $array_sort = array();
+      $array_sort['name'] = 'Model name';
+      $array_sort['itemtype'] = 'Itemtype';
+      $array_sort['stabledevel'] = 'Stable/devel';
+      $array_sort['localglpi'] = 'In local GLPI';
+      $array_sort['snmpfile'] = 'Snmpfile';
+      Dropdown::showFromArray('sort', $array_sort, array('value' => $_SESSION['glpi_plugin_fusioninventory_constructmodelsort']));
+      echo "&nbsp;<input type='submit' name='updatesort' class='submit' value=\"".$LANG['buttons'][7]."\" >";
+      Html::closeForm();
+      echo "</center>";
+      
+      $a_sort = array();
+      $a_sort['name'] = array();
+      $a_sort['itemtype'] = array();
+      $a_sort['stabledevel'] = array();
+      $a_sort['localglpi'] = array();
+      $nb_devices = 0;
+      foreach ($data as $key => $a_models) {
+         $a_sort['name'][$key] = $a_models['name'];
+         $a_sort['itemtype'][$key] = $a_models['itemtype'];
+         $stable = 1;
+         $local = 2;
+         $snmpfile = 1;
+         foreach ($a_models['devices'] as $a_devices) {
+            $nb_devices++;
+            if ($a_devices['stable'] == '0') {
+               $stable = 0;
+            }
+            $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_modeldevices`
+                      LEFT JOIN `glpi_plugin_fusinvsnmp_models`
+                         ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
+                      WHERE `sysdescr` = '".$a_devices['sysdescr']."'
+                      LIMIT 1";
+            $result = $DB->query($query);
+            if ($DB->numrows($result) != 0) {
+               $datam = $DB->fetch_assoc($result);
+               if ($datam['name'] != $a_models['name']) {
+                  $local = 1;
+               }
+            } else {
+               $local = 0;
+            }
+            
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
+                      WHERE `construct_device_id` = '".$a_devices['id']."'
+                      LIMIT 1";
+            $result = $DB->query($query);
+            if ($DB->numrows($result) == "1") {
+               $sqldata = $DB->fetch_assoc($result);
+               if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$sqldata['log'])) {
+                  $querydel = "DELETE * FROM `glpi_plugin_fusioninventory_construct_walks`
+                      WHERE `construct_device_id`='".$a_devices['id']."'";
+                  $DB->query($querydel);
+               } else {
+                  $snmpfile = 0;
+               }
+            }            
+         }
+         $a_sort['stabledevel'][$key] = $stable;
+         $a_sort['localglpi'][$key] = $local; 
+         $a_sort['snmpfile'][$key] = $snmpfile;
+      }
+      
       
       echo "<form name='form_model' id='form_model' method='post'>";
       echo "<input type='hidden' name='nbmodels' value='".count($data)."' />";
       echo  "<table class='tab_cadre_fixe'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='8'>";
+      echo count($data)." models ! ".$nb_devices." devices supported !";
+      echo "</th>";
+      echo "</tr>";
       
       echo "<tr class='tab_bg_1'>";
       echo "<th rowspan='2'>";
@@ -669,9 +754,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "Model name";
       echo "</th>";
       echo "<th rowspan='2'>";
-      echo "itemtype";
+      echo "Itemtype";
       echo "</th>";
-      echo "<th colspan='4'>";
+      echo "<th colspan='5'>";
       echo "Equipements";
       echo "</th>";
       echo "</tr>";
@@ -688,16 +773,20 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<th>";
       echo "In local GLPI";
       echo "</th>";
+      echo "<th>";
+      echo "Snmp file";
+      echo "</th>";
       echo "</tr>";
       
-      ksort($data);
-      foreach ($data as $a_models) {
+      array_multisort($a_sort[$_SESSION['glpi_plugin_fusioninventory_constructmodelsort']], SORT_ASC, 
+                      $a_sort['itemtype'], SORT_ASC, 
+                      $a_sort['name'], SORT_ASC, 
+                      $data);
+      foreach ($data as $key => $a_models) {
          $nbdevices = count($a_models['devices']);
          $colormodel = '00d50f';
-         foreach ($a_models['devices'] as $a_devices) {
-            if ($a_devices['stable'] == '0') {
-               $colormodel = 'ff0000';
-            }
+         if ($a_sort['stabledevel'][$key] == '0') {
+            $colormodel = 'ff0000';
          }
          echo "<tr class='tab_bg_3'>";
          echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
@@ -760,6 +849,19 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             } else {
                echo "<td style='background-color:#ff0000' align='center'>";
                echo "No";
+            }
+            echo "</td>";
+            
+            
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
+                      WHERE `construct_device_id` = '".$a_devices['id']."'
+                      LIMIT 1";
+            $result = $DB->query($query);
+            if ($DB->numrows($result) == "1") {
+               echo "<td style='background-color:#00d50f' align='center'>";
+               echo "<img src='".$CFG_GLPI["root_doc"]."/pics/ok.png' width='14' height='14'/>";
+            } else {
+               echo "<td style='background-color:#ff0000' align='center'>";
             }
             echo "</td>";
             echo "</tr>";
@@ -846,6 +948,112 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       }
    }
    
+   
+   
+   function showFormAddOid($mapping_name) {
+      global $LANG;
+      
+      echo "<form name='form' method='post' action=''>";
+      echo "<table class='tab_cadre_fixe'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='3'>";
+      echo "Add a new oid";
+      echo "</th>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_3'>";
+      echo "<td>";
+      echo "Mapping&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      echo $mapping_name;
+      echo "<input type='hidden' name='mapping' value='".$mapping_name."' />";
+      echo "</td>";
+      echo "<td>";
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_3'>";
+      echo "<td>";
+      echo "Numeric oid&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      echo "<input type='text' name='numeric_oid' value='' size='35'/>";
+      echo "</td>";
+      echo "<td>";
+      echo "For example we use this oid to get <i>name</i> :<br/> <strong>.1.3.6.1.2.1.1.5.0</strong>";
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_3'>";
+      echo "<td>";
+      echo "Mib oid&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      echo "<input type='text' name='mib_oid' value='' size='35'/>";
+      echo "</td>";
+      echo "<td>";
+      echo "For example we use this mib oid to get <i>name</i> :<br/> <strong>SNMPv2-MIB::sysName.0</strong>";
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_3'>";
+      echo "<td>";
+      echo "Number numeric groups after&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showInteger("nboids_after", 0, 0, 20);
+      echo "</td>";
+      echo "<td>";
+      echo "* For the oid for <i>name</i> there is no other thing after .1.3.6.1.2.1.1.5.0, so it's <strong>0</strong><br/>
+            * For the oid for <i>ifName</i>, we get the port id like .1.3.6.1.2.1.31.1.1.1.1<strong>.10001</strong>, 
+            .1.3.6.1.2.1.31.1.1.1.1<strong>.10002</strong>... so it's <strong>1</strong>";
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='3' align='center'>";
+      echo "<input type='submit' name='add' value=\"".$LANG['buttons'][8]."\" class='submit'>";
+      echo "</td>";
+      echo "</table>";
+      Html::closeForm();
+   }
+   
+   
+   
+   function sendNewOid($data) {
+      $addOid = array();
+      $addOid['addOid']['mapping'] = $_POST['mapping'];
+      $addOid['addOid']['numeric_oid'] = $_POST['numeric_oid'];
+      $addOid['addOid']['mib_oid'] = $_POST['mib_oid'];
+      $addOid['addOid']['nboids_after'] = $_POST['nboids_after'];
+      
+      $buffer = json_encode($addOid);
+      $buffer .= "\n";
+      fputs ($this->fp, $buffer);
+      $ret = fgets ($this->fp);
+      $data = json_decode($ret, true);
+      
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th align='center'>";
+      if ($data['oidcreation'] == 'succesfull') {
+         echo "This oid is right created on server :)";
+         echo '<script language="JavaScript">
+         window.onunload = function() {
+             if (window.opener && !window.opener.closed) {
+                 window.opener.popUpClosed();
+             }
+         };
+         </script>';
+      } else if ($data['oidcreation'] == 'yetexist') {
+         echo "This oid yet exist on server !";
+      }
+      echo "</th>";
+      echo "</tr>";
+      echo "</table>";
+   }
 }
 
 ?>

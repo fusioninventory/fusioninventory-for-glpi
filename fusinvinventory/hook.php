@@ -83,7 +83,13 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
          $sopt[5155]['linkfield'] = '';
          $sopt[5155]['name']      = $LANG['plugin_fusinvinventory']['bios'][0]."-".$LANG['common'][27];
          $sopt[5155]['datatype']  = 'date';
-         
+
+         $sopt[5160]['table']     = 'glpi_plugin_fusinvinventory_computers';
+         $sopt[5160]['field']     = 'bios_assettag';
+         $sopt[5160]['linkfield'] = '';
+         $sopt[5160]['name']      = $LANG['plugin_fusinvinventory']['bios'][0]."-Asset TAG";
+         $sopt[5160]['datatype']  = 'text';
+
          $sopt[5156]['table']     = 'glpi_plugin_fusinvinventory_computers';
          $sopt[5156]['field']     = 'bios_version';
          $sopt[5156]['linkfield'] = '';

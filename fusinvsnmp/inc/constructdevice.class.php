@@ -55,14 +55,14 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo  "<table width='950' align='center'>
          <tr>
          <td>
-         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?reset=reset'>Revenir au menu principal</a>
+         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$id."'>Back to device form information</a>
          </td>
          </tr>
          </table>";
       
       echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
       
-      $ret = $this->manageWalks($data);
+      $ret = $this->manageWalks($data, $id);
 
       if ($ret) {
          echo "<table class='tab_cadre_fixe'>";
@@ -76,95 +76,29 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       
       Html::closeForm();
       
+      echo '<script language="JavaScript">
+      function popUpClosed() {
+          window.location.reload();
+      }
+      </script>';
       return;
-      
-      
-      
-      
-      
-      
-//      if ($id!='') {
-//         $this->getFromDB($id);
-//      } else {
-         $this->getEmpty();
-//      }
-
-      $this->showTabs($options);
-      $this->showFormHeader($options);
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][5].":    </td><td>";
-      Dropdown::show("Manufacturer",
-                     array('name'=>"manufacturers_id",
-                           'value'=>$this->fields["manufacturers_id"]));
-      echo "</td>";
-
-      echo "<tr>";
-      echo "<td>".$LANG['setup'][71].":    </td><td>\n";
-      Dropdown::show("NetworkEquipmentFirmware",
-                     array('name'=>"firmware",
-                           'value'=>$this->fields["firmware"]));
-      echo "</td>";
-      echo "</tr>\n";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>" . $LANG['common'][25] . "</td>";
-      echo "<td>";
-      echo "<textarea name='sysdescr'  cols='110' rows='4' />".$this->fields["sysdescr"]."</textarea>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>" . $LANG['common'][17] . " :</td>";
-      echo "<td>";
-         $type_list = array();
-         $type_list[] = COMPUTER_TYPE;
-         $type_list[] = NETWORKING_TYPE;
-         $type_list[] = PRINTER_TYPE;
-         $type_list[] = PERIPHERAL_TYPE;
-         $type_list[] = PHONE_TYPE;
-
-         // GENERIC OBJECT : Search types in generic object
-         $plugin = new Plugin();
-         if ($plugin->isActivated('genericobject')) {
-            if (TableExists("glpi_plugin_genericobject_types")) {
-               $query = "SELECT * FROM `glpi_plugin_genericobject_types`
-                  WHERE `status`='1' ";
-               if ($result=$DB->query($query)) {
-                  while ($data=$DB->fetch_array($result)) {
-                     $type_list[] = $data['itemtype'];
-                  }
-               }
-            }
-         }
-         // END GENERIC OBJECT
-         Device::dropdownTypes('type',$this->fields["type"],$type_list);
-      echo "</td>";
-      echo "</tr>";
-
-
-//      echo "<div id='tabcontent'></div>";
-//      echo "<script type='text/javascript'>loadDefaultTab();</script>";
-
-      return true;
    }
 
 
    
-   function manageWalks($json) {
+   function manageWalks($json, $devices_id=0) {
       global $DB,$CFG_GLPI,$LANG;
 
       $snmpwalk = '';
-      if (isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])) {
+//      if (isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])) {
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
-                   WHERE `construct_device_id`='".$_SESSION['plugin_fusioninventory_snmpwalks_id']."'
+                   WHERE `construct_device_id`='".$devices_id."'
                    LIMIT 1";
-
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
             $snmpwalk = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$data['log']);
          }
-      }
+//      }
 
       $a_mapping = array();
       $a_mibs = array();
@@ -211,7 +145,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          echo "</th>";
          echo "<td width='130' align='center'>";
          if ($snmpwalk != '') {
-            echo "<img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />&nbsp;add a new oid";
+            echo "<a onclick=\"var w = window.open('".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/front/constructmodel.form.php?mapping=".$data->name."' ,'glpipopup', 'height=400, width=1000, top=100, left=100, scrollbars=yes' );w.focus();\"><img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />&nbsp;add a new oid</a>";
          }
          echo "</td>";
          echo "</tr>";

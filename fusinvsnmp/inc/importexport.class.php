@@ -521,7 +521,8 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
       $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_modeldevices`
                 LEFT JOIN `glpi_plugin_fusinvsnmp_models`
-                   ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`";
+                   ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
+                ORDER BY `sysdescr`";
 
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {

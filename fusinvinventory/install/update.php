@@ -357,6 +357,9 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
                            "bios_version", 
                            "varchar(255) DEFAULT NULL");
       $migration->addField($newTable, 
+                           "bios_assettag",
+                           "varchar(255) DEFAULT NULL");
+      $migration->addField($newTable, 
                            "bios_manufacturers_id", 
                            "int(11) NOT NULL DEFAULT '0'");
       $migration->addField($newTable, 
