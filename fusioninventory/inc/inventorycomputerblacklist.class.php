@@ -152,11 +152,9 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    * @return value XML cleaned (without blacklisted fields)
    *
    **/
-   function cleanBlacklist($p_xml) {
-      $xml = $p_xml;
-
-      if (isset($xml->CONTENT->BIOS->SSN)) {
-         $xml->CONTENT->BIOS->SSN = trim($xml->CONTENT->BIOS->SSN);
+   function cleanBlacklist($arrayinventory) {
+      if (isset($arrayinventory['CONTENT']['BIOS']['SSN'])) {
+         $arrayinventory['CONTENT']['BIOS']['SSN'] = trim($arrayinventory['CONTENT']['BIOS']['SSN']);
       }
 
       $pfInventoryComputerCriteria = new PluginFusioninventoryInventoryComputerCriteria();
@@ -170,8 +168,9 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
-                  if ((isset($xml->CONTENT->BIOS->SSN)) AND ($xml->CONTENT->BIOS->SSN ==$blacklist_data['value'])) {
-                     $xml->CONTENT->BIOS->SSN = "";
+                  if ((isset($arrayinventory['CONTENT']['BIOS']['SSN'])) 
+                          AND ($arrayinventory['CONTENT']['BIOS']['SSN'] ==$blacklist_data['value'])) {
+                     $arrayinventory['CONTENT']['BIOS']['SSN'] = "";
                   }
                }
                break;
@@ -180,8 +179,9 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
-                  if ((isset($xml->CONTENT->HARDWARE->UUID)) AND ($xml->CONTENT->HARDWARE->UUID == $blacklist_data['value'])) {
-                     $xml->CONTENT->HARDWARE->UUID = "";
+                  if ((isset($arrayinventory['CONTENT']['HARDWARE']['UUID'])) 
+                          AND ($arrayinventory['CONTENT']['HARDWARE']['UUID'] == $blacklist_data['value'])) {
+                     $arrayinventory['CONTENT']['HARDWARE']['UUID'] = "";
                   }
                }
                break;
@@ -190,10 +190,11 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
-                  if (isset($xml->CONTENT->NETWORKS)) {
-                     foreach($xml->CONTENT->NETWORKS as $network) {
-                        if ((isset($network->MACADDR)) AND ($network->MACADDR == $blacklist_data['value'])) {
-                           $network->MACADDR = "";
+                  if (isset($arrayinventory['CONTENT']['NETWORKS'])) {
+                     foreach($arrayinventory['CONTENT']['NETWORKS'] as $key=>$network) {
+                        if ((isset($network['MACADDR'])) 
+                                AND ($network['MACADDR'] == $blacklist_data['value'])) {
+                           $arrayinventory['CONTENT']['NETWORKS'][$key]['MACADDR'] = "";
                         }
                      }
                   }
@@ -204,8 +205,9 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
-                  if ((isset($xml->CONTENT->HARDWARE->WINPRODKEY)) AND ($xml->CONTENT->HARDWARE->WINPRODKEY == $blacklist_data['value'])) {
-                     $xml->CONTENT->HARDWARE->WINPRODKEY = "";
+                  if ((isset($arrayinventory['CONTENT']['HARDWARE']['WINPRODKEY'])) 
+                          AND ($arrayinventory['CONTENT']['HARDWARE']['WINPRODKEY'] == $blacklist_data['value'])) {
+                     $arrayinventory['CONTENT']['HARDWARE']['WINPRODKEY'] = "";
                   }
                }
               break;
@@ -214,8 +216,9 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
-                  if ((isset($xml->CONTENT->BIOS->SMODEL)) AND ($xml->CONTENT->BIOS->SMODEL == $blacklist_data['value'])) {
-                     $xml->CONTENT->BIOS->SMODEL = "";
+                  if ((isset($arrayinventory['CONTENT']['BIOS']['SMODEL'])) 
+                          AND ($arrayinventory['CONTENT']['BIOS']['SMODEL'] == $blacklist_data['value'])) {
+                     $arrayinventory['CONTENT']['BIOS']['SMODEL'] = "";
                   }
                }
               break;
@@ -224,10 +227,11 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
-                  if (isset($xml->CONTENT->STORAGES)) {
-                     foreach($xml->CONTENT->STORAGES as $storage) {
-                        if ((isset($storage->SERIALNUMBER)) AND ($storage->SERIALNUMBER == $blacklist_data['value'])) {
-                           $storage->SERIALNUMBER = "";
+                  if (isset($arrayinventory['CONTENT']['STORAGES'])) {
+                     foreach($arrayinventory['CONTENT']['STORAGES'] as $key=>$storage) {
+                        if ((isset($storage['SERIALNUMBER'])) 
+                                AND ($storage['SERIALNUMBER'] == $blacklist_data['value'])) {
+                           $arrayinventory['CONTENT']['STORAGES'][$key]['SERIALNUMBER'] = "";
                         }
                      }
                   }
@@ -238,10 +242,11 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
-                  if (isset($xml->CONTENT->DRIVES)) {
-                     foreach($xml->CONTENT->DRIVES as $drive) {
-                        if ((isset($drive->SERIAL)) AND ($drive->SERIAL == $blacklist_data['value'])) {
-                           $drive->SERIAL = "";
+                  if (isset($arrayinventory['CONTENT']['DRIVES'])) {
+                     foreach($arrayinventory['CONTENT']['DRIVES'] as $key=>$drive) {
+                        if ((isset($drive['SERIAL'])) 
+                                AND ($drive['SERIAL'] == $blacklist_data['value'])) {
+                           $arrayinventory['CONTENT']['DRIVES'][$key]['SERIAL'] = "";
                         }
                      }
                   }
@@ -252,8 +257,9 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
-                  if ((isset($xml->CONTENT->BIOS->ASSETTAG)) AND ($xml->CONTENT->BIOS->ASSETTAG == $blacklist_data['value'])) {
-                     $xml->CONTENT->BIOS->ASSETTAG = "";
+                  if ((isset($arrayinventory['CONTENT']['BIOS']['ASSETTAG'])) 
+                          AND ($arrayinventory['CONTENT']['BIOS']['ASSETTAG'] == $blacklist_data['value'])) {
+                     $arrayinventory['CONTENT']['BIOS']['ASSETTAG'] = "";
                   }
                }
               break;
@@ -262,8 +268,9 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                $a_blacklist = $this->find("`plugin_fusioninventory_criterium_id`='".$id."'");
 
                foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
-                  if ((isset($xml->CONTENT->BIOS->SMANUFACTURER)) AND ($xml->CONTENT->BIOS->SMANUFACTURER == $blacklist_data['value'])) {
-                     $xml->CONTENT->BIOS->SMANUFACTURER = "";
+                  if ((isset($arrayinventory['CONTENT']['BIOS']['SMANUFACTURER'])) 
+                          AND ($arrayinventory['CONTENT']['BIOS']['SMANUFACTURER'] == $blacklist_data['value'])) {
+                     $arrayinventory['CONTENT']['BIOS']['SMANUFACTURER'] = "";
                   }
                }
               break;
@@ -271,15 +278,15 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
          }
       }
       // Blacklist mac of "miniport*" for windows because have same mac as principal network ports
-      if (isset($xml->CONTENT->NETWORKS)) {
-         foreach($xml->CONTENT->NETWORKS as $network) {
-            if ((isset($network->DESCRIPTION))
-                    AND ((string)$network->DESCRIPTION == "Miniport d'ordonnancement de paquets")) {
-               $network->MACADDR = "";
+      if (isset($arrayinventory['CONTENT']['NETWORKS'])) {
+         foreach($arrayinventory['CONTENT']['NETWORKS'] as $key=>$network) {
+            if ((isset($network['DESCRIPTION']))
+                    AND ($network['DESCRIPTION'] == "Miniport d'ordonnancement de paquets")) {
+               $arrayinventory['CONTENT']['NETWORKS'][$key]['MACADDR'] = "";
             }
          }
       }
-      return $xml;
+      return $arrayinventory;
    }
 }
 

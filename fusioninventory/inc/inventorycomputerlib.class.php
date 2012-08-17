@@ -59,23 +59,23 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    * @return nothing
    *
    **/
-   function startAction($xml, $items_id, $new=0) {
+   function startAction($arrayinventory, $items_id, $new=0) {
       global $DB;
 
       if (isset($_SESSION["plugin_fusinvinventory_ignorecontrollers"])) {
          unset($_SESSION["plugin_fusinvinventory_ignorecontrollers"]);
       }
-      if (isset($xml->CONTENT->VIDEOS)) {
-         foreach ($xml->CONTENT->VIDEOS as $child) {
-            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->NAME] = 1;
-            if (isset($child->CHIPSET)) {
-               $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->CHIPSET] = 1;
+      if (isset($arrayinventory['CONTENT']['VIDEOS'])) {
+         foreach ($arrayinventory['CONTENT']['VIDEOS'] as $child) {
+            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][$child['NAME']] = 1;
+            if (isset($child['CHIPSET'])) {
+               $_SESSION["plugin_fusinvinventory_ignorecontrollers"][$child['CHIPSET']] = 1;
             }
          }
       }
-      if (isset($xml->CONTENT->SOUNDS)) {
-         foreach ($xml->CONTENT->SOUNDS as $child) {
-            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][(string)$child->NAME] = 1;
+      if (isset($arrayinventory['CONTENT']['SOUNDS'])) {
+         foreach ($arrayinventory['CONTENT']['SOUNDS'] as $child) {
+            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][$child['NAME']] = 1;
          }
       }
 
@@ -132,7 +132,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
          // Link computer to agent FusionInventory
          $pfAgent = new PluginFusioninventoryAgent();
-         $pfAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
+         $pfAgent->setAgentWithComputerid($items_id, $arrayinventory['DEVICEID']);
 
          // Transfer agent entity
          $pfAgent = new PluginFusioninventoryAgent();
@@ -148,11 +148,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
 
          //Sections update
-         $xmlSections = $this->_getXMLSections($xml);
+         $xmlSections = $this->_getXMLSections($arrayinventory);
          $this->updateLibMachine($xmlSections, $internalId);
 
          $pfInventoryComputerLibhook = new PluginFusioninventoryInventoryComputerLibhook();
-         $pfInventoryComputerLibhook->writeXMLFusion($items_id, $xml->asXML());
+// TODO WRITE         $pfInventoryComputerLibhook->writeXMLFusion($items_id, $xml->asXML());
       } else {
          // New Computer
          if ($_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE) {
@@ -163,7 +163,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
          
          //We launch CreateMachine() hook and provide an InternalId
-         $xmlSections = $this->_getXMLSections($xml);
+         $xmlSections = $this->_getXMLSections($arrayinventory);
          $internalId = uniqid("", true);
 
          //try {
@@ -172,7 +172,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
             // Link computer to agent FusionInventory
             $pfAgent = new PluginFusioninventoryAgent();
-            $pfAgent->setAgentWithComputerid($items_id, $xml->DEVICEID);
+            $pfAgent->setAgentWithComputerid($items_id, $arrayinventory['DEVICEID']);
 
             // Transfer agent entity
             $pfAgent = new PluginFusioninventoryAgent();
@@ -189,13 +189,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
             $this->addLibMachine($internalId, $items_id);
 
-            $pfInventoryComputerLibhook->writeXMLFusion($items_id, $xml->asXML());
+//            $pfInventoryComputerLibhook->writeXMLFusion($items_id, $xml->asXML());
 
             $this->updateLibMachine($xmlSections, $internalId);
 
-         //} catch (MyException $e) {
-             // $log->error('created machine stage: error');
-         //}
       }
    }
 
@@ -209,7 +206,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    * @return array XML sections into an array
    *
    **/
-   private function _getXMLSections($simpleXMLObj) {
+   private function _getXMLSections($arrayinventory) {
 
       $xmlSections = array();
       $pfInventoryComputerLibfilter = new PluginFusioninventoryInventoryComputerLibfilter();
@@ -220,10 +217,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       'CONTROLLERS',
       'NETWORKS');
 
-      foreach($simpleXMLObj->CONTENT->children() as $section) {
+      foreach($arrayinventory['CONTENT'] as $section=>$value) {
 
-         if(in_array($section->getName(), $sectionsToFilter)) {
-            $nofilter = $pfInventoryComputerLibfilter->filter($section);
+         if (in_array($section, $sectionsToFilter)) {
+            $nofilter = $pfInventoryComputerLibfilter->filter($section, $value);
             //if the folder for the filter doesn't exist, delete this element from array.
             if($nofilter){
                foreach($sectionsToFilter as $fKey => $fValue) {
@@ -235,17 +232,33 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
 
          $sectionData = array();
-         foreach ($section->children() as $data) {
-            $sectionData[$data->getName()] = (string)$data;
-         }
+         if (is_array($value)) {
+            foreach ($value as $vkey=>$vvalue) {
+               if (is_int($vkey)) {
+                  foreach ($vvalue as $vvkey=>$vvvalue) {
+                     $sectionData[$vvkey] = $vvvalue;
+                  }
+                  //sectionId initialization, we will affect id after hook createSection return value.
+                  $serializedSectionData = serialize($sectionData);
+                  array_push($xmlSections,
+                             array("sectionId"        => 0,
+                                   "sectionName"      => $section,
+                                   "sectionDatawName" => $serializedSectionData.$section,
+                                   "sectionData"      => $serializedSectionData));
 
+               } else {
+                  $sectionData[$vkey] = $vvalue;
+               }
+            }
+         }
          //sectionId initialization, we will affect id after hook createSection return value.
          $serializedSectionData = serialize($sectionData);
          array_push($xmlSections,
                     array("sectionId"        => 0,
-                          "sectionName"      => $section->getName(),
-                          "sectionDatawName" => $serializedSectionData.$section->getName(),
+                          "sectionName"      => $section,
+                          "sectionDatawName" => $serializedSectionData.$section,
                           "sectionData"      => $serializedSectionData));
+
       }
       return $xmlSections;
    }

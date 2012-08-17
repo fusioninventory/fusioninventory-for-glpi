@@ -46,6 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryInventoryComputerInventory {
    private $p_xml;
+   private $arrayinventory = array();
 
    /**
    * Import data
@@ -56,14 +57,14 @@ class PluginFusioninventoryInventoryComputerInventory {
    *
    * @return nothing (import ok) / error string (import ko)
    **/
-   function import($p_DEVICEID, $p_CONTENT, $p_xml) {
+   function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
       global $DB;
 
       $errors = '';
 
       $ret = $DB->query("SELECT GET_LOCK('inventory', 15)");
       if ($DB->result($ret, 0, 0) == 1) {
-          $this->sendCriteria($p_DEVICEID, $p_CONTENT, $p_xml);
+          $this->sendCriteria($p_DEVICEID, $a_CONTENT, $arrayinventory);
 
           $DB->request("SELECT RELEASE_LOCK('inventory')");
       } else {
@@ -85,47 +86,44 @@ class PluginFusioninventoryInventoryComputerInventory {
    * @return nothing
    *
    **/
-   function sendCriteria($p_DEVICEID, $p_CONTENT, $p_xml) {
+   function sendCriteria($p_DEVICEID, $a_CONTENT, $arrayinventory) {
 
-      // Hack
+      // * Hacks
 
          // Hack to put OS in software
-         $sxml_soft = $p_xml->CONTENT->addChild('SOFTWARES');
-         $sxml_soft->addChild('COMMENTS', (string)$p_xml->CONTENT->HARDWARE->OSCOMMENTS);
-         $sxml_soft->addChild('NAME', (string)$p_xml->CONTENT->HARDWARE->OSNAME);
-         $sxml_soft->addChild('VERSION', (string)$p_xml->CONTENT->HARDWARE->OSVERSION);
-
+         $inputos = array();
+         $inputos['COMMENTS'] = $arrayinventory['CONTENT']['HARDWARE']['OSCOMMENTS'];
+         $inputos['NAME']     = $arrayinventory['CONTENT']['HARDWARE']['OSNAME'];
+         $inputos['VERSION']  = $arrayinventory['CONTENT']['HARDWARE']['OSVERSION'];
+         $arrayinventory['CONTENT']['SOFTWARES'][] = $inputos;
+         
          // Hack for USB Printer serial
-         if (isset($p_xml->CONTENT->PRINTERS)) {
-            foreach($p_xml->CONTENT->PRINTERS as $printer) {
-               if ((isset($printer->SERIAL))
-                       AND (preg_match('/\/$/', (string)$printer->SERIAL))) {
-                  $printer->SERIAL = preg_replace('/\/$/', '', (string)$printer->SERIAL);
+         if (isset($arrayinventory['CONTENT']['PRINTERS'])) {
+            foreach($arrayinventory['CONTENT']['PRINTERS'] as $key=>$printer) {
+               if ((isset($printer['SERIAL']))
+                       AND (preg_match('/\/$/', $printer['SERIAL']))) {
+                  $arrayinventory['CONTENT']['PRINTERS'][$key]['SERIAL'] = preg_replace('/\/$/', '', $printer['SERIAL']);
                }
             }
          }
 
          // Hack to remove Memories with Flash types see ticket http://forge.fusioninventory.org/issues/1337
-         if (isset($p_xml->CONTENT->MEMORIES)) {
+         if (isset($arrayinventory['CONTENT']['MEMORIES'])) {
             $i = 0;
             $arrayName = array();
-            foreach($p_xml->CONTENT->MEMORIES as $memory) {
-               if ((isset($memory->TYPE))
-                       AND (preg_match('/Flash/', (string)$memory->TYPE))) {
-
-                  $arrayName[] = $i;
+            foreach($arrayinventory['CONTENT']['MEMORIES'] as $key=>$memory) {
+               if ((isset($memory['TYPE']))
+                       AND (preg_match('/Flash/', $memory['TYPE']))) {
+                  
+                  unset($arrayinventory['CONTENT']['MEMORIES'][$key]);
                }
-               $i++;
-            }
-            foreach ($arrayName as $key) {
-               unset($p_xml->CONTENT->MEMORIES[$key]);
             }
          }
       // End hack
 
       // Know if computer is HP to remove S in prefix of serial number
-         if ((isset($p_xml->CONTENT->BIOS->SMANUFACTURER))
-               AND (strstr($p_xml->CONTENT->BIOS->SMANUFACTURER, "ewlett"))) {
+         if ((isset($arrayinventory['CONTENT']['BIOS']['SMANUFACTURER']))
+               AND (strstr($arrayinventory['CONTENT']['BIOS']['SMANUFACTURER'], "ewlett"))) {
 
             $_SESSION["plugin_fusioninventory_manufacturerHP"] = 1;
          } else {
@@ -137,16 +135,16 @@ class PluginFusioninventoryInventoryComputerInventory {
       // End code for HP computers
 
       // Get tag is defined and put it in fusioninventory_agent table
-         if (isset($p_xml->CONTENT->ACCOUNTINFO)) {
-            foreach($p_xml->CONTENT->ACCOUNTINFO as $tag) {
-               if (isset($tag->KEYNAME)
-                       AND $tag->KEYNAME == 'TAG') {
-                  if (isset($tag->KEYVALUE)
-                          AND $tag->KEYVALUE != '') {
+         if (isset($arrayinventory['CONTENT']['ACCOUNTINFO'])) {
+            foreach($arrayinventory['CONTENT']['ACCOUNTINFO'] as $tag) {
+               if (isset($tag['KEYNAME'])
+                       AND $tag['KEYNAME'] == 'TAG') {
+                  if (isset($tag['KEYVALUE'])
+                          AND $tag['KEYVALUE'] != '') {
                      $pfAgent = new PluginFusioninventoryAgent();
                      $input = array();
                      $input['id'] = $_SESSION['plugin_fusioninventory_agents_id'];
-                     $input['tag'] = $tag->KEYVALUE;
+                     $input['tag'] = $tag['KEYVALUE'];
                      $pfAgent->update($input);
                   }
                }
@@ -156,74 +154,78 @@ class PluginFusioninventoryInventoryComputerInventory {
 
 
       $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
-      $p_xml = $pfBlacklist->cleanBlacklist($p_xml);
+      $arrayinventory = $pfBlacklist->cleanBlacklist($arrayinventory);
 
-      $this->p_xml = $p_xml;
+      $this->arrayinventory = $arrayinventory;
 //      $_SESSION['SOURCEXML'] = $p_xml;
 
-      $xml = $p_xml;
+//      $xml = $p_xml;
       $input = array();
 
       // Global criterias
 
-         if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
-            $input['serial'] = (string)$xml->CONTENT->BIOS->SSN;
+         if ((isset($arrayinventory['CONTENT']['BIOS']['SSN'])) 
+                 AND (!empty($arrayinventory['CONTENT']['BIOS']['SSN']))) {
+            $input['serial'] = $arrayinventory['CONTENT']['BIOS']['SSN'];
          }
-         if ((isset($xml->CONTENT->HARDWARE->UUID)) AND (!empty($xml->CONTENT->HARDWARE->UUID))) {
-            $input['uuid'] = (string)$xml->CONTENT->HARDWARE->UUID;
+         if ((isset($arrayinventory['CONTENT']['HARDWARE']['UUID'])) 
+                 AND (!empty($arrayinventory['CONTENT']['HARDWARE']['UUID']))) {
+            $input['uuid'] = $arrayinventory['CONTENT']['HARDWARE']['UUID'];
          }
-         if (isset($xml->CONTENT->NETWORKS)) {
-            foreach($xml->CONTENT->NETWORKS as $network) {
-               if (((isset($network->VIRTUALDEV)) AND ($network->VIRTUALDEV != '1'))
-                       OR (!isset($network->VIRTUALDEV))){
-                  if ((isset($network->MACADDR)) AND (!empty($network->MACADDR))) {
-                     $input['mac'][] = (string)$network->MACADDR;
+         if (isset($arrayinventory['CONTENT']['NETWORKS'])) {
+            foreach($arrayinventory['CONTENT']['NETWORKS'] as $network) {
+               if (((isset($network['VIRTUALDEV'])) AND ($network['VIRTUALDEV'] != '1'))
+                       OR (!isset($network['VIRTUALDEV']))){
+                  if ((isset($network['MACADDR'])) AND (!empty($network['MACADDR']))) {
+                     $input['mac'][] = $network['MACADDR'];
                   }
-                  if ((isset($network->IPADDRESS)) AND (!empty($network->IPADDRESS))) {
-                     if ((string)$network->IPADDRESS != '127.0.0.1') {
-                        $input['ip'][] = (string)$network->IPADDRESS;
+                  if ((isset($network['IPADDRESS'])) AND (!empty($network['IPADDRESS']))) {
+                     if ((string)$network['IPADDRESS'] != '127.0.0.1') {
+                        $input['ip'][] = $network['IPADDRESS'];
                      }
                   }
-                  if ((isset($network->IPSUBNET)) AND (!empty($network->IPSUBNET))) {
-                     $input['subnet'][] = (string)$network->IPSUBNET;
+                  if ((isset($network['IPSUBNET'])) AND (!empty($network['IPSUBNET']))) {
+                     $input['subnet'][] = (string)$network['IPSUBNET'];
                   }
                }
             }
          }
-         if ((isset($xml->CONTENT->HARDWARE->WINPRODKEY))
-               AND (!empty($xml->CONTENT->HARDWARE->WINPRODKEY))) {
-            $input['mskey'] = (string)$xml->CONTENT->HARDWARE->WINPRODKEY;
+         if ((isset($arrayinventory['CONTENT']['HARDWARE']['WINPRODKEY']))
+               AND (!empty($arrayinventory['CONTENT']['HARDWARE']['WINPRODKEY']))) {
+            $input['mskey'] = $arrayinventory['CONTENT']['HARDWARE']['WINPRODKEY'];
          }
-         if ((isset($xml->CONTENT->HARDWARE->OSNAME))
-               AND (!empty($xml->CONTENT->HARDWARE->OSNAME))) {
-            $input['osname'] = (string)$xml->CONTENT->HARDWARE->OSNAME;
+         if ((isset($arrayinventory['CONTENT']['HARDWARE']['OSNAME']))
+               AND (!empty($arrayinventory['CONTENT']['HARDWARE']['OSNAME']))) {
+            $input['osname'] = $arrayinventory['CONTENT']['HARDWARE']['OSNAME'];
 
          }
-         if ((isset($xml->CONTENT->BIOS->SMODEL)) AND (!empty($xml->CONTENT->BIOS->SMODEL))) {
-            $input['model'] = (string)$xml->CONTENT->BIOS->SMODEL;
+         if ((isset($arrayinventory['CONTENT']['BIOS']['SMODEL'])) 
+                 AND (!empty($arrayinventory['CONTENT']['BIOS']['SMODEL']))) {
+            $input['model'] = $arrayinventory['CONTENT']['BIOS']['SMODEL'];
          }
-         if (isset($xml->CONTENT->STORAGES)) {
-            foreach($xml->CONTENT->STORAGES as $storage) {
-               if ((isset($storage->SERIALNUMBER)) AND (!empty($storage->SERIALNUMBER))) {
-                  $input['partitionserial'][] = (string)$storage->SERIALNUMBER;
+         if (isset($arrayinventory['CONTENT']['STORAGES'])) {
+            foreach($arrayinventory['CONTENT']['STORAGES'] as $storage) {
+               if ((isset($storage['SERIALNUMBER'])) AND (!empty($storage['SERIALNUMBER']))) {
+                  $input['partitionserial'][] = $storage['SERIALNUMBER'];
                }
             }
          }
-         if (isset($xml->CONTENT->DRIVES)) {
-            foreach($xml->CONTENT->DRIVES as $drive) {
-               if ((isset($drive->SERIAL)) AND (!empty($drive->SERIAL))) {
-                  $input['hdserial'][] = (string)$drive->SERIAL;
+         if (isset($arrayinventory['CONTENT']['DRIVES'])) {
+            foreach($arrayinventory['CONTENT']['DRIVES'] as $drive) {
+               if ((isset($drive['SERIAL'])) AND (!empty($drive['SERIAL']))) {
+                  $input['hdserial'][] = $drive['SERIAL'];
                }
             }
          }
-         if ((isset($xml->CONTENT->ACCOUNTINFO->KEYNAME)) AND ($xml->CONTENT->ACCOUNTINFO->KEYNAME == 'TAG')) {
-            if (isset($xml->CONTENT->ACCOUNTINFO->KEYVALUE)) {
-               $input['tag'] = (string)$xml->CONTENT->ACCOUNTINFO->KEYVALUE;
+         if ((isset($arrayinventory['CONTENT']['ACCOUNTINFO']['KEYNAME'])) 
+                 AND ($arrayinventory['CONTENT']['ACCOUNTINFO']['KEYNAME'] == 'TAG')) {
+            if (isset($arrayinventory['CONTENT']['ACCOUNTINFO']['KEYVALUE'])) {
+               $input['tag'] = $arrayinventory['CONTENT']['ACCOUNTINFO']['KEYVALUE'];
             }
          }
-         if ((isset($xml->CONTENT->HARDWARE->NAME))
-                 AND ((string)$xml->CONTENT->HARDWARE->NAME != '')) {
-            $input['name'] = (string)$xml->CONTENT->HARDWARE->NAME;
+         if ((isset($arrayinventory['CONTENT']['HARDWARE']['NAME']))
+                 AND ($arrayinventory['CONTENT']['HARDWARE']['NAME'] != '')) {
+            $input['name'] = $arrayinventory['CONTENT']['HARDWARE']['NAME'];
          } else {
             $input['name'] = '';
          }
@@ -235,8 +237,9 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          if ($pfConfig->getValue($plugins_id, 'transfers_id_auto', 'inventory') == '0') {
             $inputent = $input;
-            if ((isset($xml->CONTENT->HARDWARE->WORKGROUP)) AND (!empty($xml->CONTENT->HARDWARE->WORKGROUP))) {
-               $inputent['domain'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->WORKGROUP);
+            if ((isset($arrayinventory['CONTENT']['HARDWARE']['WORKGROUP'])) 
+                    AND (!empty($arrayinventory['CONTENT']['HARDWARE']['WORKGROUP']))) {
+               $inputent['domain'] = $arrayinventory['CONTENT']['HARDWARE']['WORKGROUP'];
             }
             if (isset($inputent['serial'])) {
                $inputent['serialnumber'] = $inputent['serial'];
@@ -266,8 +269,9 @@ class PluginFusioninventoryInventoryComputerInventory {
          $inputdb['date'] = date("Y-m-d H:i:s");
          $inputdb['itemtype'] = "Computer";
 
-         if ((isset($xml->CONTENT->HARDWARE->WORKGROUP)) AND (!empty($xml->CONTENT->HARDWARE->WORKGROUP))) {
-            $input['domain'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->WORKGROUP);
+         if ((isset($arrayinventory['CONTENT']['HARDWARE']['WORKGROUP'])) 
+                 AND (!empty($arrayinventory['CONTENT']['HARDWARE']['WORKGROUP']))) {
+            $input['domain'] = $arrayinventory['CONTENT']['HARDWARE']['WORKGROUP'];
          }
          if (isset($input['serial'])) {
             $input['serialnumber'] = $input['serial'];
@@ -309,9 +313,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          "pluginFusioninventory-rules",
          "Rule passed : ".$items_id.", ".$itemtype."\n"
       );
-      //$xml = simplexml_load_string($_SESSION['SOURCEXML'],'SimpleXMLElement', LIBXML_NOCDATA);
-      //$xml = $_SESSION['SOURCEXML'];
-      $xml = $this->p_xml;
+      $arrayinventory = $this->arrayinventory;
 
       if ($itemtype == 'Computer') {
          $pfLib = new PluginFusioninventoryInventoryComputerLib();
@@ -319,31 +321,34 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          // ** Get entity with rules
             $input_rules = array();
-            if ((isset($xml->CONTENT->BIOS->SSN)) AND (!empty($xml->CONTENT->BIOS->SSN))) {
-               $input_rules['serialnumber'] = (string)$xml->CONTENT->BIOS->SSN;
+            if ((isset($arrayinventory['CONTENT']['BIOS']['SSN'])) 
+                    AND (!empty($arrayinventory['CONTENT']['BIOS']['SSN']))) {
+               $input_rules['serialnumber'] = $arrayinventory['CONTENT']['BIOS']['SSN'];
             }
-            if ((isset($xml->CONTENT->HARDWARE->NAME)) AND (!empty($xml->CONTENT->HARDWARE->NAME))) {
-               $input_rules['name'] = (string)$xml->CONTENT->HARDWARE->NAME;
+            if ((isset($arrayinventory['CONTENT']['HARDWARE']['NAME'])) 
+                    AND (!empty($arrayinventory['CONTENT']['HARDWARE']['NAME']))) {
+               $input_rules['name'] = $arrayinventory['CONTENT']['HARDWARE']['NAME'];
             }
-            if (isset($xml->CONTENT->NETWORKS)) {
-               foreach($xml->CONTENT->NETWORKS as $network) {
-                  if ((isset($network->IPADDRESS)) AND (!empty($network->IPADDRESS))) {
-                     if ((string)$network->IPADDRESS != '127.0.0.1') {
-                        $input_rules['ip'][] = (string)$network->IPADDRESS;
+            if (isset($arrayinventory['CONTENT']['NETWORKS'])) {
+               foreach($arrayinventory['CONTENT']['NETWORKS'] as $network) {
+                  if ((isset($network['IPADDRESS'])) AND (!empty($network['IPADDRESS']))) {
+                     if ($network['IPADDRESS'] != '127.0.0.1') {
+                        $input_rules['ip'][] = $network['IPADDRESS'];
                      }
                   }
-                  if ((isset($network->IPSUBNET)) AND (!empty($network->IPSUBNET))) {
-                     $input_rules['subnet'][] = (string)$network->IPSUBNET;
+                  if ((isset($network['IPSUBNET'])) AND (!empty($network['IPSUBNET']))) {
+                     $input_rules['subnet'][] = $network['IPSUBNET'];
                   }
                }
             }
-            if ((isset($xml->CONTENT->HARDWARE->WORKGROUP)) AND (!empty($xml->CONTENT->HARDWARE->WORKGROUP))) {
-               $input_rules['domain'] = (string)$xml->CONTENT->HARDWARE->WORKGROUP;
+            if ((isset($arrayinventory['CONTENT']['HARDWARE']['WORKGROUP'])) 
+                    AND (!empty($arrayinventory['CONTENT']['HARDWARE']['WORKGROUP']))) {
+               $input_rules['domain'] = $arrayinventory['CONTENT']['HARDWARE']['WORKGROUP'];
             }
-            if ((isset($xml->CONTENT->ACCOUNTINFO->KEYNAME))
-                  AND ($xml->CONTENT->ACCOUNTINFO->KEYNAME == 'TAG')) {
-               if (isset($xml->CONTENT->ACCOUNTINFO->KEYVALUE)) {
-                  $input_rules['tag'] = (string)$xml->CONTENT->ACCOUNTINFO->KEYVALUE;
+            if ((isset($arrayinventory['CONTENT']['ACCOUNTINFO']['KEYNAME']))
+                  AND ($arrayinventory['CONTENT']['ACCOUNTINFO']['KEYNAME'] == 'TAG')) {
+               if (isset($arrayinventory['CONTENT']['ACCOUNTINFO']['KEYVALUE'])) {
+                  $input_rules['tag'] = $arrayinventory['CONTENT']['ACCOUNTINFO']['KEYVALUE'];
                }
             }
 
@@ -397,19 +402,19 @@ class PluginFusioninventoryInventoryComputerInventory {
                $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
                unset($_SESSION['plugin_fusioninventory_rules_id']);
             }
-            $pfLib->startAction($xml, $items_id, '1');
+            $pfLib->startAction($arrayinventory, $items_id, '1');
          } else {
             $computer = new Computer();
             $operatingSystem = new OperatingSystem();
             $computer->getFromDB($items_id);
-            if ((isset($xml->CONTENT->HARDWARE->OSNAME))
+            if ((isset($arrayinventory['CONTENT']['HARDWARE']['OSNAME']))
                     AND ($computer->fields['operatingsystems_id']
-                            != $operatingSystem->importExternal((string)$xml->CONTENT->HARDWARE->OSNAME,
+                            != $operatingSystem->importExternal($arrayinventory['CONTENT']['HARDWARE']['OSNAME'],
                                                                 $_SESSION["plugin_fusinvinventory_entity"]))) {
                $_SESSION["plugin_fusinvinventory_history_add"] = false;
                $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
             }
-            $pfLib->startAction($xml, $items_id, '0');
+            $pfLib->startAction($arrayinventory, $items_id, '0');
          }
       } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
          $class = new $itemtype();
@@ -443,19 +448,19 @@ class PluginFusioninventoryInventoryComputerInventory {
             PluginFusioninventoryUnknownDevice::writeXML($items_id, $xml->asXML());
          }
 
-         if (isset($xml->CONTENT->HARDWARE->NAME)) {
-            $input['name'] = (string)$xml->CONTENT->HARDWARE->NAME;
+         if (isset($arrayinventory['CONTENT']['HARDWARE']['NAME'])) {
+            $input['name'] = $arrayinventory['CONTENT']['HARDWARE']['NAME'];
          }
          $input['item_type'] = "Computer";
-         if (isset($xml->CONTENT->HARDWARE->WORKGROUP)) {
+         if (isset($arrayinventory['CONTENT']['HARDWARE']['WORKGROUP'])) {
             $input['domain'] = Dropdown::importExternal("Domain",
-                                                        (string)$xml->CONTENT->HARDWARE->WORKGROUP,
+                                                        $arrayinventory['CONTENT']['HARDWARE']['WORKGROUP'],
                                                         $_SESSION["plugin_fusinvinventory_entity"]);
          }
-         if (isset($xml->CONTENT->BIOS->SSN)) {
-            $input['serial'] = (string)$xml->CONTENT->BIOS->SSN;
-         } else if(isset($xml->CONTENT->BIOS->MSN)) {
-            $input['serial'] = (string)$xml->CONTENT->BIOS->MSN;
+         if (isset($arrayinventory['CONTENT']['BIOS']['SSN'])) {
+            $input['serial'] = $arrayinventory['CONTENT']['BIOS']['SSN'];
+         } else if(isset($arrayinventory['CONTENT']['BIOS']['MSN'])) {
+            $input['serial'] = $arrayinventory['CONTENT']['BIOS']['MSN'];
          }
          $class->update($input);
       }

@@ -155,11 +155,11 @@ class PluginFusioninventoryCommunication {
    /**
     * Import data
     *
-    * @param $p_xml XML code to import
+    * @param $arrayinventory array to import
     *
     * @return true (import ok) / false (import ko)
     **/
-   function import($p_xml) {
+   function import($arrayinventory) {
 
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $pfAgent = new PluginFusioninventoryAgent();
@@ -168,14 +168,12 @@ class PluginFusioninventoryCommunication {
          'pluginFusioninventory-communication',
          'Function import().'
       );
-      // TODO : gérer l'encodage, la version
-      // Do not manage <REQUEST> element (always the same)
 
       $_SESSION["plugin_fusioninventory_disablelocks"] = 1;
-      $this->message = $p_xml;
+      $this->message = $arrayinventory;
       $errors = '';
 
-      $xmltag = (string)$this->message->QUERY;
+      $xmltag = $this->message['QUERY'];
       if ($xmltag == "NETDISCOVERY") {
          $xmltag = "NETWORKDISCOVERY";
       }
@@ -185,7 +183,7 @@ class PluginFusioninventoryCommunication {
       }
 
       
-      $agent = $pfAgent->InfosByKey($this->message->DEVICEID);
+      $agent = $pfAgent->InfosByKey($this->message['DEVICEID']);
       if ($xmltag == "PROLOG") {
          return false;
       }
@@ -193,10 +191,10 @@ class PluginFusioninventoryCommunication {
          return true;
       }
 
-      if (isset($this->message->CONTENT->MODULEVERSION)) {
-         $pfAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->message->CONTENT->MODULEVERSION);
-      } else if (isset($this->message->CONTENT->VERSIONCLIENT)) {
-         $version = str_replace("FusionInventory-Agent_", "", (string)$this->message->CONTENT->VERSIONCLIENT);
+      if (isset($this->message['CONTENT']['MODULEVERSION'])) {
+         $pfAgent->setAgentVersions($agent['id'], $xmltag, $this->message['CONTENT']['MODULEVERSION']);
+      } else if (isset($this->message['CONTENT']['VERSIONCLIENT'])) {
+         $version = str_replace("FusionInventory-Agent_", "", $this->message['CONTENT']['VERSIONCLIENT']);
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
@@ -207,9 +205,9 @@ class PluginFusioninventoryCommunication {
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];
          $moduleCommunication = new $moduleClass();
-         $errors.=$moduleCommunication->import($this->message->DEVICEID,
-                 $this->message->CONTENT,
-                 $p_xml);
+         $errors.=$moduleCommunication->import($this->message['DEVICEID'],
+                 $this->message['CONTENT'],
+                 $arrayinventory);
       } else {
          $errors.=__('Unattended element in').' QUERY : *'.$xmltag."*\n";
       }
@@ -407,16 +405,16 @@ class PluginFusioninventoryCommunication {
             return;
          }
       }
-
-      // Clean for XSS and other in XML
-      $pfToolbox = new PluginFusioninventoryToolbox();
-      $pxml = $pfToolbox->cleanXML($pxml);
+      
+      // Convert XML into PHP array
+      $arrayinventory = array();
+      $arrayinventory = PluginFusioninventoryFormatconvert::XMLtoArray($pxml);
 
       $agent = new PluginFusioninventoryAgent();
-      $agents_id = $agent->importToken($pxml);
+      $agents_id = $agent->importToken($arrayinventory);
       $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
-
-      if (!$communication->import($pxml)) {
+      
+      if (!$communication->import($arrayinventory)) {
 
          if (isset($pxml->DEVICEID)) {
 

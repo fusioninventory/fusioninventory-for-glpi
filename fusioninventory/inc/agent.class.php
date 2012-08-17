@@ -353,18 +353,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    * @param $p_xml simpleXMLobject
    *
    **/
-   function importToken($pxml) {
+   function importToken($arrayinventory) {
 
-      if (isset($pxml->DEVICEID)) {
+      if (isset($arrayinventory['DEVICEID'])) {
          $pta = new PluginFusioninventoryAgent();
-         $a_agent = $pta->find("`device_id`='".$pxml->DEVICEID."'", "", "1");
+         $a_agent = $pta->find("`device_id`='".$arrayinventory['DEVICEID']."'", "", "1");
          if (empty($a_agent)) {
             $a_input = array();
-            if (isset($pxml->TOKEN)) {
-               $a_input['token'] = $pxml->TOKEN;
+            if (isset($arrayinventory['TOKEN'])) {
+               $a_input['token'] = $arrayinventory['TOKEN'];
             }
-            $a_input['name']         = $pxml->DEVICEID;
-            $a_input['device_id']    = $pxml->DEVICEID;
+            $a_input['name']         = $arrayinventory['DEVICEID'];
+            $a_input['device_id']    = $arrayinventory['DEVICEID'];
             $a_input['entities_id']  = 0;
             $a_input['last_contact'] = date("Y-m-d H:i:s");
             if (isset($_SERVER['HTTP_USER_AGENT'])) {
@@ -375,8 +375,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             foreach ($a_agent as $data) {
                $input = array();
                $input['id'] = $data['id'];
-               if (isset($pxml->TOKEN)) {
-                  $input['token'] = $pxml->TOKEN;
+               if (isset($arrayinventory['TOKEN'])) {
+                  $input['token'] = $arrayinventory['TOKEN'];
                }
                $input['last_contact'] = date("Y-m-d H:i:s");
                if (isset($_SERVER['HTTP_USER_AGENT'])) {

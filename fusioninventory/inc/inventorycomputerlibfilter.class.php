@@ -53,34 +53,35 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
     * @param $section Section of the XML
     *
     **/
-    public static function filter($section) {
+    public static function filter($section, $value) {
 
-        switch($section->getName()) {
+        switch($section) {
             case 'CONTROLLERS':
 
-                if(isset($section->PCIID) AND $section->PCIID != '') {
-                    $manufacturer = self::_getDataFromPCIID($section->PCIID);
+                if(isset($value['PCIID']) AND $value['PCIID'] != '') {
+                    $manufacturer = self::_getDataFromPCIID($value['PCIID']);
                     if (!empty($manufacturer)) {
-                       $section->MANUFACTURER = $manufacturer;
+                       $value['MANUFACTURER'] = $manufacturer;
                     }
                 }
 
             break;
 
             case 'USBDEVICES':
-                if(isset($section->VENDORID) AND $section->VENDORID != ''
-                     AND isset($section->PRODUCTID)) {
+                if(isset($value['VENDORID']) 
+                        AND $value['VENDORID'] != ''
+                        AND isset($value['PRODUCTID'])) {
 
-                    $dataArray = self::_getDataFromUSBID($section->VENDORID, $section->PRODUCTID);
+                    $dataArray = self::_getDataFromUSBID($value['VENDORID'], $value['PRODUCTID']);
 
                     $dataArray[0] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[0]);
                     if (!empty($dataArray[0])
-                            AND !isset($section->MANUFACTURER)) {
+                            AND !isset($value['MANUFACTURER'])) {
                        $section->addChild('MANUFACTURER', $dataArray[0]);
                     }
                     $dataArray[1] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[1]);
                     if (!empty($dataArray[1])
-                            AND !isset($section->PRODUCTNAME)) {
+                            AND !isset($value['PRODUCTNAME'])) {
                        $section->addChild('PRODUCTNAME', $dataArray[1]);
                     }
 
