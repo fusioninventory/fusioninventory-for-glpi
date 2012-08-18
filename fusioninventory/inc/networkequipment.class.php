@@ -304,11 +304,6 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
       echo "</table>";
       Html::closeForm();
 
-
-      // ***** IP list ***** //
-      PluginFusioninventoryNetworkEquipmentIP::showIP($id);
-      echo "<br/>";
-
 // ********************************************************************************************** //
 // *********************************** METTRE TABLEAU DES PORTS ********************************* //
 // ********************************************************************************************** //
