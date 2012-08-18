@@ -57,7 +57,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
     * @return "" (import ok) / error string (import ko)
     *
     **/
-   function import($p_DEVICEID, $p_CONTENT, $p_xml) {
+   function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfAgent = new PluginFusioninventoryAgent();
 
@@ -67,17 +67,17 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $errors = '';
 
       $a_agent = $pfAgent->InfosByKey($p_DEVICEID);
-      if (isset($p_CONTENT->PROCESSNUMBER)) {
-         $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $p_CONTENT->PROCESSNUMBER;
-         if ($pfTaskjobstate->getFromDB($p_CONTENT->PROCESSNUMBER)) {
+      if (isset($a_CONTENT['PROCESSNUMBER'])) {
+         $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $a_CONTENT['PROCESSNUMBER'];
+         if ($pfTaskjobstate->getFromDB($a_CONTENT['PROCESSNUMBER'])) {
             if ($pfTaskjobstate->fields['state'] != "3") {
-               $pfTaskjobstate->changeStatus($p_CONTENT->PROCESSNUMBER, 2);
-               if ((!isset($p_CONTENT->AGENT->START)) AND (!isset($p_CONTENT->AGENT->END))) {
+               $pfTaskjobstate->changeStatus($a_CONTENT['PROCESSNUMBER'], 2);
+               if ((!isset($a_CONTENT['AGENT']['START'])) 
+                       AND (!isset($a_CONTENT['AGENT']['END']))) {
                   $nb_devices = 0;
-                  $segs=$p_CONTENT->xpath('//DEVICE');
-                  $nb_devices = count($segs);
+                  $nb_devices = count($a_CONTENT['DEVICE']);
 
-                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $p_CONTENT->PROCESSNUMBER;
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $a_CONTENT['PROCESSNUMBER'];
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
@@ -88,28 +88,28 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          }
       }
 
-      if ($pfTaskjobstate->getFromDB($p_CONTENT->PROCESSNUMBER)) {
+      if ($pfTaskjobstate->getFromDB($a_CONTENT['PROCESSNUMBER'])) {
          if ($pfTaskjobstate->fields['state'] != "3") {
             $pfImportExport = new PluginFusioninventorySnmpmodelImportExport();
-            $errors.=$pfImportExport->import_netdiscovery($p_CONTENT, $p_DEVICEID);
-            if (isset($p_CONTENT->AGENT->END)) {
-               if ((isset($p_CONTENT->DICO)) AND ($p_CONTENT->DICO == "REQUEST")) {
+            $errors.=$pfImportExport->import_netdiscovery($a_CONTENT, $p_DEVICEID);
+            if (isset($a_CONTENT['AGENT']['END'])) {
+               if ((isset($a_CONTENT['DICO'])) AND ($a_CONTENT['DICO'] == "REQUEST")) {
                   $pfAgent->getFromDB($pfTaskjobstate->fields["plugin_fusioninventory_agents_id"]);
                   $input = array();
                   $input['id'] = $pfAgent->fields['id'];
                   $input["senddico"] = "1";
                   $pfAgent->update($input);
 
-                  $pfTaskjobstate->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
-                                                                          $a_agent['id'],
-                                                                          'PluginFusioninventoryAgent',
-                                                                          '1',
-                                                                          '==fusinvsnmp::3==');
+                  $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
+                                                      $a_agent['id'],
+                                                      'PluginFusioninventoryAgent',
+                                                      '1',
+                                                      '==fusinvsnmp::3==');
                } else {
 
-                  $pfTaskjobstate->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
-                                                                       $a_agent['id'],
-                                                                       'PluginFusioninventoryAgent');
+                  $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
+                                                      $a_agent['id'],
+                                                      'PluginFusioninventoryAgent');
                }
             }
          }
@@ -124,42 +124,42 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
     *
     * @param type $p_xml simpleXML object
     */
-   function sendCriteria($p_xml) {
+   function sendCriteria($arrayinventory) {
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkDiscovery->sendCriteria().');
 
-      if ((isset($p_xml->MAC)) AND ($p_xml->MAC == "00:00:00:00:00:00")) {
-         unset($p_xml->MAC);
+      if ((isset($arrayinventory['MAC'])) AND ($arrayinventory['MAC'] == "00:00:00:00:00:00")) {
+         unset($arrayinventory['MAC']);
       }
 
-      $_SESSION['SOURCE_XMLDEVICE'] = $p_xml->asXML();
+      $_SESSION['SOURCE_XMLDEVICE'] = $arrayinventory;
 
       $input = array();
 
       // Global criterias
 
-      if ((isset($p_xml->SERIAL)) AND (!empty($p_xml->SERIAL))) {
-         $input['serial'] = (string)$p_xml->SERIAL;
+      if ((isset($arrayinventory['SERIAL'])) AND (!empty($arrayinventory['SERIAL']))) {
+         $input['serial'] = $arrayinventory['SERIAL'];
       }
-      if ((isset($p_xml->MAC)) AND (!empty($p_xml->MAC))) {
-         $input['mac'][] = (string)$p_xml->MAC;
+      if ((isset($arrayinventory['MAC'])) AND (!empty($arrayinventory['MAC']))) {
+         $input['mac'][] = $arrayinventory['MAC'];
       }
-      if ((isset($p_xml->IP)) AND (!empty($p_xml->IP))) {
-         $input['ip'][] = (string)$p_xml->IP;
+      if ((isset($arrayinventory['IP'])) AND (!empty($arrayinventory['IP']))) {
+         $input['ip'][] = $arrayinventory['IP'];
       }
-      if ((isset($p_xml->MODELSNMP)) AND (!empty($p_xml->MODELSNMP))) {
-         $input['model'] = (string)$p_xml->MODELSNMP;
+      if ((isset($arrayinventory['MODELSNMP'])) AND (!empty($arrayinventory['MODELSNMP']))) {
+         $input['model'] = $arrayinventory['MODELSNMP'];
       }
-      if ((isset($p_xml->NETBIOSNAME)) AND (!empty($p_xml->NETBIOSNAME))) {
-         $input['name'] = (string)$p_xml->NETBIOSNAME;
-      } else if ((isset($p_xml->SNMPHOSTNAME)) AND (!empty($p_xml->SNMPHOSTNAME))) {
-         $input['name'] = (string)$p_xml->SNMPHOSTNAME;
-      } else if ((isset($p_xml->DNSHOSTNAME)) AND (!empty($p_xml->DNSHOSTNAME))) {
-         $input['name'] = (string)$p_xml->DNSHOSTNAME;
+      if ((isset($arrayinventory['NETBIOSNAME'])) AND (!empty($arrayinventory['NETBIOSNAME']))) {
+         $input['name'] = $arrayinventory['NETBIOSNAME'];
+      } else if ((isset($arrayinventory['SNMPHOSTNAME'])) AND (!empty($arrayinventory['SNMPHOSTNAME']))) {
+         $input['name'] = $arrayinventory['SNMPHOSTNAME'];
+      } else if ((isset($arrayinventory['DNSHOSTNAME'])) AND (!empty($arrayinventory['DNSHOSTNAME']))) {
+         $input['name'] = $arrayinventory['DNSHOSTNAME'];
       }
-      $input['entities_id'] = (string)$p_xml->ENTITY;
-      switch ($p_xml->TYPE) {
+      $input['entities_id'] = $arrayinventory['ENTITY'];
+      switch ($arrayinventory['TYPE']) {
 
          case '1':
             $input['itemtype'] = "Computer";
@@ -298,31 +298,31 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkDiscovery->importDevice().');
 
-      $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $arrayinventory = $_SESSION['SOURCE_XMLDEVICE'];
       $input = array();
       $input['id'] = $item->getID();
 
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($item->getType()), $item->getID());
 
       if (!in_array('name', $a_lockable)) {
-         if (isset($xml->NETBIOSNAME) AND !empty($xml->NETBIOSNAME)) {
-            $input['name'] = (string)$xml->NETBIOSNAME;
-         } else if (isset($xml->SNMPHOSTNAME) AND !empty($xml->SNMPHOSTNAME)) {
-            $input['name'] = (string)$xml->SNMPHOSTNAME;
-         } else if (isset($xml->DNSHOSTNAME) AND !empty($xml->DNSHOSTNAME)) {
-            $input['name'] = (string)$xml->DNSHOSTNAME;
+         if (isset($arrayinventory['NETBIOSNAME']) AND !empty($arrayinventory['NETBIOSNAME'])) {
+            $input['name'] = $arrayinventory['NETBIOSNAME'];
+         } else if (isset($arrayinventory['SNMPHOSTNAME']) AND !empty($arrayinventory['SNMPHOSTNAME'])) {
+            $input['name'] = $arrayinventory['SNMPHOSTNAME'];
+         } else if (isset($arrayinventory['DNSHOSTNAME']) AND !empty($arrayinventory['DNSHOSTNAME'])) {
+            $input['name'] = $arrayinventory['DNSHOSTNAME'];
          }
       }
       if (!in_array('serial', $a_lockable)) {
-         if (trim($xml->SERIAL) != '') {
-            $input['serial'] = trim($xml->SERIAL);
+         if (trim($arrayinventory['SERIAL']) != '') {
+            $input['serial'] = trim($arrayinventory['SERIAL']);
          }
       }
 
-      if (isset($xml->ENTITY) AND !empty($xml->ENTITY)) {
-         $input['entities_id'] = $xml->ENTITY;
+      if (isset($arrayinventory['ENTITY']) AND !empty($arrayinventory['ENTITY'])) {
+         $input['entities_id'] = $arrayinventory['ENTITY'];
          if (!isset($_SESSION['glpiactiveentities_string'])) {
-            $_SESSION['glpiactiveentities_string'] = "'".$xml->ENTITY."'";
+            $_SESSION['glpiactiveentities_string'] = "'".$arrayinventory['ENTITY']."'";
          }
       }
       if (!isset($_SESSION['glpiactiveentities_string'])) {
@@ -334,10 +334,10 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          case 'Computer':
             // If computer is update with Agent, don't update it
             if (Dropdown::getDropdownName("glpi_autoupdatesystems", $item->fields['autoupdatesystems_id']) != 'FusionInventory') {
-               if (isset($xml->WORKGROUP)) {
+               if (isset($arrayinventory['WORKGROUP'])) {
                   $domain = new Domain();
                   if (!in_array('domains_id', $a_lockable)) {
-                     $input['domains_id'] = $domain->import(array('name'=>(string)$xml->WORKGROUP));
+                     $input['domains_id'] = $domain->import(array('name'=>$arrayinventory['WORKGROUP']));
                   }
                }
                $item->update($input);
@@ -348,14 +348,14 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                      AND `items_id`='".$item->getID()."'");
                $update = 0;
                foreach ($a_computerports as $a_computerport) {
-                  if (isset($xml->MAC) AND !empty($xml->MAC)) {
-                     $xml->MAC = strtolower((string)$xml->MAC);
-                     if ($a_computerport['mac'] == (string)$xml->MAC) {
+                  if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
+                     $arrayinventory['MAC'] = strtolower($arrayinventory['MAC']);
+                     if ($a_computerport['mac'] == $arrayinventory['MAC']) {
                         $input = array();
                         $input['id'] = $a_computerport['id'];
-                        $input['mac'] = (string)$xml->MAC;
-                        if (isset($xml->IP)) {
-                           $input['ip'] = (string)$xml->IP;
+                        $input['mac'] = $arrayinventory['MAC'];
+                        if (isset($arrayinventory['IP'])) {
+                           $input['ip'] = $arrayinventory['IP'];
                         }
                         $NetworkPort->update($input);
                         unset($a_computerports[$a_computerport['id']]);
@@ -371,11 +371,11 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                }
                if ($update == '0') {
                   $input = array();
-                  if (isset($xml->MAC) AND !empty($xml->MAC)) {
-                     $input['mac'] = (string)$xml->MAC;
+                  if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
+                     $input['mac'] = $arrayinventory['MAC'];
                   }
-                  if (isset($xml->IP)) {
-                     $input['ip'] = (string)$xml->IP;
+                  if (isset($arrayinventory['IP'])) {
+                     $input['ip'] = $arrayinventory['IP'];
                   }
                   $input['items_id'] = $item->getID();
                   $input['itemtype'] = 'Computer';
@@ -393,16 +393,16 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
 
             if (!in_array('contact', $a_lockable)) {
-               $input['contact'] = (string)$xml->USERSESSION;
+               $input['contact'] = $arrayinventory['USERSESSION'];
             }
             if (!in_array('domain', $a_lockable)) {
-               if (!empty($xml->WORKGROUP)) {
+               if (!empty($arrayinventory['WORKGROUP'])) {
                $input['domain'] = Dropdown::importExternal("Domain",
-                                       (string)$xml->WORKGROUP,(string)$xml->ENTITY);
+                                       $arrayinventory['WORKGROUP'], $arrayinventory['ENTITY']);
                }
             }
-            if (!empty($xml->TYPE)) {
-               switch ((string)$xml->TYPE) {
+            if (!empty($arrayinventory['TYPE'])) {
+               switch ($arrayinventory['TYPE']) {
 
                   case '1':
                      $input['item_type'] = 'Computer';
@@ -428,20 +428,20 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                   AND `items_id`='".$item->getID()."'");
             $update = 0;
             foreach ($a_unknownPorts as $a_unknownPort) {
-               if (isset($xml->MAC) AND !empty($xml->MAC)) {
-                  $xml->MAC = strtolower((string)$xml->MAC);
-                  if ($a_unknownPort['mac'] == (string)$xml->MAC) {
-                     $a_unknownPort['mac'] = (string)$xml->MAC;
-                     if (isset($xml->IP)) {
-                        $a_unknownPort['ip'] = (string)$xml->IP;
+               if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
+                  $arrayinventory['MAC'] = strtolower($arrayinventory['MAC']);
+                  if ($a_unknownPort['mac'] == $arrayinventory['MAC']) {
+                     $a_unknownPort['mac'] = $arrayinventory['MAC'];
+                     if (isset($arrayinventory['IP'])) {
+                        $a_unknownPort['ip'] = $arrayinventory['IP'];
                      }
                      $NetworkPort->update($a_unknownPort);
                      unset($a_unknownPorts[$a_unknownPort['id']]);
                      $update = 1;
                      break;
                   }
-               } else if (isset($xml->IP) AND !empty($xml->IP)) {
-                  if ($a_unknownPort['ip'] == (string)$xml->IP) {
+               } else if (isset($arrayinventory['IP']) AND !empty($arrayinventory['IP'])) {
+                  if ($a_unknownPort['ip'] == $arrayinventory['IP']) {
                      unset($a_unknownPorts[$a_unknownPort['id']]);
                      $update = 1;
                      break;
@@ -453,11 +453,11 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             if ($update == '0') {
                $input = array();
-               if (isset($xml->MAC) AND !empty($xml->MAC)) {
-                  $input['mac'] = (string)$xml->MAC;
+               if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
+                  $input['mac'] = $arrayinventory['MAC'];
                }
-               if (isset($xml->IP)) {
-                  $input['ip'] = (string)$xml->IP;
+               if (isset($arrayinventory['IP'])) {
+                  $input['ip'] = $arrayinventory['IP'];
                }
                $input['items_id'] = $item->getID();
                $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
@@ -480,23 +480,24 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             $input = array();
             $input['id'] = $pfUnknownDevice->fields['id'];
-            if (isset($xml->DESCRIPTION) AND !empty($xml->DESCRIPTION)) {
-               $input['sysdescr'] = $xml->DESCRIPTION;
+            if (isset($arrayinventory['DESCRIPTION']) 
+                    AND !empty($arrayinventory['DESCRIPTION'])) {
+               $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
             }
             // <MODELSNMP>Printer0093</MODELSNMP>
-            if (isset($xml->MODELSNMP) AND !empty($xml->MODELSNMP)) {
+            if (isset($arrayinventory['MODELSNMP']) AND !empty($arrayinventory['MODELSNMP'])) {
                $pfModel = new PluginFusioninventorySnmpmodel();
-               $model_id = $pfModel->getModelByKey($xml->MODELSNMP);
-               if (($model_id == '0') AND (isset($xml->DESCRIPTION)) AND (!empty($xml->DESCRIPTION))) {
-                  $model_id = $pfModel->getModelBySysdescr($xml->DESCRIPTION);
+               $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
+               if (($model_id == '0') AND (isset($arrayinventory['DESCRIPTION'])) AND (!empty($arrayinventory['DESCRIPTION']))) {
+                  $model_id = $pfModel->getModelBySysdescr($arrayinventory['DESCRIPTION']);
                }
                if ($model_id != '0') {
                   $input['plugin_fusioninventory_snmpmodels_id'] = $model_id;
                }
             }
 
-            if (isset($xml->AUTHSNMP) AND !empty($xml->AUTHSNMP)) {
-               $input['plugin_fusinvsnmp_configsecurities_id'] = $xml->AUTHSNMP;
+            if (isset($arrayinventory['AUTHSNMP']) AND !empty($$arrayinventory['AUTHSNMP'])) {
+               $input['plugin_fusinvsnmp_configsecurities_id'] = $arrayinventory['AUTHSNMP'];
             }
             $pfUnknownDevice->update($input);
             break;
@@ -512,10 +513,10 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                     , 1));
             $networkports_id = 0;
             if (isset($a_networkPortAggregates['id'])) {
-               if (isset($xml->MAC) AND !empty($xml->MAC)) {
+               if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
                   $input = array();
                   $input['id'] = $a_networkPortAggregates['id'];
-                  $input['mac'] = $xml->MAC;
+                  $input['mac'] = $arrayinventory['MAC'];
                   $NetworkPort->update($input);
                }
                $networkports_id = $a_networkPortAggregates['id'];
@@ -524,8 +525,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $input['itemtype'] = 'NetworkEquipment';
                $input['items_id'] = $item->getID();
                $input['instantiation_type'] = 'NetworkPortAggregate';
-               if (isset($xml->MAC) AND !empty($xml->MAC)) {
-                  $input['mac'] = (string)$xml->MAC;
+               if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
+                  $input['mac'] = $arrayinventory['MAC'];
                }
                $networkports_id = $NetworkPort->add($input);
             }
@@ -544,12 +545,12 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $input['items_id'] = $networkports_id;
                $networknames_id = $networkName->add($input);
             }
-            if (isset($xml->IP)) {
+            if (isset($arrayinventory['IP'])) {
                $iPAddress = new IPAddress();
                $input = array();
                $input['itemtype'] = 'NetworkName';
                $input['items_id'] = $networknames_id;
-               $input['name'] = (string)$xml->IP;
+               $input['name'] = $arrayinventory['IP'];
                $iPAddress->add($input);
             }
             
@@ -572,15 +573,15 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                                           "fusinvsnmp",
                                           "NetworkEquipment");
             }
-            $pfNetworkEquipment->setValue('sysdescr', $xml->DESCRIPTION);
+            $pfNetworkEquipment->setValue('sysdescr', $arrayinventory['DESCRIPTION']);
             $pfModel = new PluginFusioninventorySnmpmodel();
-            if (isset($xml->MODELSNMP) AND !empty($xml->MODELSNMP)) {
-               $model_id = $pfModel->getModelByKey($xml->MODELSNMP);
+            if (isset($arrayinventory['MODELSNMP']) AND !empty($arrayinventory['MODELSNMP'])) {
+               $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
                if ($model_id != '0') {
                   $pfNetworkEquipment->setValue('plugin_fusioninventory_snmpmodels_id', $model_id);
                }
             }
-            $pfNetworkEquipment->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
+            $pfNetworkEquipment->setValue('plugin_fusinvsnmp_configsecurities_id', $arrayinventory['AUTHSNMP']);
             $pfNetworkEquipment->updateDB();
             break;
 
@@ -595,12 +596,12 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                   AND `items_id`='".$item->getID()."'");
             $update = 0;
             foreach ($a_printerports as $a_printerport) {
-               if (isset($xml->MAC) AND !empty($xml->MAC)) {
-                  $xml->MAC = strtolower((string)$xml->MAC);
-                  if ($a_printerport['mac'] == (string)$xml->MAC) {
-                     $a_printerport['mac'] = (string)$xml->MAC;
-                     if (isset($xml->IP)) {
-                        $a_printerport['ip'] = (string)$xml->IP;
+               if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
+                  $arrayinventory['MAC'] = strtolower($arrayinventory['MAC']);
+                  if ($a_printerport['mac'] == $arrayinventory['MAC']) {
+                     $a_printerport['mac'] = $arrayinventory['MAC'];
+                     if (isset($arrayinventory['IP'])) {
+                        $a_printerport['ip'] = $arrayinventory['IP'];
                      }
                      $NetworkPort->update($a_printerport);
                      unset($a_printerports[$a_printerport['id']]);
@@ -616,11 +617,11 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             if ($update == '0') {
                $input = array();
-               if (isset($xml->MAC) AND !empty($xml->MAC)) {
-                  $input['mac'] = (string)$xml->MAC;
+               if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
+                  $input['mac'] = $arrayinventory['MAC'];
                }
-               if (isset($xml->IP)) {
-                  $input['ip'] = (string)$xml->IP;
+               if (isset($arrayinventory['IP'])) {
+                  $input['ip'] = $arrayinventory['IP'];
                }
                $input['items_id'] = $item->getID();
                $input['itemtype'] = 'Printer';
@@ -647,15 +648,15 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                                           "fusinvsnmp",
                                           "Printer");
             }
-            $pfPrinter->setValue('sysdescr', $xml->DESCRIPTION);
-            if (isset($xml->MODELSNMP) AND !empty($xml->MODELSNMP)) {
+            $pfPrinter->setValue('sysdescr', $arrayinventory['DESCRIPTION']);
+            if (isset($arrayinventory['MODELSNMP']) AND !empty($arrayinventory['MODELSNMP'])) {
                $pfModel = new PluginFusioninventorySnmpmodel();
-               $model_id = $pfModel->getModelByKey($xml->MODELSNMP);
+               $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
                if ($model_id != '0') {
                   $pfPrinter->setValue('plugin_fusioninventory_snmpmodels_id', $model_id);
                }
             }
-            $pfPrinter->setValue('plugin_fusinvsnmp_configsecurities_id', $xml->AUTHSNMP);
+            $pfPrinter->setValue('plugin_fusinvsnmp_configsecurities_id', $arrayinventory['AUTHSNMP']);
             $pfPrinter->updateDB();
             break;
 

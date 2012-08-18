@@ -444,7 +444,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
 
 
-   function import_netdiscovery($p_xml, $agentKey) {
+   function import_netdiscovery($arrayinventory, $agentKey) {
 
       PluginFusioninventoryCommunication::addLog(
          'Function PluginFusioninventorySnmpmodelImportExport->import_netdiscovery().');
@@ -454,28 +454,27 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
       $agent = $pta->InfosByKey($agentKey);
 
-      if (isset($p_xml->AGENT->START)) {
-         $ptap->updateState($p_xml->PROCESSNUMBER, array('start_time' => date("Y-m-d H:i:s")), $agent['id']);
-      } else if (isset($p_xml->AGENT->END)) {
-         $ptap->updateState($p_xml->PROCESSNUMBER, array('end_time' => date("Y-m-d H:i:s")), $agent['id']);
-      } else if (isset($p_xml->AGENT->EXIT)) {
-         $ptap->endState($p_xml->PROCESSNUMBER, date("Y-m-d H:i:s"), $agent['id']);
-      } else if (isset($p_xml->AGENT->NBIP)) {
-         $ptap->updateState($p_xml->PROCESSNUMBER, array('nb_ip' => $p_xml->AGENT->NBIP), $agent['id']);
+      if (isset($arrayinventory['AGENT']['START'])) {
+         $ptap->updateState($arrayinventory['PROCESSNUMBER'], array('start_time' => date("Y-m-d H:i:s")), $agent['id']);
+      } else if (isset($arrayinventory['AGENT']['END'])) {
+         $ptap->updateState($arrayinventory['PROCESSNUMBER'], array('end_time' => date("Y-m-d H:i:s")), $agent['id']);
+      } else if (isset($arrayinventory['AGENT']['EXIT'])) {
+         $ptap->endState($arrayinventory['PROCESSNUMBER'], date("Y-m-d H:i:s"), $agent['id']);
+      } else if (isset($arrayinventory['AGENT']['NBIP'])) {
+         $ptap->updateState($arrayinventory['PROCESSNUMBER'], array('nb_ip' => $arrayinventory['AGENT']['NBIP']), $agent['id']);
       }
-      if (isset($p_xml->AGENT->AGENTVERSION)) {
+      if (isset($arrayinventory['AGENT']['AGENTVERSION'])) {
          $agent['last_contact'] = date("Y-m-d H:i:s");
          $pta->update($agent);
       }
       $_SESSION['glpi_plugin_fusioninventory_agentid'] = $agent['id'];
-
       $count_discovery_devices = 0;
-      foreach($p_xml->DEVICE as $discovery) {
-         $count_discovery_devices++;
+      if (isset($arrayinventory['DEVICE'])) {
+         $count_discovery_devices = count($arrayinventory['DEVICE']);
       }
       if ($count_discovery_devices != "0") {
          $ptap->updateState($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('nb_found' => $count_discovery_devices), $agent['id']);
-         foreach($p_xml->DEVICE as $discovery) {
+         foreach($arrayinventory['DEVICE'] as $discovery) {
             if (count($discovery) > 0) {
                $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
                $pfCommunicationNetworkDiscovery->sendCriteria($discovery);

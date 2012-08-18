@@ -49,6 +49,12 @@ class PluginFusioninventoryFormatconvert {
    static function XMLtoArray($xml) {
       $datainventory = array();
       $datainventory = json_decode(json_encode((array)$xml), true);
+      if (isset($datainventory['CONTENT']['ENVS'])) {
+         unset($datainventory['CONTENT']['ENVS']);
+      }
+      if (isset($datainventory['CONTENT']['PROCESSES'])) {
+         unset($datainventory['CONTENT']['PROCESSES']);
+      }
       $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
       return $datainventory;
    }
