@@ -321,14 +321,14 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $sxml_option->addChild('NAME', 'NETDISCOVERY');
 
       $a_versions = importArrayFromDB($pfAgent->fields["version"]);
-      if (((isset($a_versions["NETDISCOVERY"])) AND ($a_versions["NETDISCOVERY"] >= 1.3))
-              OR !isset($a_versions["NETDISCOVERY"])) {
+      if (((isset($a_versions["NETWORKDISCOVERY"])) AND ($a_versions["NETWORKDISCOVERY"] >= 1.3))
+              OR !isset($a_versions["NETWORKDISCOVERY"])) {
          $sxml_option->addChild('DICOHASH', md5_file(GLPI_ROOT."/plugins/fusioninventory/tools/networkdiscovery.xml"));
       }
       if (($pfAgent->fields["senddico"] == "1")) {
 
-         if (((isset($a_versions["NETDISCOVERY"]))
-                 AND ($a_versions["NETDISCOVERY"] >= 1.3))) {
+         if (((isset($a_versions["NETWORKDISCOVERY"]))
+                 AND ($a_versions["NETWORKDISCOVERY"] >= 1.3))) {
 
             $sxml_option->addChild('DICO', file_get_contents(GLPI_ROOT."/plugins/fusioninventory/tools/networkdiscovery.xml"));
          }
