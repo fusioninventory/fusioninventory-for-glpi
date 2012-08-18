@@ -272,13 +272,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                      break;
 
                   case 'PORTS':
-                     $a_ports = array();
-                     if (is_int(key($child))) {
-                        $a_ports = $child;
-                     } else {
-                        $a_ports[] = $child;
-                     }
-                     $errors.=$this->importPorts($a_ports);
+                     $errors.=$this->importPorts($child);
                      break;
 
                   case 'CARTRIDGES':
@@ -580,7 +574,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
       $a_ips = array();
       if (isset($p_ips['IP'])) {
-         if (is_int(key($p_ips['IP']))) {
+         if (is_array($p_ips['IP'])) {
             $a_ips = $p_ips['IP'];
          } else {
             $a_ips[] = $a_ips['IP'];
@@ -618,15 +612,19 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $errors='';
       if (isset($p_ports['PORT'])) {
          $a_ports = array();
-         if (is_int(key($p_ports))) {
-            $a_ports = $p_ports;
+         if (is_int(key($p_ports['PORT']))) {
+            $a_ports = $p_ports['PORT'];
          } else {
-            $a_ports[] = $p_ports;
+            $a_ports[] = $p_ports['PORT'];
          }
          if ($this->type == "Printer") {
-            $errors .= $this->importPortPrinter($a_ports);
+            foreach ($a_ports as $a_port) {
+               $errors .= $this->importPortPrinter($a_port);
+            }
          } elseif ($this->type == "NetworkEquipment") {
-            $errors .= $this->importPortNetworking($a_ports);
+            foreach ($a_ports as $a_port) {
+               $errors .= $this->importPortNetworking($a_port);
+            }
          }
       }
       // Remove ports may not in XML and must be deleted in GLPI DB
@@ -651,6 +649,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     * @return errors string to be alimented if import ko / '' if ok
     **/
    function importPortNetworking($p_port) {
+      Toolbox::logInFile("TO", print_r($p_port, true));
+      
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkInventory->importPortNetworking().');
       $errors='';
@@ -1034,8 +1034,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       }
       $count = 0;
       $a_macsFound = array();
-      foreach ($p_connections->children() as $child) {
-         switch ($child->getName()) {
+      foreach ($p_connections as $childname=>$child) {
+         switch ($childname) {
 
             case 'CDP': // already managed
                if ($pfNetworkPort->getValue('trunk') != '1') {
@@ -1045,13 +1045,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
             case 'CONNECTION':
                $continue = 1;
-               if (isset($child->MAC)) {
-                  if (isset($a_macsFound[(string)$child->MAC])) {
+               if (isset($child['MAC'])) {
+                  if (isset($a_macsFound[$child['MAC']])) {
                      $continue = 0;
                   } else if (count($child) > 20) {
                      $continue = 0;
                   } else {
-                     $a_macsFound[(string)$child->MAC] = 1;
+                     $a_macsFound[$child['MAC']] = 1;
                   }
 
                   if (count($child) > 1
@@ -1095,8 +1095,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $errors  = '';
       if ($p_cdp==1) {
          $a_ip = array();
-         foreach ($p_connection->children() as $child) {
-            switch ($child->getName()) {
+         foreach ($p_connection as $childname=>$child) {
+            switch ($childname) {
 
                case 'IP':
                case 'IFDESCR':
@@ -1105,12 +1105,12 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                case 'SYSDESCR': // CDP or LLDP
                case 'SYSNAME': // CDP or LLDP
                case 'MODEL': // CDP or LLDP
-                  $a_ip[strtolower($child->getName())] = (string)$child;
+                  $a_ip[strtolower($childname)] = $child;
                   break;
 
                default:
                   $errors.=__('Unattended element in').' CONNECTION (CDP='.$p_cdp.') : '
-                           .$child->getName()."\n";
+                           .$childname."\n";
 
             }
          }
@@ -1121,9 +1121,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             $pfNetworkPort->addMac($a_ip);
          }
       } else {
-         foreach ($p_connection->children() as $child) {
+         foreach ($p_connection as $childname=>$child) {
 
-            switch ($child->getName()) {
+            switch ($childname) {
 
                case 'MAC':
                   $pfNetworkPort->addMac(strval($child));
@@ -1135,7 +1135,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
                default:
                   $errors.=__('Unattended element in').' CONNECTION (CDP='.$p_cdp.') : '
-                           .$child->getName()."\n";
+                           .$childname."\n";
 
             }
          }
@@ -1155,8 +1155,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    function importVlans($p_vlans, $pfNetworkPort) {
 
       $errors='';
-      foreach ($p_vlans->children() as $child) {
-         switch ($child->getName()) {
+      foreach ($p_vlans as $childname=>$child) {
+         switch ($childname) {
 
             case 'VLAN' :
                $errors.=$this->importVlan($child, $pfNetworkPort);
@@ -1183,19 +1183,19 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $errors='';
       $number='';
       $name='';
-      foreach ($p_vlan->children() as $child) {
-         switch ($child->getName()) {
+      foreach ($p_vlan as $childname=>$child) {
+         switch ($childname) {
 
             case 'NUMBER':
-               $number=(string)$child;
+               $number=$child;
                break;
 
             case 'NAME':
-               $name=(string)$child;
+               $name=$child;
                break;
 
             default:
-               $errors.=__('Unattended element in').' VLAN : '.$child->getName()."\n";
+               $errors.=__('Unattended element in').' VLAN : '.$childname."\n";
 
          }
       }
@@ -1269,7 +1269,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
        // End manual blacklist
 
        $_SESSION['SOURCE_XMLDEVICE'] = $arraydevice;
-
        $input = array();
 
       // Global criterias
@@ -1350,7 +1349,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             $inputdb['mac'] = exportArrayToDB($input['mac']);
          }
          $inputdb['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
-         $inputdb['method'] = 'netinventory';
+         $inputdb['method'] = 'networkinventory';
          $pFusioninventoryIgnoredimportdevice->add($inputdb);
          unset($_SESSION['plugin_fusioninventory_rules_id']);
       }
@@ -1394,6 +1393,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkInventory->rulepassed().');
 
+      $arraydevice = array();
       $arraydevice = $_SESSION['SOURCE_XMLDEVICE'];
       
       $errors = '';
