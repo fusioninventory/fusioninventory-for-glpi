@@ -65,7 +65,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
               'Function PluginFusioninventoryCommunicationNetworkDiscovery->import().');
 
       $errors = '';
-
       $a_agent = $pfAgent->InfosByKey($p_DEVICEID);
       if (isset($a_CONTENT['PROCESSNUMBER'])) {
          $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $a_CONTENT['PROCESSNUMBER'];
@@ -75,7 +74,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                if ((!isset($a_CONTENT['AGENT']['START'])) 
                        AND (!isset($a_CONTENT['AGENT']['END']))) {
                   $nb_devices = 0;
-                  $nb_devices = count($a_CONTENT['DEVICE']);
+                  if (isset($a_CONTENT['DEVICE'])) {
+                     if (is_int(key($a_CONTENT['DEVICE']))) {
+                        $nb_devices = count($a_CONTENT['DEVICE']);
+                     } else {
+                        $nb_devices = 1;
+                     }
+                  }
 
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $a_CONTENT['PROCESSNUMBER'];
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];

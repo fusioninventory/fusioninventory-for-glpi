@@ -470,15 +470,24 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       $_SESSION['glpi_plugin_fusioninventory_agentid'] = $agent['id'];
       $count_discovery_devices = 0;
       if (isset($arrayinventory['DEVICE'])) {
-         $count_discovery_devices = count($arrayinventory['DEVICE']);
+         if (is_int(key($arrayinventory['DEVICE']))) {
+            $count_discovery_devices = count($arrayinventory['DEVICE']);
+         } else {
+            $count_discovery_devices = 1;
+         }
       }
       if ($count_discovery_devices != "0") {
          $ptap->updateState($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('nb_found' => $count_discovery_devices), $agent['id']);
-         foreach($arrayinventory['DEVICE'] as $discovery) {
-            if (count($discovery) > 0) {
-               $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
-               $pfCommunicationNetworkDiscovery->sendCriteria($discovery);
-            }
+         if (is_int(key($arrayinventory['DEVICE']))) {
+            foreach($arrayinventory['DEVICE'] as $discovery) {
+               if (count($discovery) > 0) {
+                  $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
+                  $pfCommunicationNetworkDiscovery->sendCriteria($discovery);
+               }
+            }            
+         } else {
+            $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
+            $pfCommunicationNetworkDiscovery->sendCriteria($arrayinventory['DEVICE']);
          }
       }
    }
