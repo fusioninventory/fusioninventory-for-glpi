@@ -224,13 +224,10 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     *
     * @return errors string to be alimented if import ko / '' if ok
     */
-   function importDevice($itemtype, $items_id) {
+   function importDevice($itemtype, $items_id, $arraydevice) {
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkInventory->importDevice().');
-
-      $arraydevice = array();
-      $arraydevice = $_SESSION['SOURCE_XMLDEVICE'];
 
       // Write XML file
       if (count($arraydevice) > 0) {
@@ -1456,7 +1453,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
                '[==fusinvsnmp::7==] Update '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
-         $errors .= $this->importDevice($itemtype, $items_id);
+         $errors .= $this->importDevice($itemtype, $items_id, $arraydevice);
       }
       if ($errors != '') {
          echo $errors;
