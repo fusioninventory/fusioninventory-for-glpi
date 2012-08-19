@@ -251,6 +251,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    **/
    function getValue($plugin_id, $name, $module) {
 
+      if (isset($_SESSION['plugin_fusioninventory_configvalues'][$plugin_id][$module][$name])) {
+         return $_SESSION['plugin_fusioninventory_configvalues'][$plugin_id][$module][$name];
+      }
+      
       $config = current($this->find("`plugins_id`='".$plugin_id."'
                           AND `type`='".$name."'
                           AND `module`='".$module."'"));
@@ -820,6 +824,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          return false;
       } else {
          return true;
+      }
+   }
+   
+   
+   
+   static function loadCache() {
+      global $DB;
+
+      $_SESSION['plugin_fusioninventory_configvalues'] = array();
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_configs`";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $_SESSION['plugin_fusioninventory_configvalues'][$data['plugins_id']][$data['module']][$data['type']] = $data['value'];
       }
    }
 }

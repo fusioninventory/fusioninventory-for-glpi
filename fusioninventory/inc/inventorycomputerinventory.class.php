@@ -88,6 +88,7 @@ class PluginFusioninventoryInventoryComputerInventory {
    **/
    function sendCriteria($p_DEVICEID, $a_CONTENT, $arrayinventory) {
 
+      pluginfusioninventoryconfig::loadCache();
       // * Hacks
 
          // Hack to put OS in software
