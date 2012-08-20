@@ -960,15 +960,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       $a_return = array();
       foreach ($array1 as $key=>$value) {
-         $find = '';
-         foreach ($array2 as $key2=>$value2) {
-            if ($value == $value2) {
-               $find = 1;
-               unset($array2[$key2]);
-               break;
-            }
-         }
-         if ($find == '') {
+         $key2 = '';
+         $key2 = array_search($value, $array2, true);
+         if ($key2) {
+            unset($array2[$key2]);
+         } else {
             $a_return[$key] = $value;
          }
       }
