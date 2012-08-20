@@ -55,6 +55,9 @@ class PluginFusioninventoryToolbox {
    static function logIfExtradebug($file, $message) {
       $config = new PluginFusioninventoryConfig();
       if ($config->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug', '')) {
+         if (is_array($message)) {
+            $message = print_r($message, true);
+         }
          Toolbox::logInFile($file, $message);
       }
    }

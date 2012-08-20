@@ -87,21 +87,23 @@ class PluginFusioninventoryInventoryComputerLibhook {
 
 
 
-    /**
-    * add a new section to the machine in an application
-    *
-    * @param $data array with section to add
-    * @param $idmachine integer id of the GLPI Computer
-    *
-    * @return $sectionId integer id of the section
-    *
-    **/
-    public static function addSections($data, $idmachine) {
-
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-addsection",
-         "[".$idmachine."] ".print_r($data, true)
-      );
+   /**
+   * add a new section to the machine in an application
+   *
+   * @param $data array with section to add
+   * @param $idmachine integer id of the GLPI Computer
+   *
+   * @return $sectionId integer id of the section
+   *
+   **/
+   public static function addSections($data, $idmachine) {
+      $config = new PluginFusioninventoryConfig();
+      if ($config->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug', '')) {
+         PluginFusioninventoryToolbox::logIfExtradebug(
+            "pluginFusioninventory-addsection",
+            "[".$idmachine."] ".print_r($data, true)
+         );
+      }
 
       $Computer = new Computer();
 
@@ -603,11 +605,14 @@ class PluginFusioninventoryInventoryComputerLibhook {
       $_SESSION["plugin_fusinvinventory_history_add"] = true;
       $_SESSION["plugin_fusinvinventory_no_history_add"] = false;
 
-      PluginFusioninventoryToolbox::logIfExtradebug(
-         "pluginFusioninventory-removesection",
-         "[".$idmachine."] ".print_r($idsections, true)
-      );
-
+      $config = new PluginFusioninventoryConfig();
+      if ($config->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug', '')) {
+         PluginFusioninventoryToolbox::logIfExtradebug(
+            "pluginFusioninventory-removesection",
+            "[".$idmachine."] ".print_r($idsections, true)
+         );
+      }
+      
         foreach ($idsections as $section) {
             $split = explode("/", $section);
             $sectionName = $split[0];
@@ -1014,8 +1019,11 @@ class PluginFusioninventoryInventoryComputerLibhook {
          }
       }
       $Computer->update($inputC);
-      PluginFusioninventoryToolbox::logIfExtradebug("pluginFusinvinventory-updatesection",
-                                                   "[".$idmachine."] ".print_r($data, true));
+      $config = new PluginFusioninventoryConfig();
+      if ($config->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'extradebug', '')) {
+         PluginFusioninventoryToolbox::logIfExtradebug("pluginFusinvinventory-updatesection",
+                                                      "[".$idmachine."] ".print_r($data, true));
+      }
     }
 
 

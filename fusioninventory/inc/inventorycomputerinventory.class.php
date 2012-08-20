@@ -260,7 +260,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       $data = array();
       $data = $rule->processAllRules($input, array(), array('class'=>$this));
       PluginFusioninventoryToolbox::logIfExtradebug("pluginFusioninventory-rules",
-                                                   print_r($data, true));
+                                                   $data);
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          $this->rulepassed(0, "Computer");
       } else if (!isset($data['found_equipment'])) {
@@ -370,8 +370,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
             PluginFusioninventoryToolbox::logIfExtradebug(
                "pluginFusioninventory-entityrules",
-               print_r($dataEntity, true)
-            );
+               $dataEntity);
          if (!isset($_SESSION['glpiactiveentities_string'])) {
             $_SESSION['glpiactiveentities_string'] = "'".$_SESSION["plugin_fusinvinventory_entity"]."'";
          }

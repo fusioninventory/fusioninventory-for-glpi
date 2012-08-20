@@ -316,13 +316,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
-         print_r($input, true)
+         $input
       );
       $complex_criterias = array();
       $sql_where         = '';
       $sql_from          = '';
-      $sql_where_networkequipment  = '';
-      $sql_from_networkequipment   = '';
       $sql_where_computer  = '';
       $sql_from_computer   = '';
       $continue          = true;
