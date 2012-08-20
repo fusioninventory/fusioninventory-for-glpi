@@ -117,8 +117,10 @@ class PluginFusioninventoryInventoryComputerImport_Software extends CommonDBTM  
       $query = "SELECT `id`
                 FROM `glpi_softwareversions`
                 WHERE `softwares_id` = '$software_id'
-                   AND `name` = '$modified_version' ";
+                   AND `name` = '$modified_version' 
+                LIMIT 1";
       $result = $DB->query($query);
+      $newsoftware = 0;
       if ($DB->numrows($result) > 0) {
          $data = $DB->fetch_array($result);
          $isNewVers = $data["id"];
@@ -131,9 +133,10 @@ class PluginFusioninventoryInventoryComputerImport_Software extends CommonDBTM  
             $input['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
          }
          $isNewVers = $SoftwareVersion->add($input, array(), $_SESSION["plugin_fusinvinventory_history_add"]);
+         $newsoftware = 1;
       }
 
-      $Computer_SoftwareVersion = new Computer_SoftwareVersion;
+      $Computer_SoftwareVersion = new Computer_SoftwareVersion();
       $array = array();
       $array['computers_id'] = $idmachine;
       $array['softwareversions_id'] = $isNewVers;
@@ -141,11 +144,18 @@ class PluginFusioninventoryInventoryComputerImport_Software extends CommonDBTM  
          $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
       }
       // Check if this software yet exist (See ticket http://forge.fusioninventory.org/issues/999)
-      $a_soft = $Computer_SoftwareVersion->find("`computers_id`='".$array['computers_id']."'
-               AND `softwareversions_id`='".$array['softwareversions_id']."' ",
-            "",
-            1);
-      if (count($a_soft) == 0) {
+      $addsoftware = 1;
+      if ($newsoftware == 0) {
+         $query = "SELECT * FROM `glpi_computers_softwareversions`
+                   WHERE `computers_id`='".$array['computers_id']."'
+                     AND `softwareversions_id`='".$array['softwareversions_id']."' 
+                   LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == 1) {
+            $addsoftware = 0;
+         }
+      }
+      if ($addsoftware == 1) {
          $Computer_SoftwareVersion_id = $Computer_SoftwareVersion->add($array, array(), $_SESSION["plugin_fusinvinventory_history_add"]);
          return $Computer_SoftwareVersion_id;
       }
