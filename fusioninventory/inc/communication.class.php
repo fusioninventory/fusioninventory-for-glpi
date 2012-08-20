@@ -409,20 +409,25 @@ class PluginFusioninventoryCommunication {
       // Convert XML into PHP array
       $arrayinventory = array();
       $arrayinventory = PluginFusioninventoryFormatconvert::XMLtoArray($pxml);
-
+      unset($pxml);
+      $deviceid = '';
+      if (isset($arrayinventory['DEVICEID'])) {
+         $deviceid = $arrayinventory['DEVICEID'];
+      }
+      
       $agent = new PluginFusioninventoryAgent();
       $agents_id = $agent->importToken($arrayinventory);
       $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
       
       if (!$communication->import($arrayinventory)) {
 
-         if (isset($pxml->DEVICEID)) {
+         if ($deviceid != '') {
 
             $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
 <REPLY>
 </REPLY>");
 
-            $a_agent = $agent->InfosByKey(Toolbox::addslashes_deep($pxml->DEVICEID));
+            $a_agent = $agent->InfosByKey($deviceid);
 
             // Get taskjob in waiting
             $communication->getTaskAgent($a_agent['id']);
