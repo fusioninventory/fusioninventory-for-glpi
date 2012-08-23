@@ -175,7 +175,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "Command to get the sysdescr";
       echo "</td>";
       echo "<td>";
-      echo "snmpwalk -v [version] -c [community] [IP] sysdescr";
+      echo "snmpwalk -v [version] -c [community] -Cc [IP] sysdescr";
       echo "</td>";
       echo "</tr>";
       
