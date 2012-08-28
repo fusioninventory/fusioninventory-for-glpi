@@ -266,16 +266,22 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          // Upload snmpwalk
          // send to server (it add sysdescr and lock for this user)
          // server return oids, mapping, oids most used for this kind of device (check with sysdescr)
-      } else if ($data->device->lock != '0'
-              AND $a_lock[0] != $a_userinfos['login']) {
-         echo "<table class='tab_cadre_fixe'>";
-         echo "<tr class='tab_bg_1 center'>";
-         echo "<th>";
-         echo "<br/>Somebody work now on this, retry in 1 hour...<br/><br/>";
-         echo "</th>";
-         echo "</tr>";
-         echo "</table>";
       } else {
+      
+         $edit = 1;
+         $id = 0;
+         if ($data->device->lock != '0'
+              AND $a_lock[0] != $a_userinfos['login']) {
+            echo "<table class='tab_cadre_fixe'>";
+            echo "<tr class='tab_bg_1 center'>";
+            echo "<th>";
+            echo "<br/>Somebody work now on this, retry in 1 hour...<br/><br/>";
+            echo "</th>";
+            echo "</tr>";
+            echo "</table>";
+            $edit = 0;
+         }
+      
          // Device exist, update it? get snmpmodels?
          echo "<table class='tab_cadre_fixe'>";
 
@@ -284,8 +290,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "This device exist";
          echo "</th>";
          echo "<th colspan='2'>";
-         $edit = 1;
-         $id = 0;
+
          if ($devices_id > 0) {
             $id = $devices_id;
          } else {
