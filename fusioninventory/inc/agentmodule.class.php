@@ -435,28 +435,18 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    * @return nothing
    *
    **/
-   static function getUrlForModule($module) {
-      $agentmodule = new PluginFusioninventoryAgentmodule();
-      $modules = $agentmodule->find("`modulename`='".strtoupper($module)."'", "", 1);
-      if (!empty($modules)) {
-         $tmp = array_pop($modules);
-         if (empty($tmp['url'])) {
-            $protocol = 'http';
-            if ((isset($_SERVER["HTTPS"])) AND ($_SERVER["HTTPS"] == "on")) {
-               $protocol = 'https';
-            }
-            $port = $_SERVER['SERVER_PORT'];
-            $folder = $_SERVER['PHP_SELF'];
-            $a_folders = explode("/plugins/", $folder);
-            if (strtoupper($module) == 'ESX') {
-               return $protocol."://".$_SERVER['HTTP_HOST'].":".$port.$a_folders[0]."/plugins/fusinvinventory/b/esx/";
-            } else if (strtoupper($module) == 'DEPLOY') {
-               return $protocol."://".$_SERVER['HTTP_HOST'].":".$port.$a_folders[0]."/plugins/fusinvdeploy/b/deploy/";
-            }
-         }
-         return $tmp['url'];
-      }
-      return false;
+   static function getUrlForModule($modulename) {
+      global $DB;
+
+      $query = "SELECT url_base FROM `glpi_configs` LIMIT 1";
+      $result = $DB->query($query);
+      $data = $DB->fetch_assoc($result);
+      return
+         $data['url_base'].
+         '/plugins/fusinv'.
+         strtolower($modulename).
+         '/b/'.
+         strtolower($modulename);
    }
 }
 
