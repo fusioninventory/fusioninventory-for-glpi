@@ -385,7 +385,7 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryOCSCommunication
                                                                  "Merged with ".$changestate);
             }
       }
-      $snmpauthlist=$pfConfigSecurity->find();
+      $snmpauthlist=$pfConfigSecurity->find("`is_deleted`='0'");
       if (count($snmpauthlist)){
          foreach ($snmpauthlist as $snmpauth){
             $pfCommunicationSNMP->addAuth($sxml_option, $snmpauth['id']);
