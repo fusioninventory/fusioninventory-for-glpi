@@ -179,13 +179,20 @@ function plugin_version_fusinvinventory() {
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusinvinventory_check_prerequisites() {
-   global $LANG;
+   global $LANG,$DB;
    if (version_compare(GLPI_VERSION,'0.83.3','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
       echo $LANG['plugin_fusioninventory']['errors'][50];
    }
    $plugin = new Plugin();
    if (!$plugin->isActivated("fusioninventory")) {
       return false;
+   }
+   if ((TableExists("glpi_plugin_fusinvinventory_computers")
+           AND !FieldExists("glpi_plugin_fusinvinventory_computers", "bios_assettag"))) {
+      $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` SET `value`='0.83+1.0' 
+         WHERE `type`='version'
+         AND `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusinvinventory')."'");
+      $DB->query("UPDATE `glpi_plugins` SET `version`='0.83+1.0' WHERE `directory`='fusinvinventory'");
    }
    return true;
 }
