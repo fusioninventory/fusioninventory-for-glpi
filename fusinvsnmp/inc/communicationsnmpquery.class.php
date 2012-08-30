@@ -426,7 +426,14 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             case 'IPS':
                $errors.=$this->importIps($child, $this->ptd->getValue('id'));
                break;
-            
+
+            case 'MANUFACTURER':
+               if (!in_array('manufacturers_id', $a_lockable)) {
+                  $Manufacturer = new Manufacturer();
+                  $this->ptd->setValue('manufacturers_id', $Manufacturer->import(array('name' => (string)$p_info->MANUFACTURER)));
+               }
+               break;
+
             default:
                $errors.=$LANG['plugin_fusioninventory']['errors'][22].' INFO : '.$child->getName()."\n";
                
