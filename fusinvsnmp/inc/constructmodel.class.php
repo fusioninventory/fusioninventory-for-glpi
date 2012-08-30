@@ -657,7 +657,6 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $array_sort['name'] = 'Model name';
       $array_sort['itemtype'] = 'Itemtype';
       $array_sort['stabledevel'] = 'Stable/devel';
-      $array_sort['localglpi'] = 'In local GLPI';
       $array_sort['snmpfile'] = 'Snmpfile';
       Dropdown::showFromArray('sort', $array_sort, array('value' => $_SESSION['glpi_plugin_fusioninventory_constructmodelsort']));
       echo "&nbsp;<input type='submit' name='updatesort' class='submit' value=\"".$LANG['buttons'][7]."\" >";
