@@ -672,13 +672,14 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       foreach ($data as $key => $a_models) {
          $a_sort['name'][$key] = $a_models['name'];
          $a_sort['itemtype'][$key] = $a_models['itemtype'];
-         $stable = 1;
+         $stable = 'ok';
          $local = 2;
          $snmpfile = 1;
+         $nbnotinglpi = 0;
          foreach ($a_models['devices'] as $a_devices) {
             $nb_devices++;
             if ($a_devices['stable'] == '0') {
-               $stable = 0;
+               $stable = 'part';
             }
             $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_modeldevices`
                       LEFT JOIN `glpi_plugin_fusinvsnmp_models`
@@ -690,9 +691,11 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
                $datam = $DB->fetch_assoc($result);
                if ($datam['name'] != $a_models['name']) {
                   $local = 1;
+                  $nbnotinglpi++;
                }
             } else {
                $local = 0;
+               $nbnotinglpi++;
             }
             
             $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
@@ -710,19 +713,68 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
                }
             }            
          }
-         $a_sort['stabledevel'][$key] = $stable;
+         if (count($a_models['devices']) == $nbnotinglpi) {
+            $a_sort['stabledevel'][$key] = 'not';
+         } else if ($nbnotinglpi == '0') {
+            $a_sort['stabledevel'][$key] = 'ok';
+         } else {
+            $a_sort['stabledevel'][$key] = 'part';
+         }         
          $a_sort['localglpi'][$key] = $local; 
          $a_sort['snmpfile'][$key] = $snmpfile;
       }
-      
-      
       echo "<form name='form_model' id='form_model' method='post'>";
       echo "<input type='hidden' name='nbmodels' value='".count($data)."' />";
-      echo  "<table class='tab_cadre_fixe'>";
+
+      echo "<br/>";
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='9'>";
+      echo count($data)." models ! ".$nb_devices." devices supported !";
+      echo "</th>";
+      echo "</tr>";
+      echo "</table>";
+      echo "<br/>";
+      
+      $this->displayModelsList($data, $nb_devices, $a_sort, 'not');
+      
+      $this->displayModelsList($data, $nb_devices, $a_sort, 'part');
+
+      $this->displayModelsList($data, $nb_devices, $a_sort, 'ok');
+      
+      Html::openArrowMassives("form_model", true);
+      Html::closeArrowMassives(array('import' => $LANG['buttons'][37]),
+                               array('import' => 'Import will update existing models'));
+      Html::closeForm();
+   }
+   
+   
+   
+   function displayModelsList($data, $nb_devices, $a_sort, $modelimport) {
+      global $CFG_GLPI,$LANG,$DB;
+      
+      echo  "<table class='tab_cadre'>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='8'>";
-      echo count($data)." models ! ".$nb_devices." devices supported !";
+      echo "<th colspan='3'>";
+      if ($modelimport == 'not') {
+         echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/pics/box_red.png'/>";
+         echo "</th>";
+         echo "<th colspan='5'>";
+         echo "Models not imported";
+      } else if ($modelimport == 'part') {
+         echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/pics/box_orange.png'/>";
+         echo "</th>";
+         echo "<th colspan='5'>";
+         echo "Models to be updated";
+      } else if ($modelimport == 'ok') {
+         echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/pics/box_green.png'/>";
+         echo "</th>";
+         echo "<th colspan='5'>";
+         echo "Model up to date";
+      }
+      
+      
       echo "</th>";
       echo "</tr>";
       
@@ -735,7 +787,11 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<th rowspan='2'>";
       echo "Itemtype";
       echo "</th>";
-      echo "<th colspan='5'>";
+      if ($modelimport == 'part') {
+         echo "<th colspan='5'>";
+      } else {
+         echo "<th colspan='4'>";
+      }
       echo "Equipements";
       echo "</th>";
       echo "</tr>";
@@ -749,9 +805,12 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<th>";
       echo "Stable/devel";
       echo "</th>";
-      echo "<th>";
-      echo "In local GLPI";
-      echo "</th>";
+      if ($modelimport == 'part') {
+         echo "<th>";
+   //      echo "In local GLPI";
+         echo "Imported";
+         echo "</th>";
+      }
       echo "<th>";
       echo "Snmp file";
       echo "</th>";
@@ -762,95 +821,80 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
                       $a_sort['name'], SORT_ASC, 
                       $data);
       foreach ($data as $key => $a_models) {
-         $nbdevices = count($a_models['devices']);
-         $colormodel = '00d50f';
-         if ($a_sort['stabledevel'][$key] == '0') {
-            $colormodel = 'ff0000';
-         }
-         echo "<tr class='tab_bg_3'>";
-         echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
-         echo "<input type='checkbox' name='models[]' value='".$a_models['id']."'/>";
-         echo "</td>";
-         echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
-         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".$a_models['id']."'>";
-         echo "<font color='#000000'>".$a_models['name']."</font>";
-         echo "</a>";
-         echo "</td>";
-         echo "<td align='center' rowspan='".$nbdevices."' style='background-color:#".$colormodel."'>";
-         $a_itemtypes = array();
-         $a_itemtypes[1] = $LANG['Menu'][0];
-         $a_itemtypes[2] = $LANG['Menu'][1];
-         $a_itemtypes[3] = $LANG['Menu'][2];
-         echo $a_itemtypes[$a_models['itemtype']];
-         echo "</td>";
-         $i = 0;
-         foreach ($a_models['devices'] as $a_devices) {
-            if ($i > 0) {
-               echo "<tr class='tab_bg_3'>";
-            }
-            $i = 1;
-            $color = '00d50f';
-            if ($a_devices['stable'] == '0') {
-               $color = 'ff0000';
-            }
-            echo "<td style='background-color:#".$color."'>";
-            echo $a_devices['sysdescr'];
+         if ($a_sort['stabledevel'][$key] == $modelimport) {
+            $nbdevices = count($a_models['devices']);
+            echo "<tr class='tab_bg_3'>";
+            echo "<td align='center' rowspan='".$nbdevices."'>";
+            echo "<input type='checkbox' name='models[]' value='".$a_models['id']."'/>";
             echo "</td>";
-            echo "<td align='center' style='background-color:#".$color."'>";
-            echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$a_devices['id']."'>";
-            echo "<img src='".$CFG_GLPI["root_doc"]."/pics/rapports.png' width='18' height='18' />";
-
+            echo "<td align='center' rowspan='".$nbdevices."'>";
+            echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".$a_models['id']."'>";
+            echo "<font color='#000000'>".$a_models['name']."</font>";
             echo "</a>";
             echo "</td>";
-            if ($a_devices['stable'] == '0') {
-               echo "<td align='center' style='background-color:#".$color."'>";
-               echo "devel";
-            } else {
-               echo "<td align='center' style='background-color:#".$color."'>";
-               echo "stable";
-            }
+            echo "<td align='center' rowspan='".$nbdevices."'>";
+            $a_itemtypes = array();
+            $a_itemtypes[1] = $LANG['Menu'][0];
+            $a_itemtypes[2] = $LANG['Menu'][1];
+            $a_itemtypes[3] = $LANG['Menu'][2];
+            echo $a_itemtypes[$a_models['itemtype']];
             echo "</td>";
-            $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_modeldevices`
-                      LEFT JOIN `glpi_plugin_fusinvsnmp_models`
-                         ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
-                      WHERE `sysdescr` = '".$a_devices['sysdescr']."'
-                      LIMIT 1";
-            $result = $DB->query($query);
-            if ($DB->numrows($result) != 0) {
-               $datam = $DB->fetch_assoc($result);
-               if ($datam['name'] == $a_models['name']) {
-                  echo "<td style='background-color:#00d50f' align='center'>";
-                  echo "Yes";
-               } else {
-                  echo "<td style='background-color:#ff9000' align='center'>";
-                  echo "Older";
+            $i = 0;
+            foreach ($a_models['devices'] as $a_devices) {
+               if ($i > 0) {
+                  echo "<tr class='tab_bg_3'>";
                }
-            } else {
-               echo "<td style='background-color:#ff0000' align='center'>";
-               echo "No";
+               $i = 1;
+               echo "<td>";
+               echo $a_devices['sysdescr'];
+               echo "</td>";
+               echo "<td align='center'>";
+               echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$a_devices['id']."'>";
+               echo "<img src='".$CFG_GLPI["root_doc"]."/pics/rapports.png' width='18' height='18' />";
+
+               echo "</a>";
+               echo "</td>";
+               echo "<td align='center'>";
+               if ($a_devices['stable'] == '0') {
+                  echo "devel";
+               } else {
+                  echo "stable";
+               }
+               echo "</td>";
+               if ($modelimport == 'part') {
+                  echo "<td align='center'>";
+                  $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_modeldevices`
+                            LEFT JOIN `glpi_plugin_fusinvsnmp_models`
+                               ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
+                            WHERE `sysdescr` = '".$a_devices['sysdescr']."'
+                            LIMIT 1";
+                  $result = $DB->query($query);
+                  if ($DB->numrows($result) > 0) {
+                     $datam = $DB->fetch_assoc($result);
+                     if ($datam['name'] == $a_models['name']) {
+                        echo "<img src='".$CFG_GLPI["root_doc"]."/pics/ok.png' width='20' height='20'/>";
+                     } else {
+//                        echo "May be updated";
+                     }
+                  }
+                  echo "</td>";
+               }
+
+               echo "<td align='center'>";
+               $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
+                         WHERE `construct_device_id` = '".$a_devices['id']."'
+                         LIMIT 1";
+               $result = $DB->query($query);
+               if ($DB->numrows($result) == "1") {
+                  echo "<img src='".$CFG_GLPI["root_doc"]."/pics/ok.png' width='20' height='20'/>";
+               }
+               echo "</td>";
+               echo "</tr>";
             }
-            echo "</td>";
-            
-            
-            $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
-                      WHERE `construct_device_id` = '".$a_devices['id']."'
-                      LIMIT 1";
-            $result = $DB->query($query);
-            if ($DB->numrows($result) == "1") {
-               echo "<td style='background-color:#00d50f' align='center'>";
-               echo "<img src='".$CFG_GLPI["root_doc"]."/pics/ok.png' width='14' height='14'/>";
-            } else {
-               echo "<td style='background-color:#ff0000' align='center'>";
-            }
-            echo "</td>";
-            echo "</tr>";
          }
       }
       echo "</table>";
-      Html::openArrowMassives("form_model", true);
-      Html::closeArrowMassives(array('import' => $LANG['buttons'][37]),
-                               array('import' => 'Import will update existing models'));
-      Html::closeForm();
+      echo "<br/>";
    }
    
    
