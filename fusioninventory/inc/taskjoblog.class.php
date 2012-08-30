@@ -810,6 +810,11 @@ function appear_array(id){
       if (strstr($comment, "Merged with")) {
          $state = '7';
       }      
+
+      $a_taskjobstates = $this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
+               AND `state` != '3'
+               AND `uniqid`='".$uniqid."'");
+
       
       if (    $state == '1'
            OR $state == '6'
@@ -858,12 +863,22 @@ function appear_array(id){
          } else {
             
             if ($veryshort == '0') {
-               echo $LANG['crontask'][40]." (".Html::convDateTime($date).")";
-               echo " : <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+               if ($a_taskjobstates == '0') {
+                  echo $LANG['crontask'][40]." (".Html::convDateTime($date).") : ";
+               }
+               echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
                   $LANG['plugin_fusioninventory']['taskjoblog'][9]."</a>";
             } else {
-               echo $LANG['crontask'][40]." :<br/> ".Html::convDateTime($date)."";
+               if ($a_taskjobstates == '0') {
+                  echo $LANG['crontask'][40]." :<br/> ".Html::convDateTime($date)."";
+               }
             }
+         }
+         if ($a_taskjobstates != '0') {
+            echo "<input type='hidden' name='taskjobstates_id' value='".$taskstates_id."' />";
+            echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
+            echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.$LANG['plugin_fusioninventory']['task'][32].'"
+                class="submit" type="submit">';
          }
          echo "</td>";
          echo "</tr>";
