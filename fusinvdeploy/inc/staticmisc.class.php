@@ -179,11 +179,11 @@ class PluginFusinvdeployStaticmisc {
       return Dropdown::show("Group", $options);
    }
 
-   static function task_actionselection_PluginFusioninventoryAgent_deployinstall() {
+   static function task_actionselection_PluginFusinvdeployGroup_deployinstall() {
       return self::getDeployActions();
    }
 
-   static function task_actionselection_PluginFusioninventoryAgent_deployuninstall() {
+   static function task_actionselection_PluginFusinvdeployGroup_deployuninstall() {
       return self::getDeployActions();
    }
 

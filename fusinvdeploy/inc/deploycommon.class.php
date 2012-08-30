@@ -74,7 +74,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryOCSCommunicati
       foreach ($actions as $action) {
          $itemtype = key($action);
          $items_id = current($action);
-
+         
          switch($itemtype) {
             case 'Computer':
                $computers[] = $items_id;
@@ -145,7 +145,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryOCSCommunicati
 
       foreach($computers as $computer_id) {
          //Unique Id match taskjobstatuses for an agent(computer)
-         $uniqid= uniqid();
+//         $uniqid= uniqid();
 
          foreach($definitions as $definition) {
             $package->getFromDB($definition['PluginFusinvdeployPackage']);
@@ -159,12 +159,12 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryOCSCommunicati
             //get agent if for this computer
             $agents_id = $agent->getAgentWithComputerid($computer_id);
             if($agents_id === false) {
-               $jobstates_id= $jobstate->add($c_input);
+               $jobstates_id = $jobstate->add($c_input);
                $jobstate->changeStatusFinish($jobstates_id,
                                                      0,
                                                      '',
                                                      1,
-                                                     "No agent found for this computer",
+                                                     "No agent found for [[Computer::".$computer_id."]]",
                                                      0,
                                                      0);
             } else {
@@ -183,6 +183,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryOCSCommunicati
                $taskvalid++;
                $joblog->add($c_input);
                unset($c_input['state']);
+               unset($c_input['plugin_fusioninventory_agents_id']);
             }
          }
       }
