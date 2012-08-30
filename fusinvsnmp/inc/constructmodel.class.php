@@ -45,84 +45,64 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvsnmpConstructmodel extends CommonDBTM {
-   private $fp;
+   private $fp, $auth=array(),$key='';
 
    function connect() {
-      $this->fp = @fsockopen("93.93.45.69", "9000");
-      //$this->fp = @fsockopen("127.0.0.1", "9000");
-      if ($this->fp) {
-         return true;
+      global $CFG_GLPI;
+      
+      $this->fp = curl_init('http://192.168.20.194:9000/');
+      curl_setopt($this->fp, CURLOPT_RETURNTRANSFER, 1);
+      if ($CFG_GLPI['proxy_name'] != '') {
+         curl_setopt($this->fp, CURLOPT_PROXYPORT, $CFG_GLPI['proxy_port']);
+         curl_setopt($this->fp, CURLOPT_PROXYTYPE, 'HTTP');
+         curl_setopt($this->fp, CURLOPT_PROXY, $CFG_GLPI['proxy_name']);
+         if ($CFG_GLPI['proxy_user'] != '') {
+            curl_setopt($this->fp, CURLOPT_PROXYUSERPWD, $CFG_GLPI['proxy_user'].":".$CFG_GLPI['proxy_passwd']);
+         }
       }
-      echo "<table class='tab_cadre_fixe'>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<th>";
-      echo "Error";
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      echo "The server is not available!<br/>
-         verify you have opened port 9000 to IP 93.93.45.69 !";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "</table>";
-      return false;
+      curl_setopt($this->fp, CURLOPT_POST, true);
+      return true;
    }
    
    
    
    function closeConnection() {
-      fclose($this->fp);
+      curl_close($this->fp);
    }
    
    
    
    function showAuth() {
-                 
-      $ret = fgets ($this->fp, 102400);
-      if ($ret == "Hello\n") {
+      
+      $auth = array();
+      $a_userinfos = PluginFusinvsnmpConstructdevice_User::getUserAccount($_SESSION['glpiID']);
+      if (!isset($a_userinfos['login'])) {
+         echo "<table class='tab_cadre_fixe'>";
 
-         $auth = array();
-         $a_userinfos = PluginFusinvsnmpConstructdevice_User::getUserAccount($_SESSION['glpiID']);
-         $auth_error = 0;
-         if (!isset($a_userinfos['login'])) {
-            $auth_error = 1;
-         } else {
-            $auth["auth"] = array(  "login" => $a_userinfos['login'],
-                                    "password" => $a_userinfos['password'],
-                                    "key" => $a_userinfos['key']);
-            $buffer = json_encode($auth);
-            $buffer .= "\n";
-            fputs ($this->fp, $buffer);
-            $ret = fgets ($this->fp, 102400);
-            if ($ret == "Authentication error\n") {
-               $auth_error = 1;            
-            }
-         }
-         if ($auth_error == '1') {
-            echo "<table class='tab_cadre_fixe'>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<th>";
+         echo "Error";
+         echo "</th>";
+         echo "</tr>";
 
-            echo "<tr class='tab_bg_1'>";
-            echo "<th>";
-            echo "Error";
-            echo "</th>";
-            echo "</tr>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'>";
+         echo "Authentication is not right, verify login and password !";
+         echo "</td>";
+         echo "</tr>";
 
-            echo "<tr class='tab_bg_1'>";
-            echo "<td align='center'>";
-            echo "Authentication is not right, verify login and password !";
-            echo "</td>";
-            echo "</tr>";
+         echo "</table>";
+         return false;
+      } else {
+         $this->key = $a_userinfos['key'];
+         $auth["auth"] = array("login" => $a_userinfos['login'],
+                               "password" => $a_userinfos['password'],
+                               "key" => $a_userinfos['key']);
+         $buffer = json_encode($auth);
 
-            echo "</table>";
-            return false;
-         }
-         return true;
-      }
-      return false;
+         $this->auth = 'login='.$a_userinfos['login'].'&auth='.$this->mcryptText($buffer);
+      }         
+      return true;
    }
    
    
@@ -236,10 +216,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          $_SESSION['plugin_fusioninventory_itemtype'] = $itemtype;
       }
       $buffer = json_encode($getsysdescr);
-      $buffer .= "\n";
-      fputs ($this->fp, $buffer);
-      $ret = fgets ($this->fp, 102400);
-      $data = json_decode($ret);
+      curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
+      $retserv = curl_exec($this->fp);
+      $data = json_decode($retserv);
       
       $_SESSION['plugin_fusioninventory_sysdescr'] = $data->device->sysdescr;
       echo  "<table width='950' align='center'>
@@ -511,19 +490,17 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $getDevice['getDevice'] = array(
          "id" => $id);
       $buffer = json_encode($getDevice);
-      $buffer .= "\n";
-      fputs ($this->fp, $buffer);
-      $ret = fgets ($this->fp);
-      return json_decode($ret);
+      curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
+      $retserv = curl_exec($this->fp);
+      return json_decode($retserv);
    }
    
    
    function sendMib($a_mib) {
       $buffer = json_encode($a_mib);
-      $buffer .= "\n";
-      fputs ($this->fp, $buffer);
-      $ret = fgets ($this->fp);
-      return json_decode($ret);
+      curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
+      $retserv = curl_exec($this->fp);
+      return json_decode($retserv);
    }
    
    
@@ -534,10 +511,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          "sysdescr" => $sysdescr,
          "itemtype" => $itemtype);
       $buffer = json_encode($getsysdescr);
-      $buffer .= "\n";
-      fputs ($this->fp, $buffer);
-      $ret = fgets ($this->fp, 102400);
-      return json_decode($ret);      
+      curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
+      $retserv = curl_exec($this->fp);
+      return json_decode($retserv);      
    }
    
    
@@ -547,8 +523,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $unlock['setUnLock'] = array(
          "devices_id" => $_SESSION['plugin_fusioninventory_snmpwalks_id']);
       $buffer = json_encode($unlock);
-      $buffer .= "\n";
-      fputs ($this->fp, $buffer);    
+      curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
+      curl_exec($this->fp);
    }
    
    
@@ -628,10 +604,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       }
       
       $buffer = json_encode($singleModel);
-      $buffer .= "\n";
-      fputs ($this->fp, $buffer);
-      $ret = fgets ($this->fp);
-      $data = json_decode($ret);
+      curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
+      $retserv = curl_exec($this->fp);
+      $data = json_decode($retserv);
       
       if ($write == '0') {
          $mime = "text/xml";
@@ -667,10 +642,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          'type' => 'all'); // all, stable, devel
       
       $buffer = json_encode($getsysdescr);
-      $buffer .= "\n";
-      fputs ($this->fp, $buffer);
-      $ret = fgets ($this->fp, 1024000);
-      $data = json_decode($ret, true);
+      curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
+      $retserv = curl_exec($this->fp);
+      $data = json_decode($retserv, true);
 
       echo "<center>";
       if (!isset($_SESSION['glpi_plugin_fusioninventory_constructmodelsort'])) {
@@ -1035,10 +1009,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $addOid['addOid']['nboids_after'] = $_POST['nboids_after'];
       
       $buffer = json_encode($addOid);
-      $buffer .= "\n";
-      fputs ($this->fp, $buffer);
-      $ret = fgets ($this->fp);
-      $data = json_decode($ret, true);
+      curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
+      $retserv = curl_exec($this->fp);
+      $data = json_decode($retserv, true);
       
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
@@ -1058,6 +1031,18 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
       echo "</table>";
+   }
+   
+   
+   function mcryptText($text) {
+      return $text;
+      
+      
+      $td = mcrypt_module_open(MCRYPT_RIJNDAEL_256, "", MCRYPT_MODE_ECB, "");
+      mcrypt_generic_init($td, $this->key, 0);
+      $temp = mcrypt_generic($td, $text);
+      mcrypt_generic_end ($td);
+      return $temp;
    }
 }
 
