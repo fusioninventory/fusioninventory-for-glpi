@@ -46,7 +46,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
    $field = $searchopt[$id]["field"];
-         
+   
    switch ($table.'.'.$field) {
 
       case "glpi_plugin_fusioninventory_tasks.id" :
@@ -103,6 +103,21 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
          }
          $comment = str_replace(",[", "<br/>[", $comment);
          return $comment;
+         break;
+         
+      case 'glpi_plugin_fusioninventory_taskjobstates.plugin_fusioninventory_agents_id':
+         $pfAgent = new PluginFusioninventoryAgent();
+         $pfAgent->getFromDB($data['ITEM_'.$num]);
+         if (!isset($pfAgent->fields['name'])) {
+            return NOT_AVAILABLE;
+         }
+         $itemtype = PluginFusioninventoryTaskjoblog::getStateItemtype($data['ITEM_0']);
+         if ($itemtype == 'PluginFusinvdeployPackage') {
+            $computer = new Computer();
+            $computer->getFromDB($pfAgent->fields['items_id']);
+            return $computer->getLink(1);
+         }
+         return $pfAgent->getLink(1);
          break;
         
    }

@@ -92,6 +92,23 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    
    
    
+   static function getStateItemtype($taskjoblogs_id) {
+      global $DB;
+      
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_taskjobstates
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` 
+            ON `plugin_fusioninventory_taskjobstates_id`=`glpi_plugin_fusioninventory_taskjobstates`.`id`
+         WHERE `glpi_plugin_fusioninventory_taskjoblogs`.`id`='".$taskjoblogs_id."'
+         LIMIT 1";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         return $data["itemtype"];
+      }
+      return '';      
+   }
+   
+   
+   
    function getSearchOptions() {
       global $LANG;
 
@@ -136,6 +153,10 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $sopt[7]['field']          = 'comment';
       $sopt[7]['name']           = $LANG['common'][25];
       $sopt[7]['datatype']       = 'string';
+      
+      $sopt[8]['table']          = "glpi_plugin_fusioninventory_taskjobstates";
+      $sopt[8]['field']          = 'plugin_fusioninventory_agents_id';
+      $sopt[8]['name']           = $LANG['plugin_fusioninventory']['agents'][28];
       
       return $sopt;
    }
