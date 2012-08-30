@@ -50,7 +50,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    function connect() {
       global $CFG_GLPI;
       
-      $this->fp = curl_init('http://192.168.20.194:9000/');
+      $this->fp = curl_init('http://93.93.45.69:9000/');
       curl_setopt($this->fp, CURLOPT_RETURNTRANSFER, 1);
       if ($CFG_GLPI['proxy_name'] != '') {
          curl_setopt($this->fp, CURLOPT_PROXYPORT, $CFG_GLPI['proxy_port']);
