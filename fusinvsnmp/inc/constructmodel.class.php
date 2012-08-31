@@ -735,10 +735,11 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "</tr>";
       echo "</table>";
       
-      $menu = "<br/><center><a href='#'>Top</a>
+      $menu = "<br/><center>| <a href='#'>Top</a>
          | <a href='#not'>Models not imported</a>
          | <a href='#part'>Models to be updated</a>
-         | <a href='#ok'>Models up to date</a></center><br/>";
+         | <a href='#ok'>Models up to date</a>
+         | <a href='#import'>Import button</a> |</center><br/>";
       
       echo "<a id='not'>".$menu."</a>";
       $this->displayModelsList($data, $nb_devices, $a_sort, 'not');
@@ -749,6 +750,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<a id='ok'>".$menu."</a>";
       $this->displayModelsList($data, $nb_devices, $a_sort, 'ok');
       
+      echo "<a id='import'>".$menu."</a>";
       Html::openArrowMassives("form_model", true);
       Html::closeArrowMassives(array('import' => $LANG['buttons'][37]),
                                array('import' => 'Import will update existing models'));
