@@ -129,7 +129,11 @@ if ($pfConstructmodel->connect()) {
       
       } else if (isset($_POST['sendsnmpwalk'])
               AND $_POST['sysdescr'] != '') {
-         if ($_POST['itemtype'] == '0') {
+         $message = array();
+         $message = $pfConstructmodel->detectWrongSysdescr($_POST['sysdescr']);
+         if (!empty($message)){
+            $pfConstructmodel->showFormDefineSysdescr($message);
+         } else if ($_POST['itemtype'] == '0') {
             $pfConstructmodel->showFormDefineSysdescr();
          } else {
             $pfConstructmodel->sendGetsysdescr($_POST['sysdescr'], $_POST['itemtype']);

@@ -139,7 +139,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    }
    
    
-   function showFormDefineSysdescr() {
+   function showFormDefineSysdescr($message = array()) {
       global $LANG,$CFG_GLPI;
       
       echo "<form name='form' method='post' action='".$this->getSearchURL()."'>";
@@ -156,7 +156,22 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "Command to get the sysdescr";
       echo "</td>";
       echo "<td>";
-      echo "snmpwalk -v [version] -c [community] -Cc [IP] sysdescr";
+      if (empty($message)) {
+         echo "snmpwalk -v [version] -c [community] -Cc [IP] sysdescr";
+      } else {
+         echo "<strong>This device need use another OID for 'sysdescr' (try in order and
+            stop when OID exist and not empty):</strong><br/>";
+         echo "<ul style='margin-left:0px; padding-left:20px; list-style-type:disc;'>";
+         foreach ($message as $data) {
+            echo "<li>";
+            echo "snmpwalk -v [version] -c [community] -Cc [IP] ".$data['oid'];
+            if (isset($data['message'])) {
+               echo " <i>( ".$data["message"]." )</i>";
+            }
+            echo "</li>";
+         }
+         echo "</ul>";
+      }
       echo "</td>";
       echo "</tr>";
       
@@ -176,7 +191,11 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "Itemtype";
       echo "</td>";
       echo "<td>";
-      Dropdown::showItemType();
+      if (isset($_POST['itemtype'])) {
+         Dropdown::showItemType('', array('value' => $_POST['itemtype']));
+      } else {
+         Dropdown::showItemType();
+      }
       echo "</td>";
       echo "</tr>";
       
@@ -185,7 +204,12 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "Sysdescr";
       echo "</td>";
       echo "<td>";
-      echo "<textarea name='sysdescr'  cols='100' rows='4' /></textarea>";
+      $sysdescr = '';
+      if (empty($message)
+              AND isset($_POST['sysdescr'])) {
+         $sysdescr = $_POST['sysdescr'];
+      }
+      echo "<textarea name='sysdescr' cols='100' rows='4' />".$sysdescr."</textarea>";
       echo "</td>";
       echo "</tr>";
       
@@ -1096,6 +1120,60 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       mcrypt_generic_end ($td);
       return $temp;
    }
+   
+   
+   
+   function detectWrongSysdescr($sysdescr) {
+      $message = array();
+      if (strstr($sysdescr, 'AXIS OfficeBasic Network Print Server')) {
+         $message[] = array('oid' => '.1.3.6.1.4.1.2699.1.2.1.2.1.1.3.1',
+                            'message' => 'Value between "MDL:" and ";" OR "MODEL:" and ";"');
+      } else if (strstr($sysdescr, 'EPSON Built-in')) {
+         $message[] = array('oid' => '.1.3.6.1.4.1.1248.1.1.3.1.3.8.0');
+      } else if (strstr($sysdescr, 'EPSON Internal 10Base-T')) {
+         $message[] = array('oid' => '.1.3.6.1.2.1.25.3.2.1.3.1');
+      } else if (strstr($sysdescr, ',HP,JETDIRECT,J')) {
+         $message[] = array('oid' => '.1.3.6.1.4.1.1229.2.2.2.1.15.1');
+      } else if (strstr($sysdescr, 'SAMSUNG NETWORK PRINTER,ROM')) {
+         $message[] = array('oid' => '.1.3.6.1.4.1.236.11.5.1.1.1.1.0');
+      } else if (strstr($sysdescr, 'RICOH NETWORK PRINTER')) {
+         $message[] = array('oid' => '.1.3.6.1.4.1.11.2.3.9.1.1.7.0');
+      } else if (strstr($sysdescr, 'ZebraNet PrintServer')
+              OR (strstr($sysdescr, 'ZebraNet Wired PS'))) {
+         $message[] = array('oid' => '.1.3.6.1.4.1.10642.1.1.0',
+                            'message' => 'If this OID exist');
+         $message[] = array('oid' => '.1.3.6.1.4.1.11.2.3.9.1.1.7.0',
+                            'message' => 'Value between "MDL:" and ";" OR "MODEL:" and ";"');
+      } else if (strstr($sysdescr, 'HP ETHERNET MULTI-ENVIRONMENT')
+              OR (strstr($sysdescr, 'A SNMP proxy agent, EEPROM'))) {
+         $message[] = array('oid' => '.1.3.6.1.2.1.25.3.2.1.3.1',
+                            'message' => 'If this OID exist');
+         $message[] = array('oid' => '.1.3.6.1.4.1.11.2.3.9.1.1.7.0',
+                            'message' => 'Value between "MDL:" and ";" OR "MODEL:" and ";"');
+      } else if ($sysdescr == "Ethernet Switch") {
+         $message[] = array('oid' => '.1.3.6.1.4.1.674.10895.3000.1.2.100.1.0');
+      } else if ($sysdescr == "SB-110"
+              OR $sysdescr == "KYOCERA MITA Printing System"
+              OR $sysdescr == "KYOCERA Print I/F") {         
+         $message[] = array('oid' => '.1.3.6.1.4.1.1347.42.5.1.1.2.1',
+                            'message' => 'If this OID exist');
+         $message[] = array('oid' => '.1.3.6.1.4.1.1347.43.5.1.1.1.1',
+                            'message' => 'If this OID exist');
+         $message[] = array('oid' => '.1.3.6.1.4.1.11.2.3.9.1.1.7.0',
+                            'message' => 'Value between "MDL:" and ";" OR "MODEL:" and ";"');
+      } else if (strstr($sysdescr, 'Linux')) {
+         $message[] = array('oid' => '.1.3.6.1.2.1.1.5.0',
+                            'message' => 'If this OID exist');
+         $message[] = array('oid' => '.1.3.6.1.4.1.714.1.2.5.6.1.2.1.6.1',
+                            'message' => 'If this OID exist');
+      } else if (preg_match("/Samsung(.*);S\/N(.*)/", $sysdescr)) {
+         $message[] = array('oid' => '.1.3.6.1.4.1.236.11.5.1.1.1.1.0');
+      }  else if (preg_match("/^\S+ Service Release/", $sysdescr)) {
+         $message[] = array('oid' => '.1.3.6.1.2.1.47.1.1.1.1.13.1');
+      } 
+      return $message;
+   }
+   
 }
 
 ?>
