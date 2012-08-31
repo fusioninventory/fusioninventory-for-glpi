@@ -94,14 +94,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             }
             $errors.=$this->importContent($p_CONTENT);
             $result=true;
-            if ($errors != '') {
-               if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
-                  $result=true;
-               } else {
-                  // It's PROLOG
-                  $result=false;
-               }
-            }
             if (isset($p_CONTENT->AGENT->END)) {
                $pfTaskjobstate->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
                                                          $this->agent['id'],
@@ -282,10 +274,12 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                               .$child->getName()."\n";
                }
             }
-            if ($errors=='') {
-               $this->ptd->updateDB();
-            }
+            $this->ptd->updateDB();
          }
+      }
+      if (!empty($errors)) {
+         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.$errors.' [['.$itemtype.'::'.$items_id.']]';
+         $this->addtaskjoblog();
       }
       return $errors;
    }
@@ -312,10 +306,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
          $errors.=$this->importInfoNetworking($xml->INFO);
       } elseif ($itemtype == 'Printer') {
          $errors.=$this->importInfoPrinter($xml->INFO);
-      }
-      if (!empty($errors)) {
-         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.$errors.' [['.$itemtype.'::'.$items_id.']]';
-         $this->addtaskjoblog();
       }
       return $errors;
    }
@@ -1466,9 +1456,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                '[==fusinvsnmp::7==] Update '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
          $errors .= $this->importDevice($itemtype, $items_id);
-      }
-      if ($errors != '') {
-         echo $errors;
       }
       return $errors;
    }
