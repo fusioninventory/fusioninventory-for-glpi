@@ -734,12 +734,19 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
       echo "</table>";
-      echo "<br/>";
       
+      $menu = "<br>/<center><a href='#'>Top</a>
+         | <a href='#not'>Models not imported</a>
+         | <a href='#part'>Models to be updated</a>
+         | <a href='#ok'>Models up to date</a></center><br/>";
+      
+      echo "<a id='not'>".$menu."</a>";
       $this->displayModelsList($data, $nb_devices, $a_sort, 'not');
       
+      echo "<a id='part'>".$menu."</a>";
       $this->displayModelsList($data, $nb_devices, $a_sort, 'part');
 
+      echo "<a id='ok'>".$menu."</a>";
       $this->displayModelsList($data, $nb_devices, $a_sort, 'ok');
       
       Html::openArrowMassives("form_model", true);
@@ -771,7 +778,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/pics/box_green.png'/>";
          echo "</th>";
          echo "<th colspan='5'>";
-         echo "Model up to date";
+         echo "Models up to date";
       }
       
       
@@ -894,7 +901,6 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          }
       }
       echo "</table>";
-      echo "<br/>";
    }
    
    
