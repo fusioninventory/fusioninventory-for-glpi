@@ -457,7 +457,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "</th>";
          echo "</tr>";
 
-         $datalog = json_decode($ret, true);
+         $datalog = json_decode($retserv, true);
          arsort($datalog['logs']);
          foreach ($datalog['logs'] as $ldata) {
             echo "<tr class='tab_bg_1'>";
