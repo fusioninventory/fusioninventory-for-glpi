@@ -419,8 +419,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
 
             case 'MANUFACTURER':
                if (!in_array('manufacturers_id', $a_lockable)) {
-                  $Manufacturer = new Manufacturer();
-                  $this->ptd->setValue('manufacturers_id', $Manufacturer->import(array('name' => (string)$p_info->MANUFACTURER)));
+                  $this->ptd->setValue('manufacturers_id', 
+                                        Dropdown::importExternal('Manufacturer',
+                                                                 (string)$p_info->MANUFACTURER,
+                                                                 $_SESSION["plugin_fusinvinventory_entity"]));
                }
                break;
 
