@@ -735,7 +735,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "</tr>";
       echo "</table>";
       
-      $menu = "<br>/<center><a href='#'>Top</a>
+      $menu = "<br/><center><a href='#'>Top</a>
          | <a href='#not'>Models not imported</a>
          | <a href='#part'>Models to be updated</a>
          | <a href='#ok'>Models up to date</a></center><br/>";
