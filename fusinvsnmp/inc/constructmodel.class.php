@@ -821,7 +821,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "</th>";
       }
       echo "<th>";
-      echo "Snmp file";
+      echo "snmpwalk file";
       echo "</th>";
       echo "</tr>";
       
