@@ -288,6 +288,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     **/
    static function deleteInLockArray($p_table, $p_items_id, $p_fieldToDel) {
 
+      $pfLock = new PluginFusioninventoryLock();
       $fieldsToLock = PluginFusioninventoryLock::getLockFields($p_table, $p_items_id);
       if (count($fieldsToLock)){
          $fieldToDel=array_search($p_fieldToDel,$fieldsToLock);
@@ -297,18 +298,18 @@ class PluginFusioninventoryLock extends CommonDBTM{
          if (count($fieldsToLock)) {       // there are still locks
             $fieldsToLock=array_values($fieldsToLock);
 
-            $a_lines = $this->find("`tablename`='".$p_table."' AND `items_id`='".$p_items_id."'");
+            $a_lines = $pfLock->find("`tablename`='".$p_table."' AND `items_id`='".$p_items_id."'");
             $a_line = current($a_lines);
-            $this->getFromDB($a_line['id']);
+            $pfLock->getFromDB($a_line['id']);
             $input = array();
-            $input['id'] = $this->fields['id'];
+            $input['id'] = $pfLock->fields['id'];
             $input['tablefields'] = exportArrayToDB($fieldsToLock);
-            $this->update($input);
+            $pfLock->update($input);
          } else {                            // no locks any more
-            $a_lines = $this->find("`tablename`='".$p_table."' AND `items_id`='".$p_items_id."'");
+            $a_lines = $pfLock->find("`tablename`='".$p_table."' AND `items_id`='".$p_items_id."'");
             $a_line = current($a_lines);
-            $this->getFromDB($a_line['id']);
-            $this->delete($this->fields);
+            $pfLock->getFromDB($a_line['id']);
+            $pfLock->delete($pfLock->fields);
          }
       }
    }
