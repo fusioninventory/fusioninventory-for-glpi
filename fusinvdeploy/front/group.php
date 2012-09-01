@@ -53,8 +53,7 @@ Html::header($LANG['plugin_fusinvdeploy']['group'][0],$_SERVER["PHP_SELF"],"plug
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$group = new PluginFusinvdeployGroup();
-$group->showList();
+Search::show('PluginFusinvdeployGroup');
 
 Html::footer();
 
