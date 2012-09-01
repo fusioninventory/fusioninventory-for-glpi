@@ -240,14 +240,14 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<th width='25%'>";
       if ($this->fields['id'] > 0) {
          echo $LANG['plugin_fusioninventory']['task'][27];
-         $this->plusButton('definition');
+         $this->plusButton('definition'.$id);
          echo "<br/><i>Liste des objets sur lesquelles l'action doit porter</i>";
       }
       echo "</th>";
       echo "<th width='25%'>";
       if ($this->fields['id'] > 0) {
          echo $LANG['plugin_fusioninventory']['task'][28];
-         $this->plusButton('action');
+         $this->plusButton('action'.$id);
          echo "<br/><i>Liste des objets qui vont effectuer l'action</i>";
       }
       echo "</th>";
@@ -414,7 +414,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<tr>";
       echo "<td>".$LANG['plugin_fusioninventory']['task'][30]."&nbsp;:</td>";
       echo "<td align='center' height='10'>";
-      echo "<span id='show_".ucfirst($type)."List'>";
+      echo "<span id='show_".ucfirst($type)."List".$id."'>";
       echo "</span>";
       echo "</td>";
       echo "</tr>";
@@ -503,7 +503,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       Ajax::updateItemOnEvent(
               'dropdown_'.ucfirst($myname).'Type'.$rand,
-              "show_".ucfirst($myname)."List",
+              "show_".ucfirst($myname)."List".$taskjobs_id,
               $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowntypelist.php",
               $params);
 
@@ -552,15 +552,15 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $iddropdown = "dropdown_".$_POST['name']."selectiontoadd";
       }
 
-      echo "<br/><center><input type='button' id='add_button_".$_POST['name']."' name='add_button_".$_POST['name']."' value=\"".$LANG['buttons'][8]."\" class='submit'></center>";
+      echo "<br/><center><input type='button' id='add_button_".$_POST['name'].$taskjobs_id."' name='add_button_".$_POST['name']."' value=\"".$LANG['buttons'][8]."\" class='submit'></center>";
       $params = array('items_id'  => '__VALUE0__',
-                      'add_button_'.$_POST['name'] => '__VALUE1__',
+                      'add_button_'.$_POST['name'].$taskjobs_id => '__VALUE1__',
                       'itemtype'  => $definitiontype,
                       'rand'      => $rand,
                       'myname'    => 'items_id',
                       'type'      => $_POST['name'],
                       'taskjobs_id'=>$taskjobs_id);
-      Ajax::updateItemOnEvent(array($iddropdown.$rand ,"add_button_".$_POST['name']),
+      Ajax::updateItemOnEvent(array($iddropdown.$rand ,"add_button_".$_POST['name'].$taskjobs_id),
                               "Additem_$rand",
                               $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobaddtype.php",
                               $params,
@@ -611,13 +611,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</table>";
 
       if ($nb > 0) {
-         echo "<center><input type='button' id='delete".$name."' name='delete".$name."' value=\"".$LANG['buttons'][6]."\" class='submit'></center>";
+         echo "<center><input type='button' id='delete".$name.$id."' name='delete".$name.$id."' value=\"".$LANG['buttons'][6]."\" class='submit'></center>";
 
          $params = array($name.'item' => '__CHECKBOX__',
                          'type'      => $name,
                          'taskjobs_id'=>$id);
 
-         $toobserve = "delete".$name;
+         $toobserve = "delete".$name.$id;
          $toupdate = "Deleteitem";
          $url = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobdeletetype.php";
          $parameters=$params;
@@ -2034,14 +2034,14 @@ return namelist;
       echo "<script type='text/javascript'>
       //document.getElementById('show_".ucfirst($type)."List').innerHTML='&nbsp';
 
-      Ext.get('".$type."').setDisplayed('none');
+      Ext.get('".$type.$taskjobs_id."').setDisplayed('none');
       </script>";
       // reload item list
       $params = array();
       $params['taskjobs_id'] = $taskjobs_id;
       $params['typename'] = $type;
       echo "<script type='text/javascript'>";
-      Ajax::UpdateItemJsCode("show".$type."list_",
+      Ajax::UpdateItemJsCode("show".$type."list".$taskjobs_id."_",
                                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlist.php",
                                 $params);
       echo "</script>";
@@ -2068,7 +2068,7 @@ return namelist;
       $params['taskjobs_id'] = $taskjobs_id;
       $params['typename'] = $type;
       echo "<script type='text/javascript'>";
-      Ajax::UpdateItemJsCode("show".$type."list_",
+      Ajax::UpdateItemJsCode("show".$type."list".$taskjobs_id."_",
                                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlist.php",
                                 $params);
       echo "</script>";
@@ -2099,38 +2099,38 @@ return namelist;
    function showTaskjobItems($name, $randmethod, $id) {
       global $LANG,$CFG_GLPI;
       
-      echo "<div style='display:none' id='".$name."' >";
+      echo "<div style='display:none' id='".$name.$id."' >";
       $params = array('method' => '__VALUE__',
                       'rand'      => $randmethod,
                       'myname'    => 'method',
                       'typename'  => $name,
                       'taskjobs_id'=>$id );
       Ajax::updateItemOnEvent("dropdown_method".$randmethod,
-                              "show".$name."Type",
+                              "show".$name."Type".$id,
                               $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowntype.php",
                               $params,
                               array("change", "load"));
       if ($this->fields['method'] != "") {
          echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("show".$name."Type",
+         Ajax::UpdateItemJsCode("show".$name."Type".$id,
                                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowntype.php",
                                 $params,
                                 "dropdown_method".$randmethod);
          echo "</script>";
       }
-      echo "<span id='show".$name."Type'>&nbsp;</span>";
-      echo "<span id='show_".ucfirst($name)."List'>&nbsp;</span>";
+      echo "<span id='show".$name."Type".$id."'>&nbsp;</span>";
+      echo "<span id='show_".ucfirst($name)."List".$id."'>&nbsp;</span>";
       echo "<hr>";
       echo "</div>";
       // Display itemname list
       echo "<script type='text/javascript'>";
       $params['taskjobs_id'] = $id;
-      Ajax::UpdateItemJsCode("show".$name."list_",
+      Ajax::UpdateItemJsCode("show".$name."list".$id."_",
                                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlist.php",
                                 $params,
                                 "dropdown_method".$randmethod);
       echo "</script>";
-      echo "<span id='show".$name."list_'>&nbsp;</span>";
+      echo "<span id='show".$name."list".$id."_'>&nbsp;</span>";
    }
    
    
