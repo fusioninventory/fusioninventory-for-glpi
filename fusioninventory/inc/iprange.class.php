@@ -81,7 +81,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    }
 
 
-   function canView() {
+   static function canView() {
       return PluginFusioninventoryProfile::haveRight("fusioninventory", "iprange", "r");
    }
 

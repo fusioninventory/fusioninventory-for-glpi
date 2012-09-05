@@ -58,7 +58,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
       return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credentialip', 'w');
    }
 
-   function canView() {
+   static function canView() {
       return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credentialip', 'r');
    }
 

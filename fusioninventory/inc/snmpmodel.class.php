@@ -51,7 +51,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
    }
 
 
-   function canView() {
+   static function canView() {
       return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "r");
    }
 

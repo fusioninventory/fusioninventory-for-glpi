@@ -60,7 +60,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    }
 
 
-   function canView() {
+   static function canView() {
       return true;
    }
 

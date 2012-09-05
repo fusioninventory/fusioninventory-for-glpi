@@ -56,7 +56,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    }
 
 
-   function canView() {
+   static function canView() {
       return true;
    }
 

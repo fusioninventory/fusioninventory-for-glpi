@@ -67,7 +67,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-   function canView() {
+   static function canView() {
       return PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "r");
    }
 

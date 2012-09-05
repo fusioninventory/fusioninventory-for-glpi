@@ -73,7 +73,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
       return true;
    }
 
-   function canView() {
+   static function canView() {
       return true;
    }
 
