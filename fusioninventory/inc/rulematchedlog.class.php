@@ -51,7 +51,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
    }
 
-   function canCreate() {
+   static function canCreate() {
       return true;
    }
 

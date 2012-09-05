@@ -51,7 +51,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       return "";
    }
 
-   function canCreate() {
+   static function canCreate() {
       return Session::haveRight('computer', 'w');
    }
 

@@ -52,7 +52,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
    }
 
-   function canCreate() {
+   static function canCreate() {
       return Session::haveRight('computer', 'w');
    }
 

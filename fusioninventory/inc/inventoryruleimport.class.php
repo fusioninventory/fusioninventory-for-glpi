@@ -64,7 +64,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    public $can_sort = true;
 
 
-   function canCreate() {
+   static function canCreate() {
       return Session::haveRight('rule_ocs', 'w');
    }
 

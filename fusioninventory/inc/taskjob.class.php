@@ -56,7 +56,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
 
-   function canCreate() {
+   static function canCreate() {
       return PluginFusioninventoryProfile::haveRight("fusioninventory", "task", "w");
    }
 

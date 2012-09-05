@@ -55,11 +55,11 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
    }
 
-   function canCreate() {
+   static function canCreate() {
       return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'w');
    }
 
-   function canView() {
+   static function canView() {
       return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r');
    }
 

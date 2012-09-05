@@ -130,7 +130,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
 
-   function canCreate() {
+   static function canCreate() {
       return PluginFusioninventoryProfile::haveRight('fusioninventory', 'configuration', 'w');
    }
 

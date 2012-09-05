@@ -69,7 +69,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
    }
 
 
-   function canCreate() {
+   static function canCreate() {
       return true;
    }
 

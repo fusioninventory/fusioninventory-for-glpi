@@ -53,7 +53,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    }
 
 
-   function canCreate() {
+   static function canCreate() {
       return PluginFusioninventoryProfile::haveRight("fusinvinventory", "blacklist", "w");
    }
 
