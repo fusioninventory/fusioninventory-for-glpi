@@ -60,7 +60,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
    // From Rule
-   public $right    = 'rule_ocs';
+   //public $right    = 'rule_ocs';
    public $can_sort = true;
 
 
