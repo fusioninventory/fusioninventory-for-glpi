@@ -69,7 +69,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    }
 
 
-   static function canView() {
+   static static function canView() {
       return Session::haveRight('rule_ocs', 'r');
    }
 

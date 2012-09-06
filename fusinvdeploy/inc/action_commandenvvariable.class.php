@@ -52,11 +52,11 @@ class PluginFusinvdeployAction_Commandenvvariable extends CommonDBTM {
 
    }
 
-   function canCreate() {
+   static function canCreate() {
       return true;
    }
 
-   function canView() {
+   static function canView() {
       return true;
    }
 
