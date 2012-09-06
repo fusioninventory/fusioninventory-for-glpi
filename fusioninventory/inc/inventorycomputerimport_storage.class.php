@@ -75,7 +75,7 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
               "component_drive", 'inventory') == '0') {
             return;
          }
-         $CompDevice = new Computer_Device('DeviceDrive');
+         $CompDevice = new Item_Devices('Item_DeviceDrive');
          $DeviceDrive = new DeviceDrive();
          $type_tmp = "Drive";
          $drive_idfield = 'devicedrives_id';
@@ -85,7 +85,7 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
               "component_harddrive", 'inventory') == '0') {
             return;
          }
-         $CompDevice = new Computer_Device('DeviceHardDrive');
+         $CompDevice = new Item_Devices('Item_DeviceHardDrive');
          $DeviceDrive = new DeviceHardDrive();
          $drive_idfield = 'deviceharddrives_id';
       }
@@ -189,9 +189,9 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
       // Detect if it's drive or harddrive
       $typeDevice = $this->getTypeDrive($sectiondetail);
 
-      $CompDevice = new Computer_Device('DeviceDrive');
+      $CompDevice = new Item_Devices('Item_DeviceDrive');
 
-      $CompHardDevice = new Computer_Device('DeviceHardDrive');
+      $CompHardDevice = new Item_Devices('Item_DeviceHardDrive');
 
       if ($typeDevice == "Drive") {
          $items_id = str_replace("d", "", $items_id);

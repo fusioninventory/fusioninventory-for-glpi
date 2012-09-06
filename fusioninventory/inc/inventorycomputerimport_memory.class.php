@@ -67,7 +67,7 @@ class PluginFusioninventoryInventoryComputerImport_Memory extends CommonDBTM {
          return;
       }
 
-      $CompDevice = new Computer_Device('DeviceMemory');
+      $CompDevice = new Item_Devices('Item_DeviceMemory');
 
       if (isset($dataSection["CAPACITY"])
               AND $dataSection["CAPACITY"] == 'No') {
@@ -167,7 +167,7 @@ class PluginFusioninventoryInventoryComputerImport_Memory extends CommonDBTM {
    *
    **/
    function deleteItem($items_id, $idmachine) {
-      $CompDevice = new Computer_Device('DeviceMemory');
+      $CompDevice = new Item_Devices('Item_DeviceMemory');
       $CompDevice->getFromDB($items_id);
       if ($CompDevice->fields['computers_id'] == $idmachine) {
          $input = array();

@@ -67,7 +67,7 @@ class PluginFusioninventoryInventoryComputerImport_Processor extends CommonDBTM 
          return;
       }
 
-      $CompDevice = new Computer_Device('DeviceProcessor');
+      $CompDevice = new Item_Devices('Item_DeviceProcessor');
 
       $devID = 0;
       $processor = array();
@@ -139,7 +139,7 @@ class PluginFusioninventoryInventoryComputerImport_Processor extends CommonDBTM 
    *
    **/
    function deleteItem($items_id, $idmachine) {
-      $CompDevice = new Computer_Device('DeviceProcessor');
+      $CompDevice = new Item_Devices('Item_DeviceProcessor');
       $CompDevice->getFromDB($items_id);
       if ($CompDevice->fields['computers_id'] == $idmachine) {
          $input = array();

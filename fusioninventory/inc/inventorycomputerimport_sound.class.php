@@ -67,7 +67,7 @@ class PluginFusioninventoryInventoryComputerImport_Sound extends CommonDBTM {
          return;
       }
 
-      $CompDevice = new Computer_Device('DeviceSoundCard');
+      $CompDevice = new Item_Devices('Item_DeviceSoundCard');
 
       $devID = 0;
       if ($type == "update") {
@@ -127,7 +127,7 @@ class PluginFusioninventoryInventoryComputerImport_Sound extends CommonDBTM {
    *
    **/
    function deleteItem($items_id, $idmachine) {
-      $CompDevice = new Computer_Device('DeviceSoundCard');
+      $CompDevice = new Item_Devices('Item_DeviceSoundCard');
       $CompDevice->getFromDB($items_id);
       if ($CompDevice->fields['computers_id'] == $idmachine) {
          $input = array();

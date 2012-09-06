@@ -209,7 +209,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                switch ($split[0]) {
 
                   case 'CONTROLLERS':
-                     $DeviceControl = new Computer_Device('DeviceControl');
+                     $DeviceControl = new Item_Devices('Item_DeviceControl');
                      if (!$a_lists = $DeviceControl->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, __('Controllers'), $a_sectiontmp['NAME']);
                      } else {
@@ -219,7 +219,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      break;
 
                   case 'CPUS':
-                     $DeviceProcessor = new Computer_Device('DeviceProcessor');
+                     $DeviceProcessor = new Item_Devices('Item_DeviceProcessor');
                      if (!$a_lists = $DeviceProcessor->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, __('Processor'), $a_sectiontmp['NAME']);
                      } else {
@@ -249,7 +249,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      break;
 
                   case 'MEMORIES':
-                     $DeviceMemory = new Computer_Device('DeviceMemory');
+                     $DeviceMemory = new Item_Devices('Item_DeviceMemory');
                      if (!$a_lists = $DeviceMemory->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, __('Memory'), $a_sectiontmp['DESCRIPTION']);
                      } else {
@@ -281,7 +281,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      break;
 
                   case 'SOUNDS':
-                     $DeviceSoundCard = new Computer_Device('DeviceSoundCard');
+                     $DeviceSoundCard = new Item_Devices('Item_DeviceSoundCard');
                      if (!$a_lists = $DeviceSoundCard->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, __('Soundcard'), $a_sectiontmp['NAME']);
                      } else {
@@ -295,7 +295,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      $pfInventoryComputerImport_Storage = new PluginFusioninventoryInventoryComputerImport_Storage();
                      $type_tmp = $pfInventoryComputerImport_Storage->getTypeDrive($array_section);
                      if ($type_tmp == "Drive") {
-                        $DeviceDrive = new Computer_Device('DeviceDrive');
+                        $DeviceDrive = new Item_Devices('Item_DeviceDrive');
                         $split[1] = str_replace("d", "", $split[1]);
                         if (!$a_lists = $DeviceDrive->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                            $text .= $this->displaySectionNotValid($computer_id, $name, __('Drives'), $a_sectiontmp['NAME']);
@@ -304,7 +304,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                            $a_sections_lib['Drive'][$a_list['id']] = 1;
                         }
                      } else {
-                        $DeviceHardDrive = new Computer_Device('DeviceHardDrive');
+                        $DeviceHardDrive = new Item_Devices('Item_DeviceHardDrive');
                         if (!$a_lists = $DeviceHardDrive->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                            $text .= $this->displaySectionNotValid($computer_id, $name, __('Hard Drive'), $a_sectiontmp['NAME']);
                         } else {
@@ -315,7 +315,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
                      break;
 
                   case 'VIDEOS':
-                     $DeviceGraphicCard = new Computer_Device('DeviceGraphicCard');
+                     $DeviceGraphicCard = new Item_Devices('Item_DeviceGraphicCard');
                      if (!$a_lists = $DeviceGraphicCard->find("`id`='".$split[1]."' AND `computers_id`='".$computer_id."'")) {
                         $text .= $this->displaySectionNotValid($computer_id, $name, __('Graphics Card'), $a_sectiontmp['NAME']);
                      } else {
@@ -513,24 +513,24 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
          }
 
          // Check now sections in GLPI ant not in lib
-         $computerDeviceControl = new Computer_Device('DeviceControl');
+         $computerDeviceControl = new Item_Devices('Item_DeviceControl');
          $deviceControl = new DeviceControl();
-         $computerDeviceProcessor = new Computer_Device('DeviceProcessor');
+         $computerDeviceProcessor = new Item_Devices('Item_DeviceProcessor');
          $deviceProcessor = new DeviceProcessor();
          $ComputerDisk = new ComputerDisk();
-         $computerDeviceMemory = new Computer_Device('DeviceMemory');
+         $computerDeviceMemory = new Item_Devices('Item_DeviceMemory');
          $deviceMemory = new DeviceMemory();
          $NetworkPort = new NetworkPort();
          $Computer_SoftwareVersion = new Computer_SoftwareVersion();
          $SoftwareVersion = new SoftwareVersion();
          $Software = new Software();
-         $computerDeviceSoundCard = new Computer_Device('DeviceSoundCard');
+         $computerDeviceSoundCard = new Item_Devices('Item_DeviceSoundCard');
          $deviceSoundCard = new DeviceSoundCard();
-         $computerDeviceDrive = new Computer_Device('DeviceDrive');
+         $computerDeviceDrive = new Item_Devices('Item_DeviceDrive');
          $deviceDrive = new DeviceDrive();
-         $computerDeviceHardDrive = new Computer_Device('DeviceHardDrive');
+         $computerDeviceHardDrive = new Item_Devices('Item_DeviceHardDrive');
          $deviceHardDrive = new DeviceHardDrive();
-         $computerDeviceGraphicCard = new Computer_Device('DeviceGraphicCard');
+         $computerDeviceGraphicCard = new Item_Devices('Item_DeviceGraphicCard');
          $deviceGraphicCard = new DeviceGraphicCard();
          $Computer_Item = new Computer_Item();
          $monitor = new Monitor();
@@ -880,7 +880,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
       $items_id = $split[0];
       $itemtype = $split[1];
       if (strstr($itemtype, "Device")) {
-         $class = new Computer_Device($itemtype);
+         $class = new Item_Devices($itemtype);
          $class->delete(array('id'=>$items_id,
                                    "_itemtype" => $itemtype), 1);
       } else {
@@ -903,15 +903,15 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
       $computer = new Computer();
       $pfLib    = new PluginFusinvinventoryLib();
 
-      $computerDeviceControl     = new Computer_Device('DeviceControl');
-      $computerDeviceProcessor   = new Computer_Device('DeviceProcessor');
+      $computerDeviceControl     = new Item_Devices('Item_DeviceControl');
+      $computerDeviceProcessor   = new Item_Devices('Item_DeviceProcessor');
       $ComputerDisk              = new ComputerDisk();
-      $computerDeviceMemory      = new Computer_Device('DeviceMemory');
+      $computerDeviceMemory      = new Item_Devices('Item_DeviceMemory');
       $NetworkPort               = new NetworkPort();
       $Computer_SoftwareVersion  = new Computer_SoftwareVersion();
-      $computerDeviceSoundCard   = new Computer_Device('DeviceSoundCard');
-      $computerDeviceHardDrive   = new Computer_Device('DeviceHardDrive');
-      $computerDeviceGraphicCard = new Computer_Device('DeviceGraphicCard');
+      $computerDeviceSoundCard   = new Item_Devices('Item_DeviceSoundCard');
+      $computerDeviceHardDrive   = new Item_Devices('Item_DeviceHardDrive');
+      $computerDeviceGraphicCard = new Item_Devices('Item_DeviceGraphicCard');
       $Computer_Item             = new Computer_Item();
 
       $query = "SELECT *

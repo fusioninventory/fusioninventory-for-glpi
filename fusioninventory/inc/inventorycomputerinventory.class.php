@@ -572,7 +572,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       $xml_hardware->addChild("DESCRIPTION", $datas['comment']);
 
       // ** CONTROLLERS
-      $CompDeviceControl = new Computer_Device('DeviceControl');
+      $CompDeviceControl = new Item_Devices('Item_DeviceControl');
       $DeviceControl = new DeviceControl();
       $a_deviceControl = $CompDeviceControl->find("`computers_id`='".$items_id."' ");
       foreach ($a_deviceControl as $deviceControl_id => $deviceControl_data) {
@@ -589,7 +589,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       }
 
       // ** CPUS
-      $CompDeviceProcessor = new Computer_Device('DeviceProcessor');
+      $CompDeviceProcessor = new Item_Devices('Item_DeviceProcessor');
       $DeviceProcessor = new DeviceProcessor();
       $a_deviceProcessor = $CompDeviceProcessor->find("`computers_id`='".$items_id."' ");
       foreach ($a_deviceProcessor as $deviceProcessor_id => $deviceProcessor_data) {
@@ -606,7 +606,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       }
 
       // ** STORAGE
-      $CompDeviceDrive = new Computer_Device('DeviceDrive');
+      $CompDeviceDrive = new Item_Devices('Item_DeviceDrive');
       $DeviceDrive = new DeviceDrive();
       $a_deviceDrive = $CompDeviceDrive->find("`computers_id`='".$items_id."' ");
       foreach ($a_deviceDrive as $deviceDrive_id => $deviceDrive_data) {
@@ -626,7 +626,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $xml_storage->addChild("INTERFACE", $interface);
          }
       }
-      $CompDeviceHardDrive = new Computer_Device('DeviceHardDrive');
+      $CompDeviceHardDrive = new Item_Devices('Item_DeviceHardDrive');
       $DeviceHardDrive = new DeviceHardDrive();
       $a_DeviceHardDrive = $CompDeviceHardDrive->find("`computers_id`='".$items_id."' ");
       foreach ($a_DeviceHardDrive as $DeviceHardDrive_id => $DeviceHardDrive_data) {
@@ -668,7 +668,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
 
       // ** MEMORIES
-      $CompDeviceMemory = new Computer_Device('DeviceMemory');
+      $CompDeviceMemory = new Item_Devices('Item_DeviceMemory');
       $DeviceMemory = new DeviceMemory();
       $a_deviceMemory = $CompDeviceMemory->find("`computers_id`='".$items_id."' ");
       foreach ($a_deviceMemory as $deviceMemory_id => $deviceMemory_data) {
@@ -744,7 +744,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
 
       // ** SOUNDS
-      $CompDeviceSoundCard = new Computer_Device('DeviceSoundCard');
+      $CompDeviceSoundCard = new Item_Devices('Item_DeviceSoundCard');
       $DeviceSoundCard = new DeviceSoundCard();
       $a_deviceSoundCard = $CompDeviceSoundCard->find("`computers_id`='".$items_id."' ");
       foreach ($a_deviceSoundCard as $deviceSoundCard_id => $deviceSoundCard_data) {
@@ -762,7 +762,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
 
       // ** VIDEOS
-      $CompDeviceGraphicCard = new Computer_Device('DeviceGraphicCard');
+      $CompDeviceGraphicCard = new Item_Devices('Item_DeviceGraphicCard');
       $DeviceGraphicCard = new DeviceGraphicCard();
       $a_deviceGraphicCard = $CompDeviceGraphicCard->find("`computers_id`='".$items_id."' ");
       foreach ($a_deviceGraphicCard as $deviceGraphicCard_id => $deviceGraphicCard_data) {

@@ -67,7 +67,7 @@ class PluginFusioninventoryInventoryComputerImport_Graphiccard extends CommonDBT
          return;
       }
 
-      $CompDevice = new Computer_Device('DeviceGraphicCard');
+      $CompDevice = new Item_Devices('Item_DeviceGraphicCard');
 
       $devID = 0;
       $computer_graphiccard = array();
@@ -137,7 +137,7 @@ class PluginFusioninventoryInventoryComputerImport_Graphiccard extends CommonDBT
    *
    **/
    function deleteItem($items_id, $idmachine) {
-      $CompDevice = new Computer_Device('DeviceGraphicCard');
+      $CompDevice = new Item_Devices('Item_DeviceGraphicCard');
       $CompDevice->getFromDB($items_id);
       if ($CompDevice->fields['computers_id'] == $idmachine) {
          $input = array();
