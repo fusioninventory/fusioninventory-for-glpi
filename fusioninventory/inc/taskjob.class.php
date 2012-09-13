@@ -1505,7 +1505,7 @@ return namelist;
             if ($task['communication'] == 'pull') {
                $has_recent_log_entries = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
                         AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
-               # No news from the agent since 1 hour. The agent is probably crached. Let's cancel the task
+               # No news from the agent since 4 hour. The agent is probably crached. Let's cancel the task
                if (count($has_recent_log_entries) == 1) {
                      $a_statustmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
                                                 AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
