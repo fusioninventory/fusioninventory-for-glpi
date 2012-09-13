@@ -62,6 +62,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          }
       }
       curl_setopt($this->fp, CURLOPT_POST, true);
+      curl_setopt($this->fp,CURLOPT_HTTPHEADER,array('Expect:'));
       return true;
    }
    

@@ -61,6 +61,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          </table>";
       
       echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
+      echo "<input type='hidden' name='devices_id' value='".$id."' />";
       
       $ret = $this->manageWalks($data, $id);
 

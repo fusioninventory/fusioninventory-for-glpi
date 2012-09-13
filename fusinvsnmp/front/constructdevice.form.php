@@ -66,93 +66,23 @@ if (isset($_POST['update'])) {
                                  'mappings_id' => $split[1],
                                  'oid_port_counter' => $portcounter); 
    }
-   $a_json['devices_id'] = $_SESSION['plugin_fusioninventory_snmpwalks_id'];
+   
+   $a_json['devices_id'] = $_POST['devices_id'];
    
    $pfConstructmodel = new PluginFusinvsnmpConstructmodel();
    if ($pfConstructmodel->connect()) {
       if ($pfConstructmodel->showAuth()) {
-         if (isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])
-            AND $_SESSION['plugin_fusioninventory_snmpwalks_id'] > 0) {
+         if (isset($_POST['devices_id'])
+            AND $_POST['devices_id'] > 0) {
             
             $pfConstructDevice = new PluginFusinvsnmpConstructDevice();
             $dataret = $pfConstructmodel->sendMib($a_json);
          }
       }
    }
+   $pfConstructmodel->closeConnection();
    Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$a_json['devices_id']);
 }
-/// OLD ********************************
-
-if (isset($_GET['vlan_update'])) {
-   $query_update = "UPDATE `glpi_plugin_fusinvsnmp_constructdevice_miboids`
-         SET vlan=0
-      WHERE plugin_fusinvsnmp_constructdevices_id=".$_GET['id']."
-         AND plugin_fusinvsnmp_miboids_id=".$_GET['vlan_update'];
-   $DB->query($query_update);
-   Html::back();
-} else if (isset ($_POST["add"])) {
-   $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevices
-      WHERE sysdescr='".$_POST['sysdescr']."' ";
-   $result = $DB->query($query);
-   if ($DB->numrows($result) == '0') {
-      $pfConstructDevice->add($_POST);
-   } else {
-      $_SESSION["MESSAGE_AFTER_REDIRECT"] = "Déjà existant";
-   }
-	Html::back();
-} else if (isset($_POST['addWalk'])) {
-   $i = 1;
-   $md5 = md5(rand(1, 1000000));
-   while ($i == '1') {
-      $md5 = md5(rand(1, 1000000));
-      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_constructdevicewalks`
-         WHERE log='".$md5."' ";
-      $result = $DB->query($query);
-      if ($DB->numrows($result) == "0") {
-         $i = 0;
-      }   
-   }
-
-   $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_constructdevicewalks` 
-      (`id`,`plugin_fusinvsnmp_constructdevices_id`,`log`)
-      VALUES (NULL, '".$_POST['id']."', '".$md5."')";
-   $DB->query($query_ins);
-   move_uploaded_file($_FILES['walk']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$md5);
-   Html::back();
-} else if (isset($_POST['mib'])) { // Check MIBS
-   foreach($_POST['oidsselected'] as $oid) {
-      $a_mapping = explode('||', $_POST['links_oid_fields_'.$oid]);
-
-      $mapping = new PluginFusioninventoryMapping;
-      $mappings = $mapping->get($a_mapping[0], $a_mapping[1]);
-      $mappings_id = $mappings->fields['id'];
-      $query_ins = "INSERT INTO glpi_plugin_fusinvsnmp_constructdevice_miboids
-         (`plugin_fusinvsnmp_miboids_id`, `plugin_fusinvsnmp_constructdevices_id`,
-            `plugin_fusioninventory_mappings_id`,
-            `oid_port_counter`, `oid_port_dyn`, `vlan`)
-         VALUES
-         ('".$oid."', '".$_POST['id']."', '".$mappings_id."',
-            '".$_POST['oid_port_counter_'.$oid]."',
-            '".$_POST['oid_port_dyn_'.$oid]."',
-              '".$_POST['vlan_'.$oid]."' )";
-      $DB->query($query_ins);     
-   }
-   Html::back();
-} else if (isset ($_POST["update"])) {
-	$pfConstructDevice->update($_POST);
-	Html::back();
-} else if (isset ($_POST["delete"])) {
-	$pfConstructDevice->delete($_POST);
-	Html::redirect("construct_device.php");
-}
-
-$id = "";
-if (isset($_GET["id"])) {
-   $id = $_GET["id"];
-}
-
-$pfConstructDevice->showForm($id);
-$pfConstructDevice->manageWalks($_SERVER["PHP_SELF"], $id);
 
 Html::footer();
 
