@@ -148,8 +148,14 @@ function {$render}renderValue(val, meta, record) {
 //create store and load data
 var {$render}checkGridReader = new Ext.data.JsonReader({
    root: '{$render}checks',
-   fields: ['{$render}id', '{$render}type', '{$render}path',
-   '{$render}value', '{$render}unit', '{$render}ranking']
+   fields: [
+      { name: '{$render}id', type: 'integer' },
+      { name: '{$render}type' },
+      { name: '{$render}path' },
+      { name: '{$render}value' },
+      { name: '{$render}unit' },
+      { name: '{$render}ranking' }
+]
 });
 
 var {$render}checkGridStore = new Ext.data.Store({
