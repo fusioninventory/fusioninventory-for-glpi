@@ -643,7 +643,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                            if ($split[1] > 0) {
                               $boolUpdate = true;
                            }
-                           Toolbox::logDebug("zob");
                            break;
 
                         case "LICENSEINFOS":
@@ -651,7 +650,6 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                            if ($split[1] > 0) {
                               $boolUpdate = true;
                            }
-                           Toolbox::logDebug($split);
 
                            break;
 

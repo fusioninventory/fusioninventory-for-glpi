@@ -67,7 +67,6 @@ class PluginFusinvinventoryImport_LicenseInfo extends CommonDBTM {
 #              "import_license") == '0') {
 #         return;
 #      }
-      Toolbox::logDebug($dataSection);
 
       $pfLicenseInfo = new PluginFusinvinventoryLicenseInfo();
 
@@ -83,11 +82,17 @@ class PluginFusinvinventoryImport_LicenseInfo extends CommonDBTM {
          $licenseInfo['computers_id']=$items_id;
       }
 
-      if (isset($dataSection['NAME'])) {
-         $licenseInfo['name'] = $dataSection['NAME'];
-      }
-      if (isset($dataSection['FULLNAME'])) {
-         $licenseInfo['fullname'] = $dataSection['FULLNAME'];
+
+      foreach (array(
+                  'NAME',
+                  'FULLNAME',
+                  'KEY',
+                  'IS_TRIAL',
+                  'IS_UPDATE',
+                  'IS_OEM',
+                  'ACTIVATION_DATE') as $k) {
+         if (isset($dataSection[$k]))
+            $licenseInfo[strtolower($k)] = $dataSection[$k];
       }
 
       if (isset($licenseInfo['name']) && !empty($licenseInfo["name"])) {
@@ -97,13 +102,10 @@ class PluginFusinvinventoryImport_LicenseInfo extends CommonDBTM {
             if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
                $licenseInfo['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
             }
-            error_log("pfLicense:". print_r($pfLicenseInfo,1));
             $id_licenseInfo = $pfLicenseInfo->add($licenseInfo);
-            error_log(print_r($licenseInfo,1));
-            error_log("add: $id_licenseInfo\n");
          }
       }
-      return $id_license;
+      return $id_licenseInfo;
    }
 
 
