@@ -125,7 +125,11 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
          $this->getEmpty();
          $a_computerextend = $this->fields;
       }
-      
+
+      $pfLicenseInfo = new PluginFusinvinventoryLicenseInfo();
+      $a_licenseInfo = $pfLicenseInfo->find("`computers_id`='".$computers_id."'");
+
+
       echo '<div align="center">';
       echo '<table class="tab_cadre_fixe" style="margin: 0; margin-top: 5px;">';
       echo '<tr>';
@@ -180,7 +184,60 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
 
       echo '</table>';
       echo '</div>';
-      
+
+
+      if (count($a_licenseInfo)) {
+
+         echo '<div align="center">';
+         echo '<table class="tab_cadre_fixe" style="margin: 0; margin-top: 5px;">';
+         echo '<tr>';
+         echo '<th colspan="4">License</th>';
+         echo '</tr>';
+
+         foreach ($a_licenseInfo as $licenseInfo) {
+            echo '<tr class="tab_bg_1">';
+            echo '<td>Name&nbsp;:</td>';
+            echo '<td>'.$licenseInfo['name'].'</td>';
+            echo '</tr>';
+
+            echo '<tr class="tab_bg_1">';
+            echo '<td>Full name&nbsp;:</td>';
+            echo '<td>'.$licenseInfo['fullname'].'</td>';
+            echo '</tr>';
+
+            echo '<tr class="tab_bg_1">';
+            echo '<td>key&nbsp;:</td>';
+            echo '<td>'.$licenseInfo['key'].'</td>';
+            echo '</tr>';
+
+
+            if ($licenseInfo['is_update']||$licenseInfo['is_trial']||$licenseInfo['is_oem']) {
+                $options = array();
+
+                if ($licenseInfo['is_update'])
+                   array_push($options, 'update');
+
+                if ($licenseInfo['is_trial'])
+                   array_push($options, 'trial');
+
+                if ($licenseInfo['is_oem'])
+                   array_push($options, 'OEM');
+
+                echo '<tr class="tab_bg_1">';
+                echo '<td>Option(s)&nbsp;:</td>';
+                echo '<td>'.implode(', ', $options).'</td>';
+                echo '</tr>';
+            }
+
+
+            echo "<td colspan='2'></td>";
+         }
+
+         echo '</table>';
+         echo '</div>';
+
+      }
+
    }
    
    

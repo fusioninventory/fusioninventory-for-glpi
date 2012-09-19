@@ -566,6 +566,19 @@ class PluginFusinvinventoryLibhook {
                array_push($sectionsId,$section['sectionName']."/".$id_user);
                break;
 
+            case 'LICENSEINFOS':
+               error_log("import LICENSEINFOS");
+               $pfImport_LicenseInfo =  new PluginFusinvinventoryImport_LicenseInfo();
+               $id_licenseInfo = $pfImport_LicenseInfo->AddUpdateItem("add", $idmachine, $dataSection);
+               if (empty($id_licenseInfo)) {
+                  $id_licenseInfo = $j;
+                  $j--;
+               }
+               array_push($sectionsId,$section['sectionName']."/".$id_licenseInfo);
+               break;
+
+
+
             // TODO :
             /*
              *
@@ -693,6 +706,12 @@ class PluginFusinvinventoryLibhook {
                      $pfImport_User = new PluginFusinvinventoryImport_User();
                      $pfImport_User->deleteItem($items_id, $idmachine);
                      break;
+
+                  case 'LICENSEINFOS':
+                     $license =  new PluginFusinvinventoryImport_License();
+                     $license->deleteItem($items_id, $idmachine);
+                     break;
+
 
                }
             }           
