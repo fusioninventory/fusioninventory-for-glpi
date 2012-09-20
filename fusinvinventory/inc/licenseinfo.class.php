@@ -49,7 +49,7 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
    static function getTypeName() {
       global $LANG;
 
-      return $LANG['plugin_fusinvinventory']['licence'][0];
+      return $LANG['plugin_fusinvinventory']['licenseinfo'][0];
    }
 
    function canCreate() {

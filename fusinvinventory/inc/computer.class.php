@@ -191,23 +191,28 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
          echo '<div align="center">';
          echo '<table class="tab_cadre_fixe" style="margin: 0; margin-top: 5px;">';
          echo '<tr>';
-         echo '<th colspan="4">License</th>';
+         echo '<th colspan="4">'.$LANG['plugin_fusinvinventory']['licenseinfo'][0].'</th>';
          echo '</tr>';
 
          foreach ($a_licenseInfo as $licenseInfo) {
             echo '<tr class="tab_bg_1">';
-            echo '<td>Name&nbsp;:</td>';
+            echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][1].'&nbsp;:</td>';
             echo '<td>'.$licenseInfo['name'].'</td>';
             echo '</tr>';
 
             echo '<tr class="tab_bg_1">';
-            echo '<td>Full name&nbsp;:</td>';
+            echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][2].'&nbsp;:</td>';
             echo '<td>'.$licenseInfo['fullname'].'</td>';
             echo '</tr>';
 
             echo '<tr class="tab_bg_1">';
-            echo '<td>key&nbsp;:</td>';
+            echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][3].'&nbsp;:</td>';
             echo '<td>'.$licenseInfo['key'].'</td>';
+            echo '</tr>';
+
+            echo '<tr class="tab_bg_1">';
+            echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][4].'&nbsp;:</td>';
+            echo '<td>'.$licenseInfo['productid'].'</td>';
             echo '</tr>';
 
 
@@ -224,7 +229,7 @@ class PluginFusinvinventoryComputer extends CommonDBTM {
                    array_push($options, 'OEM');
 
                 echo '<tr class="tab_bg_1">';
-                echo '<td>Option(s)&nbsp;:</td>';
+                echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][5].'&nbsp;:</td>';
                 echo '<td>'.implode(', ', $options).'</td>';
                 echo '</tr>';
             }

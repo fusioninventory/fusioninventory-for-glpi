@@ -47,6 +47,14 @@ $LANG['plugin_fusinvinventory']['antivirus'][1]="Cet ordinateur n'est pas sous W
 $LANG['plugin_fusinvinventory']['antivirus'][2]="Version";
 $LANG['plugin_fusinvinventory']['antivirus'][3]="A jour";
 
+$LANG['plugin_fusinvinventory']['licenseinfo'][0]="Licence";
+$LANG['plugin_fusinvinventory']['licenseinfo'][1]="Nom";
+$LANG['plugin_fusinvinventory']['licenseinfo'][2]="Nom complet";
+$LANG['plugin_fusinvinventory']['licenseinfo'][3]="Clé";
+$LANG['plugin_fusinvinventory']['licenseinfo'][4]="ProductId";
+$LANG['plugin_fusinvinventory']['licenseinfo'][5]="Option(s)";
+
+
 $LANG['plugin_fusinvinventory']['bios'][0]="BIOS";
 
 $LANG['plugin_fusinvinventory']['blacklist'][0]="Valeur en liste noire";
