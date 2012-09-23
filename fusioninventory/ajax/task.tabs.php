@@ -96,7 +96,7 @@ switch($_POST['glpi_tab']) {
          }
       }
       break;
-   
+      
 }
 
 if ($_POST['glpi_tab'] > 1) {
@@ -127,6 +127,16 @@ $i++;
 if ($_POST['glpi_tab'] == $i) {
    $pfTaskjob->showForm(0);
 }
+
+$item = new $_REQUEST['itemtype']();
+
+if (($item instanceof CommonDBTM)
+    && $item->isNewItem()
+    && (!isset($_REQUEST["id"]) || !$item->can($_REQUEST["id"],'r'))) {
+   exit();
+}
+
+CommonGLPI::displayStandardTab($item, $_REQUEST['glpi_tab'],'');
 
 Html::ajaxFooter();
 
