@@ -811,9 +811,9 @@ function appear_array(id){
          $state = '7';
       }      
 
-      $a_taskjobstates = $this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
+      $a_taskjobstates = count($this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
                AND `state` != '3'
-               AND `uniqid`='".$uniqid."'");
+               AND `uniqid`='".$uniqid."'"));
 
       
       if (    $state == '1'
