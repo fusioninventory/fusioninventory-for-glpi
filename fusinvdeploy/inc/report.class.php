@@ -166,6 +166,11 @@ class PluginFusinvdeployReport extends CommonDBTM {
                      $a_message[] = $datafail['comment'];
                      $date = $datafail['date'];
                   }
+                  $a_faildetail = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
+                     AND `comment` LIKE '%--------------------------------%'");
+                  foreach ($a_faildetail as $datadetail) {
+                     $a_message[] = $datadetail['comment'];
+                  }
                   $message = implode("<br/>", $a_message);
                }
                $a_failed = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
@@ -175,6 +180,11 @@ class PluginFusinvdeployReport extends CommonDBTM {
                   foreach ($a_failed as $datafail) {
                      $message = 'Action cancelled by user';
                      $date = $datafail['date'];
+                  }
+                  $a_faildetail = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
+                     AND `comment` LIKE '%--------------------------------%'");
+                  foreach ($a_faildetail as $datadetail) {
+                     $message .= "<br/>".$datadetail['comment'];
                   }
                }
                
