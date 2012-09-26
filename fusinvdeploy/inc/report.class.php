@@ -158,12 +158,20 @@ class PluginFusinvdeployReport extends CommonDBTM {
                $message = '';
                $date = '';
                $a_failed = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
-                  AND (`comment` LIKE '%failed%' OR `comment` LIKE '%failure%')");
+                  AND (`comment` LIKE '%failed%' OR `comment` LIKE '%failure%' OR `comment`='==fusioninventory::2==')");
                if (count($a_failed) > 0) {
                   $state = 'failed';
                   $a_message = array();
                   foreach ($a_failed as $datafail) {
-                     $a_message[] = $datafail['comment'];
+                     $comment = $datafail['comment'];
+                     $matches = array();
+                     preg_match_all("/==(\w*)\:\:([0-9]*)==/", $comment, $matches);
+                     if ($matches[1]) {
+                        foreach($matches[0] as $num=>$commentvalue) {
+                           $comment = str_replace($commentvalue, $LANG['plugin_'.$matches[1][$num]]["codetasklog"][$matches[2][$num]], $comment);
+                        }
+                     }
+                     $a_message[] = $comment;
                      $date = $datafail['date'];
                   }
                   $a_faildetail = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
@@ -212,7 +220,7 @@ class PluginFusinvdeployReport extends CommonDBTM {
                   }
                }
                if ($state != '') {
-                  echo "<tr class='tab_bg_1'>";
+                  echo "<tr class='tab_bg_3'>";
                   echo "<td>";            
                   echo $pfPackage->getLink();
                   echo "</td>";
