@@ -72,11 +72,11 @@ class PluginFusinvinventoryImport_User extends CommonDBTM {
       $input = array();
       $input['id'] = $Computer->fields['id'];
       if (isset($dataSection['LOGIN'])) {
-         if (!in_array('contact', $a_lockable)) {
+         if (!in_array('contact', $a_lockable)) {            
             if ($_SESSION["plugin_fusinvinventory_userdefined"] == 0) {
                $input['contact'] = $dataSection['LOGIN'];
             } else {
-               $input['contact'] .= "/".$dataSection['LOGIN'];
+               $input['contact'] = $Computer->fields['contact']."/".$dataSection['LOGIN'];
             }
             $input['contact'] = preg_replace("/^\//", "", $input['contact']);
          }
