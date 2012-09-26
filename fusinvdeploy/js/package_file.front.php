@@ -637,7 +637,6 @@ var {$render}AddActionsAuto = function(filename) {
 
                //get scripts
                var install_a = files_autoactions[ext].install.replace("##FILENAME##", filename);
-               var uninstall_a = files_autoactions[ext].uninstall.replace("##FILENAME##", filename);
 
                //send scripts
                //-> install
@@ -649,24 +648,13 @@ var {$render}AddActionsAuto = function(filename) {
                      installid: ''
                   },
                   success: function(){
-                     //-> uninstall
-                     Ext.Ajax.request({
-                        url: '../ajax/package_action.save.php?package_id={$_REQUEST["id"]}&render=uninstall',
-                        params: {
-                           uninstallexec: uninstall_a,
-                           uninstallitemtype: 'PluginFusinvdeployAction_Command',
-                           uninstallid: ''
-                        },
-                        success: function(){
-                           installactionGrid.store.reload();
-                           installactionGrid.store.reload();
+                        installactionGrid.store.reload();
+                        installactionGrid.store.reload();
 
-                           //click submit button
-                           myButton = {$render}fileForm.getForm().buttons[0];
-                           myButton.handler.call(myButton.scope, myButton, Ext.EventObject);
-                        }
-                     });
-                  }
+                        //click submit button
+                        myButton = {$render}fileForm.getForm().buttons[0];
+                        myButton.handler.call(myButton.scope, myButton, Ext.EventObject);
+                     }
                })
             }
          }

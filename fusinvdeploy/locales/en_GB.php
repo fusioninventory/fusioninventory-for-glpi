@@ -164,7 +164,7 @@ $LANG['plugin_fusinvdeploy']['message'][2] = "Loading...";
 $LANG['plugin_fusinvdeploy']['message'][3] = "File already exist";
 $LANG['plugin_fusinvdeploy']['message'][4] = "Paths on MS Windows do not accept more than 255 characters, the value you entered exceeds the limit.<br /><br /><b>Do you want to continue?</b><br /><br /><div class='message_smalltext right'>You can disable this message in the <a href='##URL##'>plugin configuration</a></div>";
 $LANG['plugin_fusinvdeploy']['message'][5] = "Attention";
-$LANG['plugin_fusinvdeploy']['message'][6] = "Wish to the command to install and uninstall is automatically added for your file?";
+$LANG['plugin_fusinvdeploy']['message'][6] = "Should the install command be automatically added for this file?";
 
 $LANG['plugin_fusinvdeploy']['check'][0] = "Register key exist";
 $LANG['plugin_fusinvdeploy']['check'][1] = "Register key missing";

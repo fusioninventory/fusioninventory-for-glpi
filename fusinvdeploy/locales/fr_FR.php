@@ -155,7 +155,7 @@ $LANG['plugin_fusinvdeploy']['message'][2]="Chargement...";
 $LANG['plugin_fusinvdeploy']['message'][3]="Fichier déjà existant";
 $LANG['plugin_fusinvdeploy']['message'][4]="Les chemins sous MS Windows n'acceptent pas plus de 255 caractères, la valeur que vous avez saisi dépasse cette limite.<br /><br /><b>Voulez vous continuer ?</b><br /><br /><div class";
 $LANG['plugin_fusinvdeploy']['message'][5]="Attention";
-$LANG['plugin_fusinvdeploy']['message'][6]="Souhaitez vous que la commande d'installation et de désinstallation soit automatiquement ajouté pour votre fichier ? ";
+$LANG['plugin_fusinvdeploy']['message'][6]="Souhaitez vous que la commande d'installation soit automatiquement ajoutée pour votre fichier ? ";
 
 $LANG['plugin_fusinvdeploy']['mirror'][1]="Mirroir";
 $LANG['plugin_fusinvdeploy']['mirror'][3]="Adresse du mirroir";
