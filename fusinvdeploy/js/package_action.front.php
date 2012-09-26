@@ -182,9 +182,19 @@ function {$render}renderType(val) {
 //create store and load data
 var {$render}actionGridReader = new Ext.data.JsonReader({
    root: '{$render}actions',
-   fields: ['{$render}id', '{$render}itemtype', '{$render}value', '{$render}from', '{$render}to',
-            '{$render}exec', '{$render}path', '{$render}messagename', '{$render}messagevalue',
-            '{$render}messagetype', '{$render}ranking']
+   fields: [
+      { name: '{$render}id', type: 'integer' },
+      { name: '{$render}itemtype' },
+      { name: '{$render}value' },
+      { name: '{$render}from' },
+      { name: '{$render}to' },
+      { name: '{$render}exec' },
+      { name: '{$render}path' },
+      { name: '{$render}messagename' },
+      { name: '{$render}messagevalue' },
+      { name: '{$render}messagetype' },
+      { name: '{$render}ranking', type: 'integer' }
+   ]
 });
 
 var {$render}actionGridStore = new Ext.data.Store({

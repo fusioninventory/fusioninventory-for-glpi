@@ -161,7 +161,7 @@ function {$render}renderBool(val) {
 //create store
 var {$render}fileGridStore = new Ext.data.ArrayStore({
    fields: [
-      {name: '{$render}id'},
+      {name: '{$render}id', type: 'integer'},
       {name: '{$render}file'},
       {name: '{$render}mimetype'},
       {name: '{$render}filesize'},
