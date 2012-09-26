@@ -237,7 +237,7 @@ class PluginFusinvdeployReport extends CommonDBTM {
                   }
                   echo $display;
                   echo "<td>";            
-                  echo $date;
+                  echo Html::convDateTime($date);
                   echo "</td>";
                   echo "<td>";            
                   echo $message;
