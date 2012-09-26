@@ -769,6 +769,8 @@ function appear_array(id){
    function displayShortLogs($taskjobs_id, $veryshort=0) {
       global $DB,$CFG_GLPI,$LANG;
       
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      
       echo "<td colspan='2' valign='top'>";
       
       if ($veryshort == '0') {
@@ -811,10 +813,9 @@ function appear_array(id){
          $state = '7';
       }      
 
-      $a_taskjobstates = count($this->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
+      $a_taskjobstates = count($pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
                AND `state` != '3'
                AND `uniqid`='".$uniqid."'"));
-
       
       if (    $state == '1'
            OR $state == '6'
