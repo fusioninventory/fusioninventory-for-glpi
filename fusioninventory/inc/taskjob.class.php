@@ -1521,6 +1521,8 @@ return namelist;
             } else if ($task['communication'] == 'push') {
                $a_valid = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
                         AND ADDTIME(`date`, '00:10:00') < NOW()", "id DESC", "1");
+               $a_valid4h = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
+                        AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
 
                if (count($a_valid) == '1') {
                   // Get agent status
@@ -1558,6 +1560,20 @@ return namelist;
                                                                '',
                                                                1,
                                                                "==fusioninventory::2==");
+                        }
+                        if (count($a_valid4h) == 1) {
+                           $a_statetmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
+                                                   AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
+                                                   AND `state`='0' ");
+                           foreach($a_statetmp as $datatmp) {
+                              $pfTaskjobstate->changeStatusFinish($datatmp['id'],
+                                                                  0,
+                                                                  '',
+                                                                  1,
+                                                                  "==fusioninventory::2==");
+                           }
+                           
+                           
                         }
                         break;
 
