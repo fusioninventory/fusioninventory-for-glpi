@@ -1233,9 +1233,7 @@ return namelist;
     */
    function getRealStateAgent($items_id) {
       
-      ini_set('display_errors','On');
-      error_reporting(E_ALL | E_STRICT);
-      set_error_handler(array('Toolbox','userErrorHandlerDebug'));
+      $this->disableDebug();
       
       ob_start();
       ini_set("allow_url_fopen", "1");
