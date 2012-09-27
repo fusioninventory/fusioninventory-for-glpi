@@ -485,7 +485,8 @@ var {$render}fileForm = new Ext.FormPanel({
             waitMsg: 'Chargement du fichier...',
             success: function(form, o){
                {$render}msg('Traitement du fichier',o.result.msg);
-               {$render}fileStore.reload();
+               installfileStore.reload();
+               uninstallfileStore.reload();
                {$render}fileForm.newFileMode(false);
                form.reset();
                {$render}fileGrid.getSelectionModel().clearSelections();
@@ -637,7 +638,8 @@ var {$render}AddActionsAuto = function(filename) {
 
                //get scripts
                var install_a = files_autoactions[ext].install.replace("##FILENAME##", filename);
-
+               var uninstall_a = files_autoactions[ext].uninstall.replace("##FILENAME##", filename);
+         
                //send scripts
                //-> install
                Ext.Ajax.request({
@@ -648,13 +650,24 @@ var {$render}AddActionsAuto = function(filename) {
                      installid: ''
                   },
                   success: function(){
-                        installactionGrid.store.reload();
-                        installactionGrid.store.reload();
-
-                        //click submit button
-                        myButton = {$render}fileForm.getForm().buttons[0];
-                        myButton.handler.call(myButton.scope, myButton, Ext.EventObject);
-                     }
+                     //-> uninstall
+                     Ext.Ajax.request({
+                        url: '../ajax/package_action.save.php?package_id={$_REQUEST["id"]}&render=uninstall',
+                        params: {
+                           uninstallexec: uninstall_a,
+                           uninstallitemtype: 'PluginFusinvdeployAction_Command',
+                           uninstallid: ''
+                        },
+                        success: function(){
+                           installactionGrid.store.reload();
+                           uninstallactionGrid.store.reload();
+                        
+                           //click submit button
+                           myButton = {$render}fileForm.getForm().buttons[0];
+                           myButton.handler.call(myButton.scope, myButton, Ext.EventObject);
+                        }
+                     });
+                  }
                })
             }
          }
