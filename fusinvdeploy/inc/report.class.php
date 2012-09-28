@@ -208,11 +208,11 @@ class PluginFusinvdeployReport extends CommonDBTM {
 
                         } else if (strstr($datasuccessful['comment'], 'ok, no check to evaluate.')) {
                            $state = 'unknown';
-                           $message = $datasuccessful['comment'];                           
+                           $message .= $datasuccessful['comment'];                           
                         } else if (strstr($datasuccessful['comment'], 'exit status is not ok')
                                 OR strstr($datasuccessful['comment'], 'error pattern found in log')) {
                            $state = 'failed';
-                           $message = $datasuccessful['comment'];
+                           $message .= $datasuccessful['comment'];
                         }
                      }
                   } else {
