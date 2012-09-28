@@ -64,7 +64,7 @@ class PluginFusinvdeployReport extends CommonDBTM {
          if ($item->getID() > 0) {
             $pfTaskjob = new PluginFusioninventoryTaskjob();
             $a_jobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$item->getID()."'
-               AND `method`='deployinstall'");
+               AND (`method`='deployinstall' OR `method`='deployuninstall')");
             if (count($a_jobs) > 0) {
                return $LANG['reports'][15]." (deploy)";
             }
@@ -108,7 +108,7 @@ class PluginFusinvdeployReport extends CommonDBTM {
       $computer = new Computer();
       
       $a_taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$tasks_id."'
-         AND `method`='deployinstall'");
+         AND (`method`='deployinstall' OR `method`='deployuninstall')");
       
       echo "<table class='tab_cadre_fixe'>";
       foreach ($a_taskjobs as $datajob) {
