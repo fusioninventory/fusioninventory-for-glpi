@@ -151,7 +151,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $xmlSections = $this->_getXMLSections($arrayinventory);
          $this->updateLibMachine($xmlSections, $internalId);
 
-         $pfInventoryComputerLibhook = new PluginFusioninventoryInventoryComputerLibhook();
+//         $pfInventoryComputerLibhook = new PluginFusioninventoryInventoryComputerLibhook();
 // TODO WRITE         $pfInventoryComputerLibhook->writeXMLFusion($items_id, $xml->asXML());
       } else {
          // New Computer
@@ -926,15 +926,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    *
    * @param $items_id integer id of GLPI Computer
    * @param $internal_id value uniq id of the computer in lib
-   * @param $simpleXMLObj simplexml XML of the Computer
+   * @param $arrayObj array of the Computer
    * @param $a_sectionsinfos
    *
    * @return nothing
    */
-   function addLibMachineFromGLPI($items_id, $internal_id, $simpleXMLObj, $a_sectionsinfos) {
+   function addLibMachineFromGLPI($items_id, $internal_id, $arrayObj, $a_sectionsinfos) {
       $this->addLibMachine($internal_id, $items_id);
 
-      $xmlSections = $this->_getXMLSections($simpleXMLObj);
+      $xmlSections = $this->_getXMLSections($arrayObj);
 
       $serializedSectionsFromXML = array();
 

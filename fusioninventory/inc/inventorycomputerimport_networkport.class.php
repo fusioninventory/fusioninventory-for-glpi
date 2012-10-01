@@ -54,6 +54,8 @@ class PluginFusioninventoryInventoryComputerImport_Networkport extends CommonDBT
    * @param $items_id integer
    *     - if add    : id of the computer
    *     - if update : id of the network port
+   *                   + I if ipaddress
+   *                   + E/L/W : Ethernet / Local loop / Wifi port
    * @param $dataSection array all values of the section
    * @param $itemtype value name of the type of item
    *
@@ -65,10 +67,11 @@ class PluginFusioninventoryInventoryComputerImport_Networkport extends CommonDBT
       $computer = new Computer();
       $computer->getFromDB($items_id);
       
-      if ((!isset($dataSection['DESCRIPTION'])) AND
-              (!isset($dataSection['IPADDRESS']))
-             AND (!isset($dataSection['MACADDR']))
-             AND (!isset($dataSection['TYPE']))) {
+      if ((!isset($dataSection['DESCRIPTION'])) 
+//             AND (!isset($dataSection['IPADDRESS']))
+//             AND (!isset($dataSection['MACADDR']))
+//             AND (!isset($dataSection['TYPE']))
+              ) {
 
          return "";
       }
@@ -87,6 +90,7 @@ class PluginFusioninventoryInventoryComputerImport_Networkport extends CommonDBT
       $iPAddress = new IPAddress();
 
       if ($type == 'update') {
+         
          $iPAddress->getFromDB($items_id);
          $networkName->getFromDB($iPAddress->fields['items_id']);
          
@@ -220,6 +224,8 @@ class PluginFusioninventoryInventoryComputerImport_Networkport extends CommonDBT
    * Delete network port
    *
    * @param $items_id integer id of the network port
+   *                   + I if ipaddress
+   *                   + E/L/W : Ethernet / Local loop / Wifi port
    * @param $idmachine integer id of the computer
    *
    * @return nothing
