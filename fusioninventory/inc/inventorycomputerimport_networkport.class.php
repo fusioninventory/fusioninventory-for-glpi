@@ -236,22 +236,29 @@ class PluginFusioninventoryInventoryComputerImport_Networkport extends CommonDBT
    *
    * @param $items_id integer id of the network port
    *                   + I if ipaddress
-   *                   + E/L/W : Ethernet / Local loop / Wifi port
    * @param $idmachine integer id of the computer
    *
    * @return nothing
    *
    **/
    function deleteItem($items_id, $idmachine) {
+      
       $NetworkPort = new NetworkPort();
-      $NetworkPort->getFromDB($items_id);
-      if (($NetworkPort->fields['items_id'] == $idmachine) AND ($NetworkPort->fields['itemtype'] == 'Computer')) {
-         $input = array();
-         $input['id'] = $items_id;
-         if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
-            $input['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
-         }
-         $NetworkPort->delete($input, 0, $_SESSION["plugin_fusinvinventory_history_add"]);
+      $networkName = new NetworkName();
+      $iPAddress = new IPAddress();
+      if (strstr($items_id, "I")) {
+         $items_id = str_replace("I", "", $items_id);
+         $iPAddress->getFromDB($items_id);
+         $networkNames_id = $iPAddress->fields['items_id'];
+         $iPAddress->delete(array('id'=>$items_id), 1);
+         $a_ipaddresses = $iPAddress->find("`items_id`='".$networkNames_id."'
+            AND `itemtype`='NetworkName'");
+         if (count($a_ipaddresses) == '0') {
+            $networkName->getFromDB($networkNames_id);
+            $NetworkPort->delete(array('id'=>$networkName->fields['items_id']), 1);
+         }         
+      } else {
+         $NetworkPort->delete(array('id'=>$items_id), 1);
       }
    }
 }
