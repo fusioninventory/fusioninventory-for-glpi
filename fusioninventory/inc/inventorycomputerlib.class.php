@@ -235,9 +235,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if (is_array($value)) {
             foreach ($value as $vkey=>$vvalue) {
                if (is_int($vkey)) {
+                  $sectionData = array();
                   foreach ($vvalue as $vvkey=>$vvvalue) {
                      $sectionData[$vvkey] = $vvvalue;
                   }
+      
                   //sectionId initialization, we will affect id after hook createSection return value.
                   $serializedSectionData = serialize($sectionData);
                   array_push($xmlSections,
@@ -330,6 +332,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       }
       //Retrieve changes, sections to Add and sections to Remove
       // *** array_diff not work nicely so use own function
+
       $sectionsToAdd    = $this->diffArray($serializedSectionsFromXML, $infoSections["sections"]);
       $sectionsToRemove = $this->diffArray($infoSections["sections"], $serializedSectionsFromXML);
 
@@ -517,7 +520,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                               $boolUpdate = true;
 
                            } else if(isset($arrSectionToAdd["MACADDR"]) AND isset($arrSectionToRemove["MACADDR"])
-                                 AND $arrSectionToAdd["MACADDR"] == $arrSectionToRemove["MACADDR"]) {
+                                 AND $arrSectionToAdd["MACADDR"] == $arrSectionToRemove["MACADDR"]
+                                 AND isset($arrSectionToAdd["IPADDRESS"]) AND isset($arrSectionToRemove["IPADDRESS"])
+                                 AND $arrSectionToAdd["IPADDRESS"] == $arrSectionToRemove["IPADDRESS"]) {
+                              $boolUpdate = true;
+                           } else if(isset($arrSectionToAdd["MACADDR"]) AND isset($arrSectionToRemove["MACADDR"])
+                                 AND $arrSectionToAdd["MACADDR"] == $arrSectionToRemove["MACADDR"]
+                                 AND isset($arrSectionToAdd["IPADDRESS6"]) AND isset($arrSectionToRemove["IPADDRESS6"])
+                                 AND $arrSectionToAdd["IPADDRESS6"] == $arrSectionToRemove["IPADDRESS6"]) {
                               $boolUpdate = true;
                            }
                            break;
