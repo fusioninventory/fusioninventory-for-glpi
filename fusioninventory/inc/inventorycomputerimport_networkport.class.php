@@ -242,7 +242,6 @@ class PluginFusioninventoryInventoryComputerImport_Networkport extends CommonDBT
    *
    **/
    function deleteItem($items_id, $idmachine) {
-      
       $NetworkPort = new NetworkPort();
       $networkName = new NetworkName();
       $iPAddress = new IPAddress();
@@ -258,7 +257,8 @@ class PluginFusioninventoryInventoryComputerImport_Networkport extends CommonDBT
             $NetworkPort->delete(array('id'=>$networkName->fields['items_id']), 1);
          }         
       } else {
-         $NetworkPort->delete(array('id'=>$items_id), 1);
+         $networkName->getFromDB($items_id);
+         $NetworkPort->delete(array('id'=>$networkName->fields['items_id']), 1);
       }
    }
 }

@@ -1316,7 +1316,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                                                    "Input data : ".print_r($input, true));
       $data = $rule->processAllRules($input, array());
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
-                                                   print_r($data, true));
+                                                   $data);
       if (isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
 

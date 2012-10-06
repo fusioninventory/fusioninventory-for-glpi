@@ -46,11 +46,16 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
 
-   var $table = "glpi_plugin_fusioninventory_inventorycomputerlibserialization";
+   
+   function __construct() {
+      global $CFG_GLPI;
+      $this->table = "glpi_plugin_fusioninventory_inventorycomputerlibserialization";
+      $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryInventoryComputerLibintegrity"] = $this->table;
+   }
+   
+   
 
-
-
-  function getSearchOptions() {
+   function getSearchOptions() {
 
       $tab = array();
       $tab['common'] = __('Characteristics');
@@ -74,7 +79,7 @@ class PluginFusioninventoryInventoryComputerLibintegrity extends CommonDBTM {
 
       if ($item->getType() == 'Computer') {
          if (Session::haveRight('computer', "w")) {
-            $query = "SELECT * FROM `".$this->getTable()."`
+            $query = "SELECT * FROM `".$this->table."`
                WHERE `computers_id`='".$item->getID()."'
                LIMIT 1";
             $result = $DB->query($query);

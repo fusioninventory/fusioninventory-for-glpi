@@ -188,7 +188,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $data = array ();
       $data = $rule->processAllRules($input, array());
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
-                                                   print_r($data, true));
+                                                   $data);
 
       if (isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
