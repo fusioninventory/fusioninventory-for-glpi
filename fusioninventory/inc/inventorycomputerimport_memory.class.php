@@ -67,7 +67,7 @@ class PluginFusioninventoryInventoryComputerImport_Memory extends CommonDBTM {
          return;
       }
 
-      $CompDevice = new Item_Devices('Item_DeviceMemory');
+      $CompDevice = new Item_DeviceMemory();
 
       if (isset($dataSection["CAPACITY"])
               AND $dataSection["CAPACITY"] == 'No') {
@@ -138,13 +138,17 @@ class PluginFusioninventoryInventoryComputerImport_Memory extends CommonDBTM {
          $array = array();
          $array['_itemtype'] = 'DeviceMemory';
          $array['devicememories_id'] = $memory_id;
-         $array['specificity'] = $dataSection["CAPACITY"];
+         $array['size'] = $dataSection["CAPACITY"];
+         if (isset($dataSection["SERIALNUMBER"])) {
+            $array['serial'] = $dataSection["SERIALNUMBER"];
+         }
          if ($type == "update") {
-            $array['computers_id'] = $computer_memory['computers_id'];
+            $array['items_id'] = $computer_memory['computers_id'];
             $array['id'] = $items_id;
             $CompDevice->update($array);
          } else if ($type == "add") {
-            $array['computers_id'] = $items_id;
+            $array['items_id'] = $items_id;
+            $array['itemtype'] = 'Computer';
             if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
                $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
             }

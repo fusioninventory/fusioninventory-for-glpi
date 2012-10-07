@@ -75,7 +75,7 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
               "component_drive", 'inventory') == '0') {
             return;
          }
-         $CompDevice = new Item_Devices('Item_DeviceDrive');
+         $CompDevice = new Item_DeviceDrive();
          $DeviceDrive = new DeviceDrive();
          $type_tmp = "Drive";
          $drive_idfield = 'devicedrives_id';
@@ -85,7 +85,7 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
               "component_harddrive", 'inventory') == '0') {
             return;
          }
-         $CompDevice = new Item_Devices('Item_DeviceHardDrive');
+         $CompDevice = new Item_DeviceHardDrive();
          $DeviceDrive = new DeviceHardDrive();
          $drive_idfield = 'deviceharddrives_id';
       }
@@ -139,7 +139,7 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
          if ($type == "update") {
             $array = array();
             $array['id'] =  $items_id;
-            $array['computers_id'] =  $CompDevice->fields['computers_id'];
+            $array['items_id'] =  $CompDevice->fields['computers_id'];
             $array['_itemtype'] =  $DeviceDrive->getType();
             $array[$drive_idfield] =  $drive_id;
             if ($type_tmp == "HardDrive") {
@@ -153,7 +153,8 @@ class PluginFusioninventoryInventoryComputerImport_Storage extends CommonDBTM {
             $devID = $CompDevice->update($array);
          } else if ($type == "add") {
             $array = array();
-            $array['computers_id'] = $items_id;
+            $array['items_id'] = $items_id;
+            $array['itemtype'] = 'Computer';
             if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
                $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
             }

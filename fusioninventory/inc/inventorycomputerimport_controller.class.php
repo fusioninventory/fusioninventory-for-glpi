@@ -67,7 +67,7 @@ class PluginFusioninventoryInventoryComputerImport_Controller extends CommonDBTM
          return;
       }
 
-      $CompDevice = new Item_Devices('Item_DeviceControl');
+      $CompDevice = new Item_DeviceControl();
 
       $devID = 0;
       $computer_controller = array();
@@ -101,7 +101,9 @@ class PluginFusioninventoryInventoryComputerImport_Controller extends CommonDBTM
             $computer_controller['id'] = $items_id;
             $CompDevice->update($computer_controller);
          } else if ($type == "add") {
-            $computer_controller['computers_id'] = $items_id;
+            $computer_controller['items_id'] = $items_id;
+            $computer_controller['itemtype'] = 'Computer';
+
             if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
                $computer_controller['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
             }

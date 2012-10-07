@@ -67,7 +67,7 @@ class PluginFusioninventoryInventoryComputerImport_Sound extends CommonDBTM {
          return;
       }
 
-      $CompDevice = new Item_Devices('Item_DeviceSoundCard');
+      $CompDevice = new Item_DeviceSoundCard();
 
       $devID = 0;
       if ($type == "update") {
@@ -101,10 +101,11 @@ class PluginFusioninventoryInventoryComputerImport_Sound extends CommonDBTM {
          $array['devicesoundcards_id'] = $sound_id;
          if ($type == "update") {
             $array['id'] = $items_id;
-            $array['computers_id'] = $CompDevice->fields['computers_id'];
+            $array['items_id'] = $CompDevice->fields['computers_id'];
             $devID = $CompDevice->update($array);
          } else if ($type == "add") {
-            $array['computers_id'] = $items_id;
+            $array['items_id'] = $items_id;
+            $array['itemtype'] = 'Computer';
             if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
                $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
             }

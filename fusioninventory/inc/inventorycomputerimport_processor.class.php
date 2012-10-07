@@ -67,11 +67,12 @@ class PluginFusioninventoryInventoryComputerImport_Processor extends CommonDBTM 
          return;
       }
 
-      $CompDevice = new Item_Devices('Item_DeviceProcessor');
+      $CompDevice = new Item_DeviceProcessor();
 
       $devID = 0;
       $processor = array();
-      $specificity = "";
+      $specificity_frequency = "";
+      $specificity_serial = "";
       if ($type == "update") {
          $devID = $items_id;
          $CompDevice->getFromDB($items_id);
@@ -97,7 +98,10 @@ class PluginFusioninventoryInventoryComputerImport_Processor extends CommonDBTM 
       }
       if (isset($dataSection['SPEED'])) {
          $processor['frequence'] = $dataSection['SPEED'];
-         $specificity = $dataSection['SPEED'];
+         $specificity_frequency = $dataSection['SPEED'];
+      }
+      if (isset($dataSection['SERIAL'])) {
+         $specificity_serial = $dataSection['SERIAL'];
       }
       if (isset($dataSection['MANUFACTURER'])) {
          $processor["manufacturers_id"] = Dropdown::importExternal('Manufacturer',
@@ -113,12 +117,15 @@ class PluginFusioninventoryInventoryComputerImport_Processor extends CommonDBTM 
       $array['deviceprocessors_id'] = $Processor_id;
       if ($type == "update") {
          $array['id'] = $items_id;
-         $array['specificity'] = $specificity;
-         $array['computers_id'] = $CompDevice->fields['computers_id'];
+         $array['frequency'] = $specificity_frequency;
+         $array['serial'] = $specificity_serial;
+         $array['items_id'] = $CompDevice->fields['computers_id'];
          $devID = $CompDevice->update($array);
       } else if ($type == "add") {
-         $array['computers_id'] = $items_id;
-         $array['specificity'] = $specificity;
+         $array['items_id'] = $items_id;
+         $array['itemtype'] = 'Computer';
+         $array['frequency'] = $specificity_frequency;
+         $array['serial'] = $specificity_serial;
          if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
             $array['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
          }

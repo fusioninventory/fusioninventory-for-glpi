@@ -67,7 +67,7 @@ class PluginFusioninventoryInventoryComputerImport_Graphiccard extends CommonDBT
          return;
       }
 
-      $CompDevice = new Item_Devices('Item_DeviceGraphicCard');
+      $CompDevice = new Item_DeviceGraphicCard();
 
       $devID = 0;
       $computer_graphiccard = array();
@@ -110,11 +110,12 @@ class PluginFusioninventoryInventoryComputerImport_Graphiccard extends CommonDBT
          $array['devicegraphiccards_id'] = $graphiccard_id;
          $array['specificity'] = $graphiccard['specif_default'];
          if ($type == "update") {
-            $array['computers_id'] = $computer_graphiccard['computers_id'];
+            $array['items_id'] = $computer_graphiccard['computers_id'];
             $array['id'] = $items_id;
             $CompDevice->update($array);
          } else if ($type == "add") {
-            $array['computers_id'] = $items_id;
+            $array['items_id'] = $items_id;
+            $array['itemtype'] = 'Computer';
             if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
                $array['_no_history']= $_SESSION["plugin_fusinvinventory_no_history_add"];
             }
