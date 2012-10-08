@@ -321,35 +321,22 @@ class PluginFusioninventoryInventoryComputerInventory {
             $_SESSION['glpiactiveentities_string'] = $_SESSION["plugin_fusinvinventory_entity"];
             $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
             
-            // TODO => Add new computer
             $this->addNewComputer($a_computerinventory);
-         exit;
-            
-            $input = array();
-            $input['date_mod'] = date("Y-m-d H:i:s");
-            $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-            if (isset($_SESSION['plugin_fusioninventory_locations_id'])) {
-               $input["locations_id"] = $_SESSION['plugin_fusioninventory_locations_id'];
-            }
-
-            self::addDefaultStateIfNeeded($input, false);
-            $items_id = $Computer->add($input);
-            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
-               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
-               $inputrulelog = array();
-               $inputrulelog['date'] = date('Y-m-d H:i:s');
-               $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
-               if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-                  $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
-               }
-               $inputrulelog['items_id'] = $items_id;
-               $inputrulelog['itemtype'] = $itemtype;
-               $inputrulelog['method'] = 'inventory';
-               $pfRulematchedlog->add($inputrulelog);
-               $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
-               unset($_SESSION['plugin_fusioninventory_rules_id']);
-            }
-            $pfLib->startAction($a_computerinventory, $items_id, '1');
+//            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
+//               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+//               $inputrulelog = array();
+//               $inputrulelog['date'] = date('Y-m-d H:i:s');
+//               $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+//               if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+//                  $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+//               }
+//               $inputrulelog['items_id'] = $items_id;
+//               $inputrulelog['itemtype'] = $itemtype;
+//               $inputrulelog['method'] = 'inventory';
+//               $pfRulematchedlog->add($inputrulelog);
+//               $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
+//               unset($_SESSION['plugin_fusioninventory_rules_id']);
+//            }
          } else {
             $computer = new Computer();
             $operatingSystem = new OperatingSystem();
@@ -446,6 +433,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $input['states_id'] = $state;
          }
       }
+      return $input;
    }
 
    
@@ -476,6 +464,10 @@ class PluginFusioninventoryInventoryComputerInventory {
       $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
       
       $a_computerinventory['computer']['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+      if (isset($_SESSION['plugin_fusioninventory_locations_id'])) {
+         $a_computerinventory['computer']["locations_id"] = $_SESSION['plugin_fusioninventory_locations_id'];
+      }
+      $a_computerinventory['computer'] = self::addDefaultStateIfNeeded($a_computerinventory['computer'], false);
       $computers_id = $computer->add($a_computerinventory['computer'], array(), false);
       
       $a_computerinventory['fusioninventorycomputer']['computers_id'] = $computers_id;
