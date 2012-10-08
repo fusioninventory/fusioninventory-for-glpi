@@ -97,6 +97,8 @@ class PluginFusioninventoryFormatconvert {
       $thisc = new self();
       $pfConfig = new PluginFusioninventoryConfig();
       
+      $ignorecontrollers = array();
+      
       if (isset($array['ACCOUNTINFO'])) {
          $a_inventory['ACCOUNTINFO'] = $array['ACCOUNTINFO'];
       }
@@ -196,14 +198,41 @@ class PluginFusioninventoryFormatconvert {
       if (isset($array['BIOS']['BMANUFACTURER'])) {
          $a_inventory['BIOS']['BIOSMANUFACTURER'] = $array['BIOS']['BMANUFACTURER'];
       }
+      
+      // * SOUNDS
+      foreach ($array['SOUNDS'] as $a_sounds) {
+         $a_inventory['sound'][] = $thisc->addValues($a_sounds, 
+                                                     array(
+                                                        'NAME'          => 'designation', 
+                                                        'MANUFACTURER'  => 'manufacturers_id', 
+                                                        'DESCRIPTION'   => 'comment'));
 
-      // * CONTROLLERS
-      foreach ($array['CONTROLLERS'] as $a_controllers) {
-         $a_inventory['CONTROLLERS'][] = $thisc->addValues($a_controllers, 
+         $ignorecontrollers[$a_sounds['NAME']] = 1;
+      }
+            
+      // * VIDEOS
+      foreach ($array['VIDEOS'] as $a_videos) {
+         $a_inventory['graphiccard'][] = $thisc->addValues($a_videos, 
                                                            array(
                                                               'NAME'          => 'designation', 
-                                                              'MANUFACTURER'  => 'manufacturer', 
-                                                              'TYPE'          => 'type'));
+                                                              'MEMORY'        => 'memory'));
+
+         $ignorecontrollers[$a_videos['NAME']] = 1;
+         if (isset($a_videos['CHIPSET'])) {
+            $ignorecontrollers[$a_videos['CHIPSET']] = 1;
+         }
+      }
+      
+      // * CONTROLLERS
+      foreach ($array['CONTROLLERS'] as $a_controllers) {
+         if ((isset($a_controllers["NAME"])) 
+                 AND (!isset($ignorecontrollers[$a_controllers["NAME"]]))) {
+            $a_inventory['controller'][] = $thisc->addValues($a_controllers, 
+                                                              array(
+                                                                 'NAME'          => 'designation', 
+                                                                 'MANUFACTURER'  => 'manufacturers_id', 
+                                                                 'TYPE'          => 'type'));
+         }
       }
 
       // * CPUS
@@ -211,7 +240,7 @@ class PluginFusioninventoryFormatconvert {
          $array_tmp = $thisc->addValues($a_cpus, 
                                         array( 
                                            'SPEED' => 'frequence', 
-                                           'MANUFACTURER' => 'manufacturer', 
+                                           'MANUFACTURER' => 'manufacturers_id', 
                                            'SERIAL' => 'serial'));
          if (isset($a_cpus['NAME'])) {
             $array_tmp['designation'] = $a_cpus['NAME'];
@@ -337,12 +366,24 @@ class PluginFusioninventoryFormatconvert {
                if (isset($array_tmp['ip'])) {
                   $array_tmp['ipaddress'] = array($array_tmp['ip']);
                   unset($array_tmp['ip']);
+               } else {
+                  $array_tmp['ipaddress'] = array();
+               }
+               if (isset($array_tmp["instantiation_type"])
+                       AND $array_tmp["instantiation_type"] == 'Ethernet') {
+                  $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
+               } else if (isset($array_tmp["instantiation_type"])
+                       AND ($array_tmp["instantiation_type"] == 'Wifi'
+                            OR $array_tmp["instantiation_type"] == 'IEEE')) {
+                  $array_tmp["instantiation_type"] = 'NetworkPortWifi';
+               } else {
+                  $array_tmp["instantiation_type"] = 'NetworkPortLocal';
                }
                $a_networknames[$array_tmp['name']] = $array_tmp;
             }
          }
       }
-      $a_inventory['networkports'] = $a_networknames;
+      $a_inventory['networkport'] = $a_networknames;
       
       // * SLOTS
       
@@ -388,8 +429,7 @@ class PluginFusioninventoryFormatconvert {
             }
          }         
       }
-      
-      // * SOUNDS
+
       
       // * STORAGES
       
@@ -418,10 +458,7 @@ class PluginFusioninventoryFormatconvert {
             }
          }
       }
-      
-      // * VIDEOS
-      
-      
+     
       // * VIRTUALMACHINES
       if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
               "import_vm", 'inventory') != '0') {

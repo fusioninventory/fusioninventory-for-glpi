@@ -67,24 +67,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       Toolbox::logInFile("DATA", print_r($arrayinventory, true));
       
       exit;
-      
-      // TODO => move into formatconverter class
-//      if (isset($_SESSION["plugin_fusinvinventory_ignorecontrollers"])) {
-//         unset($_SESSION["plugin_fusinvinventory_ignorecontrollers"]);
-//      }
-//      if (isset($arrayinventory['CONTENT']['VIDEOS'])) {
-//         foreach ($arrayinventory['CONTENT']['VIDEOS'] as $child) {
-//            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][$child['NAME']] = 1;
-//            if (isset($child['CHIPSET'])) {
-//               $_SESSION["plugin_fusinvinventory_ignorecontrollers"][$child['CHIPSET']] = 1;
-//            }
-//         }
-//      }
-//      if (isset($arrayinventory['CONTENT']['SOUNDS'])) {
-//         foreach ($arrayinventory['CONTENT']['SOUNDS'] as $child) {
-//            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][$child['NAME']] = 1;
-//         }
-//      }
 
       if ($new == "0") {
          // Transfer if entity is different

@@ -159,7 +159,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                  AND (!empty($a_computerinventory['computer']['uuid']))) {
             $input['uuid'] = $a_computerinventory['computer']['uuid'];
          }
-         foreach($a_computerinventory['networkports'] as $network) {
+         foreach($a_computerinventory['networkport'] as $network) {
             if (((isset($network['virtualdev'])) AND ($network['virtualdev'] != '1'))
                     OR (!isset($network['virtualdev']))){
                if ((isset($network['mac'])) AND (!empty($network['mac']))) {
@@ -463,14 +463,23 @@ class PluginFusioninventoryInventoryComputerInventory {
       $computer_SoftwareVersion     = new Computer_SoftwareVersion();
       $computerVirtualmachine       = new ComputerVirtualMachine();
       $computerDisk                 = new ComputerDisk();
+      $item_DeviceControl           = new Item_DeviceControl();
+      $deviceControl                = new DeviceControl();
+      $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
+      $deviceGraphicCard            = new DeviceGraphicCard();
+      $item_DeviceSoundCard         = new Item_DeviceSoundCard();
+      $deviceSoundCard              = new DeviceSoundCard();
+      $networkPort                  = new NetworkPort();
+      $networkName                  = new NetworkName();
+      $iPAddress                    = new IPAddress();
       
       $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
       
       $a_computerinventory['computer']['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-      $computers_id = $computer->add($a_computerinventory['computer']);
+      $computers_id = $computer->add($a_computerinventory['computer'], array(), false);
       
       $a_computerinventory['fusioninventorycomputer']['computers_id'] = $computers_id;
-      $pfInventoryComputerComputer->add($a_computerinventory['fusioninventorycomputer']);
+      $pfInventoryComputerComputer->add($a_computerinventory['fusioninventorycomputer'], array(), false);
       
       // * Processors
       foreach ($a_computerinventory['processor'] as $a_processor) {
@@ -479,6 +488,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          $a_processor['itemtype'] = 'Computer';
          $a_processor['items_id'] = $computers_id;
          $a_processor['frequency'] = $a_processor['frequence'];
+         $a_processor['_no_history'] = true;
          $item_DeviceProcessor->add($a_processor);
       }
       
@@ -488,7 +498,38 @@ class PluginFusioninventoryInventoryComputerInventory {
          $a_memory['devicememories_id'] = $memories_id;
          $a_memory['itemtype'] = 'Computer';
          $a_memory['items_id'] = $computers_id;
+         $a_memory['_no_history'] = true;
          $item_DeviceMemory->add($a_memory);
+      }
+      
+      // * Graphiccard
+      foreach ($a_computerinventory['graphiccard'] as $a_graphiccard) {
+         $graphiccards_id = $deviceGraphicCard->import($a_graphiccard);
+         $a_graphiccard['devicegraphiccards_id'] = $graphiccards_id;
+         $a_graphiccard['itemtype'] = 'Computer';
+         $a_graphiccard['items_id'] = $computers_id;
+         $a_graphiccard['_no_history'] = true;
+         $item_DeviceGraphicCard->add($a_graphiccard);
+      }
+      
+      // * Sound
+      foreach ($a_computerinventory['sound'] as $a_sound) {
+         $sounds_id = $deviceSoundCard->import($a_sound);
+         $a_sound['devicesounds_id'] = $sounds_id;
+         $a_sound['itemtype'] = 'Computer';
+         $a_sound['items_id'] = $computers_id;
+         $a_sound['_no_history'] = true;
+         $item_DeviceSoundCard->add($a_sound);
+      }
+      
+      // * Controllers
+      foreach ($a_computerinventory['controller'] as $a_controller) {
+         $controllers_id = $deviceControl->import($a_controller);
+         $a_controller['devicecontrols_id'] = $controllers_id;
+         $a_controller['itemtype'] = 'Computer';
+         $a_controller['items_id'] = $computers_id;
+         $a_controller['_no_history'] = true;
+         $item_DeviceControl->add($a_controller);
       }
       
       // * Software
@@ -504,21 +545,42 @@ class PluginFusioninventoryInventoryComputerInventory {
          $softwareversions_id = $softwareVersion->add($a_software);
          $a_software['computers_id'] = $computers_id;
          $a_software['softwareversions_id'] = $softwareversions_id;
+         $a_software['_no_history'] = true;
          $computer_SoftwareVersion->add($a_software);
       }
 
       // * Virtualmachines
       foreach ($a_computerinventory['virtualmachine'] as $a_virtualmachine) {
          $a_virtualmachine['computers_id'] = $computers_id;
+         $a_virtualmachine['_no_history'] = true;
          $computerVirtualmachine->add($a_virtualmachine);
       }
       
       // * ComputerDisk
       foreach ($a_computerinventory['computerdisk'] as $a_computerdisk) {
          $a_computerdisk['computers_id'] = $computers_id;
+         $a_computerdisk['_no_history'] = true;
          $computerDisk->add($a_computerdisk);
       }
       
+      // * Networkports
+      foreach ($a_computerinventory['networkport'] as $a_networkport) {
+         $a_networkport['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+         $a_networkport['items_id'] = $computers_id;
+         $a_networkport['itemtype'] = "Computer";
+         $a_networkport['_no_history'] = true;
+         $a_networkport['items_id'] = $networkPort->add($a_networkport);
+         $a_networkport['is_recursive'] = 0;
+         $a_networkport['itemtype'] = 'NetworkPort';
+         $a_networknames_id = $networkName->add($a_networkport);
+         foreach ($a_networkport['ipaddress'] as $ip) {
+            $input = array();
+            $input['items_id'] = $a_networknames_id;
+            $input['itemtype'] = 'NetworkName';
+            $input['name'] = $ip;
+            $iPAddress->add($input);
+         }
+      }
       
    }
 
