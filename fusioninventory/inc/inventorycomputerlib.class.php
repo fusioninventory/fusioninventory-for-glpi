@@ -68,23 +68,23 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       
       exit;
       
-      
-      if (isset($_SESSION["plugin_fusinvinventory_ignorecontrollers"])) {
-         unset($_SESSION["plugin_fusinvinventory_ignorecontrollers"]);
-      }
-      if (isset($arrayinventory['CONTENT']['VIDEOS'])) {
-         foreach ($arrayinventory['CONTENT']['VIDEOS'] as $child) {
-            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][$child['NAME']] = 1;
-            if (isset($child['CHIPSET'])) {
-               $_SESSION["plugin_fusinvinventory_ignorecontrollers"][$child['CHIPSET']] = 1;
-            }
-         }
-      }
-      if (isset($arrayinventory['CONTENT']['SOUNDS'])) {
-         foreach ($arrayinventory['CONTENT']['SOUNDS'] as $child) {
-            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][$child['NAME']] = 1;
-         }
-      }
+      // TODO => move into formatconverter class
+//      if (isset($_SESSION["plugin_fusinvinventory_ignorecontrollers"])) {
+//         unset($_SESSION["plugin_fusinvinventory_ignorecontrollers"]);
+//      }
+//      if (isset($arrayinventory['CONTENT']['VIDEOS'])) {
+//         foreach ($arrayinventory['CONTENT']['VIDEOS'] as $child) {
+//            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][$child['NAME']] = 1;
+//            if (isset($child['CHIPSET'])) {
+//               $_SESSION["plugin_fusinvinventory_ignorecontrollers"][$child['CHIPSET']] = 1;
+//            }
+//         }
+//      }
+//      if (isset($arrayinventory['CONTENT']['SOUNDS'])) {
+//         foreach ($arrayinventory['CONTENT']['SOUNDS'] as $child) {
+//            $_SESSION["plugin_fusinvinventory_ignorecontrollers"][$child['NAME']] = 1;
+//         }
+//      }
 
       if ($new == "0") {
          // Transfer if entity is different
@@ -169,6 +169,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $_SESSION['glpiactiveentities_string'] = $_SESSION["plugin_fusinvinventory_entity"];
          $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
          
+         
+         
+         
          //We launch CreateMachine() hook and provide an InternalId
          $xmlSections = $this->_getXMLSections($arrayinventory);
          $internalId = uniqid("", true);
@@ -201,75 +204,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $this->updateLibMachine($xmlSections, $internalId);
 
       }
-   }
-
-
-
-   /**
-   * get all sections and convert to php array
-   *
-   * @param $simpleXMLObj simplexml XML object of the computer
-   *
-   * @return array XML sections into an array
-   *
-   **/
-   private function _getXMLSections($arrayinventory) {
-
-      $xmlSections = array();
-      $pfInventoryComputerLibfilter = new PluginFusioninventoryInventoryComputerLibfilter();
-
-      $sectionsToFilter = array();
-      array_push ($sectionsToFilter,
-      'USBDEVICES',
-      'CONTROLLERS',
-      'NETWORKS');
-
-      foreach($arrayinventory['CONTENT'] as $section=>$value) {
-
-         if (in_array($section, $sectionsToFilter)) {
-            $nofilter = $pfInventoryComputerLibfilter->filter($section, $value);
-            //if the folder for the filter doesn't exist, delete this element from array.
-            if($nofilter){
-               foreach($sectionsToFilter as $fKey => $fValue) {
-                  if ($fValue == $nofilter) {
-                     unset($sectionsToFilter[$fKey]);
-                  }
-               }
-            }
-         }
-
-         $sectionData = array();
-         if (is_array($value)) {
-            foreach ($value as $vkey=>$vvalue) {
-               if (is_int($vkey)) {
-                  $sectionData = array();
-                  foreach ($vvalue as $vvkey=>$vvvalue) {
-                     $sectionData[$vvkey] = $vvvalue;
-                  }
-      
-                  //sectionId initialization, we will affect id after hook createSection return value.
-                  $serializedSectionData = serialize($sectionData);
-                  array_push($xmlSections,
-                             array("sectionId"        => 0,
-                                   "sectionName"      => $section,
-                                   "sectionDatawName" => $serializedSectionData.$section,
-                                   "sectionData"      => $serializedSectionData));
-
-               } else {
-                  $sectionData[$vkey] = $vvalue;
-               }
-            }
-         }
-         //sectionId initialization, we will affect id after hook createSection return value.
-         $serializedSectionData = serialize($sectionData);
-         array_push($xmlSections,
-                    array("sectionId"        => 0,
-                          "sectionName"      => $section,
-                          "sectionDatawName" => $serializedSectionData.$section,
-                          "sectionData"      => $serializedSectionData));
-
-      }
-      return $xmlSections;
    }
 
 

@@ -91,6 +91,8 @@ class PluginFusioninventoryFormatconvert {
     * Modify Computer inventory
     */
    static function computerInventoryTransformation($array) {
+      global $DB;
+      
       $a_inventory = array();
       $thisc = new self();
       $pfConfig = new PluginFusioninventoryConfig();
@@ -114,6 +116,19 @@ class PluginFusioninventoryFormatconvert {
       if (isset($array_tmp['operatingsystem_installationdate'])) {
          $array_tmp['operatingsystem_installationdate'] = date("Y-m-d", $array_tmp['operatingsystem_installationdate']);
       }
+      if (isset($array_tmp['users_id'])) {
+         $query = "SELECT `id`
+                   FROM `glpi_users`
+                   WHERE `name` = '" . $array_tmp['users_id'] . "';";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == 1) {
+            $array_tmp['users_id'] = $DB->result($result, 0, 0);
+         } else {
+            $array_tmp['users_id'] = 0;
+         }    
+      }
+      
+      
       $a_inventory['computer'] = $array_tmp;
       
       $array_tmp = $thisc->addValues($array['HARDWARE'], 
@@ -245,7 +260,7 @@ class PluginFusioninventoryFormatconvert {
             } else if (isset($a_drives['TYPE'])) {
                $array_tmp['mountpoint'] = $a_drives['TYPE'];
             }            
-            $a_inventory['DRIVES'][] = $array_tmp;
+            $a_inventory['computerdisk'][] = $array_tmp;
          }
       }
       
@@ -363,10 +378,13 @@ class PluginFusioninventoryFormatconvert {
                if (isset($res_rule["manufacturer"])  && $res_rule["manufacturer"]) {
                   $array_tmp['manufacturer'] = Dropdown::getDropdownName("glpi_manufacturers", $res_rule["manufacturer"]);
                }
+               if (!isset($array_tmp['manufacturer'])) {
+                  $array_tmp['manufacturer'] = '';
+               }
                if (isset($res_rule['new_entities_id'])) {
                   $array_tmp['entities_id'] = $res_rule['new_entities_id'];
                }
-               $a_inventory['softwares'][] = $array_tmp;
+               $a_inventory['software'][] = $array_tmp;
             }
          }         
       }
@@ -409,7 +427,7 @@ class PluginFusioninventoryFormatconvert {
               "import_vm", 'inventory') != '0') {
          
           foreach ($array['VIRTUALMACHINES'] as $a_virtualmachines) {
-            $a_inventory['virtualmachines'][] = $thisc->addValues($a_virtualmachines, 
+            $a_inventory['virtualmachine'][] = $thisc->addValues($a_virtualmachines, 
                                            array( 
                                               'NAME'        => 'name', 
                                               'VCPU'        => 'vcpu', 
@@ -444,6 +462,7 @@ class PluginFusioninventoryFormatconvert {
    
    
    static function computerReplaceids($array) {
+      
       foreach ($array as $key=>$value) {
          if (is_array($value)) {
             $array[$key] = PluginFusioninventoryFormatconvert::computerReplaceids($value);
@@ -510,7 +529,7 @@ class PluginFusioninventoryFormatconvert {
                                                        $value,
                                                        $_SESSION["plugin_fusinvinventory_entity"]);
                      break;
-                  
+                                    
                }
                $array[$key] = $value;
             }

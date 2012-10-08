@@ -317,6 +317,14 @@ class PluginFusioninventoryInventoryComputerInventory {
                     OR $_SESSION["plugin_fusinvinventory_entity"] == '-1') {
                $_SESSION["plugin_fusinvinventory_entity"] = 0;
             }
+            $_SESSION['glpiactiveentities'] = array($_SESSION["plugin_fusinvinventory_entity"]);
+            $_SESSION['glpiactiveentities_string'] = $_SESSION["plugin_fusinvinventory_entity"];
+            $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
+            
+            // TODO => Add new computer
+            $this->addNewComputer($a_computerinventory);
+         exit;
+            
             $input = array();
             $input['date_mod'] = date("Y-m-d H:i:s");
             $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
@@ -440,357 +448,78 @@ class PluginFusioninventoryInventoryComputerInventory {
       }
    }
 
-
-
-   /**
-   * Create GLPI existant computer (never in lib) in Lib FusionInventory
-   *
-   * @param $items_id integer id of the computer
-   * @param $internal_id value uniq id in internal lib
-   *
-   * @return nothing
-   *
-   **/
-   function createMachineInLib($items_id, $internal_id) {
-
-      $NetworkPort = new NetworkPort();
-      $Computer = new Computer();
-      $a_sectionsinfos = array();
-
-      $Computer->getFromDB($items_id);
-      $datas = $Computer->fields;
-
-      $data_computer = array();
-      $data_computer['IMPORT'] = 'GLPI';
-      $data_computer['CONTENT'] = array();
-
-      // ** NETWORKS
-      $a_networkport = $NetworkPort->find("`items_id`='".$items_id."' AND `itemtype`='Computer' ");
-      $n = 0;
-      foreach ($a_networkport as $networkport_id => $networkport_data) {
-         $a_sectionsinfos[] = "NETWORKS/".$networkport_id;
-         $data_computer['CONTENT']['NETWORKS'][$n] = array(
-                     "MACADDR"      => $networkport_data['mac'],
-                     "IPADDRESS"    => $networkport_data['ip'],
-                     "IPMASK"       => $networkport_data['netmask'],
-                     "IPSUBNET"     => $networkport_data['subnet'],
-                     "IPGATEWAY"    => $networkport_data['gateway'],
-                     "DESCRIPTION"  => $networkport_data['name']);
-         $network_type = Dropdown::getDropdownName('glpi_networkinterfaces',
-                                                   $networkport_data['networkinterfaces_id']);
-         if ($network_type != "&nbsp;") {
-            $data_computer['CONTENT']['NETWORKS'][$n]['TYPE'] = $network_type;
+   
+   
+   function addNewComputer($a_computerinventory) {
+      
+      $computer = new Computer();
+      $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();
+      $item_DeviceProcessor         = new Item_DeviceProcessor();
+      $deviceProcessor              = new DeviceProcessor();
+      $item_DeviceMemory            = new Item_DeviceMemory();
+      $deviceMemory                 = new DeviceMemory();
+      $Software                     = new Software();
+      $softwareVersion              = new SoftwareVersion();
+      $computer_SoftwareVersion     = new Computer_SoftwareVersion();
+      $computerVirtualmachine       = new ComputerVirtualMachine();
+      $computerDisk                 = new ComputerDisk();
+      
+      $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
+      
+      $a_computerinventory['computer']['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+      $computers_id = $computer->add($a_computerinventory['computer']);
+      
+      $a_computerinventory['fusioninventorycomputer']['computers_id'] = $computers_id;
+      $pfInventoryComputerComputer->add($a_computerinventory['fusioninventorycomputer']);
+      
+      // * Processors
+      foreach ($a_computerinventory['processor'] as $a_processor) {
+         $processors_id = $deviceProcessor->import($a_processor);
+         $a_processor['deviceprocessors_id'] = $processors_id;
+         $a_processor['itemtype'] = 'Computer';
+         $a_processor['items_id'] = $computers_id;
+         $a_processor['frequency'] = $a_processor['frequence'];
+         $item_DeviceProcessor->add($a_processor);
+      }
+      
+      // * Memories
+      foreach ($a_computerinventory['memory'] as $a_memory) {
+         $memories_id = $deviceMemory->import($a_memory);
+         $a_memory['devicememories_id'] = $memories_id;
+         $a_memory['itemtype'] = 'Computer';
+         $a_memory['items_id'] = $computers_id;
+         $item_DeviceMemory->add($a_memory);
+      }
+      
+      // * Software
+      foreach ($a_computerinventory['software'] as $a_software) {
+         if (!isset($a_software['entities_id'])) {
+            $a_software['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
          }
-         $n++;
+         $softwares_id = $Software->addOrRestoreFromTrash($a_software['name'],
+                                                         $a_software['manufacturer'],
+                                                         $a_software['entities_id']);
+         $a_software['softwares_id'] = $softwares_id;
+         $a_software['name'] = $a_software['version'];
+         $softwareversions_id = $softwareVersion->add($a_software);
+         $a_software['computers_id'] = $computers_id;
+         $a_software['softwareversions_id'] = $softwareversions_id;
+         $computer_SoftwareVersion->add($a_software);
       }
 
-      // ** BIOS
-      $data_computer['CONTENT']['BIOS'] = array();
-      $a_sectionsinfos[] = "BIOS/".$items_id;
-      $data_computer['CONTENT']['BIOS']['SSN'] = $datas['serial'];
-      $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'),
-                                                $datas['manufacturers_id']);
-      if ($manufacturer != "&nbsp;") {
-         $data_computer['CONTENT']['BIOS']['SMANUFACTURER'] = $manufacturer;
+      // * Virtualmachines
+      foreach ($a_computerinventory['virtualmachine'] as $a_virtualmachine) {
+         $a_virtualmachine['computers_id'] = $computers_id;
+         $computerVirtualmachine->add($a_virtualmachine);
       }
-      $model = Dropdown::getDropdownName(getTableForItemType('ComputerModel'),
-                                         $datas['computermodels_id']);
-      if ($model != "&nbsp;") {
-         $data_computer['CONTENT']['BIOS']['SMODEL'] = $model;
+      
+      // * ComputerDisk
+      foreach ($a_computerinventory['computerdisk'] as $a_computerdisk) {
+         $a_computerdisk['computers_id'] = $computers_id;
+         $computerDisk->add($a_computerdisk);
       }
-      $type = Dropdown::getDropdownName(getTableForItemType('ComputerType'),
-                                        $datas['computertypes_id']);
-      if ($type != "&nbsp;") {
-         $data_computer['CONTENT']['BIOS']['TYPE'] = $type;
-      }
-
-      // ** HARDWARE
-      $data_computer['CONTENT']['HARDWARE'] = array();
-      $a_sectionsinfos[] = "HARDWARE/".$items_id;
-      $data_computer['CONTENT']['HARDWARE']['NAME'] = $datas['name'];
-      $osname = Dropdown::getDropdownName(getTableForItemType('OperatingSystem'),
-                                          $datas['operatingsystems_id']);
-      if ($osname != "&nbsp;") {
-         $data_computer['CONTENT']['HARDWARE']['OSNAME'] = $osname;
-      }
-      $osversion = Dropdown::getDropdownName(getTableForItemType('OperatingSystemVersion'),
-                                             $datas['operatingsystemversions_id']);
-      if ($osversion != "&nbsp;") {
-         $data_computer['CONTENT']['HARDWARE']['OSVERSION'] = $osversion;
-      }
-      $data_computer['CONTENT']['HARDWARE']['WINPRODID'] = $datas['os_licenseid'];
-      $data_computer['CONTENT']['HARDWARE']['WINPRODKEY'] = $datas['os_license_number'];
-      $workgroup = Dropdown::getDropdownName(getTableForItemType('Domain'), $datas['domains_id']);
-      if ($workgroup != "&nbsp;") {
-         $data_computer['CONTENT']['HARDWARE']['WORKGROUP'] = $workgroup;
-      }
-      $data_computer['CONTENT']['HARDWARE']['DESCRIPTION'] = $datas['comment'];
-
-      // ** CONTROLLERS
-      $CompDeviceControl = new Item_Devices('Item_DeviceControl');
-      $DeviceControl = new DeviceControl();
-      $a_deviceControl = $CompDeviceControl->find("`computers_id`='".$items_id."' ");
-      $n = 0;
-      foreach ($a_deviceControl as $deviceControl_id => $deviceControl_data) {
-         $a_sectionsinfos[] = "CONTROLLERS/".$deviceControl_id;
-         $data_computer['CONTENT']['CONTROLLERS'][$n] = array();
-         $DeviceControl->getFromDB($deviceControl_data['devicecontrols_id']);
-         $data_computer['CONTENT']['CONTROLLERS']['CAPTION'][$n] = $DeviceControl->fields['designation'];
-         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'),
-                                                   $DeviceControl->fields['manufacturers_id']);
-         if ($manufacturer != "&nbsp;") {
-            $data_computer['CONTENT']['CONTROLLERS']['MANUFACTURER'][$n] = $manufacturer;
-         }
-         $data_computer['CONTENT']['CONTROLLERS']['NAME'][$n] = $DeviceControl->fields['designation'];
-         $n++;
-      }
-
-      // ** CPUS
-      $CompDeviceProcessor = new Item_Devices('Item_DeviceProcessor');
-      $DeviceProcessor = new DeviceProcessor();
-      $a_deviceProcessor = $CompDeviceProcessor->find("`computers_id`='".$items_id."' ");
-      $n = 0;
-      foreach ($a_deviceProcessor as $deviceProcessor_id => $deviceProcessor_data) {
-         $a_sectionsinfos[] = "CPUS/".$deviceProcessor_id;
-         $data_computer['CONTENT']['CPUS'][$n] = array();
-         $DeviceProcessor->getFromDB($deviceProcessor_data['deviceprocessors_id']);
-         $data_computer['CONTENT']['CPUS'][$n]['NAME'] = $DeviceProcessor->fields['designation'];
-         $data_computer['CONTENT']['CPUS'][$n]['SPEED'] = $deviceProcessor_data['specificity'];
-         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'),
-                                                   $DeviceProcessor->fields['manufacturers_id']);
-         if ($manufacturer != "&nbsp;") {
-            $data_computer['CONTENT']['CPUS'][$n]['MANUFACTURER'] = $manufacturer;
-         }
-         $n++;
-      }
-
-      // ** STORAGE
-      $CompDeviceDrive = new Item_Devices('Item_DeviceDrive');
-      $DeviceDrive = new DeviceDrive();
-      $a_deviceDrive = $CompDeviceDrive->find("`computers_id`='".$items_id."' ");
-      $n = 0;
-      foreach ($a_deviceDrive as $deviceDrive_id => $deviceDrive_data) {
-         $a_sectionsinfos[] = "STORAGES/d".$deviceDrive_id;
-         $data_computer['CONTENT']['STORAGES'][$n] = array();
-         $DeviceDrive->getFromDB($deviceDrive_data['devicedrives_id']);
-         $data_computer['CONTENT']['STORAGES'][$n]['NAME'] = $DeviceDrive->fields['designation'];
-         $data_computer['CONTENT']['STORAGES'][$n]['MODEL'] = $DeviceDrive->fields['designation'];
-         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'),
-                                                   $DeviceDrive->fields['manufacturers_id']);
-         if ($manufacturer != "&nbsp;") {
-            $data_computer['CONTENT']['STORAGES'][$n]['MANUFACTURER'] = $manufacturer;
-         }
-         $interface = Dropdown::getDropdownName(getTableForItemType('InterfaceType'),
-                                                $DeviceDrive->fields['interfacetypes_id']);
-         if ($interface != "&nbsp;") {
-            $data_computer['CONTENT']['STORAGES'][$n]['INTERFACE'] = $interface;
-         }
-         $n++;
-      }
-      $CompDeviceHardDrive = new Item_Devices('Item_DeviceHardDrive');
-      $DeviceHardDrive = new DeviceHardDrive();
-      $a_DeviceHardDrive = $CompDeviceHardDrive->find("`computers_id`='".$items_id."' ");
-      foreach ($a_DeviceHardDrive as $DeviceHardDrive_id => $DeviceHardDrive_data) {
-         $a_sectionsinfos[] = "STORAGES/".$DeviceHardDrive_id;
-         $data_computer['CONTENT']['STORAGES'][$n] = array();
-         $DeviceHardDrive->getFromDB($DeviceHardDrive_data['deviceharddrives_id']);
-         $data_computer['CONTENT']['STORAGES'][$n]['NAME'] = $DeviceHardDrive->fields['designation'];
-         $data_computer['CONTENT']['STORAGES'][$n]['MODEL'] = $DeviceHardDrive->fields['designation'];
-         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'),
-                                                   $DeviceHardDrive->fields['manufacturers_id']);
-         if ($manufacturer != "&nbsp;") {
-            $data_computer['CONTENT']['STORAGES'][$n]['MANUFACTURER'] = $manufacturer;
-         }
-         $interface = Dropdown::getDropdownName(getTableForItemType('InterfaceType'),
-                                                $DeviceHardDrive->fields['interfacetypes_id']);
-         if ($interface != "&nbsp;") {
-            $data_computer['CONTENT']['STORAGES'][$n]['INTERFACE'] = $interface;
-         }
-         $n++;
-      }
-
-      // ** DRIVES
-      $ComputerDisk = new ComputerDisk;
-      $a_disk = $ComputerDisk->find("`computers_id`='".$items_id."' ");
-      $n = 0;
-      foreach ($a_disk as $disk_id => $disk_data) {
-         $a_sectionsinfos[] = "DRIVES/".$disk_id;
-         $data_computer['CONTENT']['DRIVES'][$n] = array(
-                  'LABEL'        => $disk_data['name'],
-                  'VOLUMN'       => $disk_data['device'],
-                  'MOUNTPOINT'   => $disk_data['mountpoint'],
-                  'TOTAL'        => $disk_data['totalsize'],
-                  'FREE'         => $disk_data['freesize']
-         );
-         $filesystem = Dropdown::importExternal('Filesystem',
-                                                $disk_data['filesystems_id'],
-                                                $_SESSION["plugin_fusinvinventory_entity"]);
-         if ($filesystem != "&nbsp;") {
-            $data_computer['CONTENT']['DRIVES'][$n]['FILESYSTEM'] = $filesystem;
-         }
-         $n++;
-      }
-
-
-      // ** MEMORIES
-      $CompDeviceMemory = new Item_Devices('Item_DeviceMemory');
-      $DeviceMemory = new DeviceMemory();
-      $a_deviceMemory = $CompDeviceMemory->find("`computers_id`='".$items_id."' ");
-      $n = 0;
-      foreach ($a_deviceMemory as $deviceMemory_id => $deviceMemory_data) {
-         $DeviceMemory->getFromDB($deviceMemory_data['devicememories_id']);
-         $a_sectionsinfos[] = "MEMORIES/".$deviceMemory_id;
-         $data_computer['CONTENT']['MEMORIES'][$n] = array(
-               'DESCRIPTION'  => $DeviceMemory->fields['designation'],
-               'CAPACITY'     => $deviceMemory_data['specificity'],
-               'SPEED'        => $DeviceMemory->fields['frequence']
-         );
-         $type = Dropdown::getDropdownName(getTableForItemType('DeviceMemoryType'),
-                                           $DeviceMemory->fields['devicememorytypes_id']);
-         if ($type != "&nbsp;") {
-            $data_computer['CONTENT']['MEMORIES'][$n]['TYPE'] = $type;
-         }
-         $n++;
-      }
-
-
-      // ** MONITORS
-      $Monitor = new Monitor();
-      $Computer_Item = new Computer_Item();
-      $a_ComputerMonitor = $Computer_Item->find("`computers_id`='".$items_id.
-                                                "' AND 'itemtype' = 'Monitor'");
-      $n = 0;
-      foreach ($a_ComputerMonitor as $ComputerMonitor_id => $ComputerMonitor_data) {
-         $a_sectionsinfos[] = "MONITORS/".$ComputerMonitor_id;
-         $Monitor->getFromDB($ComputerMonitor_data['items_id']);
-         $data_computer['CONTENT']['MONITORS'][$n] = array(
-               'CAPTION'      => $Monitor->fields['name'],
-               'SERIAL'       => $Monitor->fields['serial'],
-               'DESCRIPTION'  => $Monitor->fields['comment']
-         );
-         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'),
-                                                   $Monitor->fields['manufacturers_id']);
-         if ($manufacturer != "&nbsp;") {
-            $data_computer['CONTENT']['MONITORS'][$n]['MANUFACTURER'] = $manufacturer;
-         }
-         $n++;
-      }
-
-
-      // ** PRINTERS
-      $Printer = new Printer();
-      $Computer_Item = new Computer_Item();
-      $a_ComputerPrinter = $Computer_Item->find("`computers_id`='".$items_id.
-                                                "' AND 'itemtype' = 'Printer'");
-      $n = 0;
-      foreach ($a_ComputerPrinter as $ComputerPrinter_id => $ComputerPrinter_data) {
-         $a_sectionsinfos[] = "PRINTERS/".$ComputerPrinter_id;
-         $Printer->getFromDB($ComputerPrinter_data['items_id']);
-         $data_computer['CONTENT']['PRINTERS'][$n] = array(
-               'NAME'   => $Printer->fields['name'],
-               'SERIAL' => $Printer->fields['serial']
-         );
-         if ($Printer->fields['have_usb'] == "1") {
-            $data_computer['CONTENT']['PRINTERS'][$n]['PORT'] = 'USB';
-         }
-         $n++;
-      }
-
-
-      // ** SOFTWARE
-      $Computer_SoftwareVersion = new Computer_SoftwareVersion();
-      $SoftwareVersion = new SoftwareVersion();
-      $Software = new Software();
-      $a_softwareVersion = $Computer_SoftwareVersion->find("`computers_id`='".$items_id."' ");
-      $n = 0;
-      foreach ($a_softwareVersion as $softwareversion_id => $softwareversion_data) {
-         $SoftwareVersion->getFromDB($softwareversion_data['softwareversions_id']);
-         $Software->getFromDB($SoftwareVersion->fields['softwares_id']);
-         $a_sectionsinfos[] = "SOFTWARES/".$softwareversion_id;
-         $data_computer['CONTENT']['SOFTWARES'][$n] = array(
-               'NAME'      => $Software->fields['name'],
-               'VERSION'   => $SoftwareVersion->fields['name']
-         );
-         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'),
-                                                   $Software->fields['manufacturers_id']);
-         if ($manufacturer != "&nbsp;") {
-            $data_computer['CONTENT']['SOFTWARES'][$n]['PUBLISHER'] = $manufacturer;
-         }
-         $n++;
-      }
-
-
-      // ** SOUNDS
-      $CompDeviceSoundCard = new Item_Devices('Item_DeviceSoundCard');
-      $DeviceSoundCard = new DeviceSoundCard();
-      $a_deviceSoundCard = $CompDeviceSoundCard->find("`computers_id`='".$items_id."' ");
-      $n = 0;
-      foreach ($a_deviceSoundCard as $deviceSoundCard_id => $deviceSoundCard_data) {
-         $a_sectionsinfos[] = "SOUNDS/".$deviceSoundCard_id;
-         $DeviceSoundCard->getFromDB($deviceSoundCard_data['devicesoundcards_id']);
-         $data_computer['CONTENT']['SOUNDS'][$n] = array(
-               'NAME'         => $DeviceSoundCard->fields['designation'],
-               'DESCRIPTION'  => $DeviceSoundCard->fields['comment']
-         );
-         $manufacturer = Dropdown::getDropdownName(getTableForItemType('Manufacturer'),
-                                                   $DeviceSoundCard->fields['manufacturers_id']);
-         if ($manufacturer != "&nbsp;") {
-            $data_computer['CONTENT']['SOUNDS'][$n]['MANUFACTURER'] = $manufacturer;
-         }
-         $n++;
-      }
-
-
-      // ** VIDEOS
-      $CompDeviceGraphicCard = new Item_Devices('Item_DeviceGraphicCard');
-      $DeviceGraphicCard = new DeviceGraphicCard();
-      $a_deviceGraphicCard = $CompDeviceGraphicCard->find("`computers_id`='".$items_id."' ");
-      foreach ($a_deviceGraphicCard as $deviceGraphicCard_id => $deviceGraphicCard_data) {
-         $a_sectionsinfos[] = "VIDEOS/".$deviceGraphicCard_id;
-         $DeviceGraphicCard->getFromDB($deviceGraphicCard_data['devicegraphiccards_id']);
-         $data_computer['CONTENT']['VIDEOS'][] = array(
-               'NAME'   => $DeviceGraphicCard->fields['designation'],
-               'MEMORY' => $deviceGraphicCard_data['specificity']
-         );
-      }
-
-      // ** VIRTUALMACHINES
-      $ComputerVirtualMachine = new ComputerVirtualMachine();
-      $a_VirtualMachines = $ComputerVirtualMachine->find("`computers_id`='".$items_id."' ");
-      foreach ($a_VirtualMachines as $VirtualMachines_id=>$VirtualMachines_data) {
-         $a_sectionsinfos[] = "VIRTUALMACHINES/".$VirtualMachines_id;
-         $data_computer['CONTENT']['VIRTUALMACHINES'][] = array(
-               'MEMORY' => $VirtualMachines_data['ram']."MB",
-               'NAME' => $VirtualMachines_data['name'],
-               'STATUS' => Dropdown::getDropdownName("glpi_virtualmachinestates",
-                                                     $VirtualMachines_data['virtualmachinestates_id']),
-               'SUBSYSTEM' => Dropdown::getDropdownName("glpi_virtualmachinesystems",
-                                                        $VirtualMachines_data['virtualmachinesystems_id']),
-               'UUID' => $VirtualMachines_data['uuid'],
-               'VCPU' => $VirtualMachines_data['vcpu'],
-               'VMTYPE' => Dropdown::getDropdownName("glpi_virtualmachinetypes",
-                                                     $VirtualMachines_data['virtualmachinetypes_id'])
-         );
-      }
-
-      // ** USBDEVICES (PERIPHERALS)
-      $Peripheral = new Peripheral();
-      $Computer_Item = new Computer_Item();
-      $a_ComputerPeripheral = $Computer_Item->find("`computers_id`='".$items_id."' AND `itemtype`='Peripheral'");
-      $n = 0;
-      foreach ($a_ComputerPeripheral as $ComputerPeripheral_id => $ComputerPeripheral_data) {
-         $a_sectionsinfos[] = "USBDEVICES/".$ComputerPeripheral_id;
-         $Peripheral->getFromDB($ComputerPeripheral_data['items_id']);
-         $data_computer['CONTENT']['USBDEVICES'][$n] = array();
-         $data_computer['CONTENT']['USBDEVICES'][$n]['NAME'] = $Peripheral->fields['name'];
-         if ($Peripheral->fields['serial'] != "") {
-            $data_computer['CONTENT']['USBDEVICES'][$n]['SERIAL'] = $Peripheral->fields['serial'];
-         }
-         $n++;
-      }
-
-      $pfLib = new PluginFusioninventoryInventoryComputerLib();
-      $pfLib->addLibMachineFromGLPI($items_id, $internal_id, $data_computer, $a_sectionsinfos);
+      
+      
    }
 
 
