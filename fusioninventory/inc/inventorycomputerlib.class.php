@@ -62,6 +62,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    function startAction($arrayinventory, $items_id, $new=0) {
       global $DB;
 
+      // Convert *s_id (name) into real *s_id (id) of $arrayinventory
+      $arrayinventory = PluginFusioninventoryFormatconvert::computerReplaceids($arrayinventory);
+      Toolbox::logInFile("DATA", print_r($arrayinventory, true));
+      
+      exit;
+      
+      
       if (isset($_SESSION["plugin_fusinvinventory_ignorecontrollers"])) {
          unset($_SESSION["plugin_fusinvinventory_ignorecontrollers"]);
       }

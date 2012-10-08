@@ -55,6 +55,9 @@ class PluginFusioninventoryFormatconvert {
       if (isset($datainventory['CONTENT']['PROCESSES'])) {
          unset($datainventory['CONTENT']['PROCESSES']);
       }
+      if (isset($datainventory['CONTENT']['PORTS'])) {
+         unset($datainventory['CONTENT']['PORTS']);
+      }
       $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
       return $datainventory;
    }
@@ -89,48 +92,74 @@ class PluginFusioninventoryFormatconvert {
     */
    static function computerInventoryTransformation($array) {
       $a_inventory = array();
-      
+      $thisc = new self();
       $pfConfig = new PluginFusioninventoryConfig();
       
       if (isset($array['ACCOUNTINFO'])) {
          $a_inventory['ACCOUNTINFO'] = $array['ACCOUNTINFO'];
       }
+         
+      // * HARDWARE
+      $array_tmp = $thisc->addValues($array['HARDWARE'], 
+                                     array( 
+                                        'NAME'           => 'name',
+                                        'OSNAME'         => 'operatingsystems_id',
+                                        'OSVERSION'      => 'operatingsystemversions_id',
+                                        'WINPRODID'      => 'os_licenseid',
+                                        'WINPRODKEY'     => 'os_license_number',
+                                        'WORKGROUP'      => 'domains_id',
+                                        'UUID'           => 'uuid',
+                                        'DESCRIPTION'    => 'comment',
+                                        'LASTLOGGEDUSER' => 'users_id'));
+      if (isset($array_tmp['operatingsystem_installationdate'])) {
+         $array_tmp['operatingsystem_installationdate'] = date("Y-m-d", $array_tmp['operatingsystem_installationdate']);
+      }
+      $a_inventory['computer'] = $array_tmp;
+      
+      $array_tmp = $thisc->addValues($array['HARDWARE'], 
+                                     array( 
+                                        'OSINSTALLDATE' => 'operatingsystem_installationdate',
+                                        'WINOWNER' => 'winowner',
+                                        'WINCOMPANY' => 'wincompany'));
+      $a_inventory['fusioninventorycomputer'] = $array_tmp;
+      
+      // * BIOS
       if (isset($array['BIOS'])) {
          $a_inventory['BIOS'] = array();
          if ((isset($array['BIOS']['SMANUFACTURER']))
                AND (!empty($array['BIOS']['SMANUFACTURER']))) {
-            $a_inventory['BIOS']['MANUFACTURER'] = $array['BIOS']['SMANUFACTURER'];
+            $a_inventory['computer']['manufacturers_id'] = $array['BIOS']['SMANUFACTURER'];
          } else if ((isset($array['BIOS']['MMANUFACTURER']))
                       AND (!empty($array['BIOS']['MMANUFACTURER']))) {
-            $a_inventory['BIOS']['MANUFACTURER'] = $array['BIOS']['MMANUFACTURER'];
+            $a_inventory['computer']['manufacturers_id'] = $array['BIOS']['MMANUFACTURER'];
          } else if ((isset($array['BIOS']['BMANUFACTURER']))
                       AND (!empty($array['BIOS']['BMANUFACTURER']))) {
-            $a_inventory['BIOS']['MANUFACTURER'] = $array['BIOS']['BMANUFACTURER'];
+            $a_inventory['computer']['manufacturers_id'] = $array['BIOS']['BMANUFACTURER'];
          }
          if (isset($array['BIOS']['SMODEL']) AND $array['BIOS']['SMODEL'] != '') {
-            $a_inventory['BIOS']['MODEL'] = $array['BIOS']['SMODEL'];
+            $a_inventory['computer']['computermodels_id'] = $array['BIOS']['SMODEL'];
          } else if (isset($array['BIOS']['MMODEL']) AND $array['BIOS']['MMODEL'] != '') {
-            $a_inventory['BIOS']['MODEL'] = $array['BIOS']['MMODEL'];            
+            $a_inventory['computer']['computermodels_id'] = $array['BIOS']['MMODEL'];            
          }
          if (isset($array['BIOS']['SSN'])) {
-            $a_inventory['BIOS']['SERIAL'] = $array['BIOS']['SSN'];
+            $a_inventory['computer']['serial'] = $array['BIOS']['SSN'];
             // HP patch for serial begin with 'S'
-            if ((isset($a_inventory['BIOS']['MANUFACTURER']))
-                  AND (strstr($a_inventory['BIOS']['MANUFACTURER'], "ewlett"))) {
+            if ((isset($a_inventory['computer']['manufacturers_id']))
+                  AND (strstr($a_inventory['computer']['manufacturers_id'], "ewlett"))) {
 
                if (preg_match("/^[sS]/", $a_inventory['BIOS']['SERIAL'])) {
-                  $a_inventory['BIOS']['SERIAL'] = preg_replace("/^[sS]/", "", $a_inventory['BIOS']['SERIAL']);
+                  $a_inventory['computer']['serial'] = preg_replace("/^[sS]/", "", $a_inventory['BIOS']['SERIAL']);
                }
             }
          }
       }
       // * Type of computer
       if (isset($array['HARDWARE']['CHASSIS_TYPE'])) {
-         $a_inventory['BIOS']['TYPE'] = $array['HARDWARE']['CHASSIS_TYPE'];
+         $a_inventory['computer']['computertypes_id'] = $array['HARDWARE']['CHASSIS_TYPE'];
       } else  if (isset($array['BIOS']['TYPE'])) {
-         $a_inventory['BIOS']['TYPE'] = $array['BIOS']['TYPE'];
+         $a_inventory['computer']['computertypes_id'] = $array['BIOS']['TYPE'];
       } else if (isset($array['BIOS']['MMODEL'])) {
-         $a_inventory['BIOS']['TYPE'] = $array['BIOS']['MMODEL'];
+         $a_inventory['computer']['computertypes_id'] = $array['BIOS']['MMODEL'];
       }
       
       if (isset($array['BIOS']['SKUNUMBER'])) {
@@ -154,7 +183,6 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * CONTROLLERS
-      $thisc = new self();
       foreach ($array['CONTROLLERS'] as $a_controllers) {
          $a_inventory['CONTROLLERS'][] = $thisc->addValues($a_controllers, 
                                                            array(
@@ -175,7 +203,7 @@ class PluginFusioninventoryFormatconvert {
          } else if (isset($a_cpus['TYPE'])) {
             $array_tmp['designation'] = $a_cpus['TYPE'];
          }
-         $a_inventory['CPUS'][] = $array_tmp;
+         $a_inventory['processor'][] = $array_tmp;
       }
 
       // * DRIVES
@@ -220,29 +248,16 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['DRIVES'][] = $array_tmp;
          }
       }
-
-      // * HARDWARE
-      $array_tmp = $thisc->addValues($array, 
-                                     array( 
-                                        'NAME' => 'name',
-                                        'OSNAME' => 'operatingsystem',
-                                        'OSVERSION' => 'operatingsystemversion',
-                                        'WINPRODID' => 'os_licenseid',
-                                        'WINPRODKEY' => 'os_license_number',
-                                        'WORKGROUP' => 'domain',
-                                        'UUID' => 'uuid',
-                                        'DESCRIPTION' => 'comment'));
-      if (isset($array_tmp['operatingsystem_installationdate'])) {
-         $array_tmp['operatingsystem_installationdate'] = date("Y-m-d", $array_tmp['operatingsystem_installationdate']);
-      }
-      $a_inventory['computer'] = $array_tmp;
       
-      $array_tmp = $thisc->addValues($array, 
+      // * OPERATINGSYSTEM
+      $array_tmp = $thisc->addValues($array['OPERATINGSYSTEM'], 
                                      array( 
-                                        'OSINSTALLDATE' => 'operatingsystem_installationdate',
-                                        'WINOWNER' => 'winowner',
-                                        'WINCOMPANY' => 'wincompany'));
-      $a_inventory['fusioninventorycomputer'] = $array_tmp;
+                                        'FULL_NAME'      => 'operatingsystems_id',
+                                        'KERNEL_VERSION' => 'operatingsystemversions_id',
+                                        'SERVICE_PACK'   => 'operatingsystemservicepacks_id'));
+      foreach ($array_tmp as $key=>$value) {
+         $a_inventory['fusioninventorycomputer'][$key] = $value;
+      }
       
       // * MEMORIES
       foreach ($array['MEMORIES'] as $a_memories) {
@@ -293,36 +308,100 @@ class PluginFusioninventoryFormatconvert {
             $array_tmp = $thisc->addValues($a_networks, 
                                            array( 
                                               'DESCRIPTION' => 'name', 
-                                              'MACADDR' => 'mac', 
-                                              'TYPE' => 'instantiation_type',
-                                              'IPADDRESS' => 'ip',
-                                              'IPADDRESS6' => 'ip'));
+                                              'MACADDR'     => 'mac', 
+                                              'TYPE'        => 'instantiation_type',
+                                              'IPADDRESS'   => 'ip',
+                                              'IPADDRESS6'  => 'ip',
+                                              'VIRTUALDEV'  => 'virtualdev',
+                                              'IPSUBNET'    => 'subnet'));
             if (isset($a_networknames[$array_tmp['name']])) {
-               $a_networknames[$array_tmp['name']]['ipaddress'][] = $array_tmp['ip'];
+               if (isset($array_tmp['ip'])) {
+                  $a_networknames[$array_tmp['name']]['ipaddress'][] = $array_tmp['ip'];
+               }
             } else {
-               $array_tmp['ipaddress'] = array($array_tmp['ip']);
-               unset($array_tmp['ip']);
+               if (isset($array_tmp['ip'])) {
+                  $array_tmp['ipaddress'] = array($array_tmp['ip']);
+                  unset($array_tmp['ip']);
+               }
                $a_networknames[$array_tmp['name']] = $array_tmp;
             }
          }
       }
-      $a_inventory['networkport'] = $a_networknames;
-      
-      // * OPERATINGSYSTEM
-      
-      // * PORTS
+      $a_inventory['networkports'] = $a_networknames;
       
       // * SLOTS
       
       // * SOFTWARES
+      if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
+              "import_software", 'inventory') != '0') {
+         
+         $rulecollection = new RuleDictionnarySoftwareCollection();
+         foreach ($array['SOFTWARES'] as $a_softwares) {
+            $array_tmp = $thisc->addValues($a_softwares, 
+                                           array( 
+                                              'PUBLISHER'   => 'manufacturer', 
+                                              'NAME'        => 'name', 
+                                              'VERSION'     => 'version'));
+            if (isset($array_tmp['manufacturer'])) {
+               $array_tmp['manufacturer'] = Manufacturer::processName($array_tmp['manufacturer']);
+            } else {
+               $array_tmp['manufacturer'] = '';
+            }
+            $res_rule = $rulecollection->processAllRules(array(
+                                                            "name"         => $array_tmp['name'],
+                                                            "manufacturer" => $array_tmp['manufacturer'],
+                                                            "old_version"  => $array_tmp['version']));
+            if (isset($res_rule['_ignore_ocs_import']) AND $res_rule['_ignore_ocs_import'] == "1") {
+
+            } else {
+               if (isset($res_rule["name"])) {
+                  $array_tmp['name'] = $res_rule["name"];
+               }
+               if (isset($res_rule["version"]) && $res_rule["version"]!= '') {
+                  $array_tmp['version'] = $res_rule["version"];
+               }
+               if (isset($res_rule["manufacturer"])  && $res_rule["manufacturer"]) {
+                  $array_tmp['manufacturer'] = Dropdown::getDropdownName("glpi_manufacturers", $res_rule["manufacturer"]);
+               }
+               if (isset($res_rule['new_entities_id'])) {
+                  $array_tmp['entities_id'] = $res_rule['new_entities_id'];
+               }
+               $a_inventory['softwares'][] = $array_tmp;
+            }
+         }         
+      }
       
       // * SOUNDS
       
       // * STORAGES
       
       // * USERS
+      foreach ($array['USERS'] as $a_users) {
+         $array_tmp = $thisc->addValues($a_users, 
+                                        array( 
+                                           'LOGIN' => 'login', 
+                                           'DOMAIN' => 'domain'));
+         $user = '';
+         if (isset($array_tmp['login'])) {
+            $user = $array_tmp['login'];
+            if (isset($array_tmp['domain'])) {
+               $user .= "@".$array_tmp['domain'];
+            }
+         }
+         if ($user != '') {
+            if (isset($a_inventory['computer']['contact'])) {
+               if ($a_inventory['computer']['contact'] == '') {
+                  $a_inventory['computer']['contact'] = $user;
+               } else {
+                  $a_inventory['computer']['contact'] .= "/".$user;
+               }
+            } else {
+               $a_inventory['computer']['contact'] = $user;
+            }
+         }
+      }
       
-      // * VIDDEOS
+      // * VIDEOS
       
       
       // * VIRTUALMACHINES
@@ -332,13 +411,13 @@ class PluginFusioninventoryFormatconvert {
           foreach ($array['VIRTUALMACHINES'] as $a_virtualmachines) {
             $a_inventory['virtualmachines'][] = $thisc->addValues($a_virtualmachines, 
                                            array( 
-                                              'NAME' => 'name', 
-                                              'VCPU' => 'vcpu', 
-                                              'MEMORY' => 'ram', 
-                                              'VMTYPE' => 'virtualmachinetypes', 
-                                              'SUBSYSTEM' => 'virtualmachinesystems', 
-                                              'STATUS' => 'virtualmachinestates', 
-                                              'UUID' => 'uuid'));
+                                              'NAME'        => 'name', 
+                                              'VCPU'        => 'vcpu', 
+                                              'MEMORY'      => 'ram', 
+                                              'VMTYPE'      => 'virtualmachinetypes_id', 
+                                              'SUBSYSTEM'   => 'virtualmachinesystems_id', 
+                                              'STATUS'      => 'virtualmachinestates_id', 
+                                              'UUID'        => 'uuid'));
          }
       }
       
@@ -360,6 +439,84 @@ class PluginFusioninventoryFormatconvert {
          }
       }
       return $a_return;
+   }
+   
+   
+   
+   static function computerReplaceids($array) {
+      foreach ($array as $key=>$value) {
+         if (is_array($value)) {
+            $array[$key] = PluginFusioninventoryFormatconvert::computerReplaceids($value);
+         } else {
+            if (strstr($key, "s_id")) {
+               switch ($key) {
+                  
+                  case 'manufacturers_id':
+                     $value = Dropdown::importExternal('Manufacturer',
+                                                       $value,
+                                                       $_SESSION["plugin_fusinvinventory_entity"]);
+                     break;
+                  
+                  case 'computermodels_id':
+                     $value = Dropdown::importExternal('ComputerModel',
+                                                       $value,
+                                                       $_SESSION["plugin_fusinvinventory_entity"]);
+                     break;
+                  
+                  case 'computertypes_id':
+                     $value = Dropdown::importExternal('ComputerType',
+                                                       $value,
+                                                       $_SESSION["plugin_fusinvinventory_entity"]);
+                     break;
+                  
+                  case 'domains_id':
+                     $value = Dropdown::importExternal('Domain',
+                                                       $value,
+                                                       $_SESSION["plugin_fusinvinventory_entity"]);
+                     break;
+                  
+                  case 'operatingsystems_id':
+                     $value = Dropdown::importExternal('OperatingSystem',
+                                                       $value,
+                                                       $_SESSION["plugin_fusinvinventory_entity"]);
+                     break;
+                  
+                  case 'operatingsystemversions_id':
+                     $value = Dropdown::importExternal('OperatingSystemVersion',
+                                                       $value,
+                                                       $_SESSION["plugin_fusinvinventory_entity"]);
+                     break;
+                  
+                  case 'operatingsystemservicepacks_id':
+                     $value = Dropdown::importExternal('OperatingSystemServicePack',
+                                                       $value,
+                                                       $_SESSION["plugin_fusinvinventory_entity"]);
+                     break;
+                  
+                  case 'virtualmachinetypes_id':
+                     $value = Dropdown::importExternal('VirtualMachineType',
+                                                       $value,
+                                                       $_SESSION["plugin_fusinvinventory_entity"]);
+                     break;
+                  
+                  case 'virtualmachinesystems_id':
+                     $value = Dropdown::importExternal('VirtualMachineSystem',
+                                                       $value,
+                                                       $_SESSION["plugin_fusinvinventory_entity"]);
+                     break;
+                  
+                  case 'virtualmachinestates_id':
+                     $value = Dropdown::importExternal('VirtualMachineState',
+                                                       $value,
+                                                       $_SESSION["plugin_fusinvinventory_entity"]);
+                     break;
+                  
+               }
+               $array[$key] = $value;
+            }
+         }
+      }
+      return $array;
    }
 }
 
