@@ -349,8 +349,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }            
          }
-         Toolbox::logInFile("NETWORKP", print_r($simplenetworkport, true));
-         Toolbox::logInFile("NETWORKP", print_r($db_networkport, true));
          foreach ($simplenetworkport as $key => $arrays) {
             foreach ($db_networkport as $keydb => $arraydb) {
                if ($arrays == $arraydb) {
