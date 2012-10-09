@@ -548,83 +548,37 @@ class PluginFusioninventoryFormatconvert {
          if (is_array($value)) {
             $array[$key] = PluginFusioninventoryFormatconvert::computerReplaceids($value);
          } else {
-            if (strstr($key, "s_id")) {
-               if ($value == '') {
-                  $value = 0;
-               } else {
-                  switch ($key) {
-
-                     case 'manufacturers_id':
-                        $value = Dropdown::importExternal('Manufacturer',
-                                                          $value,
-                                                          $_SESSION["plugin_fusinvinventory_entity"]);
-                        break;
-
-                     case 'computermodels_id':
-                        $value = Dropdown::importExternal('ComputerModel',
-                                                          $value,
-                                                          $_SESSION["plugin_fusinvinventory_entity"]);
-                        break;
-
-                     case 'computertypes_id':
-                        $value = Dropdown::importExternal('ComputerType',
-                                                          $value,
-                                                          $_SESSION["plugin_fusinvinventory_entity"]);
-                        break;
-
-                     case 'domains_id':
-                        $value = Dropdown::importExternal('Domain',
-                                                          $value,
-                                                          $_SESSION["plugin_fusinvinventory_entity"]);
-                        break;
-
-                     case 'operatingsystems_id':
-                        $value = Dropdown::importExternal('OperatingSystem',
-                                                          $value,
-                                                          $_SESSION["plugin_fusinvinventory_entity"]);
-                        break;
-
-                     case 'operatingsystemversions_id':
-                        $value = Dropdown::importExternal('OperatingSystemVersion',
-                                                          $value,
-                                                          $_SESSION["plugin_fusinvinventory_entity"]);
-                        break;
-
-                     case 'operatingsystemservicepacks_id':
-                        $value = Dropdown::importExternal('OperatingSystemServicePack',
-                                                          $value,
-                                                          $_SESSION["plugin_fusinvinventory_entity"]);
-                        break;
-
-                     case 'virtualmachinetypes_id':
-                        $value = Dropdown::importExternal('VirtualMachineType',
-                                                          $value,
-                                                          $_SESSION["plugin_fusinvinventory_entity"]);
-                        break;
-
-                     case 'virtualmachinesystems_id':
-                        $value = Dropdown::importExternal('VirtualMachineSystem',
-                                                          $value,
-                                                          $_SESSION["plugin_fusinvinventory_entity"]);
-                        break;
-
-                     case 'virtualmachinestates_id':
-                        $value = Dropdown::importExternal('VirtualMachineState',
-                                                          $value,
-                                                          $_SESSION["plugin_fusinvinventory_entity"]);
-                        break;
-
-                     case 'filesystems_id':
-                        $value = Dropdown::importExternal('Filesystem',
-                                                          $value,
-                                                          $_SESSION["plugin_fusinvinventory_entity"]);
-                        break;
-
-                  }
-               }
-               $array[$key] = $value;
+            $itemtype = '';
+            if ($key == 'manufacturers_id') {
+               $itemtype = 'Manufacturer';
+            } else if ($key == 'computermodels_id') {
+               $itemtype = 'ComputerModel';
+            } else if ($key == 'computertypes_id') {
+               $itemtype = 'ComputerType';
+            } else if ($key == 'domains_id') {
+               $itemtype = 'Domain';
+            } else if ($key == 'operatingsystems_id') {
+               $itemtype = 'OperatingSystem';
+            } else if ($key == 'operatingsystemversions_id') {
+               $itemtype = 'OperatingSystemVersion';
+            } else if ($key == 'operatingsystemservicepacks_id') {
+               $itemtype = 'OperatingSystemServicePack';
+            } else if ($key == 'virtualmachinetypes_id') {
+               $itemtype = 'VirtualMachineType';
+            } else if ($key == 'virtualmachinesystems_id') {
+               $itemtype = 'VirtualMachineSystem';
+            } else if ($key == 'virtualmachinestates_id') {
+               $itemtype = 'VirtualMachineState';
+            } else if ($key == 'filesystems_id') {
+               $itemtype = 'Filesystem';
             } else if ($key == "manufacturer") {               
-               $array['manufacturers_id']= Dropdown::importExternal('Manufacturer', $value);
+               $array['manufacturers_id']= Dropdown::importExternal('Manufacturer',
+                                                                    $value);
+            }
+            if ($itemtype != '') {
+               $value = Dropdown::importExternal($itemtype,
+                                                 $value);
+               $array[$key] = $value;  
             }
          }
       }

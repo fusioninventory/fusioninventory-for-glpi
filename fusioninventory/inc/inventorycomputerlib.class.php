@@ -187,7 +187,65 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
          
       // * Virtualmachines
-         
+         $db_computervirtualmachine = array();
+         $query = "SELECT `id`, `name`, `uuid`, `virtualmachinesystems_id` FROM `glpi_computervirtualmachines`
+             WHERE `computers_id` = '$items_id'";
+         $result = $DB->query($query);         
+         while ($data = $DB->fetch_assoc($result)) {
+            $idtmp = $data['id'];
+            unset($data['id']);
+            $db_computervirtualmachine[$idtmp] = $data;
+         }
+         $simplecomputervirtualmachine = array();
+         foreach ($a_computerinventory['virtualmachine'] as $key=>$a_computervirtualmachine) {
+            $a_field = array('name', 'uuid', 'virtualmachinesystems_id');
+            foreach ($a_field as $field) {
+               if (isset($a_computervirtualmachine[$field])) {
+                  $simplecomputervirtualmachine[$key][$field] = $a_computervirtualmachine[$field];
+               }
+            }            
+         }
+         foreach ($simplecomputervirtualmachine as $key => $arrays) {
+            foreach ($db_computervirtualmachine as $keydb => $arraydb) {
+               if ($arrays == $arraydb) {
+                  $input['id'] = $keydb;
+                  if (isset($a_computerinventory['virtualmachine'][$key]['vcpu'])) {
+                     $input['vcpu'] = $a_computerinventory['virtualmachine'][$key]['vcpu'];
+                  }
+                  if (isset($a_computerinventory['virtualmachine'][$key]['ram'])) {
+                     $input['ram'] = $a_computerinventory['virtualmachine'][$key]['ram'];
+                  }
+                  if (isset($a_computerinventory['virtualmachine'][$key]['virtualmachinetypes_id'])) {
+                     $input['virtualmachinetypes_id'] = $a_computerinventory['virtualmachine'][$key]['virtualmachinetypes_id'];
+                  }
+                  if (isset($a_computerinventory['virtualmachine'][$key]['virtualmachinestates_id'])) {
+                     $input['virtualmachinestates_id'] = $a_computerinventory['virtualmachine'][$key]['virtualmachinestates_id'];
+                  }
+                  $computerVirtualmachine->update($input);
+                  unset($simplecomputervirtualmachine[$key]);
+                  unset($a_computerinventory['virtualmachine'][$key]);
+                  unset($db_computervirtualmachine[$keydb]);
+                  break;
+               }
+            }
+         }
+         if (count($a_computerinventory['virtualmachine']) == 0
+            AND count($db_computervirtualmachine) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_computervirtualmachine) != 0) {
+               // Delete softwares in DB
+               foreach ($db_computervirtualmachine as $idtmp => $data) {
+                  $computerVirtualmachine->delete(array('id'=>$idtmp));
+               }
+            }
+            if (count($a_computerinventory['virtualmachine']) != 0) {
+               foreach($a_computerinventory['virtualmachine'] as $a_virtualmachine) {
+                  $a_virtualmachine['computers_id'] = $items_id;
+                  $computerVirtualmachine->add($a_virtualmachine);
+               }
+            }
+         }
          
       // * ComputerDisk
          $db_computerdisk = array();
@@ -365,15 +423,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             unset($db_computer[$field]);
          }
       }
-      foreach($db_computer as $key => $value) {
-         if (!isset($datainventory[$value])) {
-            if (strstr($value, "s_id")) {
-               $datainventory[$value] = 0;
-            } else {
-               $datainventory[$value] = '';
-            }
-         }
-      }
       return array($datainventory, $db_computer);
    }
    
@@ -383,7 +432,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       $a_return = array();
       foreach ($array1 as $key=>$value) {
-         $key2 = '';
+         $key2 = false;
          $key2 = array_search($value, $array2, true);
          if ($key2) {
             unset($array2[$key2]);
