@@ -2172,9 +2172,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
    /*
-    * Table glpi_plugin_fusioninventory_inventorycomputerantivirus
+    * Table glpi_plugin_fusioninventory_inventorycomputerantiviruses
     */
-      $newTable = "glpi_plugin_fusioninventory_inventorycomputerantivirus";
+      $newTable = "glpi_plugin_fusioninventory_inventorycomputerantiviruses";
       $migration->renameTable("glpi_plugin_fusinvinventory_antivirus", $newTable);
       if (!TableExists($newTable)) {
          $DB->query("CREATE TABLE `".$newTable."` (

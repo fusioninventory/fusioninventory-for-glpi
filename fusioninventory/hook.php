@@ -54,25 +54,25 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5150]['datatype']  = 'datetime';
          $sopt[5150]['itemlink_type'] = 'PluginFusioninventoryInventoryComputerLib';
 
-         $sopt[5151]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantivirus';
+         $sopt[5151]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5151]['field']     = 'name';
          $sopt[5151]['linkfield'] = '';
          $sopt[5151]['name']      = 'Antivirus name';
          $sopt[5151]['datatype']  = 'text';
 
-         $sopt[5152]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantivirus';
+         $sopt[5152]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5152]['field']     = 'version';
          $sopt[5152]['linkfield'] = '';
          $sopt[5152]['name']      = 'Antivirus version';
          $sopt[5152]['datatype']  = 'text';
 
-         $sopt[5153]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantivirus';
+         $sopt[5153]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5153]['field']     = 'is_active';
          $sopt[5153]['linkfield'] = '';
          $sopt[5153]['name']      = 'Antivirus activé';
          $sopt[5153]['datatype']  = 'bool';
 
-         $sopt[5154]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantivirus';
+         $sopt[5154]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5154]['field']     = 'uptodate';
          $sopt[5154]['linkfield'] = '';
          $sopt[5154]['name']      = 'Antivirus à jour';

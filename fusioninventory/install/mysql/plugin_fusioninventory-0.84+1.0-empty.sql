@@ -375,9 +375,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerblacklists` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerantivirus`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerantiviruses`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerantivirus` (
+CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerantiviruses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
