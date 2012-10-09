@@ -463,6 +463,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       $networkPort                  = new NetworkPort();
       $networkName                  = new NetworkName();
       $iPAddress                    = new IPAddress();
+      $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       
       $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
       
@@ -577,6 +578,13 @@ class PluginFusioninventoryInventoryComputerInventory {
             $input['name'] = $ip;
             $iPAddress->add($input);
          }
+      }
+      
+      // * Antivirus
+      foreach ($a_computerinventory['antivirus'] as $a_antivirus) {
+         $a_antivirus['computers_id'] = $computers_id;
+         $a_antivirus['_no_history'] = true;
+         $pfInventoryComputerAntivirus->add($a_antivirus);
       }
       
    }

@@ -139,38 +139,22 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
       $a_antivirus = $this->find("`computers_id`='".$items_id."'");
       $antivirusData = array();
-      if (count($a_antivirus) > 0) {
-         $antivirusData = current($a_antivirus);
-      }
-
+      
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
+      echo "<tr>";
+      echo "<th colspan='4'>".__('Antivirus');
 
-      if (count($antivirusData) == '0') {
-         echo "<tr>";
-         echo "<th>".__('Antivirus');
-
-         echo "</th>";
-         echo "</tr>";
-
+      echo "</th>";
+      echo "</tr>";
+      
+      foreach ($a_antivirus as $antivirusData) {
          echo "<tr class='tab_bg_1'>";
-         echo "<td align='center'><br/><strong>";
-         echo __('This computer is not a Windows XP and later or no antivirus is installed')."<br/>";
-         echo "</strong><br/></td>";
-         echo "</tr>";
-      } else {
-         echo "<tr>";
-         echo "<th colspan='4'>".__('Antivirus');
-
-         echo "</th>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
+         echo "<th width='15%'>";
          echo __('Name')."&nbsp;:";
-         echo "</td>";
-         echo "<td>";
+         echo "</th>";
+         echo "<th width='35%'>";
          echo $antivirusData['name'];
-         echo "</td>";
+         echo "</th>";
          echo "<td>";
          echo __('Active')."&nbsp;:";
          echo "</td>";
@@ -203,8 +187,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
          echo "</td>";
          echo "<td colspan='2'>";
          echo "</td>";
-         echo "</tr>";
-
+         echo "</tr>";     
       }
       echo "</table>";
       return true;

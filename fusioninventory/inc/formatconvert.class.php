@@ -60,48 +60,14 @@ class PluginFusioninventoryFormatconvert {
       }
       $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
       // Hack for some sections
-         if (isset($datainventory['CONTENT']['SOUNDS'])
-                 AND isset($datainventory['CONTENT']['SOUNDS']['NAME'])) {
-            $datainventory['CONTENT']['SOUNDS'] = array($datainventory['CONTENT']['SOUNDS']);
+         $a_fields = array('SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES', 'MEMORIES',
+                           'NETWORKS', 'SOFTWARE', 'USERS', 'VIRTUALMACHINES', 'ANTIVIRUS');
+         foreach ($a_fields as $field) {
+            if (isset($datainventory['CONTENT'][$field])
+                    AND !is_int(key($datainventory['CONTENT'][$field]))) {
+               $datainventory['CONTENT'][$field] = array($datainventory['CONTENT'][$field]);
+            }
          }
-         if (isset($datainventory['CONTENT']['VIDEOS'])
-                 AND isset($datainventory['CONTENT']['VIDEOS']['NAME'])) {
-            $datainventory['CONTENT']['VIDEOS'] = array($datainventory['CONTENT']['VIDEOS']);
-         }
-         if (isset($datainventory['CONTENT']['CONTROLLERS'])
-                 AND isset($datainventory['CONTENT']['CONTROLLERS']['NAME'])) {
-            $datainventory['CONTENT']['CONTROLLERS'] = array($datainventory['CONTENT']['CONTROLLERS']);
-         }
-         if (isset($datainventory['CONTENT']['CPUS'])
-                 AND isset($datainventory['CONTENT']['CPUS']['SPEED'])) {
-            $datainventory['CONTENT']['CPUS'] = array($datainventory['CONTENT']['CPUS']);
-         }
-         if (isset($datainventory['CONTENT']['DRIVES'])
-                 AND isset($datainventory['CONTENT']['DRIVES']['TOTAL'])) {
-            $datainventory['CONTENT']['DRIVES'] = array($datainventory['CONTENT']['DRIVES']);
-         }
-         if (isset($datainventory['CONTENT']['MEMORIES'])
-                 AND isset($datainventory['CONTENT']['MEMORIES']['SPEED'])) {
-            $datainventory['CONTENT']['MEMORIES'] = array($datainventory['CONTENT']['MEMORIES']);
-         }
-         if (isset($datainventory['CONTENT']['NETWORKS'])
-                 AND isset($datainventory['CONTENT']['NETWORKS']['DESCRIPTION'])) {
-            $datainventory['CONTENT']['NETWORKS'] = array($datainventory['CONTENT']['NETWORKS']);
-         }
-         if (isset($datainventory['CONTENT']['SOFTWARE'])
-                 AND isset($datainventory['CONTENT']['SOFTWARE']['NAME'])) {
-            $datainventory['CONTENT']['SOFTWARE'] = array($datainventory['CONTENT']['SOFTWARE']);
-         }
-         if (isset($datainventory['CONTENT']['USERS'])
-                 AND isset($datainventory['CONTENT']['USERS']['LOGIN'])) {
-            $datainventory['CONTENT']['USERS'] = array($datainventory['CONTENT']['USERS']);
-         }
-         if (isset($datainventory['CONTENT']['VIRTUALMACHINES'])
-                 AND isset($datainventory['CONTENT']['VIRTUALMACHINES']['NAME'])) {
-            $datainventory['CONTENT']['VIRTUALMACHINES'] = array($datainventory['CONTENT']['VIRTUALMACHINES']);
-         }
-      
-      
       return $datainventory;
    }
    
@@ -119,7 +85,11 @@ class PluginFusioninventoryFormatconvert {
    static function cleanArray($data) {
       foreach ($data as $key=>$value) {
          if (is_array($value)) {
-            $value = PluginFusioninventoryFormatconvert::cleanArray($value);
+            if (count($value) == 0) {
+               $value = '';
+            } else {
+               $value = PluginFusioninventoryFormatconvert::cleanArray($value);
+            }
          } else {
             $value = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value));
          }
@@ -520,9 +490,21 @@ class PluginFusioninventoryFormatconvert {
          }
       }
       
-      
-      
-      
+      // * ANTIVIRUS
+      if (isset($array['ANTIVIRUS'])) {
+         foreach ($array['ANTIVIRUS'] as $a_antiviruses) {
+            $a_inventory['antivirus'][] = $thisc->addValues($a_antiviruses, 
+                                                          array( 
+                                                             'NAME'     => 'name', 
+                                                             'COMPANY'  => 'manufacturers_id', 
+                                                             'VERSION'  => 'version',
+                                                             'ENABLED'  => 'is_active',
+                                                             'UPTODATE' => 'uptodate'));
+         }
+      }
+      if (!isset($a_inventory['antivirus'])) {
+         $a_inventory['antivirus'] = array();
+      }
       
       return $a_inventory;
    }
