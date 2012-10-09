@@ -115,9 +115,6 @@ class PluginFusioninventoryFormatconvert {
                                         'UUID'           => 'uuid',
                                         'DESCRIPTION'    => 'comment',
                                         'LASTLOGGEDUSER' => 'users_id'));
-      if (isset($array_tmp['operatingsystem_installationdate'])) {
-         $array_tmp['operatingsystem_installationdate'] = date("Y-m-d", $array_tmp['operatingsystem_installationdate']);
-      }
       if (isset($array_tmp['users_id'])) {
          $query = "SELECT `id`
                    FROM `glpi_users`
@@ -139,6 +136,10 @@ class PluginFusioninventoryFormatconvert {
                                         'WINOWNER' => 'winowner',
                                         'WINCOMPANY' => 'wincompany'));
       $a_inventory['fusioninventorycomputer'] = $array_tmp;
+      if (isset($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
+         $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] 
+                  = date("Y-m-d", $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate']);
+      }
       
       // * BIOS
       if (isset($array['BIOS'])) {
@@ -569,6 +570,8 @@ class PluginFusioninventoryFormatconvert {
                                     
                }
                $array[$key] = $value;
+            } else if ($key == "manufacturer") {               
+               $array['manufacturers_id']= Dropdown::importExternal('Manufacturer', $value);
             }
          }
       }

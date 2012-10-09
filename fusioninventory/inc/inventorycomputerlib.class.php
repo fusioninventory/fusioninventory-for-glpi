@@ -48,6 +48,308 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
    var $table = "glpi_plugin_fusioninventory_inventorycomputerlibserialization";
 
+   
+   
+   function updateComputer($a_computerinventory, $items_id) {
+      global $DB;
+      
+      $computer                     = new Computer();
+      $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();
+      $item_DeviceProcessor         = new Item_DeviceProcessor();
+      $deviceProcessor              = new DeviceProcessor();
+      $item_DeviceMemory            = new Item_DeviceMemory();
+      $deviceMemory                 = new DeviceMemory();
+      $Software                     = new Software();
+      $softwareVersion              = new SoftwareVersion();
+      $computer_SoftwareVersion     = new Computer_SoftwareVersion();
+      $computerVirtualmachine       = new ComputerVirtualMachine();
+      $computerDisk                 = new ComputerDisk();
+      $item_DeviceControl           = new Item_DeviceControl();
+      $deviceControl                = new DeviceControl();
+      $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
+      $deviceGraphicCard            = new DeviceGraphicCard();
+      $item_DeviceSoundCard         = new Item_DeviceSoundCard();
+      $deviceSoundCard              = new DeviceSoundCard();
+      $networkPort                  = new NetworkPort();
+      $networkName                  = new NetworkName();
+      $iPAddress                    = new IPAddress();
+      
+      $computer->getFromDB($items_id);
+      
+      $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
+      
+      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $items_id);
+      
+      // * Computer
+         $db_computer = array();
+         $a_field = array('name', 'operatingsystems_id', 'operatingsystemversions_id',  'os_licenseid',
+                        'os_license_number', 'domains_id', 'uuid',  'comment', 'users_id', 'contact',
+                        'manufacturers_id', 'computermodels_id', 'serial', 'computertypes_id');
+         foreach ($a_field as $field) {
+            $db_computer[$field] = $computer->fields[$field];
+         }
+         $a_ret = $this->checkLock($a_computerinventory['computer'], $db_computer, $a_lockable);
+         $a_computerinventory['computer'] = $a_ret[0];
+         $db_computer = $a_ret[1];
+         $input = $this->diffArray($a_computerinventory['computer'], $db_computer);
+         $input['id'] = $items_id;
+         $computer->update($input);
+      
+      // * Computer fusion (ext)
+         $db_computer = array();
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputercomputers`
+             WHERE `computers_id` = '$items_id'";
+         $result = $DB->query($query);         
+         while ($data = $DB->fetch_assoc($result)) {
+            $db_computer = $data;
+         }
+         if (count($db_computer) == '0') { // Add
+            $a_computerinventory['fusioninventorycomputer']['computers_id'] = $items_id;
+            $pfInventoryComputerComputer->add($a_computerinventory['fusioninventorycomputer']);
+         } else { // Update
+            $idtmp = $db_computer['id'];
+            unset($db_computer['id']);
+            unset($db_computer['computers_id']);
+            $a_ret = $this->checkLock($a_computerinventory['fusioninventorycomputer'], $db_computer);
+            $a_computerinventory['fusioninventorycomputer'] = $a_ret[0];
+            $db_computer = $a_ret[1];
+            $input = $this->diffArray($a_computerinventory['fusioninventorycomputer'], $db_computer);
+            $input['id'] = $idtmp;
+            $pfInventoryComputerComputer->update($input);
+         }
+         
+         
+      // * Processors
+         
+      // * Memories
+         
+      // * Graphiccard
+         
+      // * Sound
+         
+      // * Controllers
+         
+      // * Software
+         $a_softwares = array();
+         $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
+                    `glpi_softwares`.`name`,
+                    `glpi_softwareversions`.`name` AS version,
+                    `glpi_softwares`.`manufacturers_id`
+             FROM `glpi_computers_softwareversions`
+             LEFT JOIN `glpi_softwareversions`
+                  ON (`glpi_computers_softwareversions`.`softwareversions_id`
+                        = `glpi_softwareversions`.`id`)
+             LEFT JOIN `glpi_softwares`
+                  ON (`glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`)
+             WHERE `glpi_computers_softwareversions`.`computers_id` = '$items_id'";
+         $result = $DB->query($query);
+         while ($db_software = $DB->fetch_assoc($result)) {
+            $idtmp = $db_software['sid'];
+            unset($db_software['sid']);
+            $a_softwares[$idtmp] = $db_software;
+         }
+         foreach ($a_computerinventory['software'] as $key => $arrays) {
+            unset($arrays['manufacturer']);
+            foreach ($a_softwares as $keydb => $arraydb) {
+               if ($arrays == $arraydb) {
+                  unset($a_computerinventory['software'][$key]);
+                  unset($a_softwares[$keydb]);
+                  break;
+               }
+            }
+         }
+         if (count($a_computerinventory['software']) == 0
+            AND count($a_softwares) == 0) {
+            // Nothing to do
+         } else {
+            if (count($a_softwares) != 0) {
+               // Delete softwares in DB
+               foreach ($a_softwares as $idtmp => $data) {
+                  $computer_SoftwareVersion->delete(array('id'=>$idtmp));
+               }
+            }
+            if (count($a_computerinventory['software']) != 0) {
+               foreach($a_computerinventory['software'] as $a_software) {
+                  if (!isset($a_software['entities_id'])) {
+                     $a_software['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                  }
+                  $softwares_id = $Software->addOrRestoreFromTrash($a_software['name'],
+                                                                  $a_software['manufacturer'],
+                                                                  $a_software['entities_id']);
+                  $a_software['softwares_id'] = $softwares_id;
+                  $a_software['name'] = $a_software['version'];
+                  $softwareversions_id = $softwareVersion->add($a_software);
+                  $a_software['computers_id'] = $items_id;
+                  $a_software['softwareversions_id'] = $softwareversions_id;
+                  $a_software['_no_history'] = true;
+                  $computer_SoftwareVersion->add($a_software);
+               }
+            }
+         }
+         
+      // * Virtualmachines
+         
+         
+      // * ComputerDisk
+         
+     
+      // * Networkports
+         $db_networkport = array();
+         $query = "SELECT `id`, `name`, `mac`, `instantiation_type` FROM `glpi_networkports`
+             WHERE `items_id` = '$items_id'
+               AND `itemtype`='Computer'";
+         $result = $DB->query($query);         
+         while ($data = $DB->fetch_assoc($result)) {
+            $idtmp = $data['id'];
+            unset($data['id']);
+            if (is_null($data['mac'])) {
+               unset($data['mac']);
+            }
+            $db_networkport[$idtmp] = $data;
+         }
+         $simplenetworkport = array();
+         foreach ($a_computerinventory['networkport'] as $key=>$a_networkport) {
+            $a_field = array('name', 'mac', 'instantiation_type');
+            foreach ($a_field as $field) {
+               if (isset($a_networkport[$field])) {
+                  $simplenetworkport[$key][$field] = $a_networkport[$field];
+               }
+            }            
+         }
+         foreach ($simplenetworkport as $key => $arrays) {
+            foreach ($db_networkport as $keydb => $arraydb) {
+               if ($arrays == $arraydb) {
+                  // Get networkname
+                  $a_networknames_find = current($networkName->find("`items_id`='".$keydb."'
+                                                             AND `itemtype`='NetworkPort'", "", 1));
+                  
+                  // Same networkport, verify ipaddresses
+                  $db_addresses = array();
+                  $query = "SELECT `id`, `name` FROM `glpi_ipaddresses`
+                      WHERE `items_id` = '".$a_networknames_find['id']."'
+                        AND `itemtype`='NetworkName'";
+                  $result = $DB->query($query);         
+                  while ($data = $DB->fetch_assoc($result)) {
+                     $db_addresses[$data['id']] = $data['name'];
+                  }
+                  $a_computerinventory_ipaddress = $a_computerinventory['networkport'][$key]['ipaddress'];
+                  foreach ($a_computerinventory_ipaddress as $key2 => $arrays2) {
+                     foreach ($db_addresses as $keydb2 => $arraydb2) {
+                        if ($arrays2 == $arraydb2) {
+                           unset($a_computerinventory_ipaddress[$key2]);
+                           unset($db_addresses[$keydb2]);
+                           break;
+                        }
+                     }
+                  }
+                  if (count($a_computerinventory_ipaddress) == 0
+                     AND count($db_addresses) == 0) {
+                     // Nothing to do
+                  } else {
+                     if (count($db_addresses) != 0) {
+                        // Delete softwares in DB                     
+                        foreach ($db_addresses as $idtmp => $name) {
+                           $iPAddress->delete(array('id'=>$idtmp));
+                        }
+                     }
+                     if (count($a_computerinventory_ipaddress) != 0) {
+                        foreach ($a_computerinventory_ipaddress as $ip) {
+                           $input = array();
+                           $input['items_id'] = $a_networknames_find['id'];
+                           $input['itemtype'] = 'NetworkName';
+                           $input['name'] = $ip;
+                           $iPAddress->add($input);
+                        }
+                     }
+                  }
+                  
+                  unset($db_networkport[$keydb]);
+                  unset($simplenetworkport[$key]);
+                  unset($a_computerinventory['networkport'][$key]);
+                  break;
+               }
+            }
+         }
+         
+         if (count($a_computerinventory['networkport']) == 0
+            AND count($db_networkport) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_networkport) != 0) {
+               // Delete softwares in DB
+               foreach ($db_networkport as $idtmp => $data) {
+                  $networkPort->delete(array('id'=>$idtmp));
+               }
+            }
+            if (count($a_computerinventory['networkport']) != 0) {
+               foreach ($a_computerinventory['networkport'] as $a_networkport) {
+                  $a_networkport['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                  $a_networkport['items_id'] = $items_id;
+                  $a_networkport['itemtype'] = "Computer";
+                  $a_networkport['_no_history'] = true;
+                  $a_networkport['items_id'] = $networkPort->add($a_networkport);
+                  $a_networkport['is_recursive'] = 0;
+                  $a_networkport['itemtype'] = 'NetworkPort';
+                  $a_networknames_id = $networkName->add($a_networkport);
+                  foreach ($a_networkport['ipaddress'] as $ip) {
+                     $input = array();
+                     $input['items_id'] = $a_networknames_id;
+                     $input['itemtype'] = 'NetworkName';
+                     $input['name'] = $ip;
+                     $iPAddress->add($input);
+                  }
+               }
+            }
+         }         
+      
+   }
+   
+   
+   
+   static function checkLock($datainventory, $db_computer, $a_lockable=array()) {
+      foreach($a_lockable as $field) {
+         if (isset($datainventory[$field])) {
+            unset($datainventory[$field]);
+         }
+         if (isset($db_computer[$field])) {
+            unset($db_computer[$field]);
+         }
+      }
+      foreach($db_computer as $key => $value) {
+         if (!isset($datainventory[$value])) {
+            if (strstr($value, "s_id")) {
+               $datainventory[$value] = 0;
+            } else {
+               $datainventory[$value] = '';
+            }
+         }
+      }
+      return array($datainventory, $db_computer);
+   }
+   
+   
+   
+   function diffArray($array1, $array2) {
+
+      $a_return = array();
+      foreach ($array1 as $key=>$value) {
+         $key2 = '';
+         $key2 = array_search($value, $array2, true);
+         if ($key2) {
+            unset($array2[$key2]);
+         } else {
+            $a_return[$key] = $value;
+         }
+      }
+      return $a_return;
+   }
+   
+   
+   
+   
+// ************************************************************************************ //
+// ******************************** old *********************************************** //
+// ************************************************************************************ //
 
    /**
    * Sarting create or update computer and get Entity
@@ -889,20 +1191,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
-   function diffArray($array1, $array2) {
 
-      $a_return = array();
-      foreach ($array1 as $key=>$value) {
-         $key2 = '';
-         $key2 = array_search($value, $array2, true);
-         if ($key2) {
-            unset($array2[$key2]);
-         } else {
-            $a_return[$key] = $value;
-         }
-      }
-      return $a_return;
-   }
 }
 
 ?>

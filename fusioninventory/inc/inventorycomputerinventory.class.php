@@ -305,8 +305,6 @@ class PluginFusioninventoryInventoryComputerInventory {
       $a_computerinventory = $this->arrayinventory;
 
       if ($itemtype == 'Computer') {
-         $pfLib = new PluginFusioninventoryInventoryComputerLib();
-         $Computer = new Computer();
          
          if ($items_id == '0') {
             if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
@@ -338,9 +336,10 @@ class PluginFusioninventoryInventoryComputerInventory {
 //               unset($_SESSION['plugin_fusioninventory_rules_id']);
 //            }
          } else {
-            $computer = new Computer();
-            $operatingSystem = new OperatingSystem();
-            $pfConfig = new PluginFusioninventoryConfig();
+            $computer   = new Computer();
+            $pfConfig   = new PluginFusioninventoryConfig();
+            $pfLib      = new PluginFusioninventoryInventoryComputerLib();
+            
             $computer->getFromDB($items_id);
             if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'transfers_id_auto', 'inventory') != '0') {
                if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {               
@@ -354,15 +353,19 @@ class PluginFusioninventoryInventoryComputerInventory {
             } else {
                $_SESSION["plugin_fusinvinventory_entity"] = $computer->fields['entities_id'];
             }
+            $_SESSION['glpiactiveentities'] = array($_SESSION["plugin_fusinvinventory_entity"]);
+            $_SESSION['glpiactiveentities_string'] = $_SESSION["plugin_fusinvinventory_entity"];
+            $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
+            
                         
             if ((isset($a_computerinventory['computer']['operatingsystems_id']))
-                    AND ($computer->fields['operatingsystems_id']
-                            != $operatingSystem->importExternal($a_computerinventory['computer']['operatingsystems_id'],
-                                                                $_SESSION["plugin_fusinvinventory_entity"]))) {
+                    AND ($computer->fields['operatingsystems_id'] != $a_computerinventory['computer']['operatingsystems_id'])) {
                $_SESSION["plugin_fusinvinventory_history_add"] = false;
                $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
             }
-            $pfLib->startAction($a_computerinventory, $items_id, '0');
+            $pfLib->updateComputer($a_computerinventory, $items_id);
+            
+//            $pfLib->startAction($a_computerinventory, $items_id, '0');
          }
       } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
          $class = new $itemtype();
@@ -440,7 +443,7 @@ class PluginFusioninventoryInventoryComputerInventory {
    
    function addNewComputer($a_computerinventory) {
       
-      $computer = new Computer();
+      $computer                     = new Computer();
       $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();
       $item_DeviceProcessor         = new Item_DeviceProcessor();
       $deviceProcessor              = new DeviceProcessor();
@@ -463,6 +466,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       
       $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
       
+      // * Computer
       $a_computerinventory['computer']['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
       if (isset($_SESSION['plugin_fusioninventory_locations_id'])) {
          $a_computerinventory['computer']["locations_id"] = $_SESSION['plugin_fusioninventory_locations_id'];
@@ -470,6 +474,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       $a_computerinventory['computer'] = self::addDefaultStateIfNeeded($a_computerinventory['computer'], false);
       $computers_id = $computer->add($a_computerinventory['computer'], array(), false);
       
+      // * Computer fusion (ext)
       $a_computerinventory['fusioninventorycomputer']['computers_id'] = $computers_id;
       $pfInventoryComputerComputer->add($a_computerinventory['fusioninventorycomputer'], array(), false);
       
