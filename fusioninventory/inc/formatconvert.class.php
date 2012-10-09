@@ -59,6 +59,49 @@ class PluginFusioninventoryFormatconvert {
          unset($datainventory['CONTENT']['PORTS']);
       }
       $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
+      // Hack for some sections
+         if (isset($datainventory['CONTENT']['SOUNDS'])
+                 AND isset($datainventory['CONTENT']['SOUNDS']['NAME'])) {
+            $datainventory['CONTENT']['SOUNDS'] = array($datainventory['CONTENT']['SOUNDS']);
+         }
+         if (isset($datainventory['CONTENT']['VIDEOS'])
+                 AND isset($datainventory['CONTENT']['VIDEOS']['NAME'])) {
+            $datainventory['CONTENT']['VIDEOS'] = array($datainventory['CONTENT']['VIDEOS']);
+         }
+         if (isset($datainventory['CONTENT']['CONTROLLERS'])
+                 AND isset($datainventory['CONTENT']['CONTROLLERS']['NAME'])) {
+            $datainventory['CONTENT']['CONTROLLERS'] = array($datainventory['CONTENT']['CONTROLLERS']);
+         }
+         if (isset($datainventory['CONTENT']['CPUS'])
+                 AND isset($datainventory['CONTENT']['CPUS']['SPEED'])) {
+            $datainventory['CONTENT']['CPUS'] = array($datainventory['CONTENT']['CPUS']);
+         }
+         if (isset($datainventory['CONTENT']['DRIVES'])
+                 AND isset($datainventory['CONTENT']['DRIVES']['TOTAL'])) {
+            $datainventory['CONTENT']['DRIVES'] = array($datainventory['CONTENT']['DRIVES']);
+         }
+         if (isset($datainventory['CONTENT']['MEMORIES'])
+                 AND isset($datainventory['CONTENT']['MEMORIES']['SPEED'])) {
+            $datainventory['CONTENT']['MEMORIES'] = array($datainventory['CONTENT']['MEMORIES']);
+         }
+         if (isset($datainventory['CONTENT']['NETWORKS'])
+                 AND isset($datainventory['CONTENT']['NETWORKS']['DESCRIPTION'])) {
+            $datainventory['CONTENT']['NETWORKS'] = array($datainventory['CONTENT']['NETWORKS']);
+         }
+         if (isset($datainventory['CONTENT']['SOFTWARE'])
+                 AND isset($datainventory['CONTENT']['SOFTWARE']['NAME'])) {
+            $datainventory['CONTENT']['SOFTWARE'] = array($datainventory['CONTENT']['SOFTWARE']);
+         }
+         if (isset($datainventory['CONTENT']['USERS'])
+                 AND isset($datainventory['CONTENT']['USERS']['LOGIN'])) {
+            $datainventory['CONTENT']['USERS'] = array($datainventory['CONTENT']['USERS']);
+         }
+         if (isset($datainventory['CONTENT']['VIRTUALMACHINES'])
+                 AND isset($datainventory['CONTENT']['VIRTUALMACHINES']['NAME'])) {
+            $datainventory['CONTENT']['VIRTUALMACHINES'] = array($datainventory['CONTENT']['VIRTUALMACHINES']);
+         }
+      
+      
       return $datainventory;
    }
    
@@ -269,7 +312,7 @@ class PluginFusioninventoryFormatconvert {
             $array_tmp = $thisc->addValues($a_drives, 
                                            array( 
                                               'VOLUMN' => 'device',                                               
-                                              'FILESYSTEM' => 'filesystem',
+                                              'FILESYSTEM' => 'filesystems_id',
                                               'TOTAL' => 'totalsize', 
                                               'FREE' => 'freesize'));
             if ((isset($a_drives['LABEL'])) AND (!empty($a_drives['LABEL']))) {
@@ -506,68 +549,78 @@ class PluginFusioninventoryFormatconvert {
             $array[$key] = PluginFusioninventoryFormatconvert::computerReplaceids($value);
          } else {
             if (strstr($key, "s_id")) {
-               switch ($key) {
-                  
-                  case 'manufacturers_id':
-                     $value = Dropdown::importExternal('Manufacturer',
-                                                       $value,
-                                                       $_SESSION["plugin_fusinvinventory_entity"]);
-                     break;
-                  
-                  case 'computermodels_id':
-                     $value = Dropdown::importExternal('ComputerModel',
-                                                       $value,
-                                                       $_SESSION["plugin_fusinvinventory_entity"]);
-                     break;
-                  
-                  case 'computertypes_id':
-                     $value = Dropdown::importExternal('ComputerType',
-                                                       $value,
-                                                       $_SESSION["plugin_fusinvinventory_entity"]);
-                     break;
-                  
-                  case 'domains_id':
-                     $value = Dropdown::importExternal('Domain',
-                                                       $value,
-                                                       $_SESSION["plugin_fusinvinventory_entity"]);
-                     break;
-                  
-                  case 'operatingsystems_id':
-                     $value = Dropdown::importExternal('OperatingSystem',
-                                                       $value,
-                                                       $_SESSION["plugin_fusinvinventory_entity"]);
-                     break;
-                  
-                  case 'operatingsystemversions_id':
-                     $value = Dropdown::importExternal('OperatingSystemVersion',
-                                                       $value,
-                                                       $_SESSION["plugin_fusinvinventory_entity"]);
-                     break;
-                  
-                  case 'operatingsystemservicepacks_id':
-                     $value = Dropdown::importExternal('OperatingSystemServicePack',
-                                                       $value,
-                                                       $_SESSION["plugin_fusinvinventory_entity"]);
-                     break;
-                  
-                  case 'virtualmachinetypes_id':
-                     $value = Dropdown::importExternal('VirtualMachineType',
-                                                       $value,
-                                                       $_SESSION["plugin_fusinvinventory_entity"]);
-                     break;
-                  
-                  case 'virtualmachinesystems_id':
-                     $value = Dropdown::importExternal('VirtualMachineSystem',
-                                                       $value,
-                                                       $_SESSION["plugin_fusinvinventory_entity"]);
-                     break;
-                  
-                  case 'virtualmachinestates_id':
-                     $value = Dropdown::importExternal('VirtualMachineState',
-                                                       $value,
-                                                       $_SESSION["plugin_fusinvinventory_entity"]);
-                     break;
-                                    
+               if ($value == '') {
+                  $value = 0;
+               } else {
+                  switch ($key) {
+
+                     case 'manufacturers_id':
+                        $value = Dropdown::importExternal('Manufacturer',
+                                                          $value,
+                                                          $_SESSION["plugin_fusinvinventory_entity"]);
+                        break;
+
+                     case 'computermodels_id':
+                        $value = Dropdown::importExternal('ComputerModel',
+                                                          $value,
+                                                          $_SESSION["plugin_fusinvinventory_entity"]);
+                        break;
+
+                     case 'computertypes_id':
+                        $value = Dropdown::importExternal('ComputerType',
+                                                          $value,
+                                                          $_SESSION["plugin_fusinvinventory_entity"]);
+                        break;
+
+                     case 'domains_id':
+                        $value = Dropdown::importExternal('Domain',
+                                                          $value,
+                                                          $_SESSION["plugin_fusinvinventory_entity"]);
+                        break;
+
+                     case 'operatingsystems_id':
+                        $value = Dropdown::importExternal('OperatingSystem',
+                                                          $value,
+                                                          $_SESSION["plugin_fusinvinventory_entity"]);
+                        break;
+
+                     case 'operatingsystemversions_id':
+                        $value = Dropdown::importExternal('OperatingSystemVersion',
+                                                          $value,
+                                                          $_SESSION["plugin_fusinvinventory_entity"]);
+                        break;
+
+                     case 'operatingsystemservicepacks_id':
+                        $value = Dropdown::importExternal('OperatingSystemServicePack',
+                                                          $value,
+                                                          $_SESSION["plugin_fusinvinventory_entity"]);
+                        break;
+
+                     case 'virtualmachinetypes_id':
+                        $value = Dropdown::importExternal('VirtualMachineType',
+                                                          $value,
+                                                          $_SESSION["plugin_fusinvinventory_entity"]);
+                        break;
+
+                     case 'virtualmachinesystems_id':
+                        $value = Dropdown::importExternal('VirtualMachineSystem',
+                                                          $value,
+                                                          $_SESSION["plugin_fusinvinventory_entity"]);
+                        break;
+
+                     case 'virtualmachinestates_id':
+                        $value = Dropdown::importExternal('VirtualMachineState',
+                                                          $value,
+                                                          $_SESSION["plugin_fusinvinventory_entity"]);
+                        break;
+
+                     case 'filesystems_id':
+                        $value = Dropdown::importExternal('Filesystem',
+                                                          $value,
+                                                          $_SESSION["plugin_fusinvinventory_entity"]);
+                        break;
+
+                  }
                }
                $array[$key] = $value;
             } else if ($key == "manufacturer") {               

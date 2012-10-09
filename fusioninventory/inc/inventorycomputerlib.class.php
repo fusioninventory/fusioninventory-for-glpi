@@ -181,7 +181,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $softwareversions_id = $softwareVersion->add($a_software);
                   $a_software['computers_id'] = $items_id;
                   $a_software['softwareversions_id'] = $softwareversions_id;
-                  $a_software['_no_history'] = true;
                   $computer_SoftwareVersion->add($a_software);
                }
             }
@@ -191,6 +190,58 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          
          
       // * ComputerDisk
+         $db_computerdisk = array();
+         $query = "SELECT `id`, `name`, `device`, `mountpoint` FROM `glpi_computerdisks`
+             WHERE `computers_id` = '$items_id'";
+         $result = $DB->query($query);         
+         while ($data = $DB->fetch_assoc($result)) {
+            $idtmp = $data['id'];
+            unset($data['id']);
+            $db_computerdisk[$idtmp] = $data;
+         }
+         $simplecomputerdisk = array();
+         foreach ($a_computerinventory['computerdisk'] as $key=>$a_computerdisk) {
+            $a_field = array('name', 'device', 'mountpoint');
+            foreach ($a_field as $field) {
+               if (isset($a_computerdisk[$field])) {
+                  $simplecomputerdisk[$key][$field] = $a_computerdisk[$field];
+               }
+            }            
+         }
+         foreach ($simplecomputerdisk as $key => $arrays) {
+            foreach ($db_computerdisk as $keydb => $arraydb) {
+               if ($arrays == $arraydb) {
+                  $input['id'] = $keydb;
+                  if (isset($a_computerinventory['computerdisk'][$key]['filesystems_id'])) {
+                     $input['filesystems_id'] = $a_computerinventory['computerdisk'][$key]['filesystems_id'];
+                  }
+                  $input['totalsize'] = $a_computerinventory['computerdisk'][$key]['totalsize'];                  
+                  $input['freesize'] = $a_computerinventory['computerdisk'][$key]['freesize'];
+                  $computerDisk->update($input);
+                  unset($simplecomputerdisk[$key]);
+                  unset($a_computerinventory['computerdisk'][$key]);
+                  unset($db_computerdisk[$keydb]);
+                  break;
+               }
+            }
+         }
+         if (count($a_computerinventory['computerdisk']) == 0
+            AND count($db_computerdisk) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_computerdisk) != 0) {
+               // Delete softwares in DB
+               foreach ($db_computerdisk as $idtmp => $data) {
+                  $computerDisk->delete(array('id'=>$idtmp));
+               }
+            }
+            if (count($a_computerinventory['computerdisk']) != 0) {
+               foreach($a_computerinventory['computerdisk'] as $a_computerdisk) {
+                  $a_computerdisk['computers_id'] = $items_id;
+                  $computerDisk->add($a_computerdisk);
+               }
+            }
+         }
          
      
       // * Networkports
@@ -286,7 +337,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $a_networkport['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
                   $a_networkport['items_id'] = $items_id;
                   $a_networkport['itemtype'] = "Computer";
-                  $a_networkport['_no_history'] = true;
                   $a_networkport['items_id'] = $networkPort->add($a_networkport);
                   $a_networkport['is_recursive'] = 0;
                   $a_networkport['itemtype'] = 'NetworkPort';
