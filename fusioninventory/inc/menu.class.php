@@ -181,12 +181,6 @@ class PluginFusioninventoryMenu {
          $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerblacklist.php";
       }
 
-      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "importxml","w")) {
-         $a_menu[3]['name'] = __('Data integrity check');
-
-         $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_checkintegrity.png";
-         $a_menu[3]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventorycomputerlibintegrity.php";
-      }
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu("Inventory", $a_menu, $type,
                                                              $width_status);
