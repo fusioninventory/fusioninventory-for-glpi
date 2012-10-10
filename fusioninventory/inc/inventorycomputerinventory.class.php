@@ -233,8 +233,9 @@ class PluginFusioninventoryInventoryComputerInventory {
             $dataEntity = array ();
             $dataEntity = $ruleEntity->processAllRules($inputent, array());
             if (isset($dataEntity['entities_id'])) {
-               $_SESSION['plugin_fusioninventory_entityrestrict'] = $dataEntity['entities_id'];
-               $input['entities_id'] = $dataEntity['entities_id'];
+               //$_SESSION['plugin_fusioninventory_entityrestrict'] = $dataEntity['entities_id'];
+               $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
+               //$input['entities_id'] = $dataEntity['entities_id'];
             }
             if (isset($dataEntity['locations_id'])) {
                $_SESSION['plugin_fusioninventory_locations_id'] = $dataEntity['locations_id'];

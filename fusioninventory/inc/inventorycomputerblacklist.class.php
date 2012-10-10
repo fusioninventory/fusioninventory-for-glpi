@@ -153,9 +153,6 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    *
    **/
    function cleanBlacklist($a_computerinventory) {
-      if (isset($a_computerinventory['computer']['serial'])) {
-         $a_computerinventory['computer']['serial'] = trim($a_computerinventory['computer']['serial']);
-      }
 
       $pfInventoryComputerCriteria = new PluginFusioninventoryInventoryComputerCriteria();
       $fields = $pfInventoryComputerCriteria->find("");

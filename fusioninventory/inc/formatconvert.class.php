@@ -173,13 +173,13 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['computer']['computermodels_id'] = $array['BIOS']['MMODEL'];            
          }
          if (isset($array['BIOS']['SSN'])) {
-            $a_inventory['computer']['serial'] = $array['BIOS']['SSN'];
+            $a_inventory['computer']['serial'] = trim($array['BIOS']['SSN']);
             // HP patch for serial begin with 'S'
             if ((isset($a_inventory['computer']['manufacturers_id']))
                   AND (strstr($a_inventory['computer']['manufacturers_id'], "ewlett"))) {
 
                if (preg_match("/^[sS]/", $a_inventory['BIOS']['SERIAL'])) {
-                  $a_inventory['computer']['serial'] = preg_replace("/^[sS]/", "", $a_inventory['BIOS']['SERIAL']);
+                  $a_inventory['computer']['serial'] = trim(preg_replace("/^[sS]/", "", $a_inventory['BIOS']['SERIAL']));
                }
             }
          }
