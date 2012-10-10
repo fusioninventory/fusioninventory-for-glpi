@@ -56,7 +56,6 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "configsecurity","w");
-   $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
    $new_ID = 0;
    $new_ID = $pfConfigSecurity->add($_POST);
    Html::back();

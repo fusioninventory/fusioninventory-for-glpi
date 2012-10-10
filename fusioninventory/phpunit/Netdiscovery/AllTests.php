@@ -87,7 +87,7 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
 
       $input = array();
       $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
-      $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusinvsnmp");
+      $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusioninventory");
       $input['method'] = 'netdiscovery';
       $input['definition'] = '[{"PluginFusioninventoryIPRange":"'.$ipranges_id.'"}]';
       $input['action'] = '[{"PluginFusioninventoryAgent":"'.$agents_id.'"}]';

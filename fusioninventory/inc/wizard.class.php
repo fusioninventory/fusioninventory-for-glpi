@@ -660,7 +660,7 @@ class PluginFusioninventoryWizard {
             $input['entities_id'] = $_SESSION['glpiactive_entity'];
             $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
             $input['name'] = 'wizard - netdiscovery - '.$pfIPRange->fields['name'];
-            $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusinvsnmp");
+            $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusioninventory");
             $input['method'] = 'netdiscovery';
             $input['definition'] = exportArrayToDB(array(array('PluginFusioninventoryIPRange' => $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])));
             $a_agentscan = $pfAgentmodule->getAgentsCanDo('NETDISCOVERY');
@@ -715,7 +715,7 @@ class PluginFusioninventoryWizard {
             $input['entities_id'] = $_SESSION['glpiactive_entity'];
             $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
             $input['name'] = 'wizard - netinventory - '.$pfIPRange->fields['name'];
-            $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusinvsnmp");
+            $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusioninventory");
             $input['method'] = 'snmpinventory';
             $input['definition'] = exportArrayToDB(array(array('PluginFusioninventoryIPRange' => $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])));
             $a_agentscan = $pfAgentmodule->getAgentsCanDo('SNMPINVENTORY');
@@ -770,7 +770,7 @@ class PluginFusioninventoryWizard {
             $input['entities_id'] = $_SESSION['glpiactive_entity'];
             $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
             $input['name'] = 'wizard - esx - '.$pfCredentialIp->fields['name'];
-            $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusinvinventory");
+            $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusioninventory");
             $input['method'] = 'ESX';
             $input['definition'] = exportArrayToDB(array(array('PluginFusioninventoryCredentialIp' => $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])));
             $a_agentscan = $pfAgentmodule->getAgentsCanDo('ESX');

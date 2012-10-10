@@ -966,7 +966,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             }
 
             // Import SNMP if enable
-            if (PluginFusioninventoryModule::getModuleId("fusinvsnmp")) {
+            if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
                $pfUnknownDevice = new PluginFusinvsnmpUnknownDevice();
                $pfUnknownDevice->import($items_id, $NetworkEquipment_id, 'NetworkEquipment');
             }

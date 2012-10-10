@@ -218,7 +218,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          // If transfer is disable, get entity and search only on this entity (see http://forge.fusioninventory.org/issues/1503)
          $pfConfig = new PluginFusioninventoryConfig();
-         $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
+         $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
          //if ($pfConfig->getValue($plugins_id, 'transfers_id_auto', 'inventory') == '0') {
             $inputent = $input;

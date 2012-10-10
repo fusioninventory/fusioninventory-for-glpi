@@ -155,7 +155,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
       $pfConfig = new PluginFusioninventoryConfig();
 
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
       if ($pfConfig->getValue($plugins_id, "storagesnmpauth") == "file") {
          $sopt[5191]['table'] = 'glpi_plugin_fusioninventory_printers';
@@ -204,7 +204,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
       $pfConfig = new PluginFusioninventoryConfig();
 
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvsnmp');
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
       $sopt[5191]['table']='glpi_plugin_fusioninventory_configsecurities';
       $sopt[5191]['field']='name';

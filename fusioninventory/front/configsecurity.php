@@ -50,11 +50,7 @@ Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninvento
 
 PluginFusioninventoryProfile::checkRight("fusioninventory", "configsecurity","r");
 
-$pfConfig = new PluginFusioninventoryConfig();
-
 PluginFusioninventoryMenu::displayMenu("mini");
-
-$plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
 $_GET['target']="configsecurity.php";
 

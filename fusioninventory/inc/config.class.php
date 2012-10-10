@@ -352,12 +352,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    static function showFormInventory($options=array()) {
 
       $pfConfig = new PluginFusioninventoryConfig();
-      $pfsnmpConfig = new self();
 
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
+      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
-      $pfsnmpConfig->fields['id'] = 1;
-      $pfsnmpConfig->showFormHeader($options);
+      $pfConfig->fields['id'] = 1;
+      $pfConfig->showFormHeader($options);
 
       echo "<tr>";
       echo "<th colspan='4'>".__('Import options');
@@ -370,16 +369,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo _n('Monitor', 'Monitors', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      $array = array();
-      $array[0] = __('No import');
+      $elements = array();
+      $elements[0] = __('No import');
+      $elements[1] = __('Global import');
+      $elements[2] = __('Unique import');
+      $elements[3] = __('Unique import on serial number');
 
-      $array[1] = __('Global import');
-
-      $array[2] = __('Unique import');
-
-      $array[3] = __('Unique import on serial number');
-
-      Dropdown::showFromArray("import_monitor", $array,
+      Dropdown::showFromArray("import_monitor", $elements,
                               array('value' =>
                                  $pfConfig->getValue($plugins_id, 'import_monitor', 'inventory')));
       echo "&nbsp;";
@@ -405,16 +401,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo _n('Printer', 'Printers', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      $array = array();
-      $array[0] = __('No import');
+      $elements = array();
+      $elements[0] = __('No import');
+      $elements[1] = __('Global import');
+      $elements[2] = __('Unique import');
+      $elements[3] = __('Unique import on serial number');
 
-      $array[1] = __('Global import');
-
-      $array[2] = __('Unique import');
-
-      $array[3] = __('Unique import on serial number');
-
-      Dropdown::showFromArray("import_printer", $array,
+      Dropdown::showFromArray("import_printer", $elements,
                               array('value' =>
                                  $pfConfig->getValue($plugins_id, 'import_printer', 'inventory')));
       echo "&nbsp;";
@@ -434,16 +427,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo _n('Device', 'Devices', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      $array = array();
-      $array[0] = __('No import');
-
-      $array[1] = __('Global import');
-
-      $array[2] = __('Unique import');
-
-      $array[3] = __('Unique import on serial number');
-
-      Dropdown::showFromArray("import_peripheral", $array,
+      $elements = array();
+      $elements[0] = __('No import');
+      $elements[1] = __('Global import');
+      $elements[2] = __('Unique import');
+      $elements[3] = __('Unique import on serial number');
+      Dropdown::showFromArray("import_peripheral", $elements,
                               array('value' =>
                                        $pfConfig->getValue($plugins_id, 'import_peripheral', 'inventory')));
       echo "&nbsp;";
@@ -558,7 +547,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showFromArray("location",
                               array("0"=>"------",
                                     "1"=>__('Tag')),
-
                               array('value'=>$pfConfig->getValue($plugins_id, 'location', 'inventory')));
 
       echo "</td>";
@@ -579,7 +567,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showFromArray("group",
                               array("0"=>"------",
                                     "1"=>__('Tag')),
-
                               array('value'=>$pfConfig->getValue($plugins_id, 'group', 'inventory')));
       echo "</td>";
       echo "<td>";
@@ -620,7 +607,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       $options['candel'] = false;
-      $pfsnmpConfig->showFormButtons($options);
+      $pfConfig->showFormButtons($options);
 
       return true;
    }

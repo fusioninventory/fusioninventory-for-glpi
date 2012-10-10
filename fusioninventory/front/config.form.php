@@ -52,10 +52,9 @@ Html::header(__('Features'), $_SERVER["PHP_SELF"],
 if (isset($_POST['update'])) {
    $pfConfig = new PluginFusioninventoryConfig();
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-   $plugins_inventory_id = PluginFusioninventoryModule::getModuleId('inventory');
    foreach ($_POST as $key => $value) {
       if (preg_match("/[component_|import_|transfers_id_auto|states_id_auto]/",$key)) {
-         $pfConfig->updateConfigType($plugins_inventory_id, $key, $value);
+         $pfConfig->updateConfigType($plugins_id, $key, $value);
       } else if ($key == 'ssl_only') {
          $pfConfig->updateValue($plugins_id, 'ssl_only', $_POST['ssl_only']);
       } else if ($key == 'inventory_frequence') {
