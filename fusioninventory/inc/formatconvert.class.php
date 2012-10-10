@@ -404,44 +404,9 @@ class PluginFusioninventoryFormatconvert {
       // * SOFTWARES
       if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
               "import_software", 'inventory') != '0') {
-         
-         $rulecollection = new RuleDictionnarySoftwareCollection();
-         foreach ($array['SOFTWARES'] as $a_softwares) {
-            $array_tmp = $thisc->addValues($a_softwares, 
-                                           array( 
-                                              'PUBLISHER'   => 'manufacturer', 
-                                              'NAME'        => 'name', 
-                                              'VERSION'     => 'version'));
-            if (isset($array_tmp['manufacturer'])) {
-               $array_tmp['manufacturer'] = Manufacturer::processName($array_tmp['manufacturer']);
-            } else {
-               $array_tmp['manufacturer'] = '';
-            }
-            $res_rule = $rulecollection->processAllRules(array(
-                                                            "name"         => $array_tmp['name'],
-                                                            "manufacturer" => $array_tmp['manufacturer'],
-                                                            "old_version"  => $array_tmp['version']));
-            if (isset($res_rule['_ignore_ocs_import']) AND $res_rule['_ignore_ocs_import'] == "1") {
-
-            } else {
-               if (isset($res_rule["name"])) {
-                  $array_tmp['name'] = $res_rule["name"];
-               }
-               if (isset($res_rule["version"]) && $res_rule["version"]!= '') {
-                  $array_tmp['version'] = $res_rule["version"];
-               }
-               if (isset($res_rule["manufacturer"])  && $res_rule["manufacturer"]) {
-                  $array_tmp['manufacturer'] = Dropdown::getDropdownName("glpi_manufacturers", $res_rule["manufacturer"]);
-               }
-               if (!isset($array_tmp['manufacturer'])) {
-                  $array_tmp['manufacturer'] = '';
-               }
-               if (isset($res_rule['new_entities_id'])) {
-                  $array_tmp['entities_id'] = $res_rule['new_entities_id'];
-               }
-               $a_inventory['software'][] = $array_tmp;
-            }
-         }         
+         $a_inventory['SOFTWARES'] = $array['SOFTWARES'];
+      } else {
+         $a_inventory['SOFTWARES'] = array();
       }
 
       
@@ -506,6 +471,65 @@ class PluginFusioninventoryFormatconvert {
          $a_inventory['antivirus'] = array();
       }
       
+      return $a_inventory;
+   }
+   
+   
+   
+   static function computerSoftwareTransformation($a_inventory) {
+      global $DB;
+      
+      $thisc = new self();
+      
+      $entities_id_software = $_SESSION["plugin_fusinvinventory_entity"];
+      $entities_id_software = Entity::getUsedConfig('entities_id_software', $_SESSION["plugin_fusinvinventory_entity"], '', true);
+      if ($entities_id_software < 0) {
+         $entities_id_software = $_SESSION["plugin_fusinvinventory_entity"];
+      }
+      
+      
+      $rulecollection = new RuleDictionnarySoftwareCollection();
+      foreach ($a_inventory['SOFTWARES'] as $a_softwares) {
+         $array_tmp = $thisc->addValues($a_softwares, 
+                                        array( 
+                                           'PUBLISHER'   => 'manufacturer', 
+                                           'NAME'        => 'name', 
+                                           'VERSION'     => 'version'));
+         if (isset($array_tmp['manufacturer'])) {
+            $array_tmp['manufacturer'] = Manufacturer::processName($array_tmp['manufacturer']);
+         } else {
+            $array_tmp['manufacturer'] = '';
+         }
+         $res_rule = $rulecollection->processAllRules(array(
+                                                         "name"         => $array_tmp['name'],
+                                                         "manufacturer" => $array_tmp['manufacturer'],
+                                                         "old_version"  => $array_tmp['version'],
+                                                         "entities_id"  => $entities_id_software));
+         if (isset($res_rule['_ignore_ocs_import']) AND $res_rule['_ignore_ocs_import'] == "1") {
+
+         } else {
+            if (isset($res_rule["name"])) {
+               $array_tmp['name'] = $res_rule["name"];
+            }
+            if (isset($res_rule["version"]) && $res_rule["version"]!= '') {
+               $array_tmp['version'] = $res_rule["version"];
+            }
+            if (isset($res_rule["manufacturer"])  && $res_rule["manufacturer"]) {
+               $array_tmp['manufacturer'] = Dropdown::getDropdownName("glpi_manufacturers", $res_rule["manufacturer"]);
+            }
+            if (!isset($array_tmp['manufacturer'])) {
+               $array_tmp['manufacturer'] = '';
+            }
+            if (isset($res_rule['new_entities_id'])) {
+               $array_tmp['entities_id'] = $res_rule['new_entities_id'];
+            }
+            if (!isset($array_tmp['entities_id'])) {
+               $array_tmp['entities_id'] = $entities_id_software;
+            }
+            $a_inventory['software'][] = $array_tmp;
+         }
+      } 
+      unset($a_inventory['SOFTWARES']);
       return $a_inventory;
    }
    

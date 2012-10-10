@@ -74,6 +74,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $networkName                  = new NetworkName();
       $iPAddress                    = new IPAddress();
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
+      $pfConfig                     = new PluginFusioninventoryConfig();
       
       $computer->getFromDB($items_id);
       
@@ -93,8 +94,20 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $a_computerinventory['computer'] = $a_ret[0];
          $db_computer = $a_ret[1];
          $input = $this->diffArray($a_computerinventory['computer'], $db_computer);
-         $input['id'] = $items_id;
+         $input['id'] = $items_id;         
+         if (isset($input['comment'])) {
+            unset($input['comment']);
+         }
          $computer->update($input);
+         
+         $input = $this->diffArray($a_computerinventory['computer'], $db_computer);
+         if (isset($input['comment'])) {
+            $inputcomment = array();
+            $inputcomment['comment'] = $input['comment'];
+            $inputcomment['id'] = $items_id; 
+            $inputcomment['_no_history'] = true;
+            $computer->update($input);
+         }
       
       // * Computer fusion (ext)
          $db_computer = array();
@@ -134,64 +147,65 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Controllers
          
       // * Software
-         $a_softwares = array();
-         $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
-                    `glpi_softwares`.`name`,
-                    `glpi_softwareversions`.`name` AS version,
-                    `glpi_softwares`.`manufacturers_id`
-             FROM `glpi_computers_softwareversions`
-             LEFT JOIN `glpi_softwareversions`
-                  ON (`glpi_computers_softwareversions`.`softwareversions_id`
-                        = `glpi_softwareversions`.`id`)
-             LEFT JOIN `glpi_softwares`
-                  ON (`glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`)
-             WHERE `glpi_computers_softwareversions`.`computers_id` = '$items_id'";
-         $result = $DB->query($query);
-         while ($db_software = $DB->fetch_assoc($result)) {
-            $idtmp = $db_software['sid'];
-            unset($db_software['sid']);
-            if ($db_software['version'] == '') {
-               unset($db_software['version']);
-            }            
-            foreach($db_software as $key=>$value) {
-               $db_software[$key] = Toolbox::addslashes_deep($value);
+         if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
+              "import_software", 'inventory') != 0) {
+            $a_softwares = array();
+            $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
+                       `glpi_softwares`.`name`,
+                       `glpi_softwareversions`.`name` AS version,
+                       `glpi_softwareversions`.`entities_id`,
+                       `glpi_softwares`.`manufacturers_id`
+                FROM `glpi_computers_softwareversions`
+                LEFT JOIN `glpi_softwareversions`
+                     ON (`glpi_computers_softwareversions`.`softwareversions_id`
+                           = `glpi_softwareversions`.`id`)
+                LEFT JOIN `glpi_softwares`
+                     ON (`glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`)
+                WHERE `glpi_computers_softwareversions`.`computers_id` = '$items_id'";
+            $result = $DB->query($query);
+            while ($db_software = $DB->fetch_assoc($result)) {
+               $idtmp = $db_software['sid'];
+               unset($db_software['sid']);
+               if ($db_software['version'] == '') {
+                  unset($db_software['version']);
+               } 
+               $db_software = Toolbox::addslashes_deep($db_software);
+               $db_software = array_map('strtolower', $db_software);
+               $a_softwares[$idtmp] = $db_software;
             }
-            $a_softwares[$idtmp] = $db_software;
-         }
-         foreach ($a_computerinventory['software'] as $key => $arrays) {
-            unset($arrays['manufacturer']);
-            foreach ($a_softwares as $keydb => $arraydb) {
-               if ($arrays == $arraydb) {
-                  unset($a_computerinventory['software'][$key]);
-                  unset($a_softwares[$keydb]);
-                  break;
-               }
-            }
-         }
-         if (count($a_computerinventory['software']) == 0
-            AND count($a_softwares) == 0) {
-            // Nothing to do
-         } else {
-            if (count($a_softwares) != 0) {
-               // Delete softwares in DB
-               foreach ($a_softwares as $idtmp => $data) {
-                  $computer_SoftwareVersion->delete(array('id'=>$idtmp));
-               }
-            }
-            if (count($a_computerinventory['software']) != 0) {
-               foreach($a_computerinventory['software'] as $a_software) {
-                  if (!isset($a_software['entities_id'])) {
-                     $a_software['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+            foreach ($a_computerinventory['software'] as $key => $arrays) {
+               unset($arrays['manufacturer']);
+               $arrayslower = array_map('strtolower', $arrays);
+               foreach ($a_softwares as $keydb => $arraydb) {
+                  if ($arrayslower == $arraydb) {
+                     unset($a_computerinventory['software'][$key]);
+                     unset($a_softwares[$keydb]);
+                     break;
                   }
-                  $softwares_id = $Software->addOrRestoreFromTrash($a_software['name'],
-                                                                  $a_software['manufacturer'],
-                                                                  $a_software['entities_id']);
-                  $a_software['softwares_id'] = $softwares_id;
-                  $a_software['name'] = $a_software['version'];
-                  $softwareversions_id = $softwareVersion->add($a_software);
-                  $a_software['computers_id'] = $items_id;
-                  $a_software['softwareversions_id'] = $softwareversions_id;
-                  $computer_SoftwareVersion->add($a_software);
+               }
+            }
+            if (count($a_computerinventory['software']) == 0
+               AND count($a_softwares) == 0) {
+               // Nothing to do
+            } else {
+               if (count($a_softwares) != 0) {
+                  // Delete softwares in DB
+                  foreach ($a_softwares as $idtmp => $data) {
+                     $computer_SoftwareVersion->delete(array('id'=>$idtmp));
+                  }
+               }
+               if (count($a_computerinventory['software']) != 0) {
+                  foreach($a_computerinventory['software'] as $a_software) {
+                     $softwares_id = $Software->addOrRestoreFromTrash($a_software['name'],
+                                                                     $a_software['manufacturer'],
+                                                                     $a_software['entities_id']);
+                     $a_software['softwares_id'] = $softwares_id;
+                     $a_software['name'] = $a_software['version'];
+                     $softwareversions_id = $softwareVersion->add($a_software);
+                     $a_software['computers_id'] = $items_id;
+                     $a_software['softwareversions_id'] = $softwareversions_id;
+                     $computer_SoftwareVersion->add($a_software);
+                  }
                }
             }
          }
@@ -204,9 +218,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          while ($data = $DB->fetch_assoc($result)) {
             $idtmp = $data['id'];
             unset($data['id']);            
-            foreach($data as $key=>$value) {
-               $data[$key] = Toolbox::addslashes_deep($value);
-            }
+            $data = Toolbox::addslashes_deep($data);
+            $data = array_map('strtolower', $data);
             $db_computervirtualmachine[$idtmp] = $data;
          }
          $simplecomputervirtualmachine = array();
@@ -219,8 +232,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }            
          }
          foreach ($simplecomputervirtualmachine as $key => $arrays) {
+            $arrayslower = array_map('strtolower', $arrays);
             foreach ($db_computervirtualmachine as $keydb => $arraydb) {
-               if ($arrays == $arraydb) {
+               if ($arrayslower == $arraydb) {
                   $input = array();
                   $input['id'] = $keydb;
                   if (isset($a_computerinventory['virtualmachine'][$key]['vcpu'])) {
@@ -269,9 +283,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          while ($data = $DB->fetch_assoc($result)) {
             $idtmp = $data['id'];
             unset($data['id']);            
-            foreach($data as $key=>$value) {
-               $data[$key] = Toolbox::addslashes_deep($value);
-            }
+            $data = Toolbox::addslashes_deep($data);
+            $data = array_map('strtolower', $data);
             $db_computerdisk[$idtmp] = $data;
          }
          $simplecomputerdisk = array();
@@ -284,8 +297,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }            
          }
          foreach ($simplecomputerdisk as $key => $arrays) {
+            $arrayslower = array_map('strtolower', $arrays);
             foreach ($db_computerdisk as $keydb => $arraydb) {
-               if ($arrays == $arraydb) {
+               if ($arrayslower == $arraydb) {
                   $input = array();
                   $input['id'] = $keydb;
                   if (isset($a_computerinventory['computerdisk'][$key]['filesystems_id'])) {
@@ -332,9 +346,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if (is_null($data['mac'])) {
                unset($data['mac']);
             }
-            foreach($data as $key=>$value) {
-               $data[$key] = Toolbox::addslashes_deep($value);
-            }
+            $data = Toolbox::addslashes_deep($data);
+            $data = array_map('strtolower', $data);
             $db_networkport[$idtmp] = $data;
          }
          $simplenetworkport = array();
@@ -343,15 +356,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             foreach ($a_field as $field) {
                if (isset($a_networkport[$field])) {
                   $simplenetworkport[$key][$field] = $a_networkport[$field];
-                  if (isset($simplenetworkport[$key]['mac'])) {
-                     $simplenetworkport[$key]['mac'] = strtolower($simplenetworkport[$key]['mac']);
-                  }
                }
             }            
          }
          foreach ($simplenetworkport as $key => $arrays) {
+            $arrayslower = array_map('strtolower', $arrays);
             foreach ($db_networkport as $keydb => $arraydb) {
-               if ($arrays == $arraydb) {
+               if ($arrayslower == $arraydb) {
                   // Get networkname
                   $a_networknames_find = current($networkName->find("`items_id`='".$keydb."'
                                                              AND `itemtype`='NetworkPort'", "", 1));
@@ -443,9 +454,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          while ($data = $DB->fetch_assoc($result)) {
             $idtmp = $data['id'];
             unset($data['id']);            
-            foreach($data as $key=>$value) {
-               $data[$key] = Toolbox::addslashes_deep($value);
-            }
+            $data = Toolbox::addslashes_deep($data);
+            $data = array_map('strtolower', $data);
             $db_antivirus[$idtmp] = $data;
          }
          $simpleantivirus = array();
@@ -458,8 +468,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }            
          }
          foreach ($simpleantivirus as $key => $arrays) {
+            $arrayslower = array_map('strtolower', $arrays);
             foreach ($db_antivirus as $keydb => $arraydb) {
-               if ($arrays == $arraydb) {
+               if ($arrayslower == $arraydb) {
                   $input = array();
                   $input = $a_computerinventory['virtualmachine'][$key];
                   $input['id'] = $keydb;

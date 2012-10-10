@@ -196,7 +196,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 //               }
 //            }
 //         }
-//         if (isset($arrayinventory['CONTENT']['DRIVES'])) {
+//         if (isset($arrayinventory['CONTENT']['computerdisk'])) {
 //            foreach($arrayinventory['CONTENT']['DRIVES'] as $drive) {
 //               if ((isset($drive['SERIAL'])) AND (!empty($drive['SERIAL']))) {
 //                  $input['hdserial'][] = $drive['SERIAL'];
@@ -319,6 +319,8 @@ class PluginFusioninventoryInventoryComputerInventory {
             $_SESSION['glpiactiveentities_string'] = $_SESSION["plugin_fusinvinventory_entity"];
             $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
             
+            $a_computerinventory = PluginFusioninventoryFormatconvert::computerSoftwareTransformation($a_computerinventory);
+            
             $this->addNewComputer($a_computerinventory);
 //            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
 //               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
@@ -363,9 +365,10 @@ class PluginFusioninventoryInventoryComputerInventory {
                $_SESSION["plugin_fusinvinventory_history_add"] = false;
                $_SESSION["plugin_fusinvinventory_no_history_add"] = true;
             }
-            $pfLib->updateComputer($a_computerinventory, $items_id);
             
-//            $pfLib->startAction($a_computerinventory, $items_id, '0');
+            $a_computerinventory = PluginFusioninventoryFormatconvert::computerSoftwareTransformation($a_computerinventory);
+            
+            $pfLib->updateComputer($a_computerinventory, $items_id);
          }
       } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
          $class = new $itemtype();
@@ -464,6 +467,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       $networkName                  = new NetworkName();
       $iPAddress                    = new IPAddress();
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
+      $pfConfig                     = new PluginFusioninventoryConfig();
       
       $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
       
@@ -531,20 +535,20 @@ class PluginFusioninventoryInventoryComputerInventory {
       }
       
       // * Software
-      foreach ($a_computerinventory['software'] as $a_software) {
-         if (!isset($a_software['entities_id'])) {
-            $a_software['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+      if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
+              "import_software", 'inventory') != 0) {
+         foreach ($a_computerinventory['software'] as $a_software) {
+            $softwares_id = $Software->addOrRestoreFromTrash($a_software['name'],
+                                                            $a_software['manufacturer'],
+                                                            $a_software['entities_id']);
+            $a_software['softwares_id'] = $softwares_id;
+            $a_software['name'] = $a_software['version'];
+            $softwareversions_id = $softwareVersion->add($a_software);
+            $a_software['computers_id'] = $computers_id;
+            $a_software['softwareversions_id'] = $softwareversions_id;
+            $a_software['_no_history'] = true;
+            $computer_SoftwareVersion->add($a_software);
          }
-         $softwares_id = $Software->addOrRestoreFromTrash($a_software['name'],
-                                                         $a_software['manufacturer'],
-                                                         $a_software['entities_id']);
-         $a_software['softwares_id'] = $softwares_id;
-         $a_software['name'] = $a_software['version'];
-         $softwareversions_id = $softwareVersion->add($a_software);
-         $a_software['computers_id'] = $computers_id;
-         $a_software['softwareversions_id'] = $softwareversions_id;
-         $a_software['_no_history'] = true;
-         $computer_SoftwareVersion->add($a_software);
       }
 
       // * Virtualmachines
