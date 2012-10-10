@@ -141,9 +141,8 @@ class PluginFusioninventoryInventoryComputerInventory {
          }
 
 
-      // TODO => Update this function for new array
-//      $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
-//      $arrayinventory = $pfBlacklist->cleanBlacklist($arrayinventory);
+      $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
+      $a_computerinventory = $pfBlacklist->cleanBlacklist($a_computerinventory);
 
       $this->arrayinventory = $a_computerinventory;
 
@@ -308,7 +307,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          
          if ($items_id == '0') {
             if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
-               $_SESSION["plugin_fusinvinventory_entity"] == $_SESSION['plugin_fusioninventory_entityrestrict'];
+               $_SESSION["plugin_fusinvinventory_entity"] = $_SESSION['plugin_fusioninventory_entityrestrict'];
             }
             if (!isset($_SESSION["plugin_fusinvinventory_entity"])
                     OR $_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE
@@ -343,9 +342,9 @@ class PluginFusioninventoryInventoryComputerInventory {
             $pfLib      = new PluginFusioninventoryInventoryComputerLib();
             
             $computer->getFromDB($items_id);
-            if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'transfers_id_auto', 'inventory') != '0') {
+            if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'transfers_id_auto', 'inventory') != 0) {
                if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {               
-                  $_SESSION["plugin_fusinvinventory_entity"] == $_SESSION['plugin_fusioninventory_entityrestrict'];
+                  $_SESSION["plugin_fusinvinventory_entity"] = $_SESSION['plugin_fusioninventory_entityrestrict'];
                }
                if (!isset($_SESSION["plugin_fusinvinventory_entity"])
                        OR $_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE
