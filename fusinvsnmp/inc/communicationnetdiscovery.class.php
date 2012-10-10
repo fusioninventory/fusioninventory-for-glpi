@@ -176,16 +176,19 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       switch ($p_xml->TYPE) {
 
          case '1':
+         case 'COMPUTER':
             $input['itemtype'] = "Computer";
             // Computer
 
              break;
 
          case '2':
+         case 'NETWORKING':
             $input['itemtype'] = "NetworkEquipment";
              break;
 
          case '3':
+         case 'PRINTER':
             $input['itemtype'] = "Printer";
              break;
 
@@ -434,14 +437,17 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                switch ((string)$xml->TYPE) {
 
                   case '1':
+                  case 'COMPUTER':
                      $input['item_type'] = 'Computer';
                      break;
 
                   case '2':
+                  case 'NETWORKING':
                      $input['item_type'] = 'NetworkEquipment';
                      break;
 
                   case '3':
+                  case 'PRINTER':
                      $input['item_type'] = 'Printer';
                      break;
                   
