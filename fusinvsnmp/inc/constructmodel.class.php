@@ -244,6 +244,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $buffer = json_encode($getsysdescr);
       curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
       $retserv = curl_exec($this->fp);
+
       $data = json_decode($retserv);
       
       $_SESSION['plugin_fusioninventory_sysdescr'] = $data->device->sysdescr;
@@ -311,7 +312,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             $sqldata = $DB->fetch_assoc($result);
             if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$sqldata['log'])) {
                $edit = 0;
-               $querydel = "DELETE * FROM `glpi_plugin_fusioninventory_construct_walks`
+               $querydel = "DELETE FROM `glpi_plugin_fusioninventory_construct_walks`
                    WHERE `construct_device_id`='".$id."'";
                $DB->query($querydel);
             }
@@ -730,7 +731,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             if ($DB->numrows($result) == "1") {
                $sqldata = $DB->fetch_assoc($result);
                if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$sqldata['log'])) {
-                  $querydel = "DELETE * FROM `glpi_plugin_fusioninventory_construct_walks`
+                  $querydel = "DELETE FROM `glpi_plugin_fusioninventory_construct_walks`
                       WHERE `construct_device_id`='".$a_devices['id']."'";
                   $DB->query($querydel);
                } else {
