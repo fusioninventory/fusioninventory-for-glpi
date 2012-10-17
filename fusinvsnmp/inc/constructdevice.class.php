@@ -274,7 +274,9 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<th width='150'>";
       //echo $a_oid->percentage."%";
-      Html::displayProgressBar(150, $a_oid->percentage->$mappings_id, array('simple' => true));
+      if (isset($a_oid->percentage->$mappings_id)) {
+        Html::displayProgressBar(150, $a_oid->percentage->$mappings_id, array('simple' => true));
+      }
       echo "</th>";
       echo "<th colspan='2' style='text-align: left;'>";
 
