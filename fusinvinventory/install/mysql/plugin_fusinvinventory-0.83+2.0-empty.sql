@@ -165,6 +165,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_licenseinfos`;
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_licenseinfos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
+  `softwarelicenses_id` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `fullname` varchar(255) DEFAULT NULL,
   `key` varchar(255) DEFAULT NULL,
