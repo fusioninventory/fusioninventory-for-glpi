@@ -76,25 +76,32 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
          echo '</tr>';
 
          foreach ($a_licenseInfo as $licenseInfo) {
-            echo '<tr class="tab_bg_1">';
-            echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][1].'&nbsp;:</td>';
-            echo '<td>'.$licenseInfo['name'].'</td>';
-            echo '</tr>';
+            $licence_link = $licence_endlink = "";
+            if (!empty($licenseInfo['softwarelicenses_id'])) {
+               $licence_link = "<a href='".GLPI_ROOT."/front/softwarelicense.form.php?id=".
+                  $licenseInfo['softwarelicenses_id']."'>";
+               $licence_endlink = "</a>";
+            }
 
-            echo '<tr class="tab_bg_1">';
-            echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][2].'&nbsp;:</td>';
-            echo '<td>'.$licenseInfo['fullname'].'</td>';
-            echo '</tr>';
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>".$LANG['plugin_fusinvinventory']['licenseinfo'][1]."&nbsp;:</td>";
+            echo "<td>$licence_link".$licenseInfo['name']."$licence_endlink</td>";
+            echo "</tr>";
 
-            echo '<tr class="tab_bg_1">';
-            echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][3].'&nbsp;:</td>';
-            echo '<td>'.$licenseInfo['key'].'</td>';
-            echo '</tr>';
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>".$LANG['plugin_fusinvinventory']['licenseinfo'][2]."&nbsp;:</td>";
+            echo "<td>$licence_link".$licenseInfo['fullname']."$licence_endlink</td>";
+            echo "</tr>";
 
-            echo '<tr class="tab_bg_1">';
-            echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][4].'&nbsp;:</td>';
-            //echo '<td>'.$licenseInfo['productid'].'</td>';//TODO Complete thid field in sql schema
-            echo '</tr>';
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>".$LANG['plugin_fusinvinventory']['licenseinfo'][3]."&nbsp;:</td>";
+            echo "<td>".$licenseInfo['key']."</td>";
+            echo "</tr>";
+
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>".$LANG['plugin_fusinvinventory']['licenseinfo'][4]."&nbsp;:</td>";
+            //echo "<td>".$licenseInfo['productid'].'</td>";//TODO Complete thid field in sql schema
+            echo "</tr>";
 
 
             if ($licenseInfo['is_update']||$licenseInfo['is_trial']||$licenseInfo['is_oem']) {
@@ -117,8 +124,14 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
 
             if (empty($licenseInfo['softwarelicenses_id'])) {
                echo '<tr class="tab_bg_1">';
-               echo '<td>'.$LANG['log'][116].'&nbsp;:</td>';
-               echo '<td>';
+               echo "<td>".$LANG['log'][116]."&nbsp;:</td>";
+               echo "<td>";
+               echo "<form method='post' action='".GLPI_ROOT.
+                        "/plugins/fusinvinventory/front/licenseinfo.form.php'>";
+               echo "<input type='hidden' name='computers_id' value='$computers_id'>";
+               echo "<input type='hidden' name='fusinvinventory_licenseinfos_id' value='".
+                  $licenseInfo['id']."'>";
+               echo "<input type='hidden' name='key' value='".$licenseInfo['key']."'>";
                $rand = mt_rand();
                Dropdown::show('Software', array(
                   'toupdate'    => array(
@@ -132,8 +145,10 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
                      "OR name LIKE '%".$licenseInfo['fullname']."%'"
                ));
                echo "<span id='softwarelicenses_id_$rand'></span>";
-               echo '</td>';
-               echo '</tr>';
+               Html::closeForm();
+               echo "</td>";
+               echo "</tr>";
+
             }
 
             echo "<td colspan='2'></td>";
@@ -150,15 +165,37 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
 
       if (!isset($options['__VALUE__']) || empty($options['__VALUE__'])) return;
 
-      Dropdown::show('SoftwareLicense', array(
-         'name'        => 'name',
-         'displaywith' => array('serial'),
-         'condition'   => "glpi_softwarelicenses.softwares_id = '".$options['__VALUE__']."'/*
-                           AND serial = ''*/"
+      $softwarelicences = new SoftwareLicense;
+      $licenses_found = $softwarelicences->find(
+         "glpi_softwarelicenses.softwares_id = '".$options['__VALUE__']."'
+         /*AND serial = ''*/");
+
+      $licenses = array();
+      foreach($licenses_found as $softwarelicenses_id => $license) {
+         $licenses[$softwarelicenses_id] = $license['name']." (".$license['serial'].")";
+      }
+
+      Dropdown::showFromArray('softwarelicenses_id', $licenses);
+
+      echo "&nbsp;<input type='submit' class='button' name='associate' value='".
+         $LANG['buttons'][3]."'>";
+
+   }
+
+
+   function associate($options) {
+
+      $computer_slicense = new Computer_SoftwareLicense;
+      $computer_slicense->add(array(
+         'computers_id'        => $options['computers_id'],
+         'softwarelicenses_id' => $options['softwarelicenses_id']
       ));
 
-      echo "&nbsp;<input type='submit' class='button' value='".$LANG['buttons'][3]."'>";
-
+      $pfLicenseInfo = new self;
+      $pfLicenseInfo->update(array(
+         'id'                  => $options['fusinvinventory_licenseinfos_id'], 
+         'softwarelicenses_id' => $options['softwarelicenses_id']
+      ));
    }
 
 }
