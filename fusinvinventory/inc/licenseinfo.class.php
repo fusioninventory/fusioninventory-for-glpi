@@ -61,6 +61,104 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
       return Session::haveRight('computer', 'r');
    }
 
+   function showForm($computers_id) {
+      global $LANG;
+
+      $pfLicenseInfo = new self();
+      $a_licenseInfo = $pfLicenseInfo->find("`computers_id`='".$computers_id."'");
+
+      if (count($a_licenseInfo)) {
+
+         echo '<div align="center">';
+         echo '<table class="tab_cadre_fixe" style="margin: 0; margin-top: 5px;">';
+         echo '<tr>';
+         echo '<th colspan="4">'.$LANG['plugin_fusinvinventory']['licenseinfo'][0].'</th>';
+         echo '</tr>';
+
+         foreach ($a_licenseInfo as $licenseInfo) {
+            echo '<tr class="tab_bg_1">';
+            echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][1].'&nbsp;:</td>';
+            echo '<td>'.$licenseInfo['name'].'</td>';
+            echo '</tr>';
+
+            echo '<tr class="tab_bg_1">';
+            echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][2].'&nbsp;:</td>';
+            echo '<td>'.$licenseInfo['fullname'].'</td>';
+            echo '</tr>';
+
+            echo '<tr class="tab_bg_1">';
+            echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][3].'&nbsp;:</td>';
+            echo '<td>'.$licenseInfo['key'].'</td>';
+            echo '</tr>';
+
+            echo '<tr class="tab_bg_1">';
+            echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][4].'&nbsp;:</td>';
+            echo '<td>'.$licenseInfo['productid'].'</td>';
+            echo '</tr>';
+
+
+            if ($licenseInfo['is_update']||$licenseInfo['is_trial']||$licenseInfo['is_oem']) {
+                $options = array();
+
+                if ($licenseInfo['is_update'])
+                   array_push($options, 'update');
+
+                if ($licenseInfo['is_trial'])
+                   array_push($options, 'trial');
+
+                if ($licenseInfo['is_oem'])
+                   array_push($options, 'OEM');
+
+                echo '<tr class="tab_bg_1">';
+                echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][5].'&nbsp;:</td>';
+                echo '<td>'.implode(', ', $options).'</td>';
+                echo '</tr>';
+            }
+
+            if (empty($licenseInfo['softwarelicenses_id'])) {
+               echo '<tr class="tab_bg_1">';
+               echo '<td>'.$LANG['log'][116].'&nbsp;:</td>';
+               echo '<td>';
+               $rand = mt_rand();
+               Dropdown::show('Software', array(
+                  'toupdate'  => array(
+                     'value_fieldname' => "__VALUE__",
+                     'to_update'       => "softwarelicenses_id_$rand",
+                     'url'             => GLPI_ROOT.
+                        "/plugins/fusinvinventory/ajax/dropdownsoftwarelicenses.php"
+                  ),
+                  'condition' => "name LIKE '%".$licenseInfo['name']."%' ".
+                     "OR name LIKE '%".$licenseInfo['fullname']."%'"
+               ));
+               echo "<span id='softwarelicenses_id_$rand'></span>";
+               echo '</td>';
+               echo '</tr>';
+            }
+
+            echo "<td colspan='2'></td>";
+         }
+
+         echo '</table>';
+         echo '</div>';
+
+      }
+   }
+
+   function dropdownSoftwareLicenses($options) {
+      global $LANG;
+
+      if (!isset($options['__VALUE__']) || empty($options['__VALUE__'])) return;
+
+      Dropdown::show('SoftwareLicense', array(
+         'displaywith' => array('serial'),
+         'condition'   => "glpi_softwarelicenses.softwares_id = '".$options['__VALUE__']."'/*
+                           AND serial = ''*/"
+      ));
+
+      echo "&nbsp;<input type='submit' class='button' value='".$LANG['buttons'][3]."'>";
+
+   }
+
 }
 
 ?>

@@ -49,15 +49,9 @@ if (!defined('GLPI_ROOT')) {
    die("Can not acces directly to this file");
 }
 
-if (!isset($_POST['__VALUE__']) || empty($_POST['__VALUE__'])) exit;
-
-Dropdown::show('SoftwareLicense', array(
-   'displaywith' => array('serial'),
-   'condition'   => "glpi_softwarelicenses.softwares_id = '".$_POST['__VALUE__']."'/*
-                     AND serial = ''*/"
-));
-
-echo "&nbsp;<input type='submit' class='button' value='".$LANG['buttons'][3]."'>";
+Session::checkCentralAccess();
+$pflicenseinfo = new PluginFusinvinventoryLicenseInfo;
+$pflicenseinfo->dropdownSoftwareLicenses($_POST);
 
 
 ?>
