@@ -93,7 +93,7 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
 
             echo '<tr class="tab_bg_1">';
             echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][4].'&nbsp;:</td>';
-            echo '<td>'.$licenseInfo['productid'].'</td>';
+            //echo '<td>'.$licenseInfo['productid'].'</td>';//TODO Complete thid field in sql schema
             echo '</tr>';
 
 
@@ -121,13 +121,14 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
                echo '<td>';
                $rand = mt_rand();
                Dropdown::show('Software', array(
-                  'toupdate'  => array(
+                  'toupdate'    => array(
                      'value_fieldname' => "__VALUE__",
                      'to_update'       => "softwarelicenses_id_$rand",
                      'url'             => GLPI_ROOT.
-                        "/plugins/fusinvinventory/ajax/dropdownsoftwarelicenses.php"
+                        "/plugins/fusinvinventory/ajax/dropdownsoftwarelicenses.php".
+                           "?key=".$licenseInfo['key']
                   ),
-                  'condition' => "name LIKE '%".$licenseInfo['name']."%' ".
+                  'condition'   => "name LIKE '%".$licenseInfo['name']."%' ".
                      "OR name LIKE '%".$licenseInfo['fullname']."%'"
                ));
                echo "<span id='softwarelicenses_id_$rand'></span>";
@@ -144,12 +145,13 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
       }
    }
 
-   function dropdownSoftwareLicenses($options) {
+   function dropdownSoftwareLicenses($options, $key = "") {
       global $LANG;
 
       if (!isset($options['__VALUE__']) || empty($options['__VALUE__'])) return;
 
       Dropdown::show('SoftwareLicense', array(
+         'name'        => 'name',
          'displaywith' => array('serial'),
          'condition'   => "glpi_softwarelicenses.softwares_id = '".$options['__VALUE__']."'/*
                            AND serial = ''*/"

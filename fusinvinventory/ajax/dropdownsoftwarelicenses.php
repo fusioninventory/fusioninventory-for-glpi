@@ -51,7 +51,7 @@ if (!defined('GLPI_ROOT')) {
 
 Session::checkCentralAccess();
 $pflicenseinfo = new PluginFusinvinventoryLicenseInfo;
-$pflicenseinfo->dropdownSoftwareLicenses($_POST);
+$pflicenseinfo->dropdownSoftwareLicenses($_POST, isset($_GET['key'])?$_GET['key']:"");
 
 
 ?>
