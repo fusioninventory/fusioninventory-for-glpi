@@ -313,6 +313,49 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
                               "datetime DEFAULT NULL");
    $migration->migrationOneTable($newTable);
    
+
+   /*
+    * Table glpi_plugin_fusinvinventory_licenseinfos
+    */
+   
+   $newTable = "glpi_plugin_fusinvinventory_licenseinfos";
+   if (!TableExists($newTable)) {
+      $DB->query("CREATE TABLE `".$newTable."` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                     PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
+   } 
+   $migration->migrationOneTable($newTable);
+   
+      $migration->addField($newTable,
+                              "computers_id",
+                              "int(11) NOT NULL DEFAULT 0");
+      $migration->addField($newTable,
+                              "softwarelicenses_id",
+                              "int(11) DEFAULT NULL");
+      $migration->addField($newTable,
+                              "name",
+                              "VARCHAR(255) DEFAULT NULL");
+      $migration->addField($newTable,
+                              "fullname",
+                              "VARCHAR(255) DEFAULT NULL");
+      $migration->addField($newTable,
+                              "key",
+                              "VARCHAR(255) DEFAULT NULL");
+      $migration->addField($newTable,
+                              "is_trial",
+                              "TINYINT(1) NOT NULL DEFAULT 0");
+      $migration->addField($newTable,
+                              "is_update",
+                              "TINYINT(1) NOT NULL DEFAULT 0");
+      $migration->addField($newTable,
+                              "is_oem",
+                              "TINYINT(1) NOT NULL DEFAULT 0");
+      $migration->addField($newTable,
+                              "activation_date",
+                              "DATETIME DEFAULT NULL");
+   $migration->migrationOneTable($newTable);
+   
    
    
    /*
