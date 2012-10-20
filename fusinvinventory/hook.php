@@ -111,6 +111,13 @@ function plugin_fusinvinventory_getAddSearchOptions($itemtype) {
          $sopt[5159]['linkfield'] = '';
          $sopt[5159]['name']      = $LANG['plugin_fusinvinventory']['computer'][2];
          
+         $sopt[5161]['table']     = 'glpi_plugin_fusioninventory_agents';
+         $sopt[5161]['field']     = 'useragent';
+         $sopt[5161]['linkfield'] = '';
+         $sopt[5161]['name']      = $LANG['plugin_fusioninventory']['title'][1]." - ".
+            $LANG['plugin_fusioninventory']['agents'][42];
+
+         
    }
    return $sopt;
 }
@@ -170,9 +177,8 @@ function plugin_fusinvinventory_needUpdate() {
 
 
 
-function plugin_fusinvinventory_addLeftJoin($itemtype, $ref_table, $new_table, $linkfield, 
-                                            &$already_link_tables) {
-   
+function plugin_fusinvinventory_addLeftJoin($itemtype, $ref_table, $new_table, $linkfield) {
+
    if ($itemtype == 'Computer') {
       return " LEFT JOIN `$new_table` ON (`$ref_table`.`id` = `$new_table`.`computers_id`) ";
    }

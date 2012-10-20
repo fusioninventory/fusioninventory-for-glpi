@@ -811,7 +811,7 @@ function plugin_fusioninventory_forceGroupBy($type) {
 
 
 function plugin_fusioninventory_addLeftJoin($itemtype,$ref_table,$new_table,$linkfield,&$already_link_tables) {
-
+    
    switch ($itemtype) {
 
       case 'PluginFusioninventoryAgent':
@@ -885,6 +885,18 @@ function plugin_fusioninventory_addLeftJoin($itemtype,$ref_table,$new_table,$lin
          }
          
          break;
+         
+      case 'Computer':
+          switch ($new_table.".".$linkfield) {
+          
+              case 'glpi_plugin_fusioninventory_agents.plugin_fusioninventory_agents_id':
+                  return " LEFT JOIN `glpi_plugin_fusioninventory_agents` 
+                  ON (`glpi_computers`.`id`=`glpi_plugin_fusioninventory_agents`.`items_id`) ";
+                  break;
+              
+          }
+          
+          break;
       
    }
    return "";
