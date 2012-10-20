@@ -204,6 +204,8 @@ $LANG['plugin_fusioninventory']['task'][54]="Aufgabe erneut ausführen";
 $LANG['plugin_fusioninventory']['task'][55]="Kein Agent berechtigt die ESX-Inventur auszuführen";
 $LANG['plugin_fusioninventory']['task'][56]="Planned for running";
 $LANG['plugin_fusioninventory']['task'][58]="In error";
+$LANG['plugin_fusioninventory']['task'][59]="List of objets on which the action must be set";
+$LANG['plugin_fusioninventory']['task'][60]="List of objets that will perform the action";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="gestartet";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="OK";

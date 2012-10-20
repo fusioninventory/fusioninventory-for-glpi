@@ -241,14 +241,14 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       if ($this->fields['id'] > 0) {
          echo $LANG['plugin_fusioninventory']['task'][27];
          $this->plusButton('definition'.$id);
-         echo "<br/><i>Liste des objets sur lesquelles l'action doit porter</i>";
+         echo "<br/><i>".$LANG['plugin_fusioninventory']['task'][59]."</i>";
       }
       echo "</th>";
       echo "<th width='25%'>";
       if ($this->fields['id'] > 0) {
          echo $LANG['plugin_fusioninventory']['task'][28];
          $this->plusButton('action'.$id);
-         echo "<br/><i>Liste des objets qui vont effectuer l'action</i>";
+         echo "<br/><i>".$LANG['plugin_fusioninventory']['task'][60]."</i>";
       }
       echo "</th>";
       echo "</tr>";
