@@ -117,6 +117,11 @@ class PluginFusinvinventoryLib extends CommonDBTM {
          if ($result) {
             if ($DB->numrows($result) == '1') {
                $a_serialized = $DB->fetch_assoc($result);
+            } else {
+                $input = array();
+                $input['id'] = $items_id;
+                PluginFusinvinventoryInventory::addDefaultStateIfNeeded($input, false);
+                $Computer->update($input);
             }
          }
          $internalId = uniqid("", true);
