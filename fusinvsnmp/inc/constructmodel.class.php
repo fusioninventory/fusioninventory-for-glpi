@@ -89,7 +89,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
 
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
-         echo "Authentication is not right, verify login and password !";
+         echo "Authentication is not right, verify login and password !<br/>
+            See <a href='http://www.fusioninventory.org/documentation/fi4g/snmpmodels'>documentation</a>";
          echo "</td>";
          echo "</tr>";
 
@@ -130,11 +131,11 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
       
-//      echo "<tr class='tab_bg_1'>";
-//      echo "<td align='center'>";
-//      echo "<a href='".$this->getSearchURL()."?action=walksmanaged'>Devices managed (snmpwalk)</a>";
-//      echo "</td>";
-//      echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      echo "<a href='http://www.fusioninventory.org/documentation/fi4g/snmpmodels'>Documentation</a>";
+      echo "</td>";
+      echo "</tr>";
 
       echo "</table>";
    }
