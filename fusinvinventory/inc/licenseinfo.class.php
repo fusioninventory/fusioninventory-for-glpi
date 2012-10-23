@@ -86,23 +86,18 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
             echo "<tr class='tab_bg_1'>";
             echo "<td>".$LANG['plugin_fusinvinventory']['licenseinfo'][1]."&nbsp;:</td>";
             echo "<td>$licence_link".$licenseInfo['name']."$licence_endlink</td>";
-            echo "</tr>";
-
-            echo "<tr class='tab_bg_1'>";
-            echo "<td>".$LANG['plugin_fusinvinventory']['licenseinfo'][2]."&nbsp;:</td>";
-            echo "<td>$licence_link".$licenseInfo['fullname']."$licence_endlink</td>";
-            echo "</tr>";
-
-            echo "<tr class='tab_bg_1'>";
             echo "<td>".$LANG['plugin_fusinvinventory']['licenseinfo'][3]."&nbsp;:</td>";
             echo "<td>".$licenseInfo['key']."</td>";
             echo "</tr>";
 
             echo "<tr class='tab_bg_1'>";
+            echo "<td>".$LANG['plugin_fusinvinventory']['licenseinfo'][2]."&nbsp;:</td>";
+            echo "<td>$licence_link".$licenseInfo['fullname']."$licence_endlink</td>";
             echo "<td>".$LANG['plugin_fusinvinventory']['licenseinfo'][4]."&nbsp;:</td>";
-            //echo "<td>".$licenseInfo['productid'].'</td>";//TODO Complete thid field in sql schema
+            echo "<td>";
+            //echo $licenseInfo['productid'];//TODO Complete thid field in sql schema
+            echo "</td>";            
             echo "</tr>";
-
 
             if ($licenseInfo['is_update']||$licenseInfo['is_trial']||$licenseInfo['is_oem']) {
                 $options = array();
@@ -125,7 +120,7 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
             if (empty($licenseInfo['softwarelicenses_id'])) {
                echo '<tr class="tab_bg_1">';
                echo "<td>".$LANG['log'][116]."&nbsp;:</td>";
-               echo "<td>";
+               echo "<td colspan='3'>";
                echo "<form method='post' action='".GLPI_ROOT.
                         "/plugins/fusinvinventory/front/licenseinfo.form.php'>";
                echo "<input type='hidden' name='computers_id' value='$computers_id'>";
@@ -150,8 +145,9 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
                echo "</tr>";
 
             }
-
-            echo "<td colspan='2'></td>";
+            echo "<tr class='tab_bg_3'>";
+            echo "<td colspan='4'></td>";
+            echo "</tr>";
          }
 
          echo '</table>';
