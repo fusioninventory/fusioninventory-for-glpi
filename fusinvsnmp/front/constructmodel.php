@@ -61,6 +61,18 @@ if (isset($_POST['updatesort'])) {
    Html::back();
 }
 
+if (!function_exists('curl_init')) {
+   echo '<table  class="tab_cadre_fixe">';
+   echo '<tr class="tab_bg_1">';
+   echo "<th>";
+   echo "<br/>!! cURL extension (PHP) is required... !!<br/><br/>";
+   echo "</th>";
+   echo "</tr>";
+   echo "</table>";
+   exit;
+}
+
+
 $pfConstructmodel = new PluginFusinvsnmpConstructmodel();
 if ($pfConstructmodel->connect()) {
    if ($pfConstructmodel->showAuth()) {
