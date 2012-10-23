@@ -62,7 +62,7 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
    }
 
    function showForm($computers_id) {
-      global $LANG;
+      global $LANG, $CFG_GLPI;
 
       $pfLicenseInfo = new self();
       $a_licenseInfo = $pfLicenseInfo->find("`computers_id`='".$computers_id."'");
@@ -81,6 +81,13 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
                $licence_link = "<a href='".GLPI_ROOT."/front/softwarelicense.form.php?id=".
                   $licenseInfo['softwarelicenses_id']."'>";
                $licence_endlink = "</a>";
+               $licence_endlink .= "<form method='post' action='".GLPI_ROOT.
+                        "/plugins/fusinvinventory/front/licenseinfo.form.php'>";
+
+               $licence_endlink .= "<input type='hidden' name='fusinvinventory_licenseinfos_id' value='".$licenseInfo['id']."' />";
+               $licence_endlink .= "<input type='hidden' name='softwarelicenses_id' value='0' />";
+               $licence_endlink .= "<input type='submit' class='button' name='associate' value='".$LANG['buttons'][59]."'>";
+               $licence_endlink .= Html::closeForm(false);
             }
 
             echo "<tr class='tab_bg_1'>";
@@ -128,17 +135,25 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
                   $licenseInfo['id']."'>";
                echo "<input type='hidden' name='key' value='".$licenseInfo['key']."'>";
                $rand = mt_rand();
-               Dropdown::show('Software', array(
-                  'toupdate'    => array(
-                     'value_fieldname' => "__VALUE__",
-                     'to_update'       => "softwarelicenses_id_$rand",
-                     'url'             => GLPI_ROOT.
-                        "/plugins/fusinvinventory/ajax/dropdownsoftwarelicenses.php".
-                           "?key=".$licenseInfo['key']
-                  ),
-                  'condition'   => "name LIKE '%".$licenseInfo['name']."%' ".
-                     "OR name LIKE '%".$licenseInfo['fullname']."%'"
-               ));
+//               Dropdown::show('Software', array(
+//                  'toupdate'    => array(
+//                     'value_fieldname' => "__VALUE__",
+//                     'to_update'       => "softwarelicenses_id_$rand",
+//                     'url'             => GLPI_ROOT.
+//                        "/plugins/fusinvinventory/ajax/dropdownsoftwarelicenses.php".
+//                           "?key=".$licenseInfo['key']
+//                  ),
+//                  'condition'   => "name LIKE '%".$licenseInfo['name']."%' ".
+//                     "OR name LIKE '%".$licenseInfo['fullname']."%'"
+//               ));
+                $params = array(
+                     'softwarelicenses_id' => $licenseInfo['softwarelicenses_id'],
+                     'name' => $licenseInfo['name'],
+                     'fullname' => $licenseInfo['fullname'],
+                     'serial' => $licenseInfo['key']
+                  );
+                Ajax::updateItem("softwarelicenses_id_$rand",
+                              $CFG_GLPI["root_doc"]."/plugins/fusinvinventory/ajax/dropdownsoftwarelicenses.php?key=".$licenseInfo['key'], $params, false);
                echo "<span id='softwarelicenses_id_$rand'></span>";
                Html::closeForm();
                echo "</td>";
@@ -157,24 +172,31 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
    }
 
    function dropdownSoftwareLicenses($options, $key = "") {
-      global $LANG;
+      global $LANG,$DB;
 
-      if (!isset($options['__VALUE__']) || empty($options['__VALUE__'])) return;
-
-      $softwarelicences = new SoftwareLicense;
-      $licenses_found = $softwarelicences->find(
-         "glpi_softwarelicenses.softwares_id = '".$options['__VALUE__']."'
-         /*AND serial = ''*/");
-
+      $query = "SELECT `glpi_softwares`.`name` as sname,
+                       `glpi_softwarelicenses`.`name` as lname,
+                       `glpi_softwarelicenses`.`id` as lid,
+                       `glpi_softwarelicenses`.`serial` FROM `glpi_softwarelicenses`
+         LEFT JOIN `glpi_softwares` 
+            ON `glpi_softwarelicenses`.`softwares_id` = `glpi_softwares`.`id`
+         WHERE ((`glpi_softwarelicenses`.`name` LIKE '%".$options['name']."%' 
+                  OR `glpi_softwarelicenses`.`name` LIKE '%".$options['fullname']."%'
+                  OR `glpi_softwares`.`name` LIKE '%".$options['name']."%' 
+                  OR `glpi_softwares`.`name` LIKE '%".$options['fullname']."%')
+               AND `serial` = '".$options['serial']."')
+         OR (`glpi_softwarelicenses`.`name` = '".$options['serial']."'
+               AND `serial` = '".$options['serial']."')";
+      
       $licenses = array();
-      foreach($licenses_found as $softwarelicenses_id => $license) {
-         $licenses[$softwarelicenses_id] = $license['name']." (".$license['serial'].")";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $licenses[$data['lid']] = $data['sname']." (".$data['serial'].")";
       }
 
-      Dropdown::showFromArray('softwarelicenses_id', $licenses);
+      Dropdown::showFromArray('softwarelicenses_id', $licenses, array('value' => $options['softwarelicenses_id']));
 
-      echo "&nbsp;<input type='submit' class='button' name='associate' value='".
-         $LANG['buttons'][3]."'>";
+      echo "&nbsp;<input type='submit' class='button' name='associate' value='".$LANG['buttons'][3]."'>";
 
    }
 
