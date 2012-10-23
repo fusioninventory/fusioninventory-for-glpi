@@ -202,6 +202,15 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
       ));
    }
 
+   
+   
+   static function cleanComputer($computers_id) {
+      $pfLicenseinfo = new PluginFusinvinventoryLicenseInfo();
+      $a_licenses = $pfLicenseinfo->find("`computers_id`='".$computers_id."'");
+      foreach ($a_licenses as $data) {
+         $pfLicenseinfo->delete($data);
+      }
+   }
 }
 
 ?>

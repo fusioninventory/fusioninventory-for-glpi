@@ -189,6 +189,8 @@ function plugin_pre_item_purge_fusinvinventory($item) {
          $pfLib->removeExternalid($item->getField('id'));
          // Remove antivirus if set
          PluginFusinvinventoryAntivirus::cleanComputer($item->getField('id'));
+         // Remove licenses of set
+         PluginFusinvinventoryLicenseInfo::cleanComputer($item->getField('id'));
          break;
 
    }
