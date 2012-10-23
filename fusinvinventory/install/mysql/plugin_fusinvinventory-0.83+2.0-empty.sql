@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_licenseinfos` (
   `softwarelicenses_id` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `fullname` varchar(255) DEFAULT NULL,
-  `key` varchar(255) DEFAULT NULL,
+  `serial` varchar(255) DEFAULT NULL,
   `is_trial` tinyint(1) NOT NULL DEFAULT '0',
   `is_update` tinyint(1) NOT NULL DEFAULT '0',
   `is_oem` tinyint(1) NOT NULL DEFAULT '0',

@@ -340,7 +340,7 @@ function pluginFusinvinventoryUpdate($current_version, $migrationname='Migration
                               "fullname",
                               "VARCHAR(255) DEFAULT NULL");
       $migration->addField($newTable,
-                              "key",
+                              "serial",
                               "VARCHAR(255) DEFAULT NULL");
       $migration->addField($newTable,
                               "is_trial",

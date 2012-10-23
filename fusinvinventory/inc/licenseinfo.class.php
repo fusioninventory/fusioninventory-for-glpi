@@ -93,19 +93,15 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
             echo "<tr class='tab_bg_1'>";
             echo "<td>".$LANG['plugin_fusinvinventory']['licenseinfo'][1]."&nbsp;:</td>";
             echo "<td>$licence_link".$licenseInfo['name']."$licence_endlink</td>";
-            echo "<td>".$LANG['plugin_fusinvinventory']['licenseinfo'][3]."&nbsp;:</td>";
-            echo "<td>".$licenseInfo['key']."</td>";
+            echo "<td>".$LANG['common'][19]."&nbsp;:</td>";
+            echo "<td>".$licenseInfo['serial']."</td>";
             echo "</tr>";
 
             echo "<tr class='tab_bg_1'>";
             echo "<td>".$LANG['plugin_fusinvinventory']['licenseinfo'][2]."&nbsp;:</td>";
             echo "<td>$licence_link".$licenseInfo['fullname']."$licence_endlink</td>";
-            echo "<td>".$LANG['plugin_fusinvinventory']['licenseinfo'][4]."&nbsp;:</td>";
+            echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][5].'&nbsp;:</td>';
             echo "<td>";
-            //echo $licenseInfo['productid'];//TODO Complete thid field in sql schema
-            echo "</td>";            
-            echo "</tr>";
-
             if ($licenseInfo['is_update']||$licenseInfo['is_trial']||$licenseInfo['is_oem']) {
                 $options = array();
 
@@ -117,12 +113,11 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
 
                 if ($licenseInfo['is_oem'])
                    array_push($options, 'OEM');
-
-                echo '<tr class="tab_bg_1">';
-                echo '<td>'.$LANG['plugin_fusinvinventory']['licenseinfo'][5].'&nbsp;:</td>';
-                echo '<td>'.implode(', ', $options).'</td>';
-                echo '</tr>';
+                
+                echo implode(', ', $options);
             }
+            echo "</td>";            
+            echo "</tr>";
 
             if (empty($licenseInfo['softwarelicenses_id'])) {
                echo '<tr class="tab_bg_1">';
@@ -133,27 +128,16 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
                echo "<input type='hidden' name='computers_id' value='$computers_id'>";
                echo "<input type='hidden' name='fusinvinventory_licenseinfos_id' value='".
                   $licenseInfo['id']."'>";
-               echo "<input type='hidden' name='key' value='".$licenseInfo['key']."'>";
+               echo "<input type='hidden' name='key' value='".$licenseInfo['serial']."'>";
                $rand = mt_rand();
-//               Dropdown::show('Software', array(
-//                  'toupdate'    => array(
-//                     'value_fieldname' => "__VALUE__",
-//                     'to_update'       => "softwarelicenses_id_$rand",
-//                     'url'             => GLPI_ROOT.
-//                        "/plugins/fusinvinventory/ajax/dropdownsoftwarelicenses.php".
-//                           "?key=".$licenseInfo['key']
-//                  ),
-//                  'condition'   => "name LIKE '%".$licenseInfo['name']."%' ".
-//                     "OR name LIKE '%".$licenseInfo['fullname']."%'"
-//               ));
-                $params = array(
+               $params = array(
                      'softwarelicenses_id' => $licenseInfo['softwarelicenses_id'],
                      'name' => $licenseInfo['name'],
                      'fullname' => $licenseInfo['fullname'],
-                     'serial' => $licenseInfo['key']
+                     'serial' => $licenseInfo['serial']
                   );
                 Ajax::updateItem("softwarelicenses_id_$rand",
-                              $CFG_GLPI["root_doc"]."/plugins/fusinvinventory/ajax/dropdownsoftwarelicenses.php?key=".$licenseInfo['key'], $params, false);
+                              $CFG_GLPI["root_doc"]."/plugins/fusinvinventory/ajax/dropdownsoftwarelicenses.php?key=".$licenseInfo['serial'], $params, false);
                echo "<span id='softwarelicenses_id_$rand'></span>";
                Html::closeForm();
                echo "</td>";
@@ -203,11 +187,13 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
 
    function associate($options) {
 
-      $computer_slicense = new Computer_SoftwareLicense;
-      $computer_slicense->add(array(
-         'computers_id'        => $options['computers_id'],
-         'softwarelicenses_id' => $options['softwarelicenses_id']
-      ));
+      if (isset($options['computers_id'])) {
+         $computer_slicense = new Computer_SoftwareLicense;
+         $computer_slicense->add(array(
+            'computers_id'        => $options['computers_id'],
+            'softwarelicenses_id' => $options['softwarelicenses_id']
+         ));
+      }
 
       $pfLicenseInfo = new self;
       $pfLicenseInfo->update(array(

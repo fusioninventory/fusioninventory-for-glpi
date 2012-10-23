@@ -83,16 +83,21 @@ class PluginFusinvinventoryImport_LicenseInfo extends CommonDBTM {
       }
 
 
-      foreach (array(
-                  'NAME',
-                  'FULLNAME',
-                  'KEY',
-                  'IS_TRIAL',
-                  'IS_UPDATE',
-                  'IS_OEM',
-                  'ACTIVATION_DATE') as $k) {
-         if (isset($dataSection[$k]))
-            $licenseInfo[strtolower($k)] = $dataSection[$k];
+      $a_XMLnode = array('NAME',
+                         'FULLNAME',
+                         'KEY',
+                         'IS_TRIAL',
+                         'IS_UPDATE',
+                         'IS_OEM',
+                         'ACTIVATION_DATE');
+      foreach ($a_XMLnode as $k) {
+         if (isset($dataSection[$k])) {
+            if ($k == "KEY") {
+               $licenseInfo['serial'] = $dataSection[$k];
+            } else {
+               $licenseInfo[strtolower($k)] = $dataSection[$k];
+            }
+         }
       }
 
       if (isset($licenseInfo['name']) && !empty($licenseInfo["name"])) {

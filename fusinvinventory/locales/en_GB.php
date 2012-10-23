@@ -105,7 +105,6 @@ $LANG['plugin_fusinvinventory']['antivirus'][3]="Up to date";
 $LANG['plugin_fusinvinventory']['licenseinfo'][0]="License";
 $LANG['plugin_fusinvinventory']['licenseinfo'][1]="Name";
 $LANG['plugin_fusinvinventory']['licenseinfo'][2]="Full Name";
-$LANG['plugin_fusinvinventory']['licenseinfo'][3]="Key";
 $LANG['plugin_fusinvinventory']['licenseinfo'][4]="ProductId";
 $LANG['plugin_fusinvinventory']['licenseinfo'][5]="Option(s)";
 
