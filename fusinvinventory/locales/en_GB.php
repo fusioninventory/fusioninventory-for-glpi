@@ -102,6 +102,12 @@ $LANG['plugin_fusinvinventory']['antivirus'][1]="This computer is not a Windows 
 $LANG['plugin_fusinvinventory']['antivirus'][2]="Version";
 $LANG['plugin_fusinvinventory']['antivirus'][3]="Up to date";
 
+$LANG['plugin_fusinvinventory']['licenseinfo'][0]="License";
+$LANG['plugin_fusinvinventory']['licenseinfo'][1]="Name";
+$LANG['plugin_fusinvinventory']['licenseinfo'][2]="Full Name";
+$LANG['plugin_fusinvinventory']['licenseinfo'][4]="ProductId";
+$LANG['plugin_fusinvinventory']['licenseinfo'][5]="Option(s)";
+
 $LANG['plugin_fusinvinventory']['computer'][0]="Last inventory";
 $LANG['plugin_fusinvinventory']['computer'][1]="Owner";
 $LANG['plugin_fusinvinventory']['computer'][2]="Company";

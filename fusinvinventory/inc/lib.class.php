@@ -306,6 +306,7 @@ class PluginFusinvinventoryLib extends CommonDBTM {
       $a_sections[] = "VIRTUALMACHINES";
       $a_sections[] = "CPUS";
       $a_sections[] = "ANTIVIRUS";
+      $a_sections[] = "LICENSEINFOS";
 
       // Retrieve all sections stored in info file
       $infoSections = $this->_getInfoSections($internalId);
@@ -647,6 +648,14 @@ class PluginFusinvinventoryLib extends CommonDBTM {
                            if ($split[1] > 0) {
                               $boolUpdate = true;
                            }
+                           break;
+
+                        case "LICENSEINFOS":
+                           $split = explode("/", $sectionId);
+                           if ($split[1] > 0) {
+                              $boolUpdate = true;
+                           }
+
                            break;
 
                         default:
