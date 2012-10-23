@@ -187,8 +187,7 @@ function plugin_fusinvinventory_check_prerequisites() {
    if (!$plugin->isActivated("fusioninventory")) {
       return false;
    }
-   if ((TableExists("glpi_plugin_fusinvinventory_computers")
-           AND !FieldExists("glpi_plugin_fusinvinventory_computers", "bios_assettag"))) {
+   if (!TableExists("glpi_plugin_fusinvinventory_licenseinfos")) {
       $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` SET `value`='0.83+1.0' 
          WHERE `type`='version'
          AND `plugins_id`='".PluginFusioninventoryModule::getModuleId('fusinvinventory')."'");
