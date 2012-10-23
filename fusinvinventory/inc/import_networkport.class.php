@@ -142,7 +142,8 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
    function deleteItem($items_id, $idmachine) {
       $NetworkPort = new NetworkPort();
       $NetworkPort->getFromDB($items_id);
-      if (($NetworkPort->fields['items_id'] == $idmachine) AND ($NetworkPort->fields['itemtype'] == 'Computer')) {
+      if (($NetworkPort->getField('items_id') == $idmachine) 
+              AND ($NetworkPort->getField('itemtype') == 'Computer')) {
          $input = array();
          $input['id'] = $items_id;
          if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
