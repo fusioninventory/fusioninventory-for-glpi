@@ -136,6 +136,13 @@ class PluginFusioninventoryMenu {
 
       }
 
+      if (Session::haveRight("config","w")) {
+         $a_menu[10]['name'] = $LANG['plugin_fusioninventory']['functionalities'][2];
+         $a_menu[10]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
+         $a_menu[10]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/config.form.php";
+
+      }
+
       echo "<div align='center' style='z-index: 1;position:absolute;width: 100%; margin: 0 auto;'>";
       echo "<table width='100%'>";
 
