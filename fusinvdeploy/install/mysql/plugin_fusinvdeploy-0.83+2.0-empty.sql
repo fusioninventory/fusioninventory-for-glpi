@@ -205,7 +205,9 @@ CREATE TABLE `glpi_plugin_fusinvdeploy_mirrors` (
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
 
 
-
+-- WARNING
+-- WARNING VIEW also created in fusinvdeploy/setup.php
+-- These will be removed in 0.84
 DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_actions_messages`;
 
 CREATE TABLE `glpi_plugin_fusinvdeploy_actions_messages` (
@@ -222,6 +224,8 @@ DROP VIEW IF EXISTS `glpi_plugin_fusinvdeploy_tasks`;
 
 CREATE VIEW `glpi_plugin_fusinvdeploy_tasks`
 AS SELECT * FROM glpi_plugin_fusioninventory_tasks;
+-- WARNING
+-- WARNING
 
 
 
