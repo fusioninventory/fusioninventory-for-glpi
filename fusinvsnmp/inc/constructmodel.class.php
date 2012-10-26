@@ -302,6 +302,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             $id = $devices_id;
          } else {
             $id = $data->device->id;
+            Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$id);
          }
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
                    WHERE `construct_device_id`='".$id."'
