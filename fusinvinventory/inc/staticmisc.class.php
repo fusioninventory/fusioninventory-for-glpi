@@ -271,7 +271,7 @@ class PluginFusinvinventoryStaticmisc {
    static function task_ESX_getParameters() {
 
       return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'ESX', 
-                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('ESX'));
+                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('fusinvinventory', 'ESX'));
    }
 }
 
