@@ -62,7 +62,6 @@ class PluginFusinvdeployConfig extends CommonDBTM {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
       $insert = array(
-         'glpi_path'          => str_replace("http://", "", $Config->fields['url_base']),
          'server_upload_path' => $root_doc.'/files/_plugins/'.$a_plugin['shortname'].'/upload',
          'alert_winpath'     => 1
       );
@@ -95,7 +94,6 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       $config = new PluginFusioninventoryConfig;
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
-      $config->updateConfigType($plugins_id, 'glpi_path', $p_post['glpi_path']);
       $config->updateConfigType($plugins_id, 'server_upload_path', $p_post['server_upload_path']);
       $config->updateConfigType($plugins_id, 'alert_winpath', $p_post['alert_winpath']);
    }
@@ -109,18 +107,6 @@ class PluginFusinvdeployConfig extends CommonDBTM {
       echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
-
-//      echo "<tr class='tab_bg_1'>";
-//      echo "<td>".$LANG['plugin_fusinvdeploy']['config'][0]."&nbsp;:</td>";
-//      echo "<td>";
-//      Html::autocompletionTextField($config, 'glpi_path', array(
-//         'name'   => 'glpi_path',
-//         'value'  => $config->getValue($plugins_id, 'glpi_path'),
-//         'size'   => '100%'
-//      ));
-//      echo "</td>";
-//      echo "<td colspan='2'></td>";;
-//      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['plugin_fusinvdeploy']['config'][1]."&nbsp;:</td>";

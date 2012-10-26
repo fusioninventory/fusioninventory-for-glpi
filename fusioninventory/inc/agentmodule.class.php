@@ -415,6 +415,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
    
 
+
    /**
    * Get URL for module (for REST)
    *
