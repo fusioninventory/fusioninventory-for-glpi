@@ -568,10 +568,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'entities_id', 
                                  'entities_id', 
                                  "int(11) NOT NULL DEFAULT '-1'");
-         $migration->changeField($newTable, 
-                                 'url', 
-                                 'url', 
-                                 "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->dropField($newTable,
+                               "url");
+
       $migration->migrationOneTable($newTable);
  
       

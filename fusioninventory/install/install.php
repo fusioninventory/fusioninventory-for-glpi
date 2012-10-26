@@ -196,6 +196,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
                     ('inventory_frequence', '24', '".$plugins_id."'),
                     ('agent_port', '62354', '".$plugins_id."'),
                     ('extradebug', '0', '".$plugins_id."'),
+                    ('agent_base_url', '', '".$plugins_id."'),
                     ('users_id', '".$users_id."', '".$plugins_id."')";
    $DB->query($query);
 
