@@ -1,4 +1,4 @@
-## obsolete tables
+-- obsolete tables
 DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol`;
 DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol`;
 DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_version`;
@@ -16,12 +16,12 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_mac`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_walks`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lockable`;
 
-## renamed tables
+-- renamed tables
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_modules`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lock`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_task`;
-#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_device`;
+-- DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_device`;
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents`;
 
@@ -325,8 +325,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs` (
 
 
 
-## INSERT
-## glpi_displaypreferences
+-- INSERT
+-- glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 
    VALUES (NULL,'PluginFusioninventoryAgent', '2', '1', '0'),
           (NULL,'PluginFusioninventoryAgent', '4', '2', '0'),

@@ -46,7 +46,7 @@ define ("PLUGIN_FUSINVDEPLOY_VERSION","0.83+2.0");
 
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvdeploy() {
-   global $PLUGIN_HOOKS,$CFG_GLPI,$LANG;
+   global $PLUGIN_HOOKS,$CFG_GLPI,$LANG,$DB;
 
    // ##### 1. Stop if fusioninventory not activated #####
    $PLUGIN_HOOKS['csrf_compliant']['fusinvdeploy'] = true;
@@ -137,6 +137,32 @@ function plugin_init_fusinvdeploy() {
             ."&glpi_tab=".array_search($a_plugin['name'], $a_tabs);
       }
    }
+
+
+   # These will be removed in 0.84
+   if (isset($_GET['id']) AND isset($_GET['action']) && $_GET['action'] == 'activate') {
+      if (!$DB->query("DROP VIEW IF EXISTS `glpi_plugin_fusinvdeploy_tasks`;")
+            ||
+            !$DB->query("CREATE VIEW `glpi_plugin_fusinvdeploy_tasks` ".
+            "AS SELECT * FROM `glpi_plugin_fusioninventory_tasks`;")
+            ||
+            !$DB->query("DROP VIEW IF EXISTS `glpi_plugin_fusinvdeploy_taskjobs`;")
+            ||
+            !$DB->query("CREATE VIEW `glpi_plugin_fusinvdeploy_taskjobs` ".
+               "AS SELECT `id`, ".
+               "`plugin_fusioninventory_tasks_id` AS `plugin_fusinvdeploy_tasks_id`, ".
+               "`entities_id`, `name`, `date_creation`, `retry_nb`, ".
+               "`retry_time`, `plugins_id`, `method`, `definition`, ".
+               "`action`, `comment`, `users_id`, `status`, ".
+               "`rescheduled_taskjob_id`, `statuscomments`, ".
+               "`periodicity_count`, `periodicity_type`, `execution_id` ".
+               "FROM `glpi_plugin_fusioninventory_taskjobs`;")) {
+            Session::addMessageAfterRedirect("SQL VIEW creation failure!");
+            Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
+            return false;
+      }
+   }
+
 
    if (!class_exists('PluginFusioninventoryProfile')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
