@@ -229,7 +229,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    function sendGetsysdescr($sysdescr, $itemtype, $devices_id = 0) {
-      global $CFG_GLPI,$DB;
+      global $CFG_GLPI,$DB, $LANG;
       
       $getsysdescr = array();
       if ($devices_id > 0) {
@@ -451,6 +451,11 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             echo "<tr class='tab_bg_1'>";
             echo "<td class='center'>";
             echo "snmpwalk file present";
+            echo "<form method='post' name='' id=''  action=''>";
+            echo "<input type='hidden' name='devices_id' value='".$devices_id."' />";
+            echo "<div align='center'><input type='submit' name='deletesnmpwalkfile' value=\"" . $LANG['buttons'][6] .
+                 "\" class='submit' >";
+            Html::closeForm();
             echo "</td>";
             echo "</tr>";
 

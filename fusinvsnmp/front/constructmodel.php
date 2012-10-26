@@ -118,6 +118,17 @@ if ($pfConstructmodel->connect()) {
 
          $_SESSION['plugin_fusioninventory_snmpwalks_id'] = $jsonret->device->id;
          Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?editoid=".$jsonret->device->id);
+      } else if (isset($_POST['deletesnmpwalkfile'])) {
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
+                   WHERE `construct_device_id`='".$_POST['devices_id']."'";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            unlink(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$data['log']);
+            $query_delete = "DELETE FROM glpi_plugin_fusioninventory_construct_walks
+               WHERE id='".$data['id']."'";
+            $DB->query($query_delete);
+         }
+         Html::back();
       } else if (isset($_GET['action'])
               AND $_GET['action'] == 'displaydevice'
               AND isset($_SESSION['plugin_fusioninventory_sysdescr'])
