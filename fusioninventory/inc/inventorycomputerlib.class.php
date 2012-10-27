@@ -153,8 +153,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
                        `glpi_softwares`.`name`,
                        `glpi_softwareversions`.`name` AS version,
-                       `glpi_softwareversions`.`entities_id`,
-                       `glpi_softwares`.`manufacturers_id`
+                       `glpi_softwareversions`.`entities_id`
                 FROM `glpi_computers_softwareversions`
                 LEFT JOIN `glpi_softwareversions`
                      ON (`glpi_computers_softwareversions`.`softwareversions_id`
@@ -166,15 +165,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             while ($db_software = $DB->fetch_assoc($result)) {
                $idtmp = $db_software['sid'];
                unset($db_software['sid']);
-               if ($db_software['version'] == '') {
-                  unset($db_software['version']);
-               } 
                $db_software = Toolbox::addslashes_deep($db_software);
                $db_software = array_map('strtolower', $db_software);
                $a_softwares[$idtmp] = $db_software;
             }
             foreach ($a_computerinventory['software'] as $key => $arrays) {
                unset($arrays['manufacturer']);
+               unset($arrays['manufacturers_id']);
                $arrayslower = array_map('strtolower', $arrays);
                foreach ($a_softwares as $keydb => $arraydb) {
                   if ($arrayslower == $arraydb) {
@@ -184,6 +181,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   }
                }
             }
+            
             if (count($a_computerinventory['software']) == 0
                AND count($a_softwares) == 0) {
                // Nothing to do

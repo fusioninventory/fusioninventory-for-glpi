@@ -489,7 +489,6 @@ class PluginFusioninventoryFormatconvert {
          $entities_id_software = $_SESSION["plugin_fusinvinventory_entity"];
       }
       
-      
       $rulecollection = new RuleDictionnarySoftwareCollection();
       foreach ($a_inventory['SOFTWARES'] as $a_softwares) {
          $array_tmp = $thisc->addValues($a_softwares, 
@@ -528,8 +527,12 @@ class PluginFusioninventoryFormatconvert {
             if (isset($res_rule['new_entities_id'])) {
                $array_tmp['entities_id'] = $res_rule['new_entities_id'];
             }
-            if (!isset($array_tmp['entities_id'])) {
+            if (!isset($array_tmp['entities_id'])
+                    || $array_tmp['entities_id'] == '') {
                $array_tmp['entities_id'] = $entities_id_software;
+            }
+            if (!isset($array_tmp['version'])) {
+               $array_tmp['version'] = "";
             }
             $a_inventory['software'][] = $array_tmp;
          }

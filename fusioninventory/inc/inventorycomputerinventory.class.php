@@ -61,6 +61,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       global $DB;
 
       $errors = '';
+      $_SESSION["plugin_fusinvinventory_entity"] = 0;
 
       $ret = $DB->query("SELECT GET_LOCK('inventory', 15)");
       if ($DB->result($ret, 0, 0) == 1) {
@@ -242,7 +243,6 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
          //}
          // End transfer disabled
-
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusioninventoryInventoryComputerInventory";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array();
