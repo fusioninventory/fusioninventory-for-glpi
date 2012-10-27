@@ -418,7 +418,7 @@ class PluginFusioninventoryFormatconvert {
       // * SLOTS
       
       // * SOFTWARES
-      if (isset($a_inventory['SOFTWARES'])
+      if (isset($array['SOFTWARES'])
               && $pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                   "import_software", 'inventory') != '0') {
          $a_inventory['SOFTWARES'] = $array['SOFTWARES'];
