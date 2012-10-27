@@ -479,11 +479,9 @@ class PluginFusioninventoryFormatconvert {
    
    
    static function computerSoftwareTransformation($a_inventory) {
-      global $DB;
       
       $thisc = new self();
       
-      $entities_id_software = $_SESSION["plugin_fusinvinventory_entity"];
       $entities_id_software = Entity::getUsedConfig('entities_id_software', $_SESSION["plugin_fusinvinventory_entity"], '', true);
       if ($entities_id_software < 0) {
          $entities_id_software = $_SESSION["plugin_fusinvinventory_entity"];
@@ -519,9 +517,11 @@ class PluginFusioninventoryFormatconvert {
                $array_tmp['version'] = $res_rule["version"];
             }
             if (isset($res_rule["manufacturer"])  && $res_rule["manufacturer"]) {
+               $array_tmp['manufacturers_id'] = $res_rule["manufacturer"];
                $array_tmp['manufacturer'] = Dropdown::getDropdownName("glpi_manufacturers", $res_rule["manufacturer"]);
             }
             if (!isset($array_tmp['manufacturer'])) {
+               $array_tmp['manufacturers_id'] = 0;
                $array_tmp['manufacturer'] = '';
             }
             if (isset($res_rule['new_entities_id'])) {
@@ -585,9 +585,11 @@ class PluginFusioninventoryFormatconvert {
                $itemtype = 'VirtualMachineState';
             } else if ($key == 'filesystems_id') {
                $itemtype = 'Filesystem';
-            } else if ($key == "manufacturer") {               
-               $array['manufacturers_id']= Dropdown::importExternal('Manufacturer',
-                                                                    $value);
+            } else if ($key == "manufacturer") {
+               if (!isset($array['manufacturers_id'])) {
+                  $array['manufacturers_id']= Dropdown::importExternal('Manufacturer',
+                                                                       $value);
+               }
             }
             if ($itemtype != '') {
                $value = Dropdown::importExternal($itemtype,

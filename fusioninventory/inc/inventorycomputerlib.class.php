@@ -169,6 +169,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $db_software = array_map('strtolower', $db_software);
                $a_softwares[$idtmp] = $db_software;
             }
+
             foreach ($a_computerinventory['software'] as $key => $arrays) {
                unset($arrays['manufacturer']);
                unset($arrays['manufacturers_id']);
@@ -181,7 +182,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   }
                }
             }
-            
             if (count($a_computerinventory['software']) == 0
                AND count($a_softwares) == 0) {
                // Nothing to do
@@ -262,7 +262,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             // Nothing to do
          } else {
             if (count($db_computervirtualmachine) != 0) {
-               // Delete softwares in DB
+               // Delete virtualmachine in DB
                foreach ($db_computervirtualmachine as $idtmp => $data) {
                   $computerVirtualmachine->delete(array('id'=>$idtmp));
                }
@@ -321,7 +321,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             // Nothing to do
          } else {
             if (count($db_computerdisk) != 0) {
-               // Delete softwares in DB
+               // Delete computerdisk in DB
                foreach ($db_computerdisk as $idtmp => $data) {
                   $computerDisk->delete(array('id'=>$idtmp));
                }
@@ -392,7 +392,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      // Nothing to do
                   } else {
                      if (count($db_addresses) != 0) {
-                        // Delete softwares in DB                     
+                        // Delete ip address in DB                     
                         foreach ($db_addresses as $idtmp => $name) {
                            $iPAddress->delete(array('id'=>$idtmp));
                         }
@@ -421,7 +421,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             // Nothing to do
          } else {
             if (count($db_networkport) != 0) {
-               // Delete softwares in DB
+               // Delete networkport in DB
                foreach ($db_networkport as $idtmp => $data) {
                   $networkPort->delete(array('id'=>$idtmp));
                }

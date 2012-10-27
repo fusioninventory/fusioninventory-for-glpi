@@ -367,7 +367,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
             
             $a_computerinventory = PluginFusioninventoryFormatconvert::computerSoftwareTransformation($a_computerinventory);
-            
+
             $pfLib->updateComputer($a_computerinventory, $items_id);
          }
       } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
