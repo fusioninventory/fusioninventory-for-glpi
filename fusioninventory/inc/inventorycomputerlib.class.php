@@ -221,13 +221,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $db_computervirtualmachine[$idtmp] = $data;
          }
          $simplecomputervirtualmachine = array();
-         foreach ($a_computerinventory['virtualmachine'] as $key=>$a_computervirtualmachine) {
-            $a_field = array('name', 'uuid', 'virtualmachinesystems_id');
-            foreach ($a_field as $field) {
-               if (isset($a_computervirtualmachine[$field])) {
-                  $simplecomputervirtualmachine[$key][$field] = $a_computervirtualmachine[$field];
-               }
-            }            
+         if (isset($a_computerinventory['virtualmachine'])) {
+            foreach ($a_computerinventory['virtualmachine'] as $key=>$a_computervirtualmachine) {
+               $a_field = array('name', 'uuid', 'virtualmachinesystems_id');
+               foreach ($a_field as $field) {
+                  if (isset($a_computervirtualmachine[$field])) {
+                     $simplecomputervirtualmachine[$key][$field] = $a_computervirtualmachine[$field];
+                  }
+               }            
+            }
          }
          foreach ($simplecomputervirtualmachine as $key => $arrays) {
             $arrayslower = array_map('strtolower', $arrays);
@@ -313,6 +315,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
+         
          if (count($a_computerinventory['computerdisk']) == 0
             AND count($db_computerdisk) == 0) {
             // Nothing to do

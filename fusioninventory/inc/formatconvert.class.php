@@ -270,13 +270,13 @@ class PluginFusioninventoryFormatconvert {
                  "component_drive", 'inventory') == '0'
              OR ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
                  "component_networkdrive", 'inventory') == '0'
-                 AND ((isset($array['DRIVES']['TYPE'])
-                    AND $array['DRIVES']['TYPE'] == 'Network Drive')
-                     OR isset($array['DRIVES']['FILESYSTEM'])
-                    AND $array['DRIVES']['FILESYSTEM'] == 'nfs'))
-             OR ((isset($array['DRIVES']['TYPE'])) AND
-                 (($array['DRIVES']['TYPE'] == "Removable Disk")
-                OR ($array['DRIVES']['TYPE'] == "Compact Disc")))) {
+                 AND ((isset($a_drives['TYPE'])
+                    AND $a_drives['TYPE'] == 'Network Drive')
+                     OR isset($a_drives['FILESYSTEM'])
+                    AND $a_drives['FILESYSTEM'] == 'nfs'))
+             OR ((isset($a_drives['TYPE'])) AND
+                 (($a_drives['TYPE'] == "Removable Disk")
+                OR ($a_drives['TYPE'] == "Compact Disc")))) {
 
          } else {
             $array_tmp = $thisc->addValues($a_drives, 
