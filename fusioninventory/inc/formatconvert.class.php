@@ -583,7 +583,7 @@ class PluginFusioninventoryFormatconvert {
          } else {
             $itemtype = '';
             if ($key == 'manufacturers_id'
-                    && !isset($arry['manufacturer'])) {
+                    && !isset($array['manufacturer'])) {
                $itemtype = 'Manufacturer';
             } else if ($key == 'computermodels_id') {
                $itemtype = 'ComputerModel';
