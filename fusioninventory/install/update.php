@@ -2943,15 +2943,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
          $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_models_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodels_id",
                                  "plugin_fusioninventory_snmpmodels_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
@@ -2959,20 +2951,29 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "plugin_fusioninventory_snmpmodelmiblabels_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmiblabels_id",
-                                 "plugin_fusioninventory_snmpmodelmiblabels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_miboids_id",
-                                 "plugin_fusioninventory_snmpmodelmiboids",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmiboids",
                                  "plugin_fusioninventory_snmpmodelmiboids",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_mibobjects_id",
                                  "plugin_fusioninventory_snmpmodelmibobjects_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "plugin_fusioninventory_snmpmodels_id",
+                                 "plugin_fusioninventory_snmpmodels_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "plugin_fusioninventory_snmpmodelmiblabels_id",
+                                 "plugin_fusioninventory_snmpmodelmiblabels_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "plugin_fusioninventory_snmpmodelmiboids",
+                                 "plugin_fusioninventory_snmpmodelmiboids",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "plugin_fusioninventory_snmpmodelmibobjects_id",
@@ -4866,9 +4867,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
    
    /*
-    * Modify displaypreference for PluginFusinvsnmpPrinterLogReport
+    * Modify displaypreference for PluginFusioninventoryPrinterLog
     */
-      $pfPrinterLogReport = new PluginFusinvsnmpPrinterLogReport();
+      include_once("../plugins/fusioninventory/inc/printerlog.class.php");
+      $pfPrinterLogReport = new PluginFusioninventoryPrinterLog();
       $a_searchoptions = $pfPrinterLogReport->getSearchOptions();
       $query = "SELECT * FROM `glpi_displaypreferences`
       WHERE `itemtype` = 'PluginFusioninventoryPrinterLogReport'
@@ -4985,8 +4987,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_input['extradebug'] = 0;
       $a_input['users_id'] = $users_id;
       foreach ($a_input as $type=>$value) {
-         if (is_null($config->getValue($plugins_id, $type))) {
-            $config->addValues($plugins_id, array($type=>$value));
+         if (is_null($config->getValue($plugins_id, $type, ''))) {
+            $config->addValues($plugins_id, array($type=>$value),'');
          }
       }
      $DB->query("DELETE FROM `glpi_plugin_fusioninventory_configs`
@@ -6864,119 +6866,64 @@ function update213to220_ConvertField($migration) {
    $constantsfield['printer > port > index number'] = 'ifIndex';
    $constantsfield['Drucker > Port > Indexnummer'] = 'ifIndex';
 
-   echo "Converting history port ...\n";
-   $i = 0;
-   $nb = count($constantsfield);
-   $migration->addKey("glpi_plugin_tracker_snmp_history",
-                      "Field");
-   $migration->addKey("glpi_plugin_tracker_snmp_history",
-                      array("Field", "old_value"),
-                      "Field_2");
-   $migration->addKey("glpi_plugin_tracker_snmp_history",
-                      array("Field", "new_value"),
-                      "Field_3");
-   $migration->migrationOneTable("glpi_plugin_tracker_snmp_history");
-
-   foreach($constantsfield as $langvalue=>$mappingvalue) {
-      $i++;
-      $query_update = "UPDATE `glpi_plugin_tracker_snmp_history`
-         SET `Field`='".$mappingvalue."'
-         WHERE `Field`=\"".$langvalue."\" ";
-      $DB->query($query_update);
-      $migration->displayMessage("$i / $nb");
-   }
-   $migration->displayMessage("$i / $nb");
-
-   // Move connections from glpi_plugin_fusioninventory_snmp_history to glpi_plugin_fusioninventory_snmp_history_connections
-   echo "Moving creation connections history\n";
-   $query = "SELECT *
-             FROM `glpi_plugin_tracker_snmp_history`
-             WHERE `Field` = '0'
-               AND ((`old_value` NOT LIKE '%:%')
-                     OR (`old_value` IS NULL))";
-   if ($result=$DB->query($query)) {
-      $nb = $DB->numrows($result);
+   if (TableExists("glpi_plugin_tracker_snmp_history")) {
+      echo "Converting history port ...\n";
       $i = 0;
-      $migration->displayMessage("$i / $nb");
-      while ($data=$DB->fetch_array($result)) {
+      $nb = count($constantsfield);
+         $migration->addKey("glpi_plugin_tracker_snmp_history",
+                         "Field");
+      $migration->addKey("glpi_plugin_tracker_snmp_history",
+                         array("Field", "old_value"),
+                         "Field_2");
+      $migration->addKey("glpi_plugin_tracker_snmp_history",
+                         array("Field", "new_value"),
+                         "Field_3");
+      $migration->migrationOneTable("glpi_plugin_tracker_snmp_history");
+
+      foreach($constantsfield as $langvalue=>$mappingvalue) {
          $i++;
-
-         // Search port from mac address
-         $query_port = "SELECT * FROM `glpi_networkports`
-            WHERE `mac`='".$data['new_value']."' ";
-         if ($result_port=$DB->query($query_port)) {
-            if ($DB->numrows($result_port) == '1') {
-               $input = array();
-               $data_port = $DB->fetch_assoc($result_port);
-               $input['FK_port_source'] = $data_port['id'];
-
-               $query_port2 = "SELECT * FROM `glpi_networkports`
-                  WHERE `items_id` = '".$data['new_device_ID']."'
-                     AND `itemtype` = '".$data['new_device_type']."' ";
-               if ($result_port2=$DB->query($query_port2)) {
-                  if ($DB->numrows($result_port2) == '1') {
-                     $data_port2 = $DB->fetch_assoc($result_port2);
-                     $input['FK_port_destination'] = $data_port2['id'];
-
-                     $input['date'] = $data['date_mod'];
-                     $input['creation'] = 1;
-                     $input['process_number'] = $data['FK_process'];
-                     $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
-                        (`date_mod`, `creation`, `networkports_id_source`, `networkports_id_destination`)
-                        VALUES ('".$input['date']."',
-                                '".$input['creation']."',
-                                '".$input['FK_port_source']."',
-                                '".$input['FK_port_destination']."')";
-                     $DB->query($query_ins);
-                  }
-               }
-            }
-         }
-
-         $query_delete = "DELETE FROM `glpi_plugin_tracker_snmp_history`
-               WHERE `ID`='".$data['ID']."' ";
-         $DB->query($query_delete);
-         if (preg_match("/000$/", $i)) {
-            $migration->displayMessage("$i / $nb");
-         }
+         $query_update = "UPDATE `glpi_plugin_tracker_snmp_history`
+            SET `Field`='".$mappingvalue."'
+            WHERE `Field`=\"".$langvalue."\" ";
+         $DB->query($query_update);
+         $migration->displayMessage("$i / $nb");
       }
       $migration->displayMessage("$i / $nb");
-   }
 
-   echo "Moving deleted connections history\n";
-   $query = "SELECT *
-             FROM `glpi_plugin_tracker_snmp_history`
-             WHERE `Field` = '0'
-               AND ((`new_value` NOT LIKE '%:%')
-                     OR (`new_value` IS NULL))";
-   if ($result=$DB->query($query)) {
-      $nb = $DB->numrows($result);
-      $i = 0;
-      $migration->displayMessage("$i / $nb");
-      while ($data=$DB->fetch_array($result)) {
-         $i++;
+      // Move connections from glpi_plugin_fusioninventory_snmp_history to glpi_plugin_fusioninventory_snmp_history_connections
+      echo "Moving creation connections history\n";
+      $query = "SELECT *
+                FROM `glpi_plugin_tracker_snmp_history`
+                WHERE `Field` = '0'
+                  AND ((`old_value` NOT LIKE '%:%')
+                        OR (`old_value` IS NULL))";
+      if ($result=$DB->query($query)) {
+         $nb = $DB->numrows($result);
+         $i = 0;
+         $migration->displayMessage("$i / $nb");
+         while ($data=$DB->fetch_array($result)) {
+            $i++;
 
-         // Search port from mac address
-         $query_port = "SELECT * FROM `glpi_networkports`
-            WHERE `mac`='".$data['old_value']."' ";
-         if ($result_port=$DB->query($query_port)) {
-            if ($DB->numrows($result_port) == '1') {
-               $input = array();
-               $data_port = $DB->fetch_assoc($result_port);
-               $input['FK_port_source'] = $data_port['id'];
+            // Search port from mac address
+            $query_port = "SELECT * FROM `glpi_networkports`
+               WHERE `mac`='".$data['new_value']."' ";
+            if ($result_port=$DB->query($query_port)) {
+               if ($DB->numrows($result_port) == '1') {
+                  $input = array();
+                  $data_port = $DB->fetch_assoc($result_port);
+                  $input['FK_port_source'] = $data_port['id'];
 
-               $query_port2 = "SELECT * FROM `glpi_networkports`
-                  WHERE `items_id` = '".$data['old_device_ID']."'
-                     AND `itemtype` = '".$data['old_device_type']."' ";
-               if ($result_port2=$DB->query($query_port2)) {
-                  if ($DB->numrows($result_port2) == '1') {
-                     $data_port2 = $DB->fetch_assoc($result_port2);
-                     $input['FK_port_destination'] = $data_port2['id'];
+                  $query_port2 = "SELECT * FROM `glpi_networkports`
+                     WHERE `items_id` = '".$data['new_device_ID']."'
+                        AND `itemtype` = '".$data['new_device_type']."' ";
+                  if ($result_port2=$DB->query($query_port2)) {
+                     if ($DB->numrows($result_port2) == '1') {
+                        $data_port2 = $DB->fetch_assoc($result_port2);
+                        $input['FK_port_destination'] = $data_port2['id'];
 
-                     $input['date'] = $data['date_mod'];
-                     $input['creation'] = 1;
-                     $input['process_number'] = $data['FK_process'];
-                     if ($input['FK_port_source'] != $input['FK_port_destination']) {
+                        $input['date'] = $data['date_mod'];
+                        $input['creation'] = 1;
+                        $input['process_number'] = $data['FK_process'];
                         $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
                            (`date_mod`, `creation`, `networkports_id_source`, `networkports_id_destination`)
                            VALUES ('".$input['date']."',
@@ -6988,16 +6935,73 @@ function update213to220_ConvertField($migration) {
                   }
                }
             }
-         }
 
-         $query_delete = "DELETE FROM `glpi_plugin_tracker_snmp_history`
-               WHERE `ID`='".$data['ID']."' ";
-         $DB->query($query_delete);
-         if (preg_match("/000$/", $i)) {
-            $migration->displayMessage("$i / $nb");
+            $query_delete = "DELETE FROM `glpi_plugin_tracker_snmp_history`
+                  WHERE `ID`='".$data['ID']."' ";
+            $DB->query($query_delete);
+            if (preg_match("/000$/", $i)) {
+               $migration->displayMessage("$i / $nb");
+            }
          }
+         $migration->displayMessage("$i / $nb");
       }
-      $migration->displayMessage("$i / $nb");
+
+      echo "Moving deleted connections history\n";
+      $query = "SELECT *
+                FROM `glpi_plugin_tracker_snmp_history`
+                WHERE `Field` = '0'
+                  AND ((`new_value` NOT LIKE '%:%')
+                        OR (`new_value` IS NULL))";
+      if ($result=$DB->query($query)) {
+         $nb = $DB->numrows($result);
+         $i = 0;
+         $migration->displayMessage("$i / $nb");
+         while ($data=$DB->fetch_array($result)) {
+            $i++;
+
+            // Search port from mac address
+            $query_port = "SELECT * FROM `glpi_networkports`
+               WHERE `mac`='".$data['old_value']."' ";
+            if ($result_port=$DB->query($query_port)) {
+               if ($DB->numrows($result_port) == '1') {
+                  $input = array();
+                  $data_port = $DB->fetch_assoc($result_port);
+                  $input['FK_port_source'] = $data_port['id'];
+
+                  $query_port2 = "SELECT * FROM `glpi_networkports`
+                     WHERE `items_id` = '".$data['old_device_ID']."'
+                        AND `itemtype` = '".$data['old_device_type']."' ";
+                  if ($result_port2=$DB->query($query_port2)) {
+                     if ($DB->numrows($result_port2) == '1') {
+                        $data_port2 = $DB->fetch_assoc($result_port2);
+                        $input['FK_port_destination'] = $data_port2['id'];
+
+                        $input['date'] = $data['date_mod'];
+                        $input['creation'] = 1;
+                        $input['process_number'] = $data['FK_process'];
+                        if ($input['FK_port_source'] != $input['FK_port_destination']) {
+                           $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
+                              (`date_mod`, `creation`, `networkports_id_source`, `networkports_id_destination`)
+                              VALUES ('".$input['date']."',
+                                      '".$input['creation']."',
+                                      '".$input['FK_port_source']."',
+                                      '".$input['FK_port_destination']."')";
+                           $DB->query($query_ins);
+                        }
+                     }
+                  }
+               }
+            }
+
+            $query_delete = "DELETE FROM `glpi_plugin_tracker_snmp_history`
+                  WHERE `ID`='".$data['ID']."' ";
+            $DB->query($query_delete);
+            if (preg_match("/000$/", $i)) {
+               $migration->displayMessage("$i / $nb");
+            }
+         }
+         $migration->displayMessage("$i / $nb");
+      }
    }
 }
 

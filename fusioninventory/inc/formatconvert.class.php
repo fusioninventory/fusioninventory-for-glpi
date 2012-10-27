@@ -441,17 +441,19 @@ class PluginFusioninventoryFormatconvert {
       // * VIRTUALMACHINES
       if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
               "import_vm", 'inventory') != '0') {
-         
-          foreach ($array['VIRTUALMACHINES'] as $a_virtualmachines) {
-            $a_inventory['virtualmachine'][] = $thisc->addValues($a_virtualmachines, 
-                                           array( 
-                                              'NAME'        => 'name', 
-                                              'VCPU'        => 'vcpu', 
-                                              'MEMORY'      => 'ram', 
-                                              'VMTYPE'      => 'virtualmachinetypes_id', 
-                                              'SUBSYSTEM'   => 'virtualmachinesystems_id', 
-                                              'STATUS'      => 'virtualmachinestates_id', 
-                                              'UUID'        => 'uuid'));
+
+         if (isset($array['VIRTUALMACHINES'])) {
+            foreach ($array['VIRTUALMACHINES'] as $a_virtualmachines) {
+               $a_inventory['virtualmachine'][] = $thisc->addValues($a_virtualmachines, 
+                                              array( 
+                                                 'NAME'        => 'name', 
+                                                 'VCPU'        => 'vcpu', 
+                                                 'MEMORY'      => 'ram', 
+                                                 'VMTYPE'      => 'virtualmachinetypes_id', 
+                                                 'SUBSYSTEM'   => 'virtualmachinesystems_id', 
+                                                 'STATUS'      => 'virtualmachinestates_id', 
+                                                 'UUID'        => 'uuid'));
+            }
          }
       }
       
