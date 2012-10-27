@@ -255,9 +255,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          return $_SESSION['plugin_fusioninventory_configvalues'][$plugin_id][$module][$name];
       }
       
+      $modulewhere = "='".$module."'";
+      if ($module == '') {
+         $modulewhere = "IS NULL";
+      }
       $config = current($this->find("`plugins_id`='".$plugin_id."'
                           AND `type`='".$name."'
-                          AND `module`='".$module."'"));
+                          AND `module` ".$modulewhere));
       if (isset($config['value'])) {
          return $config['value'];
       }
