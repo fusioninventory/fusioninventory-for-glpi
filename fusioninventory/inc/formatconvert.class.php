@@ -502,6 +502,9 @@ class PluginFusioninventoryFormatconvert {
          } else {
             $array_tmp['manufacturer'] = '';
          }
+         if (!isset($array_tmp['version'])) {
+            $array_tmp['version'] = '';
+         }
          $res_rule = $rulecollection->processAllRules(array(
                                                          "name"         => $array_tmp['name'],
                                                          "manufacturer" => $array_tmp['manufacturer'],

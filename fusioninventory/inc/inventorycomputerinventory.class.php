@@ -552,10 +552,12 @@ class PluginFusioninventoryInventoryComputerInventory {
       }
 
       // * Virtualmachines
-      foreach ($a_computerinventory['virtualmachine'] as $a_virtualmachine) {
-         $a_virtualmachine['computers_id'] = $computers_id;
-         $a_virtualmachine['_no_history'] = true;
-         $computerVirtualmachine->add($a_virtualmachine);
+      if (isset($a_computerinventory['virtualmachine'])) {
+         foreach ($a_computerinventory['virtualmachine'] as $a_virtualmachine) {
+            $a_virtualmachine['computers_id'] = $computers_id;
+            $a_virtualmachine['_no_history'] = true;
+            $computerVirtualmachine->add($a_virtualmachine);
+         }
       }
       
       // * ComputerDisk
