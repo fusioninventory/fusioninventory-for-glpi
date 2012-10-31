@@ -273,7 +273,8 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
+            if (PluginFusioninventoryModule::getModuleId("fusioninventory")
+                    && $item->getID() > 0) {
                $array[1] = $LANG['plugin_fusioninventory']['title'][0];
             }
             return $array;
