@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetworkCommonDBTM {
+class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    private $oFusionInventory_networkequipment;
    private $newPorts=array(), $updatesPorts=array();
 
@@ -53,6 +53,18 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
       $this->dohistory=true;
       $this->oFusionInventory_networkequipment = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
       $this->oFusionInventory_networkequipment->type = 'PluginFusioninventoryNetworkEquipment';
+   }
+
+   
+   
+   static function canCreate() {
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment", "w");
+   }
+
+   
+
+   static function canView() {
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment", "r");
    }
    
    
@@ -144,25 +156,23 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
          $canedit = true;
       }
 
-      $this->oFusionInventory_networkequipment->id = $id;
-
       $nw=new NetworkPort_NetworkPort();
 
-      if (!$data = $this->oFusionInventory_networkequipment->find("`networkequipments_id`='".$id."'", '', 1)) {
+      if (!$data = $this->find("`networkequipments_id`='".$id."'", '', 1)) {
          // Add in database if not exist
          $input = array();
          $input['networkequipments_id'] = $id;
          $_SESSION['glpi_plugins_fusinvsnmp_table'] = 'glpi_networkequipments';
-         $ID_tn = $this->oFusionInventory_networkequipment->add($input);
-         $this->oFusionInventory_networkequipment->getFromDB($ID_tn);
+         $ID_tn = $this->add($input);
+         $this->getFromDB($ID_tn);
       } else {
          foreach ($data as $datas) {
-            $this->oFusionInventory_networkequipment->fields = $datas;
+            $this->fields = $datas;
          }
       }
 
       $PID = 0;
-      $PID = $this->oFusionInventory_networkequipment->fields['last_PID_update'];
+      $PID = $this->fields['last_PID_update'];
 
       // Form networking informations
       echo "<form name='form' method='post' action='".$options['target']."'>";
@@ -181,7 +191,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
       echo "</td>";
       echo "<td rowspan='3'>";
       echo "<textarea name='sysdescr' cols='45' rows='5'>";
-      echo $this->oFusionInventory_networkequipment->fields['sysdescr'];
+      echo $this->fields['sysdescr'];
       echo "</textarea>";
       echo "<td align='center' rowspan='2'>".__('SNMP models')."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -196,7 +206,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
       }
       Dropdown::show("PluginFusioninventorySnmpmodel",
                      array('name'=>"model_infos",
-                           'value'=>$this->oFusionInventory_networkequipment->fields['plugin_fusioninventory_snmpmodels_id'],
+                           'value'=>$this->fields['plugin_fusioninventory_snmpmodels_id'],
                            'comment'=>0,
                            'used'=>$exclude_models));
       echo "</td>";
@@ -212,7 +222,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>".__('SNMP authentication')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::auth_dropdown($this->oFusionInventory_networkequipment->fields['plugin_fusioninventory_configsecurities_id']);
+      PluginFusioninventoryConfigSecurity::auth_dropdown($this->fields['plugin_fusioninventory_configsecurities_id']);
       echo "</td>";
       echo "</tr>";
 
@@ -222,13 +232,13 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
       echo __('Last inventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      echo Html::convDateTime($this->oFusionInventory_networkequipment->fields['last_fusioninventory_update']);
+      echo Html::convDateTime($this->fields['last_fusioninventory_update']);
       echo "</td>";
       echo "<td align='center'>";
       echo __('CPU usage (in %)')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Html::displayProgressBar(250, $this->oFusionInventory_networkequipment->fields['cpu'],
+      Html::displayProgressBar(250, $this->fields['cpu'],
                   array('simple' => true));
       echo "</td>";
       echo "</tr>";
@@ -238,7 +248,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
       echo __('Uptime')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      $sysUpTime = $this->oFusionInventory_networkequipment->fields['uptime'];
+      $sysUpTime = $this->fields['uptime'];
       $day = 0;
       $hour = 0;
       $minute = 0;
@@ -278,15 +288,15 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
       $result2 = $DB->query($query2);
       $data2 = $DB->fetch_assoc($result2);
       $ram_pourcentage = 0;
-      if (!empty($data2["ram"]) AND !empty($this->oFusionInventory_networkequipment->fields['memory'])) {
-         $ram_pourcentage = ceil((100 * ($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])) / $data2["ram"]);
+      if (!empty($data2["ram"]) AND !empty($this->fields['memory'])) {
+         $ram_pourcentage = ceil((100 * ($data2["ram"] - $this->fields['memory'])) / $data2["ram"]);
       }
-      if ((($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory']) < 0)
-           OR (empty($this->oFusionInventory_networkequipment->fields['memory']))) {
+      if ((($data2["ram"] - $this->fields['memory']) < 0)
+           OR (empty($this->fields['memory']))) {
          echo "<center><strong>".__('Datas not available')."</strong></center>";
       } else {
          Html::displayProgressBar(250, $ram_pourcentage,
-                        array('title' => " (".($data2["ram"] - $this->oFusionInventory_networkequipment->fields['memory'])." Mo / ".
+                        array('title' => " (".($data2["ram"] - $this->fields['memory'])." Mo / ".
                          $data2["ram"]." Mo)"));
       }
       echo "</td>";
@@ -859,7 +869,7 @@ function appear_array(id){
       }
       $query = "UPDATE `glpi_plugin_fusioninventory_networkequipments`
                 SET `plugin_fusioninventory_snmpmodels_id`='".$plugin_fusinvsnmp_models_id."',
-                    `plugin_fusinvsnmp_configsecurities_id`='".$plugin_fusinvsnmp_configsecurities_id."',
+                    `plugin_fusioninventory_configsecurities_id`='".$plugin_fusinvsnmp_configsecurities_id."',
                     `sysdescr`='".$sysdescr."'
                 WHERE `networkequipments_id`='".$id."';";
 

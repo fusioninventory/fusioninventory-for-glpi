@@ -77,18 +77,6 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
       return true;
    }
 
-   function canCancel() {
-      return true;
-   }
-
-   function canUndo() {
-      return true;
-   }
-
-   function canValidate() {
-      return true;
-   }
-
 
 
    /**

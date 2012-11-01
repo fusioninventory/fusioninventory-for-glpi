@@ -55,6 +55,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    private $portVlans=array(); // number and name for each vlan
 
 
+   
 
    function __construct($p_type=NULL) {
       if ($p_type!=NULL) {

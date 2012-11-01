@@ -58,6 +58,18 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    }
 
 
+   
+   static function canCreate() {
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment", "w");
+   }
+
+   
+
+   static function canView() {
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment", "r");
+   }
+   
+   
 
    /**
     * Import data
@@ -149,7 +161,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
       $errors='';
       $nbDevices = 0;
-
+Toolbox::logInFile("NETWORK", print_r($arrayinventory, true));
+return;
       foreach ($arrayinventory as $childname=>$child) {
          PluginFusioninventoryCommunication::addLog($childname);
          switch ($childname) {
@@ -162,6 +175,11 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                   $a_devices[] = $child;
                }
                foreach ($a_devices as $dchild) {
+//                  $a_inventory = PluginFusioninventoryFormatconvert::networkequipmentInventoryTransformation($dchild);
+               
+
+                  
+                  
                   if (isset($dchild['ERROR'])) {
                      $itemtype = "";
                      if ($dchild['ERROR']['TYPE'] == "NETWORKING") {

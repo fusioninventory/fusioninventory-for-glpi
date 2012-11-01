@@ -636,6 +636,92 @@ class PluginFusioninventoryFormatconvert {
       }
       return $array;
    }
+   
+   
+   /*
+    * Modify switch inventory
+    */
+   static function networkequipmentInventoryTransformation($array) {
+      global $DB;
+      
+      $a_inventory = array();
+      $thisc = new self();
+    
+      // * INFO
+      $array_tmp = $thisc->addValues($array['INFO'], 
+                                     array( 
+                                        'NAME'         => 'name',
+                                        'SERIAL'       => 'serial',
+                                        'ID'           => 'id',
+                                        'LOCATION'     => 'locations_id',
+                                        'MODEL'        => 'networkequipmentmodels_id',
+                                        'TYPE'         => 'networkequipmenttypes_id',
+                                        'MANUFACTURER' => 'manufacturers_id',
+                                        'FIRMWARE'     => 'networkequipmentfirmwares_id',
+                                        'RAM'          => 'ram'));
+      
+      $a_inventory['networkequipment'] = $array_tmp;
+      
+      $array_tmp = $thisc->addValues($array['INFO'], 
+                                     array( 
+                                        'COMMENT' => 'sysdscr',
+                                        'UPTIME'  => 'uptime',
+                                        'CPU'     => 'cpu',
+                                        'MEMORY'  => 'memory'));
+      
+      $a_inventory['fusioninventorynetworkequipment'] = $array_tmp;
+      
+      // * Internal ports
+      if (isset($array['INFO']['IPS'])) {
+         foreach ($array['INFO']['IPS'] as $IP) {
+            $a_inventory['internalport'][] = $IP;
+         }
+      }      
+      
+      // * PORTS
+      foreach ($array['PORTS'] as $a_port) {
+         $array_tmp = $thisc->addValues($a_port, 
+                                        array( 
+                                           'IFNAME'   => 'name',
+                                           'IFNUMBER' => 'logical_number',
+                                           'MAC'      => 'mac',
+                                           'IFPEED'   => 'speed',
+                                           
+                                           'IFDESCR'           => 'ifdescr',
+                                           'IFINERRORS'        => 'ifinerrors',
+                                           'IFINOCTETS'        => 'ifinoctets',
+                                           'IFINTERNALSTATUS'  => 'ifinternalstatus',
+                                           'IFLASTCHANGE'      => 'iflastchange',
+                                           'IFMTU'             => 'itmtu',
+                                           'IFOUTERRORS'       => 'ifouterrors',
+                                           'IFSTATUS'          => 'iftatus',
+                                           'IFTYPE'            => 'iftype',
+                                           'TRUNK'             => 'trunk'));
+         
+         $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
+         
+         if (isset($a_port['CONNECTIONS'])) {
+            if (isset($a_port['CONNECTIONS']['CDP'])
+                    && $a_port['CONNECTIONS']['CDP'] == 1) {
+               
+               $array_tmp = $thisc->addValues($a_port['CONNECTIONS']['CONNECTION'], 
+                                              array( 
+                                                 'IFDESCR'  => 'ifdescr',
+                                                 'IFNUMBER' => 'logical_number',
+                                                 'SYSDESCR' => 'sysdescr',
+                                                 'SYSMAC'   => 'mac',
+                                                 'SYSNAME'  => 'name'));
+               $a_inventory['connection-cdp'][$a_port['IFNUMBER']] = $array_tmp;
+            } else {
+               // MAC
+               
+               
+               
+            }
+         }
+      }
+      return $a_inventory;
+   }
 }
 
 ?>
