@@ -58,8 +58,6 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
    
    
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $DB,$LANG;
-
       return self::createTabEntry(__('FusionInventory SNMP'));
    }
 
@@ -80,7 +78,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
   
 
 
-   function getType() {
+   static function getType() {
       return "NetworkEquipment";
    }
 
@@ -136,7 +134,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryNetwork
 
 
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $DB,$CFG_GLPI;
 
       if (!PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment","r")) {
          return false;

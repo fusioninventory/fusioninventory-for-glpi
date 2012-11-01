@@ -64,7 +64,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
 
 
 
-   function getType() {
+   static function getType() {
       return "Printer";
    }
 
