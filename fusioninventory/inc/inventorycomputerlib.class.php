@@ -86,7 +86,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $db_computer = array();
          $a_field = array('name', 'operatingsystems_id', 'operatingsystemversions_id',  'os_licenseid',
                         'os_license_number', 'domains_id', 'uuid',  'comment', 'users_id', 'contact',
-                        'manufacturers_id', 'computermodels_id', 'serial', 'computertypes_id');
+                        'manufacturers_id', 'computermodels_id', 'serial', 'computertypes_id',
+                        'operatingsystemservicepacks_id');
          foreach ($a_field as $field) {
             $db_computer[$field] = $computer->fields[$field];
          }

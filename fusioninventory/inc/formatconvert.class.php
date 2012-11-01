@@ -127,7 +127,12 @@ class PluginFusioninventoryFormatconvert {
                                         'WORKGROUP'      => 'domains_id',
                                         'UUID'           => 'uuid',
                                         'DESCRIPTION'    => 'comment',
-                                        'LASTLOGGEDUSER' => 'users_id'));
+                                        'LASTLOGGEDUSER' => 'users_id',
+                                        'operatingsystemservicepacks_id' => 'operatingsystemservicepacks_id',
+                                        'manufacturers_id' => 'manufacturers_id',
+                                        'computermodels_id' => 'computermodels_id',
+                                        'serial' => 'serial',
+                                        'computertypes_id' => 'computertypes_id'));
       if (isset($array_tmp['users_id'])) {
          $query = "SELECT `id`
                    FROM `glpi_users`
@@ -184,6 +189,7 @@ class PluginFusioninventoryFormatconvert {
             }
          }
       }
+      
       // * Type of computer
       if (isset($array['HARDWARE']['CHASSIS_TYPE'])) {
          $a_inventory['computer']['computertypes_id'] = $array['HARDWARE']['CHASSIS_TYPE'];
@@ -223,6 +229,21 @@ class PluginFusioninventoryFormatconvert {
                                                            'DESCRIPTION'   => 'comment'));
 
             $ignorecontrollers[$a_sounds['NAME']] = 1;
+         }
+      }
+      
+      // * OPERATINGSYSTEM
+      if (isset($array['OPERATINGSYSTEM'])) {
+         $array_tmp = $thisc->addValues($array['OPERATINGSYSTEM'], 
+                                        array( 
+                                           'FULL_NAME'      => 'operatingsystems_id',
+                                           'KERNEL_VERSION' => 'operatingsystemversions_id',
+                                           'SERVICE_PACK'   => 'operatingsystemservicepacks_id'));
+         
+         foreach ($array_tmp as $key=>$value) {
+            if ($a_inventory['fusioninventorycomputer'][$key] != '') {
+               $a_inventory['computer'][$key] = $value;
+            }
          }
       }
             
@@ -271,7 +292,7 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['processor'][] = $array_tmp;
          }
       }
-
+      
       // * DRIVES
       if (isset($array['DRIVES'])) {
          foreach ($array['DRIVES'] as $a_drives) {
@@ -314,18 +335,6 @@ class PluginFusioninventoryFormatconvert {
                }            
                $a_inventory['computerdisk'][] = $array_tmp;
             }
-         }
-      }
-      
-      // * OPERATINGSYSTEM
-      if (isset($array['OPERATINGSYSTEM'])) {
-         $array_tmp = $thisc->addValues($array['OPERATINGSYSTEM'], 
-                                        array( 
-                                           'FULL_NAME'      => 'operatingsystems_id',
-                                           'KERNEL_VERSION' => 'operatingsystemversions_id',
-                                           'SERVICE_PACK'   => 'operatingsystemservicepacks_id'));
-         foreach ($array_tmp as $key=>$value) {
-            $a_inventory['fusioninventorycomputer'][$key] = $value;
          }
       }
       
@@ -568,6 +577,11 @@ class PluginFusioninventoryFormatconvert {
       foreach ($array as $key=>$value) {
          if (in_array($key, $a_keys)) {
             $a_return[$a_key[$key]] = $value;
+         }
+      }
+      foreach ($a_key as $key=>$value) {
+         if (!isset($a_return[$value])) {
+            $a_return[$value] = '';
          }
       }
       return $a_return;
