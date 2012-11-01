@@ -138,8 +138,103 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          
          
       // * Processors
+         $db_processors = array();
+         $query = "SELECT `glpi_items_deviceprocessors`.`id`, `designation`, `frequence`, `frequency`, 
+               `serial`, `manufacturers_id` FROM `glpi_items_deviceprocessors`
+            LEFT JOIN `glpi_deviceprocessors` ON `deviceprocessors_id`=`glpi_deviceprocessors`.`id`
+            WHERE `items_id` = '$items_id'
+               AND `itemtype`='Computer'";
+         $result = $DB->query($query);         
+         while ($data = $DB->fetch_assoc($result)) {
+            $idtmp = $data['id'];
+            unset($data['id']);            
+            $data = Toolbox::addslashes_deep($data);
+            $data = array_map('strtolower', $data);
+            $db_processors[$idtmp] = $data;
+         }
+
+         // Check all fields from source: 'designation', 'serial', 'manufacturers_id', 'frequence'
+         foreach ($a_computerinventory['processor'] as $key => $arrays) {
+            $arrayslower = array_map('strtolower', $arrays);
+            foreach ($db_processors as $keydb => $arraydb) {
+               if ($arrayslower == $arraydb) {
+                  unset($a_computerinventory['processor'][$key]);
+                  unset($db_processors[$keydb]);
+                  break;
+               }
+            }
+         }
+         
+         if (count($a_computerinventory['processor']) == 0
+            AND count($db_processors) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_processors) != 0) {
+               // Delete processor in DB
+               foreach ($db_processors as $idtmp => $data) {
+                  $item_DeviceProcessor->delete(array('id'=>$idtmp));
+               }
+            }
+            if (count($a_computerinventory['processor']) != 0) {
+               foreach($a_computerinventory['processor'] as $a_processor) {
+                  $processors_id = $deviceProcessor->import($a_processor);
+                  $a_processor['deviceprocessors_id'] = $processors_id;
+                  $a_processor['itemtype'] = 'Computer';
+                  $a_processor['items_id'] = $items_id;
+                  $item_DeviceProcessor->add($a_processor);
+               }
+            }
+         }
          
       // * Memories
+         
+         $db_memories = array();
+         $query = "SELECT `glpi_items_devicememories`.`id`, `designation`, `size`, `frequence`, 
+               `serial`, `devicememorytypes_id` FROM `glpi_items_devicememories`
+            LEFT JOIN `glpi_devicememories` ON `devicememories_id`=`glpi_devicememories`.`id`
+            WHERE `items_id` = '$items_id'
+               AND `itemtype`='Computer'";
+         $result = $DB->query($query);         
+         while ($data = $DB->fetch_assoc($result)) {
+            $idtmp = $data['id'];
+            unset($data['id']);            
+            $data = Toolbox::addslashes_deep($data);
+            $data = array_map('strtolower', $data);
+            $db_memories[$idtmp] = $data;
+         }
+
+         // Check all fields from source: 'designation', 'serial', 'size', 'devicememorytypes_id', 'frequence'
+         foreach ($a_computerinventory['memory'] as $key => $arrays) {
+            $arrayslower = array_map('strtolower', $arrays);
+            foreach ($db_memories as $keydb => $arraydb) {
+               if ($arrayslower == $arraydb) {
+                  unset($a_computerinventory['memory'][$key]);
+                  unset($db_memories[$keydb]);
+                  break;
+               }
+            }
+         }
+         
+         if (count($a_computerinventory['memory']) == 0
+            AND count($db_memories) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_memories) != 0) {
+               // Delete processor in DB
+               foreach ($db_memories as $idtmp => $data) {
+                  $item_DeviceMemory->delete(array('id'=>$idtmp));
+               }
+            }
+            if (count($a_computerinventory['memory']) != 0) {
+               foreach($a_computerinventory['memory'] as $a_memory) {
+                  $memories_id = $deviceMemory->import($a_memory);
+                  $a_memory['devicememories_id'] = $memories_id;
+                  $a_memory['itemtype'] = 'Computer';
+                  $a_memory['items_id'] = $items_id;
+                  $item_DeviceMemory->add($a_memory);
+               }
+            }
+         }
          
       // * Graphiccard
          

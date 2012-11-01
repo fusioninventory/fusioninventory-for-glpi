@@ -219,19 +219,6 @@ class PluginFusioninventoryFormatconvert {
          $a_inventory['BIOS']['BIOSMANUFACTURER'] = $array['BIOS']['BMANUFACTURER'];
       }
       
-      // * SOUNDS
-      if (isset($array['SOUNDS'])) {
-         foreach ($array['SOUNDS'] as $a_sounds) {
-            $a_inventory['sound'][] = $thisc->addValues($a_sounds, 
-                                                        array(
-                                                           'NAME'          => 'designation', 
-                                                           'MANUFACTURER'  => 'manufacturers_id', 
-                                                           'DESCRIPTION'   => 'comment'));
-
-            $ignorecontrollers[$a_sounds['NAME']] = 1;
-         }
-      }
-      
       // * OPERATINGSYSTEM
       if (isset($array['OPERATINGSYSTEM'])) {
          $array_tmp = $thisc->addValues($array['OPERATINGSYSTEM'], 
@@ -246,14 +233,27 @@ class PluginFusioninventoryFormatconvert {
             }
          }
       }
+      
+      // * SOUNDS
+      if (isset($array['SOUNDS'])) {
+         foreach ($array['SOUNDS'] as $a_sounds) {
+            $a_inventory['sound'][] = $thisc->addValues($a_sounds, 
+                                                        array(
+                                                           'NAME'          => 'designation', 
+                                                           'MANUFACTURER'  => 'manufacturers_id', 
+                                                           'DESCRIPTION'   => 'comment'));
+
+            $ignorecontrollers[$a_sounds['NAME']] = 1;
+         }
+      }
             
       // * VIDEOS
       if (isset($array['VIDEOS'])) {
          foreach ($array['VIDEOS'] as $a_videos) {
             $a_inventory['graphiccard'][] = $thisc->addValues($a_videos, 
                                                               array(
-                                                                 'NAME'          => 'designation', 
-                                                                 'MEMORY'        => 'memory'));
+                                                                 'NAME'   => 'designation', 
+                                                                 'MEMORY' => 'memory'));
 
             $ignorecontrollers[$a_videos['NAME']] = 1;
             if (isset($a_videos['CHIPSET'])) {
@@ -281,14 +281,15 @@ class PluginFusioninventoryFormatconvert {
          foreach ($array['CPUS'] as $a_cpus) {
             $array_tmp = $thisc->addValues($a_cpus, 
                                            array( 
-                                              'SPEED' => 'frequence', 
+                                              'SPEED'        => 'frequence', 
                                               'MANUFACTURER' => 'manufacturers_id', 
-                                              'SERIAL' => 'serial'));
-            if (isset($a_cpus['NAME'])) {
-               $array_tmp['designation'] = $a_cpus['NAME'];
-            } else if (isset($a_cpus['TYPE'])) {
+                                              'SERIAL'       => 'serial',
+                                              'NAME'         => 'designation'));
+            if ($array_tmp['designation'] == ''
+                    && isset($a_cpus['TYPE'])) {
                $array_tmp['designation'] = $a_cpus['TYPE'];
             }
+            $array_tmp['frequency'] = $array_tmp['frequence'];
             $a_inventory['processor'][] = $array_tmp;
          }
       }
@@ -348,9 +349,9 @@ class PluginFusioninventoryFormatconvert {
             } else {
                $array_tmp = $thisc->addValues($a_memories, 
                                               array( 
-                                                 'CAPACITY' => 'size', 
-                                                 'SPEED' => 'frequence', 
-                                                 'TYPE' => 'devicememorytype',
+                                                 'CAPACITY'     => 'size', 
+                                                 'SPEED'        => 'frequence', 
+                                                 'TYPE'         => 'devicememorytypes_id',
                                                  'SERIALNUMBER' => 'serial'));
                $array_tmp['designation'] = "";
                if (isset($a_memories["TYPE"]) 
@@ -434,7 +435,6 @@ class PluginFusioninventoryFormatconvert {
       } else {
          $a_inventory['SOFTWARES'] = array();
       }
-
       
       // * STORAGES
       
@@ -443,7 +443,7 @@ class PluginFusioninventoryFormatconvert {
          foreach ($array['USERS'] as $a_users) {
             $array_tmp = $thisc->addValues($a_users, 
                                            array( 
-                                              'LOGIN' => 'login', 
+                                              'LOGIN'  => 'login', 
                                               'DOMAIN' => 'domain'));
             $user = '';
             if (isset($array_tmp['login'])) {
@@ -619,6 +619,8 @@ class PluginFusioninventoryFormatconvert {
                $itemtype = 'VirtualMachineState';
             } else if ($key == 'filesystems_id') {
                $itemtype = 'Filesystem';
+            } else if ($key== 'devicememorytypes_id') {
+               $itemtype = 'DeviceMemoryType';
             } else if ($key == "manufacturer") {
                if (!isset($array['manufacturers_id'])) {
                   $array['manufacturers_id']= Dropdown::importExternal('Manufacturer',

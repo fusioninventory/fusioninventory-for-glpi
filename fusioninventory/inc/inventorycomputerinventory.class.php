@@ -489,7 +489,6 @@ class PluginFusioninventoryInventoryComputerInventory {
          $a_processor['deviceprocessors_id'] = $processors_id;
          $a_processor['itemtype'] = 'Computer';
          $a_processor['items_id'] = $computers_id;
-         $a_processor['frequency'] = $a_processor['frequence'];
          $a_processor['_no_history'] = true;
          $item_DeviceProcessor->add($a_processor);
       }
