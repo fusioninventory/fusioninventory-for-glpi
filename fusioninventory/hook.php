@@ -838,19 +838,6 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          }
          break;
 
-      case 'Profile' :
-         if ($withtemplate) { // new object / template case
-            return array();
-         } else { // Non template case / editing an existing object
-            $array = array ();
-            if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $array[1] = __('FusionInventory');
-
-            }
-            return $array;
-         }
-         break;
-
       case 'PluginFusioninventoryUnknownDevice' :
          $array = array ();
          if ($_GET['id'] > 0) {
@@ -903,12 +890,6 @@ function plugin_headings_actions_fusioninventory($item) {
          return $array;
          break;
 
-      case 'Profile' :
-         $array = array();
-         $array[1] = "plugin_headings_fusioninventory";
-         return $array;
-         break;
-
       case 'PluginFusioninventoryUnknownDevice' :
          $array = array ();
          $array[1] = "plugin_headings_fusioninventory_xml";
@@ -943,24 +924,6 @@ function plugin_headings_fusioninventory_tasks($item, $itemtype='', $items_id=0)
    $pfTaskjob = new PluginFusioninventoryTaskjob();
    $pfTaskjob->manageTasksByObject($itemtype, $items_id);
 
-}
-
-
-
-
-function plugin_headings_fusioninventory($item, $withtemplate=0) {
-   global $CFG_GLPI;
-
-   switch (get_class($item)) {
-      case 'Profile' :
-
-         $pfProfile = new PluginFusioninventoryProfile();
-//         if (!$prof->GetfromDB($id)) {
-//            PluginFusioninventoryDb::createaccess($id);
-//         }
-         $pfProfile->showProfileForm($item->getField('id'), $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/profile.php");
-      break;
-   }
 }
 
 

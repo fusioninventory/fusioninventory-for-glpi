@@ -68,7 +68,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryTaskjobstate');
       Plugin::registerClass('PluginFusioninventoryUnknownDevice');
       Plugin::registerClass('PluginFusioninventoryModule');
-      Plugin::registerClass('PluginFusioninventoryProfile');
+      Plugin::registerClass('PluginFusioninventoryProfile',
+              array('addtabon' => array('Profile')));
       Plugin::registerClass('PluginFusioninventorySetup');
       Plugin::registerClass('PluginFusioninventoryAgentmodule');
       Plugin::registerClass('PluginFusioninventoryIPRange');

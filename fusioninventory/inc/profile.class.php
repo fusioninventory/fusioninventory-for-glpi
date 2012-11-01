@@ -46,6 +46,27 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryProfile extends CommonDBTM {
 
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      return self::createTabEntry('FusionInventory');
+   }
+
+
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      global $CFG_GLPI;
+      
+      if ($item->getID() > 0) {
+         $pfProfile = new self();
+         $pfProfile->showProfileForm($item->getID(),
+              $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/profile.php');
+      }
+
+      return true;
+   }
+
+   
+   
    /**
     * Add profile
     *
@@ -312,9 +333,9 @@ class PluginFusioninventoryProfile extends CommonDBTM {
                echo $data['name']."&nbsp;:";
                echo "</td>";
                echo "<td>";
-               echo Profile::dropdownNoneReadWrite($pluginname."-".$data['profil'],
-                                                   $this->getRightDB($pluginname, $data['profil'],
-                                                   $items_id), 1, 1, 1);
+               Profile::dropdownNoneReadWrite($pluginname."-".$data['profil'],
+                                              $this->getRightDB($pluginname, $data['profil'],
+                                              $items_id), 1, 1, 1);
                echo "</td>";
                $i++;
                if ($i == '2') {
