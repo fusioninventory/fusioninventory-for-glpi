@@ -47,12 +47,12 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "w");
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "model", "w");
    }
 
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "r");
+      return PluginFusioninventoryProfile::haveRight("fusioninventory", "model", "r");
    }
 
 
@@ -96,7 +96,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
    function showForm($id, $options=array()) {
       global $CFG_GLPI,$LANG;
 
-      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
+      PluginFusioninventoryProfile::checkRight("fusioninventory", "model","r");
 
       if ($id!='') {
          $this->getFromDB($id);
@@ -104,7 +104,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
          $this->getEmpty();
       }
 
-      $target = $CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/model.form.php';
+      $target = $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/model.form.php';
             $this->showTabs($id);
       echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
@@ -154,7 +154,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_2'><td colspan='2'>";
-      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
+      if(PluginFusioninventoryProfile::haveRight("fusioninventory", "model","w")) {
          if ($id=='') {
             echo "<div align='center'><input type='submit' name='add' value=\"" . __('Add') .
 

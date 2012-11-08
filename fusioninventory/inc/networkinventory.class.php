@@ -115,7 +115,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                        AND `plugin_fusioninventory_configsecurities_id`!='0'
                        AND `glpi_plugin_fusioninventory_snmpmodels`.`itemtype`='NetworkEquipment'
                        AND `glpi_networkequipments`.`id` = '".$items_id."'
-                       AND `glpi_networkequipments`.`ip`!=''
+                       AND `glpi_ipaddresses`.`name`!=''
                   LIMIT 1";
                $result=$DB->query($query);
                while ($data=$DB->fetch_array($result)) {

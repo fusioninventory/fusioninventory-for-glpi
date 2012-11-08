@@ -58,7 +58,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
    function export($ID_model) {
       global $DB;
 
-      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
+      PluginFusioninventoryProfile::checkRight("fusioninventory", "model","r");
       $query = "SELECT *
          FROM `glpi_plugin_fusioninventory_snmpmodels`
          WHERE `id`='".$ID_model."'";
@@ -122,9 +122,9 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
    function showForm($id, $options=array()) {
       global $CFG_GLPI;
 
-      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model", "r");
+      PluginFusioninventoryProfile::checkRight("fusioninventory", "model", "r");
 
-      $target = $CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/model.form.php';
+      $target = $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/snmpmodel.form.php';
       echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 
       echo "<br>";
@@ -137,7 +137,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       echo "<td align='center'>";
       echo "<input type='file' name='importfile' value=''/>";
 
-      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
+      if(PluginFusioninventoryProfile::haveRight("fusioninventory", "model","w")) {
     echo "&nbsp;<input type='submit' value='".__('Import')."' class='submit'/>";
       }
       echo "</td>";
@@ -151,7 +151,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
    function showFormMassImport($target) {
 
-      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
+      PluginFusioninventoryProfile::checkRight("fusioninventory", "model","r");
 
       echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 
@@ -162,7 +162,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       echo "<td align='center'>";
       echo __('Mass import of models in folder plugins/fusioninventory/snmpmodels/')."<br/>";
       echo "<input type='hidden' name='massimport' value='1'/>";
-      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
+      if(PluginFusioninventoryProfile::haveRight("fusioninventory", "model","w")) {
     echo "&nbsp;<input type='submit' value='".__('Import')."' class='submit'/>";
       }
       echo "</td>";
@@ -178,7 +178,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       global $DB;
 
       if ($installation != 1) {
-         PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+         PluginFusioninventoryProfile::checkRight("fusioninventory", "model","w");
       }
 
       $xml = simplexml_load_file($file,'SimpleXMLElement', LIBXML_NOCDATA);

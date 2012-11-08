@@ -50,7 +50,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
    function showFormList($id, $options=array()) {
       global $DB,$CFG_GLPI,$LANG;
 
-      if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","r")) {
+      if (!PluginFusioninventoryProfile::haveRight("fusioninventory", "model","r")) {
          return false;
       } else if ((isset($id)) AND (!empty($id))) {
          $query = "SELECT `itemtype`
@@ -81,7 +81,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
             $this->getFromDB($id);
 
             echo "<br>";
-            $target = $CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/model.form.php';
+            $target = $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/model.form.php';
             echo "<div align='center'><form method='post' name='oid_list' id='oid_list'
                        action=\"".$target."\">";
 
@@ -357,7 +357,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                                   `glpi_plugin_fusioninventory_mappings`.`id`
                 WHERE `plugin_fusioninventory_snmpmodels_id`='".$p_id."'
                   AND `is_active`='1'
-                  AND `oid_port_counter`='0';";
+                  AND `oid_port_counter`='0'";
 
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {

@@ -161,8 +161,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
       $errors='';
       $nbDevices = 0;
-Toolbox::logInFile("NETWORK", print_r($arrayinventory, true));
-return;
       foreach ($arrayinventory as $childname=>$child) {
          PluginFusioninventoryCommunication::addLog($childname);
          switch ($childname) {
@@ -175,9 +173,9 @@ return;
                   $a_devices[] = $child;
                }
                foreach ($a_devices as $dchild) {
-//                  $a_inventory = PluginFusioninventoryFormatconvert::networkequipmentInventoryTransformation($dchild);
-               
-
+                  $a_inventory = PluginFusioninventoryFormatconvert::networkequipmentInventoryTransformation($dchild);
+                  Toolbox::logInFile("NETWORK", print_r($a_inventory, true));               
+                  return;
                   
                   
                   if (isset($dchild['ERROR'])) {

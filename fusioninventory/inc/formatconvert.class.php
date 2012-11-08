@@ -642,7 +642,6 @@ class PluginFusioninventoryFormatconvert {
     * Modify switch inventory
     */
    static function networkequipmentInventoryTransformation($array) {
-      global $DB;
       
       $a_inventory = array();
       $thisc = new self();
@@ -679,7 +678,7 @@ class PluginFusioninventoryFormatconvert {
       }      
       
       // * PORTS
-      foreach ($array['PORTS'] as $a_port) {
+      foreach ($array['PORTS']['PORT'] as $a_port) {
          $array_tmp = $thisc->addValues($a_port, 
                                         array( 
                                            'IFNAME'   => 'name',
@@ -714,9 +713,9 @@ class PluginFusioninventoryFormatconvert {
                $a_inventory['connection-cdp'][$a_port['IFNUMBER']] = $array_tmp;
             } else {
                // MAC
-               
-               
-               
+               foreach ($a_port['CONNECTIONS']['CONNECTION']['MAC'] as $mac) {
+                  $a_inventory['connection-mac'][$a_port['IFNUMBER']][] = $mac;
+               }
             }
          }
       }
