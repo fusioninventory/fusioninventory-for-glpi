@@ -657,7 +657,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       if (isset($_SESSION['plugin_fusioninventory_locations_id'])) {
          $a_computerinventory['computer']["locations_id"] = $_SESSION['plugin_fusioninventory_locations_id'];
       }
-      $a_computerinventory['computer'] = self::addDefaultStateIfNeeded($a_computerinventory['computer'], false);
+      $a_computerinventory['computer'] = PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($a_computerinventory['computer'], false);
       $computers_id = $computer->add($a_computerinventory['computer'], array(), false);
       
       // * Computer fusion (ext)

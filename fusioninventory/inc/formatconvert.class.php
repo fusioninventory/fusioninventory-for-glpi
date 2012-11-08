@@ -438,6 +438,7 @@ class PluginFusioninventoryFormatconvert {
       
       // * STORAGES
       
+      
       // * USERS
       if (isset($array['USERS'])) {
          foreach ($array['USERS'] as $a_users) {
