@@ -108,6 +108,7 @@ function plugin_init_fusioninventory() {
 
          $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
 
+         $PLUGIN_HOOKS['add_css']['fusioninventory']="css/views.css";
          if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
             $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/config.form.php?itemtype=pluginfusioninventoryconfig&glpi_tab=1';
          }
@@ -302,7 +303,9 @@ function plugin_fusioninventory_check_prerequisites() {
    $crontask = new CronTask();
    if ((TableExists("glpi_plugin_fusioninventory_agents")
            AND !FieldExists("glpi_plugin_fusioninventory_agents", "tag"))
-        OR ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob'))) {
+        OR ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob'))
+        OR (TableExists("glpi_plugin_fusioninventory_agentmodules")
+           AND FieldExists("glpi_plugin_fusioninventory_agentmodules", "url"))) {
       $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` SET `value`='0.80+1.4' WHERE `type`='version'");
       $DB->query("UPDATE `glpi_plugins` SET `version`='0.80+1.4' WHERE `directory` LIKE 'fusi%'");
    }

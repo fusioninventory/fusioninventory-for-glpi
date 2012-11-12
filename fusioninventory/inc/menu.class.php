@@ -68,9 +68,11 @@ class PluginFusioninventoryMenu {
 
       $config = new PluginFusioninventoryConfig();
       if (strlen($config->getValue(null, 'agent_base_url'))<10) {
+         echo "<div class='msgboxmonit msgboxmonit-red'>";
          print "<center><a href=\"config.form.php\">";
          print $LANG['plugin_fusioninventory']['setup'][18];
          print "</a></center>";
+         echo "</div>";
          exit;
       }
 
