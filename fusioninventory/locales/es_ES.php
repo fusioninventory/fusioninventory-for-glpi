@@ -159,6 +159,7 @@ $LANG['plugin_fusioninventory']['rulesengine'][152]="Bien a importar";
 
 $LANG['plugin_fusioninventory']['setup'][16]="Documentación";
 $LANG['plugin_fusioninventory']['setup'][17]="Los plugins FusionInventory INVENTORY y FusionInventory SNMP deben ser desinstalados antes de quitar el plugin FusionInventory.";
+$LANG['plugin_fusioninventory']['setup'][18]="The server needs to kown the URL the agents use to access the server. Please configure it in the General Configuration page.";
 
 $LANG['plugin_fusioninventory']['task'][0]="Tarea";
 $LANG['plugin_fusioninventory']['task'][14]="Fecha de ejecución";

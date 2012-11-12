@@ -159,6 +159,7 @@ $LANG['plugin_fusioninventory']['rulesengine'][152]="Bens a importar";
 
 $LANG['plugin_fusioninventory']['setup'][16]="Documentação";
 $LANG['plugin_fusioninventory']['setup'][17]="Outros plugins do FusionInventory (fusinv...) deve ser desinstalado antes de desinstalar o plugin FusionInventory";
+$LANG['plugin_fusioninventory']['setup'][18]="The server needs to kown the URL the agents use to access the server. Please configure it in the General Configuration page.";
 
 $LANG['plugin_fusioninventory']['task'][0]="Tarefa";
 $LANG['plugin_fusioninventory']['task'][14]="Data da cobrança";
