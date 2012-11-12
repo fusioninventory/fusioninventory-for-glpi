@@ -361,8 +361,11 @@ class PluginFusinvsnmpNetdiscovery extends PluginFusioninventoryOCSCommunication
 
                $last_ip = long2ip($first_ip + $a_split[1]);
                $first_ip = long2ip($first_ip + $a_split[0]);
-               $sxml_rangeip->addAttribute('IPSTART', $first_ip);
-               $sxml_rangeip->addAttribute('IPEND', $last_ip);
+               if ($first_ip != '0.0.0.0'
+                       && $last_ip != '0.0.0.0') {
+                  $sxml_rangeip->addAttribute('IPSTART', $first_ip);
+                  $sxml_rangeip->addAttribute('IPEND', $last_ip);
+               }
             } else {
                $sxml_rangeip->addAttribute('IPSTART', $pfIPRange->fields["ip_start"]);
                $sxml_rangeip->addAttribute('IPEND', $pfIPRange->fields["ip_end"]);
