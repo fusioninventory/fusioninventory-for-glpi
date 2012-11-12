@@ -63,7 +63,15 @@ class PluginFusioninventoryMenu {
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta.png'/></a>";
 //         echo "&nbsp;<a href='https://www.transifex.net/projects/p/FusionInventory/resources/'>";
 //         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/></a>";
-         echo "<H1>Version '".PLUGIN_FUSIONINVENTORY_REALVERSION."'</H1></center><br/>";
+         echo "<H1>Version '".PLUGIN_FUSIONINVENTORY_REALVERSION."'</H1></center><br/>\n";
+      }
+
+      $config = new PluginFusioninventoryConfig();
+      if (strlen($config->getValue(null, 'agent_base_url'))<10) {
+         print "<center><a href=\"config.form.php\">";
+         print $LANG['plugin_fusioninventory']['setup'][18];
+         print "</a></center>";
+         exit;
       }
 
 

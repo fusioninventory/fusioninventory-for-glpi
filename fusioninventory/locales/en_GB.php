@@ -56,6 +56,7 @@ $LANG['plugin_fusioninventory']['profile'][6]="Unknown devices";
 
 $LANG['plugin_fusioninventory']['setup'][16]="Documentation";
 $LANG['plugin_fusioninventory']['setup'][17]="Other FusionInventory plugins (fusinv...) must be uninstalled before removing the FusionInventory plugin";
+$LANG['plugin_fusioninventory']['setup'][18]="The server needs to kown the URL the agents use to access the server. Please configure it in the General Configuration page.";
 
 $LANG['plugin_fusioninventory']['functionalities'][0]="Features";
 $LANG['plugin_fusioninventory']['functionalities'][2]="General configuration";

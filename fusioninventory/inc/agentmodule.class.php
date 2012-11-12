@@ -175,18 +175,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                echo "</table>";
             echo "</td>";
 
-            if ($use_rest) {
-               echo "<tr>";
-               echo "<td class='tab_bg_2 center'>";
-               echo $LANG['plugin_fusioninventory']['agents'][41];
-               echo "</td><td colspan='2'>";
-               echo "<input type='text' name='url' value='".$data['url']."' size='70'>";
-               echo "</td>";
-               echo "</tr>";
-            } else {
-               echo "<input type='hidden' name='url' value='' />";
-            }
-
             echo "<tr>";
             echo "<td class='tab_bg_2 center' colspan='3'>";
             echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit'>";
@@ -427,6 +415,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
    
 
+
    /**
    * Get URL for module (for REST)
    *
@@ -435,18 +424,21 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    * @return nothing
    *
    **/
-   static function getUrlForModule($modulename) {
+   static function getUrlForModule($pluginname, $modulename) {
       global $DB;
 
-      $query = "SELECT url_base FROM `glpi_configs` LIMIT 1";
-      $result = $DB->query($query);
-      $data = $DB->fetch_assoc($result);
-      return
-         $data['url_base'].
-         '/plugins/fusinv'.
-         strtolower($modulename).
-         '/b/'.
-         strtolower($modulename);
+      $config = new PluginFusioninventoryConfig();
+      if (strlen($config->getValue(null, 'agent_base_url'))<10) {
+          die ("agent_base_url is unset!\n");
+      }
+
+      # Construct the path to the JSON back from the agent_base_url.
+      # agent_base_url is the initial URL used by the agent
+      return preg_replace(
+         '/\/plugins\/(fusioninventory.*)/i',
+         '/plugins/'.strtolower($pluginname).'/b/'.strtolower($modulename).'/',
+         $config->getValue(null, 'agent_base_url')
+      );
    }
 }
 

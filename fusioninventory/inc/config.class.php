@@ -173,10 +173,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    * 
    * @return field value for an existing field, false otherwise
    **/
-   function getValue($plugin_id, $name) {
+   function getValue($plugin_id=null, $name) {
 
-      $config = current($this->find("`type`='".$name."'
-                          AND `plugins_id`='".$plugin_id."'"));
+      $filter = "`type`='".$name."'";
+      if ($plugin_id) {
+         $filter .=  "AND `plugins_id`='".$plugin_id."'";
+      }
+      $config = current($this->find($filter));
+
       if (isset($config['value'])) {
          return $config['value'];
       }
@@ -248,7 +252,16 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showYesNo("extradebug", $this->isActive($plugin_id, 'extradebug'));
       echo "</td>";
-      echo "<td colspan='2'></td>";
+      echo "<td>";
+      echo $LANG['plugin_fusioninventory']['agents'][41].": ";
+      if (file_get_contents($this->getValue($plugin_id, 'agent_base_url').'/front/communication.php') === false) {
+           echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\">";
+      }
+
+      echo "</td>";
+      echo "<td>";
+      echo "<input type='text' name='agent_base_url' value='".$this->getValue($plugin_id, 'agent_base_url')."'/>";
+      echo "</td>";
       echo "</tr>";
 
       $options['candel'] = false;
@@ -295,8 +308,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                           AND `type`='".$name."'"));
       if (isset($config['id'])) {
          return $this->update(array('id'=> $config['id'], 'value'=>$value));
+      } else {
+         return $this->add(array('type' => $name, 'value' => $value, 'plugins_id' => $plugin_id));
       }
-      return false;
    }
 
 

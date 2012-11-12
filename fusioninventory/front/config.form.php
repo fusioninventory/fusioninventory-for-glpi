@@ -57,6 +57,7 @@ if (isset($_POST['update'])) {
    $config->updateValue($plugins_id, 'delete_task', $_POST['delete_task']);
    $config->updateValue($plugins_id, 'agent_port', $_POST['agent_port']);
    $config->updateValue($plugins_id, 'extradebug', $_POST['extradebug']);
+   $config->updateValue($plugins_id, 'agent_base_url', $_POST['agent_base_url']);
    Html::back();
 }
 
