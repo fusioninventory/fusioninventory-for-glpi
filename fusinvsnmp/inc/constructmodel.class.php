@@ -1126,7 +1126,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $td = mcrypt_module_open(MCRYPT_RIJNDAEL_256, "", MCRYPT_MODE_ECB, "");
       mcrypt_generic_init($td, $this->key, 0);
       $temp = mcrypt_generic($td, $text);
-      mcrypt_generic_end ($td);
+      mcrypt_generic_deinit($td);
       return $temp;
    }
    
