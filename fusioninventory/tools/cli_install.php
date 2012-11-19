@@ -171,6 +171,10 @@ if (!isset($_SERVER['argv'][1])) {
    system("php -q cli_install.php fusinvdeploy");
 
 } else if ($_SERVER['argv'][1] == 'fusinvsnmp') {
+
+   $plugin->getFromDBbyDir("fusioninventory");
+   $plugin->install($plugin->fields['id']);
+   $plugin->load("fusioninventory");
    
    // ** Install / update too plugin fusinvsnmp
    if ($plugin->getFromDBbyDir("fusinvsnmp")) {

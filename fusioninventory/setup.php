@@ -101,6 +101,8 @@ function plugin_init_fusioninventory() {
       // ##### 5. Set in session XMLtags of methods #####
 
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['WAKEONLAN'] = '';
+      
+      $_SESSION["plugin_fusioninventory_moduleid"] = $moduleId;
 
       $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
          PluginFusioninventoryProfile::changeprofile($moduleId);
