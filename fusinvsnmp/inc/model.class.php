@@ -60,6 +60,13 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       global $LANG;
 
       $tab = array();
+      
+      if (!isset($LANG['plugin_fusinvsnmp']['model_info'][4])) {
+         $LANG['plugin_fusinvsnmp']['model_info'][4] = "SNMP models";
+      }
+      if (!isset($LANG['plugin_fusinvsnmp']['model_info'][12])) {
+         $LANG['plugin_fusinvsnmp']['model_info'][12] = "Key of model discovery";
+      }
 
       $tab['common'] = $LANG['plugin_fusinvsnmp']['model_info'][4];
 

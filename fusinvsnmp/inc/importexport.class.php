@@ -509,8 +509,9 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
    
    static function exportDictionnaryFile() {
       global $DB;
-
-      if (!strstr($_SERVER['PHP_SELF'], "front/plugin.php")) {
+      
+      if (!strstr($_SERVER['PHP_SELF'], "front/plugin.php")
+              AND $_SERVER['PHP_SELF'] != "cli_install.php") {
          PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
       }
 

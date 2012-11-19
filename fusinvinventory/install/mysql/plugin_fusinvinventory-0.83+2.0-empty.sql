@@ -182,4 +182,3 @@ INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`id`, `plugin_fusioninvent
 
 INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES
 ('PluginFusinvinventoryBlacklist', 2, 1, 0);
-

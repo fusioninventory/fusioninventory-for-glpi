@@ -104,6 +104,7 @@ function pluginFusinvsnmpInstall($version, $migrationname='Migration') {
       PluginFusinvsnmpModel::importAllModels();
 
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+      Plugin::loadLang("fusinvsnmp", "en_GB");
       PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
 
       $configSNMP = new PluginFusinvSNMPConfig;
