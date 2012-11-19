@@ -56,6 +56,9 @@ class Update extends PHPUnit_Framework_TestCase {
       if ($version == '') {
          return;
       }
+      echo "#####################################################\n
+            ######### Update from version ".$version."###############\n
+            #####################################################\n";
       $GLPIInstall = new GLPIInstall();
       $GLPIInstall->testInstall();
       
