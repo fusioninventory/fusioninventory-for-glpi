@@ -103,7 +103,7 @@ class PluginFusinvinventoryStaticmisc {
          $a_menu[3]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/blacklist.php";
       }
 
-      if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "importxml","w")) {
+      if (PluginFusioninventoryProfile::haveRight("fusinvinventory", "importxml", "w")) {
          $a_menu[4]['name'] = $LANG['plugin_fusinvinventory']['menu'][4];
          $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/pics/menu_checkintegrity.png";
          $a_menu[4]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/libintegrity.php";
@@ -185,7 +185,7 @@ class PluginFusinvinventoryStaticmisc {
                 LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c` 
                    ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id` 
                 WHERE `c`.`itemtype`='PluginFusinvinventoryVmwareESX'";
-      $query.= getEntitiesRestrictRequest(' AND','a');
+      $query.= getEntitiesRestrictRequest(' AND', 'a');
       $results = $DB->query($query);
 
       $agents = array();
@@ -194,7 +194,7 @@ class PluginFusinvinventoryStaticmisc {
          $agents[$data['id']] = $data['name'];
       }
       if (!empty($agents)) {
-         return Dropdown::showFromArray('definitionselectiontoadd',$agents);
+         return Dropdown::showFromArray('definitionselectiontoadd', $agents);
       }
    }
 
@@ -223,7 +223,7 @@ class PluginFusinvinventoryStaticmisc {
 
       $module = new PluginFusioninventoryAgentmodule();
       $module_infos = $module->getActivationExceptions('esx');
-      $exceptions = json_decode($module_infos['exceptions'],true);
+      $exceptions = json_decode($module_infos['exceptions'], true);
 
       $in = "";
       if (!empty($exceptions)) {
@@ -235,14 +235,14 @@ class PluginFusinvinventoryStaticmisc {
                 LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c` 
                    ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id` 
                 WHERE `c`.`itemtype`='PluginFusioninventoryVmwareESX'";
-      $query.= getEntitiesRestrictRequest(' AND','glpi_plugin_fusioninventory_credentialips');
+      $query.= getEntitiesRestrictRequest(' AND', 'glpi_plugin_fusioninventory_credentialips');
       
       $results = $DB->query($query);
       $credentialips = array();
       while ($data = $DB->fetch_array($results)) {
          $credentialips[$data['id']] = $data['name'];
       }
-      return Dropdown::showFromArray('actionselectiontoadd',$credentialips);
+      return Dropdown::showFromArray('actionselectiontoadd', $credentialips);
    }
    
 

@@ -80,7 +80,7 @@ class PluginFusioninventoryOCSCommunication {
     * @return nothing
     **/
    function setMessage($message) {
-      $this->message = @simplexml_load_string($message,'SimpleXMLElement', 
+      $this->message = @simplexml_load_string($message, 'SimpleXMLElement', 
                                            LIBXML_NOCDATA); // @ to avoid xml warnings
    }
 
@@ -573,13 +573,13 @@ class PluginFusioninventoryOCSCommunication {
 
       // Check XML integrity
       $pxml = '';
-      if ($pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
+      if ($pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)) {
 
-      } else if ($pxml = @simplexml_load_string(utf8_encode($xml),'SimpleXMLElement', LIBXML_NOCDATA)) {
+      } else if ($pxml = @simplexml_load_string(utf8_encode($xml), 'SimpleXMLElement', LIBXML_NOCDATA)) {
          $xml = utf8_encode($xml);
       } else {
          $xml = preg_replace ('/<FOLDER>.*?<\/SOURCE>/', '', $xml);
-         $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
+         $pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
 
          if (!$pxml) {
             $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
