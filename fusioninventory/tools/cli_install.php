@@ -173,7 +173,7 @@ if (!isset($_SERVER['argv'][1])) {
 } else if ($_SERVER['argv'][1] == 'fusinvsnmp') {
 
    $plugin->getFromDBbyDir("fusioninventory");
-   $plugin->install($plugin->fields['id']);
+   $plugin->activate($plugin->fields['id']);
    $plugin->load("fusioninventory");
    
    // ** Install / update too plugin fusinvsnmp
@@ -196,6 +196,7 @@ if (!isset($_SERVER['argv'][1])) {
       $migration->displayWarning("Current FusinvSNMP version: $current_version");
       $migration->displayWarning("Version to update: ".PLUGIN_FUSINVSNMP_VERSION);
 
+/*      
       if (($current_version != PLUGIN_FUSINVSNMP_VERSION)
            AND $current_version!='0') {
       pluginFusinvsnmpUpdate($current_version, $migration);
@@ -207,9 +208,9 @@ if (!isset($_SERVER['argv'][1])) {
          pluginFusinvsnmpInstall(PLUGIN_FUSINVSNMP_VERSION, $migration);
          $migration->displayWarning("installation done.");
       }
-
+*/
       $plugin->getFromDBbyDir("fusinvsnmp");
-      $plugin->load("fusinvsnmp");
+      $plugin->install($plugin->fields['id']);
       $plugin->activate($plugin->fields['id']);
       $plugin->load("fusinvsnmp");
    }
