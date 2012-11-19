@@ -199,8 +199,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $migration->renameTable("glpi_plugin_fusioninventory_networking_ports", "glpi_plugin_fusinvsnmp_networkports"); 
    $migration->renameTable("glpi_plugin_fusioninventory_construct_device", "glpi_plugin_fusinvsnmp_constructdevices");
    $migration->renameTable("glpi_plugin_fusioninventory_construct_mibs", "glpi_plugin_fusinvsnmp_constructdevice_miboids");
-   $migration->renameTable("glpi_plugin_fusioninventory_construct_walks", "glpi_plugin_fusinvsnmp_constructdevicewalks");
-   $migration->dropTable("glpi_plugin_fusioninventory_construct_walks");   
    $migration->renameTable("glpi_plugin_fusioninventory_networking", "glpi_plugin_fusinvsnmp_networkequipments");
    $migration->renameTable("glpi_plugin_fusioninventory_networking_ifaddr", "glpi_plugin_fusinvsnmp_networkequipmentips");
    $migration->renameTable("glpi_plugin_fusioninventory_printers", "glpi_plugin_fusinvsnmp_printers");
@@ -934,6 +932,43 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->migrationOneTable($newTable);
 
 
+
+   /*
+    * Table glpi_plugin_fusioninventory_construct_walks
+    */
+      $newTable = "glpi_plugin_fusioninventory_construct_walks";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "construct_device_id",
+                                 "construct_device_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "log",
+                                 "log",
+                                 "varchar(255) DEFAULT NULL");          
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                              "construct_device_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                              "log",
+                              "varchar(255) DEFAULT NULL");          
+      $migration->migrationOneTable($newTable);
+      
+      
       
    /*
     * Table glpi_plugin_fusioninventory_locks
