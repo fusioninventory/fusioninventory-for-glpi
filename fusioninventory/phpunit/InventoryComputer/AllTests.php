@@ -44,7 +44,7 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
 
 
     public function testSetModuleInventoryOff() {
-       global $DB,$LANG,$CFG_GLPI;
+       global $DB,$CFG_GLPI;
 
        
        $plugin = new Plugin();
@@ -76,7 +76,7 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
         $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
            SET `is_active`='0'
            WHERE `modulename`='INVENTORY' ";
-        $result = $DB->query($query);
+        $DB->query($query);
 
         // Activate Extra-debug
          $plugin = new Plugin();
@@ -111,7 +111,7 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
         $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
            SET `is_active` = '1'
            WHERE `modulename` = 'INVENTORY'";
-        $result = $DB->query($query);
+        $DB->query($query);
      }
 
      
@@ -197,7 +197,6 @@ echo "# testHardwareModifications\n";
 
 
    function testProlog($inputXML='', $deviceID='') {
-      global $DB;
 
       if (empty($inputXML)) {
          echo "testProlog with no arguments...\n";
@@ -269,7 +268,6 @@ echo "# testHardwareModifications\n";
          return;
       }
 
-      $Computer = new Computer();
       $Printer  = new Printer();
 
       $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -314,7 +312,7 @@ echo "# testHardwareModifications\n";
          foreach($xml->CONTENT->PRINTERS as $child) {
             if (isset($child->SERIAL)) {
                $a_printer = $Printer->find("`serial`='".$child->SERIAL."' ");
-               foreach ($a_printer as $printer_id => $datas) {
+               foreach ($a_printer as $datas) {
                   if (isset($child->NAME)) {
                      $this->assertEquals(trim($child->NAME), $datas['name'], 'Difference of printers fields ['.$xmlFile.']');
                   } else if (isset($child->DRIVER)) {
@@ -372,7 +370,6 @@ echo "# testHardwareModifications\n";
          return;
       }
 
-      $Computer = new Computer();
       $Monitor  = new Monitor();
 
       $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -462,7 +459,6 @@ echo "# testHardwareModifications\n";
 
       }
 
-      $Computer = new Computer();
       $query = "SELECT * FROM `glpi_computers_deviceprocessors`
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
@@ -507,7 +503,6 @@ echo "# testHardwareModifications\n";
          }
       }
 
-      $Computer = new Computer();
       $query = "SELECT * FROM `glpi_computerdisks`
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
@@ -563,7 +558,6 @@ echo "# testHardwareModifications\n";
          }
       }
 
-      $Computer = new Computer();
       $query = "SELECT * FROM `glpi_computers_devicecontrols`
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
@@ -598,7 +592,6 @@ echo "# testHardwareModifications\n";
          }
       }
 
-      $Computer = new Computer();
       $query = "SELECT * FROM `glpi_computers_devicesoundcards`
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
@@ -633,7 +626,6 @@ echo "# testHardwareModifications\n";
          }
       }
 
-      $Computer = new Computer();
       $query = "SELECT * FROM `glpi_computers_devicegraphiccards`
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
@@ -684,7 +676,6 @@ echo "# testHardwareModifications\n";
          }
       }
 
-      $Computer = new Computer();
       $query = "SELECT * FROM `glpi_computers_devicememories`
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
@@ -728,7 +719,6 @@ echo "# testHardwareModifications\n";
          }
       }
 
-      $Computer = new Computer();
       $itemtype = "Computer";
       $query = "SELECT * FROM `glpi_networkports`
          WHERE `items_id`='".$items_id."'
@@ -813,7 +803,6 @@ echo "# testHardwareModifications\n";
          }
       }
 
-      $Computer = new Computer();
       $query = "SELECT glpi_softwares.name as softname, glpi_softwareversions.name as versname
          FROM `glpi_computers_softwareversions`
          LEFT JOIN `glpi_softwareversions` on softwareversions_id = `glpi_softwareversions`.`id`
@@ -867,7 +856,6 @@ echo "# testHardwareModifications\n";
 
 
    function testHardware($xmlFile='', $items_id=0, $unknown=0) {
-      global $DB;
       
       Config::detectRootDoc();
 
@@ -986,7 +974,6 @@ echo "# testHardwareModifications\n";
   }
 
    function testHardwareModifications($xmlFile='', $items_id=0) {
-      global $DB;
 
       if (empty($xmlFile)) {
          echo "testHardwareModifications with no arguments...\n";
@@ -1012,7 +999,6 @@ echo "# testHardwareModifications\n";
    
    
    function testHistoryCreateComputer() {
-      global $DB;
       
 $XML = array();
 $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
@@ -1458,7 +1444,7 @@ $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
    
    
    function testHistoryWhenOSChange() {
-      global $DB;
+      
 return;
       $xml = simplexml_load_file("InventoryComputer/xml/2.1.6/David-PC-2010-08-09-20-52-54-imprimante.xml", 'SimpleXMLElement', LIBXML_NOCDATA);
       $xml->CONTENT->HARDWARE->UUID = "68405E00-E5BE-11DF-801C-B05981201220HHTT";
