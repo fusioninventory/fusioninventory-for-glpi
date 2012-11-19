@@ -178,6 +178,8 @@ echo "# testHardwareModifications\n";
                      $GLPIlog = new GLPIlogs();
                      $GLPIlog->testSQLlogs();
                      $GLPIlog->testPHPlogs();
+                  } else {
+                     $this->assertEquals(0, 1, "InventoryComputer/xml/".$Entry."/".$xmlFilename." : XML not well formed");  
                   }
                }
             }
