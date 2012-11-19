@@ -437,7 +437,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function dropdownMethod($myname,$value=0,$entity_restrict='') {
-      global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
 
@@ -574,7 +573,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
    
    function showList($id, $name) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $CFG_GLPI,$LANG;
 
       $ok = 0;
       $ok = $this->getFromDB($id);
@@ -2111,7 +2110,7 @@ return namelist;
    
    
    function showTaskjobItems($name, $randmethod, $id) {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
       
       echo "<div style='display:none' id='".$name.$id."' >";
       $params = array('method' => '__VALUE__',
