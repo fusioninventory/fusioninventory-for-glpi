@@ -53,7 +53,10 @@ function plugin_init_fusioninventory() {
    $PLUGIN_HOOKS['csrf_compliant']['fusioninventory'] = true;
 
    $moduleId = 0;
-   if (class_exists('PluginFusioninventoryModule')) { // check if plugin is active
+   $Plugin = new Plugin();
+
+   if (class_exists('PluginFusioninventoryModule')
+           && $Plugin->isActivated('fusioninventory')) { // check if plugin is active
       // ##### 1. (Not required here) #####
 
       // ##### 2. register class #####
