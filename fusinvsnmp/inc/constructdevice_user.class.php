@@ -58,8 +58,6 @@ class PluginFusinvsnmpConstructdevice_User extends CommonDBTM {
    
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $LANG;
-
       if ($this->canView()) {
          return self::createTabEntry('SNMP model tool account');
       }

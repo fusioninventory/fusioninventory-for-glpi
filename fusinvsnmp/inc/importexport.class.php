@@ -58,7 +58,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
    function export($ID_model) {
       global $DB;
 
-      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
+      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model", "r");
       $query = "SELECT *
          FROM `glpi_plugin_fusinvsnmp_models`
          WHERE `id`='".$ID_model."'";
@@ -98,10 +98,10 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          while ($data=$DB->fetch_array($result)) {
             $xml .= "		<oidobject>\n";
             $xml .= "			<object>".
-               Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_mibobjects",$data["plugin_fusinvsnmp_mibobjects_id"]).
+               Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_mibobjects", $data["plugin_fusinvsnmp_mibobjects_id"]).
                "</object>\n";
             $xml .= "			<oid>".
-               Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miboids",$data["plugin_fusinvsnmp_miboids_id"])."</oid>\n";
+               Dropdown::getDropdownName("glpi_plugin_fusinvsnmp_miboids", $data["plugin_fusinvsnmp_miboids_id"])."</oid>\n";
             $xml .= "			<portcounter>".$data["oid_port_counter"]."</portcounter>\n";
             $xml .= "			<dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
             $xml .= "			<mappings_id>".$data["plugin_fusioninventory_mappings_id"].
@@ -137,7 +137,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       echo "<td align='center'>";
       echo "<input type='file' name='importfile' value=''/>";
 
-      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
+      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "w")) {
     echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
       }
       echo "</td>";
@@ -152,7 +152,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
    function showFormMassImport($target) {
       global $LANG;
 
-      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
+      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model", "r");
 
       echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 
@@ -163,7 +163,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       echo "<td align='center'>";
       echo $LANG['plugin_fusinvsnmp']['model_info'][16]."<br/>";
       echo "<input type='hidden' name='massimport' value='1'/>";
-      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
+      if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "w")) {
          echo "&nbsp;<input type='submit' value='".$LANG["buttons"][37]."' class='submit'/>";
       }
       echo "</td>";
@@ -179,10 +179,10 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       global $DB;
 
       if ($installation != 1) {
-         PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","w");
+         PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model", "w");
       }
 
-      $xml = simplexml_load_file($file,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file($file, 'SimpleXMLElement', LIBXML_NOCDATA);
 
       // Clean
       $query = "DELETE FROM `glpi_plugin_fusinvsnmp_modelmibs`
@@ -257,10 +257,10 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          $input['plugin_fusinvsnmp_mibobjects_id'] = 0;
          if (isset($child->object)) {
             $input['plugin_fusinvsnmp_mibobjects_id'] = Dropdown::importExternal(
-               "PluginFusinvsnmpMibObject",$child->object);
+               "PluginFusinvsnmpMibObject", $child->object);
          }
          $input['plugin_fusinvsnmp_miboids_id'] = Dropdown::importExternal(
-            "PluginFusinvsnmpMibOid",$child->oid);
+            "PluginFusinvsnmpMibOid", $child->oid);
          $input['oid_port_counter'] = 0;
          if (isset($child->portcounter)) {
             $input['oid_port_counter'] = $child->portcounter;
@@ -324,7 +324,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
    
 
    function createModel($xml, $message) {
-      global $DB,$LANG;
+      global $DB;
 
       $pfMapping = new PluginFusioninventoryMapping();
       $pfModel = new PluginFusinvsnmpModel();
@@ -374,11 +374,11 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
 
          if (isset($child->object)) {
             $plugin_fusinvsnmp_mibobjects_id = Dropdown::importExternal(
-               "PluginFusinvsnmpMibObject",$child->object);
+               "PluginFusinvsnmpMibObject", $child->object);
          }
          if (isset($child->oid)) {
             $plugin_fusinvsnmp_miboids_id = Dropdown::importExternal(
-               "PluginFusinvsnmpMibOid",$child->oid);
+               "PluginFusinvsnmpMibOid", $child->oid);
          }
          if (isset($child->portcounter)) {
             $oid_port_counter = $child->portcounter;
@@ -457,7 +457,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
     */
    function importMass() {
       ini_set("max_execution_time", "0");
-      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $this->import($file,0,1);
+      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $this->import($file, 0, 1);
       PluginFusinvsnmpImportExport::exportDictionnaryFile();
    }
 
@@ -512,7 +512,7 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
       
       if (!strstr($_SERVER['PHP_SELF'], "front/plugin.php")
               AND $_SERVER['PHP_SELF'] != "cli_install.php") {
-         PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model","r");
+         PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model", "r");
       }
 
       $xmlstr = "<?xml version='1.0' encoding='UTF-8'?>

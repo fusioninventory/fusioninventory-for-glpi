@@ -66,7 +66,7 @@ if (isset($_FILES['importfile']['tmp_name'])) {
    } else {
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = $LANG['plugin_fusinvinventory']['importxml'][2];
    }
-	Html::back();
+   Html::back();
 }
 
 $pfImportXML->showForm();

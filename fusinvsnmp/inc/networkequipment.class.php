@@ -658,7 +658,6 @@ function appear_array(id){
                            $used[]=$line["vlans_id"];
                            $vlan = new Vlan();
                            $vlan->getFromDB($line["vlans_id"]);
-                           $a_vlan = Dropdown::getDropdownName("glpi_vlans", $line["vlans_id"],1);
                            echo "<tr><td>" . $vlan->fields['name']." [".$vlan->fields['tag']."]";
                            echo "</td><td>";
                            if ($canedit) {

@@ -142,7 +142,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    function showFormDefineSysdescr($message = array()) {
-      global $LANG,$CFG_GLPI;
+      global $LANG;
       
       echo "<form name='form' method='post' action='".$this->getSearchURL()."'>";
       echo "<table class='tab_cadre_fixe'>";
@@ -643,14 +643,12 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $data = json_decode($retserv);
       
       if ($write == '0') {
-         $mime = "text/xml";
 
          header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
          header('Pragma: private'); /// IE BUG + SSL
          header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
          header("Content-disposition: filename=\"".$data->snmpmodel->name.".xml\"");
          header("Content-Type: application/force-download");
-         //header("Content-type: ".$mime);
 
          echo $data->snmpmodel->model;
       } else {
@@ -669,7 +667,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    function showAllModels() {
-      global $CFG_GLPI,$LANG,$DB;
+      global $LANG,$DB;
       
       $getsysdescr = array();
       $getsysdescr['getallmodels'] = array(

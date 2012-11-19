@@ -2121,7 +2121,6 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       
          // Update with mapping
          if (FieldExists($newTable, "mapping_type")) {
-            $pFusinvsnmpModelMib = new PluginFusinvsnmpModelMib();
             $query = "SELECT * FROM `".$newTable."`
                GROUP BY `mapping_type`, `mapping_name`";
             $result=$DB->query($query);
@@ -2942,7 +2941,6 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       
          // Update with mapping
          if (FieldExists($newTable, "object_name")) {
-            $pcartridge = new PluginFusinvsnmpCommonDBTM($newTable);
             $query = "SELECT * FROM `".$newTable."`
                GROUP BY `object_name`";
             $result=$DB->query($query);
@@ -3254,7 +3252,6 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       
          // Update with mapping
          if (FieldExists($newTable, "Field")) {
-            $pFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
             $pFusioninventoryMapping = new PluginFusioninventoryMapping();
             $query = "SELECT * FROM `".$newTable."`
                GROUP BY `Field`";
@@ -3983,7 +3980,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
 
 
 function update213to220_ConvertField($migration) {
-   global $LANG,$FUSIONINVENTORY_MAPPING,$FUSIONINVENTORY_MAPPING_DISCOVERY,$DB;
+   global $DB;
 
    // ----------------------------------------------------------------------
    //NETWORK MAPPING MAPPING

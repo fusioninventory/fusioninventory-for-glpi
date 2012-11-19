@@ -41,7 +41,7 @@
  */
 
 function pluginFusinvdeployInstall($version, $migration='') {
-   global $DB,$LANG, $CFG_GLPI;
+   global $DB;
 
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvdeploy();
@@ -80,10 +80,10 @@ function pluginFusinvdeployInstall($version, $migration='') {
       $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
       PluginFusioninventoryProfile::initProfile($a_plugin['shortname'], $plugins_id);
       PluginFusioninventoryProfile::changeProfile($plugins_id);
-	
-	   // Create configuration
-	   $PluginFusinvdeployConfig = new PluginFusinvdeployConfig();
-	   $PluginFusinvdeployConfig->initConfigModule();
+
+      // Create configuration
+      $PluginFusinvdeployConfig = new PluginFusinvdeployConfig();
+      $PluginFusinvdeployConfig->initConfigModule();
 
       $agentmodule         = new PluginFusioninventoryAgentmodule;
       $input               = array();

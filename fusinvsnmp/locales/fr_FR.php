@@ -49,7 +49,9 @@ $LANG['plugin_fusinvsnmp']['agents'][27]="Version du module snmpquery";
 
 $LANG['plugin_fusinvsnmp']['codetasklog'][1]="équipements inventoriés";
 $LANG['plugin_fusinvsnmp']['codetasklog'][2]="équipements découverts";
-$LANG['plugin_fusinvsnmp']['codetasklog'][3]="La base de définition des matériels SNMP de l'agent n'est plus à jour. Lors de sa prochaine exécution, il récupérera une nouvelle version sur le serveur.";
+$LANG['plugin_fusinvsnmp']['codetasklog'][3]="La base de définition des matériels SNMP de l'agent ".
+ "n'est plus à jour. Lors de sa prochaine exécution, il récupérera une nouvelle version sur".
+ " le serveur.";
 $LANG['plugin_fusinvsnmp']['codetasklog'][4]="Ajout de l'élément";
 $LANG['plugin_fusinvsnmp']['codetasklog'][5]="Mise à jour de l'élément";
 $LANG['plugin_fusinvsnmp']['codetasklog'][6]="L'inventaire a démarré";
@@ -71,9 +73,11 @@ $LANG['plugin_fusinvsnmp']['constructdevice'][5]="Regénérer les commentaires d
 $LANG['plugin_fusinvsnmp']['discovery'][5]="Nombre de matériels importés";
 $LANG['plugin_fusinvsnmp']['discovery'][9]="Nombre de matériels non importés car type non défini";
 
-$LANG['plugin_fusinvsnmp']['errors'][50]="La version de GLPI n'est pas compatible, vous avez besoin de la version 0.78";
+$LANG['plugin_fusinvsnmp']['errors'][50]="La version de GLPI n'est pas compatible, vous avez ".
+ "besoin de la version 0.78";
 
-$LANG['plugin_fusinvsnmp']['legend'][0]="Connexion avec un switch or un serveur en mode trunk ou taggé";
+$LANG['plugin_fusinvsnmp']['legend'][0]="Connexion avec un switch or un serveur en mode trunk ou ".
+ "taggé";
 $LANG['plugin_fusinvsnmp']['legend'][1]="Connexion autre (avec un ordinateur, une imprimante...)";
 
 $LANG['plugin_fusinvsnmp']['mapping'][104]="MTU";

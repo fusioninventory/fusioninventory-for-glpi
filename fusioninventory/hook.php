@@ -146,7 +146,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 
 
 function plugin_fusioninventory_searchOptionsValues($item) {
-   global $CFG_GLPI,$DB;
+   global $DB;
    
    if ($item['searchoption']['table'] == 'glpi_plugin_fusioninventory_taskjoblogs'
            AND $item['searchoption']['field'] == 'state') {
@@ -193,7 +193,6 @@ function cron_plugin_fusioninventory() {
 
 
 function plugin_fusioninventory_install() {
-   global $DB;
 
    include_once (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion(PLUGIN_FUSIONINVENTORY_VERSION);

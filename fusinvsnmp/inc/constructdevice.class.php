@@ -48,9 +48,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
    private $suggest = 1;
 
    function showForm($id, $data) {
-      global $DB,$LANG,$CFG_GLPI;
-
-      $options = array();
+      global $LANG,$CFG_GLPI;
 
       echo  "<table width='950' align='center'>
          <tr>
@@ -88,7 +86,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
    
    function manageWalks($json, $devices_id=0) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $DB,$CFG_GLPI;
 
       $snmpwalk = '';
 //      if (isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])) {
@@ -256,7 +254,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
    
    
    function displayOid($a_oid, $mappings_id, $a_match, $sysdescr, $color='red', $a_mibs=array()) {
-      global $CFG_GLPI,$LANG;
+      global $LANG;
 
       $style = " style='border-color: #ff0000; border-width: 1px' ";
       $checked = '';

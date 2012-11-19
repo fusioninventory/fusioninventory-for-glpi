@@ -245,12 +245,12 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
               AND isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryRuleImportEquipment::LINK_RESULT_CREATE)) {
 
-            $this->rulepassed(0, $input['itemtype'],$input['entities_id']);
+            $this->rulepassed(0, $input['itemtype'], $input['entities_id']);
          } else if (isset($input['itemtype'])
                 AND !isset($data['action'])) {
-            $this->rulepassed(0, $input['itemtype'],$input['entities_id']);           
+            $this->rulepassed(0, $input['itemtype'], $input['entities_id']);           
          } else {
-            $this->rulepassed(0, "PluginFusioninventoryUnknownDevice",$input['entities_id']);
+            $this->rulepassed(0, "PluginFusioninventoryUnknownDevice", $input['entities_id']);
          }
       }
    }
@@ -330,7 +330,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
          'Function PluginFusinvsnmpCommunicationNetDiscovery->importDevice().'
       );
       
-      $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'], 'SimpleXMLElement', LIBXML_NOCDATA);
       $input = array();
       $input['id'] = $item->getID();
 
@@ -430,7 +430,8 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
             if (!in_array('domain', $a_lockable)) {
                if (!empty($xml->WORKGROUP)) {
                $input['domain'] = Dropdown::importExternal("Domain",
-                                       (string)$xml->WORKGROUP,(string)$xml->ENTITY);
+                                                           (string)$xml->WORKGROUP, 
+                                                           (string)$xml->ENTITY);
                }
             }
             if (!empty($xml->TYPE)) {

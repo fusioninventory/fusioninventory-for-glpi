@@ -792,7 +792,6 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
       global $LANG;
 
       $errors='';
-      $pfNetworkPort = new PluginFusinvsnmpNetworkPort('Printer');
       $networkPort = new NetworkPort();
       $pfNetworkporttype = new PluginFusinvsnmpNetworkporttype();
       $ifType = $p_port->IFTYPE;

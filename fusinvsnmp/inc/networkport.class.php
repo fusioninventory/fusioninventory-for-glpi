@@ -70,7 +70,6 @@ class PluginFusinvsnmpNetworkPort extends CommonDBTM {
     *@return nothing
     **/
    function loadNetworkport($networkports_id) {
-      global $DB;
 
       $networkport = new NetworkPort();
       $networkport->getFromDB($networkports_id);
