@@ -147,10 +147,13 @@ if (!isset($_SERVER['argv'][1])) {
    } else {
       $mess = "installation done.";
    }
+   
+   $plugin->getFromDBbyDir("fusioninventory");
+   $plugin->install($plugin->fields['id']);
+   
    plugin_fusioninventory_install();
    $migration->displayWarning($mess);
 
-   $plugin->getFromDBbyDir("fusioninventory");
    $plugin->load("fusioninventory");
    $plugin->activate($plugin->fields['id']);
    $plugin->load("fusioninventory");
