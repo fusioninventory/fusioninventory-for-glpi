@@ -2068,8 +2068,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Update display preferences
     */
-   changeDisplayPreference("5153", "PluginFusioninventoryUnknownDevice");
-   changeDisplayPreference("5158", "PluginFusioninventoryAgent");
+   pluginFusioninventorychangeDisplayPreference("5153", "PluginFusioninventoryUnknownDevice");
+   pluginFusioninventorychangeDisplayPreference("5158", "PluginFusioninventoryAgent");
    
    
    /*
@@ -2245,7 +2245,7 @@ function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
 
 
 
-function changeDisplayPreference($olditemtype, $newitemtype) {
+function pluginFusioninventorychangeDisplayPreference($olditemtype, $newitemtype) {
    global $DB;
    
    $query = "SELECT *,count(`id`) as `cnt` FROM `glpi_displaypreferences` 
