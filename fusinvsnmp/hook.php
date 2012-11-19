@@ -1635,7 +1635,7 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
          }
          break;
 
-		case 'PluginFusioninventoryUnknownDevice' :
+      case 'PluginFusioninventoryUnknownDevice' :
          $already_link_tables_tmp = $already_link_tables;
          array_pop($already_link_tables_tmp);
          $leftjoin_fusinvsnmp_unknown = 1;
@@ -1675,9 +1675,9 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
                return $return;
                break;
 
-			}
+         }
          return;
-			break;
+         break;
 
       case "PluginFusinvsnmpPrinterLog":
          if ($new_table == "glpi_infocoms") {
