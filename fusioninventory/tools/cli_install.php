@@ -173,6 +173,7 @@ if (!isset($_SERVER['argv'][1])) {
 } else if ($_SERVER['argv'][1] == 'fusinvsnmp') {
 
    $plugin->getFromDBbyDir("fusioninventory");
+   $_SESSION['plugin_fusioninventory_moduleid'] = $plugin->fields['id'];
    $plugin->activate($plugin->fields['id']);
    $plugin->load("fusioninventory");
    
