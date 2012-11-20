@@ -144,37 +144,14 @@ $migration = new CliMigration($current_version);
    } else {
       $mess = "installation done.";
    }
-   plugin_fusioninventory_install();
+
    $migration->displayWarning($mess);
 
    $plugin->getFromDBbyDir("fusioninventory");
-   $plugin->load("fusioninventory");
+   $plugin->install("fusioninventory");
    $plugin->activate($plugin->fields['id']);
    $plugin->load("fusioninventory");
 
-   system("php -q cli_install.php fusinvdeploy");
-
-if ($_SERVER['argv'][1] == 'fusinvdeploy') {
-
-   // ** Install / update too plugin fusinvdeploy
-   if ($plugin->getFromDBbyDir("fusinvdeploy")) {
-      include_once(GLPI_ROOT . "/plugins/fusinvdeploy/install/update.php");
-      include_once(GLPI_ROOT . "/plugins/fusinvdeploy/locales/en_GB.php");
-      $a_plugin = plugin_version_fusinvdeploy();
-      $current_version = pluginfusinvdeployGetCurrentVersion($a_plugin['version']);
-
-      $migration = new CliMigration($current_version);
-
-      if (!isset($current_version)) {
-         $current_version = 0;
-      }
-      if ($current_version == '0') {
-         $migration->displayWarning("***** Install process of plugin FUSINVDEPLOY *****");
-      } else {
-         $migration->displayWarning("***** Update process of plugin FUSINVDEPLOY *****");
-      }
-   }
-}
 
 if (in_array('--optimize', $_SERVER['argv'])) {
 
