@@ -4,13 +4,11 @@
    <name>678856</name>
    <type>2</type>
    <key>Networking1885</key>
-   <comments></comments>
+   <comments>Cisco Internetwork Operating System Software IOS (tm) 7300 Software (C7300-P-M), Version 12.2(20)S6, RELEASE SOFTWARE (fc4)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2004 by cisco Systems, Inc.Compiled Fri 29-Oct-04 14:3
+
+</comments>
    <devices>
-      <sysdescr>Cisco Internetwork Operating System Software ^M
-IOS (tm) 7300 Software (C7300-P-M), Version 12.2(20)S6, RELEASE SOFTWARE (fc4)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2004 by cisco Systems, Inc.^M
-Compiled Fri 29-Oct-04 14:3</sysdescr>
+      <sysdescr>Cisco Internetwork Operating System Software IOS (tm) 7300 Software (C7300-P-M), Version 12.2(20)S6, RELEASE SOFTWARE (fc4)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2004 by cisco Systems, Inc.Compiled Fri 29-Oct-04 14:3</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

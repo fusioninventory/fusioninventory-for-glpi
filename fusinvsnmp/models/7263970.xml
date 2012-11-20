@@ -4,13 +4,14 @@
    <name>7263970</name>
    <type>2</type>
    <key>Networking1791</key>
-   <comments></comments>
+   <comments>Cisco Systems Catalyst 1900
+
+Cisco Internetwork Operating System Software IOS (tm) C3500XL Software (C3500XL-C3H2S-M), Version 12.0(5.2)XU, MAINTENANCE INTERIM SOFTWARECopyright (c) 1986-2000 by cisco Systems, Inc.Compiled Mon 17-Jul-00 18:29 by ayounes
+
+</comments>
    <devices>
       <sysdescr>Cisco Systems Catalyst 1900</sysdescr>
-      <sysdescr>Cisco Internetwork Operating System Software ^M
-IOS (tm) C3500XL Software (C3500XL-C3H2S-M), Version 12.0(5.2)XU, MAINTENANCE INTERIM SOFTWARE^M
-Copyright (c) 1986-2000 by cisco Systems, Inc.^M
-Compiled Mon 17-Jul-00 18:29 by ayounes</sysdescr>
+      <sysdescr>Cisco Internetwork Operating System Software IOS (tm) C3500XL Software (C3500XL-C3H2S-M), Version 12.0(5.2)XU, MAINTENANCE INTERIM SOFTWARECopyright (c) 1986-2000 by cisco Systems, Inc.Compiled Mon 17-Jul-00 18:29 by ayounes</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

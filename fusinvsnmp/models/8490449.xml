@@ -3,8 +3,14 @@
 <model>
    <name>8490449</name>
    <type>1</type>
-   <key></key>
-   <comments></comments>
+   <key>Computer0001</key>
+   <comments>ITIUM 4030
+
+Microsoft Windows CE Version 5.0 (Build 0)
+
+IBM OS/400 V4R5M0
+
+</comments>
    <devices>
       <sysdescr>ITIUM 4030</sysdescr>
       <sysdescr>Microsoft Windows CE Version 5.0 (Build 0)</sysdescr>

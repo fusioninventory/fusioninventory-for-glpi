@@ -4,7 +4,11 @@
    <name>4977167</name>
    <type>3</type>
    <key>Printer0441</key>
-   <comments></comments>
+   <comments>Brother NC-4100h, Firmware Ver.1.07  (01.02.08),MID 84UZ21,FID 1
+
+Brother NC-5100h, Firmware Ver.1.50  (04.04.19),MID 84UZ44,FID 1
+
+</comments>
    <devices>
       <sysdescr>Brother NC-4100h, Firmware Ver.1.07  (01.02.08),MID 84UZ21,FID 1</sysdescr>
       <sysdescr>Brother NC-5100h, Firmware Ver.1.50  (04.04.19),MID 84UZ44,FID 1</sysdescr>

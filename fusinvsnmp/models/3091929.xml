@@ -4,7 +4,9 @@
    <name>3091929</name>
    <type>2</type>
    <key>Networking1123</key>
-   <comments></comments>
+   <comments>DGS-3024 Gigabit Ethernet Switch
+
+</comments>
    <devices>
       <sysdescr>DGS-3024 Gigabit Ethernet Switch</sysdescr>
    </devices>

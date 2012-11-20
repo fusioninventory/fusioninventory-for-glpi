@@ -4,16 +4,14 @@
    <name>7250650</name>
    <type>2</type>
    <key>Networking1807</key>
-   <comments></comments>
+   <comments>Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(6)T, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Thu 23-Feb-06 04:00 by ccai
+
+Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(24)T2, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Tue 20-Oct-09 04:56 by prod_rel_team
+
+</comments>
    <devices>
-      <sysdescr>Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(6)T, RELEASE SOFTWARE (fc1)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
-Compiled Thu 23-Feb-06 04:00 by ccai</sysdescr>
-      <sysdescr>Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(24)T2, RELEASE SOFTWARE (fc2)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
-Compiled Tue 20-Oct-09 04:56 by prod_rel_team</sysdescr>
+      <sysdescr>Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(6)T, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Thu 23-Feb-06 04:00 by ccai</sysdescr>
+      <sysdescr>Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(24)T2, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Tue 20-Oct-09 04:56 by prod_rel_team</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

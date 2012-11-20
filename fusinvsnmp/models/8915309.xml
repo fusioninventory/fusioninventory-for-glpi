@@ -4,12 +4,11 @@
    <name>8915309</name>
    <type>2</type>
    <key>Networking1873</key>
-   <comments></comments>
+   <comments>Cisco Internetwork Operating System Software IOS (tm) 3700 Software (C3725-IS-M), Version 12.3(5a), RELEASE SOFTWARE (fc1)Copyright (c) 1986-2003 by cisco Systems, Inc.Compiled Mon 24-Nov-03 20:36 by kellythw
+
+</comments>
    <devices>
-      <sysdescr>Cisco Internetwork Operating System Software ^M
-IOS (tm) 3700 Software (C3725-IS-M), Version 12.3(5a), RELEASE SOFTWARE (fc1)^M
-Copyright (c) 1986-2003 by cisco Systems, Inc.^M
-Compiled Mon 24-Nov-03 20:36 by kellythw</sysdescr>
+      <sysdescr>Cisco Internetwork Operating System Software IOS (tm) 3700 Software (C3725-IS-M), Version 12.3(5a), RELEASE SOFTWARE (fc1)Copyright (c) 1986-2003 by cisco Systems, Inc.Compiled Mon 24-Nov-03 20:36 by kellythw</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

@@ -4,7 +4,15 @@
    <name>6145894</name>
    <type>3</type>
    <key>Printer0094</key>
-   <comments></comments>
+   <comments>Xerox WorkCentre 4250; System Software Version 15.002.30.000, Main Controller 2.50.02.30, Network Controller 4.01.15, Image Output Terminal 0.01.18, User Interface 0.045.15.014, Finisher 4.04.07, DADF 1.01, Tray2 1.01.04
+
+KONICA MINOLTA bizhub 363
+
+SHARP AR-M351U
+
+SHARP MX-M350U
+
+</comments>
    <devices>
       <sysdescr>Xerox WorkCentre 4250; System Software Version 15.002.30.000, Main Controller 2.50.02.30, Network Controller 4.01.15, Image Output Terminal 0.01.18, User Interface 0.045.15.014, Finisher 4.04.07, DADF 1.01, Tray2 1.01.04</sysdescr>
       <sysdescr>KONICA MINOLTA bizhub 363</sysdescr>

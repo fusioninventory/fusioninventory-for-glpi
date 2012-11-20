@@ -4,7 +4,11 @@
    <name>9539738</name>
    <type>3</type>
    <key>Printer0435</key>
-   <comments></comments>
+   <comments>Xerox Phaser 3125/N; OS &amp;lt;OS 1.70.01.14 01-03-2007&amp;gt;, PCL &amp;lt;PCL6 5.40  12-21-2006&amp;gt;, PS &amp;lt;PS3 V1.51.46 11-13-2006&amp;gt;, Net &amp;lt;V4.01.07(P3125)&amp;gt;, Eng &amp;lt;1.00.06&amp;gt;
+
+Xerox Phaser 3435; OS 1.70.00.39 04-17-2008, NIC V4.01.02(P3435) 04-11-2008, Engine 1.00.57, Tray2 , Duplex 0.00.00 , PCL6 5.72  04-02-2008, PS3 V1.79.96 03-27-2008
+
+</comments>
    <devices>
       <sysdescr>Xerox Phaser 3125/N; OS &amp;lt;OS 1.70.01.14 01-03-2007&amp;gt;, PCL &amp;lt;PCL6 5.40  12-21-2006&amp;gt;, PS &amp;lt;PS3 V1.51.46 11-13-2006&amp;gt;, Net &amp;lt;V4.01.07(P3125)&amp;gt;, Eng &amp;lt;1.00.06&amp;gt;</sysdescr>
       <sysdescr>Xerox Phaser 3435; OS 1.70.00.39 04-17-2008, NIC V4.01.02(P3435) 04-11-2008, Engine 1.00.57, Tray2 , Duplex 0.00.00 , PCL6 5.72  04-02-2008, PS3 V1.79.96 03-27-2008</sysdescr>

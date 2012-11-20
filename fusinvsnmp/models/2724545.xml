@@ -4,12 +4,11 @@
    <name>2724545</name>
    <type>2</type>
    <key>Networking2001</key>
-   <comments></comments>
+   <comments>Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500e-UNIVERSALK9-M), Version 15.0(1)XO, RELEASE SOFTWARE (fc4)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Fri 10-Sep-10 04:08 by
+
+</comments>
    <devices>
-      <sysdescr>Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500e-UNIVERSALK9-M), Version 15.0(1)XO, RELEASE SOFTWARE (fc4)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2010 by Cisco Systems, Inc.^M
-Compiled Fri 10-Sep-10 04:08 by</sysdescr>
+      <sysdescr>Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500e-UNIVERSALK9-M), Version 15.0(1)XO, RELEASE SOFTWARE (fc4)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Fri 10-Sep-10 04:08 by</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

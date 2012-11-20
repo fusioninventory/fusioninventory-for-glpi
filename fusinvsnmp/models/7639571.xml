@@ -4,12 +4,11 @@
    <name>7639571</name>
    <type>2</type>
    <key>Networking1996</key>
-   <comments></comments>
+   <comments>Cisco IOS Software, C1861 Software (C1861-IPVOICE-M), Version 12.4(22)T, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 09-Oct-08 22:23 by prod_rel_team
+
+</comments>
    <devices>
-      <sysdescr>Cisco IOS Software, C1861 Software (C1861-IPVOICE-M), Version 12.4(22)T, RELEASE SOFTWARE (fc1)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
-Compiled Thu 09-Oct-08 22:23 by prod_rel_team</sysdescr>
+      <sysdescr>Cisco IOS Software, C1861 Software (C1861-IPVOICE-M), Version 12.4(22)T, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 09-Oct-08 22:23 by prod_rel_team</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

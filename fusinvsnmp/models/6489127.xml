@@ -4,7 +4,9 @@
    <name>6489127</name>
    <type>2</type>
    <key>Networking1766</key>
-   <comments></comments>
+   <comments>ProCurve J9049A Switch 2900-24G, revision T.13.45, ROM K.12.12 (/sw/code/build/mbm(t3a))
+
+</comments>
    <devices>
       <sysdescr>ProCurve J9049A Switch 2900-24G, revision T.13.45, ROM K.12.12 (/sw/code/build/mbm(t3a))</sysdescr>
    </devices>

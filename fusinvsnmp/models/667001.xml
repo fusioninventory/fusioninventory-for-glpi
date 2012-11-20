@@ -4,12 +4,11 @@
    <name>667001</name>
    <type>2</type>
    <key>Networking1988</key>
-   <comments></comments>
+   <comments>Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500e-IPBASEK9-M), Version 12.2(50)SG1, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 09-Feb-09 23:47 by p
+
+</comments>
    <devices>
-      <sysdescr>Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500e-IPBASEK9-M), Version 12.2(50)SG1, RELEASE SOFTWARE (fc2)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
-Compiled Mon 09-Feb-09 23:47 by p</sysdescr>
+      <sysdescr>Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500e-IPBASEK9-M), Version 12.2(50)SG1, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 09-Feb-09 23:47 by p</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

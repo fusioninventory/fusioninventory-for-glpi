@@ -1,0 +1,721 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model>
+   <name>9404667</name>
+   <type>2</type>
+   <key>Networking1858</key>
+   <comments>ProCurve J4899A Switch 2650, revision H.10.29, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J4899B Switch 2650, revision H.10.31, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J4900A Switch 2626, revision H.10.29, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J4900B Switch 2626, revision H.10.29, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J9021A Switch 2810-24G, revision N.11.15, ROM N.10.01 (/sw/code/build/bass(bh2))
+
+ProCurve J9088A Switch 2610-48, revision R.11.25, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+ProCurve J9088A Switch 2610-48, revision R.11.30, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+ProCurve J4899B Switch 2650, revision H.10.50, ROM H.08.05 (/sw/code/build/fish(mkfs))
+
+ProCurve J4899B Switch 2650, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J4900B Switch 2626, revision H.08.98, ROM H.08.02 (/sw/code/build/fish(ts_08_5))
+
+ProCurve J4900B Switch 2626, revision H.10.31, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J9088A Switch 2610-48, revision R.11.07, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+HP J4819A ProCurve Switch 5308xl, revision E.10.74, ROM E.05.05 (/sw/code/build/alpmo(m35))
+
+ProCurve J8697A Switch 5406zl, revision K.12.57, ROM K.12.12 (/sw/code/build/btm(t2g))
+
+ProCurve J4899B Switch 2650, revision H.10.35, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+HP J4850A ProCurve Switch 5304XL, revision E.10.61, ROM E.05.04 (/sw/code/build/alpmo(m35))
+
+ProCurve J9022A Switch 2810-48G, revision N.11.06, ROM N.10.01 (/sw/code/build/bass(bh2))
+
+ProCurve J4903A Switch 2824, revision I.08.105, ROM I.08.07 (/sw/code/build/mako(ts_08_5))
+
+ProCurve J4900B Switch 2626, revision H.08.106, ROM H.08.02 (/sw/code/build/fish(ts_08_5))
+
+ProCurve J4903A Switch 2824, revision I.08.87, ROM I.08.07 (/sw/code/build/mako(ts_08_5))
+
+ProCurve J8773A Switch 4208vl, revision L.11.09, ROM L.10.03 (/sw/code/build/rmm(rm11))
+
+ProCurve J9279A Switch 2510G-24, revision Y.11.08, ROM N.10.02 (/sw/code/build/cod(cod11))
+
+HP J4865A ProCurve Switch 4108GL, revision G.07.107, ROM G.05.02 (/sw/code/build/gamo(m03))
+
+ProCurve J4899B Switch 2650, revision H.10.83, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J9050A Switch 2900-48G, revision T.13.68, ROM K.12.12 (/sw/code/build/mbm(t3a))
+
+ProCurve J9050A Switch 2900-48G, revision T.13.57, ROM K.12.12 (/sw/code/build/mbm(t3a))
+
+ProCurve J4899C Switch 2650, revision H.10.83, ROM H.08.05 (/sw/code/build/fish(mkfs))
+
+ProCurve J9050A Switch 2900-48G, revision T.13.71, ROM K.12.12 (/sw/code/build/mbm(t3a))
+
+ProCurve J9049A Switch 2900-24G, revision T.12.09, ROM K.11.03 (/sw/code/build/mbm(t2a))
+
+ProCurve J9050A Switch 2900-48G, revision T.13.09, ROM K.12.12 (/sw/code/build/mbm(t3a))
+
+ProCurve J9050A Switch 2900-48G, revision T.13.45, ROM K.12.12 (/sw/code/build/mbm(t3a))
+
+ProCurve j9020a Switch 2510-48, revision U.11.11, ROM R.10.06 (/sw/code/build/dosx(ndx))
+
+ProCurve J9019A Switch 2510-24, revision Q.10.01, ROM Q.10.02 (/sw/code/build/harp(harp))
+
+ProCurve J9019A Switch 2510-24, revision Q.11.17, ROM Q.10.02 (/sw/code/build/harp(bh2))
+
+ProCurve J8693A Switch 3500yl-48G, revision K.12.57, ROM K.12.12 (/sw/code/build/btm(t2g))
+
+ProCurve J4819A Switch 5308xl, revision E.11.10, ROM E.05.05 (/sw/code/build/alpmo(alp11))
+
+ProCurve J9138A Switch 2520-24-PoE, revision S.14.03, ROM S.14.03 (/sw/code/build/elmo(t4b_release))
+
+ProCurve J9087A Switch 2610-24-PWR, revision R.11.22, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+ProCurve J8164A Switch 2626-PWR, revision H.10.38, ROM H.08.02 (/sw/code/build/fish(mf_v10_fishp))
+
+ProCurve J8770A Switch 4204vl, revision L.10.23, ROM L.10.03 (/sw/code/build/rmm(nabs))
+
+ProCurve J8770A Switch 4204vl, revision L.11.20, ROM L.10.03 (/sw/code/build/rmm(rm11))
+
+ProCurve J8698A Switch 5412zl, revision K.14.41, ROM K.12.20 (/sw/code/build/btm(t4a))
+
+ProCurve J9091A Switch 8212zl, revision K.14.41, ROM K.12.20 (/sw/code/build/btm(t4a))
+
+ProCurve J4899B Switch 2650, revision H.10.67, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J8770A Switch 4204vl, revision L.11.24, ROM L.10.03 (/sw/code/build/rmm(rm11))
+
+HP J4865A ProCurve Switch 4108GL, revision G.07.109, ROM G.05.02 (/sw/code/build/gamo(m03))
+
+ProCurve J9022A Switch 2810-48G, revision N.11.15, ROM N.10.01 (/sw/code/build/bass(bh2))
+
+ProCurve J4903A Switch 2824, revision I.10.73, ROM I.08.07 (/sw/code/build/mako(mkfs))
+
+ProCurve J4904A Switch 2848, revision I.10.73, ROM I.08.07 (/sw/code/build/mako(mkfs))
+
+ProCurve J4850A Switch 5304XL, revision E.11.21, ROM E.05.05 (/sw/code/build/alpmo(alp11))
+
+ProCurve J4900B Switch 2626, revision H.10.83, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J9279A Switch 2510G-24, revision Y.11.16, ROM N.10.02 (/sw/code/build/cod(cod11))
+
+ProCurve J9280A Switch 2510G-48, revision Y.11.12, ROM N.10.02 (/sw/code/build/cod(cod11))
+
+ProCurve J4903A Switch 2824, revision I.10.70, ROM I.08.07 (/sw/code/build/mako(mkfs))
+
+ProCurve J9021A Switch 2810-24G, revision N.10.02, ROM N.10.01 (/sw/code/build/bass(bass))
+
+ProCurve J4904A Switch 2848, revision I.08.87, ROM I.08.07 (/sw/code/build/mako(ts_08_5))
+
+ProCurve J8697A Switch 5406zl, revision K.14.41, ROM K.12.20 (/sw/code/build/btm(t4a))
+
+ProCurve J9145A 2910al-24G Switch, revision W.14.30, ROM W.14.04 (/sw/code/build/sbm(t4a))
+
+ProCurve J8693A Switch 3500yl-48G, revision K.13.63, ROM K.12.17 (/sw/code/build/btm(t3a))
+
+ProCurve J8698A Switch 5412zl, revision K.13.60, ROM K.12.17 (/sw/code/build/btm(t3a))
+
+ProCurve J9049A Switch 2900-24G, revision T.13.09, ROM K.12.12 (/sw/code/build/mbm(t3a))
+
+ProCurve J9091A Switch 8212zl, revision K.14.47, ROM K.12.20 (/sw/code/build/btm(t4a))
+
+ProCurve J9137A Switch 2520-8-PoE, revision S.14.03, ROM S.14.03 (/sw/code/build/elmo(t4b_release))
+
+ProCurve J9264A Switch 6600ml-24G-4XG, revision K.14.47, ROM K.12.20 (/sw/code/build/btm(t4a))
+
+ProCurve J9264A Switch 6600ml-24G-4XG, revision K.14.41, ROM K.12.20 (/sw/code/build/btm(t4a))
+
+ProCurve J9298A Switch 2520G-8-PoE, revision J.14.01, ROM J.14.04 (/sw/code/build/walle(t4b_release))
+
+ProCurve J9471A Switch 3500-24-PoE, revision K.14.XX, ROM K.12.19 (/sw/code/build/btm(dbjr_t4))
+
+ProCurve J9049A Switch 2900-24G, revision T.13.71, ROM K.11.03 (/sw/code/build/mbm(t3a))
+
+ProCurve J8992A Switch 6200yl-24G, revision K.12.16, ROM K.11.03 (/sw/code/build/btm(t2a))
+
+ProCurve J9088A Switch 2610-48, revision R.11.54, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+ProCurve J9085A Switch 2610-24, revision R.11.16, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+ProCurve J9088A Switch 2610-48, revision R.11.16, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+ProCurve J9085A Switch 2610-24, revision R.11.30, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+ProCurve J9021A Switch 2810-24G, revision N.11.25, ROM N.10.01 (/sw/code/build/bass(bh2))
+
+ProCurve J9087A Switch 2610-24-PWR, revision R.11.30, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+ProCurve J8773A Switch 4208vl, revision L.10.23, ROM L.10.03 (/sw/code/build/rmm(nabs))
+
+ProCurve J9280A Switch 2510G-48, revision Y.11.16, ROM N.10.02 (/sw/code/build/cod(cod11))
+
+ProCurve J8692A Switch 3500yl-24G, revision K.12.05, ROM K.11.03 (/sw/code/build/btm(t2a))
+
+ProCurve J9087A Switch 2610-24-PWR, revision R.11.25, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+ProCurve J9279A Switch 2510G-24, revision Y.11.12, ROM N.10.02 (/sw/code/build/cod(cod11))
+
+ProCurve J8697A Switch 5406zl, revision K.13.25, ROM K.12.12 (/sw/code/build/btm(t3a))
+
+ProCurve J9147A 2910al-48G Switch, revision W.14.03, ROM W.14.04 (/sw/code/build/sbm(t4a_RC3))
+
+ProCurve J4899B Switch 2650, revision H.08.92, ROM H.08.02 (/sw/code/build/fish(ts_08_5))
+
+ProCurve J4900B Switch 2626, revision H.08.92, ROM H.08.02 (/sw/code/build/fish(ts_08_5))
+
+ProCurve J8697A Switch 5406zl, revision K.13.51, ROM K.12.14 (/sw/code/build/btm(t3a))
+
+ProCurve J4899A Switch 2650, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J8164A Switch 2626-PWR, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J9085A Switch 2610-24, revision R.11.60, ROM R.10.06 (/sw/code/build/nemo(R_ndx))
+
+ProCurve J8692A Switch 3500yl-24G, revision K.12.57, ROM K.12.12 (/sw/code/build/btm(t2g))
+
+ProCurve J4900A Switch 2626, revision H.10.83, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J8762A Switch 2600-8-PWR, revision H.08.98, ROM H.08.03 (/sw/code/build/fish(ts_08_5))
+
+ProCurve J4900A Switch 2626, revision H.10.67, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+ProCurve J4900B Switch 2626, revision H.10.38, ROM H.08.02 (/sw/code/build/fish(mf_v10_fishp))
+
+HP J4905A ProCurve Switch 3400cl-24G, revision M.08.54, ROM I.08.02 (/sw/code/build/makf(f04))
+
+ProCurve J9280A Switch 2510G-48, revision Y.11.01, ROM N.10.02 (/sw/code/build/cod(cod11))
+
+ProCurve J9085A Switch 2610-24, revision R.11.54, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+ProCurve J4850A Switch 5304XL, revision E.11.10, ROM E.05.05 (/sw/code/build/alpmo(alp11))
+
+</comments>
+   <devices>
+      <sysdescr>ProCurve J4899A Switch 2650, revision H.10.29, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J4899B Switch 2650, revision H.10.31, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J4900A Switch 2626, revision H.10.29, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J4900B Switch 2626, revision H.10.29, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J9021A Switch 2810-24G, revision N.11.15, ROM N.10.01 (/sw/code/build/bass(bh2))</sysdescr>
+      <sysdescr>ProCurve J9088A Switch 2610-48, revision R.11.25, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
+      <sysdescr>ProCurve J9088A Switch 2610-48, revision R.11.30, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
+      <sysdescr>ProCurve J4899B Switch 2650, revision H.10.50, ROM H.08.05 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J4899B Switch 2650, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J4900B Switch 2626, revision H.08.98, ROM H.08.02 (/sw/code/build/fish(ts_08_5))</sysdescr>
+      <sysdescr>ProCurve J4900B Switch 2626, revision H.10.31, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J9088A Switch 2610-48, revision R.11.07, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
+      <sysdescr>HP J4819A ProCurve Switch 5308xl, revision E.10.74, ROM E.05.05 (/sw/code/build/alpmo(m35))</sysdescr>
+      <sysdescr>ProCurve J8697A Switch 5406zl, revision K.12.57, ROM K.12.12 (/sw/code/build/btm(t2g))</sysdescr>
+      <sysdescr>ProCurve J4899B Switch 2650, revision H.10.35, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>HP J4850A ProCurve Switch 5304XL, revision E.10.61, ROM E.05.04 (/sw/code/build/alpmo(m35))</sysdescr>
+      <sysdescr>ProCurve J9022A Switch 2810-48G, revision N.11.06, ROM N.10.01 (/sw/code/build/bass(bh2))</sysdescr>
+      <sysdescr>ProCurve J4903A Switch 2824, revision I.08.105, ROM I.08.07 (/sw/code/build/mako(ts_08_5))</sysdescr>
+      <sysdescr>ProCurve J4900B Switch 2626, revision H.08.106, ROM H.08.02 (/sw/code/build/fish(ts_08_5))</sysdescr>
+      <sysdescr>ProCurve J4903A Switch 2824, revision I.08.87, ROM I.08.07 (/sw/code/build/mako(ts_08_5))</sysdescr>
+      <sysdescr>ProCurve J8773A Switch 4208vl, revision L.11.09, ROM L.10.03 (/sw/code/build/rmm(rm11))</sysdescr>
+      <sysdescr>ProCurve J9279A Switch 2510G-24, revision Y.11.08, ROM N.10.02 (/sw/code/build/cod(cod11))</sysdescr>
+      <sysdescr>HP J4865A ProCurve Switch 4108GL, revision G.07.107, ROM G.05.02 (/sw/code/build/gamo(m03))</sysdescr>
+      <sysdescr>ProCurve J4899B Switch 2650, revision H.10.83, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J9050A Switch 2900-48G, revision T.13.68, ROM K.12.12 (/sw/code/build/mbm(t3a))</sysdescr>
+      <sysdescr>ProCurve J9050A Switch 2900-48G, revision T.13.57, ROM K.12.12 (/sw/code/build/mbm(t3a))</sysdescr>
+      <sysdescr>ProCurve J4899C Switch 2650, revision H.10.83, ROM H.08.05 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J9050A Switch 2900-48G, revision T.13.71, ROM K.12.12 (/sw/code/build/mbm(t3a))</sysdescr>
+      <sysdescr>ProCurve J9049A Switch 2900-24G, revision T.12.09, ROM K.11.03 (/sw/code/build/mbm(t2a))</sysdescr>
+      <sysdescr>ProCurve J9050A Switch 2900-48G, revision T.13.09, ROM K.12.12 (/sw/code/build/mbm(t3a))</sysdescr>
+      <sysdescr>ProCurve J9050A Switch 2900-48G, revision T.13.45, ROM K.12.12 (/sw/code/build/mbm(t3a))</sysdescr>
+      <sysdescr>ProCurve j9020a Switch 2510-48, revision U.11.11, ROM R.10.06 (/sw/code/build/dosx(ndx))</sysdescr>
+      <sysdescr>ProCurve J9019A Switch 2510-24, revision Q.10.01, ROM Q.10.02 (/sw/code/build/harp(harp))</sysdescr>
+      <sysdescr>ProCurve J9019A Switch 2510-24, revision Q.11.17, ROM Q.10.02 (/sw/code/build/harp(bh2))</sysdescr>
+      <sysdescr>ProCurve J8693A Switch 3500yl-48G, revision K.12.57, ROM K.12.12 (/sw/code/build/btm(t2g))</sysdescr>
+      <sysdescr>ProCurve J4819A Switch 5308xl, revision E.11.10, ROM E.05.05 (/sw/code/build/alpmo(alp11))</sysdescr>
+      <sysdescr>ProCurve J9138A Switch 2520-24-PoE, revision S.14.03, ROM S.14.03 (/sw/code/build/elmo(t4b_release))</sysdescr>
+      <sysdescr>ProCurve J9087A Switch 2610-24-PWR, revision R.11.22, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
+      <sysdescr>ProCurve J8164A Switch 2626-PWR, revision H.10.38, ROM H.08.02 (/sw/code/build/fish(mf_v10_fishp))</sysdescr>
+      <sysdescr>ProCurve J8770A Switch 4204vl, revision L.10.23, ROM L.10.03 (/sw/code/build/rmm(nabs))</sysdescr>
+      <sysdescr>ProCurve J8770A Switch 4204vl, revision L.11.20, ROM L.10.03 (/sw/code/build/rmm(rm11))</sysdescr>
+      <sysdescr>ProCurve J8698A Switch 5412zl, revision K.14.41, ROM K.12.20 (/sw/code/build/btm(t4a))</sysdescr>
+      <sysdescr>ProCurve J9091A Switch 8212zl, revision K.14.41, ROM K.12.20 (/sw/code/build/btm(t4a))</sysdescr>
+      <sysdescr>ProCurve J4899B Switch 2650, revision H.10.67, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J8770A Switch 4204vl, revision L.11.24, ROM L.10.03 (/sw/code/build/rmm(rm11))</sysdescr>
+      <sysdescr>HP J4865A ProCurve Switch 4108GL, revision G.07.109, ROM G.05.02 (/sw/code/build/gamo(m03))</sysdescr>
+      <sysdescr>ProCurve J9022A Switch 2810-48G, revision N.11.15, ROM N.10.01 (/sw/code/build/bass(bh2))</sysdescr>
+      <sysdescr>ProCurve J4903A Switch 2824, revision I.10.73, ROM I.08.07 (/sw/code/build/mako(mkfs))</sysdescr>
+      <sysdescr>ProCurve J4904A Switch 2848, revision I.10.73, ROM I.08.07 (/sw/code/build/mako(mkfs))</sysdescr>
+      <sysdescr>ProCurve J4850A Switch 5304XL, revision E.11.21, ROM E.05.05 (/sw/code/build/alpmo(alp11))</sysdescr>
+      <sysdescr>ProCurve J4900B Switch 2626, revision H.10.83, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J9279A Switch 2510G-24, revision Y.11.16, ROM N.10.02 (/sw/code/build/cod(cod11))</sysdescr>
+      <sysdescr>ProCurve J9280A Switch 2510G-48, revision Y.11.12, ROM N.10.02 (/sw/code/build/cod(cod11))</sysdescr>
+      <sysdescr>ProCurve J4903A Switch 2824, revision I.10.70, ROM I.08.07 (/sw/code/build/mako(mkfs))</sysdescr>
+      <sysdescr>ProCurve J9021A Switch 2810-24G, revision N.10.02, ROM N.10.01 (/sw/code/build/bass(bass))</sysdescr>
+      <sysdescr>ProCurve J4904A Switch 2848, revision I.08.87, ROM I.08.07 (/sw/code/build/mako(ts_08_5))</sysdescr>
+      <sysdescr>ProCurve J8697A Switch 5406zl, revision K.14.41, ROM K.12.20 (/sw/code/build/btm(t4a))</sysdescr>
+      <sysdescr>ProCurve J9145A 2910al-24G Switch, revision W.14.30, ROM W.14.04 (/sw/code/build/sbm(t4a))</sysdescr>
+      <sysdescr>ProCurve J8693A Switch 3500yl-48G, revision K.13.63, ROM K.12.17 (/sw/code/build/btm(t3a))</sysdescr>
+      <sysdescr>ProCurve J8698A Switch 5412zl, revision K.13.60, ROM K.12.17 (/sw/code/build/btm(t3a))</sysdescr>
+      <sysdescr>ProCurve J9049A Switch 2900-24G, revision T.13.09, ROM K.12.12 (/sw/code/build/mbm(t3a))</sysdescr>
+      <sysdescr>ProCurve J9091A Switch 8212zl, revision K.14.47, ROM K.12.20 (/sw/code/build/btm(t4a))</sysdescr>
+      <sysdescr>ProCurve J9137A Switch 2520-8-PoE, revision S.14.03, ROM S.14.03 (/sw/code/build/elmo(t4b_release))</sysdescr>
+      <sysdescr>ProCurve J9264A Switch 6600ml-24G-4XG, revision K.14.47, ROM K.12.20 (/sw/code/build/btm(t4a))</sysdescr>
+      <sysdescr>ProCurve J9264A Switch 6600ml-24G-4XG, revision K.14.41, ROM K.12.20 (/sw/code/build/btm(t4a))</sysdescr>
+      <sysdescr>ProCurve J9298A Switch 2520G-8-PoE, revision J.14.01, ROM J.14.04 (/sw/code/build/walle(t4b_release))</sysdescr>
+      <sysdescr>ProCurve J9471A Switch 3500-24-PoE, revision K.14.XX, ROM K.12.19 (/sw/code/build/btm(dbjr_t4))</sysdescr>
+      <sysdescr>ProCurve J9049A Switch 2900-24G, revision T.13.71, ROM K.11.03 (/sw/code/build/mbm(t3a))</sysdescr>
+      <sysdescr>ProCurve J8992A Switch 6200yl-24G, revision K.12.16, ROM K.11.03 (/sw/code/build/btm(t2a))</sysdescr>
+      <sysdescr>ProCurve J9088A Switch 2610-48, revision R.11.54, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
+      <sysdescr>ProCurve J9085A Switch 2610-24, revision R.11.16, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
+      <sysdescr>ProCurve J9088A Switch 2610-48, revision R.11.16, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
+      <sysdescr>ProCurve J9085A Switch 2610-24, revision R.11.30, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
+      <sysdescr>ProCurve J9021A Switch 2810-24G, revision N.11.25, ROM N.10.01 (/sw/code/build/bass(bh2))</sysdescr>
+      <sysdescr>ProCurve J9087A Switch 2610-24-PWR, revision R.11.30, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
+      <sysdescr>ProCurve J8773A Switch 4208vl, revision L.10.23, ROM L.10.03 (/sw/code/build/rmm(nabs))</sysdescr>
+      <sysdescr>ProCurve J9280A Switch 2510G-48, revision Y.11.16, ROM N.10.02 (/sw/code/build/cod(cod11))</sysdescr>
+      <sysdescr>ProCurve J8692A Switch 3500yl-24G, revision K.12.05, ROM K.11.03 (/sw/code/build/btm(t2a))</sysdescr>
+      <sysdescr>ProCurve J9087A Switch 2610-24-PWR, revision R.11.25, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
+      <sysdescr>ProCurve J9279A Switch 2510G-24, revision Y.11.12, ROM N.10.02 (/sw/code/build/cod(cod11))</sysdescr>
+      <sysdescr>ProCurve J8697A Switch 5406zl, revision K.13.25, ROM K.12.12 (/sw/code/build/btm(t3a))</sysdescr>
+      <sysdescr>ProCurve J9147A 2910al-48G Switch, revision W.14.03, ROM W.14.04 (/sw/code/build/sbm(t4a_RC3))</sysdescr>
+      <sysdescr>ProCurve J4899B Switch 2650, revision H.08.92, ROM H.08.02 (/sw/code/build/fish(ts_08_5))</sysdescr>
+      <sysdescr>ProCurve J4900B Switch 2626, revision H.08.92, ROM H.08.02 (/sw/code/build/fish(ts_08_5))</sysdescr>
+      <sysdescr>ProCurve J8697A Switch 5406zl, revision K.13.51, ROM K.12.14 (/sw/code/build/btm(t3a))</sysdescr>
+      <sysdescr>ProCurve J4899A Switch 2650, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J8164A Switch 2626-PWR, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J9085A Switch 2610-24, revision R.11.60, ROM R.10.06 (/sw/code/build/nemo(R_ndx))</sysdescr>
+      <sysdescr>ProCurve J8692A Switch 3500yl-24G, revision K.12.57, ROM K.12.12 (/sw/code/build/btm(t2g))</sysdescr>
+      <sysdescr>ProCurve J4900A Switch 2626, revision H.10.83, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J8762A Switch 2600-8-PWR, revision H.08.98, ROM H.08.03 (/sw/code/build/fish(ts_08_5))</sysdescr>
+      <sysdescr>ProCurve J4900A Switch 2626, revision H.10.67, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
+      <sysdescr>ProCurve J4900B Switch 2626, revision H.10.38, ROM H.08.02 (/sw/code/build/fish(mf_v10_fishp))</sysdescr>
+      <sysdescr>HP J4905A ProCurve Switch 3400cl-24G, revision M.08.54, ROM I.08.02 (/sw/code/build/makf(f04))</sysdescr>
+      <sysdescr>ProCurve J9280A Switch 2510G-48, revision Y.11.01, ROM N.10.02 (/sw/code/build/cod(cod11))</sysdescr>
+      <sysdescr>ProCurve J9085A Switch 2610-24, revision R.11.54, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
+      <sysdescr>ProCurve J4850A Switch 5304XL, revision E.11.10, ROM E.05.05 (/sw/code/build/alpmo(alp11))</sysdescr>
+   </devices>
+   <oidlist>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.1.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>comments</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.17.1.4.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>dot1dBasePortIfIndex</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.17.4.3.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>dot1dTpFdbAddress</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.17.4.3.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>dot1dTpFdbPort</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifdescr</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifIndex</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.14</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifinerrors</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.10</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifinoctets</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.7</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifinternalstatus</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.9</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>iflastchange</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.4</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifmtu</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.20</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifouterrors</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.16</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifoutoctets</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.6</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifPhysAddress</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.5</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifspeed</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.8</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifstatus</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.3</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifType</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.17.1.1.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>macaddr</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.6.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>location</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.3.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>uptime</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.1.0</oid>
+         <portcounter>1</portcounter>
+         <dynamicport>0</dynamicport>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.4</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>cdpCacheAddress</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.7</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>cdpCacheDevicePort</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.47.1.1.1.1.13.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>entPhysicalModelName</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.31.1.1.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifName</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.4.20.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ipAdEntAddr</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.4.22.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ipNetToMediaPhysAddress</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.5.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>name</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.47.1.1.1.1.10.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>firmware2</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.47.1.1.1.1.11.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>serial</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.47.1.1.1.1.9.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>firmware1</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.4.1.11.2.14.11.5.1.7.1.15.3.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>vmvlan</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.5</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemChassisId</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.7</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemPortId</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.3.2.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpLocChassisId</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.47.1.2.1.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>vtpVlanName</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.5</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>cdpCacheVersion</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.6</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>cdpCacheDeviceId</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.4.1.9.9.23.1.2.1.1.8</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>cdpCachePlatform</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.10</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemSysDesc</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.9</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemSysName</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.8</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemPortDesc</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+   </oidlist>
+</model>

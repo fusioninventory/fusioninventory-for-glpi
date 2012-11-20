@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <model>
-   <name>7013134</name>
+   <name>4806984</name>
    <type>3</type>
-   <key>Printer0399</key>
-   <comments></comments>
+   <key>Printer0543</key>
+   <comments>Xerox Phaser 7760GX;PS 3.5.0,Net 26.54.03.09.2006,Eng 3.2.2,OS 5.50
+
+</comments>
    <devices>
-      <sysdescr>hp LaserJet 1320 series</sysdescr>
+      <sysdescr>Xerox Phaser 7760GX;PS 3.5.0,Net 26.54.03.09.2006,Eng 3.2.2,OS 5.50</sysdescr>
    </devices>
    <oidlist>
       <oidobject>
@@ -93,7 +95,7 @@
          <portcounter>0</portcounter>
          <dynamicport>0</dynamicport>
          <mapping_type>Printer</mapping_type>
-         <mapping_name>tonerblackmax</mapping_name>
+         <mapping_name>tonercyanmax</mapping_name>
          <vlan>0</vlan>
          <activation>1</activation>
       </oidobject>
@@ -103,7 +105,7 @@
          <portcounter>0</portcounter>
          <dynamicport>0</dynamicport>
          <mapping_type>Printer</mapping_type>
-         <mapping_name>tonerblackremaining</mapping_name>
+         <mapping_name>tonercyanremaining</mapping_name>
          <vlan>0</vlan>
          <activation>1</activation>
       </oidobject>
@@ -159,11 +161,61 @@
       </oidobject>
       <oidobject>
          <object></object>
-         <oid>.1.3.6.1.4.1.11.2.3.9.4.2.1.1.3.12.0</oid>
+         <oid>.1.3.6.1.2.1.43.11.1.1.8.1.2</oid>
          <portcounter>0</portcounter>
          <dynamicport>0</dynamicport>
          <mapping_type>Printer</mapping_type>
-         <mapping_name>otherserial</mapping_name>
+         <mapping_name>tonermagentamax</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.43.11.1.1.9.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>tonermagentaremaining</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.43.11.1.1.8.1.3</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>toneryellowmax</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.43.11.1.1.9.1.3</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>toneryellowremaining</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.43.11.1.1.8.1.4</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>tonerblackmax</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.43.11.1.1.9.1.4</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>tonerblackremaining</mapping_name>
          <vlan>0</vlan>
          <activation>1</activation>
       </oidobject>
@@ -183,27 +235,37 @@
          <portcounter>0</portcounter>
          <dynamicport>0</dynamicport>
          <mapping_type>Printer</mapping_type>
-         <mapping_name>cartridgeblack</mapping_name>
+         <mapping_name>tonercyan</mapping_name>
          <vlan>0</vlan>
          <activation>1</activation>
       </oidobject>
       <oidobject>
          <object></object>
-         <oid>.1.3.6.1.4.1.11.2.3.9.1.1.7.0</oid>
+         <oid>.1.3.6.1.2.1.43.11.1.1.6.1.2</oid>
          <portcounter>0</portcounter>
          <dynamicport>0</dynamicport>
          <mapping_type>Printer</mapping_type>
-         <mapping_name>informations</mapping_name>
+         <mapping_name>tonermagenta</mapping_name>
          <vlan>0</vlan>
          <activation>1</activation>
       </oidobject>
       <oidobject>
          <object></object>
-         <oid>.1.3.6.1.4.1.11.2.3.9.4.2.1.4.1.2.22.0</oid>
+         <oid>.1.3.6.1.2.1.43.11.1.1.6.1.3</oid>
          <portcounter>0</portcounter>
          <dynamicport>0</dynamicport>
          <mapping_type>Printer</mapping_type>
-         <mapping_name>pagecounterrectoversopages</mapping_name>
+         <mapping_name>toneryellow</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.43.11.1.1.6.1.4</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>tonerblack</mapping_name>
          <vlan>0</vlan>
          <activation>1</activation>
       </oidobject>

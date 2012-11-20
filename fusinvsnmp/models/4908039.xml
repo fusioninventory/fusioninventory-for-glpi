@@ -4,7 +4,11 @@
    <name>4908039</name>
    <type>3</type>
    <key>Printer0215</key>
-   <comments></comments>
+   <comments>Brother NC-6100h, Firmware Ver.1.01  (03.10.09),MID 84UZ51
+
+Brother NC-6200h, Firmware Ver.1.33  (06.07.21),MID 84UZ82,FID 1
+
+</comments>
    <devices>
       <sysdescr>Brother NC-6100h, Firmware Ver.1.01  (03.10.09),MID 84UZ51</sysdescr>
       <sysdescr>Brother NC-6200h, Firmware Ver.1.33  (06.07.21),MID 84UZ82,FID 1</sysdescr>

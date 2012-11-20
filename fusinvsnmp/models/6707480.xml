@@ -4,7 +4,17 @@
    <name>6707480</name>
    <type>3</type>
    <key>Printer0468</key>
-   <comments></comments>
+   <comments>Lexmark E240n version BR.Q.P203 kernel 2.4.0-test6 All-N-1
+
+Lexmark E332n version 141.C09 kernel 2.4.0-test6 All-N-1
+
+Lexmark E332n version 141.C20 kernel 2.4.0-test6 All-N-1
+
+Lexmark E342n version BR.H.P204 kernel 2.4.0-test6 All-N-1
+
+Lexmark W840 version NS.NP.N118 kernel 2.6.6 All-N-1
+
+</comments>
    <devices>
       <sysdescr>Lexmark E240n version BR.Q.P203 kernel 2.4.0-test6 All-N-1</sysdescr>
       <sysdescr>Lexmark E332n version 141.C09 kernel 2.4.0-test6 All-N-1</sysdescr>

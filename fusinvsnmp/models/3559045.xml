@@ -4,13 +4,11 @@
    <name>3559045</name>
    <type>2</type>
    <key>Networking1897</key>
-   <comments></comments>
+   <comments>Cisco Internetwork Operating System Software IOS (tm) C1200 Software (C1200-K9W7-M), Version 12.2(13)JA2, EARLY DEPLOYMENT RELEASE SOFTWARE (fc1)TAC Support: http://www.cisco.com/tacCopyright (c) 1986-2004 by cisco Systems, Inc.Compiled Fri 30-Jan
+
+</comments>
    <devices>
-      <sysdescr>Cisco Internetwork Operating System Software ^M
-IOS (tm) C1200 Software (C1200-K9W7-M), Version 12.2(13)JA2, EARLY DEPLOYMENT RELEASE SOFTWARE (fc1)^M
-TAC Support: http://www.cisco.com/tac^M
-Copyright (c) 1986-2004 by cisco Systems, Inc.^M
-Compiled Fri 30-Jan</sysdescr>
+      <sysdescr>Cisco Internetwork Operating System Software IOS (tm) C1200 Software (C1200-K9W7-M), Version 12.2(13)JA2, EARLY DEPLOYMENT RELEASE SOFTWARE (fc1)TAC Support: http://www.cisco.com/tacCopyright (c) 1986-2004 by cisco Systems, Inc.Compiled Fri 30-Jan</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

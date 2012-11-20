@@ -4,7 +4,9 @@
    <name>5662699</name>
    <type>2</type>
    <key>Networking1653</key>
-   <comments></comments>
+   <comments>ProCurve j9020a Switch 2510-48, revision U.11.08, ROM R.10.06 (/sw/code/build/dosx(ndx))
+
+</comments>
    <devices>
       <sysdescr>ProCurve j9020a Switch 2510-48, revision U.11.08, ROM R.10.06 (/sw/code/build/dosx(ndx))</sysdescr>
    </devices>

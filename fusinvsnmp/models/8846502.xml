@@ -4,7 +4,17 @@
    <name>8846502</name>
    <type>2</type>
    <key>Networking1874</key>
-   <comments></comments>
+   <comments>PROCURVE J9029A - PA.02.06
+
+PROCURVE J9080A - VB.02.04
+
+PROCURVE J9028B - PB.02.09
+
+PROCURVE J9029A - PA.02.07
+
+PROCURVE J9079A - VA.02.01
+
+</comments>
    <devices>
       <sysdescr>PROCURVE J9029A - PA.02.06</sysdescr>
       <sysdescr>PROCURVE J9080A - VB.02.04</sysdescr>

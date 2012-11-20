@@ -4,12 +4,11 @@
    <name>102642</name>
    <type>2</type>
    <key>Networking1792</key>
-   <comments></comments>
+   <comments>Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(11)EA1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2002 by cisco Systems, Inc.Compiled Wed 28-Aug-02 10:25 by antonino
+
+</comments>
    <devices>
-      <sysdescr>Cisco Internetwork Operating System Software^M 
-IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(11)EA1, RELEASE SOFTWARE (fc1)^M
-Copyright (c) 1986-2002 by cisco Systems, Inc.^M
-Compiled Wed 28-Aug-02 10:25 by antonino</sysdescr>
+      <sysdescr>Cisco Internetwork Operating System Software IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(11)EA1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2002 by cisco Systems, Inc.Compiled Wed 28-Aug-02 10:25 by antonino</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

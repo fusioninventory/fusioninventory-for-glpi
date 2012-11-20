@@ -4,7 +4,9 @@
    <name>56385</name>
    <type>2</type>
    <key>Networking1696</key>
-   <comments></comments>
+   <comments>HP J4093A ProCurve Switch 2424M, revision C.08.22, ROM C.06.01 (/sw/code/build/vgro(c08))
+
+</comments>
    <devices>
       <sysdescr>HP J4093A ProCurve Switch 2424M, revision C.08.22, ROM C.06.01 (/sw/code/build/vgro(c08))</sysdescr>
    </devices>

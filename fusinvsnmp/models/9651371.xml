@@ -4,11 +4,11 @@
    <name>9651371</name>
    <type>2</type>
    <key>Networking0331</key>
-   <comments></comments>
+   <comments>H3C Comware Platform Software, Software Version 5.20, Release 1206H3C S5820X-28CCopyright (c) 2004-2010 H3C Technologies Co., Ltd. All rights reserved.
+
+</comments>
    <devices>
-      <sysdescr>H3C Comware Platform Software, Software Version 5.20, Release 1206^M
-H3C S5820X-28C^M
-Copyright (c) 2004-2010 H3C Technologies Co., Ltd. All rights reserved.</sysdescr>
+      <sysdescr>H3C Comware Platform Software, Software Version 5.20, Release 1206H3C S5820X-28CCopyright (c) 2004-2010 H3C Technologies Co., Ltd. All rights reserved.</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

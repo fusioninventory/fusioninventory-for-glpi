@@ -4,7 +4,9 @@
    <name>7707176</name>
    <type>3</type>
    <key>Printer0348</key>
-   <comments></comments>
+   <comments>KYOCERA Printer I/F IB-21E Ver 1.4.0
+
+</comments>
    <devices>
       <sysdescr>KYOCERA Printer I/F IB-21E Ver 1.4.0</sysdescr>
    </devices>

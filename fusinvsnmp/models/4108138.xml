@@ -4,9 +4,10 @@
    <name>4108138</name>
    <type>2</type>
    <key>Networking0092</key>
-   <comments></comments>
+   <comments>ATI 8000S
+
+</comments>
    <devices>
-      <sysdescr>OmniStack LS 6200</sysdescr>
       <sysdescr>ATI 8000S</sysdescr>
    </devices>
    <oidlist>

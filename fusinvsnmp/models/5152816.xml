@@ -4,7 +4,9 @@
    <name>5152816</name>
    <type>2</type>
    <key>Networking1865</key>
-   <comments></comments>
+   <comments>HP J4899A ProCurve Switch 2650, revision H.07.02, ROM H.07.01 (/sw/code/build/fish(f02))
+
+</comments>
    <devices>
       <sysdescr>HP J4899A ProCurve Switch 2650, revision H.07.02, ROM H.07.01 (/sw/code/build/fish(f02))</sysdescr>
    </devices>

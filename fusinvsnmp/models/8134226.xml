@@ -4,20 +4,17 @@
    <name>8134226</name>
    <type>2</type>
    <key>Networking1875</key>
-   <comments></comments>
+   <comments>Cisco Systems WS-C6006  Cisco Catalyst Operating System Software, Version 5.5(2)  Copyright (c) 1995-2000 by Cisco Systems  
+
+Cisco Systems WS-C6006Cisco Catalyst Operating System Software, Version 7.3(2)Copyright (c) 1995-2002 by Cisco Systems
+
+Cisco Systems, Inc. WS-C4003Cisco Catalyst Operating System Software, Version 5.5(1)Copyright (c) 1995-2000 by Cisco Systems, Inc.
+
+</comments>
    <devices>
-      <sysdescr>Cisco Systems WS-C6006  
-Cisco Catalyst Operating System Software, Version 5.5(2)  
-Copyright (c) 1995-2000 by Cisco Systems  
-</sysdescr>
-      <sysdescr>Cisco Systems WS-C6006
-Cisco Catalyst Operating System Software, Version 7.3(2)
-Copyright (c) 1995-2002 by Cisco Systems
-</sysdescr>
-      <sysdescr>Cisco Systems, Inc. WS-C4003
-Cisco Catalyst Operating System Software, Version 5.5(1)
-Copyright (c) 1995-2000 by Cisco Systems, Inc.
-</sysdescr>
+      <sysdescr>Cisco Systems WS-C6006  Cisco Catalyst Operating System Software, Version 5.5(2)  Copyright (c) 1995-2000 by Cisco Systems  </sysdescr>
+      <sysdescr>Cisco Systems WS-C6006Cisco Catalyst Operating System Software, Version 7.3(2)Copyright (c) 1995-2002 by Cisco Systems</sysdescr>
+      <sysdescr>Cisco Systems, Inc. WS-C4003Cisco Catalyst Operating System Software, Version 5.5(1)Copyright (c) 1995-2000 by Cisco Systems, Inc.</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

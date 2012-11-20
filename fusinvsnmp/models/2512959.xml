@@ -4,7 +4,9 @@
    <name>2512959</name>
    <type>2</type>
    <key>Networking1951</key>
-   <comments></comments>
+   <comments>ProCurve J4899B Switch 2650, revision H.10.29, ROM H.08.02 (/sw/code/build/fish(mkfs))
+
+</comments>
    <devices>
       <sysdescr>ProCurve J4899B Switch 2650, revision H.10.29, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
    </devices>

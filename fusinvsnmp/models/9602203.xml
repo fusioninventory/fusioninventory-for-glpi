@@ -3,8 +3,10 @@
 <model>
    <name>9602203</name>
    <type>1</type>
-   <key></key>
-   <comments></comments>
+   <key>Computer0002</key>
+   <comments>IBM PowerPC CHRP Computer
+
+</comments>
    <devices>
       <sysdescr>IBM PowerPC CHRP Computer</sysdescr>
    </devices>

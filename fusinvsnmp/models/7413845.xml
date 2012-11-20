@@ -4,7 +4,13 @@
    <name>7413845</name>
    <type>3</type>
    <key>Printer0311</key>
-   <comments></comments>
+   <comments>Dell 2130cn Color Laser; Net 13.11, Controller 200805191811, Engine 01.01.04
+
+Dell 2130cn Color Laser; Net 13.22, Controller 200906261555, Engine 01.01.05
+
+Xerox Phaser 6130N; Net 10.74,ESS 200707251151,IOT 02.00.09
+
+</comments>
    <devices>
       <sysdescr>Dell 2130cn Color Laser; Net 13.11, Controller 200805191811, Engine 01.01.04</sysdescr>
       <sysdescr>Dell 2130cn Color Laser; Net 13.22, Controller 200906261555, Engine 01.01.05</sysdescr>

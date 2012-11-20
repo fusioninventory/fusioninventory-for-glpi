@@ -4,7 +4,9 @@
    <name>5713241</name>
    <type>2</type>
    <key>Networking0069</key>
-   <comments></comments>
+   <comments>FreeBSD F60-XA307610700202 4.11-RELEASE-p25  NETASQ Secure BSD (NS-BSD)  i386
+
+</comments>
    <devices>
       <sysdescr>FreeBSD F60-XA307610700202 4.11-RELEASE-p25  NETASQ Secure BSD (NS-BSD)  i386</sysdescr>
    </devices>

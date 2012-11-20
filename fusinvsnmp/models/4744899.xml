@@ -4,7 +4,13 @@
    <name>4744899</name>
    <type>3</type>
    <key>Printer0240</key>
-   <comments></comments>
+   <comments>Brother NC-6800h, Firmware Ver.1.01  (08.12.12),MID 84UB03
+
+Brother NC-6400h, Firmware Ver.1.08  (06.05.08),MID 84UZ93
+
+Brother NC-6400h, Firmware Ver.1.09  (06.07.13),MID 84UZ93
+
+</comments>
    <devices>
       <sysdescr>Brother NC-6800h, Firmware Ver.1.01  (08.12.12),MID 84UB03</sysdescr>
       <sysdescr>Brother NC-6400h, Firmware Ver.1.08  (06.05.08),MID 84UZ93</sysdescr>

@@ -89,7 +89,6 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       global $DB,$CFG_GLPI;
 
       $snmpwalk = '';
-//      if (isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])) {
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
                    WHERE `construct_device_id`='".$devices_id."'
                    LIMIT 1";
@@ -97,7 +96,6 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          while ($data=$DB->fetch_array($result)) {
             $snmpwalk = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$data['log']);
          }
-//      }
 
       $a_mapping = array();
       $a_mibs = array();

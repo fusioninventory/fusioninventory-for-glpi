@@ -4,24 +4,26 @@
    <name>7187454</name>
    <type>2</type>
    <key>Networking0394</key>
-   <comments></comments>
+   <comments>H3C Comware Platform Software, Software Version 5.20, Release 5309 H3C S3610-28FCopyright(c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.
+
+H3C Comware Platform Software, Software Version 5.20 Release 1208P03H3C S5500-28C-PWR-SICopyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved
+
+H3C Comware Platform Software, Software Version 5.20 Release 1208P03H3C S5500-28C-SICopyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.
+
+H3C S5500EI
+
+H3C Comware Platform Software, Software Version 5.20 Release 1208P03H3C S5500-52C-PWR-SICopyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.
+
+H3C Comware Platform Software, Software Version 5.20 Release 1208P03H3C S5500-52C-SICopyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.
+
+</comments>
    <devices>
-      <sysdescr>H3C Comware Platform Software, Software Version 5.20, Release 5309 ^M
-H3C S3610-28F^M
-Copyright(c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.</sysdescr>
-      <sysdescr>H3C Comware Platform Software, Software Version 5.20 Release 1208P03
-H3C S5500-28C-PWR-SI
-Copyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved</sysdescr>
-      <sysdescr>H3C Comware Platform Software, Software Version 5.20 Release 1208P03^M
-H3C S5500-28C-SI^M
-Copyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.</sysdescr>
+      <sysdescr>H3C Comware Platform Software, Software Version 5.20, Release 5309 H3C S3610-28FCopyright(c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.</sysdescr>
+      <sysdescr>H3C Comware Platform Software, Software Version 5.20 Release 1208P03H3C S5500-28C-PWR-SICopyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved</sysdescr>
+      <sysdescr>H3C Comware Platform Software, Software Version 5.20 Release 1208P03H3C S5500-28C-SICopyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.</sysdescr>
       <sysdescr>H3C S5500EI</sysdescr>
-      <sysdescr>H3C Comware Platform Software, Software Version 5.20 Release 1208P03^M
-H3C S5500-52C-PWR-SI^M
-Copyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.</sysdescr>
-      <sysdescr>H3C Comware Platform Software, Software Version 5.20 Release 1208P03^M
-H3C S5500-52C-SI^M
-Copyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.</sysdescr>
+      <sysdescr>H3C Comware Platform Software, Software Version 5.20 Release 1208P03H3C S5500-52C-PWR-SICopyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.</sysdescr>
+      <sysdescr>H3C Comware Platform Software, Software Version 5.20 Release 1208P03H3C S5500-52C-SICopyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

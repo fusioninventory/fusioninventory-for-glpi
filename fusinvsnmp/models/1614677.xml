@@ -4,7 +4,9 @@
    <name>1614677</name>
    <type>3</type>
    <key>Printer0112</key>
-   <comments></comments>
+   <comments>EPL-5900
+
+</comments>
    <devices>
       <sysdescr>EPL-5900</sysdescr>
    </devices>

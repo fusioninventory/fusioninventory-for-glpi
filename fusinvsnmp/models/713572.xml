@@ -3,11 +3,12 @@
 <model>
    <name>713572</name>
    <type>1</type>
-   <key></key>
-   <comments></comments>
+   <key>Computer0003</key>
+   <comments>Wyse 5150SE
+
+</comments>
    <devices>
-      <sysdescr>Wyse 5150SE
-</sysdescr>
+      <sysdescr>Wyse 5150SE</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

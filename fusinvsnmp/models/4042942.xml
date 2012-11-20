@@ -4,12 +4,11 @@
    <name>4042942</name>
    <type>2</type>
    <key>Networking1772</key>
-   <comments></comments>
+   <comments>Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(4)T7, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Wed 29-Nov-06 00:43 by kellythw
+
+</comments>
    <devices>
-      <sysdescr>Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(4)T7, RELEASE SOFTWARE (fc1)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
-Compiled Wed 29-Nov-06 00:43 by kellythw</sysdescr>
+      <sysdescr>Cisco IOS Software, C870 Software (C870-ADVIPSERVICESK9-M), Version 12.4(4)T7, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Wed 29-Nov-06 00:43 by kellythw</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

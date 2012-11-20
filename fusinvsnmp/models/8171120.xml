@@ -4,7 +4,13 @@
    <name>8171120</name>
    <type>2</type>
    <key>Networking0057</key>
-   <comments></comments>
+   <comments>Fibre Channel Switch.
+
+DS-300B
+
+Brocade 4Gb SAN Switch Module for IBM eServer BladeCenter
+
+</comments>
    <devices>
       <sysdescr>Fibre Channel Switch.</sysdescr>
       <sysdescr>DS-300B</sysdescr>

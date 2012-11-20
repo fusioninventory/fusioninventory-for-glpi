@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model>
+   <name>8015425</name>
+   <type>2</type>
+   <key>Networking0316</key>
+   <comments>Ethernet Switch 425-24T  HW:06       FW:3.5.0.2   SW:v3.5.0.06  BN:6 (c) Nortel Networks
+
+3Com Switch 4210 9-Port Software Version 3Com OS V3.01.05s56
+
+BayStack 5510-24T      HW:03       FW:4.1.0.8   SW:v4.1.0.04
+
+BayStack 420     HW:#02      FW:3.1.0.5   SW:v3.1.0.04
+
+Ethernet Switch 425-48T  HW:32       FW:3.6.0.1   SW:v3.6.0.00 BN:00 (c) Nortel Networks
+
+Ethernet Routing Switch 2550T (Stack Enabled)         HW:05       FW:1.0.0.14  SW:v4.3.0.004 BN:00 (c) Nortel Networks
+
+Ethernet Switch 3510-24T              HW:33       FW:4.0.0.7   SW:v4.0.4.00
+
+Ethernet Switch 470-24T      HW:34       FW:3.6.0.6   SW:v3.6.2.04 BN:4 ISVN:2 (c) Nortel Networks
+
+BayStack 460 - 24T - PWR     HW:07       FW:3.6.0.1   SW:v3.1.9.04 ISVN:3
+
+Business Policy Switch 2000  HW:11       FW:3.6.0.6   SW:v3.2.0.02 ISVN:3
+
+BayStack 420     HW:#02      FW:3.1.0.5   SW:v3.1.1.00
+
+</comments>
+   <devices>
+      <sysdescr>Ethernet Switch 425-24T  HW:06       FW:3.5.0.2   SW:v3.5.0.06  BN:6 (c) Nortel Networks</sysdescr>
+      <sysdescr>3Com Switch 4210 9-Port Software Version 3Com OS V3.01.05s56</sysdescr>
+      <sysdescr>BayStack 5510-24T      HW:03       FW:4.1.0.8   SW:v4.1.0.04</sysdescr>
+      <sysdescr>BayStack 420     HW:#02      FW:3.1.0.5   SW:v3.1.0.04</sysdescr>
+      <sysdescr>Ethernet Switch 425-48T  HW:32       FW:3.6.0.1   SW:v3.6.0.00 BN:00 (c) Nortel Networks</sysdescr>
+      <sysdescr>Ethernet Routing Switch 2550T (Stack Enabled)         HW:05       FW:1.0.0.14  SW:v4.3.0.004 BN:00 (c) Nortel Networks</sysdescr>
+      <sysdescr>Ethernet Switch 3510-24T              HW:33       FW:4.0.0.7   SW:v4.0.4.00</sysdescr>
+      <sysdescr>Ethernet Switch 470-24T      HW:34       FW:3.6.0.6   SW:v3.6.2.04 BN:4 ISVN:2 (c) Nortel Networks</sysdescr>
+      <sysdescr>BayStack 460 - 24T - PWR     HW:07       FW:3.6.0.1   SW:v3.1.9.04 ISVN:3</sysdescr>
+      <sysdescr>Business Policy Switch 2000  HW:11       FW:3.6.0.6   SW:v3.2.0.02 ISVN:3</sysdescr>
+      <sysdescr>BayStack 420     HW:#02      FW:3.1.0.5   SW:v3.1.1.00</sysdescr>
+   </devices>
+   <oidlist>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.1.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>comments</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.17.1.4.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>dot1dBasePortIfIndex</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.17.4.3.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>dot1dTpFdbAddress</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.17.4.3.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>dot1dTpFdbPort</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifdescr</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifIndex</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.14</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifinerrors</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.10</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifinoctets</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.7</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifinternalstatus</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.9</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>iflastchange</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.4</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifmtu</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.20</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifouterrors</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.16</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifoutoctets</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.6</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifPhysAddress</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.5</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifspeed</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.8</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifstatus</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.3</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifType</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.17.1.1.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>macaddr</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.6.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>location</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.3.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>uptime</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.1.0</oid>
+         <portcounter>1</portcounter>
+         <dynamicport>0</dynamicport>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.31.1.1.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifName</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.4.20.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ipAdEntAddr</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.4.22.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ipNetToMediaPhysAddress</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.5.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>name</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.47.1.1.1.1.11.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>serial</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.47.1.1.1.1.13.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>entPhysicalModelName</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+   </oidlist>
+</model>

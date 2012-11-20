@@ -4,7 +4,9 @@
    <name>9928042</name>
    <type>2</type>
    <key>Networking1441</key>
-   <comments></comments>
+   <comments>Dell 48 Port Gigabit Ethernet, 2.1.1.4, VxWorks5.5.1
+
+</comments>
    <devices>
       <sysdescr>Dell 48 Port Gigabit Ethernet, 2.1.1.4, VxWorks5.5.1</sysdescr>
    </devices>

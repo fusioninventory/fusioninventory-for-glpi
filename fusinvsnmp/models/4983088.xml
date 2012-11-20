@@ -4,7 +4,13 @@
    <name>4983088</name>
    <type>2</type>
    <key>Networking1913</key>
-   <comments></comments>
+   <comments>Ethernet Routing Switch 5530-24TFD    HW:32       FW:5.0.0.4   SW:v5.1.5.009 BN:09 (c) Nortel Networks
+
+Ethernet Routing Switch 4548GT        HW:05       FW:5.3.0.3   SW:v5.3.1.001 BN:01 (c) Nortel Networks
+
+Ethernet Routing Switch 4548GT        HW:04       FW:5.3.0.3   SW:v5.3.1.001 BN:01 (c) Nortel Networks
+
+</comments>
    <devices>
       <sysdescr>Ethernet Routing Switch 5530-24TFD    HW:32       FW:5.0.0.4   SW:v5.1.5.009 BN:09 (c) Nortel Networks</sysdescr>
       <sysdescr>Ethernet Routing Switch 4548GT        HW:05       FW:5.3.0.3   SW:v5.3.1.001 BN:01 (c) Nortel Networks</sysdescr>

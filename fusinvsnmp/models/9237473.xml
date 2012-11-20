@@ -4,7 +4,19 @@
    <name>9237473</name>
    <type>3</type>
    <key>Printer0219</key>
-   <comments></comments>
+   <comments>Brother NC-9100h, Firmware Ver.1.05  (04.03.26),MID 8C5-945
+
+Brother NC-6600h, Firmware Ver.1.06  (07.11.21),MID 84UA03
+
+Brother NC-6400h, Firmware Ver.1.15  (07.01.23),MID 8C5-B45,FID 2
+
+Brother NC-4100h, Firmware Ver.1.02  (07.02.27),MID 84TU07,FID 5
+
+Brother NC-4100h, Firmware Ver.1.01  (02.09.06),MID 84TU07,FID 5
+
+Brother NC-6100h, Firmware Ver.1.03  (04.03.29),MID 84UZ51
+
+</comments>
    <devices>
       <sysdescr>Brother NC-9100h, Firmware Ver.1.05  (04.03.26),MID 8C5-945</sysdescr>
       <sysdescr>Brother NC-6600h, Firmware Ver.1.06  (07.11.21),MID 84UA03</sysdescr>

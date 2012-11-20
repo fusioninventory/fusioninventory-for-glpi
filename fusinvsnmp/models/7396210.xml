@@ -4,13 +4,19 @@
    <name>7396210</name>
    <type>2</type>
    <key>Networking0251</key>
-   <comments></comments>
+   <comments>dd-wrt
+
+Xirrus XN4 WiFi Array, ArrayOS Version 4.0-1222
+
+Xirrus XN8 WiFi Array, ArrayOS Version 4.0-1222
+
+QLogic(R) 4Gb Intelligent Pass-thru Module for IBM BladeCenter(R)
+
+</comments>
    <devices>
       <sysdescr>dd-wrt</sysdescr>
-      <sysdescr>Xirrus XN4 WiFi Array
-, ArrayOS Version 4.0-1222</sysdescr>
-      <sysdescr>Xirrus XN8 WiFi Array
-, ArrayOS Version 4.0-1222</sysdescr>
+      <sysdescr>Xirrus XN4 WiFi Array, ArrayOS Version 4.0-1222</sysdescr>
+      <sysdescr>Xirrus XN8 WiFi Array, ArrayOS Version 4.0-1222</sysdescr>
       <sysdescr>QLogic(R) 4Gb Intelligent Pass-thru Module for IBM BladeCenter(R)</sysdescr>
    </devices>
    <oidlist>

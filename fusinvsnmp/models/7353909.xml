@@ -4,7 +4,11 @@
    <name>7353909</name>
    <type>3</type>
    <key>Printer0293</key>
-   <comments></comments>
+   <comments>Xerox WorkCentre 7346;ESS PS1.237.2,IOT 3.3.0,FIN C4.4.0,IIT 20.4.3,ADF 20.0.0,SJFI3.0.8,SSMI1.7.2
+
+Xerox WorkCentre 7435;System 74.1.0,ESS PS1.220.7,IOT 40.10.0,FIN B13.3.0,IIT 22.13.1,ADF 20.0.0,SJFI3.0.11,SSMI1.10.0
+
+</comments>
    <devices>
       <sysdescr>Xerox WorkCentre 7346;ESS PS1.237.2,IOT 3.3.0,FIN C4.4.0,IIT 20.4.3,ADF 20.0.0,SJFI3.0.8,SSMI1.7.2</sysdescr>
       <sysdescr>Xerox WorkCentre 7435;System 74.1.0,ESS PS1.220.7,IOT 40.10.0,FIN B13.3.0,IIT 22.13.1,ADF 20.0.0,SJFI3.0.11,SSMI1.10.0</sysdescr>

@@ -4,12 +4,11 @@
    <name>9202108</name>
    <type>2</type>
    <key>Networking1787</key>
-   <comments></comments>
+   <comments>Cisco Internetwork Operating System Software IOS (tm) C2950lre Software (C2950lre-I6L2Q4-M), Version 12.1(22)EA9, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by cisco Systems, Inc.Compiled Fri 01-Dec-06 18:06 by weiliu
+
+</comments>
    <devices>
-      <sysdescr>Cisco Internetwork Operating System Software ^M
-IOS (tm) C2950lre Software (C2950lre-I6L2Q4-M), Version 12.1(22)EA9, RELEASE SOFTWARE (fc1)^M
-Copyright (c) 1986-2006 by cisco Systems, Inc.^M
-Compiled Fri 01-Dec-06 18:06 by weiliu</sysdescr>
+      <sysdescr>Cisco Internetwork Operating System Software IOS (tm) C2950lre Software (C2950lre-I6L2Q4-M), Version 12.1(22)EA9, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by cisco Systems, Inc.Compiled Fri 01-Dec-06 18:06 by weiliu</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

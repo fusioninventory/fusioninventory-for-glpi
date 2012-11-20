@@ -4,10 +4,11 @@
    <name>9011474</name>
    <type>3</type>
    <key>Printer0431</key>
-   <comments></comments>
+   <comments>magicolor 3300; Release 3.0.2; Processor MIPS; CROWN, 0;
+
+</comments>
    <devices>
-      <sysdescr>magicolor 3300; Release 3.0.2; Processor MIPS; CROWN, 0;
-</sysdescr>
+      <sysdescr>magicolor 3300; Release 3.0.2; Processor MIPS; CROWN, 0;</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

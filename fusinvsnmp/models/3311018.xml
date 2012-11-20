@@ -4,7 +4,9 @@
    <name>3311018</name>
    <type>3</type>
    <key>Printer0253</key>
-   <comments></comments>
+   <comments>Xerox Phaser 6280DN; NIC 13.40,ESS 200903261050,IOT 05.04.00,Boot 200805161055
+
+</comments>
    <devices>
       <sysdescr>Xerox Phaser 6280DN; NIC 13.40,ESS 200903261050,IOT 05.04.00,Boot 200805161055</sysdescr>
    </devices>

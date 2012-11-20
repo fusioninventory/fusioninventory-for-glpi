@@ -4,7 +4,13 @@
    <name>6402168</name>
    <type>3</type>
    <key>Printer0062</key>
-   <comments></comments>
+   <comments>Brother NC-6200h, Firmware Ver.1.03  (04.11.18),MID 84UZ82,FID 1
+
+OKI OkiLAN 3100e Rev.n252v144 10/100BASE Ethernet Print Server: Attached to OKIPAGE 14i Rev.01.07: (C)2000 Oki UK Limited
+
+Brother NC-6200h, Firmware Ver.D  ,MID 8X5-A47,FID 2
+
+</comments>
    <devices>
       <sysdescr>Brother NC-6200h, Firmware Ver.1.03  (04.11.18),MID 84UZ82,FID 1</sysdescr>
       <sysdescr>OKI OkiLAN 3100e Rev.n252v144 10/100BASE Ethernet Print Server: Attached to OKIPAGE 14i Rev.01.07: (C)2000 Oki UK Limited</sysdescr>

@@ -4,7 +4,11 @@
    <name>1512250</name>
    <type>3</type>
    <key>Printer0246</key>
-   <comments></comments>
+   <comments>Brother NC-6400h, Firmware Ver.1.15  (07.01.23),MID 8C5-B43,FID 2
+
+Brother NC-6400h, Firmware Ver.1.12  (06.04.20),MID 8C5-B35,FID 2
+
+</comments>
    <devices>
       <sysdescr>Brother NC-6400h, Firmware Ver.1.15  (07.01.23),MID 8C5-B43,FID 2</sysdescr>
       <sysdescr>Brother NC-6400h, Firmware Ver.1.12  (06.04.20),MID 8C5-B35,FID 2</sysdescr>

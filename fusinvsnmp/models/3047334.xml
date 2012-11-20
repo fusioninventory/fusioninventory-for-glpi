@@ -4,12 +4,11 @@
    <name>3047334</name>
    <type>2</type>
    <key>Networking1883</key>
-   <comments></comments>
+   <comments>Cisco Internetwork Operating System SoftwareIOS (tm) 4000 Software (XX-D-M), Version 10.3(4), RELEASE SOFTWARE (fc1)Copyright (c) 1986-1995 by cisco Systems, Inc.Compiled Thu 29-Jun-95 07:13 by pitoscia
+
+</comments>
    <devices>
-      <sysdescr>Cisco Internetwork Operating System Software^M
-IOS (tm) 4000 Software (XX-D-M), Version 10.3(4), RELEASE SOFTWARE (fc1)^M
-Copyright (c) 1986-1995 by cisco Systems, Inc.^M
-Compiled Thu 29-Jun-95 07:13 by pitoscia</sysdescr>
+      <sysdescr>Cisco Internetwork Operating System SoftwareIOS (tm) 4000 Software (XX-D-M), Version 10.3(4), RELEASE SOFTWARE (fc1)Copyright (c) 1986-1995 by cisco Systems, Inc.Compiled Thu 29-Jun-95 07:13 by pitoscia</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

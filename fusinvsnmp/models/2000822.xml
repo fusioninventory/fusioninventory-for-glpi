@@ -4,12 +4,11 @@
    <name>2000822</name>
    <type>2</type>
    <key>Networking1887</key>
-   <comments></comments>
+   <comments>Cisco IOS Software, 2800 Software (C2800NM-ADVENTERPRISEK9-M), Version 12.4(13b), RELEASE SOFTWARE (fc3)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Tue 24-Apr-07 16:18 by prod_rel_team
+
+</comments>
    <devices>
-      <sysdescr>Cisco IOS Software, 2800 Software (C2800NM-ADVENTERPRISEK9-M), Version 12.4(13b), RELEASE SOFTWARE (fc3)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
-Compiled Tue 24-Apr-07 16:18 by prod_rel_team</sysdescr>
+      <sysdescr>Cisco IOS Software, 2800 Software (C2800NM-ADVENTERPRISEK9-M), Version 12.4(13b), RELEASE SOFTWARE (fc3)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Tue 24-Apr-07 16:18 by prod_rel_team</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

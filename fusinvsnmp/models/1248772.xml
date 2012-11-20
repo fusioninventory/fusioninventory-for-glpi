@@ -4,7 +4,13 @@
    <name>1248772</name>
    <type>3</type>
    <key>Printer0355</key>
-   <comments></comments>
+   <comments>FUJI XEROX DocuCentre-II 2055 ;ESS1.130.1,IOT 11.0.0,IIT 2.2.0,ADF 11.6.5,FAX 11.20.53
+
+FUJI XEROX ApeosPort 450 I ;ESS1.100.2,IOT 11.19.77,IIT 3.2.1,ADF 10.5.1,FAX 11.20.50,
+
+FUJI XEROX Document Centre 286;ESS 1.131.1,IOT 11.38.0,IIT 11.7.1,ADF 10.2.0,FAX 11.20.23
+
+</comments>
    <devices>
       <sysdescr>FUJI XEROX DocuCentre-II 2055 ;ESS1.130.1,IOT 11.0.0,IIT 2.2.0,ADF 11.6.5,FAX 11.20.53</sysdescr>
       <sysdescr>FUJI XEROX ApeosPort 450 I ;ESS1.100.2,IOT 11.19.77,IIT 3.2.1,ADF 10.5.1,FAX 11.20.50,</sysdescr>

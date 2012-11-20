@@ -4,7 +4,9 @@
    <name>5278332</name>
    <type>3</type>
    <key>Printer0307</key>
-   <comments></comments>
+   <comments>Xerox WorkCentre Multifunction System; ESS 0.040.010.00930, IOT 61.20.0, UI 0.12.27.22, Finisher 3.10.0, Scanner 17.5.0
+
+</comments>
    <devices>
       <sysdescr>Xerox WorkCentre Multifunction System; ESS 0.040.010.00930, IOT 61.20.0, UI 0.12.27.22, Finisher 3.10.0, Scanner 17.5.0</sysdescr>
    </devices>

@@ -4,7 +4,15 @@
    <name>9807323</name>
    <type>2</type>
    <key>Networking1628</key>
-   <comments></comments>
+   <comments>ProCurve J4900B Switch 2626, revision H.10.50, ROM H.08.05 (/sw/code/build/fish(mkfs))
+
+ProCurve J8773A Switch 4208vl, revision L.11.20, ROM L.10.03 (/sw/code/build/rmm(rm11))
+
+ProCurve J9085A Switch 2610-24, revision R.11.04, ROM R.10.06 (/sw/code/build/nemo(ndx))
+
+ProCurve J9021A Switch 2810-24G, revision N.11.06, ROM N.10.01 (/sw/code/build/bass(bh2))
+
+</comments>
    <devices>
       <sysdescr>ProCurve J4900B Switch 2626, revision H.10.50, ROM H.08.05 (/sw/code/build/fish(mkfs))</sysdescr>
       <sysdescr>ProCurve J8773A Switch 4208vl, revision L.11.20, ROM L.10.03 (/sw/code/build/rmm(rm11))</sysdescr>

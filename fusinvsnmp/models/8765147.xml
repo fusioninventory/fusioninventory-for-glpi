@@ -4,7 +4,11 @@
    <name>8765147</name>
    <type>3</type>
    <key>Printer0354</key>
-   <comments></comments>
+   <comments>FUJI XEROX Document Centre C250;ESS 1.131.20,IOT 6.6.5,IIT 12.7.0,IIT D12.0.0,ADF 9.9.2,FAX 11.20.50
+
+FUJI XEROX DocuCentre-IV C3370 ;ESS1.102.4,IOT 70.27.0,IIT 2.22.1,ADF 7.7.60,FAX 1.1.9,SJFI3.0.15,SSMI1.14.0
+
+</comments>
    <devices>
       <sysdescr>FUJI XEROX Document Centre C250;ESS 1.131.20,IOT 6.6.5,IIT 12.7.0,IIT D12.0.0,ADF 9.9.2,FAX 11.20.50</sysdescr>
       <sysdescr>FUJI XEROX DocuCentre-IV C3370 ;ESS1.102.4,IOT 70.27.0,IIT 2.22.1,ADF 7.7.60,FAX 1.1.9,SJFI3.0.15,SSMI1.14.0</sysdescr>

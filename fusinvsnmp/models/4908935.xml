@@ -4,7 +4,9 @@
    <name>4908935</name>
    <type>3</type>
    <key>Printer0299</key>
-   <comments></comments>
+   <comments>Xerox WorkCentre 7435;System 75.1.0,ESS PS1.222.3,IOT 41.1.0,FIN B13.8.0,IIT 22.13.1,ADF 20.0.0,SJFI3.0.12,SSMI1.11.1
+
+</comments>
    <devices>
       <sysdescr>Xerox WorkCentre 7435;System 75.1.0,ESS PS1.222.3,IOT 41.1.0,FIN B13.8.0,IIT 22.13.1,ADF 20.0.0,SJFI3.0.12,SSMI1.11.1</sysdescr>
    </devices>

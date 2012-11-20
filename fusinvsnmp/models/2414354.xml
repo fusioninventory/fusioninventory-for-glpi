@@ -4,7 +4,9 @@
    <name>2414354</name>
    <type>2</type>
    <key>Networking1884</key>
-   <comments></comments>
+   <comments>ProCurve J8697A Switch 5406zl, revision K.14.49m, ROM K.12.22 (/sw/code/build/btm(K_t4a_m_dev))
+
+</comments>
    <devices>
       <sysdescr>ProCurve J8697A Switch 5406zl, revision K.14.49m, ROM K.12.22 (/sw/code/build/btm(K_t4a_m_dev))</sysdescr>
    </devices>

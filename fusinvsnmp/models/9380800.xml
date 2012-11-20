@@ -4,12 +4,11 @@
    <name>9380800</name>
    <type>2</type>
    <key>Networking1880</key>
-   <comments></comments>
+   <comments>Cisco IOS Software, 7200 Software (C7200P-ADVIPSERVICESK9-M), Version 12.4(20)T1, RELEASE SOFTWARE (fc3)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Wed 24-Sep-08 23:04 by prod_rel_team
+
+</comments>
    <devices>
-      <sysdescr>Cisco IOS Software, 7200 Software (C7200P-ADVIPSERVICESK9-M), Version 12.4(20)T1, RELEASE SOFTWARE (fc3)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2008 by Cisco Systems, Inc.^M
-Compiled Wed 24-Sep-08 23:04 by prod_rel_team</sysdescr>
+      <sysdescr>Cisco IOS Software, 7200 Software (C7200P-ADVIPSERVICESK9-M), Version 12.4(20)T1, RELEASE SOFTWARE (fc3)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Wed 24-Sep-08 23:04 by prod_rel_team</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

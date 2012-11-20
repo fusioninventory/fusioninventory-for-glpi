@@ -4,12 +4,11 @@
    <name>5847395</name>
    <type>2</type>
    <key>Networking1806</key>
-   <comments></comments>
+   <comments>Cisco IOS Software, 1841 Software (C1841-IPBASE-M), Version 12.4(1c), RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Tue 25-Oct-05 17:10 by evmiller
+
+</comments>
    <devices>
-      <sysdescr>Cisco IOS Software, 1841 Software (C1841-IPBASE-M), Version 12.4(1c), RELEASE SOFTWARE (fc1)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2005 by Cisco Systems, Inc.^M
-Compiled Tue 25-Oct-05 17:10 by evmiller</sysdescr>
+      <sysdescr>Cisco IOS Software, 1841 Software (C1841-IPBASE-M), Version 12.4(1c), RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Tue 25-Oct-05 17:10 by evmiller</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

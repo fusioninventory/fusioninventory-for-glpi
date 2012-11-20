@@ -4,12 +4,11 @@
    <name>1684819</name>
    <type>2</type>
    <key>Networking1894</key>
-   <comments></comments>
+   <comments>Cisco Systems, Inc. WS-C2980Cisco Catalyst Operating System Software, Version 6.1(1)Copyright (c) 1995-2000 by Cisco Systems, Inc.
+
+</comments>
    <devices>
-      <sysdescr>Cisco Systems, Inc. WS-C2980^M
-Cisco Catalyst Operating System Software, Version 6.1(1)^M
-Copyright (c) 1995-2000 by Cisco Systems, Inc.^M
-</sysdescr>
+      <sysdescr>Cisco Systems, Inc. WS-C2980Cisco Catalyst Operating System Software, Version 6.1(1)Copyright (c) 1995-2000 by Cisco Systems, Inc.</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

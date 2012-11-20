@@ -4,15 +4,17 @@
    <name>1424888</name>
    <type>2</type>
    <key>Networking0381</key>
-   <comments></comments>
+   <comments>Switch 4800G 48-Port
+
+H3C Comware Platform Software, Software Version 5.20 Release 2202P21H3C S5500-28C-EICopyright (c) 2004-2010 Hangzhou H3C Tech. Co., Ltd. All rights reserved.
+
+H3C Comware Platform Software, Software Version 5.20 Release 2202P06H3C S5120-52C-PWR-EICopyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.
+
+</comments>
    <devices>
       <sysdescr>Switch 4800G 48-Port</sysdescr>
-      <sysdescr>H3C Comware Platform Software, Software Version 5.20 Release 2202P21^M
-H3C S5500-28C-EI^M
-Copyright (c) 2004-2010 Hangzhou H3C Tech. Co., Ltd. All rights reserved.</sysdescr>
-      <sysdescr>H3C Comware Platform Software, Software Version 5.20 Release 2202P06^M
-H3C S5120-52C-PWR-EI^M
-Copyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.</sysdescr>
+      <sysdescr>H3C Comware Platform Software, Software Version 5.20 Release 2202P21H3C S5500-28C-EICopyright (c) 2004-2010 Hangzhou H3C Tech. Co., Ltd. All rights reserved.</sysdescr>
+      <sysdescr>H3C Comware Platform Software, Software Version 5.20 Release 2202P06H3C S5120-52C-PWR-EICopyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

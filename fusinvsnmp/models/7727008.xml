@@ -4,12 +4,11 @@
    <name>7727008</name>
    <type>2</type>
    <key>Networking1776</key>
-   <comments></comments>
+   <comments>Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(53)SE, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Sun 13-Dec-09 15:45 by prod_rel_team
+
+</comments>
    <devices>
-      <sysdescr>Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(53)SE, RELEASE SOFTWARE (fc2)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2009 by Cisco Systems, Inc.^M
-Compiled Sun 13-Dec-09 15:45 by prod_rel_team</sysdescr>
+      <sysdescr>Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(53)SE, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Sun 13-Dec-09 15:45 by prod_rel_team</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

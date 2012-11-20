@@ -4,7 +4,13 @@
    <name>693532</name>
    <type>2</type>
    <key>Networking0393</key>
-   <comments></comments>
+   <comments>3Com Switch 5500-EI PWR 28-Port Software Version 3Com OS V3.03.02s168ep01
+
+3Com Switch 5500-EI PWR 52-Port Software Version 3Com OS V3.03.02s168e
+
+3Com Switch 5500G-EI PWR 48-Port Software Version 3Com OS V3.03.02s168
+
+</comments>
    <devices>
       <sysdescr>3Com Switch 5500-EI PWR 28-Port Software Version 3Com OS V3.03.02s168ep01</sysdescr>
       <sysdescr>3Com Switch 5500-EI PWR 52-Port Software Version 3Com OS V3.03.02s168e</sysdescr>

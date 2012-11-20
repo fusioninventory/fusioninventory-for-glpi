@@ -4,12 +4,11 @@
    <name>9933304</name>
    <type>2</type>
    <key>Networking1888</key>
-   <comments></comments>
+   <comments>Cisco Internetwork Operating System Software IOS (tm) C2900XL Software (C2900XL-H2-M), Version 12.0(5.1)XP, MAINTENANCE INTERIM SOFTWARECopyright (c) 1986-1999 by cisco Systems, Inc.Compiled Fri 10-Dec-99 11:00 by cchang
+
+</comments>
    <devices>
-      <sysdescr>Cisco Internetwork Operating System Software ^M
-IOS (tm) C2900XL Software (C2900XL-H2-M), Version 12.0(5.1)XP, MAINTENANCE INTERIM SOFTWARE^M
-Copyright (c) 1986-1999 by cisco Systems, Inc.^M
-Compiled Fri 10-Dec-99 11:00 by cchang</sysdescr>
+      <sysdescr>Cisco Internetwork Operating System Software IOS (tm) C2900XL Software (C2900XL-H2-M), Version 12.0(5.1)XP, MAINTENANCE INTERIM SOFTWARECopyright (c) 1986-1999 by cisco Systems, Inc.Compiled Fri 10-Dec-99 11:00 by cchang</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

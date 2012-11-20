@@ -4,24 +4,20 @@
    <name>9549387</name>
    <type>2</type>
    <key>Networking1878</key>
-   <comments></comments>
+   <comments>Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.4(3g)JA1, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 19-Jul-07 23:32 by kellythw
+
+Cisco IOS Software, C1100 Software (C1100-K9W7-M), Version 12.3(8)JEB1, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Fri 20-Jul-07 20:43 by dchih
+
+Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.3(8)JA2, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Tue 30-May-06 18:15 by pwade
+
+Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.3(8)JEA2, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Tue 17-Jul-07 23:20 by ccai
+
+</comments>
    <devices>
-      <sysdescr>Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.4(3g)JA1, RELEASE SOFTWARE (fc1)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
-Compiled Thu 19-Jul-07 23:32 by kellythw</sysdescr>
-      <sysdescr>Cisco IOS Software, C1100 Software (C1100-K9W7-M), Version 12.3(8)JEB1, RELEASE SOFTWARE (fc1)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
-Compiled Fri 20-Jul-07 20:43 by dchih</sysdescr>
-      <sysdescr>Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.3(8)JA2, RELEASE SOFTWARE (fc1)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2006 by Cisco Systems, Inc.^M
-Compiled Tue 30-May-06 18:15 by pwade</sysdescr>
-      <sysdescr>Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.3(8)JEA2, RELEASE SOFTWARE (fc1)^M
-Technical Support: http://www.cisco.com/techsupport^M
-Copyright (c) 1986-2007 by Cisco Systems, Inc.^M
-Compiled Tue 17-Jul-07 23:20 by ccai</sysdescr>
+      <sysdescr>Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.4(3g)JA1, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 19-Jul-07 23:32 by kellythw</sysdescr>
+      <sysdescr>Cisco IOS Software, C1100 Software (C1100-K9W7-M), Version 12.3(8)JEB1, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Fri 20-Jul-07 20:43 by dchih</sysdescr>
+      <sysdescr>Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.3(8)JA2, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Tue 30-May-06 18:15 by pwade</sysdescr>
+      <sysdescr>Cisco IOS Software, C1310 Software (C1310-K9W7-M), Version 12.3(8)JEA2, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Tue 17-Jul-07 23:20 by ccai</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

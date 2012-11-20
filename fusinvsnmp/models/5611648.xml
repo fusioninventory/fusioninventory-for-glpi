@@ -4,7 +4,9 @@
    <name>5611648</name>
    <type>2</type>
    <key>Networking0364</key>
-   <comments></comments>
+   <comments>Ethernet Routing Switch 5510-48T      HW:03       FW:4.2.0.13  SW:v4.2.6.013
+
+</comments>
    <devices>
       <sysdescr>Ethernet Routing Switch 5510-48T      HW:03       FW:4.2.0.13  SW:v4.2.6.013</sysdescr>
    </devices>

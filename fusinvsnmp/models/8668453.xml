@@ -4,7 +4,23 @@
    <name>8668453</name>
    <type>2</type>
    <key>Networking0211</key>
-   <comments></comments>
+   <comments>BayStack 450-12T HW:RevD  FW:V1.48 SW:v4.3.0.4 ISVN:2
+
+BayStack 450-24T HW:RevL  FW:V1.47 SW:v3.1.0.22  ISVN:1
+
+EthAirNet Wireless LAN
+
+(c) Intel Corporation, 550T Express 550T Switch, Version 2.32 
+
+BayStack 450-24T HW:RevL  FW:V1.36 SW:v1.3.1.2
+
+Wireless Switch, Version 4.2.1.0-005R MIB=01a
+
+HP J4812A ProCurve Switch 2512, revision F.05.72, ROM F.02.01  (/sw/code/build/info(s02))
+
+AT-8326GB
+
+</comments>
    <devices>
       <sysdescr>BayStack 450-12T HW:RevD  FW:V1.48 SW:v4.3.0.4 ISVN:2</sysdescr>
       <sysdescr>BayStack 450-24T HW:RevL  FW:V1.47 SW:v3.1.0.22  ISVN:1</sysdescr>

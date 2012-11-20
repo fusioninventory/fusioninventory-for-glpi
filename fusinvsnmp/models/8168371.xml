@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model>
+   <name>8168371</name>
+   <type>2</type>
+   <key>Networking2043</key>
+   <comments>Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyright 
+
+Juniper Networks, Inc. ex4200-48t internet router, kernel JUNOS 10.4R4.5 #0: 2011-05-06 05:43:08 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R4.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-05-06 05:25:39 UTC Copyri
+
+Juniper Networks, Inc. ex4200-48t internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 10:41:45 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 10:19:14 UTC Copyri
+
+Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 09:59:51 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 09:39:20 UTC Copyrig
+
+Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.0S10.1 #0: 2010-11-08 21:23:50 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/service/10.0S10.1/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-08 20:47:22 UTC Co
+
+Juniper Networks, Inc. ex2200-48t-4g internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 09:59:51 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 09:39:20 UTC Copyrig
+
+Juniper Networks, Inc. ex4200-24p internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyri
+
+Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyri
+
+Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.1S1.3 #0: 2010-03-31 20:03:32 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/service/10.1S1.3/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-03-31 19:27:56 UTC Copyri
+
+Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4S6.6 #0: 2011-08-24 06:20:03 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/service/10.4S6.6/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-08-24 05:54:50 UTC Copyright 
+
+Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.0S10.1 #0: 2010-11-08 21:23:50 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/service/10.0S10.1/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-08 20:47:22 UTC Co
+
+Juniper Networks, Inc. ex2200-24p-4g internet router, kernel JUNOS 10.1R4.4 #0: 2010-11-12 18:07:04 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/release/10.1R4.4/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-12 17:44:45 UTC Copyrig
+
+Juniper Networks, Inc. ex3200-48p internet router, kernel JUNOS 10.3R1.9 #0: 2010-08-13 12:43:56 UTC     builder@zigeth.juniper.net:/volume/build/junos/10.3/release/10.3R1.9/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-08-13 12:28:47 UTC Copyr
+
+Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.2R1.8 #0: 2010-05-27 21:05:57 UTC     builder@shoth.juniper.net:/volume/build/junos/10.2/release/10.2R1.8/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-05-27 20:44:44 UTC Copyri
+
+Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 10:41:45 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 10:19:14 UTC Copyri
+
+Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.0S10.1 #0: 2010-11-08 21:23:50 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/service/10.0S10.1/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-08 20:47:22 UTC Copyri
+
+Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyri
+
+Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.4R7.5 #0: 2011-09-08 06:29:27 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R7.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-09-08 06:10:04 UTC Copyri
+
+Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.0R4.7 #0: 2010-08-22 02:54:43 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/release/10.0R4.7/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-08-22 02:35:12 UTC Copy
+
+Juniper Networks, Inc. ex4200-24p internet router, kernel JUNOS 10.4R7.5 #0: 2011-09-08 06:29:27 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R7.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-09-08 06:10:04 UTC Copyri
+
+Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.4R3.4 #0: 2011-03-19 22:06:32 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R3.4/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-03-19 21:51:24 UTC Copyri
+
+</comments>
+   <devices>
+      <sysdescr>Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyright </sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex4200-48t internet router, kernel JUNOS 10.4R4.5 #0: 2011-05-06 05:43:08 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R4.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-05-06 05:25:39 UTC Copyri</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex4200-48t internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 10:41:45 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 10:19:14 UTC Copyri</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex2200-48p-4g internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 09:59:51 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 09:39:20 UTC Copyrig</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.0S10.1 #0: 2010-11-08 21:23:50 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/service/10.0S10.1/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-08 20:47:22 UTC Co</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex2200-48t-4g internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 09:59:51 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 09:39:20 UTC Copyrig</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex4200-24p internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyri</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyri</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.1S1.3 #0: 2010-03-31 20:03:32 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/service/10.1S1.3/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-03-31 19:27:56 UTC Copyri</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.4S6.6 #0: 2011-08-24 06:20:03 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/service/10.4S6.6/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-08-24 05:54:50 UTC Copyright </sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.0S10.1 #0: 2010-11-08 21:23:50 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/service/10.0S10.1/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-08 20:47:22 UTC Co</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex2200-24p-4g internet router, kernel JUNOS 10.1R4.4 #0: 2010-11-12 18:07:04 UTC     builder@queth.juniper.net:/volume/build/junos/10.1/release/10.1R4.4/obj-arm/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-12 17:44:45 UTC Copyrig</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex3200-48p internet router, kernel JUNOS 10.3R1.9 #0: 2010-08-13 12:43:56 UTC     builder@zigeth.juniper.net:/volume/build/junos/10.3/release/10.3R1.9/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-08-13 12:28:47 UTC Copyr</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex4200-48p internet router, kernel JUNOS 10.2R1.8 #0: 2010-05-27 21:05:57 UTC     builder@shoth.juniper.net:/volume/build/junos/10.2/release/10.2R1.8/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-05-27 20:44:44 UTC Copyri</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.4R6.5 #0: 2011-07-23 10:41:45 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R6.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-07-23 10:19:14 UTC Copyri</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.0S10.1 #0: 2010-11-08 21:23:50 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/service/10.0S10.1/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-08 20:47:22 UTC Copyri</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.4R5.5 #0: 2011-06-14 03:40:39 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R5.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-06-14 02:59:54 UTC Copyri</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.4R7.5 #0: 2011-09-08 06:29:27 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R7.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-09-08 06:10:04 UTC Copyri</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.0R4.7 #0: 2010-08-22 02:54:43 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/release/10.0R4.7/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-08-22 02:35:12 UTC Copy</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex4200-24p internet router, kernel JUNOS 10.4R7.5 #0: 2011-09-08 06:29:27 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R7.5/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-09-08 06:10:04 UTC Copyri</sysdescr>
+      <sysdescr>Juniper Networks, Inc. ex4200-24t internet router, kernel JUNOS 10.4R3.4 #0: 2011-03-19 22:06:32 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R3.4/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2011-03-19 21:51:24 UTC Copyri</sysdescr>
+   </devices>
+   <oidlist>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.1.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>comments</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.17.1.4.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>dot1dBasePortIfIndex</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifdescr</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifIndex</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.14</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifinerrors</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.10</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifinoctets</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.7</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifinternalstatus</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.9</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>iflastchange</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.4</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifmtu</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.20</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifouterrors</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.16</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifoutoctets</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.6</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifPhysAddress</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.5</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifspeed</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.8</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifstatus</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.3</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifType</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.17.1.1.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>macaddr</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.6.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>location</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.3.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>uptime</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.1.0</oid>
+         <portcounter>1</portcounter>
+         <dynamicport>0</dynamicport>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.31.1.1.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ifName</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.4.20.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ipAdEntAddr</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.4.22.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>ipNetToMediaPhysAddress</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.5.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>name</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.17.7.1.4.3.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>vtpVlanName</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.5</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemChassisId</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.7</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemPortId</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.3.2.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpLocChassisId</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.10</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemSysDesc</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.9</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemSysName</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.8</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemPortDesc</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.17.7.1.2.2.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>dot1dTpFdbAddress</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.17.1.4.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>dot1dTpFdbPort</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+   </oidlist>
+</model>

@@ -4,12 +4,11 @@
    <name>3461779</name>
    <type>2</type>
    <key>Networking1871</key>
-   <comments></comments>
+   <comments>Cisco Systems WS-C5509  Cisco Catalyst Operating System Software, Version 4.5(1)  Copyright (c) 1995-1999 by Cisco Systems  
+
+</comments>
    <devices>
-      <sysdescr>Cisco Systems WS-C5509  
-Cisco Catalyst Operating System Software, Version 4.5(1)  
-Copyright (c) 1995-1999 by Cisco Systems  
-</sysdescr>
+      <sysdescr>Cisco Systems WS-C5509  Cisco Catalyst Operating System Software, Version 4.5(1)  Copyright (c) 1995-1999 by Cisco Systems  </sysdescr>
    </devices>
    <oidlist>
       <oidobject>

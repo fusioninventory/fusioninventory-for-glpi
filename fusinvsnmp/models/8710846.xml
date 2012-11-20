@@ -4,11 +4,11 @@
    <name>8710846</name>
    <type>2</type>
    <key>Networking0629</key>
-   <comments></comments>
+   <comments>H3C Comware Platform Software, Software Version 5.20, Release 6605P03H3C S7503ECopyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.
+
+</comments>
    <devices>
-      <sysdescr>H3C Comware Platform Software, Software Version 5.20, Release 6605P03^M
-H3C S7503E^M
-Copyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.</sysdescr>
+      <sysdescr>H3C Comware Platform Software, Software Version 5.20, Release 6605P03H3C S7503ECopyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

@@ -4,7 +4,11 @@
    <name>1087055</name>
    <type>2</type>
    <key>Networking0212</key>
-   <comments></comments>
+   <comments>IBM Gigabit Ethernet Switch Module
+
+Avaya P130 workgroup switch, SW version 2.14.0
+
+</comments>
    <devices>
       <sysdescr>IBM Gigabit Ethernet Switch Module</sysdescr>
       <sysdescr>Avaya P130 workgroup switch, SW version 2.14.0</sysdescr>

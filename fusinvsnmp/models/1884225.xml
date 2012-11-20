@@ -4,7 +4,9 @@
    <name>1884225</name>
    <type>2</type>
    <key>Networking1866</key>
-   <comments></comments>
+   <comments>HP J4121A ProCurve Switch 4000M, revision C.09.09, ROM C.06.01 (/sw/code/build/vgro(c09))
+
+</comments>
    <devices>
       <sysdescr>HP J4121A ProCurve Switch 4000M, revision C.09.09, ROM C.06.01 (/sw/code/build/vgro(c09))</sysdescr>
    </devices>

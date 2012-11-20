@@ -4,7 +4,11 @@
    <name>9862469</name>
    <type>2</type>
    <key>Networking1124</key>
-   <comments></comments>
+   <comments>Alcatel-Lucent OS6400-P48 6.4.3.640.R01 Service Release, October 11, 2010.
+
+Alcatel-Lucent OS9616/OS9716-CFM2 6.4.3.640.R01 Service Release, October 11, 2010.
+
+</comments>
    <devices>
       <sysdescr>Alcatel-Lucent OS6400-P48 6.4.3.640.R01 Service Release, October 11, 2010.</sysdescr>
       <sysdescr>Alcatel-Lucent OS9616/OS9716-CFM2 6.4.3.640.R01 Service Release, October 11, 2010.</sysdescr>

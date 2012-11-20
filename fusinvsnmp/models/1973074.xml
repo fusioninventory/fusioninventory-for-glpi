@@ -4,11 +4,18 @@
    <name>1973074</name>
    <type>3</type>
    <key>Printer0264</key>
-   <comments></comments>
+   <comments>SHARP AR-M165
+
+SHARP MX-M363N
+
+SHARP MX-M850
+
+SHARP MX-M200D
+
+</comments>
    <devices>
       <sysdescr>SHARP AR-M165</sysdescr>
       <sysdescr>SHARP MX-M363N</sysdescr>
-      <sysdescr>SHARP MX-M363U</sysdescr>
       <sysdescr>SHARP MX-M850</sysdescr>
       <sysdescr>SHARP MX-M200D</sysdescr>
    </devices>

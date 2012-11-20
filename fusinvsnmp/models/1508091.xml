@@ -4,12 +4,11 @@
    <name>1508091</name>
    <type>2</type>
    <key>Networking1783</key>
-   <comments></comments>
+   <comments>Cisco Internetwork Operating System Software IOS (tm) C2940 Software (C2940-I6Q4L2-M), Version 12.1(22)EA12, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2008 by cisco Systems, Inc.Compiled Mon 07-Jul-08 23:44 by amvarma
+
+</comments>
    <devices>
-      <sysdescr>Cisco Internetwork Operating System Software ^M
-IOS (tm) C2940 Software (C2940-I6Q4L2-M), Version 12.1(22)EA12, RELEASE SOFTWARE (fc1)^M
-Copyright (c) 1986-2008 by cisco Systems, Inc.^M
-Compiled Mon 07-Jul-08 23:44 by amvarma</sysdescr>
+      <sysdescr>Cisco Internetwork Operating System Software IOS (tm) C2940 Software (C2940-I6Q4L2-M), Version 12.1(22)EA12, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2008 by cisco Systems, Inc.Compiled Mon 07-Jul-08 23:44 by amvarma</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

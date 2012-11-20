@@ -4,7 +4,11 @@
    <name>1062513</name>
    <type>3</type>
    <key>Printer0326</key>
-   <comments></comments>
+   <comments>EPL-6200
+
+EPL-N3000
+
+</comments>
    <devices>
       <sysdescr>EPL-6200</sysdescr>
       <sysdescr>EPL-N3000</sysdescr>

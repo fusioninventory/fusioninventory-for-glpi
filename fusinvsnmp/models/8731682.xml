@@ -4,7 +4,25 @@
    <name>8731682</name>
    <type>3</type>
    <key>Printer0111</key>
-   <comments></comments>
+   <comments>HP LaserJet M1522nf MFP
+
+SHARP AR-M256
+
+NRG MP 2550 1.01.3 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model
+
+Lexmark T632 version 55.00.39 kernel 2.4.0-test6 All-N-1
+
+Xerox WorkCentre PE120 Series ; OS 4.12 Engine 1.1.06 NIC V1.06 BootLoader V1.05(2M)
+
+SAGEM MF 9327
+
+TOSHIBA e-STUDIO167
+
+NRG MP 3350 1.10 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model
+
+Xerox Phaser 3635MFP; System Software Version 20.100.29.000, Main Controller 1.01.00.29, Network Controller 4.01.38, IOT 1.00.27, UI 0.035.15.146
+
+</comments>
    <devices>
       <sysdescr>HP LaserJet M1522nf MFP</sysdescr>
       <sysdescr>SHARP AR-M256</sysdescr>

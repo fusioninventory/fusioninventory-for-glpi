@@ -4,7 +4,11 @@
    <name>7073129</name>
    <type>3</type>
    <key>Printer0408</key>
-   <comments></comments>
+   <comments>FS-1020D
+
+FS-1010
+
+</comments>
    <devices>
       <sysdescr>FS-1020D</sysdescr>
       <sysdescr>FS-1010</sysdescr>

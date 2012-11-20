@@ -4,13 +4,11 @@
    <name>790048</name>
    <type>2</type>
    <key>Networking1985</key>
-   <comments></comments>
-   <devices>
-      <sysdescr>Cisco Systems, Inc. WS-C4506
-Cisco Catalyst Operating System Software, Version 8.4(9)GLX
-Copyright (c) 1995-2005 by Cisco Systems, Inc.
+   <comments>Cisco Systems, Inc. WS-C4506Cisco Catalyst Operating System Software, Version 8.4(9)GLXCopyright (c) 1995-2005 by Cisco Systems, Inc.
 
-</sysdescr>
+</comments>
+   <devices>
+      <sysdescr>Cisco Systems, Inc. WS-C4506Cisco Catalyst Operating System Software, Version 8.4(9)GLXCopyright (c) 1995-2005 by Cisco Systems, Inc.</sysdescr>
    </devices>
    <oidlist>
       <oidobject>
