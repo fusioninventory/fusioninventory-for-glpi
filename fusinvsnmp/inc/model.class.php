@@ -94,7 +94,7 @@ class PluginFusinvsnmpModel extends CommonDBTM {
       $tab[7]['table'] = "glpi_plugin_fusinvsnmp_modeldevices";
       $tab[7]['field'] = 'sysdescr';
 //      $tab[7]['linkfield'] = 'sysdescr';
-      $tab[7]['name'] = "Device";
+      $tab[7]['name'] = $LANG['plugin_fusinvsnmp']['snmp'][4];
       $tab[7]['forcegroupby']  = true;
       $tab[7]['splititems']    = true;
 
