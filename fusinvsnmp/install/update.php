@@ -3953,6 +3953,9 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    if (!class_exists('PluginFusinvsnmpImportExport')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/importexport.class.php");
    }
+   if (!class_exists('PluginFusinvsnmpModeldevice')) { // if plugin is unactive
+      include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/modeldevice.class.php");
+   }
    if (!class_exists('PluginFusinvsnmpCommonDBTM')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
    }
