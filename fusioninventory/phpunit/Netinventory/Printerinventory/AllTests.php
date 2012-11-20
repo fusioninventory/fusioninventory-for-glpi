@@ -113,6 +113,7 @@ class Printerinventory extends PHPUnit_Framework_TestCase {
         <MANUFACTURER>Hewlett Packard</MANUFACTURER>
         <MODEL>HP LaserJet P1505n</MODEL>
         <NAME>ARC12-B09-N</NAME>
+        <SERIAL>ARC12-B09-N</SERIAL>
         <TYPE/></INFO>
       <PAGECOUNTERS>
         <BLACK/>  <COLOR/>  <COPYBLACK/>  <COPYCOLOR/>  <COPYTOTAL/>  <FAXTOTAL/>  <PRINTBLACK/>  <PRINTCOLOR/>  <PRINTTOTAL/>  <RECTOVERSO/>  <SCANNED/>  <TOTAL>54679</TOTAL>
@@ -164,6 +165,7 @@ class Printerinventory extends PHPUnit_Framework_TestCase {
       $a_printer = current($a_printers);
       
       $printer1bis = str_replace('<IP>10.10.4.20</IP>', '<IP>10.10.4.10</IP>', $printer1);
+      $this->testSendinventory("toto", $printer1bis);
       $a_ports = $networkPort->find("`name`='NetDrvr'");
       $a_port = current($a_ports);
       $this->assertEquals($a_port['ip'], "10.10.4.10", 'IP of port NetDrvr not right');

@@ -856,11 +856,13 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             }
          }
          // Update
-         if ($portDB['id'] > 0) {
+         if (count($portDB) > 0 && $portDB['id'] > 0) {
             $portModif['id'] = $portDB['id'];
             $networkPort->update($portModif);
             $this->a_ports[$portDB['id']] = $portDB['id'];
          } else {
+            $portModif['items_id'] = $this->deviceId;
+            $portModif['itemtype'] = 'Printer';
             $newID = $networkPort->add($portModif);
             $this->a_ports[$newID] = $newID;
          }
