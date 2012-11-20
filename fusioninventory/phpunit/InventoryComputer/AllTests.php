@@ -298,8 +298,19 @@ echo "# testHardwareModifications\n";
          }
          // Verify printers in XML
          $a_printerXML = array();
+         $a_serial = array();
          foreach ($xml->CONTENT->PRINTERS as $child) {
-            $a_printerXML["'".(string)$child->NAME."'"] = 1;
+            if (isset($child->SERIAL)) {
+               if (isset($a_serial[(string)$child->SERIAL])) {
+                  unset($a_printerXML[$a_serial[(string)$child->SERIAL]]);
+                  $a_printerXML["'".(string)$child->NAME."'"] = 1;
+               } else {
+                  $a_printerXML["'".(string)$child->NAME."'"] = 1;                  
+               }               
+               $a_serial[(string)$child->SERIAL] = (string)$child->NAME;
+            } else {
+               $a_printerXML["'".(string)$child->NAME."'"] = 1;
+            }
          }
          // Display (test) differences
          $a_printerDiff = array();
