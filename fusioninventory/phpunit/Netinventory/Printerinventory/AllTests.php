@@ -51,10 +51,10 @@ class Printerinventory extends PHPUnit_Framework_TestCase {
          WHERE `modulename`='SNMPQUERY' ";
       $DB->query($query);
       
-      $networkEquipment = new NetworkEquipment();
-      $a_equipments = $networkEquipment->find();
-      foreach ($a_equipments as $id=>$data) {
-         $networkEquipment->delete(array('id'=>$id), 1);
+      $printer = new Printer();
+      $a_printers = $printer->find();
+      foreach ($a_printers as $id=>$data) {
+         $printer->delete(array('id'=>$id), 1);
       }
 
    }
@@ -150,6 +150,7 @@ class Printerinventory extends PHPUnit_Framework_TestCase {
          
          // CHECK 1 : Check ip of ports
          $a_ports = $networkPort->find("`name`='NetDrvr'");
+         $this->assertEquals(count($a_ports), 1, 'Port of printer not created');
          $a_port = current($a_ports);
          $this->assertEquals($a_port['ip'], "10.10.4.20", 'IP of port NetDrvr not right');
          $this->assertEquals($a_port['mac'], "00:23:7d:84:fd:d9", 'MAC of port NetDrvr not right');
@@ -199,9 +200,9 @@ class Printerinventory extends PHPUnit_Framework_TestCase {
 
          foreach ($xml->CONTENT->DEVICE as $child) {
             foreach ($child->INFO as $child2) {
-               if ($child2->TYPE == 'NETWORKING') {
+               if ($child2->TYPE == 'PRINTER') {
                   // Create switch in asset
-                  $NetworkEquipment = new NetworkEquipment();
+                  $printer = new Printer();
                   $input = array();
                   if (isset($child2->SERIAL)) {
                      $input['serial']=$child2->SERIAL;
@@ -209,7 +210,7 @@ class Printerinventory extends PHPUnit_Framework_TestCase {
                      $input['name']=$child2->NAME;
                   }
                   $input['entities_id'] = 0;
-                  $NetworkEquipment->add($input);
+                  $printer->add($input);
                }
             }
          }
