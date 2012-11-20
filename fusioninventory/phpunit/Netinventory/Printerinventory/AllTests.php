@@ -114,7 +114,8 @@ class Printerinventory extends PHPUnit_Framework_TestCase {
         <MODEL>HP LaserJet P1505n</MODEL>
         <NAME>ARC12-B09-N</NAME>
         <SERIAL>ARC12-B09-N</SERIAL>
-        <TYPE/></INFO>
+        <TYPE>PRINTER</TYPE>
+      </INFO>
       <PAGECOUNTERS>
         <BLACK/>  <COLOR/>  <COPYBLACK/>  <COPYCOLOR/>  <COPYTOTAL/>  <FAXTOTAL/>  <PRINTBLACK/>  <PRINTCOLOR/>  <PRINTTOTAL/>  <RECTOVERSO/>  <SCANNED/>  <TOTAL>54679</TOTAL>
       </PAGECOUNTERS>
