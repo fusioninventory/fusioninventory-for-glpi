@@ -1744,6 +1744,17 @@ function plugin_fusinvsnmp_addLeftJoin($itemtype,$ref_table,$new_table,$linkfiel
                
          }         
          break;
+      
+      case 'PluginFusinvsnmpModel':
+         
+         switch ($new_table.".".$linkfield) {
+
+            case 'glpi_plugin_fusinvsnmp_modeldevices.plugin_fusinvsnmp_modeldevices_id':
+               return " LEFT JOIN `glpi_plugin_fusinvsnmp_modeldevices` 
+                  ON (`glpi_plugin_fusinvsnmp_modeldevices`.`plugin_fusinvsnmp_models_id` = `glpi_plugin_fusinvsnmp_models`.`id`) ";
+               break;
+         }
+         break;
    }
    return "";
 }
