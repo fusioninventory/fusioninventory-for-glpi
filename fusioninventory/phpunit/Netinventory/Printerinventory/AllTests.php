@@ -101,6 +101,7 @@ class Printerinventory extends PHPUnit_Framework_TestCase {
 
       $printer1 = '<?xml version="1.0" encoding="UTF-8"?>
 <REQUEST>
+   <CONTENT>
    <DEVICE>
       <CARTRIDGES>
         <TONERBLACK>56</TONERBLACK>
