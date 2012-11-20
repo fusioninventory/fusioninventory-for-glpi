@@ -88,13 +88,19 @@ class Update extends PHPUnit_Framework_TestCase {
       $FusinvInstall->testDB("fusinvsnmp");
       
 //      $FusinvInstall->testDB("fusinvdeploy");
+
+      
+      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_modeldevices`";
+      $result = $DB->query($query);
+      $this->assertGreaterThan(1000, $DB->numrows($result), 'models and devices not imported
+         when update from version '.$version);
       
       $this->assertFileExists("../../../files/_plugins/fusinvsnmp/discovery.xml", 
                  'Discovery file (SNMP MODELS) not created');
       $file = file_get_contents("../../../files/_plugins/fusinvsnmp/discovery.xml");
       $a_lines = explode("\n", $file);
-      $this->assertGreaterThan(20, count($a_lines), 'Discovery.xml file not right generated (nb lines)');
-
+      $this->assertGreaterThan(20, count($a_lines), 'Discovery.xml file not right generated (nb lines) 
+         when update from version '.$version);
       
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
