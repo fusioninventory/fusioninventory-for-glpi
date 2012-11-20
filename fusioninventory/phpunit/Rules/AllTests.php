@@ -640,7 +640,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusinvinventory");
 
-      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.84/";
       Session::loadLanguage("en_GB");
 
      // Disable all rules
@@ -806,7 +806,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
 
-      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.84/";
       Session::loadLanguage("en_GB");
 
       // Add the rule with criterial only if type = Computer
@@ -920,7 +920,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
 
-      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.84/";
       Session::loadLanguage("en_GB");
 
       // Add the rule with criterial only if type = Computer
@@ -1077,7 +1077,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
 
-      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.84/";
       Session::loadLanguage("en_GB");
 
       // Add the rule with criterial only if type = Computer
@@ -1255,7 +1255,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
 
-      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.84/";
       Session::loadLanguage("en_GB");
 
       // Create computer only with serial and name;

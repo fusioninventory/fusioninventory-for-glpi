@@ -49,7 +49,7 @@ class Hub extends PHPUnit_Framework_TestCase {
       $Install = new Install();
       $Install->testInstall(0);
 
-      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.83/";
+      $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.84/";
 //      Config::detectRootDoc();
 
      // set in config module inventory = yes by default

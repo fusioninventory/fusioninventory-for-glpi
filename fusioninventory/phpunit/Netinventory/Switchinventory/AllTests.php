@@ -511,7 +511,7 @@ Compiled Wed 18-Aug-10 04:40 by prod_rel_team</COMMENTS>
       }
 
       $emulatorAgent = new emulatorAgent;
-      $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/front/communication.php";
+      $emulatorAgent->server_urlpath = "/fusion0.84/plugins/fusioninventory/front/communication.php";
       if (empty($xmlstring)) {
          $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
       } else {
