@@ -148,7 +148,7 @@ $migration = new CliMigration($current_version);
    $migration->displayWarning($mess);
 
    $plugin->getFromDBbyDir("fusioninventory");
-   $plugin->install("fusioninventory");
+   $plugin->install($plugin->fields['id']);
    $plugin->activate($plugin->fields['id']);
    $plugin->load("fusioninventory");
 
