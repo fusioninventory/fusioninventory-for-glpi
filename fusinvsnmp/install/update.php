@@ -3963,6 +3963,7 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
    if (!class_exists('PluginFusinvsnmpCommonDBTM')) { // if plugin is unactive
       include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
    }
+   $DB->list_fields("glpi_plugin_fusinvsnmp_modeldevices", false);
    PluginFusinvsnmpModel::importAllModels();
    
    
