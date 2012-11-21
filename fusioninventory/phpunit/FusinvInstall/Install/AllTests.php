@@ -66,11 +66,6 @@ class Install extends PHPUnit_Framework_TestCase {
 
          $FusinvInstall = new FusinvInstall();
          $FusinvInstall->testDB("fusioninventory");
-
-         $FusinvInstall->testDB("fusinvinventory");
-
-         $FusinvInstall->testDB("fusinvsnmp");
-
       } else {
 
          // Delete if Table of FusionInventory or Tracker yet in DB
@@ -97,12 +92,6 @@ class Install extends PHPUnit_Framework_TestCase {
 
          $FusinvInstall = new FusinvInstall();
          $FusinvInstall->testDB("fusioninventory");
-
-         $FusinvInstall->testDB("fusinvinventory");
-
-         $FusinvInstall->testDB("fusinvsnmp");
-
-//         $FusinvInstall->testDB("fusinvdeploy");
 
          passthru("mysqldump -h ".$DB->dbhost." -u ".$DB->dbuser." -p".$DB->dbpassword." ".$DB->dbdefault." > save.sql");
       }

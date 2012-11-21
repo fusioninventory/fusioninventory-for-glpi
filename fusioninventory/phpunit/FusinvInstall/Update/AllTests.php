@@ -80,10 +80,6 @@ class Update extends PHPUnit_Framework_TestCase {
       $FusinvInstall = new FusinvInstall();
       $FusinvInstall->testDB("fusioninventory");
 
-      $FusinvInstall->testDB("fusinvsnmp");
-
-//      $FusinvInstall->testDB("fusinvdeploy");
-
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
