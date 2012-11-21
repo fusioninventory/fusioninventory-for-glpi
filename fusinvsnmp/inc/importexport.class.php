@@ -282,20 +282,24 @@ class PluginFusinvsnmpImportExport extends CommonGLPI {
          }
          if (isset($child->mapping_type)) {
             $mapping_type = '';
-            switch ($child->mapping_type) {
+            if (is_numeric($child->mapping_type)) {
+               switch ($child->mapping_type) {
 
-               case '1':
-                  $mapping_type = "Computer";
-                  break;
+                  case '1':
+                     $mapping_type = "Computer";
+                     break;
 
-               case '2':
-                  $mapping_type = "NetworkEquipment";
-                  break;
+                  case '2':
+                     $mapping_type = "NetworkEquipment";
+                     break;
 
-               case '3':
-                  $mapping_type = "Printer";
-                  break;
+                  case '3':
+                     $mapping_type = "Printer";
+                     break;
 
+               }
+            } else {
+               $mapping_type = $child->mapping_type;
             }
          }
          $input["plugin_fusioninventory_mappings_id"] = 0;
