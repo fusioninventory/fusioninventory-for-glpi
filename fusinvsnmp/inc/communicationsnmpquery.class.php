@@ -821,28 +821,28 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
             switch ($name) {
                
                case 'IFNAME':
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
+//                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
                   if ($portDB['name'] != (string)$child) {
                      $portModif['name'] = (string)$child;
                   }
                   break;
                
                case 'MAC':
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
+//                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
                   if ($portDB['mac'] != (string)$child) {
                      $portModif['mac'] = (string)$child;
                   }
                   break;
                
                case 'IP':
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
+//                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
                   if ($portDB['ip'] != (string)$child) {
                      $portModif['ip'] = (string)$child;
                   }
                   break;
                
                case 'IFNUMBER':
-                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
+//                  PluginFusinvsnmpNetworkPortLog::networkport_addLog($portDB['id'], $child, strtolower($name));
                   if ($portDB['logical_number'] != (string)$child) {
                      $portModif['logical_number'] = (string)$child;
                   }
