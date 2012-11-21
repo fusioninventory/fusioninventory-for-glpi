@@ -214,14 +214,14 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       }
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
-         WHERE `modulename`='SNMPQUERY'";
+         WHERE `modulename`='NETWORKINVENTORY'";
       $result = $DB->query($query);
-      $this->assertEquals($DB->numrows($result), 1, 'SNMPQUERY module not registered');
+      $this->assertEquals($DB->numrows($result), 1, 'NETWORKINVENTORY module not registered');
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
-         WHERE `modulename`='NETDISCOVERY'";
+         WHERE `modulename`='NETWORKDISCOVERY'";
       $result = $DB->query($query);
-      $this->assertEquals($DB->numrows($result), 1, 'NETDISCOVERY module not registered');
+      $this->assertEquals($DB->numrows($result), 1, 'NETWORKDISCOVERY module not registered');
 
 //      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
 //         WHERE `modulename`='DEPLOY'";
