@@ -197,19 +197,6 @@ if (!isset($_SERVER['argv'][1])) {
       $migration->displayWarning("Current FusinvSNMP version: $current_version");
       $migration->displayWarning("Version to update: ".PLUGIN_FUSINVSNMP_VERSION);
 
-/*      
-      if (($current_version != PLUGIN_FUSINVSNMP_VERSION)
-           AND $current_version!='0') {
-      pluginFusinvsnmpUpdate($current_version, $migration);
-         $migration->displayWarning("Update done.");
-      } else if ($current_version == PLUGIN_FUSINVSNMP_VERSION) {
-         $migration->displayWarning("No migration needed.");
-      } else {
-         include (GLPI_ROOT . "/plugins/fusinvsnmp/install/install.php");
-         pluginFusinvsnmpInstall(PLUGIN_FUSINVSNMP_VERSION, $migration);
-         $migration->displayWarning("installation done.");
-      }
-*/
       $plugin->getFromDBbyDir("fusinvsnmp");
       $plugin->install($plugin->fields['id']);
       $plugin->activate($plugin->fields['id']);
@@ -236,20 +223,9 @@ if (!isset($_SERVER['argv'][1])) {
 
       $migration->displayWarning("Current FusinvINVENTORY version: $current_version");
       $migration->displayWarning("Version to update: ".PLUGIN_FUSINVINVENTORY_VERSION);
-
-      if (($current_version != PLUGIN_FUSINVINVENTORY_VERSION)
-           AND $current_version!='0') {
-      pluginFusinvinventoryUpdate($current_version, $migration);
-         $migration->displayWarning("Update done.");
-      } else if ($current_version == PLUGIN_FUSINVINVENTORY_VERSION) {
-         $migration->displayWarning("No migration needed.");
-      } else {
-         include (GLPI_ROOT . "/plugins/fusinvinventory/install/install.php");
-         pluginFusinvinventoryInstall(PLUGIN_FUSINVINVENTORY_VERSION, $migration);
-         $migration->displayWarning("installation done.");
-      }
+      
       $plugin->getFromDBbyDir("fusinvinventory");
-      $plugin->load("fusinvinventory");
+      $plugin->install($plugin->fields['id']);
       $plugin->activate($plugin->fields['id']);
       $plugin->load("fusinvinventory");
    }
@@ -259,8 +235,7 @@ if (!isset($_SERVER['argv'][1])) {
    if ($plugin->getFromDBbyDir("fusinvdeploy")) {
       include_once(GLPI_ROOT . "/plugins/fusinvdeploy/install/update.php");
       include_once(GLPI_ROOT . "/plugins/fusinvdeploy/locales/en_GB.php");
-      $a_plugin = plugin_version_fusinvdeploy();
-      $current_version = pluginfusinvdeployGetCurrentVersion($a_plugin['version']);
+      $current_version = pluginfusinvdeployGetCurrentVersion(PLUGIN_FUSINVDEPLOY_VERSION);
 
       $migration = new CliMigration($current_version);
 
@@ -274,21 +249,10 @@ if (!isset($_SERVER['argv'][1])) {
       }
 
       $migration->displayWarning("Current FusinvDEPLOY version: ".$current_version);
-      $migration->displayWarning("Version to update: ".$a_plugin['version']);
+      $migration->displayWarning("Version to update: ".PLUGIN_FUSINVDEPLOY_VERSION);
 
-      if (($current_version != $a_plugin['version'])
-           AND $current_version!='0') {
-         pluginFusinvdeployUpdate($current_version, $migration);
-         $migration->displayWarning("Update done.");
-      } else if ($current_version == $a_plugin['version']) {
-         $migration->displayWarning("No migration needed.");
-      } else {
-         include (GLPI_ROOT . "/plugins/fusinvdeploy/install/install.php");
-         pluginFusinvdeployInstall($a_plugin['version'], $migration);
-         $migration->displayWarning("installation done.");
-      }
       $plugin->getFromDBbyDir("fusinvdeploy");
-      $plugin->load("fusinvdeploy");
+      $plugin->install($plugin->fields['id']);
       $plugin->activate($plugin->fields['id']);
       $plugin->load("fusinvdeploy");
    }

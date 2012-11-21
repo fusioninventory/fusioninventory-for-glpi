@@ -128,7 +128,7 @@ function plugin_fusinvinventory_install() {
 
    $a_plugin = plugin_version_fusinvinventory();
 
-   include (GLPI_ROOT . "/plugins/fusinvinventory/install/update.php");
+   include_once (GLPI_ROOT . "/plugins/fusinvinventory/install/update.php");
    $version_detected = pluginfusinvinventoryGetCurrentVersion($a_plugin['version']);
    if ((isset($version_detected))
            AND ($version_detected != $a_plugin['version'])
