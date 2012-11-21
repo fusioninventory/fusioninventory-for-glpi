@@ -3964,6 +3964,8 @@ function pluginFusinvsnmpUpdate($current_version, $migrationname='Migration') {
       include(GLPI_ROOT . "/plugins/fusinvsnmp/inc/commondbtm.class.php");
    }
    $DB->list_fields("glpi_plugin_fusinvsnmp_modeldevices", false);
+   $DB->list_fields("glpi_plugin_fusinvsnmp_models", false);
+
    PluginFusinvsnmpModel::importAllModels();
    
    
