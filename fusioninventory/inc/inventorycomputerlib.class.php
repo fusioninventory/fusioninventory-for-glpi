@@ -66,6 +66,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $computerDisk                 = new ComputerDisk();
       $item_DeviceControl           = new Item_DeviceControl();
       $deviceControl                = new DeviceControl();
+      $item_DeviceHardDrive         = new Item_DeviceHardDrive();
+      $deviceHardDrive              = new DeviceHardDrive();
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
       $deviceGraphicCard            = new DeviceGraphicCard();
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
@@ -231,6 +233,54 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
+
+      // * Hard drive
+         $db_harddrives = array();
+         $query = "SELECT `glpi_items_deviceharddrives`.`id`, `serial`
+               FROM `glpi_items_deviceharddrives`
+            WHERE `items_id` = '$items_id'
+               AND `itemtype`='Computer'";
+         $result = $DB->query($query);         
+         while ($data = $DB->fetch_assoc($result)) {
+            $idtmp = $data['id'];
+            unset($data['id']);            
+            $data = Toolbox::addslashes_deep($data);
+            $data = array_map('strtolower', $data);
+            $db_harddrives[$idtmp] = $data;
+         }
+
+         foreach ($a_computerinventory['harddrive'] as $key => $arrays) {
+            $arrayslower = array_map('strtolower', $arrays);
+            foreach ($db_harddrives as $keydb => $arraydb) {
+               if ($arrayslower['serial'] == $arraydb['serial']) {
+                  unset($a_computerinventory['harddrive'][$key]);
+                  unset($db_harddrives[$keydb]);
+                  break;
+               }
+            }
+         }
+         
+         if (count($a_computerinventory['harddrive']) == 0
+            AND count($db_harddrives) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_harddrives) != 0) {
+               // Delete hard drive in DB
+               foreach ($db_harddrives as $idtmp => $data) {
+                  $item_DeviceHardDrive->delete(array('id'=>$idtmp));
+               }
+            }
+            if (count($a_computerinventory['harddrive']) != 0) {
+               foreach($a_computerinventory['harddrive'] as $a_harddrive) {
+                  $harddrives_id = $deviceHardDrive->import($a_harddrive);
+                  $a_harddrive['deviceharddrives_id'] = $harddrives_id;
+                  $a_harddrive['itemtype'] = 'Computer';
+                  $a_harddrive['items_id'] = $items_id;
+                  $item_DeviceHardDrive->add($a_harddrive);
+               }
+            }
+         }
+
          
       // * Graphiccard
          
@@ -640,6 +690,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $computerDisk                 = new ComputerDisk();
       $item_DeviceControl           = new Item_DeviceControl();
       $deviceControl                = new DeviceControl();
+      $item_DeviceHardDrive         = new Item_DeviceHardDrive();
+      $deviceHardDrive              = new DeviceHardDrive();
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
       $deviceGraphicCard            = new DeviceGraphicCard();
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
@@ -677,6 +729,16 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $a_memory['items_id'] = $computers_id;
          $a_memory['_no_history'] = true;
          $item_DeviceMemory->add($a_memory);
+      }
+      
+      // * Hard drive
+      foreach ($a_computerinventory['harddrive'] as $a_harddrive) {
+         $harddrives_id = $deviceHardDrive->import($a_harddrive);
+         $a_harddrive['deviceharddrives_id'] = $harddrives_id;
+         $a_harddrive['itemtype'] = 'Computer';
+         $a_harddrive['items_id'] = $computers_id;
+         $a_harddrive['_no_history'] = true;
+         $item_DeviceHardDrive->add($a_harddrive);
       }
       
       // * Graphiccard
