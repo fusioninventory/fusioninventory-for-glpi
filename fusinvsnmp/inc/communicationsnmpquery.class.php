@@ -1052,24 +1052,31 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   } else {
                      $a_macsFound[(string)$child->MAC] = 1;
                   }
+               }
+               if ($continue == '1') {
+                  $count++;
+                  $errors.=$this->importConnection($child, $pfNetworkPort, $cdp);
+               }
+               if (isset($child->MAC)) {                  
                   $a_macs = array();
                   foreach ($child->children() as $child) {
                      if ($child->getName() == 'MAC') {
                         $a_macs[strval($child)] = strval($child);
                      }
                   }
-                  
-                  if (count($a_macs) > 1
-                          AND $pfNetworkPort->getValue('trunk') != '1') {
-                     
-                     $pfNetworkPort->setValue('trunk', -1);
-                  } else if ($pfNetworkPort->getValue('trunk') != '1') {
-                     $pfNetworkPort->setValue('trunk', 0);
+                  if ($pfNetworkPort->isPorthasPhone()) {
+                     if ($pfNetworkPort->getValue('trunk') != '1') {
+                        $pfNetworkPort->setValue('trunk', 0);
+                     }
+                  } else {
+                     if (count($a_macs) > 1
+                             AND $pfNetworkPort->getValue('trunk') != '1') {
+
+                        $pfNetworkPort->setValue('trunk', -1);
+                     } else if ($pfNetworkPort->getValue('trunk') != '1') {
+                        $pfNetworkPort->setValue('trunk', 0);
+                     }
                   }
-               }
-               if ($continue == '1') {
-                  $count++;
-                  $errors.=$this->importConnection($child, $pfNetworkPort, $cdp);
                }
                break;
                
