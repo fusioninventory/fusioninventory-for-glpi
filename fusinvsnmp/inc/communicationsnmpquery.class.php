@@ -1052,8 +1052,14 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   } else {
                      $a_macsFound[(string)$child->MAC] = 1;
                   }
+                  $a_macs = array();
+                  foreach ($child->children() as $child) {
+                     if ($child->getName() == 'MAC') {
+                        $a_macs[strval($child)] = strval($child);
+                     }
+                  }
                   
-                  if (count($child) > 1
+                  if (count($a_macs) > 1
                           AND $pfNetworkPort->getValue('trunk') != '1') {
                      
                      $pfNetworkPort->setValue('trunk', -1);
