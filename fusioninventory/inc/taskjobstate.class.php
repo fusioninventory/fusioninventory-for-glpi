@@ -351,12 +351,18 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $pfTaskjoblog->add($a_input);
 
       $pfTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
-      $input = array();
-      $input['id'] = $this->fields['plugin_fusioninventory_taskjobs_id'];
-      $input['status'] = 0;
-      $pfTaskjob->update($input);
-      if ($reinitialize == '1') {
-         $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
+      
+      $a_taskjobstates = $this->find("`plugin_fusioninventory_taskjobs_id`='".$this->fields['plugin_fusioninventory_taskjobs_id']."'
+                           AND `state` != '3'
+                           AND `uniqid`='".$this->fields['uniqid']."'");
+      if (count($a_taskjobstates) == '0') {
+         $input = array();
+         $input['id'] = $this->fields['plugin_fusioninventory_taskjobs_id'];
+         $input['status'] = 0;
+         $pfTaskjob->update($input);
+         if ($reinitialize == '1') {
+            $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
+         }
       }
    }
 

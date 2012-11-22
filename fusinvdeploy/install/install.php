@@ -41,7 +41,7 @@
  */
 
 function pluginFusinvdeployInstall($version, $migration='') {
-   global $DB $CFG_GLPI;
+   global $DB;
 
    // Get informations of plugin
    $a_plugin = plugin_version_fusinvdeploy();
@@ -95,9 +95,7 @@ function pluginFusinvdeployInstall($version, $migration='') {
       if (isset($_SERVER['HTTP_REFERER'])) {
          $url = $_SERVER['HTTP_REFERER'];
       }
-      $input['url']        = PluginFusioninventoryCommunicationRest:: getDefaultRestURL($_SERVER['HTTP_REFERER'],
-                                                                                        'fusinvdeploy',
-                                                                                        'deploy');
+      $input['url'] = '';
 
       $agentmodule->add($input);
    }

@@ -71,35 +71,35 @@ function displayState(val, full) {
    switch (val) {
       case '0':
          var img_name = 'bullet-blue.png';
-         val = '{__('Prepared')}';
+         val = "{$LANG['plugin_fusioninventory']['taskjoblog'][7]}";
          break
       case '1':
          var img_name = 'bullet-yellow.png';
-         val = '{__('Started')}';
+         val = "{$LANG['plugin_fusioninventory']['taskjoblog'][1]}";
          break
       case '2':
          var img_name = 'bullet-green.png';
-         val = '{__('Ok')}';
+         val = "{$LANG['plugin_fusioninventory']['taskjoblog'][2]}";
          break
       case '3':
          var img_name = 'bullet-red.png';
-         val = '{__('Error / rescheduled')}';
+         val = "{$LANG['plugin_fusioninventory']['taskjoblog'][3]}";
          break
       case '4':
          var img_name = 'bullet-red.png';
-         val = '{__('Error')}';
+         val = "{$LANG['plugin_fusioninventory']['taskjoblog'][4]}";
          break
       case '5':
          var img_name = 'bullet-red.png';
-         val = '{__('unknown')}';
+         val = "{$LANG['plugin_fusioninventory']['taskjoblog'][5]}";
          break
       case '6':
          var img_name = 'bullet-yellow.png';
-         val = '{__('Running')}';
+         val = "{$LANG['plugin_fusioninventory']['taskjoblog'][6]}";
          break
       case '7':
          var img_name = 'bullet-blue.png';
-         val = '{__('Prepared')}';
+         val = "{$LANG['plugin_fusioninventory']['taskjoblog'][7]}";
          break
       default:
          var img_name = 'bullet-grey.png';

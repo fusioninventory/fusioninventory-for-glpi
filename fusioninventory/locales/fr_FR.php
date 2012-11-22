@@ -90,7 +90,7 @@ $LANG['plugin_fusioninventory']['discovery'][9]="Nombre de matériels non import
 $LANG['plugin_fusioninventory']['errors'][1]="PHP allow_url_fopen est désactivé, Réveil impossible de l'agent pour faire l'inventaire";
 $LANG['plugin_fusioninventory']['errors'][22]="Elément inattendu dans";
 $LANG['plugin_fusioninventory']['errors'][2]="PHP allow_url_fopen est désactivé, Le mode push ne peut pas fonctionner";
-$LANG['plugin_fusioninventory']['errors'][50]="La version de GLPI n'est pas compatible, la version 0.83 est requise";
+$LANG['plugin_fusioninventory']['errors'][50]="La version de GLPI n'est pas compatible, la version 0.83.3 est requise";
 
 $LANG['plugin_fusioninventory']['functionalities'][0]="Fonctionnalités";
 $LANG['plugin_fusioninventory']['functionalities'][16]="Stockage de l'authentification SNMP";
@@ -159,6 +159,7 @@ $LANG['plugin_fusioninventory']['rulesengine'][152]="Matériel à importer";
 
 $LANG['plugin_fusioninventory']['setup'][16]="Documentation";
 $LANG['plugin_fusioninventory']['setup'][17]="Les autres plugins FusionInventory (fusinv...) doivent être désinstallés avant de désinstaller le plugin FusionInventory.";
+$LANG['plugin_fusioninventory']['setup'][18]="The server needs to kown the URL the agents use to access the server. Please configure it in the General Configuration page.";
 
 $LANG['plugin_fusioninventory']['task'][0]="Tâche";
 $LANG['plugin_fusioninventory']['task'][14]="Date d'exécution";
@@ -204,6 +205,8 @@ $LANG['plugin_fusioninventory']['task'][54]="Exécuter encore une fois cette tâ
 $LANG['plugin_fusioninventory']['task'][55]="Pas d'agent autorisé à faire un inventaire ESX";
 $LANG['plugin_fusioninventory']['task'][56]="Planifié pour exécution";
 $LANG['plugin_fusioninventory']['task'][58]=" En erreur";
+$LANG['plugin_fusioninventory']['task'][59]="Liste des objets sur lesquelles l'action doit porter";
+$LANG['plugin_fusioninventory']['task'][60]="Liste des objets qui vont effectuer l'action";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Démarré";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

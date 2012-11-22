@@ -167,16 +167,19 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       switch ($arrayinventory['TYPE']) {
 
          case '1':
+         case 'COMPUTER':
             $input['itemtype'] = "Computer";
             // Computer
 
              break;
 
          case '2':
+         case 'NETWORKING':
             $input['itemtype'] = "NetworkEquipment";
              break;
 
          case '3':
+         case 'PRINTER':
             $input['itemtype'] = "Printer";
              break;
 
@@ -224,16 +227,19 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          unset($_SESSION['plugin_fusioninventory_rules_id']);
       }
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
+         if (!isset($_SESSION['glpiactiveentities_string'])) {
+            $_SESSION['glpiactiveentities_string'] = "'".$input['entities_id']."'";
+         }
          if (isset($input['itemtype'])
               AND isset($data['action'])
               AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE)) {
 
-            $this->rulepassed(0, $input['itemtype'],$input['entities_id']);
+            $this->rulepassed(0, $input['itemtype'], $input['entities_id']);
          } else if (isset($input['itemtype'])
                 AND !isset($data['action'])) {
             $this->rulepassed(0, $input['itemtype'],$input['entities_id']);
          } else {
-            $this->rulepassed(0, "PluginFusioninventoryUnknownDevice",$input['entities_id']);
+            $this->rulepassed(0, "PluginFusioninventoryUnknownDevice", $input['entities_id']);
          }
       }
    }
@@ -249,10 +255,18 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
     */
    function rulepassed($items_id, $itemtype, $entities_id=0) {
 
-      PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
-                                                   "Rule passed : ".$items_id.", ".$itemtype."\n");
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusioninventoryCommunicationNetworkDiscovery->rulepassed().');
+      PluginFusioninventoryLogger::logIfExtradebug(
+         "pluginFusioninventory-rules",
+         "Rule passed : ".$items_id.", ".$itemtype."\n"
+      );
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationNetDiscovery->rulepassed().'
+      );
+      
+      if (!isset($_SESSION['glpiactiveentities_string'])) {
+         $_SESSION['glpiactiveentities_string'] = "'".$entities_id."'";
+      }
 
       $item = new $itemtype();
       if ($items_id == "0") {
@@ -299,11 +313,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
     * @param object $item
     */
    function importDevice($item) {
-
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusioninventoryCommunicationNetworkDiscovery->importDevice().');
-
-      $arrayinventory = $_SESSION['SOURCE_XMLDEVICE'];
+      
+      PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
+         'fusioninventorycommunication',
+         'Function PluginFusinvsnmpCommunicationNetDiscovery->importDevice().'
+      );
+      
+      $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'], 'SimpleXMLElement', LIBXML_NOCDATA);
       $input = array();
       $input['id'] = $item->getID();
 
@@ -410,14 +426,17 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                switch ($arrayinventory['TYPE']) {
 
                   case '1':
+                  case 'COMPUTER':
                      $input['item_type'] = 'Computer';
                      break;
 
                   case '2':
+                  case 'NETWORKING':
                      $input['item_type'] = 'NetworkEquipment';
                      break;
 
                   case '3':
+                  case 'PRINTER':
                      $input['item_type'] = 'Printer';
                      break;
 

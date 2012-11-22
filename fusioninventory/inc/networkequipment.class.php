@@ -645,6 +645,41 @@ function appear_array(id){
                               if (!empty($link2)) {
                                  echo "<br/>".$link2;
                               }
+                              if ($data_device["itemtype"] == 'Phone') {
+                                 $query_devicephone = "SELECT *
+                                         FROM `glpi_networkports`
+                                         WHERE `itemtype`='Phone'
+                                             AND `items_id`='".$data_device["items_id"]."'
+                                             AND `id`!='".$data_device["id"]."'
+                                         LIMIT 1";
+                                 $result_devicephone = $DB->query($query_devicephone);
+                                 if ($DB->numrows($result_devicephone) > 0) {
+                                    $data_devicephone = $DB->fetch_assoc($result_devicephone);
+                                    $computer_ports_id = $nw->getOppositeContact($data_devicephone["id"]);
+                                    if ($computer_ports_id) {
+                                       $networkport = new NetworkPort();
+                                       $networkport->getFromDB($computer_port_id);
+                                       if ($networkport->fields['itemtype'] == 'Computer') {
+                                          echo "<hr/>";
+                                          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/computer_icon.png' style='float:left'/> ";
+                                          $computer = new Computer();
+                                          $computer->getFromDB($networkport->fields["items_id"]);
+                                          $link1 = $computer->getLink(1);
+                                          $link = str_replace($computer->getName(0), $networkport->fields["mac"],
+                                                              $computer->getLink());
+                                          $link2 = str_replace($computer->getName(0), $networkport->fields["ip"],
+                                                               $computer->getLink());
+                                          echo $link1;
+                                          if (!empty($link)) {
+                                             echo "<br/>".$link;
+                                          }
+                                          if (!empty($link2)) {
+                                             echo "<br/>".$link2;
+                                          }
+                                       }
+                                    }
+                                 }
+                              }
                               echo "</td>";
                            }
                         } else {
@@ -688,7 +723,6 @@ function appear_array(id){
                            $used[]=$line["vlans_id"];
                            $vlan = new Vlan();
                            $vlan->getFromDB($line["vlans_id"]);
-                           $a_vlan = Dropdown::getDropdownName("glpi_vlans", $line["vlans_id"],1);
                            echo "<tr><td>" . $vlan->fields['name']." [".$vlan->fields['tag']."]";
                            echo "</td><td>";
                            if ($canedit) {

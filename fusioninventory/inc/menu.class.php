@@ -60,10 +60,20 @@ class PluginFusioninventoryMenu {
       if (PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE != 1) {
          echo "<center>";
          echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/wiki/Beta_test'>";
-         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta_1.png'/></a>";
-         echo "&nbsp;<a href='https://www.transifex.net/projects/p/FusionInventory/resources/'>";
-         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/></a>";
-         echo "</center><br/>";
+         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta.png'/></a>";
+//         echo "&nbsp;<a href='https://www.transifex.net/projects/p/FusionInventory/resources/'>";
+//         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/></a>";
+         echo "<H1>Version '".PLUGIN_FUSIONINVENTORY_REALVERSION."'</H1></center><br/>\n";
+      }
+
+      $config = new PluginFusioninventoryConfig();
+      if (strlen($config->getValue(null, 'agent_base_url'))<10) {
+         echo "<div class='msgboxmonit msgboxmonit-red'>";
+         print "<center><a href=\"config.form.php\">";
+         print $LANG['plugin_fusioninventory']['setup'][18];
+         print "</a></center>";
+         echo "</div>";
+         exit;
       }
 
 
@@ -141,6 +151,13 @@ class PluginFusioninventoryMenu {
 
          $a_menu[8]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_credentialips.png";
          $a_menu[8]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredentialip');
+
+      }
+
+      if (Session::haveRight("config","w")) {
+         $a_menu[10]['name'] = $LANG['plugin_fusioninventory']['functionalities'][2];
+         $a_menu[10]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
+         $a_menu[10]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/config.form.php";
 
       }
 

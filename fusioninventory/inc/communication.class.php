@@ -187,9 +187,6 @@ class PluginFusioninventoryCommunication {
       if ($xmltag == "PROLOG") {
          return false;
       }
-      if (!isset($agent['id'])) {
-         return true;
-      }
 
       if (isset($this->message['CONTENT']['MODULEVERSION'])) {
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $this->message['CONTENT']['MODULEVERSION']);
@@ -198,8 +195,12 @@ class PluginFusioninventoryCommunication {
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
-      if (!$pfAgentmodule->getAgentCanDo($xmltag, $agent['id'])) {
-         return true;
+         if (isset($this->message->CONTENT->MODULEVERSION)) {
+            $pfAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->message->CONTENT->MODULEVERSION);
+         } else if (isset($this->message->CONTENT->VERSIONCLIENT)) {
+            $version = str_replace("FusionInventory-Agent_", "", (string)$this->message->CONTENT->VERSIONCLIENT);
+            $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
+         }
       }
 
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
@@ -388,13 +389,13 @@ class PluginFusioninventoryCommunication {
 
       // Check XML integrity
       $pxml = '';
-      if ($pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA)) {
+      if ($pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)) {
 
-      } else if ($pxml = @simplexml_load_string(utf8_encode($xml),'SimpleXMLElement', LIBXML_NOCDATA)) {
+      } else if ($pxml = @simplexml_load_string(utf8_encode($xml), 'SimpleXMLElement', LIBXML_NOCDATA)) {
          $xml = utf8_encode($xml);
       } else {
          $xml = preg_replace ('/<FOLDER>.*?<\/SOURCE>/', '', $xml);
-         $pxml = @simplexml_load_string($xml,'SimpleXMLElement', LIBXML_NOCDATA);
+         $pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
 
          if (!$pxml) {
             $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>

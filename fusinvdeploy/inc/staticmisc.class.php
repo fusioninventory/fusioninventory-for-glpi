@@ -179,11 +179,11 @@ class PluginFusinvdeployStaticmisc {
       return Dropdown::show("Group", $options);
    }
 
-   static function task_actionselection_PluginFusioninventoryAgent_deployinstall() {
+   static function task_actionselection_PluginFusinvdeployGroup_deployinstall() {
       return self::getDeployActions();
    }
 
-   static function task_actionselection_PluginFusioninventoryAgent_deployuninstall() {
+   static function task_actionselection_PluginFusinvdeployGroup_deployuninstall() {
       return self::getDeployActions();
    }
 
@@ -225,7 +225,7 @@ class PluginFusinvdeployStaticmisc {
       global $CFG_GLPI;
 
       return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'Deploy',
-                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('Deploy'));
+                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('fusinvdeploy', 'Deploy'));
    }
 
    static function json_indent($json) {

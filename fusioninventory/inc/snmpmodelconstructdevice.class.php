@@ -44,449 +44,327 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
+class PluginFusinvsnmpConstructDevice extends CommonDBTM {
+   private $suggest = 1;
 
-   function showForm($id, $options=array()) {
-      global $DB;
+   function showForm($id, $data) {
+      global $LANG,$CFG_GLPI;
 
-      if ($id!='') {
-         $this->getFromDB($id);
-      } else {
-         $this->getEmpty();
+      echo  "<table width='950' align='center'>
+         <tr>
+         <td>
+         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$id."'>Back to device form information</a>
+         </td>
+         </tr>
+         </table>";
+      
+      echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
+      echo "<input type='hidden' name='devices_id' value='".$id."' />";
+      
+      $ret = $this->manageWalks($data, $id);
+
+      if ($ret) {
+         echo "<table class='tab_cadre_fixe'>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<th align='center'>";
+         echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit'>";
+         echo "</th>";
+         echo "</tr>";
+         echo "</table>";
       }
-
-      $this->showTabs($options);
-      $this->showFormHeader($options);
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Manufacturer').":    </td><td>";
-      Dropdown::show("Manufacturer",
-                     array('name'=>"manufacturers_id",
-                           'value'=>$this->fields["manufacturers_id"]));
-      echo "</td>";
-
-      echo "<tr>";
-      echo "<td>".__('Firmware').":    </td><td>\n";
-      Dropdown::show("NetworkEquipmentFirmware",
-                     array('name'=>"firmware",
-                           'value'=>$this->fields["firmware"]));
-      echo "</td>";
-      echo "</tr>\n";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>" . __('Comments') . "</td>";
-      echo "<td>";
-      echo "<textarea name='sysdescr'  cols='110' rows='4' />".$this->fields["sysdescr"]."</textarea>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>" . __('Type') . " :</td>";
-      echo "<td>";
-         $type_list = array();
-         $type_list[] = COMPUTER_TYPE;
-         $type_list[] = NETWORKING_TYPE;
-         $type_list[] = PRINTER_TYPE;
-         $type_list[] = PERIPHERAL_TYPE;
-         $type_list[] = PHONE_TYPE;
-
-         // GENERIC OBJECT : Search types in generic object
-         $plugin = new Plugin();
-         if ($plugin->isActivated('genericobject')) {
-            if (TableExists("glpi_plugin_genericobject_types")) {
-               $query = "SELECT * FROM `glpi_plugin_genericobject_types`
-                  WHERE `status`='1' ";
-               if ($result=$DB->query($query)) {
-                  while ($data=$DB->fetch_array($result)) {
-                     $type_list[] = $data['itemtype'];
-                  }
-               }
-            }
-         }
-         // END GENERIC OBJECT
-         Device::dropdownTypes('type',$this->fields["type"],$type_list);
-      echo "</td>";
-      echo "</tr>";
-
-      $this->showFormButtons($options);
-
-      echo "<div id='tabcontent'></div>";
-      echo "<script type='text/javascript'>loadDefaultTab();</script>";
-
-      return true;
+      
+      Html::closeForm();
+      
+      echo '<script language="JavaScript">
+      function popUpClosed() {
+          window.location.reload();
+      }
+      </script>';
+      return;
    }
 
 
-
-   function manageWalks($target, $id) {
+   
+   function manageWalks($json, $devices_id=0) {
       global $DB,$CFG_GLPI;
 
-      $query = "SELECT * FROM glpi_plugin_fusioninventory_snmpmodelconstructdevices
-         WHERE id='".$id."'";
-      $result = $DB->query($query);
-      $a_device = $DB->fetch_assoc($result);
-      $type_model = $a_device['type'];
-
-      // List of OID with relations by default with mapping
-      $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.4']      = 'cdpCacheAddress';
-      $mapping_pre[2]['.1.3.6.1.4.1.9.9.23.1.2.1.1.7']      = 'cdpCacheDevicePort';
-      $mapping_pre[2]['.1.3.6.1.2.1.1.1.0']                 = 'comment';
-      $mapping_pre[2]['.1.3.6.1.4.1.9.9.109.1.1.1.1.3.1']   = 'cpu';
-      $mapping_pre[2]['.1.3.6.1.2.1.17.1.4.1.2']            = 'dot1dBasePortIfIndex';
-      $mapping_pre[2]['.1.3.6.1.2.1.17.4.3.1.1']            = 'dot1dTpFdbAddress';
-      $mapping_pre[2]['.1.3.6.1.2.1.17.4.3.1.2']            = 'dot1dTpFdbPort';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.13.1001']    = 'entPhysicalModelName';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.1001']     = 'firmware';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.2']               = 'ifdescr';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.1']               = 'ifIndex';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.14']              = 'ifinerrors';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.10']              = 'ifinoctets';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.7']               = 'ifinternalstatus';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.9']               = 'iflastchange';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.4']               = 'ifmtu';
-      $mapping_pre[2]['.1.3.6.1.2.1.31.1.1.1.1']            = 'ifName';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.20']              = 'ifouterrors';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.16']              = 'ifoutoctets';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.6']               = 'ifPhysAddress';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.5']               = 'ifspeed';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.8']               = 'ifstatus';
-      $mapping_pre[2]['.1.3.6.1.2.1.2.2.1.3']               = 'ifType';
-      $mapping_pre[2]['.1.3.6.1.2.1.4.20.1.1']              = 'ipAdEntAddr';
-      $mapping_pre[2]['.1.3.6.1.2.1.4.22.1.2']              = 'ipNetToMediaPhysAddress';
-      $mapping_pre[2]['.1.3.6.1.2.1.1.6.0']                 = 'location';
-      $mapping_pre[2]['.1.3.6.1.2.1.17.1.1.0']              = 'macaddr';
-      $mapping_pre[2]['.1.3.6.1.4.1.9.2.1.8.0']             = 'memory';
-      $mapping_pre[2]['.1.3.6.1.2.1.1.5.0']                 = 'name';
-      $mapping_pre[2]['.1.3.6.1.4.1.9.3.6.6.0']             = 'ram';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1001']    = 'serial';
-      $mapping_pre[2]['.1.3.6.1.2.1.1.3.0']                 = 'uptime';
-      $mapping_pre[2]['.1.3.6.1.4.1.9.9.46.1.6.1.1.14']     = 'vlanTrunkPortDynamicStatus';
-      $mapping_pre[2]['.1.3.6.1.4.1.9.9.68.1.2.2.1.2']      = 'vmvlan';
-      $mapping_pre[2]['.1.3.6.1.4.1.9.9.46.1.3.1.1.4.1']    = 'vtpVlanName';
-      $mapping_pre[2]['.1.3.6.1.2.1.17.7.1.4.3.1.1']        = 'vtpVlanName';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1001']    = 'serial';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.9.1']        = 'firmware1';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.10.1']       = 'firmware2';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.1']       = 'serial';
-      $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.13.1']       = 'entPhysicalModelName';
-      // Omnistack LS6200 :
-         $mapping_pre[2]['.1.3.6.1.2.1.47.1.1.1.1.11.67108992'] = 'serial';
-         /*
-          * firmware: iso.3.6.1.2.1.47.1.1.1.1.10.67108992
-          * modele: iso.3.6.1.2.1.47.1.1.1.1.2.68420352
-          * MAC: .1.3.6.1.2.1.17.1.1.0
-          *
-          */
-
-
-
-      $mapping_pre[3]['.1.3.6.1.4.1.641.2.1.2.1.2.1']                = 'model';
-      $mapping_pre[3]['.1.3.6.1.4.1.641.2.1.2.1.6.1']                = 'serial';
-      $mapping_pre[3]['.1.3.6.1.2.1.25.2.3.1.5.1']                   = 'memory';
-      $mapping_pre[3]['.1.3.6.1.2.1.43.8.2.1.14.1.1']                = 'enterprise';
-      $mapping_pre[3]['.1.3.6.1.2.1.4.20.1.2']                       = 'ip';
-      $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.2']                        = 'ifName';
-      $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.6']                        = 'ifPhysAddress';
-      $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.3']                        = 'ifType';
-      $mapping_pre[3]['.1.3.6.1.2.1.1.5.0']                          = 'name';
-      $mapping_pre[3]['.1.3.6.1.2.1.1.6.0']                          = 'location';
-      $mapping_pre[3]['.1.3.6.1.2.1.1.1.0']                          = 'comment';
-      $mapping_pre[3]['.1.3.6.1.2.1.2.2.1.1']                        = 'ifIndex';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.1.4.0']              = 'serial';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.2']         = 'cartridgescyan';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.1']         = 'cartridgesblack';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.3']         = 'cartridgesmagenta';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.24.1.1.5.4']         = 'cartridgesyellow';
-      $mapping_pre[3]['.1.3.6.1.2.1.43.10.2.1.4.1.1']                = 'pagecountertotalpages';
-      $mapping_pre[3]['.1.3.6.1.2.1.43.5.1.1.17.1']                  = 'serial';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.13']        = 'pagecountercolorpages';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.14']        = 'pagecounterblackpages';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.2']         = 'pagecountertotalpages_copy';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.3']         = 'pagecounterblackpages_copy';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.5']         = 'pagecountercolorpages_copy';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.6']         = 'pagecountertotalpages_fax';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.8']         = 'pagecountertotalpages_print';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.20']        = 'pagecounterblackpages_print';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.19']        = 'pagecountercolorpages_print';
-      $mapping_pre[3]['.1.3.6.1.4.1.367.3.2.1.2.19.5.1.9.47']        = 'pagecounterscannedpages';
-      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.3.12.0']        = 'otherserial';
-      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.16.4.1.1.1.0']  = 'pagecounterblackpages';
-      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.16.4.1.3.1.0']  = 'pagecountercolorpages';
-      $mapping_pre[3]['.1.3.6.1.4.1.1129.2.3.50.1.3.21.6.1.3.1.3']   = 'pagecountertotalpages_print';
-      $mapping_pre[3]['.1.3.6.1.4.1.1129.2.3.50.1.3.21.6.1.3.1.3']   = 'pagecountertotalpages_print';
-      $mapping_pre[3]['.1.3.6.1.4.1.1129.2.3.50.1.3.21.6.1.4.1.3']   = 'pagecountertotalpages_copy';
-      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.1.1.7.0']               = 'informations';
-      $mapping_pre[3]['.1.3.6.1.4.1.674.10898.100.2.1.2.1.6.1']      = 'serial';
-      $mapping_pre[3]['.1.3.6.1.4.1.1602.1.2.1.4.0']                 = 'serial';
-      $mapping_pre[3]['.1.3.6.1.4.1.11.2.3.9.4.2.1.1.3.3.0']         = 'serial';
-      $mapping_pre[3]['.1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.1.0']       = 'serial';
-
-
-
-
-      $mapping_pre[1]['.1.3.6.1.4.1.714.1.2.5.3.5.0'] = 'serial';
-      $mapping_pre[1]['.1.3.6.1.2.1.2.2.1.6']         = 'ifPhysAddress';
-
-//      $mapping_pre[3][''] = '';
-      $mapping_pre_vlan = array();
-      $mapping_pre_vlan['.1.3.6.1.4.1.9.9.46.1.6.1.1.14'] = '1';
-      $mapping_pre_vlan['.1.3.6.1.2.1.17.4.3.1.1'] = '1';
-      $mapping_pre_vlan['.1.3.6.1.2.1.4.22.1.2'] = '1';
-      $mapping_pre_vlan['.1.3.6.1.2.1.17.4.3.1.2'] = '1';
-      $mapping_pre_vlan['.1.3.6.1.2.1.17.1.4.1.2'] = '1';
-
-
-
-      // Used mapping name :
-      $a_mapping_used = array();
-      $query = "SELECT `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.*,
-             `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
-         FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`
-            LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-               ON `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
-                  `glpi_plugin_fusioninventory_mappings`.`id`
-         WHERE `plugin_fusinvsnmp_constructdevices_id`='".$id."'
-            AND `mapping_name` != ''";
-      if ($result = $DB->query($query)) {
-         while ($data = $DB->fetch_array($result)) {
-            $a_mapping_used[$data['itemtype']."||".$data['mapping_name']] =
-                  $data['itemtype']."||".$data['mapping_name'];
+      $snmpwalk = '';
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
+                   WHERE `construct_device_id`='".$devices_id."'
+                   LIMIT 1";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $snmpwalk = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$data['log']);
          }
-      }
 
-      $query = "SELECT * FROM glpi_plugin_fusinvsnmp_constructdevicewalks
-         WHERE plugin_fusinvsnmp_constructdevices_id='".$id."'";
-      echo "<div align='center'>
-         <form method='post' name='' id=''  action='".$target."' >";
-
-      $a_oids = array();
-      $a_oids1 = array();
-      $a_oids2 = array();
+      $a_mapping = array();
       $a_mibs = array();
-      if ($result = $DB->query($query)) {
-         if ($data = $DB->fetch_array($result)) {
-            $file_content = file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$data['log']);
-            echo $data['log']."<br/>";
-            $query_oid = "SELECT * FROM glpi_plugin_fusinvsnmp_miboids";
-            $result_oid = $DB->query($query_oid);
-            while ($fields_oid = $DB->fetch_array($result_oid)) {
-               if ($fields_oid['comment'] != "") {
-                  $a_oids[] = $fields_oid['comment'];
-                  $a_oids1[] = $fields_oid['name'];
-                  $a_oids2[] = $fields_oid['id'];
-               }
-            }
-            $before = '';
-            $oid_id_before = 0;
-            foreach($file_content as $line){
-                $i = 1;
-               foreach($a_oids as $num=>$oid){
-                  if ((strstr($line, $oid.".")) OR (strstr($line, $oid." "))) {
-                     if (($i == '1') AND ($before != $a_oids1[$num])) {
-                        if ($before != '') {
-                           echo "</td>";
-                           echo "</tr>";
-                           echo "<tr>";
-                           echo "<th>";
-                           echo __('1')." : ";
-                           if (isset($a_mibs['id'])) {
-                              if ($a_mibs["vlan"] == "1") {
-                                 echo "<a href='".$target."?id=".$id."&vlan_update=".$oid_id_before."'>";
-                                 echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-                                 echo "</a>";
-                              } else {
-                                 echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
-                              }
-                           } else {
-                              if (isset($mapping_pre_vlan[$before])) {
-                                 Dropdown::showYesNo("vlan_".$oid_id_before, 1);
-                              } else {
-                                 Dropdown::showYesNo("vlan_".$oid_id_before);
-                              }
-                           }
-                           echo "</th>";
-                           echo "<th>";
-                           echo __('1')." : ";
-                           if (isset($a_mibs['id'])) {
-                              if ($a_mibs["oid_port_counter"] == "1") {
-                                 echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-                              } else {
-                                 echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
-                              }
-                           } else {
-                              Dropdown::showYesNo("oid_port_counter_".$oid_id_before);
-                           }
-                           echo "</th>";
-                           echo "<th>";
-                           echo __('1')." : ";
-                           if (isset($a_mibs['id'])) {
-                              if ($a_mibs["oid_port_dyn"] == "1") {
-                                 echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-                              } else {
-                                 echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
-                              }
-                           } else {
-                              Dropdown::showYesNo("oid_port_dyn_".$oid_id_before);
-                           }
-                           echo "</th>";
-                           echo "</tr>";
-                           echo "<tr>";
-                           echo "<th colspan='3'>";
-                           echo __('1')." : ";
-                           if (isset($a_mibs['id'])) {
-                              if ($a_mibs["oid_port_counter"] == "0") {
-                                 $mapping = new PluginFusioninventoryMapping();
-                                 $mappings = $mapping->get($a_mibs['itemtype'], $a_mibs['mapping_name']);
-                                 echo $mapping->getTranslation($mappings->fields['locale'])." ( ".$a_mibs["mapping_name"]." )";
-                              }
-                           } else {
-                              $types = array();
-                              $types[] = "-----";
-
-                              $map = new PluginFusioninventoryMapping();
-                              $maps = $map->find();
-                              foreach ($maps as $mapfields) {
-                                 if (($type_model == $type) OR ($type_model == "0")) {
-                                    $types[$type."||".$mapfields['name']]=
-                                       $LANG['plugin_fusinvsnmp']['mapping']
-                                          [$mapfields["locale"]].
-                                       " (".$mapfields['name'].")";
-                                 }
-                              }
-                              Dropdown::showFromArray("links_oid_fields_".$oid_id_before, $types,
-                                                      array('value'=>$type_model."||".$mapping_pre[$type_model][$before],
-                                                            'used'=>$a_mapping_used)); //,$linkoid_used
-                           }
-                           echo "</th>";
-                           echo "</tr>";
-                           echo "</table>";
-                           echo "<br/>";
-                        }
-                        $query_oid_mib = "SELECT *
-                           FROM glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids
-                           WHERE plugin_fusinvsnmp_constructdevices_id='".$id."'
-                              AND plugin_fusinvsnmp_miboids_id='".$a_oids2[$num]."'";
-                        $a_mibs = array();
-                        $result_oid_mib = $DB->query($query_oid_mib);
-                        if ($DB->numrows($result_oid_mib) != "0") {
-                           $a_mibs = $DB->fetch_assoc($result_oid_mib);
-                        }
-                        echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-                        echo "<tr>";
-                        echo "<th colspan='3'>";
-                        if (isset($a_mibs['id'])) {
-                           echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-                           echo "&nbsp;<font>";
-                        } else {
-                           echo "<input type='checkbox' name='oidsselected[]' value='".$a_oids2[$num]."' />&nbsp;";
-                           echo "&nbsp;<font color='#ff0000'>";
-                        }
-                        echo $a_oids1[$num]."</font>";
-                        if (isset($a_mibs['id'])) {
-                           //echo "&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/delete.png'/>";
-                        }
-                        echo "</th>";
-                        echo "</tr>";
-                        echo "<tr class='tab_bg_1 center'>";
-                        echo "<td colspan='3'>";
-                     }
-                     if (!isset($a_mibs['id'])) {
-                        echo $line."<br/>";
-                     }
-                     $before = $a_oids1[$num];
-                     $oid_id_before = $a_oids2[$num];
-                     $i = 2;
-                  }
-               }
-            }
-            if ($before != '') {
-               echo "</td>";
-               echo "</tr>";
-               echo "<tr>";
-               echo "<th>";
-               echo __('1')." : ";
-               if (isset($a_mibs['id'])) {
-                  if ($a_mibs["vlan"] == "1") {
-                     echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
-                  } else {
-                     echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark_off.png'/>";
-                  }
-               } else {
-                  if (isset($mapping_pre_vlan[$before])) {
-                     Dropdown::showYesNo("vlan_".$oid_id_before, 1);
-                  } else {
-                     Dropdown::showYesNo("vlan_".$oid_id_before);
-                  }
-               }
-               echo "</th>";
-               echo "<th>";
-               echo __('1')." : ";
-               Dropdown::showYesNo("oid_port_counter_".$oid_id_before);
-               echo "</th>";
-               echo "<th>";
-               echo __('1')." : ";
-               Dropdown::showYesNo("oid_port_dyn_".$oid_id_before);
-               echo "</th>";
-               echo "</tr>";
-               echo "<tr>";
-               echo "<th colspan='3'>";
-               echo __('1')." : ";
-               if (isset($a_mibs['id'])) {
-                  if ($a_mibs["oid_port_counter"] == "0") {
-                     $mapping = new PluginFusioninventoryMapping();
-                     $mappings = $mapping->get($a_mibs['itemtype'], $a_mibs['mapping_name']);
-                     if ($mappings) {
-                        echo $mapping->getTranslation($mappings);
-                     }
-                  }
-               } else {
-                  $types = array();
-                  $types[] = "-----";
-
-                  $map = new PluginFusioninventoryMapping();
-                  $maps = $map->find();
-                  foreach ($maps as $mapfields) {
-                     if (($type_model == $type) OR ($type_model == "0")) {
-                        $types[$type."||".$mapfields['name']]=
-                           $LANG['plugin_fusinvsnmp']['mapping']
-                                          [$mapfields["locale"]].
-                           " (".$mapfields['name'].")";
-                     }
-                  }
-                  Dropdown::showFromArray("links_oid_fields_".$oid_id_before, $types,
-                                          array('value'=>$type_model."||".$mapping_pre[$type_model][$before],
-                                                'used'=>$a_mapping_used)); //,$linkoid_used
-               }
-               echo "</th>";
-               echo "</tr>";
-               echo "</table>";
-               echo "<br/>";
+      $a_mibs2 = array();
+      $portcounter = '';
+      if (isset($json->mibs)) {
+         foreach ($json->mibs as $data) {
+            if (empty($data->mapping_name)) {
+               $portcounter = $data->oids_id;
+            } else {
+               $a_mibs[$data->oids_id."-".$data->mapping_name] = 1;
+               $a_mibs2[$data->mapping_name] = 1;
             }
          }
       }
-      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-      echo "<tr class='tab_bg_1 center'>";
-      echo "<td>";
-      echo "<input type='hidden' name='id' value='" . $id . "'/>";
-      echo "&nbsp;<input type='submit' name='mib' value=\"" . __('Update') . "\" class='submit' >";
-      echo "</td>";
-      echo "</tr>";
-      echo "</table>";
-      Html::closeForm();
-      echo "<br/>";
 
-      echo "<form method='post' name='' id=''  action='".$target."' enctype=\"multipart/form-data\">";
-      echo "<table class='tab_cadre' cellpadding='5' width='950'>";
-      echo "<tr class='tab_bg_1 center'>";
-      echo "<td>";
-      echo "<input type='hidden' name='id' value='" . $id . "'/>";
-      echo "<input type='file' name='walk'/>";
-      echo "&nbsp;<input type='submit' name='addWalk' value=\"" . __('Add') . "\" class='submit' >";
+      $dot1dTpFdbAddress = 0;
+      $dot1dTpFdbPort = 0;
+      $dot1dBasePortIfIndex = 0;
+      if (strstr($json->device->sysdescr, "Cisco")) {
+         foreach ($json->oids as $a_oids) {
+            if ($a_oids->numeric_oid == ".1.3.6.1.2.1.17.4.3.1.1") {
+               $dot1dTpFdbAddress = $a_oids->id;
+            } else if ($a_oids->numeric_oid == ".1.3.6.1.2.1.17.4.3.1.2") {
+               $dot1dTpFdbPort = $a_oids->id;
+            }if ($a_oids->numeric_oid == ".1.3.6.1.2.1.17.1.4.1.2") {
+               $dot1dBasePortIfIndex = $a_oids->id;
+            }
+         }
+      }
+      
+      
+      foreach ($json->mappings as $data) {
+         $a_mapping[$data->order] = $data->id;
+      }
+      ksort($a_mapping);
+      foreach ($a_mapping as $id) {
+         $data = $json->mappings->$id;
+         echo "<table class='tab_cadre_fixe'>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<th>";
+         echo $data->name;
+         echo "</th>";
+         echo "<td width='130' align='center'>";
+         if ($snmpwalk != '') {
+            echo "<a onclick=\"var w = window.open('".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/front/constructmodel.form.php?mapping=".$data->name."' ,'glpipopup', 'height=400, width=1000, top=100, left=100, scrollbars=yes' );w.focus();\"><img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />&nbsp;add a new oid</a>";
+         }
+         echo "</td>";
+         echo "</tr>";
+         
+         echo "</table>";
+         $a_oidfound = array();
+         foreach ($json->oids as $a_oids) {
+            if ($a_oids->name == $data->name) {
+               // Search in the snmwpalk the oid
+               $found = array();
+               $iso = $a_oids->numeric_oid;
+               $iso = preg_replace("/^.1./", "iso.", $iso);
+               preg_match_all("/".$a_oids->numeric_oid."(\.\d+){".$a_oids->nboids_after."} = (.*\n)/", $snmpwalk, $found);
+               if (isset($found[0][0])) {
+                  $a_oidfound[$a_oids->id] = $found[0];
+               } else {     
+                  preg_match_all("/".$a_oids->mib_oid."(?:\.\d+){".$a_oids->nboids_after."} = (?:.*)\n/", $snmpwalk, $found);
+                  if (isset($found[0][0])) {
+                     $a_oidfound[$a_oids->id] = $found[0];
+                  } else { 
+                     preg_match_all("/".$iso."(\.\d+){".$a_oids->nboids_after."} = (.*\n)/", $snmpwalk, $found);
+                     if (isset($found[0][0])) {
+                        $a_oidfound[$a_oids->id] = $found[0];
+                     }
+                  }
+               }
+            } 
+            if (isset($a_mibs2[$data->id])) { // This mapping has yet a value on server
+               if (isset($a_mibs[$a_oids->id."-".$data->id])) { // if this value is related with this oid
+                  if (!isset($a_oidfound[$a_oids->id])) {
+                     $a_oidfound[$a_oids->id] = array('?=?');
+                  }
+               }
+            }
+         }
+         if (count($a_oidfound) == '1') {
+            foreach ($a_oidfound as $oid_id => $a_found) {               
+               if (isset($a_mibs[$oid_id."-".$data->id])) {
+                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr, "green", $json->mibs->$id);
+               } else if ($json->oids->$oid_id->percentage->$id > 49) {
+                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr, "blue");
+               }else {
+                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr);
+               }
+            }
+         } else if (count($a_oidfound) > 1) {
+            foreach ($a_oidfound as $oid_id => $a_found) {
+               if (isset($a_mibs[$oid_id."-".$data->id])) {
+                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr, "green", $json->mibs->$id);
+               } else {
+                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr);
+               }
+            }
+         } else {
+            if (($data->name == "dot1dTpFdbAddress"
+                    OR $data->name == "dot1dTpFdbPort"
+                    OR $data->name == "dot1dBasePortIfIndex")
+                 AND strstr($json->device->sysdescr, "Cisco")) {
+               
+               $oids_id_temp = 0;
+               if ($data->name == "dot1dTpFdbAddress") {
+                  $oids_id_temp = $dot1dTpFdbAddress;
+               } else if ($data->name == "dot1dTpFdbPort") {
+                  $oids_id_temp = $dot1dTpFdbPort;
+               } else if ($data->name == "dot1dBasePortIfIndex") {
+                  $oids_id_temp = $dot1dBasePortIfIndex;
+               }
+               if (isset($a_mibs2[$data->id])) {
+                  $this->displayOid($json->oids->$oids_id_temp, $data->id, array(), $json->device->sysdescr, "green", $json->mibs->$id);
+               } else {
+                  $this->displayOid($json->oids->$oids_id_temp, $data->id, array(), $json->device->sysdescr, "blue");
+               }
+            }
+         }
+         echo "<br/>";
+      }
+      $portcounteroid = "";
+      foreach ($json->oids as $dataoid) {
+         if ($dataoid->numeric_oid == '.1.3.6.1.2.1.2.1.0') {
+            $portcounteroid = $dataoid->id;
+         }
+      }
+      echo "<table class='tab_cadre_fixe'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th>";
+      echo "Ports counter";
+      echo "</th>";
+      echo "<td width='130' align='center'>";
+      echo "";
       echo "</td>";
       echo "</tr>";
+
       echo "</table>";
-      Html::closeForm();
-      echo "</div>";
+      if ($portcounter != '') {
+                  $id = "0";
+         $this->displayOid($json->oids->$portcounteroid, 0, array(), $json->device->sysdescr, "green", $json->mibs->$id);
+      } else {
+         $this->displayOid($json->oids->$portcounteroid, 0, array(), $json->device->sysdescr, "blue");
+      }
+      if ($snmpwalk == '') {
+         return false;
+      }
+      return true;
+   }
+   
+   
+   
+   function displayOid($a_oid, $mappings_id, $a_match, $sysdescr, $color='red', $a_mibs=array()) {
+      global $LANG;
+
+      $style = " style='border-color: #ff0000; border-width: 1px' ";
+      $checked = '';
+      if ($color == 'blue'
+              AND $this->suggest == '1') {
+         $style = " style='border-color: #0000ff; border-width: 3px' "; // 0000ff
+         $checked = 'checked';
+      } else if ($color == 'green') {
+         $this->suggest = 0;
+         $style = " style='border-color: #00d50f; border-width: 3px' ";
+         $checked = 'checked';
+      }
+
+      echo "<table class='tab_cadre' cellpadding='5' width='800' ".$style.">";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th width='150'>";
+      //echo $a_oid->percentage."%";
+      if (isset($a_oid->percentage->$mappings_id)) {
+        Html::displayProgressBar(150, $a_oid->percentage->$mappings_id, array('simple' => true));
+      }
+      echo "</th>";
+      echo "<th colspan='2' style='text-align: left;'>";
+
+      echo "&nbsp;&nbsp;&nbsp;<input type='checkbox' name='oidsselected[]' value='".$a_oid->id."-".$mappings_id."' ".$checked."/>&nbsp;";
+      echo "&nbsp;<font color='#ff0000'>";
+//      } else {
+//         echo "&nbsp;&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+//         echo "&nbsp;<font>";
+//         
+//      }
+      
+      echo $a_oid->numeric_oid." (".$a_oid->mib_oid.")";
+      echo "</font>";
+      echo "</th>";
+      echo "</tr>";
+
+      $i = 0;
+      foreach ($a_match as $data) {
+         if ($i > 8) {
+            echo "<tr class='tab_bg_1'>";
+            echo "<td colspan='3'>";
+            echo "[...]";
+            echo "</td>";
+            echo "</tr>";
+            break;
+         }
+         echo "<tr class='tab_bg_1'>";
+         echo "<td colspan='3'>";
+         echo trim($data);
+         echo "</td>";
+         echo "</tr>";
+         $i++;
+      }
+      
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<th>";
+      if ($a_oid->numeric_oid == ".1.3.6.1.2.1.2.1.0") {
+         echo "<div style='display:none'>";
+         Dropdown::showYesNo("vlan_".$a_oid->id, 0);
+         echo "</div>";
+      } else {
+         echo $LANG['networking'][56]." : ";
+         $vlan = 0;
+         if (isset($a_mibs->vlan)) {
+            $vlan = $a_mibs->vlan;
+         }
+         $mapping_pre_vlan = $this->mibVlan();
+         if (isset($mapping_pre_vlan[$a_oid->numeric_oid])) {   
+            if (strstr($sysdescr, "Cisco")) {
+               $vlan = 1;
+            }
+         }
+         Dropdown::showYesNo("vlan_".$a_oid->id, $vlan);
+      }
+
+      echo "</th>";
+      echo "<th width='350'>";
+      if ($a_oid->numeric_oid == ".1.3.6.1.2.1.2.1.0") {
+         echo $LANG['plugin_fusinvsnmp']["mib"][6]." : ";
+         Dropdown::showYesNo("oid_port_counter_".$a_oid->id, 1);
+      }
+      echo "</th>";
+      echo "<th width='200'>";
+      if ($a_oid->numeric_oid == ".1.3.6.1.2.1.2.1.0") {
+         echo "<div style='display:none'>";
+         Dropdown::showYesNo("oid_port_dyn_".$a_oid->id, 0);
+         echo "</div>";
+      } else {
+         echo $LANG['plugin_fusinvsnmp']["mib"][7]." : ";
+         $oidportdyn = 0;
+         if (isset($a_mibs->oid_port_dyn)) {
+            $oidportdyn = $a_mibs->oid_port_dyn;
+         } else if (count($a_match) > 1) {
+            $oidportdyn = 1;
+         }
+         if (count($a_match) > 1
+              OR preg_match('/^if/', $a_oid->name)
+              OR preg_match('/ipAdEntAddr/',$a_oid->name)
+              OR preg_match('/^cdp/i',$a_oid->name)
+              OR preg_match('/ipNetToMediaPhysAddress/',$a_oid->name)
+              OR preg_match('/^dot1d/i',$a_oid->name)) {
+            $oidportdyn = 1;
+         }
+         Dropdown::showYesNo("oid_port_dyn_".$a_oid->id, $oidportdyn);
+      }
+      echo "</th>";
+      echo "</tr>";
+
+      echo "</table>";
+
+      
    }
 
 
@@ -676,123 +554,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
    }
 
 
-
-   function generateDiscovery() {
-      global $DB;
-
-      $xmlstr = "<?xml version='1.0' encoding='UTF-8'?>
-<SNMPDISCOVERY>
-</SNMPDISCOVERY>";
-      $sxml = new SimpleXMLElement($xmlstr);
-      //$sxml = simplexml_load_file($xmlstr);
-
-      $query = "SELECT *
-               FROM `".$this->getTable()."`
-               WHERE type NOT IN('', 0) ";
-      if ($result = $DB->query($query)) {
-         while ($data = $DB->fetch_array($result)) {
-            $sxml_device = $sxml->addChild('DEVICE');
-            $sxml_device->addAttribute('SYSDESCR', $data['sysdescr']);
-            $sxml_device->addAttribute('MANUFACTURER', $data['manufacturers_id']); //dropdown
-            $sxml_device->addAttribute('TYPE', $data['type']);
-
-            if (($data['snmpmodel_id'] !='0') AND ($data['snmpmodel_id'] != '')) {
-               //$sxml_device->addAttribute('MODELSNMP', $data['snmpmodel_id']); //dropdown
-
-               $query_modelkey = "SELECT *
-                                 FROM `glpi_plugin_fusioninventory_snmpmodels`
-                                 WHERE id='".$data['snmpmodel_id']."'
-                                 LIMIT 1";
-               $result_modelkey=$DB->query($query_modelkey);
-               if ($DB->numrows($result_modelkey)) {
-                  $line = mysql_fetch_assoc($result_modelkey);
-                  $sxml_device->addAttribute('MODELSNMP', $line['discovery_key']);
-               }
-
-               $query_serial = "SELECT `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.*,
-                     `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
-                  FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`
-                     LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                        ON `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
-                           `glpi_plugin_fusioninventory_mappings`.`id`
-                  WHERE `plugin_fusinvsnmp_constructdevices_id`='".$data['id']."'
-                     AND `mapping_name`='serial'
-                  LIMIT 1";
-               $result_serial=$DB->query($query_serial);
-               if ($DB->numrows($result_serial)) {
-                  $line = mysql_fetch_assoc($result_serial);
-                  $sxml_device->addAttribute('SERIAL', Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',
-                                               $line['plugin_fusinvsnmp_miboids_id']));
-               }
-
-               $query_serial = "SELECT `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.*,
-                     `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`,
-                     `glpi_plugin_fusioninventory_mappings`.`itemtype`
-                  FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`
-                     LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                        ON `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
-                           `glpi_plugin_fusioninventory_mappings`.`id`
-                  WHERE `plugin_fusinvsnmp_constructdevices_id`='".$data['id']."'
-                     AND ((`mapping_name`='macaddr' AND `itemtype`='NetworkEquipment')
-                           OR ( `mapping_name`='ifPhysAddress' AND `itemtype`='Printer')
-                           OR ( `mapping_name`='ifPhysAddress' AND `itemtype`='Computer'))
-                  LIMIT 1";
-               $result_serial=$DB->query($query_serial);
-               if ($DB->numrows($result_serial)) {
-                  $line = mysql_fetch_assoc($result_serial);
-                  if ($line['mapping_name'] == "macaddr") {
-                     $sxml_device->addAttribute('MAC', Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',
-                                                   $line['plugin_fusinvsnmp_miboids_id']));
-                  } else {
-                     $sxml_device->addAttribute('MACDYN', Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',
-                                                   $line['plugin_fusinvsnmp_miboids_id']));
-                  }
-               }
-            }
-         }
-      }
-      $sxml = $this->formatXmlString($sxml);
-      echo $sxml->asXML();
-      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/tools/networkdiscovery.xml", $sxml->asXML());
-
-   }
-
-
-
-   function formatXmlString($sxml) {
-      $xml = str_replace("><", ">\n<", $sxml->asXML());
-      $xml = str_replace("^M", "", $xml);
-      $token      = strtok($xml, "\n");
-      $result     = '';
-      $pad        = 0;
-      $matches    = array();
-      $indent     = 0;
-
-      while ($token !== false) {
-         // 1. open and closing tags on same line - no change
-         if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) :
-            $indent=0;
-         // 2. closing tag - outdent now
-         elseif (preg_match('/^<\/\w/', $token, $matches)) :
-            $pad = $pad-3;
-         // 3. opening tag - don't pad this one, only subsequent tags
-         elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) :
-            $indent=3;
-         else :
-            $indent = 0;
-         endif;
-
-         $line    = str_pad($token, strlen($token)+$pad, '  ', STR_PAD_LEFT);
-         $result .= $line . "\n";
-         $token   = strtok("\n");
-         $pad    += $indent;
-      }
-      $sxml = simplexml_load_string($result,'SimpleXMLElement', LIBXML_NOCDATA);
-      return $sxml;
-   }
-
-
-
+   
    function cleanmodels() {
       global $DB;
 
@@ -854,6 +616,19 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
             WHERE id='".$model_id."' ";
          $DB->query($query_update);
       }
+   }
+   
+   
+   private function mibVlan() {
+
+      $mapping_pre_vlan = array();
+      $mapping_pre_vlan['.1.3.6.1.4.1.9.9.46.1.6.1.1.14'] = '1';
+      $mapping_pre_vlan['.1.3.6.1.2.1.17.4.3.1.1'] = '1';
+      $mapping_pre_vlan['.1.3.6.1.2.1.4.22.1.2'] = '1';
+      $mapping_pre_vlan['.1.3.6.1.2.1.17.4.3.1.2'] = '1';
+      $mapping_pre_vlan['.1.3.6.1.2.1.17.1.4.1.2'] = '1';
+      
+      return $mapping_pre_vlan;
    }
 }
 

@@ -66,10 +66,12 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "model","w");
    $pfModel->delete($_POST);
-   Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/model.php");
+   PluginFusinvsnmpImportExport::exportDictionnaryFile();
+   Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/model.php");
 } else if (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "model","w");
    $pfImportExport->import($_FILES['importfile']['tmp_name']);
+   PluginFusinvsnmpImportExport::exportDictionnaryFile();
    Html::back();
 } else if (isset($_GET["is_active"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "model","w");

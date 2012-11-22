@@ -74,8 +74,8 @@ class PluginFusinvdeployFile extends CommonDBTM {
    static function getExtensionsWithAutoAction() {
       $ext = array();
 
-      $ext['msi']['install']     = "install msiexec /qb /i ##FILENAME## REBOOT=ReallySuppress";
-      $ext['msi']['uninstall']   = "uninstall msiexec /qb /x ##FILENAME## REBOOT=ReallySuppress";
+      $ext['msi']['install']     = "msiexec /qb /i ##FILENAME## REBOOT=ReallySuppress";
+      $ext['msi']['uninstall']   = "msiexec /qb /x ##FILENAME## REBOOT=ReallySuppress";
 
       $ext['deb']['install']     = "dpkg -i ##FILENAME## ; apt-get install -f";
       $ext['deb']['uninstall']   = "dpkg -P ##FILENAME## ; apt-get install -f";
@@ -447,6 +447,19 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
       $render   = PluginFusinvdeployOrder::getRender($render);
       $order_id = PluginFusinvdeployOrder::getIdForPackage($package_id,$render);
+      
+      // Check if add a file in install and if not have file in uninstall, 
+      // we add too this file in unistall
+      $uninstall = 0;
+      $order_uninstall_id = 0;
+      if ($render == 'install') {
+         $render_uninstall = PluginFusinvdeployOrder::getRender('uninstall');
+         $order_uninstall_id = PluginFusinvdeployOrder::getIdForPackage($package_id,$render_uninstall);
+         $a_uninstall_files = $this->find("`plugin_fusinvdeploy_orders_id`='".$order_uninstall_id."'");
+         if (count($a_uninstall_files) == 0) {
+            $uninstall = 1;
+         }
+      }
 
       if (isset ($_POST["id"]) and !$_POST['id']) {
 
@@ -502,7 +515,11 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
-            print "{success:true, file:'{$filename}',msg:\"{__('File saved!')}\"}";
+            if ($uninstall == 1) {
+               $data['order_id'] = $order_uninstall_id;
+               $this->addFileInRepo($data);
+            }
+            print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['action'][4]}\"}";
             exit;
          } else {
             print "{success:false, file:'{$filename}',msg:\"{__('File missing')}\"}";

@@ -70,17 +70,6 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       return true;
    }
 
-   function showList() {
-      echo "<center>";
-      echo "<table class='tab_cadre_navigation'><tr><td>";
-
-      self::title();
-      Search::show('PluginFusinvdeployGroup');
-
-      echo "</td></tr></table>";
-      echo "</center>";
-   }
-
    function defineTabs($options=array()) {
 
       $ong = array();

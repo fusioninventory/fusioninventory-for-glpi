@@ -47,7 +47,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 Html::header(__('FusionInventory'), $_SERVER["PHP_SELF"], "plugins",
              "fusioninventory", "documentation");
 
-echo "<meta http-equiv='refresh' content='0;URL=http://fusioninventory.org/wordpress/documentation/'>";
+echo "<meta http-equiv='refresh' content='0;URL=http://fusioninventory.org/documentation/'>";
 
 Html::footer();
 

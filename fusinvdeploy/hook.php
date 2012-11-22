@@ -100,7 +100,12 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
       case 'Computer' :
          switch ($options['action']) {
              case 'plugin_fusinvdeploy_targetDeployTask' :
-               echo "<br/>". __('Task').":&nbsp;";
+                echo "<table class='tab_cadre'>";
+                echo "<tr>";
+                echo "<td>";
+                echo $LANG['plugin_fusinvdeploy']['task'][1]."&nbsp;:";
+                echo "</td>";
+                echo "<td>";
                $rand = mt_rand();
                Dropdown::show('PluginFusinvdeployTask', array(
                      'name'      => "tasks_id",
@@ -111,23 +116,35 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
                            'url'             => GLPI_ROOT."/plugins/fusinvdeploy/ajax/dropdown_taskjob.php"
                   )
                ));
-
-               echo "<br/>"."&nbsp;".__('Package').":&nbsp;";
+               echo "</td>";
+               echo "</tr>";
+               echo "<tr>";
+               echo "<td>";
+               echo $LANG['plugin_fusinvdeploy']['package'][7]."&nbsp;:";
+               echo "</td>";
+               echo "<td>";
                Dropdown::show('PluginFusinvdeployPackage', array(
                         'name'      => "packages_id"
                ));
-
-               echo "<br/>";
-               echo "<input type='checkbox' name='separate_jobs' value='1'>";
+               echo "</td>";
+               echo "</tr>";
+               echo "<tr>";
+               echo "<td colspan='2'>";
+               echo "<input type='checkbox' name='separate_jobs' value='1'/>&nbsp;";
                if ($options['itemtype'] == 'Computer') {
-                     echo "&nbsp;".__('Create a job for each computer')."&nbsp;";
+                     echo $LANG['plugin_fusinvdeploy']['massiveactions'][1];
                } else if ($options['itemtype'] == 'PluginFusinvdeployGroup') {
-                     echo "&nbsp;".__('Create a job for each group')."&nbsp;";
+                     echo $LANG['plugin_fusinvdeploy']['massiveactions'][2];
                }
-               echo "</input>";
-
-               echo "<br/>"."&nbsp;<input type='submit' name='massiveaction' class='submit' value='".
-                     __('Post')."'>&nbsp;";
+               echo "</td>";
+               echo "</tr>";
+               echo "<tr>";
+               echo "<td colspan='2' align='center'>";
+               echo "<input type='submit' name='massiveaction' class='submit' value='".
+                     $LANG['buttons'][2]."'/>";
+               echo "</td>";
+               echo "</tr>";
+               echo "</table>";
             break;
          }
          break;
@@ -150,11 +167,6 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
             case 'PluginFusinvdeployGroup':
             case 'Computer':
 
-               logDebug(
-                  "MASSIVEACTION DEBUG:\n".
-                  print_r($data,true).
-                  "\n"
-               );
             // TODO: rename 'tasks' variables into 'job'
             // The 'separate jobs' option allows to create a taskjob for each computer
             // (I can't see the point but it may be
@@ -189,7 +201,14 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
             break;
 
          }
-
+            if ($data['tasks_id'] == 0) {
+               $pfTask = new PluginFusioninventoryTask();
+               $input = array();
+               $input['name'] = 'Deploy';
+               $input['communication'] = 'push';
+               $input['date_scheduled'] = date("Y-m-d H:i:s");
+               $data['tasks_id'] = $pfTask->add($input);               
+            }
             $params = array(
                'tasks_id'        => $data['tasks_id'],
                'tasks' => json_encode($tasks)

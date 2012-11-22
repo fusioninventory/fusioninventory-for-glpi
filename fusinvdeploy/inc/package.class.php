@@ -60,20 +60,9 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       return true;
    }
 
-   function canCancel() {
-      return true;
-   }
 
-   function canUndo() {
-      return true;
-   }
-
-   function canValidate() {
-      return true;
-   }
-
+   
    function defineTabs($options=array()){
-      global $CFG_GLPI;
 
       $ong = array();
       if ($this->fields['id'] > 0){
@@ -143,6 +132,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       return $tab;
    }
 
+   
+   
    function post_addItem() {
       //check whether orders have not already been created
       if (!isset($_SESSION['tmp_clone_package'])) {
@@ -151,10 +142,14 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       }
    }
 
+   
+   
    function cleanDBonPurge() {
       PluginFusinvdeployOrder::cleanForPackage($this->fields['id']);
    }
 
+   
+   
    function title() {
 
       $buttons = array();
@@ -170,6 +165,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       Html::displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_mini_package.png", $title, $title, $buttons);
    }
 
+   
+   
    function showMenu($options=array())  {
 
       $this->displaylist = false;
@@ -265,8 +262,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    }
 
 
+   
    static function canEdit($id) {
-      global $DB;
 
       $taskjobs_a = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobs',
                "definition LIKE '%\"PluginFusinvdeployPackage\":\"".$id."%'");
@@ -279,6 +276,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       return true;
    }
 
+   
+   
    function pre_deleteItem() {
       global  $CFG_GLPI;
 
@@ -490,6 +489,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       }
    }
 
+   
+   
    public function package_clone($new_name = '') {
 
       if ($this->getField('id') < 0) return false;
@@ -614,6 +615,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
    }
 
+   
+   
    static function showEditDeniedMessage($id, $message) {
       global $CFG_GLPI, $CFG_GLPI;
 

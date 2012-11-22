@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
+require_once(GLPI_ROOT."/plugins/fusioninventory/inc/ocscommunication.class.php");
 
 class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommunication {
 
@@ -359,8 +359,11 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
 
                $last_ip = long2ip($first_ip + $a_split[1]);
                $first_ip = long2ip($first_ip + $a_split[0]);
-               $sxml_rangeip->addAttribute('IPSTART', $first_ip);
-               $sxml_rangeip->addAttribute('IPEND', $last_ip);
+               if ($first_ip != '0.0.0.0'
+                       && $last_ip != '0.0.0.0') {
+                  $sxml_rangeip->addAttribute('IPSTART', $first_ip);
+                  $sxml_rangeip->addAttribute('IPEND', $last_ip);
+               }
             } else {
                $sxml_rangeip->addAttribute('IPSTART', $pfIPRange->fields["ip_start"]);
                $sxml_rangeip->addAttribute('IPEND', $pfIPRange->fields["ip_end"]);
@@ -383,7 +386,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                                                                  "Merged with ".$changestate);
             }
       }
-      $snmpauthlist=$pfConfigSecurity->find();
+      $snmpauthlist=$pfConfigSecurity->find("`is_deleted`='0'");
       if (count($snmpauthlist)){
          foreach ($snmpauthlist as $snmpauth){
             $pfToolbox->addAuth($sxml_option, $snmpauth['id']);

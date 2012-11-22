@@ -113,9 +113,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $sopt[6]['name']           = __('Communication type');
 
 
-      $sopt[8]['table']          = $this->getTable();
+      $sopt[8]['table']          = 'glpi_plugin_fusioninventory_taskjoblogs';
       $sopt[8]['field']          = 'state';
-      $sopt[8]['linkfield']      = '';
       $sopt[8]['name']           = 'Running';
 
       $sopt[30]['table']          = $this->getTable();
@@ -646,9 +645,19 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       $query = "SELECT `glpi_plugin_fusioninventory_tasks`.*
          FROM `glpi_plugin_fusioninventory_tasks`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` ON `plugin_fusioninventory_taskjobstates_id` = `glpi_plugin_fusioninventory_taskjobstates`.`id`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS taskjobs ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS taskjobstates ON taskjobstates.`id` = 
+            (SELECT id
+             FROM glpi_plugin_fusioninventory_taskjobstates
+             WHERE plugin_fusioninventory_taskjobs_id = taskjobs.`id`
+             ORDER BY id DESC
+             LIMIT 1
+            )
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` ON `glpi_plugin_fusioninventory_taskjoblogs`.`id` = 
+            (SELECT `id` 
+            FROM `glpi_plugin_fusioninventory_taskjoblogs`
+            WHERE `plugin_fusioninventory_taskjobstates_id`= taskjobstates.`id`
+            ORDER BY id DESC LIMIT 1 )
          WHERE `glpi_plugin_fusioninventory_taskjoblogs`.`state`='4'
          ".$where."
          GROUP BY plugin_fusioninventory_tasks_id

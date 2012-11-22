@@ -77,7 +77,6 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
             $object_used = array();
             $mappings_used = array();
 
-            echo "<br>";
             $this->getFromDB($id);
 
             echo "<br>";

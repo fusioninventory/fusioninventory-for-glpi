@@ -159,6 +159,7 @@ $LANG['plugin_fusioninventory']['rulesengine'][152]="Bien a importar";
 
 $LANG['plugin_fusioninventory']['setup'][16]="Documentación";
 $LANG['plugin_fusioninventory']['setup'][17]="Los plugins FusionInventory INVENTORY y FusionInventory SNMP deben ser desinstalados antes de quitar el plugin FusionInventory.";
+$LANG['plugin_fusioninventory']['setup'][18]="The server needs to kown the URL the agents use to access the server. Please configure it in the General Configuration page.";
 
 $LANG['plugin_fusioninventory']['task'][0]="Tarea";
 $LANG['plugin_fusioninventory']['task'][14]="Fecha de ejecución";
@@ -204,6 +205,8 @@ $LANG['plugin_fusioninventory']['task'][54]="Ejecutar de nuevo esta tarea";
 $LANG['plugin_fusioninventory']['task'][55]="A ningún agente le está permitido ejecutar ESX Inventory";
 $LANG['plugin_fusioninventory']['task'][56]="Planned for running";
 $LANG['plugin_fusioninventory']['task'][58]="In error";
+$LANG['plugin_fusioninventory']['task'][59]="List of objets on which the action must be set";
+$LANG['plugin_fusioninventory']['task'][60]="List of objets that will perform the action";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="Iniciado";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Correcto";

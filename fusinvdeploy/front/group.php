@@ -53,8 +53,7 @@ Html::header(__('Groups of computers'),$_SERVER["PHP_SELF"],"plugins",
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$group = new PluginFusinvdeployGroup();
-$group->showList();
+Search::show('PluginFusinvdeployGroup');
 
 Html::footer();
 

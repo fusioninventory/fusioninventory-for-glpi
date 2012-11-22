@@ -404,6 +404,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       }
       echo "</td>";
       echo "</table>";
+      Html::closeForm();
       echo "</div>";
    }
 

@@ -216,6 +216,19 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<td height='18'>".__('Module')."&nbsp;:</td>";
       echo "<td align='center'>";
       $randmethod = $this->dropdownMethod("method", $this->fields['method']);
+      if ($id != '') {
+         echo "<div style='display:none' id='methodupdate' >";
+         $params = array('method' => '__VALUE__',
+                         'rand'      => $randmethod,
+                         'myname'    => 'method',
+                         'name'      => 'methodupdate',
+                         'taskjobs_id'=>$id );
+         Ajax::updateItemOnEvent("dropdown_method".$randmethod,
+                                 "methodupdate",
+                                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskmethodupdate.php",
+                                 $params);
+         echo "</div>";
+      }
       echo "</td>";
       echo "</tr>";
 
@@ -234,7 +247,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       if ($this->fields['id'] > 0) {
          echo __('Definition');
 
-         $this->plusButton('definition');
+         $this->plusButton('definition'.$id));
          echo "<br/><i>Liste des objets sur lesquelles l'action doit porter</i>";
       }
       echo "</th>";
@@ -242,7 +255,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       if ($this->fields['id'] > 0) {
          echo __('Action');
 
-         $this->plusButton('action');
+         $this->plusButton('action'.$id));
          echo "<br/><i>Liste des objets qui vont effectuer l'action</i>";
       }
       echo "</th>";
@@ -412,7 +425,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<tr>";
       echo "<td>".__('Selection')."&nbsp;:</td>";
       echo "<td align='center' height='10'>";
-      echo "<span id='show_".ucfirst($type)."List'>";
+      echo "<span id='show_".ucfirst($type)."List".$id."'>";
       echo "</span>";
       echo "</td>";
       echo "</tr>";
@@ -435,7 +448,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    function dropdownMethod($myname,$value=0,$entity_restrict='') {
-      global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
 
@@ -501,7 +513,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       Ajax::updateItemOnEvent(
               'dropdown_'.ucfirst($myname).'Type'.$rand,
-              "show_".ucfirst($myname)."List",
+              "show_".ucfirst($myname)."List".$taskjobs_id,
               $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowntypelist.php",
               $params);
 
@@ -550,15 +562,15 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $iddropdown = "dropdown_".$_POST['name']."selectiontoadd";
       }
 
-      echo "<br/><center><input type='button' id='add_button_".$_POST['name']."' name='add_button_".$_POST['name']."' value=\"".__('Add')."\" class='submit'></center>";
+      echo "<br/><center><input type='button' id='add_button_".$_POST['name'].$taskjobs_id."' name='add_button_".$_POST['name']."' value=\"".__('Add')."\" class='submit'></center>";
       $params = array('items_id'  => '__VALUE0__',
-                      'add_button_'.$_POST['name'] => '__VALUE1__',
+                      'add_button_'.$_POST['name'].$taskjobs_id => '__VALUE1__',
                       'itemtype'  => $definitiontype,
                       'rand'      => $rand,
                       'myname'    => 'items_id',
                       'type'      => $_POST['name'],
                       'taskjobs_id'=>$taskjobs_id);
-      Ajax::updateItemOnEvent(array($iddropdown.$rand ,"add_button_".$_POST['name']),
+      Ajax::updateItemOnEvent(array($iddropdown.$rand ,"add_button_".$_POST['name'].$taskjobs_id),
                               "Additem_$rand",
                               $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobaddtype.php",
                               $params,
@@ -612,13 +624,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</table>";
 
       if ($nb > 0) {
-         echo "<center><input type='button' id='delete".$name."' name='delete".$name."' value=\"".__('Delete')."\" class='submit'></center>";
+         echo "<center><input type='button' id='delete".$name.$id."' name='delete".$name.$id."' value=\"".__('Delete')."\" class='submit'></center>";
 
          $params = array($name.'item' => '__CHECKBOX__',
                          'type'      => $name,
                          'taskjobs_id'=>$id);
 
-         $toobserve = "delete".$name;
+         $toobserve = "delete".$name.$id;
          $toupdate = "Deleteitem";
          $url = $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobdeletetype.php";
          $parameters=$params;
@@ -1124,6 +1136,9 @@ return namelist;
             WHERE `is_active`='1'
                AND `status` = '0'
                AND `glpi_plugin_fusioninventory_tasks`.`id`='".$tasks_id."'
+               AND `".$pfTaskjob->getTable()."`.`plugins_id` != '0'
+               AND `".$pfTaskjob->getTable()."`.`method` IS NOT NULL
+               AND `".$pfTaskjob->getTable()."`.`method` != ''
             ORDER BY `id`";
          $result = $DB->query($query);
          while ($data=$DB->fetch_array($result)) {
@@ -1233,11 +1248,9 @@ return namelist;
     *
     */
    function getRealStateAgent($items_id) {
-
-      ini_set('display_errors','On');
-      error_reporting(E_ALL | E_STRICT);
-      set_error_handler(array('Toolbox','userErrorHandlerDebug'));
-
+      
+      $this->disableDebug();
+      
       ob_start();
       ini_set("allow_url_fopen", "1");
 
@@ -1507,7 +1520,7 @@ return namelist;
             if ($task['communication'] == 'pull') {
                $has_recent_log_entries = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
                         AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
-               # No news from the agent since 1 hour. The agent is probably crached. Let's cancel the task
+               # No news from the agent since 4 hour. The agent is probably crached. Let's cancel the task
                if (count($has_recent_log_entries) == 1) {
                      $a_statustmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
                                                 AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
@@ -1523,6 +1536,8 @@ return namelist;
             } else if ($task['communication'] == 'push') {
                $a_valid = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
                         AND ADDTIME(`date`, '00:10:00') < NOW()", "id DESC", "1");
+               $a_valid4h = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
+                        AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
 
                if (count($a_valid) == '1') {
                   // Get agent status
@@ -1560,6 +1575,20 @@ return namelist;
                                                                '',
                                                                1,
                                                                "==fusioninventory::2==");
+                        }
+                        if (count($a_valid4h) == 1) {
+                           $a_statetmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
+                                                   AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
+                                                   AND `state`='0' ");
+                           foreach($a_statetmp as $datatmp) {
+                              $pfTaskjobstate->changeStatusFinish($datatmp['id'],
+                                                                  0,
+                                                                  '',
+                                                                  1,
+                                                                  "==fusioninventory::2==");
+                           }
+                           
+                           
                         }
                         break;
 
@@ -2046,14 +2075,14 @@ return namelist;
       echo "<script type='text/javascript'>
       //document.getElementById('show_".ucfirst($type)."List').innerHTML='&nbsp';
 
-      Ext.get('".$type."').setDisplayed('none');
+      Ext.get('".$type.$taskjobs_id."').setDisplayed('none');
       </script>";
       // reload item list
       $params = array();
       $params['taskjobs_id'] = $taskjobs_id;
       $params['typename'] = $type;
       echo "<script type='text/javascript'>";
-      Ajax::UpdateItemJsCode("show".$type."list_",
+      Ajax::UpdateItemJsCode("show".$type."list".$taskjobs_id."_",
                                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlist.php",
                                 $params);
       echo "</script>";
@@ -2080,7 +2109,7 @@ return namelist;
       $params['taskjobs_id'] = $taskjobs_id;
       $params['typename'] = $type;
       echo "<script type='text/javascript'>";
-      Ajax::UpdateItemJsCode("show".$type."list_",
+      Ajax::UpdateItemJsCode("show".$type."list".$taskjobs_id."_",
                                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlist.php",
                                 $params);
       echo "</script>";
@@ -2110,7 +2139,7 @@ return namelist;
 
    function showTaskjobItems($name, $randmethod, $id) {
       global $CFG_GLPI;
-
+      
       echo "<div style='display:none' id='".$name."' >";
       $params = array('method' => '__VALUE__',
                       'rand'      => $randmethod,
@@ -2118,31 +2147,31 @@ return namelist;
                       'typename'  => $name,
                       'taskjobs_id'=>$id );
       Ajax::updateItemOnEvent("dropdown_method".$randmethod,
-                              "show".$name."Type",
+                              "show".$name."Type".$id,
                               $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowntype.php",
                               $params,
                               array("change", "load"));
       if ($this->fields['method'] != "") {
          echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("show".$name."Type",
+         Ajax::UpdateItemJsCode("show".$name."Type".$id,
                                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowntype.php",
                                 $params,
                                 "dropdown_method".$randmethod);
          echo "</script>";
       }
-      echo "<span id='show".$name."Type'>&nbsp;</span>";
-      echo "<span id='show_".ucfirst($name)."List'>&nbsp;</span>";
+      echo "<span id='show".$name."Type".$id."'>&nbsp;</span>";
+      echo "<span id='show_".ucfirst($name)."List".$id."'>&nbsp;</span>";
       echo "<hr>";
       echo "</div>";
       // Display itemname list
       echo "<script type='text/javascript'>";
       $params['taskjobs_id'] = $id;
-      Ajax::UpdateItemJsCode("show".$name."list_",
+      Ajax::UpdateItemJsCode("show".$name."list".$id."_",
                                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlist.php",
                                 $params,
                                 "dropdown_method".$randmethod);
       echo "</script>";
-      echo "<span id='show".$name."list_'>&nbsp;</span>";
+      echo "<span id='show".$name."list".$id."_'>&nbsp;</span>";
    }
 
 
@@ -2199,6 +2228,23 @@ return namelist;
       echo "</tr>";
 
       echo "</table>";
+   }
+   
+   
+   
+   function updateMethod($method, $taskjobs_id) {
+      
+      $a_methods = array();
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+      foreach ($a_methods as $datas) {
+         if ($method == $datas['method']) {
+            $input = array();
+            $input['id'] = $taskjobs_id;
+            $input['method'] = $method;
+            $input['plugins_id'] = PluginFusioninventoryModule::getModuleId($datas['module']);
+            $this->update($input);
+         }
+      }
    }
 }
 

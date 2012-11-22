@@ -199,6 +199,9 @@ class PluginFusioninventoryWizard {
                $_GET['id'] = '';
             } else if ($_GET['id'] == '0') {
                $_GET['id'] = '';
+            } else {
+               $class->getFromDB($_GET['id']);
+               $_POST['id'] = $class->fields['plugin_fusioninventory_tasks_id'];
             }
             $class->showForm($_GET['id']);
          }
@@ -1044,7 +1047,7 @@ class PluginFusioninventoryWizard {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td><input type='radio' name='credential[]' value='".$data['id']."' />";
+      echo "<td><input type='radio' name='credential[]' value='-1' />";
       echo "&nbsp;<input type='text' name='name' value=''/>";
       echo "</td>";
       echo "<td>";

@@ -217,7 +217,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $migration->renameTable("glpi_plugin_fusioninventory_networking_ports", "glpi_plugin_fusinvsnmp_networkports");
    $migration->renameTable("glpi_plugin_fusioninventory_construct_device", "glpi_plugin_fusinvsnmp_constructdevices");
    $migration->renameTable("glpi_plugin_fusioninventory_construct_mibs", "glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids");
-   $migration->renameTable("glpi_plugin_fusioninventory_construct_walks", "glpi_plugin_fusinvsnmp_constructdevicewalks");
    $migration->renameTable("glpi_plugin_fusioninventory_networking", "glpi_plugin_fusioninventory_networkequipments");
    $migration->renameTable("glpi_plugin_fusioninventory_networking_ifaddr", "glpi_plugin_fusinvsnmp_networkequipmentips");
    $migration->renameTable("glpi_plugin_fusioninventory_printers", "glpi_plugin_fusinvsnmp_printers");
@@ -608,10 +607,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'entities_id',
                                  'entities_id',
                                  "int(11) NOT NULL DEFAULT '-1'");
-         $migration->changeField($newTable,
-                                 'url',
-                                 'url',
-                                 "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
+         $migration->dropField($newTable,
+                               "url");
+
       $migration->migrationOneTable($newTable);
 
 
@@ -1020,6 +1018,43 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
 
+   /*
+    * Table glpi_plugin_fusioninventory_construct_walks
+    */
+      $newTable = "glpi_plugin_fusioninventory_construct_walks";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "construct_device_id",
+                                 "construct_device_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "log",
+                                 "log",
+                                 "varchar(255) DEFAULT NULL");          
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                              "construct_device_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                              "log",
+                              "varchar(255) DEFAULT NULL");          
+      $migration->migrationOneTable($newTable);
+      
+      
+      
    /*
     * Table glpi_plugin_fusioninventory_locks
     */
@@ -2124,6 +2159,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             "plugin_fusioninventory_criterium_id");
       $migration->migrationOneTable($newTable);
 
+      
+   pluginFusioninventorychangeDisplayPreference("5153", "PluginFusioninventoryUnknownDevice");
+   pluginFusioninventorychangeDisplayPreference("5158", "PluginFusioninventoryAgent");
+
+      
    /*
     *  Udpate criteria for blacklist
     */
@@ -2139,7 +2179,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             VALUES ('".$id."', 'System manufacturer')";
       }
 
-   /*
+   
+
+    /*
     * Update blacklist
     */
       $input = array();
@@ -7001,6 +7043,23 @@ function update213to220_ConvertField($migration) {
             }
          }
          $migration->displayMessage("$i / $nb");
+      }
+   }
+}
+         
+function pluginFusioninventorychangeDisplayPreference($olditemtype, $newitemtype) {
+   global $DB;
+   
+   $query = "SELECT *,count(`id`) as `cnt` FROM `glpi_displaypreferences` 
+   WHERE (`itemtype` = '".$newitemtype."'
+   OR `itemtype` = '".$olditemtype."')
+   group by `users_id`, `num`";
+   $result=$DB->query($query);
+   while ($data=$DB->fetch_array($result)) {
+      if ($data['cnt'] > 1) {
+         $queryd = "DELETE FROM `glpi_displaypreferences`
+            WHERE `id`='".$data['id']."'";
+         $DB->query($queryd);
       }
    }
 }

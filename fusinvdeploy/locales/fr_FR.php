@@ -141,7 +141,7 @@ $LANG['plugin_fusinvdeploy']['label'][3]="Unité";
 $LANG['plugin_fusinvdeploy']['label'][4]="Activé";
 $LANG['plugin_fusinvdeploy']['label'][5]="Fichier";
 $LANG['plugin_fusinvdeploy']['label'][6]="Déploiement P2P";
-$LANG['plugin_fusinvdeploy']['label'][7]="Date d&#145";
+$LANG['plugin_fusinvdeploy']['label'][7]="Date d'ajout";
 $LANG['plugin_fusinvdeploy']['label'][8]="Durée de validité";
 $LANG['plugin_fusinvdeploy']['label'][9]="Rétention des données durant (jours)";
 
@@ -155,7 +155,7 @@ $LANG['plugin_fusinvdeploy']['message'][2]="Chargement...";
 $LANG['plugin_fusinvdeploy']['message'][3]="Fichier déjà existant";
 $LANG['plugin_fusinvdeploy']['message'][4]="Les chemins sous MS Windows n'acceptent pas plus de 255 caractères, la valeur que vous avez saisi dépasse cette limite.<br /><br /><b>Voulez vous continuer ?</b><br /><br /><div class";
 $LANG['plugin_fusinvdeploy']['message'][5]="Attention";
-$LANG['plugin_fusinvdeploy']['message'][6]="Souhaitez vous que la commande d'installation et de désinstallation soit automatiquement ajouté pour votre fichier ? ";
+$LANG['plugin_fusinvdeploy']['message'][6]="Souhaitez vous que la commande d'installation soit automatiquement ajoutée pour votre fichier ? ";
 
 $LANG['plugin_fusinvdeploy']['mirror'][1]="Mirroir";
 $LANG['plugin_fusinvdeploy']['mirror'][3]="Adresse du mirroir";
@@ -168,10 +168,10 @@ $LANG['plugin_fusinvdeploy']['package'][14]="Installation";
 $LANG['plugin_fusinvdeploy']['package'][15]="Désinstallation";
 $LANG['plugin_fusinvdeploy']['package'][16]="Installation d'un paquet";
 $LANG['plugin_fusinvdeploy']['package'][17]="Désinstallation d'un paquet";
-$LANG['plugin_fusinvdeploy']['package'][18]="Déplacer un fichier";
+$LANG['plugin_fusinvdeploy']['package'][18]="Déplacer";
 $LANG['plugin_fusinvdeploy']['package'][19]="Fragments de fichiers";
 $LANG['plugin_fusinvdeploy']['package'][1]="Exécuter une commande";
-$LANG['plugin_fusinvdeploy']['package'][20]="Supprimer un fichier";
+$LANG['plugin_fusinvdeploy']['package'][20]="Supprimer";
 $LANG['plugin_fusinvdeploy']['package'][21]="Afficher une boite de dialogue";
 $LANG['plugin_fusinvdeploy']['package'][22]="Codes retour";
 $LANG['plugin_fusinvdeploy']['package'][23]="Une ou plusieurs tâche(s) (#task#) utilise ce paquet, suppression impossible";
@@ -179,7 +179,7 @@ $LANG['plugin_fusinvdeploy']['package'][24]="Une ou plusieurs tâche(s) (#task#)
 $LANG['plugin_fusinvdeploy']['package'][25]="Nouveau nom";
 $LANG['plugin_fusinvdeploy']['package'][26]="Ajouter un paquet";
 $LANG['plugin_fusinvdeploy']['package'][27]="Créer un répertoire";
-$LANG['plugin_fusinvdeploy']['package'][28]="Copier un fichier";
+$LANG['plugin_fusinvdeploy']['package'][28]="Copier";
 $LANG['plugin_fusinvdeploy']['package'][2]="Lancer (exécutable dans le paquet)";
 $LANG['plugin_fusinvdeploy']['package'][3]="Exécuter (exécutable du système)";
 $LANG['plugin_fusinvdeploy']['package'][4]="Stocker";
@@ -215,4 +215,5 @@ $LANG['plugin_fusinvdeploy']['task'][3]="Ajouter tâche";
 $LANG['plugin_fusinvdeploy']['task'][8]="Liste des actions";
 
 $LANG['plugin_fusinvdeploy']['title'][0]="Déploiement FusionInventory";
+
 ?>

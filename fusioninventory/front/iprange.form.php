@@ -55,10 +55,10 @@ PluginFusioninventoryMenu::displayMenu("mini");
 if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange","w");
    if ($iprange->checkip($_POST)) {
-      $_POST['ip_start']  = $_POST['ip_start0'].".".$_POST['ip_start1'].".";
-      $_POST['ip_start'] .= $_POST['ip_start2'].".".$_POST['ip_start3'];
-      $_POST['ip_end']    = $_POST['ip_end0'].".".$_POST['ip_end1'].".";
-      $_POST['ip_end']   .= $_POST['ip_end2'].".".$_POST['ip_end3'];
+      $_POST['ip_start']  = (int)$_POST['ip_start0'].".".(int)$_POST['ip_start1'].".";
+      $_POST['ip_start'] .= (int)$_POST['ip_start2'].".".(int)$_POST['ip_start3'];
+      $_POST['ip_end']    = (int)$_POST['ip_end0'].".".(int)$_POST['ip_end1'].".";
+      $_POST['ip_end']   .= (int)$_POST['ip_end2'].".".(int)$_POST['ip_end3'];
       $iprange->add($_POST);
       Html::back();
    } else {
@@ -95,10 +95,10 @@ if (isset ($_POST["add"])) {
    } else {
       PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange","w");
       if ($iprange->checkip($_POST)) {
-         $_POST['ip_start']  = $_POST['ip_start0'].".".$_POST['ip_start1'].".";
-         $_POST['ip_start'] .= $_POST['ip_start2'].".".$_POST['ip_start3'];
-         $_POST['ip_end']    = $_POST['ip_end0'].".".$_POST['ip_end1'].".";
-         $_POST['ip_end']   .= $_POST['ip_end2'].".".$_POST['ip_end3'];
+         $_POST['ip_start']  = (int)$_POST['ip_start0'].".".(int)$_POST['ip_start1'].".";
+         $_POST['ip_start'] .= (int)$_POST['ip_start2'].".".(int)$_POST['ip_start3'];
+         $_POST['ip_end']    = (int)$_POST['ip_end0'].".".(int)$_POST['ip_end1'].".";
+         $_POST['ip_end']   .= (int)$_POST['ip_end2'].".".(int)$_POST['ip_end3'];
          $iprange->update($_POST);
       }
    }

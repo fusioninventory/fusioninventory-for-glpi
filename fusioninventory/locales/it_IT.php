@@ -159,6 +159,7 @@ $LANG['plugin_fusioninventory']['rulesengine'][152]="Materiale da importare";
 
 $LANG['plugin_fusioninventory']['setup'][16]="Documentazione";
 $LANG['plugin_fusioninventory']['setup'][17]="Gli altri plugin FusionInventory (fusinv. ..) devono essere disinstallati prima di disinstallare il plugin FusionInventory.";
+$LANG['plugin_fusioninventory']['setup'][18]="The server needs to kown the URL the agents use to access the server. Please configure it in the General Configuration page.";
 
 $LANG['plugin_fusioninventory']['task'][0]="Compito";
 $LANG['plugin_fusioninventory']['task'][14]="Data d'esecuzione";
@@ -204,6 +205,8 @@ $LANG['plugin_fusioninventory']['task'][54]="Run again this task";
 $LANG['plugin_fusioninventory']['task'][55]="No agent allowed to run ESX inventory";
 $LANG['plugin_fusioninventory']['task'][56]="Planned for running";
 $LANG['plugin_fusioninventory']['task'][58]="In error";
+$LANG['plugin_fusioninventory']['task'][59]="List of objets on which the action must be set";
+$LANG['plugin_fusioninventory']['task'][60]="List of objets that will perform the action";
 
 $LANG['plugin_fusioninventory']['taskjoblog'][1]="In esecuzione";
 $LANG['plugin_fusioninventory']['taskjoblog'][2]="Ok";

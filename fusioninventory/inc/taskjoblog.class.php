@@ -95,9 +95,26 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $elements = $this->dropdownStateValues();
       return $elements[$states_id];
    }
-
-
-
+   
+   
+   
+   static function getStateItemtype($taskjoblogs_id) {
+      global $DB;
+      
+      $query = "SELECT * FROM glpi_plugin_fusioninventory_taskjobstates
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` 
+            ON `plugin_fusioninventory_taskjobstates_id`=`glpi_plugin_fusioninventory_taskjobstates`.`id`
+         WHERE `glpi_plugin_fusioninventory_taskjoblogs`.`id`='".$taskjoblogs_id."'
+         LIMIT 1";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         return $data["itemtype"];
+      }
+      return '';      
+   }
+   
+   
+   
    function getSearchOptions() {
 
       $sopt = array();
@@ -149,7 +166,11 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $sopt[7]['name']           = __('Comments');
 
       $sopt[7]['datatype']       = 'string';
-
+      
+      $sopt[8]['table']          = "glpi_plugin_fusioninventory_taskjobstates";
+      $sopt[8]['field']          = 'plugin_fusioninventory_agents_id';
+      $sopt[8]['name']           = $LANG['plugin_fusioninventory']['agents'][28];
+      
       return $sopt;
    }
 
@@ -766,8 +787,10 @@ function appear_array(id){
     * @return nothing
     */
    function displayShortLogs($taskjobs_id, $veryshort=0) {
-      global $DB,$CFG_GLPI;
-
+      global $DB,$CFG_GLPI,$LANG;
+      
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      
       echo "<td colspan='2' valign='top'>";
 
       if ($veryshort == '0') {
@@ -808,8 +831,12 @@ function appear_array(id){
 
       if (strstr($comment, "Merged with")) {
          $state = '7';
-      }
+      }      
 
+      $a_taskjobstates = count($pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
+               AND `state` != '3'
+               AND `uniqid`='".$uniqid."'"));
+      
       if (    $state == '1'
            OR $state == '6'
            OR $state == '7') { // not finish
@@ -858,12 +885,22 @@ function appear_array(id){
          } else {
 
             if ($veryshort == '0') {
-               echo __('Last run')." (".Html::convDateTime($date).")";
-               echo " : <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-                  __('View logs of this execution')."</a>";
+               if ($a_taskjobstates == '0') {
+                  echo $LANG['crontask'][40]." (".Html::convDateTime($date).") : ";
+               }
+               echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+                  $LANG['plugin_fusioninventory']['taskjoblog'][9]."</a>";
             } else {
-               echo __('Last run')." :<br/> ".Html::convDateTime($date)."";
+               if ($a_taskjobstates == '0') {
+                  echo $LANG['crontask'][40]." :<br/> ".Html::convDateTime($date)."";
+               }
             }
+         }
+         if ($a_taskjobstates != '0') {
+            echo "<input type='hidden' name='taskjobstates_id' value='".$taskstates_id."' />";
+            echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
+            echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.$LANG['plugin_fusioninventory']['task'][32].'"
+                class="submit" type="submit">';
          }
          echo "</td>";
          echo "</tr>";
@@ -960,7 +997,7 @@ function appear_array(id){
       }
       if ($uniqid == '0') {
          if ($action == '') {
-            echo "<center><strong>".__('No agent allowed to run ESX inventory')."</strong></center>";
+            echo "<center><strong>No agent found for this task</strong></center>";
          }
       } else {
          $params = array();

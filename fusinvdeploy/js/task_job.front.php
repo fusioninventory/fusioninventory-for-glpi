@@ -88,13 +88,13 @@ var taskJobColumns =  [{
    hidden: true
 }, {
    id: 'package_id',
-   header: '{__('Package')}',
+   header: "{$LANG['plugin_fusinvdeploy']['package'][7]}",
    dataIndex: 'package_id',
    renderer: renderPackage,
    groupable: false
 }, {
    id: 'method',
-   header: '{__('Module')}',
+   header: "{$LANG['plugin_fusioninventory']['task'][26]}",
    dataIndex: 'method',
    renderer: renderMethod,
    groupable: false
@@ -225,7 +225,7 @@ var taskJobGrid = new Ext.grid.GridPanel({
    style: 'margin-bottom:5px',
    columns: taskJobColumns,
    store: taskJobStore,
-   title: '{__('Order list')}',
+   title: "{$LANG['plugin_fusinvdeploy']['task'][13]}",
    view: new Ext.grid.GroupingView({
       forceFit:true,
       groupTextTpl: '<b>{text}</b>',
@@ -235,7 +235,7 @@ var taskJobGrid = new Ext.grid.GridPanel({
       emptyGroupText: ''
    }),
    tbar: [{
-      text: '{__('Add order')}',
+      text: "{$LANG['plugin_fusinvdeploy']['task'][15]}",
       iconCls: 'exticon-add',
       handler: function(btn,ev) {
          var u = new taskJobStore.recordType({
@@ -250,10 +250,10 @@ var taskJobGrid = new Ext.grid.GridPanel({
          });
          taskJobStore.insert(0,u);
          taskJobGrid.getSelectionModel().selectFirstRow();
-         taskJobForm.setTitle('{__('Add order')}');
+         taskJobForm.setTitle("{$LANG['plugin_fusinvdeploy']['task'][15]}");
       }
    }, '-', {
-      text: '{__('Delete order')}',
+      text: "{$LANG['plugin_fusinvdeploy']['task'][16]}",
       iconCls: 'exticon-delete',
       handler: function(btn,ev) {
          var selection = taskJobGrid.getSelectionModel().getSelections();
@@ -292,7 +292,7 @@ var taskJobGrid = new Ext.grid.GridPanel({
          rowselect: function(g,index,ev) {
             var rec = taskJobGrid.store.getAt(index);
             taskJobForm.loadData(rec);
-            taskJobForm.setTitle('{__('Edit order')}');
+            taskJobForm.setTitle("{$LANG['plugin_fusinvdeploy']['task'][17]}");
             taskJobForm.buttons[0].setDisabled(false);
 
             taskJobForm.expand();
@@ -321,10 +321,10 @@ var taskJobForm = new Ext.FormPanel({
    bodyStyle:'padding:5px 10px',
    style:'margin-left:5px;margin-bottom:5px',
    width: {$width_right},
-   title: '{__('Edit task')}',
+   title: "{$LANG['plugin_fusinvdeploy']['task'][11]}",
    items: [
       new Ext.form.ComboBox({
-         fieldLabel: '{__('Module')}',
+         fieldLabel: "{$LANG['plugin_fusioninventory']['task'][26]}",
          name: 'method',
          hiddenName: 'method',
          valueField: 'value',
@@ -342,7 +342,7 @@ var taskJobForm = new Ext.FormPanel({
          triggerAction: 'all'
       }),
       new Ext.form.ComboBox({
-         fieldLabel: '{__('Package')}',
+         fieldLabel: "{$LANG['plugin_fusinvdeploy']['package'][7]}",
          name: 'package_id',
          valueField: 'package_id',
          displayField: 'package_name',
@@ -398,7 +398,7 @@ var taskJobForm = new Ext.FormPanel({
          }),
          width: {$field_width}
       }), {
-         fieldLabel: '{__('Comments')}',
+         fieldLabel: "{$LANG['common'][25]}",
          xtype: 'textarea',
          name: 'comment',
          hiddenName: 'comment',
@@ -406,7 +406,7 @@ var taskJobForm = new Ext.FormPanel({
          height:45
       }, {
          xtype:'fieldset',
-         title: '{__('Advanced options')}',
+         title: "{$LANG['plugin_fusinvdeploy']['task'][14]}",
          collapsed: true,
          checkboxToggle:true,
          autoHeight:true,
@@ -419,7 +419,7 @@ var taskJobForm = new Ext.FormPanel({
                allowBlank: false,
                width:50
             }), new Ext.ux.form.SpinnerField({
-               fieldLabel: '{__('Time between 2 trials (in minutes)')}',
+               fieldLabel: "{$LANG['plugin_fusioninventory']['task'][25]}",
                name: 'retry_time',
                hiddenName: 'retry_time',
                allowBlank: false,
@@ -429,7 +429,7 @@ var taskJobForm = new Ext.FormPanel({
       }
    ],
    buttons: [{
-      text: '{__('OK')}',
+      text: "{$LANG['plugin_fusinvdeploy']['action'][2]}",
       iconCls: 'exticon-save',
       disabled:true,
       handler: function(btn,ev) {
@@ -445,11 +445,11 @@ var taskJobForm = new Ext.FormPanel({
 
 function taskJobFormSave() {
    if (taskJobForm.record == null) {
-      Ext.MessageBox.alert('Erreur', '{__('Empty form')}');
+      Ext.MessageBox.alert('Erreur', "{$LANG['plugin_fusinvdeploy']['message'][0]}");
       return;
    }
    if (!taskJobForm.getForm().isValid()) {
-      Ext.MessageBox.alert('Erreur', '{__('Empty form')}');
+      Ext.MessageBox.alert('Erreur', "{$LANG['plugin_fusinvdeploy']['message'][0]}");
       return false;
    }
 

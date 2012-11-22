@@ -137,7 +137,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
     *@return nothing
     **/
    function loadNetworkport($networkports_id) {
-      global $DB;
 
       $networkport = new NetworkPort();
       $networkport->getFromDB($networkports_id);
@@ -1024,6 +1023,26 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    
 
 
+   
+   
+   
+   function isPorthasPhone() {
+      $isPhone = false;
+      
+      $networkPort = new NetworkPort();
+      
+      foreach ($this->portMacs as $ifmac) {
+         $a_ports = $networkPort->find("`mac`='".$ifmac."'","", 1);
+         if (count($a_ports) > 0) {
+            $a_port = current($a_ports);
+            if ($a_port['itemtype'] == 'Phone') {
+               $isPhone = true;
+               return $isPhone;
+            }
+         }
+      }
+      return $isPhone;
+   }
    
 }
 

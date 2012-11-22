@@ -59,6 +59,13 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
    function getSearchOptions() {
 
       $tab = array();
+      
+      if (!isset($LANG['plugin_fusinvsnmp']['model_info'][4])) {
+         $LANG['plugin_fusinvsnmp']['model_info'][4] = "SNMP models";
+      }
+      if (!isset($LANG['plugin_fusinvsnmp']['model_info'][12])) {
+         $LANG['plugin_fusinvsnmp']['model_info'][12] = "Key of model discovery";
+      }
 
       $tab['common'] = __('SNMP models');
 
@@ -88,6 +95,14 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       $tab[6]['name'] = __('Comments');
 
 
+      $tab[7]['table'] = "glpi_plugin_fusinvsnmp_modeldevices";
+      $tab[7]['field'] = 'sysdescr';
+//      $tab[7]['linkfield'] = 'sysdescr';
+      $tab[7]['name'] = $LANG['plugin_fusinvsnmp']['snmp'][4];
+      $tab[7]['forcegroupby']  = true;
+      $tab[7]['splititems']    = true;
+
+      
       return $tab;
    }
 
@@ -173,6 +188,10 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "</table>";
       Html::closeForm();
       echo "</div>";
+      
+      echo "<br/>";
+      $pfModeldevice = new PluginFusinvsnmpModeldevice();
+      $pfModeldevice->showDevices($id);
    }
 
 
@@ -357,10 +376,15 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
 
 
-   static function importAllModels() {
+   static function importAllModels($folder='') {
       /*
        * Manage models migration
        */
+      
+      if ($folder == '') {
+         $folder = GLPI_ROOT.'/plugins/fusinvsnmp/models';
+      }
+      
       $NewModelList = array();
       foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) {
          $file = str_replace("../plugins/fusioninventory/snmpmodels/", "", $file);
@@ -417,6 +441,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       foreach ($a_printers as $a_printer) {
          $pfModel->getrightmodel($a_printer['printers_id'], "Printer");
       }
+      PluginFusinvsnmpImportExport::exportDictionnaryFile();
    }
 }
 

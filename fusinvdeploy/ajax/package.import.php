@@ -42,11 +42,11 @@
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
-checkLoginUser();
+Session::checkLoginUser();
 
 if (! empty($_FILES)) {
    if ($_FILES["file"]["error"] > 0) {
-      logDebug("Error on import: " . $_FILES["file"]["error"] . "\n");
+      Toolbox::logDebug("Error on import: " . $_FILES["file"]["error"] . "\n");
    } else {
       //logDebug("Upload: " . $_FILES["file"]["name"] . "\n");
       //logDebug("Type: " . $_FILES["file"]["type"] . "\n");
@@ -61,3 +61,4 @@ if (! empty($_FILES)) {
 }
 //TODO: need to verify data we are receiving
 
+?>

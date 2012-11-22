@@ -196,34 +196,36 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          $computerip = 0;
          foreach ($a_networkPort as $datanetwork) {
             if ($datanetwork['ip'] != "127.0.0.1") {
-               $computerip++;
-               $sxml_param = $sxml_option->addChild('PARAM');
-               $sxml_param->addAttribute('MAC', $datanetwork['mac']);
-               $sxml_param->addAttribute('IP', $datanetwork['ip']);
+               if ($datanetwork['mac'] != '') {
+                  $computerip++;
+                  $sxml_param = $sxml_option->addChild('PARAM');
+                  $sxml_param->addAttribute('MAC', $datanetwork['mac']);
+                  //$sxml_param->addAttribute('IP', $datanetwork['ip']);
 
-               if ($changestate == '0') {
-                  $pfTaskjobstate->changeStatus($data['id'], 1);
-                  $pfTaskjoblog->addTaskjoblog($data['id'],
-                                          '0',
-                                          'Computer',
-                                          '1',
-                                          '');
-                  $changestate = $pfTaskjobstate->fields['id'];
-               } else {
+                  if ($changestate == '0') {
+                     $pfTaskjobstate->changeStatus($data['id'], 1);
+                     $pfTaskjoblog->addTaskjoblog($data['id'],
+                                             '0',
+                                             'Computer',
+                                             '1',
+                                             '');
+                     $changestate = $pfTaskjobstate->fields['id'];
+                  } else {
+                     $pfTaskjobstate->changeStatusFinish($data['id'],
+                                                                       $data['items_id'],
+                                                                       $data['itemtype'],
+                                                                       0,
+                                                                       "Merged with ".$changestate);
+                  }
+
+                  // Update taskjobstate (state = 3 : finish); Because we haven't return of agent on this action
                   $pfTaskjobstate->changeStatusFinish($data['id'],
-                                                                    $data['items_id'],
-                                                                    $data['itemtype'],
-                                                                    0,
-                                                                    "Merged with ".$changestate);
+                                                                        $data['items_id'],
+                                                                        $data['itemtype'],
+                                                                        0,
+                                                                        'WakeOnLan have not return state',
+                                                                        1);
                }
-
-               // Update taskjobstate (state = 3 : finish); Because we haven't return of agent on this action
-               $pfTaskjobstate->changeStatusFinish($data['id'],
-                                                                     $data['items_id'],
-                                                                     $data['itemtype'],
-                                                                     0,
-                                                                     'WakeOnLan have not return state',
-                                                                     1);
             }
          }
          if ($computerip == '0') {
