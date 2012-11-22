@@ -634,7 +634,7 @@ function appear_array(id){
                                           echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/computer_icon.png' style='float:left'/> ";
                                           $computer = new Computer();
                                           $computer->getFromDB($networkport->fields["items_id"]);
-                                          $link1 = $item->getLink(1);
+                                          $link1 = $computer->getLink(1);
                                           $link = str_replace($computer->getName(0), $networkport->fields["mac"],
                                                               $computer->getLink());
                                           $link2 = str_replace($computer->getName(0), $networkport->fields["ip"],
