@@ -154,9 +154,11 @@ class PluginFusioninventoryFormatconvert {
                                         'WINOWNER' => 'winowner',
                                         'WINCOMPANY' => 'wincompany'));
       $a_inventory['fusioninventorycomputer'] = $array_tmp;
-      if (isset($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
+      if (!empty($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
          $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] 
                   = date("Y-m-d", $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate']);
+      } else {
+         unset($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate']);
       }
       
       // * BIOS
@@ -437,6 +439,37 @@ class PluginFusioninventoryFormatconvert {
       }
       
       // * STORAGES
+      if (isset($array['STORAGES'])) {
+         foreach ($array['STORAGES']  as $a_storage) {
+            $type_tmp = PluginFusioninventoryFormatconvert::getTypeDrive($a_storage);
+            if ($type_tmp == "Drive") {
+               // it's cd-rom / dvd
+//               if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+//                    "component_drive") =! 0) {
+//// TODO ***
+//                }
+            } else {
+               // it's harddisk
+//               if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
+//                    "component_harddrive") != 0) {
+               
+                  $array_tmp = $thisc->addValues($a_storage, 
+                                                 array( 
+                                                     'DISKSIZE'      => 'capacity',
+                                                     'INTERFACE'     => 'interfacetypes_id',
+                                                     'MANUFACTURER'  => 'manufacturers_id',
+                                                     'MODEL'         => 'designation',
+                                                     'SERIAL'        => 'serial'));
+                  if ($array_tmp['designation'] == '') {
+                     $array_tmp['designation'] = $a_storage['NAME'];
+                  }
+                  $a_inventory['harddrive'][] = $array_tmp;
+//                }
+            }            
+         }
+      }
+      
+      
       
       
       // * USERS
@@ -622,6 +655,8 @@ class PluginFusioninventoryFormatconvert {
                $itemtype = 'Filesystem';
             } else if ($key== 'devicememorytypes_id') {
                $itemtype = 'DeviceMemoryType';
+            } else if ($key == 'interfacetypes_id') {
+               $itemtype = 'InterfaceType';
             } else if ($key == "manufacturer") {
                if (!isset($array['manufacturers_id'])) {
                   $array['manufacturers_id']= Dropdown::importExternal('Manufacturer',
@@ -717,10 +752,40 @@ class PluginFusioninventoryFormatconvert {
                foreach ($a_port['CONNECTIONS']['CONNECTION']['MAC'] as $mac) {
                   $a_inventory['connection-mac'][$a_port['IFNUMBER']][] = $mac;
                }
+               $a_inventory['connection-mac'][$a_port['IFNUMBER']] = array_unique($a_inventory['connection-mac'][$a_port['IFNUMBER']]);
             }
          }
       }
       return $a_inventory;
+   }
+   
+
+   
+   /**
+   * Get type of the drive
+   *
+   * @param $data array of the storage
+   *
+   * @return "Drive" or "HardDrive" 
+   *
+   **/
+   static function getTypeDrive($data) {
+      if (((isset($data['TYPE'])) AND
+              ((preg_match("/rom/i", $data["TYPE"])) OR (preg_match("/dvd/i", $data["TYPE"]))
+               OR (preg_match("/blue.{0,1}ray/i", $data["TYPE"]))))
+            OR
+         ((isset($data['MODEL'])) AND
+              ((preg_match("/rom/i", $data["MODEL"])) OR (preg_match("/dvd/i", $data["MODEL"]))
+               OR (preg_match("/blue.{0,1}ray/i", $data["MODEL"]))))
+            OR
+         ((isset($data['NAME'])) AND
+              ((preg_match("/rom/i", $data["NAME"])) OR (preg_match("/dvd/i", $data["NAME"]))
+               OR (preg_match("/blue.{0,1}ray/i", $data["NAME"]))))) {
+         
+         return "Drive";
+      } else {
+         return "HardDrive";
+      }
    }
 }
 
