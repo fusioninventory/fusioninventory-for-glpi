@@ -313,7 +313,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          $module_name = 'SNMPQUERY';
       }
       $agentModule = $this->getActivationExceptions($module_name);
-
+      
       $where = "";
       if ($agentModule['is_active'] == 0) {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
@@ -425,8 +425,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    *
    **/
    static function getUrlForModule($pluginname, $modulename) {
-      global $DB;
-
       $config = new PluginFusioninventoryConfig();
       if (strlen($config->getValue(null, 'agent_base_url'))<10) {
           die ("agent_base_url is unset!\n");
@@ -434,11 +432,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       # Construct the path to the JSON back from the agent_base_url.
       # agent_base_url is the initial URL used by the agent
-      return preg_replace(
-         '/\/plugins\/(fusioninventory.*)/i',
-         '/plugins/'.strtolower($pluginname).'/b/'.strtolower($modulename).'/',
-         $config->getValue(null, 'agent_base_url')
-      );
+      return $config->getValue(null, 'agent_base_url').'/plugins/'.strtolower($pluginname).'/b/'.strtolower($modulename).'/';
    }
 }
 
