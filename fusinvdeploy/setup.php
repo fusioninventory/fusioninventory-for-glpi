@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-include_once ("includes.php");
+include_once(GLPI_ROOT."/inc/includes.php");
 
 define ("PLUGIN_FUSINVDEPLOY_VERSION","0.84+1.0");
 
