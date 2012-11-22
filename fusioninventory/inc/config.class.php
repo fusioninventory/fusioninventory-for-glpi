@@ -256,11 +256,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo $LANG['plugin_fusioninventory']['agents'][41].'&nbsp;';
       Html::showToolTip('ex: http://192.168.20.1/glpi');
       echo "&nbsp;:";
-      if (!file_exists($this->getValue($plugin_id, 'agent_base_url').'/front/communication.php')
-            OR file_get_contents($this->getValue($plugin_id, 'agent_base_url').'/front/communication.php') === false) {
+      if (!file_exists($this->getValue(null, 'agent_base_url').'/plugins/fusioninventory/index.php')
+            AND !file_get_contents($this->getValue(null, 'agent_base_url').'/plugins/fusioninventory/index.php')) {
            echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\">";
       }
-
+      
       echo "</td>";
       echo "<td>";
       echo "<input type='text' name='agent_base_url' size='50' value='".$this->getValue($plugin_id, 'agent_base_url')."'/>";
