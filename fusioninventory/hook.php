@@ -842,6 +842,10 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             }
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
                $array[2] = __('FusInv')." ".__('Tasks');
+            }
+            return $array;
+         }
+         break;
 
       case 'Profile' :
          if ($withtemplate) { // new object / template case
@@ -1892,19 +1896,6 @@ function plugin_fusioninventory_addLeftJoin($itemtype,$ref_table,$new_table,$lin
 }
 
 
-         switch ($new_table.".".$linkfield) {
-            // ** FusionInventory - switch
-            case "glpi_plugin_fusioninventory_networkequipments.plugin_fusioninventory_networkequipments_id" :
-               $table_networking_ports = 0;
-               foreach ($already_link_tables AS $num=>$tmp_table) {
-                  if ($tmp_table == "glpi_networkports.") {
-                     $table_networking_ports = 1;
-                  }
-               }
-               if ($table_networking_ports == "1") {
-                  return " LEFT JOIN glpi_networkports_networkports AS FUSIONINVENTORY_11 ON glpi_networkports.id = FUSIONINVENTORY_11.networkports_id_1 OR glpi_networkports.id = FUSIONINVENTORY_11.networkports_id_2 ".
-                     " LEFT JOIN glpi_networkports AS FUSIONINVENTORY_12 ON FUSIONINVENTORY_12.id = CASE WHEN FUSIONINVENTORY_11.networkports_id_1 = glpi_networkports.id THEN FUSIONINVENTORY_11.networkports_id_2 ELSE FUSIONINVENTORY_11.networkports_id_1 END
-                     LEFT JOIN glpi_networkequipments ON FUSIONINVENTORY_12.items_id=glpi_networkequipments.id";
 
 function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
    
