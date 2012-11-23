@@ -195,13 +195,13 @@ class PluginFusioninventoryCommunication {
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
-         if (isset($this->message->CONTENT->MODULEVERSION)) {
-            $pfAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->message->CONTENT->MODULEVERSION);
-         } else if (isset($this->message->CONTENT->VERSIONCLIENT)) {
-            $version = str_replace("FusionInventory-Agent_", "", (string)$this->message->CONTENT->VERSIONCLIENT);
-            $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
-         }
+      if (isset($this->message->CONTENT->MODULEVERSION)) {
+         $pfAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->message->CONTENT->MODULEVERSION);
+      } else if (isset($this->message->CONTENT->VERSIONCLIENT)) {
+         $version = str_replace("FusionInventory-Agent_", "", (string)$this->message->CONTENT->VERSIONCLIENT);
+         $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
+
 
       if (isset($_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"])) {
          $moduleClass = $_SESSION['glpi_plugin_fusioninventory']['xmltags']["$xmltag"];

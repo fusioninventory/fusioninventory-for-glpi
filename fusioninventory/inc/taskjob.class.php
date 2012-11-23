@@ -247,7 +247,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       if ($this->fields['id'] > 0) {
          echo __('Definition');
 
-         $this->plusButton('definition'.$id));
+         $this->plusButton('definition'.$id);
          echo "<br/><i>Liste des objets sur lesquelles l'action doit porter</i>";
       }
       echo "</th>";
@@ -255,7 +255,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       if ($this->fields['id'] > 0) {
          echo __('Action');
 
-         $this->plusButton('action'.$id));
+         $this->plusButton('action'.$id);
          echo "<br/><i>Liste des objets qui vont effectuer l'action</i>";
       }
       echo "</th>";
