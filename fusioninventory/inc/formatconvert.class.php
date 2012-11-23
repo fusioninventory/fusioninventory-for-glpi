@@ -690,10 +690,21 @@ class PluginFusioninventoryFormatconvert {
                                         'ID'           => 'id',
                                         'LOCATION'     => 'locations_id',
                                         'MODEL'        => 'networkequipmentmodels_id',
-                                        'TYPE'         => 'networkequipmenttypes_id',
+                                        'TYPE'         => 'itemtype',
                                         'MANUFACTURER' => 'manufacturers_id',
                                         'FIRMWARE'     => 'networkequipmentfirmwares_id',
                                         'RAM'          => 'ram'));
+      
+      switch ($array_tmp['itemtype']) {
+         
+         case 'NETWORKING':
+            $array_tmp['itemtype'] = 'NetworkEquipment';
+            break;
+         
+         case 'PRINTER':
+            $array_tmp['itemtype'] = 'Printer';
+            break;
+      }
       
       $a_inventory['networkequipment'] = $array_tmp;
       
