@@ -129,12 +129,13 @@ class PluginFusinvsnmpNetworkEquipmentIP extends CommonDBTM {
    
    
    function setIP($ip) {
-      $this->ifaddrsPresent[$ip] = 0;
+      $this->ifaddrsPresent[$ip] = $ip;
    }
 
    
    
    function saveIPs($networkequipments_id) {
+      $this->ifaddrsPresent = array_unique($this->ifaddrsPresent);
       foreach ($this->ifaddrs as $ip=>$id) {
          if (isset($this->ifaddrsPresent[$ip])) {
             unset($this->ifaddrsPresent[$ip]);
