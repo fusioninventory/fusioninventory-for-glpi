@@ -102,7 +102,8 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
       $PortID = "";
       $query = "SELECT *
                 FROM `glpi_plugin_fusinvsnmp_networkequipmentips`
-                WHERE `ip`='".$IP."';";
+                WHERE `ip`='".$IP."' 
+                   LIMIT 1";
       $result = $DB->query($query);
       if ($DB->numrows($result) == "1") {
          $data = $DB->fetch_assoc($result);
