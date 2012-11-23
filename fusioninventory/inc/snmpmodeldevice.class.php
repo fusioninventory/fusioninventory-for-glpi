@@ -57,7 +57,7 @@ class PluginFusioninventorySnmpmodeldevice extends CommonDBTM {
 
 
    function updateDevicesForModel($models_id, $a_devices) {
-      $a_devicesDBtmp = $this->find("`plugin_fusinvsnmp_models_id`='".$models_id."'");
+      $a_devicesDBtmp = $this->find("`plugin_fusioninventory_snmpmodels_id`='".$models_id."'");
       $a_devicesDB = array();
       foreach ($a_devicesDBtmp as $data) {
          $a_devicesDB[$data['sysdescr']] = $data['id'];
@@ -65,7 +65,7 @@ class PluginFusioninventorySnmpmodeldevice extends CommonDBTM {
       foreach ($a_devices as $sysdescr) {
          if (!isset($a_devicesDB[$sysdescr])) {
             $input = array();
-            $input['plugin_fusinvsnmp_models_id'] = $models_id;
+            $input['plugin_fusioninventory_snmpmodels_id'] = $models_id;
             $input['sysdescr'] = $sysdescr;
             $this->add($input);
          } else {
