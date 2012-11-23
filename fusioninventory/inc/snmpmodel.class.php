@@ -98,7 +98,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       $tab[7]['table'] = "glpi_plugin_fusinvsnmp_modeldevices";
       $tab[7]['field'] = 'sysdescr';
 //      $tab[7]['linkfield'] = 'sysdescr';
-      $tab[7]['name'] = __('Sysdescr', 'monitoring');
+      $tab[7]['name'] = __('Sysdescr', 'fusioninventory');
       $tab[7]['forcegroupby']  = true;
       $tab[7]['splititems']    = true;
 
