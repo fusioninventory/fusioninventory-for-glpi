@@ -246,7 +246,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
    `is_active` int(1) NOT NULL DEFAULT '0',
    `exceptions` text DEFAULT NULL COMMENT 'array(agent_id)',
    `entities_id` int(11) NOT NULL DEFAULT '-1',
-   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    PRIMARY KEY (`id`),
    UNIQUE KEY `unicity` (`plugins_id`, `modulename`),
    KEY `is_active` (`is_active`),
