@@ -95,9 +95,9 @@ class Install extends PHPUnit_Framework_TestCase {
 
          passthru("mysqldump -h ".$DB->dbhost." -u ".$DB->dbuser." -p".$DB->dbpassword." ".$DB->dbdefault." > save.sql");
          
-         $this->assertFileExists("../../../files/_plugins/fusinvsnmp/discovery.xml", 
+         $this->assertFileExists("../../../files/_plugins/fusioninventory/discovery.xml", 
                  'Discovery file (SNMP MODELS) not created');
-         $file = file_get_contents("../../../files/_plugins/fusinvsnmp/discovery.xml");
+         $file = file_get_contents("../../../files/_plugins/fusioninventory/discovery.xml");
          $a_lines = explode("\n", $file);
          $this->assertGreaterThan(20, count($a_lines), 'Discovery.xml file not right generated (nb lines)');
 
