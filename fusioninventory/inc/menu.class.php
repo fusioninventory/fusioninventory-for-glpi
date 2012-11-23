@@ -70,7 +70,7 @@ class PluginFusioninventoryMenu {
       if (strlen($config->getValue(null, 'agent_base_url', ''))<10) {
          echo "<div class='msgboxmonit msgboxmonit-red'>";
          print "<center><a href=\"config.form.php\">";
-         print __'The server needs to kown the URL the agents use to access the server. Please '.
+         print __('The server needs to kown the URL the agents use to access the server. Please '.
                  'configure it in the General Configuration page.', 'fusioninventory');
          print "</a></center>";
          echo "</div>";
