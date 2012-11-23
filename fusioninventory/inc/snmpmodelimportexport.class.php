@@ -538,9 +538,9 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 </SNMPDISCOVERY>";
       $xml = new SimpleXMLElement($xmlstr);
 
-      $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_modeldevices`
-                LEFT JOIN `glpi_plugin_fusinvsnmp_models`
-                   ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodeldevices`
+                LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
+                   ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
                 ORDER BY `sysdescr`";
 
       $result=$DB->query($query);
@@ -565,25 +565,25 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
             }
             $device->addChild('MODELSNMP', $data['discovery_key']);
 
-            $query_serial = "SELECT * FROM `glpi_plugin_fusinvsnmp_modelmibs`
+            $query_serial = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                     ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=
+                     ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_mappings_id`=
                         `glpi_plugin_fusioninventory_mappings`.`id`
-               WHERE `plugin_fusinvsnmp_models_id`='".$data['plugin_fusinvsnmp_models_id']."'
+               WHERE `plugin_fusioninventory_snmpmodels_id`='".$data['plugin_fusioninventory_snmpmodels_id']."'
                   AND `name`='serial'
                LIMIT 1";
             $result_serial=$DB->query($query_serial);
             if ($DB->numrows($result_serial)) {
                $line = mysql_fetch_assoc($result_serial);
-               $device->addChild('SERIAL', Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',
+               $device->addChild('SERIAL', Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',
                                             $line['plugin_fusinvsnmp_miboids_id']));
             }
 
-            $query_serial = "SELECT * FROM `glpi_plugin_fusinvsnmp_modelmibs`
+            $query_serial = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                     ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_mappings_id`=
+                     ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_mappings_id`=
                         `glpi_plugin_fusioninventory_mappings`.`id`
-               WHERE `plugin_fusinvsnmp_models_id`='".$data['plugin_fusinvsnmp_models_id']."'
+               WHERE `plugin_fusioninventory_snmpmodels_id`='".$data['plugin_fusioninventory_snmpmodels_id']."'
                   AND ((`name`='macaddr' AND `itemtype`='NetworkEquipment')
                         OR ( `name`='ifPhysAddress' AND `itemtype`='Printer')
                         OR ( `name`='ifPhysAddress' AND `itemtype`='Computer'))
@@ -592,19 +592,18 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
             if ($DB->numrows($result_serial)) {
                $line = mysql_fetch_assoc($result_serial);
                if ($line['name'] == "macaddr") {
-                  $device->addChild('MAC', Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',
-                                                $line['plugin_fusinvsnmp_miboids_id']));
+                  $device->addChild('MAC', Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',
+                                                $line['plugin_fusioninventory_snmpmodelmiboids_id']));
                } else {
-                  $device->addChild('MACDYN', Dropdown::getDropdownName('glpi_plugin_fusinvsnmp_miboids',
-                                                $line['plugin_fusinvsnmp_miboids_id']));
+                  $device->addChild('MACDYN', Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',
+                                                $line['plugin_fusioninventory_snmpmodelmiboids_id']));
                }
             }
       }
-      $pfOCSCommunication = new PluginFusioninventoryOCSCommunication();
-      $xmlprint = $pfOCSCommunication->formatXML($xml);
+      $xmlprint = PluginFusioninventoryToolbox::formatXML($xml);
       $xmlprint = str_replace("<SYSDESCR>", "<SYSDESCR><![CDATA[", $xmlprint);
       $xmlprint = str_replace("</SYSDESCR>", "]]></SYSDESCR>", $xmlprint);
-      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/discovery.xml", $xmlprint);
+      file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml", $xmlprint);
    }
 }
 

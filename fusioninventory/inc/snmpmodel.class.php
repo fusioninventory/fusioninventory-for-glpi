@@ -441,7 +441,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       foreach ($a_printers as $a_printer) {
          $pfModel->getrightmodel($a_printer['printers_id'], "Printer");
       }
-      PluginFusinvsnmpImportExport::exportDictionnaryFile();
+      PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
    }
 }
 
