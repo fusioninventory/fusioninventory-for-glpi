@@ -232,7 +232,8 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
             $a_devices[] = (string)$child;
          }
       }
-      $pfModeldevice->updateDevicesForModel($pfModel->fields['id'], $a_devices);
+      $pfSnmpmodeldevice = new PluginFusioninventorySnmpmodeldevice();
+      $pfSnmpmodeldevice->updateDevicesForModel($pfModel->fields['id'], $a_devices);
 
       $a_oids = $pfModelMib->find("`plugin_fusioninventory_snmpmodels_id`='".$models_data['id']."'");
       foreach ($a_oids as $data) {
