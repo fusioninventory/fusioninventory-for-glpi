@@ -574,7 +574,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
                LIMIT 1";
             $result_serial=$DB->query($query_serial);
             if ($DB->numrows($result_serial) > 0) {
-               $line = fetch_assoc($result_serial);
+               $line = $DB->fetch_assoc($result_serial);
                $device->addChild('SERIAL', Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',
                                             $line['plugin_fusinvsnmp_miboids_id']));
             }
@@ -590,7 +590,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
                LIMIT 1";
             $result_serial=$DB->query($query_serial);
             if ($DB->numrows($result_serial) > 0) {
-               $line = fetch_assoc($result_serial);
+               $line = $DB->fetch_assoc($result_serial);
                if ($line['name'] == "macaddr") {
                   $device->addChild('MAC', Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',
                                                 $line['plugin_fusioninventory_snmpmodelmiboids_id']));
