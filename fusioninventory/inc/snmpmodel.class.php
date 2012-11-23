@@ -430,14 +430,14 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "</table>";
 
       // Reload model for networkequipment have sysdescr
-      $networkequipmentext = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
-      $a_networkequipments = $networkequipmentext->find("`sysdescr`!=''");
+      $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+      $a_networkequipments = $pfNetworkEquipment->find("`sysdescr`!=''");
       foreach ($a_networkequipments as $a_networkequipment) {
          $pfModel->getrightmodel($a_networkequipment['networkequipments_id'], "NetworkEquipment");
       }
       // Reload model for printers have sysdescr
-      $printerext = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
-      $a_printers = $printerext->find("`sysdescr`!=''");
+      $pfPrinter = new PluginFusioninventoryPrinter();;
+      $a_printers = $pfPrinter->find("`sysdescr`!=''");
       foreach ($a_printers as $a_printer) {
          $pfModel->getrightmodel($a_printer['printers_id'], "Printer");
       }
