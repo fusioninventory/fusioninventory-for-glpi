@@ -76,6 +76,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/printer.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/configlogfield.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/networkporttype.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/toolbox.class.php");
 
    $migration->displayMessage("Installation of plugin FusionInventory");
 
