@@ -469,8 +469,8 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
     */
    function importMass() {
       ini_set("max_execution_time", "0");
-      foreach (glob(GLPI_ROOT.'/plugins/fusinvsnmp/models/*.xml') as $file) $this->import($file, 0, 1);
-      PluginFusinvsnmpImportExport::exportDictionnaryFile();
+      foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) $this->import($file, 0, 1);
+      PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
    }
 
 
@@ -530,7 +530,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       
       if (!strstr($_SERVER['PHP_SELF'], "front/plugin.php")
               AND $_SERVER['PHP_SELF'] != "cli_install.php") {
-         PluginFusioninventoryProfile::checkRight("fusinvsnmp", "model", "r");
+         PluginFusioninventoryProfile::checkRight("fusioninventory", "snmpmodel", "r");
       }
 
       $xmlstr = "<?xml version='1.0' encoding='UTF-8'?>
@@ -576,7 +576,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
             if ($DB->numrows($result_serial) > 0) {
                $line = $DB->fetch_assoc($result_serial);
                $device->addChild('SERIAL', Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',
-                                            $line['plugin_fusinvsnmp_miboids_id']));
+                                            $line['plugin_fusioninventory_snmpmodelmiboids_id']));
             }
 
             $query_serial = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
