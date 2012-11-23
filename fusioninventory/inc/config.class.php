@@ -297,7 +297,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    *
    **/
    function showForm($options=array()) {
-
+      global $CFG_GLPI;
+      
       $plugin_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
       $this->showFormHeader($options);
@@ -336,17 +337,17 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showYesNo("extradebug", $this->isActive($plugin_id, 'extradebug', ''));
       echo "</td>";
       echo "<td>";
-      echo $LANG['plugin_fusioninventory']['agents'][41].'&nbsp;';
+      echo __('Service URL', 'fuioninventory').'&nbsp;';
       Html::showToolTip('ex: http://192.168.20.1/glpi');
       echo "&nbsp;:";
-      if (!file_exists($this->getValue(null, 'agent_base_url').'/plugins/fusioninventory/index.php')
-            AND !file_get_contents($this->getValue(null, 'agent_base_url').'/plugins/fusioninventory/index.php')) {
+      if (!file_exists($this->getValue(null, 'agent_base_url', '').'/plugins/fusioninventory/index.php')
+            AND !file_get_contents($this->getValue(null, 'agent_base_url', '').'/plugins/fusioninventory/index.php')) {
            echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\">";
       }
       
       echo "</td>";
       echo "<td>";
-      echo "<input type='text' name='agent_base_url' size='50' value='".$this->getValue($plugin_id, 'agent_base_url')."'/>";
+      echo "<input type='text' name='agent_base_url' size='50' value='".$this->getValue($plugin_id, 'agent_base_url', '')."'/>";
       echo "</td>";
       echo "</tr>";
 
@@ -825,7 +826,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    * @return bool true if field is active or false
    **/
    function is_active($p_plugins_id, $p_type) {
-      if (!($this->getValue($p_plugins_id, $p_type))) {
+      if (!($this->getValue($p_plugins_id, $p_type, ''))) {
          return false;
       } else {
          return true;
