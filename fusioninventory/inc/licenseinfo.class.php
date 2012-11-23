@@ -46,18 +46,18 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
    
-   static function getTypeName() {
+   static function getTypeName($nb=0) {
       global $LANG;
 
       return $LANG['plugin_fusinvinventory']['licenseinfo'][0];
    }
 
-   function canCreate() {
+   static function canCreate() {
       return Session::haveRight('computer', 'w');
    }
 
 
-   function canView() {
+   static function canView() {
       return Session::haveRight('computer', 'r');
    }
 
