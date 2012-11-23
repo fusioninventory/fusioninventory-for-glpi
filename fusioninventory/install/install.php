@@ -65,6 +65,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
    require_once GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerlib.class.php";
    require_once GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerlibhook.class.php";
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodel.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodeldevice.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmib.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmiblabel.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmibobject.class.php");
