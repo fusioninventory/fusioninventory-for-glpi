@@ -54,8 +54,7 @@ function plugin_init_fusioninventory() {
 
    $Plugin = new Plugin();
    $moduleId = 0;
-   if (class_exists('PluginFusioninventoryModule')
-           && $Plugin->isActivated('fusioninventory')) { // check if plugin is active
+   if ($Plugin->isActivated('fusioninventory')) { // check if plugin is active
       // ##### 1. (Not required here) #####
 
       // ##### 2. register class #####
@@ -138,6 +137,9 @@ function plugin_init_fusioninventory() {
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETWORKINVENTORY'] 
                                              = 'PluginFusioninventoryCommunicationNetworkInventory';
 
+      $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
+         PluginFusioninventoryProfile::changeprofile($moduleId);
+
 
       $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
 
@@ -182,18 +184,15 @@ function plugin_init_fusioninventory() {
          
          $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
 
-         $Plugin = new Plugin();
-         if ($Plugin->isActivated('fusioninventory')) {
-            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents", "r")
-               OR PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","r")
-               OR PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration","r")
-               OR PluginFusioninventoryProfile::haveRight("fusioninventory", "wol","r")
-               OR PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","r")
-               OR PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")
-               ) {
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agents", "r")
+            OR PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","r")
+            OR PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration","r")
+            OR PluginFusioninventoryProfile::haveRight("fusioninventory", "wol","r")
+            OR PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","r")
+            OR PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")
+            ) {
 
-               $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
-            }
+            $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
          }
          
          
