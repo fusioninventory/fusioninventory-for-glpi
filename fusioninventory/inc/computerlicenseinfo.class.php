@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
+class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
    
    static function getTypeName($nb=0) {
       global $LANG;
@@ -205,7 +205,7 @@ class PluginFusinvinventoryLicenseInfo extends CommonDBTM {
    
    
    static function cleanComputer($computers_id) {
-      $pfLicenseinfo = new PluginFusinvinventoryLicenseInfo();
+      $pfLicenseinfo = new PluginFusioninventoryComputerLicenseInfo();
       $a_licenses = $pfLicenseinfo->find("`computers_id`='".$computers_id."'");
       foreach ($a_licenses as $data) {
          $pfLicenseinfo->delete($data);

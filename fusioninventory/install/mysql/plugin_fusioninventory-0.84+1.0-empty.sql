@@ -780,9 +780,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_statediscoveries` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_licenseinfos`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computerlicenseinfos`;
 
-CREATE TABLE `glpi_plugin_fusinvinventory_licenseinfos` (
+CREATE TABLE `glpi_plugin_fusioninventory_computerlicenseinfos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
   `softwarelicenses_id` int(11) DEFAULT NULL,

@@ -68,7 +68,7 @@ class PluginFusinvinventoryImport_LicenseInfo extends CommonDBTM {
 #         return;
 #      }
 
-      $pfLicenseInfo = new PluginFusinvinventoryLicenseInfo();
+      $pfLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
 
       $licenseInfo=array();
       $id_licenseInfo = 0;
@@ -125,7 +125,7 @@ class PluginFusinvinventoryImport_LicenseInfo extends CommonDBTM {
    *
    **/
    function deleteItem($items_id, $idmachine) {
-      $pfLicenseInfo = new PluginFusinvinventoryLicenseInfo();
+      $pfLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
       $pfLicenseInfo->getFromDB($items_id);
       if ($pfLicenseInfo->fields['computers_id'] == $idmachine) {
          $pfLicenseInfo->delete(array("id" => $items_id), 0, $_SESSION["plugin_fusinvinventory_history_add"]);

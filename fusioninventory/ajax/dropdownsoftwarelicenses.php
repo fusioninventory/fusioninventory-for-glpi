@@ -50,7 +50,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 Session::checkCentralAccess();
-$pflicenseinfo = new PluginFusinvinventoryLicenseInfo;
+$pflicenseinfo = new PluginFusioninventoryComputerLicenseInfo();
 $pflicenseinfo->dropdownSoftwareLicenses($_POST, isset($_GET['key'])?$_GET['key']:"");
 
 

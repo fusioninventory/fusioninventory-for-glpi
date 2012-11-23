@@ -47,7 +47,7 @@ include (GLPI_ROOT."/inc/includes.php");
 Session::checkRight("config","w");
 
 if (isset($_POST['associate'])) {
-   $pflicenseinfo = new PluginFusinvinventoryLicenseInfo;
+   $pflicenseinfo = new PluginFusioninventoryComputerLicenseInfo();
    $pflicenseinfo->associate($_POST);
    Html::back();
 }
