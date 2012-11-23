@@ -4433,18 +4433,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          if (isset($_SERVER['HTTP_REFERER'])) {
             $url = $_SERVER['HTTP_REFERER'];
          }
-         $input['url'] = PluginFusioninventoryCommunicationRest::getDefaultRestURL($_SERVER['HTTP_REFERER'],
-                                                                                    'fusioninventory',
-                                                                                    'esx');
          $agentmodule->add($input);
-      } else {
-         $data = $DB->fetch_assoc($result);
-         $input = array();
-         $input['id'] = $data['id'];
-         $input['url'] = PluginFusioninventoryCommunicationRest::getDefaultRestURL($_SERVER['HTTP_REFERER'],
-                                                                                    'fusioninventory',
-                                                                                    'esx');
-         $agentmodule->update($input);
       }
 
 

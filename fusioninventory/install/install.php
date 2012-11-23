@@ -265,9 +265,6 @@ function pluginFusioninventoryInstall($version, $migration='') {
       if (isset($_SERVER['HTTP_REFERER'])) {
          $url = $_SERVER['HTTP_REFERER'];
       }
-      $input['url'] = PluginFusioninventoryCommunicationRest::getDefaultRestURL($_SERVER['HTTP_REFERER'],
-                                                                                 'fusioninventory',
-                                                                                 'esx');
       $PluginFusioninventoryAgentmodule->add($input);
 
       $input = array();
