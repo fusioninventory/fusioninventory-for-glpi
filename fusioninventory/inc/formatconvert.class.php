@@ -687,13 +687,18 @@ class PluginFusioninventoryFormatconvert {
                                      array( 
                                         'NAME'         => 'name',
                                         'SERIAL'       => 'serial',
+                                        'OTHERSERIAL'  => 'otherserial',
                                         'ID'           => 'id',
                                         'LOCATION'     => 'locations_id',
                                         'MODEL'        => 'networkequipmentmodels_id',
                                         'TYPE'         => 'itemtype',
+                                        'UPTIM'        => 'uptime',
                                         'MANUFACTURER' => 'manufacturers_id',
                                         'FIRMWARE'     => 'networkequipmentfirmwares_id',
-                                        'RAM'          => 'ram'));
+                                        'CPU'          => 'cpu',
+                                        'RAM'          => 'ram',
+                                        'MEMORY'       => 'memory',
+                                        'MAC'          => 'mac'));
       
       switch ($array_tmp['itemtype']) {
          
@@ -732,7 +737,6 @@ class PluginFusioninventoryFormatconvert {
                                            'IFNUMBER' => 'logical_number',
                                            'MAC'      => 'mac',
                                            'IFPEED'   => 'speed',
-                                           
                                            'IFDESCR'           => 'ifdescr',
                                            'IFINERRORS'        => 'ifinerrors',
                                            'IFINOCTETS'        => 'ifinoctets',
