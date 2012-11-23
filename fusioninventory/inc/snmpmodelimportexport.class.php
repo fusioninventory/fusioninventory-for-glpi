@@ -360,7 +360,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       $input['itemtype']      = $type;
       $input['discovery_key'] = (string)$xml->key;
       $input['comment']       = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep((string)$xml->comments));
-      $plugin_fusinvsnmp_models_id = $pfModel->add($input);
+      $plugin_fusioninventory_snmpmodels_id = $pfModel->add($input);
       
       $a_devices = array();
       if (isset($xml->devices)
@@ -370,7 +370,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
          }
       }
       $pfSnmpmodeldevice = new PluginFusioninventorySnmpmodeldevice();
-      $pfSnmpmodeldevice->updateDevicesForModel($plugin_fusinvsnmp_models_id, $a_devices);
+      $pfSnmpmodeldevice->updateDevicesForModel($plugin_fusioninventory_snmpmodels_id, $a_devices);
 
 
       foreach($xml->oidlist->oidobject as $child) {
