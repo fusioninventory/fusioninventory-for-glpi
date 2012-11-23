@@ -68,6 +68,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $PluginFusioninventorySetup = new PluginFusioninventorySetup();
       $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
       $input['users_id']               = $users_id;
+      $input['agent_base_url']         = '';
 
       foreach ($input as $key => $value) {
          $this->addValues($plugin_id, array($key => $value), '');

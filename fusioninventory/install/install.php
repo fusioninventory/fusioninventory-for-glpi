@@ -314,21 +314,6 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $PluginFusioninventoryLock->importFromOcs();
 
 
-   // glpi_plugin_fusioninventory_configs
-   $pfSetup = new PluginFusioninventorySetup();
-   $users_id = $pfSetup->createFusionInventoryUser();
-   $query = "INSERT INTO `glpi_plugin_fusioninventory_configs`
-                         (`type`, `value`, `plugins_id`)
-             VALUES ('version', '".$version."', '".$plugins_id."'),
-                    ('ssl_only', '0', '".$plugins_id."'),
-                    ('delete_task', '20', '".$plugins_id."'),
-                    ('inventory_frequence', '24', '".$plugins_id."'),
-                    ('agent_port', '62354', '".$plugins_id."'),
-                    ('extradebug', '0', '".$plugins_id."'),
-                    ('agent_base_url', '', '".$plugins_id."'),
-                    ('users_id', '".$users_id."', '".$plugins_id."')";
-   $DB->query($query);
-
    PluginFusioninventoryProfile::changeProfile($plugins_id);
    $pfAgentmodule = new PluginFusioninventoryAgentmodule();
    $input = array();
