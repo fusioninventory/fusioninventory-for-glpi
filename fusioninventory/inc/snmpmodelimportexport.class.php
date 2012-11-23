@@ -363,10 +363,14 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       $plugin_fusinvsnmp_models_id = $pfModel->add($input);
       
       $a_devices = array();
-      foreach ($xml->devices->sysdescr as $child) {
-         $a_devices[] = (string)$child;
+      if (isset($xml->devices)
+              && isset($xml->devices->sysdescr)) {
+         foreach ($xml->devices->sysdescr as $child) {
+            $a_devices[] = (string)$child;
+         }
       }
-      $pfModeldevice->updateDevicesForModel($plugin_fusinvsnmp_models_id, $a_devices);
+      $pfSnmpmodeldevice = new PluginFusioninventorySnmpmodeldevice();
+      $pfSnmpmodeldevice->updateDevicesForModel($plugin_fusinvsnmp_models_id, $a_devices);
 
 
       foreach($xml->oidlist->oidobject as $child) {

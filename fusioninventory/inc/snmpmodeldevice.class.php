@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvsnmpModeldevice extends CommonDBTM {
+class PluginFusioninventorySnmpmodeldevice extends CommonDBTM {
 
    function canCreate() {
       return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "w");

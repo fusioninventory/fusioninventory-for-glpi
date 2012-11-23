@@ -190,8 +190,8 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "</div>";
       
       echo "<br/>";
-      $pfModeldevice = new PluginFusinvsnmpModeldevice();
-      $pfModeldevice->showDevices($id);
+      $pfSnmpmodeldevice = new PluginFusioninventorySnmpmodeldevice();
+      $pfSnmpmodeldevice->showDevices($id);
    }
 
 
