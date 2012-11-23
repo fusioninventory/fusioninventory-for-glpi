@@ -496,7 +496,7 @@ class PluginFusioninventorySetup {
 
       $ranking++;
       // Create rule for : Printer import
-      $rulecollection = new PluginFusioninventoryRuleImportEquipmentCollection();
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
       $input = array();
       $input['is_active']=1;
       $input['name']='Printer import';
