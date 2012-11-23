@@ -253,21 +253,18 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
       $input = array();
       $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "INVENTORY";
       $input['is_active']  = 1;
       $input['exceptions'] = exportArrayToDB(array());
-      $input['url']        = '';
       $PluginFusioninventoryAgentmodule->add($input);
 
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "ESX";
       $input['is_active']  = 0;
-      $url= '';
-      if (isset($_SERVER['HTTP_REFERER'])) {
-         $url = $_SERVER['HTTP_REFERER'];
-      }
+      $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
       $input = array();
