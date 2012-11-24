@@ -711,7 +711,8 @@ class PluginFusioninventoryFormatconvert {
             break;
       }
       
-      $a_inventory['networkequipment'] = $array_tmp;
+      $a_inventory['NetworkEquipment'] = $array_tmp;
+      $a_inventory['itemtype'] = 'NetworkEquipment';
       
       $array_tmp = $thisc->addValues($array['INFO'], 
                                      array( 
@@ -720,7 +721,7 @@ class PluginFusioninventoryFormatconvert {
                                         'CPU'     => 'cpu',
                                         'MEMORY'  => 'memory'));
       
-      $a_inventory['fusioninventorynetworkequipment'] = $array_tmp;
+      $a_inventory['PluginFusioninventoryNetworkEquipment'] = $array_tmp;
       
       // * Internal ports
       if (isset($array['INFO']['IPS'])) {

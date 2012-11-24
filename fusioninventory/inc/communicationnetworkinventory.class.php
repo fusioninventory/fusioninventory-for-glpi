@@ -179,9 +179,9 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                      }
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.$dchild['ERROR']['MESSAGE'].' [['.$itemtype.'::'.$dchild['ERROR']['ID'].']]';
                      $this->addtaskjoblog();
-                  } else if ($a_inventory['sysdescr'] == ''
-                              && $a_inventory['name'] == ''
-                              && $a_inventory['serial'] == '') {
+                  } else if ($a_inventory['PluginFusioninventory'.$a_inventory['itemtype']]['sysdescr'] == ''
+                              && $a_inventory[$a_inventory['itemtype']]['name'] == ''
+                              && $a_inventory[$a_inventory['itemtype']]['serial'] == '') {
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] No informations [['.$itemtype.'::'.$dchild['ID'].']]';
                      $this->addtaskjoblog();
                   } else {
@@ -359,7 +359,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
 
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $this->ptd->getValue('id'));
 
-      foreach ($a_inventory as $childname=>$child) {
+      foreach ($a_inventory[$a_inventory['itemtype']] as $childname=>$child) {
          switch ($childname) {
 
             case 'id': // already managed
@@ -1322,8 +1322,8 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
       $errors = '';
 
       // Manual blacklist
-       if ($a_inventory['SERIAL'] == 'null') {
-          $a_inventory['SERIAL'] = '';
+       if ($a_inventory[$a_inventory['itemtype']]['serial'] == 'null') {
+          $a_inventory[$a_inventory['itemtype']]['serial'] = '';
        }
        // End manual blacklist
 
@@ -1332,12 +1332,12 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
 
       // Global criterias
 
-         if (!empty($a_inventory['serial'])) {
-            $input['serial'] = $a_inventory['serial'];
+         if (!empty($a_inventory[$a_inventory['itemtype']]['serial'])) {
+            $input['serial'] = $a_inventory[$a_inventory['itemtype']]['serial'];
          }
          if ($a_inventory['itemtype'] == 'NetworkEquipment') {
-            if (!empty($a_inventory['mac'])) {
-               $input['mac'][] = $a_inventory['mac'];
+            if (!empty($a_inventory[$a_inventory['itemtype']]['mac'])) {
+               $input['mac'][] = $a_inventory[$a_inventory['itemtype']]['mac'];
             }
          } else if ($a_inventory['itemtype'] == 'Printer') {
             $input['itemtype'] = "Printer";
@@ -1493,14 +1493,14 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
          $class->getFromDB($items_id);
          $input = array();
          $input['id'] = $class->fields['id'];
-         if (!empty($a_inventory['name'])) {
-            $input['name'] = $a_inventory['name'];
+         if (!empty($a_inventory[$a_inventory['itemtype']]['name'])) {
+            $input['name'] = $a_inventory[$a_inventory['itemtype']]['name'];
          }
-         if (!empty($a_inventory['serial'])) {
-            $input['serial'] = $a_inventory['serial'];
+         if (!empty($a_inventory[$a_inventory['itemtype']]['serial'])) {
+            $input['serial'] = $a_inventory[$a_inventory['itemtype']]['serial'];
          }
-         if (!empty($a_inventory['otherserial'])) {
-            $input['otherserial'] = $a_inventory['otherserial'];
+         if (!empty($a_inventory[$a_inventory['itemtype']]['otherserial'])) {
+            $input['otherserial'] = $a_inventory[$a_inventory['itemtype']]['otherserial'];
          }
          if (!empty($a_inventory['itemtype'])) {
             $input['itemtype'] = $a_inventory['itemtype'];
