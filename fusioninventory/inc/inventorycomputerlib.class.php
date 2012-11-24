@@ -96,14 +96,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $a_ret = $this->checkLock($a_computerinventory['computer'], $db_computer, $a_lockable);
          $a_computerinventory['computer'] = $a_ret[0];
          $db_computer = $a_ret[1];
-         $input = $this->diffArray($a_computerinventory['computer'], $db_computer);
+         $input = PluginFusioninventoryToolbox::diffArray($a_computerinventory['computer'], $db_computer);
          $input['id'] = $items_id;         
          if (isset($input['comment'])) {
             unset($input['comment']);
          }
          $computer->update($input);
          
-         $input = $this->diffArray($a_computerinventory['computer'], $db_computer);
+         $input = PluginFusioninventoryToolbox::diffArray($a_computerinventory['computer'], $db_computer);
          if (isset($input['comment'])) {
             $inputcomment = array();
             $inputcomment['comment'] = $input['comment'];
@@ -133,7 +133,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $a_ret = $this->checkLock($a_computerinventory['fusioninventorycomputer'], $db_computer);
             $a_computerinventory['fusioninventorycomputer'] = $a_ret[0];
             $db_computer = $a_ret[1];
-            $input = $this->diffArray($a_computerinventory['fusioninventorycomputer'], $db_computer);
+            $input = PluginFusioninventoryToolbox::diffArray($a_computerinventory['fusioninventorycomputer'], $db_computer);
             $input['id'] = $idtmp;
             $pfInventoryComputerComputer->update($input);
          }
@@ -656,23 +656,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       }
       return array($datainventory, $db_computer);
-   }
-   
-   
-   
-   function diffArray($array1, $array2) {
-
-      $a_return = array();
-      foreach ($array1 as $key=>$value) {
-         $key2 = false;
-         $key2 = array_search($value, $array2, true);
-         if ($key2) {
-            unset($array2[$key2]);
-         } else {
-            $a_return[$key] = $value;
-         }
-      }
-      return $a_return;
    }
    
    

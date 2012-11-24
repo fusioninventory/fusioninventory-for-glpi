@@ -139,10 +139,6 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
          PluginFusioninventoryProfile::changeprofile($moduleId);
-
-
-      $PLUGIN_HOOKS['add_javascript']['fusioninventory']="script.js";
-
       
       if (isset($_SESSION["glpiID"])) {
 

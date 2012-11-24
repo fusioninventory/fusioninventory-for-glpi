@@ -232,6 +232,7 @@ Toolbox::logInFile("K", '1');
               'Function PluginFusioninventoryCommunicationNetworkInventory->importDevice().');
 
       $a_inventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_inventory);
+Toolbox::logInFile("K", print_r($a_inventory, true));
       
       // Write XML file
       if (count($a_inventory) > 0) {
@@ -271,7 +272,7 @@ Toolbox::logInFile("K", '1');
 // TODO Continue rewrite network 0.84
                   
                   
-                  case 'PORTS':
+                  case 'networkport':
                      $errors.=$this->importPorts($child);
                      break;
 
@@ -304,7 +305,7 @@ Toolbox::logInFile("K", '1');
                               .$childname."\n";
                }
             }
-            $this->ptd->updateDB();
+//            $this->ptd->updateDB();
          }
 //      }
       if (!empty($errors)) {
@@ -347,114 +348,33 @@ Toolbox::logInFile("K", '1');
     * @return errors string to be alimented if import ko / '' if ok
     **/
    function importInfoNetworking($a_inventory) {
-
-      $errors='';
-      $this->ptd = new PluginFusioninventoryNetworkEquipment();
-      $this->ptd->load($this->deviceId);
-
-      $_SESSION["plugin_fusinvinventory_entity"] = $this->ptd->getValue('entities_id');
-      if (!isset($_SESSION['glpiactiveentities_string'])) {
-         $_SESSION['glpiactiveentities_string'] = "'".$this->ptd->getValue('entities_id')."'";
+      $networkEquipment = new NetworkEquipment();
+      $networkEquipment->getFromDB($this->deviceId);
+      $db_networkequipment = array();
+      $a_field = array('name', 'networkequipmentfirmwares_id', 'mac', 'memory', 
+                       'networkequipmentmodels_id', 'locations_id', 'ram', 'serial',
+                       'manufacturers_id');
+      foreach ($a_field as $field) {
+         $db_networkequipment[$field] = $networkEquipment->fields[$field];
       }
+//      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $this->ptd->getValue('id'));
 
-      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $this->ptd->getValue('id'));
+//      $a_ret = $this->checkLock($a_computerinventory['computer'], $db_computer, $a_lockable);
+//      $a_computerinventory['computer'] = $a_ret[0];
+//      $db_computer = $a_ret[1];
+      
+      $input = PluginFusioninventoryToolbox::diffArray($a_inventory['NetworkEquipment'], $db_networkequipment);
+      $input['id'] = $this->deviceId;         
+      $networkEquipment->update($input);
 
-      foreach ($a_inventory[$a_inventory['itemtype']] as $childname=>$child) {
-         switch ($childname) {
 
-            case 'id': // already managed
-               break;
-
-            case 'itemtype': // already managed
-               break;
-
-            case 'cpu':
-               $this->ptd->setValue('cpu', $child);
-               break;
-
-            case 'networkequipmentfirmwares_id':
-               if (!in_array('networkequipmentfirmwares_id', $a_lockable)) {
-                  $firmware = $child;
-                  if (strstr($firmware, "CW_VERSION")
-                          OR strstr($firmware, "CW_INTERIM_VERSION")) {
-                     $explode = explode("$", $firmware);
-                     if (isset($explode[1])) {
-                        $firmware = $explode[1];
-                     }
-                  }
-                  $NetworkEquipmentFirmware = new NetworkEquipmentFirmware();
-                  $this->ptd->setValue('networkequipmentfirmwares_id', $NetworkEquipmentFirmware->import(array('name' => $firmware)));
-               }
-               break;
-
-            case 'mac':
-               if (!in_array('mac', $a_lockable)) {
-                  $this->ptd->setValue('mac', $child);
-               }
-               break;
-
-            case 'memory':
-               if (!in_array('memory', $a_lockable)) {
-                  $this->ptd->setValue('memory', $child);
-               }
-               break;
-
-            case 'networkequipmentmodels_id':
-               $NetworkEquipmentModel = new NetworkEquipmentModel();
-               if (!in_array('networkequipmentmodels_id', $a_lockable)) {
-                  $networkequipmentmodels_id = $NetworkEquipmentModel->import(array('name'=>$child));
-                  $this->ptd->setValue('networkequipmentmodels_id', $networkequipmentmodels_id);
-               }
-               break;
-
-            case 'locations_id':
-               if (!in_array('locations_id', $a_lockable)) {
-                  $Location = new Location();
-                  $this->ptd->setValue('locations_id', $Location->import(array('name' => $child,
-                                                                    'entities_id' => $this->ptd->getValue('entities_id'))));
-               }
-               break;
-
-            case 'name':
-               if (!in_array('name', $a_lockable)) {
-                  $this->ptd->setValue('name', $child);
-               }
-               break;
-
-            case 'ram':
-               $this->ptd->setValue('ram', $child);
-               break;
-
-            case 'serial':
-               if (!in_array('serial', $a_lockable)) {
-                  $this->ptd->setValue('serial', $child);
-               }
-               break;
-
-            case 'uptime':
-               $this->ptd->setValue('uptime', $child);
-               break;
-
-            case 'manufacturers_id':
-               if (!in_array('manufacturers_id', $a_lockable)) {
-                  $this->ptd->setValue('manufacturers_id', 
-                                        Dropdown::importExternal('Manufacturer',
-                                                                 (string)$p_info->MANUFACTURER,
-                                                                 $_SESSION["plugin_fusinvinventory_entity"]));
-               }
-               break;
-
-            case 'internalport':
-               // TODO glpi0.84, to be continued.....
-               $errors.=$this->internalPorts($child, $this->ptd->getValue('id'));
-               break;
-
-            default:
-               $errors.=__('Unattended element in').' INFO : '.$childname."\n";
-
-         }
-      }
-      return $errors;
+//            case 'cpu':
+//            case 'uptime':
+//            
+     // TODO glpi0.84, to be continued.....
+     $this->internalPorts($a_inventory['internalport'], $this->deviceId);
+     
+     return '';
    }
 
 
@@ -587,8 +507,9 @@ Toolbox::logInFile("K", '1');
       $networkports_id = 0;
       if (isset($a_networkPortAggregates['id'])) {
          $networkports_id = $a_networkPortAggregates['id'];
-         foreach ($iPAddress->find("`itemtype`='networkName'
-                                    AND `items_id`='".$a_networkPortAggregates['id']."'") as $data) {
+         $a_ips_fromDB = $iPAddress->find("`itemtype`='networkName'
+                                    AND `items_id`='".$a_networkPortAggregates['id']."'");
+         foreach ($a_ips_fromDB as $data) {
             $a_ips_DB[$data['id']] = $data['name'];
          }         
       } else {
@@ -596,6 +517,7 @@ Toolbox::logInFile("K", '1');
          $input['itemtype'] = 'NetworkEquipment';
          $input['items_id'] = $networkequipments_id;
          $input['instantiation_type'] = 'NetworkPortAggregate';
+         $input['name'] = 'general';
          $networkports_id = $networkPort->add($input);
       }
       
@@ -608,7 +530,6 @@ Toolbox::logInFile("K", '1');
             }
          }
       }
-
       if (count($a_ips) == 0
          AND count($a_ips_DB) == 0) {
          // Nothing to do
@@ -623,10 +544,11 @@ Toolbox::logInFile("K", '1');
             foreach($a_ips as $ip) {
                if ($ip != '127.0.0.1') {
                   $input = array();
+                  $input['entities_id'] = 0;
                   $input['itemtype'] = 'NetworkName';
                   $input['items_id'] = $networkports_id;
                   $input['name'] = $ip;
-                  $iPAddress->add($input);
+                  $id = $iPAddress->add($input);
                   
                   // Search in unknown device if device with IP (CDP) is yet added, in this case,
                   // we get id of this unknown device
@@ -1371,6 +1293,7 @@ Toolbox::logInFile("K", '1');
       $data = array();
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    "Input data : ".print_r($input, true));
+Toolbox::logInFile("K", 'crit'.print_r($input, true));
       $data = $rule->processAllRules($input, array());
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    $data);

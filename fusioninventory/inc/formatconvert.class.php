@@ -629,45 +629,61 @@ class PluginFusioninventoryFormatconvert {
          if (is_array($value)) {
             $array[$key] = PluginFusioninventoryFormatconvert::computerReplaceids($value);
          } else {
-            $itemtype = '';
-            if ($key == 'manufacturers_id'
-                    && !isset($array['manufacturer'])) {
-               $itemtype = 'Manufacturer';
-            } else if ($key == 'computermodels_id') {
-               $itemtype = 'ComputerModel';
-            } else if ($key == 'computertypes_id') {
-               $itemtype = 'ComputerType';
-            } else if ($key == 'domains_id') {
-               $itemtype = 'Domain';
-            } else if ($key == 'operatingsystems_id') {
-               $itemtype = 'OperatingSystem';
-            } else if ($key == 'operatingsystemversions_id') {
-               $itemtype = 'OperatingSystemVersion';
-            } else if ($key == 'operatingsystemservicepacks_id') {
-               $itemtype = 'OperatingSystemServicePack';
-            } else if ($key == 'virtualmachinetypes_id') {
-               $itemtype = 'VirtualMachineType';
-            } else if ($key == 'virtualmachinesystems_id') {
-               $itemtype = 'VirtualMachineSystem';
-            } else if ($key == 'virtualmachinestates_id') {
-               $itemtype = 'VirtualMachineState';
-            } else if ($key == 'filesystems_id') {
-               $itemtype = 'Filesystem';
-            } else if ($key== 'devicememorytypes_id') {
-               $itemtype = 'DeviceMemoryType';
-            } else if ($key == 'interfacetypes_id') {
-               $itemtype = 'InterfaceType';
-            } else if ($key == "manufacturer") {
-               if (!isset($array['manufacturers_id'])) {
-                  $array['manufacturers_id']= Dropdown::importExternal('Manufacturer',
-                                                                       $value);
-               }
+            if (isForeignKeyField($key)) {
+               $array[$key] = Dropdown::importExternal(getItemTypeForTable(getTableNameForForeignKeyField($key)),
+                                                       $value);
             }
-            if ($itemtype != '') {
-               $value = Dropdown::importExternal($itemtype,
-                                                 $value);
-               $array[$key] = $value;  
-            }
+            
+//            $itemtype = '';
+//            if ($key == 'manufacturers_id'
+//                    && !isset($array['manufacturer'])) {
+//               $itemtype = 'Manufacturer';
+//            } else if ($key == 'computermodels_id') {
+//               $itemtype = 'ComputerModel';
+//            } else if ($key == 'computertypes_id') {
+//               $itemtype = 'ComputerType';
+//            } else if ($key == 'domains_id') {
+//               $itemtype = 'Domain';
+//            } else if ($key == 'operatingsystems_id') {
+//               $itemtype = 'OperatingSystem';
+//            } else if ($key == 'operatingsystemversions_id') {
+//               $itemtype = 'OperatingSystemVersion';
+//            } else if ($key == 'operatingsystemservicepacks_id') {
+//               $itemtype = 'OperatingSystemServicePack';
+//            } else if ($key == 'virtualmachinetypes_id') {
+//               $itemtype = 'VirtualMachineType';
+//            } else if ($key == 'virtualmachinesystems_id') {
+//               $itemtype = 'VirtualMachineSystem';
+//            } else if ($key == 'virtualmachinestates_id') {
+//               $itemtype = 'VirtualMachineState';
+//            } else if ($key == 'filesystems_id') {
+//               $itemtype = 'Filesystem';
+//            } else if ($key == 'devicememorytypes_id') {
+//               $itemtype = 'DeviceMemoryType';
+//            } else if ($key == 'interfacetypes_id') {
+//               $itemtype = 'InterfaceType';
+//            } else if ($key == "manufacturer") {
+//               if (!isset($array['manufacturers_id'])) {
+//                  $array['manufacturers_id']= Dropdown::importExternal('Manufacturer',
+//                                                                       $value);
+//               }
+//            } elseif ($key == "networkequipmentfirmwares_id") {
+//               if (strstr($value, "CW_VERSION")
+//                       OR strstr($value, "CW_INTERIM_VERSION")) {
+//                  $explode = explode("$", $value);
+//                  if (isset($explode[1])) {
+//                     $value = $explode[1];
+//                  }
+//               }
+//               $NetworkEquipmentFirmware = new NetworkEquipmentFirmware();
+//               $array['networkequipmentfirmwares_id'] = $NetworkEquipmentFirmware->import(array('name' => $value));
+//            }
+//
+//            if ($itemtype != '') {
+//               $value = Dropdown::importExternal($itemtype,
+//                                                 $value);
+//               $array[$key] = $value;  
+//            }
          }
       }
       return $array;
@@ -710,6 +726,13 @@ class PluginFusioninventoryFormatconvert {
             $array_tmp['itemtype'] = 'Printer';
             break;
       }
+      if (strstr($array_tmp['networkequipmentfirmwares_id'], "CW_VERSION")
+              OR strstr($array_tmp['networkequipmentfirmwares_id'], "CW_INTERIM_VERSION")) {
+         $explode = explode("$", $array_tmp['networkequipmentfirmwares_id']);
+         if (isset($explode[1])) {
+            $array_tmp['networkequipmentfirmwares_id'] = $explode[1];
+         }
+      }
       
       $a_inventory['NetworkEquipment'] = $array_tmp;
       $a_inventory['itemtype'] = 'NetworkEquipment';
@@ -725,7 +748,7 @@ class PluginFusioninventoryFormatconvert {
       
       // * Internal ports
       if (isset($array['INFO']['IPS'])) {
-         foreach ($array['INFO']['IPS'] as $IP) {
+         foreach ($array['INFO']['IPS']['IP'] as $IP) {
             $a_inventory['internalport'][] = $IP;
          }
       }      
