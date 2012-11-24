@@ -728,6 +728,7 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['internalport'][] = $IP;
          }
       }      
+      $a_inventory['internalport'] = array_unique($a_inventory['internalport']);
       
       // * PORTS
       foreach ($array['PORTS']['PORT'] as $a_port) {
@@ -764,8 +765,10 @@ class PluginFusioninventoryFormatconvert {
                $a_inventory['connection-cdp'][$a_port['IFNUMBER']] = $array_tmp;
             } else {
                // MAC
-               foreach ($a_port['CONNECTIONS']['CONNECTION']['MAC'] as $mac) {
-                  $a_inventory['connection-mac'][$a_port['IFNUMBER']][] = $mac;
+               foreach ($a_port['CONNECTIONS']['CONNECTION'] as $keymac=>$mac) {
+                  if ($keymac == 'MAC') {
+                     $a_inventory['connection-mac'][$a_port['IFNUMBER']][] = $mac;
+                  }
                }
                $a_inventory['connection-mac'][$a_port['IFNUMBER']] = array_unique($a_inventory['connection-mac'][$a_port['IFNUMBER']]);
             }
