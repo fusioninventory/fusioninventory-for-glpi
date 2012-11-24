@@ -49,19 +49,19 @@ Session::checkRight("config","w");
 Html::header(__('Features'), $_SERVER["PHP_SELF"],
              "plugins", "fusioninventory", "configuration");
 
+$pfConfig = new PluginFusioninventoryConfig();
+
 if (isset($_POST['update'])) {
-   $pfConfig = new PluginFusioninventoryConfig();
    $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-   $config->updateValue($plugins_id, 'ssl_only', $_POST['ssl_only']);
-   $config->updateValue($plugins_id, 'inventory_frequence', $_POST['inventory_frequence']);
-   $config->updateValue($plugins_id, 'delete_task', $_POST['delete_task']);
-   $config->updateValue($plugins_id, 'agent_port', $_POST['agent_port']);
-   $config->updateValue($plugins_id, 'extradebug', $_POST['extradebug']);
-   $config->updateValue($plugins_id, 'agent_base_url', $_POST['agent_base_url']);
+   $pfConfig->updateValue($plugins_id, 'ssl_only', $_POST['ssl_only']);
+   $pfConfig->updateValue($plugins_id, 'inventory_frequence', $_POST['inventory_frequence']);
+   $pfConfig->updateValue($plugins_id, 'delete_task', $_POST['delete_task']);
+   $pfConfig->updateValue($plugins_id, 'agent_port', $_POST['agent_port']);
+   $pfConfig->updateValue($plugins_id, 'extradebug', $_POST['extradebug']);
+   $pfConfig->updateValue($plugins_id, 'agent_base_url', $_POST['agent_base_url']);
    Html::back();
 }
 
-$pfConfig = new PluginFusioninventoryConfig();
 $a_config = current($pfConfig->find("", "", 1));
 $pfConfig->getFromDB($a_config['id']);
 if (isset($_GET['glpi_tab'])) {
