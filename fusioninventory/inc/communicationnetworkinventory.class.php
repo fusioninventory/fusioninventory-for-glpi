@@ -227,7 +227,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
     * @return errors string to be alimented if import ko / '' if ok
     */
    function importDevice($itemtype, $items_id, $a_inventory) {
-
+Toolbox::logInFile("K", '1');
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkInventory->importDevice().');
 
