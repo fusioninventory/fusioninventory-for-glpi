@@ -96,9 +96,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $errors = '';
 
       $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $a_CONTENT['PROCESSNUMBER'];
-      if ($pfTaskjobstate->getFromDB($a_CONTENT['PROCESSNUMBER'])) {
-         if ($pfTaskjobstate->fields['state'] != "3") {
-            $pfTaskjobstate->changeStatus($a_CONTENT['PROCESSNUMBER'], 2);
+//      if ($pfTaskjobstate->getFromDB($a_CONTENT['PROCESSNUMBER'])) {
+//         if ($pfTaskjobstate->fields['state'] != "3") {
+//            $pfTaskjobstate->changeStatus($a_CONTENT['PROCESSNUMBER'], 2);
             if ((!isset($a_CONTENT['AGENT']['START'])) AND (!isset($a_CONTENT['AGENT']['END']))) {
                $nb_devices = 0;
                if (isset($a_CONTENT['DEVICE'])) {
@@ -132,10 +132,10 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusinvsnmp::6==';
                $this->addtaskjoblog();
             }
-         }
-      } else {
-         $errors.=$this->importContent($p_CONTENT);
-      }
+//         }
+//      } else {
+//         $errors.=$this->importContent($p_CONTENT);
+//      }
       return $errors;
    }
 
@@ -168,7 +168,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                }
                foreach ($a_devices as $dchild) {
                   $a_inventory = PluginFusioninventoryFormatconvert::networkequipmentInventoryTransformation($dchild);
-                  Toolbox::logInFile("NETWORK", print_r($a_inventory, true));               
+Toolbox::logInFile("NETWORK", print_r($a_inventory, true));               
                   
                   if (isset($dchild['ERROR'])) {
                      $itemtype = "";
@@ -179,9 +179,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                      }
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.$dchild['ERROR']['MESSAGE'].' [['.$itemtype.'::'.$dchild['ERROR']['ID'].']]';
                      $this->addtaskjoblog();
-                  } else if ($a_inventory['COMMENTS'] == ''
-                              && $a_inventory['NAME'] == ''
-                              && $a_inventory['SERIAL'] == '') {
+                  } else if ($a_inventory['sysdescr'] == ''
+                              && $a_inventory['name'] == ''
+                              && $a_inventory['serial'] == '') {
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] No informations [['.$itemtype.'::'.$dchild['ID'].']]';
                      $this->addtaskjoblog();
                   } else {
@@ -268,10 +268,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          if ($this->deviceId!='') {
             foreach ($arraydevice as $childname=>$child) {
                switch ($childname) {
-
-                  case 'INFO': // already managed
-                     break;
-
+// TODO Continue rewrite network 0.84
+                  
+                  
                   case 'PORTS':
                      $errors.=$this->importPorts($child);
                      break;
@@ -447,7 +446,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
             case 'internalport':
                // TODO glpi0.84, to be continued.....
-               $errors.=$this->importIps($child, $this->ptd->getValue('id'));
+               $errors.=$this->internalPorts($child, $this->ptd->getValue('id'));
                break;
 
             default:
@@ -572,36 +571,75 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     *
     * @return errors string to be alimented if import ko / '' if ok
     **/
-   function importIps($p_ips, $networkequipments_id) {
+   function internalPorts($a_ips, $networkequipments_id) {
 
-      $errors='';
-      $pfNetworkEquipmentIP = new PluginFusioninventoryNetworkEquipmentIP();
+      $networkPort = new NetworkPort();
+      $iPAddress = new IPAddress();
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
 
-      $pfNetworkEquipmentIP->loadIPs($networkequipments_id);
-
-      $a_ips = array();
-      if (isset($p_ips['IP'])) {
-         if (is_array($p_ips['IP'])) {
-            $a_ips = $p_ips['IP'];
-         } else {
-            $a_ips[] = $a_ips['IP'];
-         }
+      // Get agregated ports
+      $a_networkPortAggregates = current($networkPort->find(
+                    "`itemtype`='NetworkEquipment' 
+                       AND `items_id`='".$networkequipments_id."'
+                       AND `instantiation_type`='NetworkPortAggregate'
+                       AND `logical_number` = '0'", '', 1));
+      $a_ips_DB = array();
+      $networkports_id = 0;
+      if (isset($a_networkPortAggregates['id'])) {
+         $networkports_id = $a_networkPortAggregates['id'];
+         foreach ($iPAddress->find("`itemtype`='networkName'
+                                    AND `items_id`='".$a_networkPortAggregates['id']."'") as $data) {
+            $a_ips_DB[$data['id']] = $data['name'];
+         }         
+      } else {
+         $input = array();
+         $input['itemtype'] = 'NetworkEquipment';
+         $input['items_id'] = $networkequipments_id;
+         $input['instantiation_type'] = 'NetworkPortAggregate';
+         $networkports_id = $networkPort->add($input);
       }
-      foreach ($a_ips as $ip) {
-         if ($ip != "127.0.0.1") {
-            $pfNetworkEquipmentIP->setIP($ip);
-            // Search in unknown device if device with IP (CDP) is yet added, in this case,
-            // we get id of this unknown device
-            $a_unknown = $pfUnknownDevice->find("`ip`='".$ip."'", "", 1);
-            if (count($a_unknown) > 0) {
-               $datas= current($a_unknown);
-               $this->unknownDeviceCDP = $datas['id'];
+      
+      foreach ($a_ips as $key => $ip) {
+         foreach ($a_ips_DB as $keydb => $ipdb) {
+            if ($ip == $ipdb) {
+               unset($a_ips[$key]);
+               unset($a_ips_DB[$keydb]);
+               break;
             }
          }
       }
-      $pfNetworkEquipmentIP->saveIPs($networkequipments_id);
-      return $errors;
+
+      if (count($a_ips) == 0
+         AND count($a_ips_DB) == 0) {
+         // Nothing to do
+      } else {
+         if (count($a_ips_DB) != 0) {
+            // Delete processor in DB
+            foreach ($a_ips_DB as $idtmp => $ip) {
+               $iPAddress->delete(array('id'=>$idtmp));
+            }
+         }
+         if (count($a_ips) != 0) {
+            foreach($a_ips as $ip) {
+               if ($ip != '127.0.0.1') {
+                  $input = array();
+                  $input['itemtype'] = 'NetworkName';
+                  $input['items_id'] = $networkports_id;
+                  $input['name'] = $ip;
+                  $iPAddress->add($input);
+                  
+                  // Search in unknown device if device with IP (CDP) is yet added, in this case,
+                  // we get id of this unknown device
+                  $a_unknown = $pfUnknownDevice->find("`ip`='".$ip."'", "", 1);
+                  if (count($a_unknown) > 0) {
+                     $datas= current($a_unknown);
+                     $this->unknownDeviceCDP = $datas['id'];
+                  }
+               }
+            }
+         }
+      }
+      return '';
    }
 
 

@@ -715,7 +715,7 @@ class PluginFusioninventoryFormatconvert {
       
       $array_tmp = $thisc->addValues($array['INFO'], 
                                      array( 
-                                        'COMMENT' => 'sysdscr',
+                                        'COMMENT' => 'sysdescr',
                                         'UPTIME'  => 'uptime',
                                         'CPU'     => 'cpu',
                                         'MEMORY'  => 'memory'));
