@@ -48,13 +48,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    private $oFusionInventory_networkequipment;
    private $newPorts=array(), $updatesPorts=array();
 
-   function __construct() {
-      parent::__construct("glpi_networkequipments");
-      $this->dohistory=true;
-      $this->oFusionInventory_networkequipment = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
-      $this->oFusionInventory_networkequipment->type = 'PluginFusioninventoryNetworkEquipment';
-   }
-
    
    
    static function canCreate() {
@@ -92,55 +85,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
    static function getType() {
       return "NetworkEquipment";
-   }
-
-
-   /**
-    * Load an existing networking switch
-    *
-    *@return nothing
-    **/
-   function load($p_id='') {
-      global $DB;
-
-      parent::load($p_id);
-
-      $query = "SELECT `id`
-                FROM `glpi_plugin_fusioninventory_networkequipments`
-                WHERE `networkequipments_id` = '".$this->getValue('id')."';";
-      $result = $DB->query($query);
-      if ($result) {
-         if ($DB->numrows($result) != 0) {
-            $fusioninventory = $DB->fetch_assoc($result);
-            $this->oFusionInventory_networkequipment->load($fusioninventory['id']);
-            $this->ptcdLinkedObjects[]=$this->oFusionInventory_networkequipment;
-         } else {
-            $input = array();
-            $input['networkequipments_id'] = $this->getValue('id');
-            $_SESSION['glpi_plugins_fusinvsnmp_table'] = 'glpi_networkequipments';
-            $id = $this->oFusionInventory_networkequipment->add($input);
-            $this->oFusionInventory_networkequipment->load($id);
-            $this->ptcdLinkedObjects[]=$this->oFusionInventory_networkequipment;
-            $this->ptcdLinkedObjects[]=$input;
-         }
-      }
-   }
-
-
-
-   /**
-    * Update an existing preloaded switch with the instance values
-    *
-    *@return nothing
-    **/
-   function updateDB() {
-
-      parent::updateDB();
-      //$a_networkequipment = $this->ptcdUpdates;
-
-      // update last_fusioninventory_update even if no other update
-      $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
-      $this->oFusionInventory_networkequipment->updateDB();
    }
 
 

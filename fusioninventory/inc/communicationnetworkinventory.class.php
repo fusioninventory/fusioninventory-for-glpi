@@ -256,13 +256,15 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
             break;
 
          case 'NetworkEquipment':
-            $this->type = 'NetworkEquipment';
+            $pfInventoryNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+            $pfInventoryNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $items_id);
             break;
 
          default:
             $errors.=__('Unattended element in').' TYPE : '
                               .$a_inventory['itemtype']."\n";
       }
+      return;
 //      if (!isset($arraydevice['ERROR'])) {
          $errors.=$this->importInfo($itemtype, $items_id, $a_inventory);
          if ($this->deviceId!='') {
@@ -330,50 +332,10 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
               'Function PluginFusioninventoryCommunicationNetworkInventory->importInfo().');
       $errors='';
       if ($itemtype == 'NetworkEquipment') {
-         $errors.=$this->importInfoNetworking($a_inventory);
       } elseif ($itemtype == 'Printer') {
          $errors.=$this->importInfoPrinter($a_inventory);
       }
       return $errors;
-   }
-
-
-
-   /**
-    * Import INFO:Networking
-    *
-    * @param $p_info INFO code to import
-    *
-    * @return errors string to be alimented if import ko / '' if ok
-    **/
-   function importInfoNetworking($a_inventory) {
-      $networkEquipment = new NetworkEquipment();
-      $networkEquipment->getFromDB($this->deviceId);
-      $db_networkequipment = array();
-      $a_field = array('name', 'networkequipmentfirmwares_id', 'mac', 'memory', 
-                       'networkequipmentmodels_id', 'locations_id', 'ram', 'serial',
-                       'manufacturers_id');
-      foreach ($a_field as $field) {
-         $db_networkequipment[$field] = $networkEquipment->fields[$field];
-      }
-      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $this->deviceId);
-      
-      $a_ret = PluginFusioninventoryToolbox::checkLock($a_inventory['NetworkEquipment'], $db_networkequipment, $a_lockable);
-      $a_inventory['NetworkEquipment'] = $a_ret[0];
-      $db_networkequipment = $a_ret[1];
-         
-      $input = PluginFusioninventoryToolbox::diffArray($a_inventory['NetworkEquipment'], $db_networkequipment);
-      $input['id'] = $this->deviceId;         
-      $networkEquipment->update($input);
-
-
-//            case 'cpu':
-//            case 'uptime':
-//            
-     // TODO glpi0.84, to be continued.....
-     $this->internalPorts($a_inventory['internalport'], $this->deviceId);
-     
-     return '';
    }
 
 
@@ -482,86 +444,6 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
 
 
 
-   /**
-    * Import IPs
-    *
-    * @param $p_ips IPs code to import
-    * @param $networkequipments_id id of network equipment
-    *
-    * @return errors string to be alimented if import ko / '' if ok
-    **/
-   function internalPorts($a_ips, $networkequipments_id) {
-
-      $networkPort = new NetworkPort();
-      $iPAddress = new IPAddress();
-      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-
-      // Get agregated ports
-      $a_networkPortAggregates = current($networkPort->find(
-                    "`itemtype`='NetworkEquipment' 
-                       AND `items_id`='".$networkequipments_id."'
-                       AND `instantiation_type`='NetworkPortAggregate'
-                       AND `logical_number` = '0'", '', 1));
-      $a_ips_DB = array();
-      $networkports_id = 0;
-      if (isset($a_networkPortAggregates['id'])) {
-         $networkports_id = $a_networkPortAggregates['id'];
-         $a_ips_fromDB = $iPAddress->find("`itemtype`='networkName'
-                                    AND `items_id`='".$a_networkPortAggregates['id']."'");
-         foreach ($a_ips_fromDB as $data) {
-            $a_ips_DB[$data['id']] = $data['name'];
-         }         
-      } else {
-         $input = array();
-         $input['itemtype'] = 'NetworkEquipment';
-         $input['items_id'] = $networkequipments_id;
-         $input['instantiation_type'] = 'NetworkPortAggregate';
-         $input['name'] = 'general';
-         $networkports_id = $networkPort->add($input);
-      }
-      
-      foreach ($a_ips as $key => $ip) {
-         foreach ($a_ips_DB as $keydb => $ipdb) {
-            if ($ip == $ipdb) {
-               unset($a_ips[$key]);
-               unset($a_ips_DB[$keydb]);
-               break;
-            }
-         }
-      }
-      if (count($a_ips) == 0
-         AND count($a_ips_DB) == 0) {
-         // Nothing to do
-      } else {
-         if (count($a_ips_DB) != 0) {
-            // Delete processor in DB
-            foreach ($a_ips_DB as $idtmp => $ip) {
-               $iPAddress->delete(array('id'=>$idtmp));
-            }
-         }
-         if (count($a_ips) != 0) {
-            foreach($a_ips as $ip) {
-               if ($ip != '127.0.0.1') {
-                  $input = array();
-                  $input['entities_id'] = 0;
-                  $input['itemtype'] = 'NetworkName';
-                  $input['items_id'] = $networkports_id;
-                  $input['name'] = $ip;
-                  $id = $iPAddress->add($input);
-                  
-                  // Search in unknown device if device with IP (CDP) is yet added, in this case,
-                  // we get id of this unknown device
-                  $a_unknown = $pfUnknownDevice->find("`ip`='".$ip."'", "", 1);
-                  if (count($a_unknown) > 0) {
-                     $datas= current($a_unknown);
-                     $this->unknownDeviceCDP = $datas['id'];
-                  }
-               }
-            }
-         }
-      }
-      return '';
-   }
 
 
 

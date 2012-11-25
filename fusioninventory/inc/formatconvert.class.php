@@ -739,11 +739,11 @@ class PluginFusioninventoryFormatconvert {
       
       $array_tmp = $thisc->addValues($array['INFO'], 
                                      array( 
-                                        'COMMENT' => 'sysdescr',
+                                        'COMMENTS' => 'sysdescr',
                                         'UPTIME'  => 'uptime',
                                         'CPU'     => 'cpu',
                                         'MEMORY'  => 'memory'));
-      
+      $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
       $a_inventory['PluginFusioninventoryNetworkEquipment'] = $array_tmp;
       
       // * Internal ports

@@ -386,7 +386,7 @@ class PluginFusioninventoryToolbox {
    // *********************** Functions used for inventory *********************** //
    
 
-   function diffArray($array1, $array2) {
+   static function diffArray($array1, $array2) {
 
       $a_return = array();
       foreach ($array1 as $key=>$value) {
