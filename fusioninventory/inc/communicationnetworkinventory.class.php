@@ -498,7 +498,6 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
     * @return errors string to be alimented if import ko / '' if ok
     **/
    function importPortNetworking($p_port) {
-      Toolbox::logInFile("TO", print_r($p_port, true));
       
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkInventory->importPortNetworking().');

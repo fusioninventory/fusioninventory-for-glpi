@@ -107,7 +107,9 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             $input['id'] = $idtmp;
             $pfNetworkEquipment->update($input);
          }
-         
+        
+      // * Ports
+         $this->importPorts($a_inventory, $items_id);
       
    }
    
@@ -133,6 +135,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $networkPort = new NetworkPort();
       $iPAddress = new IPAddress();
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+      $networkName = new NetworkName();
 
       // Get agregated ports
       $a_networkPortAggregates = current($networkPort->find(
@@ -146,12 +149,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          $a_networkPortAggregates['mac'] = $mac;
          $networkPort->update($a_networkPortAggregates);
          
-         $networkports_id = $a_networkPortAggregates['id'];
-         $a_ips_fromDB = $iPAddress->find("`itemtype`='networkName'
-                                    AND `items_id`='".$a_networkPortAggregates['id']."'");
-         foreach ($a_ips_fromDB as $data) {
-            $a_ips_DB[$data['id']] = $data['name'];
-         }
+         $networkports_id = $a_networkPortAggregates['id'];         
       } else {
          $input = array();
          $input['itemtype'] = 'NetworkEquipment';
@@ -160,6 +158,23 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          $input['name'] = 'general';
          $input['mac'] = $mac;
          $networkports_id = $networkPort->add($input);
+      }
+      // Get networkname
+      $a_networknames_find = current($networkName->find("`items_id`='".$networkports_id."'
+                                                         AND `itemtype`='NetworkPort'", "", 1));
+      $networknames_id = 0;
+      if (isset($a_networknames_find['id'])) {
+         $networknames_id = $a_networknames_find['id'];
+      } else {
+         $input = array();
+         $input['items_id'] = $networkports_id;
+         $input['itemtype'] = 'NetworkPort';
+         $networknames_id = $networkName->add($input);
+      }
+      $a_ips_fromDB = $iPAddress->find("`itemtype`='networkName'
+                                    AND `items_id`='".$networknames_id."'");
+      foreach ($a_ips_fromDB as $data) {
+         $a_ips_DB[$data['id']] = $data['name'];
       }
       
       foreach ($a_ips as $key => $ip) {
@@ -187,7 +202,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   $input = array();
                   $input['entities_id'] = 0;
                   $input['itemtype'] = 'NetworkName';
-                  $input['items_id'] = $networkports_id;
+                  $input['items_id'] = $networknames_id;
                   $input['name'] = $ip;
                   $id = $iPAddress->add($input);
                   
@@ -202,6 +217,49 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             }
          }
       }
+   }
+   
+   
+   
+   function importPorts($a_inventory, $items_id) {
+      
+      $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
+      $networkPort = new NetworkPort();
+      $pfNetworkPort = new PluginFusioninventoryNetworkPort();
+      
+      foreach ($a_inventory['networkport'] as $a_port) {
+         $ifType = $a_port['iftype'];
+         if ($pfNetworkporttype->isImportType($ifType)) {
+         $a_ports_DB = current($networkPort->find(
+                    "`itemtype`='NetworkEquipment' 
+                       AND `items_id`='".$items_id."'
+                       AND `instantiation_type`='NetworkPortEthernet'
+                       AND `logical_number` = '".$a_port['logical_number']."'", '', 1));
+         if (!isset($a_ports_DB['id'])) {
+            // Add port
+            $a_port['instantiation_type'] = 'NetworkPortEthernet';
+            $a_port['items_id'] = $items_id;
+            $a_port['itemtype'] = 'NetworkEquipment';
+            $networkports_id = $networkPort->add($a_port);
+            $a_port['networkports_id'] = $networkports_id;
+            $pfNetworkPort->add($a_port);
+            
+         } else {
+            // Update port
+            
+            
+         }
+                  
+         
+            
+            
+            
+            // Connections
+            
+            // Vlan
+         }
+      }
+      
    }
 
    

@@ -56,15 +56,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
 
    
-
-   function __construct($p_type=NULL) {
-      if ($p_type!=NULL) {
-         $this->glpi_type = $p_type;
-      }
-   }
-
-  
-   
    function getSearchOptions() {
 
       $tab                     = array();

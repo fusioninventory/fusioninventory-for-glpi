@@ -761,18 +761,21 @@ class PluginFusioninventoryFormatconvert {
                                            'IFNAME'   => 'name',
                                            'IFNUMBER' => 'logical_number',
                                            'MAC'      => 'mac',
-                                           'IFPEED'   => 'speed',
+                                           'IFSPEED'   => 'speed',
                                            'IFDESCR'           => 'ifdescr',
                                            'IFINERRORS'        => 'ifinerrors',
                                            'IFINOCTETS'        => 'ifinoctets',
                                            'IFINTERNALSTATUS'  => 'ifinternalstatus',
                                            'IFLASTCHANGE'      => 'iflastchange',
-                                           'IFMTU'             => 'itmtu',
+                                           'IFMTU'             => 'ifmtu',
                                            'IFOUTERRORS'       => 'ifouterrors',
                                            'IFSTATUS'          => 'iftatus',
                                            'IFTYPE'            => 'iftype',
                                            'TRUNK'             => 'trunk'));
-         
+         if ($array_tmp['trunk'] == '') {
+            $array_tmp['trunk'] = 0;
+         }
+         $array_tmp['ifspeed'] = $array_tmp['speed'];
          $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
          
          if (isset($a_port['CONNECTIONS'])) {
