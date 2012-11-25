@@ -816,6 +816,9 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          if ($sysname != '') {
             $input['name'] = $sysname;
          }
+         if ($model != '') {
+            $input['comment'] = $model;
+         }
          if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
             $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
          }

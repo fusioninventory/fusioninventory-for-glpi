@@ -226,36 +226,39 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
       $networkPort = new NetworkPort();
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
-      
+
+      $networkports_id = 0;
       foreach ($a_inventory['networkport'] as $a_port) {
          $ifType = $a_port['iftype'];
          if ($pfNetworkporttype->isImportType($ifType)) {
-         $a_ports_DB = current($networkPort->find(
-                    "`itemtype`='NetworkEquipment' 
-                       AND `items_id`='".$items_id."'
-                       AND `instantiation_type`='NetworkPortEthernet'
-                       AND `logical_number` = '".$a_port['logical_number']."'", '', 1));
-         if (!isset($a_ports_DB['id'])) {
-            // Add port
-            $a_port['instantiation_type'] = 'NetworkPortEthernet';
-            $a_port['items_id'] = $items_id;
-            $a_port['itemtype'] = 'NetworkEquipment';
-            $networkports_id = $networkPort->add($a_port);
-            $a_port['networkports_id'] = $networkports_id;
-            $pfNetworkPort->add($a_port);
-            
-         } else {
-            // Update port
-            
-            
-         }
-                  
-         
-            
-            
-            
+            $a_ports_DB = current($networkPort->find(
+                       "`itemtype`='NetworkEquipment' 
+                          AND `items_id`='".$items_id."'
+                          AND `instantiation_type`='NetworkPortEthernet'
+                          AND `logical_number` = '".$a_port['logical_number']."'", '', 1));
+            if (!isset($a_ports_DB['id'])) {
+               // Add port
+               $a_port['instantiation_type'] = 'NetworkPortEthernet';
+               $a_port['items_id'] = $items_id;
+               $a_port['itemtype'] = 'NetworkEquipment';
+               $networkports_id = $networkPort->add($a_port);
+               $a_port['networkports_id'] = $networkports_id;
+               $pfNetworkPort->add($a_port);
+
+            } else {
+               // Update port
+
+
+            }
+
             // Connections
-            
+            if (isset($a_inventory['connection-cdp'][$a_port['logical_number']])) {
+               $this->importConnectionCDP($a_inventory['connection-cdp'][$a_port['logical_number']],
+                       $networkports_id);
+            } else if (isset($a_inventory['connection-mac'][$a_port['logical_number']])) {
+               $this->importConnectionMac();
+            }
+
             // Vlan
          }
       }
@@ -263,7 +266,44 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
    }
 
    
+
+   function importConnectionCDP($a_cdp, $networkports_id) {
+      
+      $pfNetworkPort = new PluginFusioninventoryNetworkPort();
+      
+      if ($a_cdp['ip'] != '') {
+         $portID = $pfNetworkPort->getPortIDfromDeviceIP($a_cdp['ip'],
+                                                $a_cdp['ifdescr'],
+                                                $a_cdp['sysdescr'],
+                                                $a_cdp['name'],
+                                                $a_cdp['model']);
+      } else {
+         if ($a_cdp['mac'] != '') {
+            $portID = $pfNetworkPort->getPortIDfromSysmacandPortnumber($a_cdp['sysmac'],
+                                                                       $a_cdp['logical_number'],
+                                                                       $a_cdp);
+         }
+      }
+      
+      if ($portID
+              AND $portID > 0) {
+         $wire = new NetworkPort_NetworkPort();
+         $contact_id = $wire->getOppositeContact($networkports_id);
+         if (!($contact_id
+                 AND $contact_id == $portID)) {
+            $pfNetworkPort->disconnectDB($networkports_id);
+            $pfNetworkPort->disconnectDB($portID);
+            $wire->add(array('networkports_id_1'=> $networkports_id,
+                             'networkports_id_2' => $portID));
+         }
+      }
+   }
    
+   
+   
+   function importConnectionMac() {
+      
+   }
 }
 
 ?>

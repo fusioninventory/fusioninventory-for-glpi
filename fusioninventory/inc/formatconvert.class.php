@@ -776,6 +776,10 @@ class PluginFusioninventoryFormatconvert {
             $array_tmp['trunk'] = 0;
          }
          $array_tmp['ifspeed'] = $array_tmp['speed'];
+         if ($array_tmp['ifdescr'] == '') {
+            $array_tmp['ifdescr'] = $array_tmp['name'];
+         }
+         
          $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
          
          if (isset($a_port['CONNECTIONS'])) {
@@ -787,6 +791,8 @@ class PluginFusioninventoryFormatconvert {
                                                  'IFDESCR'  => 'ifdescr',
                                                  'IFNUMBER' => 'logical_number',
                                                  'SYSDESCR' => 'sysdescr',
+                                                 'MODEL'    => 'model',
+                                                 'IP'       => 'ip',
                                                  'SYSMAC'   => 'mac',
                                                  'SYSNAME'  => 'name'));
                $a_inventory['connection-cdp'][$a_port['IFNUMBER']] = $array_tmp;

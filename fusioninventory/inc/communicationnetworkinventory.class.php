@@ -560,60 +560,6 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                   $errors.=$this->importVlans($child, $pfNetworkPort);
                   break;
 
-               case 'IFNAME':
-                  PluginFusioninventoryNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
-                  if ((string)$child != '') {
-                     $pfNetworkPort->setValue('name', $child);
-                  }
-                  break;
-
-               case 'MAC':
-                  PluginFusioninventoryNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
-                  if (!strstr($child, '00:00:00:00:00:00')) {
-                     $pfNetworkPort->setValue('mac', $child);
-                  }
-                  break;
-
-               case 'IFNUMBER':
-                  PluginFusioninventoryNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
-                  $pfNetworkPort->setValue('logical_number', $child);
-                  break;
-
-               case 'IFTYPE': // already managed
-                  $pfNetworkPort->setValue('instantiation_type', 'NetworkPortEthernet');
-                  break;
-
-               case 'TRUNK':
-                  if ((string)$child == '1') {
-                     PluginFusioninventoryNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
-                     $pfNetworkPort->setValue('trunk', 1);
-                     $trunk = 1;
-                  }
-                  break;
-
-               case 'IFDESCR':
-                  if (!isset($p_port['IFNAME'])
-                          OR $p_port['IFNAME'] == '') {
-                     $pfNetworkPort->setValue('name', $p_port['IFDESCR']);
-                  }
-                  $pfNetworkPort->setValue(strtolower($name), $child);
-                  break;
-
-               case 'IFINERRORS':
-               case 'IFINOCTETS':
-               case 'IFINTERNALSTATUS':
-               case 'IFLASTCHANGE':
-               case 'IFMTU':
-               case 'IFOUTERRORS':
-               case 'IFOUTOCTETS':
-               case 'IFSPEED':
-               case 'IFSTATUS':
-                  PluginFusioninventoryNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), $child, strtolower($name));
-                  $pfNetworkPort->setValue(strtolower($name), $child);
-                  break;
-
-               default:
-                  $errors.=__('Unattended element in').' PORT : '.$name."\n";
             }
          }
          if ($trunk == "0") {
