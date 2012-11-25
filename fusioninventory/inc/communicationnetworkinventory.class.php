@@ -227,12 +227,11 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
     * @return errors string to be alimented if import ko / '' if ok
     */
    function importDevice($itemtype, $items_id, $a_inventory) {
-Toolbox::logInFile("K", '1');
+      
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkInventory->importDevice().');
 
       $a_inventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_inventory);
-Toolbox::logInFile("K", print_r($a_inventory, true));
       
       // Write XML file
       if (count($a_inventory) > 0) {
@@ -357,12 +356,12 @@ Toolbox::logInFile("K", print_r($a_inventory, true));
       foreach ($a_field as $field) {
          $db_networkequipment[$field] = $networkEquipment->fields[$field];
       }
-//      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $this->ptd->getValue('id'));
-
-//      $a_ret = $this->checkLock($a_computerinventory['computer'], $db_computer, $a_lockable);
-//      $a_computerinventory['computer'] = $a_ret[0];
-//      $db_computer = $a_ret[1];
+      $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $this->deviceId);
       
+      $a_ret = PluginFusioninventoryToolbox::checkLock($a_inventory['NetworkEquipment'], $db_networkequipment, $a_lockable);
+      $a_inventory['NetworkEquipment'] = $a_ret[0];
+      $db_networkequipment = $a_ret[1];
+         
       $input = PluginFusioninventoryToolbox::diffArray($a_inventory['NetworkEquipment'], $db_networkequipment);
       $input['id'] = $this->deviceId;         
       $networkEquipment->update($input);

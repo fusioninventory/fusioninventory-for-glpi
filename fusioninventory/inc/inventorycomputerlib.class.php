@@ -93,7 +93,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          foreach ($a_field as $field) {
             $db_computer[$field] = $computer->fields[$field];
          }
-         $a_ret = $this->checkLock($a_computerinventory['computer'], $db_computer, $a_lockable);
+         $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['computer'], $db_computer, $a_lockable);
          $a_computerinventory['computer'] = $a_ret[0];
          $db_computer = $a_ret[1];
          $input = PluginFusioninventoryToolbox::diffArray($a_computerinventory['computer'], $db_computer);
@@ -130,7 +130,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $idtmp = $db_computer['id'];
             unset($db_computer['id']);
             unset($db_computer['computers_id']);
-            $a_ret = $this->checkLock($a_computerinventory['fusioninventorycomputer'], $db_computer);
+            $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['fusioninventorycomputer'], $db_computer);
             $a_computerinventory['fusioninventorycomputer'] = $a_ret[0];
             $db_computer = $a_ret[1];
             $input = PluginFusioninventoryToolbox::diffArray($a_computerinventory['fusioninventorycomputer'], $db_computer);
@@ -644,19 +644,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       
    }
    
-   
-   
-   static function checkLock($datainventory, $db_computer, $a_lockable=array()) {
-      foreach($a_lockable as $field) {
-         if (isset($datainventory[$field])) {
-            unset($datainventory[$field]);
-         }
-         if (isset($db_computer[$field])) {
-            unset($db_computer[$field]);
-         }
-      }
-      return array($datainventory, $db_computer);
-   }
    
    
    

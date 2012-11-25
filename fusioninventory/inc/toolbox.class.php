@@ -382,6 +382,9 @@ class PluginFusioninventoryToolbox {
    }
 
 
+   
+   // *********************** Functions used for inventory *********************** //
+   
 
    function diffArray($array1, $array2) {
 
@@ -396,6 +399,20 @@ class PluginFusioninventoryToolbox {
          }
       }
       return $a_return;
+   }
+
+   
+   
+   static function checkLock($data, $db_data, $a_lockable=array()) {
+      foreach($a_lockable as $field) {
+         if (isset($data[$field])) {
+            unset($data[$field]);
+         }
+         if (isset($db_data[$field])) {
+            unset($db_data[$field]);
+         }
+      }
+      return array($data, $db_data);
    }
 
 }
