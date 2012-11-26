@@ -78,7 +78,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
       $this->internalPorts($a_inventory['internalport'], 
                            $items_id, 
-                           $a_inventory['NetworkEquipment']['mac']);      
+                           $a_inventory['NetworkEquipment']['mac'],
+                           $a_inventory['name']);      
       
       
       // * NetworkEquipment fusion (ext)
@@ -138,7 +139,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
     *
     * @return errors string to be alimented if import ko / '' if ok
     **/
-   function internalPorts($a_ips, $networkequipments_id, $mac) {
+   function internalPorts($a_ips, $networkequipments_id, $mac, $networkname_name) {
 
       $networkPort = new NetworkPort();
       $iPAddress = new IPAddress();
@@ -173,11 +174,14 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $networknames_id = 0;
       if (isset($a_networknames_find['id'])) {
          $networknames_id = $a_networknames_find['id'];
+         $a_networknames_find['name'] = $networkname_name;
+         $networkName->update($a_networknames_find);
       } else {
          $input = array();
          $input['items_id'] = $networkports_id;
          $input['itemtype'] = 'NetworkPort';
-         $networknames_id = $networkName->add($input);
+         $input['name']     = $networkname_name;
+         $networknames_id   = $networkName->add($input);
       }
       $a_ips_fromDB = $iPAddress->find("`itemtype`='networkName'
                                     AND `items_id`='".$networknames_id."'");
@@ -256,7 +260,21 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             } else {
                // Update port
                $networkports_id = $a_ports_DB['id'];
-
+               $a_port['id'] = $a_ports_DB['id'];
+               $networkPort->update($a_port);
+               unset($a_port['id']);
+               
+               // Check if pfnetworkport exist.
+               $a_pfnetworkport_DB = current($pfNetworkPort->find(
+                       "`networkports_id`='".$networkports_id."'", '', 1));
+               $a_port['networkports_id'] = $networkports_id;
+               if (isset($a_pfnetworkport_DB['id'])) {
+                  $a_port['id'] = $a_pfnetworkport_DB['id'];
+                  $pfNetworkPort->update($a_port);
+               } else {
+                  $a_port['networkports_id'] = $networkports_id;
+                  $pfNetworkPort->add($a_port);
+               }
             }
 
             // Connections
@@ -268,6 +286,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             }
 
             // Vlan
+            $this->importPortVlan($a_inventory['vlans'][$a_port['logical_number']],
+                                  $networkports_id);
          }
       }
       
@@ -310,6 +330,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
    
    
    function importConnectionMac() {
+      
+   }
+   
+   
+   
+   function importPortVlan() {
       
    }
 }

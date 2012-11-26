@@ -708,7 +708,7 @@ class PluginFusioninventoryFormatconvert {
                                         'LOCATION'     => 'locations_id',
                                         'MODEL'        => 'networkequipmentmodels_id',
                                         'TYPE'         => 'itemtype',
-                                        'UPTIM'        => 'uptime',
+                                        'UPTIME'        => 'uptime',
                                         'MANUFACTURER' => 'manufacturers_id',
                                         'FIRMWARE'     => 'networkequipmentfirmwares_id',
                                         'CPU'          => 'cpu',
@@ -733,7 +733,7 @@ class PluginFusioninventoryFormatconvert {
             $array_tmp['networkequipmentfirmwares_id'] = $explode[1];
          }
       }
-      
+
       $a_inventory['NetworkEquipment'] = $array_tmp;
       $a_inventory['itemtype'] = 'NetworkEquipment';
       
@@ -806,6 +806,18 @@ class PluginFusioninventoryFormatconvert {
                $a_inventory['connection-mac'][$a_port['IFNUMBER']] = array_unique($a_inventory['connection-mac'][$a_port['IFNUMBER']]);
             }
          }
+         
+         // VLAN
+         if (isset($a_port['VLANS'])) {
+            foreach ($a_port['VLANS'] as $a_vlan) {
+               $array_tmp = $thisc->addValues($a_vlan, 
+                                              array( 
+                                                 'NAME'  => 'name',
+                                                 'NUMBER' => 'tag'));
+               
+            }
+         }
+         $a_inventory['vlans'][$a_port['IFNUMBER']][$array_tmp['tag']] = $array_tmp;
       }
       return $a_inventory;
    }
