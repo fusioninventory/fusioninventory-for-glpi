@@ -63,7 +63,7 @@ class PluginFusinvdeployFile_Mirror extends CommonDBTM {
       }
 
       //always add default mirror (this server)
-      $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY')
+      $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('fusinvdeploy', 'Deploy')
             ."?action=getFilePart&file=";
 
       return $mirrors;
