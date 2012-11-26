@@ -707,7 +707,6 @@ class PluginFusioninventoryFormatconvert {
                                         'ID'           => 'id',
                                         'LOCATION'     => 'locations_id',
                                         'MODEL'        => 'networkequipmentmodels_id',
-                                        'TYPE'         => 'itemtype',
                                         'UPTIME'        => 'uptime',
                                         'MANUFACTURER' => 'manufacturers_id',
                                         'FIRMWARE'     => 'networkequipmentfirmwares_id',
@@ -716,16 +715,6 @@ class PluginFusioninventoryFormatconvert {
                                         'MEMORY'       => 'memory',
                                         'MAC'          => 'mac'));
       
-      switch ($array_tmp['itemtype']) {
-         
-         case 'NETWORKING':
-            $array_tmp['itemtype'] = 'NetworkEquipment';
-            break;
-         
-         case 'PRINTER':
-            $array_tmp['itemtype'] = 'Printer';
-            break;
-      }
       if (strstr($array_tmp['networkequipmentfirmwares_id'], "CW_VERSION")
               OR strstr($array_tmp['networkequipmentfirmwares_id'], "CW_INTERIM_VERSION")) {
          $explode = explode("$", $array_tmp['networkequipmentfirmwares_id']);
@@ -823,6 +812,58 @@ class PluginFusioninventoryFormatconvert {
    }
    
 
+   
+   /*
+    * Modify switch inventory
+    */
+   static function printerInventoryTransformation($array) {
+      
+      $a_inventory = array();
+      $thisc = new self();
+    
+      // * INFO
+      $array_tmp = $thisc->addValues($array['INFO'], 
+                                     array( 
+                                        'NAME'         => 'name',
+                                        'SERIAL'       => 'serial',
+                                        'OTHERSERIAL'  => 'otherserial',
+                                        'ID'           => 'id',
+                                        'MANUFACTURER' => 'manufacturers_id',
+                                        'LOCATION'     => 'locations_id',
+                                        'MODEL'        => 'printermodels_id'));
+      
+      $a_inventory['Printer'] = $array_tmp;
+      $a_inventory['itemtype'] = 'Printer';
+      
+      $array_tmp = $thisc->addValues($array['INFO'], 
+                                     array( 
+                                        'COMMENTS' => 'sysdescr'));
+      $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
+      $a_inventory['PluginFusioninventoryPrinter'] = $array_tmp;
+      
+      // * PORTS
+      foreach ($array['PORTS']['PORT'] as $a_port) {
+         $array_tmp = $thisc->addValues($a_port, 
+                                        array( 
+                                           'IFNAME'   => 'name',
+                                           'IFNUMBER' => 'logical_number',
+                                           'MAC'      => 'mac',
+                                           'IP'       => 'ip',
+                                           'IFTYPE'   => 'iftype'));
+         
+         $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
+      }
+      
+      // TODO
+      
+      // CARTRIDGES
+      
+      // PAGESCOUNTER
+      
+      return $a_inventory;
+   }
+
+   
    
    /**
    * Get type of the drive
