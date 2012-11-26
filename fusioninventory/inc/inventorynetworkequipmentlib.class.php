@@ -46,7 +46,15 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
-   
+
+   /**
+    * Function to update NetworkEquipment
+    * 
+    * @param array $a_inventory data fron agent inventory
+    * @param id $items_id id of the networkequipment
+    * 
+    * @return nothing
+    */
    function updateNetworkEquipment($a_inventory, $items_id) {
       global $DB;
       
@@ -218,7 +226,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   $input['name'] = $ip;
                   $id = $iPAddress->add($input);
                   
-                  // Search in unknown device if device with IP (CDP) is yet added, in this case,
+                  // Search in unknown device if device with IP (LLDP) is yet added, in this case,
                   // we get id of this unknown device
                   $a_unknown = $pfUnknownDevice->find("`ip`='".$ip."'", "", 1);
                   if (count($a_unknown) > 0) {
@@ -278,8 +286,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             }
 
             // Connections
-            if (isset($a_inventory['connection-cdp'][$a_port['logical_number']])) {
-               $this->importConnectionCDP($a_inventory['connection-cdp'][$a_port['logical_number']],
+            if (isset($a_inventory['connection-lldp'][$a_port['logical_number']])) {
+               $this->importConnectionLLDP($a_inventory['connection-lldp'][$a_port['logical_number']],
                        $networkports_id);
             } else if (isset($a_inventory['connection-mac'][$a_port['logical_number']])) {
                $this->importConnectionMac();
@@ -295,21 +303,21 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
    
 
-   function importConnectionCDP($a_cdp, $networkports_id) {
+   function importConnectionLLDP($a_lldp, $networkports_id) {
       
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
       
-      if ($a_cdp['ip'] != '') {
-         $portID = $pfNetworkPort->getPortIDfromDeviceIP($a_cdp['ip'],
-                                                $a_cdp['ifdescr'],
-                                                $a_cdp['sysdescr'],
-                                                $a_cdp['name'],
-                                                $a_cdp['model']);
+      if ($a_lldp['ip'] != '') {
+         $portID = $pfNetworkPort->getPortIDfromDeviceIP($a_lldp['ip'],
+                                                         $a_lldp['ifdescr'],
+                                                         $a_lldp['sysdescr'],
+                                                         $a_lldp['name'],
+                                                         $a_lldp['model']);
       } else {
-         if ($a_cdp['mac'] != '') {
-            $portID = $pfNetworkPort->getPortIDfromSysmacandPortnumber($a_cdp['sysmac'],
-                                                                       $a_cdp['logical_number'],
-                                                                       $a_cdp);
+         if ($a_lldp['mac'] != '') {
+            $portID = $pfNetworkPort->getPortIDfromSysmacandPortnumber($a_lldp['sysmac'],
+                                                                       $a_lldp['logical_number'],
+                                                                       $a_lldp);
          }
       }
       

@@ -470,10 +470,6 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
             foreach ($a_ports as $a_port) {
                $errors .= $this->importPortPrinter($a_port);
             }
-         } elseif ($this->type == "NetworkEquipment") {
-            foreach ($a_ports as $a_port) {
-               $errors .= $this->importPortNetworking($a_port);
-            }
          }
       }
       // Remove ports may not in XML and must be deleted in GLPI DB
@@ -483,100 +479,6 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
       foreach ($a_portsDB as $data) {
          if (!isset($this->a_ports[$data['id']])) {
             $networkPort->delete($data);
-         }
-      }
-      return $errors;
-   }
-
-
-
-   /**
-    * Import PORT Networking
-    *
-    * @param $p_port PORT code to import
-    *
-    * @return errors string to be alimented if import ko / '' if ok
-    **/
-   function importPortNetworking($p_port) {
-      
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusioninventoryCommunicationNetworkInventory->importPortNetworking().');
-      $errors='';
-      $pfNetworkPort = new PluginFusioninventoryNetworkPort("NetworkEquipment");
-      $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
-      $ifType = $p_port['IFTYPE'];
-      // not virtual port
-      if ($pfNetworkporttype->isImportType($ifType)) {
-         // Get port of unknown device CDP if exist
-         $portloaded = 0;
-         $portIndex  = 0;
-         if (!empty($this->unknownDeviceCDP)) {
-            $NetworkPort = new NetworkPort();
-            $a_unknownPorts = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
-                                                   AND `items_id`='".$this->unknownDeviceCDP."'",
-                                                   '',
-                                                   1);
-            if (count($a_unknownPorts) > 0) {
-               $dataport = current($a_unknownPorts);
-               if ((isset($p_port['IFNAME']))
-                       AND ($p_port['IFNAME'] == $dataport['name'])) {
-
-                  // get this port and put in this switch
-                  $dataport['itemtype'] = 'NetworkEquipment';
-                  $dataport['items_id'] = $this->ptd->getValue('id');
-                  $NetworkPort->update($dataport);
-                  $pfNetworkPort->loadNetworkport($dataport['id']);
-                  $portloaded = 1;
-                  $portIndex = $p_port['IFNUMBER'];
-               }
-            }
-            $nbelements = countElementsInTable($NetworkPort->getTable(),
-                    "`itemtype`='PluginFusioninventoryUnknownDevice'
-                        AND `items_id`='".$this->unknownDeviceCDP."'");
-            if ($nbelements == '0') {
-               $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-               $pfUnknownDevice->delete(array('id'=>$this->unknownDeviceCDP), 1);
-               $this->unknownDeviceCDP = 0;
-            }
-         }
-         if ($portloaded == '0') {
-            $oldport = false;
-            $oldport = $pfNetworkPort->getPortIdWithLogicialNumber($p_port['IFNUMBER'], $this->deviceId);
-            if ($oldport) {
-               $pfNetworkPort->loadNetworkport($oldport);
-            }
-         }
-
-         $pfNetworkPort->setValue('entities_id', $this->ptd->fields['entities_id']);
-         $trunk = 0;
-         foreach ($p_port as $name=>$child) {
-            switch ($name) {
-
-               case 'CONNECTIONS':
-                  $errors.=$this->importConnections($child, $pfNetworkPort);
-                  break;
-
-               case 'VLANS':
-                  $errors.=$this->importVlans($child, $pfNetworkPort);
-                  break;
-
-            }
-         }
-         if ($trunk == "0") {
-            if ($pfNetworkPort->getValue('trunk') == '1') {
-               PluginFusioninventoryNetworkPortLog::networkport_addLog($pfNetworkPort->getNetworkPorts_id(), '0', 'trunk');
-               $pfNetworkPort->setValue('trunk', 0);
-            }
-         }
-         $pfNetworkPort->savePort("NetworkEquipment", $this->deviceId);
-         $this->a_ports[$pfNetworkPort->getValue("networkports_id")] = $pfNetworkPort->getValue("networkports_id");
-         $pfNetworkPort->connectPorts();
-      } else { // virtual port : do not import but delete if exists
-         $oldport = false;
-         $oldport = $pfNetworkPort->getPortIdWithLogicialNumber($p_port['IFNUMBER'], $this->deviceId);
-         if ($oldport) {
-            $NetworkPort = new NetworkPort();
-            $NetworkPort->delete(array('id' => $oldport));
          }
       }
       return $errors;

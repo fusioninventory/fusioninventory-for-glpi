@@ -795,7 +795,7 @@ class PluginFusioninventoryFormatconvert {
                                                  'IP'       => 'ip',
                                                  'SYSMAC'   => 'mac',
                                                  'SYSNAME'  => 'name'));
-               $a_inventory['connection-cdp'][$a_port['IFNUMBER']] = $array_tmp;
+               $a_inventory['connection-lldp'][$a_port['IFNUMBER']] = $array_tmp;
             } else {
                // MAC
                foreach ($a_port['CONNECTIONS']['CONNECTION'] as $keymac=>$mac) {
