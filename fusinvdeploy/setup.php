@@ -42,7 +42,7 @@
 
 include_once ("includes.php");
 
-define ("PLUGIN_FUSINVDEPLOY_VERSION","0.83+2.0");
+define ("PLUGIN_FUSINVDEPLOY_VERSION","0.83+2.1");
 
 // Init the hooks of fusinvdeploy
 function plugin_init_fusinvdeploy() {

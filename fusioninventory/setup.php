@@ -40,10 +40,10 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION","0.83+2.0");
+define ("PLUGIN_FUSIONINVENTORY_VERSION","0.83+2.1");
 
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE","0");
-define ("PLUGIN_FUSIONINVENTORY_REALVERSION","0.83+2.0 SNAPSHOT");
+define ("PLUGIN_FUSIONINVENTORY_REALVERSION","0.83+2.1 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
 // Init the hooks of fusioninventory
