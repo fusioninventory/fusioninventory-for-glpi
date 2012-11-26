@@ -156,7 +156,7 @@ class PluginFusioninventoryMenu {
       }
 
       if (Session::haveRight("config","w")) {
-         $a_menu[10]['name'] = $LANG['plugin_fusioninventory']['functionalities'][2];
+         $a_menu[10]['name'] = __('General configuration', 'fusioninventory');
          $a_menu[10]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
          $a_menu[10]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/config.form.php";
 
