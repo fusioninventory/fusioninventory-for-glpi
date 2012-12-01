@@ -343,7 +343,59 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
          
          
-      // * Sound
+      // * Sound         
+         
+         $db_soundcards = array();
+         $query = "SELECT `glpi_items_devicesoundcards`.`id`, `designation`, `comment`,
+               `manufacturers_id` FROM `glpi_items_devicesoundcards`
+            LEFT JOIN `glpi_devicesoundcards` ON `devicesoundcards_id`=`glpi_devicesoundcards`.`id`
+            WHERE `items_id` = '$items_id'
+               AND `itemtype`='Computer'";
+         $result = $DB->query($query);         
+         while ($data = $DB->fetch_assoc($result)) {
+            $idtmp = $data['id'];
+            unset($data['id']);            
+            $data = Toolbox::addslashes_deep($data);
+            $data = array_map('strtolower', $data);
+            $db_soundcards[$idtmp] = $data;
+         }
+
+         if (count($db_soundcards) == 0) {
+            foreach ($a_computerinventory['soundcard'] as $a_soundcard) {
+               $this->addSoundCard($a_soundcard, $items_id, false);
+            }
+         } else {
+            // Check all fields from source: 'designation', 'memory', 'manufacturers_id'
+            foreach ($a_computerinventory['soundcard'] as $key => $arrays) {
+               $arrayslower = array_map('strtolower', $arrays);
+               foreach ($db_soundcards as $keydb => $arraydb) {
+                  if ($arrayslower == $arraydb) {
+                     unset($a_computerinventory['soundcard'][$key]);
+                     unset($db_soundcards[$keydb]);
+                     break;
+                  }
+               }
+            }
+
+            if (count($a_computerinventory['soundcard']) == 0
+               AND count($db_soundcards) == 0) {
+               // Nothing to do
+            } else {
+               if (count($db_soundcards) != 0) {
+                  // Delete soundcard in DB
+                  foreach ($db_soundcards as $idtmp => $data) {
+                     $item_DeviceSoundCard->delete(array('id'=>$idtmp));
+                  }
+               }
+               if (count($a_computerinventory['soundcard']) != 0) {
+                  foreach($a_computerinventory['soundcard'] as $a_soundcard) {
+                     $this->addSoundCard($a_soundcard, $items_id, false);
+                  }
+               }
+            }
+         }
+         
+         
          
       // * Controllers
          
@@ -723,8 +775,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $deviceHardDrive              = new DeviceHardDrive();
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
       $deviceGraphicCard            = new DeviceGraphicCard();
-      $item_DeviceSoundCard         = new Item_DeviceSoundCard();
-      $deviceSoundCard              = new DeviceSoundCard();
+
       $networkPort                  = new NetworkPort();
       $networkName                  = new NetworkName();
       $iPAddress                    = new IPAddress();
@@ -732,36 +783,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $pfConfig                     = new PluginFusioninventoryConfig();
       
 
-      
-      // * Hard drive
-      foreach ($a_computerinventory['harddrive'] as $a_harddrive) {
-         $harddrives_id = $deviceHardDrive->import($a_harddrive);
-         $a_harddrive['deviceharddrives_id'] = $harddrives_id;
-         $a_harddrive['itemtype'] = 'Computer';
-         $a_harddrive['items_id'] = $computers_id;
-         $a_harddrive['_no_history'] = true;
-         $item_DeviceHardDrive->add($a_harddrive);
-      }
-      
-      // * Graphiccard
-      foreach ($a_computerinventory['graphiccard'] as $a_graphiccard) {
-         $graphiccards_id = $deviceGraphicCard->import($a_graphiccard);
-         $a_graphiccard['devicegraphiccards_id'] = $graphiccards_id;
-         $a_graphiccard['itemtype'] = 'Computer';
-         $a_graphiccard['items_id'] = $computers_id;
-         $a_graphiccard['_no_history'] = true;
-         $item_DeviceGraphicCard->add($a_graphiccard);
-      }
-      
-      // * Sound
-      foreach ($a_computerinventory['sound'] as $a_sound) {
-         $sounds_id = $deviceSoundCard->import($a_sound);
-         $a_sound['devicesounds_id'] = $sounds_id;
-         $a_sound['itemtype'] = 'Computer';
-         $a_sound['items_id'] = $computers_id;
-         $a_sound['_no_history'] = true;
-         $item_DeviceSoundCard->add($a_sound);
-      }
       
       // * Controllers
       foreach ($a_computerinventory['controller'] as $a_controller) {
@@ -898,6 +919,21 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $item_DeviceGraphicCard->add($data);      
    }
    
+   
+   
+   function addSoundCard($data, $computers_id, $history=true) {
+      $item_DeviceSoundCard         = new Item_DeviceSoundCard();
+      $deviceSoundCard              = new DeviceSoundCard();
+      
+      $sounds_id = $deviceSoundCard->import($data);
+      $data['devicesoundcards_id'] = $sounds_id;
+      $data['itemtype'] = 'Computer';
+      $data['items_id'] = $computers_id;
+      if ($history === false) {
+         $data['_no_history'] = true;
+      }
+      $item_DeviceSoundCard->add($data);
+   }
 }
 
 ?>

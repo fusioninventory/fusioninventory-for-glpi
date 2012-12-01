@@ -239,7 +239,7 @@ class PluginFusioninventoryFormatconvert {
       // * SOUNDS
       if (isset($array['SOUNDS'])) {
          foreach ($array['SOUNDS'] as $a_sounds) {
-            $a_inventory['sound'][] = $thisc->addValues($a_sounds, 
+            $a_inventory['soundcard'][] = $thisc->addValues($a_sounds, 
                                                         array(
                                                            'NAME'          => 'designation', 
                                                            'MANUFACTURER'  => 'manufacturers_id', 
