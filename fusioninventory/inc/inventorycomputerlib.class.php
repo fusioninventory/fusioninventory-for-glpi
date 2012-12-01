@@ -56,9 +56,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $computer                     = new Computer();
       $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();
       $item_DeviceProcessor         = new Item_DeviceProcessor();
-      $deviceProcessor              = new DeviceProcessor();
       $item_DeviceMemory            = new Item_DeviceMemory();
-      $deviceMemory                 = new DeviceMemory();
       $Software                     = new Software();
       $softwareVersion              = new SoftwareVersion();
       $computer_SoftwareVersion     = new Computer_SoftwareVersion();
@@ -80,7 +78,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       
       $computer->getFromDB($items_id);
       
-      $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
+//      $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
       
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $items_id);
       
@@ -155,31 +153,38 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $db_processors[$idtmp] = $data;
          }
 
-         // Check all fields from source: 'designation', 'serial', 'manufacturers_id', 'frequence'
-         foreach ($a_computerinventory['processor'] as $key => $arrays) {
-            $arrayslower = array_map('strtolower', $arrays);
-            foreach ($db_processors as $keydb => $arraydb) {
-               if ($arrayslower == $arraydb) {
-                  unset($a_computerinventory['processor'][$key]);
-                  unset($db_processors[$keydb]);
-                  break;
-               }
+         if (count($db_processors) == 0) {
+            foreach ($a_computerinventory['processor'] as $a_processor) {
+               $this->addProcessor($a_processor, $items_id, false);
             }
-         }
-         
-         if (count($a_computerinventory['processor']) == 0
-            AND count($db_processors) == 0) {
-            // Nothing to do
          } else {
-            if (count($db_processors) != 0) {
-               // Delete processor in DB
-               foreach ($db_processors as $idtmp => $data) {
-                  $item_DeviceProcessor->delete(array('id'=>$idtmp));
+
+            // Check all fields from source: 'designation', 'serial', 'manufacturers_id', 'frequence'
+            foreach ($a_computerinventory['processor'] as $key => $arrays) {
+               $arrayslower = array_map('strtolower', $arrays);
+               foreach ($db_processors as $keydb => $arraydb) {
+                  if ($arrayslower == $arraydb) {
+                     unset($a_computerinventory['processor'][$key]);
+                     unset($db_processors[$keydb]);
+                     break;
+                  }
                }
             }
-            if (count($a_computerinventory['processor']) != 0) {
-               foreach($a_computerinventory['processor'] as $a_processor) {
-                  $this->addProcessor($a_processor, $items_id);
+
+            if (count($a_computerinventory['processor']) == 0
+               AND count($db_processors) == 0) {
+               // Nothing to do
+            } else {
+               if (count($db_processors) != 0) {
+                  // Delete processor in DB
+                  foreach ($db_processors as $idtmp => $data) {
+                     $item_DeviceProcessor->delete(array('id'=>$idtmp));
+                  }
+               }
+               if (count($a_computerinventory['processor']) != 0) {
+                  foreach($a_computerinventory['processor'] as $a_processor) {
+                     $this->addProcessor($a_processor, $items_id);
+                  }
                }
             }
          }
@@ -201,35 +206,37 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $db_memories[$idtmp] = $data;
          }
 
-         // Check all fields from source: 'designation', 'serial', 'size', 'devicememorytypes_id', 'frequence'
-         foreach ($a_computerinventory['memory'] as $key => $arrays) {
-            $arrayslower = array_map('strtolower', $arrays);
-            foreach ($db_memories as $keydb => $arraydb) {
-               if ($arrayslower == $arraydb) {
-                  unset($a_computerinventory['memory'][$key]);
-                  unset($db_memories[$keydb]);
-                  break;
-               }
+         if (count($db_memories) == 0) {
+            foreach ($a_computerinventory['memory'] as $a_memory) {
+               $this->addMemory($a_memory, $items_id, false);
             }
-         }
-         
-         if (count($a_computerinventory['memory']) == 0
-            AND count($db_memories) == 0) {
-            // Nothing to do
          } else {
-            if (count($db_memories) != 0) {
-               // Delete processor in DB
-               foreach ($db_memories as $idtmp => $data) {
-                  $item_DeviceMemory->delete(array('id'=>$idtmp));
+            // Check all fields from source: 'designation', 'serial', 'size', 'devicememorytypes_id', 'frequence'
+            foreach ($a_computerinventory['memory'] as $key => $arrays) {
+               $arrayslower = array_map('strtolower', $arrays);
+               foreach ($db_memories as $keydb => $arraydb) {
+                  if ($arrayslower == $arraydb) {
+                     unset($a_computerinventory['memory'][$key]);
+                     unset($db_memories[$keydb]);
+                     break;
+                  }
                }
             }
-            if (count($a_computerinventory['memory']) != 0) {
-               foreach($a_computerinventory['memory'] as $a_memory) {
-                  $memories_id = $deviceMemory->import($a_memory);
-                  $a_memory['devicememories_id'] = $memories_id;
-                  $a_memory['itemtype'] = 'Computer';
-                  $a_memory['items_id'] = $items_id;
-                  $item_DeviceMemory->add($a_memory);
+
+            if (count($a_computerinventory['memory']) == 0
+               AND count($db_memories) == 0) {
+               // Nothing to do
+            } else {
+               if (count($db_memories) != 0) {
+                  // Delete processor in DB
+                  foreach ($db_memories as $idtmp => $data) {
+                     $item_DeviceMemory->delete(array('id'=>$idtmp));
+                  }
+               }
+               if (count($a_computerinventory['memory']) != 0) {
+                  foreach($a_computerinventory['memory'] as $a_memory) {
+                     $this->addMemory($a_memory, $items_id, false);
+                  }
                }
             }
          }
@@ -249,34 +256,36 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $db_harddrives[$idtmp] = $data;
          }
 
-         foreach ($a_computerinventory['harddrive'] as $key => $arrays) {
-            $arrayslower = array_map('strtolower', $arrays);
-            foreach ($db_harddrives as $keydb => $arraydb) {
-               if ($arrayslower['serial'] == $arraydb['serial']) {
-                  unset($a_computerinventory['harddrive'][$key]);
-                  unset($db_harddrives[$keydb]);
-                  break;
-               }
+         if (count($db_harddrives) == 0) {
+            foreach ($a_computerinventory['harddrive'] as $a_harddrive) {
+               $this->addHardDisk($a_harddrive, $items_id, false);
             }
-         }
-         
-         if (count($a_computerinventory['harddrive']) == 0
-            AND count($db_harddrives) == 0) {
-            // Nothing to do
          } else {
-            if (count($db_harddrives) != 0) {
-               // Delete hard drive in DB
-               foreach ($db_harddrives as $idtmp => $data) {
-                  $item_DeviceHardDrive->delete(array('id'=>$idtmp));
+            foreach ($a_computerinventory['harddrive'] as $key => $arrays) {
+               $arrayslower = array_map('strtolower', $arrays);
+               foreach ($db_harddrives as $keydb => $arraydb) {
+                  if ($arrayslower['serial'] == $arraydb['serial']) {
+                     unset($a_computerinventory['harddrive'][$key]);
+                     unset($db_harddrives[$keydb]);
+                     break;
+                  }
                }
             }
-            if (count($a_computerinventory['harddrive']) != 0) {
-               foreach($a_computerinventory['harddrive'] as $a_harddrive) {
-                  $harddrives_id = $deviceHardDrive->import($a_harddrive);
-                  $a_harddrive['deviceharddrives_id'] = $harddrives_id;
-                  $a_harddrive['itemtype'] = 'Computer';
-                  $a_harddrive['items_id'] = $items_id;
-                  $item_DeviceHardDrive->add($a_harddrive);
+
+            if (count($a_computerinventory['harddrive']) == 0
+               AND count($db_harddrives) == 0) {
+               // Nothing to do
+            } else {
+               if (count($db_harddrives) != 0) {
+                  // Delete hard drive in DB
+                  foreach ($db_harddrives as $idtmp => $data) {
+                     $item_DeviceHardDrive->delete(array('id'=>$idtmp));
+                  }
+               }
+               if (count($a_computerinventory['harddrive']) != 0) {
+                  foreach($a_computerinventory['harddrive'] as $a_harddrive) {
+                     $this->addHardDisk($a_harddrive, $items_id, false);
+                  }
                }
             }
          }
@@ -672,34 +681,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
       
-      $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
-      
-      // * Computer
-      $a_computerinventory['computer']['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-      if (isset($_SESSION['plugin_fusioninventory_locations_id'])) {
-         $a_computerinventory['computer']["locations_id"] = $_SESSION['plugin_fusioninventory_locations_id'];
-      }
-      $a_computerinventory['computer'] = PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($a_computerinventory['computer'], false);
-      $computers_id = $computer->add($a_computerinventory['computer'], array(), false);
-      
-      // * Computer fusion (ext)
-      $a_computerinventory['fusioninventorycomputer']['computers_id'] = $computers_id;
-      $pfInventoryComputerComputer->add($a_computerinventory['fusioninventorycomputer'], array(), false);
-      
-      // * Processors
-      foreach ($a_computerinventory['processor'] as $a_processor) {
-         $this->addProcessor($a_processor, $computers_id, false);
-      }
-      
-      // * Memories
-      foreach ($a_computerinventory['memory'] as $a_memory) {
-         $memories_id = $deviceMemory->import($a_memory);
-         $a_memory['devicememories_id'] = $memories_id;
-         $a_memory['itemtype'] = 'Computer';
-         $a_memory['items_id'] = $computers_id;
-         $a_memory['_no_history'] = true;
-         $item_DeviceMemory->add($a_memory);
-      }
+
       
       // * Hard drive
       foreach ($a_computerinventory['harddrive'] as $a_harddrive) {
@@ -809,14 +791,47 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $deviceProcessor              = new DeviceProcessor();
       
       $processors_id = $deviceProcessor->import($data);
-      $a_processor['deviceprocessors_id'] = $processors_id;
-      $a_processor['itemtype'] = 'Computer';
-      $a_processor['items_id'] = $computers_id;
+      $data['deviceprocessors_id'] = $processors_id;
+      $data['itemtype'] = 'Computer';
+      $data['items_id'] = $computers_id;
       if ($history === false) {
-         $a_processor['_no_history'] = true;
+         $data['_no_history'] = true;
       }
-      $item_DeviceProcessor->add($a_processor);      
+      $item_DeviceProcessor->add($data);      
    }
+   
+   
+   
+   function addMemory($data, $computers_id, $history=true) {
+      $item_DeviceMemory            = new Item_DeviceMemory();
+      $deviceMemory                 = new DeviceMemory();
+      
+      $memories_id = $deviceMemory->import($data);
+      $data['devicememories_id'] = $memories_id;
+      $data['itemtype'] = 'Computer';
+      $data['items_id'] = $computers_id;
+      if ($history === false) {
+         $data['_no_history'] = true;
+      }
+      $item_DeviceMemory->add($data);
+   }
+   
+   
+   
+   function addHardDisk($data, $computers_id, $history=true) {
+      $item_DeviceHardDrive         = new Item_DeviceHardDrive();
+      $deviceHardDrive              = new DeviceHardDrive();
+      
+      $harddrives_id = $deviceHardDrive->import($data);
+      $data['deviceharddrives_id'] = $harddrives_id;
+      $data['itemtype'] = 'Computer';
+      $data['items_id'] = $computers_id;
+      if ($history === false) {
+         $data['_no_history'] = true;
+      }
+      $item_DeviceHardDrive->add($data);
+   }
+   
 }
 
 ?>

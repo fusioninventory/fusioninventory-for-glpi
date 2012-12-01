@@ -63,15 +63,8 @@ class PluginFusioninventoryInventoryComputerInventory {
       $errors = '';
       $_SESSION["plugin_fusinvinventory_entity"] = 0;
 
-      $ret = $DB->query("SELECT GET_LOCK('inventory', 15)");
-      if ($DB->result($ret, 0, 0) == 1) {
-          $this->sendCriteria($p_DEVICEID, $a_CONTENT, $arrayinventory);
-
-          $DB->request("SELECT RELEASE_LOCK('inventory')");
-      } else {
-          die ("TIMEOUT: SERVER OVERLOADED\n");
-      }
-
+      $this->sendCriteria($p_DEVICEID, $a_CONTENT, $arrayinventory);
+      
       return $errors;
    }
 
@@ -298,6 +291,8 @@ class PluginFusioninventoryInventoryComputerInventory {
    *
    **/
    function rulepassed($items_id, $itemtype) {
+      global $DB;
+
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
          "Rule passed : ".$items_id.", ".$itemtype."\n"
@@ -307,7 +302,46 @@ class PluginFusioninventoryInventoryComputerInventory {
       if ($itemtype == 'Computer') {
          $pfInventoryComputerLib      = new PluginFusioninventoryInventoryComputerLib();
          $a_computerinventory = PluginFusioninventoryFormatconvert::computerSoftwareTransformation($a_computerinventory);
-
+         $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
+         
+         $ret = $DB->query("SELECT GET_LOCK('inventory', 15)");
+         if ($DB->result($ret, 0, 0) == 1) {
+            // * New
+            $computer   = new Computer();
+            if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
+               $_SESSION["plugin_fusinvinventory_entity"] = $_SESSION['plugin_fusioninventory_entityrestrict'];
+            }
+            if (!isset($_SESSION["plugin_fusinvinventory_entity"])
+                    OR $_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE
+                    OR $_SESSION["plugin_fusinvinventory_entity"] == '-1') {
+               $_SESSION["plugin_fusinvinventory_entity"] = 0;
+            }
+            
+            if ($items_id == '0') {
+               $input = array();
+               $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+               $items_id = $computer->add($input);
+            } else {
+               $pfConfig   = new PluginFusioninventoryConfig();
+               $computer->getFromDB($items_id);
+               if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'transfers_id_auto', 'inventory') == 0) {
+                  $_SESSION["plugin_fusinvinventory_entity"] = $computer->fields['entities_id'];
+               }
+            }
+            $_SESSION['glpiactiveentities'] = array($_SESSION["plugin_fusinvinventory_entity"]);
+            $_SESSION['glpiactiveentities_string'] = $_SESSION["plugin_fusinvinventory_entity"];
+            $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
+            
+            $pfInventoryComputerLib->updateComputer($a_computerinventory, $items_id);
+            $DB->request("SELECT RELEASE_LOCK('inventory')");
+         } else {
+             die ("TIMEOUT: SERVER OVERLOADED\n");
+         }
+         
+         
+         
+         // * Old
+         /*
          if ($items_id == '0') {
             if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
                $_SESSION["plugin_fusinvinventory_entity"] = $_SESSION['plugin_fusioninventory_entityrestrict'];
@@ -369,6 +403,8 @@ class PluginFusioninventoryInventoryComputerInventory {
             
             $pfInventoryComputerLib->updateComputer($a_computerinventory, $items_id);
          }
+          
+          */
       } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
          $class = new $itemtype();
          if ($items_id == "0") {
