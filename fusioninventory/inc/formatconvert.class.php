@@ -230,7 +230,7 @@ class PluginFusioninventoryFormatconvert {
                                            'SERVICE_PACK'   => 'operatingsystemservicepacks_id'));
          
          foreach ($array_tmp as $key=>$value) {
-            if ($a_inventory['fusioninventorycomputer'][$key] != '') {
+            if ($a_inventory['computer'][$key] != '') {
                $a_inventory['computer'][$key] = $value;
             }
          }
