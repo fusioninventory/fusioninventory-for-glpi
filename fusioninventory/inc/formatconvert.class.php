@@ -272,8 +272,7 @@ class PluginFusioninventoryFormatconvert {
                $a_inventory['controller'][] = $thisc->addValues($a_controllers, 
                                                                  array(
                                                                     'NAME'          => 'designation', 
-                                                                    'MANUFACTURER'  => 'manufacturers_id', 
-                                                                    'TYPE'          => 'type'));
+                                                                    'MANUFACTURER'  => 'manufacturers_id'));
             }
          }
       }
