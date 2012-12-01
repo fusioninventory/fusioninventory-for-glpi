@@ -72,8 +72,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       
       $computer->getFromDB($items_id);
       
-//      $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
-      
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_computers', $items_id);
       
       // * Computer

@@ -588,11 +588,13 @@ class PluginFusioninventoryFormatconvert {
             if (isset($res_rule["version"]) && $res_rule["version"]!= '') {
                $array_tmp['version'] = $res_rule["version"];
             }
-            if (isset($res_rule["manufacturer"])  && $res_rule["manufacturer"]) {
+            if (isset($res_rule["manufacturer"])) {
                $array_tmp['manufacturers_id'] = $res_rule["manufacturer"];
                $array_tmp['manufacturer'] = Dropdown::getDropdownName("glpi_manufacturers", $res_rule["manufacturer"]);
-            }
-            if (!isset($array_tmp['manufacturer'])) {
+            } else if ($array_tmp['manufacturer'] != '') {
+               $array_tmp['manufacturers_id'] = Dropdown::importExternal("glpi_manufacturers",
+                                                                         $array_tmp['manufacturer']);
+            } else {
                $array_tmp['manufacturers_id'] = 0;
                $array_tmp['manufacturer'] = '';
             }
@@ -636,13 +638,17 @@ class PluginFusioninventoryFormatconvert {
    static function computerReplaceids($array) {
       
       foreach ($array as $key=>$value) {
-         if (is_array($value)) {
-            $array[$key] = PluginFusioninventoryFormatconvert::computerReplaceids($value);
+         if ($key == 'software') {
+            return $array;
          } else {
-            if (isForeignKeyField($key)
-                    && $key != "users_id") {
-               $array[$key] = Dropdown::importExternal(getItemTypeForTable(getTableNameForForeignKeyField($key)),
-                                                       $value);
+            if (is_array($value)) {
+               $array[$key] = PluginFusioninventoryFormatconvert::computerReplaceids($value);
+            } else {
+               if (isForeignKeyField($key)
+                       && $key != "users_id") {
+                  $array[$key] = Dropdown::importExternal(getItemTypeForTable(getTableNameForForeignKeyField($key)),
+                                                          $value);
+               }
             }
          }
       }

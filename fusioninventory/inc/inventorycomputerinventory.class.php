@@ -303,7 +303,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          $pfInventoryComputerLib      = new PluginFusioninventoryInventoryComputerLib();
          $a_computerinventory = PluginFusioninventoryFormatconvert::computerSoftwareTransformation($a_computerinventory);
          $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
-
+         
          $ret = $DB->query("SELECT GET_LOCK('inventory', 15)");
          if ($DB->result($ret, 0, 0) == 1) {
             // * New
