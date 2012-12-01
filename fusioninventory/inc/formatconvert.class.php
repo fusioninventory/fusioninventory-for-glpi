@@ -250,6 +250,7 @@ class PluginFusioninventoryFormatconvert {
       }
             
       // * VIDEOS
+      $a_inventory['graphiccard'] = array();
       if (isset($array['VIDEOS'])) {
          foreach ($array['VIDEOS'] as $a_videos) {
             $a_inventory['graphiccard'][] = $thisc->addValues($a_videos, 
@@ -265,6 +266,7 @@ class PluginFusioninventoryFormatconvert {
       }
       
       // * CONTROLLERS
+      $a_inventory['controller'] = array();
       if (isset($array['CONTROLLERS'])) {
          foreach ($array['CONTROLLERS'] as $a_controllers) {
             if ((isset($a_controllers["NAME"])) 
@@ -278,6 +280,7 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * CPUS
+      $a_inventory['processor'] = array();
       if (isset($array['CPUS'])) {
          foreach ($array['CPUS'] as $a_cpus) {
             $array_tmp = $thisc->addValues($a_cpus, 
@@ -296,6 +299,7 @@ class PluginFusioninventoryFormatconvert {
       }
       
       // * DRIVES
+      $a_inventory['computerdisk'] = array();
       if (isset($array['DRIVES'])) {
          foreach ($array['DRIVES'] as $a_drives) {
             if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
@@ -341,6 +345,7 @@ class PluginFusioninventoryFormatconvert {
       }
       
       // * MEMORIES
+      $a_inventory['memory'] = array();
       if (isset($array['MEMORIES'])) {
          foreach ($array['MEMORIES'] as $a_memories) {
             if ((!isset($a_memories["CAPACITY"]))
@@ -376,6 +381,7 @@ class PluginFusioninventoryFormatconvert {
       
       
       // * NETWORKS
+      $a_inventory['networkport'] = array();
       if (isset($array['NETWORKS'])) {
          $a_networknames = array();
          foreach ($array['NETWORKS'] as $a_networks) {
@@ -438,6 +444,7 @@ class PluginFusioninventoryFormatconvert {
       }
       
       // * STORAGES
+      $a_inventory['harddrive'] = array();
       if (isset($array['STORAGES'])) {
          foreach ($array['STORAGES']  as $a_storage) {
             $type_tmp = PluginFusioninventoryFormatconvert::getTypeDrive($a_storage);
@@ -505,6 +512,7 @@ class PluginFusioninventoryFormatconvert {
       }
      
       // * VIRTUALMACHINES
+      $a_inventory['virtualmachine'] = array();
       if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
               "import_vm", 'inventory') != '0') {
 
@@ -524,6 +532,7 @@ class PluginFusioninventoryFormatconvert {
       }
       
       // * ANTIVIRUS
+      $a_inventory['antivirus'] = array();
       if (isset($array['ANTIVIRUS'])) {
          foreach ($array['ANTIVIRUS'] as $a_antiviruses) {
             $a_inventory['antivirus'][] = $thisc->addValues($a_antiviruses, 
@@ -534,9 +543,6 @@ class PluginFusioninventoryFormatconvert {
                                                              'ENABLED'  => 'is_active',
                                                              'UPTODATE' => 'uptodate'));
          }
-      }
-      if (!isset($a_inventory['antivirus'])) {
-         $a_inventory['antivirus'] = array();
       }
       
       return $a_inventory;

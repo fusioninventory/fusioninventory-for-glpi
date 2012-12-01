@@ -324,7 +324,9 @@ class PluginFusioninventoryInventoryComputerInventory {
             } else {
                $pfConfig   = new PluginFusioninventoryConfig();
                $computer->getFromDB($items_id);
-               if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'transfers_id_auto', 'inventory') == 0) {
+               if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"], 
+                                       'transfers_id_auto', 
+                                       'inventory') == 0) {
                   $_SESSION["plugin_fusinvinventory_entity"] = $computer->fields['entities_id'];
                }
             }

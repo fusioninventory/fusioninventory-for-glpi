@@ -300,16 +300,16 @@ class PluginFusioninventoryCommunication {
       // ********** End ********** //
 
       $config = new PluginFusioninventoryConfig();
-      $module = new PluginFusioninventoryModule();
+      $plugin = new Plugin();
       $user   = new User();
 
       ob_start();
-      $module_id = $module->getModuleId("fusioninventory");
-      $users_id  = $config->getValue($module_id, 'users_id', '');
+      $a_plugins = current($plugin->find("`directory`='fusioninventory'", '', 1));
+      $users_id  = $config->getValue($a_plugins['id'], 'users_id', '');
       $_SESSION['glpiID'] = $users_id;
       $user->getFromDB($users_id);
       Session::changeActiveEntities();
-      $_SESSION["glpiname"] = $user->fields['name'];
+      $_SESSION["glpiname"] = $user->getField('name');
       $_SESSION['glpiactiveprofile'] = array();
       $_SESSION['glpiactiveprofile']['interface'] = '';
       $_SESSION['glpiactiveprofile']['internet'] = 'w';
@@ -368,7 +368,7 @@ class PluginFusioninventoryCommunication {
       $taskjob->reenableusemode();
 
       // check if we are in ssl only mode
-      $ssl = $config->getValue($module_id, 'ssl_only', '');
+      $ssl = $config->getValue($a_plugins['id'], 'ssl_only', '');
       if (
          $ssl == "1"
             AND

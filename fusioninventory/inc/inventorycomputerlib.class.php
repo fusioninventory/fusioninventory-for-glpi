@@ -101,7 +101,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $inputcomment['comment'] = $input['comment'];
             $inputcomment['id'] = $items_id; 
             $inputcomment['_no_history'] = true;
-            $computer->update($input);
+            $computer->update($inputcomment);
          }
       
       // * Computer fusion (ext)
