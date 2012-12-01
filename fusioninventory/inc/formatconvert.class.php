@@ -461,7 +461,12 @@ class PluginFusioninventoryFormatconvert {
                                                      'MODEL'         => 'designation',
                                                      'SERIAL'        => 'serial'));
                   if ($array_tmp['designation'] == '') {
-                     $array_tmp['designation'] = $a_storage['NAME'];
+                     if (isset($a_storage['NAME'])) {
+                        $array_tmp['designation'] = $a_storage['NAME'];
+                     } else if (isset($a_storage['DESIGNATION'])) {
+                        $array_tmp['designation'] = $a_storage['DESIGNATION'];
+                     }
+                     
                   }
                   $a_inventory['harddrive'][] = $array_tmp;
 //                }
@@ -629,7 +634,8 @@ class PluginFusioninventoryFormatconvert {
          if (is_array($value)) {
             $array[$key] = PluginFusioninventoryFormatconvert::computerReplaceids($value);
          } else {
-            if (isForeignKeyField($key)) {
+            if (isForeignKeyField($key)
+                    && $key != "users_id") {
                $array[$key] = Dropdown::importExternal(getItemTypeForTable(getTableNameForForeignKeyField($key)),
                                                        $value);
             }
