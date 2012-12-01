@@ -65,7 +65,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $item_DeviceControl           = new Item_DeviceControl();
       $deviceControl                = new DeviceControl();
       $item_DeviceHardDrive         = new Item_DeviceHardDrive();
-      $deviceHardDrive              = new DeviceHardDrive();
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
       $deviceGraphicCard            = new DeviceGraphicCard();
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
@@ -292,6 +291,57 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
          
       // * Graphiccard
+         
+         $db_graphiccards = array();
+         $query = "SELECT `glpi_items_devicegraphiccards`.`id`, `designation`, `memory` 
+               FROM `glpi_items_devicegraphiccards`
+            LEFT JOIN `glpi_devicegraphiccards` ON `devicegraphiccards_id`=`glpi_devicegraphiccards`.`id`
+            WHERE `items_id` = '$items_id'
+               AND `itemtype`='Computer'";
+         $result = $DB->query($query);         
+         while ($data = $DB->fetch_assoc($result)) {
+            $idtmp = $data['id'];
+            unset($data['id']);            
+            $data = Toolbox::addslashes_deep($data);
+            $data = array_map('strtolower', $data);
+            $db_graphiccards[$idtmp] = $data;
+         }
+
+         if (count($db_graphiccards) == 0) {
+            foreach ($a_computerinventory['graphiccard'] as $a_graphiccard) {
+               $this->addGraphicCard($a_graphiccard, $items_id, false);
+            }
+         } else {
+            // Check all fields from source: 'designation', 'memory'
+            foreach ($a_computerinventory['graphiccard'] as $key => $arrays) {
+               $arrayslower = array_map('strtolower', $arrays);
+               foreach ($db_graphiccards as $keydb => $arraydb) {
+                  if ($arrayslower == $arraydb) {
+                     unset($a_computerinventory['graphiccard'][$key]);
+                     unset($db_graphiccards[$keydb]);
+                     break;
+                  }
+               }
+            }
+
+            if (count($a_computerinventory['graphiccard']) == 0
+               AND count($db_graphiccards) == 0) {
+               // Nothing to do
+            } else {
+               if (count($db_graphiccards) != 0) {
+                  // Delete graphiccard in DB
+                  foreach ($db_graphiccards as $idtmp => $data) {
+                     $item_DeviceGraphicCard->delete(array('id'=>$idtmp));
+                  }
+               }
+               if (count($a_computerinventory['graphiccard']) != 0) {
+                  foreach($a_computerinventory['graphiccard'] as $a_graphiccard) {
+                     $this->addGraphicCard($a_graphiccard, $items_id, false);
+                  }
+               }
+            }
+         }
+         
          
       // * Sound
          
@@ -830,6 +880,22 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $data['_no_history'] = true;
       }
       $item_DeviceHardDrive->add($data);
+   }
+   
+   
+   
+   function addGraphicCard($data, $computers_id, $history=true) {
+      $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
+      $deviceGraphicCard            = new DeviceGraphicCard();
+      
+      $graphiccards_id = $deviceGraphicCard->import($data);
+      $data['devicegraphiccards_id'] = $graphiccards_id;
+      $data['itemtype'] = 'Computer';
+      $data['items_id'] = $computers_id;
+      if ($history === false) {
+         $data['_no_history'] = true;
+      }
+      $item_DeviceGraphicCard->add($data);      
    }
    
 }
