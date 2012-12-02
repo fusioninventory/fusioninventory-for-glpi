@@ -64,6 +64,9 @@ class PluginFusioninventoryFormatconvert {
                            'NETWORKS', 'SOFTWARE', 'USERS', 'VIRTUALMACHINES', 'ANTIVIRUS');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
+                    AND !is_array($datainventory['CONTENT'][$field])) {
+               $datainventory['CONTENT'][$field] = array($datainventory['CONTENT'][$field]);
+            } else if (isset($datainventory['CONTENT'][$field])
                     AND !is_int(key($datainventory['CONTENT'][$field]))) {
                $datainventory['CONTENT'][$field] = array($datainventory['CONTENT'][$field]);
             }
@@ -185,7 +188,8 @@ class PluginFusioninventoryFormatconvert {
             if ((isset($a_inventory['computer']['manufacturers_id']))
                   AND (strstr($a_inventory['computer']['manufacturers_id'], "ewlett"))) {
 
-               if (preg_match("/^[sS]/", $a_inventory['BIOS']['SERIAL'])) {
+               if (isset($a_inventory['BIOS']['SERIAL'])
+                       && preg_match("/^[sS]/", $a_inventory['BIOS']['SERIAL'])) {
                   $a_inventory['computer']['serial'] = trim(preg_replace("/^[sS]/", "", $a_inventory['BIOS']['SERIAL']));
                }
             }
@@ -237,6 +241,7 @@ class PluginFusioninventoryFormatconvert {
       }
       
       // * SOUNDS
+      $a_inventory['soundcard'] = array();
       if (isset($array['SOUNDS'])) {
          foreach ($array['SOUNDS'] as $a_sounds) {
             $a_inventory['soundcard'][] = $thisc->addValues($a_sounds, 
@@ -592,10 +597,10 @@ class PluginFusioninventoryFormatconvert {
                $array_tmp['manufacturers_id'] = $res_rule["manufacturer"];
                $array_tmp['manufacturer'] = Dropdown::getDropdownName("glpi_manufacturers", $res_rule["manufacturer"]);
             } else if ($array_tmp['manufacturer'] != '') {
-               $array_tmp['manufacturers_id'] = Dropdown::importExternal("glpi_manufacturers",
-                                                                         $array_tmp['manufacturer']);
+//               $array_tmp['manufacturers_id'] = Dropdown::importExternal("glpi_manufacturers",
+//                                                                         $array_tmp['manufacturer']);
             } else {
-               $array_tmp['manufacturers_id'] = 0;
+//               $array_tmp['manufacturers_id'] = 0;
                $array_tmp['manufacturer'] = '';
             }
             if (isset($res_rule['new_entities_id'])) {

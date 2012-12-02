@@ -33,3 +33,5 @@ barcode
 behaviors
 internetmonitoring
 iphelper
+fusioninventory/phpunit/Bench/*
+

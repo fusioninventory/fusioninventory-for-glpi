@@ -87,9 +87,15 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          // Hack to put OS in software
          $inputos = array();
-         $inputos['COMMENTS'] = $arrayinventory['CONTENT']['HARDWARE']['OSCOMMENTS'];
-         $inputos['NAME']     = $arrayinventory['CONTENT']['HARDWARE']['OSNAME'];
-         $inputos['VERSION']  = $arrayinventory['CONTENT']['HARDWARE']['OSVERSION'];
+         if (isset($arrayinventory['CONTENT']['HARDWARE']['OSCOMMENTS'])) {
+            $inputos['COMMENTS'] = $arrayinventory['CONTENT']['HARDWARE']['OSCOMMENTS'];
+         }
+         if (isset($arrayinventory['CONTENT']['HARDWARE']['OSNAME'])) {
+            $inputos['NAME']     = $arrayinventory['CONTENT']['HARDWARE']['OSNAME'];
+         }
+         if (isset($arrayinventory['CONTENT']['HARDWARE']['OSVERSION'])) {
+            $inputos['VERSION']  = $arrayinventory['CONTENT']['HARDWARE']['OSVERSION'];
+         }
          $arrayinventory['CONTENT']['SOFTWARES'][] = $inputos;
          
          // Hack for USB Printer serial
@@ -137,7 +143,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
       $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
       $a_computerinventory = $pfBlacklist->cleanBlacklist($a_computerinventory);
-
+      
       $this->arrayinventory = $a_computerinventory;
 
       $input = array();
@@ -303,8 +309,9 @@ class PluginFusioninventoryInventoryComputerInventory {
          $pfInventoryComputerLib      = new PluginFusioninventoryInventoryComputerLib();
          $a_computerinventory = PluginFusioninventoryFormatconvert::computerSoftwareTransformation($a_computerinventory);
          $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
-         
-         $ret = $DB->query("SELECT GET_LOCK('inventory', 15)");
+
+         $ret = $DB->query("SELECT GET_LOCK('inventory', 20)");
+         $timestart = microtime(true);
          if ($DB->result($ret, 0, 0) == 1) {
             // * New
             $computer   = new Computer();
@@ -335,9 +342,18 @@ class PluginFusioninventoryInventoryComputerInventory {
             $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
             
             $pfInventoryComputerLib->updateComputer($a_computerinventory, $items_id);
+            Toolbox::logInFile("exetime", (microtime(true) - $timestart)." (".$a_computerinventory['computer']['name'].")\n");
+            Toolbox::logInFile('exetime', "mem : ".  memory_get_peak_usage()."\n");
+
             $DB->request("SELECT RELEASE_LOCK('inventory')");
          } else {
-             die ("TIMEOUT: SERVER OVERLOADED\n");
+            $communication = new PluginFusioninventoryCommunication();
+            $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
+      <REPLY>
+      <ERROR>TIMEOUT: SERVER OVERLOADED</ERROR>
+      </REPLY>");
+            $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
+            exit;
          }
          
          

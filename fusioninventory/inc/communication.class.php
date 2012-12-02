@@ -407,6 +407,8 @@ class PluginFusioninventoryCommunication {
          }
       }
       
+      $_SESSION['plugin_fusioninventory_compressmode'] = $compressmode;
+      
       // Convert XML into PHP array
       $arrayinventory = array();
       $arrayinventory = PluginFusioninventoryFormatconvert::XMLtoArray($pxml);

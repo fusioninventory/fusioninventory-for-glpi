@@ -899,6 +899,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $softwareVersion              = new SoftwareVersion();
       $computer_SoftwareVersion     = new Computer_SoftwareVersion();
       
+      $data['_no_message'] = true;
+      
       $softwares_id = $software->addOrRestoreFromTrash($data['name'],
                                                        $data['manufacturer'],
                                                        $data['entities_id']);
@@ -907,9 +909,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $softwareversions_id = $softwareVersion->add($data);
       $data['computers_id'] = $computers_id;
       $data['softwareversions_id'] = $softwareversions_id;
-      if ($history === false) {
+//      if ($history === false) {
          $data['_no_history'] = true;
-      }
+//      }
       $computer_SoftwareVersion->add($data);
    }
 }
