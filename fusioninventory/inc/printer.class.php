@@ -168,7 +168,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
       echo "</textarea>";
       echo "</td>";
       echo "<td align='center'>";
-      echo __('Last inventory')."&nbsp;:";
+      echo __('Last inventory', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       echo Html::convDateTime($this->oFusionInventory_printer->fields['last_fusioninventory_update']);

@@ -48,8 +48,8 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5150]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerlibserialization';
          $sopt[5150]['field']     = 'last_fusioninventory_update';
          $sopt[5150]['linkfield'] = '';
-         $sopt[5150]['name']      = __('FusInv')." - ".
-            __('Last inventory');
+         $sopt[5150]['name']      = __('FusInv', 'fusioninventory')." - ".
+            __('Last inventory', 'fusioninventory');
 
          $sopt[5150]['datatype']  = 'datetime';
          $sopt[5150]['itemlink_type'] = 'PluginFusioninventoryInventoryComputerLib';
@@ -81,14 +81,14 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5155]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5155]['field']     = 'bios_date';
          $sopt[5155]['linkfield'] = '';
-         $sopt[5155]['name']      = __('BIOS')."-".__('Date');
+         $sopt[5155]['name']      = __('BIOS', 'fusioninventory')."-".__('Date');
 
          $sopt[5155]['datatype']  = 'date';
 
          $sopt[5156]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5156]['field']     = 'bios_version';
          $sopt[5156]['linkfield'] = '';
-         $sopt[5156]['name']      = __('BIOS')."-".__('Version');
+         $sopt[5156]['name']      = __('BIOS', 'fusioninventory')."-".__('Version');
 
 
          $sopt[5157]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
@@ -114,7 +114,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5192]['table']='glpi_plugin_fusioninventory_networkequipments';
       $sopt[5192]['field']='name';
       $sopt[5192]['linkfield']='';
-      $sopt[5192]['name']=__('FusInv')." - ".__('Switch');
+      $sopt[5192]['name']=__('FusInv', 'fusioninventory')." - ".__('Switch');
 
       $sopt[5192]['itemlink_type'] = 'NetworkEquipment';
 
@@ -122,7 +122,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5193]['table']='glpi_plugin_fusioninventory_networkports';
       $sopt[5193]['field']='id';
       $sopt[5193]['linkfield']='';
-      $sopt[5193]['name']=__('FusInv')." - ".__('Hardware ports');
+      $sopt[5193]['name']=__('FusInv', 'fusioninventory')." - ".__('Hardware ports');
 
       $sopt[5193]['forcegroupby']='1';
    }
@@ -132,7 +132,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5192]['table']='glpi_plugin_fusioninventory_networkequipments';
       $sopt[5192]['field']='name';
       $sopt[5192]['linkfield']='';
-      $sopt[5192]['name']=__('FusInv')." - ".__('Switch');
+      $sopt[5192]['name']=__('FusInv', 'fusioninventory')." - ".__('Switch');
 
       $sopt[5192]['itemlink_type'] = 'NetworkEquipment';
 
@@ -140,14 +140,14 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5193]['table']='glpi_plugin_fusioninventory_networkports';
       $sopt[5193]['field']='id';
       $sopt[5193]['linkfield']='';
-      $sopt[5193]['name']=__('FusInv')." - ".__('Hardware ports');
+      $sopt[5193]['name']=__('FusInv', 'fusioninventory')." - ".__('Hardware ports');
 
       $sopt[5193]['forcegroupby']='1';
 
       $sopt[5190]['table']='glpi_plugin_fusioninventory_snmpmodels';
       $sopt[5190]['field']='name';
       $sopt[5190]['linkfield']='plugin_fusioninventory_snmpmodels_id';
-      $sopt[5190]['name']=__('FusInv')." - ".
+      $sopt[5190]['name']=__('FusInv', 'fusioninventory')." - ".
          __('SNMP models');
 
       $sopt[5190]['massiveaction'] = false;
@@ -161,7 +161,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5191]['table'] = 'glpi_plugin_fusioninventory_printers';
          $sopt[5191]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
          $sopt[5191]['linkfield'] = 'id';
-         $sopt[5191]['name'] = __('FusInv')." - ".
+         $sopt[5191]['name'] = __('FusInv', 'fusioninventory')." - ".
             __('SNMP authentication');
 
          $sopt[5191]['massiveaction'] = false;
@@ -169,7 +169,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5191]['table']='glpi_plugin_fusioninventory_configsecurities';
          $sopt[5191]['field']='name';
          $sopt[5191]['linkfield']='id';
-         $sopt[5191]['name']=__('FusInv')." - ".
+         $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".
             __('SNMP authentication');
 
          $sopt[5191]['datatype'] = 'itemlink';
@@ -180,8 +180,8 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5194]['table']='glpi_plugin_fusioninventory_printers';
       $sopt[5194]['field']='last_fusioninventory_update';
       $sopt[5194]['linkfield']='';
-      $sopt[5194]['name']=__('FusInv')." - ".
-         __('Last inventory');
+      $sopt[5194]['name']=__('FusInv', 'fusioninventory')." - ".
+         __('Last inventory', 'fusioninventory');
 
       $sopt[5194]['datatype'] = 'datetime';
 
@@ -197,7 +197,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5190]['table']='glpi_plugin_fusioninventory_snmpmodels';
       $sopt[5190]['field']='name';
       $sopt[5190]['linkfield']='plugin_fusioninventory_snmpmodels_id';
-      $sopt[5190]['name']=__('FusInv')." - ".
+      $sopt[5190]['name']=__('FusInv', 'fusioninventory')." - ".
          __('SNMP models');
 
       $sopt[5190]['massiveaction'] = false;
@@ -209,21 +209,21 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5191]['table']='glpi_plugin_fusioninventory_configsecurities';
       $sopt[5191]['field']='name';
       $sopt[5191]['linkfield']='plugin_fusinvsnmp_configsecurities_id';
-      $sopt[5191]['name']=__('FusInv')." - ".__('SNMP authentication');
+      $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".__('SNMP authentication');
       $sopt[5191]['massiveaction'] = false;
 
       $sopt[5194]['table']='glpi_plugin_fusioninventory_networkequipments';
       $sopt[5194]['field']='last_fusioninventory_update';
       $sopt[5194]['linkfield']='';
-      $sopt[5194]['name']=__('FusInv')." - ".
-         __('Last inventory');
+      $sopt[5194]['name']=__('FusInv', 'fusioninventory')." - ".
+         __('Last inventory', 'fusioninventory');
 
       $sopt[5194]['datatype'] = 'datetime';
 
       $sopt[5195]['table']='glpi_plugin_fusioninventory_networkequipments';
       $sopt[5195]['field']='cpu';
       $sopt[5195]['linkfield']='';
-      $sopt[5195]['name']=__('FusInv')." - ".
+      $sopt[5195]['name']=__('FusInv', 'fusioninventory')." - ".
          __('CPU usage (in %)');
 
       $sopt[5195]['datatype'] = 'number';
@@ -808,7 +808,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
 
 //            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-//               $array[3] = __('FusInv')." ".__('Tasks');
+//               $array[3] = __('FusInv', 'fusioninventory')." ".__('Tasks');
 
 //            }
 
@@ -823,10 +823,10 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-               $array[2] = __('FusInv')." ".__('Tasks');
+               $array[2] = __('FusInv', 'fusioninventory')." ".__('Tasks');
             }
             if ($_GET['id'] > 0) {
-               $array[3] = __('FusInv')." ".__('XML');
+               $array[3] = __('FusInv', 'fusioninventory')." ".__('XML');
             }
             return $array;
          }
@@ -838,10 +838,10 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer", "r")) {
-               $array[1] = __('FusInv')." ".__('SNMP');
+               $array[1] = __('FusInv', 'fusioninventory')." ".__('SNMP');
             }
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-               $array[2] = __('FusInv')." ".__('Tasks');
+               $array[2] = __('FusInv', 'fusioninventory')." ".__('Tasks');
             }
             return $array;
          }
@@ -857,7 +857,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
                $array[1] = $LANG['plugin_fusioninventory']['title'][0];
             }
             if ($_GET['id'] > 0) {
-               $array[3] = __('FusInv')." ".__('XML');
+               $array[3] = __('FusInv', 'fusioninventory')." ".__('XML');
             }
 
             return $array;
@@ -868,7 +868,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          $array = array ();
          if ($_GET['id'] > 0) {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","r")) {
-               $array[1] = __('FusInv')." ".__('XML');
+               $array[1] = __('FusInv', 'fusioninventory')." ".__('XML');
 
             }
          }
@@ -878,7 +878,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
       case 'PluginFusioninventoryCredentialIp':
          $array = array();
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-            $array[1] = __('FusInv')." ".__('Tasks');
+            $array[1] = __('FusInv', 'fusioninventory')." ".__('Tasks');
 
          }
          return $array;
@@ -976,7 +976,7 @@ function plugin_headings_fusioninventory_xml($item) {
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
       echo "<th>".__('XML');
-      echo " (".__('Last inventory')."&nbsp;: " . Html::convDateTime(date("Y-m-d H:i:s", filemtime($filename))).")";
+      echo " (".__('Last inventory', 'fusioninventory')."&nbsp;: " . Html::convDateTime(date("Y-m-d H:i:s", filemtime($filename))).")";
       echo "</th>";
       echo "</tr>";
 

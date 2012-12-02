@@ -132,7 +132,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
-      echo '<th colspan="2" width="50%">'.__('BIOS').'</th>';
+      echo '<th colspan="2" width="50%">'.__('BIOS', 'fusioninventory').'</th>';
       echo '<th colspan="2">'.__('Others').'</th>';
       echo '</tr>';
 
@@ -195,10 +195,10 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          // $xml = str_replace("\n", "<br/>", $xml);
          echo "<table class='tab_cadre_fixe' cellpadding='1'>";
          echo "<tr>";
-         echo "<th>".__('FusInv')." ".
+         echo "<th>".__('FusInv', 'fusioninventory')." ".
             __('XML');
 
-         echo " (".__('Last inventory')."&nbsp;: " .
+         echo " (".__('Last inventory', 'fusioninventory')."&nbsp;: " .
             Html::convDateTime(date("Y-m-d H:i:s",
                          filemtime(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id))).")";
          echo "</th>";

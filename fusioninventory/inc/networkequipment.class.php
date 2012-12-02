@@ -173,7 +173,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "</td>";
       echo "<td align='center'>";
-      echo __('Last inventory')."&nbsp;:";
+      echo __('Last inventory', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       echo Html::convDateTime($this->fields['last_fusioninventory_update']);
