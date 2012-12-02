@@ -9,7 +9,7 @@ my @threads;
 $nb_xml = 0;
 for ($f=2; $f < 1000; $f++) {
    $overload = 0;
-$f = 4;
+   #$f = 1;
    $nb_xml += $f;
    my @threads;
    print "========== ".$f." inventories ========== ".$nb_xml."\n";

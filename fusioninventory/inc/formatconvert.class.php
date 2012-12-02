@@ -262,8 +262,9 @@ class PluginFusioninventoryFormatconvert {
                                                               array(
                                                                  'NAME'   => 'designation', 
                                                                  'MEMORY' => 'memory'));
-
-            $ignorecontrollers[$a_videos['NAME']] = 1;
+            if (isset($a_videos['NAME'])) {
+               $ignorecontrollers[$a_videos['NAME']] = 1;
+            }
             if (isset($a_videos['CHIPSET'])) {
                $ignorecontrollers[$a_videos['CHIPSET']] = 1;
             }

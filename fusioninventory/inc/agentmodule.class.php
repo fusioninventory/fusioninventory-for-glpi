@@ -101,90 +101,87 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       $a_modules = $this->find();
       foreach ($a_modules as $data) {
-         $plugin->getFromDB($data['plugins_id']);
-         if ($plugin->isActivated($plugin->fields['directory'])) {
-            echo "<form name='form_ic' method='post' action='". Toolbox::getItemTypeFormURL(__CLASS__)."'>";
-            echo "<table class='tab_cadre_fixe'>";
-            echo "<tr>";
-            echo "<th width='130'>".__('Module')."</th>";
-            echo "<th width='180'>".__('Activation (by default)')."</th>";
-            echo "<th>".__('Exceptions')."</th>";
-            echo "</tr>";
+         echo "<form name='form_ic' method='post' action='". Toolbox::getItemTypeFormURL(__CLASS__)."'>";
+         echo "<table class='tab_cadre_fixe'>";
+         echo "<tr>";
+         echo "<th width='130'>".__('Module')."</th>";
+         echo "<th width='180'>".__('Activation (by default)')."</th>";
+         echo "<th>".__('Exceptions')."</th>";
+         echo "</tr>";
 
-            echo "<tr class='tab_bg_1'>";
-            $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-            $modulename = $data["modulename"];
-            $use_rest = false;
+         echo "<tr class='tab_bg_1'>";
+         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+         $modulename = $data["modulename"];
+         $use_rest = false;
 
-            foreach ($a_methods as $datamod) {
+         foreach ($a_methods as $datamod) {
 
-               if ((strtolower($data["modulename"]) == strtolower($datamod['method'])) ||
-                   isset($datamod['task'])
-                     && (strtolower($data["modulename"]) == strtolower($datamod['task']))) {
-                  if (isset($datamod['use_rest']) && $datamod['use_rest'] == true) {
-                     $use_rest = true;
-                  }
-                  if (isset($datamod['name'])) {
-                     $modulename = $datamod['name'];
-                  }
-                  break;
+            if ((strtolower($data["modulename"]) == strtolower($datamod['method'])) ||
+                isset($datamod['task'])
+                  && (strtolower($data["modulename"]) == strtolower($datamod['task']))) {
+               if (isset($datamod['use_rest']) && $datamod['use_rest'] == true) {
+                  $use_rest = true;
                }
+               if (isset($datamod['name'])) {
+                  $modulename = $datamod['name'];
+               }
+               break;
             }
-            // Hack for snmpquery
-               if ($modulename == 'SNMPQUERY') {
-                  $modulename = __('Network inventory (SNMP)');
+         }
+         // Hack for snmpquery
+            if ($modulename == 'SNMPQUERY') {
+               $modulename = __('Network inventory (SNMP)');
 
-               }
-            echo "<td align='center'><strong>".$modulename."</strong></td>";
+            }
+         echo "<td align='center'><strong>".$modulename."</strong></td>";
+         echo "<td align='center'>";
+         $checked = $data['is_active'];
+         $check = "";
+         if ($checked == 1)
+            $check = "checked='checked'";
+         echo "<input type='checkbox' name='activation' value='Activation' ".$check." />";
+         echo "</td>";
+         echo "<td>";
+            echo "<table>";
+            echo "<tr>";
+            echo "<td>";
+            $a_agentList = importArrayFromDB($data['exceptions']);
+            $a_used = array();
+            foreach ($a_agentList as $agent_id) {
+               $a_used[] = $agent_id;
+            }
+            Dropdown::show("PluginFusioninventoryAgent", array("name" => "agent_to_add[]",
+                                                               "used" => $a_used));
+            echo "</td>";
             echo "<td align='center'>";
-            $checked = $data['is_active'];
-            $check = "";
-            if ($checked == 1)
-               $check = "checked='checked'";
-            echo "<input type='checkbox' name='activation' value='Activation' ".$check." />";
+            echo "<input type='submit' class='submit' name='agent_add' value='" .
+               __s('Add') . " >>'>";
+            echo "<br><br>";
+            echo "<input type='submit' class='submit' name='agent_delete' value='<< " .
+               __s('Delete') . "'>";
             echo "</td>";
             echo "<td>";
-               echo "<table>";
-               echo "<tr>";
-               echo "<td>";
-               $a_agentList = importArrayFromDB($data['exceptions']);
-               $a_used = array();
-               foreach ($a_agentList as $agent_id) {
-                  $a_used[] = $agent_id;
-               }
-               Dropdown::show("PluginFusioninventoryAgent", array("name" => "agent_to_add[]",
-                                                                  "used" => $a_used));
-               echo "</td>";
-               echo "<td align='center'>";
-               echo "<input type='submit' class='submit' name='agent_add' value='" .
-                  __s('Add') . " >>'>";
-               echo "<br><br>";
-               echo "<input type='submit' class='submit' name='agent_delete' value='<< " .
-                  __s('Delete') . "'>";
-               echo "</td>";
-               echo "<td>";
 
-               echo "<select size='6' name='agent_to_delete[]'>";
-               foreach ($a_agentList as $agent_id) {
-                  $pfAgent->getFromDB($agent_id);
-                  echo "<option value='".$agent_id."'>".$pfAgent->getName()."</option>";
-               }
-               echo "</select>";
-               echo "</td>";
-               echo "</tr>";
-               echo "</table>";
-            echo "</td>";
-
-            echo "<tr>";
-            echo "<td class='tab_bg_2 center' colspan='3'>";
-            echo "<input type='submit' name='update' value=\"".__s('Update')."\" class='submit'>";
+            echo "<select size='6' name='agent_to_delete[]'>";
+            foreach ($a_agentList as $agent_id) {
+               $pfAgent->getFromDB($agent_id);
+               echo "<option value='".$agent_id."'>".$pfAgent->getName()."</option>";
+            }
+            echo "</select>";
             echo "</td>";
             echo "</tr>";
             echo "</table>";
-            echo "<input type='hidden' name='id' value='".$data['id']."' />";
-            Html::closeForm();
-            echo "<br/>";
-         }
+         echo "</td>";
+
+         echo "<tr>";
+         echo "<td class='tab_bg_2 center' colspan='3'>";
+         echo "<input type='submit' name='update' value=\"".__s('Update')."\" class='submit'>";
+         echo "</td>";
+         echo "</tr>";
+         echo "</table>";
+         echo "<input type='hidden' name='id' value='".$data['id']."' />";
+         Html::closeForm();
+         echo "<br/>";
       }
       return true;
    }

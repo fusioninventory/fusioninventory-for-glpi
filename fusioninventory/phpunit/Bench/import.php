@@ -12,6 +12,7 @@ if (isset($_SERVER['argv'])
 include('../emulatoragent.php');
 $emulatorAgent = new emulatorAgent;
 $emulatorAgent->server_urlpath = "/glpi084/plugins/fusioninventory/";
+$emulatorAgent->server_ip = "127.0.0.1";
 
 $overload = 0;
 $start_time = microtime(true);
