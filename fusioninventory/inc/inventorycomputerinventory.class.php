@@ -323,11 +323,13 @@ class PluginFusioninventoryInventoryComputerInventory {
                     OR $_SESSION["plugin_fusinvinventory_entity"] == '-1') {
                $_SESSION["plugin_fusinvinventory_entity"] = 0;
             }
-            
+            $_SESSION["plugin_fusioninventory_no_history"] = false;
+
             if ($items_id == '0') {
                $input = array();
                $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
                $items_id = $computer->add($input);
+               $_SESSION["plugin_fusioninventory_no_history"] = true;
             } else {
                $pfConfig   = new PluginFusioninventoryConfig();
                $computer->getFromDB($items_id);
