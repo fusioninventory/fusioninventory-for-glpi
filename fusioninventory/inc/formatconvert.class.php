@@ -258,10 +258,13 @@ class PluginFusioninventoryFormatconvert {
       $a_inventory['graphiccard'] = array();
       if (isset($array['VIDEOS'])) {
          foreach ($array['VIDEOS'] as $a_videos) {
-            $a_inventory['graphiccard'][] = $thisc->addValues($a_videos, 
-                                                              array(
-                                                                 'NAME'   => 'designation', 
-                                                                 'MEMORY' => 'memory'));
+            $array_tmp = $thisc->addValues($a_videos,array(
+                                                        'NAME'   => 'designation', 
+                                                        'MEMORY' => 'memory'));
+            if ($array_tmp['memory'] == '') {
+               $array_tmp['memory'] = 0;
+            }
+            $a_inventory['graphiccard'][] = $array_tmp;
             if (isset($a_videos['NAME'])) {
                $ignorecontrollers[$a_videos['NAME']] = 1;
             }
@@ -644,12 +647,17 @@ class PluginFusioninventoryFormatconvert {
    static function computerReplaceids($array) {
       
       foreach ($array as $key=>$value) {
-         if ($key == 'software') {
+         if (!is_int($key)
+                 && $key == "software") {
             return $array;
          } else {
             if (is_array($value)) {
                $array[$key] = PluginFusioninventoryFormatconvert::computerReplaceids($value);
             } else {
+               if ($key == "manufacturers_id") {
+                  $manufacturer = new Manufacturer();
+                  $array[$key] = $manufacturer->processName($value);
+               } 
                if (isForeignKeyField($key)
                        && $key != "users_id") {
                   $array[$key] = Dropdown::importExternal(getItemTypeForTable(getTableNameForForeignKeyField($key)),

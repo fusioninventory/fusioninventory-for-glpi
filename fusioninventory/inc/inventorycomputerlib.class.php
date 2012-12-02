@@ -796,7 +796,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             foreach ($db_antivirus as $keydb => $arraydb) {
                if ($arrayslower == $arraydb) {
                   $input = array();
-                  $input = $a_computerinventory['virtualmachine'][$key];
+                  $input = $a_computerinventory['antivirus'][$key];
                   $input['id'] = $keydb;
                   $pfInventoryComputerAntivirus->update($input);
                   unset($simpleantivirus[$key]);
