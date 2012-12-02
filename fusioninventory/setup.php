@@ -89,7 +89,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
                             array('rulecollections_types'=>true));
       Plugin::registerClass('PluginFusioninventoryRulematchedlog',
-              array('addtabon' => array('PluginFusioninventoryAgent',
+              array('addtabon' => array('Computer',
+                                        'PluginFusioninventoryAgent',
                                         'PluginFusioninventoryUnknownDevice',
                                         'Printer',
                                         'NetworkEquipment')));
