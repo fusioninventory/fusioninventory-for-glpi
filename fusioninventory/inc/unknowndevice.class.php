@@ -333,12 +333,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center' rowspan='2'>";
-      echo __('Sysdescr')."&nbsp;:";
+      echo __('Sysdescr', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td rowspan='2'>";
       echo "<textarea name='sysdescr'  cols='45' rows='5' />".$this->fields["sysdescr"]."</textarea>";
 
-      echo "<td align='center'>".__('SNMP models')."&nbsp;:</td>";
+      echo "<td align='center'>".__('SNMP models', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       if (!empty($pfUnknownDevice->fields['item_type'])) {
          Dropdown::show("PluginFusioninventorySnmpmodel",
@@ -351,7 +351,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".__('SNMP authentication')."&nbsp;:</td>";
+      echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       PluginFusioninventoryConfigSecurity::auth_dropdown($this->fields['plugin_fusioninventory_configsecurities_id']);
       echo "</td>";

@@ -199,7 +199,7 @@ class PluginFusioninventoryStaticmisc {
                          'name'    => __('VMware host')),
           
                    array('profil'  => 'configsecurity',
-                          'name'    => __('SNMP authentication')),
+                          'name'    => __('SNMP authentication', 'fusioninventory')),
 
                    array('profil'  => 'networkequipment',
                           'name'    => __('Network equipment SNMP')),

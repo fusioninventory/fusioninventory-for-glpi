@@ -67,7 +67,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
          $LANG['plugin_fusinvsnmp']['model_info'][12] = "Key of model discovery";
       }
 
-      $tab['common'] = __('SNMP models');
+      $tab['common'] = __('SNMP models', 'fusioninventory');
 
 
       $tab[1]['table'] = $this->getTable();

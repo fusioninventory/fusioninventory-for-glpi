@@ -153,7 +153,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       if ($a_computerextend['winowner'] == '') {
          echo "<td colspan='2'></td>";
       } else {
-         echo '<td>'.__('Owner').'&nbsp;:</td>';
+         echo '<td>'.__('Owner', 'fusioninventory').'&nbsp;:</td>';
          echo '<td>'.$a_computerextend['winowner'].'</td>';
       }
       echo '</tr>';
@@ -167,7 +167,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       if ($a_computerextend['wincompany'] == '') {
          echo "<td colspan='2'></td>";
       } else {
-         echo '<td>'.__('Company').'&nbsp;:</td>';
+         echo '<td>'.__('Company', 'fusioninventory').'&nbsp;:</td>';
          echo '<td>'.$a_computerextend['wincompany'].'</td>';
       }
       echo '</tr>';

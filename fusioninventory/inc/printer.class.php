@@ -159,7 +159,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo __('Sysdescr');
+      echo __('Sysdescr', 'fusioninventory');
 
       echo "</td>";
       echo "<td>";
@@ -176,7 +176,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' rowspan='2'>".__('SNMP models')."&nbsp;:</td>";
+      echo "<td align='center' rowspan='2'>".__('SNMP models', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       $query_models = "SELECT *
                        FROM `glpi_plugin_fusioninventory_snmpmodels`
@@ -193,7 +193,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
                            'comment'=>false,
                            'used'=>$exclude_models));
       echo "</td>";
-      echo "<td align='center'>".__('SNMP authentication')."&nbsp;:</td>";
+      echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       PluginFusioninventoryConfigSecurity::auth_dropdown($this->oFusionInventory_printer->fields["plugin_fusinvsnmp_configsecurities_id"]);
       echo "</td>";

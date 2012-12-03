@@ -131,13 +131,13 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center' rowspan='3'>";
-      echo __('Sysdescr')."&nbsp;:";
+      echo __('Sysdescr', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td rowspan='3'>";
       echo "<textarea name='sysdescr' cols='45' rows='5'>";
       echo $this->fields['sysdescr'];
       echo "</textarea>";
-      echo "<td align='center' rowspan='2'>".__('SNMP models')."&nbsp;:</td>";
+      echo "<td align='center' rowspan='2'>".__('SNMP models', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       $query_models = "SELECT *
                        FROM `glpi_plugin_fusioninventory_snmpmodels`
@@ -164,7 +164,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".__('SNMP authentication')."&nbsp;:</td>";
+      echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       PluginFusioninventoryConfigSecurity::auth_dropdown($this->fields['plugin_fusioninventory_configsecurities_id']);
       echo "</td>";

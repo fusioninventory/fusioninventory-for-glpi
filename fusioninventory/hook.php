@@ -100,13 +100,13 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5158]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5158]['field']     = 'winowner';
          $sopt[5158]['linkfield'] = '';
-         $sopt[5158]['name']      = __('Owner');
+         $sopt[5158]['name']      = __('Owner', 'fusioninventory');
 
 
          $sopt[5159]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5159]['field']     = 'wincompany';
          $sopt[5159]['linkfield'] = '';
-         $sopt[5159]['name']      = __('Company');
+         $sopt[5159]['name']      = __('Company', 'fusioninventory');
    }
    
    if ($itemtype == 'Computer') {
@@ -148,7 +148,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5190]['field']='name';
       $sopt[5190]['linkfield']='plugin_fusioninventory_snmpmodels_id';
       $sopt[5190]['name']=__('FusInv', 'fusioninventory')." - ".
-         __('SNMP models');
+         __('SNMP models', 'fusioninventory');
 
       $sopt[5190]['massiveaction'] = false;
 
@@ -162,7 +162,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5191]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
          $sopt[5191]['linkfield'] = 'id';
          $sopt[5191]['name'] = __('FusInv', 'fusioninventory')." - ".
-            __('SNMP authentication');
+            __('SNMP authentication', 'fusioninventory');
 
          $sopt[5191]['massiveaction'] = false;
       } else {
@@ -170,7 +170,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5191]['field']='name';
          $sopt[5191]['linkfield']='id';
          $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".
-            __('SNMP authentication');
+            __('SNMP authentication', 'fusioninventory');
 
          $sopt[5191]['datatype'] = 'itemlink';
          $sopt[5191]['itemlink_type'] = 'PluginFusioninventoryConfigSecurity';
@@ -188,7 +188,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5196]['table']         = 'glpi_plugin_fusioninventory_printers';
       $sopt[5196]['field']         = 'sysdescr';
       $sopt[5196]['linkfield']     = '';
-      $sopt[5196]['name']          = __('Sysdescr');
+      $sopt[5196]['name']          = __('Sysdescr', 'fusioninventory');
 
       $sopt[5196]['datatype']      = 'text';
    }
@@ -198,7 +198,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5190]['field']='name';
       $sopt[5190]['linkfield']='plugin_fusioninventory_snmpmodels_id';
       $sopt[5190]['name']=__('FusInv', 'fusioninventory')." - ".
-         __('SNMP models');
+         __('SNMP models', 'fusioninventory');
 
       $sopt[5190]['massiveaction'] = false;
 
@@ -209,7 +209,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5191]['table']='glpi_plugin_fusioninventory_configsecurities';
       $sopt[5191]['field']='name';
       $sopt[5191]['linkfield']='plugin_fusinvsnmp_configsecurities_id';
-      $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".__('SNMP authentication');
+      $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".__('SNMP authentication', 'fusioninventory');
       $sopt[5191]['massiveaction'] = false;
 
       $sopt[5194]['table']='glpi_plugin_fusioninventory_networkequipments';
@@ -231,7 +231,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5196]['table']         = 'glpi_plugin_fusioninventory_networkequipments';
       $sopt[5196]['field']         = 'sysdescr';
       $sopt[5196]['linkfield']     = '';
-      $sopt[5196]['name']          = __('Sysdescr');
+      $sopt[5196]['name']          = __('Sysdescr', 'fusioninventory');
 
       $sopt[5196]['datatype']      = 'text';
 

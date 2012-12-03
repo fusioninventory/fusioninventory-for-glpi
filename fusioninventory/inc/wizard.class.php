@@ -364,7 +364,7 @@ class PluginFusioninventoryWizard {
       __('Action choice')   => "w_start",
       __('Type of device to inventory')   => "w_inventorychoice",
       __('IP Ranges')  => "w_iprange",
-//      __('SNMP authentication')   => "w_authsnmp",
+//      __('SNMP authentication', 'fusioninventory')   => "w_authsnmp",
 //      __('Equipment import and link rules')    => "w_importrules",
 //      __('Task management')     => "w_tasks",
       __('Run tasks')   => "w_tasksforcerun",
@@ -413,7 +413,7 @@ class PluginFusioninventoryWizard {
 
       return array(
       __('IP Ranges')  => "w_iprange",
-      //__('SNMP authentication')   => "w_authsnmp",
+      //__('SNMP authentication', 'fusioninventory')   => "w_authsnmp",
       //__('Equipment import and link rules')    => "w_importrules",
       //__('Task management')     => "w_tasks",
       __('Run tasks')   => "w_tasksforcerun",
