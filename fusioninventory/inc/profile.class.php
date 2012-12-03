@@ -48,7 +48,10 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
    
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      return self::createTabEntry('FusionInventory');
+      if ($item->getID() > 0
+              && $item->fields['interface'] == 'central') {
+         return self::createTabEntry('FusionInventory');
+      }
    }
 
 
