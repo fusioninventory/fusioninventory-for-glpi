@@ -104,7 +104,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "<form name='form_ic' method='post' action='". Toolbox::getItemTypeFormURL(__CLASS__)."'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
-         echo "<th width='130'>".__('Module')."</th>";
+         echo "<th width='130'>".__('Module', 'fusioninventory')."</th>";
          echo "<th width='180'>".__('Activation (by default)')."</th>";
          echo "<th>".__('Exceptions')."</th>";
          echo "</tr>";
@@ -210,9 +210,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
-      echo "<th>".__('Module')."</th>";
+      echo "<th>".__('Module', 'fusioninventory')."</th>";
       echo "<th>Activation</th>";
-      echo "<th>".__('Module')."</th>";
+      echo "<th>".__('Module', 'fusioninventory')."</th>";
       echo "<th>Activation</th>";
       echo "</tr>";
 

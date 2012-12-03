@@ -50,7 +50,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
    static function getTypeName($nb=0) {
 
-      return __('Locks');
+      return _n('Lock', 'Locks', 2, 'fusioninventory');
 
    }
 
@@ -87,9 +87,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       if (Session::haveRight(strtolower($itemtype), "w")) {
          if ($_SESSION['glpishow_count_on_tabs']) {
-            return self::createTabEntry(__('Locks'), self::countForLock($item));
+            return self::createTabEntry(_n('Lock', 'Locks', 2, 'fusioninventory'), self::countForLock($item));
          }
-         return __('Locks');
+         return _n('Lock', 'Locks', 2, 'fusioninventory');
 
       }
       return '';
@@ -164,7 +164,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if ($p_items_id != '0') {
          echo "<th>&nbsp;".__('Values')."&nbsp;</th>";
       }
-      echo "<th>&nbsp;".__('Locks')."&nbsp;</th></tr>";
+      echo "<th>&nbsp;"._n('Lock', 'Locks', 2, 'fusioninventory')."&nbsp;</th></tr>";
 
       $checked = '';
       $a_exclude = $this->excludeFields();

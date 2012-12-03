@@ -213,7 +213,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
       echo "<input type='text' name='name' size='41' value='".$this->fields["name"]."'/>";
       echo "</td>";
-      echo "<td height='18'>".__('Module')."&nbsp;:</td>";
+      echo "<td height='18'>".__('Module', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       $randmethod = $this->dropdownMethod("method", $this->fields['method']);
       if ($id != '') {

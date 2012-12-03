@@ -147,15 +147,15 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       if ($selected_value == "0"){$selected = 'selected';}else{$selected = '';}
       echo "<option value='0' ".$selected.">-----</option>\n";
       if ($selected_value == COMPUTER_TYPE){$selected = 'selected';}else{$selected = '';}
-      echo "<option value='".COMPUTER_TYPE."' ".$selected.">".__('Computers')."</option>\n";
+      echo "<option value='".COMPUTER_TYPE."' ".$selected.">"._n('Computer', 'Computers', 2)."</option>\n";
       if ($selected_value == NETWORKING_TYPE){$selected = 'selected';}else{$selected = '';}
-      echo "<option value='".NETWORKING_TYPE."' ".$selected.">".__('Networks')."</option>\n";
+      echo "<option value='".NETWORKING_TYPE."' ".$selected.">"._n('Network device', 'Network devices', 2)."</option>\n";
       if ($selected_value == PRINTER_TYPE){$selected = 'selected';}else{$selected = '';}
-      echo "<option value='".PRINTER_TYPE."' ".$selected.">".__('Printers')."</option>\n";
+      echo "<option value='".PRINTER_TYPE."' ".$selected.">"._n('Printer', 'Printers', 2)."</option>\n";
       if ($selected_value == PERIPHERAL_TYPE){$selected = 'selected';}else{$selected = '';}
-      echo "<option value='".PERIPHERAL_TYPE."' ".$selected.">".__('Devices')."</option>\n";
+      echo "<option value='".PERIPHERAL_TYPE."' ".$selected.">"._n('Device', 'Devices', 2)."</option>\n";
       if ($selected_value == PHONE_TYPE){$selected = 'selected';}else{$selected = '';}
-      echo "<option value='".PHONE_TYPE."' ".$selected.">".__('Phones')."</option>\n";
+      echo "<option value='".PHONE_TYPE."' ".$selected.">"._n('Phone', 'Phones', 2)."</option>\n";
       echo "</select>";
 
       echo "</td>";

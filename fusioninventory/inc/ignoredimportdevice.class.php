@@ -110,7 +110,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
       echo "</th>";
       echo "<th>";
-      echo __('Module');
+      echo __('Module', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";

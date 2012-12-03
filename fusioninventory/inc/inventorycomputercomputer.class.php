@@ -196,7 +196,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo "<table class='tab_cadre_fixe' cellpadding='1'>";
          echo "<tr>";
          echo "<th>".__('FusInv', 'fusioninventory')." ".
-            __('XML');
+            __('XML', 'fusioninventory');
 
          echo " (".__('Last inventory', 'fusioninventory')."&nbsp;: " .
             Html::convDateTime(date("Y-m-d H:i:s",

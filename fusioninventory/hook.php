@@ -224,7 +224,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5195]['field']='cpu';
       $sopt[5195]['linkfield']='';
       $sopt[5195]['name']=__('FusInv', 'fusioninventory')." - ".
-         __('CPU usage (in %)');
+         __('CPU usage (in %)', 'fusioninventory');
 
       $sopt[5195]['datatype'] = 'number';
 
@@ -826,7 +826,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
                $array[2] = __('FusInv', 'fusioninventory')." ".__('Tasks');
             }
             if ($_GET['id'] > 0) {
-               $array[3] = __('FusInv', 'fusioninventory')." ".__('XML');
+               $array[3] = __('FusInv', 'fusioninventory')." ".__('XML', 'fusioninventory');
             }
             return $array;
          }
@@ -838,7 +838,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer", "r")) {
-               $array[1] = __('FusInv', 'fusioninventory')." ".__('SNMP');
+               $array[1] = __('FusInv', 'fusioninventory')." ".__('SNMP', 'fusioninventory');
             }
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
                $array[2] = __('FusInv', 'fusioninventory')." ".__('Tasks');
@@ -857,7 +857,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
                $array[1] = $LANG['plugin_fusioninventory']['title'][0];
             }
             if ($_GET['id'] > 0) {
-               $array[3] = __('FusInv', 'fusioninventory')." ".__('XML');
+               $array[3] = __('FusInv', 'fusioninventory')." ".__('XML', 'fusioninventory');
             }
 
             return $array;
@@ -868,7 +868,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          $array = array ();
          if ($_GET['id'] > 0) {
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","r")) {
-               $array[1] = __('FusInv', 'fusioninventory')." ".__('XML');
+               $array[1] = __('FusInv', 'fusioninventory')." ".__('XML', 'fusioninventory');
 
             }
          }
@@ -975,7 +975,7 @@ function plugin_headings_fusioninventory_xml($item) {
       $xml = str_replace("\n", "<br/>", $xml);
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
-      echo "<th>".__('XML');
+      echo "<th>".__('XML', 'fusioninventory');
       echo " (".__('Last inventory', 'fusioninventory')."&nbsp;: " . Html::convDateTime(date("Y-m-d H:i:s", filemtime($filename))).")";
       echo "</th>";
       echo "</tr>";
@@ -1037,14 +1037,14 @@ function plugin_fusioninventory_MassiveActions($type) {
 
       case "Computer":
          return array (
-            "plugin_fusioninventory_manage_locks" => __('Locks')
+            "plugin_fusioninventory_manage_locks" => _n('Lock', 'Locks', 2, 'fusioninventory')
 
          );
          break;
 
       case "NetworkEquipment":
          return array (
-            "plugin_fusioninventory_manage_locks"  => __('Locks'),
+            "plugin_fusioninventory_manage_locks"  => _n('Lock', 'Locks', 2, 'fusioninventory'),
             "plugin_fusioninventory_get_model"          => __('Load the correct SNMP model'),
             "plugin_fusioninventory_assign_model"       => __('Assign SNMP model'),
             "plugin_fusioninventory_assign_auth"        => __('Assign SNMP authentication')
@@ -1053,7 +1053,7 @@ function plugin_fusioninventory_MassiveActions($type) {
 
       case "Printer":
          return array (
-            "plugin_fusioninventory_manage_locks"  => __('Locks'),
+            "plugin_fusioninventory_manage_locks"  => _n('Lock', 'Locks', 2, 'fusioninventory'),
             "plugin_fusioninventory_get_model"          => __('Load the correct SNMP model'),
             "plugin_fusioninventory_assign_model"       => __('Assign SNMP model'),
             "plugin_fusioninventory_assign_auth"        => __('Assign SNMP authentication')
@@ -1065,7 +1065,7 @@ function plugin_fusioninventory_MassiveActions($type) {
          $a_modules = $pfAgentmodule->find();
          $array = array();
          foreach ($a_modules as $data) {
-            $array["plugin_fusioninventory_agentmodule".$data["modulename"]] = __('Module')." - ".$data['modulename'];
+            $array["plugin_fusioninventory_agentmodule".$data["modulename"]] = __('Module', 'fusioninventory')." - ".$data['modulename'];
          }
          $array['plugin_fusioninventory_transfert']            = __('Transfer');
          $array['plugin_fusioninventory_set_discovery_threads']     = __('Threads number')."&nbsp;(".strtolower(__('Network discovery')).")";

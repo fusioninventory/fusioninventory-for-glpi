@@ -168,7 +168,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $tab[$i]['table']         = $pfAgentmodule->getTable();
          $tab[$i]['field']         = $data["modulename"];
          $tab[$i]['linkfield']     = $data["modulename"];
-         $tab[$i]['name']          = __('Module')." - ".$data["modulename"];
+         $tab[$i]['name']          = __('Module', 'fusioninventory')." - ".$data["modulename"];
          $tab[$i]['datatype']      = 'bool';
          $tab[$i]['massiveaction'] = false;
          $i++;

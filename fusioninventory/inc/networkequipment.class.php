@@ -179,7 +179,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo Html::convDateTime($this->fields['last_fusioninventory_update']);
       echo "</td>";
       echo "<td align='center'>";
-      echo __('CPU usage (in %)')."&nbsp;:";
+      echo __('CPU usage (in %)', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Html::displayProgressBar(250, $this->fields['cpu'],
