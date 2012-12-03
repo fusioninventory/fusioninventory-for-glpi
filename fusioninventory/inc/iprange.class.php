@@ -128,7 +128,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       $ong = array();
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
-         $ong[1] = __('Tasks');
+         $ong[1] = _n('Task', 'Tasks', 2);
 
       }
       return $ong;

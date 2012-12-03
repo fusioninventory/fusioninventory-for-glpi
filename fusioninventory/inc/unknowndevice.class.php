@@ -182,7 +182,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $ong = array();
       if ($this->fields['id'] > 0){
-         $ong[1]=__('Connections');
+         $ong[1]=_n('Connection', 'Connections', 2);
 
          $ong[2]=__('Import');
 

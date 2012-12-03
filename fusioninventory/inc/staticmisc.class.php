@@ -76,12 +76,12 @@ class PluginFusioninventoryStaticmisc {
 
       $a_tasks[] = array('module'         => 'fusioninventory',
                          'method'         => 'networkdiscovery',
-                         'name'           => __('Network discovery'));
+                         'name'           => __('Network discovery', 'fusioninventory'));
 
 
       $a_tasks[] = array('module'         => 'fusioninventory',
                          'method'         => 'networkinventory',
-                         'name'           => __('Network inventory (SNMP)'));
+                         'name'           => __('Network inventory (SNMP)', 'fusioninventory'));
       
       return $a_tasks;
    }
@@ -175,7 +175,7 @@ class PluginFusioninventoryStaticmisc {
                          'name'    => __('Unknown devices')),
 
                    array('profil'  => 'task',
-                         'name'    => __('Tasks')),
+                         'name'    => _n('Task', 'Tasks', 2)),
 
                    array('profil'  => 'iprange',
                          'name'    => __('IP range configuration')),

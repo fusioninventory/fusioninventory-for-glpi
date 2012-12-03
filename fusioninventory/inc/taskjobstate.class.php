@@ -154,7 +154,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
          case 'all':
             $search = "";
-            $title = __('Tasks');
+            $title = _n('Task', 'Tasks', 2);
 
             $icon = "";
             break;
@@ -192,7 +192,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          echo "<th></th>";
          echo "<th>".__('Unique id')."</th>";
          echo "<th>".__('Job')."</th>";
-         echo "<th>".__('Agent')."</th>";
+         echo "<th>".__('Agent', 'fusioninventory')."</th>";
          echo "<th>";
          echo __('Date');
 

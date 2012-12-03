@@ -808,7 +808,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
 
 //            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-//               $array[3] = __('FusInv', 'fusioninventory')." ".__('Tasks');
+//               $array[3] = __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
 
 //            }
 
@@ -823,7 +823,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
          } else { // Non template case / editing an existing object
             $array = array ();
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-               $array[2] = __('FusInv', 'fusioninventory')." ".__('Tasks');
+               $array[2] = __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
             }
             if ($_GET['id'] > 0) {
                $array[3] = __('FusInv', 'fusioninventory')." ".__('XML', 'fusioninventory');
@@ -841,7 +841,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
                $array[1] = __('FusInv', 'fusioninventory')." ".__('SNMP', 'fusioninventory');
             }
             if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-               $array[2] = __('FusInv', 'fusioninventory')." ".__('Tasks');
+               $array[2] = __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
             }
             return $array;
          }
@@ -878,7 +878,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
       case 'PluginFusioninventoryCredentialIp':
          $array = array();
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
-            $array[1] = __('FusInv', 'fusioninventory')." ".__('Tasks');
+            $array[1] = __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
 
          }
          return $array;
@@ -1045,18 +1045,18 @@ function plugin_fusioninventory_MassiveActions($type) {
       case "NetworkEquipment":
          return array (
             "plugin_fusioninventory_manage_locks"  => _n('Lock', 'Locks', 2, 'fusioninventory'),
-            "plugin_fusioninventory_get_model"          => __('Load the correct SNMP model'),
-            "plugin_fusioninventory_assign_model"       => __('Assign SNMP model'),
-            "plugin_fusioninventory_assign_auth"        => __('Assign SNMP authentication')
+            "plugin_fusioninventory_get_model"          => __('Load the correct SNMP model', 'fusioninventory'),
+            "plugin_fusioninventory_assign_model"       => __('Assign SNMP model', 'fusioninventory'),
+            "plugin_fusioninventory_assign_auth"        => __('Assign SNMP authentication', 'fusioninventory')
          );
          break;
 
       case "Printer":
          return array (
             "plugin_fusioninventory_manage_locks"  => _n('Lock', 'Locks', 2, 'fusioninventory'),
-            "plugin_fusioninventory_get_model"          => __('Load the correct SNMP model'),
-            "plugin_fusioninventory_assign_model"       => __('Assign SNMP model'),
-            "plugin_fusioninventory_assign_auth"        => __('Assign SNMP authentication')
+            "plugin_fusioninventory_get_model"          => __('Load the correct SNMP model', 'fusioninventory'),
+            "plugin_fusioninventory_assign_model"       => __('Assign SNMP model', 'fusioninventory'),
+            "plugin_fusioninventory_assign_auth"        => __('Assign SNMP authentication', 'fusioninventory')
          );
          break;
 
@@ -1068,16 +1068,16 @@ function plugin_fusioninventory_MassiveActions($type) {
             $array["plugin_fusioninventory_agentmodule".$data["modulename"]] = __('Module', 'fusioninventory')." - ".$data['modulename'];
          }
          $array['plugin_fusioninventory_transfert']            = __('Transfer');
-         $array['plugin_fusioninventory_set_discovery_threads']     = __('Threads number')."&nbsp;(".strtolower(__('Network discovery')).")";
-         $array['plugin_fusioninventory_set_snmpinventory_threads'] = __('Threads number')."&nbsp;(".strtolower(__('Network inventory (SNMP)')).")";
+         $array['plugin_fusioninventory_set_discovery_threads']     = __('Threads number', 'fusioninventory')."&nbsp;(".strtolower(__('Network discovery', 'fusioninventory')).")";
+         $array['plugin_fusioninventory_set_snmpinventory_threads'] = __('Threads number', 'fusioninventory')."&nbsp;(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")";
          return $array;
          break;
 
       case "PluginFusioninventoryUnknownDevice";
          return array (
             "plugin_fusioninventory_unknown_import"   => __('Import'),
-            "plugin_fusioninventory_assign_model"          => __('Assign SNMP model'),
-            "plugin_fusioninventory_assign_auth"           => __('Assign SNMP authentication')
+            "plugin_fusioninventory_assign_model"          => __('Assign SNMP model', 'fusioninventory'),
+            "plugin_fusioninventory_assign_auth"           => __('Assign SNMP authentication', 'fusioninventory')
          );
          break;
 
@@ -1091,7 +1091,7 @@ function plugin_fusioninventory_MassiveActions($type) {
       case 'PluginFusioninventoryTaskjob':
          return array(
             'plugin_fusioninventory_task_forceend' =>
-               __('Force the end')
+               __('Force the end', 'fusioninventory')
 
          );
          break;
@@ -1349,7 +1349,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                   list($Import, $NoImport) = $pfUnknownDevice->import($key,$Import,$NoImport);
                }
             }
-             Session::addMessageAfterRedirect(__('Number of imported devices')." : ".$Import);
+             Session::addMessageAfterRedirect(__('Number of imported devices', 'fusioninventory')." : ".$Import);
              Session::addMessageAfterRedirect(__('Number of devices not imported because type not defined')." : ".$NoImport);
          }
          break;

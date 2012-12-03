@@ -88,8 +88,7 @@ if (isset($_GET['file'])) {
          if ($fsize){
             echo fread($f, filesize($file));
          } else {
-            echo __('1');
-
+            
          }
 
          if ($mc) @ini_set('magic_quotes_runtime', $mc);

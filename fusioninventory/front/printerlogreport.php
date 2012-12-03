@@ -46,7 +46,7 @@ $DBCONNECTION_REQUIRED=0;
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
-Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","printerlog");
+Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","printerlog");
 
 PluginFusioninventoryProfile::checkRight("fusinvsnmp","reportprinter","r");
 

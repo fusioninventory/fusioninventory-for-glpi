@@ -130,7 +130,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          }
          // Hack for snmpquery
             if ($modulename == 'SNMPQUERY') {
-               $modulename = __('Network inventory (SNMP)');
+               $modulename = __('Network inventory (SNMP)', 'fusioninventory');
 
             }
          echo "<td align='center'><strong>".$modulename."</strong></td>";
@@ -233,7 +233,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             }
             // Hack for snmpquery
                if ($modulename == 'SNMPQUERY') {
-                  $modulename = __('Network inventory (SNMP)');
+                  $modulename = __('Network inventory (SNMP)', 'fusioninventory');
 
                }
             echo "<td width='50%'>".$modulename." :</td>";

@@ -129,7 +129,7 @@ if (isset($_POST["delete_criteria"])) {
    $rule->redirectToList();
 }
 
-Html::header(__('Rules'), $_SERVER['PHP_SELF'], "admin",
+Html::header(_n('Rule', 'Rules', 2, 'fusioninventory'), $_SERVER['PHP_SELF'], "admin",
              $rulecollection->menu_type, $rulecollection->menu_option);
 
 $rule->showForm($_GET["id"]);

@@ -262,7 +262,7 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['webservices']['fusioninventory'] = 'plugin_fusioninventory_registerMethods';
 
          // Fil ariane
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['title'] = __('Menu');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['title'] = __('Menu', 'fusioninventory');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['page']  = '/plugins/fusioninventory/front/wizard.php';
 

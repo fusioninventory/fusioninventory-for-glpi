@@ -87,13 +87,13 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th>".__('Unique id')."</th>";
-      echo "<th>".__('Agent')."</th>";
+      echo "<th>".__('Agent', 'fusioninventory')."</th>";
       echo "<th>".__('Status')."</th>";
       echo "<th>".__('Starting date')."</th>";
       echo "<th>".__('Ending date')."</th>";
       echo "<th>".__('Total duration')."</th>";
       echo "<th>".__('Number per second')."</th>";
-      echo "<th>".__('Threads number')."</th>";
+      echo "<th>".__('Threads number', 'fusioninventory')."</th>";
       echo "<th>".__('To inventory')."</th>";
       echo "<th>".__('Error(s)')."</th>";
       echo "</tr>";

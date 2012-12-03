@@ -130,7 +130,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       $sopt[2]['table']          = 'glpi_plugin_fusioninventory_tasks';
       $sopt[2]['field']          = 'name';
-      $sopt[2]['name']           = __('Tasks');
+      $sopt[2]['name']           = _n('Task', 'Tasks', 2);
 
       $sopt[2]['datatype']       = 'itemlink';
       $sopt[2]['itemlink_type']  = "PluginFusioninventoryTask";
@@ -234,7 +234,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "<th></th>";
             echo "<th>".__('Unique id')."</th>";
             echo "<th>".__('Process number')."</th>";
-            echo "<th>".__('Agent')."</th>";
+            echo "<th>".__('Agent', 'fusioninventory')."</th>";
             echo "<th>";
             echo __('Date');
 
@@ -300,7 +300,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "<tr>";
             echo "<th></th>";
             echo "<th>".__('Unique id')."</th>";
-            echo "<th>".__('Agent')."</th>";
+            echo "<th>".__('Agent', 'fusioninventory')."</th>";
             echo "<th>";
             echo __('Date');
 
@@ -425,7 +425,7 @@ function appear_array(id){
          echo "<form name='form' method='post' action='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjob.form.php'>";
          echo "<input type='hidden' name='taskjobstates_id' value='".$pfTaskjobstate->fields['id']."' />";
          echo "<input type='hidden' name='taskjobs_id' value='".$pfTaskjobstate->fields['plugin_fusioninventory_taskjobs_id']."' />";
-         echo '<input name="forceend" value="'.__('Force the end').'"
+         echo '<input name="forceend" value="'.__('Force the end', 'fusioninventory').'"
              class="submit" type="submit">';
          Html::closeForm();
          echo "</td>";
@@ -489,7 +489,7 @@ function appear_array(id){
             $text .= "</tr>";
             $text .= "<tr class='tab_bg_1'>";
             $text .= "<th colspan='2'>";
-            $text .= __('Agent');
+            $text .= __('Agent', 'fusioninventory');
 
             $text .= "</th>";
             $a_return = $this->displayHistoryDetail(array_shift($a_history));
@@ -852,7 +852,7 @@ function appear_array(id){
             __('View logs of this execution')."</a>";
          echo "<input type='hidden' name='taskjobstates_id' value='".$taskstates_id."' />";
          echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
-         echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.__('Force the end').'"
+         echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.__('Force the end', 'fusioninventory').'"
              class="submit" type="submit">';
          echo "</td>";
          if ($veryshort == '0') {

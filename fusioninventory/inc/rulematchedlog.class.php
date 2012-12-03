@@ -138,7 +138,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "</th>";
       echo "<th>";
-      echo __('Agent');
+      echo __('Agent', 'fusioninventory');
 
       echo "</th>";
       echo "<th>";

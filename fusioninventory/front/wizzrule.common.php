@@ -112,7 +112,7 @@ if (isset($_GET["action"])) {
    $max = get_cfg_var("max_execution_time");
    $max = $start + ($max>0 ? $max/2.0 : 30.0);
 
-   Html::header(__('Rules'), $_SERVER['PHP_SELF'], "admin", $rulecollection->menu_type,
+   Html::header(_n('Rule', 'Rules', 2, 'fusioninventory'), $_SERVER['PHP_SELF'], "admin", $rulecollection->menu_type,
                 $rulecollection->menu_option);
 
    if (!(isset($_POST['replay_confirm']) || isset($_GET['offset']))
@@ -164,7 +164,7 @@ if (isset($_GET["action"])) {
    exit();
 }
 
-//Html::header(__('Rules'), $_SERVER['PHP_SELF'], "admin", $rulecollection->menu_type,
+//Html::header(_n('Rule', 'Rules', 2, 'fusioninventory'), $_SERVER['PHP_SELF'], "admin", $rulecollection->menu_type,
 //             $rulecollection->menu_option);
    $tabs = array();
    if ($rulecollection->showInheritedTab()) {
@@ -176,7 +176,7 @@ if (isset($_GET["action"])) {
                                     get_class($rulecollection));
    }
 
-   $title = __('Rules');
+   $title = _n('Rule', 'Rules', 2, 'fusioninventory');
 
    if ($rulecollection->isRuleRecursive()) {
       $title = __('Local rules').' : '.Dropdown::getDropdownName('glpi_entities',

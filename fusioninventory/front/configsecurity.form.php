@@ -49,7 +49,7 @@ PluginFusioninventoryProfile::checkRight("fusioninventory", "configsecurity","r"
 $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
 $config = new PluginFusioninventoryConfig();
 
-Html::header(__('FusionInventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","configsecurity");
+Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","configsecurity");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

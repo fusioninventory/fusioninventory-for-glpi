@@ -56,7 +56,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    **/
    static function getTypeName($nb=0) {
 
-      return __('Agent');
+      return __('Agent', 'fusioninventory');
 
    }
 
@@ -77,7 +77,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = __('Agent');
+      $tab['common'] = __('Agent', 'fusioninventory');
 
 
       $tab[1]['table']     = $this->getTable();
@@ -102,7 +102,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[4]['table']     = $this->getTable();
       $tab[4]['field']     = 'last_contact';
       $tab[4]['linkfield'] = '';
-      $tab[4]['name']      = __('Last contact');
+      $tab[4]['name']      = __('Last contact', 'fusioninventory');
 
       $tab[4]['datatype']  = 'datetime';
 
@@ -200,7 +200,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function getComments() {
 
       $comment = __('Useragent').' : '.$this->fields['useragent'].'<br/>
-         '.__('Last contact').' : '.Html::convDateTime($this->fields['last_contact']).' minutes';
+         '.__('Last contact', 'fusioninventory').' : '.Html::convDateTime($this->fields['last_contact']).' minutes';
 
       if (!empty($comment)) {
          return Html::showToolTip($comment, array('display' => false));
@@ -284,7 +284,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Threads number')."&nbsp;(".strtolower(__('Network discovery')).")&nbsp;:</td>";
+      echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("threads_networkdiscovery", $this->fields["threads_networkdiscovery"],1,400);
       echo "</td>";
@@ -295,11 +295,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Threads number')."&nbsp;(".strtolower(__('Network inventory (SNMP)')).")&nbsp;:</td>";
+      echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("threads_networkinventory", $this->fields["threads_networkinventory"],1,400);
       echo "</td>";
-      echo "<td>".__('Last contact')."&nbsp:</td>";
+      echo "<td>".__('Last contact', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
       echo Html::convDateTime($this->fields["last_contact"]);
       echo "</td>";
@@ -537,7 +537,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo __('Agent')."&nbsp:";
+      echo __('Agent', 'fusioninventory')."&nbsp:";
       echo "</td>";
       echo "<td>";
       $pFusioninventoryAgent = new PluginFusioninventoryAgent();

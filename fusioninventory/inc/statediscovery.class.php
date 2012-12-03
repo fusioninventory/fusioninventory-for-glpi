@@ -136,7 +136,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th>".__('Unique id')."</th>";
-      echo "<th>".__('Agent')."</th>";
+      echo "<th>".__('Agent', 'fusioninventory')."</th>";
       echo "<th>".__('Status')."</th>";
       echo "<th>".__('Starting date')."</th>";
       echo "<th>".__('Ending date')."</th>";

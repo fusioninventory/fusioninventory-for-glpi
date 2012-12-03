@@ -321,7 +321,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
             echo "<tr>";
             echo "<th colspan='4'>".__('Rights management')." ";
-            echo __('FusionInventory')." :</th>";
+            echo __('FusionInventory', 'fusioninventory')." :</th>";
             echo "</tr>";
 
             $i = 0;
