@@ -48,7 +48,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return __('Antivirus');
+      return __('Antivirus', 'fusioninventory');
 
    }
 
@@ -86,7 +86,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
          if (Session::haveRight('computer', "r")) {
             $a_antivirus = $this->find("`computers_id`='".$item->getID()."'", '', 1);
             if (count($a_antivirus) > 0) {
-               return self::createTabEntry(__('Antivirus'));
+               return self::createTabEntry(__('Antivirus', 'fusioninventory'));
 
             }
          }
@@ -142,7 +142,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
       
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
-      echo "<th colspan='4'>".__('Antivirus');
+      echo "<th colspan='4'>".__('Antivirus', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";
@@ -171,7 +171,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
          echo Dropdown::getDropdownName('glpi_manufacturers', $antivirusData["manufacturers_id"]);
          echo "</td>";
          echo "<td>";
-         echo __('Up to date')."&nbsp;:";
+         echo __('Up to date', 'fusioninventory')."&nbsp;:";
          echo "</td>";
          echo "<td>";
          echo Dropdown::getYesNo($antivirusData['uptodate']);

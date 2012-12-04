@@ -215,7 +215,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                break;
 
             default :
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.__('Unattended element in').' CONTENT : '.$childname;
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.__('Unattended element in', 'fusioninventory').' CONTENT : '.$childname;
                $this->addtaskjoblog();
          }
       }
@@ -267,7 +267,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
             break;
 
          default:
-            $errors.=__('Unattended element in').' TYPE : '
+            $errors.=__('Unattended element in', 'fusioninventory').' TYPE : '
                               .$a_inventory['itemtype']."\n";
       }
       return;
@@ -308,7 +308,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                      }
 
                   default:
-                     $errors.=__('Unattended element in').' DEVICE : '
+                     $errors.=__('Unattended element in', 'fusioninventory').' DEVICE : '
                               .$childname."\n";
                }
             }
@@ -441,7 +441,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                break;
 
             default:
-               $errors.=__('Unattended element in').' INFO : '.$childname."\n";
+               $errors.=__('Unattended element in', 'fusioninventory').' INFO : '.$childname."\n";
 
          }
       }
@@ -562,7 +562,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                   break;
 
                default:
-                  $errors.=__('Unattended element in').' PORT : '.$name."\n";
+                  $errors.=__('Unattended element in', 'fusioninventory').' PORT : '.$name."\n";
             }
          }
          // Update
@@ -619,7 +619,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                $pfPrinterCartridge->add($input);
             }
          } else {
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.__('Unattended element in').' CARTRIDGES : '.$name;
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.__('Unattended element in', 'fusioninventory').' CARTRIDGES : '.$name;
             $this->addtaskjoblog();
          }
       }
@@ -704,7 +704,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                break;
 
             default:
-               $errors.=__('Unattended element in').' PAGECOUNTERS : '.$childname."\n";
+               $errors.=__('Unattended element in', 'fusioninventory').' PAGECOUNTERS : '.$childname."\n";
 
          }
       }
@@ -732,7 +732,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
          if ($cdp==1) {
             $pfNetworkPort->setCDP();
          } else {
-            $errors.=__('Unattended element in').' CONNECTIONS : CDP='.$cdp."\n";
+            $errors.=__('Unattended element in', 'fusioninventory').' CONNECTIONS : CDP='.$cdp."\n";
          }
       }
       $count = 0;
@@ -785,7 +785,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                break;
 
             default:
-               $errors.=__('Unattended element in').' CONNECTIONS : '
+               $errors.=__('Unattended element in', 'fusioninventory').' CONNECTIONS : '
                         .$child->getName()."\n";
          }
       }
@@ -825,7 +825,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                   break;
 
                default:
-                  $errors.=__('Unattended element in').' CONNECTION (CDP='.$p_cdp.') : '
+                  $errors.=__('Unattended element in', 'fusioninventory').' CONNECTION (CDP='.$p_cdp.') : '
                            .$childname."\n";
 
             }
@@ -850,7 +850,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                   break;
 
                default:
-                  $errors.=__('Unattended element in').' CONNECTION (CDP='.$p_cdp.') : '
+                  $errors.=__('Unattended element in', 'fusioninventory').' CONNECTION (CDP='.$p_cdp.') : '
                            .$childname."\n";
 
             }
@@ -879,7 +879,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                break;
 
             default :
-               $errors.=__('Unattended element in').' VLANS : '.$child->getName()."\n";
+               $errors.=__('Unattended element in', 'fusioninventory').' VLANS : '.$child->getName()."\n";
 
          }
       }
@@ -911,7 +911,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                break;
 
             default:
-               $errors.=__('Unattended element in').' VLAN : '.$childname."\n";
+               $errors.=__('Unattended element in', 'fusioninventory').' VLAN : '.$childname."\n";
 
          }
       }

@@ -75,7 +75,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
       $tab[3]['table']         = $this->getTable();
       $tab[3]['field']         = 'ifmtu';
-      $tab[3]['name']          = __('MTU');
+      $tab[3]['name']          = __('MTU', 'fusioninventory');
 
       $tab[5]['table']         = $this->getTable();
       $tab[5]['field']         = 'ifspeed ';
@@ -83,27 +83,27 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
       $tab[6]['table']         = $this->getTable();
       $tab[6]['field']         = 'ifinternalstatus';
-      $tab[6]['name']          = __('Internal status');
+      $tab[6]['name']          = __('Internal status', 'fusioninventory');
 
       $tab[7]['table']         = $this->getTable();
       $tab[7]['field']         = 'iflastchange';
-      $tab[7]['name']          = __('Last change');
+      $tab[7]['name']          = __('Last change', 'fusioninventory');
 
       $tab[8]['table']         = $this->getTable();
       $tab[8]['field']         = 'ifinoctets';
-      $tab[8]['name']          = __('Number of bytes received / Number of bytes sent');
+      $tab[8]['name']          = __('Number of bytes received / Number of bytes sent', 'fusioninventory');
 
       $tab[9]['table']         = $this->getTable();
       $tab[9]['field']         = 'ifinerrors';
-      $tab[9]['name']          = __('Number of input errors / Number of errors in reception');
+      $tab[9]['name']          = __('Number of input errors / Number of errors in reception', 'fusioninventory');
 
       $tab[10]['table']         = $this->getTable();
       $tab[10]['field']         = 'portduplex';
-      $tab[10]['name']          = __('Duplex');
+      $tab[10]['name']          = __('Duplex', 'fusioninventory');
 
       $tab[11]['table']         = $this->getTable();
       $tab[11]['field']         = 'mac';
-      $tab[11]['name']          = __('Internal MAC address');
+      $tab[11]['name']          = __('Internal MAC address', 'fusioninventory');
 
       $tab[12]['table']         = $this->getTable();
       $tab[12]['field']         = 'vlan';

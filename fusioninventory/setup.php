@@ -195,15 +195,15 @@ function plugin_init_fusioninventory() {
          
          $report_list = array();
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "reportprinter","r")) {
-            $report_list["front/printerlogreport.php"] = __('Printed page counter');
+            $report_list["front/printerlogreport.php"] = __('Printed page counter', 'fusioninventory');
 
          }
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "reportnetworkequipment","r")) {
-            $report_list["report/switch_ports.history.php"] = __('Switchs ports history');
+            $report_list["report/switch_ports.history.php"] = __('Switchs ports history', 'fusioninventory');
 
-            $report_list["report/ports_date_connections.php"] = __('Unused switchs ports');
+            $report_list["report/ports_date_connections.php"] = __('Unused switchs ports', 'fusioninventory');
 
-            $report_list["report/not_queried_recently.php"] = __('Number of days since last inventory');
+            $report_list["report/not_queried_recently.php"] = __('Number of days since last inventory', 'fusioninventory');
 
          }
          $PLUGIN_HOOKS['reports']['fusioninventory'] = $report_list;
@@ -255,8 +255,8 @@ function plugin_init_fusioninventory() {
          }
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']
             ["<img  src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/books.png'
-               title='".__('Documentation')."'
-               alt='".__('Documentation')."'>"] =
+               title='".__('Documentation', 'fusioninventory')."'
+               alt='".__('Documentation', 'fusioninventory')."'>"] =
             'front/documentation.php';
 
          $PLUGIN_HOOKS['webservices']['fusioninventory'] = 'plugin_fusioninventory_registerMethods';
@@ -266,15 +266,15 @@ function plugin_init_fusioninventory() {
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['page']  = '/plugins/fusioninventory/front/wizard.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['title'] = __('Task management');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['title'] = __('Task management', 'fusioninventory');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['page']  = '/plugins/fusioninventory/front/task.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['taskjob']['title'] = __('Running jobs');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['taskjob']['title'] = __('Running jobs', 'fusioninventory');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['taskjob']['page']  = '/plugins/fusioninventory/front/taskjob.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['title'] = __('Agents management');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['title'] = __('Agents management', 'fusioninventory');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
 
@@ -282,20 +282,20 @@ function plugin_init_fusioninventory() {
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['page']  = '/plugins/fusioninventory/front/config.form.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['title'] = __('Unknown device');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['title'] = __('Unknown device', 'fusioninventory');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['page']  = '/plugins/fusioninventory/front/unknowndevice.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['inventoryruleimport']['title'] = __('Equipment import and link rules');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['inventoryruleimport']['title'] = __('Equipment import and link rules', 'fusioninventory');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['inventoryruleimport']['page']  = '/plugins/fusioninventory/front/inventoryruleimport.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['wizard-start']['title'] = __('Wizard');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['wizard-start']['title'] = __('Wizard', 'fusioninventory');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['wizard-start']['page']  = '/plugins/fusioninventory/front/wizard.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['title'] =
-            __('IP range configuration');
+            __('IP range configuration', 'fusioninventory');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['page']  =
             '/plugins/fusioninventory/front/iprange.php';
@@ -328,15 +328,15 @@ function plugin_init_fusioninventory() {
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['page']  = '/plugins/fusioninventory/front/inventorycomputerblacklist.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['title'] = __('Criteria rules');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['title'] = __('Criteria rules', 'fusioninventory');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['page']  = '/plugins/fusinvinventory/front/ruleinventory.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['title'] = __('Entity rules');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['title'] = __('Entity rules', 'fusioninventory');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['page']  = '/plugins/fusioninventory/front/inventoryruleentity.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['title'] = __('Import agent XML file');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['title'] = __('Import agent XML file', 'fusioninventory');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['page']  = '/plugins/fusinvinventory/front/importxml.php';
          
@@ -348,7 +348,7 @@ function plugin_init_fusioninventory() {
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['page']  = '/plugins/fusioninventory/front/configsecurity.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['title'] = __('Discovery status');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['title'] = __('Discovery status', 'fusioninventory');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['page']  = '/plugins/fusioninventory/front/statediscovery.php';
          
@@ -403,7 +403,7 @@ function plugin_fusioninventory_check_prerequisites() {
    global $DB;
 
    if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
-      echo __('Your GLPI version not compatible, require 0.84');
+      echo __('Your GLPI version not compatible, require 0.84', 'fusioninventory');
 
       return false;
    }

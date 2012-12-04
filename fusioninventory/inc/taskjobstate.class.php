@@ -140,14 +140,14 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
          case 'running':
             $search = " AND `state`!='".self::FINISHED."'";
-            $title = __('Running tasks');
+            $title = __('Running tasks', 'fusioninventory');
 
             $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_running.png'/>";
             break;
 
          case 'finished':
             $search = " AND `state`='".self::FINISHED."'";
-            $title = __('Finished tasks');
+            $title = __('Finished tasks', 'fusioninventory');
 
             $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
             break;
@@ -190,8 +190,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          echo "<table class='tab_cadre' width='950'>";
          echo "<tr>";
          echo "<th></th>";
-         echo "<th>".__('Unique id')."</th>";
-         echo "<th>".__('Job')."</th>";
+         echo "<th>".__('Unique id', 'fusioninventory')."</th>";
+         echo "<th>".__('Job', 'fusioninventory')."</th>";
          echo "<th>".__('Agent', 'fusioninventory')."</th>";
          echo "<th>";
          echo __('Date');

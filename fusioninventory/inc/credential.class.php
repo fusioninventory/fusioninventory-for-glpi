@@ -51,7 +51,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
    static function getTypeName($nb=0) {
 
-      return __('Authentication for remote devices (VMware)');
+      return __('Authentication for remote devices (VMware)', 'fusioninventory');
 
    }
 
@@ -151,7 +151,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       $tab = array();
 
-      $tab['common'] = __('Authentication for remote devices (VMware)');
+      $tab['common'] = __('Authentication for remote devices (VMware)', 'fusioninventory');
 
 
       $tab[1]['table'] = $this->getTable();
@@ -385,7 +385,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       $buttons = array();
       if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r')) {
-         $buttons["credentialip.php"] = __('Remote devices to inventory (VMware)');
+         $buttons["credentialip.php"] = __('Remote devices to inventory (VMware)', 'fusioninventory');
 
       }
    }

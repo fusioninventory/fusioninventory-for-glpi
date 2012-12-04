@@ -58,20 +58,20 @@ class PluginFusioninventoryStaticmisc {
       $a_tasks = array();
       $a_tasks[] = array('module'          => 'fusioninventory',
                          'method'          => 'wakeonlan',
-                         'name'            => __('Wake On LAN'),
+                         'name'            => __('Wake On LAN', 'fusioninventory'),
                          'use_rest'        => false);
 
       $a_tasks[] =  array('module'         => 'fusioninventory',
                           'method'         => 'inventory',
                           'selection_type' => 'devices',
                           'hidetask'       => 1,
-                          'name'           => __('Computer Inventory'),
+                          'name'           => __('Computer Inventory', 'fusioninventory'),
                           'use_rest'       => false);
 
       $a_tasks[] = array('module'         => 'fusioninventory',
                          'method'         => 'ESX',
                          'selection_type' => 'devices',
-                         'name'           => __('VMware host remote inventory'),
+                         'name'           => __('VMware host remote inventory', 'fusioninventory'),
                          'use_rest'       => true);
 
       $a_tasks[] = array('module'         => 'fusioninventory',
@@ -160,58 +160,58 @@ class PluginFusioninventoryStaticmisc {
    static function profiles() {
 
       return array(array('profil'  => 'agent',
-                         'name'    => __('Agents')),
+                         'name'    => __('Agents', 'fusioninventory')),
 
                    array('profil'  => 'remotecontrol',
-                         'name'    => __('Agent remote control')),
+                         'name'    => __('Agent remote control', 'fusioninventory')),
 
                    array('profil'  => 'configuration',
-                         'name'    => __('Configuration')),
+                         'name'    => __('Configuration', 'fusioninventory')),
 
                    array('profil'  => 'wol',
-                         'name'    => __('Wake On LAN')),
+                         'name'    => __('Wake On LAN', 'fusioninventory')),
 
                    array('profil'  => 'unknowndevice',
-                         'name'    => __('Unknown devices')),
+                         'name'    => __('Unknown devices', 'fusioninventory')),
 
                    array('profil'  => 'task',
                          'name'    => _n('Task', 'Tasks', 2)),
 
                    array('profil'  => 'iprange',
-                         'name'    => __('IP range configuration')),
+                         'name'    => __('IP range configuration', 'fusioninventory')),
 
                    array('profil'  => 'credential',
-                         'name'    => __('Authentication for remote devices (VMware)')),
+                         'name'    => __('Authentication for remote devices (VMware)', 'fusioninventory')),
 
                    array('profil'  => 'credentialip',
-                         'name'    => __('Remote devices to inventory (VMware)')),
+                         'name'    => __('Remote devices to inventory (VMware)', 'fusioninventory')),
 
                    array('profil'  => 'existantrule',
-                         'name'    => __('Existance criteria')),
+                         'name'    => __('Existance criteria', 'fusioninventory')),
 
                    array('profil'  => 'importxml',
-                         'name'    => __('XML file manual import')),
+                         'name'    => __('XML file manual import', 'fusioninventory')),
 
                    array('profil'  => 'blacklist',
-                         'name'    => __('Fields blacklist')),
+                         'name'    => __('Fields blacklist', 'fusioninventory')),
 
                    array('profil'  => 'ESX',
-                         'name'    => __('VMware host')),
+                         'name'    => __('VMware host', 'fusioninventory')),
           
                    array('profil'  => 'configsecurity',
                           'name'    => __('SNMP authentication', 'fusioninventory')),
 
                    array('profil'  => 'networkequipment',
-                          'name'    => __('Network equipment SNMP')),
+                          'name'    => __('Network equipment SNMP', 'fusioninventory')),
 
                    array('profil'  => 'printer',
-                          'name'    => __('Printer SNMP')),
+                          'name'    => __('Printer SNMP', 'fusioninventory')),
 
                    array('profil'  => 'model',
-                          'name'    => __('SNMP model')),
+                          'name'    => __('SNMP model', 'fusioninventory')),
 
                    array('profil'  => 'reportprinter',
-                          'name'    => __('Printers report')),
+                          'name'    => __('Printers report', 'fusioninventory')),
 
                    array('profil'  => 'reportnetworkequipment',
                           'name'    => __('Network report')));
@@ -284,7 +284,7 @@ class PluginFusioninventoryStaticmisc {
 
    static function task_actiontype_ESX($a_itemtype) {
       return array ('' => Dropdown::EMPTY_VALUE ,
-                    'PluginFusioninventoryAgent' => __('Agents'));
+                    'PluginFusioninventoryAgent' => __('Agents', 'fusioninventory'));
 
    }
 
@@ -361,7 +361,7 @@ class PluginFusioninventoryStaticmisc {
    // *** NETWORKDISCOVERY ***
    static function task_definitiontype_networkdiscovery($a_itemtype) {
 
-      $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges');
+      $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges', 'fusioninventory');
 
 
       return $a_itemtype;
@@ -384,7 +384,7 @@ class PluginFusioninventoryStaticmisc {
    // *** NETWORKINVENTORY ***
    static function task_definitiontype_networkinventory($a_itemtype) {
 
-      $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges');
+      $a_itemtype['PluginFusioninventoryIPRange'] = __('IP Ranges', 'fusioninventory');
 
       $a_itemtype['NetworkEquipment'] = NetworkEquipment::getTypeName();
       $a_itemtype['Printer'] = Printer::getTypeName();
@@ -429,12 +429,12 @@ class PluginFusioninventoryStaticmisc {
    static function task_networkdiscovery_agents() {
 
       $array = array();
-      $array["-.1"] = __('Auto managenement dynamic of agents');
+      $array["-.1"] = __('Auto managenement dynamic of agents', 'fusioninventory');
 
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $array1 = $pfAgentmodule->getAgentsCanDo('NETWORKDISCOVERY');
       foreach ($array1 as $id => $data) {
-         $array["PluginFusioninventoryAgent-".$id] = __('Auto managenement dynamic of agents')." - ".$data['name'];
+         $array["PluginFusioninventoryAgent-".$id] = __('Auto managenement dynamic of agents', 'fusioninventory')." - ".$data['name'];
       }
       return $array;
    }
@@ -479,7 +479,7 @@ class PluginFusioninventoryStaticmisc {
             $selection_type = 'iprange';
             break;
 
-         // __('Auto managenement dynamic of agents')
+         // __('Auto managenement dynamic of agents', 'fusioninventory')
 
 
       }

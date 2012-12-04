@@ -70,7 +70,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
             $a_computers = $this->find("`computers_id`='".$item->getID()."'", '', 1);
             if (count($a_computers) > 0) {
                // Bios/other informations
-               $array_ret[0] = self::createTabEntry(__('Advanced informations'));
+               $array_ret[0] = self::createTabEntry(__('Advanced informations', 'fusioninventory'));
 
             }
 
@@ -80,7 +80,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
                $folder = '0';
             }
             if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id)) {
-               $array_ret[1] = self::createTabEntry(__('Import informations'));
+               $array_ret[1] = self::createTabEntry(__('Import informations', 'fusioninventory'));
 
             }
          }
@@ -128,7 +128,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '<div align="center">';
       echo '<table class="tab_cadre_fixe" style="margin: 0; margin-top: 5px;">';
       echo '<tr>';
-      echo '<th colspan="4">'.__('Advanced informations').'</th>';
+      echo '<th colspan="4">'.__('Advanced informations', 'fusioninventory').'</th>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';

@@ -46,7 +46,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 Session::checkRight("config","w");
 
-Html::header(__('Features'), $_SERVER["PHP_SELF"],
+Html::header(__('Features', 'fusioninventory'), $_SERVER["PHP_SELF"],
              "plugins", "fusioninventory", "configuration");
 
 $pfConfig = new PluginFusioninventoryConfig();

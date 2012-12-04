@@ -58,7 +58,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
-         return __('Agents modules');
+         return __('Agents modules', 'fusioninventory');
 
       }
       return '';
@@ -103,8 +103,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
          echo "<th width='130'>".__('Module', 'fusioninventory')."</th>";
-         echo "<th width='180'>".__('Activation (by default)')."</th>";
-         echo "<th>".__('Exceptions')."</th>";
+         echo "<th width='180'>".__('Activation (by default)', 'fusioninventory')."</th>";
+         echo "<th>".__('Exceptions', 'fusioninventory')."</th>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";

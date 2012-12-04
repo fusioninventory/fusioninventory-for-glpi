@@ -54,7 +54,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
 
    function getTitle() {
-      return __('Entity rules');
+      return __('Entity rules', 'fusioninventory');
 
    }
 
@@ -169,7 +169,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $actions['_affect_entity_by_tag']['type'] = 'text';
       $actions['_affect_entity_by_tag']['force_actions'] = array('regex_result');
 
-      $actions['_ignore_import']['name'] = __('Ignore in FusionInventory import');
+      $actions['_ignore_import']['name'] = __('Ignore in FusionInventory import', 'fusioninventory');
 
       $actions['_ignore_import']['type'] = 'yesonly';
 

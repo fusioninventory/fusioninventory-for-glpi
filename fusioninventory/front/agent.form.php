@@ -57,10 +57,10 @@ if (isset($_POST['startagent'])) {
    $taskjob = new PluginFusioninventoryTaskjob();
 
    if ($taskjob->startAgentRemotly($_POST['agent_id'])) {
-       Session::addMessageAfterRedirect(__('The agent is running'));
+       Session::addMessageAfterRedirect(__('The agent is running', 'fusioninventory'));
 
    } else {
-       Session::addMessageAfterRedirect(__('Impossible to communicate with agent!'));
+       Session::addMessageAfterRedirect(__('Impossible to communicate with agent!', 'fusioninventory'));
 
    }
    Html::back();

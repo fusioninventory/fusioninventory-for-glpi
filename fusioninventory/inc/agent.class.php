@@ -109,14 +109,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[5]['table']     = $this->getTable();
       $tab[5]['field']     = 'lock';
       $tab[5]['linkfield'] = 'lock';
-      $tab[5]['name']      = __('locked');
+      $tab[5]['name']      = __('locked', 'fusioninventory');
 
       $tab[5]['datatype']  = 'bool';
 
       $tab[6]['table']     = $this->getTable();
       $tab[6]['field']     = 'device_id';
       $tab[6]['linkfield'] = 'device_id';
-      $tab[6]['name']      = __('Device_id');
+      $tab[6]['name']      = __('Device_id', 'fusioninventory');
 
       $tab[6]['datatype']  = 'text';
       $tab[6]['massiveaction'] = false;
@@ -124,7 +124,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[7]['table']         = 'glpi_computers';
       $tab[7]['field']         = 'name';
       $tab[7]['linkfield']     = 'items_id';
-      $tab[7]['name']          = __('Computer link');
+      $tab[7]['name']          = __('Computer link', 'fusioninventory');
 
       $tab[7]['datatype']      = 'itemlink';
       $tab[7]['itemlink_type'] = 'Computer';
@@ -148,14 +148,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[10]['table']     = $this->getTable();
       $tab[10]['field']     = 'useragent';
       $tab[10]['linkfield'] = 'useragent';
-      $tab[10]['name']      = __('Useragent');
+      $tab[10]['name']      = __('Useragent', 'fusioninventory');
 
       $tab[10]['datatype']  = 'text';
       $tab[10]['massiveaction'] = false;
 
       $tab[11]['table']     = $this->getTable();
       $tab[11]['field']     = 'tag';
-      $tab[11]['name']      = __('FusionInventory tag');
+      $tab[11]['name']      = __('FusionInventory tag', 'fusioninventory');
 
       $tab[11]['datatype']  = 'text';
       $tab[11]['massiveaction'] = false;
@@ -185,7 +185,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $ong[1]=__('Main');
 
       }
-      $ong[2] = __('Agent modules');
+      $ong[2] = __('Agent modules', 'fusioninventory');
 
       $ong[3] = __('Historical');
 
@@ -199,7 +199,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     */
    function getComments() {
 
-      $comment = __('Useragent').' : '.$this->fields['useragent'].'<br/>
+      $comment = __('Useragent', 'fusioninventory').' : '.$this->fields['useragent'].'<br/>
          '.__('Last contact', 'fusioninventory').' : '.Html::convDateTime($this->fields['last_contact']).' minutes';
 
       if (!empty($comment)) {
@@ -244,14 +244,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       echo "<input type='text' name='name' value='".$this->fields["name"]."' size='30'/>";
       echo "</td>";
-      echo "<td>".__('Device_id')."&nbsp;:</td>";
+      echo "<td>".__('Device_id', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       echo $this->fields["device_id"];
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Computer link')."&nbsp:</td>";
+      echo "<td>".__('Computer link', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
       if (($this->fields["items_id"] != "0") AND ($this->fields["items_id"] != "")) {
          $oComputer = new Computer();
@@ -270,7 +270,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('locked')."&nbsp:</td>";
+      echo "<td>".__('locked', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
       Dropdown::showYesNo('lock', $this->fields["lock"]);
       echo "</td>";
@@ -288,7 +288,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       Dropdown::showInteger("threads_networkdiscovery", $this->fields["threads_networkdiscovery"],1,400);
       echo "</td>";
-      echo "<td>".__('Useragent')."&nbsp:</td>";
+      echo "<td>".__('Useragent', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
       echo $this->fields["useragent"];
       echo "</td>";
@@ -307,7 +307,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td>".__('FusionInventory tag')."&nbsp:</td>";
+      echo "<td>".__('FusionInventory tag', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
       echo $this->fields["tag"];
       echo "</td>";
@@ -530,7 +530,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='2'>";
-      echo __('Agent state');
+      echo __('Agent state', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";
@@ -570,7 +570,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             break;
 
          case 'noanswer':
-            echo __('Impossible to communicate with agent!');
+            echo __('Impossible to communicate with agent!', 'fusioninventory');
 
             break;
 
@@ -594,7 +594,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if ($waiting == '1') {
          echo "<tr>";
          echo "<th colspan='2'>";
-         echo "<input name='startagent' value=\"".__('Force inventory').
+         echo "<input name='startagent' value=\"".__('Force inventory', 'fusioninventory').
 
             "\" class='submit' type='submit'>";
          echo "</th>";
@@ -752,7 +752,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='2'>";
-      echo __('Informations for agent configuration');
+      echo __('Informations for agent configuration', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";
@@ -761,7 +761,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td width='50%'>";
       $array = explode("/", $_SERVER['HTTP_REFERER']);
       $create_url = $array[0]."//".$array[2].  str_replace("front/wizard.php", "", $_SERVER['PHP_SELF']);
-      echo __('Communication url of the server')."&nbsp;:";
+      echo __('Communication url of the server', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       echo "<strong>".$create_url."</strong>";

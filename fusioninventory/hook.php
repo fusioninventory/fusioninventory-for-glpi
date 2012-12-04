@@ -1350,7 +1350,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                }
             }
              Session::addMessageAfterRedirect(__('Number of imported devices', 'fusioninventory')." : ".$Import);
-             Session::addMessageAfterRedirect(__('Number of devices not imported because type not defined')." : ".$NoImport);
+             Session::addMessageAfterRedirect(__('Number of devices not imported because type not defined', 'fusioninventory')." : ".$NoImport);
          }
          break;
 

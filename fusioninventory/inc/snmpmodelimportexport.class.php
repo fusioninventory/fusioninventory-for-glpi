@@ -129,7 +129,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
       echo "<br>";
       echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
-      echo __('SNMP model import')." :</th></tr>";
+      echo __('SNMP model import', 'fusioninventory')." :</th></tr>";
 
       echo "   <tr class='tab_bg_1'>";
       echo "      <td align='center'>";
@@ -156,11 +156,11 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 
       echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th>";
-      echo __('Mass import of models')." :</th></tr>";
+      echo __('Mass import of models', 'fusioninventory')." :</th></tr>";
 
       echo "   <tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo __('Mass import of models in folder plugins/fusioninventory/snmpmodels/')."<br/>";
+      echo __('Mass import of models in folder plugins/fusioninventory/snmpmodels/', 'fusioninventory')."<br/>";
       echo "<input type='hidden' name='massimport' value='1'/>";
       if(PluginFusioninventoryProfile::haveRight("fusioninventory", "model","w")) {
     echo "&nbsp;<input type='submit' value='".__('Import')."' class='submit'/>";
@@ -210,7 +210,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       $pfMapping = new PluginFusioninventoryMapping();
 
       if ($message == '1') {
-         $_SESSION["MESSAGE_AFTER_REDIRECT"] = __('Model already exists');
+         $_SESSION["MESSAGE_AFTER_REDIRECT"] = __('Model already exists', 'fusioninventory');
 
       }
 

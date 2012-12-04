@@ -53,7 +53,7 @@ class PluginFusioninventoryInventoryRuleEntityCollection extends RuleCollection 
 
    function getTitle() {
 
-      return __('Entity rules');
+      return __('Entity rules', 'fusioninventory');
 
    }
 

@@ -52,7 +52,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    **/
    static function getTypeName($nb=0) {
 
-      return __('Unknown device');
+      return __('Unknown device', 'fusioninventory');
 
    }
 
@@ -71,7 +71,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = __('Unknown device');
+      $tab['common'] = __('Unknown device', 'fusioninventory');
 
 
       $tab[1]['table']         = $this->getTable();
@@ -119,7 +119,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[7]['table']     = $this->getTable();
       $tab[7]['field']     = 'hub';
       $tab[7]['linkfield'] = 'hub';
-      $tab[7]['name']      = __('Network hub');
+      $tab[7]['name']      = __('Network hub', 'fusioninventory');
 
       $tab[7]['datatype']  = 'bool';
 
@@ -188,7 +188,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
          $ptc = new PluginFusioninventoryConfig;
          if (($ptc->isActive('fusioninventory', 'remotehttpagent', '')) AND(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
-            $ong[3]=__('Job');
+            $ong[3]=__('Job', 'fusioninventory');
 
          }
          $ong[4]=__('Historical');
@@ -293,7 +293,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . __('Approved devices') . " :</td>";
+      echo "<td align='center'>" . __('Approved devices', 'fusioninventory') . " :</td>";
       echo "<td align='center'>";
       Dropdown::showYesNo("accepted", $this->fields["accepted"]);
       echo "</td>";
@@ -305,7 +305,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . __('Network hub') . " :</td>";
+      echo "<td align='center'>" . __('Network hub', 'fusioninventory') . " :</td>";
       echo "<td align='center'>";
       echo Dropdown::getYesNo($this->fields["hub"]);
       echo "</td>";
@@ -391,7 +391,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<table  class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th align='center'>";
-      echo __('Import unknown device into asset');
+      echo __('Import unknown device into asset', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";

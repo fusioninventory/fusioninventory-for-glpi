@@ -74,7 +74,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       $tab[1]['table']     = $this->getTable();
       $tab[1]['field']     = 'value';
       $tab[1]['linkfield'] = 'value';
-      $tab[1]['name']      = __('blacklisted value');
+      $tab[1]['name']      = __('blacklisted value', 'fusioninventory');
 
       $tab[1]['datatype']  = 'itemlink';
 
@@ -126,7 +126,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
       $this->showFormHeader();
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('blacklisted value')."</td>";
+      echo "<td>".__('blacklisted value', 'fusioninventory')."</td>";
       echo "<td>";
       echo "<input type='text' name='value' value='".$this->fields['value']."' />";
       echo "</td>";

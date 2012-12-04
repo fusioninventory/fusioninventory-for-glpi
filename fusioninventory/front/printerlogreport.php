@@ -84,14 +84,14 @@ function displaySearchForm() {
    echo "<table class='tab_cadre' cellpadding='5'>";
    echo "<tr class='tab_bg_1' align='center'>";
    echo "<td>";
-   echo __('Starting date')." :";
+   echo __('Starting date', 'fusioninventory')." :";
    echo "</td>";
    echo "<td width='120'>";
    Html::showDateFormItem("glpi_plugin_fusioninventory_date_start",$_SESSION['glpi_plugin_fusioninventory_date_start']);
    echo "</td>";
 
    echo "<td>";
-   echo __('Ending date')." :";
+   echo __('Ending date', 'fusioninventory')." :";
    echo "</td>";
    echo "<td width='120'>";
    Html::showDateFormItem("glpi_plugin_fusioninventory_date_end",$_SESSION['glpi_plugin_fusioninventory_date_end']);

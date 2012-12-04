@@ -68,11 +68,11 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       $array_ret = array();
       if ($item->getType() == 'PluginFusioninventoryAgent') {
          if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "r")) {
-             $array_ret[0] = self::createTabEntry(__('Import informations'));
+             $array_ret[0] = self::createTabEntry(__('Import informations', 'fusioninventory'));
 
          }
       } else {
-         $array_ret[1] = self::createTabEntry(__('Import informations'));
+         $array_ret[1] = self::createTabEntry(__('Import informations', 'fusioninventory'));
 
       }
       return $array_ret;
@@ -123,7 +123,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='4'>";
-      echo __('Rule import logs');
+      echo __('Rule import logs', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";
@@ -190,7 +190,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='5'>";
-      echo __('Rule import logs');
+      echo __('Rule import logs', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";

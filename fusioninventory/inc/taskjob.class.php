@@ -50,7 +50,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    **/
    static function getTypeName($nb=0) {
 
-      return __('Job');
+      return __('Job', 'fusioninventory');
 
    }
 
@@ -193,10 +193,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       } else {
          if ($ismultientities) {
-            echo __('New action')."&nbsp;:&nbsp;".
+            echo __('New action', 'fusioninventory')."&nbsp;:&nbsp;".
                  Dropdown::getDropdownName("glpi_entities", $this->fields['entities_id']);
          } else {
-            echo __('New action');
+            echo __('New action', 'fusioninventory');
 
          }
       }
@@ -245,7 +245,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</td>";
       echo "<th width='25%'>";
       if ($this->fields['id'] > 0) {
-         echo __('Definition');
+         echo __('Definition', 'fusioninventory');
 
          $this->plusButton('definition'.$id);
          echo "<br/><i>Liste des objets sur lesquelles l'action doit porter</i>";
@@ -264,16 +264,16 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       $rowspan = 4;
       if ($pfTask->fields["is_advancedmode"] == '1') {
-         echo "<td height='18'>".__('Time between task start and start this action')."&nbsp;:</td>";
+         echo "<td height='18'>".__('Time between task start and start this action', 'fusioninventory')."&nbsp;:</td>";
          echo "<td align='center'>";
          Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
          $a_time = array();
          $a_time[] = "------";
-         $a_time['minutes'] = strtolower(__('Minute(s)'));
+         $a_time['minutes'] = strtolower(__('Minute(s)', 'fusioninventory'));
 
-         $a_time['hours'] = strtolower(__('hour(s)'));
+         $a_time['hours'] = strtolower(__('hour(s)', 'fusioninventory'));
 
-         $a_time['days'] = __('day(s)');
+         $a_time['days'] = __('day(s)', 'fusioninventory');
 
          $a_time['months'] = __('months');
 
@@ -300,14 +300,14 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
       if ($pfTask->fields["is_advancedmode"] == '1') {
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".__('Number of trials')."&nbsp;:</td>";
+         echo "<td>".__('Number of trials', 'fusioninventory')."&nbsp;:</td>";
          echo "<td align='center'>";
          Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
          echo "</td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".__('Time between 2 trials (in minutes)')."&nbsp;:</td>";
+         echo "<td>".__('Time between 2 trials (in minutes)', 'fusioninventory')."&nbsp;:</td>";
          echo "<td align='center'>";
          Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
          echo "</td>";
@@ -328,8 +328,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "<input type='submit' name='update' value=\"".__('Update')."\" class='submit'>";
          echo "</td>";
          echo "<td valign='top' align='center' colspan='2'>";
-         echo "<input type='submit' name='delete' value=\"".__('Purge')."\"
-                         class='submit' ".Html::addConfirmationOnAction(__('Confirm the final deletion ?')).">";
+         echo "<input type='submit' name='delete' value=\"".__('Purge', 'fusioninventory')."\"
+                         class='submit' ".Html::addConfirmationOnAction(__('Confirm the final deletion ?', 'fusioninventory')).">";
          echo "</td>";
       }
       echo '</tr>';
@@ -369,7 +369,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='4'>";
       if ($type == 'definition') {
-         echo __('Definition');
+         echo __('Definition', 'fusioninventory');
       } else if ($type == 'action') {
          echo __('Action');
       }
@@ -390,7 +390,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $a_list = importArrayFromDB($this->fields[$type]);
       if ($a_list) {
          echo "<input type='submit' class='submit' name='".$type."_delete' value='<< ".
-               __('Delete')."'>";
+               __('Delete', 'fusioninventory')."'>";
       }
       echo "</td>";
       echo "<td rowspan='2'>";
@@ -404,10 +404,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             $class = new $item_type();
             $name = '';
             if ($item_id == '.1') {
-               $name = __('Auto managenement dynamic of agents');
+               $name = __('Auto managenement dynamic of agents', 'fusioninventory');
 
             } else if ($item_id == '.2') {
-               $name = __('Auto managenement dynamic of agents (same subnet)');
+               $name = __('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
 
             } else {
                $class->getFromDB($item_id);
@@ -423,7 +423,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr>";
-      echo "<td>".__('Selection')."&nbsp;:</td>";
+      echo "<td>".__('Selection', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center' height='10'>";
       echo "<span id='show_".ucfirst($type)."List".$id."'>";
       echo "</span>";
@@ -598,11 +598,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                $display = '';
                if ($itemtype == "PluginFusioninventoryAgent"
                        AND $items_id == ".1" ) {
-                  $display = __('Auto managenement dynamic of agents');
+                  $display = __('Auto managenement dynamic of agents', 'fusioninventory');
 
                } else if ($itemtype == "PluginFusioninventoryAgent"
                        AND $items_id == ".2" ) {
-                  $display = __('Auto managenement dynamic of agents (same subnet)');
+                  $display = __('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
 
                } else {
                   $class = new $itemtype();
@@ -624,7 +624,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</table>";
 
       if ($nb > 0) {
-         echo "<center><input type='button' id='delete".$name.$id."' name='delete".$name.$id."' value=\"".__('Delete')."\" class='submit'></center>";
+         echo "<center><input type='button' id='delete".$name.$id."' name='delete".$name.$id."' value=\"".__('Delete', 'fusioninventory')."\" class='submit'></center>";
 
          $params = array($name.'item' => '__CHECKBOX__',
                          'type'      => $name,
@@ -636,7 +636,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $parameters=$params;
          $events=array("click");
          $minsize = -1;
-         $forceloadfor=array(__('Delete'));
+         $forceloadfor=array(__('Delete', 'fusioninventory'));
 
          echo "<script type='text/javascript'>";
 
@@ -842,9 +842,9 @@ return namelist;
    function get_agents($module) {
 
       $array = array();
-      $array[".1"] = " ".__('Auto managenement dynamic of agents');
+      $array[".1"] = " ".__('Auto managenement dynamic of agents', 'fusioninventory');
 
-      $array[".2"] = " ".__('Auto managenement dynamic of agents (same subnet)');
+      $array[".2"] = " ".__('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
 
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $array1 = $pfAgentmodule->getAgentsCanDo(strtoupper($module));
@@ -1154,7 +1154,7 @@ return namelist;
          }
          unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
       } else {
-         $_SESSION["MESSAGE_AFTER_REDIRECT"] = __('Unable to run task because some jobs is running yet!');
+         $_SESSION["MESSAGE_AFTER_REDIRECT"] = __('Unable to run task because some jobs is running yet!', 'fusioninventory');
 
       }
       return $uniqid;
@@ -1389,14 +1389,14 @@ return namelist;
 
       echo "<tr>";
       echo "<th colspan='4'>";
-      echo __('Action on this device');
+      echo __('Action on this device', 'fusioninventory');
 
       echo " : </th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo __('Job')."&nbsp;:";
+      echo __('Job', 'fusioninventory')."&nbsp;:";
       echo "</td>";
 
       echo "<td align='center'>";
@@ -1418,7 +1418,7 @@ return namelist;
       echo "</td>";
 
       echo "<td align='center'>";
-      echo __('Scheduled date')."&nbsp;:";
+      echo __('Scheduled date', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td align='center'>";
       Html::showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
@@ -1769,9 +1769,9 @@ return namelist;
       echo "<tr class='tab_bg_1'>";
       echo "<th>".__('Name')."</th>";
       echo "<th>".__('Active')."</th>";
-      echo "<th>".__('Scheduled date')."</th>";
+      echo "<th>".__('Scheduled date', 'fusioninventory')."</th>";
       echo "<th>".__('Periodicity')."</th>";
-      echo "<th>".__('Definition')."</td>";
+      echo "<th>".__('Definition', 'fusioninventory')."</td>";
       echo "<th>".__('Action')."</th>";
       echo "</tr>";
 
@@ -1790,19 +1790,19 @@ return namelist;
 
             case 'minutes':
                $a_time = $pfTask->fields['periodicity_count']." ".
-               strtolower(__('Minute(s)'));
+               strtolower(__('Minute(s)', 'fusioninventory'));
 
                break;
 
             case 'hours':
                $a_time = $pfTask->fields['periodicity_count']." ".
-                    strtolower(__('hour(s)'));
+                    strtolower(__('hour(s)', 'fusioninventory'));
 
                break;
 
             case 'days':
                $a_time = $pfTask->fields['periodicity_count']." ".
-                    __('day(s)');
+                    __('day(s)', 'fusioninventory');
 
                break;
 
@@ -1833,10 +1833,10 @@ return namelist;
                $class->getFromDB($items_id);
                $name = '';
                if ($items_id == '.1') {
-                  $name = __('Auto managenement dynamic of agents');
+                  $name = __('Auto managenement dynamic of agents', 'fusioninventory');
 
                } else if ($items_id == '.2') {
-                  $name = __('Auto managenement dynamic of agents (same subnet)');
+                  $name = __('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
 
                } else {
                   $name = $class->getLink(1);
@@ -1910,12 +1910,12 @@ return namelist;
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Communication type')."&nbsp;:</td>";
+      echo "<td>".__('Communication type', 'fusioninventory')."&nbsp;:</td>";
       echo "<td>";
       $com = array();
-      $com['push'] = __('Server contacts the agent (push)');
+      $com['push'] = __('Server contacts the agent (push)', 'fusioninventory');
 
-      $com['pull'] = __('Agent contacts the server (pull)');
+      $com['pull'] = __('Agent contacts the server (pull)', 'fusioninventory');
 
       Dropdown::showFromArray("communication", $com, array('value'=>$pfTask->fields["communication"]));
       echo "</td>";
@@ -1924,13 +1924,13 @@ return namelist;
       Dropdown::showInteger("periodicity_count", $pfTask->fields['periodicity_count'], 0, 300);
       $a_time = array();
       $a_time[] = "------";
-      $a_time['minutes'] = __('Minute(s)');
+      $a_time['minutes'] = __('Minute(s)', 'fusioninventory');
 
-      $a_time['hours'] = ucfirst(__('hour(s)'));
+      $a_time['hours'] = ucfirst(__('hour(s)', 'fusioninventory'));
 
-      $a_time['days'] = ucfirst(__('day(s)'));
+      $a_time['days'] = ucfirst(__('day(s)', 'fusioninventory'));
 
-      $a_time['months'] = ucfirst(__('month(s)'));
+      $a_time['months'] = ucfirst(__('month(s)', 'fusioninventory'));
 
       Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$pfTask->fields['periodicity_type']));
       echo "</td>";
@@ -1972,7 +1972,7 @@ return namelist;
       echo "<table class='tab_cadre_fixe' style='width:500px'>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2' align='center'>".__('Force start')."</th>";
+      echo "<th colspan='2' align='center'>".__('Force start', 'fusioninventory')."</th>";
       echo "</tr>";
 
       if (isset($_SESSION['plugin_fusioninventory_wizard'])
@@ -2002,7 +2002,7 @@ return namelist;
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2' align='center'>";
-      echo '<input name="forcestart" value="'.__('Force start').'"
+      echo '<input name="forcestart" value="'.__('Force start', 'fusioninventory').'"
           class="submit" type="submit">';
       echo "</td>";
       echo "</tr>";
@@ -2209,22 +2209,22 @@ return namelist;
 
       echo "<table class='tab_cadre' width='700'>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2'>".__('Action after finish running task')."</th>";
+      echo "<th colspan='2'>".__('Action after finish running task', 'fusioninventory')."</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td width='10'><input type='radio' name='endtask[]' value='finishdelete' /></td>";
-      echo "<td>".__('Delete this task and finish')."</td>";
+      echo "<td>".__('Delete this task and finish', 'fusioninventory')."</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td><input type='radio' name='endtask[]' value='finish' /></td>";
-      echo "<td>".__('Finish')."</td>";
+      echo "<td>".__('Finish', 'fusioninventory')."</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td><input type='radio' name='endtask[]' value='runagain' /></td>";
-      echo "<td>".__('Run again this task')."</td>";
+      echo "<td>".__('Run again this task', 'fusioninventory')."</td>";
       echo "</tr>";
 
       echo "</table>";

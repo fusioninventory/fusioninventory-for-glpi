@@ -50,7 +50,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = __('History meter printer');
+      $tab['common'] = __('History meter printer', 'fusioninventory');
 
 
       $tab[1]['table'] = $this->getTable();
@@ -145,73 +145,73 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       $tab[6]['table'] = 'glpi_plugin_fusioninventory_printerlogs';
       $tab[6]['field'] = 'pages_total';
       $tab[6]['linkfield'] = 'id';
-      $tab[6]['name'] = __('Total number of printed pages');
+      $tab[6]['name'] = __('Total number of printed pages', 'fusioninventory');
 
 
       $tab[7]['table'] = 'glpi_plugin_fusioninventory_printerlogs';
       $tab[7]['field'] = 'pages_n_b';
       $tab[7]['linkfield'] = 'id';
-      $tab[7]['name'] = __('Number of printed black and white pages');
+      $tab[7]['name'] = __('Number of printed black and white pages', 'fusioninventory');
 
 
       $tab[8]['table'] = 'glpi_plugin_fusioninventory_printerlogs';
       $tab[8]['field'] = 'pages_color';
       $tab[8]['linkfield'] = 'id';
-      $tab[8]['name'] = __('Number of printed color pages');
+      $tab[8]['name'] = __('Number of printed color pages', 'fusioninventory');
 
 
       $tab[9]['table'] = $this->getTable();
       $tab[9]['field'] = 'pages_recto_verso';
       $tab[9]['linkfield'] = 'id';
-      $tab[9]['name'] = __('Number of pages printed duplex');
+      $tab[9]['name'] = __('Number of pages printed duplex', 'fusioninventory');
 
 
       $tab[10]['table'] = $this->getTable();
       $tab[10]['field'] = 'scanned';
       $tab[10]['linkfield'] = 'id';
-      $tab[10]['name'] = __('Number of scanned pages');
+      $tab[10]['name'] = __('Number of scanned pages', 'fusioninventory');
 
 
       $tab[11]['table'] = $this->getTable();
       $tab[11]['field'] = 'pages_total_print';
       $tab[11]['linkfield'] = 'id';
-      $tab[11]['name'] = __('Total number of printed pages (print)');
+      $tab[11]['name'] = __('Total number of printed pages (print)', 'fusioninventory');
 
 
       $tab[12]['table'] = $this->getTable();
       $tab[12]['field'] = 'pages_n_b_print';
       $tab[12]['linkfield'] = 'id';
-      $tab[12]['name'] = __('Number of printed black and white pages (print)');
+      $tab[12]['name'] = __('Number of printed black and white pages (print)', 'fusioninventory');
 
 
       $tab[13]['table'] = $this->getTable();
       $tab[13]['field'] = 'pages_color_print';
       $tab[13]['linkfield'] = 'id';
-      $tab[13]['name'] = __('Number of printed color pages (print)');
+      $tab[13]['name'] = __('Number of printed color pages (print)', 'fusioninventory');
 
 
       $tab[14]['table'] = $this->getTable();
       $tab[14]['field'] = 'pages_total_copy';
       $tab[14]['linkfield'] = 'id';
-      $tab[14]['name'] = __('Total number of printed pages (copy)');
+      $tab[14]['name'] = __('Total number of printed pages (copy)', 'fusioninventory');
 
 
       $tab[15]['table'] = $this->getTable();
       $tab[15]['field'] = 'pages_n_b_copy';
       $tab[15]['linkfield'] = 'id';
-      $tab[15]['name'] = __('Number of printed black and white pages (copy)');
+      $tab[15]['name'] = __('Number of printed black and white pages (copy)', 'fusioninventory');
 
 
       $tab[16]['table'] = $this->getTable();
       $tab[16]['field'] = 'pages_color_copy';
       $tab[16]['linkfield'] = 'id';
-      $tab[16]['name'] = __('Number of printed color pages (copy)');
+      $tab[16]['name'] = __('Number of printed color pages (copy)', 'fusioninventory');
 
 
       $tab[17]['table'] = $this->getTable();
       $tab[17]['field'] = 'pages_total_fax';
       $tab[17]['linkfield'] = 'id';
-      $tab[17]['name'] = __('Total number of printed pages (fax)');
+      $tab[17]['name'] = __('Total number of printed pages (fax)', 'fusioninventory');
 
 
       return $tab;
@@ -299,11 +299,11 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          $this->showFormHeader($options);
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".__('Total printed pages')." : </td>";
+         echo "<td>".__('Total printed pages', 'fusioninventory')." : </td>";
          echo "<td>".$stats["num_pages"]."</td></tr>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".__('Pages / day')." : </td>";
+         echo "<td>".__('Pages / day', 'fusioninventory')." : </td>";
          echo "<td>".$stats["pages_per_day"]."</td></tr>";
 
          echo "</table></div>";
@@ -335,12 +335,12 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                  id='printer_history_form'  action=\"".Toolbox::getItemTypeFormURL(__CLASS__)."\">";
 
       echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='3'>";
-      echo __('History meter printer')." :</th></tr>";
+      echo __('History meter printer', 'fusioninventory')." :</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<th></th>";
       echo "<th>".__('Date')." :</th>";
-      echo "<th>".__('Meter')." :</th></tr>";
+      echo "<th>".__('Meter', 'fusioninventory')." :</th></tr>";
 
       for ($i=0 ; $i<$limit ; $i++) {
          echo "<tr class='tab_bg_1'>";
@@ -361,10 +361,10 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "<tr class='tab_bg_1'><td colspan='3'>";
       echo "<div align='center'><a onclick= \"if (markAllRows('printer_history_form'))
                  return false;\"
-                 href='".$_SERVER['PHP_SELF']."?select=all'>".__('Check All')."</a>";
+                 href='".$_SERVER['PHP_SELF']."?select=all'>".__('Check All', 'fusioninventory')."</a>";
       echo " - <a onclick= \"if ( unMarkAllRows('printer_history_form') ) return false;\"
-                  href='".$_SERVER['PHP_SELF']."?select=none'>".__('Uncheck All')."</a> ";
-      echo "<input type='submit' name='delete' value=\"".__('Delete')."\" class='submit' >
+                  href='".$_SERVER['PHP_SELF']."?select=none'>".__('Uncheck All', 'fusioninventory')."</a> ";
+      echo "<input type='submit' name='delete' value=\"".__('Delete', 'fusioninventory')."\" class='submit' >
             </div></td></tr>";
       echo "</table>";
       Html::closeForm();
@@ -476,7 +476,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='4'>";
-      echo __('Printed page counter');
+      echo __('Printed page counter', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";
@@ -486,7 +486,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "<td class='left'>";
       Html::showDateFormItem("graph_begin", $begin);
       echo "</td>";
-      echo "<td class='left'>".__('Time unit')."&nbsp;:</td>";
+      echo "<td class='left'>".__('Time unit', 'fusioninventory')."&nbsp;:</td>";
       echo "<td class='left'>";
       $elementsTime=array('day'=>__('day'),
 
@@ -494,7 +494,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
                           'month'=>__('month'),
 
-                          'year'=>__('year'));
+                          'year'=>__('year', 'fusioninventory'));
 
       Dropdown::showFromArray('graph_timeUnit', $elementsTime,
                               array('value'=>$timeUnit));
@@ -506,11 +506,11 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "<td class='left'>";
       Html::showDateFormItem("graph_end", $end);
       echo "</td>";
-      echo "<td class='left'>".__('Display')."&nbsp;:</td>";
+      echo "<td class='left'>".__('Display', 'fusioninventory')."&nbsp;:</td>";
       echo "<td class='left'>";
-      $elements=array('total'=>__('Total counter'),
+      $elements=array('total'=>__('Total counter', 'fusioninventory'),
 
-                    'day'=>__('pages per day'));
+                    'day'=>__('pages per day', 'fusioninventory'));
 
       Dropdown::showFromArray('graph_type', $elements,
                               array('value'=>$graphType));
@@ -525,7 +525,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "</tr>\n";
 
       echo "<tr>";
-      echo "<th colspan='4'>".__('Printers to compare')."</th>";
+      echo "<th colspan='4'>".__('Printers to compare', 'fusioninventory')."</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -533,7 +533,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "<td class='left' rowspan='3'>";
       echo $printersList;
       echo "</td>";
-      echo "<td class='left'>".__('Add a printer')."&nbsp;:</td>";
+      echo "<td class='left'>".__('Add a printer', 'fusioninventory')."&nbsp;:</td>";
       echo "<td class='left'>";
       $printersused = array();
       foreach($printersView as $printer_id=>$name) {
@@ -547,13 +547,13 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "</tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td class='left'>".__('Remove a printer')."&nbsp;:</td>";
+      echo "<td class='left'>".__('Remove a printer', 'fusioninventory')."&nbsp;:</td>";
       echo "<td class='left'>";
       $printersTmp = $printersView;
       $printersTmp[0] = "-----";
       asort($printersTmp);
       Dropdown::showFromArray('graph_printerCompRemove', $printersTmp);
-      echo "&nbsp;<input type='submit' value=\"".__('Delete')."\" class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
+      echo "&nbsp;<input type='submit' value=\"".__('Delete', 'fusioninventory')."\" class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
       echo "</td>";
       echo "</tr>\n";
 
@@ -696,7 +696,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='center'>";
             if ($continue == '0') {
-               echo __('Too datas to display');
+               echo __('Too datas to display', 'fusioninventory');
 
             }
             echo "</td>";

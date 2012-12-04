@@ -54,7 +54,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
    function getTitle() {
 
-      return __('Equipment import and link rules');
+      return __('Equipment import and link rules', 'fusioninventory');
 
    }
 
@@ -107,12 +107,12 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
                break;
 
             case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE:
-               echo __('Device created');
+               echo __('Device created', 'fusioninventory');
 
                break;
 
             case PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED:
-               echo __('Import denied');
+               echo __('Import denied', 'fusioninventory');
 
                break;
 

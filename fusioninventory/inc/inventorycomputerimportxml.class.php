@@ -61,7 +61,7 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
 
       echo "<br>";
       echo "<table class='tab_cadre' cellpadding='1' width='600'><tr><th colspan='2'>";
-      echo __('Import XML file from an Agent')." :</th></tr>";
+      echo __('Import XML file from an Agent', 'fusioninventory')." :</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";

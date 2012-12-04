@@ -89,20 +89,20 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                $nb_col++;
             }
             echo "<table class='tab_cadre_fixe'><tr><th colspan='".$nb_col."'>";
-            echo __('OID list')."</th></tr>";
+            echo __('OID list', 'fusioninventory')."</th></tr>";
 
             echo "<tr class='tab_bg_1'>";
             echo "<th align='center'></th>";
-            echo "<th align='center'>".__('MIB Label')."</th>";
-            echo "<th align='center'>".__('Object')."</th>";
-            echo "<th align='center'>".__('OID')."</th>";
-            echo "<th align='center'>".__('Port Counters')."</th>";
-            echo "<th align='center'>".__('Dynamic port (.x)')."</th>";
-            echo "<th align='center' width='250'>".__('Linked fields')."</th>";
+            echo "<th align='center'>".__('MIB Label', 'fusioninventory')."</th>";
+            echo "<th align='center'>".__('Object', 'fusioninventory')."</th>";
+            echo "<th align='center'>".__('OID', 'fusioninventory')."</th>";
+            echo "<th align='center'>".__('Port Counters', 'fusioninventory')."</th>";
+            echo "<th align='center'>".__('Dynamic port (.x)', 'fusioninventory')."</th>";
+            echo "<th align='center' width='250'>".__('Linked fields', 'fusioninventory')."</th>";
             if ($type_model == NETWORKING_TYPE) {
                echo "<th align='center'>".__('VLAN')."</th>";
             }
-            echo "<th align='center'>".__('is_active')."</th>";
+            echo "<th align='center'>".__('is_active', 'fusioninventory')."</th>";
 
             echo "</tr>";
             while ($data=$DB->fetch_array($result)) {
@@ -193,14 +193,14 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
             echo "<tr>";
             echo "<td><img src=\"".$CFG_GLPI["root_doc"]."/pics/arrow-left.png\" alt=''></td>
                   <td align='center'><a onclick= \"if ( markCheckboxes('oid_list') ) return false;\"
-                      href='".$_SERVER['PHP_SELF']."?select=all'>".__('Check All')."</a></td>";
+                      href='".$_SERVER['PHP_SELF']."?select=all'>".__('Check All', 'fusioninventory')."</a></td>";
             echo "<td>/</td><td align='center'><a onclick= \"if ( unMarkCheckboxes('oid_list') )
                      return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
-                     __('Uncheck All')."</a>";
+                     __('Uncheck All', 'fusioninventory')."</a>";
             echo "</td><td align='left' colspan='6' width='80%'>";
             if(PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model","w")) {
                echo "<input class='submit' type='submit' name='delete_oid' value='" .
-                     __('Delete') . "'>";
+                     __('Delete', 'fusioninventory') . "'>";
             }
             echo "</td>";
             echo "</tr>";
@@ -231,17 +231,17 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
       echo "<br/>";
       echo "<table class='tab_cadre_fixe'>";
 
-      echo "<tr class='tab_bg_1'><th colspan='7'>".__('add an OID...').
+      echo "<tr class='tab_bg_1'><th colspan='7'>".__('add an OID...', 'fusioninventory').
 
                "</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th align='center'>".__('MIB Label')."</th>";
-      echo "<th align='center'>".__('Object')."</th>";
-      echo "<th align='center'>".__('OID')."</th>";
-      echo "<th align='center'>".__('Port Counters')."</th>";
-      echo "<th align='center'>".__('Dynamic port (.x)')."</th>";
-      echo "<th align='center' width='250'>".__('Linked fields')."</th>";
+      echo "<th align='center'>".__('MIB Label', 'fusioninventory')."</th>";
+      echo "<th align='center'>".__('Object', 'fusioninventory')."</th>";
+      echo "<th align='center'>".__('OID', 'fusioninventory')."</th>";
+      echo "<th align='center'>".__('Port Counters', 'fusioninventory')."</th>";
+      echo "<th align='center'>".__('Dynamic port (.x)', 'fusioninventory')."</th>";
+      echo "<th align='center' width='250'>".__('Linked fields', 'fusioninventory')."</th>";
       if ($type_model == NETWORKING_TYPE) {
          echo "<th align='center'>".__('VLAN')."</th>";
       }

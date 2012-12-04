@@ -63,7 +63,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    
    
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      return self::createTabEntry(__('FusionInventory SNMP'));
+      return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
    }
 
 
@@ -124,7 +124,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='4'>";
-      echo __('SNMP information');
+      echo __('SNMP information', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";
@@ -159,7 +159,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       echo "<input type='submit' name='GetRightModel'
-              value='".__('Load the correct model')."' class='submit'/>";
+              value='".__('Load the correct model', 'fusioninventory')."' class='submit'/>";
       echo "</td>";
       echo "</tr>";
 
@@ -189,7 +189,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo __('Uptime')."&nbsp;:";
+      echo __('Uptime', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       $sysUpTime = $this->fields['uptime'];
@@ -217,13 +217,13 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          $day = 0;
       }
 
-      echo "<b>$day</b> ".__('day(s)')." ";
-      echo "<b>$hour</b> ".__('hour(s)')." ";
-      echo "<b>$minute</b> ".__('Minute(s)')." ";
-      echo " ".__('and')." <b>$sec</b> ".__('sec(s)')." ";
+      echo "<b>$day</b> ".__('day(s)', 'fusioninventory')." ";
+      echo "<b>$hour</b> ".__('hour(s)', 'fusioninventory')." ";
+      echo "<b>$minute</b> ".__('Minute(s)', 'fusioninventory')." ";
+      echo " ".__('and')." <b>$sec</b> ".__('sec(s)', 'fusioninventory')." ";
       echo "</td>";
       echo "<td align='center'>";
-      echo __('Memory usage (in %)')."&nbsp;:";
+      echo __('Memory usage (in %)', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       $query2 = "SELECT *
@@ -237,7 +237,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       }
       if ((($data2["ram"] - $this->fields['memory']) < 0)
            OR (empty($this->fields['memory']))) {
-         echo "<center><strong>".__('Datas not available')."</strong></center>";
+         echo "<center><strong>".__('Datas not available', 'fusioninventory')."</strong></center>";
       } else {
          Html::displayProgressBar(250, $ram_pourcentage,
                         array('title' => " (".($data2["ram"] - $this->fields['memory'])." Mo / ".
@@ -305,7 +305,7 @@ function appear_array(id){
       $result_array=$DB->query($query_array);
       
       echo "<th colspan='".($DB->numrows($result_array) + 2)."'>";
-      echo __('Ports array');
+      echo __('Ports array', 'fusioninventory');
   
       $result=$DB->query($query);
       echo ' ('.$DB->numrows($result).')';
@@ -325,7 +325,7 @@ function appear_array(id){
          $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/Fr_VI_visualisationsdonnees_2_reseau";
       }
       echo "<a href='legend'></a>";
-      echo "<div id='legendlink'><a onClick='Ext.get(\"legend\").toggle();'>[ ".__('Legend')." ]</a></div>";
+      echo "<div id='legendlink'><a onClick='Ext.get(\"legend\").toggle();'>[ ".__('Legend', 'fusioninventory')." ]</a></div>";
       echo "</th>";
       echo "</tr>";
 
@@ -334,11 +334,11 @@ function appear_array(id){
       <tr class='tab_bg_1' style='display: none;' id='legend'>
          <td colspan='".($DB->numrows($result_array) + 2)."'>
          <ul>
-            <li>".__('Connection with a switch or a server in trunk or tagged mode')."&nbsp;:</li>
+            <li>".__('Connection with a switch or a server in trunk or tagged mode', 'fusioninventory')."&nbsp;:</li>
          </ul>
          <img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/port_trunk.png' width='750' />
          <ul>
-            <li>".__('Other connections (with a computer, a printer...)')."&nbsp;:</li>
+            <li>".__('Other connections (with a computer, a printer...)', 'fusioninventory')."&nbsp;:</li>
          </ul>
          <img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/connected_trunk.png' width='750' />
          </td>
@@ -350,7 +350,7 @@ function appear_array(id){
       echo '<th>';
       echo "<th>".__('Name')."</th>";
       if ($monitoring == '1') {
-         echo "<th>".__('Monitoring')."</th>";
+         echo "<th>".__('Monitoring', 'fusioninventory')."</th>";
       }
 
       $query_array = "SELECT *
@@ -363,7 +363,7 @@ function appear_array(id){
             echo "<th>";
             switch ($data_array['num']) {
                case 3:
-                  echo __('MTU');
+                  echo __('MTU', 'fusioninventory');
                   break;
 
                case 5:
@@ -371,27 +371,27 @@ function appear_array(id){
                   break;
 
                case 6:
-                  echo __('Internal status');
+                  echo __('Internal status', 'fusioninventory');
                   break;
 
                case 7:
-                  echo __('Last Change');
+                  echo __('Last Change', 'fusioninventory');
                   break;
 
                case 8:
-                  echo __('Number of bytes received')." / ".__('Number of bytes sent');
+                  echo __('Number of bytes received', 'fusioninventory')." / ".__('Number of bytes sent', 'fusioninventory');
                   break;
 
                case 9:
-                  echo __('Number of input errors')." / ".__('Number of errors in reception');
+                  echo __('Number of input errors', 'fusioninventory')." / ".__('Number of errors in reception', 'fusioninventory');
                   break;
 
                case 10 :
-                  echo __('Duplex');
+                  echo __('Duplex', 'fusioninventory');
                   break;
 
                case 11 :
-                  echo __('Internal MAC address');
+                  echo __('Internal MAC address', 'fusioninventory');
                   break;
                
                case 12:
@@ -671,7 +671,7 @@ function appear_array(id){
                            echo "</td><td>";
                            if ($canedit) {
                               echo "<a href='" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?unassign_vlan=unassigned&amp;id=" . $line["id"] . "'>";
-                              echo "<img src=\"" . $CFG_GLPI["root_doc"] . "/pics/delete.png\" alt='" . __('Delete') . "' title='" . __('Delete') . "'></a>";
+                              echo "<img src=\"" . $CFG_GLPI["root_doc"] . "/pics/delete.png\" alt='" . __('Delete', 'fusioninventory') . "' title='" . __('Delete', 'fusioninventory') . "'></a>";
                            } else
                               echo "&nbsp;";
                            echo "</td></tr>";

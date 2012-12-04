@@ -83,7 +83,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $criterias = array ();
       $criterias['entities_id']['table']     = 'glpi_entities';
       $criterias['entities_id']['field']     = 'entities_id';
-      $criterias['entities_id']['name']      = __('Assets to import').' : '.__('Destination of equipment entity');
+      $criterias['entities_id']['name']      = __('Assets to import', 'fusioninventory').' : '.__('Destination of equipment entity', 'fusioninventory');
 
       $criterias['entities_id']['linkfield'] = 'entities_id';
       $criterias['entities_id']['type']      = 'dropdown';
@@ -98,7 +98,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
       $criterias['states_id']['table']           = 'glpi_states';
       $criterias['states_id']['field']           = 'name';
-      $criterias['states_id']['name']            = __('Search GLPI equipment with the status');
+      $criterias['states_id']['name']            = __('Search GLPI equipment with the status', 'fusioninventory');
 
       $criterias['states_id']['linkfield']       = 'state';
       $criterias['states_id']['type']            = 'dropdown';
@@ -106,40 +106,40 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $criterias['states_id']['is_global']       = true;
       $criterias['states_id']['allow_condition'] = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
 
-      $criterias['model']['name']           = __('Assets to import').' : '.__('Model');
+      $criterias['model']['name']           = __('Assets to import', 'fusioninventory').' : '.__('Model');
 
 
-      $criterias['mac']['name']             = __('Assets to import').' : '.__('MAC');
+      $criterias['mac']['name']             = __('Assets to import', 'fusioninventory').' : '.__('MAC');
 
 
-      $criterias['ip']['name']              = __('Assets to import').' : '.__('IP');
+      $criterias['ip']['name']              = __('Assets to import', 'fusioninventory').' : '.__('IP');
 
 
-      $criterias['serial']['name']          = __('Assets to import').' : '.__('Serial Number');
+      $criterias['serial']['name']          = __('Assets to import', 'fusioninventory').' : '.__('Serial Number');
 
 
-//      $criterias['hdserial']['name']        = __('Assets to import').' : '.__('Hard disk serial number');
+//      $criterias['hdserial']['name']        = __('Assets to import', 'fusioninventory').' : '.__('Hard disk serial number');
 
 //
-//      $criterias['partitionserial']['name'] = __('Assets to import').' : '.__('Partition serial number');
+//      $criterias['partitionserial']['name'] = __('Assets to import', 'fusioninventory').' : '.__('Partition serial number');
 
 
-      $criterias['uuid']['name']            = __('Assets to import').' : '.__('UUID');
+      $criterias['uuid']['name']            = __('Assets to import', 'fusioninventory').' : '.__('UUID');
 
 
-      $criterias['mskey']['name']           = __('Assets to import').' : '.__('Serial of the operating system');
+      $criterias['mskey']['name']           = __('Assets to import', 'fusioninventory').' : '.__('Serial of the operating system');
 
 
-      $criterias['name']['name']            = __('Assets to import').' : '.__('Name');
+      $criterias['name']['name']            = __('Assets to import', 'fusioninventory').' : '.__('Name');
 
 
-      $criterias['tag']['name']             = __('Assets to import').' : '.__('FusionInventory tag');
+      $criterias['tag']['name']             = __('Assets to import', 'fusioninventory').' : '.__('FusionInventory tag', 'fusioninventory');
 
 
-      $criterias['osname']['name']          = __('Assets to import').' : '.__('Operating system');
+      $criterias['osname']['name']          = __('Assets to import', 'fusioninventory').' : '.__('Operating system');
 
 
-      $criterias['itemtype']['name']        = __('Assets to import').' : '.__('Item type');
+      $criterias['itemtype']['name']        = __('Assets to import', 'fusioninventory').' : '.__('Item type');
 
       $criterias['itemtype']['type']        = 'dropdown_itemtype';
       $criterias['itemtype']['is_global']       = false;
@@ -153,7 +153,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    function getActions() {
 
       $actions = array();
-      $actions['_fusion']['name']        = __('FusionInventory link');
+      $actions['_fusion']['name']        = __('FusionInventory link', 'fusioninventory');
 
       $actions['_fusion']['type']        = 'fusion_type';
 
@@ -168,11 +168,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
    static function getRuleActionValues() {
 
-      return array(self::RULE_ACTION_LINK_OR_CREATE    => __('Link if possible, else create device'),
+      return array(self::RULE_ACTION_LINK_OR_CREATE    => __('Link if possible, else create device', 'fusioninventory'),
 
-                   self::RULE_ACTION_LINK_OR_NO_CREATE => __('Link if possible, else import denied'),
+                   self::RULE_ACTION_LINK_OR_NO_CREATE => __('Link if possible, else import denied', 'fusioninventory'),
 
-                   self::RULE_ACTION_DENIED            => __('Import denied'));
+                   self::RULE_ACTION_DENIED            => __('Import denied', 'fusioninventory'));
 
    }
 
@@ -202,9 +202,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          case "state" :
             $link_array = array("0" => __('No'),
 
-                                "1" => __('Yes')." : ".__('equal'),
+                                "1" => __('Yes')." : ".__('equal', 'fusioninventory'),
 
-                                "2" => __('Yes')." : ".__('empty'));
+                                "2" => __('Yes')." : ".__('empty', 'fusioninventory'));
 
 
             Dropdown::showFromArray($name, $link_array, array('value' => $value));
@@ -853,12 +853,12 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                break;
 
             case self::LINK_RESULT_CREATE:
-               echo __('Device created');
+               echo __('Device created', 'fusioninventory');
 
                break;
 
             case self::LINK_RESULT_DENIED:
-               echo __('Import denied');
+               echo __('Import denied', 'fusioninventory');
 
                break;
 

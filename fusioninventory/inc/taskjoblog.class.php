@@ -64,19 +64,19 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    function dropdownStateValues() {
 
       $elements = array();
-      $elements[7] = __('Prepared');
+      $elements[7] = __('Prepared', 'fusioninventory');
 
-      $elements[1] = __('Started');
+      $elements[1] = __('Started', 'fusioninventory');
 
       $elements[6] = __('Running');
 
-      $elements[2] = __('Ok');
+      $elements[2] = __('Ok', 'fusioninventory');
 
-      $elements[3] = __('Error / rescheduled');
+      $elements[3] = __('Error / rescheduled', 'fusioninventory');
 
       $elements[4] = __('Error');
 
-      $elements[5] = __('unknown');
+      $elements[5] = __('unknown', 'fusioninventory');
 
 
       return $elements;
@@ -137,7 +137,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       $sopt[3]['table']          = 'glpi_plugin_fusioninventory_taskjobs';
       $sopt[3]['field']          = 'name';
-      $sopt[3]['name']           = __('Job');
+      $sopt[3]['name']           = __('Job', 'fusioninventory');
 
       $sopt[3]['datatype']       = 'itemlink';
       $sopt[3]['itemlink_type']  = "PluginFusioninventoryTaskjob";
@@ -157,7 +157,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       $sopt[6]['table']          = 'glpi_plugin_fusioninventory_taskjobstates';
       $sopt[6]['field']          = 'uniqid';
-      $sopt[6]['name']           = __('Unique id');
+      $sopt[6]['name']           = __('Unique id', 'fusioninventory');
 
       $sopt[6]['datatype']       = 'string';
 
@@ -232,8 +232,8 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "<table class='tab_cadre'>";
             echo "<tr>";
             echo "<th></th>";
-            echo "<th>".__('Unique id')."</th>";
-            echo "<th>".__('Process number')."</th>";
+            echo "<th>".__('Unique id', 'fusioninventory')."</th>";
+            echo "<th>".__('Process number', 'fusioninventory')."</th>";
             echo "<th>".__('Agent', 'fusioninventory')."</th>";
             echo "<th>";
             echo __('Date');
@@ -299,7 +299,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             $result = $DB->query($query);
             echo "<tr>";
             echo "<th></th>";
-            echo "<th>".__('Unique id')."</th>";
+            echo "<th>".__('Unique id', 'fusioninventory')."</th>";
             echo "<th>".__('Agent', 'fusioninventory')."</th>";
             echo "<th>";
             echo __('Date');
@@ -473,7 +473,7 @@ function appear_array(id){
             $a_devices_merged[] = $Class->getLink(1)."&nbsp;(".$Class->getTypeName().")";
          } else {
             $text .= "<tr>";
-            $text .= "<th colspan='2'><img src='".$CFG_GLPI['root_doc']."/pics/puce.gif' />".__('Process number')."&nbsp;: ".$data['id']."</th>";
+            $text .= "<th colspan='2'><img src='".$CFG_GLPI['root_doc']."/pics/puce.gif' />".__('Process number', 'fusioninventory')."&nbsp;: ".$data['id']."</th>";
             $text .= "<th>";
             $text .= __('Date');
 
@@ -511,7 +511,7 @@ function appear_array(id){
 
             $text .= "<tr class='tab_bg_1'>";
             $text .= "<th colspan='2'>";
-            $text .= __('Definition');
+            $text .= __('Definition', 'fusioninventory');
 
             $text .= "<sup>(".(count($a_devices_merged) + 1).")</sup>";
             $text .= "</th>";
@@ -615,25 +615,25 @@ function appear_array(id){
 
          case 7:
             $text .= "<td align='center'>";
-            $text .= __('Prepared');
+            $text .= __('Prepared', 'fusioninventory');
 
             break;
 
          case 1:
             $text .= "<td align='center'>";
-            $text .= __('Started');
+            $text .= __('Started', 'fusioninventory');
 
             break;
 
          case 2:
             $text .= "<td style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
-            $text .= "<strong>".__('Ok')."</strong>";
+            $text .= "<strong>".__('Ok', 'fusioninventory')."</strong>";
             $finish++;
             break;
 
          case 3:
             $text .= "<td style='background-color: rgb(255, 120, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
-            $text .= "<strong>".__('Error / rescheduled')."</strong>";
+            $text .= "<strong>".__('Error / rescheduled', 'fusioninventory')."</strong>";
             $finish++;
             break;
 
@@ -645,7 +645,7 @@ function appear_array(id){
 
          case 5:
             $text .= "<td style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
-            $text .= "<strong>".__('unknown')."</strong>";
+            $text .= "<strong>".__('unknown', 'fusioninventory')."</strong>";
             $finish++;
             break;
 
@@ -744,9 +744,9 @@ function appear_array(id){
          }
       }
       $input = array();
-      $input[__('Started')] = $finishState[2];
-      $input[__('Ok')] = $finishState[3];
-      $input[__('Error / rescheduled')] = $finishState[4];
+      $input[__('Started', 'fusioninventory')] = $finishState[2];
+      $input[__('Ok', 'fusioninventory')] = $finishState[3];
+      $input[__('Error / rescheduled', 'fusioninventory')] = $finishState[4];
       $input[__('Error')] = $finishState[5];
       Stat::showGraph(array('status'=>$input),
                array('title'  => '',
@@ -849,7 +849,7 @@ function appear_array(id){
          echo $this->getDivState($state, 'td');
          echo "<td align='center'>";
          echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?sort=1&order=DESC&field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-            __('View logs of this execution')."</a>";
+            __('View logs of this execution', 'fusioninventory')."</a>";
          echo "<input type='hidden' name='taskjobstates_id' value='".$taskstates_id."' />";
          echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
          echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.__('Force the end', 'fusioninventory').'"
@@ -863,7 +863,7 @@ function appear_array(id){
             echo "</th>";
             echo "<td colspan='2' align='center'>";
             echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?sort=1&order=DESC&field[0]=3&searchtype[0]=equals&contains[0]=".$taskjobs_id."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-               __('See all executions')."</a>";
+               __('See all executions', 'fusioninventory')."</a>";
             echo "</td>";
             echo "</tr>";
          }
@@ -908,7 +908,7 @@ function appear_array(id){
             echo "<tr class='tab_bg_3'>";
             echo "<td colspan='2' align='center'>";
             echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=3&searchtype[0]=equals&contains[0]=".$taskjobs_id."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-               __('See all executions')."</a>";
+               __('See all executions', 'fusioninventory')."</a>";
             echo "</td>";
             echo "</tr>";
          }
@@ -935,21 +935,21 @@ function appear_array(id){
       switch ($state) {
 
          case 7:
-            return "<".$type." align='center' width='".$width."'>".__('Prepared')."</".$type.">";
+            return "<".$type." align='center' width='".$width."'>".__('Prepared', 'fusioninventory')."</".$type.">";
             break;
 
          case 1:
-            return "<".$type." align='center' width='".$width."'>".__('Started')."</".$type.">";
+            return "<".$type." align='center' width='".$width."'>".__('Started', 'fusioninventory')."</".$type.">";
             break;
 
          case 2:
             return "<".$type." style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
-               "<strong>".__('Ok')."</strong></".$type.">";
+               "<strong>".__('Ok', 'fusioninventory')."</strong></".$type.">";
             break;
 
          case 3:
             return "<".$type." style='background-color: rgb(255, 120, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
-               "<strong>".__('Error / rescheduled')."</strong></".$type.">";
+               "<strong>".__('Error / rescheduled', 'fusioninventory')."</strong></".$type.">";
             break;
 
          case 4:
@@ -959,7 +959,7 @@ function appear_array(id){
 
          case 5:
             return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
-               "<strong>".__('unknown')."</strong></".$type.">";
+               "<strong>".__('unknown', 'fusioninventory')."</strong></".$type.">";
             break;
 
          case 6:

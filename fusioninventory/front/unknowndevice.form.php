@@ -79,7 +79,7 @@ if (isset ($_POST["add"])) {
 
    if ($pfUnknownDevice->restore($_POST)) {
       Event::log($_POST["id"],"PluginFusioninventoryUnknownDevice", 4, "inventory",
-               $_SESSION["glpiname"]." ".__('restoration of the item')." ".$pfUnknownDevice->getField('name'));
+               $_SESSION["glpiname"]." ".__('restoration of the item', 'fusioninventory')." ".$pfUnknownDevice->getField('name'));
    }
    $pfUnknownDevice->redirectToList();
 
@@ -99,7 +99,7 @@ if (isset ($_POST["add"])) {
    $NoImport = 0;
    list($Import, $NoImport) = $pfUnknownDevice->import($_POST['id'],$Import,$NoImport);
     Session::addMessageAfterRedirect(__('Number of imported devices', 'fusioninventory')." : ".$Import);
-    Session::addMessageAfterRedirect(__('Number of devices not imported because type not defined')." : ".$NoImport);
+    Session::addMessageAfterRedirect(__('Number of devices not imported because type not defined', 'fusioninventory')." : ".$NoImport);
    if ($Import == "0") {
       Html::back();
    } else {

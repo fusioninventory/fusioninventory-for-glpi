@@ -53,18 +53,18 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
          if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 1)) {
             // Permanent task discovery
-            return __('Communication mode');
+            return __('Communication mode', 'fusioninventory');
 
          } else if ((isset($_POST['glpi_tab'])) AND ($_POST['glpi_tab'] == 2)) {
             // Permanent task inventory
-            return __('See all informations of task');
+            return __('See all informations of task', 'fusioninventory');
 
          } else {
-            return __('IP Ranges');
+            return __('IP Ranges', 'fusioninventory');
 
          }
       } else {
-         return __('IP Ranges');
+         return __('IP Ranges', 'fusioninventory');
 
       }
    }
@@ -91,7 +91,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = __('IP range configuration');
+      $tab['common'] = __('IP range configuration', 'fusioninventory');
 
 
       $tab[1]['table'] = $this->getTable();
@@ -110,13 +110,13 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       $tab[3]['table'] = $this->getTable();
       $tab[3]['field'] = 'ip_start';
       $tab[3]['linkfield'] = 'ip_start';
-      $tab[3]['name'] = __('Start of IP range');
+      $tab[3]['name'] = __('Start of IP range', 'fusioninventory');
 
 
        $tab[4]['table'] = $this->getTable();
       $tab[4]['field'] = 'ip_end';
       $tab[4]['linkfield'] = 'ip_end';
-      $tab[4]['name'] = __('End of IP range');
+      $tab[4]['name'] = __('End of IP range', 'fusioninventory');
 
 
       return $tab;
@@ -155,7 +155,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . __('Start of IP range') . "</td>";
+      echo "<td align='center' colspan='2'>" . __('Start of IP range', 'fusioninventory') . "</td>";
       echo "<td align='center' colspan='2'>";
       if (empty($this->fields["ip_start"]))
          $this->fields["ip_start"] = "...";
@@ -175,7 +175,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . __('End of IP range') . "</td>";
+      echo "<td align='center' colspan='2'>" . __('End of IP range', 'fusioninventory') . "</td>";
       echo "<td align='center' colspan='2'>";
       unset($ipexploded);
       if (empty($this->fields["ip_end"]))
@@ -249,13 +249,13 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       if ($count == '0') {
          return true;
       } else {
-          Session::addMessageAfterRedirect("<font color='#ff0000'>".__('Bad IP').
+          Session::addMessageAfterRedirect("<font color='#ff0000'>".__('Bad IP', 'fusioninventory').
 
             "</font><br/>".
-            __('Start of IP range')." : ".
+            __('Start of IP range', 'fusioninventory')." : ".
             $a_input['ip_start0'].".".$a_input['ip_start1'].".".
             $a_input['ip_start2'].".".$a_input['ip_start3']."<br/>".
-            __('End of IP range')." : ".
+            __('End of IP range', 'fusioninventory')." : ".
             $a_input['ip_end0'].".".$a_input['ip_end1'].".".
             $a_input['ip_end2'].".".$a_input['ip_end3']);
          return false;

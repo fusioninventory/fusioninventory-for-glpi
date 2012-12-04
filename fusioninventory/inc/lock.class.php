@@ -162,7 +162,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<table class='tab_cadre'>";
       echo "<tr><th>&nbsp;".__('Fields')."&nbsp;</th>";
       if ($p_items_id != '0') {
-         echo "<th>&nbsp;".__('Values')."&nbsp;</th>";
+         echo "<th>&nbsp;".__('Values', 'fusioninventory')."&nbsp;</th>";
       }
       echo "<th>&nbsp;"._n('Lock', 'Locks', 2, 'fusioninventory')."&nbsp;</th></tr>";
 
@@ -249,16 +249,16 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if ($p_items_id == '0') {
          // add option selection for add theses lock filed or remove them
          echo "<tr>";
-         echo "<th colspan='2'>".__('Job')."</th>";
+         echo "<th colspan='2'>".__('Job', 'fusioninventory')."</th>";
          echo "<tr>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".__('Add locks')."</td>";
+         echo "<td>".__('Add locks', 'fusioninventory')."</td>";
          echo "<td align='center'><input type='radio' name='actionlock' value='addLock' checked/></td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
-         echo "<td>".__('Delete locks')."</td>";
+         echo "<td>".__('Delete locks', 'fusioninventory')."</td>";
          echo "<td align='center'><input type='radio' name='actionlock' value='deleteLock' /></td>";
          echo "</tr>";
 

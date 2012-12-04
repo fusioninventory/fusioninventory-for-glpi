@@ -73,19 +73,19 @@ if (isset($_GET['generatemodels']) AND $_GET['generatemodels'] == '1') {
 }
 
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?generatemodels=1'>".__('Automatic creation of models')."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?generatemodels=1'>".__('Automatic creation of models', 'fusioninventory')."</a>";
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?cleanmodels=1'>".__('Delete models non used')."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?cleanmodels=1'>".__('Delete models non used', 'fusioninventory')."</a>";
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?generatecomments=1'>".__('Re-create models comments')."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?generatecomments=1'>".__('Re-create models comments', 'fusioninventory')."</a>";
 echo " | ";
 
 echo "<br/>";
 
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?generatediscover=1'>".__('Generate discovery file')."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?generatediscover=1'>".__('Generate discovery file', 'fusioninventory')."</a>";
 echo " | ";
-echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>".__('Export all models')."</a>";
+echo "<a href='".$_SERVER["PHP_SELF"]."?exportmodels=1'>".__('Export all models', 'fusioninventory')."</a>";
 echo " | ";
 
 Search::show('PluginFusioninventorySnmpmodelConstructDevice');

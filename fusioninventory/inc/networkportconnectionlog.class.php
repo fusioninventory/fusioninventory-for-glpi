@@ -56,7 +56,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
 
       echo "<th>";
-      echo __('PID');
+      echo __('PID', 'fusioninventory');
 
       echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/agentprocess.form.php'>(".__('All').")</a>";
       echo "</th>";
@@ -126,7 +126,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
                $link .= __('Without name');
 
             $link .= "</a>";
-            echo $link." ".__('on')." ".$link1;
+            echo $link." ".__('on', 'fusioninventory')." ".$link1;
             echo "</td>";
 
             echo "<td>";
@@ -149,7 +149,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
                $link .= __('Without name');
 
             $link .= "</a>";
-            echo $link." ".__('on')." ".$link1;
+            echo $link." ".__('on', 'fusioninventory')." ".$link1;
             echo "</td>";
 
             echo "</tr>";

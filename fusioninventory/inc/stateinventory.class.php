@@ -86,16 +86,16 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<th>".__('Unique id')."</th>";
+      echo "<th>".__('Unique id', 'fusioninventory')."</th>";
       echo "<th>".__('Agent', 'fusioninventory')."</th>";
       echo "<th>".__('Status')."</th>";
-      echo "<th>".__('Starting date')."</th>";
-      echo "<th>".__('Ending date')."</th>";
+      echo "<th>".__('Starting date', 'fusioninventory')."</th>";
+      echo "<th>".__('Ending date', 'fusioninventory')."</th>";
       echo "<th>".__('Total duration')."</th>";
-      echo "<th>".__('Number per second')."</th>";
+      echo "<th>".__('Number per second', 'fusioninventory')."</th>";
       echo "<th>".__('Threads number', 'fusioninventory')."</th>";
-      echo "<th>".__('To inventory')."</th>";
-      echo "<th>".__('Error(s)')."</th>";
+      echo "<th>".__('To inventory', 'fusioninventory')."</th>";
+      echo "<th>".__('Error(s)', 'fusioninventory')."</th>";
       echo "</tr>";
 
       $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.*
@@ -145,18 +145,18 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
          switch ($data['state']) {
 
             case 0:
-               echo __('Prepared');
+               echo __('Prepared', 'fusioninventory');
 
                break;
 
             case 1:
             case 2:
-               echo __('Started');
+               echo __('Started', 'fusioninventory');
 
                break;
 
             case 3:
-               echo __('Finished tasks');
+               echo __('Finished tasks', 'fusioninventory');
 
                break;
 

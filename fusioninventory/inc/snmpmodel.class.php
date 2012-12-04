@@ -86,7 +86,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       $tab[5]['table'] = $this->getTable();
       $tab[5]['field'] = 'discovery_key';
       $tab[5]['linkfield'] = 'discovery_key';
-      $tab[5]['name'] = __('Key of model discovery');
+      $tab[5]['name'] = __('Key of model discovery', 'fusioninventory');
 
 
       $tab[6]['table'] = $this->getTable();
@@ -124,8 +124,8 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
       echo "<table class='tab_cadre' cellpadding='5' width='950'><tr><th colspan='2'>";
-      echo ($id =='' ? __('Create SNMP model') :
-            __('Edit SNMP model'));
+      echo ($id =='' ? __('Create SNMP model', 'fusioninventory') :
+            __('Edit SNMP model', 'fusioninventory'));
 
       echo " :</th></tr>";
 
@@ -180,7 +180,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
                  "\" class='submit' >";
             echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='submit' name='delete' value=\"" .
-                    __('Delete') . "\" class='submit'>";
+                    __('Delete', 'fusioninventory') . "\" class='submit'>";
          }
       }
       echo "</td>";

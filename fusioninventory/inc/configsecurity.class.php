@@ -78,7 +78,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' colspan='2'>" . __('SNMP version') . "</td>";
+      echo "<td align='center' colspan='2'>" . __('SNMP version', 'fusioninventory') . "</td>";
       echo "<td align='center' colspan='2'>";
          $this->showDropdownSNMPVersion($this->fields["snmpversion"]);
       echo "</td>";
@@ -90,7 +90,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>" . __('Community') . "</td>";
+      echo "<td align='center'>" . __('Community', 'fusioninventory') . "</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='community' value='" . $this->fields["community"] . "'/>";
       echo "</td>";
@@ -103,7 +103,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . __('Encryption protocol for authentication ') . "</td>";
+      echo "<td align='center'>" . __('Encryption protocol for authentication ', 'fusioninventory') . "</td>";
       echo "<td align='center'>";
          $this->showDropdownSNMPAuth($this->fields["authentication"]);
       echo "</td>";
@@ -120,7 +120,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . __('Encryption protocol for data') . "</td>";
+      echo "<td align='center'>" . __('Encryption protocol for data', 'fusioninventory') . "</td>";
       echo "<td align='center'>";
          $this->showDropdownSNMPEncryption($this->fields["encryption"]);
       echo "</td>";

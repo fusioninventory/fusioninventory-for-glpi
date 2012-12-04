@@ -71,7 +71,7 @@ class PluginFusioninventoryWizard {
       echo "<table class='tab_cadre' width='250'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th>";
-      echo "<strong>".__('Breadcrumb')."</strong>";
+      echo "<strong>".__('Breadcrumb', 'fusioninventory')."</strong>";
       echo "</th>";
       echo "</tr>";
       foreach ($a_list as $name=>$link) {
@@ -237,7 +237,7 @@ class PluginFusioninventoryWizard {
       echo "</td>";
       echo "<td align='right' style='background-color: #e1cc7b;' height='30'>";
       if (isset($options['finish'])) {
-         echo "<input class='submit' type='submit' name='next' value='".__('Finish')."'
+         echo "<input class='submit' type='submit' name='next' value='".__('Finish', 'fusioninventory')."'
                onclick='window.location.href=\"".$CFG_GLPI['root_doc']."/plugins/fusioninventory/\"'/>";
 
       } else {
@@ -325,12 +325,12 @@ class PluginFusioninventoryWizard {
    function filInventoryComputer() {
 
       return array(
-      __('Action choice')   => "w_start",
-      __('Type of device to inventory')   => "w_inventorychoice",
-      __('Import options')   => "w_importcomputeroptions",
-      __('Equipment import and link rules')    => "w_importrules",
-      __('Entity rules')   => "w_entityrules",
-      __('Agent configuration')   => "w_agentconfig");
+      __('Action choice', 'fusioninventory')   => "w_start",
+      __('Type of device to inventory', 'fusioninventory')   => "w_inventorychoice",
+      __('Import options', 'fusioninventory')   => "w_importcomputeroptions",
+      __('Equipment import and link rules', 'fusioninventory')    => "w_importrules",
+      __('Entity rules', 'fusioninventory')   => "w_entityrules",
+      __('Agent configuration', 'fusioninventory')   => "w_agentconfig");
    }
 
 
@@ -343,12 +343,12 @@ class PluginFusioninventoryWizard {
    function filInventoryESX() {
 
       return array(
-      __('Action choice')   => "w_start",
-      __('Type of device to inventory')   => "w_inventorychoice",
-      __('ESX servers management')   => "w_remotedevices",
-      __('Run tasks')   => "w_tasksforcerun",
-      __('Tasks running result')   => "w_taskslog",
-      __('End Task')    => "w_tasksend");
+      __('Action choice', 'fusioninventory')   => "w_start",
+      __('Type of device to inventory', 'fusioninventory')   => "w_inventorychoice",
+      __('ESX servers management', 'fusioninventory')   => "w_remotedevices",
+      __('Run tasks', 'fusioninventory')   => "w_tasksforcerun",
+      __('Tasks running result', 'fusioninventory')   => "w_taskslog",
+      __('End Task', 'fusioninventory')    => "w_tasksend");
    }
 
 
@@ -361,15 +361,15 @@ class PluginFusioninventoryWizard {
    function filInventorySNMP() {
 
       return array(
-      __('Action choice')   => "w_start",
-      __('Type of device to inventory')   => "w_inventorychoice",
-      __('IP Ranges')  => "w_iprange",
+      __('Action choice', 'fusioninventory')   => "w_start",
+      __('Type of device to inventory', 'fusioninventory')   => "w_inventorychoice",
+      __('IP Ranges', 'fusioninventory')  => "w_iprange",
 //      __('SNMP authentication', 'fusioninventory')   => "w_authsnmp",
-//      __('Equipment import and link rules')    => "w_importrules",
-//      __('Task management')     => "w_tasks",
-      __('Run tasks')   => "w_tasksforcerun",
-      __('Tasks running result')   => "w_taskslog",
-      __('End Task')    => "w_tasksend");
+//      __('Equipment import and link rules', 'fusioninventory')    => "w_importrules",
+//      __('Task management', 'fusioninventory')     => "w_tasks",
+      __('Run tasks', 'fusioninventory')   => "w_tasksforcerun",
+      __('Tasks running result', 'fusioninventory')   => "w_taskslog",
+      __('End Task', 'fusioninventory')    => "w_tasksend");
    }
 
 
@@ -381,7 +381,7 @@ class PluginFusioninventoryWizard {
     **/
    function filNetDiscovery() {
 
-      $array = array(__('Action choice')   => "w_start");
+      $array = array(__('Action choice', 'fusioninventory')   => "w_start");
       return array_merge($array, $this->fil_Part_NetDiscovery());
    }
 
@@ -396,9 +396,9 @@ class PluginFusioninventoryWizard {
    function filInventorySNMP_Netdiscovery() {
 
       $array = array(
-      __('Action choice')   => "w_start",
-      __('Type of device to inventory')   => "w_snmpdeviceschoice",
-      __('Choice (netdiscovery or inventory)')  => "");
+      __('Action choice', 'fusioninventory')   => "w_start",
+      __('Type of device to inventory', 'fusioninventory')   => "w_snmpdeviceschoice",
+      __('Choice (netdiscovery or inventory)', 'fusioninventory')  => "");
       return array_merge($array, $this->fil_Part_NetDiscovery());
   }
 
@@ -412,13 +412,13 @@ class PluginFusioninventoryWizard {
    function fil_Part_NetDiscovery() {
 
       return array(
-      __('IP Ranges')  => "w_iprange",
+      __('IP Ranges', 'fusioninventory')  => "w_iprange",
       //__('SNMP authentication', 'fusioninventory')   => "w_authsnmp",
-      //__('Equipment import and link rules')    => "w_importrules",
-      //__('Task management')     => "w_tasks",
-      __('Run tasks')   => "w_tasksforcerun",
-      __('Tasks running result')   => "w_taskslog",
-      __('End Task')    => "w_tasksend");
+      //__('Equipment import and link rules', 'fusioninventory')    => "w_importrules",
+      //__('Task management', 'fusioninventory')     => "w_tasks",
+      __('Run tasks', 'fusioninventory')   => "w_tasksforcerun",
+      __('Tasks running result', 'fusioninventory')   => "w_taskslog",
+      __('End Task', 'fusioninventory')    => "w_tasksend");
    }
 
 
@@ -444,20 +444,20 @@ class PluginFusioninventoryWizard {
       if ($plugin->isInstalled('fusinvsnmp')
          && $plugin->isActivated('fusinvsnmp')) {
 
-         $a_buttons[] = array(__('Discover the network'),
+         $a_buttons[] = array(__('Discover the network', 'fusioninventory'),
 
                                'w_iprange',
                                'networkscan.png',
                                'filNetDiscovery');
       }
 
-      $a_buttons[] = array(__('Inventory devices'),
+      $a_buttons[] = array(__('Inventory devices', 'fusioninventory'),
 
                                 'w_inventorychoice',
                                 'general_inventory.png',
                                 '');
 
-      echo "<center>".__('Welcome in FusionInventory. Begin configuration?')."</center><br/>";
+      echo "<center>".__('Welcome in FusionInventory. Begin configuration?', 'fusioninventory')."</center><br/>";
 
       PluginFusioninventoryWizard::displayButtons($a_buttons, $ariane);
    }
@@ -486,7 +486,7 @@ class PluginFusioninventoryWizard {
 //                               'filInventoryComputer');
 
 
-         $a_buttons[] = array(__('ESX servers'),
+         $a_buttons[] = array(__('ESX servers', 'fusioninventory'),
 
                                'w_remotedevices',
                                '',
@@ -495,7 +495,7 @@ class PluginFusioninventoryWizard {
       if ($plugin->isInstalled('fusinvsnmp')
          && $plugin->isActivated('fusinvsnmp')) {
 
-         $a_buttons[] = array(__('Network devices and printers'),
+         $a_buttons[] = array(__('Network devices and printers', 'fusioninventory'),
 
                                 'w_iprange',
                                 'general_inventory.png',
@@ -936,14 +936,14 @@ class PluginFusioninventoryWizard {
          "/plugins/fusioninventory/front/wizard.form.php\">";
       echo "<table class='tab_cadre' width='700'>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='4'>".__('IP Ranges')."</th>";
+      echo "<th colspan='4'>".__('IP Ranges', 'fusioninventory')."</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<th></th>";
       echo "<th>".__('Name')."</th>";
-      echo "<th>".__('Start of IP range')."</th>";
-      echo "<th>".__('End of IP range')."</th>";
+      echo "<th>".__('Start of IP range', 'fusioninventory')."</th>";
+      echo "<th>".__('End of IP range', 'fusioninventory')."</th>";
       echo "</tr>";
 
       $a_ipranges = $pfiprange->find("`entities_id` IN (".$_SESSION['glpiactiveentities_string'].")");
@@ -994,13 +994,13 @@ class PluginFusioninventoryWizard {
          "/plugins/fusioninventory/front/wizard.form.php\">";
       echo "<table class='tab_cadre' width='800'>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='5'>".__('Remote devices to inventory (VMware)')."</th>";
+      echo "<th colspan='5'>".__('Remote devices to inventory (VMware)', 'fusioninventory')."</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<th></th>";
       echo "<th>".__('Name')."</th>";
-      echo "<th>".__('Credential')."</th>";
+      echo "<th>".__('Credential', 'fusioninventory')."</th>";
       echo "<th colspan='2'>".__('IP')."</th>";
       echo "</tr>";
 

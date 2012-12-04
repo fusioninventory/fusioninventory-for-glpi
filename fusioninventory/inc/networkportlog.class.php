@@ -85,7 +85,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='3'>";
-      echo __('List of fields to history')." :";
+      echo __('List of fields to history', 'fusioninventory')." :";
       echo "</td>";
       echo "</tr>";
 
@@ -148,7 +148,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       echo "<br /><br />";
       if (!empty($options)) {
          if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","w")) {
-            echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_delete' value='<< " . __('Delete') . "'>";
+            echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_delete' value='<< " . __('Delete', 'fusioninventory') . "'>";
          }
       }
       echo "</td><td class='left'>";
@@ -167,7 +167,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='3'>";
-      echo __('Clean history')." :";
+      echo __('Clean history', 'fusioninventory')." :";
       echo "</th>";
       echo "</tr>";
 
@@ -433,7 +433,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                         $link .= __('Without name');
 
                      $link .= "</a>";
-                     $text .= "<td align='center'>".$link." ".__('on')." ".$link1."</td>";
+                     $text .= "<td align='center'>".$link." ".__('on', 'fusioninventory')." ".$link1."</td>";
                   } else {
                      $text .= "<td align='center'><font color='#ff0000'>".__('Deleted')."</font></td>";
                   }
@@ -451,7 +451,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                         $link .= __('Without name');
 
                      $link .= "</a>";
-                     $text .= "<td align='center'>".$link." ".__('on')." ".$link1."</td>";
+                     $text .= "<td align='center'>".$link." ".__('on', 'fusioninventory')." ".$link1."</td>";
                   } else {
                      $text .= "<td align='center'><font color='#ff0000'>".__('Deleted')."</font></td>";
                   }

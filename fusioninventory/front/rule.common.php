@@ -168,7 +168,7 @@ Html::header(_n('Rule', 'Rules', 2, 'fusioninventory'), $_SERVER['PHP_SELF'], "a
 
    $tabs = array();
    if ($rulecollection->showInheritedTab()) {
-      $tabs[0] = array('title'  => __('Rules applied').' : '.
+      $tabs[0] = array('title'  => __('Rules applied', 'fusioninventory').' : '.
                                    Dropdown::getDropdownName('glpi_entities',
                                                              $_SESSION['glpiactive_entity']),
                        'url'    => $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/rules.tabs.php",
@@ -179,7 +179,7 @@ Html::header(_n('Rule', 'Rules', 2, 'fusioninventory'), $_SERVER['PHP_SELF'], "a
    $title = _n('Rule', 'Rules', 2, 'fusioninventory');
 
    if ($rulecollection->isRuleRecursive()) {
-      $title = __('Local rules').' : '.Dropdown::getDropdownName('glpi_entities',
+      $title = __('Local rules', 'fusioninventory').' : '.Dropdown::getDropdownName('glpi_entities',
                                                                         $_SESSION['glpiactive_entity']);
    }
    $tabs[1] = array('title'  => $title,

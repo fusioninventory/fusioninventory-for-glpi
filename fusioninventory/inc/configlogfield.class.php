@@ -130,18 +130,18 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
 
       echo "<tr>";
       echo "<th colspan='2'>";
-      echo __('History configuration');
+      echo __('History configuration', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";
 
       echo "<tr>";
       echo "<th>";
-      echo __('List of fields for which to keep history');
+      echo __('List of fields for which to keep history', 'fusioninventory');
 
       echo "</th>";
       echo "<th>";
-      echo __('Retention in days');
+      echo __('Retention in days', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";

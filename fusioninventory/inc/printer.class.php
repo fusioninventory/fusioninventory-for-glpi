@@ -152,7 +152,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='4'>";
-      echo __('SNMP information');
+      echo __('SNMP information', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";
@@ -202,7 +202,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       echo "<input type='submit' name='GetRightModel'
-              value='".__('Load the correct model')."' class='submit'/>";
+              value='".__('Load the correct model', 'fusioninventory')."' class='submit'/>";
       echo "</td>";
       echo "<td colspan='2'>";
       echo "</td>";
