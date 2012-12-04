@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Mathieu Simon <mathieu.sim@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
-"POT-Creation-Date: 2012-12-04 15:10+0100\n"
-"PO-Revision-Date: 2012-12-04 14:11+0000\n"
+"POT-Creation-Date: 2012-12-04 15:21+0100\n"
+"PO-Revision-Date: 2012-12-04 14:22+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -72,7 +73,7 @@ msgstr "Aufgabe"
 
 #: hook.php:841
 msgid "SNMP"
-msgstr ""
+msgstr "SNMP"
 
 #: hook.php:857 index.php:57 front/agent.form.php:49 front/agent.php:49
 #: front/agentmodule.form.php:47 front/configsecurity.form.php:52
@@ -95,7 +96,7 @@ msgstr ""
 #: front/wizard_inventory.php:49 front/wizard_inventorycomputeroptions.php:49
 #: inc/menu.class.php:304 inc/profile.class.php:327
 msgid "FusionInventory"
-msgstr ""
+msgstr "FusionInventory"
 
 #: hook.php:1040 hook.php:1047 hook.php:1056 inc/lock.class.php:53
 #: inc/lock.class.php:90 inc/lock.class.php:92 inc/lock.class.php:167
@@ -127,12 +128,12 @@ msgstr "Modul"
 #: inc/config.class.php:657 inc/config.class.php:662
 #: inc/stateinventory.class.php:96
 msgid "Threads number"
-msgstr ""
+msgstr "Anzahl Threads"
 
 #: hook.php:1071 inc/agent.class.php:287 inc/config.class.php:657
 #: inc/staticmisc.class.php:79
 msgid "Network discovery"
-msgstr ""
+msgstr "Netzwerkdiscovery"
 
 #: hook.php:1072 inc/agent.class.php:298 inc/agentmodule.class.php:131
 #: inc/agentmodule.class.php:234 inc/config.class.php:662
@@ -225,11 +226,11 @@ msgstr "XML-Datei eines Agents importieren"
 
 #: setup.php:351 inc/menu.class.php:224
 msgid "Discovery status"
-msgstr ""
+msgstr "Discovery-Status"
 
 #: setup.php:406
 msgid "Your GLPI version not compatible, require 0.84"
-msgstr ""
+msgstr "Ihre version von GLPI ist nicht kompatibel, benötige 0.84."
 
 #: front/agent.form.php:60
 msgid "The agent is running"
@@ -258,7 +259,7 @@ msgstr "Keine Datei zum importieren gefunden!"
 
 #: front/popup.php:65
 msgid "Cache informations"
-msgstr ""
+msgstr "Cache-Informationen"
 
 #: front/popup.php:70
 msgid "Network ports display options"
@@ -267,7 +268,7 @@ msgstr ""
 #: front/printerlogreport.php:87 inc/statediscovery.class.php:141
 #: inc/stateinventory.class.php:92
 msgid "Starting date"
-msgstr ""
+msgstr "Startdatum"
 
 #: front/printerlogreport.php:94 inc/statediscovery.class.php:142
 #: inc/stateinventory.class.php:93
@@ -280,7 +281,7 @@ msgstr ""
 
 #: front/rule.common.php:182 front/wizzrule.common.php:182
 msgid "Local rules"
-msgstr ""
+msgstr "Lokale Regeln"
 
 #: front/snmpmodelconstructdevice.php:76
 msgid "Automatic creation of models"
@@ -312,7 +313,7 @@ msgstr ""
 #: inc/taskjoblog.class.php:237 inc/taskjoblog.class.php:303
 #: inc/taskjoblog.class.php:492 inc/taskjobstate.class.php:195
 msgid "Agent"
-msgstr ""
+msgstr "Agent"
 
 #: inc/agent.class.php:105 inc/agent.class.php:203 inc/agent.class.php:302
 msgid "Last contact"
@@ -345,7 +346,7 @@ msgstr "Agenten-Module"
 
 #: inc/agent.class.php:533
 msgid "Agent state"
-msgstr ""
+msgstr "Status des Agent"
 
 #: inc/agent.class.php:597
 msgid "Force inventory"
@@ -390,7 +391,7 @@ msgstr ""
 
 #: inc/computerlicenseinfo.class.php:94
 msgid "Serial number"
-msgstr ""
+msgstr "Seriennummer"
 
 #: inc/computerlicenseinfo.class.php:99
 msgid "Full name"
@@ -398,7 +399,7 @@ msgstr ""
 
 #: inc/computerlicenseinfo.class.php:101
 msgid "Option"
-msgstr ""
+msgstr "Option"
 
 #: inc/computerlicenseinfo.class.php:122
 msgid "Union between computer and license"
@@ -406,11 +407,11 @@ msgstr ""
 
 #: inc/config.class.php:205 inc/staticmisc.class.php:68
 msgid "Computer Inventory"
-msgstr ""
+msgstr "Computerinventar"
 
 #: inc/config.class.php:207
 msgid "Network Inventory"
-msgstr ""
+msgstr "Netzwerkinventar"
 
 #: inc/config.class.php:303
 msgid "SSL-only for agent"
@@ -430,7 +431,7 @@ msgstr "Netzwerkports Agents"
 
 #: inc/config.class.php:331
 msgid "Extra-debug"
-msgstr ""
+msgstr "Extra-Debug"
 
 #: inc/config.class.php:336
 msgid "Service URL"
@@ -471,7 +472,7 @@ msgstr "Diese Option wird für jedes Element mit einer Seriennummer ein Element 
 #: inc/inventorycomputerantivirus.class.php:89
 #: inc/inventorycomputerantivirus.class.php:145
 msgid "Antivirus"
-msgstr ""
+msgstr "Antivirus"
 
 #: inc/config.class.php:507
 msgid "Virtual network card"
@@ -495,7 +496,7 @@ msgstr "Modell für den automatischen Computertransfer in eine andere Entität."
 
 #: inc/config.class.php:652
 msgid "Network options"
-msgstr ""
+msgstr "Netzwerkoptionen"
 
 #: inc/configlogfield.class.php:133
 msgid "History configuration"
@@ -527,7 +528,7 @@ msgstr "Verschlüsselungmethode für Daten"
 
 #: inc/constructmodel.class.php:684
 msgid "Sorted by"
-msgstr ""
+msgstr "Ordnen nach"
 
 #: inc/credential.class.php:54 inc/credential.class.php:154
 #: inc/credentialip.class.php:107 inc/credentialip.class.php:123
@@ -543,7 +544,7 @@ msgstr "Remote-Gerät inventarisieren (VMware)"
 
 #: inc/credentialip.class.php:53
 msgid "Remote device inventory"
-msgstr ""
+msgstr "Remote-Inventarisierung von Geräten"
 
 #: inc/inventorycomputerantivirus.class.php:174
 msgid "Up to date"
@@ -562,7 +563,7 @@ msgstr ""
 #: inc/inventorycomputercomputer.class.php:83 inc/rulematchedlog.class.php:71
 #: inc/rulematchedlog.class.php:75
 msgid "Import informations"
-msgstr ""
+msgstr "Informationen importieren"
 
 #: inc/inventorycomputerimportxml.class.php:64
 msgid "Import XML file from an Agent"
@@ -608,11 +609,11 @@ msgstr "Import nicht erlaubt"
 
 #: inc/inventoryruleimport.class.php:205
 msgid "equal"
-msgstr ""
+msgstr "gleich"
 
 #: inc/inventoryruleimport.class.php:207
 msgid "empty"
-msgstr ""
+msgstr "leer"
 
 #: inc/inventoryruleimport.class.php:856
 #: inc/inventoryruleimportcollection.class.php:110
@@ -667,7 +668,7 @@ msgstr "Sperrung entfernen"
 
 #: inc/mapping.class.php:108
 msgid "networking > location"
-msgstr ""
+msgstr "Netwerk > Standort"
 
 #: inc/mapping.class.php:112
 msgid "networking > firmware"
@@ -1204,7 +1205,7 @@ msgstr "Netzwerk > LLDP remote port Beschreibung"
 #: inc/mapping.class.php:649 inc/networkequipment.class.php:366
 #: inc/networkport.class.php:78
 msgid "MTU"
-msgstr ""
+msgstr "MTU"
 
 #: inc/mapping.class.php:657 inc/networkequipment.class.php:374
 #: inc/networkport.class.php:86
@@ -1572,7 +1573,7 @@ msgstr ""
 
 #: inc/networkequipment.class.php:66
 msgid "FusionInventory SNMP"
-msgstr ""
+msgstr "FusionInventory"
 
 #: inc/networkequipment.class.php:127 inc/printer.class.php:155
 msgid "SNMP information"
@@ -1825,10 +1826,6 @@ msgstr ""
 msgid "Linked fields"
 msgstr "Verlinkte Felder"
 
-#: inc/snmpmodelmib.class.php:105
-msgid "is_active"
-msgstr "ist aktiv"
-
 #: inc/snmpmodelmib.class.php:234
 msgid "add an OID..."
 msgstr "Füge eine OID hinzu..."
@@ -1882,11 +1879,11 @@ msgstr "Zum Inventar"
 
 #: inc/stateinventory.class.php:98
 msgid "Error(s)"
-msgstr ""
+msgstr "Fehler"
 
 #: inc/staticmisc.class.php:61 inc/staticmisc.class.php:172
 msgid "Wake On LAN"
-msgstr ""
+msgstr "Wake On LAN"
 
 #: inc/staticmisc.class.php:74
 msgid "VMware host remote inventory"
@@ -1894,7 +1891,7 @@ msgstr "VMware host, Remoteinventar"
 
 #: inc/staticmisc.class.php:163 inc/staticmisc.class.php:287
 msgid "Agents"
-msgstr ""
+msgstr "Agents"
 
 #: inc/staticmisc.class.php:166
 msgid "Agent remote control"
@@ -1995,7 +1992,7 @@ msgstr ""
 #: inc/taskjob.class.php:248 inc/taskjob.class.php:372
 #: inc/taskjob.class.php:1774 inc/taskjoblog.class.php:514
 msgid "Definition"
-msgstr ""
+msgstr "Definition"
 
 #: inc/taskjob.class.php:267
 msgid "Time between task start and start this action"
@@ -2153,4 +2150,4 @@ msgstr "Netzwergeräte und -Drucker"
 
 #: inc/wizard.class.php:1003
 msgid "Credential"
-msgstr ""
+msgstr "Logindaten"

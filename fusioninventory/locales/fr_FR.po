@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
-"POT-Creation-Date: 2012-12-04 15:10+0100\n"
-"PO-Revision-Date: 2012-12-04 14:11+0000\n"
+"POT-Creation-Date: 2012-12-04 15:21+0100\n"
+"PO-Revision-Date: 2012-12-04 14:22+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -346,7 +346,7 @@ msgstr "Modules de l'agent"
 
 #: inc/agent.class.php:533
 msgid "Agent state"
-msgstr ""
+msgstr "Etat de l'agent"
 
 #: inc/agent.class.php:597
 msgid "Force inventory"
@@ -411,7 +411,7 @@ msgstr "Inventaire ordinateur"
 
 #: inc/config.class.php:207
 msgid "Network Inventory"
-msgstr ""
+msgstr "Inventaire réseau"
 
 #: inc/config.class.php:303
 msgid "SSL-only for agent"
@@ -419,7 +419,7 @@ msgstr "SSL seulement pour l'agent"
 
 #: inc/config.class.php:307
 msgid "Inventory frequency (in hours)"
-msgstr ""
+msgstr "Fréquence des inventaire (en heures)"
 
 #: inc/config.class.php:315
 msgid "Delete tasks after"
@@ -472,7 +472,7 @@ msgstr "Cette option va créer un élément pour chaque élément qui a un numé
 #: inc/inventorycomputerantivirus.class.php:89
 #: inc/inventorycomputerantivirus.class.php:145
 msgid "Antivirus"
-msgstr ""
+msgstr "Antivirus"
 
 #: inc/config.class.php:507
 msgid "Virtual network card"
@@ -528,7 +528,7 @@ msgstr "Protocole de cryptage pour les données"
 
 #: inc/constructmodel.class.php:684
 msgid "Sorted by"
-msgstr ""
+msgstr "Trié par"
 
 #: inc/credential.class.php:54 inc/credential.class.php:154
 #: inc/credentialip.class.php:107 inc/credentialip.class.php:123
@@ -558,12 +558,12 @@ msgstr "Valeur en liste noire"
 #: inc/inventorycomputercomputer.class.php:73
 #: inc/inventorycomputercomputer.class.php:131
 msgid "Advanced informations"
-msgstr ""
+msgstr "Informations avancées"
 
 #: inc/inventorycomputercomputer.class.php:83 inc/rulematchedlog.class.php:71
 #: inc/rulematchedlog.class.php:75
 msgid "Import informations"
-msgstr ""
+msgstr "Informations d'import"
 
 #: inc/inventorycomputerimportxml.class.php:64
 msgid "Import XML file from an Agent"
@@ -1569,7 +1569,7 @@ msgstr "Configuration générale"
 
 #: inc/menu.class.php:229
 msgid "Network inventory status"
-msgstr ""
+msgstr "Statut de l'inventaire réseau"
 
 #: inc/networkequipment.class.php:66
 msgid "FusionInventory SNMP"
@@ -1591,23 +1591,23 @@ msgstr "Uptime"
 #: inc/taskjob.class.php:276 inc/taskjob.class.php:1805
 #: inc/taskjob.class.php:1931
 msgid "day(s)"
-msgstr ""
+msgstr "jour(s)"
 
 #: inc/networkequipment.class.php:221 inc/task.class.php:278
 #: inc/taskjob.class.php:274 inc/taskjob.class.php:1799
 #: inc/taskjob.class.php:1929
 msgid "hour(s)"
-msgstr ""
+msgstr "heure(s)"
 
 #: inc/networkequipment.class.php:222 inc/task.class.php:276
 #: inc/taskjob.class.php:272 inc/taskjob.class.php:1793
 #: inc/taskjob.class.php:1927
 msgid "Minute(s)"
-msgstr ""
+msgstr "Minute(s)"
 
 #: inc/networkequipment.class.php:223
 msgid "sec(s)"
-msgstr ""
+msgstr "sec(s)"
 
 #: inc/networkequipment.class.php:226
 msgid "Memory usage (in %)"
@@ -1663,7 +1663,7 @@ msgstr ""
 
 #: inc/networkport.class.php:90
 msgid "Last change"
-msgstr ""
+msgstr "Dernière modification"
 
 #: inc/networkport.class.php:94
 msgid "Number of bytes received / Number of bytes sent"
@@ -1825,10 +1825,6 @@ msgstr "oid"
 #: inc/snmpmodelmib.class.php:101 inc/snmpmodelmib.class.php:244
 msgid "Linked fields"
 msgstr "Liaison champs"
-
-#: inc/snmpmodelmib.class.php:105
-msgid "is_active"
-msgstr ""
 
 #: inc/snmpmodelmib.class.php:234
 msgid "add an OID..."

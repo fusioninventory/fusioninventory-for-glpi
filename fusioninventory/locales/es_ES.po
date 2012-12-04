@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
-"POT-Creation-Date: 2012-12-04 15:10+0100\n"
-"PO-Revision-Date: 2012-12-04 14:11+0000\n"
+"POT-Creation-Date: 2012-12-04 15:21+0100\n"
+"PO-Revision-Date: 2012-12-04 14:22+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1824,10 +1824,6 @@ msgstr ""
 #: inc/snmpmodelmib.class.php:101 inc/snmpmodelmib.class.php:244
 msgid "Linked fields"
 msgstr "Campos conectados"
-
-#: inc/snmpmodelmib.class.php:105
-msgid "is_active"
-msgstr "está activo"
 
 #: inc/snmpmodelmib.class.php:234
 msgid "add an OID..."

@@ -102,7 +102,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
             if ($type_model == NETWORKING_TYPE) {
                echo "<th align='center'>".__('VLAN')."</th>";
             }
-            echo "<th align='center'>".__('is_active', 'fusioninventory')."</th>";
+            echo "<th align='center'>".__('Active')."</th>";
 
             echo "</tr>";
             while ($data=$DB->fetch_array($result)) {
