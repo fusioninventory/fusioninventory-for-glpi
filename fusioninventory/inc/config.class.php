@@ -254,11 +254,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       
       $modulewhere = "='".$module."'";
       if ($module == '') {
-         $modulewhere = "IS NULL";
+         $modulewhere = "IS NULL OR `module`=''";
       }
       $config = current($this->find("`plugins_id`='".$plugin_id."'
                           AND `type`='".$name."'
-                          AND `module` ".$modulewhere));
+                          AND (`module` ".$modulewhere.")"));
       if (isset($config['value'])) {
          return $config['value'];
       }
@@ -336,8 +336,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo __('Service URL', 'fusioninventory').'&nbsp;';
       Html::showToolTip('ex: http://192.168.20.1/glpi');
       echo "&nbsp;:";
-      if (!file_exists($this->getValue(null, 'agent_base_url', '').'/plugins/fusioninventory/index.php')
-            AND !file_get_contents($this->getValue(null, 'agent_base_url', '').'/plugins/fusioninventory/index.php')) {
+      if (!file_exists($this->getValue($plugin_id, 'agent_base_url', '').'/plugins/fusioninventory/index.php')
+            AND !file_get_contents($this->getValue($plugin_id, 'agent_base_url', '').'/plugins/fusioninventory/index.php')) {
            echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\">";
       }
       
