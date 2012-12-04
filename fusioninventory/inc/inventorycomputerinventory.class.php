@@ -310,26 +310,25 @@ class PluginFusioninventoryInventoryComputerInventory {
          $a_computerinventory = PluginFusioninventoryFormatconvert::computerSoftwareTransformation($a_computerinventory);
          $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
 
+         $computer   = new Computer();
+         if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
+            $_SESSION["plugin_fusinvinventory_entity"] = $_SESSION['plugin_fusioninventory_entityrestrict'];
+         }
+         if (!isset($_SESSION["plugin_fusinvinventory_entity"])
+                 OR $_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE
+                 OR $_SESSION["plugin_fusinvinventory_entity"] == '-1') {
+            $_SESSION["plugin_fusinvinventory_entity"] = 0;
+         }
+         $no_history = false;
+         
          $ret = $DB->query("SELECT GET_LOCK('inventory', 20)");
-         $timestart = microtime(true);
          if ($DB->result($ret, 0, 0) == 1) {
             // * New
-            $computer   = new Computer();
-            if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
-               $_SESSION["plugin_fusinvinventory_entity"] = $_SESSION['plugin_fusioninventory_entityrestrict'];
-            }
-            if (!isset($_SESSION["plugin_fusinvinventory_entity"])
-                    OR $_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE
-                    OR $_SESSION["plugin_fusinvinventory_entity"] == '-1') {
-               $_SESSION["plugin_fusinvinventory_entity"] = 0;
-            }
-            $_SESSION["plugin_fusioninventory_no_history"] = false;
-
             if ($items_id == '0') {
                $input = array();
                $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
                $items_id = $computer->add($input);
-               $_SESSION["plugin_fusioninventory_no_history"] = true;
+               $no_history = true;
             } else {
                $pfConfig   = new PluginFusioninventoryConfig();
                $computer->getFromDB($items_id);
@@ -343,7 +342,10 @@ class PluginFusioninventoryInventoryComputerInventory {
             $_SESSION['glpiactiveentities_string'] = $_SESSION["plugin_fusinvinventory_entity"];
             $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
             
-            $pfInventoryComputerLib->updateComputer($a_computerinventory, $items_id);
+            $pfInventoryComputerLib->updateComputer($a_computerinventory, $items_id, $no_history);
+            
+            $DB->request("SELECT RELEASE_LOCK('inventory')");
+            
             if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
                $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
                $inputrulelog = array();
@@ -358,8 +360,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                $pfRulematchedlog->add($inputrulelog);
                $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
                unset($_SESSION['plugin_fusioninventory_rules_id']);
-            }
-            $DB->request("SELECT RELEASE_LOCK('inventory')");
+            }            
          } else {
             $communication = new PluginFusioninventoryCommunication();
             $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
