@@ -217,7 +217,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<tr class='tab_bg_2'>";
       echo "<td align='center' colspan='2'>";
       echo "<input class='submit' type='submit' name='sendsnmpwalk'
-                      value='" . $LANG['buttons'][26] . "'>";
+                      value='".__('Send')."'>";
       echo "</td>";
       echo "</tr>";
       
@@ -453,7 +453,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             echo "snmpwalk file present";
             echo "<form method='post' name='' id=''  action=''>";
             echo "<input type='hidden' name='devices_id' value='".$devices_id."' />";
-            echo "<div align='center'><input type='submit' name='deletesnmpwalkfile' value=\"" . $LANG['buttons'][6] .
+            echo "<div align='center'><input type='submit' name='deletesnmpwalkfile' value=\"" . __('Delete permanently') .
                  "\" class='submit' >";
             Html::closeForm();
             echo "</td>";
@@ -612,7 +612,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<td colspan='2'>";
       echo "<input type='hidden' name='sysdescr' value='".$sysdescr."' />";
       echo "<input type='hidden' name='itemtype' value='".$itemtype."' />";
-      echo "<div align='center'><input type='submit' name='add' value=\"" . $LANG["buttons"][8] .
+      echo "<div align='center'><input type='submit' name='add' value=\"" . __('Add') .
                  "\" class='submit' >";
       echo "</td>";
       echo "</tr>";
@@ -681,14 +681,14 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          $_SESSION['glpi_plugin_fusioninventory_constructmodelsort'] = 'itemtype';
       }
       echo "<form name='sortform' id='sortform' method='post'>";
-      echo $LANG['search'][4]."&nbsp;: ";
+      echo __('Sorted by', 'fusioninventory')."&nbsp;: ";
       $array_sort = array();
       $array_sort['name'] = 'Model name';
       $array_sort['itemtype'] = 'Itemtype';
       $array_sort['stabledevel'] = 'Stable/devel';
       $array_sort['snmpfile'] = 'Snmpfile';
       Dropdown::showFromArray('sort', $array_sort, array('value' => $_SESSION['glpi_plugin_fusioninventory_constructmodelsort']));
-      echo "&nbsp;<input type='submit' name='updatesort' class='submit' value=\"".$LANG['buttons'][7]."\" >";
+      echo "&nbsp;<input type='submit' name='updatesort' class='submit' value=\"".__('Update')."\" >";
       Html::closeForm();
       echo "</center>";
       
@@ -781,7 +781,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       
       echo "<a id='import'>".$menu."</a>";
       Html::openArrowMassives("form_model", true);
-      Html::closeArrowMassives(array('import' => $LANG['buttons'][37]),
+      Html::closeArrowMassives(array('import' => __('Import')),
                                array('import' => 'Import will update existing models'));
       Html::closeForm();
    }
@@ -872,9 +872,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             echo "</td>";
             echo "<td align='center' rowspan='".$nbdevices."'>";
             $a_itemtypes = array();
-            $a_itemtypes[1] = $LANG['Menu'][0];
-            $a_itemtypes[2] = $LANG['Menu'][1];
-            $a_itemtypes[3] = $LANG['Menu'][2];
+            $a_itemtypes[1] = __('Computer');
+            $a_itemtypes[2] = __('Network');
+            $a_itemtypes[3] = __('Printer');
             echo $a_itemtypes[$a_models['itemtype']];
             echo "</td>";
             $i = 0;
@@ -1073,7 +1073,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='3' align='center'>";
-      echo "<input type='submit' name='add' value=\"".$LANG['buttons'][8]."\" class='submit'>";
+      echo "<input type='submit' name='add' value=\"".__('Add')."\" class='submit'>";
       echo "</td>";
       echo "</table>";
       Html::closeForm();

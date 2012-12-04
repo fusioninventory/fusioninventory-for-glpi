@@ -67,7 +67,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr class='tab_bg_1'>";
          echo "<th align='center'>";
-         echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit'>";
+         echo "<input type='submit' name='update' value=\"".__('Update')."\" class='submit'>";
          echo "</th>";
          echo "</tr>";
          echo "</table>";
@@ -314,7 +314,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          Dropdown::showYesNo("vlan_".$a_oid->id, 0);
          echo "</div>";
       } else {
-         echo $LANG['networking'][56]." : ";
+         echo __('VLAN')." : ";
          $vlan = 0;
          if (isset($a_mibs->vlan)) {
             $vlan = $a_mibs->vlan;
@@ -331,7 +331,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo "</th>";
       echo "<th width='350'>";
       if ($a_oid->numeric_oid == ".1.3.6.1.2.1.2.1.0") {
-         echo $LANG['plugin_fusinvsnmp']["mib"][6]." : ";
+         echo __('Port Counters', 'fusioninventory')." : ";
          Dropdown::showYesNo("oid_port_counter_".$a_oid->id, 1);
       }
       echo "</th>";
@@ -341,7 +341,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          Dropdown::showYesNo("oid_port_dyn_".$a_oid->id, 0);
          echo "</div>";
       } else {
-         echo $LANG['plugin_fusinvsnmp']["mib"][7]." : ";
+         echo __('Dynamic port (.x)', 'fusioninventory')." : ";
          $oidportdyn = 0;
          if (isset($a_mibs->oid_port_dyn)) {
             $oidportdyn = $a_mibs->oid_port_dyn;

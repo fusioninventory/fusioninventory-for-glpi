@@ -169,7 +169,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       
       $sopt[8]['table']          = "glpi_plugin_fusioninventory_taskjobstates";
       $sopt[8]['field']          = 'plugin_fusioninventory_agents_id';
-      $sopt[8]['name']           = $LANG['plugin_fusioninventory']['agents'][28];
+      $sopt[8]['name']           = __('Agent', 'fusioninventory');
       
       return $sopt;
    }
@@ -886,20 +886,20 @@ function appear_array(id){
 
             if ($veryshort == '0') {
                if ($a_taskjobstates == '0') {
-                  echo $LANG['crontask'][40]." (".Html::convDateTime($date).") : ";
+                  echo __('Last run')." (".Html::convDateTime($date).") : ";
                }
                echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-                  $LANG['plugin_fusioninventory']['taskjoblog'][9]."</a>";
+                  __('View logs of this execution', 'fusioninventory')."</a>";
             } else {
                if ($a_taskjobstates == '0') {
-                  echo $LANG['crontask'][40]." :<br/> ".Html::convDateTime($date)."";
+                  echo __('Last run')." :<br/> ".Html::convDateTime($date)."";
                }
             }
          }
          if ($a_taskjobstates != '0') {
             echo "<input type='hidden' name='taskjobstates_id' value='".$taskstates_id."' />";
             echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
-            echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.$LANG['plugin_fusioninventory']['task'][32].'"
+            echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.__('Force the end', 'fusioninventory').'"
                 class="submit" type="submit">';
          }
          echo "</td>";
