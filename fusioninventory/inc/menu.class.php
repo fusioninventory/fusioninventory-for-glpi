@@ -75,7 +75,7 @@ class PluginFusioninventoryMenu {
                  'configure it in the General Configuration page.', 'fusioninventory');
          print "</a></center>";
          echo "</div>";
-//         exit;
+         exit;
       }
 
 
