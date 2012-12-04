@@ -745,8 +745,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    /**
     * Show configuration form of agent
     *
-    * @global type $LANG
-    *
     */
    static function showConfig() {
 

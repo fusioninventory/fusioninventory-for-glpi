@@ -854,7 +854,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             $array = array ();
             if (PluginFusioninventoryModule::getModuleId("fusioninventory")
                     && $item->getID() > 0) {
-               $array[1] = $LANG['plugin_fusioninventory']['title'][0];
+               $array[1] = __('FusionInventory', 'fusioninventory');
             }
             if ($_GET['id'] > 0) {
                $array[3] = __('FusInv', 'fusioninventory')." ".__('XML', 'fusioninventory');

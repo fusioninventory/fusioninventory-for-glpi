@@ -50,8 +50,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    /**
     * Display tab
     *
-    * @global array $LANG
-    *
     * @param CommonGLPI $item
     * @param integer $withtemplate
     *

@@ -48,7 +48,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
 
 
    function showForm($input='') {
-      global $DB,$LANG,$CFG_GLPI;
+      global $DB,$CFG_GLPI;
 
       $NetworkPort = new NetworkPort();
 

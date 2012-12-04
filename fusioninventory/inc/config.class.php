@@ -119,13 +119,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Display name of itemtype
     *
-    * @global array $LANG
-    *
     * @return value name of this itemtype
     **/
    static function getTypeName($nb=0) {
 
-      return __('General configuration');
+      return __('General setup');
 
    }
 
@@ -193,8 +191,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Display tab
     *
-    * @global array $LANG
-    *
     * @param CommonGLPI $item
     * @param integer $withtemplate
     *
@@ -204,7 +200,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       if ($item->getType()==__CLASS__) {
          $array_ret = array();
-         $array_ret[0] = __('General configuration');
+         $array_ret[0] = __('General setup');
 
          $array_ret[1] = __('Computer Inventory');
          

@@ -48,7 +48,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
 
 
    function showFormList($id, $options=array()) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $DB,$CFG_GLPI;
 
       if (!PluginFusioninventoryProfile::haveRight("fusioninventory", "model","r")) {
          return false;

@@ -51,7 +51,7 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
 
       $tabs = array();
       $moduleTabs = array();
-      $tabs[1]=__('General configuration');
+      $tabs[1]=__('General setup');
 
       $tabs[2]=__('Agents modules');
 

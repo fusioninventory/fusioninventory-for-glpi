@@ -109,7 +109,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
 
    function showForm($id, $options=array()) {
-      global $CFG_GLPI,$LANG;
+      global $CFG_GLPI;
 
       PluginFusioninventoryProfile::checkRight("fusioninventory", "model","r");
 

@@ -787,7 +787,7 @@ function appear_array(id){
     * @return nothing
     */
    function displayShortLogs($taskjobs_id, $veryshort=0) {
-      global $DB,$CFG_GLPI,$LANG;
+      global $DB,$CFG_GLPI;
       
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       

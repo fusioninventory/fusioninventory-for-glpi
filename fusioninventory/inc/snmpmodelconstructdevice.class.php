@@ -48,7 +48,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
    private $suggest = 1;
 
    function showForm($id, $data) {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
 
       echo  "<table width='950' align='center'>
          <tr>
@@ -252,7 +252,6 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
    
    
    function displayOid($a_oid, $mappings_id, $a_match, $sysdescr, $color='red', $a_mibs=array()) {
-      global $LANG;
 
       $style = " style='border-color: #ff0000; border-width: 1px' ";
       $checked = '';

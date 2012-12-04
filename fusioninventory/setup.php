@@ -278,7 +278,7 @@ function plugin_init_fusioninventory() {
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['title'] = __('General configuration');
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['title'] = __('General setup');
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['page']  = '/plugins/fusioninventory/front/config.form.php';
 

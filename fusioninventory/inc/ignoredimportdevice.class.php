@@ -62,7 +62,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
 
    function showDevices() {
-      global $DB,$LANG;
+      global $DB;
       
       $rule = new PluginFusioninventoryRuleImportEquipment();
       $entity = new Entity();

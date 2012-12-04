@@ -164,7 +164,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    *@return value code of this bar
    **/
    static function getProgressBar($width,$percent,$options=array()) {
-      global $CFG_GLPI,$LANG;
+      global $CFG_GLPI;
 
       $param = array();
       $param['title']=__('Progress');

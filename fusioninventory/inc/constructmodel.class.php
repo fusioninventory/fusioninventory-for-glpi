@@ -142,7 +142,6 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    function showFormDefineSysdescr($message = array()) {
-      global $LANG;
       
       echo "<form name='form' method='post' action='".$this->getSearchURL()."'>";
       echo "<table class='tab_cadre_fixe'>";
@@ -229,7 +228,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    function sendGetsysdescr($sysdescr, $itemtype, $devices_id = 0) {
-      global $CFG_GLPI,$DB, $LANG;
+      global $CFG_GLPI,$DB;
       
       $getsysdescr = array();
       if ($devices_id > 0) {
@@ -564,7 +563,6 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    function showUploadSnmpwalk($sysdescr, $itemtype) {
-      global $LANG;
       
       echo "<form method='post' name='' id=''  action='' enctype=\"multipart/form-data\">";
       echo "<table class='tab_cadre_fixe'>";
@@ -667,7 +665,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    function showAllModels() {
-      global $LANG,$DB;
+      global $DB;
       
       $getsysdescr = array();
       $getsysdescr['getallmodels'] = array(
@@ -791,7 +789,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    function displayModelsList($data, $nb_devices, $a_sort, $modelimport) {
-      global $CFG_GLPI,$LANG,$DB;
+      global $CFG_GLPI,$DB;
       
       echo  "<table class='tab_cadre'>";
 
@@ -1013,7 +1011,6 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    function showFormAddOid($mapping_name) {
-      global $LANG;
       
       echo "<form name='form' method='post' action=''>";
       echo "<table class='tab_cadre_fixe'>";

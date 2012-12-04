@@ -47,8 +47,6 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
    
    static function getTypeName($nb=0) {
-      global $LANG;
-
       return $LANG['plugin_fusinvinventory']['licenseinfo'][0];
    }
 
@@ -62,7 +60,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
    }
 
    function showForm($computers_id) {
-      global $LANG, $CFG_GLPI;
+      global $CFG_GLPI;
 
       $pfLicenseInfo = new self();
       $a_licenseInfo = $pfLicenseInfo->find("`computers_id`='".$computers_id."'");

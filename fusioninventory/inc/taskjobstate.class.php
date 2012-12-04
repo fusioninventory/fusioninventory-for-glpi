@@ -128,7 +128,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    *
    **/
    function stateTaskjobItem($items_id, $itemtype, $state='all') {
-      global $DB,$LANG, $CFG_GLPI;
+      global $DB,$CFG_GLPI;
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $icon = "";
