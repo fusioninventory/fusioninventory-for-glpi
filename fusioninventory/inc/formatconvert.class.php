@@ -45,6 +45,8 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryFormatconvert {
+   var $foreignkey_itemtype = array();
+   
    
    static function XMLtoArray($xml) {
       $datainventory = array();
@@ -559,7 +561,7 @@ class PluginFusioninventoryFormatconvert {
    
    
    
-   static function computerSoftwareTransformation($a_inventory) {
+   static function computerSoftwareTransformation($a_inventory, $entities_id) {
       
       $thisc = new self();
       
@@ -572,20 +574,18 @@ class PluginFusioninventoryFormatconvert {
       foreach ($a_inventory['SOFTWARES'] as $a_softwares) {
          $array_tmp = $thisc->addValues($a_softwares, 
                                         array( 
-                                           'PUBLISHER'   => 'manufacturer', 
+                                           'PUBLISHER'   => 'manufacturers_id', 
                                            'NAME'        => 'name', 
                                            'VERSION'     => 'version'));
-         if (isset($array_tmp['manufacturer'])) {
-            $array_tmp['manufacturer'] = Manufacturer::processName($array_tmp['manufacturer']);
+         if ($array_tmp['manufacturers_id'] != '') {
+            $array_tmp['manufacturers_id'] = Manufacturer::processName($array_tmp['manufacturers_id']);
          } else {
-            $array_tmp['manufacturer'] = '';
+            $array_tmp['manufacturers_id'] = 0;
          }
-         if (!isset($array_tmp['version'])) {
-            $array_tmp['version'] = '';
-         }
+
          $res_rule = $rulecollection->processAllRules(array(
                                                          "name"         => $array_tmp['name'],
-                                                         "manufacturer" => $array_tmp['manufacturer'],
+                                                         "manufacturer" => $array_tmp['manufacturers_id'],
                                                          "old_version"  => $array_tmp['version'],
                                                          "entities_id"  => $entities_id_software));
          if (isset($res_rule['_ignore_ocs_import']) AND $res_rule['_ignore_ocs_import'] == "1") {
@@ -599,13 +599,13 @@ class PluginFusioninventoryFormatconvert {
             }
             if (isset($res_rule["manufacturer"])) {
                $array_tmp['manufacturers_id'] = $res_rule["manufacturer"];
-               $array_tmp['manufacturer'] = Dropdown::getDropdownName("glpi_manufacturers", $res_rule["manufacturer"]);
-            } else if ($array_tmp['manufacturer'] != '') {
-//               $array_tmp['manufacturers_id'] = Dropdown::importExternal("glpi_manufacturers",
-//                                                                         $array_tmp['manufacturer']);
+            } else if ($array_tmp['manufacturers_id'] != ''
+                    && $array_tmp['manufacturers_id'] != '0') {
+               $array_tmp['manufacturers_id'] = Dropdown::importExternal("glpi_manufacturers",
+                                                                         $array_tmp['manufacturers_id'],
+                                                                         $entities_id);
             } else {
-//               $array_tmp['manufacturers_id'] = 0;
-               $array_tmp['manufacturer'] = '';
+               $array_tmp['manufacturers_id'] = 0;
             }
             if (isset($res_rule['new_entities_id'])) {
                $array_tmp['entities_id'] = $res_rule['new_entities_id'];
@@ -617,6 +617,7 @@ class PluginFusioninventoryFormatconvert {
             if (!isset($array_tmp['version'])) {
                $array_tmp['version'] = "";
             }
+Toolbox::logInFile("SOFT", print_r($array_tmp, true));
             $a_inventory['software'][] = $array_tmp;
          }
       } 
@@ -644,7 +645,7 @@ class PluginFusioninventoryFormatconvert {
    
    
    
-   static function computerReplaceids($array) {
+   function computerReplaceids($array) {
       
       foreach ($array as $key=>$value) {
          if (!is_int($key)
@@ -652,15 +653,20 @@ class PluginFusioninventoryFormatconvert {
             return $array;
          } else {
             if (is_array($value)) {
-               $array[$key] = PluginFusioninventoryFormatconvert::computerReplaceids($value);
+               $array[$key] = $this->computerReplaceids($value);
             } else {
                if ($key == "manufacturers_id") {
                   $manufacturer = new Manufacturer();
-                  $array[$key] = $manufacturer->processName($value);
+                  $array[$key]  = $manufacturer->processName($value);
                } 
-               if (isForeignKeyField($key)
+               if (isset($this->foreignkey_itemtype[$key])) {
+                  $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
+                                                          $value);
+               } else if (isForeignKeyField($key)
                        && $key != "users_id") {
-                  $array[$key] = Dropdown::importExternal(getItemTypeForTable(getTableNameForForeignKeyField($key)),
+                  
+                  $this->foreignkey_itemtype[$key] = getItemTypeForTable(getTableNameForForeignKeyField($key));
+                  $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
                                                           $value);
                }
             }

@@ -86,17 +86,17 @@ class PluginFusioninventoryInventoryComputerInventory {
       // * Hacks
 
          // Hack to put OS in software
-         $inputos = array();
-         if (isset($arrayinventory['CONTENT']['HARDWARE']['OSCOMMENTS'])) {
-            $inputos['COMMENTS'] = $arrayinventory['CONTENT']['HARDWARE']['OSCOMMENTS'];
-         }
          if (isset($arrayinventory['CONTENT']['HARDWARE']['OSNAME'])) {
+            $inputos = array();
+            if (isset($arrayinventory['CONTENT']['HARDWARE']['OSCOMMENTS'])) {
+               $inputos['COMMENTS'] = $arrayinventory['CONTENT']['HARDWARE']['OSCOMMENTS'];
+            }
             $inputos['NAME']     = $arrayinventory['CONTENT']['HARDWARE']['OSNAME'];
+            if (isset($arrayinventory['CONTENT']['HARDWARE']['OSVERSION'])) {
+               $inputos['VERSION']  = $arrayinventory['CONTENT']['HARDWARE']['OSVERSION'];
+            }
+            $arrayinventory['CONTENT']['SOFTWARES'][] = $inputos;
          }
-         if (isset($arrayinventory['CONTENT']['HARDWARE']['OSVERSION'])) {
-            $inputos['VERSION']  = $arrayinventory['CONTENT']['HARDWARE']['OSVERSION'];
-         }
-         $arrayinventory['CONTENT']['SOFTWARES'][] = $inputos;
          
          // Hack for USB Printer serial
          if (isset($arrayinventory['CONTENT']['PRINTERS'])) {
@@ -307,10 +307,29 @@ class PluginFusioninventoryInventoryComputerInventory {
 
       if ($itemtype == 'Computer') {
          $pfInventoryComputerLib      = new PluginFusioninventoryInventoryComputerLib();
-         $a_computerinventory = PluginFusioninventoryFormatconvert::computerSoftwareTransformation($a_computerinventory);
-         $a_computerinventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_computerinventory);
-
+         $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+         
          $computer   = new Computer();
+         if ($items_id == '0') {
+            $_SESSION['glpiactiveentities'] = array($_SESSION["plugin_fusinvinventory_entity"]);
+            $_SESSION['glpiactiveentities_string'] = $_SESSION["plugin_fusinvinventory_entity"];
+            $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
+         } else {
+            $pfConfig   = new PluginFusioninventoryConfig();
+            $computer->getFromDB($items_id);
+            if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"], 
+                                    'transfers_id_auto', 
+                                    'inventory') == 0) {
+               $_SESSION["plugin_fusinvinventory_entity"] = $computer->fields['entities_id'];
+            }
+            $_SESSION['glpiactiveentities'] = array($_SESSION["plugin_fusinvinventory_entity"]);
+            $_SESSION['glpiactiveentities_string'] = $_SESSION["plugin_fusinvinventory_entity"];
+            $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
+         }
+         
+         $a_computerinventory = PluginFusioninventoryFormatconvert::computerSoftwareTransformation($a_computerinventory, $_SESSION["plugin_fusinvinventory_entity"]);
+         $a_computerinventory = $pfFormatconvert->computerReplaceids($a_computerinventory);
+
          if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
             $_SESSION["plugin_fusinvinventory_entity"] = $_SESSION['plugin_fusioninventory_entityrestrict'];
          }
@@ -329,19 +348,8 @@ class PluginFusioninventoryInventoryComputerInventory {
                $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
                $items_id = $computer->add($input);
                $no_history = true;
-            } else {
-               $pfConfig   = new PluginFusioninventoryConfig();
-               $computer->getFromDB($items_id);
-               if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"], 
-                                       'transfers_id_auto', 
-                                       'inventory') == 0) {
-                  $_SESSION["plugin_fusinvinventory_entity"] = $computer->fields['entities_id'];
-               }
             }
-            $_SESSION['glpiactiveentities'] = array($_SESSION["plugin_fusinvinventory_entity"]);
-            $_SESSION['glpiactiveentities_string'] = $_SESSION["plugin_fusinvinventory_entity"];
-            $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
-            
+
             $pfInventoryComputerLib->updateComputer($a_computerinventory, $items_id, $no_history);
             
             $DB->request("SELECT RELEASE_LOCK('inventory')");

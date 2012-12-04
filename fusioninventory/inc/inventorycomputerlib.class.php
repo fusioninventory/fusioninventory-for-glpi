@@ -459,89 +459,71 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
          
       // * Software
-//         if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"],
-//              "import_software", 'inventory') != 0) {
-            $a_softwares = array();
-            if ($no_history === false) {
-               $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
-                          `glpi_softwares`.`name`,
-                          `glpi_softwareversions`.`name` AS version,
-                          `glpi_softwareversions`.`entities_id`
-                   FROM `glpi_computers_softwareversions`
-                   LEFT JOIN `glpi_softwareversions`
-                        ON (`glpi_computers_softwareversions`.`softwareversions_id`
-                              = `glpi_softwareversions`.`id`)
-                   LEFT JOIN `glpi_softwares`
-                        ON (`glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`)
-                   WHERE `glpi_computers_softwareversions`.`computers_id` = '$items_id'";
-               $result = $DB->query($query);
-               while ($db_software = $DB->fetch_assoc($result)) {
-                  $idtmp = $db_software['sid'];
-                  unset($db_software['sid']);
-                  $db_software = Toolbox::addslashes_deep($db_software);
-                  $db_software = array_map('strtolower', $db_software);
-                  $a_softwares[$idtmp] = $db_software;
+         $a_softwares = array();
+         if ($no_history === false) {
+            $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
+                       `glpi_softwares`.`name`,
+                       `glpi_softwareversions`.`name` AS version,
+                       `glpi_softwareversions`.`entities_id`
+                FROM `glpi_computers_softwareversions`
+                LEFT JOIN `glpi_softwareversions`
+                     ON (`glpi_computers_softwareversions`.`softwareversions_id`
+                           = `glpi_softwareversions`.`id`)
+                LEFT JOIN `glpi_softwares`
+                     ON (`glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`)
+                WHERE `glpi_computers_softwareversions`.`computers_id` = '$items_id'";
+            $result = $DB->query($query);
+            while ($db_software = $DB->fetch_assoc($result)) {
+               $idtmp = $db_software['sid'];
+               unset($db_software['sid']);
+               $db_software = Toolbox::addslashes_deep($db_software);
+               $db_software = array_map('strtolower', $db_software);
+               $a_softwares[$idtmp] = $db_software;
+            }
+         }
+
+         if (count($a_softwares) == 0) {
+            foreach ($a_computerinventory['software'] as $a_software) {
+               $a_software['_no_message'] = true;
+
+               $this->addSoftware($a_software,
+                                  $items_id,
+                                  $no_history);
+            }
+         } else {
+            foreach ($a_computerinventory['software'] as $key => $arrays) {
+               unset($arrays['manufacturers_id']);
+               $arrayslower = array_map('strtolower', $arrays);
+               foreach ($a_softwares as $keydb => $arraydb) {
+                  if ($arrayslower == $arraydb) {
+                     unset($a_computerinventory['software'][$key]);
+                     unset($a_softwares[$keydb]);
+                     break;
+                  }
                }
             }
 
-            if (count($a_softwares) == 0) {
-               foreach ($a_computerinventory['software'] as $a_software) {
-                  $a_software['_no_message'] = true;
-
-                  $softwares_id = $software->addOrRestoreFromTrash($a_software['name'],
-                                                                   $a_software['manufacturer'],
-                                                                   $a_software['entities_id']);
-                  $a_software['softwares_id'] = $softwares_id;
-                  $a_software['name'] = $data['version'];
-                  $softwareversions_id = $softwareVersion->add($a_software);
-                  $a_software['computers_id'] = $items_id;
-                  $a_software['softwareversions_id'] = $softwareversions_id;
-                  $a_software['_no_history'] = $no_history;
-                  $computer_SoftwareVersion->add($a_software);
-               }
+            if (count($a_computerinventory['software']) == 0
+               AND count($a_softwares) == 0) {
+               // Nothing to do
             } else {
-               foreach ($a_computerinventory['software'] as $key => $arrays) {
-                  unset($arrays['manufacturer']);
-                  unset($arrays['manufacturers_id']);
-                  $arrayslower = array_map('strtolower', $arrays);
-                  foreach ($a_softwares as $keydb => $arraydb) {
-                     if ($arrayslower == $arraydb) {
-                        unset($a_computerinventory['software'][$key]);
-                        unset($a_softwares[$keydb]);
-                        break;
-                     }
+               if (count($a_softwares) != 0) {
+                  // Delete softwares in DB
+                  foreach ($a_softwares as $idtmp => $data) {
+                     $computer_SoftwareVersion->delete(array('id'=>$idtmp));
                   }
                }
+               if (count($a_computerinventory['software']) != 0) {
+                  foreach($a_computerinventory['software'] as $a_software) {
+                     $a_software['_no_message'] = true;
 
-               if (count($a_computerinventory['software']) == 0
-                  AND count($a_softwares) == 0) {
-                  // Nothing to do
-               } else {
-                  if (count($a_softwares) != 0) {
-                     // Delete softwares in DB
-                     foreach ($a_softwares as $idtmp => $data) {
-                        $computer_SoftwareVersion->delete(array('id'=>$idtmp));
-                     }
-                  }
-                  if (count($a_computerinventory['software']) != 0) {
-                     foreach($a_computerinventory['software'] as $a_software) {
-                        $a_software['_no_message'] = true;
-
-                        $softwares_id = $software->addOrRestoreFromTrash($a_software['name'],
-                                                                         $a_software['manufacturer'],
-                                                                         $a_software['entities_id']);
-                        $a_software['softwares_id'] = $softwares_id;
-                        $a_software['name'] = $data['version'];
-                        $softwareversions_id = $softwareVersion->add($a_software);
-                        $a_software['computers_id'] = $items_id;
-                        $a_software['softwareversions_id'] = $softwareversions_id;
-                        $a_software['_no_history'] = $no_history;
-                        $computer_SoftwareVersion->add($a_software);
-                     }
+                     $this->addSoftware($a_software,
+                                        $items_id,
+                                        $no_history);
                   }
                }
             }
-//         }
+         }
          
       // * Virtualmachines
          $db_computervirtualmachine = array();
@@ -930,6 +912,71 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['items_id'] = $computers_id;
       $data['_no_history'] = $no_history;
       $item_DeviceControl->add($data);
+   }
+   
+   
+   
+   function addSoftware($a_software, $computers_id, $no_history) {
+      global $DB;
+
+      $software                  = new Software();
+      $softwareVersion           = new SoftwareVersion();
+      $computer_SoftwareVersion  = new Computer_SoftwareVersion();
+      $new = 0;
+      
+      //Look for the software by his name in GLPI for a specific entity
+      $sql = "SELECT `id`
+              FROM `glpi_softwares`
+              WHERE `manufacturers_id` = '".$a_software['manufacturers_id']."'
+                    AND `name` = '".$a_software['name']."' " .
+                    getEntitiesRestrictRequest('AND', 'glpi_softwares', 'entities_id', $a_software['entities_id'],
+                                               true).
+              " LIMIT 1";
+
+      $res_soft = $DB->query($sql);
+      if ($DB->numrows($res_soft) > 0) {
+         $soft = $DB->fetch_assoc($res_soft);
+         $id = $soft["id"];
+      } else {
+         //Process software's category rules
+         $softcatrule = new RuleSoftwareCategoryCollection();
+         $result      = $softcatrule->processAllRules(null, null, Toolbox::stripslashes_deep($a_software));
+
+         if (!empty($result) && isset($result["softwarecategories_id"])) {
+            $a_software["softwarecategories_id"] = $result["softwarecategories_id"];
+         } else {
+            $a_software["softwarecategories_id"] = 0;
+         }
+
+         $id = $software->add($a_software);
+         $new = 1;
+      }
+
+      if ($new == 1) {
+         $a_software['softwares_id'] = $id;
+         $a_software['name'] = $a_software['version'];
+         $softwareversions_id = $softwareVersion->add($a_software);
+      } else {
+         $softwareversions_id = 0;
+         $query_search = "SELECT * FROM `glpi_softwareversions`
+                          WHERE `softwares_id` = '".$id."'
+                                AND `name` = '".$a_software['version']."'
+                          LIMIT 1";
+         $result_search = $DB->query($query_search);
+
+         if ($DB->numrows($result_search) > 0) {
+            $data = $DB->fetch_assoc($result_search);
+            $softwareversions_id = $data['id'];
+         } else {
+            $a_software['softwares_id'] = $id;
+            $a_software['name'] = $a_software['version'];
+            $softwareversions_id = $softwareVersion->add($a_software);
+         }
+      }
+      $a_software['computers_id'] = $computers_id;
+      $a_software['softwareversions_id'] = $softwareversions_id;
+      $a_software['_no_history'] = $no_history;
+      $computer_SoftwareVersion->add($a_software);
    }
 }
 
