@@ -179,7 +179,7 @@ class PluginFusioninventoryMenu {
 
       $a_menu = array();
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "importxml", "r")) {
-         $a_menu[0]['name'] = __('Import agent XML file', 'fusionsinventory');
+         $a_menu[0]['name'] = __('Import agent XML file', 'fusioninventory');
 
          $a_menu[0]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_importxml.png";
          $a_menu[0]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvinventory/front/importxml.php";
