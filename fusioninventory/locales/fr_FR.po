@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# David Durieux <d.durieux@siprossii.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2012-12-04 12:02+0100\n"
-"PO-Revision-Date: 2012-12-04 13:11+0000\n"
+"PO-Revision-Date: 2012-12-04 13:43+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +24,7 @@ msgstr ""
 #: hook.php:841 hook.php:844 hook.php:860 hook.php:871 hook.php:881
 #: inc/inventorycomputercomputer.class.php:198 inc/taskjob.class.php:118
 msgid "FusInv"
-msgstr ""
+msgstr "FusInv"
 
 #: hook.php:52 hook.php:184 hook.php:219 hook.php:979
 #: inc/inventorycomputercomputer.class.php:201
@@ -70,8 +71,8 @@ msgstr "Utilisation du CPU (en %)"
 #: inc/taskjoblog.class.php:133 inc/taskjobstate.class.php:157
 msgid "Task"
 msgid_plural "Tasks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tâche"
+msgstr[1] "Tâches"
 
 #: hook.php:829 hook.php:860 hook.php:871 hook.php:978
 #: inc/inventorycomputercomputer.class.php:199
@@ -80,7 +81,7 @@ msgstr "Tâche"
 
 #: hook.php:841
 msgid "SNMP"
-msgstr ""
+msgstr "SNMP"
 
 #: hook.php:857 index.php:57 front/agent.form.php:49 front/agent.php:49
 #: front/agentmodule.form.php:47 front/configsecurity.form.php:52
@@ -103,7 +104,7 @@ msgstr ""
 #: front/wizard_inventory.php:49 front/wizard_inventorycomputeroptions.php:49
 #: inc/menu.class.php:304 inc/profile.class.php:327
 msgid "FusionInventory"
-msgstr ""
+msgstr "FusionInventory"
 
 #: hook.php:1048 hook.php:1057
 msgid "Load the correct SNMP model"
@@ -122,24 +123,24 @@ msgstr "Assigner une authentification SNMP"
 #: inc/ignoredimportdevice.class.php:113 inc/rulematchedlog.class.php:145
 #: inc/rulematchedlog.class.php:216 inc/taskjob.class.php:216
 msgid "Module"
-msgstr ""
+msgstr "Module"
 
 #: hook.php:1071 hook.php:1072 inc/agent.class.php:287 inc/agent.class.php:298
 #: inc/config.class.php:657 inc/config.class.php:662
 #: inc/stateinventory.class.php:96
 msgid "Threads number"
-msgstr ""
+msgstr "Nombre de threads"
 
 #: hook.php:1071 inc/agent.class.php:287 inc/config.class.php:657
 #: inc/staticmisc.class.php:79
 msgid "Network discovery"
-msgstr ""
+msgstr "Découverte réseau"
 
 #: hook.php:1072 inc/agent.class.php:298 inc/agentmodule.class.php:131
 #: inc/agentmodule.class.php:234 inc/config.class.php:662
 #: inc/staticmisc.class.php:84
 msgid "Network inventory (SNMP)"
-msgstr ""
+msgstr "Inventaire réseau (SNMP)"
 
 #: hook.php:1094 inc/taskjoblog.class.php:428 inc/taskjoblog.class.php:855
 #: inc/taskjoblog.class.php:902
@@ -172,11 +173,11 @@ msgstr "Nombre de jours depuis dernier inventaire"
 
 #: setup.php:258 setup.php:259
 msgid "Documentation"
-msgstr ""
+msgstr "Documentation"
 
 #: setup.php:265
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: setup.php:269 inc/menu.class.php:92 inc/menu.class.php:98
 #: inc/task.class.php:53 inc/task.class.php:685 inc/task.class.php:694
@@ -203,7 +204,7 @@ msgstr ""
 
 #: setup.php:293
 msgid "Wizard"
-msgstr ""
+msgstr "Assistant"
 
 #: setup.php:298 inc/iprange.class.php:94 inc/menu.class.php:134
 #: inc/staticmisc.class.php:181
@@ -313,11 +314,11 @@ msgstr ""
 #: inc/taskjoblog.class.php:237 inc/taskjoblog.class.php:303
 #: inc/taskjoblog.class.php:492 inc/taskjobstate.class.php:195
 msgid "Agent"
-msgstr ""
+msgstr "Agent"
 
 #: inc/agent.class.php:105 inc/agent.class.php:203 inc/agent.class.php:302
 msgid "Last contact"
-msgstr ""
+msgstr "Dernier contact"
 
 #: inc/agent.class.php:112 inc/agent.class.php:273
 msgid "locked"
@@ -333,12 +334,12 @@ msgstr "Lié à l'ordinateur"
 
 #: inc/agent.class.php:151 inc/agent.class.php:202 inc/agent.class.php:291
 msgid "Useragent"
-msgstr ""
+msgstr "Useragent"
 
 #: inc/agent.class.php:158 inc/agent.class.php:310
 #: inc/inventoryruleimport.class.php:136
 msgid "FusionInventory tag"
-msgstr ""
+msgstr "Etiquette FusionInventory"
 
 #: inc/agent.class.php:188
 msgid "Agent modules"
@@ -370,7 +371,7 @@ msgstr "Activation (par défaut)"
 
 #: inc/agentmodule.class.php:107
 msgid "Exceptions"
-msgstr ""
+msgstr "Exceptions"
 
 #: inc/communication.class.php:213
 #: inc/communicationnetworkinventory.class.php:218
@@ -391,15 +392,15 @@ msgstr ""
 
 #: inc/computerlicenseinfo.class.php:94
 msgid "Serial number"
-msgstr ""
+msgstr "Numéro de série"
 
 #: inc/computerlicenseinfo.class.php:99
 msgid "Full name"
-msgstr ""
+msgstr "Nom complet"
 
 #: inc/computerlicenseinfo.class.php:101
 msgid "Option"
-msgstr ""
+msgstr "Option"
 
 #: inc/computerlicenseinfo.class.php:122
 msgid "Union between computer and license"
@@ -407,7 +408,7 @@ msgstr ""
 
 #: inc/config.class.php:205 inc/staticmisc.class.php:68
 msgid "Computer Inventory"
-msgstr ""
+msgstr "Inventaire ordinateur"
 
 #: inc/config.class.php:207
 msgid "Network Inventory"
@@ -431,7 +432,7 @@ msgstr "Port de l'agent"
 
 #: inc/config.class.php:331
 msgid "Extra-debug"
-msgstr ""
+msgstr "Extra-debug"
 
 #: inc/config.class.php:336
 msgid "Service URL"
@@ -1731,7 +1732,7 @@ msgstr "Connexion autre (avec un ordinateur, une imprimante...)"
 
 #: inc/networkequipment.class.php:353
 msgid "Monitoring"
-msgstr ""
+msgstr "Monitoring"
 
 #: inc/networkequipment.class.php:382
 msgid "Number of bytes received"
@@ -1747,7 +1748,7 @@ msgstr "Nb d'erreurs en réception"
 
 #: inc/networkequipment.class.php:390 inc/networkport.class.php:102
 msgid "Duplex"
-msgstr ""
+msgstr "Duplex"
 
 #: inc/networkequipment.class.php:674 inc/networkportlog.class.php:151
 #: inc/networkporttype.class.php:387 inc/printerlog.class.php:367
@@ -1771,7 +1772,7 @@ msgstr ""
 
 #: inc/networkportconnectionlog.class.php:59
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: inc/networkportconnectionlog.class.php:129
 #: inc/networkportconnectionlog.class.php:152 inc/networkportlog.class.php:436
