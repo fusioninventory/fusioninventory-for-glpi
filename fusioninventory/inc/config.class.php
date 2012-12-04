@@ -333,7 +333,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showYesNo("extradebug", $this->isActive($plugin_id, 'extradebug', ''));
       echo "</td>";
       echo "<td>";
-      echo __('Service URL', 'fuioninventory').'&nbsp;';
+      echo __('Service URL', 'fusioninventory').'&nbsp;';
       Html::showToolTip('ex: http://192.168.20.1/glpi');
       echo "&nbsp;:";
       if (!file_exists($this->getValue(null, 'agent_base_url', '').'/plugins/fusioninventory/index.php')
