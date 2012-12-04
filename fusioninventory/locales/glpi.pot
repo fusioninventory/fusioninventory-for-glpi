@@ -1,21 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
-# Translators:
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: FusionInventory (for GLPI)\n"
-"Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-12-04 15:10+0100\n"
-"PO-Revision-Date: 2012-12-04 14:11+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: et_EE\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: hook.php:51 hook.php:117 hook.php:125 hook.php:135 hook.php:143
 #: hook.php:150 hook.php:164 hook.php:172 hook.php:183 hook.php:200
@@ -29,7 +30,7 @@ msgstr ""
 #: inc/inventorycomputercomputer.class.php:201
 #: inc/networkequipment.class.php:176 inc/printer.class.php:171
 msgid "Last inventory"
-msgstr "Viimane laoseis"
+msgstr ""
 
 #: hook.php:84 hook.php:91 inc/inventorycomputercomputer.class.php:135
 msgid "BIOS"
@@ -211,7 +212,7 @@ msgstr ""
 
 #: setup.php:331
 msgid "Criteria rules"
-msgstr "Kriteeriumi reeglid"
+msgstr ""
 
 #: setup.php:335 inc/inventoryruleentity.class.php:57
 #: inc/inventoryruleentitycollection.class.php:56 inc/menu.class.php:189
@@ -250,7 +251,7 @@ msgstr ""
 
 #: front/inventorycomputerimportxml.php:63
 msgid "XML file not valid!"
-msgstr "XML-fail pole korrektne!"
+msgstr ""
 
 #: front/inventorycomputerimportxml.php:67
 msgid "No file to import!"
@@ -438,17 +439,17 @@ msgstr ""
 
 #: inc/config.class.php:376 inc/wizard.class.php:330
 msgid "Import options"
-msgstr "Importimise valikud"
+msgstr ""
 
 #: inc/config.class.php:388 inc/config.class.php:398 inc/config.class.php:420
 #: inc/config.class.php:446
 msgid "Global import"
-msgstr "Üldine import"
+msgstr ""
 
 #: inc/config.class.php:389 inc/config.class.php:400 inc/config.class.php:421
 #: inc/config.class.php:447
 msgid "Unique import"
-msgstr "Ainulaadne import"
+msgstr ""
 
 #: inc/config.class.php:390 inc/config.class.php:402 inc/config.class.php:422
 #: inc/config.class.php:448
@@ -483,7 +484,7 @@ msgstr ""
 
 #: inc/config.class.php:596
 msgid "Default status"
-msgstr "Vaikimisi staatus"
+msgstr ""
 
 #: inc/config.class.php:607
 msgid "Automatic computers transfer"
@@ -547,7 +548,7 @@ msgstr ""
 
 #: inc/inventorycomputerantivirus.class.php:174
 msgid "Up to date"
-msgstr "Ajakohane"
+msgstr ""
 
 #: inc/inventorycomputerblacklist.class.php:77
 #: inc/inventorycomputerblacklist.class.php:129
@@ -1554,8 +1555,8 @@ msgstr ""
 
 #: inc/menu.class.php:73
 msgid ""
-"The server needs to kown the URL the agents use to access the server. Please"
-" configure it in the General Configuration page."
+"The server needs to kown the URL the agents use to access the server. Please "
+"configure it in the General Configuration page."
 msgstr ""
 
 #: inc/menu.class.php:119

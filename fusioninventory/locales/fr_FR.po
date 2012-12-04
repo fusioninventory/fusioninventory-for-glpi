@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
-"POT-Creation-Date: 2012-12-04 12:02+0100\n"
-"PO-Revision-Date: 2012-12-04 13:43+0000\n"
+"POT-Creation-Date: 2012-12-04 15:10+0100\n"
+"PO-Revision-Date: 2012-12-04 14:11+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -66,14 +66,6 @@ msgstr "Authentification SNMP"
 msgid "CPU usage (in %)"
 msgstr "Utilisation du CPU (en %)"
 
-#: hook.php:826 hook.php:844 hook.php:881 inc/iprange.class.php:131
-#: inc/staticmisc.class.php:178 inc/taskjob.class.php:118
-#: inc/taskjoblog.class.php:133 inc/taskjobstate.class.php:157
-msgid "Task"
-msgid_plural "Tasks"
-msgstr[0] "Tâche"
-msgstr[1] "Tâches"
-
 #: hook.php:829 hook.php:860 hook.php:871 hook.php:978
 #: inc/inventorycomputercomputer.class.php:199
 msgid "XML"
@@ -105,6 +97,13 @@ msgstr "SNMP"
 #: inc/menu.class.php:304 inc/profile.class.php:327
 msgid "FusionInventory"
 msgstr "FusionInventory"
+
+#: hook.php:1040 hook.php:1047 hook.php:1056 inc/lock.class.php:53
+#: inc/lock.class.php:90 inc/lock.class.php:92 inc/lock.class.php:167
+msgid "Lock"
+msgid_plural "Locks"
+msgstr[0] ""
+msgstr[1] ""
 
 #: hook.php:1048 hook.php:1057
 msgid "Load the correct SNMP model"
@@ -442,12 +441,6 @@ msgstr "URL d'accès au service"
 msgid "Import options"
 msgstr "Options d'import"
 
-#: inc/config.class.php:383
-msgid "Monitor"
-msgid_plural "Monitors"
-msgstr[0] ""
-msgstr[1] ""
-
 #: inc/config.class.php:388 inc/config.class.php:398 inc/config.class.php:420
 #: inc/config.class.php:446
 msgid "Global import"
@@ -475,54 +468,6 @@ msgstr "Cette option va créer un élément pour chaque élément trouvé"
 msgid "This option will create one item for each item have serial number"
 msgstr "Cette option va créer un élément pour chaque élément qui a un numéro de série"
 
-#: inc/config.class.php:415 inc/snmpmodel.class.php:147
-msgid "Printer"
-msgid_plural "Printers"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/config.class.php:431
-msgid "Processor"
-msgid_plural "Processors"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/config.class.php:441 inc/snmpmodel.class.php:149
-msgid "Device"
-msgid_plural "Devices"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/config.class.php:456
-msgid "Memory"
-msgid_plural "Memories"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/config.class.php:466
-msgid "Software"
-msgid_plural "Software"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/config.class.php:473
-msgid "Hard drive"
-msgid_plural "Hard drives"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/config.class.php:483
-msgid "Volume"
-msgid_plural "Volumes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/config.class.php:490
-msgid "Network card"
-msgid_plural "Network cards"
-msgstr[0] ""
-msgstr[1] ""
-
 #: inc/config.class.php:500 inc/inventorycomputerantivirus.class.php:51
 #: inc/inventorycomputerantivirus.class.php:89
 #: inc/inventorycomputerantivirus.class.php:145
@@ -533,51 +478,9 @@ msgstr ""
 msgid "Virtual network card"
 msgstr "Carte réseau virtuelle"
 
-#: inc/config.class.php:519
-msgid "Graphic card"
-msgid_plural "Graphic cards"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/config.class.php:531
-msgid "Sound card"
-msgid_plural "Sound cards"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/config.class.php:541
-msgid "Virtual machine"
-msgid_plural "Virtual machines"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/config.class.php:548
-msgid "Drive"
-msgid_plural "Drives"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/config.class.php:558
-msgid "Location"
-msgid_plural "Locations"
-msgstr[0] ""
-msgstr[1] ""
-
 #: inc/config.class.php:568
 msgid "Network drives"
 msgstr "Volumes réseau"
-
-#: inc/config.class.php:578
-msgid "Group"
-msgid_plural "Groups"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/config.class.php:587
-msgid "Controller"
-msgid_plural "Controllers"
-msgstr[0] ""
-msgstr[1] ""
 
 #: inc/config.class.php:596
 msgid "Default status"
@@ -710,12 +613,12 @@ msgstr ""
 
 #: inc/inventoryruleimport.class.php:207
 msgid "empty"
-msgstr ""
+msgstr "Vide"
 
 #: inc/inventoryruleimport.class.php:856
 #: inc/inventoryruleimportcollection.class.php:110
 msgid "Device created"
-msgstr ""
+msgstr "Matériel créé"
 
 #: inc/iprange.class.php:56
 msgid "Communication mode"
@@ -1302,7 +1205,7 @@ msgstr "réseaux > LLDP description du port distant"
 #: inc/mapping.class.php:649 inc/networkequipment.class.php:366
 #: inc/networkport.class.php:78
 msgid "MTU"
-msgstr ""
+msgstr "MTU"
 
 #: inc/mapping.class.php:657 inc/networkequipment.class.php:374
 #: inc/networkport.class.php:86
@@ -1670,7 +1573,7 @@ msgstr ""
 
 #: inc/networkequipment.class.php:66
 msgid "FusionInventory SNMP"
-msgstr ""
+msgstr "FusionInventory SNMP"
 
 #: inc/networkequipment.class.php:127 inc/printer.class.php:155
 msgid "SNMP information"
@@ -1682,7 +1585,7 @@ msgstr "Charger le bon modèle"
 
 #: inc/networkequipment.class.php:192
 msgid "Uptime"
-msgstr ""
+msgstr "Uptime"
 
 #: inc/networkequipment.class.php:220 inc/task.class.php:280
 #: inc/taskjob.class.php:276 inc/taskjob.class.php:1805
@@ -1877,24 +1780,6 @@ msgstr "Création de modèle SNMP"
 msgid "Edit SNMP model"
 msgstr "Edition de modèle SNMP"
 
-#: inc/snmpmodel.class.php:143
-msgid "Computer"
-msgid_plural "Computers"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/snmpmodel.class.php:145
-msgid "Network device"
-msgid_plural "Network devices"
-msgstr[0] ""
-msgstr[1] ""
-
-#: inc/snmpmodel.class.php:151
-msgid "Phone"
-msgid_plural "Phones"
-msgstr[0] ""
-msgstr[1] ""
-
 #: inc/snmpmodelconstructdevice.class.php:334 inc/snmpmodelmib.class.php:99
 #: inc/snmpmodelmib.class.php:242
 msgid "Port Counters"
@@ -1907,7 +1792,7 @@ msgstr "Port dynamique (.x)"
 
 #: inc/snmpmodelimportexport.class.php:132
 msgid "SNMP model import"
-msgstr ""
+msgstr "Import de modèle SNMP"
 
 #: inc/snmpmodelimportexport.class.php:159
 msgid "Mass import of models"
@@ -2200,12 +2085,6 @@ msgstr "Tâches en cours"
 #: inc/unknowndevice.class.php:122 inc/unknowndevice.class.php:308
 msgid "Network hub"
 msgstr "Hub réseau"
-
-#: inc/unknowndevice.class.php:185
-msgid "Connection"
-msgid_plural "Connections"
-msgstr[0] ""
-msgstr[1] ""
 
 #: inc/unknowndevice.class.php:296
 msgid "Approved devices"
