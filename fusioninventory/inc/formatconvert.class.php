@@ -142,7 +142,8 @@ class PluginFusioninventoryFormatconvert {
       if (isset($array_tmp['users_id'])) {
          $query = "SELECT `id`
                    FROM `glpi_users`
-                   WHERE `name` = '" . $array_tmp['users_id'] . "';";
+                   WHERE `name` = '" . $array_tmp['users_id'] . "'
+                   LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
             $array_tmp['users_id'] = $DB->result($result, 0, 0);
@@ -649,7 +650,16 @@ class PluginFusioninventoryFormatconvert {
       }
       foreach ($a_key as $key=>$value) {
          if (!isset($a_return[$value])) {
-            $a_return[$value] = '';
+            $int = 0;
+            if ($key == 'capacity') {
+               $int = 1;
+            }
+             
+            if ($int == 1) {
+               $a_return[$value] = 0;
+            } else {
+               $a_return[$value] = '';
+            }            
          }
       }
       return $a_return;

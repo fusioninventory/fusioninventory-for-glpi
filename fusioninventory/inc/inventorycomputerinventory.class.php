@@ -340,7 +340,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          }
          $no_history = false;
 $start = microtime(true);
-         $ret = $DB->query("SELECT GET_LOCK('inventory', 20)");
+         $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 20)");
          if ($DB->result($ret, 0, 0) == 1) {
             // * New
             if ($items_id == '0') {
@@ -352,7 +352,7 @@ $start = microtime(true);
 
             $pfInventoryComputerLib->updateComputer($a_computerinventory, $items_id, $no_history);
             
-            $DB->request("SELECT RELEASE_LOCK('inventory')");
+            $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
 Toolbox::logInFile("exetime", (microtime(true) - $start)."\n");
             if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
                $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
