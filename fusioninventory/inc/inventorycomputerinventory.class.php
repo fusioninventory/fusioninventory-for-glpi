@@ -327,7 +327,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
          }
          
-         $a_computerinventory = PluginFusioninventoryFormatconvert::computerSoftwareTransformation($a_computerinventory, $_SESSION["plugin_fusinvinventory_entity"]);
+         $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation($a_computerinventory, $_SESSION["plugin_fusinvinventory_entity"]);
          $a_computerinventory = $pfFormatconvert->computerReplaceids($a_computerinventory);
 
          if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
@@ -339,7 +339,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $_SESSION["plugin_fusinvinventory_entity"] = 0;
          }
          $no_history = false;
-         
+$start = microtime(true);
          $ret = $DB->query("SELECT GET_LOCK('inventory', 20)");
          if ($DB->result($ret, 0, 0) == 1) {
             // * New
@@ -353,7 +353,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $pfInventoryComputerLib->updateComputer($a_computerinventory, $items_id, $no_history);
             
             $DB->request("SELECT RELEASE_LOCK('inventory')");
-            
+Toolbox::logInFile("exetime", (microtime(true) - $start)."\n");
             if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
                $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
                $inputrulelog = array();

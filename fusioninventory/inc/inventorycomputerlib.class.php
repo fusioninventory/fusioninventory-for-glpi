@@ -93,8 +93,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if (isset($input['comment'])) {
             unset($input['comment']);
          }
-         $input['_no_history'] = $no_history;
-         $computer->update($input);
+         $history = true;
+         if ($no_history) {
+            $history = false;
+         }
+         $computer->update($input, $history);
          
          if (isset($input['comment'])) {
             $inputcomment = array();
@@ -651,6 +654,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if (count($a_computerinventory['computerdisk']) != 0) {
                foreach($a_computerinventory['computerdisk'] as $a_computerdisk) {
                   $a_computerdisk['computers_id'] = $items_id;
+                  $a_computerdisk['_no_history'] = $no_history;
                   $computerDisk->add($a_computerdisk);
                }
             }
@@ -923,10 +927,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $softwareVersion           = new SoftwareVersion();
       $computer_SoftwareVersion  = new Computer_SoftwareVersion();
       $new = 0;
-      
+
       //Look for the software by his name in GLPI for a specific entity
-      $sql = "SELECT `id`
-              FROM `glpi_softwares`
+      $sql = "SELECT `id` FROM `glpi_softwares`
               WHERE `manufacturers_id` = '".$a_software['manufacturers_id']."'
                     AND `name` = '".$a_software['name']."' " .
                     getEntitiesRestrictRequest('AND', 'glpi_softwares', 'entities_id', $a_software['entities_id'],
@@ -958,7 +961,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $softwareversions_id = $softwareVersion->add($a_software);
       } else {
          $softwareversions_id = 0;
-         $query_search = "SELECT * FROM `glpi_softwareversions`
+         $query_search = "SELECT `id` FROM `glpi_softwareversions`
                           WHERE `softwares_id` = '".$id."'
                                 AND `name` = '".$a_software['version']."'
                           LIMIT 1";

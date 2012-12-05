@@ -46,6 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryFormatconvert {
    var $foreignkey_itemtype = array();
+   var $manufacturer_cache = array();
    
    
    static function XMLtoArray($xml) {
@@ -561,9 +562,10 @@ class PluginFusioninventoryFormatconvert {
    
    
    
-   static function computerSoftwareTransformation($a_inventory, $entities_id) {
+   function computerSoftwareTransformation($a_inventory, $entities_id) {
       
       $thisc = new self();
+      $ruleDictionnaryManufacturerCollection = new RuleDictionnaryManufacturerCollection();
       
       $entities_id_software = Entity::getUsedConfig('entities_id_software', $_SESSION["plugin_fusinvinventory_entity"], '', true);
       if ($entities_id_software < 0) {
@@ -578,7 +580,13 @@ class PluginFusioninventoryFormatconvert {
                                            'NAME'        => 'name', 
                                            'VERSION'     => 'version'));
          if ($array_tmp['manufacturers_id'] != '') {
-            $array_tmp['manufacturers_id'] = Manufacturer::processName($array_tmp['manufacturers_id']);
+            // Replace Manufacturer::processName
+            $output = array();
+            $output = $rulecollection->processAllRules(array("name" => stripslashes($array_tmp['manufacturers_id'])),
+                                                             $output, array());
+            if (isset($output["name"])) {
+               $array_tmp['manufacturers_id'] = $output["name"];
+            }
          } else {
             $array_tmp['manufacturers_id'] = 0;
          }
@@ -601,9 +609,12 @@ class PluginFusioninventoryFormatconvert {
                $array_tmp['manufacturers_id'] = $res_rule["manufacturer"];
             } else if ($array_tmp['manufacturers_id'] != ''
                     && $array_tmp['manufacturers_id'] != '0') {
-               $array_tmp['manufacturers_id'] = Dropdown::importExternal("glpi_manufacturers",
-                                                                         $array_tmp['manufacturers_id'],
-                                                                         $entities_id);
+               if (!isset($this->manufacturer_cache[$array_tmp['manufacturers_id']])) {
+                  $new_value = Dropdown::importExternal('Manufacturer',
+                                                        $array_tmp['manufacturers_id']);
+                  $this->manufacturer_cache[$array_tmp['manufacturers_id']] = $new_value;
+               }
+               $array_tmp['manufacturers_id'] = $this->manufacturer_cache[$array_tmp['manufacturers_id']];
             } else {
                $array_tmp['manufacturers_id'] = 0;
             }
@@ -617,10 +628,11 @@ class PluginFusioninventoryFormatconvert {
             if (!isset($array_tmp['version'])) {
                $array_tmp['version'] = "";
             }
-Toolbox::logInFile("SOFT", print_r($array_tmp, true));
-            $a_inventory['software'][] = $array_tmp;
+            if (!isset($a_inventory['software'][$array_tmp['name']."$$$$".$array_tmp['version']])) {
+               $a_inventory['software'][$array_tmp['name']."$$$$".$array_tmp['version']] = $array_tmp;
+            }
          }
-      } 
+      }
       unset($a_inventory['SOFTWARES']);
       return $a_inventory;
    }
