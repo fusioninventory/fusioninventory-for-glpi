@@ -471,7 +471,7 @@ class PluginFusioninventoryFormatconvert {
                // it's harddisk
 //               if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"],
 //                    "component_harddrive") != 0) {
-               
+               if (is_array($a_storage)) {
                   $array_tmp = $thisc->addValues($a_storage, 
                                                  array( 
                                                      'DISKSIZE'      => 'capacity',
@@ -485,10 +485,9 @@ class PluginFusioninventoryFormatconvert {
                      } else if (isset($a_storage['DESIGNATION'])) {
                         $array_tmp['designation'] = $a_storage['DESIGNATION'];
                      }
-                     
                   }
                   $a_inventory['harddrive'][] = $array_tmp;
-//                }
+               }
             }            
          }
       }
@@ -565,17 +564,15 @@ class PluginFusioninventoryFormatconvert {
    
    function computerSoftwareTransformation($a_inventory, $entities_id) {
       
-      $thisc = new self();
-      $ruleDictionnaryManufacturerCollection = new RuleDictionnaryManufacturerCollection();
-      
       $entities_id_software = Entity::getUsedConfig('entities_id_software', $_SESSION["plugin_fusinvinventory_entity"], '', true);
       if ($entities_id_software < 0) {
          $entities_id_software = $_SESSION["plugin_fusinvinventory_entity"];
       }
       
       $rulecollection = new RuleDictionnarySoftwareCollection();
+      
       foreach ($a_inventory['SOFTWARES'] as $a_softwares) {
-         $array_tmp = $thisc->addValues($a_softwares, 
+         $array_tmp = $this->addValues($a_softwares, 
                                         array( 
                                            'PUBLISHER'   => 'manufacturers_id', 
                                            'NAME'        => 'name', 
@@ -651,9 +648,15 @@ class PluginFusioninventoryFormatconvert {
       foreach ($a_key as $key=>$value) {
          if (!isset($a_return[$value])) {
             $int = 0;
-            if ($key == 'capacity') {
-               $int = 1;
-            }
+            switch ($value) {
+               
+               case 'capacity':
+               case 'freesize':
+               case 'totalsize':
+                  $int = 1;
+                  break;
+
+            } 
              
             if ($int == 1) {
                $a_return[$value] = 0;

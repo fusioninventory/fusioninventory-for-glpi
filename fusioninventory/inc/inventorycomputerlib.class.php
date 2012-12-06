@@ -47,6 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
    var $table = "glpi_plugin_fusioninventory_inventorycomputerlibserialization";
+   var $softList = array();
    
    function __construct() {
       $this->software                  = new Software();
@@ -73,8 +74,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $networkName                  = new NetworkName();
       $iPAddress                    = new IPAddress();
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
-      $computer_SoftwareVersion     = new Computer_SoftwareVersion();
-
       
       $computer->getFromDB($items_id);
       
@@ -127,7 +126,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
          if (count($db_computer) == '0') { // Add
             $a_computerinventory['fusioninventorycomputer']['computers_id'] = $items_id;
-            $pfInventoryComputerComputer->add($a_computerinventory['fusioninventorycomputer']);
+            $pfInventoryComputerComputer->add($a_computerinventory['fusioninventorycomputer'], array(), false);
          } else { // Update
             $idtmp = $db_computer['id'];
             unset($db_computer['id']);
@@ -466,12 +465,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
          
       // * Software
-         $a_softwares = array();
+         $db_software = array();
          if ($no_history === false) {
             $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
                        `glpi_softwares`.`name`,
                        `glpi_softwareversions`.`name` AS version,
-                       `glpi_softwareversions`.`entities_id`
+                       `glpi_softwareversions`.`entities_id`,
+                       `glpi_softwares`.`manufacturers_id`
                 FROM `glpi_computers_softwareversions`
                 LEFT JOIN `glpi_softwareversions`
                      ON (`glpi_computers_softwareversions`.`softwareversions_id`
@@ -480,53 +480,91 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      ON (`glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`)
                 WHERE `glpi_computers_softwareversions`.`computers_id` = '$items_id'";
             $result = $DB->query($query);
-            while ($db_software = $DB->fetch_assoc($result)) {
-               $idtmp = $db_software['sid'];
-               unset($db_software['sid']);
-               $db_software = Toolbox::addslashes_deep($db_software);
-               $db_software = array_map('strtolower', $db_software);
-               $a_softwares[$idtmp] = $db_software;
+            while ($data = $DB->fetch_assoc($result)) {
+               $idtmp = $data['sid'];
+               unset($data['sid']);
+               $data = Toolbox::addslashes_deep($data);
+//               $data = array_map('strtolower', $data);
+               $db_software[$idtmp] = $data;
             }
          }
-
-         if (count($a_softwares) == 0) {
-            foreach ($a_computerinventory['software'] as $a_software) {
-               $a_software['_no_message'] = true;
-
-               $this->addSoftware($a_software,
-                                  $items_id,
-                                  $no_history);
+         
+         if (count($db_software) == 0) {
+            if (count($a_computerinventory['software']) > 50) {
+               $this->loadSoftwares($_SESSION["plugin_fusinvinventory_entity"]);
+               foreach ($a_computerinventory['software'] as $keysoft=>$a_software) {
+                  if (isset($this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']])) {
+                     $a_software['softwares_id'] = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']]['id'];
+                     $a_software['_no_message'] = true;
+                     $this->addSoftware($a_software,
+                                        $items_id,
+                                        $no_history);
+                     unset($a_computerinventory['software'][$keysoft]);
+                  }
+               }
+            }
+            $ret = $DB->query("SELECT GET_LOCK('software', 300)");
+            if ($DB->result($ret, 0, 0) == 1) {
+               if (count($a_computerinventory['software']) > 50) {
+                  $this->loadSoftwares($_SESSION["plugin_fusinvinventory_entity"]);
+               }
+               foreach ($a_computerinventory['software'] as $a_software) {
+                  $a_software['_no_message'] = true;
+                  if (count($a_computerinventory['software']) > 50) {
+                     if (isset($this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']])) {
+                        $a_software['softwares_id'] = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']]['id'];
+                     }
+                  } else {
+                     $a_software['softwares_id'] = -1;
+                  }
+                  $this->addSoftware($a_software,
+                                     $items_id,
+                                     $no_history);
+               }
+               $DB->request("SELECT RELEASE_LOCK('software')");
             }
          } else {
-            foreach ($a_computerinventory['software'] as $key => $arrays) {
-               unset($arrays['manufacturers_id']);
-               $arrayslower = array_map('strtolower', $arrays);
-               foreach ($a_softwares as $keydb => $arraydb) {
+            foreach ($a_computerinventory['software'] as $key => $arrayslower) {
+//               $arrayslower = array_map('strtolower', $arrays);
+               foreach ($db_software as $keydb => $arraydb) {
                   if ($arrayslower == $arraydb) {
                      unset($a_computerinventory['software'][$key]);
-                     unset($a_softwares[$keydb]);
+                     unset($db_software[$keydb]);
                      break;
                   }
                }
             }
 
             if (count($a_computerinventory['software']) == 0
-               AND count($a_softwares) == 0) {
+               AND count($db_software) == 0) {
                // Nothing to do
             } else {
-               if (count($a_softwares) != 0) {
+               if (count($db_software) != 0) {
                   // Delete softwares in DB
-                  foreach ($a_softwares as $idtmp => $data) {
-                     $computer_SoftwareVersion->delete(array('id'=>$idtmp));
+                  foreach ($db_software as $idtmp => $data) {
+                     $this->computer_SoftwareVersion->delete(array('id'=>$idtmp));
                   }
                }
                if (count($a_computerinventory['software']) != 0) {
-                  foreach($a_computerinventory['software'] as $a_software) {
-                     $a_software['_no_message'] = true;
-
-                     $this->addSoftware($a_software,
-                                        $items_id,
-                                        $no_history);
+                  $ret = $DB->query("SELECT GET_LOCK('software', 300)");
+                  if ($DB->result($ret, 0, 0) == 1) {
+                     if (count($a_computerinventory['software']) > 50) {
+                        $this->loadSoftwares($_SESSION["plugin_fusinvinventory_entity"]);
+                     }
+                     foreach($a_computerinventory['software'] as $a_software) {
+                        $a_software['_no_message'] = true;
+                        if (count($a_computerinventory['software']) > 50) {
+                           if (isset($this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']])) {
+                              $a_software['softwares_id'] = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']]['id'];
+                           }
+                        } else {
+                           $a_software['softwares_id'] = -1;
+                        }
+                        $this->addSoftware($a_software,
+                                           $items_id,
+                                           $no_history);
+                     }
+                     $DB->request("SELECT RELEASE_LOCK('software')");
                   }
                }
             }
@@ -597,7 +635,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if (count($a_computerinventory['virtualmachine']) != 0) {
                foreach($a_computerinventory['virtualmachine'] as $a_virtualmachine) {
                   $a_virtualmachine['computers_id'] = $items_id;
-                  $computerVirtualmachine->add($a_virtualmachine);
+                  $computerVirtualmachine->add($a_virtualmachine, array(), false);
                }
             }
          }
@@ -659,7 +697,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                foreach($a_computerinventory['computerdisk'] as $a_computerdisk) {
                   $a_computerdisk['computers_id'] = $items_id;
                   $a_computerdisk['_no_history'] = $no_history;
-                  $computerDisk->add($a_computerdisk);
+                  $computerDisk->add($a_computerdisk, array(), false);
                }
             }
          }
@@ -735,7 +773,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                            $input['items_id'] = $a_networknames_find['id'];
                            $input['itemtype'] = 'NetworkName';
                            $input['name'] = $ip;
-                           $iPAddress->add($input);
+                           $iPAddress->add($input, array(), false);
                         }
                      }
                   }
@@ -764,17 +802,20 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $a_networkport['items_id'] = $items_id;
                   $a_networkport['itemtype'] = "Computer";
                   $a_networkport['_no_history'] = $no_history;
-                  $a_networkport['items_id'] = $networkPort->add($a_networkport);
+                  $a_networkport['items_id'] = $networkPort->add($a_networkport, array(), false);
                   unset($a_networkport['_no_history']);
                   $a_networkport['is_recursive'] = 0;
                   $a_networkport['itemtype'] = 'NetworkPort';
-                  $a_networknames_id = $networkName->add($a_networkport);
+                  unset($a_networkport['name']);
+         $a_networkport['_no_history'] = $no_history;
+                  $a_networknames_id = $networkName->add($a_networkport, array(), false);
                   foreach ($a_networkport['ipaddress'] as $ip) {
                      $input = array();
                      $input['items_id'] = $a_networknames_id;
                      $input['itemtype'] = 'NetworkName';
                      $input['name'] = $ip;
-                     $iPAddress->add($input);
+         $input['_no_history'] = $no_history;
+                     $iPAddress->add($input, array(), false);
                   }
                }
             }
@@ -831,7 +872,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if (count($a_computerinventory['antivirus']) != 0) {
                foreach($a_computerinventory['antivirus'] as $a_antivirus) {
                   $a_antivirus['computers_id'] = $items_id;
-                  $pfInventoryComputerAntivirus->add($a_antivirus);
+                  $pfInventoryComputerAntivirus->add($a_antivirus, array(), false);
                }
             }
          }
@@ -849,7 +890,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Computer';
       $data['items_id'] = $computers_id;
       $data['_no_history'] = $no_history;
-      $item_DeviceProcessor->add($data);      
+      $item_DeviceProcessor->add($data, array(), false);      
    }
    
    
@@ -863,7 +904,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Computer';
       $data['items_id'] = $computers_id;
       $data['_no_history'] = $no_history;
-      $item_DeviceMemory->add($data);
+      $item_DeviceMemory->add($data, array(), false);
    }
    
    
@@ -877,7 +918,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Computer';
       $data['items_id'] = $computers_id;
       $data['_no_history'] = $no_history;
-      $item_DeviceHardDrive->add($data);
+      $item_DeviceHardDrive->add($data, array(), false);
    }
    
    
@@ -891,7 +932,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Computer';
       $data['items_id'] = $computers_id;
       $data['_no_history'] = $no_history;
-      $item_DeviceGraphicCard->add($data);      
+      $item_DeviceGraphicCard->add($data, array(), false);      
    }
    
    
@@ -905,7 +946,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Computer';
       $data['items_id'] = $computers_id;
       $data['_no_history'] = $no_history;
-      $item_DeviceSoundCard->add($data);
+      $item_DeviceSoundCard->add($data, array(), false);
    }
    
    
@@ -919,73 +960,95 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Computer';
       $data['items_id'] = $computers_id;
       $data['_no_history'] = $no_history;
-      $item_DeviceControl->add($data);
+      $item_DeviceControl->add($data, array(), false);
    }
    
+   
+   
+   function loadSoftwares($entities_id) {
+      global $DB;
+      
+      $this->softList = array();
+      $sql = "SELECT * FROM `glpi_softwares`
+      WHERE ".getEntitiesRestrictRequest('', 'glpi_softwares', 'entities_id', $entities_id,
+                                                  true);
+      $result = $DB->query($sql);         
+      while ($data = $DB->fetch_assoc($result)) { 
+         $this->softList[$data['name']."$$$$".$data['manufacturers_id']] = $data;
+      }
+   }
    
    
    function addSoftware($a_software, $computers_id, $no_history) {
       global $DB;
 
       $new = 0;
+      $add = 0;
+      if (isset($a_software['softwares_id'])) {
+         if ($a_software['softwares_id'] == "-1") {
+            //Look for the software by his name in GLPI for a specific entity
+            $sql = "SELECT `id` FROM `glpi_softwares`
+                    WHERE `manufacturers_id` = '".$a_software['manufacturers_id']."'
+                          AND `name` = '".$a_software['name']."' " .
+                          getEntitiesRestrictRequest('AND', 'glpi_softwares', 'entities_id', $a_software['entities_id'],
+                                                     true).
+                    " LIMIT 1";
 
-      $lock = "software-".$a_software['name']."$$".$a_software['version'];
-      $ret = $DB->query("SELECT GET_LOCK('".$lock."', 60)");
-      if ($DB->result($ret, 0, 0) == 1) {
-      
-         //Look for the software by his name in GLPI for a specific entity
-         $sql = "SELECT `id` FROM `glpi_softwares`
-                 WHERE `manufacturers_id` = '".$a_software['manufacturers_id']."'
-                       AND `name` = '".$a_software['name']."' " .
-                       getEntitiesRestrictRequest('AND', 'glpi_softwares', 'entities_id', $a_software['entities_id'],
-                                                  true).
-                 " LIMIT 1";
-
-         $res_soft = $DB->query($sql);
-         if ($DB->numrows($res_soft) > 0) {
-            $soft = $DB->fetch_assoc($res_soft);
-            $id = $soft["id"];
-         } else {
-            //Process software's category rules
-            $result      = $this->softcatrule->processAllRules(null, null, Toolbox::stripslashes_deep($a_software));
-
-            if (!empty($result) && isset($result["softwarecategories_id"])) {
-               $a_software["softwarecategories_id"] = $result["softwarecategories_id"];
+            $res_soft = $DB->query($sql);
+            if ($DB->numrows($res_soft) > 0) {
+               $soft = $DB->fetch_assoc($res_soft);
+               $a_software['softwares_id'] = $soft["id"];
             } else {
-               $a_software["softwarecategories_id"] = 0;
+               $add = 1;
             }
-
-            $id = $this->software->add($a_software);
-            $new = 1;
-         }
-
-         if ($new == 1) {
-            $a_software['softwares_id'] = $id;
-            $a_software['name'] = $a_software['version'];
-            $softwareversions_id = $this->softwareVersion->add($a_software);
          } else {
-            $softwareversions_id = 0;
-            $query_search = "SELECT `id` FROM `glpi_softwareversions`
-                             WHERE `softwares_id` = '".$id."'
-                                   AND `name` = '".$a_software['version']."'
-                             LIMIT 1";
-            $result_search = $DB->query($query_search);
-
-            if ($DB->numrows($result_search) > 0) {
-               $data = $DB->fetch_assoc($result_search);
-               $softwareversions_id = $data['id'];
-            } else {
-               $a_software['softwares_id'] = $id;
-               $a_software['name'] = $a_software['version'];
-               $softwareversions_id = $this->softwareVersion->add($a_software);
-            }
+            // It's ok
          }
-         $a_software['computers_id'] = $computers_id;
-         $a_software['softwareversions_id'] = $softwareversions_id;
-         $a_software['_no_history'] = $no_history;
-         $this->computer_SoftwareVersion->add($a_software);
-         $DB->request("SELECT RELEASE_LOCK('".$lock."')");
+      } else {
+         // notin DB, add new
+         $add = 1;
       }
+      
+      if ($add == 1) {
+         //Process software's category rules
+         $result = $this->softcatrule->processAllRules(null, null, Toolbox::stripslashes_deep($a_software));
+
+         if (!empty($result) && isset($result["softwarecategories_id"])) {
+            $a_software["softwarecategories_id"] = $result["softwarecategories_id"];
+         } else {
+            $a_software["softwarecategories_id"] = 0;
+         }
+
+         $a_software['softwares_id'] = $this->software->add($a_software, array(), false);
+         $new = 1; 
+      }
+      
+
+      if ($new == 1) {
+         $a_software['name'] = $a_software['version'];
+   $a_software['_no_history'] = $no_history;
+         $softwareversions_id = $this->softwareVersion->add($a_software, array(), false);
+      } else {
+         $softwareversions_id = 0;
+         $query_search = "SELECT `id` FROM `glpi_softwareversions`
+                          WHERE `softwares_id` = '".$a_software['softwares_id']."'
+                                AND `name` = '".$a_software['version']."'
+                          LIMIT 1";
+         $result_search = $DB->query($query_search);
+
+         if ($DB->numrows($result_search) > 0) {
+            $data = $DB->fetch_assoc($result_search);
+            $softwareversions_id = $data['id'];
+         } else {
+            $a_software['name'] = $a_software['version'];
+      $a_software['_no_history'] = $no_history;
+            $softwareversions_id = $this->softwareVersion->add($a_software, array(), false);
+         }
+      }
+      $a_software['computers_id'] = $computers_id;
+      $a_software['softwareversions_id'] = $softwareversions_id;
+      $a_software['_no_history'] = $no_history;
+      $this->computer_SoftwareVersion->add($a_software, array(), false);
    }
 }
 

@@ -298,7 +298,9 @@ class PluginFusioninventoryInventoryComputerInventory {
    **/
    function rulepassed($items_id, $itemtype) {
       global $DB;
-
+if ($items_id > 0) {
+   exit;
+}
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
          "Rule passed : ".$items_id.", ".$itemtype."\n"
@@ -307,7 +309,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
       if ($itemtype == 'Computer') {
          $pfInventoryComputerLib      = new PluginFusioninventoryInventoryComputerLib();
-         $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+         $pfFormatconvert             = new PluginFusioninventoryFormatconvert();
          
          $computer   = new Computer();
          if ($items_id == '0') {
@@ -327,9 +329,6 @@ class PluginFusioninventoryInventoryComputerInventory {
             $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
          }
          
-         $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation($a_computerinventory, $_SESSION["plugin_fusinvinventory_entity"]);
-         $a_computerinventory = $pfFormatconvert->computerReplaceids($a_computerinventory);
-
          if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
             $_SESSION["plugin_fusinvinventory_entity"] = $_SESSION['plugin_fusioninventory_entityrestrict'];
          }
@@ -339,21 +338,37 @@ class PluginFusioninventoryInventoryComputerInventory {
             $_SESSION["plugin_fusinvinventory_entity"] = 0;
          }
          $no_history = false;
+         // * New
+         if ($items_id == '0') {
+            $input = array();
+            $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+            $items_id = $computer->add($input);
+            $no_history = true;
+         }
+         
+         $ret = $DB->query("SELECT IS_USED_LOCK('inventory".$items_id."')");
+         if (!is_null($DB->result($ret, 0, 0))) {
+            $communication = new PluginFusioninventoryCommunication();
+            $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
+      <REPLY>
+      <ERROR>ERROR: SAME COMPUTER IS CURRENTLY UPDATED</ERROR>
+      </REPLY>");
+            $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
+            exit;            
+         }
+         
+         $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation($a_computerinventory, $_SESSION["plugin_fusinvinventory_entity"]);
+         $a_computerinventory = $pfFormatconvert->computerReplaceids($a_computerinventory);
+
+         
 $start = microtime(true);
-         $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 20)");
+         $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 300)");
          if ($DB->result($ret, 0, 0) == 1) {
-            // * New
-            if ($items_id == '0') {
-               $input = array();
-               $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-               $items_id = $computer->add($input);
-               $no_history = true;
-            }
 
             $pfInventoryComputerLib->updateComputer($a_computerinventory, $items_id, $no_history);
             
             $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
-Toolbox::logInFile("exetime", (microtime(true) - $start)."\n");
+Toolbox::logInFile("exetime", (microtime(true) - $start)." (".$items_id.")\n");
             if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
                $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
                $inputrulelog = array();
