@@ -626,6 +626,8 @@ class PluginFusioninventoryFormatconvert {
             if (!isset($array_tmp['version'])) {
                $array_tmp['version'] = "";
             }
+            $array_tmp['is_template'] = 0;
+            $array_tmp['is_deleted'] = 0;
             if (!isset($a_inventory['software'][$array_tmp['name']."$$$$".$array_tmp['version']])) {
                $a_inventory['software'][$array_tmp['name']."$$$$".$array_tmp['version']] = $array_tmp;
             }
