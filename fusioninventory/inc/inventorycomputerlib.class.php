@@ -999,15 +999,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $whereid = '';
       if ($lastid > 0) {
          $whereid = ' AND `id` > "'.$lastid.'"';
+      } else {
+         $whereid = " AND `name` IN ('".  implode("','", $a_soft)."')";
       }
       
       $sql = "SELECT * FROM `glpi_softwares`
       WHERE `entities_id`='".$entities_id."'".$whereid;
       $result = $DB->query($sql);         
       while ($data = $DB->fetch_assoc($result)) {
-         if (isset($a_soft[$data['name']])) {
-            $this->softList[$data['name']."$$$$".$data['manufacturers_id']] = $data['id'];
-         }
+         $this->softList[$data['name']."$$$$".$data['manufacturers_id']] = $data['id'];
          $lastid = $data['id'];
       }
       return $lastid;
@@ -1021,15 +1021,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $whereid = '';
       if ($lastid > 0) {
          $whereid = ' AND `id` > "'.$lastid.'"';
+      } else {
+         $whereid = " AND `name` IN ('".  implode("','", $a_softVersion)."')";
       }
       
       $sql = "SELECT * FROM `glpi_softwareversions`
       WHERE `entities_id`='".$entities_id."'".$whereid;
       $result = $DB->query($sql);         
       while ($data = $DB->fetch_assoc($result)) { 
-         if (isset($a_softVersion[$data['name']])) {
-            $this->softVersionList[$data['name']."$$$$".$data['softwares_id']] = $data['id'];
-         }
+         $this->softVersionList[$data['name']."$$$$".$data['softwares_id']] = $data['id'];
          $lastid = $data['id'];
       }
       return $lastid;
