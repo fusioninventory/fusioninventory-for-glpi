@@ -498,6 +498,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $lastSoftwareVid = 0;
             
             if (count($db_software) == 0) {
+               $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software", $entities_id));
+               $options = array();
+               if ($nb_unicity == 0) {
+                  $options['disable_unicity_check'] = true;
+               }
                $a_softwareInventory = array();
                $a_softwareVersionInventory = array();
 
@@ -517,7 +522,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                            $a_software['_no_message'] = true;
                            $this->addSoftware($a_software,
                                               $items_id,
-                                              $no_history);
+                                              $no_history,
+                                              $options);
                            unset($a_computerinventory['software'][$keysoft]);
                         }
                      }
@@ -541,7 +547,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                      $this->addSoftware($a_software,
                                         $items_id,
-                                        $no_history);
+                                        $no_history,
+                                        $options);
                   }
                   $DB->request("SELECT RELEASE_LOCK('software')");
                }
@@ -568,6 +575,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                   if (count($a_computerinventory['software']) != 0) {
+                     $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software", $entities_id));
+                     $options = array();
+                     if ($nb_unicity == 0) {
+                        $options['disable_unicity_check'] = true;
+                     }
                      $ret = $DB->query("SELECT GET_LOCK('software', 300)");
                      if ($DB->result($ret, 0, 0) == 1) {
                         foreach ($a_computerinventory['software'] as $keysoft=>$a_software) {
@@ -589,7 +601,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                            }
                            $this->addSoftware($a_software,
                                               $items_id,
-                                              $no_history);
+                                              $no_history,
+                                              $options);
                         }
                         $DB->request("SELECT RELEASE_LOCK('software')");
                      }
@@ -1036,7 +1049,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
    
    
-   function addSoftware($a_software, $computers_id, $no_history) {
+   function addSoftware($a_software, $computers_id, $no_history, $options) {
       global $DB;
 
       $new = 0;
@@ -1067,14 +1080,16 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       }
       
       if ($add == 1) {
-         $a_software['softwares_id'] = $this->software->add($a_software, array(), false);
+         $a_software['softwares_id'] = $this->software->add($a_software, $options, false);
          $new = 1; 
       }
       
+      $options = array();
+      $options['disable_unicity_check'] = true;
       if ($new == 1) {
          $a_software['name'] = $a_software['version'];
    $a_software['_no_history'] = $no_history;
-         $softwareversions_id = $this->softwareVersion->add($a_software, array(), false);
+         $softwareversions_id = $this->softwareVersion->add($a_software, $options, false);
       } else {
          $softwareversions_id = 0;
          if (isset($this->softVersionList[$a_software['version']."$$$$".$a_software['softwares_id']])) {
@@ -1082,13 +1097,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          } else {
             $a_software['name'] = $a_software['version'];
       $a_software['_no_history'] = $no_history;
-            $softwareversions_id = $this->softwareVersion->add($a_software, array(), false);
+            $softwareversions_id = $this->softwareVersion->add($a_software, $options, false);
          }
       }
       $a_software['computers_id'] = $computers_id;
       $a_software['softwareversions_id'] = $softwareversions_id;
       $a_software['_no_history'] = $no_history;
-      $this->computer_SoftwareVersion->add($a_software, array(), false);
+
+      $this->computer_SoftwareVersion->add($a_software, $options, false);
    }
 
 
