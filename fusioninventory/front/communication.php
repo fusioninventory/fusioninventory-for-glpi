@@ -53,7 +53,7 @@ if (session_id()=="") {
    session_start();
 }
 
-$_SESSION['glpi_use_mode'] = 2;
+$_SESSION['glpi_use_mode'] = 0;
 include_once(GLPI_ROOT."/inc/includes.php");
 if (!isset($_SESSION['glpilanguage'])) {
    $_SESSION['glpilanguage'] = 'fr_FR';
@@ -62,7 +62,7 @@ if (!isset($_SESSION['glpilanguage'])) {
 ini_set('display_errors','On');
 error_reporting(E_ALL | E_STRICT);
 set_error_handler(array('Toolbox','userErrorHandlerDebug'));
-$_SESSION['glpi_use_mode'] = 2;
+$_SESSION['glpi_use_mode'] = 0;
 $_SESSION['glpiparententities'] = '';
 
 ob_end_clean();
@@ -77,7 +77,7 @@ if (!class_exists("PluginFusioninventoryConfig")) {
    session_destroy();
    exit();
 }
-
+   
 $pfCommunication  = new PluginFusioninventoryCommunication();
 
 if (isset($_GET['action']) && isset($_GET['machineid'])) {

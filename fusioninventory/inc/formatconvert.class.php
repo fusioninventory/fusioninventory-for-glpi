@@ -287,7 +287,8 @@ class PluginFusioninventoryFormatconvert {
                $a_inventory['controller'][] = $thisc->addValues($a_controllers, 
                                                                  array(
                                                                     'NAME'          => 'designation', 
-                                                                    'MANUFACTURER'  => 'manufacturers_id'));
+                                                                    'MANUFACTURER'  => 'manufacturers_id',
+                                                                    'type'          => 'interfacetypes_id'));
             }
          }
       }
@@ -570,7 +571,6 @@ class PluginFusioninventoryFormatconvert {
       }
       
       $rulecollection = new RuleDictionnarySoftwareCollection();
-      
       foreach ($a_inventory['SOFTWARES'] as $a_softwares) {
          $array_tmp = $this->addValues($a_softwares, 
                                         array( 

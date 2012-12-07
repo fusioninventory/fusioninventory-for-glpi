@@ -299,7 +299,7 @@ class PluginFusioninventoryInventoryComputerInventory {
    function rulepassed($items_id, $itemtype) {
       global $DB;
 if ($items_id > 0) {
-   exit;
+   //exit;
 }
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
@@ -345,7 +345,7 @@ if ($items_id > 0) {
             $items_id = $computer->add($input);
             $no_history = true;
          }
-         
+
          $ret = $DB->query("SELECT IS_USED_LOCK('inventory".$items_id."')");
          if (!is_null($DB->result($ret, 0, 0))) {
             $communication = new PluginFusioninventoryCommunication();
@@ -380,18 +380,20 @@ Toolbox::logInFile("exetime", (microtime(true) - $start)." (".$items_id.")\n");
                $inputrulelog['items_id'] = $items_id;
                $inputrulelog['itemtype'] = $itemtype;
                $inputrulelog['method'] = 'inventory';
-               $pfRulematchedlog->add($inputrulelog);
+               $pfRulematchedlog->add($inputrulelog, array(), false);
                $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
                unset($_SESSION['plugin_fusioninventory_rules_id']);
             }            
-         } else {
-            $communication = new PluginFusioninventoryCommunication();
-            $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
-      <REPLY>
-      <ERROR>TIMEOUT: SERVER OVERLOADED</ERROR>
-      </REPLY>");
-            $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
-            exit;
+/*         } else {
+//            $communication = new PluginFusioninventoryCommunication();
+//            $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
+//      <REPLY>
+//      <ERROR>TIMEOUT: SERVER OVERLOADED</ERROR>
+//      </REPLY>");
+//            $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
+//            exit;
+//         }
+ */
          }
       } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
          $class = new $itemtype();
