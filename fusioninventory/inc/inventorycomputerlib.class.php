@@ -224,7 +224,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             foreach ($a_computerinventory['memory'] as $key => $arrays) {
 //               $arrayslower = array_map('strtolower', $arrays);
                foreach ($db_memories as $keydb => $arraydb) {
-                  if ($arrayslower == $arraydb) {
+                  if ($arrays == $arraydb) {
                      unset($a_computerinventory['memory'][$key]);
                      unset($db_memories[$keydb]);
                      break;
