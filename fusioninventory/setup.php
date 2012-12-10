@@ -417,7 +417,9 @@ function plugin_fusioninventory_check_prerequisites() {
 
       return false;
    }
-   if (!TableExists("glpi_plugin_fusioninventory_configs")) {
+   $plugin = new Plugin();
+   if ($plugin->isActivated("fusioninventory")
+           && !TableExists("glpi_plugin_fusioninventory_configs")) {
       return false;
    }
    
