@@ -117,8 +117,10 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
 
 
 
-    public function testSendinventories() {
-
+   public function testSendinventories() {
+      global $DB;
+      $DB->connect();
+       
       $MyDirectory = opendir("InventoryComputer/xml");
       $k = 0;
       while(false !== ($Entry = readdir($MyDirectory))) {
@@ -200,6 +202,8 @@ echo "# testHardwareModifications\n";
 
 
    function testProlog($inputXML='', $deviceID='') {
+      global $DB;
+      $DB->connect();
 
       if (empty($inputXML)) {
          echo "testProlog with no arguments...\n";
@@ -880,6 +884,8 @@ echo "# testHardwareModifications\n";
 
 
    function testHardware($xmlFile='', $items_id=0, $unknown=0) {
+      global $DB;
+      $DB->connect();
       
       Config::detectRootDoc();
 
@@ -998,6 +1004,8 @@ echo "# testHardwareModifications\n";
   }
 
    function testHardwareModifications($xmlFile='', $items_id=0) {
+      global $DB;
+      $DB->connect();
 
       if (empty($xmlFile)) {
          echo "testHardwareModifications with no arguments...\n";
@@ -1023,6 +1031,8 @@ echo "# testHardwareModifications\n";
 
 
    function testHistoryCreateComputer() {
+      global $DB;
+      $DB->connect();
       
 $XML = array();
 $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
@@ -1468,6 +1478,8 @@ $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 
 
    function testHistoryWhenOSChange() {
+      global $DB;
+      $DB->connect();
       
 return;
       $xml = simplexml_load_file("InventoryComputer/xml/2.1.6/David-PC-2010-08-09-20-52-54-imprimante.xml", 'SimpleXMLElement', LIBXML_NOCDATA);
