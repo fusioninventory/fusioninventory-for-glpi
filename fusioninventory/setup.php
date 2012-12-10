@@ -42,6 +42,8 @@
 
 define ("PLUGIN_FUSIONINVENTORY_VERSION","0.84+1.0");
 
+$PF_CONFIG = array();
+
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE","0");
 define ("PLUGIN_FUSIONINVENTORY_REALVERSION","0.83+2.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
@@ -123,6 +125,9 @@ function plugin_init_fusioninventory() {
 
       $a_plugin = plugin_version_fusioninventory();
       $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+      
+      // Load config
+      PluginFusioninventoryConfig::loadCache();
 
       // ##### 4. Set in session module_id #####
 

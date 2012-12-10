@@ -247,9 +247,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    * @return field value for an existing field, false otherwise
    **/
    function getValue($name) {
+      global $PF_CONFIG;
 
-      if (isset($_SESSION['plugin_fusioninventory_configvalues'][$name])) {
-         return $_SESSION['plugin_fusioninventory_configvalues'][$name];
+      if (isset($PF_CONFIG[$name])) {
+         return $PF_CONFIG[$name];
       }
       
       $config = current($this->find("`type`='".$name."'"));
@@ -840,13 +841,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    
    
    static function loadCache() {
-      global $DB;
+      global $DB,$PF_CONFIG;
 
-      $_SESSION['plugin_fusioninventory_configvalues'] = array();
+      $PF_CONFIG = array();
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_configs`";
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
-         $_SESSION['plugin_fusioninventory_configvalues'][$data['type']] = $data['value'];
+         $PF_CONFIG[$data['type']] = $data['value'];
       }
    }
 }
