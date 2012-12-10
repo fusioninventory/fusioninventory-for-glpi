@@ -1001,6 +1001,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                "FK_fusioninventory_agents_discover");
          $migration->dropField($newTable,
                                "FK_fusioninventory_agents_query");
+         $migration->dropField($newTable,
+                               "construct_device_id");
+         $migration->dropField($newTable,
+                               "log");
          $migration->dropKey($newTable, "FK_tracker_agents");
          $migration->dropKey($newTable, "FK_tracker_agents_2");
       $migration->migrationOneTable($newTable);
