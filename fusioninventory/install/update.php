@@ -1866,10 +1866,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "plugin_fusioninventory_snmpmodels_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_configsecurities_id",
-                                 "plugin_fusinvsnmp_configsecurities_id",
+                                 "plugin_fusioninventory_configsecurities_id",
+                                 "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
       $migration->migrationOneTable($newTable);
+         $migration->changeField($newTable,
+                                 "plugin_fusinvsnmp_configsecurities_id",
+                                 "plugin_fusioninventory_configsecurities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
          $migration->dropField($newTable, "dnsname");
          $migration->dropField($newTable, "snmp");
          $migration->dropField($newTable, "FK_model_infos");
@@ -1937,7 +1941,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "plugin_fusioninventory_snmpmodels_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
-                                 "plugin_fusinvsnmp_configsecurities_id",
+                                 "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addKey($newTable,
                             "entities_id");
