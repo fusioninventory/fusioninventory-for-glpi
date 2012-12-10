@@ -3201,7 +3201,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "plugin_fusioninventory_snmpmodelmiblabels_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmiboids",
+                                 "plugin_fusioninventory_snmpmodelmiboids_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                                  "plugin_fusioninventory_snmpmodelmibobjects_id",
