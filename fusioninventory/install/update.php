@@ -4726,8 +4726,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $queryu = "UPDATE `glpi_plugin_fusioninventory_agents`
-            SET `threads_networkdiscovery`='".$data['threads_networkdiscovery']."', 
-                `threads_networkinventory`='".$data['threads_networkinventory ']."',
+            SET `threads_networkdiscovery`='".$data['threads_netdiscovery']."', 
+                `threads_networkinventory`='".$data['threads_snmpquery']."',
                 `senddico`='".$data['senddico']."'
             WHERE `id`='".$data['plugin_fusioninventory_agents_id']."'";
          $DB->query($queryu);
