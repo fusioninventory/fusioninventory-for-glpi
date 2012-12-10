@@ -415,6 +415,26 @@ class PluginFusioninventoryToolbox {
       return array($data, $db_data);
    }
 
+   
+   
+   static function showYesNo($name, $value=0) {
+      $rand = mt_rand();
+      $checked['yes'] = '';
+      $checked['no'] = '';
+      if ($value == 0) {
+         $checked['no'] = 'checked';
+      } else {
+         $checked['yes'] = 'checked';
+      }
+      echo '<table>
+            <tr>
+            <td><input type="radio" value="1" id="yes'.$rand.'" name="'.$name.'" '.$checked['yes'].' />
+            <label for="yes'.$rand.'">'.__('Yes').'</label></td>
+		   	<td><input type="radio" value="0" id="no'.$rand.'" name="'.$name.'" '.$checked['no'].' />
+            <label for="no'.$rand.'">'.__('No').'</label></td>
+            </tr>
+            </table>';
+   }
 }
 
 ?>

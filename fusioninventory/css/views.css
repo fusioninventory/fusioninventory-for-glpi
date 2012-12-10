@@ -58,3 +58,33 @@
     background-image: -o-linear-gradient(top,#FFF,#DDD);
     background-image: linear-gradient(top,#FFF,#DDD);
 }
+
+
+td > input[type=radio] {
+	padding: 0;
+	margin: 0;
+	float: left;
+	position: absolute;
+	left: 0;
+	opacity: 0;
+}
+
+td > label { 
+   width: 60px;
+   text-align: center;
+   line-height: 18px;
+   display: inline-block;
+   border: 1px solid transparent;   
+}
+
+td:not(#foo) > input:hover + label, td:not(#foo) > input:focus + label,
+td:not(#foo) > input + label:hover, td:not(#foo) > input:focus + label { 
+   background-color: #e1d39e;
+   border: 1px solid #a99f78; 
+}
+
+/* Checked styles */
+td:not(#foo) > input[type=radio]:checked + label { 
+   background-color: #e1d39e;
+   border: 1px solid #a99f78;
+}
