@@ -407,7 +407,11 @@ function plugin_version_fusioninventory() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusioninventory_check_prerequisites() {
    global $DB;
-
+   
+   if (!isset($_SESSION['glpi_plugins'])) {
+      $_SESSION['glpi_plugins'] = array();
+   }
+   
    if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
       echo __('Your GLPI version not compatible, require 0.84', 'fusioninventory');
 
