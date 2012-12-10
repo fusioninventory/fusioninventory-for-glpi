@@ -3948,7 +3948,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "plugin_fusioninventory_snmpmodels_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
-                                 "plugin_fusinvsnmp_configsecurities_id",
+                                 "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                                  "uptime",
@@ -3968,7 +3968,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "networkequipments_id");
          $migration->addKey($newTable,
-                            array("plugin_fusioninventory_snmpmodels_id", "plugin_fusinvsnmp_configsecurities_id"),
+                            array("plugin_fusioninventory_snmpmodels_id", "plugin_fusioninventory_configsecurities_id"),
                             "plugin_fusioninventory_snmpmodels_id");
       $migration->migrationOneTable($newTable);
 
