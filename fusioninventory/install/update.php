@@ -3874,16 +3874,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "sysdescr",
                                  "text COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_models_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
                                  "plugin_fusioninventory_snmpmodels_id",
                                  "plugin_fusioninventory_snmpmodels_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_configsecurities_id",
-                                 "plugin_fusinvsnmp_configsecurities_id",
+                                 "plugin_fusioninventory_configsecurities_id",
+                                 "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "uptime",
@@ -3926,6 +3922,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "last_tracker_update",
                                  "last_fusioninventory_update",
                                  "datetime DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "plugin_fusinvsnmp_models_id",
+                                 "plugin_fusioninventory_snmpmodels_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "plugin_fusinvsnmp_configsecurities_id",
+                                 "plugin_fusioninventory_configsecurities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
          $migration->dropKey($newTable,
                              "FK_networking");
          $migration->dropKey($newTable,
