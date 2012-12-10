@@ -186,6 +186,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/ignoredimportdevice.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/networkequipment.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/networkporttype.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/printer.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/printerlog.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/printerlogreport.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodeldevice.class.php");
