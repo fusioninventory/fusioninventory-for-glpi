@@ -187,7 +187,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/networkporttype.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/printerlog.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/printerlogreport.class.php");
-
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodeldevice.class.php");
    
    $migration = new $migrationname($current_version);
    $prepare_task = array();
@@ -4620,7 +4620,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Update serialized sections to mysql_real_escape_string(htmlspecialchars_decode("data"))
     */
-   if (!strstr($current_version, "+")) {// All version before 0.80+1.1 (new versioning)
+/*   if (!strstr($current_version, "+")) {// All version before 0.80+1.1 (new versioning)
       $computer = new Computer();
       $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
       $migration->displayMessage("Convert computer inventory, may require some minutes");
@@ -4633,7 +4633,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $infoSections["sections"] = array();
             $infoSections["sectionsToModify"] = array();
 
-            /* Variables for the recovery and changes in the serialized sections */
+            // Variables for the recovery and changes in the serialized sections
             $serializedSections = "";
             $arraySerializedSections = array();
             $arraySerializedSectionsTemp = array();
@@ -4712,7 +4712,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          }
       }
    }
-
+*/
    
    /*
     * Migrate data of table glpi_plugin_fusinvsnmp_agentconfigs into glpi_plugin_fusioninventory_agents
@@ -4723,8 +4723,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $queryu = "UPDATE `glpi_plugin_fusioninventory_agents`
-            SET `threads_netdiscovery`='".$data['threads_networkdiscovery']."', 
-                `threads_snmpquery`='".$data['threads_networkinventory ']."',
+            SET `threads_networkdiscovery`='".$data['threads_networkdiscovery']."', 
+                `threads_networkinventory`='".$data['threads_networkinventory ']."',
                 `senddico`='".$data['senddico']."'
             WHERE `id`='".$data['plugin_fusioninventory_agents_id']."'";
          $DB->query($queryu);
