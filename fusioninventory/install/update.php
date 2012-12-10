@@ -3109,7 +3109,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "FK_mib_oid",
-                                 "plugin_fusioninventory_snmpmodelmiboids",
+                                 "plugin_fusioninventory_snmpmodelmiboids_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "FK_mib_object",
