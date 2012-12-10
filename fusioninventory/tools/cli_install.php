@@ -114,7 +114,6 @@ $plugin = new Plugin();
 
 
 include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
-include (GLPI_ROOT . "/plugins/fusioninventory/locales/en_GB.php");
 $current_version = pluginFusioninventoryGetCurrentVersion(PLUGIN_FUSIONINVENTORY_VERSION);
 
 $migration = new CliMigration($current_version);
