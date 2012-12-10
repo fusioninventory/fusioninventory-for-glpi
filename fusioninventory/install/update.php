@@ -190,6 +190,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/printerlog.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/printerlogreport.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodeldevice.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/toolbox.class.php");
    
    $migration = new $migrationname($current_version);
    $prepare_task = array();
@@ -5063,7 +5064,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Modify displaypreference for PluginFusioninventoryPrinterLog
     */
-      include_once("../plugins/fusioninventory/inc/printerlog.class.php");
       $pfPrinterLogReport = new PluginFusioninventoryPrinterLog();
       $a_searchoptions = $pfPrinterLogReport->getSearchOptions();
       $query = "SELECT * FROM `glpi_displaypreferences`
