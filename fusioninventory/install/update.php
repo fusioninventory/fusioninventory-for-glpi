@@ -3101,7 +3101,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "FK_mib_label",
+                                 "plugin_fusioninventory_snmpmodelmiblabels_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_miblabels_id",
+                                 "plugin_fusioninventory_snmpmodelmiblabels_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "FK_mib_oid",
@@ -3109,7 +3113,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "FK_mib_object",
+                                 "plugin_fusioninventory_snmpmodelmibobjects_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_mibobjects_id",
+                                 "plugin_fusioninventory_snmpmodelmibobjects_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "oid_port_counter",
@@ -3190,13 +3198,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "plugin_fusioninventory_snmpmodels_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
-                                 "plugin_fusinvsnmp_miblabels_id",
+                                 "plugin_fusioninventory_snmpmodelmiblabels_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                                  "plugin_fusioninventory_snmpmodelmiboids",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
-                                 "plugin_fusinvsnmp_mibobjects_id",
+                                 "plugin_fusioninventory_snmpmodelmibobjects_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                                  "oid_port_counter",
