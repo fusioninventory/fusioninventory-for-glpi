@@ -991,6 +991,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "FK_entities",
                                  "entities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
          $migration->dropField($newTable,
                                "FK_tracker_agents");
          $migration->dropField($newTable,
