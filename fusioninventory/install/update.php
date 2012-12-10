@@ -1019,9 +1019,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
    /*
-    * Table glpi_plugin_fusioninventory_construct_walks
+    * Table glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks
     */
-      $newTable = "glpi_plugin_fusioninventory_construct_walks";
+      $newtable = "glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks";
+      $migration->renameTable("glpi_plugin_fusioninventory_construct_walks",
+                              $newTable);
       if (!TableExists($newTable)) {
          $query = "CREATE TABLE `".$newTable."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
