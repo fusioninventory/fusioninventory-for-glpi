@@ -52,7 +52,8 @@ class Update extends PHPUnit_Framework_TestCase {
 
    function Update($version = '') {
       global $DB;
-
+      $DB->connect();
+      
       if ($version == '') {
          return;
       }

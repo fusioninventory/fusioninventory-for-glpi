@@ -52,13 +52,12 @@ Html::header(__('Features', 'fusioninventory'), $_SERVER["PHP_SELF"],
 $pfConfig = new PluginFusioninventoryConfig();
 
 if (isset($_POST['update'])) {
-   $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-   $pfConfig->updateValue($plugins_id, 'ssl_only', $_POST['ssl_only'],'');
-   $pfConfig->updateValue($plugins_id, 'inventory_frequence', $_POST['inventory_frequence'],'');
-   $pfConfig->updateValue($plugins_id, 'delete_task', $_POST['delete_task'],'');
-   $pfConfig->updateValue($plugins_id, 'agent_port', $_POST['agent_port'],'');
-   $pfConfig->updateValue($plugins_id, 'extradebug', $_POST['extradebug'],'');
-   $pfConfig->updateValue($plugins_id, 'agent_base_url', $_POST['agent_base_url'],'');
+   $pfConfig->updateValue('ssl_only', $_POST['ssl_only']);
+   $pfConfig->updateValue('inventory_frequence', $_POST['inventory_frequence']);
+   $pfConfig->updateValue('delete_task', $_POST['delete_task']);
+   $pfConfig->updateValue('agent_port', $_POST['agent_port']);
+   $pfConfig->updateValue('extradebug', $_POST['extradebug']);
+   $pfConfig->updateValue('agent_base_url', $_POST['agent_base_url']);
    Html::back();
 }
 

@@ -45,7 +45,7 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
 
     public function testSetModuleInventoryOff() {
        global $DB,$CFG_GLPI;
-
+       $DB->connect();
 
        $plugin = new Plugin();
        $plugin->getFromDBbyDir("fusioninventory");
@@ -84,7 +84,7 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
          $fields = current($data);
          $plugins_id = $fields['id'];
          $pfConfig = new PluginFusioninventoryConfig();
-         $pfConfig->updateValue($plugins_id, "extradebug", "1");
+         $pfConfig->updateValue("extradebug", "1");
 
     }
 
@@ -106,7 +106,7 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
 
     public function testSetModuleInventoryOn() {
        global $DB;
-
+       
         // set in config module inventory = yes by default
         $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
            SET `is_active` = '1'
