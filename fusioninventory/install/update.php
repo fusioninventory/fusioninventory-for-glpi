@@ -5180,7 +5180,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_input['users_id'] = $users_id;
       foreach ($a_input as $type=>$value) {
          if (is_null($config->getValue($type))) {
-            $config->addValues($plugins_id, array($type=>$value),'');
+            $config->addValues(array($type=>$value));
          }
       }
      $DB->query("DELETE FROM `glpi_plugin_fusioninventory_configs`
@@ -5210,7 +5210,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (is_null($config->getValue("users_id"))) {
          $a_input['users_id'] = 0;
       }
-      $config->addValues($plugins_id, $a_input);
+      $config->addValues($a_input);
 
       $pfSetup = new PluginFusioninventorySetup();
       $users_id = $pfSetup->createFusionInventoryUser();
@@ -5251,7 +5251,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query($sql);
       }
       foreach ($input as $key => $value) {
-         $config->addValues($plugins_id, array($key => $value), 'inventory');
+         $config->addValues(array($key => $value));
       }
 
 

@@ -71,7 +71,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['agent_base_url']         = '';
 
       foreach ($input as $key => $value) {
-         $this->addValues($plugin_id, array($key => $value), '');
+         $this->addValues(array($key => $value));
       }
       
       $input = array();
@@ -100,7 +100,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['component_networkcardvirtual'] = 1;
 
       foreach ($input as $key => $value) {
-         $this->addValues($plugin_id, array($key => $value), 'inventory');
+         $this->addValues(array($key => $value));
       }
       
       $input = array();
@@ -108,7 +108,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['threads_networkinventory'] = 1;
 
       foreach ($input as $key => $value) {
-         $this->addValues($plugin_id, array($key => $value), 'network');
+         $this->addValues(array($key => $value));
       }
       
       
@@ -147,13 +147,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *
     * @return nothing
     **/
-   function addValues($plugin_id, $values, $module) {
+   function addValues($values) {
 
       foreach ($values as $type=>$value) {
          if (is_null($this->getValue($type))) {
-            $this->addValue($plugin_id, $type, $value,$module);
+            $this->addValue($type, $value);
          } else {
-            $this->updateValue($plugin_id, $type, $value, $module);
+            $this->updateValue($type, $value);
          }
       }
    }
@@ -699,15 +699,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *
     * @return integer the new id of the added item (or false if fail)
     **/
-   function addValue($plugin_id, $name, $value, $module) {
+   function addValue($name, $value) {
       $existing_value = $this->getValue($name);
       if (!is_null($existing_value)) {
          return $existing_value;
       } else {
-         return $this->add(array('plugins_id' => $plugin_id,
-                                 'type'       => $name,
-                                 'value'      => $value,
-                                 'module'     => $module));
+         return $this->add(array('type'       => $name,
+                                 'value'      => $value));
       }
    }
 

@@ -402,6 +402,10 @@ class PluginFusioninventoryFormatconvert {
       
       // * MONITORS
       
+ 
+      // * PRINTERS
+      
+      
       
       
       // * NETWORKS
