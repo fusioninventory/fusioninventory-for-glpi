@@ -176,6 +176,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/communicationrest.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputercomputer.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputercomputerlib.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
