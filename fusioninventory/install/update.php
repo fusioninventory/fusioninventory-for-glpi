@@ -443,6 +443,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "items_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
+                                 "itemtype",
+                                 "itemtype",
+                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
                                  "token",
                                  "token",
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
@@ -1037,12 +1041,17 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "int(11) NOT NULL AUTO_INCREMENT");
          $migration->changeField($newTable,
                                  "construct_device_id",
-                                 "construct_device_id",
+                                 "plugin_fusioninventory_snmpmodelconstructdevices_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "log",
                                  "log",
                                  "varchar(255) DEFAULT NULL");          
+      $migration->migrationOneTable($newTable);
+         $migration->changeField($newTable,
+                                 "plugin_fusioninventory_snmpmodelconstructdevices_id",
+                                 "plugin_fusioninventory_snmpmodelconstructdevices_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
       $migration->migrationOneTable($newTable);
          $migration->addField($newTable,
                               "id",
@@ -4582,7 +4591,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
    if (!strstr($current_version, "+")) {// All version before 0.80+1.1 (new versioning)
       $computer = new Computer();
-      $pfComputer = new PluginFusinvinventoryComputer();
+      $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
       $migration->displayMessage("Convert computer inventory, may require some minutes");
       $pfLib = new PluginFusioninventoryInventoryComputerLib();
       $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`";
