@@ -515,7 +515,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids` (
    `itemtype` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
    `vlan` tinyint(1) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`),
-   UNIQUE KEY `unicity` (`plugin_fusinvsnmp_miboids_id`, `plugin_fusioninventory_snmpmodelconstructdevices_id`, `plugin_fusioninventory_mappings_id`),
+   UNIQUE KEY `unicity` (`plugin_fusioninventory_snmpmodelmiboids_id`, `plugin_fusioninventory_snmpmodelconstructdevices_id`, `plugin_fusioninventory_mappings_id`),
    KEY `itemtype` ( `itemtype` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
