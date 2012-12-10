@@ -549,6 +549,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "items_id",
                               "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
+                              "itemtype",
+                              "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
                               "token",
                               "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->addField($newTable,
