@@ -628,6 +628,7 @@ class Rules extends PHPUnit_Framework_TestCase {
    */
    public function testNoRule() {
       global $DB,$XML,$CFG_GLPI;
+       $DB->connect();
 
       $Install = new Install();
       $Install->testInstall(0);
@@ -800,6 +801,7 @@ class Rules extends PHPUnit_Framework_TestCase {
     */
    public function testImportComputerwithTypeOnly() {
       global $DB,$XML,$CFG_GLPI;
+       $DB->connect();
 
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
@@ -914,6 +916,7 @@ class Rules extends PHPUnit_Framework_TestCase {
     */
    public function testImportComputerwithTypeAndNameExist() {
       global $DB,$XML,$CFG_GLPI;
+       $DB->connect();
 
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
@@ -1071,6 +1074,7 @@ class Rules extends PHPUnit_Framework_TestCase {
     */
    public function testImportComputerwithTypeAndNameExistNamePresent() {
       global $DB,$XML,$CFG_GLPI;
+       $DB->connect();
 
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
@@ -1249,6 +1253,7 @@ class Rules extends PHPUnit_Framework_TestCase {
 
    public function testImportComputerCheckrulevalidationlocal_and_globalcriteria() {
       global $DB,$XML,$CFG_GLPI;
+       $DB->connect();
 
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");

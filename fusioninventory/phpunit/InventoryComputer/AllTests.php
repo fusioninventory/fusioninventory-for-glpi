@@ -106,7 +106,8 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
 
     public function testSetModuleInventoryOn() {
        global $DB;
-       
+       $DB->connect();
+
         // set in config module inventory = yes by default
         $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
            SET `is_active` = '1'
@@ -261,6 +262,7 @@ echo "# testHardwareModifications\n";
 
    function testPrinter($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
+      $DB->connect();
 
       if (empty($xmlFile)) {
          echo "testPrinter with no arguments...\n";
@@ -374,6 +376,7 @@ echo "# testHardwareModifications\n";
 
    function testMonitor($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
+      $DB->connect();
 
       if (empty($xmlFile)) {
          echo "testMonitor with no arguments...\n";
@@ -429,6 +432,7 @@ echo "# testHardwareModifications\n";
 
    function testCPU($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
+       $DB->connect();
 
       if (empty($xmlFile)) {
          echo "testCPU with no arguments...\n";
@@ -492,6 +496,7 @@ echo "# testHardwareModifications\n";
 
    function testDrive($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
+       $DB->connect();
 
       if (empty($xmlFile)) {
          echo "testDrive with no arguments...\n";
@@ -526,6 +531,7 @@ echo "# testHardwareModifications\n";
 
    function testController($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
+       $DB->connect();
 
       if (empty($xmlFile)) {
          echo "testController with no arguments...\n";
@@ -581,6 +587,7 @@ echo "# testHardwareModifications\n";
 
    function testSound($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
+       $DB->connect();
 
       if (empty($xmlFile)) {
          echo "testSound with no arguments...\n";
@@ -615,6 +622,7 @@ echo "# testHardwareModifications\n";
 
   function testVideo($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
+       $DB->connect();
 
       if (empty($xmlFile)) {
          echo "testVideo with no arguments...\n";
@@ -650,6 +658,7 @@ echo "# testHardwareModifications\n";
 
    function testMemory($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
+       $DB->connect();
 
       if (empty($xmlFile)) {
          echo "testMemory with no arguments...\n";
@@ -708,6 +717,7 @@ echo "# testHardwareModifications\n";
 
   function testNetwork($xml='', $items_id=0, $unknown=0, $xmlFile='') {
       global $DB;
+       $DB->connect();
 
       if (empty($xml)) {
          echo "testNetwork with no arguments...\n";
@@ -774,6 +784,7 @@ echo "# testHardwareModifications\n";
 
    function testSoftware($xmlFile='', $items_id=0, $unknown=0) {
       global $DB;
+       $DB->connect();
 
       if (empty($xmlFile)) {
          echo "testSoftware with no arguments...\n";
