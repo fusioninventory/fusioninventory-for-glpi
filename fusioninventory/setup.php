@@ -413,6 +413,10 @@ function plugin_fusioninventory_check_prerequisites() {
 
       return false;
    }
+   if (!TableExists("glpi_plugin_fusioninventory_configs")) {
+      return false;
+   }
+   
    $crontask = new CronTask();
    if ((TableExists("glpi_plugin_fusioninventory_agents")
            AND !FieldExists("glpi_plugin_fusioninventory_agents", "tag"))
