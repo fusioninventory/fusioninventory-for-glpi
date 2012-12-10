@@ -40,15 +40,6 @@
    ------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
-   require GLPI_ROOT . "/inc/includes.php";
-   restore_error_handler();
-
-   error_reporting(E_ALL | E_STRICT);
-   ini_set('display_errors','On');
-}
-
 class FusinvInstall extends PHPUnit_Framework_TestCase {
 
    public function testDB($pluginname='') {

@@ -44,7 +44,8 @@ class Install extends PHPUnit_Framework_TestCase {
 
    public function testInstall($verify=1) {
       global $DB;
-
+      $DB->connect();
+      
       if (file_exists("save.sql") AND $verify == '0') {
 
          $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
