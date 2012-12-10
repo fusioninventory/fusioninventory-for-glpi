@@ -374,8 +374,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                        "name"    => $data['name']);
             $prepare_agentConfig[] = array("name" => $data["name"],
                                            "lock" => $data['lock'],
-                                           "threads_snmpquery"    => $data['nb_process_query'],
-                                           "threads_netdiscovery" => $data['nb_process_discovery']);
+                                           "threads_networkinventory"    => $data['nb_process_query'],
+                                           "threads_networkdiscovery" => $data['nb_process_discovery']);
          }
       } else if (TableExists("glpi_plugin_tracker_agents")
                   AND FieldExists("glpi_plugin_tracker_agents",
@@ -385,8 +385,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          while ($data=$DB->fetch_array($result)) {
             $prepare_agentConfig[] = array("name" => $data["name"],
                                            "lock" => $data['lock'],
-                                           "threads_snmpquery"    => $data['threads_query'],
-                                           "threads_netdiscovery" => $data['threads_discovery']);
+                                           "threads_networkinventory"    => $data['threads_query'],
+                                           "threads_networkdiscovery" => $data['threads_discovery']);
          }
       } else if (TableExists("glpi_plugin_fusioninventory_agents")) {
          if (FieldExists($newTable, "module_snmpquery")) {
@@ -394,8 +394,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $result=$DB->query($query);
             while ($data=$DB->fetch_array($result)) {
                $prepare_agentConfig[] = array("id" => $data["ID"],
-                                              "threads_snmpquery"    => $data['threads_query'],
-                                              "threads_netdiscovery" => $data['threads_discovery'],
+                                              "threads_networkinventory"    => $data['threads_query'],
+                                              "threads_networkdiscovery" => $data['threads_discovery'],
                                               "NETORKINVENTORY" => $data['module_snmpquery'],
                                               "NETWORKDISCOVERY" => $data['module_netdiscovery'],
                                               "INVENTORY" => $data['module_inventory'],
