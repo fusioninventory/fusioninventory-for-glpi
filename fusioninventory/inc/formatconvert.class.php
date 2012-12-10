@@ -651,6 +651,9 @@ class PluginFusioninventoryFormatconvert {
    
    static function addValues($array, $a_key) {
       $a_return = array();
+      if (!is_array($array)) {
+         return $a_return;
+      }
       $a_keys = array_keys($a_key);
       foreach ($array as $key=>$value) {
          if (in_array($key, $a_keys)) {
