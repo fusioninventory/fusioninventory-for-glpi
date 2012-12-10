@@ -1033,7 +1033,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Table glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks
     */
-      $newtable = "glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks";
+      $newTable = "glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks";
       $migration->renameTable("glpi_plugin_fusioninventory_construct_walks",
                               $newTable);
       if (!TableExists($newTable)) {
