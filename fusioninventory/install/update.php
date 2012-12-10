@@ -2846,15 +2846,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "int(11) NOT NULL AUTO_INCREMENT");
          $migration->changeField($newTable,
                                  "mib_oid_id",
-                                 "plugin_fusioninventory_snmpmodelmiboids",
+                                 "plugin_fusioninventory_snmpmodelmiboids_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmiboids",
-                                 "plugin_fusioninventory_snmpmodelmiboids",
+                                 "plugin_fusioninventory_snmpmodelmiboids_id",
+                                 "plugin_fusioninventory_snmpmodelmiboids_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_miboids_id",
-                                 "plugin_fusioninventory_snmpmodelmiboids",
+                                 "plugin_fusioninventory_snmpmodelmiboids_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "construct_device_id",
@@ -2895,7 +2895,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
          $migration->addField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmiboids",
+                                 "plugin_fusioninventory_snmpmodelmiboids_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                                  "plugin_fusioninventory_snmpmodelconstructdevices_id",

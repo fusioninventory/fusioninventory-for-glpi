@@ -507,7 +507,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboi
 
 CREATE TABLE `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `plugin_fusinvsnmp_miboids_id` int(11) NOT NULL DEFAULT '0',
+   `plugin_fusioninventory_snmpmodelmiboids_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_snmpmodelconstructdevices_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_mappings_id` int(11) NOT NULL DEFAULT '0',
    `oid_port_counter` tinyint(1) NOT NULL DEFAULT '0',
