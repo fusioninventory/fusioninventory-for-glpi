@@ -49,6 +49,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    var $table = "glpi_plugin_fusioninventory_inventorycomputerlibserialization";
    var $softList = array();
    var $softVersionList = array();
+   var $log_add = array();
    
    function __construct() {
       $this->software                  = new Software();
@@ -75,6 +76,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $networkName                  = new NetworkName();
       $iPAddress                    = new IPAddress();
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
+      $pfConfig                     = new PluginFusioninventoryConfig();
       
       $computer->getFromDB($items_id);
       
@@ -143,159 +145,164 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          
          
       // * Processors
-         $db_processors = array();
-         if ($no_history === false) {
-            $query = "SELECT `glpi_items_deviceprocessors`.`id`, `designation`, `frequence`, `frequency`, 
-                  `serial`, `manufacturers_id` FROM `glpi_items_deviceprocessors`
-               LEFT JOIN `glpi_deviceprocessors` ON `deviceprocessors_id`=`glpi_deviceprocessors`.`id`
-               WHERE `items_id` = '$items_id'
-                  AND `itemtype`='Computer'";
-            $result = $DB->query($query);         
-            while ($data = $DB->fetch_assoc($result)) {
-               $idtmp = $data['id'];
-               unset($data['id']);            
-               $data = Toolbox::addslashes_deep($data);
-               $data = array_map('strtolower', $data);
-               $db_processors[$idtmp] = $data;
-            }
-         }
-
-         if (count($db_processors) == 0) {
-            foreach ($a_computerinventory['processor'] as $a_processor) {
-               $this->addProcessor($a_processor, $items_id, $no_history);
-            }
-         } else {
-
-            // Check all fields from source: 'designation', 'serial', 'manufacturers_id', 'frequence'
-            foreach ($a_computerinventory['processor'] as $key => $arrays) {
-               $arrayslower = array_map('strtolower', $arrays);
-               foreach ($db_processors as $keydb => $arraydb) {
-                  if ($arrayslower == $arraydb) {
-                     unset($a_computerinventory['processor'][$key]);
-                     unset($db_processors[$keydb]);
-                     break;
-                  }
+         if ($pfConfig->getValue("component_processor") != 0) {
+            $db_processors = array();
+            if ($no_history === false) {
+               $query = "SELECT `glpi_items_deviceprocessors`.`id`, `designation`, `frequence`, `frequency`, 
+                     `serial`, `manufacturers_id` FROM `glpi_items_deviceprocessors`
+                  LEFT JOIN `glpi_deviceprocessors` ON `deviceprocessors_id`=`glpi_deviceprocessors`.`id`
+                  WHERE `items_id` = '$items_id'
+                     AND `itemtype`='Computer'";
+               $result = $DB->query($query);         
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);            
+                  $data = Toolbox::addslashes_deep($data);
+                  $data = array_map('strtolower', $data);
+                  $db_processors[$idtmp] = $data;
                }
             }
 
-            if (count($a_computerinventory['processor']) == 0
-               AND count($db_processors) == 0) {
-               // Nothing to do
+            if (count($db_processors) == 0) {
+               foreach ($a_computerinventory['processor'] as $a_processor) {
+                  $this->addProcessor($a_processor, $items_id, $no_history);
+               }
             } else {
-               if (count($db_processors) != 0) {
-                  // Delete processor in DB
-                  foreach ($db_processors as $idtmp => $data) {
-                     $item_DeviceProcessor->delete(array('id'=>$idtmp));
+
+               // Check all fields from source: 'designation', 'serial', 'manufacturers_id', 'frequence'
+               foreach ($a_computerinventory['processor'] as $key => $arrays) {
+                  $arrayslower = array_map('strtolower', $arrays);
+                  foreach ($db_processors as $keydb => $arraydb) {
+                     if ($arrayslower == $arraydb) {
+                        unset($a_computerinventory['processor'][$key]);
+                        unset($db_processors[$keydb]);
+                        break;
+                     }
                   }
                }
-               if (count($a_computerinventory['processor']) != 0) {
-                  foreach($a_computerinventory['processor'] as $a_processor) {
-                     $this->addProcessor($a_processor, $items_id, $no_history);
+
+               if (count($a_computerinventory['processor']) == 0
+                  AND count($db_processors) == 0) {
+                  // Nothing to do
+               } else {
+                  if (count($db_processors) != 0) {
+                     // Delete processor in DB
+                     foreach ($db_processors as $idtmp => $data) {
+                        $item_DeviceProcessor->delete(array('id'=>$idtmp));
+                     }
+                  }
+                  if (count($a_computerinventory['processor']) != 0) {
+                     foreach($a_computerinventory['processor'] as $a_processor) {
+                        $this->addProcessor($a_processor, $items_id, $no_history);
+                     }
                   }
                }
             }
          }
          
       // * Memories
-         
-         $db_memories = array();
-         if ($no_history === false) {
-            $query = "SELECT `glpi_items_devicememories`.`id`, `designation`, `size`, `frequence`, 
-                  `serial`, `devicememorytypes_id` FROM `glpi_items_devicememories`
-               LEFT JOIN `glpi_devicememories` ON `devicememories_id`=`glpi_devicememories`.`id`
-               WHERE `items_id` = '$items_id'
-                  AND `itemtype`='Computer'";
-            $result = $DB->query($query);         
-            while ($data = $DB->fetch_assoc($result)) {
-               $idtmp = $data['id'];
-               unset($data['id']);            
-               $data = Toolbox::addslashes_deep($data);
-//               $data = array_map('strtolower', $data);
-               $db_memories[$idtmp] = $data;
-            }
-         }
-
-         if (count($db_memories) == 0) {
-            foreach ($a_computerinventory['memory'] as $a_memory) {
-               $this->addMemory($a_memory, $items_id, $no_history);
-            }
-         } else {
-            // Check all fields from source: 'designation', 'serial', 'size', 'devicememorytypes_id', 'frequence'
-            foreach ($a_computerinventory['memory'] as $key => $arrays) {
-//               $arrayslower = array_map('strtolower', $arrays);
-               foreach ($db_memories as $keydb => $arraydb) {
-                  if ($arrays == $arraydb) {
-                     unset($a_computerinventory['memory'][$key]);
-                     unset($db_memories[$keydb]);
-                     break;
-                  }
+         if ($pfConfig->getValue("component_memory") != 0) {
+            $db_memories = array();
+            if ($no_history === false) {
+               $query = "SELECT `glpi_items_devicememories`.`id`, `designation`, `size`, `frequence`, 
+                     `serial`, `devicememorytypes_id` FROM `glpi_items_devicememories`
+                  LEFT JOIN `glpi_devicememories` ON `devicememories_id`=`glpi_devicememories`.`id`
+                  WHERE `items_id` = '$items_id'
+                     AND `itemtype`='Computer'";
+               $result = $DB->query($query);         
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);            
+                  $data = Toolbox::addslashes_deep($data);
+   //               $data = array_map('strtolower', $data);
+                  $db_memories[$idtmp] = $data;
                }
             }
 
-            if (count($a_computerinventory['memory']) == 0
-               AND count($db_memories) == 0) {
-               // Nothing to do
+            if (count($db_memories) == 0) {
+               foreach ($a_computerinventory['memory'] as $a_memory) {
+                  $this->addMemory($a_memory, $items_id, $no_history);
+               }
             } else {
-               if (count($db_memories) != 0) {
-                  // Delete processor in DB
-                  foreach ($db_memories as $idtmp => $data) {
-                     $item_DeviceMemory->delete(array('id'=>$idtmp));
+               // Check all fields from source: 'designation', 'serial', 'size', 'devicememorytypes_id', 'frequence'
+               foreach ($a_computerinventory['memory'] as $key => $arrays) {
+   //               $arrayslower = array_map('strtolower', $arrays);
+                  foreach ($db_memories as $keydb => $arraydb) {
+                     if ($arrays == $arraydb) {
+                        unset($a_computerinventory['memory'][$key]);
+                        unset($db_memories[$keydb]);
+                        break;
+                     }
                   }
                }
-               if (count($a_computerinventory['memory']) != 0) {
-                  foreach($a_computerinventory['memory'] as $a_memory) {
-                     $this->addMemory($a_memory, $items_id, $no_history);
+
+               if (count($a_computerinventory['memory']) == 0
+                  AND count($db_memories) == 0) {
+                  // Nothing to do
+               } else {
+                  if (count($db_memories) != 0) {
+                     // Delete processor in DB
+                     foreach ($db_memories as $idtmp => $data) {
+                        $item_DeviceMemory->delete(array('id'=>$idtmp));
+                     }
+                  }
+                  if (count($a_computerinventory['memory']) != 0) {
+                     foreach($a_computerinventory['memory'] as $a_memory) {
+                        $this->addMemory($a_memory, $items_id, $no_history);
+                     }
                   }
                }
             }
          }
 
       // * Hard drive
-         $db_harddrives = array();
-         if ($no_history === false) {
-            $query = "SELECT `glpi_items_deviceharddrives`.`id`, `serial`
-                  FROM `glpi_items_deviceharddrives`
-               WHERE `items_id` = '$items_id'
-                  AND `itemtype`='Computer'";
-            $result = $DB->query($query);         
-            while ($data = $DB->fetch_assoc($result)) {
-               $idtmp = $data['id'];
-               unset($data['id']);            
-               $data = Toolbox::addslashes_deep($data);
-               $data = array_map('strtolower', $data);
-               $db_harddrives[$idtmp] = $data;
-            }
-         }
-
-         if (count($db_harddrives) == 0) {
-            foreach ($a_computerinventory['harddrive'] as $a_harddrive) {
-               $this->addHardDisk($a_harddrive, $items_id, $no_history);
-            }
-         } else {
-            foreach ($a_computerinventory['harddrive'] as $key => $arrays) {
-               $arrayslower = array_map('strtolower', $arrays);
-               foreach ($db_harddrives as $keydb => $arraydb) {
-                  if ($arrayslower['serial'] == $arraydb['serial']) {
-                     unset($a_computerinventory['harddrive'][$key]);
-                     unset($db_harddrives[$keydb]);
-                     break;
-                  }
+         if ($pfConfig->getValue("component_harddrive") != 0) {
+            $db_harddrives = array();
+            if ($no_history === false) {
+               $query = "SELECT `glpi_items_deviceharddrives`.`id`, `serial`
+                     FROM `glpi_items_deviceharddrives`
+                  WHERE `items_id` = '$items_id'
+                     AND `itemtype`='Computer'";
+               $result = $DB->query($query);         
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);            
+                  $data = Toolbox::addslashes_deep($data);
+                  $data = array_map('strtolower', $data);
+                  $db_harddrives[$idtmp] = $data;
                }
             }
 
-            if (count($a_computerinventory['harddrive']) == 0
-               AND count($db_harddrives) == 0) {
-               // Nothing to do
+            if (count($db_harddrives) == 0) {
+               foreach ($a_computerinventory['harddrive'] as $a_harddrive) {
+                  $this->addHardDisk($a_harddrive, $items_id, $no_history);
+               }
             } else {
-               if (count($db_harddrives) != 0) {
-                  // Delete hard drive in DB
-                  foreach ($db_harddrives as $idtmp => $data) {
-                     $item_DeviceHardDrive->delete(array('id'=>$idtmp));
+               foreach ($a_computerinventory['harddrive'] as $key => $arrays) {
+                  $arrayslower = array_map('strtolower', $arrays);
+                  foreach ($db_harddrives as $keydb => $arraydb) {
+                     if ($arrayslower['serial'] == $arraydb['serial']) {
+                        unset($a_computerinventory['harddrive'][$key]);
+                        unset($db_harddrives[$keydb]);
+                        break;
+                     }
                   }
                }
-               if (count($a_computerinventory['harddrive']) != 0) {
-                  foreach($a_computerinventory['harddrive'] as $a_harddrive) {
-                     $this->addHardDisk($a_harddrive, $items_id, $no_history);
+
+               if (count($a_computerinventory['harddrive']) == 0
+                  AND count($db_harddrives) == 0) {
+                  // Nothing to do
+               } else {
+                  if (count($db_harddrives) != 0) {
+                     // Delete hard drive in DB
+                     foreach ($db_harddrives as $idtmp => $data) {
+                        $item_DeviceHardDrive->delete(array('id'=>$idtmp));
+                     }
+                  }
+                  if (count($a_computerinventory['harddrive']) != 0) {
+                     foreach($a_computerinventory['harddrive'] as $a_harddrive) {
+                        $this->addHardDisk($a_harddrive, $items_id, $no_history);
+                     }
                   }
                }
             }
@@ -303,54 +310,55 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
          
       // * Graphiccard
-         
-         $db_graphiccards = array();
-         if ($no_history === false) {
-            $query = "SELECT `glpi_items_devicegraphiccards`.`id`, `designation`, `memory` 
-                  FROM `glpi_items_devicegraphiccards`
-               LEFT JOIN `glpi_devicegraphiccards` ON `devicegraphiccards_id`=`glpi_devicegraphiccards`.`id`
-               WHERE `items_id` = '$items_id'
-                  AND `itemtype`='Computer'";
-            $result = $DB->query($query);         
-            while ($data = $DB->fetch_assoc($result)) {
-               $idtmp = $data['id'];
-               unset($data['id']);            
-               $data = Toolbox::addslashes_deep($data);
-               $data = array_map('strtolower', $data);
-               $db_graphiccards[$idtmp] = $data;
-            }
-         }
-
-         if (count($db_graphiccards) == 0) {
-            foreach ($a_computerinventory['graphiccard'] as $a_graphiccard) {
-               $this->addGraphicCard($a_graphiccard, $items_id, $no_history);
-            }
-         } else {
-            // Check all fields from source: 'designation', 'memory'
-            foreach ($a_computerinventory['graphiccard'] as $key => $arrays) {
-               $arrayslower = array_map('strtolower', $arrays);
-               foreach ($db_graphiccards as $keydb => $arraydb) {
-                  if ($arrayslower == $arraydb) {
-                     unset($a_computerinventory['graphiccard'][$key]);
-                     unset($db_graphiccards[$keydb]);
-                     break;
-                  }
+         if ($pfConfig->getValue("component_graphiccard") != 0) {
+            $db_graphiccards = array();
+            if ($no_history === false) {
+               $query = "SELECT `glpi_items_devicegraphiccards`.`id`, `designation`, `memory` 
+                     FROM `glpi_items_devicegraphiccards`
+                  LEFT JOIN `glpi_devicegraphiccards` ON `devicegraphiccards_id`=`glpi_devicegraphiccards`.`id`
+                  WHERE `items_id` = '$items_id'
+                     AND `itemtype`='Computer'";
+               $result = $DB->query($query);         
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);            
+                  $data = Toolbox::addslashes_deep($data);
+                  $data = array_map('strtolower', $data);
+                  $db_graphiccards[$idtmp] = $data;
                }
             }
 
-            if (count($a_computerinventory['graphiccard']) == 0
-               AND count($db_graphiccards) == 0) {
-               // Nothing to do
+            if (count($db_graphiccards) == 0) {
+               foreach ($a_computerinventory['graphiccard'] as $a_graphiccard) {
+                  $this->addGraphicCard($a_graphiccard, $items_id, $no_history);
+               }
             } else {
-               if (count($db_graphiccards) != 0) {
-                  // Delete graphiccard in DB
-                  foreach ($db_graphiccards as $idtmp => $data) {
-                     $item_DeviceGraphicCard->delete(array('id'=>$idtmp));
+               // Check all fields from source: 'designation', 'memory'
+               foreach ($a_computerinventory['graphiccard'] as $key => $arrays) {
+                  $arrayslower = array_map('strtolower', $arrays);
+                  foreach ($db_graphiccards as $keydb => $arraydb) {
+                     if ($arrayslower == $arraydb) {
+                        unset($a_computerinventory['graphiccard'][$key]);
+                        unset($db_graphiccards[$keydb]);
+                        break;
+                     }
                   }
                }
-               if (count($a_computerinventory['graphiccard']) != 0) {
-                  foreach($a_computerinventory['graphiccard'] as $a_graphiccard) {
-                     $this->addGraphicCard($a_graphiccard, $items_id, $no_history);
+
+               if (count($a_computerinventory['graphiccard']) == 0
+                  AND count($db_graphiccards) == 0) {
+                  // Nothing to do
+               } else {
+                  if (count($db_graphiccards) != 0) {
+                     // Delete graphiccard in DB
+                     foreach ($db_graphiccards as $idtmp => $data) {
+                        $item_DeviceGraphicCard->delete(array('id'=>$idtmp));
+                     }
+                  }
+                  if (count($a_computerinventory['graphiccard']) != 0) {
+                     foreach($a_computerinventory['graphiccard'] as $a_graphiccard) {
+                        $this->addGraphicCard($a_graphiccard, $items_id, $no_history);
+                     }
                   }
                }
             }
@@ -358,115 +366,117 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          
          
       // * Sound         
-         
-         $db_soundcards = array();
-         if ($no_history === false) {
-            $query = "SELECT `glpi_items_devicesoundcards`.`id`, `designation`, `comment`,
-                  `manufacturers_id` FROM `glpi_items_devicesoundcards`
-               LEFT JOIN `glpi_devicesoundcards` ON `devicesoundcards_id`=`glpi_devicesoundcards`.`id`
-               WHERE `items_id` = '$items_id'
-                  AND `itemtype`='Computer'";
-            $result = $DB->query($query);         
-            while ($data = $DB->fetch_assoc($result)) {
-               $idtmp = $data['id'];
-               unset($data['id']);            
-               $data = Toolbox::addslashes_deep($data);
-//               $data = array_map('strtolower', $data);
-               $db_soundcards[$idtmp] = $data;
-            }
-         }
-
-         if (count($db_soundcards) == 0) {
-            foreach ($a_computerinventory['soundcard'] as $a_soundcard) {
-               $this->addSoundCard($a_soundcard, $items_id, $no_history);
-            }
-         } else {
-            // Check all fields from source: 'designation', 'memory', 'manufacturers_id'
-            foreach ($a_computerinventory['soundcard'] as $key => $arrays) {
-//               $arrayslower = array_map('strtolower', $arrays);
-               foreach ($db_soundcards as $keydb => $arraydb) {
-                  if ($arrayslower == $arraydb) {
-                     unset($a_computerinventory['soundcard'][$key]);
-                     unset($db_soundcards[$keydb]);
-                     break;
-                  }
+         if ($pfConfig->getValue("component_soundcard") != 0) {
+            $db_soundcards = array();
+            if ($no_history === false) {
+               $query = "SELECT `glpi_items_devicesoundcards`.`id`, `designation`, `comment`,
+                     `manufacturers_id` FROM `glpi_items_devicesoundcards`
+                  LEFT JOIN `glpi_devicesoundcards` ON `devicesoundcards_id`=`glpi_devicesoundcards`.`id`
+                  WHERE `items_id` = '$items_id'
+                     AND `itemtype`='Computer'";
+               $result = $DB->query($query);         
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);            
+                  $data = Toolbox::addslashes_deep($data);
+   //               $data = array_map('strtolower', $data);
+                  $db_soundcards[$idtmp] = $data;
                }
             }
 
-            if (count($a_computerinventory['soundcard']) == 0
-               AND count($db_soundcards) == 0) {
-               // Nothing to do
+            if (count($db_soundcards) == 0) {
+               foreach ($a_computerinventory['soundcard'] as $a_soundcard) {
+                  $this->addSoundCard($a_soundcard, $items_id, $no_history);
+               }
             } else {
-               if (count($db_soundcards) != 0) {
-                  // Delete soundcard in DB
-                  foreach ($db_soundcards as $idtmp => $data) {
-                     $item_DeviceSoundCard->delete(array('id'=>$idtmp));
+               // Check all fields from source: 'designation', 'memory', 'manufacturers_id'
+               foreach ($a_computerinventory['soundcard'] as $key => $arrays) {
+   //               $arrayslower = array_map('strtolower', $arrays);
+                  foreach ($db_soundcards as $keydb => $arraydb) {
+                     if ($arrayslower == $arraydb) {
+                        unset($a_computerinventory['soundcard'][$key]);
+                        unset($db_soundcards[$keydb]);
+                        break;
+                     }
                   }
                }
-               if (count($a_computerinventory['soundcard']) != 0) {
-                  foreach($a_computerinventory['soundcard'] as $a_soundcard) {
-                     $this->addSoundCard($a_soundcard, $items_id, $no_history);
+
+               if (count($a_computerinventory['soundcard']) == 0
+                  AND count($db_soundcards) == 0) {
+                  // Nothing to do
+               } else {
+                  if (count($db_soundcards) != 0) {
+                     // Delete soundcard in DB
+                     foreach ($db_soundcards as $idtmp => $data) {
+                        $item_DeviceSoundCard->delete(array('id'=>$idtmp));
+                     }
+                  }
+                  if (count($a_computerinventory['soundcard']) != 0) {
+                     foreach($a_computerinventory['soundcard'] as $a_soundcard) {
+                        $this->addSoundCard($a_soundcard, $items_id, $no_history);
+                     }
                   }
                }
             }
          }
          
       // * Controllers
-         
-         $db_controls = array();
-         if ($no_history === false) {
-            $query = "SELECT `glpi_items_devicecontrols`.`id`, `interfacetypes_id`,
-                  `manufacturers_id`, `designation` FROM `glpi_items_devicecontrols`
-               LEFT JOIN `glpi_devicecontrols` ON `devicecontrols_id`=`glpi_devicecontrols`.`id`
-               WHERE `items_id` = '$items_id'
-                  AND `itemtype`='Computer'";
-            $result = $DB->query($query);         
-            while ($data = $DB->fetch_assoc($result)) {
-               $idtmp = $data['id'];
-               unset($data['id']);            
-               $data = Toolbox::addslashes_deep($data);
-               $data = array_map('strtolower', $data);
-               $db_controls[$idtmp] = $data;
-            }
-         }
-         
-         if (count($db_controls) == 0) {
-            foreach ($a_computerinventory['controller'] as $a_control) {
-               $this->addControl($a_control, $items_id, $no_history);
-            }
-         } else {
-            // Check all fields from source: 
-            foreach ($a_computerinventory['controller'] as $key => $arrays) {
-               $arrayslower = array_map('strtolower', $arrays);
-               foreach ($db_controls as $keydb => $arraydb) {
-                  if ($arrayslower == $arraydb) {
-                     unset($a_computerinventory['controller'][$key]);
-                     unset($db_controls[$keydb]);
-                     break;
-                  }
+         if ($pfConfig->getValue("component_control") != 0) {
+            $db_controls = array();
+            if ($no_history === false) {
+               $query = "SELECT `glpi_items_devicecontrols`.`id`, `interfacetypes_id`,
+                     `manufacturers_id`, `designation` FROM `glpi_items_devicecontrols`
+                  LEFT JOIN `glpi_devicecontrols` ON `devicecontrols_id`=`glpi_devicecontrols`.`id`
+                  WHERE `items_id` = '$items_id'
+                     AND `itemtype`='Computer'";
+               $result = $DB->query($query);         
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);            
+                  $data = Toolbox::addslashes_deep($data);
+                  $data = array_map('strtolower', $data);
+                  $db_controls[$idtmp] = $data;
                }
             }
 
-            if (count($a_computerinventory['controller']) == 0
-               AND count($db_controls) == 0) {
-               // Nothing to do
+            if (count($db_controls) == 0) {
+               foreach ($a_computerinventory['controller'] as $a_control) {
+                  $this->addControl($a_control, $items_id, $no_history);
+               }
             } else {
-               if (count($db_controls) != 0) {
-                  // Delete controller in DB
-                  foreach ($db_controls as $idtmp => $data) {
-                     $item_DeviceControl->delete(array('id'=>$idtmp));
+               // Check all fields from source: 
+               foreach ($a_computerinventory['controller'] as $key => $arrays) {
+                  $arrayslower = array_map('strtolower', $arrays);
+                  foreach ($db_controls as $keydb => $arraydb) {
+                     if ($arrayslower == $arraydb) {
+                        unset($a_computerinventory['controller'][$key]);
+                        unset($db_controls[$keydb]);
+                        break;
+                     }
                   }
                }
-               if (count($a_computerinventory['controller']) != 0) {
-                  foreach($a_computerinventory['controller'] as $a_control) {
-                     $this->addControl($a_control, $items_id, $no_history);
+
+               if (count($a_computerinventory['controller']) == 0
+                  AND count($db_controls) == 0) {
+                  // Nothing to do
+               } else {
+                  if (count($db_controls) != 0) {
+                     // Delete controller in DB
+                     foreach ($db_controls as $idtmp => $data) {
+                        $item_DeviceControl->delete(array('id'=>$idtmp));
+                     }
+                  }
+                  if (count($a_computerinventory['controller']) != 0) {
+                     foreach($a_computerinventory['controller'] as $a_control) {
+                        $this->addControl($a_control, $items_id, $no_history);
+                     }
                   }
                }
             }
          }
          
       // * Software
-         if (isset($a_computerinventory['software'])) {
+         if ($pfConfig->getValue("import_software") != 0) {
             $entities_id = $_SESSION["plugin_fusinvinventory_entity"];
             $db_software = array();
             if ($no_history === false) {
@@ -612,255 +622,261 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
          
       // * Virtualmachines
-         $db_computervirtualmachine = array();
-         if ($no_history === false) {
-            $query = "SELECT `id`, `name`, `uuid`, `virtualmachinesystems_id` FROM `glpi_computervirtualmachines`
-                WHERE `computers_id` = '$items_id'";
-            $result = $DB->query($query);         
-            while ($data = $DB->fetch_assoc($result)) {
-               $idtmp = $data['id'];
-               unset($data['id']);            
-               $data = Toolbox::addslashes_deep($data);
-               $data = array_map('strtolower', $data);
-               $db_computervirtualmachine[$idtmp] = $data;
-            }
-         }
-         
-         $simplecomputervirtualmachine = array();
-         if (isset($a_computerinventory['virtualmachine'])) {
-            foreach ($a_computerinventory['virtualmachine'] as $key=>$a_computervirtualmachine) {
-               $a_field = array('name', 'uuid', 'virtualmachinesystems_id');
-               foreach ($a_field as $field) {
-                  if (isset($a_computervirtualmachine[$field])) {
-                     $simplecomputervirtualmachine[$key][$field] = $a_computervirtualmachine[$field];
-                  }
-               }            
-            }
-         }
-         foreach ($simplecomputervirtualmachine as $key => $arrays) {
-            $arrayslower = array_map('strtolower', $arrays);
-            foreach ($db_computervirtualmachine as $keydb => $arraydb) {
-               if ($arrayslower == $arraydb) {
-                  $input = array();
-                  $input['id'] = $keydb;
-                  if (isset($a_computerinventory['virtualmachine'][$key]['vcpu'])) {
-                     $input['vcpu'] = $a_computerinventory['virtualmachine'][$key]['vcpu'];
-                  }
-                  if (isset($a_computerinventory['virtualmachine'][$key]['ram'])) {
-                     $input['ram'] = $a_computerinventory['virtualmachine'][$key]['ram'];
-                  }
-                  if (isset($a_computerinventory['virtualmachine'][$key]['virtualmachinetypes_id'])) {
-                     $input['virtualmachinetypes_id'] = $a_computerinventory['virtualmachine'][$key]['virtualmachinetypes_id'];
-                  }
-                  if (isset($a_computerinventory['virtualmachine'][$key]['virtualmachinestates_id'])) {
-                     $input['virtualmachinestates_id'] = $a_computerinventory['virtualmachine'][$key]['virtualmachinestates_id'];
-                  }
-                  $computerVirtualmachine->update($input);
-                  unset($simplecomputervirtualmachine[$key]);
-                  unset($a_computerinventory['virtualmachine'][$key]);
-                  unset($db_computervirtualmachine[$keydb]);
-                  break;
+         if ($pfConfig->getValue("import_vm") != 0) {
+            $db_computervirtualmachine = array();
+            if ($no_history === false) {
+               $query = "SELECT `id`, `name`, `uuid`, `virtualmachinesystems_id` FROM `glpi_computervirtualmachines`
+                   WHERE `computers_id` = '$items_id'";
+               $result = $DB->query($query);         
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);            
+                  $data = Toolbox::addslashes_deep($data);
+                  $data = array_map('strtolower', $data);
+                  $db_computervirtualmachine[$idtmp] = $data;
                }
             }
-         }
-         if (count($a_computerinventory['virtualmachine']) == 0
-            AND count($db_computervirtualmachine) == 0) {
-            // Nothing to do
-         } else {
-            if (count($db_computervirtualmachine) != 0) {
-               // Delete virtualmachine in DB
-               foreach ($db_computervirtualmachine as $idtmp => $data) {
-                  $computerVirtualmachine->delete(array('id'=>$idtmp));
+
+            $simplecomputervirtualmachine = array();
+            if (isset($a_computerinventory['virtualmachine'])) {
+               foreach ($a_computerinventory['virtualmachine'] as $key=>$a_computervirtualmachine) {
+                  $a_field = array('name', 'uuid', 'virtualmachinesystems_id');
+                  foreach ($a_field as $field) {
+                     if (isset($a_computervirtualmachine[$field])) {
+                        $simplecomputervirtualmachine[$key][$field] = $a_computervirtualmachine[$field];
+                     }
+                  }            
                }
             }
-            if (count($a_computerinventory['virtualmachine']) != 0) {
-               foreach($a_computerinventory['virtualmachine'] as $a_virtualmachine) {
-                  $a_virtualmachine['computers_id'] = $items_id;
-                  $computerVirtualmachine->add($a_virtualmachine, array(), false);
+            foreach ($simplecomputervirtualmachine as $key => $arrays) {
+               $arrayslower = array_map('strtolower', $arrays);
+               foreach ($db_computervirtualmachine as $keydb => $arraydb) {
+                  if ($arrayslower == $arraydb) {
+                     $input = array();
+                     $input['id'] = $keydb;
+                     if (isset($a_computerinventory['virtualmachine'][$key]['vcpu'])) {
+                        $input['vcpu'] = $a_computerinventory['virtualmachine'][$key]['vcpu'];
+                     }
+                     if (isset($a_computerinventory['virtualmachine'][$key]['ram'])) {
+                        $input['ram'] = $a_computerinventory['virtualmachine'][$key]['ram'];
+                     }
+                     if (isset($a_computerinventory['virtualmachine'][$key]['virtualmachinetypes_id'])) {
+                        $input['virtualmachinetypes_id'] = $a_computerinventory['virtualmachine'][$key]['virtualmachinetypes_id'];
+                     }
+                     if (isset($a_computerinventory['virtualmachine'][$key]['virtualmachinestates_id'])) {
+                        $input['virtualmachinestates_id'] = $a_computerinventory['virtualmachine'][$key]['virtualmachinestates_id'];
+                     }
+                     $computerVirtualmachine->update($input);
+                     unset($simplecomputervirtualmachine[$key]);
+                     unset($a_computerinventory['virtualmachine'][$key]);
+                     unset($db_computervirtualmachine[$keydb]);
+                     break;
+                  }
+               }
+            }
+            if (count($a_computerinventory['virtualmachine']) == 0
+               AND count($db_computervirtualmachine) == 0) {
+               // Nothing to do
+            } else {
+               if (count($db_computervirtualmachine) != 0) {
+                  // Delete virtualmachine in DB
+                  foreach ($db_computervirtualmachine as $idtmp => $data) {
+                     $computerVirtualmachine->delete(array('id'=>$idtmp));
+                  }
+               }
+               if (count($a_computerinventory['virtualmachine']) != 0) {
+                  foreach($a_computerinventory['virtualmachine'] as $a_virtualmachine) {
+                     $a_virtualmachine['computers_id'] = $items_id;
+                     $computerVirtualmachine->add($a_virtualmachine, array(), false);
+                  }
                }
             }
          }
          
       // * ComputerDisk
-         $db_computerdisk = array();
-         if ($no_history === false) {
-            $query = "SELECT `id`, `name`, `device`, `mountpoint` FROM `glpi_computerdisks`
-                WHERE `computers_id` = '$items_id'";
-            $result = $DB->query($query);         
-            while ($data = $DB->fetch_assoc($result)) {
-               $idtmp = $data['id'];
-               unset($data['id']);            
-               $data = Toolbox::addslashes_deep($data);
-               $data = array_map('strtolower', $data);
-               $db_computerdisk[$idtmp] = $data;
-            }
-         }
-         $simplecomputerdisk = array();
-         foreach ($a_computerinventory['computerdisk'] as $key=>$a_computerdisk) {
-            $a_field = array('name', 'device', 'mountpoint');
-            foreach ($a_field as $field) {
-               if (isset($a_computerdisk[$field])) {
-                  $simplecomputerdisk[$key][$field] = $a_computerdisk[$field];
+         if ($pfConfig->getValue("import_volume") != 0) {
+            $db_computerdisk = array();
+            if ($no_history === false) {
+               $query = "SELECT `id`, `name`, `device`, `mountpoint` FROM `glpi_computerdisks`
+                   WHERE `computers_id` = '$items_id'";
+               $result = $DB->query($query);         
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);            
+                  $data = Toolbox::addslashes_deep($data);
+                  $data = array_map('strtolower', $data);
+                  $db_computerdisk[$idtmp] = $data;
                }
-            }            
-         }
-         foreach ($simplecomputerdisk as $key => $arrays) {
-            $arrayslower = array_map('strtolower', $arrays);
-            foreach ($db_computerdisk as $keydb => $arraydb) {
-               if ($arrayslower == $arraydb) {
-                  $input = array();
-                  $input['id'] = $keydb;
-                  if (isset($a_computerinventory['computerdisk'][$key]['filesystems_id'])) {
-                     $input['filesystems_id'] = $a_computerinventory['computerdisk'][$key]['filesystems_id'];
+            }
+            $simplecomputerdisk = array();
+            foreach ($a_computerinventory['computerdisk'] as $key=>$a_computerdisk) {
+               $a_field = array('name', 'device', 'mountpoint');
+               foreach ($a_field as $field) {
+                  if (isset($a_computerdisk[$field])) {
+                     $simplecomputerdisk[$key][$field] = $a_computerdisk[$field];
                   }
-                  $input['totalsize'] = $a_computerinventory['computerdisk'][$key]['totalsize'];                  
-                  $input['freesize'] = $a_computerinventory['computerdisk'][$key]['freesize'];
-                  $computerDisk->update($input);
-                  unset($simplecomputerdisk[$key]);
-                  unset($a_computerinventory['computerdisk'][$key]);
-                  unset($db_computerdisk[$keydb]);
-                  break;
+               }            
+            }
+            foreach ($simplecomputerdisk as $key => $arrays) {
+               $arrayslower = array_map('strtolower', $arrays);
+               foreach ($db_computerdisk as $keydb => $arraydb) {
+                  if ($arrayslower == $arraydb) {
+                     $input = array();
+                     $input['id'] = $keydb;
+                     if (isset($a_computerinventory['computerdisk'][$key]['filesystems_id'])) {
+                        $input['filesystems_id'] = $a_computerinventory['computerdisk'][$key]['filesystems_id'];
+                     }
+                     $input['totalsize'] = $a_computerinventory['computerdisk'][$key]['totalsize'];                  
+                     $input['freesize'] = $a_computerinventory['computerdisk'][$key]['freesize'];
+                     $computerDisk->update($input);
+                     unset($simplecomputerdisk[$key]);
+                     unset($a_computerinventory['computerdisk'][$key]);
+                     unset($db_computerdisk[$keydb]);
+                     break;
+                  }
                }
             }
-         }
-         
-         if (count($a_computerinventory['computerdisk']) == 0
-            AND count($db_computerdisk) == 0) {
-            // Nothing to do
-         } else {
-            if (count($db_computerdisk) != 0) {
-               // Delete computerdisk in DB
-               foreach ($db_computerdisk as $idtmp => $data) {
-                  $computerDisk->delete(array('id'=>$idtmp));
+
+            if (count($a_computerinventory['computerdisk']) == 0
+               AND count($db_computerdisk) == 0) {
+               // Nothing to do
+            } else {
+               if (count($db_computerdisk) != 0) {
+                  // Delete computerdisk in DB
+                  foreach ($db_computerdisk as $idtmp => $data) {
+                     $computerDisk->delete(array('id'=>$idtmp));
+                  }
                }
-            }
-            if (count($a_computerinventory['computerdisk']) != 0) {
-               foreach($a_computerinventory['computerdisk'] as $a_computerdisk) {
-                  $a_computerdisk['computers_id'] = $items_id;
-                  $a_computerdisk['_no_history'] = $no_history;
-                  $computerDisk->add($a_computerdisk, array(), false);
+               if (count($a_computerinventory['computerdisk']) != 0) {
+                  foreach($a_computerinventory['computerdisk'] as $a_computerdisk) {
+                     $a_computerdisk['computers_id'] = $items_id;
+                     $a_computerdisk['_no_history'] = $no_history;
+                     $computerDisk->add($a_computerdisk, array(), false);
+                  }
                }
             }
          }
          
      
       // * Networkports
-         $db_networkport = array();
-         if ($no_history === false) {
-            $query = "SELECT `id`, `name`, `mac`, `instantiation_type` FROM `glpi_networkports`
-                WHERE `items_id` = '$items_id'
-                  AND `itemtype`='Computer'";
-            $result = $DB->query($query);         
-            while ($data = $DB->fetch_assoc($result)) {
-               $idtmp = $data['id'];
-               unset($data['id']);
-               if (is_null($data['mac'])) {
-                  unset($data['mac']);
-               }
-               $data = Toolbox::addslashes_deep($data);
-               $data = array_map('strtolower', $data);
-               $db_networkport[$idtmp] = $data;
-            }
-         }
-         $simplenetworkport = array();
-         foreach ($a_computerinventory['networkport'] as $key=>$a_networkport) {
-            $a_field = array('name', 'mac', 'instantiation_type');
-            foreach ($a_field as $field) {
-               if (isset($a_networkport[$field])) {
-                  $simplenetworkport[$key][$field] = $a_networkport[$field];
-               }
-            }            
-         }
-         foreach ($simplenetworkport as $key => $arrays) {
-            $arrayslower = array_map('strtolower', $arrays);
-            foreach ($db_networkport as $keydb => $arraydb) {
-               if ($arrayslower == $arraydb) {
-                  // Get networkname
-                  $a_networknames_find = current($networkName->find("`items_id`='".$keydb."'
-                                                             AND `itemtype`='NetworkPort'", "", 1));
-                  
-                  // Same networkport, verify ipaddresses
-                  $db_addresses = array();
-                  $query = "SELECT `id`, `name` FROM `glpi_ipaddresses`
-                      WHERE `items_id` = '".$a_networknames_find['id']."'
-                        AND `itemtype`='NetworkName'";
-                  $result = $DB->query($query);         
-                  while ($data = $DB->fetch_assoc($result)) {
-                     $db_addresses[$data['id']] = $data['name'];
+         if ($pfConfig->getValue("component_networkcard") != 0) {
+            $db_networkport = array();
+            if ($no_history === false) {
+               $query = "SELECT `id`, `name`, `mac`, `instantiation_type` FROM `glpi_networkports`
+                   WHERE `items_id` = '$items_id'
+                     AND `itemtype`='Computer'";
+               $result = $DB->query($query);         
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);
+                  if (is_null($data['mac'])) {
+                     unset($data['mac']);
                   }
-                  $a_computerinventory_ipaddress = $a_computerinventory['networkport'][$key]['ipaddress'];
-                  foreach ($a_computerinventory_ipaddress as $key2 => $arrays2) {
-                     foreach ($db_addresses as $keydb2 => $arraydb2) {
-                        if ($arrays2 == $arraydb2) {
-                           unset($a_computerinventory_ipaddress[$key2]);
-                           unset($db_addresses[$keydb2]);
-                           break;
+                  $data = Toolbox::addslashes_deep($data);
+                  $data = array_map('strtolower', $data);
+                  $db_networkport[$idtmp] = $data;
+               }
+            }
+            $simplenetworkport = array();
+            foreach ($a_computerinventory['networkport'] as $key=>$a_networkport) {
+               $a_field = array('name', 'mac', 'instantiation_type');
+               foreach ($a_field as $field) {
+                  if (isset($a_networkport[$field])) {
+                     $simplenetworkport[$key][$field] = $a_networkport[$field];
+                  }
+               }            
+            }
+            foreach ($simplenetworkport as $key => $arrays) {
+               $arrayslower = array_map('strtolower', $arrays);
+               foreach ($db_networkport as $keydb => $arraydb) {
+                  if ($arrayslower == $arraydb) {
+                     // Get networkname
+                     $a_networknames_find = current($networkName->find("`items_id`='".$keydb."'
+                                                                AND `itemtype`='NetworkPort'", "", 1));
+
+                     // Same networkport, verify ipaddresses
+                     $db_addresses = array();
+                     $query = "SELECT `id`, `name` FROM `glpi_ipaddresses`
+                         WHERE `items_id` = '".$a_networknames_find['id']."'
+                           AND `itemtype`='NetworkName'";
+                     $result = $DB->query($query);         
+                     while ($data = $DB->fetch_assoc($result)) {
+                        $db_addresses[$data['id']] = $data['name'];
+                     }
+                     $a_computerinventory_ipaddress = $a_computerinventory['networkport'][$key]['ipaddress'];
+                     foreach ($a_computerinventory_ipaddress as $key2 => $arrays2) {
+                        foreach ($db_addresses as $keydb2 => $arraydb2) {
+                           if ($arrays2 == $arraydb2) {
+                              unset($a_computerinventory_ipaddress[$key2]);
+                              unset($db_addresses[$keydb2]);
+                              break;
+                           }
                         }
                      }
-                  }
-                  if (count($a_computerinventory_ipaddress) == 0
-                     AND count($db_addresses) == 0) {
-                     // Nothing to do
-                  } else {
-                     if (count($db_addresses) != 0) {
-                        // Delete ip address in DB                     
-                        foreach ($db_addresses as $idtmp => $name) {
-                           $iPAddress->delete(array('id'=>$idtmp));
+                     if (count($a_computerinventory_ipaddress) == 0
+                        AND count($db_addresses) == 0) {
+                        // Nothing to do
+                     } else {
+                        if (count($db_addresses) != 0) {
+                           // Delete ip address in DB                     
+                           foreach ($db_addresses as $idtmp => $name) {
+                              $iPAddress->delete(array('id'=>$idtmp));
+                           }
+                        }
+                        if (count($a_computerinventory_ipaddress) != 0) {
+                           foreach ($a_computerinventory_ipaddress as $ip) {
+                              $input = array();
+                              $input['items_id'] = $a_networknames_find['id'];
+                              $input['itemtype'] = 'NetworkName';
+                              $input['name'] = $ip;
+                              $iPAddress->add($input, array(), false);
+                           }
                         }
                      }
-                     if (count($a_computerinventory_ipaddress) != 0) {
-                        foreach ($a_computerinventory_ipaddress as $ip) {
-                           $input = array();
-                           $input['items_id'] = $a_networknames_find['id'];
-                           $input['itemtype'] = 'NetworkName';
-                           $input['name'] = $ip;
-                           $iPAddress->add($input, array(), false);
-                        }
+
+                     unset($db_networkport[$keydb]);
+                     unset($simplenetworkport[$key]);
+                     unset($a_computerinventory['networkport'][$key]);
+                     break;
+                  }
+               }
+            }
+
+            if (count($a_computerinventory['networkport']) == 0
+               AND count($db_networkport) == 0) {
+               // Nothing to do
+            } else {
+               if (count($db_networkport) != 0) {
+                  // Delete networkport in DB
+                  foreach ($db_networkport as $idtmp => $data) {
+                     $networkPort->delete(array('id'=>$idtmp));
+                  }
+               }
+               if (count($a_computerinventory['networkport']) != 0) {
+                  foreach ($a_computerinventory['networkport'] as $a_networkport) {
+                     $a_networkport['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                     $a_networkport['items_id'] = $items_id;
+                     $a_networkport['itemtype'] = "Computer";
+                     $a_networkport['_no_history'] = $no_history;
+                     $a_networkport['items_id'] = $networkPort->add($a_networkport, array(), false);
+                     unset($a_networkport['_no_history']);
+                     $a_networkport['is_recursive'] = 0;
+                     $a_networkport['itemtype'] = 'NetworkPort';
+                     unset($a_networkport['name']);
+            $a_networkport['_no_history'] = $no_history;
+                     $a_networknames_id = $networkName->add($a_networkport, array(), false);
+                     foreach ($a_networkport['ipaddress'] as $ip) {
+                        $input = array();
+                        $input['items_id'] = $a_networknames_id;
+                        $input['itemtype'] = 'NetworkName';
+                        $input['name'] = $ip;
+            $input['_no_history'] = $no_history;
+                        $iPAddress->add($input, array(), false);
                      }
                   }
-                  
-                  unset($db_networkport[$keydb]);
-                  unset($simplenetworkport[$key]);
-                  unset($a_computerinventory['networkport'][$key]);
-                  break;
                }
             }
          }
-         
-         if (count($a_computerinventory['networkport']) == 0
-            AND count($db_networkport) == 0) {
-            // Nothing to do
-         } else {
-            if (count($db_networkport) != 0) {
-               // Delete networkport in DB
-               foreach ($db_networkport as $idtmp => $data) {
-                  $networkPort->delete(array('id'=>$idtmp));
-               }
-            }
-            if (count($a_computerinventory['networkport']) != 0) {
-               foreach ($a_computerinventory['networkport'] as $a_networkport) {
-                  $a_networkport['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
-                  $a_networkport['items_id'] = $items_id;
-                  $a_networkport['itemtype'] = "Computer";
-                  $a_networkport['_no_history'] = $no_history;
-                  $a_networkport['items_id'] = $networkPort->add($a_networkport, array(), false);
-                  unset($a_networkport['_no_history']);
-                  $a_networkport['is_recursive'] = 0;
-                  $a_networkport['itemtype'] = 'NetworkPort';
-                  unset($a_networkport['name']);
-         $a_networkport['_no_history'] = $no_history;
-                  $a_networknames_id = $networkName->add($a_networkport, array(), false);
-                  foreach ($a_networkport['ipaddress'] as $ip) {
-                     $input = array();
-                     $input['items_id'] = $a_networknames_id;
-                     $input['itemtype'] = 'NetworkName';
-                     $input['name'] = $ip;
-         $input['_no_history'] = $no_history;
-                     $iPAddress->add($input, array(), false);
-                  }
-               }
-            }
-         }   
          
          
       // * Antivirus
@@ -1081,6 +1097,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       
       if ($add == 1) {
          $a_software['softwares_id'] = $this->software->add($a_software, $options, false);
+         $this->addPrepareLog($a_software['softwares_id'], 'Software');
          $new = 1; 
       }
       
@@ -1090,6 +1107,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $a_software['name'] = $a_software['version'];
    $a_software['_no_history'] = $no_history;
          $softwareversions_id = $this->softwareVersion->add($a_software, $options, false);
+         $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
       } else {
          $softwareversions_id = 0;
          if (isset($this->softVersionList[$a_software['version']."$$$$".$a_software['softwares_id']])) {
@@ -1098,13 +1116,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $a_software['name'] = $a_software['version'];
       $a_software['_no_history'] = $no_history;
             $softwareversions_id = $this->softwareVersion->add($a_software, $options, false);
+            $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
          }
       }
       $a_software['computers_id'] = $computers_id;
       $a_software['softwareversions_id'] = $softwareversions_id;
       $a_software['_no_history'] = $no_history;
 
-      $this->computer_SoftwareVersion->add($a_software, $options, false);
+      $id = $this->computer_SoftwareVersion->add($a_software, $options, false);
+      $this->addPrepareLog($id, 'Computer_SoftwareVersion');
    }
 
 
@@ -1121,7 +1141,36 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       }
       return $arrayFrom;
-    }
+   }
+    
+    
+    
+   function addPrepareLog($items_id, $itemtype, $itemtype_link='') {
+      $this->log_add[] = array($items_id, $itemtype, $itemtype_link, $_SESSION["glpi_currenttime"]);
+   }
+    
+    
+   function addLog() {
+      global $DB;
+      
+      if (count($this->log_add) > 0) {
+         $username = addslashes($_SESSION["glpiname"]);
+
+         $dataLog = array();
+         foreach ($this->log_add as $data) {
+            $dataLog[] = "('".implode("', '", $data)."', '".Log::HISTORY_CREATE_ITEM."', '".$username."', '', '')";
+         }      
+
+         // Build query
+         $query = "INSERT INTO `glpi_logs`
+                          (`items_id`, `itemtype`, `itemtype_link`, `date_mod`, `linked_action`, 
+                            `user_name`, `old_value`, `new_value`)
+                   VALUES ".implode(",", $dataLog);
+
+         $DB->query($query); 
+         
+      } 
+   }
 
 }
 

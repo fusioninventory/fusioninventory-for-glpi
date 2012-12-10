@@ -220,7 +220,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          $pfConfig = new PluginFusioninventoryConfig();
          $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
-         //if ($pfConfig->getValue($plugins_id, 'transfers_id_auto', 'inventory') == '0') {
+         //if ($pfConfig->getValue('transfers_id_auto') == '0') {
             $inputent = $input;
             if ((isset($a_computerinventory['computer']['domains_id'])) 
                     AND (!empty($a_computerinventory['computer']['domains_id']))) {
@@ -264,7 +264,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          if (isset($input['serial'])) {
             $input['serialnumber'] = $input['serial'];
          }
-         if ($pfConfig->getValue($plugins_id, 'transfers_id_auto', 'inventory') != '0') {
+         if ($pfConfig->getValue('transfers_id_auto') != '0') {
             $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
             $dataEntity = array ();
             $dataEntity = $ruleEntity->processAllRules($input, array());
@@ -319,9 +319,7 @@ if ($items_id > 0) {
          } else {
             $pfConfig   = new PluginFusioninventoryConfig();
             $computer->getFromDB($items_id);
-            if ($pfConfig->getValue($_SESSION["plugin_fusioninventory_moduleid"], 
-                                    'transfers_id_auto', 
-                                    'inventory') == 0) {
+            if ($pfConfig->getValue('transfers_id_auto') == 0) {
                $_SESSION["plugin_fusinvinventory_entity"] = $computer->fields['entities_id'];
             }
             $_SESSION['glpiactiveentities'] = array($_SESSION["plugin_fusinvinventory_entity"]);
@@ -369,6 +367,8 @@ $start = microtime(true);
             
             $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
 Toolbox::logInFile("exetime", (microtime(true) - $start)." (".$items_id.")\n");
+            $pfInventoryComputerLib->addLog();
+
             if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
                $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
                $inputrulelog = array();
@@ -457,8 +457,7 @@ Toolbox::logInFile("exetime", (microtime(true) - $start)." (".$items_id.")\n");
     */
    static function addDefaultStateIfNeeded(&$input, $check_management = false, $management_value = 0) {
       $config = new PluginFusioninventoryConfig();
-      $state = $config->getValue($_SESSION["plugin_fusioninventory_moduleid"],
-              "states_id_default", 'inventory');
+      $state = $config->getValue("states_id_default");
       if ($state) {
          if (!$check_management || ($check_management && !$management_value)) {
             $input['states_id'] = $state;

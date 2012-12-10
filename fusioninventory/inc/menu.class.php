@@ -67,8 +67,7 @@ class PluginFusioninventoryMenu {
       }
 
       $config = new PluginFusioninventoryConfig();
-      $plugin_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-      if (strlen($config->getValue($plugin_id, 'agent_base_url', ''))<10) {
+      if (strlen($config->getValue('agent_base_url'))<10) {
          echo "<div class='msgboxmonit msgboxmonit-red'>";
          print "<center><a href=\"config.form.php\">";
          print __('The server needs to kown the URL the agents use to access the server. Please '.

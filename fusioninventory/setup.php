@@ -146,6 +146,7 @@ function plugin_init_fusioninventory() {
          $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
 
          $PLUGIN_HOOKS['add_css']['fusioninventory']="css/views.css";
+
          if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
             $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/config.form.php?itemtype=pluginfusioninventoryconfig&glpi_tab=1';
          }

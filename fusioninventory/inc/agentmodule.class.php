@@ -419,13 +419,13 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    **/
    static function getUrlForModule($pluginname, $modulename) {
       $config = new PluginFusioninventoryConfig();
-      if (strlen($config->getValue(null, 'agent_base_url'))<10) {
+      if (strlen($config->getValue('agent_base_url'))<10) {
           die ("agent_base_url is unset!\n");
       }
 
       # Construct the path to the JSON back from the agent_base_url.
       # agent_base_url is the initial URL used by the agent
-      return $config->getValue(null, 'agent_base_url').'/plugins/'.strtolower($pluginname).'/b/'.strtolower($modulename).'/';
+      return $config->getValue('agent_base_url').'/plugins/'.strtolower($pluginname).'/b/'.strtolower($modulename).'/';
    }
 }
 

@@ -63,8 +63,7 @@ class PluginFusinvinventoryImport_LicenseInfo extends CommonDBTM {
 
       $pfConfig = new PluginFusioninventoryConfig();
 # not implemented yet
-#      if ($pfConfig->getValue($_SESSION["plugin_fusinvinventory_moduleid"], 
-#              "import_license") == '0') {
+#      if ($pfConfig->getValue("import_license") == '0') {
 #         return;
 #      }
 

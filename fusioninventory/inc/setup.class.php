@@ -59,7 +59,7 @@ class PluginFusioninventorySetup {
 
       if (class_exists('PluginFusioninventoryConfig')) {
          $fusioninventory_config      = new PluginFusioninventoryConfig();
-         $users_id = $fusioninventory_config->getValue($plugins_id, 'users_id', '');
+         $users_id = $fusioninventory_config->getValue('users_id');
          $user->delete(array('id'=>$users_id), 1);
       }
 

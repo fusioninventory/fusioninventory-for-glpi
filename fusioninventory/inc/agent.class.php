@@ -230,9 +230,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
          unset($this->fields['id']);
          $this->fields['threads_networkdiscovery'] =
-                 $pfConfig->getValue($plugins_id, 'threads_networkdiscovery');
+                 $pfConfig->getValue('threads_networkdiscovery');
          $this->fields['threads_networkinventory'] =
-                 $pfConfig->getValue($plugins_id, 'threads_networkinventory');
+                 $pfConfig->getValue('threads_networkinventory');
          $this->fields['senddico'] = 0;
       }
 
@@ -673,14 +673,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $computer->getFromDB($pfAgent->fields['items_id']);
          if ($computer->fields["name"] && $computer->fields["name"] != "localhost") {
             array_push($ret, "http://".$computer->fields["name"].
-               ":".$config->getValue($plugins_id, 'agent_port', ''));
+               ":".$config->getValue('agent_port'));
 
             $domain = new Domain();
             $domain->getFromDB($computer->fields['domains_id']);
             array_push($ret, "http://".
                $computer->fields["name"].'.'.
                $domain->fields["name"].
-               ":".$config->getValue($plugins_id, 'agent_port', ''));
+               ":".$config->getValue('agent_port'));
          }
       }
 
@@ -688,13 +688,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       # useful when Windows domain != DNS domain
       $stack = array();
       if(preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/', $pfAgent->fields['name'], $stack)) {
-         array_push($ret, "http://".$stack[1].":".$config->getValue($plugins_id, 'agent_port', ''));
+         array_push($ret, "http://".$stack[1].":".$config->getValue('agent_port'));
       }
 
       $a_ips = $pfAgent->getIPs($agent_id);
       foreach ($a_ips as $ip) {
          if ($ip != '') {
-            array_push($ret, "http://".$ip.":".$config->getValue($plugins_id, 'agent_port', ''));
+            array_push($ret, "http://".$ip.":".$config->getValue('agent_port'));
          }
       }
       return $ret;

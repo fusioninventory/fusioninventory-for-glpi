@@ -259,7 +259,7 @@ class PluginFusioninventoryCommunication {
    function addProlog() {
       $pfConfig = new PluginFusioninventoryConfig();
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-      $this->message->addChild('PROLOG_FREQ', $pfConfig->getValue($plugins_id, "inventory_frequence", ''));
+      $this->message->addChild('PROLOG_FREQ', $pfConfig->getValue("inventory_frequence"));
    }
 
 
@@ -304,8 +304,7 @@ class PluginFusioninventoryCommunication {
       $user   = new User();
 
       ob_start();
-      $a_plugins = current($plugin->find("`directory`='fusioninventory'", '', 1));
-      $users_id  = $config->getValue($a_plugins['id'], 'users_id', '');
+      $users_id  = $config->getValue('users_id');
       $_SESSION['glpiID'] = $users_id;
       $user->getFromDB($users_id);
       Session::changeActiveEntities();
@@ -314,7 +313,6 @@ class PluginFusioninventoryCommunication {
       $_SESSION['glpiactiveprofile']['interface'] = '';
       $_SESSION['glpiactiveprofile']['internet'] = 'w';
       $_SESSION['glpiactiveprofile']['computer'] = 'w';
-      $plugin = new Plugin();
       $plugin->init();
       $LOADED_PLUGINS = array();
       if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
@@ -368,7 +366,7 @@ class PluginFusioninventoryCommunication {
       $taskjob->reenableusemode();
 
       // check if we are in ssl only mode
-      $ssl = $config->getValue($a_plugins['id'], 'ssl_only', '');
+      $ssl = $config->getValue('ssl_only');
       if (
          $ssl == "1"
             AND

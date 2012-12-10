@@ -377,7 +377,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       global $DB;
 
       $config = new PluginFusioninventoryConfig();
-      $retentiontime = $config->getValue($_SESSION["plugin_fusioninventory_moduleid"], 'delete_task', '');
+      $retentiontime = $config->getValue('delete_task');
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $sql = "SELECT * FROM `glpi_plugin_fusioninventory_taskjoblogs`
          WHERE  `date` < date_add(now(),interval -".$retentiontime." day)
