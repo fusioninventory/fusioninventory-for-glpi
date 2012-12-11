@@ -3470,7 +3470,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "last_fusioninventory_update",
                                  "datetime DEFAULT NULL");
          $migration->addKey($newTable,
-                            "plugin_fusinvsnmp_configsecurities_id");
+                            "plugin_fusioninventory_configsecurities_id");
          $migration->addKey($newTable,
                             "printers_id");
          $migration->addKey($newTable,
