@@ -4185,7 +4185,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
          // Update with mapping
          if (FieldExists($newTable, "Field")) {
-            $pFusinvsnmpNetworkPortLog = new PluginFusinvsnmpNetworkPortLog();
+//            $pfNetworkPortLog = new PluginFusioninventoryNetworkPortLog();
             $pfMapping = new PluginFusioninventoryMapping();
             $query = "SELECT * FROM `".$newTable."`
                GROUP BY `Field`";
