@@ -4770,7 +4770,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $profile = new Profile();
       $pFusioninventoryProfile = new PluginFusioninventoryProfile();
       $query = "SELECT * FROM `glpi_plugin_tracker_profiles`";
-      $result=$DB->query($query_select);
+      $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $profiledata = current($profile->find("`name`='".$data['name']."'", "", 1));
          if (!empty($profiledata)) {
