@@ -5348,7 +5348,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       Crontask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
    }
-   if (!$crontask->getFromDBbyName('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs')) {
+   if ($crontask->getFromDBbyName('PluginFusinvsnmpNetworkPortLog', 'cleannetworkportlogs')) {
       $crontask->delete($crontask->fields);
    }
    if (!$crontask->getFromDBbyName('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs')) {
