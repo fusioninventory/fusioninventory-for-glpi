@@ -4844,6 +4844,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $a_drop[] = 'glpi_plugin_fusinvsnmp_tmp_agents';
    $a_drop[] = 'glpi_plugin_fusinvsnmp_tmp_configs';
    $a_drop[] = 'glpi_plugin_fusinvsnmp_tmp_tasks';
+   $a_drop[] = 'glpi_plugin_tracker_tmp_connections';
+   $a_drop[] = 'glpi_plugin_tracker_tmp_netports';
+   $a_drop[] = 'glpi_plugin_tracker_walks';
    
    foreach ($a_drop as $droptable) {
       if (TableExists($droptable)) {
@@ -5316,7 +5319,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
 
 
-
+      
    /*
     * Update blacklist
     */
