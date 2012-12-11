@@ -677,6 +677,24 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $input['exceptions'] = exportArrayToDB(array());
       $agentmodule->add($input);
    }
+   
+   
+   
+   /*
+    * Add INVENTORY module if not present
+    */
+   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+      WHERE `modulename`='INVENTORY'";
+   $result = $DB->query($query);
+   if (!$DB->numrows($result)) {
+      $agentmodule = new PluginFusioninventoryAgentmodule;
+      $input = array();
+      $input['plugins_id'] = $plugins_id;
+      $input['modulename'] = "INVENTORY";
+      $input['is_active']  = 1;
+      $input['exceptions'] = exportArrayToDB(array());
+      $agentmodule->add($input);
+   }
 
   
 
