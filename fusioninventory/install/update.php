@@ -2090,7 +2090,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (!TableExists($newTable)) {
          $DB->query("CREATE TABLE `".$newTable."` (
                         `internal_id` varchar(255) NOT NULL DEFAULT '',
-                        PRIMARY KEY (`id`)
+                        PRIMARY KEY (`internal_id`)
                         ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
       }
          $migration->changeField($newTable,
@@ -2121,9 +2121,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "last_fusioninventory_update",
                                  "last_fusioninventory_update",
                                  "datetime DEFAULT NULL");
-
       $migration->migrationOneTable($newTable);
-
          $migration->addField($newTable,
                                  "internal_id",
                                  "varchar(255) NOT NULL DEFAULT ''");
