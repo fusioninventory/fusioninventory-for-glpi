@@ -2923,7 +2923,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "vlan",
                                  "tinyint(1) NOT NULL DEFAULT '0'");
          $migration->addKey($newTable,
-                            array("plugin_fusioninventory_snmpmodelmiboids", "plugin_fusioninventory_snmpmodelconstructdevices_id", "plugin_fusioninventory_mappings_id"),
+                            array("plugin_fusioninventory_snmpmodelmiboids_id", "plugin_fusioninventory_snmpmodelconstructdevices_id", "plugin_fusioninventory_mappings_id"),
                             "unicity",
                             "UNIQUE");
       $migration->migrationOneTable($newTable);
