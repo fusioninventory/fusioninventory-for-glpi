@@ -3966,7 +3966,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "FK_snmp_connection",
+                                 "plugin_fusioninventory_configsecurities_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_configsecurities_id",
+                                 "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
                                  "last_tracker_update",
