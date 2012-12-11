@@ -679,7 +679,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    }
 
   
-   pluginFusioninventoryUpdatemapping();
+
    
 
    /*
@@ -1204,8 +1204,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             "tablefield");
       $migration->migrationOneTable($newTable);
 
+      
+   pluginFusioninventoryUpdatemapping();
 
-
+   
    /*
     * Table glpi_plugin_fusioninventory_profiles
     */
