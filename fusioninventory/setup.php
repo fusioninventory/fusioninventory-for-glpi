@@ -156,6 +156,10 @@ function plugin_init_fusioninventory() {
             $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/config.form.php?itemtype=pluginfusioninventoryconfig&glpi_tab=1';
          }
 
+         $PLUGIN_HOOKS['autoinventory_information']['fusioninventory'] = array('Computer' =>
+                                          array('PluginFusioninventoryInventoryComputerComputer',
+                                                'showInfo'));
+         
          $PLUGIN_HOOKS['use_massive_action']['fusioninventory'] = 1;
          
          $PLUGIN_HOOKS['item_add']['fusioninventory'] = array('NetworkPort_NetworkPort'=>'plugin_item_add_fusinvsnmp');

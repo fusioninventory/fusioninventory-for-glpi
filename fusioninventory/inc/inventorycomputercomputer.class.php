@@ -116,65 +116,79 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
     *
     * @param type $computers_id
     */
-   function showForm($computers_id) {
-
-      $a_computerextend = current($this->find("`computers_id`='".$computers_id."'",
+   static function showInfo($item) {
+     
+      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $a_computerextend = current($pfInventoryComputerComputer->find(
+                                              "`computers_id`='".$item->getID()."'",
                                               "", 1));
       if (empty($a_computerextend)) {
-         $this->getEmpty();
-         $a_computerextend = $this->fields;
+         return;
       }
 
-      echo '<div align="center">';
-      echo '<table class="tab_cadre_fixe" style="margin: 0; margin-top: 5px;">';
+      echo '<table class="tab_glpi">';
       echo '<tr>';
-      echo '<th colspan="4">'.__('Advanced informations', 'fusioninventory').'</th>';
+      echo '<th colspan="2">'.__('FusionInventory', 'fusioninventory').'</th>';
       echo '</tr>';
 
       echo '<tr class="tab_bg_1">';
-      echo '<th colspan="2" width="50%">'.__('BIOS', 'fusioninventory').'</th>';
-      echo '<th colspan="2">'.__('Others').'</th>';
-      echo '</tr>';
-
-      echo '<tr class="tab_bg_1">';
-      echo '<td>'.__('Date').'&nbsp;:</td>';
-      echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
-      if (Html::convDate($a_computerextend['operatingsystem_installationdate']) == '') {
-         echo "<td colspan='2'></td>";
-      } else {
-         echo "<td>".__('Operating system')." - ".__('Installation')." (".strtolower(__('Date')).")&nbsp;:</td>";
-         echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
-      }
-      echo '</tr>';
-
-      echo '<tr class="tab_bg_1">';
-      echo '<td>'.__('Version').'&nbsp;:</td>';
-      echo '<td>'.$a_computerextend['bios_version'].'</td>';
-      if ($a_computerextend['winowner'] == '') {
-         echo "<td colspan='2'></td>";
-      } else {
-         echo '<td>'.__('Owner', 'fusioninventory').'&nbsp;:</td>';
-         echo '<td>'.$a_computerextend['winowner'].'</td>';
-      }
-      echo '</tr>';
-
-      echo '<tr class="tab_bg_1">';
-      echo '<td>'.__('Manufacturer').'&nbsp;:</td>';
       echo '<td>';
-      echo Dropdown::getDropdownName("glpi_manufacturers", 
-                                     $a_computerextend['bios_manufacturers_id']);
+      echo __('Last inventory', 'fusioninventory');
       echo '</td>';
-      if ($a_computerextend['wincompany'] == '') {
-         echo "<td colspan='2'></td>";
-      } else {
-         echo '<td>'.__('Company', 'fusioninventory').'&nbsp;:</td>';
-         echo '<td>'.$a_computerextend['wincompany'].'</td>';
-      }
+      echo '<td>';
+
+      echo '</td>';
       echo '</tr>';
+
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent->showInfoForComputer($item->getID());
+      
+      if ($a_computerextend['bios_date'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('Date du BIOS', 'fusioninventory').'</td>';
+         echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
+         echo '</tr>';
+      }
+
+      if ($a_computerextend['bios_version'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('Version du BIOS', 'fusioninventory').'</td>';
+         echo '<td>'.$a_computerextend['bios_version'].'</td>';
+         echo '</tr>';
+      }
+
+      if ($a_computerextend['bios_manufacturers_id'] > 0) {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('Manufacturer').'&nbsp;:</td>';
+         echo '<td>';
+         echo Dropdown::getDropdownName("glpi_manufacturers", 
+                                        $a_computerextend['bios_manufacturers_id']);
+         echo '</td>';
+         echo '</tr>';
+      }
+
+      if ($a_computerextend['operatingsystem_installationdate'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo "<td>".__('Operating system')." - ".__('Installation')." (".strtolower(__('Date')).")</td>";
+         echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
+         echo '</tr>';
+      }
+      
+      if ($a_computerextend['winowner'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('Owner', 'fusioninventory').'</td>';
+         echo '<td>'.$a_computerextend['winowner'].'</td>';
+         echo '</tr>';
+      }
+      
+      if ($a_computerextend['wincompany'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('Company', 'fusioninventory').'</td>';
+         echo '<td>'.$a_computerextend['wincompany'].'</td>';
+         echo '</tr>';
+      }
 
       echo '</table>';
-      echo '</div>';
-
    }
 
 

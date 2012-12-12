@@ -443,6 +443,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       if (count($agent) == '1') {
          $data = current($agent);
+         $this->getFromDB($data['id']);
          return $data['id'];
       }
       return false;
@@ -792,6 +793,24 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if (isset($this->oldvalues['token'])) {
          $key = array_search('token', $this->updates);
          unset($this->oldvalues['token']);
+      }
+   }
+   
+   
+   
+   function showInfoForComputer($computers_id) {
+      
+      if ($this->getAgentWithComputerid($computers_id)) {
+         
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('Useragent', 'fusioninventory').'</td>';
+         echo '<td>'.$this->fields['useragent'].'</td>';
+         echo '</tr>';
+         
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('FusionInventory tag', 'fusioninventory').'</td>';
+         echo '<td>'.$this->fields['tag'].'</td>';
+         echo '</tr>';
       }
    }
 }
