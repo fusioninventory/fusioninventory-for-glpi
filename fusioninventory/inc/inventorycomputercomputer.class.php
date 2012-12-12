@@ -136,7 +136,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo __('Last inventory', 'fusioninventory');
       echo '</td>';
       echo '<td>';
-
+      echo Html::convDateTime($a_computerextend['last_fusioninventory_update']);
       echo '</td>';
       echo '</tr>';
 

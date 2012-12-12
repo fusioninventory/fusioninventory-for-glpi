@@ -2126,73 +2126,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "comment",
                               "text COLLATE utf8_unicode_ci DEFAULT NULL");
       $migration->migrationOneTable($newTable);
-      
-      
 
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_inventorycomputerlibserialization
-    */
-      $newTable = "glpi_plugin_fusioninventory_inventorycomputerlibserialization";
-      $migration->renameTable("glpi_plugin_fusinvinventory_libserialization", $newTable);
-      if (!TableExists($newTable)) {
-         $DB->query("CREATE TABLE `".$newTable."` (
-                        `internal_id` varchar(255) NOT NULL DEFAULT '',
-                        PRIMARY KEY (`internal_id`)
-                        ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
-      }
-         $migration->changeField($newTable,
-                                 "internal_id",
-                                 "internal_id",
-                                 "varchar(255) NOT NULL DEFAULT ''");
-         $migration->changeField($newTable,
-                                 "computers_id",
-                                 "computers_id",
-                                 "int(11) DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "serialized_sections1",
-                                 "serialized_sections1",
-                                 "longtext DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "serialized_sections2",
-                                 "serialized_sections2",
-                                 "longtext DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "serialized_sections3",
-                                 "serialized_sections3",
-                                 "longtext DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "hash",
-                                 "hash",
-                                 "varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "last_fusioninventory_update",
-                                 "last_fusioninventory_update",
-                                 "datetime DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                                 "internal_id",
-                                 "varchar(255) NOT NULL DEFAULT ''");
-         $migration->addField($newTable,
-                                 "computers_id",
-                                 "int(11) DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "serialized_sections1",
-                                 "longtext DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "serialized_sections2",
-                                 "longtext DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "serialized_sections3",
-                                 "longtext DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "hash",
-                                 "varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "last_fusioninventory_update",
-                                 "datetime DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
 
 
    /*
@@ -2387,12 +2321,49 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                               "wincompany",
                               "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable,
+                              "last_fusioninventory_update",
+                              "datetime DEFAULT NULL");
+         $migration->addField($newTable,
+                              "serialized_inventory",
+                              "longtext DEFAULT NULL");
          $migration->addKey($newTable,
                              "computers_id");
-
+         $migration->addKey($newTable,
+                             "last_fusioninventory_update");
       $migration->migrationOneTable($newTable);
 
+      // Migrate libserialization
+      require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputercomputer.class.php");
+      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      if (TableExists('glpi_plugin_fusinvinventory_libserialization')) {
+         $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`";
+         $result=$DB->query($query);
+         while ($data = $DB->fetch_array($result)) {
+            $a_pfcomputer = array();
+            $a_pfcomputer = current($pfInventoryComputerComputer->find(
+                                                   "`computers_id`='".$data['computers_id']."'", 
+                                                   "", 1));
+            if (empty($a_pfcomputer)) {
+               // Add
+               if (countElementsInTable("glpi_computers", "`id`='".$data['computers_id']."'") > 0) {
+                  $input = array();
+                  $input['computers_id'] = $data['computers_id'];
+                  $input['last_fusioninventory_update'] = $data['last_fusioninventory_update'];
+                  $pfInventoryComputerComputer->add($input);
+               }               
+            } else {
+               // Update
+               $a_pfcomputer['last_fusioninventory_update'] = $data['last_fusioninventory_update'];
+               $pfInventoryComputerComputer->update($a_pfcomputer);
+            }
+         }
+      }
       
+
+      $migration->dropTable('glpi_plugin_fusinvinventory_libserialization');
+
+
       
    /*
     * Table glpi_plugin_fusioninventory_snmpmodeldevices

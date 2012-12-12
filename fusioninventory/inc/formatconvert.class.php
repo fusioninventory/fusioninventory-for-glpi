@@ -160,6 +160,7 @@ class PluginFusioninventoryFormatconvert {
                                         'OSINSTALLDATE' => 'operatingsystem_installationdate',
                                         'WINOWNER' => 'winowner',
                                         'WINCOMPANY' => 'wincompany'));
+      $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
       $a_inventory['fusioninventorycomputer'] = $array_tmp;
       if (!empty($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
          $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] 

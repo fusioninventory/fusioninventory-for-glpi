@@ -344,24 +344,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercriterias` (
 
 
 
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerlibserialization`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerlibserialization` (
-  `internal_id` varchar(255) NOT NULL DEFAULT '',
-  `computers_id` int(11) DEFAULT NULL,
-  `serialized_sections1` longtext DEFAULT NULL,
-  `serialized_sections2` longtext DEFAULT NULL,
-  `serialized_sections3` longtext DEFAULT NULL,
-  `hash` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `last_fusioninventory_update` datetime DEFAULT NULL,
-  PRIMARY KEY (`internal_id`),
-  KEY `computers_id` (`computers_id`),
-  KEY `last_fusioninventory_update` (`last_fusioninventory_update`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerblacklists`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerblacklists` (
@@ -404,8 +386,11 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
   `operatingsystem_installationdate` datetime DEFAULT NULL,
   `winowner` varchar(255) DEFAULT NULL,
   `wincompany` varchar(255) DEFAULT NULL,
+  `last_fusioninventory_update` datetime DEFAULT NULL,
+  `serialized_inventory` longtext DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `computers_id` (`computers_id`)
+  KEY `computers_id` (`computers_id`),
+  KEY `last_fusioninventory_update` (`last_fusioninventory_update`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
