@@ -166,13 +166,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                } else {
                   $a_devices[] = $child;
                }
-               foreach ($a_devices as $dchild) {
+//               foreach ($a_devices as $dchild) {
                  
-                  if ($dchild == "NETWORKING") {
+                  if ((string)$child->TYPE == "NETWORKING") {
                      $a_inventory = PluginFusioninventoryFormatconvert::networkequipmentInventoryTransformation($dchild);
 Toolbox::logInFile("NETWORK", print_r($a_inventory, true));               
 
-                  } else if ($dchild == "PRINTER") {
+                  } else if ((string)$child->TYPE == "PRINTER") {
                      $a_inventory = PluginFusioninventoryFormatconvert::printerInventoryTransformation($dchild);
                      
                   }
@@ -195,7 +195,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                         $errors .= $this->sendCriteria($this->arrayinventory['DEVICEID'], $a_inventory);
                         $nbDevices++;
                      }
-                  }
+//                  }
                }
                break;
 
