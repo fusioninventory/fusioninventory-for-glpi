@@ -2326,7 +2326,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "datetime DEFAULT NULL");
          $migration->addField($newTable,
                               "serialized_inventory",
-                              "longtext DEFAULT NULL");
+                              "blob");
          $migration->addKey($newTable,
                              "computers_id");
          $migration->addKey($newTable,

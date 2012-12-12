@@ -142,7 +142,11 @@ class PluginFusioninventoryInventoryComputerInventory {
 
       $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
       $a_computerinventory = $pfBlacklist->cleanBlacklist($a_computerinventory);
-      
+
+      $serialized = gzcompress(serialize($a_computerinventory));
+      $a_computerinventory['fusioninventorycomputer']['serialized_inventory'] = 
+               Toolbox::addslashes_deep($serialized);
+
       $this->arrayinventory = $a_computerinventory;
 
       $input = array();
