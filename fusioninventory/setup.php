@@ -82,8 +82,7 @@ function plugin_init_fusioninventory() {
 
       Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
                  array('addtabon' => array('Computer')));
-      Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer',
-                 array('addtabon' => array('Computer')));
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer');
       Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
 
          //Classes for rulesengine
