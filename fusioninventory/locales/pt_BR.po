@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2012-12-10 13:58+0100\n"
-"PO-Revision-Date: 2012-12-10 13:00+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2012-12-11 02:36+0000\n"
+"Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -443,15 +443,15 @@ msgstr "Opções de importação"
 
 #: inc/config.class.php:374
 msgid "Yes, manage with FusionInventory"
-msgstr ""
+msgstr "Sim, gerenciar com FusionInventory"
 
 #: inc/config.class.php:375
 msgid "No, manage only with FusionInventory"
-msgstr ""
+msgstr "Não, gerenciar somente com FusionInventory"
 
 #: inc/config.class.php:376
 msgid "No, manage only manually"
-msgstr ""
+msgstr "Não, gerenciar somente manualmente"
 
 #: inc/config.class.php:385 inc/config.class.php:395 inc/config.class.php:416
 #: inc/config.class.php:443
