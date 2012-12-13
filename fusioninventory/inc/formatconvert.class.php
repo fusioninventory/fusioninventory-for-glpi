@@ -449,6 +449,7 @@ class PluginFusioninventoryFormatconvert {
                   } else {
                      $array_tmp['have_usb'] = 0;
                   }
+                  unset($array_tmp['port']);
                   $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['name']));
 
                   if (isset($res_rule['_ignore_ocs_import']) AND $res_rule['_ignore_ocs_import'] == "1") {
