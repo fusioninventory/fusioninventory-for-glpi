@@ -491,7 +491,7 @@ echo "# testHardwareModifications\n";
          $query = "SELECT * FROM `glpi_items_deviceprocessors`
             WHERE `items_id`='".$items_id."'
                AND `itemtype`='Computer'
-               AND `specificity`='".$speed."'";
+               AND `frequency`='".$speed."'";
          $result=$DB->query($query);
          $this->assertEquals($DB->numrows($result), $nb, 'Difference of Processor speed '.$speed.' ['.$xmlFile.']');
       }
@@ -718,7 +718,7 @@ echo "# testHardwareModifications\n";
          $query = "SELECT * FROM `glpi_items_devicememories`
             WHERE `items_id`='".$items_id."'
                AND `itemtype`='Computer'
-               AND `specificity`='".$capacity."'";
+               AND `size`='".$capacity."'";
          $result=$DB->query($query);
          $this->assertEquals($DB->numrows($result), $nb, 'Difference of Memories capacity for capacity '.$capacity.' ['.$xmlFile.']');
       }
