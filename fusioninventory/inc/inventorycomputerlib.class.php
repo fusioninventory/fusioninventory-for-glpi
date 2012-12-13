@@ -1528,12 +1528,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       } else if ($pfConfig->getValue('import_monitor') == 2) {
          // Unique import
          $query = "SELECT * FROM `glpi_monitors`
+            LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_monitors`.`id`
             WHERE `name`='".$data['name']."'
                AND `manufacturers_id`='".$data['manufacturers_id']."'
                AND `serial`='".$data['serial']."'
                AND `comment`='".$data['comment']."'
                AND `is_global`='0'
                AND `entities_id`='".$data['entities_id']."'
+               AND `glpi_computers_items`.`itemtype`='Monitor'
+               AND `glpi_computers_items`.`id` IS NOT NULL
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -1598,10 +1601,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       } else if ($pfConfig->getValue('import_printer') == 2) {
          // Unique import
          $query = "SELECT * FROM `glpi_printers`
+            LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_printers`.`id`
             WHERE `name`='".$data['name']."'
                AND `serial`='".$data['serial']."'
                AND `is_global`='0'
                AND `entities_id`='".$data['entities_id']."'
+               AND `glpi_computers_items`.`itemtype`='Printer'
+               AND `glpi_computers_items`.`id` IS NOT NULL
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -1665,11 +1671,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       } else if ($pfConfig->getValue('import_peripheral') == 2) {
          // Unique import
          $query = "SELECT * FROM `glpi_peripherals`
+            LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_peripherals`.`id`
             WHERE `name`='".$data['name']."'
                AND `manufacturers_id`='".$data['manufacturers_id']."'
                AND `serial`='".$data['serial']."'
                AND `is_global`='0'
                AND `entities_id`='".$data['entities_id']."'
+               AND `glpi_computers_items`.`itemtype`='Monitor'
+               AND `glpi_computers_items`.`id` IS NOT NULL
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
