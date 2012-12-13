@@ -402,11 +402,82 @@ class PluginFusioninventoryFormatconvert {
       }
       
       // * MONITORS
-      
+      $a_inventory['monitor'] = array();
+      if ($pfConfig->getValue('import_monitor') > 0) {
+         if (isset($array['MONITORS'])) {
+            foreach ($array['MONITORS'] as $a_monitors) {
+               $array_tmp = $thisc->addValues($a_monitors, 
+                                              array( 
+                                                 'CAPTION'      => 'name', 
+                                                 'MANUFACTURER' => 'manufacturers_id', 
+                                                 'SERIAL'       => 'serial',
+                                                 'DESCRIPTION'  => 'comment'));
+               if (!($pfConfig->getValue('import_monitor') == 3
+                       && $array_tmp['serial'] == '')) {
+                  
+                  $a_inventory['monitor'][] = $array_tmp;
+               }
+            }
+         }
+      }
  
+      
       // * PRINTERS
+      $a_inventory['printer'] = array();
+      if ($pfConfig->getValue('import_printer') > 0) {
+         if (isset($array['PRINTERS'])) {
+            $rulecollection = new RuleDictionnaryPrinterCollection();
+            foreach ($array['PRINTERS'] as $a_printers) {
+               $array_tmp = $thisc->addValues($a_printers, 
+                                              array( 
+                                                 'NAME'         => 'name', 
+                                                 'PORT'         => 'port', 
+                                                 'SERIAL'       => 'serial'));
+               if (!($pfConfig->getValue('import_printer') == 3
+                       && $array_tmp['serial'] == '')) {
+                 
+                  if (strstr($array_tmp['port'], "USB")) {
+                     $array_tmp['have_usb'] = 1;
+                  } else {
+                     $array_tmp['have_usb'] = 0;
+                  }
+                  $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['name']));
+
+                  if (isset($res_rule['_ignore_ocs_import']) AND $res_rule['_ignore_ocs_import'] == "1") {
+                     // Ignrore import printer
+                  } else {
+                     $a_inventory['printer'][] = $array_tmp;
+                  }
+               }
+            }
+         }
+      }
       
       
+      
+      // * PERIPHERAL
+      $a_inventory['peripheral'] = array();
+      if ($pfConfig->getValue('import_monitor') > 0) {
+         if (isset($array['USBDEVICES'])) {
+            foreach ($array['USBDEVICES'] as $a_monitors) {
+               $array_tmp = $thisc->addValues($a_monitors, 
+                                              array( 
+                                                 'NAME'      => 'name', 
+                                                 'MANUFACTURER' => 'manufacturers_id', 
+                                                 'SERIAL'       => 'serial',
+                                                 'PRODUCTNAME'  => 'productname'));
+               if ($array_tmp['productname'] != '') {
+                  $array_tmp['name'] = $array_tmp['productname'];
+               }
+               unset($array_tmp['productname']);
+               if (!($pfConfig->getValue('import_peripheral') == 3
+                       && $array_tmp['serial'] == '')) {
+                  
+                  $a_inventory['peripheral'][] = $array_tmp;
+               }
+            }
+         }
+      }
       
       
       // * NETWORKS
