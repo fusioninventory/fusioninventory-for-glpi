@@ -64,7 +64,8 @@ class PluginFusioninventoryFormatconvert {
       $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
       // Hack for some sections
          $a_fields = array('SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES', 'MEMORIES',
-                           'NETWORKS', 'SOFTWARE', 'USERS', 'VIRTUALMACHINES', 'ANTIVIRUS');
+                           'NETWORKS', 'SOFTWARE', 'USERS', 'VIRTUALMACHINES', 'ANTIVIRUS',
+                           'MONITORS', 'PRINTERS', 'USBDEVICES');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
