@@ -481,14 +481,16 @@ echo "# testHardwareModifications\n";
       }
 
       $query = "SELECT * FROM `glpi_items_deviceprocessors`
-         WHERE `computers_id`='".$items_id."' ";
+         WHERE `items_id`='".$items_id."' 
+            AND `itemtype`='Computer'";
       $result=$DB->query($query);
 
       $this->assertEquals($DB->numrows($result), count($a_cpuXML), 'Difference of CPUs, created '.$DB->numrows($result).' times instead '.count($a_cpuXML).' ['.$xmlFile.']');
 
       foreach ($a_speed as $speed=>$nb) {
          $query = "SELECT * FROM `glpi_items_deviceprocessors`
-            WHERE `computers_id`='".$items_id."'
+            WHERE `items_id`='".$items_id."'
+               AND `itemtype`='Computer'
                AND `specificity`='".$speed."'";
          $result=$DB->query($query);
          $this->assertEquals($DB->numrows($result), $nb, 'Difference of Processor speed '.$speed.' ['.$xmlFile.']');
@@ -581,8 +583,9 @@ echo "# testHardwareModifications\n";
          }
       }
 
-      $query = "SELECT * FROM `glpi_computers_devicecontrols`
-         WHERE `computers_id`='".$items_id."' ";
+      $query = "SELECT * FROM `glpi_items_devicecontrols`
+         WHERE `items_id`='".$items_id."' 
+            AND `itemtype`='Computer'";
       $result=$DB->query($query);
 
       $this->assertEquals($DB->numrows($result), count($a_controllerXML), 'Difference of Controllers, created '.$DB->numrows($result).' times instead '.count($a_controllerXML).' ['.$xmlFile.']');
@@ -617,7 +620,8 @@ echo "# testHardwareModifications\n";
       }
 
       $query = "SELECT * FROM `glpi_items_devicesoundcards`
-         WHERE `computers_id`='".$items_id."' ";
+         WHERE `items_id`='".$items_id."' 
+            AND `itemtype`='Computer'";
       $result=$DB->query($query);
 
       $this->assertEquals($DB->numrows($result), count($a_soundXML), 'Difference of Sounds, created '.$DB->numrows($result).' times instead '.count($a_soundXML).' ['.$xmlFile.']');
@@ -652,7 +656,8 @@ echo "# testHardwareModifications\n";
       }
 
       $query = "SELECT * FROM `glpi_items_devicegraphiccards`
-         WHERE `computers_id`='".$items_id."' ";
+         WHERE `items_id`='".$items_id."' 
+            AND `itemtype`='Computer'";
       $result=$DB->query($query);
 
       $this->assertEquals($DB->numrows($result), count($a_videoXML), 'Difference of Videos, created '.$DB->numrows($result).' times instead '.count($a_videoXML).' ['.$xmlFile.']');
@@ -703,14 +708,16 @@ echo "# testHardwareModifications\n";
       }
 
       $query = "SELECT * FROM `glpi_items_devicememories`
-         WHERE `computers_id`='".$items_id."' ";
+         WHERE `items_id`='".$items_id."' 
+            AND `itemtype`='Computer'";
       $result=$DB->query($query);
 
       $this->assertEquals($DB->numrows($result), count($a_memoryXML), 'Difference of Memories, created '.$DB->numrows($result).' times instead '.count($a_memoryXML).' ['.$xmlFile.']');
 
       foreach ($a_capacity as $capacity=>$nb) {
          $query = "SELECT * FROM `glpi_items_devicememories`
-            WHERE `computers_id`='".$items_id."'
+            WHERE `items_id`='".$items_id."'
+               AND `itemtype`='Computer'
                AND `specificity`='".$capacity."'";
          $result=$DB->query($query);
          $this->assertEquals($DB->numrows($result), $nb, 'Difference of Memories capacity for capacity '.$capacity.' ['.$xmlFile.']');
