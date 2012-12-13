@@ -505,6 +505,7 @@ class PluginFusioninventoryFormatconvert {
                                                     'IPADDRESS6'  => 'ip',
                                                     'VIRTUALDEV'  => 'virtualdev',
                                                     'IPSUBNET'    => 'subnet'));
+                  $array_tmp['mac'] = strtolower($array_tmp['mac']);
                   if (isset($a_networknames[$array_tmp['name']])) {
                      if (isset($array_tmp['ip'])) {
                         $a_networknames[$array_tmp['name']]['ipaddress'][] = $array_tmp['ip'];
