@@ -480,14 +480,14 @@ echo "# testHardwareModifications\n";
 
       }
 
-      $query = "SELECT * FROM `glpi_computers_deviceprocessors`
+      $query = "SELECT * FROM `glpi_items_deviceprocessors`
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
 
       $this->assertEquals($DB->numrows($result), count($a_cpuXML), 'Difference of CPUs, created '.$DB->numrows($result).' times instead '.count($a_cpuXML).' ['.$xmlFile.']');
 
       foreach ($a_speed as $speed=>$nb) {
-         $query = "SELECT * FROM `glpi_computers_deviceprocessors`
+         $query = "SELECT * FROM `glpi_items_deviceprocessors`
             WHERE `computers_id`='".$items_id."'
                AND `specificity`='".$speed."'";
          $result=$DB->query($query);
@@ -616,7 +616,7 @@ echo "# testHardwareModifications\n";
          }
       }
 
-      $query = "SELECT * FROM `glpi_computers_devicesoundcards`
+      $query = "SELECT * FROM `glpi_items_devicesoundcards`
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
 
@@ -651,7 +651,7 @@ echo "# testHardwareModifications\n";
          }
       }
 
-      $query = "SELECT * FROM `glpi_computers_devicegraphiccards`
+      $query = "SELECT * FROM `glpi_items_devicegraphiccards`
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
 
@@ -702,14 +702,14 @@ echo "# testHardwareModifications\n";
          }
       }
 
-      $query = "SELECT * FROM `glpi_computers_devicememories`
+      $query = "SELECT * FROM `glpi_items_devicememories`
          WHERE `computers_id`='".$items_id."' ";
       $result=$DB->query($query);
 
       $this->assertEquals($DB->numrows($result), count($a_memoryXML), 'Difference of Memories, created '.$DB->numrows($result).' times instead '.count($a_memoryXML).' ['.$xmlFile.']');
 
       foreach ($a_capacity as $capacity=>$nb) {
-         $query = "SELECT * FROM `glpi_computers_devicememories`
+         $query = "SELECT * FROM `glpi_items_devicememories`
             WHERE `computers_id`='".$items_id."'
                AND `specificity`='".$capacity."'";
          $result=$DB->query($query);
