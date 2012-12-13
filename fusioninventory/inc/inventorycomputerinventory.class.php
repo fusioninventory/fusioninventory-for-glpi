@@ -94,6 +94,11 @@ class PluginFusioninventoryInventoryComputerInventory {
             if (isset($arrayinventory['CONTENT']['HARDWARE']['OSVERSION'])) {
                $inputos['VERSION']  = $arrayinventory['CONTENT']['HARDWARE']['OSVERSION'];
             }
+            if (isset($arrayinventory['CONTENT']['SOFTWARES']['VERSION'])) {
+               $temparray = $arrayinventory['CONTENT']['SOFTWARES'];
+               $arrayinventory['CONTENT']['SOFTWARES'] = array();
+               $arrayinventory['CONTENT']['SOFTWARES'][] = $temparray;
+            }
             $arrayinventory['CONTENT']['SOFTWARES'][] = $inputos;
          }
          
