@@ -1488,7 +1488,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       
       $computer_Item = new Computer_Item();
       $monitor       = new Monitor();
-      $pfConfig      = new PluginFusinvdeployConfig();
+      $pfConfig      = new PluginFusioninventoryConfig();
       
       $monitors_id = 0;
       if ($pfConfig->getValue('import_monitor') == 1) {
@@ -1557,7 +1557,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       
       $computer_Item = new Computer_Item();
       $printer       = new Printer();
-      $pfConfig      = new PluginFusinvdeployConfig();
+      $pfConfig      = new PluginFusioninventoryConfig();
       
       $printers_id = 0;
       if ($pfConfig->getValue('import_printer') == 1) {
@@ -1620,7 +1620,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       
       $computer_Item = new Computer_Item();
       $peripheral    = new Peripheral();
-      $pfConfig      = new PluginFusinvdeployConfig();
+      $pfConfig      = new PluginFusioninventoryConfig();
       
       $peripherals_id = 0;
       if ($pfConfig->getValue('import_peripheral') == 1) {
