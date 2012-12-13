@@ -821,7 +821,7 @@ echo "# testHardwareModifications\n";
       $soft = array();
       foreach ($xml->CONTENT->SOFTWARES as $child) {
          if (!isset($child->VERSION)) {
-            $child->VERSION = "N/A";
+            $child->VERSION = "";
          }
          if (isset($child->NAME)) {
             if (!isset($soft[strtolower((string)$child->NAME."-".(string)$child->VERSION)])) {
@@ -859,7 +859,7 @@ echo "# testHardwareModifications\n";
       // Verify fields in GLPI
       foreach($xml->CONTENT->SOFTWARES as $child) {
          if (!isset($child->VERSION)) {
-            $child->VERSION = 'N/A';
+            $child->VERSION = '';
          }
 
          $name = '';
