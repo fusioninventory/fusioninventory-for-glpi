@@ -140,6 +140,11 @@ class PluginFusioninventoryFormatconvert {
                                         'computermodels_id' => 'computermodels_id',
                                         'serial' => 'serial',
                                         'computertypes_id' => 'computertypes_id'));
+      if ($array_tmp['operatingsystemservicepacks_id'] == ''
+              && isset($array['HARDWARE']['OSCOMMENTS'])
+              && $array['HARDWARE']['OSCOMMENTS'] != '') {
+         $array_tmp['operatingsystemservicepacks_id'] = $array['HARDWARE']['OSCOMMENTS'];
+      }
       if (isset($array_tmp['users_id'])) {
          $query = "SELECT `id`
                    FROM `glpi_users`
