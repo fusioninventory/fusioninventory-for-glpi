@@ -123,6 +123,8 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
                } else {
                   $construct .= ' DEFAULT NULL';
                }
+            } else if ($data['Type'] == 'blob') {
+
             } else {
                if ((strstr($data['Type'], "char")
                        OR $data['Type'] == 'datetime'

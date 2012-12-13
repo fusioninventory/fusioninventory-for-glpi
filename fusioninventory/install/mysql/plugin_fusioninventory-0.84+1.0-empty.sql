@@ -387,7 +387,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
   `winowner` varchar(255) DEFAULT NULL,
   `wincompany` varchar(255) DEFAULT NULL,
   `last_fusioninventory_update` datetime DEFAULT NULL,
-  `serialized_inventory` longtext DEFAULT NULL,
+  `serialized_inventory` blob,
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`),
   KEY `last_fusioninventory_update` (`last_fusioninventory_update`)
