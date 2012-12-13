@@ -957,6 +957,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
          }
       
+      $entities_id = $_SESSION["plugin_fusinvinventory_entity"];
       // * Monitors
          if ($pfConfig->getValue("import_monitor") != 0) {
             $db_monitors = array();
@@ -970,7 +971,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         FROM `glpi_computers_items`
                      LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
                      WHERE `itemtype`='Monitor'
-                        AND `computers_id`='".$items_id."'";
+                        AND `computers_id`='".$items_id."'
+                        AND `entities_id`='".$entities_id."'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 0) {
@@ -992,7 +994,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         FROM `glpi_computers_items`
                      LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
                      WHERE `itemtype`='Monitor'
-                        AND `computers_id`='".$items_id."'";
+                        AND `computers_id`='".$items_id."'
+                        AND `entities_id`='".$entities_id."'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 1) {
@@ -1014,7 +1017,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         FROM `glpi_computers_items`
                      LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
                      WHERE `itemtype`='Monitor'
-                        AND `computers_id`='".$items_id."'";
+                        AND `computers_id`='".$items_id."'
+                        AND `entities_id`='".$entities_id."'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['serial'] == ''
@@ -1034,6 +1038,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             
             if (count($db_monitors) == 0) {
                foreach ($a_computerinventory['monitor'] as $a_monitor) {
+                  $a_monitor['entities_id'] = $entities_id;
                   $this->addMonitor($a_monitor, $items_id, $no_history);
                }
             } else {
@@ -1061,6 +1066,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   }
                   if (count($a_computerinventory['monitor']) != 0) {
                      foreach($a_computerinventory['monitor'] as $a_monitor) {
+                        $a_monitor['entities_id'] = $entities_id;
                         $this->addMonitor($a_monitor, $items_id, $no_history);
                      }
                   }
@@ -1081,7 +1087,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         FROM `glpi_computers_items`
                      LEFT JOIN `glpi_printers` ON `items_id`=`glpi_printers`.`id`
                      WHERE `itemtype`='Printer'
-                        AND `computers_id`='".$items_id."'";
+                        AND `computers_id`='".$items_id."'
+                        AND `entities_id`='".$entities_id."'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 0) {
@@ -1102,7 +1109,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         FROM `glpi_computers_items`
                      LEFT JOIN `glpi_printers` ON `items_id`=`glpi_printers`.`id`
                      WHERE `itemtype`='Printer'
-                        AND `computers_id`='".$items_id."'";
+                        AND `computers_id`='".$items_id."'
+                        AND `entities_id`='".$entities_id."'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 1) {
@@ -1123,7 +1131,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         FROM `glpi_computers_items`
                      LEFT JOIN `glpi_printers` ON `items_id`=`glpi_printers`.`id`
                      WHERE `itemtype`='Printer'
-                        AND `computers_id`='".$items_id."'";
+                        AND `computers_id`='".$items_id."'
+                        AND `entities_id`='".$entities_id."'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['serial'] == ''
@@ -1143,6 +1152,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             
             if (count($db_printers) == 0) {
                foreach ($a_computerinventory['printer'] as $a_printer) {
+                  $a_printer['entities_id'] = $entities_id;
                   $this->addPrinter($a_printer, $items_id, $no_history);
                }
             } else {
@@ -1171,6 +1181,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   }
                   if (count($a_computerinventory['printer']) != 0) {
                      foreach($a_computerinventory['printer'] as $a_printer) {
+                        $a_printer['entities_id'] = $entities_id;
                         $this->addPrinter($a_printer, $items_id, $no_history);
                      }
                   }
@@ -1191,7 +1202,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         FROM `glpi_computers_items`
                      LEFT JOIN `glpi_peripherals` ON `items_id`=`glpi_peripherals`.`id`
                      WHERE `itemtype`='Peripheral'
-                        AND `computers_id`='".$items_id."'";
+                        AND `computers_id`='".$items_id."'
+                        AND `entities_id`='".$entities_id."'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 0) {
@@ -1213,7 +1225,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         FROM `glpi_computers_items`
                      LEFT JOIN `glpi_peripherals` ON `items_id`=`glpi_peripherals`.`id`
                      WHERE `itemtype`='Peripheral'
-                        AND `computers_id`='".$items_id."'";
+                        AND `computers_id`='".$items_id."'
+                        AND `entities_id`='".$entities_id."'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 1) {
@@ -1235,7 +1248,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         FROM `glpi_computers_items`
                      LEFT JOIN `glpi_peripherals` ON `items_id`=`glpi_peripherals`.`id`
                      WHERE `itemtype`='Peripheral'
-                        AND `computers_id`='".$items_id."'";
+                        AND `computers_id`='".$items_id."'
+                        AND `entities_id`='".$entities_id."'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['serial'] == ''
@@ -1255,6 +1269,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             
             if (count($db_peripherals) == 0) {
                foreach ($a_computerinventory['peripheral'] as $a_peripheral) {
+                  $a_peripheral['entities_id'] = $entities_id;
                   $this->addPeripheral($a_peripheral, $items_id, $no_history);
                }
             } else {
@@ -1282,6 +1297,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   }
                   if (count($a_computerinventory['peripheral']) != 0) {
                      foreach($a_computerinventory['peripheral'] as $a_peripheral) {
+                        $a_peripheral['entities_id'] = $entities_id;
                         $this->addPeripheral($a_peripheral, $items_id, $no_history);
                      }
                   }
@@ -1499,6 +1515,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                AND `serial`='".$data['serial']."'
                AND `comment`='".$data['comment']."'
                AND `is_global`='1'
+               AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -1516,6 +1533,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                AND `serial`='".$data['serial']."'
                AND `comment`='".$data['comment']."'
                AND `is_global`='0'
+               AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -1533,6 +1551,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                AND `serial`='".$data['serial']."'
                AND `comment`='".$data['comment']."'
                AND `is_global`='0'
+               AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -1566,6 +1585,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             WHERE `name`='".$data['name']."'
                AND `serial`='".$data['serial']."'
                AND `is_global`='1'
+               AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -1581,6 +1601,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             WHERE `name`='".$data['name']."'
                AND `serial`='".$data['serial']."'
                AND `is_global`='0'
+               AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -1596,6 +1617,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             WHERE `name`='".$data['name']."'
                AND `serial`='".$data['serial']."'
                AND `is_global`='0'
+               AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -1630,6 +1652,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                AND `manufacturers_id`='".$data['manufacturers_id']."'
                AND `serial`='".$data['serial']."'
                AND `is_global`='1'
+               AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -1646,6 +1669,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                AND `manufacturers_id`='".$data['manufacturers_id']."'
                AND `serial`='".$data['serial']."'
                AND `is_global`='0'
+               AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -1662,6 +1686,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                AND `manufacturers_id`='".$data['manufacturers_id']."'
                AND `serial`='".$data['serial']."'
                AND `is_global`='0'
+               AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
