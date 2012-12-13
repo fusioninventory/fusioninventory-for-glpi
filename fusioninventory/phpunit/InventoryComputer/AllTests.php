@@ -784,7 +784,7 @@ echo "# testHardwareModifications\n";
                   AND `mac`='".(string)$child->MACADDR."'";
                $result=$DB->query($query);
                $data = $DB->fetch_array($result);
-               $this->assertEquals($data['mac'], (string)$child->MACADDR, 'Network port macaddress not right inserted, have '.$data['mac'].' instead '.(string)$child->MACADDR.' ['.$xmlFile.']');
+               $this->assertEquals($data['mac'], strtolower((string)$child->MACADDR), 'Network port macaddress not right inserted, have '.$data['mac'].' instead '.(string)$child->MACADDR.' ['.$xmlFile.']');
             }
          }
       }
