@@ -792,7 +792,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $idtmp = $data['id'];
                   unset($data['id']);
                   if (is_null($data['mac'])) {
-                     unset($data['mac']);
+                     $data['mac'] = '';
                   }
                   $data = Toolbox::addslashes_deep($data);
                   $data = array_map('strtolower', $data);
