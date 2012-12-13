@@ -311,18 +311,20 @@ class PluginFusioninventoryFormatconvert {
       if ($pfConfig->getValue('component_processor') == 1) {
          if (isset($array['CPUS'])) {
             foreach ($array['CPUS'] as $a_cpus) {
-               $array_tmp = $thisc->addValues($a_cpus, 
-                                              array( 
-                                                 'SPEED'        => 'frequence', 
-                                                 'MANUFACTURER' => 'manufacturers_id', 
-                                                 'SERIAL'       => 'serial',
-                                                 'NAME'         => 'designation'));
-               if ($array_tmp['designation'] == ''
-                       && isset($a_cpus['TYPE'])) {
-                  $array_tmp['designation'] = $a_cpus['TYPE'];
+               if (count($a_cpus) > 0) {
+                  $array_tmp = $thisc->addValues($a_cpus, 
+                                                 array( 
+                                                    'SPEED'        => 'frequence', 
+                                                    'MANUFACTURER' => 'manufacturers_id', 
+                                                    'SERIAL'       => 'serial',
+                                                    'NAME'         => 'designation'));
+                  if ($array_tmp['designation'] == ''
+                          && isset($a_cpus['TYPE'])) {
+                     $array_tmp['designation'] = $a_cpus['TYPE'];
+                  }
+                  $array_tmp['frequency'] = $array_tmp['frequence'];
+                  $a_inventory['processor'][] = $array_tmp;
                }
-               $array_tmp['frequency'] = $array_tmp['frequence'];
-               $a_inventory['processor'][] = $array_tmp;
             }
          }
       }
