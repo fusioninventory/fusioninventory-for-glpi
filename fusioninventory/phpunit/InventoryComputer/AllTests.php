@@ -994,7 +994,7 @@ echo "# testHardwareModifications\n";
          }
          if (isset($child->WORKGROUP)) {
             $Domain = new Domain;
-            $this->assertEquals($Computer->fields['domains_id'], $Domain->import(array('name'=>(string)$child->WORKGROUP)), 'Difference of Hardware domain, have '.$Computer->fields['domains_id'].' instead '.$Domain->import(array('name'=>(string)$child->WORKGROUP)).' ['.$xmlFile.']');
+            $this->assertEquals($Computer->fields['domains_id'], Dropdown::importExternal('Domain', (string)$child->WORKGROUP), 'Difference of Hardware domain, have '.$Computer->fields['domains_id'].' instead '.Dropdown::importExternal('Domain', (string)$child->WORKGROUP).' ['.$xmlFile.']');
          }
          if (isset($child->OSCOMMENTS)) {
             if (strstr($child->OSCOMMENTS, 'Service Pack')) {
