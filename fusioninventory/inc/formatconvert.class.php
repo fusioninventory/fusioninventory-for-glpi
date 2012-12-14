@@ -395,19 +395,21 @@ class PluginFusioninventoryFormatconvert {
                                                     'SPEED'        => 'frequence', 
                                                     'TYPE'         => 'devicememorytypes_id',
                                                     'SERIALNUMBER' => 'serial'));
-                  $array_tmp['designation'] = "";
-                  if (isset($a_memories["TYPE"]) 
-                          && $a_memories["TYPE"]!="Empty Slot" 
-                          && $a_memories["TYPE"] != "Unknown") {
-                     $array_tmp["designation"] = $a_memories["TYPE"];
-                  }
-                  if (isset($a_memories["DESCRIPTION"])) {
-                     if (!empty($array_tmp["designation"])) {
-                        $array_tmp["designation"].=" - ";
+                  if ($array_tmp['$size'] > 0) {
+                     $array_tmp['designation'] = "";
+                     if (isset($a_memories["TYPE"]) 
+                             && $a_memories["TYPE"]!="Empty Slot" 
+                             && $a_memories["TYPE"] != "Unknown") {
+                        $array_tmp["designation"] = $a_memories["TYPE"];
                      }
-                     $array_tmp["designation"] .= $a_memories["DESCRIPTION"];
+                     if (isset($a_memories["DESCRIPTION"])) {
+                        if (!empty($array_tmp["designation"])) {
+                           $array_tmp["designation"].=" - ";
+                        }
+                        $array_tmp["designation"] .= $a_memories["DESCRIPTION"];
+                     }
+                     $a_inventory['memory'][] = $array_tmp;
                   }
-                  $a_inventory['memory'][] = $array_tmp;
                }
             }
          }
