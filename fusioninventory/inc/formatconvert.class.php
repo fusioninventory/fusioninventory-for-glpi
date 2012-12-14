@@ -395,7 +395,7 @@ class PluginFusioninventoryFormatconvert {
                                                     'SPEED'        => 'frequence', 
                                                     'TYPE'         => 'devicememorytypes_id',
                                                     'SERIALNUMBER' => 'serial'));
-                  if ($array_tmp['$size'] > 0) {
+                  if ($array_tmp['size'] > 0) {
                      $array_tmp['designation'] = "";
                      if (isset($a_memories["TYPE"]) 
                              && $a_memories["TYPE"]!="Empty Slot" 
