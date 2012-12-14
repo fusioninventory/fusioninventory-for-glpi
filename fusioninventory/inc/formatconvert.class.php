@@ -311,7 +311,9 @@ class PluginFusioninventoryFormatconvert {
       if ($pfConfig->getValue('component_processor') == 1) {
          if (isset($array['CPUS'])) {
             foreach ($array['CPUS'] as $a_cpus) {
-               if (is_array($a_cpus)) {
+               if (is_array($a_cpus)
+                       && (isset($a_cpus['NAME'])
+                        || isset($a_cpus['TYPE']))) {
                   $array_tmp = $thisc->addValues($a_cpus, 
                                                  array( 
                                                     'SPEED'        => 'frequence', 
