@@ -690,60 +690,63 @@ class PluginFusioninventoryFormatconvert {
                                            'PUBLISHER'   => 'manufacturers_id', 
                                            'NAME'        => 'name', 
                                            'VERSION'     => 'version'));
-         if (count($array_tmp) > 0) {
-            if ($array_tmp['manufacturers_id'] != '') {
-               // Replace Manufacturer::processName
-               $output = array();
-               $output = $rulecollection->processAllRules(array("name" => stripslashes($array_tmp['manufacturers_id'])),
-                                                                $output, array());
-               if (isset($output["name"])) {
-                  $array_tmp['manufacturers_id'] = $output["name"];
-               }
-            } else {
-               $array_tmp['manufacturers_id'] = 0;
-            }
-
-            $res_rule = $rulecollection->processAllRules(array(
-                                                            "name"         => $array_tmp['name'],
-                                                            "manufacturer" => $array_tmp['manufacturers_id'],
-                                                            "old_version"  => $array_tmp['version'],
-                                                            "entities_id"  => $entities_id_software));
-            if (isset($res_rule['_ignore_ocs_import']) AND $res_rule['_ignore_ocs_import'] == "1") {
-
-            } else {
-               if (isset($res_rule["name"])) {
-                  $array_tmp['name'] = $res_rule["name"];
-               }
-               if (isset($res_rule["version"]) && $res_rule["version"]!= '') {
-                  $array_tmp['version'] = $res_rule["version"];
-               }
-               if (isset($res_rule["manufacturer"])) {
-                  $array_tmp['manufacturers_id'] = $res_rule["manufacturer"];
-               } else if ($array_tmp['manufacturers_id'] != ''
-                       && $array_tmp['manufacturers_id'] != '0') {
-                  if (!isset($this->manufacturer_cache[$array_tmp['manufacturers_id']])) {
-                     $new_value = Dropdown::importExternal('Manufacturer',
-                                                           $array_tmp['manufacturers_id']);
-                     $this->manufacturer_cache[$array_tmp['manufacturers_id']] = $new_value;
+         if (!(!isset($array_tmp['name'])
+                 || $array_tmp['name'] == '')) {
+            if (count($array_tmp) > 0) {
+               if ($array_tmp['manufacturers_id'] != '') {
+                  // Replace Manufacturer::processName
+                  $output = array();
+                  $output = $rulecollection->processAllRules(array("name" => stripslashes($array_tmp['manufacturers_id'])),
+                                                                   $output, array());
+                  if (isset($output["name"])) {
+                     $array_tmp['manufacturers_id'] = $output["name"];
                   }
-                  $array_tmp['manufacturers_id'] = $this->manufacturer_cache[$array_tmp['manufacturers_id']];
                } else {
                   $array_tmp['manufacturers_id'] = 0;
                }
-               if (isset($res_rule['new_entities_id'])) {
-                  $array_tmp['entities_id'] = $res_rule['new_entities_id'];
-               }
-               if (!isset($array_tmp['entities_id'])
-                       || $array_tmp['entities_id'] == '') {
-                  $array_tmp['entities_id'] = $entities_id_software;
-               }
-               if (!isset($array_tmp['version'])) {
-                  $array_tmp['version'] = "";
-               }
-               $array_tmp['is_template'] = 0;
-               $array_tmp['is_deleted'] = 0;
-               if (!isset($a_inventory['software'][$array_tmp['name']."$$$$".$array_tmp['version']])) {
-                  $a_inventory['software'][$array_tmp['name']."$$$$".$array_tmp['version']] = $array_tmp;
+
+               $res_rule = $rulecollection->processAllRules(array(
+                                                               "name"         => $array_tmp['name'],
+                                                               "manufacturer" => $array_tmp['manufacturers_id'],
+                                                               "old_version"  => $array_tmp['version'],
+                                                               "entities_id"  => $entities_id_software));
+               if (isset($res_rule['_ignore_ocs_import']) AND $res_rule['_ignore_ocs_import'] == "1") {
+
+               } else {
+                  if (isset($res_rule["name"])) {
+                     $array_tmp['name'] = $res_rule["name"];
+                  }
+                  if (isset($res_rule["version"]) && $res_rule["version"]!= '') {
+                     $array_tmp['version'] = $res_rule["version"];
+                  }
+                  if (isset($res_rule["manufacturer"])) {
+                     $array_tmp['manufacturers_id'] = $res_rule["manufacturer"];
+                  } else if ($array_tmp['manufacturers_id'] != ''
+                          && $array_tmp['manufacturers_id'] != '0') {
+                     if (!isset($this->manufacturer_cache[$array_tmp['manufacturers_id']])) {
+                        $new_value = Dropdown::importExternal('Manufacturer',
+                                                              $array_tmp['manufacturers_id']);
+                        $this->manufacturer_cache[$array_tmp['manufacturers_id']] = $new_value;
+                     }
+                     $array_tmp['manufacturers_id'] = $this->manufacturer_cache[$array_tmp['manufacturers_id']];
+                  } else {
+                     $array_tmp['manufacturers_id'] = 0;
+                  }
+                  if (isset($res_rule['new_entities_id'])) {
+                     $array_tmp['entities_id'] = $res_rule['new_entities_id'];
+                  }
+                  if (!isset($array_tmp['entities_id'])
+                          || $array_tmp['entities_id'] == '') {
+                     $array_tmp['entities_id'] = $entities_id_software;
+                  }
+                  if (!isset($array_tmp['version'])) {
+                     $array_tmp['version'] = "";
+                  }
+                  $array_tmp['is_template'] = 0;
+                  $array_tmp['is_deleted'] = 0;
+                  if (!isset($a_inventory['software'][$array_tmp['name']."$$$$".$array_tmp['version']])) {
+                     $a_inventory['software'][$array_tmp['name']."$$$$".$array_tmp['version']] = $array_tmp;
+                  }
                }
             }
          }
