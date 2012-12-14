@@ -417,6 +417,7 @@ class PluginFusioninventoryFormatconvert {
       $a_inventory['monitor'] = array();
       if ($pfConfig->getValue('import_monitor') > 0) {
          if (isset($array['MONITORS'])) {
+            $a_serialMonitor = array();
             foreach ($array['MONITORS'] as $a_monitors) {
                $array_tmp = $thisc->addValues($a_monitors, 
                                               array( 
@@ -426,8 +427,16 @@ class PluginFusioninventoryFormatconvert {
                                                  'DESCRIPTION'  => 'comment'));
                if (!($pfConfig->getValue('import_monitor') == 3
                        && $array_tmp['serial'] == '')) {
-                  
-                  $a_inventory['monitor'][] = $array_tmp;
+                  $add = 1;
+                  if (isset($array_tmp['serial'])
+                          && $array_tmp['serial'] != ''
+                          && isset($a_serialMonitor[$array_tmp['serial']])) {
+                     $add = 0;
+                  }
+                  if ($add == 1) {
+                     $a_inventory['monitor'][] = $array_tmp;
+                     $a_serialMonitor[$array_tmp['serial']] = 1;
+                  }
                }
             }
          }
