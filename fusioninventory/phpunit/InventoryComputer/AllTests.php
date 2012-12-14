@@ -747,19 +747,23 @@ echo "# testHardwareModifications\n";
       foreach ($xml->CONTENT->NETWORKS as $child) {
          if (isset($child->DESCRIPTION)) {
             $add = 1;
-            if (isset($child->MAC)) {
-               if (isset($networkunique[$child->DESCRIPTION."-".$child->MAC])) {
+            if (isset($child->MACADDR)) {
+               if (isset($networkunique[(string)$child->DESCRIPTION."-".(string)$child->MACADDR])) {
                   $add = 0;
                }
             } else {
-               if (isset($networkunique[$child->DESCRIPTION])) {
+               if (isset($networkunique[(string)$child->DESCRIPTION])) {
                   $add = 0;
                }
             }
             if ($add == 1) {
                $a_networkXML["'".$i."-".$child->DESCRIPTION."'"] = 1;
                $i++;
-               $networkunique[$child->DESCRIPTION."-".$child->MAC] = 1;
+               if (isset($child->MACADDR)) {
+                  $networkunique[(string)$child->DESCRIPTION."-".(string)$child->MACADDR] = 1;
+               } else {
+                  $networkunique[(string)$child->DESCRIPTION] = 1;
+               }
             }
          } else if (isset($child->IPADDRESS)) {
             $a_networkXML["'".$i."-".$child->IPADDRESS."'"] = 1;
