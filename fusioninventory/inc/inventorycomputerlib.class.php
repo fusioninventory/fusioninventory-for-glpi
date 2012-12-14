@@ -1509,7 +1509,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $monitors_id = 0;
       if ($pfConfig->getValue('import_monitor') == 1) {
          // Global import
-         $query = "SELECT * FROM `glpi_monitors`
+         $query = "SELECT `glpi_monitors`.`id` FROM `glpi_monitors`
             WHERE `name`='".$data['name']."'
                AND `manufacturers_id`='".$data['manufacturers_id']."'
                AND `serial`='".$data['serial']."'
@@ -1527,7 +1527,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       } else if ($pfConfig->getValue('import_monitor') == 2) {
          // Unique import
-         $query = "SELECT * FROM `glpi_monitors`
+         $query = "SELECT `glpi_monitors`.`id` FROM `glpi_monitors`
             LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_monitors`.`id`
             WHERE `name`='".$data['name']."'
                AND `manufacturers_id`='".$data['manufacturers_id']."'
@@ -1548,7 +1548,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       } else if ($pfConfig->getValue('import_monitor') == 3) {
          // Unique import on serial number      
-         $query = "SELECT * FROM `glpi_monitors`
+         $query = "SELECT `glpi_monitors`.`id` FROM `glpi_monitors`
             WHERE `name`='".$data['name']."'
                AND `manufacturers_id`='".$data['manufacturers_id']."'
                AND `serial`='".$data['serial']."'
@@ -1584,7 +1584,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $printers_id = 0;
       if ($pfConfig->getValue('import_printer') == 1) {
          // Global import
-         $query = "SELECT * FROM `glpi_printers`
+         $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
             WHERE `name`='".$data['name']."'
                AND `serial`='".$data['serial']."'
                AND `is_global`='1'
@@ -1600,7 +1600,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       } else if ($pfConfig->getValue('import_printer') == 2) {
          // Unique import
-         $query = "SELECT * FROM `glpi_printers`
+         $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
             LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_printers`.`id`
             WHERE `name`='".$data['name']."'
                AND `serial`='".$data['serial']."'
@@ -1619,7 +1619,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       } else if ($pfConfig->getValue('import_printer') == 3) {
          // Unique import on serial number      
-         $query = "SELECT * FROM `glpi_printers`
+         $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
             WHERE `name`='".$data['name']."'
                AND `serial`='".$data['serial']."'
                AND `is_global`='0'
@@ -1653,7 +1653,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $peripherals_id = 0;
       if ($pfConfig->getValue('import_peripheral') == 1) {
          // Global import
-         $query = "SELECT * FROM `glpi_peripherals`
+         $query = "SELECT `glpi_peripherals`.`id` FROM `glpi_peripherals`
             WHERE `name`='".$data['name']."'
                AND `manufacturers_id`='".$data['manufacturers_id']."'
                AND `serial`='".$data['serial']."'
@@ -1670,7 +1670,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       } else if ($pfConfig->getValue('import_peripheral') == 2) {
          // Unique import
-         $query = "SELECT * FROM `glpi_peripherals`
+         $query = "SELECT `glpi_peripherals`.`id` FROM `glpi_peripherals`
             LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_peripherals`.`id`
             WHERE `name`='".$data['name']."'
                AND `manufacturers_id`='".$data['manufacturers_id']."'
@@ -1690,7 +1690,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       } else if ($pfConfig->getValue('import_peripheral') == 3) {
          // Unique import on serial number      
-         $query = "SELECT * FROM `glpi_peripherals`
+         $query = "SELECT `glpi_peripherals`.`id` FROM `glpi_peripherals`
             WHERE `name`='".$data['name']."'
                AND `manufacturers_id`='".$data['manufacturers_id']."'
                AND `serial`='".$data['serial']."'
