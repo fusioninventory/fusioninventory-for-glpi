@@ -272,18 +272,20 @@ class PluginFusioninventoryFormatconvert {
       if ($pfConfig->getValue('component_graphiccard') == 1) {
          if (isset($array['VIDEOS'])) {
             foreach ($array['VIDEOS'] as $a_videos) {
-               $array_tmp = $thisc->addValues($a_videos,array(
-                                                           'NAME'   => 'designation', 
-                                                           'MEMORY' => 'memory'));
-               if (!isset($array_tmp['memory'])) {
-                  $array_tmp['memory'] = 0;
-               }
-               $a_inventory['graphiccard'][] = $array_tmp;
-               if (isset($a_videos['NAME'])) {
-                  $ignorecontrollers[$a_videos['NAME']] = 1;
-               }
-               if (isset($a_videos['CHIPSET'])) {
-                  $ignorecontrollers[$a_videos['CHIPSET']] = 1;
+               if (is_array($a_videos)) {
+                  $array_tmp = $thisc->addValues($a_videos,array(
+                                                              'NAME'   => 'designation', 
+                                                              'MEMORY' => 'memory'));
+                  if (!isset($array_tmp['memory'])) {
+                     $array_tmp['memory'] = 0;
+                  }
+                  $a_inventory['graphiccard'][] = $array_tmp;
+                  if (isset($a_videos['NAME'])) {
+                     $ignorecontrollers[$a_videos['NAME']] = 1;
+                  }
+                  if (isset($a_videos['CHIPSET'])) {
+                     $ignorecontrollers[$a_videos['CHIPSET']] = 1;
+                  }
                }
             }
          }
