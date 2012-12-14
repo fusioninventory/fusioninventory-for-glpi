@@ -275,7 +275,7 @@ class PluginFusioninventoryFormatconvert {
                $array_tmp = $thisc->addValues($a_videos,array(
                                                            'NAME'   => 'designation', 
                                                            'MEMORY' => 'memory'));
-               if ($array_tmp['memory'] == '') {
+               if (!isset($array_tmp['memory'])) {
                   $array_tmp['memory'] = 0;
                }
                $a_inventory['graphiccard'][] = $array_tmp;
@@ -760,6 +760,7 @@ class PluginFusioninventoryFormatconvert {
                case 'capacity':
                case 'freesize':
                case 'totalsize':
+               case 'memory':
                   $int = 1;
                   break;
 
