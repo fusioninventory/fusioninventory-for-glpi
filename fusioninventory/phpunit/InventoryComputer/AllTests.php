@@ -429,7 +429,7 @@ echo "# testHardwareModifications\n";
          if (count($a_monitorDiff) < count(array_diff_key($a_monitorXML, $a_monitorDB))) {
             $a_monitorDiff = array_diff_key($a_monitorXML, $a_monitorDB);
          }
-         $this->assertEquals(count($a_monitorDiff), 0, 'Difference of monitors "'.print_r($a_monitorDiff, true).'"');
+         $this->assertEquals(count($a_monitorDiff), 0, 'Difference of monitors "'.print_r($a_monitorDiff, true).'" ('.$xmlFile.')');
 
    }
 
