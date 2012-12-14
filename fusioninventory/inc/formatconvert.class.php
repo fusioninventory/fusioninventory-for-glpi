@@ -690,6 +690,14 @@ class PluginFusioninventoryFormatconvert {
                                            'PUBLISHER'   => 'manufacturers_id', 
                                            'NAME'        => 'name', 
                                            'VERSION'     => 'version'));
+         if (!isset($array_tmp['name'])
+                 || $array_tmp['name'] == '') {
+            if (isset($a_softwares['GUID'])
+                    && $a_softwares['GUID'] != '') {
+               $array_tmp['name'] = $a_softwares['GUID'];
+            }
+         }
+         
          if (!(!isset($array_tmp['name'])
                  || $array_tmp['name'] == '')) {
             if (count($array_tmp) > 0) {
