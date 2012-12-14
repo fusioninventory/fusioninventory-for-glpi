@@ -1536,7 +1536,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                AND `is_global`='0'
                AND `entities_id`='".$data['entities_id']."'
                AND `glpi_computers_items`.`itemtype`='Monitor'
-               AND `glpi_computers_items`.`id` IS NOT NULL
+               AND `glpi_computers_items`.`id` IS NULL
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -1607,7 +1607,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                AND `is_global`='0'
                AND `entities_id`='".$data['entities_id']."'
                AND `glpi_computers_items`.`itemtype`='Printer'
-               AND `glpi_computers_items`.`id` IS NOT NULL
+               AND `glpi_computers_items`.`id` IS NULL
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -1678,7 +1678,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                AND `is_global`='0'
                AND `entities_id`='".$data['entities_id']."'
                AND `glpi_computers_items`.`itemtype`='Monitor'
-               AND `glpi_computers_items`.`id` IS NOT NULL
+               AND `glpi_computers_items`.`id` IS NULL
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
