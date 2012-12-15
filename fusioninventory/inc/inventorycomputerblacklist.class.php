@@ -272,9 +272,9 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                   }
                }
                if ($a_computerinventory['computer']['manufacturers_id'] == "") {
-                  if (isset($a_computerinventory['computer']['mmnufacturer'])) {
+                  if (isset($a_computerinventory['computer']['mmanufacturer'])) {
                      $a_computerinventory['computer']['manufacturers_id'] = 
-                        $a_computerinventory['computer']['mmnufacturer'];
+                        $a_computerinventory['computer']['mmanufacturer'];
                      
                      foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                      if ((isset($a_computerinventory['computer']['manufacturers_id'])) 
@@ -286,9 +286,9 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                   }
                }
                if ($a_computerinventory['computer']['manufacturers_id'] == "") {
-                  if (isset($a_computerinventory['computer']['bmnufacturer'])) {
+                  if (isset($a_computerinventory['computer']['bmanufacturer'])) {
                      $a_computerinventory['computer']['manufacturers_id'] = 
-                        $a_computerinventory['computer']['bmnufacturer'];
+                        $a_computerinventory['computer']['bmanufacturer'];
                      
                      foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                      if ((isset($a_computerinventory['computer']['manufacturers_id'])) 
