@@ -268,6 +268,35 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                   if ((isset($a_computerinventory['computer']['manufacturers_id'])) 
                           AND ($a_computerinventory['computer']['manufacturers_id'] == $blacklist_data['value'])) {
                      $a_computerinventory['computer']['manufacturers_id'] = "";
+                     break;
+                  }
+               }
+               if ($a_computerinventory['computer']['manufacturers_id'] == "") {
+                  if (isset($a_computerinventory['computer']['mmnufacturer'])) {
+                     $a_computerinventory['computer']['manufacturers_id'] = 
+                        $a_computerinventory['computer']['mmnufacturer'];
+                     
+                     foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
+                     if ((isset($a_computerinventory['computer']['manufacturers_id'])) 
+                             AND ($a_computerinventory['computer']['manufacturers_id'] == $blacklist_data['value'])) {
+                        $a_computerinventory['computer']['manufacturers_id'] = "";
+                        break;
+                     }
+                  }
+                  }
+               }
+               if ($a_computerinventory['computer']['manufacturers_id'] == "") {
+                  if (isset($a_computerinventory['computer']['bmnufacturer'])) {
+                     $a_computerinventory['computer']['manufacturers_id'] = 
+                        $a_computerinventory['computer']['bmnufacturer'];
+                     
+                     foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
+                     if ((isset($a_computerinventory['computer']['manufacturers_id'])) 
+                             AND ($a_computerinventory['computer']['manufacturers_id'] == $blacklist_data['value'])) {
+                        $a_computerinventory['computer']['manufacturers_id'] = "";
+                        break;
+                     }
+                  }
                   }
                }
               break;

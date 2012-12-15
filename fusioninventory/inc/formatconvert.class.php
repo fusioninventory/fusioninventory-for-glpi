@@ -188,6 +188,15 @@ class PluginFusioninventoryFormatconvert {
                       AND (!empty($array['BIOS']['BMANUFACTURER']))) {
             $a_inventory['computer']['manufacturers_id'] = $array['BIOS']['BMANUFACTURER'];
          }
+         if ((isset($array['BIOS']['MMANUFACTURER']))
+                      AND (!empty($array['BIOS']['MMANUFACTURER']))) {
+            $a_inventory['computer']['mmanufacturer'] = $array['BIOS']['MMANUFACTURER'];
+         }
+         if ((isset($array['BIOS']['BMANUFACTURER']))
+                      AND (!empty($array['BIOS']['BMANUFACTURER']))) {
+            $a_inventory['computer']['bmanufacturer'] = $array['BIOS']['BMANUFACTURER'];
+         }
+         
          if (isset($array['BIOS']['SMODEL']) AND $array['BIOS']['SMODEL'] != '') {
             $a_inventory['computer']['computermodels_id'] = $array['BIOS']['SMODEL'];
          } else if (isset($array['BIOS']['MMODEL']) AND $array['BIOS']['MMODEL'] != '') {
