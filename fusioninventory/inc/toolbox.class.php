@@ -390,13 +390,17 @@ class PluginFusioninventoryToolbox {
 
       $a_return = array();
       foreach ($array1 as $key=>$value) {
-         $key2 = false;
-         $key2 = array_search($value, $array2, true);
-         if ($key2) {
-            unset($array2[$key2]);
-         } else {
+         if (isset($array2[$key])
+                 AND $array2[$key] != $value) {
             $a_return[$key] = $value;
          }
+//         $key2 = false;
+//         $key2 = array_search($value, $array2, true);
+//         if ($key2) {
+//            unset($array2[$key2]);
+//         } else {
+//            $a_return[$key] = $value;
+//         }
       }
       return $a_return;
    }
