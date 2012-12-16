@@ -1529,10 +1529,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          // Unique import
          if ($data['serial'] != '') {
             $query = "SELECT `glpi_monitors`.`id` FROM `glpi_monitors`
-               WHERE `name`='".$data['name']."'
-                  AND `manufacturers_id`='".$data['manufacturers_id']."'
-                  AND `serial`='".$data['serial']."'
-                  AND `comment`='".$data['comment']."'
+               WHERE `serial`='".$data['serial']."'
                   AND `is_global`='0'
                   AND `entities_id`='".$data['entities_id']."'
                LIMIT 1";
@@ -1619,8 +1616,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          // Unique import
          if ($data['serial'] != '') {
             $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
-               WHERE `name`='".$data['name']."'
-                  AND `serial`='".$data['serial']."'
+               WHERE `serial`='".$data['serial']."'
                   AND `is_global`='0'
                   AND `entities_id`='".$data['entities_id']."'
                LIMIT 1";
@@ -1704,9 +1700,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          // Unique import
          if ($data['serial'] == '') {
             $query = "SELECT `glpi_peripherals`.`id` FROM `glpi_peripherals`
-               WHERE `name`='".$data['name']."'
-                  AND `manufacturers_id`='".$data['manufacturers_id']."'
-                  AND `serial`='".$data['serial']."'
+               WHERE `serial`='".$data['serial']."'
                   AND `is_global`='0'
                   AND `entities_id`='".$data['entities_id']."'
                LIMIT 1";
