@@ -391,7 +391,7 @@ class PluginFusioninventoryToolbox {
       $a_return = array();
       foreach ($array1 as $key=>$value) {
          if (isset($array2[$key])
-                 AND $array2[$key] != $value) {
+                 && $array2[$key] != $value) {
             $a_return[$key] = $value;
          }
 //         $key2 = false;

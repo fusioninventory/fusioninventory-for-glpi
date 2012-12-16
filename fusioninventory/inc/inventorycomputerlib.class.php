@@ -84,13 +84,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       
       // * Computer
          $db_computer = array();
-         $a_field = array('name', 'operatingsystems_id', 'operatingsystemversions_id',  
-                          'os_licenseid', 'os_license_number', 'domains_id', 'uuid',  'comment', 
-                          'users_id', 'contact', 'manufacturers_id', 'computermodels_id', 'serial', 
-                          'computertypes_id', 'operatingsystemservicepacks_id');
-         foreach ($a_field as $field) {
-            $db_computer[$field] = $computer->fields[$field];
-         }
+//         $a_field = array('name', 'operatingsystems_id', 'operatingsystemversions_id',  
+//                          'os_licenseid', 'os_license_number', 'domains_id', 'uuid',  'comment', 
+//                          'users_id', 'contact', 'manufacturers_id', 'computermodels_id', 'serial', 
+//                          'computertypes_id', 'operatingsystemservicepacks_id');
+//         foreach ($a_field as $field) {
+//            $db_computer[$field] = $computer->fields[$field];
+//         }
+         $db_computer = $computer->fields;
          $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['computer'], 
                                                           $db_computer, $a_lockable);
          $a_computerinventory['computer'] = $a_ret[0];
