@@ -1617,7 +1617,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       } else if ($pfConfig->getValue('import_printer') == 2) {
          // Unique import
-         if ($dat['serial'] != '') {
+         if ($data['serial'] != '') {
             $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
                WHERE `name`='".$data['name']."'
                   AND `serial`='".$data['serial']."'
