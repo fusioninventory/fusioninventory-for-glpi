@@ -541,31 +541,31 @@ class PluginFusioninventoryFormatconvert {
                                                     'VIRTUALDEV'  => 'virtualdev',
                                                     'IPSUBNET'    => 'subnet'));
                   $array_tmp['mac'] = strtolower($array_tmp['mac']);
-                  if (isset($a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']])) {
-                     if (isset($array_tmp['ip'])) {
-                        $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'][] = $array_tmp['ip'];
-                     }
-                  } else {
-                     if (isset($array_tmp['ip'])) {
-                        $array_tmp['ipaddress'] = array($array_tmp['ip']);
-                        unset($array_tmp['ip']);
+                  if (isset($array_tmp['name'])
+                       && $array_tmp['name'] != '') {
+                     if (isset($a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']])) {
+                        if (isset($array_tmp['ip'])) {
+                           $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'][] = $array_tmp['ip'];
+                        }
                      } else {
-                        $array_tmp['ipaddress'] = array();
-                     }
-                     if (isset($array_tmp["instantiation_type"])
-                             AND $array_tmp["instantiation_type"] == 'Ethernet') {
-                        $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
-                     } else if (isset($array_tmp["instantiation_type"])
-                             AND ($array_tmp["instantiation_type"] == 'Wifi'
-                                  OR $array_tmp["instantiation_type"] == 'IEEE')) {
-                        $array_tmp["instantiation_type"] = 'NetworkPortWifi';
-                     } else if ($array_tmp['mac'] != '') {
-                        $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
-                     } else {
-                        $array_tmp["instantiation_type"] = 'NetworkPortLocal';
-                     }
-                     if (isset($array_tmp['name'])
-                             && $array_tmp['name'] != '') {
+                        if (isset($array_tmp['ip'])) {
+                           $array_tmp['ipaddress'] = array($array_tmp['ip']);
+                           unset($array_tmp['ip']);
+                        } else {
+                           $array_tmp['ipaddress'] = array();
+                        }
+                        if (isset($array_tmp["instantiation_type"])
+                                AND $array_tmp["instantiation_type"] == 'Ethernet') {
+                           $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
+                        } else if (isset($array_tmp["instantiation_type"])
+                                AND ($array_tmp["instantiation_type"] == 'Wifi'
+                                     OR $array_tmp["instantiation_type"] == 'IEEE')) {
+                           $array_tmp["instantiation_type"] = 'NetworkPortWifi';
+                        } else if ($array_tmp['mac'] != '') {
+                           $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
+                        } else {
+                           $array_tmp["instantiation_type"] = 'NetworkPortLocal';
+                        }
                         $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']] = $array_tmp;
                      }
                   }
