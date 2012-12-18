@@ -98,6 +98,7 @@ class PluginFusioninventoryFormatconvert {
                $value = PluginFusioninventoryFormatconvert::cleanArray($value);
             }
          } else {
+            $value = str_replace("\'", "'", $value);
             $value = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value));
          }
          $data[$key] = $value;
@@ -696,9 +697,6 @@ class PluginFusioninventoryFormatconvert {
       
       $rulecollection = new RuleDictionnarySoftwareCollection();
       foreach ($a_inventory['SOFTWARES'] as $a_softwares) {
-         if (isset($a_softwares['NAME'])) {
-            $a_softwares['NAME'] = str_replace("\'", "'", $a_softwares['NAME']);
-         }
          $array_tmp = $this->addValues($a_softwares, 
                                         array( 
                                            'PUBLISHER'   => 'manufacturers_id', 
