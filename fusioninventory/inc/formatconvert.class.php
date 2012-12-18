@@ -281,7 +281,9 @@ class PluginFusioninventoryFormatconvert {
       if ($pfConfig->getValue('component_graphiccard') == 1) {
          if (isset($array['VIDEOS'])) {
             foreach ($array['VIDEOS'] as $a_videos) {
-               if (is_array($a_videos)) {
+               if (is_array($a_videos)
+                       && (isset($a_videos['NAME'])
+                          || isset($a_videos['MEMORY']))) {
                   $array_tmp = $thisc->addValues($a_videos,array(
                                                               'NAME'   => 'designation', 
                                                               'MEMORY' => 'memory'));

@@ -96,8 +96,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                                           $db_computer, $a_lockable);
          $a_computerinventory['computer'] = $a_ret[0];
          $db_computer = $a_ret[1];
-         $input = PluginFusioninventoryToolbox::diffArray($a_computerinventory['computer'], 
-                                                          $db_computer);
+         
+         $input = $a_computerinventory['computer'];
+         
          $input['id'] = $items_id;         
          if (isset($input['comment'])) {
             unset($input['comment']);
@@ -143,9 +144,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                           $db_computer);
             $a_computerinventory['fusioninventorycomputer'] = $a_ret[0];
             $db_computer = $a_ret[1];
-            $input = PluginFusioninventoryToolbox::diffArray(
-                                          $a_computerinventory['fusioninventorycomputer'], 
-                                          $db_computer);
+            $input = $a_computerinventory['fusioninventorycomputer'];
             $input['id'] = $idtmp;
             $input['_no_history'] = $no_history;
             $pfInventoryComputerComputer->update($input);
