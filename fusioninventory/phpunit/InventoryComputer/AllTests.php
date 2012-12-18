@@ -886,6 +886,7 @@ echo "# testHardwareModifications\n";
          } else if (isset($child->GUID)) {
             $name = $child->GUID;
          }
+         $name = str_replace("\'", "'", $name);
          if ($name != '') {
             if (!(isset($child->VERSION)
                     AND strstr($child->VERSION, '"'))) {
@@ -994,10 +995,9 @@ echo "# testHardwareModifications\n";
             $this->assertEquals($Computer->fields['name'], (string)$child->NAME, 'Difference of Hardware name, have '.$Computer->fields['name'].' instead '.(string)$child->NAME.' ['.$xmlFile.']');
          }
          if (isset($child->OSNAME)) {
-            $OperatingSystem = new OperatingSystem;
             if (!strstr((string)$child->OSNAME, "Debian GNU/Linux squeeze/sid ")
                     AND !strstr((string)$child->OSNAME, "Debian GNU/Linux 5.0 ")) {
-               $this->assertEquals($Computer->fields['operatingsystems_id'], $OperatingSystem->importExternal((string)$child->OSNAME), 'Difference of Hardware operatingsystems, have '.$Computer->fields['operatingsystems_id'].' instead '.$OperatingSystem->importExternal((string)$child->OSNAME).' ['.$xmlFile.']');
+               $this->assertEquals($Computer->fields['operatingsystems_id'], Dropdown::importExternal('OperatingSystem', (string)$child->OSNAME), 'Difference of Hardware operatingsystems, have '.$Computer->fields['operatingsystems_id'].' instead '.Dropdown::importExternal('OperatingSystem', (string)$child->OSNAME).' ['.$xmlFile.']');
             }
          }
          if (isset($child->OSVERSION)) {

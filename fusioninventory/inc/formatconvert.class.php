@@ -696,6 +696,9 @@ class PluginFusioninventoryFormatconvert {
       
       $rulecollection = new RuleDictionnarySoftwareCollection();
       foreach ($a_inventory['SOFTWARES'] as $a_softwares) {
+         if (isset($a_softwares['NAME'])) {
+            $a_softwares['NAME'] = str_replace("\'", "'", $a_softwares['NAME']);
+         }
          $array_tmp = $this->addValues($a_softwares, 
                                         array( 
                                            'PUBLISHER'   => 'manufacturers_id', 
