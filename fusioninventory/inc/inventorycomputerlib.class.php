@@ -1568,6 +1568,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       } else if ($pfConfig->getValue('import_monitor') == 3) {
          // Unique import on serial number      
+         $added = 0;
          $query = "SELECT `glpi_monitors`.`id` FROM `glpi_monitors`
             WHERE `name`='".$data['name']."'
                AND `manufacturers_id`='".$data['manufacturers_id']."'
@@ -1583,6 +1584,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          } else {
             $data['is_global'] = 0;
             $monitors_id = $monitor->add($data);
+            $added = 1;
+         }
+         if ($added == 0) {
+            $monitor->getFromDB($monitors_id);
+            $computer_Item->disconnectForItem($monitor);
          }
       }
       $data['computers_id'] = $computers_id;
@@ -1620,6 +1626,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       } else if ($pfConfig->getValue('import_printer') == 2) {
          // Unique import
+         $added = 0;
          if ($data['serial'] != '') {
             $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
                WHERE `serial`='".$data['serial']."'
@@ -1649,10 +1656,16 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             } else {
                $data['is_global'] = 0;
                $printers_id = $printer->add($data);
+               $added = 1;
             }
+         }
+         if ($added == 0) {
+            $printer->getFromDB($printers_id);
+            $computer_Item->disconnectForItem($printer);
          }
       } else if ($pfConfig->getValue('import_printer') == 3) {
          // Unique import on serial number      
+         $added = 0;
          $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
             WHERE `name`='".$data['name']."'
                AND `serial`='".$data['serial']."'
@@ -1666,6 +1679,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          } else {
             $data['is_global'] = 0;
             $printers_id = $printer->add($data);
+            $added = 1;
+         }
+         if ($added == 0) {
+            $printer->getFromDB($printers_id);
+            $computer_Item->disconnectForItem($printer);
          }
       }
       $data['computers_id'] = $computers_id;
@@ -1704,6 +1722,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       } else if ($pfConfig->getValue('import_peripheral') == 2) {
          // Unique import
+         $added = 0;
          if ($data['serial'] == '') {
             $query = "SELECT `glpi_peripherals`.`id` FROM `glpi_peripherals`
                WHERE `serial`='".$data['serial']."'
@@ -1734,10 +1753,16 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             } else {
                $data['is_global'] = 0;
                $peripherals_id = $peripheral->add($data);
+               $added = 1;
             }
+         }
+         if ($added == 0) {
+            $peripheral->getFromDB($peripherals_id);
+            $computer_Item->disconnectForItem($peripheral);
          }
       } else if ($pfConfig->getValue('import_peripheral') == 3) {
          // Unique import on serial number      
+         $added = 0;
          $query = "SELECT `glpi_peripherals`.`id` FROM `glpi_peripherals`
             WHERE `name`='".$data['name']."'
                AND `manufacturers_id`='".$data['manufacturers_id']."'
@@ -1752,6 +1777,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          } else {
             $data['is_global'] = 0;
             $peripherals_id = $peripheral->add($data);
+            $added = 1;
+         }
+         if ($added == 0) {
+            $peripheral->getFromDB($peripherals_id);
+            $computer_Item->disconnectForItem($peripheral);
          }
       }
       $data['computers_id'] = $computers_id;
