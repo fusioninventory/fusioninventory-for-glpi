@@ -453,6 +453,9 @@ class PluginFusioninventoryFormatconvert {
                   if (!isset($array_tmp['serial'])) {
                      $array_tmp['serial'] = '';
                   }
+                  if (!isset($array_tmp['manufacturers_id'])) {
+                     $array_tmp['manufacturers_id'] = '';
+                  }
                   if ($add == 1) {
                      $a_inventory['monitor'][] = $array_tmp;
                      $a_serialMonitor[$array_tmp['serial']] = 1;
