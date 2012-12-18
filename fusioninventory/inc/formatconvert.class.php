@@ -564,7 +564,10 @@ class PluginFusioninventoryFormatconvert {
                      } else {
                         $array_tmp["instantiation_type"] = 'NetworkPortLocal';
                      }
-                     $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']] = $array_tmp;
+                     if (isset($array_tmp['name'])
+                             && $array_tmp['name'] != '') {
+                        $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']] = $array_tmp;
+                     }
                   }
                }
             }
