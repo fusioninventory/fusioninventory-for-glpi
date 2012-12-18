@@ -450,6 +450,9 @@ class PluginFusioninventoryFormatconvert {
                   if (!isset($array_tmp['comment'])) {
                      $array_tmp['comment'] = '';
                   }
+                  if (!isset($array_tmp['serial'])) {
+                     $array_tmp['serial'] = '';
+                  }
                   if ($add == 1) {
                      $a_inventory['monitor'][] = $array_tmp;
                      $a_serialMonitor[$array_tmp['serial']] = 1;
