@@ -1527,6 +1527,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       } else if ($pfConfig->getValue('import_monitor') == 2) {
          // Unique import
+         $added = 0;
          if ($data['serial'] != '') {
             $query = "SELECT `glpi_monitors`.`id` FROM `glpi_monitors`
                WHERE `serial`='".$data['serial']."'
@@ -1558,7 +1559,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             } else {
                $data['is_global'] = 0;
                $monitors_id = $monitor->add($data);
+               $added = 1;
             }
+         }
+         if ($added == 0) {
+            $monitor->getFromDB($monitors_id);
+            $computer_Item->disconnectForItem($monitor);
          }
       } else if ($pfConfig->getValue('import_monitor') == 3) {
          // Unique import on serial number      
