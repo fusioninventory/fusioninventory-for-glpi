@@ -447,6 +447,9 @@ class PluginFusioninventoryFormatconvert {
                           && isset($a_serialMonitor[$array_tmp['serial']])) {
                      $add = 0;
                   }
+                  if (!isset($array_tmp['name'])) {
+                     $array_tmp['name'] = '';
+                  }
                   if (!isset($array_tmp['comment'])) {
                      $array_tmp['comment'] = '';
                   }
