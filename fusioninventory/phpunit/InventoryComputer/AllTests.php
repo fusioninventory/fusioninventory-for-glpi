@@ -420,12 +420,21 @@ echo "# testHardwareModifications\n";
          $result=$DB->query($query);
          $a_monitorDB = array();
          while ($data=$DB->fetch_array($result)) {
-            $a_monitorDB["'".$data['name']."'"] = 1;
+            if ($data['serial'] != '') {
+               $a_monitorDB["'".$data['serial']."'"] = 1;
+            } else {
+               $a_monitorDB["'".$data['name']."'"] = 1;
+            }
          }
          // Verifiy monitors in XML
          $a_monitorXML = array();
          foreach ($xml->CONTENT->MONITORS as $child) {
-            $a_monitorXML["'".$child->CAPTION."'"] = 1;
+            if (isset($child->SERIAL)
+                    && (string)$child->SERIAL != '') {
+               $a_monitorXML["'".(string)$child->SERIAL."'"] = 1;
+            } else {
+               $a_monitorXML["'".$child->CAPTION."'"] = 1;
+            }
          }
          // Display (test) differences
          $a_monitorDiff = array();
