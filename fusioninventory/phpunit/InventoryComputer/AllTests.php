@@ -876,7 +876,7 @@ echo "# testHardwareModifications\n";
       $diff = print_r($a_diff, 1);
       $a_diff2 = array_diff_key($dbsofts,$soft);
       $diff2 = print_r($a_diff2, 1);
-      $this->assertEquals($DB->numrows($result), (count($a_softwareXML)), 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.(count($a_softwareXML)).' ['.$xmlFile.']'.$diff.' or '.$diff2);
+      $this->assertEquals((count($dbsofts)), (count($a_softwareXML)), 'Difference of Softwares, created '.(count($dbsofts)).' times instead '.(count($a_softwareXML)).' ['.$xmlFile.']'.$diff.' or '.$diff2);
 
       // Verify fields in GLPI
       foreach($xml->CONTENT->SOFTWARES as $child) {
