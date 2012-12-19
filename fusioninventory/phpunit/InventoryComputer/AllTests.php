@@ -250,6 +250,10 @@ echo "# testHardwareModifications\n";
          $serial = "`serial`='".$xml->CONTENT->BIOS->SSN."'";
       }
       $a_computers = $Computer->find("`name`='".$xml->CONTENT->HARDWARE->NAME."' AND ".$serial);
+      if (count($a_computers) == 0
+              && $serial != "(`serial` IS NULL OR `serial`='')") {
+         $a_computers = $Computer->find($serial);         
+      }      
       $unknown = 0;
       if (count($a_computers) == 0) {
          // Search in unknown device
