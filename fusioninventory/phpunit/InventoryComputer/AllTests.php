@@ -869,14 +869,14 @@ echo "# testHardwareModifications\n";
       $dbsofts = array();
       if ($result = $DB->query($query)) {
          while ($data=$DB->fetch_array($result)) {
-            $dbsofts[$data['softname']."-".$data['versname']] = 1;
+            $dbsofts[strtolower($data['softname'])."-".$data['versname']] = 1;
          }
       }
       $a_diff = array_diff_key($soft, $dbsofts);
       $diff = print_r($a_diff, 1);
       $a_diff2 = array_diff_key($dbsofts,$soft);
       $diff2 = print_r($a_diff2, 1);
-      $this->assertEquals($DB->numrows($result), (count($a_softwareXML)), 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.(count($a_softwareXML)).' ['.$xmlFile.']'.print_r($a_diff, true).' or '.print_r($a_diff2, true));
+      $this->assertEquals($DB->numrows($result), (count($a_softwareXML)), 'Difference of Softwares, created '.$DB->numrows($result).' times instead '.(count($a_softwareXML)).' ['.$xmlFile.']'.$diff.' or '.$diff2);
 
       // Verify fields in GLPI
       foreach($xml->CONTENT->SOFTWARES as $child) {
