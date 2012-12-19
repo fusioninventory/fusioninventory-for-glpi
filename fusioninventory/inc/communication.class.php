@@ -313,6 +313,9 @@ class PluginFusioninventoryCommunication {
       $_SESSION['glpiactiveprofile']['interface'] = '';
       $_SESSION['glpiactiveprofile']['internet'] = 'w';
       $_SESSION['glpiactiveprofile']['computer'] = 'w';
+      $_SESSION['glpiactiveprofile']['monitor'] = 'w';
+      $_SESSION['glpiactiveprofile']['printer'] = 'w';
+      $_SESSION['glpiactiveprofile']['peripheral'] = 'w';
       $plugin->init();
       $LOADED_PLUGINS = array();
       if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
