@@ -309,13 +309,16 @@ echo "# testHardwareModifications\n";
             if (isset($child->SERIAL)) {
                if (isset($a_serial[(string)$child->SERIAL])) {
                   unset($a_printerXML[$a_serial[(string)$child->SERIAL]]);
-                  $a_printerXML["'".(string)$child->NAME."'"] = 1;
+                  $name = str_replace("\'", "'", (string)$child->NAME);
+                  $a_printerXML["'".$name."'"] = 1;
                } else {
-                  $a_printerXML["'".(string)$child->NAME."'"] = 1;                  
+                  $name = str_replace("\'", "'", (string)$child->NAME);
+                  $a_printerXML["'".$name."'"] = 1;                  
                }               
                $a_serial[(string)$child->SERIAL] = (string)$child->NAME;
             } else {
-               $a_printerXML["'".(string)$child->NAME."'"] = 1;
+               $name = str_replace("\'", "'", (string)$child->NAME);
+               $a_printerXML["'".$name."'"] = 1;
             }
          }
          // Display (test) differences
@@ -361,7 +364,8 @@ echo "# testHardwareModifications\n";
                $printer_select = array();
                while ($data=$DB->fetch_array($result)) {
                   if (count($printer_select) == '0') {
-                     if ((isset($child->NAME)) AND ($data['name'] == $child->NAME)) {
+                     $name = str_replace("\'", "'", (string)$child->NAME);
+                     if ((isset($child->NAME)) AND ($data['name'] == $name)) {
                         $printer_select = $data;
 //                     } else if ((isset($child->DRIVER)) AND ($data['name'] == $child->DRIVER)) {
 //                        $printer_select = $data;
