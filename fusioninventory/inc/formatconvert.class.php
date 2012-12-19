@@ -75,6 +75,11 @@ class PluginFusioninventoryFormatconvert {
                $datainventory['CONTENT'][$field] = array($datainventory['CONTENT'][$field]);
             }
          }
+      if (isset($datainventory['CONTENT'])
+              && isset($datainventory['CONTENT']['BIOS'])
+              && !is_array($datainventory['CONTENT']['BIOS'])) {
+         unset($datainventory['CONTENT']['BIOS']);
+      }
       return $datainventory;
    }
    
