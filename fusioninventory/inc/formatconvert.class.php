@@ -288,8 +288,7 @@ class PluginFusioninventoryFormatconvert {
          if (isset($array['VIDEOS'])) {
             foreach ($array['VIDEOS'] as $a_videos) {
                if (is_array($a_videos)
-                       && (isset($a_videos['NAME'])
-                          || isset($a_videos['MEMORY']))) {
+                       && isset($a_videos['NAME'])) {
                   $array_tmp = $thisc->addValues($a_videos,array(
                                                               'NAME'   => 'designation', 
                                                               'MEMORY' => 'memory'));
