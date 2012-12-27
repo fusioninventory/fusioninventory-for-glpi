@@ -88,3 +88,23 @@ td:not(#foo) > input[type=radio]:checked + label {
    background-color: #e1d39e;
    border: 1px solid #a99f78;
 }
+
+.storage {
+    margin: 0px auto 20px;
+    padding: 11px 0;
+    font-size: 10px;
+    text-align: center;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    -o-border-radius: 7px;
+    -moz-box-shadow: 0px 1px 3px #888;
+    -webkit-box-shadow: 0px 1px 3px #888;
+    box-shadow: 0px 1px 3px #888;
+    /* Anciens navigateurs */
+    -o-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+    position: absolute;
+ }
+

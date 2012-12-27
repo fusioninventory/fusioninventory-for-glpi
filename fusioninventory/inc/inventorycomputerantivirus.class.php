@@ -79,7 +79,6 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
 
 
-
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getType() == 'Computer') {

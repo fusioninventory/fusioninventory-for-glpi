@@ -65,7 +65,8 @@ class PluginFusioninventoryFormatconvert {
       // Hack for some sections
          $a_fields = array('SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES', 'MEMORIES',
                            'NETWORKS', 'SOFTWARE', 'USERS', 'VIRTUALMACHINES', 'ANTIVIRUS',
-                           'MONITORS', 'PRINTERS', 'USBDEVICES');
+                           'MONITORS', 'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
+                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -602,7 +603,7 @@ class PluginFusioninventoryFormatconvert {
          }
       }
       
-      // * STORAGES
+      // * STORAGES/COMPUTERDISK
       $a_inventory['harddrive'] = array();
       if (isset($array['STORAGES'])) {
          foreach ($array['STORAGES']  as $a_storage) {
@@ -625,7 +626,7 @@ class PluginFusioninventoryFormatconvert {
                                                         'INTERFACE'     => 'interfacetypes_id',
                                                         'MANUFACTURER'  => 'manufacturers_id',
                                                         'MODEL'         => 'designation',
-                                                        'SERIAL'        => 'serial'));
+                                                        'SERIALNUMBER'  => 'serial'));
                      if ($array_tmp['designation'] == '') {
                         if (isset($a_storage['NAME'])) {
                            $array_tmp['designation'] = $a_storage['NAME'];
@@ -702,6 +703,87 @@ class PluginFusioninventoryFormatconvert {
                                                              'UPTODATE' => 'uptodate'));
          }
       }
+      // * STORAGE/VOLUMES
+      $a_inventory['storage'] = array();
+      if (isset($array['PHYSICAL_VOLUMES'])) {
+         foreach ($array['PHYSICAL_VOLUMES'] as $a_physicalvolumes) {
+            $array_tmp = $thisc->addValues($a_physicalvolumes, 
+                                           array( 
+                                              'DEVICE'   => 'name', 
+                                              'PV_UUID'  => 'uuid', 
+                                              'VG_UUID'  => 'uuid_link',
+                                              'SIZE'     => 'totalsize',
+                                              'FREE'     => 'freesize')); 
+            $array_tmp['plugin_fusioninventory_inventorycomputerstoragetypes_id'] = 
+                  'physical volumes';
+            $a_inventory['storage'][] = $array_tmp;
+         }
+      }
+      if (isset($array['STORAGES'])) {
+         foreach ($array['STORAGES']  as $a_storage) {
+            $type_tmp = PluginFusioninventoryFormatconvert::getTypeDrive($a_storage);
+            if ($type_tmp != "Drive") {
+               if (isset($a_storage['NAME'])
+                       AND $a_storage['NAME'] != '') {
+                  $detectsize = 0;
+                  $array_tmp = array();
+                  
+                  foreach ($a_inventory['storage'] as $a_physicalvol) {
+                     if (preg_match("/^\/dev\/".$a_storage['NAME']."/", $a_physicalvol['name'])) {
+                        $array_tmp['name'] = $a_storage['NAME'];
+                        if (isset($a_storage['SERIALNUMBER'])) {
+                           $array_tmp['uuid'] = $a_storage['SERIALNUMBER'];
+                        } else {
+                           $array_tmp['uuid'] = $a_storage['NAME'];
+                        }
+                        $array_tmp['plugin_fusioninventory_inventorycomputerstoragetypes_id'] = 
+                           'hard disk';
+                        if (!isset($array_tmp['uuid_link'])) {
+                           $array_tmp['uuid_link'] = array();
+                        }
+                        $array_tmp['uuid_link'][] = $a_physicalvol['uuid'];
+                        $detectsize += $a_physicalvol['totalsize'];
+                     }
+                  }
+                  if (isset($a_storage['DISKSIZE'])
+                          && $a_storage['DISKSIZE'] != '') {
+                     $array_tmp['totalsize'] = $a_storage['DISKSIZE'];
+                  } else {
+                     $array_tmp['totalsize'] = $detectsize;
+                  }
+                  $a_inventory['storage'][] = $array_tmp;
+               }
+            }
+         }
+      }
+      
+      if (isset($array['VOLUME_GROUPS'])) {
+         foreach ($array['VOLUME_GROUPS'] as $a_volumegroups) {
+            $array_tmp = $thisc->addValues($a_volumegroups, 
+                                           array( 
+                                              'VG_NAME'  => 'name', 
+                                              'VG_UUID'  => 'uuid', 
+                                              'SIZE'     => 'totalsize',
+                                              'FREE'     => 'freesize')); 
+            $array_tmp['plugin_fusioninventory_inventorycomputerstoragetypes_id'] = 
+                  'volume groups';
+            $a_inventory['storage'][] = $array_tmp;
+         }
+      }
+      if (isset($array['LOGICAL_VOLUMES'])) {
+         foreach ($array['LOGICAL_VOLUMES'] as $a_logicalvolumes) {
+            $array_tmp = $thisc->addValues($a_logicalvolumes, 
+                                           array( 
+                                              'LV_NAME'  => 'name', 
+                                              'LV_UUID'  => 'uuid', 
+                                              'VG_UUID'  => 'uuid_link',
+                                              'SIZE'     => 'totalsize')); 
+            $array_tmp['plugin_fusioninventory_inventorycomputerstoragetypes_id'] = 
+                  'logical volumes';
+            $a_inventory['storage'][] = $array_tmp;
+         }
+      }
+      
       
       return $a_inventory;
    }
@@ -782,8 +864,8 @@ class PluginFusioninventoryFormatconvert {
                   if (!isset($array_tmp['version'])) {
                      $array_tmp['version'] = "";
                   }
-                  $array_tmp['is_template'] = 0;
-                  $array_tmp['is_deleted'] = 0;
+                  $array_tmp['is_template_computer'] = 0;
+                  $array_tmp['is_deleted_computer'] = 0;
                   if (!isset($a_inventory['software'][$array_tmp['name']."$$$$".$array_tmp['version']])) {
                      $a_inventory['software'][$array_tmp['name']."$$$$".$array_tmp['version']] = $array_tmp;
                   }

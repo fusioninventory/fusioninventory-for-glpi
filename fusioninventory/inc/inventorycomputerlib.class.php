@@ -77,6 +77,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $iPAddress                    = new IPAddress();
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
+      $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();
+      $pfInventoryComputerStorage_Storage = new PluginFusioninventoryInventoryComputerStorage_Storage();
+      
       
       $computer->getFromDB($items_id);
       
@@ -497,8 +500,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                           `glpi_softwareversions`.`name` AS version,
                           `glpi_softwares`.`manufacturers_id`,
                           `glpi_softwareversions`.`entities_id`,
-                          `glpi_computers_softwareversions`.`is_template`,
-                          `glpi_computers_softwareversions`.`is_deleted`
+                          `glpi_computers_softwareversions`.`is_template_computer`,
+                          `glpi_computers_softwareversions`.`is_deleted_computer`
                    FROM `glpi_computers_softwareversions`
                    LEFT JOIN `glpi_softwareversions`
                         ON (`glpi_computers_softwareversions`.`softwareversions_id`
@@ -1304,6 +1307,60 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
+         
+      // * storage
+      // Manage by uuid to correspond with GLPI data
+         $db_storage = array();
+         if ($no_history === false) {
+            $query = "SELECT `id`, `uuid` FROM `glpi_plugin_fusioninventory_inventorycomputerstorages`
+                WHERE `computers_id` = '$items_id'";
+            $result = $DB->query($query);         
+            while ($data = $DB->fetch_assoc($result)) {
+               $idtmp = $data['id'];
+               unset($data['id']);            
+               $data = Toolbox::addslashes_deep($data);
+               $data = array_map('strtolower', $data);
+               $db_storage[$idtmp] = $data;
+            }
+         }         
+         if (count($db_storage) == 0) {
+            $a_links = array();
+            $a_uuid  = array();
+            foreach ($a_computerinventory['storage'] as $a_storage) {
+               $a_storage['computers_id'] = $items_id;
+               $insert_id = $pfInventoryComputerStorage->add($a_storage);
+               $a_uuid[$a_storage['uuid']] = $insert_id;
+               if (isset($a_storage['uuid_link'])) {
+                  if (is_array($a_storage['uuid_link'])) {
+                     $a_links[$insert_id] = $a_storage['uuid_link'];
+                  } else {
+                     $a_links[$insert_id][] = $a_storage['uuid_link'];
+                  }
+               }
+            }
+            foreach ($a_links as $id=>$data) {
+               foreach ($data as $num=>$uuid) {
+                  $a_links[$id][$num] = $a_uuid[$uuid];
+               }
+            }
+            foreach ($a_links as $id=>$data) {
+               foreach ($data as $id2) {
+                  $input = array();
+                  $input['plugin_fusioninventory_inventorycomputerstorages_id_1'] = $id;
+                  $input['plugin_fusioninventory_inventorycomputerstorages_id_2'] = $id2;
+                  $pfInventoryComputerStorage_Storage->add($input);
+               }
+            }            
+         } else {
+            // Check only field *** from source: 
+            
+            
+            
+            
+         }
+         
+         
+         
    }
 
    
