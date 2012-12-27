@@ -66,7 +66,7 @@ class PluginFusioninventoryFormatconvert {
          $a_fields = array('SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES', 'MEMORIES',
                            'NETWORKS', 'SOFTWARE', 'USERS', 'VIRTUALMACHINES', 'ANTIVIRUS',
                            'MONITORS', 'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
-                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES');
+                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -266,6 +266,24 @@ class PluginFusioninventoryFormatconvert {
             }
          }
       }
+      
+      // * BATTERIES
+      $a_inventory['batteries'] = array();
+      if (isset($array['BATTERIES'])) {
+         foreach ($array['BATTERIES'] as $a_batteries) {
+            $a_inventory['soundcard'][] = $thisc->addValues($a_batteries, 
+               array(
+                  'NAME'          => 'name', 
+                  'MANUFACTURER'  => 'manufacturers_id', 
+                  'SERIAL'     => 'serial', 
+                  'DATE'       => 'date', 
+                  'CAPACITY'   => 'capacity', 
+                  'CHEMISTRY'  => 'plugin_fusioninventory_inventorycomputerbatteries_chemistries_id', 
+                  'VOLTAGE'    => 'voltage'));
+         }
+      }
+      
+      
       
       // * SOUNDS
       $a_inventory['soundcard'] = array();

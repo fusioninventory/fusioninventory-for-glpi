@@ -44,11 +44,11 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
+class PluginFusioninventoryInventoryComputerBatteries extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return __('Antivirus', 'fusioninventory');
+      return __('Batterie', 'fusioninventory');
 
    }
 
@@ -69,10 +69,10 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
       $tab['common'] = __('Characteristics');
 
 
-      $tab[1]['table']         = $this->getTable();
-      $tab[1]['field']         = 'version';
-      $tab[1]['name']          = "Version";
-      $tab[1]['type']          = 'text';
+//      $tab[1]['table']         = $this->getTable();
+//      $tab[1]['field']         = 'version';
+//      $tab[1]['name']          = "Version";
+//      $tab[1]['type']          = 'text';
 
       return $tab;
    }
@@ -85,7 +85,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
          if (Session::haveRight('computer', "r")) {
             $a_antivirus = $this->find("`computers_id`='".$item->getID()."'", '', 1);
             if (count($a_antivirus) > 0) {
-               return self::createTabEntry(__('Antivirus', 'fusioninventory'));
+               return self::createTabEntry(__('Batterie', 'fusioninventory'));
 
             }
          }
@@ -98,29 +98,11 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getID() > 0) {
-         $pfAntivirus = new self();
-         $pfAntivirus->showForm($item->getID());
+         $pfBatteries = new self();
+         $pfBatteries->showForm($item->getID());
       }
 
       return true;
-   }
-
-
-
-
-   static function addHistory($item){
-
-      foreach ($item->oldvalues as $field=>$old_value) {
-         $changes = array();
-         $changes[0] = 0;
-         $changes[1] = '';
-         $changes[2] = "Antivirus.".$field." : ".$old_value." --> ".$item->fields[$field];
-         Log::history($item->fields['computers_id'],
-                     "Computer",
-                     $changes,
-                     'PluginFusioninventoryInventoryComputerAntivirus',
-                     Log::HISTORY_LOG_SIMPLE_MESSAGE);
-      }
    }
 
 
@@ -195,7 +177,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
 
    /**
-   * Delete antivirus on computer
+   * Delete batteries on computer
    *
    * @param $items_id integer id of the computer
    *
@@ -203,11 +185,11 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
    *
    **/
    static function cleanComputer($items_id) {
-      $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
-      $a_antivirus = $pfInventoryComputerAntivirus->find("`computers_id`='".$items_id."'");
-      if (count($a_antivirus) > 0) {
-         $input = current($a_antivirus);
-         $pfAntivirus->delete($input);
+      $pfInventoryComputerBatteries = new PluginFusioninventoryInventoryComputerBatteries();
+      $a_batteries = $pfInventoryComputerBatteries->find("`computers_id`='".$items_id."'");
+      if (count($a_batteries) > 0) {
+         $input = current($a_batteries);
+         $pfInventoryComputerBatteries->delete($input);
       }
    }
 }

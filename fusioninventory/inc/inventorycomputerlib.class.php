@@ -76,6 +76,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $networkName                  = new NetworkName();
       $iPAddress                    = new IPAddress();
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
+      $pfInventoryComputerBatteries = new PluginFusioninventoryInventoryComputerBatteries();
       $pfConfig                     = new PluginFusioninventoryConfig();
       $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();
       $pfInventoryComputerStorage_Storage = new PluginFusioninventoryInventoryComputerStorage_Storage();
@@ -959,7 +960,66 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
-      
+
+
+      // * Batteries
+         $db_batteries = array();
+         if ($no_history === false) {
+            $query = "SELECT `id`, `name`, `serial` 
+                  FROM `glpi_plugin_fusioninventory_inventorycomputerbatteries`
+               WHERE `computers_id` = '$items_id'";
+            $result = $DB->query($query);         
+            while ($data = $DB->fetch_assoc($result)) {
+               $idtmp = $data['id'];
+               unset($data['id']);            
+               $data = Toolbox::addslashes_deep($data);
+               $data = array_map('strtolower', $data);
+               $db_batteries[$idtmp] = $data;
+            }
+         }
+         $simplebatteries = array();
+         foreach ($a_computerinventory['batteries'] as $key=>$a_batteries) {
+            $a_field = array('name', 'serial');
+            foreach ($a_field as $field) {
+               if (isset($a_batteries[$field])) {
+                  $simplebatteries[$key][$field] = $a_batteries[$field];
+               }
+            }            
+         }
+         foreach ($simplebatteries as $key => $arrays) {
+            $arrayslower = array_map('strtolower', $arrays);
+            foreach ($db_batteries as $keydb => $arraydb) {
+               if ($arrayslower == $arraydb) {
+                  $input = array();
+                  $input = $a_computerinventory['batteries'][$key];
+                  $input['id'] = $keydb;
+                  $pfInventoryComputerBatteries->update($input);
+                  unset($simplebatteries[$key]);
+                  unset($a_computerinventory['batteries'][$key]);
+                  unset($db_batteries[$keydb]);
+                  break;
+               }
+            }
+         }
+         if (count($a_computerinventory['batteries']) == 0
+            AND count($db_batteries) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_batteries) != 0) {
+               foreach ($db_batteries as $idtmp => $data) {
+                  $pfInventoryComputerBatteries->delete(array('id'=>$idtmp));
+               }
+            }
+            if (count($a_computerinventory['batteries']) != 0) {
+               foreach($a_computerinventory['batteries'] as $a_batteries) {
+                  $a_batteries['computers_id'] = $items_id;
+                  $pfInventoryComputerBatteries->add($a_batteries, array(), false);
+               }
+            }
+         }
+
+         
+         
       $entities_id = $_SESSION["plugin_fusinvinventory_entity"];
       // * Monitors
          if ($pfConfig->getValue("import_monitor") != 0) {
