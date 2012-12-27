@@ -5021,10 +5021,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     * Add storage type if not present
     */
    $a_storage = array();
-   $a_storage['physical volumes']   = 5;
+   $a_storage['partition']          = 5;
    $a_storage['volume groups']      = 10;
    $a_storage['logical volumes']    = 20;
    $a_storage['hard disk']          = 1;
+   $a_storage['mount']              = 25;
    
    foreach ($a_storage as $name => $level) {
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`

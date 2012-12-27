@@ -1194,7 +1194,8 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
 
 INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerstoragetypes` 
 (`id`, `name`, `level`) VALUES
-(1, 'physical volumes', 5),
+(1, 'partition', 5),
 (2, 'volume groups', 10),
 (3, 'logical volumes', 20),
-(4, 'hard disk', 1);
+(4, 'hard disk', 1),
+(5, 'mount', 25);

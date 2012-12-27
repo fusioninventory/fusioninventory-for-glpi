@@ -715,7 +715,7 @@ class PluginFusioninventoryFormatconvert {
                                               'SIZE'     => 'totalsize',
                                               'FREE'     => 'freesize')); 
             $array_tmp['plugin_fusioninventory_inventorycomputerstoragetypes_id'] = 
-                  'physical volumes';
+                  'partition';
             $a_inventory['storage'][] = $array_tmp;
          }
       }
@@ -748,15 +748,17 @@ class PluginFusioninventoryFormatconvert {
                   if (isset($a_storage['DISKSIZE'])
                           && $a_storage['DISKSIZE'] != '') {
                      $array_tmp['totalsize'] = $a_storage['DISKSIZE'];
+                     $array_tmp['size_dynamic'] = 0;
                   } else {
                      $array_tmp['totalsize'] = $detectsize;
+                     $array_tmp['size_dynamic'] = 1;
                   }
                   $a_inventory['storage'][] = $array_tmp;
                }
             }
          }
       }
-      
+
       if (isset($array['VOLUME_GROUPS'])) {
          foreach ($array['VOLUME_GROUPS'] as $a_volumegroups) {
             $array_tmp = $thisc->addValues($a_volumegroups, 
@@ -784,6 +786,86 @@ class PluginFusioninventoryFormatconvert {
          }
       }
       
+      if (isset($array['DRIVES'])) {
+         foreach ($array['DRIVES'] as $a_drives) {
+            if ((((isset($a_drives['TYPE'])
+                       AND $a_drives['TYPE'] == 'Network Drive')
+                        OR isset($a_drives['FILESYSTEM'])
+                       AND $a_drives['FILESYSTEM'] == 'nfs'))
+                OR ((isset($a_drives['TYPE'])) AND
+                    (($a_drives['TYPE'] == "Removable Disk")
+                   OR ($a_drives['TYPE'] == "Compact Disc")))) {
+
+            } else if (strstr($a_drives['VOLUMN'], "/dev/mapper")){
+               // LVM 
+               $a_split = explode("-", $a_drives['VOLUMN']);
+               $volumn = end($a_split);
+               $detectsize = 0;
+               $array_tmp = array();
+               foreach ($a_inventory['storage'] as $num=>$a_physicalvol) {
+                  if ($a_physicalvol['plugin_fusioninventory_inventorycomputerstoragetypes_id']
+                          == 'logical volumes') {
+                     if ($volumn == $a_physicalvol['name']) {
+                        $array_tmp['name'] = $a_drives['TYPE'];
+                        if (isset($a_drives['SERIAL'])) {
+                           $array_tmp['uuid'] = $a_drives['SERIAL'];
+                        } else {
+                           $array_tmp['uuid'] = $a_drives['TYPE'];
+                        }
+                        $array_tmp['plugin_fusioninventory_inventorycomputerstoragetypes_id'] = 
+                           'mount';
+                        if (!isset($array_tmp['uuid_link'])) {
+                           $array_tmp['uuid_link'] = array();
+                        }
+                        $array_tmp['uuid_link'][] = $a_physicalvol['uuid'];
+                        $detectsize += $a_physicalvol['totalsize'];
+                     }
+                  }
+               }      
+               if (isset($array_tmp['name'])) {
+                  $array_tmp['totalsize'] = $a_drives['TOTAL'];
+                  $a_inventory['storage'][] = $array_tmp;
+               }
+               
+            } else if (strstr($a_drives['VOLUMN'], "/dev/")){
+               $detectsize = 0;
+               $array_tmp = array();
+               foreach ($a_inventory['storage'] as $num=>$a_physicalvol) {
+                  $volumn = $a_drives['VOLUMN'];
+                  $volumn = substr_replace($volumn ,"",-1);
+                  $volumn = str_replace("/dev/", "", $volumn);
+                  if ($volumn == $a_physicalvol['name']) {
+                     $array_tmp['name'] = $a_drives['VOLUMN'];
+                     if (isset($a_drives['SERIAL'])) {
+                        $array_tmp['uuid'] = $a_drives['SERIAL'];
+                     } else {
+                        $array_tmp['uuid'] = $a_drives['TYPE'];
+                     }
+                     $array_tmp['plugin_fusioninventory_inventorycomputerstoragetypes_id'] = 
+                        'partition';
+                     if (!isset($array_tmp['uuid_link'])) {
+                        $array_tmp['uuid_link'] = array();
+                     }
+                     $array_tmp['uuid_link'][] = $a_physicalvol['uuid'];
+                     $detectsize += $a_physicalvol['totalsize'];
+                     if ($a_physicalvol['size_dynamic'] == 1) {
+                        $a_inventory['storage'][$num]['totalsize'] += $a_drives['TOTAL'];
+                     }
+                  }
+               }
+               $array_tmp['totalsize'] = $a_drives['TOTAL'];
+               $a_inventory['storage'][] = $array_tmp;
+               
+               $array_tmp['plugin_fusioninventory_inventorycomputerstoragetypes_id'] = 
+                        'mount';
+               $array_tmp['name'] = $a_drives['TYPE'];
+               $array_tmp['uuid_link'] = array();
+               $array_tmp['uuid_link'][] = $array_tmp['uuid'];
+               $array_tmp['uuid'] = $array_tmp['uuid']."-mount";
+               $a_inventory['storage'][] = $array_tmp;
+            }
+         }
+      }               
       
       return $a_inventory;
    }
