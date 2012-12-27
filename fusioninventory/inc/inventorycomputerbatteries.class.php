@@ -207,7 +207,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
       $a_antivirus = $pfInventoryComputerAntivirus->find("`computers_id`='".$items_id."'");
       if (count($a_antivirus) > 0) {
          $input = current($a_antivirus);
-         $pfInventoryComputerAntivirus->delete($input);
+         $pfAntivirus->delete($input);
       }
    }
 }
