@@ -167,10 +167,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                   $a_devices[] = $child;
                }
                foreach ($a_devices as $dchild) {
-                  if ($dchild['INFO']['TYPE'] == "NETWORKING") {
-                     $a_inventory = PluginFusioninventoryFormatconvert::networkequipmentInventoryTransformation($dchild);
-                  } else if ($dchild['INFO']['TYPE'] == "PRINTER") {
-                     $a_inventory = PluginFusioninventoryFormatconvert::printerInventoryTransformation($dchild);
+                  $a_inventory = array();
+                  if (isset($dchild['INFO'])) {
+                     if ($dchild['INFO']['TYPE'] == "NETWORKING") {
+                        $a_inventory = PluginFusioninventoryFormatconvert::networkequipmentInventoryTransformation($dchild);
+                     } else if ($dchild['INFO']['TYPE'] == "PRINTER") {
+                        $a_inventory = PluginFusioninventoryFormatconvert::printerInventoryTransformation($dchild);
+                     }
                   }
                   if (isset($dchild['ERROR'])) {
                      $itemtype = "";
