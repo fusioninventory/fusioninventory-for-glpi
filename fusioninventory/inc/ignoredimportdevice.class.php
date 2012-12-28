@@ -182,5 +182,4 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
    }
 }
 
-
 ?>

@@ -254,5 +254,4 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
 }
 
-
 ?>
