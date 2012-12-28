@@ -44,8 +44,6 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-require_once(GLPI_ROOT."/plugins/fusioninventory/inc/ocscommunication.class.php");
-
 class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommunication {
 
    // Get all devices and put in taskjobstat each task for each device for each agent
