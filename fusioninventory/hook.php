@@ -45,9 +45,9 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
    $sopt = array();
    if ($itemtype == 'Computer') {
 
-         $sopt[5150]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerlibserialization';
+         $sopt[5150]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5150]['field']     = 'last_fusioninventory_update';
-         $sopt[5150]['linkfield'] = '';
+         $sopt[5150]['linkfield'] = 'id';
          $sopt[5150]['name']      = __('FusInv', 'fusioninventory')." - ".
             __('Last inventory', 'fusioninventory');
 
@@ -1880,6 +1880,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype,$ref_table,$new_table,$lin
          break;
          
       case 'Computer':
+         echo $new_table.".".$linkfield;
           switch ($new_table.".".$linkfield) {
           
               case 'glpi_plugin_fusioninventory_agents.plugin_fusioninventory_agents_id':
@@ -1887,6 +1888,12 @@ function plugin_fusioninventory_addLeftJoin($itemtype,$ref_table,$new_table,$lin
                   ON (`glpi_computers`.`id`=`glpi_plugin_fusioninventory_agents`.`items_id`) ";
                   break;
               
+              case 'glpi_plugin_fusioninventory_inventorycomputercomputers.id':
+                 return " LEFT JOIN `glpi_plugin_fusioninventory_inventorycomputercomputers` 
+                    AS glpi_plugin_fusioninventory_inventorycomputercomputers_id 
+                    ON (`glpi_computers`.`id` = `glpi_plugin_fusioninventory_inventorycomputercomputers_id`.`computers_id` ) ";
+                 break;
+               
           }
           
           break;
