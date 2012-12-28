@@ -65,13 +65,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       
       
       // * NetworkEquipment
-      $db_networkequipment = array();
-      $a_field = array('name', 'networkequipmentfirmwares_id', 
-                       'networkequipmentmodels_id', 'locations_id', 'ram', 'serial',
-                       'manufacturers_id');
-      foreach ($a_field as $field) {
-         $db_networkequipment[$field] = $networkEquipment->fields[$field];
-      }
+      $db_networkequipment =  $networkEquipment->fields;
+
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_networkequipments', $items_id);
       
       $a_ret = PluginFusioninventoryToolbox::checkLock($a_inventory['NetworkEquipment'], 
@@ -79,8 +74,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $a_inventory['NetworkEquipment'] = $a_ret[0];
       $db_networkequipment = $a_ret[1];
          
-      $input = PluginFusioninventoryToolbox::diffArray($a_inventory['NetworkEquipment'], 
-                                                       $db_networkequipment);
+      $input = $a_inventory['NetworkEquipment'];
+      
       $input['id'] = $items_id;         
       $networkEquipment->update($input);
 
