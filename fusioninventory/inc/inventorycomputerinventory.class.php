@@ -364,7 +364,7 @@ if ($items_id > 0) {
          }
          
          $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation($a_computerinventory, $_SESSION["plugin_fusinvinventory_entity"]);
-         $a_computerinventory = $pfFormatconvert->computerReplaceids($a_computerinventory);
+         $a_computerinventory = $pfFormatconvert->replaceids($a_computerinventory);
 
          
 $start = microtime(true);

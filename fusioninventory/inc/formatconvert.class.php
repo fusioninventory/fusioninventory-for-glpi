@@ -1017,7 +1017,7 @@ class PluginFusioninventoryFormatconvert {
    
    
    
-   function computerReplaceids($array) {
+   function replaceids($array) {
       
       foreach ($array as $key=>$value) {
          if (!is_int($key)
@@ -1025,7 +1025,7 @@ class PluginFusioninventoryFormatconvert {
             return $array;
          } else {
             if (is_array($value)) {
-               $array[$key] = $this->computerReplaceids($value);
+               $array[$key] = $this->replaceids($value);
             } else {
                if ($key == "manufacturers_id") {
                   $manufacturer = new Manufacturer();
