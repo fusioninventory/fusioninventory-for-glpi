@@ -899,7 +899,7 @@ class PluginFusioninventoryFormatconvert {
       if ($entities_id_software < 0) {
          $entities_id_software = $_SESSION["plugin_fusinvinventory_entity"];
       }
-      
+      $a_inventory['software'] = array();
       $rulecollection = new RuleDictionnarySoftwareCollection();
       foreach ($a_inventory['SOFTWARES'] as $a_softwares) {
          $array_tmp = $this->addValues($a_softwares, 
