@@ -61,6 +61,17 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    }
 
 
+   
+   /**
+    * @param CommonDBTM $item
+   **/
+   static function countForItem(CommonDBTM $item) {
+
+      return countElementsInTable('glpi_plugin_fusioninventory_rulematchedlogs',
+                                  "`itemtype` = '".$item->getType()."'
+                                   AND `items_id` ='".$item->getField('id')."'");
+   }
+   
 
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
@@ -72,7 +83,8 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
          }
       } else {
-         $array_ret[1] = self::createTabEntry(__('Import informations', 'fusioninventory'));
+         $cnt = PluginFusioninventoryRulematchedlog::countForItem($item);
+         $array_ret[1] = self::createTabEntry(__('Import informations', 'fusioninventory'), $cnt);
 
       }
       return $array_ret;

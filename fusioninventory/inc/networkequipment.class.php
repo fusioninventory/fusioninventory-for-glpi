@@ -72,6 +72,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
              AND `items_id`='".$item->getID()."'";
       $result = $DB->query($query);
       $ligne  = $DB->fetch_assoc($result);
+      
       return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'), $ligne['cpt']);
    }
 

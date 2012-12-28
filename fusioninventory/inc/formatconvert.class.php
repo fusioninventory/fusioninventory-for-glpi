@@ -1080,9 +1080,10 @@ class PluginFusioninventoryFormatconvert {
             $array_tmp['networkequipmentfirmwares_id'] = $explode[1];
          }
       }
-
+      $array_tmp['is_dynamic'] = 1;
       $a_inventory['NetworkEquipment'] = $array_tmp;
       $a_inventory['itemtype'] = 'NetworkEquipment';
+      
       
       $array_tmp = $thisc->addValues($array['INFO'], 
                                      array( 
