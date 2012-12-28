@@ -63,7 +63,16 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    
    
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
+      global $DB;
+      
+      $query = "SELECT COUNT(*) AS cpt
+          FROM `glpi_plugin_fusioninventory_networkports`
+          LEFT JOIN `glpi_networkports` ON `networkports_id` = `glpi_networkports`.`id`
+          WHERE `itemtype`='".$item->getType()."'
+             AND `items_id`='".$item->getID()."'";
+      $result = $DB->query($query);
+      $ligne  = $DB->fetch_assoc($result);
+      return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'), $ligne['cpt']);
    }
 
 

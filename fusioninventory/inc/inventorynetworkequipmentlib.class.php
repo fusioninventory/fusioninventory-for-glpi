@@ -98,9 +98,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          $result = $DB->query($query);         
          while ($data = $DB->fetch_assoc($result)) {            
             foreach($data as $key=>$value) {
-               $data[$key] = Toolbox::addslashes_deep($value);
+               $db_networkequipment[$key] = Toolbox::addslashes_deep($value);
             }
-            $db_networkequipment = $data;
          }
          if (count($db_networkequipment) == '0') { // Add
             $a_inventory['PluginFusioninventoryNetworkEquipment']['networkequipments_id'] = 

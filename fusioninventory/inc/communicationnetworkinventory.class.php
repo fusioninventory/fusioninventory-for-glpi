@@ -234,7 +234,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkInventory->importDevice().');
 
-      $a_inventory = PluginFusioninventoryFormatconvert::computerReplaceids($a_inventory);
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $a_inventory = $pfFormatconvert->computerReplaceids($a_inventory);
       
       // Write XML file
       if (count($a_inventory) > 0) {

@@ -723,9 +723,11 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                                 AND `glpi_phones`.`name`='".$sysname."'
                           LIMIT 1";
             $resultPort = $DB->query($queryPort);
-            $dataPort = $DB->fetch_assoc($resultPort);
-            if (isset($dataPort['id'])) {
-               $PortID = $dataPort["id"];
+            if ($DB->numrows($resultPort) == 1) {
+               $dataPort = $DB->fetch_assoc($resultPort);
+               if (isset($dataPort['id'])) {
+                  $PortID = $dataPort["id"];
+               }
             }
          }
       }
