@@ -166,15 +166,11 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                } else {
                   $a_devices[] = $child;
                }
-//               foreach ($a_devices as $dchild) {
-                 
-                  if ((string)$child->TYPE == "NETWORKING") {
+               foreach ($a_devices as $dchild) {
+                  if ($dchild['INFO']['TYPE'] == "NETWORKING") {
                      $a_inventory = PluginFusioninventoryFormatconvert::networkequipmentInventoryTransformation($dchild);
-Toolbox::logInFile("NETWORK", print_r($a_inventory, true));               
-
-                  } else if ((string)$child->TYPE == "PRINTER") {
+                  } else if ($dchild['INFO']['TYPE'] == "PRINTER") {
                      $a_inventory = PluginFusioninventoryFormatconvert::printerInventoryTransformation($dchild);
-                     
                   }
                   if (isset($dchild['ERROR'])) {
                      $itemtype = "";
@@ -188,6 +184,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                   } else if ($a_inventory['PluginFusioninventory'.$a_inventory['itemtype']]['sysdescr'] == ''
                               && $a_inventory[$a_inventory['itemtype']]['name'] == ''
                               && $a_inventory[$a_inventory['itemtype']]['serial'] == '') {
+                         
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] No informations [['.$itemtype.'::'.$dchild['ID'].']]';
                      $this->addtaskjoblog();
                   } else {
@@ -195,7 +192,7 @@ Toolbox::logInFile("NETWORK", print_r($a_inventory, true));
                         $errors .= $this->sendCriteria($this->arrayinventory['DEVICEID'], $a_inventory);
                         $nbDevices++;
                      }
-//                  }
+                  }
                }
                break;
 
