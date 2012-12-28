@@ -963,6 +963,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
       // * Batteries
+         /* Standby, see ticket http://forge.fusioninventory.org/issues/1907
          $db_batteries = array();
          if ($no_history === false) {
             $query = "SELECT `id`, `name`, `serial` 
@@ -1017,7 +1018,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
-
+*/
          
          
       $entities_id = $_SESSION["plugin_fusinvinventory_entity"];
