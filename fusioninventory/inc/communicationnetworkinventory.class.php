@@ -119,8 +119,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             }
             $errors.=$this->importContent($a_CONTENT);
             $result=true;
-            if (isset($p_CONTENT->AGENT->END)) {
-               $pfTaskjobstate->changeStatusFinish($p_CONTENT->PROCESSNUMBER,
+            if (isset($a_CONTENT['AGENT']['END'])) {
+               $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
                                                          $this->agent['id'],
                                                          'PluginFusioninventoryAgent');
             }
