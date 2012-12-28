@@ -872,16 +872,18 @@ class PluginFusioninventoryFormatconvert {
                      }
                   }
                }
-               $array_tmp['totalsize'] = $a_drives['TOTAL'];
-               $a_inventory['storage'][] = $array_tmp;
-               
-               $array_tmp['plugin_fusioninventory_inventorycomputerstoragetypes_id'] = 
-                        'mount';
-               $array_tmp['name'] = $a_drives['TYPE'];
-               $array_tmp['uuid_link'] = array();
-               $array_tmp['uuid_link'][] = $array_tmp['uuid'];
-               $array_tmp['uuid'] = $array_tmp['uuid']."-mount";
-               $a_inventory['storage'][] = $array_tmp;
+               if (isset($array_tmp['name'])) {
+                  $array_tmp['totalsize'] = $a_drives['TOTAL'];
+                  $a_inventory['storage'][] = $array_tmp;
+
+                  $array_tmp['plugin_fusioninventory_inventorycomputerstoragetypes_id'] = 
+                           'mount';
+                  $array_tmp['name'] = $a_drives['TYPE'];
+                  $array_tmp['uuid_link'] = array();
+                  $array_tmp['uuid_link'][] = $array_tmp['uuid'];
+                  $array_tmp['uuid'] = $array_tmp['uuid']."-mount";
+                  $a_inventory['storage'][] = $array_tmp;
+               }
             }
          }
       }               
