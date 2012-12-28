@@ -2265,6 +2265,123 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                           "uptodate");
       $migration->migrationOneTable($newTable);
 
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_inventorycomputerbatteries
+    */
+      $newTable = "glpi_plugin_fusioninventory_inventorycomputerbatteries";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "computers_id",
+                                 "computers_id",
+                                 "int(11) NOT NULL DEFAULT '0'");   
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "manufacturers_id",
+                                 "manufacturers_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "serial",
+                                 "serial",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "capacity",
+                                 "capacity",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "date",
+                                 "date",
+                                 "datetime DEFAULT NULL");
+         $migration->changeField($newTable,
+                                 "plugin_fusioninventory_inventorycomputerchemistries_id",
+                                 "plugin_fusioninventory_inventorycomputerchemistries_id",
+                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->changeField($newTable,
+                                 "voltage",
+                                 "voltage",
+                                 "int(11) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                              "computers_id",
+                              "int(11) NOT NULL DEFAULT '0'");   
+         $migration->addField($newTable,
+                              "name",
+                              "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable,
+                              "manufacturers_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                              "serial",
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                              "capacity",
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                              "date",
+                              "datetime DEFAULT NULL");
+         $migration->addField($newTable,
+                              "plugin_fusioninventory_inventorycomputerbchemistries_id",
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                              "voltage",
+                              "int(11) NOT NULL DEFAULT '0'");
+      $migration->migrationOneTable($newTable);
+         $migration->addKey($newTable,
+                            "computers_id");
+      $migration->migrationOneTable($newTable);
+      
+      
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_inventorycomputerchemistries
+    */
+      $newTable = "glpi_plugin_fusioninventory_inventorycomputerchemistries";
+      if (!TableExists($newTable)) {
+         $query = "CREATE TABLE `".$newTable."` (
+                     `id` int(11) NOT NULL AUTO_INCREMENT,
+                      PRIMARY KEY (`id`)
+                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+         $DB->query($query);
+      }
+         $migration->changeField($newTable,
+                                 "id",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
+                                 "name",
+                                 "name",
+                                 "varchar(255) DEFAULT NULL");
+      $migration->migrationOneTable($newTable);
+         $migration->addField($newTable,
+                              "id",
+                              "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->addField($newTable,
+                              "name",
+                              "varchar(255) DEFAULT NULL");
+      $migration->migrationOneTable($newTable);
+         $migration->addKey($newTable,
+                            "name");
+      $migration->migrationOneTable($newTable);
+      
+      
 
    /*
     * Table glpi_plugin_fusioninventory_inventorycomputercomputers

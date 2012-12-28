@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryInventoryComputerBatterie_Chemistry extends CommonDropdown {
+class PluginFusioninventoryInventoryComputerChemistry extends CommonDropdown {
 
    public $first_level_menu  = "plugins";
    public $second_level_menu = "fusioninventory";

@@ -268,20 +268,20 @@ class PluginFusioninventoryFormatconvert {
       }
       
       // * BATTERIES
-      $a_inventory['batteries'] = array();
-      if (isset($array['BATTERIES'])) {
-         foreach ($array['BATTERIES'] as $a_batteries) {
-            $a_inventory['soundcard'][] = $thisc->addValues($a_batteries, 
-               array(
-                  'NAME'          => 'name', 
-                  'MANUFACTURER'  => 'manufacturers_id', 
-                  'SERIAL'     => 'serial', 
-                  'DATE'       => 'date', 
-                  'CAPACITY'   => 'capacity', 
-                  'CHEMISTRY'  => 'plugin_fusioninventory_inventorycomputerbatteries_chemistries_id', 
-                  'VOLTAGE'    => 'voltage'));
-         }
-      }
+//      $a_inventory['batteries'] = array();
+//      if (isset($array['BATTERIES'])) {
+//         foreach ($array['BATTERIES'] as $a_batteries) {
+//            $a_inventory['soundcard'][] = $thisc->addValues($a_batteries, 
+//               array(
+//                  'NAME'          => 'name', 
+//                  'MANUFACTURER'  => 'manufacturers_id', 
+//                  'SERIAL'     => 'serial', 
+//                  'DATE'       => 'date', 
+//                  'CAPACITY'   => 'capacity', 
+//                  'CHEMISTRY'  => 'plugin_fusioninventory_inventorycomputerchemistries_id', 
+//                  'VOLTAGE'    => 'voltage'));
+//         }
+//      }
       
       
       
