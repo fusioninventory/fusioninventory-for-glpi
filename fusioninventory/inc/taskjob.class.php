@@ -113,10 +113,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
+      
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
          return __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
-
       }
       return '';
    }
@@ -135,9 +134,25 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                $pfAgent->forceRemoteAgent();
             }
          }
-
-         $pfTaskjob = new PluginFusioninventoryTaskjob();
-         $pfTaskjob->manageTasksByObject($item->getType(), $item->getID());
+         if ($item->getType() == 'PluginFusioninventoryTask') {
+            $pfTaskjob = new PluginFusioninventoryTaskjob();
+            $a_taskjob = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$_POST["id"]."'
+                  AND `rescheduled_taskjob_id`='0' ", "id");
+            if ($item->fields['is_advancedmode'] == '0') {
+               $taskjob = current($a_taskjob);
+               if (!isset($taskjob["id"])) {
+                  $taskjobs_id = $pfTaskjob->add(array('name'=>$item->fields['name'],
+                                   'entities_id'=>$item->fields['entities_id'],
+                                   'plugin_fusioninventory_tasks_id'=>$item->getID()));
+                  $pfTaskjob->showForm($taskjobs_id);
+               } else {
+                  $pfTaskjob->showForm($taskjob["id"]);
+               }
+            }
+         } else {
+            $pfTaskjob = new PluginFusioninventoryTaskjob();
+            $pfTaskjob->manageTasksByObject($item->getType(), $item->getID());
+         }
       }
       return true;
    }

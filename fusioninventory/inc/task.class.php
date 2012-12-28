@@ -132,29 +132,28 @@ class PluginFusioninventoryTask extends CommonDBTM {
       global $CFG_GLPI;
 
       $ong = array();
-      $ong[1] = __('Main');
+      $this->addStandardTab('PluginFusioninventoryTaskjob', $ong, $options);
 
-
-      if ($this->fields['id'] > 0) {
-         if ($this->fields["is_advancedmode"] == '1') {
-            $pft = new PluginFusioninventoryTaskjob;
-            $a_taskjob = $pft->find("`plugin_fusioninventory_tasks_id`='".$_GET['id']."'
-                  AND `rescheduled_taskjob_id`='0' ", "id");
-            $i = 1;
-            foreach($a_taskjob as $datas) {
-               $i++;
-               $ong[$i] = __('Job', 'fusioninventory')." ".($i-1);
-            }
-
-            $i++;
-            $ong[$i] = __('New action', 'fusioninventory')." <img src='".$CFG_GLPI['root_doc']."/pics/add_dropdown.png'/>";
-         }
-      }
+//      if ($this->fields['id'] > 0) {
+//         if ($this->fields["is_advancedmode"] == '1') {
+//            $pft = new PluginFusioninventoryTaskjob;
+//            $a_taskjob = $pft->find("`plugin_fusioninventory_tasks_id`='".$_GET['id']."'
+//                  AND `rescheduled_taskjob_id`='0' ", "id");
+//            $i = 1;
+//            foreach($a_taskjob as $datas) {
+//               $i++;
+//               $ong[$i] = __('Job', 'fusioninventory')." ".($i-1);
+//            }
+//
+//            $i++;
+//            $ong[$i] = __('New action', 'fusioninventory')." <img src='".$CFG_GLPI['root_doc']."/pics/add_dropdown.png'/>";
+//         }
+//      }
       return $ong;
    }
 
-
-
+   
+   
    /**
    * Display form for task configuration
    *
