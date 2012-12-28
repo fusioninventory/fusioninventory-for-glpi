@@ -414,12 +414,23 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       }
       if ($Computers_id != "0") {
          $NetworkPort = new NetworkPort();
+         $networkName = new NetworkName();
+         $iPAddress = new IPAddress();
          $a_ports = $NetworkPort->find("`itemtype`='Computer'
                                           AND `items_id`='".$Computers_id."'
-                                             AND `ip` IS NOT NULL");
-         foreach($a_ports as $data) {
-            if ($data['ip'] != '127.0.0.1') {
-               $ip[] = $data['ip'];
+                                             AND `instantiation_type` != 'NetworkPortLocal'");
+         foreach($a_ports as $a_port) {
+            $a_networknames = $networkName->find("`itemtype`='NetworkPort'
+                                                 AND `items_id`='".$a_port['id']."'");
+            foreach ($a_networknames as $a_networkname) {
+               $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
+                                                 AND `items_id`='".$a_networkname['id']."'");
+               foreach($a_ipaddresses as $data) {
+                  if ($data['name'] != '127.0.0.1'
+                          && $data['name'] != '::1') {
+                     $ip[] = $data['name'];
+                  }
+               }
             }
          }
       }
