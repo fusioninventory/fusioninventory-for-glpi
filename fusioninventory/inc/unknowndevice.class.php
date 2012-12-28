@@ -832,11 +832,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       if (empty($folder)) {
          $folder = '0';
       }
-      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype)) {
-         mkdir(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype);
-      }
       if (!file_exists(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype."/".$folder)) {
-         mkdir(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype."/".$folder);
+         mkdir(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype."/".$folder, 0755, true);
       }
       $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype."/".$folder."/".$items_id, 'w');
       fwrite($fileopen, $xml);
