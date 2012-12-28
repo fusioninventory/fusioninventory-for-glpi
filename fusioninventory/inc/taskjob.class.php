@@ -2155,7 +2155,7 @@ return namelist;
    function showTaskjobItems($name, $randmethod, $id) {
       global $CFG_GLPI;
       
-      echo "<div style='display:none' id='".$name."' >";
+      echo "<div style='display:none' id='".$name.$id."' >";
       $params = array('method' => '__VALUE__',
                       'rand'      => $randmethod,
                       'myname'    => 'method',
