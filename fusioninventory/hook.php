@@ -1880,7 +1880,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype,$ref_table,$new_table,$lin
          break;
          
       case 'Computer':
-         echo $new_table.".".$linkfield;
+
           switch ($new_table.".".$linkfield) {
           
               case 'glpi_plugin_fusioninventory_agents.plugin_fusioninventory_agents_id':
