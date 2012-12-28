@@ -62,6 +62,7 @@ function plugin_init_fusioninventory() {
       // ##### 2. register class #####
 
       Plugin::registerClass('PluginFusioninventoryAgent');
+      Plugin::registerClass('PluginFusioninventoryAgentmodule');
       Plugin::registerClass('PluginFusioninventoryConfig');
       Plugin::registerClass('PluginFusioninventoryTask',
               array('addtabon' => array('Computer','Printer','NetworkEquipment','PluginFusioninventoryCredentialIp')));
@@ -74,7 +75,6 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryProfile',
               array('addtabon' => array('Profile')));
       Plugin::registerClass('PluginFusioninventorySetup');
-      Plugin::registerClass('PluginFusioninventoryAgentmodule');
       Plugin::registerClass('PluginFusioninventoryIPRange');
       Plugin::registerClass('PluginFusioninventoryCredential');
       Plugin::registerClass('PluginFusioninventoryLock',

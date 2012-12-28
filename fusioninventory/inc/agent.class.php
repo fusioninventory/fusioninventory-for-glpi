@@ -185,9 +185,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $ong[1]=__('Main');
 
       }
-      $ong[2] = __('Agent modules', 'fusioninventory');
-
-      $ong[3] = __('Historical');
+      $this->addStandardTab('PluginFusioninventoryAgentmodule', $ong, $options);
+      $this->addStandardTab('Log', $ong, $options);
 
       return $ong;
    }

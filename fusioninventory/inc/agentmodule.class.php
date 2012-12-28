@@ -59,7 +59,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
          return __('Agents modules', 'fusioninventory');
-
+      } else if ($item->getType()=='PluginFusioninventoryAgent') {
+         return __('Agents modules', 'fusioninventory');
       }
       return '';
    }
@@ -80,6 +81,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       if ($item->getType()=='PluginFusioninventoryConfig') {
          $pfAgentmodule = new self();
          $pfAgentmodule->showForm();
+      } else if ($item->getType()=='PluginFusioninventoryAgent') {
+         $pfAgentmodule = new self();
+         $pfAgentmodule->showFormAgentException($item->getID());
       }
       return true;
    }
