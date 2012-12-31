@@ -197,115 +197,14 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          }
          $nbcol++;
       }
-      echo "<table class='tab_cadre' cellpadding='".$nbcol."' width='1100'>";
-
-      echo "<tr class='tab_bg_1'>";
+      
       $a_pref = DisplayPreference::getForTypeUser('PluginFusioninventoryNetworkport', 
                                                   Session::getLoginUserID());
+
+      echo "<table class='tab_cadre' cellpadding='".$nbcol."' width='1100'>";
+
+      $result = $this->showNetworkPortDetailHeader($data, $monitoring, $query);
       
-      echo "<th colspan='".(count($a_pref) + 4)."'>";
-      echo __('Ports array', 'fusioninventory');
-  
-      $result=$DB->query($query);
-      echo ' ('.$DB->numrows($result).')';
-      
-      $tmp = " class='pointer' onClick=\"var w = window.open('".$CFG_GLPI["root_doc"].
-             "/front/popup.php?popup=search_config&amp;itemtype=PluginFusioninventoryNetworkPort' ,'glpipopup', ".
-             "'height=400, width=1000, top=100, left=100, scrollbars=yes'); w.focus();\"";
-
-      echo " <img alt=\"".__s('Select default items to show')."\" title=\"".
-                          __s('Select default items to show')."\" src='".
-                          $CFG_GLPI["root_doc"]."/pics/options_search.png' ";
-      echo $tmp.">";
-
-      
-      $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/En_VI_visualisationsdonnees_2_reseau";
-      if ($_SESSION["glpilanguage"] == "fr_FR") {
-         $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/Fr_VI_visualisationsdonnees_2_reseau";
-      }
-      echo "<a href='legend'></a>";
-      echo "<div id='legendlink'><a onClick='Ext.get(\"legend\").toggle();'>[ ".__('Legend', 'fusioninventory')." ]</a></div>";
-      echo "</th>";
-      echo "</tr>";
-
-      // Display legend
-      echo "
-      <tr class='tab_bg_1' style='display: none;' id='legend'>
-         <td colspan='".(count($a_pref) + 4)."'>
-         <ul>
-            <li>".__('Connection with a switch or a server in trunk or tagged mode', 'fusioninventory')."&nbsp;:</li>
-         </ul>
-         <img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/port_trunk.png' width='750' />
-         <ul>
-            <li>".__('Other connections (with a computer, a printer...)', 'fusioninventory')."&nbsp;:</li>
-         </ul>
-         <img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/connected_trunk.png' width='750' />
-         </td>
-      </tr>";
-      echo "<script>Ext.get('legend').setVisibilityMode(Ext.Element.DISPLAY);</script>";
-
-      echo "<tr class='tab_bg_1'>";
-
-      echo "<th colspan='2'>".__('Name')."</th>";
-      
-      if ($monitoring == '1') {
-         echo "<th>".__('Monitoring', 'fusioninventory')."</th>";
-      }
-
-      foreach ($a_pref as $data_array) {
-         
-         echo "<th>";
-         switch ($data_array) {
-            case 3:
-               echo __('MTU', 'fusioninventory');
-               break;
-
-            case 5:
-               echo __('Speed');
-               break;
-
-            case 6:
-               echo __('Internal status', 'fusioninventory');
-               break;
-
-            case 7:
-               echo __('Last Change', 'fusioninventory');
-               break;
-
-            case 8:
-               echo __('Traffic received/sent', 'fusioninventory');
-               break;
-
-            case 9:
-               echo __('Errors received/sent', 'fusioninventory');
-               break;
-
-            case 10 :
-               echo __('Duplex', 'fusioninventory');
-               break;
-
-            case 11 :
-               echo __('Internal MAC address', 'fusioninventory');
-               break;
-
-            case 12:
-               echo __('VLAN');
-               break;
-
-            case 13:
-               echo __('Connected to');
-               break;
-
-            case 14:
-               echo __('Connection');
-               break;
-
-         }
-         echo "</th>";
-      }
-      echo "</tr>";
-      // Fin de l'entête du tableau
-
       if ($result) {
          while ($data=$DB->fetch_array($result)) {
             $this->showNetworkPortDetail($data, $monitoring);
@@ -659,6 +558,119 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo '</table>';
    }
 
+
+   
+   function showNetworkPortDetailHeader($data, $monitoring, $query) {
+      global $DB,$CFG_GLPI;
+
+      $a_pref = DisplayPreference::getForTypeUser('PluginFusioninventoryNetworkport', 
+                                                  Session::getLoginUserID());
+      
+      echo "<tr class='tab_bg_1'>";
+      
+      echo "<th colspan='".(count($a_pref) + 4)."'>";
+      echo __('Ports array', 'fusioninventory');
+  
+      $result=$DB->query($query);
+      echo ' ('.$DB->numrows($result).')';
+      
+      $tmp = " class='pointer' onClick=\"var w = window.open('".$CFG_GLPI["root_doc"].
+             "/front/popup.php?popup=search_config&amp;itemtype=PluginFusioninventoryNetworkPort' ,'glpipopup', ".
+             "'height=400, width=1000, top=100, left=100, scrollbars=yes'); w.focus();\"";
+
+      echo " <img alt=\"".__s('Select default items to show')."\" title=\"".
+                          __s('Select default items to show')."\" src='".
+                          $CFG_GLPI["root_doc"]."/pics/options_search.png' ";
+      echo $tmp.">";
+
+      
+      $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/En_VI_visualisationsdonnees_2_reseau";
+      if ($_SESSION["glpilanguage"] == "fr_FR") {
+         $url_legend = "https://forge.indepnet.net/wiki/fusioninventory/Fr_VI_visualisationsdonnees_2_reseau";
+      }
+      echo "<a href='legend'></a>";
+      echo "<div id='legendlink'><a onClick='Ext.get(\"legend\").toggle();'>[ ".__('Legend', 'fusioninventory')." ]</a></div>";
+      echo "</th>";
+      echo "</tr>";
+
+      // Display legend
+      echo "
+      <tr class='tab_bg_1' style='display: none;' id='legend'>
+         <td colspan='".(count($a_pref) + 4)."'>
+         <ul>
+            <li>".__('Connection with a switch or a server in trunk or tagged mode', 'fusioninventory')."&nbsp;:</li>
+         </ul>
+         <img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/port_trunk.png' width='750' />
+         <ul>
+            <li>".__('Other connections (with a computer, a printer...)', 'fusioninventory')."&nbsp;:</li>
+         </ul>
+         <img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/connected_trunk.png' width='750' />
+         </td>
+      </tr>";
+      echo "<script>Ext.get('legend').setVisibilityMode(Ext.Element.DISPLAY);</script>";
+
+      echo "<tr class='tab_bg_1'>";
+
+      echo "<th colspan='2'>".__('Name')."</th>";
+      
+      if ($monitoring == '1') {
+         echo "<th>".__('Monitoring', 'fusioninventory')."</th>";
+      }
+
+      foreach ($a_pref as $data_array) {
+         
+         echo "<th>";
+         switch ($data_array) {
+            case 3:
+               echo __('MTU', 'fusioninventory');
+               break;
+
+            case 5:
+               echo __('Speed');
+               break;
+
+            case 6:
+               echo __('Internal status', 'fusioninventory');
+               break;
+
+            case 7:
+               echo __('Last Change', 'fusioninventory');
+               break;
+
+            case 8:
+               echo __('Traffic received/sent', 'fusioninventory');
+               break;
+
+            case 9:
+               echo __('Errors received/sent', 'fusioninventory');
+               break;
+
+            case 10 :
+               echo __('Duplex', 'fusioninventory');
+               break;
+
+            case 11 :
+               echo __('Internal MAC address', 'fusioninventory');
+               break;
+
+            case 12:
+               echo __('VLAN');
+               break;
+
+            case 13:
+               echo __('Connected to');
+               break;
+
+            case 14:
+               echo __('Connection');
+               break;
+
+         }
+         echo "</th>";
+      }
+      echo "</tr>";
+      return $result;
+   }
    
    
    function showNetworkPortDetail($data, $monitoring, $aggrega=0) {
@@ -668,14 +680,14 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       $background_img = "";
       if (($data["trunk"] == "1") AND (strstr($data["ifstatus"], "up")
-            OR strstr($data["ifstatus"], "1"))) {
+            OR $data["ifstatus"] == 1)) {
          $background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
                               "/plugins/fusioninventory/pics/port_trunk.png\"); '";
       } else if (($data["trunk"] == "-1") AND (strstr($data["ifstatus"], "up")
-                  OR strstr($data["ifstatus"], "1"))) {
+                  OR $data["ifstatus"] == 1)) {
          $background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
                               "/plugins/fusioninventory/pics/multiple_mac_addresses.png\"); '";
-      } else if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")) {
+      } else if (strstr($data["ifstatus"], "up") OR $data["ifstatus"] == 1) {
          $background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
                               "/plugins/fusioninventory/pics/connected_trunk.png\"); '";
       }
