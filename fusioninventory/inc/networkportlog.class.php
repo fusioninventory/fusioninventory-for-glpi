@@ -49,6 +49,42 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
    /**
+    * Display tab
+    *
+    * @param CommonGLPI $item
+    * @param integer $withtemplate
+    *
+    * @return varchar name of the tab(s) to display
+    */
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+
+      if ($item->getID() > 0 ) {
+         return __('FusionInventory historical', 'fusioninventory');
+      }
+      return '';
+   }
+
+
+
+   /**
+    * Display content of tab
+    *
+    * @param CommonGLPI $item
+    * @param integer $tabnum
+    * @param interger $withtemplate
+    *
+    * @return boolean true
+    */
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      $pfNetworkPortLog = new self();
+      echo $pfNetworkPortLog->showHistory($item->getID());
+      return true;
+   }
+   
+   
+   
+   /**
     * Insert port history with connection and disconnection
     *
     * @param $status status of port ('make' or 'remove')
@@ -412,9 +448,6 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
             if (!empty($data["networkports_id_destination"])) {
                // Connections and disconnections
                $imgfolder = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics";
-               if (strstr($_SERVER['PHP_SELF'], 'fusinvsnmp/ajax/showporthistory.php')) {
-                  $imgfolder = "../plugins/fusinvsnmp/pics";
-               }
                if ($data['field'] == '1') {
                   $text .= "<td align='center'><img src='".$imgfolder."/connection_ok.png'/></td>";
                } else {

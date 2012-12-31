@@ -113,7 +113,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryPrinter');
       Plugin::registerClass('PluginFusioninventoryPrinterCartridge');
       Plugin::registerClass('PluginFusioninventoryConfigSecurity');
-      Plugin::registerClass('PluginFusioninventoryNetworkPortLog');
+      Plugin::registerClass('PluginFusioninventoryNetworkPortLog',
+                 array('addtabon' => array('NetworkPort')));
       Plugin::registerClass('PluginFusinvsnmpAgentconfig');
       Plugin::registerClass('PluginFusioninventoryNetworkPort',
                             array('classname'=>'glpi_networkports'));
@@ -159,9 +160,11 @@ function plugin_init_fusioninventory() {
             $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/config.form.php?itemtype=pluginfusioninventoryconfig&glpi_tab=1';
          }
 
-         $PLUGIN_HOOKS['autoinventory_information']['fusioninventory'] = array('Computer' =>
-                                          array('PluginFusioninventoryInventoryComputerComputer',
-                                                'showInfo'));
+         $PLUGIN_HOOKS['autoinventory_information']['fusioninventory'] = array(
+               'Computer' =>  array('PluginFusioninventoryInventoryComputerComputer',
+                                    'showInfo'),
+               'NetworkEquipment' => array('PluginFusioninventoryNetworkEquipment',
+                                           'showInfo'));
          
          $PLUGIN_HOOKS['use_massive_action']['fusioninventory'] = 1;
          
@@ -365,6 +368,20 @@ function plugin_init_fusioninventory() {
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['page']  = '/plugins/fusioninventory/front/statediscovery.php';
          
+         
+         // Hack for NetworkEquipment display ports
+         if (strstr($_SERVER['PHP_SELF'], '/ajax/common.tabs.php')) {
+            if (strstr($_POST['target'], '/front/networkequipment.form.php')
+                    && $_POST['itemtype'] == 'NetworkEquipment') {
+               
+               if ($_POST['glpi_tab'] == 'NetworkPort$1') {
+                  $_POST['glpi_tab'] = 'PluginFusioninventoryNetworkEquipment$1';
+               } else if ($_POST['glpi_tab'] == 'PluginFusioninventoryNetworkEquipment$1') {
+                  $_POST['displaysnmpinfo'] = 1;
+               }
+            }
+            
+         }
          
       }
    } else { // plugin not active, need $moduleId for uninstall check
