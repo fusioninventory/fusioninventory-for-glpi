@@ -143,17 +143,12 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       
       $nw = new NetworkPort_NetworkPort();
 
- 
-
-// ********************************************************************************************** //
-// *********************************** METTRE TABLEAU DES PORTS ********************************* //
-// ********************************************************************************************** //
       $monitoring = 0;
       if (class_exists("PluginMonitoringNetworkport")) {
          $monitoring = 1;
       }
 
-      // * Get aggregate ports
+      // * Get all ports compose tha aggregat
       $a_aggregated_ports = array();
       $query = "SELECT *,glpi_plugin_fusioninventory_networkports.mac as ifmacinternal
       FROM glpi_plugin_fusioninventory_networkports
@@ -193,18 +188,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          ".$where."
       ORDER BY logical_number ";
 
-      
-      echo "<script  type='text/javascript'>
-function close_array(id){
-   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/collapse.png\''+
-      'onClick=\'Ext.get(\"viewfollowup'+id+'\").toggle();appear_array('+id+');\' />';
-}
-function appear_array(id){
-   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/expand.png\''+
-      'onClick=\'Ext.get(\"viewfollowup'+id+'\").toggle();close_array('+id+');\' id=\'plusmoinsl'+id+'\' />';
-}
-
-      </script>";
       $nbcol = 5;
       if ($monitoring == '1') {
          if (PluginMonitoringProfile::haveRight("componentscatalog", 'r')) {
@@ -353,9 +336,6 @@ function appear_array(id){
                      }
                   }
                }
-               
-               
-               
             }
          }
       }
