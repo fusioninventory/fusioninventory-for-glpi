@@ -227,7 +227,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 
       $networkPort = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
-      $pfNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog();
+      $pfNetworkPortConnectionLog = new PluginFusioninventoryNetworkPortConnectionLog();
 
       // * 1. Create switch 1 with a connection
       $this->testSendinventory("toto", $switch1, 1);

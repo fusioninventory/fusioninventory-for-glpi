@@ -490,12 +490,11 @@ Compiled Wed 18-Aug-10 04:40 by prod_rel_team</COMMENTS>
          $this->testSendinventory("toto", $switch1);
          // Check unknown device created with name
          $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-         $pfSNMPUnknownDevice = new PluginFusinvsnmpUnknownDevice();
-
+         
          $a_unknown = $pfUnknownDevice->find("`name`='juniperswitch3'");
          $this->assertEquals(count($a_unknown), 1, 'Unknown device juniperswitch3 not right creatd with LLDP infos');
          $unknown = current($a_unknown);
-         $a_unknown = $pfSNMPUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$unknown['id']."'");
+         $a_unknown = $pfUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$unknown['id']."'");
          $this->assertEquals(count($a_unknown), 1, 'Unknown SNMP device juniperswitch3 not right creatd with LLDP infos');
          $snmpunknown = current($a_unknown);
          $this->assertEquals($snmpunknown['sysdescr'],
