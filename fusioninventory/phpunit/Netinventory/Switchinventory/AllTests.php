@@ -508,6 +508,9 @@ Compiled Wed 18-Aug-10 04:40 by prod_rel_team</COMMENTS>
 
 
    function testSendinventory($xmlFile='', $xmlstring='', $create='0') {
+      global $DB;
+      
+      $DB->connect();
 
       if (empty($xmlFile)) {
          echo "testSendinventory with no arguments...\n";

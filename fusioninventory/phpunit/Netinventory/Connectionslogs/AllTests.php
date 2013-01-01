@@ -46,6 +46,8 @@ class Connectionslogs extends PHPUnit_Framework_TestCase {
    public function testSetModuleInventoryOff() {
       global $DB;
 
+      $DB->connect();
+      
      // set in config module inventory = yes by default
      $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
         SET `is_active`='0'
@@ -57,7 +59,9 @@ class Connectionslogs extends PHPUnit_Framework_TestCase {
 
 
    public function testSetModuleInventoryOn() {
-      $DB = new DB();
+      global $DB;
+      
+      $DB->connect();
 
       $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
          SET `is_active`='1'
@@ -70,6 +74,8 @@ class Connectionslogs extends PHPUnit_Framework_TestCase {
    public function testSendinventories() {
       global $DB;
 
+      $DB->connect();
+      
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
@@ -279,6 +285,9 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 
 
    function testSendinventory($xmlFile='', $xmlstring='', $create='0') {
+      global $DB;
+      
+      $DB->connect();
 
       if (empty($xmlFile)) {
          echo "testSendinventory with no arguments...\n";

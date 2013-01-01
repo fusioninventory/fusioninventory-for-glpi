@@ -78,8 +78,10 @@ class Hub extends PHPUnit_Framework_TestCase {
 
 
    public function testSendinventories() {
-      global $CFG_GLPI;
+      global $CFG_GLPI,$DB;
 
+      $DB->connect();
+      
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
