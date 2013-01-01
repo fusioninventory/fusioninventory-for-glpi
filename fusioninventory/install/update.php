@@ -171,6 +171,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelimportexport.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/networkcommondbtm.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmib.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmiboid.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmibobject.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/configlogfield.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
