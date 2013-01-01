@@ -1148,12 +1148,14 @@ class PluginFusioninventoryFormatconvert {
                $a_inventory['connection-lldp'][$a_port['IFNUMBER']] = $array_tmp;
             } else {
                // MAC
-               foreach ($a_port['CONNECTIONS']['CONNECTION'] as $keymac=>$mac) {
-                  if ($keymac == 'MAC') {
-                     $a_inventory['connection-mac'][$a_port['IFNUMBER']][] = $mac;
+               if (isset($a_port['CONNECTIONS']['CONNECTION'])) {
+                  foreach ($a_port['CONNECTIONS']['CONNECTION'] as $keymac=>$mac) {
+                     if ($keymac == 'MAC') {
+                        $a_inventory['connection-mac'][$a_port['IFNUMBER']][] = $mac;
+                     }
                   }
+                  $a_inventory['connection-mac'][$a_port['IFNUMBER']] = array_unique($a_inventory['connection-mac'][$a_port['IFNUMBER']]);
                }
-               $a_inventory['connection-mac'][$a_port['IFNUMBER']] = array_unique($a_inventory['connection-mac'][$a_port['IFNUMBER']]);
             }
          }
          
