@@ -241,11 +241,11 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       if ($monitoring == '1') {
          if (PluginMonitoringProfile::haveRight("componentscatalog", 'w')) {
             echo "<tr class='tab_bg_1 center'>";
-            echo "<td></td>";
+            echo "<td colspan='2'></td>";
             echo "<td class='center'>";
             echo "<input type='submit' class='submit' name='update' value='update'/>";
             echo "</td>";
-            echo "<td colspan='".(count($a_pref) + 2)."'></td>";
+            echo "<td colspan='".(count($a_pref))."'></td>";
             echo "</tr>";
          }
       }
@@ -568,7 +568,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       
       echo "<tr class='tab_bg_1'>";
       
-      echo "<th colspan='".(count($a_pref) + 4)."'>";
+      echo "<th colspan='".(count($a_pref) + 3)."'>";
       echo __('Ports array', 'fusioninventory');
   
       $result=$DB->query($query);
