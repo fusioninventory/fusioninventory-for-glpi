@@ -46,6 +46,8 @@ class Hub extends PHPUnit_Framework_TestCase {
    public function testSetModuleInventoryOff() {
       global $DB,$CFG_GLPI;
 
+      $DB->connect();
+      
       $Install = new Install();
       $Install->testInstall(0);
 
@@ -63,7 +65,9 @@ class Hub extends PHPUnit_Framework_TestCase {
 
 
    public function testSetModuleInventoryOn() {
-      $DB = new DB();
+      global $DB;
+      
+      $DB->connect();
 
       $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
          SET `is_active`='1'
