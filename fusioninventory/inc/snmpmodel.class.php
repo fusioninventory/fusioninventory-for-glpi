@@ -46,6 +46,20 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
+   /**
+   * Get name of this type
+   *
+   * @return text name of this type by language of the user connected
+   *
+   **/
+   static function getTypeName($nb=0) {
+
+      return __('SNMP models', 'fusioninventory');
+
+   }
+
+   
+   
    static function canCreate() {
       return PluginFusioninventoryProfile::haveRight("fusioninventory", "model", "w");
    }
