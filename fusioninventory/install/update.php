@@ -2619,12 +2619,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                               "id",
                               "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_inventorycomputerstorages_id_1",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_inventorycomputerstorages_id_2",
-                                 "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                              "plugin_fusioninventory_inventorycomputerstorages_id_1",
+                              "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                              "plugin_fusioninventory_inventorycomputerstorages_id_2",
+                              "int(11) NOT NULL DEFAULT '0'");
       $migration->migrationOneTable($newTable);
          $migration->addKey($newTable,
                             "plugin_fusioninventory_inventorycomputerstorages_id_1");
