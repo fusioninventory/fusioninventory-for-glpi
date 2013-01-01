@@ -355,12 +355,12 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
             break;
 
       }
-
+      
       $input = array();
       $input['name']          = (string)$xml->name;
       $input['itemtype']      = $type;
       $input['discovery_key'] = (string)$xml->key;
-      $input['comment']       = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep((string)$xml->comments));
+      //$input['comment']       = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep((string)$xml->comments));
       $plugin_fusioninventory_snmpmodels_id = $pfModel->add($input);
       
       $a_devices = array();
