@@ -1106,7 +1106,14 @@ class PluginFusioninventoryFormatconvert {
                                         'RAM'          => 'ram',
                                         'MEMORY'       => 'memory',
                                         'MAC'          => 'mac'));
-      
+      $a_listfield = array('cpu');
+      foreach ($a_listfield as $field) {
+         if (!isset($array_tmp[$field])
+                 || $array_tmp[$field] == '') {
+            $array_tmp[$field] = 0;
+         }
+      }
+         
       if (strstr($array_tmp['networkequipmentfirmwares_id'], "CW_VERSION")
               OR strstr($array_tmp['networkequipmentfirmwares_id'], "CW_INTERIM_VERSION")) {
          $explode = explode("$", $array_tmp['networkequipmentfirmwares_id']);
@@ -1125,6 +1132,11 @@ class PluginFusioninventoryFormatconvert {
                                         'UPTIME'  => 'uptime',
                                         'CPU'     => 'cpu',
                                         'MEMORY'  => 'memory'));
+      if (!isset($array_tmp['cpu'])
+              || $array_tmp['cpu'] == '') {
+         $array_tmp['cpu'] = 0;
+      }
+      
       $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
       $a_inventory['PluginFusioninventoryNetworkEquipment'] = $array_tmp;
       
@@ -1140,10 +1152,10 @@ class PluginFusioninventoryFormatconvert {
       foreach ($array['PORTS']['PORT'] as $a_port) {
          $array_tmp = $thisc->addValues($a_port, 
                                         array( 
-                                           'IFNAME'   => 'name',
-                                           'IFNUMBER' => 'logical_number',
-                                           'MAC'      => 'mac',
-                                           'IFSPEED'   => 'speed',
+                                           'IFNAME'            => 'name',
+                                           'IFNUMBER'          => 'logical_number',
+                                           'MAC'               => 'mac',
+                                           'IFSPEED'           => 'speed',
                                            'IFDESCR'           => 'ifdescr',
                                            'IFINERRORS'        => 'ifinerrors',
                                            'IFINOCTETS'        => 'ifinoctets',
@@ -1151,6 +1163,7 @@ class PluginFusioninventoryFormatconvert {
                                            'IFLASTCHANGE'      => 'iflastchange',
                                            'IFMTU'             => 'ifmtu',
                                            'IFOUTERRORS'       => 'ifouterrors',
+                                           'IFOUTOCTETS'       => 'ifoutoctets',
                                            'IFSTATUS'          => 'iftatus',
                                            'IFTYPE'            => 'iftype',
                                            'TRUNK'             => 'trunk'));
@@ -1161,6 +1174,15 @@ class PluginFusioninventoryFormatconvert {
          if ($array_tmp['ifdescr'] == '') {
             $array_tmp['ifdescr'] = $array_tmp['name'];
          }
+         $a_listfield = array('ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu',
+                              'speed');
+         foreach ($a_listfield as $field) {
+            if (!isset($array_tmp[$field])
+                    || $array_tmp[$field] == '') {
+               $array_tmp[$field] = 0;
+            }
+         }
+         $array_tmp['ifspeed'] = $array_tmp['speed'];
          
          $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
          
