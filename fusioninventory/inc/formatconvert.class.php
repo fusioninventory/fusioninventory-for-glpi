@@ -101,6 +101,16 @@ class PluginFusioninventoryFormatconvert {
                $datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP'] = 
                      array($datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP']);
             }
+            
+            if (isset($data['PORTS']['PORT'])
+                    AND !is_array($data['PORTS']['PORT'])) {
+               $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'] = 
+                     array($datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT']);
+            } else if (isset($data['PORTS']['PORT'])
+                    AND !is_int(key($data['PORTS']['PORT']))) {
+               $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'] = 
+                     array($datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT']);
+            }
          }
       }
       return $datainventory;
@@ -1120,7 +1130,6 @@ class PluginFusioninventoryFormatconvert {
       
       // * Internal ports
       if (isset($array['INFO']['IPS'])) {
-         Toolbox::logInFile("IPS", print_r($array['INFO']['IPS'], true));
          foreach ($array['INFO']['IPS']['IP'] as $IP) {
             $a_inventory['internalport'][] = $IP;
          }
@@ -1172,6 +1181,12 @@ class PluginFusioninventoryFormatconvert {
             } else {
                // MAC
                if (isset($a_port['CONNECTIONS']['CONNECTION'])) {
+                  if (!is_array($a_port['CONNECTIONS']['CONNECTION'])) {
+                     $a_port['CONNECTIONS']['CONNECTION'] = array($a_port['CONNECTIONS']['CONNECTION']);
+                  } else if (!is_int(key($a_port['CONNECTIONS']['CONNECTION']))) {
+                     $a_port['CONNECTIONS']['CONNECTION'] = array($a_port['CONNECTIONS']['CONNECTION']);
+                  }
+                  
                   foreach ($a_port['CONNECTIONS']['CONNECTION'] as $keymac=>$mac) {
                      if ($keymac == 'MAC') {
                         $a_inventory['connection-mac'][$a_port['IFNUMBER']][] = $mac;
@@ -1184,15 +1199,22 @@ class PluginFusioninventoryFormatconvert {
          
          // VLAN
          if (isset($a_port['VLANS'])) {
+            if (!is_array($a_port['VLANS'])) {
+               $a_port['VLANS'] = array($a_port['VLANS']);
+            } else if (!is_int(key($a_port['VLANS']))) {
+               $a_port['VLANS'] = array($a_port['VLANS']);
+            }
+                  
             foreach ($a_port['VLANS'] as $a_vlan) {
                $array_tmp = $thisc->addValues($a_vlan, 
                                               array( 
                                                  'NAME'  => 'name',
                                                  'NUMBER' => 'tag'));
-               
+               if (isset($array_tmp['tag'])) {
+                  $a_inventory['vlans'][$a_port['IFNUMBER']][$array_tmp['tag']] = $array_tmp;
+               }
             }
          }
-         $a_inventory['vlans'][$a_port['IFNUMBER']][$array_tmp['tag']] = $array_tmp;
       }
       return $a_inventory;
    }
