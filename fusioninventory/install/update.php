@@ -2337,7 +2337,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "date",
                               "datetime DEFAULT NULL");
          $migration->addField($newTable,
-                              "plugin_fusioninventory_inventorycomputerbchemistries_id",
+                              "plugin_fusioninventory_inventorycomputerchemistries_id",
                               "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                               "voltage",
