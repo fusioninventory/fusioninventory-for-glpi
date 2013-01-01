@@ -236,7 +236,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 </REQUEST>';
 
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $pfTinvsnmpNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog();
+      $pfTinvsnmpNetworkPortConnectionLog = new PluginFusioninventoryNetworkPortConnectionLog();
       $networkEquipment = new NetworkEquipment();
       $networkPort = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
