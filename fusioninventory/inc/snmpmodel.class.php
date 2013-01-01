@@ -374,10 +374,6 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
        * Manage models migration
        */
       
-      if ($folder == '') {
-         $folder = GLPI_ROOT.'/plugins/fusinvsnmp/models';
-      }
-      
       $NewModelList = array();
       foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) {
          $file = str_replace("../plugins/fusioninventory/snmpmodels/", "", $file);
