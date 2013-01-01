@@ -81,6 +81,28 @@ class PluginFusioninventoryFormatconvert {
               && !is_array($datainventory['CONTENT']['BIOS'])) {
          unset($datainventory['CONTENT']['BIOS']);
       }
+      
+      // Hack for Network discovery and inventory
+      if (isset($datainventory['CONTENT']['DEVICE'])
+              AND !is_array($datainventory['CONTENT']['DEVICE'])) {
+         $datainventory['CONTENT']['DEVICE'] = array($datainventory['CONTENT']['DEVICE']);
+      } else if (isset($datainventory['CONTENT']['DEVICE'])
+              AND !is_int(key($datainventory['CONTENT']['DEVICE']))) {
+         $datainventory['CONTENT']['DEVICE'] = array($datainventory['CONTENT']['DEVICE']);
+      }
+      if (isset($datainventory['CONTENT']['DEVICE'])) {
+         foreach ($datainventory['CONTENT']['DEVICE'] as $num=>$data) {
+            if (isset($data['INFO']['IPS']['IP'])
+                    AND !is_array($data['INFO']['IPS']['IP'])) {
+               $datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP'] = 
+                     array($datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP']);
+            } else if (isset($data['INFO']['IPS']['IP'])
+                    AND !is_int(key($data['INFO']['IPS']['IP']))) {
+               $datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP'] = 
+                     array($datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP']);
+            }
+         }
+      }
       return $datainventory;
    }
    
@@ -1098,6 +1120,7 @@ class PluginFusioninventoryFormatconvert {
       
       // * Internal ports
       if (isset($array['INFO']['IPS'])) {
+         Toolbox::logInFile("IPS", print_r($array['INFO']['IPS'], true));
          foreach ($array['INFO']['IPS']['IP'] as $IP) {
             $a_inventory['internalport'][] = $IP;
          }
