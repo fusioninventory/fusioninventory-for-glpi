@@ -83,7 +83,8 @@ function plugin_init_fusioninventory() {
 
       Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
                  array('addtabon' => array('Computer')));
-      Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer');
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer',
+                 array('addtabon' => array('Computer')));
       Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
       Plugin::registerClass('PluginFusioninventoryInventoryComputerStorage',
                  array('addtabon' => array('Computer')));
