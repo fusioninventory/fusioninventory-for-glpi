@@ -150,7 +150,7 @@ function pluginFusioninventoryGetCurrentVersion($version) {
             $data = array();
             if ($result=$DB->query($query)) {
                if ($DB->numrows($result) == "1") {
-                  $data = $DB->fetch_asmosoc($result);
+                  $data = $DB->fetch_assoc($result);
                   return $data['value'];
                }
             }
@@ -180,7 +180,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/communicationrest.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputercomputer.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerlib.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
@@ -306,7 +305,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->changeField($newTable,
                                  'modulename',
                                  'modulename',
-                                 "varchar(255) COLLATE utf8_unicode_ci NOT NULL");
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->changeField($newTable,
                                  'is_active',
                                  'is_active',
@@ -323,9 +322,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'url',
                                  'url',
                                  "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-
       $migration->migrationOneTable($newTable);
-
          $migration->addField($newTable,
                               'id',
                               "int(11) NOT NULL AUTO_INCREMENT");
@@ -334,7 +331,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                               'modulename',
-                              "COLLATE utf8_unicode_ci NOT NULL");
+                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->addField($newTable,
                               'is_active',
                               "int(1) NOT NULL DEFAULT '0'");
