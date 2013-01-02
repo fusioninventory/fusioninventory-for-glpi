@@ -498,7 +498,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['fields']['id']         = array('type'    => 'autoincrement', 
                                                'value'   => '');
       $a_table['fields']['type']       = array('type'    => 'string',  
-                                               'value'   => '');
+                                               'value'   => NULL);
       $a_table['fields']['value']      = array('type'    => 'string', 
                                                'value'   => NULL);
       $a_table['fields']['plugins_id'] = array('type'    => 'integer', 
@@ -507,7 +507,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => NULL);
 
       $a_table['oldfields']  = array();
-      $a_table['oldfields'][] = '';
       $a_table['oldfields'][] = 'version';
       $a_table['oldfields'][] = 'URL_agent_conf';
       $a_table['oldfields'][] = 'ssl_only';
@@ -522,6 +521,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['oldfields'][] = 'criteria2_serial';
       $a_table['oldfields'][] = 'criteria2_macaddr';
       $a_table['oldfields'][] = 'delete_agent_process';
+      $a_table['oldfields'][] = 'activation_history';
+      $a_table['oldfields'][] = 'activation_connection';
+      $a_table['oldfields'][] = 'activation_snmp_computer';
+      $a_table['oldfields'][] = 'activation_snmp_networking';
+      $a_table['oldfields'][] = 'activation_snmp_peripheral';
+      $a_table['oldfields'][] = 'activation_snmp_phone';
+      $a_table['oldfields'][] = 'activation_snmp_printer';
+      
 
       $a_table['renamefields'] = array();
       $a_table['renamefields']['ID'] = 'id';

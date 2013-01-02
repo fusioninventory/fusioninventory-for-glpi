@@ -55,7 +55,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configs`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_configs` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+   `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `plugins_id` int(11) NOT NULL DEFAULT '0',
    `module` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
