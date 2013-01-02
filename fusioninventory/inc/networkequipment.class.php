@@ -676,8 +676,10 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    function showNetworkPortDetail($data, $monitoring, $aggrega=0) {
       global $CFG_GLPI,$DB;
       
-      $nw=new NetworkPort_NetworkPort();
-
+      $nw = new NetworkPort_NetworkPort();
+      $networkName = new NetworkName();
+      $iPAddress = new IPAddress();
+      
       $background_img = "";
       if (($data["trunk"] == "1") AND (strstr($data["ifstatus"], "up")
             OR $data["ifstatus"] == 1)) {
@@ -818,8 +820,15 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                      $link1 = $item->getLink(1);
                      $link = str_replace($item->getName(0), $data_device["mac"],
                                          $item->getLink());
-                     $link2 = str_replace($item->getName(0), $data_device["ip"],
-                                          $item->getLink());
+                     
+                     // * GetIP
+                        $a_networknames = current($networkName->find("`itemtype`='NetworkPort'
+                                          AND `items_id`='".$item->getID()."'", "", 1));
+                        $a_ipaddresses =  current($networkName->find("`itemtype`='NetworkName'
+                                          AND `items_id`='".$a_networknames['id']."'", "", 1));
+                        $link2 = str_replace($item->getName(0), $a_ipaddresses['name'],
+                                             $item->getLink());
+                        
                      if ($data_device["itemtype"] == 'PluginFusioninventoryUnknownDevice') {
                         if ($item->getField("accepted") == "1") {
                            echo "<td style='background:#bfec75'
@@ -942,7 +951,8 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                         echo "<img src=\"" . $CFG_GLPI["root_doc"] . "/pics/delete.png\" alt='" . __('Delete', 'fusioninventory') . "' title='" . __('Delete', 'fusioninventory') . "'></a>";
                      } else
                         echo "&nbsp;";
-                     echo "</td></tr>";
+                     echo "</td>";
+                     echo "</tr>";
                   }
                   echo "</table>";
                } else {
