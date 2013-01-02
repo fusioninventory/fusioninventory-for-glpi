@@ -71,7 +71,7 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
                         getTableForItemType("PluginFusioninventoryInventoryComputerStorage"), 
                         "`computers_id`='".$item->getID()."'");
             if (count($a_nb) > 0) {
-               return self::createTabEntry(__('Storage', 'fusioninventory'));
+//               return self::createTabEntry(__('Storage', 'fusioninventory'));
 
             }
          }
