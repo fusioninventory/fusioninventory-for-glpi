@@ -150,7 +150,7 @@ function pluginFusioninventoryGetCurrentVersion($version) {
             $data = array();
             if ($result=$DB->query($query)) {
                if ($DB->numrows($result) == "1") {
-                  $data = $DB->fetch_assoc($result);
+                  $data = $DB->fetch_asmosoc($result);
                   return $data['value'];
                }
             }
@@ -306,7 +306,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->changeField($newTable,
                                  'modulename',
                                  'modulename',
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                                 "varchar(255) COLLATE utf8_unicode_ci NOT NULL");
          $migration->changeField($newTable,
                                  'is_active',
                                  'is_active',
@@ -334,7 +334,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                               'modulename',
-                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+                              "COLLATE utf8_unicode_ci NOT NULL");
          $migration->addField($newTable,
                               'is_active',
                               "int(1) NOT NULL DEFAULT '0'");
@@ -603,10 +603,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'id',
                                  "int(11) NOT NULL AUTO_INCREMENT");
          $migration->changeField($newTable,
-                                 'plugins_id',
-                                 'plugins_id',
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
                                  'modulename',
                                  'modulename',
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
@@ -618,12 +614,21 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'exceptions',
                                  'exceptions',
                                  "text COMMENT 'array(agent_id)'");
-         $migration->changeField($newTable,
-                                 'entities_id',
-                                 'entities_id',
-                                 "int(11) NOT NULL DEFAULT '-1'");
          $migration->dropField($newTable,
                                "url");
+         $migration->dropField($newTable,
+                               "plugins_id");
+         $migration->dropField($newTable,
+                               "entities_id");
+         $migration->dropKey($newTable,
+                             "unicity");
+         $migration->dropKey($newTable,
+                             "entities_id");
+      $migration->migrationOneTable($newTable);
+         $migration->addKey($newTable,
+                            "modulename", 
+                            "",
+                            "UNIQUE");
       $migration->migrationOneTable($newTable);
       $DB->list_fields($newTable, false);
 
@@ -632,12 +637,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Add WakeOnLan module appear in version 2.3.0
     */
-   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='WAKEONLAN'";
+   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+      WHERE `modulename`='WAKEONLAN'";
    $result = $DB->query($query);
    if (!$DB->numrows($result)) {
       $query_ins= "INSERT INTO `glpi_plugin_fusioninventory_agentmodules`
-            (`plugins_id`, `modulename`, `is_active`, `exceptions`)
-         VALUES ('".$plugins_id."', 'WAKEONLAN', '0', '".exportArrayToDB(array())."')";
+            (`modulename`, `is_active`, `exceptions`)
+         VALUES ('WAKEONLAN', '0', '".exportArrayToDB(array())."')";
       $DB->query($query_ins);
    }
 
@@ -649,12 +655,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       WHERE `modulename`='SNMPQUERY'";
    $DB->query($query);
    
-   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='NETWORKINVENTORY'";
+   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+      WHERE `modulename`='NETWORKINVENTORY'";
    $result = $DB->query($query);
    if (!$DB->numrows($result)) {
       $agentmodule = new PluginFusioninventoryAgentmodule;
       $input = array();
-      $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "NETWORKINVENTORY";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
@@ -669,12 +675,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       WHERE `modulename`='NETDISCOVERY'";
    $DB->query($query);
    
-   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` WHERE `modulename`='NETWORKDISCOVERY'";
+   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules` 
+      WHERE `modulename`='NETWORKDISCOVERY'";
    $result = $DB->query($query);
    if (!$DB->numrows($result)) {
       $agentmodule = new PluginFusioninventoryAgentmodule;
       $input = array();
-      $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "NETWORKDISCOVERY";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
@@ -692,7 +698,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (!$DB->numrows($result)) {
       $agentmodule = new PluginFusioninventoryAgentmodule;
       $input = array();
-      $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "INVENTORY";
       $input['is_active']  = 1;
       $input['exceptions'] = exportArrayToDB(array());
@@ -4909,7 +4914,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $result = $DB->query($query);
       if ($DB->numrows($result) == '0') {
          $input = array();
-         $input['plugins_id'] = $plugins_id;
          $input['modulename'] = "ESX";
          $input['is_active']  = 0;
          $input['exceptions'] = exportArrayToDB(array());

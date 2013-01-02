@@ -243,35 +243,30 @@ function pluginFusioninventoryInstall($version, $migration='') {
       PluginFusioninventoryProfile::changeProfile();
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $input = array();
-      $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "WAKEONLAN";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
       $input = array();
-      $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "INVENTORY";
       $input['is_active']  = 1;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
       $input = array();
-      $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "ESX";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
       $input = array();
-      $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "NETWORKINVENTORY";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
       $input = array();
-      $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "NETWORKDISCOVERY";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());

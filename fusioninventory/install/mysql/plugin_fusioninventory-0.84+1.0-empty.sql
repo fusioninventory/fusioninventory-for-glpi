@@ -241,15 +241,12 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agentmodules`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
-   `plugins_id` int(11) NOT NULL DEFAULT '0',
-   `modulename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `modulename` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
    `is_active` int(1) NOT NULL DEFAULT '0',
    `exceptions` text DEFAULT NULL COMMENT 'array(agent_id)',
-   `entities_id` int(11) NOT NULL DEFAULT '-1',
    PRIMARY KEY (`id`),
-   UNIQUE KEY `unicity` (`plugins_id`, `modulename`),
-   KEY `is_active` (`is_active`),
-   KEY `entities_id` (`entities_id`)
+   UNIQUE KEY `modulename` (`modulename`),
+   KEY `is_active` (`is_active`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
