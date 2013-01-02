@@ -340,7 +340,7 @@ var {$render}fileForm = new Ext.FormPanel({
          name: '{$render}id',
          xtype: 'hidden'
       }, new Ext.form.ComboBox({
-         fieldLabel:"{$LANG['plugin_fusinvdeploy']['files'][7]}",
+         fieldLabel:"{__('Upload From', 'fusioninventory')}",
          id: '{$render}type',
          name: '{$render}type',
          valueField: 'name',
@@ -350,8 +350,8 @@ var {$render}fileForm = new Ext.FormPanel({
          store: new Ext.data.ArrayStore({
             fields: ['name', 'value'],
             data: [
-               ['filehttp', "{$LANG['plugin_fusinvdeploy']['files'][8]}"],
-               ['fileserver', "{$LANG['plugin_fusinvdeploy']['files'][9]}"]
+               ['filehttp', "{__('This computer', 'fusioninventory')}"],
+               ['fileserver', "{__('The server', 'fusioninventory')}"]
             ]
          }),
          mode: 'local',

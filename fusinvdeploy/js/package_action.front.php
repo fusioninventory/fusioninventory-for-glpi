@@ -134,7 +134,7 @@ var {$render}actionColumns =  [{
 }, {
    id: '{$render}path',
    hidden:true,
-   header: "{$LANG['plugin_fusinvdeploy']['files'][1]}",
+   header: "{__('File name', 'fusioninventory')}",
    width: {$column_width[6]},
    dataIndex: '{$render}path'
 }, {
@@ -165,17 +165,17 @@ var {$render}actionColumns =  [{
 function {$render}renderType(val) {
    switch(val) {
       case 'PluginFusinvdeployAction_Command':
-         return "{$LANG['plugin_fusinvdeploy']['package'][1]}";
+         return "{__('Execute a command', 'fusioninventory')}";
       case 'PluginFusinvdeployAction_Move':
-         return "{$LANG['plugin_fusinvdeploy']['package'][18]}";
+         return "{__('Move', 'fusioninventory')}";
       case 'PluginFusinvdeployAction_Copy':
-         return "{$LANG['plugin_fusinvdeploy']['package'][28]}";
+         return "{__('Copy', 'fusioninventory')}";
       case 'PluginFusinvdeployAction_Delete':
-         return "{$LANG['plugin_fusinvdeploy']['package'][20]}";
+         return "{__('Delete', 'fusioninventory')}";
       case 'PluginFusinvdeployAction_Mkdir':
-         return "{$LANG['plugin_fusinvdeploy']['package'][27]}";
+         return "{__('Make a directory', 'fusioninventory')}";
       case 'PluginFusinvdeployAction_Message':
-         return "{$LANG['plugin_fusinvdeploy']['package'][21]}";
+         return "{__('Show dialog', 'fusioninventory')}";
       default:
          return '';
    }
@@ -358,7 +358,7 @@ var {$render}actionGridProxyRetChecks = {
 {$render}actionGridRetChecksConfig = Ext.extend( Ext.grid.EditorGridPanel, {
    width: 295,
    height: 120,
-   /*title: "{$LANG['plugin_fusinvdeploy']['package'][22]}",*/
+   /*title: "{__('Return codes', 'fusioninventory')}",*/
    /*style : 'margin:10px 0 0',*/
    initComponent: function( config ) {
       Ext.apply( this, {
@@ -645,12 +645,12 @@ var {$render}actionForm = new Ext.FormPanel({
       store: new Ext.data.ArrayStore({
          fields: ['name', 'value'],
          data: [
-            ['PluginFusinvdeployAction_Command', "{$LANG['plugin_fusinvdeploy']['package'][1]}"],
-            ['PluginFusinvdeployAction_Move',    "{$LANG['plugin_fusinvdeploy']['package'][18]}"],
-            ['PluginFusinvdeployAction_Copy',    "{$LANG['plugin_fusinvdeploy']['package'][28]}"],
-            ['PluginFusinvdeployAction_Delete',  "{$LANG['plugin_fusinvdeploy']['package'][20]}"],
-            ['PluginFusinvdeployAction_Mkdir',   "{$LANG['plugin_fusinvdeploy']['package'][27]}"]/*,
-            ['PluginFusinvdeployAction_Message', "{$LANG['plugin_fusinvdeploy']['package'][21]}"]*/
+            ['PluginFusinvdeployAction_Command', "{__('Execute a command', 'fusioninventory')}"],
+            ['PluginFusinvdeployAction_Move',    "{__('Move', 'fusioninventory')}"],
+            ['PluginFusinvdeployAction_Copy',    "{__('Copy', 'fusioninventory')}"],
+            ['PluginFusinvdeployAction_Delete',  "{__('Delete', 'fusioninventory')}"],
+            ['PluginFusinvdeployAction_Mkdir',   "{__('Make a directory', 'fusioninventory')}"]/*,
+            ['PluginFusinvdeployAction_Message', "{__('Show dialog', 'fusioninventory')}"]*/
          ]
       }),
       mode: 'local',

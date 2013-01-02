@@ -121,19 +121,19 @@ class PluginFusinvdeployReport extends CommonDBTM {
             if ($uniqid != $datastate['uniqid']) {
                echo "<tr class='tab_bg_1'>";
                echo "<th>";
-               echo $LANG['plugin_fusinvdeploy']['package'][7];            
+               echo __('Package', 'fusioninventory');
                echo "</th>";
                echo "<th>";
-               echo $LANG['help'][25];            
+               echo __('Computer');
                echo "</th>";
                echo "<th>";
-               echo $LANG['state'][0];            
+               echo __('Status');
                echo "</th>";
                echo "<th>";
-               echo $LANG['common'][27];            
+               echo __('Date');
                echo "</th>";
                echo "<th>";
-               echo $LANG['common'][25];            
+               echo __('Comments');
                echo "</th>";
                echo "</tr>";
                $uniqid = $datastate['uniqid'];

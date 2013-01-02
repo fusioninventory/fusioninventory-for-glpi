@@ -120,7 +120,7 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
                echo "</tr>";
                echo "<tr>";
                echo "<td>";
-               echo $LANG['plugin_fusinvdeploy']['package'][7]."&nbsp;:";
+               echo __('Package', 'fusioninventory')."&nbsp;:";
                echo "</td>";
                echo "<td>";
                Dropdown::show('PluginFusinvdeployPackage', array(
@@ -132,9 +132,9 @@ function plugin_fusinvdeploy_MassiveActionsDisplay($options=array()) {
                echo "<td colspan='2'>";
                echo "<input type='checkbox' name='separate_jobs' value='1'/>&nbsp;";
                if ($options['itemtype'] == 'Computer') {
-                     echo $LANG['plugin_fusinvdeploy']['massiveactions'][1];
+                     echo __('Create a job for each computer', 'fusioninventory');
                } else if ($options['itemtype'] == 'PluginFusinvdeployGroup') {
-                     echo $LANG['plugin_fusinvdeploy']['massiveactions'][2];
+                     echo __('Create a job for each group', 'fusioninventory');
                }
                echo "</td>";
                echo "</tr>";
