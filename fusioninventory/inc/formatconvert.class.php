@@ -1164,7 +1164,7 @@ class PluginFusioninventoryFormatconvert {
                                            'IFMTU'             => 'ifmtu',
                                            'IFOUTERRORS'       => 'ifouterrors',
                                            'IFOUTOCTETS'       => 'ifoutoctets',
-                                           'IFSTATUS'          => 'iftatus',
+                                           'IFSTATUS'          => 'ifstatus',
                                            'IFTYPE'            => 'iftype',
                                            'TRUNK'             => 'trunk'));
          if ($array_tmp['trunk'] == '') {
