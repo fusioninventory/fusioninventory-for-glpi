@@ -242,7 +242,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agentmodules`;
 CREATE TABLE `glpi_plugin_fusioninventory_agentmodules` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `modulename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `is_active` int(1) NOT NULL DEFAULT '0',
+   `is_active` tinyint(1) NOT NULL DEFAULT '0',
    `exceptions` text DEFAULT NULL COMMENT 'array(agent_id)',
    PRIMARY KEY (`id`),
    UNIQUE KEY `modulename` (`modulename`),
