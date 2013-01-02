@@ -48,7 +48,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","printerlog");
 
-PluginFusioninventoryProfile::checkRight("fusinvsnmp","reportprinter","r");
+PluginFusioninventoryProfile::checkRight("reportprinter","r");
 
 if (isset($_POST['glpi_plugin_fusioninventory_date_start'])) {
    $_SESSION['glpi_plugin_fusioninventory_date_start'] = $_POST['glpi_plugin_fusioninventory_date_start'];

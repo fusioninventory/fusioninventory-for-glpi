@@ -807,7 +807,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
 
-//            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
+//            if (PluginFusioninventoryProfile::haveRight("task","r")) {
 //               $array[3] = __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
 
 //            }
@@ -822,7 +822,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
+            if (PluginFusioninventoryProfile::haveRight("task","r")) {
                $array[2] = __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
             }
             if ($_GET['id'] > 0) {
@@ -837,10 +837,10 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer", "r")) {
+            if (PluginFusioninventoryProfile::haveRight("printer", "r")) {
                $array[1] = __('FusInv', 'fusioninventory')." ".__('SNMP', 'fusioninventory');
             }
-            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
+            if (PluginFusioninventoryProfile::haveRight("task","r")) {
                $array[2] = __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
             }
             return $array;
@@ -867,7 +867,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
       case 'PluginFusioninventoryUnknownDevice' :
          $array = array ();
          if ($_GET['id'] > 0) {
-            if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","r")) {
+            if (PluginFusioninventoryProfile::haveRight("unknowndevice","r")) {
                $array[1] = __('FusInv', 'fusioninventory')." ".__('XML', 'fusioninventory');
 
             }
@@ -877,7 +877,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
 
       case 'PluginFusioninventoryCredentialIp':
          $array = array();
-         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "task","r")) {
+         if (PluginFusioninventoryProfile::haveRight("task","r")) {
             $array[1] = __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
 
          }
@@ -901,7 +901,7 @@ function plugin_headings_actions_fusioninventory($item) {
 
       case 'Printer' :
          $array = array();
-         if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer", "r")) {
+         if (PluginFusioninventoryProfile::haveRight("printer", "r")) {
             $array[1] = "plugin_headings_fusinvsnmp_printerInfo";
          }
          $array[2] = "plugin_headings_fusioninventory_tasks";
@@ -1218,14 +1218,14 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
                break;
             
             case "plugin_fusioninventory_get_model" :
-               if(PluginFusioninventoryProfile::haveRight("fusioninventory", "model","w")) {
+               if(PluginFusioninventoryProfile::haveRight("model","w")) {
                    echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
                      __('Post') . "\" >";
                }
                break;
 
             case "plugin_fusioninventory_assign_model" :
-               if(PluginFusioninventoryProfile::haveRight("fusioninventory", "model","w")) {
+               if(PluginFusioninventoryProfile::haveRight("model","w")) {
                   $query_models = "SELECT *
                                    FROM `glpi_plugin_fusioninventory_snmpmodels`
                                    WHERE `itemtype`!='".$options['itemtype']."'";
@@ -1250,7 +1250,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
                break;
 
             case "plugin_fusioninventory_assign_auth" :
-               if(PluginFusioninventoryProfile::haveRight("fusioninventory", "configsecurity","w")) {
+               if(PluginFusioninventoryProfile::haveRight("configsecurity","w")) {
                   PluginFusioninventoryConfigSecurity::auth_dropdown();
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
                      __('Post') . "\" >";
@@ -1260,7 +1260,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          }
          if ($options['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
             if ($options['action'] == "plugin_fusioninventory_unknown_import") {
-               if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
+               if (PluginFusioninventoryProfile::haveRight("unknowndevice","w")) {
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . __('Post') . "\" >";
                }
             }
@@ -1340,7 +1340,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          break;
 
       case "plugin_fusioninventory_unknown_import" :
-         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
+         if (PluginFusioninventoryProfile::haveRight("unknowndevice","w")) {
             $Import = 0;
             $NoImport = 0;
             $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();

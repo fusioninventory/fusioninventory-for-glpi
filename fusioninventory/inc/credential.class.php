@@ -56,11 +56,11 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    }
 
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'w');
+      return PluginFusioninventoryProfile::haveRight('credential', 'w');
    }
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r');
+      return PluginFusioninventoryProfile::haveRight('credential', 'r');
    }
 
 
@@ -356,7 +356,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
          $rand = Dropdown::showFromArray('plugin_fusioninventory_credentials_id', $types,
                                          array('value' => $value));
 
-         if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'w')) {
+         if (PluginFusioninventoryProfile::haveRight('credential', 'w')) {
             echo "<img alt='' title=\"".__('Add')."\" src='".$CFG_GLPI["root_doc"].
                "/pics/add_dropdown.png' style='cursor:pointer; margin-left:2px;'
                onClick=\"var w = window.open('".
@@ -384,7 +384,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    function title() {
 
       $buttons = array();
-      if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r')) {
+      if (PluginFusioninventoryProfile::haveRight('credential', 'r')) {
          $buttons["credentialip.php"] = __('Remote devices to inventory (VMware)', 'fusioninventory');
 
       }

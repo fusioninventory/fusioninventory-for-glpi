@@ -51,13 +51,13 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    
    
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment", "w");
+      return PluginFusioninventoryProfile::haveRight("networkequipment", "w");
    }
 
    
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment", "r");
+      return PluginFusioninventoryProfile::haveRight("networkequipment", "r");
    }
    
    
@@ -94,12 +94,12 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    function showForm(CommonDBTM $item, $options=array()) {
       global $DB,$CFG_GLPI;
       
-      if (!PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment","r")) {
+      if (!PluginFusioninventoryProfile::haveRight("networkequipment","r")) {
          NetworkPort::showForItem($item);
          return;
       }
       $canedit = false;
-      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment","w")) {
+      if (PluginFusioninventoryProfile::haveRight("networkequipment","w")) {
          $canedit = true;
       }
 

@@ -58,12 +58,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w");
+      return PluginFusioninventoryProfile::haveRight("unknowndevice","w");
    }
 
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","r");
+      return PluginFusioninventoryProfile::haveRight("unknowndevice","r");
    }
 
 
@@ -187,7 +187,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $ong[2]=__('Import');
 
          $ptc = new PluginFusioninventoryConfig;
-         if (($ptc->isActive('fusioninventory', 'remotehttpagent', '')) AND(PluginFusioninventoryProfile::haveRight("fusioninventory", "remotecontrol","w"))) {
+         if (($ptc->isActive('fusioninventory', 'remotehttpagent', '')) AND(PluginFusioninventoryProfile::haveRight("remotecontrol","w"))) {
             $ong[3]=__('Job', 'fusioninventory');
 
          }
@@ -210,7 +210,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    **/
    function showForm($id, $options=array()) {
 
-      //PluginFusioninventoryProfile::checkRight("fusioninventory", "networking","r");
+      //PluginFusioninventoryProfile::checkRight("networking","r");
 
       if ($id!='') {
          $this->getFromDB($id);

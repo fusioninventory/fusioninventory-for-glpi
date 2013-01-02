@@ -177,13 +177,13 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       echo "</td><td class='center'>";
 
       if (count($listName)) {
-         if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","w")) {
+         if (PluginFusioninventoryProfile::haveRight("configuration","w")) {
             echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_add' value='" . __('Add') . " >>'>";
          }
       }
       echo "<br /><br />";
       if (!empty($options)) {
-         if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","w")) {
+         if (PluginFusioninventoryProfile::haveRight("configuration","w")) {
             echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_delete' value='<< " . __('Delete', 'fusioninventory') . "'>";
          }
       }
@@ -209,7 +209,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='3' class='center'>";
-      if (PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configuration","w")) {
+      if (PluginFusioninventoryProfile::haveRight("configuration","w")) {
          echo "<input type='submit' class=\"submit\" name='Clean_history' value='".__('Clean')."' >";
       }
       echo "</td>";

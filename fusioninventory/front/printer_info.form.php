@@ -44,10 +44,10 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-PluginFusioninventoryProfile::checkRight("fusioninventory", "printer","r");
+PluginFusioninventoryProfile::checkRight("printer","r");
 
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
-      PluginFusioninventoryProfile::checkRight("fusioninventory", "printer","w");
+      PluginFusioninventoryProfile::checkRight("printer","w");
 
    $plugin_fusioninventory_printer = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
 

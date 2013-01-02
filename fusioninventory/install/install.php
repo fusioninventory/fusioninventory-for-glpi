@@ -205,11 +205,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
     * Manage profiles
     */
       $migration->displayMessage("Initialize profiles");
-      $plugin = new Plugin();
-      $data = $plugin->find("`name` = 'FusionInventory'");
-      $fields = current($data);
-      $plugins_id = $fields['id'];
-      PluginFusioninventoryProfile::initProfile('fusioninventory', $plugins_id);
+      PluginFusioninventoryProfile::initProfile('fusioninventory');
 
 
 
@@ -244,7 +240,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
     * Register Agent TASKS
     */
       $migration->displayMessage("Initialize agent TASKS");
-      PluginFusioninventoryProfile::changeProfile($plugins_id);
+      PluginFusioninventoryProfile::changeProfile();
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $input = array();
       $input['plugins_id'] = $plugins_id;

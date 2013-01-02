@@ -61,12 +61,12 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
    
    
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "model", "w");
+      return PluginFusioninventoryProfile::haveRight("model", "w");
    }
 
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "model", "r");
+      return PluginFusioninventoryProfile::haveRight("model", "r");
    }
 
 
@@ -118,7 +118,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
    function showForm($id, $options=array()) {
       global $CFG_GLPI;
 
-      PluginFusioninventoryProfile::checkRight("fusioninventory", "model","r");
+      PluginFusioninventoryProfile::checkRight("model","r");
 
       if ($id!='') {
          $this->getFromDB($id);
@@ -176,7 +176,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_2'><td colspan='2'>";
-      if(PluginFusioninventoryProfile::haveRight("fusioninventory", "model","w")) {
+      if(PluginFusioninventoryProfile::haveRight("model","w")) {
          if ($id=='') {
             echo "<div align='center'><input type='submit' name='add' value=\"" . __('Add') .
 

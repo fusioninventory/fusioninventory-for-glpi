@@ -5075,15 +5075,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
             foreach ($newprofile as $old=>$new) {
                if (isset($profiledata[$old])) {
-                  $pFusioninventoryProfile->addProfile($plugins_id,
-                                                       $new,
+                  $pFusioninventoryProfile->addProfile($new,
                                                        $profiledata[$old],
                                                        $profiledata['id']);
                }
             }
             if (isset($profiledata["snmp_report"])) {
-               $pFusioninventoryProfile->addProfile($plugins_id,
-                                                    "reportnetworkequipment",
+               $pFusioninventoryProfile->addProfile("reportnetworkequipment",
                                                     $profiledata["snmp_report"],
                                                     $profiledata['id']);
             }
@@ -5510,9 +5508,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $pfSetup->initRules();
    }
 
-
-   $plugins_id = PluginFusioninventoryModule::getModuleId("fusioninventory");
-   PluginFusioninventoryProfile::changeProfile($plugins_id);
+   PluginFusioninventoryProfile::changeProfile();
 
    /*
     *  Manage configuration of plugin

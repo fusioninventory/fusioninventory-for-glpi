@@ -288,7 +288,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
    function showForm($id, $options=array()) {
 
-      if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer","r")) {
+      if (!PluginFusioninventoryProfile::haveRight("printer","r")) {
          return false;
       }
 
@@ -353,7 +353,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['id']."'>";
       }
 
-      if (!PluginFusioninventoryProfile::haveRight("fusinvsnmp", "printer","w")) {
+      if (!PluginFusioninventoryProfile::haveRight("printer","w")) {
          return false;
       }
 

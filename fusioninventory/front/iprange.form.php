@@ -48,12 +48,12 @@ $iprange = new PluginFusioninventoryIPRange();
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
              "fusioninventory", "iprange");
 
-PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange", "r");
+PluginFusioninventoryProfile::checkRight("iprange", "r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset ($_POST["add"])) {
-   PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange","w");
+   PluginFusioninventoryProfile::checkRight("iprange","w");
    if ($iprange->checkip($_POST)) {
       $_POST['ip_start']  = (int)$_POST['ip_start0'].".".(int)$_POST['ip_start1'].".";
       $_POST['ip_start'] .= (int)$_POST['ip_start2'].".".(int)$_POST['ip_start3'];
@@ -93,7 +93,7 @@ if (isset ($_POST["add"])) {
       $task->update($input_task);
       $taskjob->update($input_taskjob);
    } else {
-      PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange","w");
+      PluginFusioninventoryProfile::checkRight("iprange","w");
       if ($iprange->checkip($_POST)) {
          $_POST['ip_start']  = (int)$_POST['ip_start0'].".".(int)$_POST['ip_start1'].".";
          $_POST['ip_start'] .= (int)$_POST['ip_start2'].".".(int)$_POST['ip_start3'];
@@ -110,7 +110,7 @@ if (isset ($_POST["add"])) {
       $_SERVER['HTTP_REFERER'] = str_replace("&allowcreate=1", "", $_SERVER['HTTP_REFERER']);
       Html::back();
    } else {
-      PluginFusioninventoryProfile::checkRight("fusioninventory", "iprange","w");
+      PluginFusioninventoryProfile::checkRight("iprange","w");
 
       $iprange->delete($_POST);
       Html::redirect(Toolbox::getItemTypeSearchURL('PluginFusioninventoryIPRange'));

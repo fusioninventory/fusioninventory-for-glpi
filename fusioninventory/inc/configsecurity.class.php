@@ -48,19 +48,19 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "w");
+      return PluginFusioninventoryProfile::haveRight("configsecurity", "w");
    }
 
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "configsecurity", "r");
+      return PluginFusioninventoryProfile::haveRight("configsecurity", "r");
    }
 
 
 
    function showForm($id, $options=array()) {
 
-      PluginFusioninventoryProfile::checkRight("fusinvsnmp", "configsecurity","r");
+      PluginFusioninventoryProfile::checkRight("configsecurity","r");
 
       if ($id!='') {
          $this->getFromDB($id);
