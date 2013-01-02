@@ -165,8 +165,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
     * Create DB structure
     */
       $migration->displayMessage("Creation tables in database");
-      $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-"
-                 .$version."-empty.sql";
+      $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-empty.sql";
       if (!$DB->runFile($DB_file)) {
          $migration->displayMessage("Error on creation tables in database");
       }
