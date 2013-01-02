@@ -46,15 +46,15 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusinvdeployReport extends CommonDBTM {
 
-   
+
    /**
     * Display tab
-    * 
+    *
     * @global array $LANG
-    * 
+    *
     * @param CommonGLPI $item
     * @param integer $withtemplate
-    * 
+    *
     * @return varchar name of the tab(s) to display
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
@@ -72,20 +72,20 @@ class PluginFusinvdeployReport extends CommonDBTM {
       }
       return '';
    }
-   
-   
- 
+
+
+
    /**
     * Display content of tab
-    * 
+    *
     * @param CommonGLPI $item
     * @param integer $tabnum
     * @param interger $withtemplate
-    * 
+    *
     * @return boolean true
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      
+
       if ($item->getType()=='PluginFusioninventoryTask') {
          if ($item->getID() > 0) {
             $pfReport = new self();
@@ -94,22 +94,22 @@ class PluginFusinvdeployReport extends CommonDBTM {
       }
       return true;
    }
-   
-   
-   
+
+
+
    function showReport($tasks_id) {
       global $LANG;
-      
+
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfPackage = new PluginFusinvdeployPackage();
       $pfAgent = new PluginFusioninventoryAgent();
       $computer = new Computer();
-      
+
       $a_taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$tasks_id."'
          AND (`method`='deployinstall' OR `method`='deployuninstall')");
-      
+
       echo "<table class='tab_cadre_fixe'>";
       foreach ($a_taskjobs as $datajob) {
          $a_taskjobstates = $pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='".$datajob['id']."'
@@ -117,7 +117,7 @@ class PluginFusinvdeployReport extends CommonDBTM {
                  "`uniqid` DESC");
          $uniqid = '';
          foreach ($a_taskjobstates as $datastate) {
-            
+
             if ($uniqid != $datastate['uniqid']) {
                echo "<tr class='tab_bg_1'>";
                echo "<th>";
@@ -138,11 +138,11 @@ class PluginFusinvdeployReport extends CommonDBTM {
                echo "</tr>";
                $uniqid = $datastate['uniqid'];
             }
-            
+
             $a_taskjobstatesuniqid = $pfTaskjobstate->find("`uniqid`='".$datastate['uniqid']."'
                AND `plugin_fusioninventory_agents_id`='".$datastate['plugin_fusioninventory_agents_id']."'");
             $pfPackage->getFromDB($datastate['items_id']);
-            
+
             $pfAgent->getFromDB($datastate['plugin_fusioninventory_agents_id']);
             $agent = '';
             if (!isset($pfAgent->fields['name'])) {
@@ -195,8 +195,8 @@ class PluginFusinvdeployReport extends CommonDBTM {
                      $message .= "<br/>".$datadetail['comment'];
                   }
                }
-               
-               
+
+
                if ($state != 'failed') {
                   $a_successful = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
                   AND `comment` LIKE '%---------------------------%'");
@@ -208,7 +208,7 @@ class PluginFusinvdeployReport extends CommonDBTM {
 
                         } else if (strstr($datasuccessful['comment'], 'ok, no check to evaluate.')) {
                            $state = 'unknown';
-                           $message .= $datasuccessful['comment'];                           
+                           $message .= $datasuccessful['comment'];
                         } else if (strstr($datasuccessful['comment'], 'exit status is not ok')
                                 OR strstr($datasuccessful['comment'], 'error pattern found in log')) {
                            $state = 'failed';
@@ -221,10 +221,10 @@ class PluginFusinvdeployReport extends CommonDBTM {
                }
                if ($state != '') {
                   echo "<tr class='tab_bg_3'>";
-                  echo "<td>";            
+                  echo "<td>";
                   echo $pfPackage->getLink();
                   echo "</td>";
-                  echo "<td>";    
+                  echo "<td>";
                   echo $agent;
                   echo "</td>";
                   $display = '';
@@ -236,10 +236,10 @@ class PluginFusinvdeployReport extends CommonDBTM {
                      $display = $pfTaskjoblog->getDivState(4, "td");
                   }
                   echo $display;
-                  echo "<td>";            
+                  echo "<td>";
                   echo Html::convDateTime($date);
                   echo "</td>";
-                  echo "<td>";            
+                  echo "<td>";
                   echo $message;
                   echo "</td>";
                   echo "</tr>";
@@ -247,7 +247,7 @@ class PluginFusinvdeployReport extends CommonDBTM {
             }
          }
       }
-      echo "</table>";      
+      echo "</table>";
    }
 
 }

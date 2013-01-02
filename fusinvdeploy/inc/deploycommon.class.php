@@ -74,7 +74,7 @@ class PluginFusinvdeployDeployCommon extends PluginFusioninventoryCommunication 
       foreach ($actions as $action) {
          $itemtype = key($action);
          $items_id = current($action);
-         
+
          switch($itemtype) {
             case 'Computer':
                $computers[] = $items_id;

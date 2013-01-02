@@ -638,7 +638,7 @@ var {$render}AddActionsAuto = function(filename) {
                //get scripts
                var install_a = files_autoactions[ext].install.replace("##FILENAME##", filename);
                var uninstall_a = files_autoactions[ext].uninstall.replace("##FILENAME##", filename);
-         
+
                //send scripts
                //-> install
                Ext.Ajax.request({
@@ -660,7 +660,7 @@ var {$render}AddActionsAuto = function(filename) {
                         success: function(){
                            installactionGrid.store.reload();
                            uninstallactionGrid.store.reload();
-                        
+
                            //click submit button
                            myButton = {$render}fileForm.getForm().buttons[0];
                            myButton.handler.call(myButton.scope, myButton, Ext.EventObject);

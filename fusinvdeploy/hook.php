@@ -207,7 +207,7 @@ function plugin_fusinvdeploy_MassiveActionsProcess($data) {
                $input['name'] = 'Deploy';
                $input['communication'] = 'push';
                $input['date_scheduled'] = date("Y-m-d H:i:s");
-               $data['tasks_id'] = $pfTask->add($input);               
+               $data['tasks_id'] = $pfTask->add($input);
             }
             $params = array(
                'tasks_id'        => $data['tasks_id'],
