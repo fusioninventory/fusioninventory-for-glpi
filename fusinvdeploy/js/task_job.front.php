@@ -88,7 +88,7 @@ var taskJobColumns =  [{
    hidden: true
 }, {
    id: 'package_id',
-   header: "{$LANG['plugin_fusinvdeploy']['package'][7]}",
+   header: "{__('Package', 'fusioninventory')}",
    dataIndex: 'package_id',
    renderer: renderPackage,
    groupable: false
@@ -342,7 +342,7 @@ var taskJobForm = new Ext.FormPanel({
          triggerAction: 'all'
       }),
       new Ext.form.ComboBox({
-         fieldLabel: "{$LANG['plugin_fusinvdeploy']['package'][7]}",
+         fieldLabel: "{__('Package', 'fusioninventory')}",
          name: 'package_id',
          valueField: 'package_id',
          displayField: 'package_name',

@@ -340,7 +340,7 @@ var {$render}fileForm = new Ext.FormPanel({
          name: '{$render}id',
          xtype: 'hidden'
       }, new Ext.form.ComboBox({
-         fieldLabel:"{$LANG['plugin_fusinvdeploy']['files'][7]}",
+         fieldLabel:"{__('Upload From', 'fusioninventory')}",
          id: '{$render}type',
          name: '{$render}type',
          valueField: 'name',
@@ -350,8 +350,8 @@ var {$render}fileForm = new Ext.FormPanel({
          store: new Ext.data.ArrayStore({
             fields: ['name', 'value'],
             data: [
-               ['filehttp', "{$LANG['plugin_fusinvdeploy']['files'][8]}"],
-               ['fileserver', "{$LANG['plugin_fusinvdeploy']['files'][9]}"]
+               ['filehttp', "{__('This computer', 'fusioninventory')}"],
+               ['fileserver', "{__('The server', 'fusioninventory')}"]
             ]
          }),
          mode: 'local',
@@ -638,7 +638,7 @@ var {$render}AddActionsAuto = function(filename) {
                //get scripts
                var install_a = files_autoactions[ext].install.replace("##FILENAME##", filename);
                var uninstall_a = files_autoactions[ext].uninstall.replace("##FILENAME##", filename);
-         
+
                //send scripts
                //-> install
                Ext.Ajax.request({
@@ -660,7 +660,7 @@ var {$render}AddActionsAuto = function(filename) {
                         success: function(){
                            installactionGrid.store.reload();
                            uninstallactionGrid.store.reload();
-                        
+
                            //click submit button
                            myButton = {$render}fileForm.getForm().buttons[0];
                            myButton.handler.call(myButton.scope, myButton, Ext.EventObject);

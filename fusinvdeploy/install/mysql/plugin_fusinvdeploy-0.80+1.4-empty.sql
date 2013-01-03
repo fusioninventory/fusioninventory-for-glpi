@@ -220,7 +220,7 @@ CREATE TABLE `glpi_plugin_fusinvdeploy_actions_messages` (
 
 DROP VIEW IF EXISTS `glpi_plugin_fusinvdeploy_tasks`;
 
-CREATE VIEW `glpi_plugin_fusinvdeploy_tasks` 
+CREATE VIEW `glpi_plugin_fusinvdeploy_tasks`
 AS SELECT * FROM glpi_plugin_fusioninventory_tasks;
 
 

@@ -447,8 +447,8 @@ class PluginFusinvdeployFile extends CommonDBTM {
 
       $render   = PluginFusinvdeployOrder::getRender($render);
       $order_id = PluginFusinvdeployOrder::getIdForPackage($package_id,$render);
-      
-      // Check if add a file in install and if not have file in uninstall, 
+
+      // Check if add a file in install and if not have file in uninstall,
       // we add too this file in unistall
       $uninstall = 0;
       $order_uninstall_id = 0;

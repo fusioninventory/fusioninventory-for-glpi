@@ -61,7 +61,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    }
 
 
-   
+
    function defineTabs($options=array()){
 
       $ong = array();
@@ -132,8 +132,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       return $tab;
    }
 
-   
-   
+
+
    function post_addItem() {
       //check whether orders have not already been created
       if (!isset($_SESSION['tmp_clone_package'])) {
@@ -142,14 +142,14 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    function cleanDBonPurge() {
       PluginFusinvdeployOrder::cleanForPackage($this->fields['id']);
    }
 
-   
-   
+
+
    function title() {
 
       $buttons = array();
@@ -165,8 +165,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       Html::displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_mini_package.png", $title, $title, $buttons);
    }
 
-   
-   
+
+
    function showMenu($options=array())  {
 
       $this->displaylist = false;
@@ -262,7 +262,7 @@ class PluginFusinvdeployPackage extends CommonDBTM {
    }
 
 
-   
+
    static function canEdit($id) {
 
       $taskjobs_a = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobs',
@@ -276,8 +276,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       return true;
    }
 
-   
-   
+
+
    function pre_deleteItem() {
       global  $CFG_GLPI;
 
@@ -489,8 +489,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    public function package_clone($new_name = '') {
 
       if ($this->getField('id') < 0) return false;
@@ -615,8 +615,8 @@ class PluginFusinvdeployPackage extends CommonDBTM {
 
    }
 
-   
-   
+
+
    static function showEditDeniedMessage($id, $message) {
       global $CFG_GLPI, $CFG_GLPI;
 

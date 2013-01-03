@@ -91,10 +91,10 @@ function plugin_init_fusinvdeploy() {
    }
 
    // ##### 2. register classes #####
-   
+
    Plugin::registerClass('PluginFusinvdeployReport',
               array('addtabon' => array('PluginFusioninventoryTask')));
-      
+
 
    // ##### 3. get informations of the plugin #####
 
