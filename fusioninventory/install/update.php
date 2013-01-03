@@ -657,92 +657,45 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             }
          }
       }
-      $migration->renameTable("glpi_plugin_tracker_rangeip",
-                              $newTable);
-      $migration->renameTable("glpi_plugin_fusinvsnmp_ipranges",
-                              $newTable);
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(1) NOT NULL AUTO_INCREMENT,
-                     PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "name",
-                                 "name",
-                                 "varchar(255) DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "entities_id",
-                                 "entities_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "ip_start",
-                                 "ip_start",
-                                 "varchar(255) DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "ip_end",
-                                 "ip_end",
-                                 "varchar(255) DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "ifaddr_start",
-                                 "ip_start",
-                                 "varchar(255) DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "ifaddr_end",
-                                 "ip_end",
-                                 "varchar(255) DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "FK_entities",
-                                 "entities_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-      $migration->migrationOneTable($newTable);
-         $migration->dropField($newTable,
-                               "FK_tracker_agents");
-         $migration->dropField($newTable,
-                               "discover");
-         $migration->dropField($newTable,
-                               "query");
-         $migration->dropField($newTable,
-                               "FK_fusioninventory_agents_discover");
-         $migration->dropField($newTable,
-                               "FK_fusioninventory_agents_query");
-         $migration->dropField($newTable,
-                               "construct_device_id");
-         $migration->dropField($newTable,
-                               "log");
-         $migration->dropKey($newTable, "FK_tracker_agents");
-         $migration->dropKey($newTable, "FK_tracker_agents_2");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                              "name",
-                              "varchar(255) DEFAULT NULL");
-         $migration->addField($newTable,
-                              "entities_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "ip_start",
-                              "varchar(255) DEFAULT NULL");
-         $migration->addField($newTable,
-                              "ip_end",
-                              "varchar(255) DEFAULT NULL");
-         $migration->addKey($newTable,
-                            "entities_id");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_ipranges';
+      $a_table['oldname'] = array('glpi_plugin_tracker_rangeip', 'glpi_plugin_fusinvsnmp_ipranges');
 
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement', 
+                                               'value'   => '');
+      $a_table['fields']['name']       = array('type'    => 'string', 
+                                               'value'   => NULL);
+      $a_table['fields']['entities_id']= array('type'    => 'integer',  
+                                               'value'   => NULL);
+      $a_table['fields']['ip_start']   = array('type'    => 'string', 
+                                               'value'   => NULL);
+      $a_table['fields']['ip_end']     = array('type'    => 'string', 
+                                               'value'   => NULL);
+ 
+      $a_table['oldfields']  = array();
+      $a_table['oldfields'][] = 'FK_tracker_agents';
+      $a_table['oldfields'][] = 'discover';
+      $a_table['oldfields'][] = 'query';
+      $a_table['oldfields'][] = 'FK_fusioninventory_agents_discover';
+      $a_table['oldfields'][] = 'FK_fusioninventory_agents_query';
+      $a_table['oldfields'][] = 'construct_device_id';
+      $a_table['oldfields'][] = 'log';
+      $a_table['oldfields'][] = 'comment';
+
+      $a_table['renamefields'] = array();
+      $a_table['renamefields']['ID'] = 'id';
+      $a_table['renamefields']['ifaddr_start'] = 'ip_start';
+      $a_table['renamefields']['ifaddr_end'] = 'ip_end';
+      $a_table['renamefields']['FK_entities'] = 'entities_id';
+
+      $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => 'entities_id', 'name' => '', 'type' => 'INDEX');
+
+      $a_table['oldkeys'] = array('FK_tracker_agents', 'FK_tracker_agents_2');
+
+      migrateTablesFusionInventory($migration, $a_table);
+      
 
 
    /*
