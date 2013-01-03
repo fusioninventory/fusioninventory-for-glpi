@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2012 by the FusionInventory Development Team.
+   Copyright (C) 2010-2013 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2012 FusionInventory team
+   @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -67,11 +67,11 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       $array_ret = array();
       if ($item->getType() == 'Computer') {
          if (Session::haveRight('computer', "r")) {
-            $a_computers = $this->find("`computers_id`='".$item->getID()."'", '', 1);
+            $pfInventoryComputerComputer = new self();
+            $a_computers = $pfInventoryComputerComputer->find("`computers_id`='".$item->getID()."'", '', 1);
             if (count($a_computers) > 0) {
                // Bios/other informations
                $array_ret[0] = self::createTabEntry(__('Advanced informations', 'fusioninventory'));
-
             }
 
             $id = $item->getField('id');
@@ -95,7 +95,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       $pfComputer = new self();
       if ($tabnum == '0') {
          if ($item->getID() > 0) {
-            $pfComputer->showForm($item->getID());
+            //$pfComputer->showForm($item->getID());
          }
       }
       if ($tabnum == '1') {
