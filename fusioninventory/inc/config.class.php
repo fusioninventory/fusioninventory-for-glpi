@@ -372,9 +372,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       $option_import = array();
-      $option_import['1'] = __('Yes, manage with FusionInventory', 'fusioninventory');
-      $option_import['2'] = __('No, manage only with FusionInventory', 'fusioninventory');
-      $option_import['0'] = __('No, manage only manually', 'fusioninventory');
+      $option_import['1'] = __('Yes, managed by FusionInventory', 'fusioninventory');
+      $option_import['2'] = __('No, managed only by FusionInventory', 'fusioninventory');
+      $option_import['0'] = __('No, managed manually', 'fusioninventory');
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
