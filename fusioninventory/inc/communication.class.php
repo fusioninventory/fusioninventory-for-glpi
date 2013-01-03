@@ -169,7 +169,6 @@ class PluginFusioninventoryCommunication {
          'Function import().'
       );
 
-      $_SESSION["plugin_fusioninventory_disablelocks"] = 1;
       $this->message = $arrayinventory;
       $errors = '';
 
