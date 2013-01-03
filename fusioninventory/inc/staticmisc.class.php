@@ -190,7 +190,7 @@ class PluginFusioninventoryStaticmisc {
                          'name'    => __('Existance criteria', 'fusioninventory')),
 
                    array('profil'  => 'importxml',
-                         'name'    => __('XML file manual import', 'fusioninventory')),
+                         'name'    => __('computer XML manual import', 'fusioninventory')),
 
                    array('profil'  => 'blacklist',
                          'name'    => __('Fields blacklist', 'fusioninventory')),
