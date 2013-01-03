@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2012 by the FusionInventory Development Team.
+   Copyright (C) 2010-2013 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2012 FusionInventory team
+   @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -847,7 +847,8 @@ class PluginFusioninventoryFormatconvert {
                     (($a_drives['TYPE'] == "Removable Disk")
                    OR ($a_drives['TYPE'] == "Compact Disc")))) {
 
-            } else if (strstr($a_drives['VOLUMN'], "/dev/mapper")){
+            } else if (isset($a_drives['VOLUMN'])
+                    && strstr($a_drives['VOLUMN'], "/dev/mapper")){
                // LVM 
                $a_split = explode("-", $a_drives['VOLUMN']);
                $volumn = end($a_split);
@@ -878,7 +879,8 @@ class PluginFusioninventoryFormatconvert {
                   $a_inventory['storage'][] = $array_tmp;
                }
                
-            } else if (strstr($a_drives['VOLUMN'], "/dev/")){
+            } else if (isset($a_drives['VOLUMN'])
+                    && strstr($a_drives['VOLUMN'], "/dev/")){
                $detectsize = 0;
                $array_tmp = array();
                foreach ($a_inventory['storage'] as $num=>$a_physicalvol) {

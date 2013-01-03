@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2012 by the FusionInventory Development Team.
+   Copyright (C) 2010-2013 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2012 FusionInventory team
+   @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -55,9 +55,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    *
    **/
    static function getTypeName($nb=0) {
-
       return __('Agent', 'fusioninventory');
-
    }
 
 
@@ -67,6 +65,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
+   
    static function canView() {
       return PluginFusioninventoryProfile::haveRight("agent", "r");
    }
@@ -79,45 +78,38 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $tab['common'] = __('Agent', 'fusioninventory');
 
-
       $tab[1]['table']     = $this->getTable();
       $tab[1]['field']     = 'name';
       $tab[1]['linkfield'] = 'name';
       $tab[1]['name']      = __('Name');
-
       $tab[1]['datatype']  = 'itemlink';
 
       $tab[2]['table']     = 'glpi_entities';
       $tab[2]['field']     = 'completename';
       $tab[2]['name']      = __('Entity');
 
-
       $tab[3]['table']     = $this->getTable();
       $tab[3]['field']     = 'is_recursive';
       $tab[3]['linkfield'] = 'is_recursive';
       $tab[3]['name']      = __('Child entities');
-
       $tab[3]['datatype']  = 'bool';
 
       $tab[4]['table']     = $this->getTable();
       $tab[4]['field']     = 'last_contact';
       $tab[4]['linkfield'] = '';
       $tab[4]['name']      = __('Last contact', 'fusioninventory');
-
       $tab[4]['datatype']  = 'datetime';
 
       $tab[5]['table']     = $this->getTable();
       $tab[5]['field']     = 'lock';
       $tab[5]['linkfield'] = 'lock';
       $tab[5]['name']      = __('locked', 'fusioninventory');
-
       $tab[5]['datatype']  = 'bool';
 
       $tab[6]['table']     = $this->getTable();
       $tab[6]['field']     = 'device_id';
       $tab[6]['linkfield'] = 'device_id';
       $tab[6]['name']      = __('Device_id', 'fusioninventory');
-
       $tab[6]['datatype']  = 'text';
       $tab[6]['massiveaction'] = false;
 
@@ -125,7 +117,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[7]['field']         = 'name';
       $tab[7]['linkfield']     = 'items_id';
       $tab[7]['name']          = __('Computer link', 'fusioninventory');
-
       $tab[7]['datatype']      = 'itemlink';
       $tab[7]['itemlink_type'] = 'Computer';
 
@@ -133,7 +124,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[8]['field']     = 'version';
       $tab[8]['linkfield'] = 'version';
       $tab[8]['name']      = __('Version');
-
       $tab[8]['datatype']  = 'text';
       $tab[8]['massiveaction'] = false;
 
@@ -141,7 +131,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[9]['field']     = 'token';
       $tab[9]['linkfield'] = 'token';
       $tab[9]['name']      = __('Token');
-
       $tab[9]['datatype']  = 'text';
       $tab[9]['massiveaction'] = false;
 
@@ -149,17 +138,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[10]['field']     = 'useragent';
       $tab[10]['linkfield'] = 'useragent';
       $tab[10]['name']      = __('Useragent', 'fusioninventory');
-
       $tab[10]['datatype']  = 'text';
       $tab[10]['massiveaction'] = false;
 
       $tab[11]['table']     = $this->getTable();
       $tab[11]['field']     = 'tag';
       $tab[11]['name']      = __('FusionInventory tag', 'fusioninventory');
-
       $tab[11]['datatype']  = 'text';
       $tab[11]['massiveaction'] = false;
-
 
       $i = 20;
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
@@ -181,9 +167,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function defineTabs($options=array()){
 
       $ong = array();
-      if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
+      if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)) {
          $ong[1]=__('Main');
-
       }
       $this->addStandardTab('PluginFusioninventoryAgentmodule', $ong, $options);
       $this->addStandardTab('Log', $ong, $options);
@@ -204,7 +189,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if (!empty($comment)) {
          return Html::showToolTip($comment, array('display' => false));
       }
-
       return $comment;
    }
 
@@ -226,7 +210,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       } else {
          $this->getEmpty();
          $pfConfig = new PluginFusioninventoryConfig();
-         $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
          unset($this->fields['id']);
          $this->fields['threads_networkdiscovery'] =
                  $pfConfig->getValue('threads_networkdiscovery');
@@ -471,7 +454,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    *
    **/
    function setAgentWithComputerid($items_id, $device_id) {
-      global $DB;
 
       $a_agent = $this->find("`items_id`='".$items_id."'", "", 1);
       // Is this computer already linked to an agent?
@@ -668,12 +650,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    /**
     * Get base URL to communicate with an agent
     *
-    * @param plugins_id ID of the fusioninventory plugin
     * @param ip agent's IP
     *
     * @return a list of http url to contact the agent
     */
-   static function getAgentBaseURLs($plugins_id, $agent_id) {
+   static function getAgentBaseURLs($agent_id) {
       $config  = new PluginFusioninventoryConfig();
       $pfAgent = new PluginFusioninventoryAgent();
 
@@ -716,14 +697,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    /**
     * URL to get agent's state
     *
-    * @param plugins_id ID of the fusioninventory plugin
     * @param ip agent's IP
     *
     * @return an array of http url to get the agent's state
     */
-   static function getAgentStatusURLs($plugins_id, $agent_id) {
+   static function getAgentStatusURLs($agent_id) {
       $ret = array();
-      foreach (self::getAgentBaseURLs($plugins_id, $agent_id) as $url) {
+      foreach (self::getAgentBaseURLs($agent_id) as $url) {
          array_push($ret, $url."/status");
       }
       return $ret;
@@ -734,18 +714,17 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    /**
     * URL to ask the agent to wake up
     *
-    * @param integer plugins_id ID of the fusioninventory plugin
     * @param interger agents_id agent id
     *
     * @return an http url to ask the agent to wake up
     */
-   static function getAgentRunURLs($plugins_id, $agent_id) {
+   static function getAgentRunURLs($agent_id) {
       $pfAgent = new PluginFusioninventoryAgent();
 
       $pfAgent->getFromDB($agent_id);
 
       $ret = array();
-      foreach (self::getAgentBaseURLs($plugins_id, $agent_id) as $url) {
+      foreach (self::getAgentBaseURLs($agent_id) as $url) {
          array_push($ret, $url."/now/".$pfAgent->fields['token']);
       }
       return $ret;
@@ -808,6 +787,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    
    
    
+   /**
+    * Display agent infos for a computer
+    * 
+    * @param type $computers_id id of the computer
+    */
    function showInfoForComputer($computers_id) {
       
       if ($this->getAgentWithComputerid($computers_id)) {

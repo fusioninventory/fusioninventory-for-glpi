@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2012 by the FusionInventory Development Team.
+   Copyright (C) 2010-2013 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    Vincent Mazzoni
    @co-author
-   @copyright Copyright (c) 2010-2012 FusionInventory team
+   @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -776,10 +776,16 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             return $PortID;
          }
 
-         $query = "SELECT *
-             FROM `glpi_networkports`
-             WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
-               AND`ip`='".$IP."'
+         $query = "SELECT `glpi_networkports`.* FROM `glpi_networkports`
+             LEFT JOIN `glpi_networknames`
+                 ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
+                    AND `glpi_networknames`.`itemtype`='NetworkPort'
+            LEFT JOIN `glpi_ipaddresses`
+                 ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
+                    AND `glpi_ipaddresses`.`itemtype`='NetworkName'
+
+             WHERE `glpi_networkports`.`itemtype`='PluginFusioninventoryUnknownDevice'
+               AND `glpi_ipaddresses`.`name`='".$IP."'
              LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == "1") {

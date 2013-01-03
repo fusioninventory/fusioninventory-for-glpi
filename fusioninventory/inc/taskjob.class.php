@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2012 by the FusionInventory Development Team.
+   Copyright (C) 2010-2013 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2012 FusionInventory team
+   @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -1227,8 +1227,6 @@ return namelist;
 
       $this->disableDebug();
 
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-
       if (empty($ip)) {
          return false;
       }
@@ -1241,7 +1239,7 @@ return namelist;
       );
 
       $ret = false;
-      foreach(PluginFusioninventoryAgent::getAgentStatusURLs($plugins_id, $agentid) as $url) {
+      foreach(PluginFusioninventoryAgent::getAgentStatusURLs($agentid) as $url) {
          $str = @file_get_contents($url, 0, $ctx);
          if ($str !== false && strstr($str, "waiting")) {
             $ret = true;
@@ -1269,8 +1267,6 @@ return namelist;
       ob_start();
       ini_set("allow_url_fopen", "1");
 
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-
       $ctx = stream_context_create(array(
          'http' => array(
             'timeout' => 2
@@ -1279,7 +1275,7 @@ return namelist;
       );
 
       $str="noanswer";
-      foreach(PluginFusioninventoryAgent::getAgentStatusURLs($plugins_id, $items_id) as $url) {
+      foreach(PluginFusioninventoryAgent::getAgentStatusURLs($items_id) as $url) {
          $str = @file_get_contents($url, false, $ctx);
          if ($str !== false) {
             break;
@@ -1315,14 +1311,12 @@ return namelist;
    **/
    function startAgentRemotly($agent_id) {
 
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-
       $ret = false;
 
       $this->disableDebug();
 
       $ctx = stream_context_create(array('http' => array('timeout' => 2)));
-      foreach (PluginFusioninventoryAgent::getAgentRunURLs($plugins_id, $agent_id) as $runURL) {
+      foreach (PluginFusioninventoryAgent::getAgentRunURLs($agent_id) as $runURL) {
          if (!$ret) {
             if (@file_get_contents($runURL, 0, $ctx) !== false) {
                $ret = true;
