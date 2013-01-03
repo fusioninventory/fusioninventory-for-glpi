@@ -1,4 +1,4 @@
-## obsolete tables
+-- obsolete tables
 DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_auth_auth_protocol`;
 DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_auth_priv_protocol`;
 DROP TABLE IF EXISTS `glpi_dropdown_plugin_fusioninventory_snmp_version`;
@@ -16,12 +16,12 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_mac`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_walks`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lockable`;
 
-## renamed tables
+-- renamed tables
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_config_modules`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_lock`;
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_task`;
-#DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_device`;
+-- DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_unknown_device`;
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_agents`;
 
@@ -857,8 +857,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_computerlicenseinfos` (
 
 
 
-## INSERT
-## glpi_plugin_fusioninventory_configsecurities
+-- INSERT
+-- glpi_plugin_fusioninventory_configsecurities
 INSERT INTO `glpi_plugin_fusioninventory_configsecurities`
       (`id`, `name`, `snmpversion`, `community`, `username`, `authentication`, `auth_passphrase`, `encryption`, `priv_passphrase`, `is_deleted`)
    VALUES (1, 'Public community v1', '1', 'public', '', '0', '', '0', '', '0'),
@@ -866,7 +866,7 @@ INSERT INTO `glpi_plugin_fusioninventory_configsecurities`
 
 
 
-## glpi_displaypreferences
+-- glpi_displaypreferences
 INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 
    VALUES (NULL,'PluginFusioninventoryAgent', '2', '1', '0'),
           (NULL,'PluginFusioninventoryAgent', '4', '2', '0'),
@@ -1040,7 +1040,7 @@ INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerblacklists`
 
 
 
-## glpi_plugin_fusioninventory_mappings
+-- glpi_plugin_fusioninventory_mappings
 INSERT INTO `glpi_plugin_fusioninventory_mappings`
       (`itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
    VALUES ('NetworkEquipment','location','glpi_networkequipments','locations_id',1,NULL),
@@ -1069,7 +1069,7 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           ('NetworkEquipment','entPhysicalModelName','glpi_networkequipments',
              'networkequipmentmodels_id',17,NULL),
           ('NetworkEquipment','macaddr','glpi_networkequipments','ip',417,NULL),
-## Network CDP (Walk)
+-- Network CDP (Walk)
           ('NetworkEquipment','cdpCacheAddress','','',409,NULL),
           ('NetworkEquipment','cdpCacheDevicePort','','',410,NULL),
           ('NetworkEquipment','cdpCacheVersion','','',435,NULL),
@@ -1088,7 +1088,7 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           ('NetworkEquipment','dot1dBasePortIfIndex','','',415,NULL),
           ('NetworkEquipment','ipAdEntAddr','','',421,NULL),
           ('NetworkEquipment','PortVlanIndex','','',422,NULL),
-## NetworkPorts
+-- NetworkPorts
           ('NetworkEquipment','ifIndex','','',408,NULL),
           ('NetworkEquipment','ifmtu','glpi_plugin_fusioninventory_networkports',
              'ifmtu',4,NULL),
@@ -1115,7 +1115,7 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
              'ifdescr',23,NULL),
           ('NetworkEquipment','portDuplex','glpi_plugin_fusioninventory_networkports',
              'portduplex',33,NULL),
-## Printers
+-- Printers
           ('Printer','model','glpi_printers','printermodels_id',25,NULL),
           ('Printer','enterprise','glpi_printers','manufacturers_id',420,NULL),
           ('Printer','serial','glpi_printers','serial',27,NULL),
@@ -1126,7 +1126,7 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           ('Printer','memory','glpi_printers','memory_size',26,NULL),
           ('Printer','location','glpi_printers','locations_id',56,NULL),
           ('Printer','informations','','',165,165),
-## Cartridges
+-- Cartridges
           ('Printer','tonerblack','','',157,157),
           ('Printer','tonerblackmax','','',166,166),
           ('Printer','tonerblackused','','',167,167),
@@ -1179,7 +1179,7 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           ('Printer','drumyellowmax','','',187,187),
           ('Printer','drumyellowused','','',188,188),
           ('Printer','drumyellowremaining','','',189,189),
-## Printers : Counter pages
+-- Printers : Counter pages
           ('Printer','pagecountertotalpages','glpi_plugin_fusioninventory_printerlogs',
              'pages_total',28,128),
           ('Printer','pagecounterblackpages','glpi_plugin_fusioninventory_printerlogs',
@@ -1206,13 +1206,13 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
              'pages_total_fax',429,1429),
           ('Printer','pagecounterlargepages','glpi_plugin_fusioninventory_printerlogs',
              'pages_total_large',434,1434),
-## Printers : NetworkPort
+-- Printers : NetworkPort
           ('Printer','ifPhysAddress','glpi_networkports','mac',58,NULL),
           ('Printer','ifName','glpi_networkports','name',57,NULL),
           ('Printer','ifaddr','glpi_networkports','ip',407,NULL),
           ('Printer','ifType','','',97,NULL),
           ('Printer','ifIndex','','',416,NULL),
-## Computer
+-- Computer
           ('Computer','serial','','serial',13,NULL),
           ('Computer','ifPhysAddress','','mac',15,NULL),
           ('Computer','ifaddr','','ip',407,NULL);
