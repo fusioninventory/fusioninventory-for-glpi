@@ -888,114 +888,51 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Table glpi_plugin_fusioninventory_tasks
     */
-      $newTable = "glpi_plugin_fusioninventory_tasks";
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "entities_id",
-                                 "entities_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "name",
-                                 "name",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "date_creation",
-                                 "date_creation",
-                                 "datetime DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "comment",
-                                 "comment",
-                                 "text DEFAULT NULL COLLATE utf8_unicode_ci");
-         $migration->changeField($newTable,
-                                 "is_active",
-                                 "is_active",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "communication",
-                                 "communication",
-                                 "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'push'");
-         $migration->changeField($newTable,
-                                 "permanent",
-                                 "permanent",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "date_scheduled",
-                                 "date_scheduled",
-                                 "datetime DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "periodicity_count",
-                                 "periodicity_count",
-                                 "int(6) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "periodicity_type",
-                                 "periodicity_type",
-                                 "varchar(255) DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "execution_id",
-                                 "execution_id",
-                                 "bigint(20) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "is_advancedmode",
-                                 "is_advancedmode",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                              "entities_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "name",
-                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                              "date_creation",
-                              "datetime DEFAULT NULL");
-         $migration->addField($newTable,
-                              "comment",
-                              "text DEFAULT NULL COLLATE utf8_unicode_ci");
-         $migration->addField($newTable,
-                              "is_active",
-                              "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "communication",
-                              "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'push'");
-         $migration->addField($newTable,
-                              "permanent",
-                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                              "date_scheduled",
-                              "datetime DEFAULT NULL");
-         $migration->addField($newTable,
-                              "periodicity_count",
-                              "int(6) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "periodicity_type",
-                              "varchar(255) DEFAULT NULL");
-         $migration->addField($newTable,
-                              "execution_id",
-                              "bigint(20) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "is_advancedmode",
-                              "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->addKey($newTable,
-                            "entities_id");
-         $migration->addKey($newTable,
-                            "is_active");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_tasks';
+      $a_table['oldname'] = array();
 
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement', 
+                                               'value'   => '');
+      $a_table['fields']['entities_id']= array('type'    => 'integer',  
+                                               'value'   => NULL);
+      $a_table['fields']['name']       = array('type'    => 'string',  
+                                               'value'   => NULL);
+      $a_table['fields']['date_creation']= array('type'    => 'datetime',  
+                                                 'value'   => NULL);
+      $a_table['fields']['comment']    = array('type'    => 'text',  
+                                               'value'   => NULL);
+      $a_table['fields']['is_active']  = array('type'    => 'bool',  
+                                               'value'   => NULL);
+      $a_table['fields']['communication']= array('type'    => 'string',  
+                                                 'value'   => 'push');
+      $a_table['fields']['permanent']  = array('type'    => 'string',  
+                                               'value'   => NULL);
+      $a_table['fields']['date_scheduled'] = array('type'    => 'datetime',  
+                                                   'value'   => NULL);
+      $a_table['fields']['periodicity_count'] = array('type'    => "int(6) NOT NULL DEFAULT '0'",  
+                                                      'value'   => NULL);
+      $a_table['fields']['periodicity_type'] = array('type'    => 'string',  
+                                                     'value'   => NULL);
+      $a_table['fields']['execution_id'] = array('type'    => "bigint(20) NOT NULL DEFAULT '0'",  
+                                                 'value'   => NULL);
+      $a_table['fields']['is_advancedmode'] = array('type'    => 'bool',  
+                                                    'value'   => NULL);
+      
+      $a_table['oldfields']  = array();
 
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => 'entities_id', 'name' => '', 'type' => 'INDEX');
+      $a_table['keys'][] = array('field' => 'is_active', 'name' => '', 'type' => 'INDEX');
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+      
 
    /*
     * Table glpi_plugin_fusioninventory_taskjobs
