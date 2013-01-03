@@ -665,10 +665,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['fields']['id']         = array('type'    => 'autoincrement', 
                                                'value'   => '');
       $a_table['fields']['name']       = array('type'    => 'string', 
-                                               'value'   => "");
-      $a_table['fields']['entities_id']= array('type'    => 'integer',  
                                                'value'   => NULL);
-      $a_table['fields']['comment']    = array('type'    => 'text', 
+      $a_table['fields']['entities_id']= array('type'    => 'integer',  
                                                'value'   => NULL);
       $a_table['fields']['ip_start']   = array('type'    => 'string', 
                                                'value'   => NULL);
@@ -683,6 +681,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['oldfields'][] = 'FK_fusioninventory_agents_query';
       $a_table['oldfields'][] = 'construct_device_id';
       $a_table['oldfields'][] = 'log';
+      $a_table['oldfields'][] = 'comment';
 
       $a_table['renamefields'] = array();
       $a_table['renamefields']['ID'] = 'id';
