@@ -56,7 +56,7 @@ class PluginFusioninventoryInventoryComputerWebservice {
    * @return array or error value
    *
    **/
-   static function methodTest($params, $protocol) {
+   static function loadInventory($params, $protocol) {
 
       if (isset ($params['help'])) {
          return array('base64'  => 'string,mandatory',
@@ -68,8 +68,8 @@ class PluginFusioninventoryInventoryComputerWebservice {
 
       $content = base64_decode($params['base64']);
 
-      $pfInventoryComputerImportXML = new PluginFusioninventoryInventoryComputerImportXML();
-      $pfInventoryComputerImportXML->importXMLContent($content);
+      $pfCommunication = new PluginFusioninventoryCommunication();
+      $pfCommunication->handleOCSCommunication($content);
 
       $msg = __('Computer injected into GLPI', 'fusioninventory');
 
