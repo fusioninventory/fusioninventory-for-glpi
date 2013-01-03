@@ -46,23 +46,43 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-importxmlfile");
 
-PluginFusioninventoryProfile::checkRight("importxmlcomputer","w");
+PluginFusioninventoryProfile::checkRight("importxml","w");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$pfInventoryComputerImportXML = new PluginFusioninventoryInventoryComputerImportXML();
+$pfCommunication = new PluginFusioninventoryCommunication();
 
-if (isset($_FILES['importfile']['tmp_name'])) {
-   PluginFusioninventoryProfile::checkRight("importxmlcomputer","w");
+if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
 
-   if ($_FILES['importfile']['tmp_name'] != '') {
-      $_SESSION["plugin_fusioninventory_disablelocks"] = 1;
-      if ($pfInventoryComputerImportXML->importXMLFile($_FILES['importfile']['tmp_name'])) {
-         $_SESSION["MESSAGE_AFTER_REDIRECT"] = __('Computer injected into GLPI', 'fusioninventory');
+   error_log($_FILES['importfile']['name']);
+   ini_set("memory_limit", "-1");
+   ini_set("max_execution_time", "0");
+
+   if (preg_match('/\.zip/i', $_FILES['importfile']['name'])) {
+      $zip = zip_open($_FILES['importfile']['tmp_name']);
+
+      if (!$zip) {
+         error_log("Zip failure");
+         $_SESSION["MESSAGE_AFTER_REDIRECT"] = __("Can't read zip file!", 'fusioninventory');
       } else {
-         $_SESSION["MESSAGE_AFTER_REDIRECT"] = __('XML file not valid!', 'fusioninventory');
+         error_log("Zip ok");
+         while ($zip_entry = zip_read($zip)) {
+            if (zip_entry_open($zip, $zip_entry, "r")) {
+               $xml= zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+               error_log("toto");
+               error_log($xml);
+               if (!empty($xml)) {
+                  $pfCommunication->handleOCSCommunication($xml);
+               }
+               zip_entry_close($zip_entry);
+            }
+         }
+         zip_close($zip);
       }
-      unset($_SESSION["plugin_fusioninventory_disablelocks"]);
+   } else if (preg_match('/\.(ocs|xml)/i', $_FILES['importfile']['name'])) {
+
+      $xml = file_get_contents($_FILES['importfile']['tmp_name']);
+      $pfCommunication->handleOCSCommunication($xml);
    } else {
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = __('No file to import!', 'fusioninventory');
 
@@ -70,7 +90,8 @@ if (isset($_FILES['importfile']['tmp_name'])) {
    Html::back();
 }
 
-$pfImportXML->showForm();
+$pfInventoryComputerImportXML = new PluginFusioninventoryInventoryComputerImportXML();
+$pfInventoryComputerImportXML->showForm();
 
 Html::footer();
 

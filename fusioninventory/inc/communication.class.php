@@ -291,8 +291,7 @@ class PluginFusioninventoryCommunication {
 
 
 // old POST protocol
-   function handleOCSCommunication() {
-      global $LOADED_PLUGINS;
+   function handleOCSCommunication($xml='') {
 
       // ***** For debug only ***** //
       //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
@@ -303,20 +302,21 @@ class PluginFusioninventoryCommunication {
       $user   = new User();
 
       ob_start();
-      $users_id  = $config->getValue('users_id');
-      $_SESSION['glpiID'] = $users_id;
-      $user->getFromDB($users_id);
-      Session::changeActiveEntities();
-      $_SESSION["glpiname"] = $user->getField('name');
-      $_SESSION['glpiactiveprofile'] = array();
-      $_SESSION['glpiactiveprofile']['interface'] = '';
-      $_SESSION['glpiactiveprofile']['internet'] = 'w';
-      $_SESSION['glpiactiveprofile']['computer'] = 'w';
-      $_SESSION['glpiactiveprofile']['monitor'] = 'w';
-      $_SESSION['glpiactiveprofile']['printer'] = 'w';
-      $_SESSION['glpiactiveprofile']['peripheral'] = 'w';
-      $plugin->init();
-      $LOADED_PLUGINS = array();
+      if (!$_SESSION['glpiID']) {
+         $users_id  = $config->getValue('users_id');
+         $_SESSION['glpiID'] = $users_id;
+         $user->getFromDB($users_id);
+         Session::changeActiveEntities();
+         $_SESSION["glpiname"] = $user->getField('name');
+         $_SESSION['glpiactiveprofile'] = array();
+         $_SESSION['glpiactiveprofile']['interface'] = '';
+         $_SESSION['glpiactiveprofile']['internet'] = 'w';
+         $_SESSION['glpiactiveprofile']['computer'] = 'w';
+         $_SESSION['glpiactiveprofile']['monitor'] = 'w';
+         $_SESSION['glpiactiveprofile']['printer'] = 'w';
+         $_SESSION['glpiactiveprofile']['peripheral'] = 'w';
+         $plugin->init();
+      }
       if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
          //Plugin::doHook("config");
          if (count($_SESSION["glpi_plugins"])) {
@@ -332,11 +332,12 @@ class PluginFusioninventoryCommunication {
       $communication  = new PluginFusioninventoryCommunication();
 
       // identify message compression algorithm
-      $xml = '';
       $taskjob = new PluginFusioninventoryTaskjob();
       $taskjob->disableDebug();
       $compressmode = '';
-      if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-zlib") {
+      if (!empty($xml)) {
+            $compressmode = 'none';
+      } else if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-zlib") {
             $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
             $compressmode = "zlib";
       } else if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-gzip") {
