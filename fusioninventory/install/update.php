@@ -725,63 +725,38 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['oldkeys'] = array();
 
       migrateTablesFusionInventory($migration, $a_table);
-
-      
       
       
       
    /*
     * Table glpi_plugin_fusioninventory_locks
     */
-      $newTable = "glpi_plugin_fusioninventory_locks";
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "tablename",
-                                 "tablename",
-                                 "varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-         $migration->changeField($newTable,
-                                 "items_id",
-                                 "items_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "fields",
-                                 "tablefields",
-                                 "text DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "tablefields",
-                                 "tablefields",
-                                 "text DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-         $migration->dropField($newTable, "itemtype");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                              "tablename",
-                              "varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-         $migration->addField($newTable,
-                              "items_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "tablefields",
-                              "text DEFAULT NULL");
-         $migration->addKey($newTable,
-                            "tablename");
-         $migration->addKey($newTable,
-                            "items_id");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_locks';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement', 
+                                               'value'   => '');
+      $a_table['fields']['tablename']  = array('type'    => "varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''", 
+                                               'value'   => NULL);
+      $a_table['fields']['items_id']   = array('type'    => 'integer',  
+                                               'value'   => NULL);
+      $a_table['fields']['tablefields']= array('type'    => 'text',  
+                                               'value'   => NULL);
+ 
+      $a_table['oldfields']  = array('itemtype');
+
+      $a_table['renamefields'] = array();
+      $a_table['renamefields']['fields'] = 'tablefields';
+
+      $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => 'tablename', 'name' => '', 'type' => 'INDEX');
+      $a_table['keys'][] = array('field' => 'items_id' , 'name' => '', 'type' => 'INDEX');
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
 
 
 
