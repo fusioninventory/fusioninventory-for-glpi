@@ -776,10 +776,16 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             return $PortID;
          }
 
-         $query = "SELECT *
-             FROM `glpi_networkports`
-             WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
-               AND`ip`='".$IP."'
+         $query = "SELECT `glpi_networkports`.* FROM `glpi_networkports`
+             LEFT JOIN `glpi_networknames`
+                 ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
+                    AND `glpi_networknames`.`itemtype`='NetworkPort'
+            LEFT JOIN `glpi_ipaddresses`
+                 ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
+                    AND `glpi_ipaddresses`.`itemtype`='NetworkName'
+
+             WHERE `glpi_networkports`.`itemtype`='PluginFusioninventoryUnknownDevice'
+               AND `glpi_ipaddresses`.`name`='".$IP."'
              LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == "1") {

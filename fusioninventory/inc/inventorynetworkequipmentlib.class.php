@@ -64,7 +64,9 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $networkEquipment->getFromDB($items_id);
 
       if (!isset($_SESSION['glpiactiveentities_string'])) {
-         $_SESSION['glpiactiveentities_string'] = "'".$networkEquipment->fields['entities_id']."'";
+         $_SESSION['glpiactiveentities'] = array($networkEquipment->fields['entities_id']);
+         $_SESSION['glpiactiveentities_string'] = $networkEquipment->fields['entities_id'];
+         $_SESSION['glpiactive_entity'] = $networkEquipment->fields['entities_id'];
       }
          
       // * NetworkEquipment
@@ -75,7 +77,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $a_ret = PluginFusioninventoryToolbox::checkLock($a_inventory['NetworkEquipment'], 
                                                        $db_networkequipment, $a_lockable);
       $a_inventory['NetworkEquipment'] = $a_ret[0];
-      $db_networkequipment = $a_ret[1];
+//      $db_networkequipment = $a_ret[1];
          
       $input = $a_inventory['NetworkEquipment'];
       
@@ -85,7 +87,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $this->internalPorts($a_inventory['internalport'], 
                            $items_id, 
                            $a_inventory['NetworkEquipment']['mac'],
-                           $a_inventory['name']);      
+                           'Internal');      
       
       
       // * NetworkEquipment fusion (ext)
@@ -291,8 +293,10 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             }
 
             // Vlan
-            $this->importPortVlan($a_inventory['vlans'][$a_port['logical_number']],
-                                  $networkports_id);
+            if (isset($a_inventory['vlans'][$a_port['logical_number']])) {
+               $this->importPortVlan($a_inventory['vlans'][$a_port['logical_number']],
+                                     $networkports_id);
+            }
          }
       }
       
