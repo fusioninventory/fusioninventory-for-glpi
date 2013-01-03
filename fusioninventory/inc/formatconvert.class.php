@@ -847,7 +847,8 @@ class PluginFusioninventoryFormatconvert {
                     (($a_drives['TYPE'] == "Removable Disk")
                    OR ($a_drives['TYPE'] == "Compact Disc")))) {
 
-            } else if (strstr($a_drives['VOLUMN'], "/dev/mapper")){
+            } else if (isset($a_drives['VOLUMN'])
+                    && strstr($a_drives['VOLUMN'], "/dev/mapper")){
                // LVM 
                $a_split = explode("-", $a_drives['VOLUMN']);
                $volumn = end($a_split);
@@ -878,7 +879,8 @@ class PluginFusioninventoryFormatconvert {
                   $a_inventory['storage'][] = $array_tmp;
                }
                
-            } else if (strstr($a_drives['VOLUMN'], "/dev/")){
+            } else if (isset($a_drives['VOLUMN'])
+                    && strstr($a_drives['VOLUMN'], "/dev/")){
                $detectsize = 0;
                $array_tmp = array();
                foreach ($a_inventory['storage'] as $num=>$a_physicalvol) {
