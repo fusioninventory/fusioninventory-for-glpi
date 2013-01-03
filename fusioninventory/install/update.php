@@ -581,70 +581,38 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
 
 
-
    /*
     * Table glpi_plugin_fusioninventory_credentialips
     */
-      $newTable = "glpi_plugin_fusioninventory_credentialips";
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "entities_id",
-                                 "entities_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_credentials_id",
-                                 "plugin_fusioninventory_credentials_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "name",
-                                 "name",
-                                 "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-         $migration->changeField($newTable,
-                                 "comment",
-                                 "comment",
-                                 "text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "ip",
-                                 "ip",
-                                 "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-         $migration->changeField($newTable,
-                                 "date_mod",
-                                 "date_mod",
-                                 "datetime DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                              "entities_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "plugin_fusioninventory_credentials_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "name",
-                              "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-         $migration->addField($newTable,
-                              "comment",
-                              "text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                              "ip",
-                              "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-         $migration->addField($newTable,
-                              "date_mod",
-                              "datetime DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_credentialips';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement', 
+                                               'value'   => '');
+      $a_table['fields']['entities_id']= array('type'    => 'integer',  
+                                               'value'   => NULL);
+      $a_table['fields']['plugin_fusioninventory_credentials_id'] = array('type'    => 'integer', 
+                                               'value'   => NULL);     
+      $a_table['fields']['name']       = array('type'    => 'string', 
+                                               'value'   => "");
+      $a_table['fields']['comment']    = array('type'    => 'text', 
+                                               'value'   => NULL);
+      $a_table['fields']['ip']         = array('type'    => 'string', 
+                                               'value'   => "");
+      $a_table['fields']['date_mod']   = array('type'    => 'datetime', 
+                                               'value'   => NULL);
+ 
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
 
 
 
