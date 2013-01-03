@@ -763,77 +763,41 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Table glpi_plugin_fusioninventory_mappings
     */
-      $newTable = "glpi_plugin_fusioninventory_mappings";
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "itemtype",
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "name",
-                                 "name",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "table",
-                                 "table",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "tablefield",
-                                 "tablefield",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "locale",
-                                 "locale",
-                                 "int(4) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "shortlocale",
-                                 "shortlocale",
-                                 "int(4) DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "name",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "table",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "tablefield",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "locale",
-                                 "int(4) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "shortlocale",
-                                 "int(4) DEFAULT NULL");
-         $migration->addKey($newTable,
-                            "name");
-         $migration->addKey($newTable,
-                            "itemtype");
-         $migration->addKey($newTable,
-                            "table");
-         $migration->addKey($newTable,
-                            "tablefield");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_mappings';
+      $a_table['oldname'] = array();
 
-      
-   pluginFusioninventoryUpdatemapping();
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement', 
+                                               'value'   => '');
+      $a_table['fields']['itemtype']   = array('type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL", 
+                                               'value'   => NULL);
+      $a_table['fields']['name']       = array('type'    => 'string',  
+                                               'value'   => NULL);
+      $a_table['fields']['table']      = array('type'    => 'string',  
+                                               'value'   => NULL);
+      $a_table['fields']['tablefield'] = array('type'    => 'string',  
+                                               'value'   => NULL);
+      $a_table['fields']['locale']     = array('type'    => "int(4) NOT NULL DEFAULT '0'",  
+                                               'value'   => NULL);
+      $a_table['fields']['shortlocale']= array('type'    => 'int(4) DEFAULT NULL',  
+                                               'value'   => NULL);
+ 
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => 'name', 'name' => '', 'type' => 'INDEX');
+      $a_table['keys'][] = array('field' => 'itemtype' , 'name' => '', 'type' => 'INDEX');
+      $a_table['keys'][] = array('field' => 'table', 'name' => '', 'type' => 'INDEX');
+      $a_table['keys'][] = array('field' => 'tablefield' , 'name' => '', 'type' => 'INDEX');
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+      pluginFusioninventoryUpdatemapping();
+
 
    
    /*
