@@ -213,6 +213,7 @@ class PluginFusioninventoryCommunication {
          $errors.=__('Unattended element in', 'fusioninventory').' QUERY : *'.$xmltag."*\n";
       }
       $result=true;
+      // TODO manage this error ( = delete it)
       if ($errors != '') {
          echo $errors;
          if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
