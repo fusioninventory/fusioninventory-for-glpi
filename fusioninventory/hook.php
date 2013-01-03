@@ -1037,8 +1037,14 @@ function plugin_fusioninventory_MassiveActions($type) {
 
       case "Computer":
          return array (
-            "plugin_fusioninventory_manage_locks" => _n('Lock', 'Locks', 2, 'fusioninventory')
+            "plugin_fusioninventory_manage_locks" => _n('Lock', 'Locks', 2, 'fusioninventory'),
+            "plugin_fusioninventory_deploy_target_task" => __('Target a task', 'fusioninventory')
+         );
+         break;
 
+      case 'PluginFusioninventoryDeployGroup' :
+         return array (
+            "plugin_fusinvdeploy_deploy_target_task" => __('Target a task', 'fusioninventory')
          );
          break;
 
@@ -1074,11 +1080,18 @@ function plugin_fusioninventory_MassiveActions($type) {
          break;
 
       case "PluginFusioninventoryUnknownDevice";
-         return array (
-            "plugin_fusioninventory_unknown_import"   => __('Import'),
-            "plugin_fusioninventory_assign_model"          => __('Assign SNMP model', 'fusioninventory'),
-            "plugin_fusioninventory_assign_auth"           => __('Assign SNMP authentication', 'fusioninventory')
-         );
+         $array = array();
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
+            $array["plugin_fusioninventory_unknown_import"]    = __('Import');
+         }
+         if(PluginFusioninventoryProfile::haveRight("fusioninventory", "configsecurity","r")) {
+            $array["plugin_fusioninventory_assign_auth"]       = __('Assign SNMP authentication', 'fusioninventory');
+         }
+         if(PluginFusioninventoryProfile::haveRight("fusioninventory", "model","w")) {
+            $array["plugin_fusioninventory_assign_model"]      = __('Assign SNMP model', 'fusioninventory')
+         }
+
+         return $array;
          break;
 
       case "PluginFusioninventoryTask";
@@ -1173,9 +1186,6 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 
    }
 
-   
-   
-   
 //   switch ($table) {
 //
 //      case 'glpi_plugin_fusioninventory_agentmodules':
@@ -1197,125 +1207,146 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 
 function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
 
-   switch ($options['itemtype']) {
-      case "Computer":
-         switch ($options['action']) {
-            case "plugin_fusioninventory_manage_locks" :
-               $pfil = new PluginFusioninventoryLock;
-               $pfil->showForm($_SERVER["PHP_SELF"], "Computer");
-               break;
+      switch ($options['action']) {
+         case "plugin_fusioninventory_manage_locks" :
+            $pfil = new PluginFusioninventoryLock;
+            $pfil->showForm($_SERVER["PHP_SELF"], $options['itemtype']);
+            break;
+
+       case 'plugin_fusinvdeploy_deploy_target_task' :
+          echo "<table class='tab_cadre'>";
+          echo "<tr>";
+          echo "<td>";
+          echo $LANG['plugin_fusinvdeploy']['task'][1]."&nbsp;:";
+          echo "</td>";
+          echo "<td>";
+         $rand = mt_rand();
+         Dropdown::show('PluginFusioninventoryDeployTask', array(
+               'name'      => "tasks_id",
+               'condition' => "is_active = 0",
+               'toupdate'  => array(
+                     'value_fieldname' => "__VALUE__",
+                     'to_update'       => "dropdown_PluginFusioninventoryTaskjobs_id$rand",
+                     'url'             => GLPI_ROOT."/plugins/fusinvdeploy/ajax/dropdown_taskjob.php"
+            )
+         ));
+         echo "</td>";
+         echo "</tr>";
+         echo "<tr>";
+         echo "<td>";
+         echo __('Package', 'fusioninventory')."&nbsp;:";
+         echo "</td>";
+         echo "<td>";
+         Dropdown::show('PluginFusioninventoryDeployPackage', array(
+                  'name'      => "packages_id"
+         ));
+         echo "</td>";
+         echo "</tr>";
+         echo "<tr>";
+         echo "<td colspan='2'>";
+         echo "<input type='checkbox' name='separate_jobs' value='1'/>&nbsp;";
+         if ($options['itemtype'] == 'Computer') {
+               echo __('Create a job for each computer', 'fusioninventory');
+         } else if ($options['itemtype'] == 'PluginFusioninventoryDeployGroup') {
+               echo __('Create a job for each group', 'fusioninventory');
+         }
+         echo "</td>";
+         echo "</tr>";
+         echo "<tr>";
+         echo "<td colspan='2' align='center'>";
+         echo "<input type='submit' name='massiveaction' class='submit' value='".
+               $LANG['buttons'][2]."'/>";
+         echo "</td>";
+         echo "</tr>";
+         echo "</table>";
+         break;
+
+      case "plugin_fusioninventory_get_model" :
+         if(PluginFusioninventoryProfile::haveRight("fusioninventory", "model","w")) {
+             echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
+               __('Post') . "\" >";
          }
          break;
 
-      case "NetworkEquipment":
-      case "Printer":
-      case "PluginFusioninventoryUnknownDevice";
-         switch ($options['action']) {
-         
-            case "plugin_fusioninventory_manage_locks" :
-               $pfil = new PluginFusioninventoryLock;
-               $pfil->showForm($_SERVER["PHP_SELF"], $options['itemtype']);
-               break;
-            
-            case "plugin_fusioninventory_get_model" :
-               if(PluginFusioninventoryProfile::haveRight("model","w")) {
-                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-                     __('Post') . "\" >";
-               }
-               break;
-
-            case "plugin_fusioninventory_assign_model" :
-               if(PluginFusioninventoryProfile::haveRight("model","w")) {
-                  $query_models = "SELECT *
-                                   FROM `glpi_plugin_fusioninventory_snmpmodels`
-                                   WHERE `itemtype`!='".$options['itemtype']."'";
-                  if ($options['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-                     $query_models = "SELECT *
-                                   FROM `glpi_plugin_fusioninventory_snmpmodels`
-                                   WHERE `itemtype`='nothing'";
-                  }
-                  $result_models=$DB->query($query_models);
-                  $exclude_models = array();
-                  while ($data_models=$DB->fetch_array($result_models)) {
-                     $exclude_models[] = $data_models['id'];
-                  }
-                  Dropdown::show("PluginFusioninventorySnmpmodel",
-                                 array('name' => "snmp_model",
-                                       'value' => "name",
-                                       'comment' => false,
-                                       'used' => $exclude_models));
-                  echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-                     __('Post') . "\" >";
-               }
-               break;
-
-            case "plugin_fusioninventory_assign_auth" :
-               if(PluginFusioninventoryProfile::haveRight("configsecurity","w")) {
-                  PluginFusioninventoryConfigSecurity::auth_dropdown();
-                  echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-                     __('Post') . "\" >";
-               }
-               break;
-
+      case "plugin_fusioninventory_assign_model" :
+         if(PluginFusioninventoryProfile::haveRight("fusioninventory", "model","w")) {
+            $query_models = "SELECT *
+                             FROM `glpi_plugin_fusioninventory_snmpmodels`
+                             WHERE `itemtype`!='".$options['itemtype']."'";
+            if ($options['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+               $query_models = "SELECT *
+                             FROM `glpi_plugin_fusioninventory_snmpmodels`
+                             WHERE `itemtype`='nothing'";
+            }
+            $result_models=$DB->query($query_models);
+            $exclude_models = array();
+            while ($data_models=$DB->fetch_array($result_models)) {
+               $exclude_models[] = $data_models['id'];
+            }
+            Dropdown::show("PluginFusioninventorySnmpmodel",
+                           array('name' => "snmp_model",
+                                 'value' => "name",
+                                 'comment' => false,
+                                 'used' => $exclude_models));
+            echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
+               __('Post') . "\" >";
          }
-         if ($options['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-            if ($options['action'] == "plugin_fusioninventory_unknown_import") {
-               if (PluginFusioninventoryProfile::haveRight("unknowndevice","w")) {
+         break;
+
+      case "plugin_fusioninventory_assign_auth" :
+         if(PluginFusioninventoryProfile::haveRight("fusioninventory", "configsecurity","w")) {
+            PluginFusioninventoryConfigSecurity::auth_dropdown();
+            echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
+               __('Post') . "\" >";
+         }
+         break;
+
+      case "plugin_fusioninventory_unknown_import" :
+               if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . __('Post') . "\" >";
                }
-            }
-         }
          break;
 
-      case 'PluginFusioninventoryAgent':
-         if (strstr($options['action'], 'plugin_fusioninventory_agentmodule')) {
-            $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-            $a_modules = $pfAgentmodule->find();
-            foreach ($a_modules as $data) {
-               if ($options['action'] == "plugin_fusioninventory_agentmodule".$data['modulename']) {
-                  Dropdown::showYesNo($options['action']);
-                  echo "&nbsp;<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . __('Post') . "\" >";
-               }
-            }
-            break;
-         }
-         
-         switch ($options['action']) {
-            
-            case 'plugin_fusioninventory_transfert':
-               Dropdown::show('Entity');
-               echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
-                     "value='".__('Post')."'>";
-               break;
-
-            case 'plugin_fusinvsnmp_set_discovery_threads':
-               echo Dropdown::showInteger('threads_networkdiscovery', '10');
-               echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-                     __('Post') . "\" >";
-               break;
-
-            case 'plugin_fusinvsnmp_set_snmpinventory_threads':
-               echo Dropdown::showInteger('threads_networkinventory', '5');
-               echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-                     __('Post') . "\" >";
-               break;
-         }
-         break;
-
-     case 'PluginFusioninventoryTask':
-         if ($options['action'] == "plugin_fusioninventory_transfert") {
-               Dropdown::show('Entity');
-               echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
-                     "value='".__('Post')."'>";
-               break;
-         }
-         break;
-
-      case 'PluginFusioninventoryTaskjob':
+      case 'plugin_fusioninventory_transfert':
+         Dropdown::show('Entity');
          echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
                "value='".__('Post')."'>";
          break;
 
+      case 'plugin_fusinvsnmp_set_discovery_threads':
+         echo Dropdown::showInteger('threads_networkdiscovery', '10');
+         echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
+               __('Post') . "\" >";
+         break;
+
+      case 'plugin_fusinvsnmp_set_snmpinventory_threads':
+         echo Dropdown::showInteger('threads_networkinventory', '5');
+         echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
+               __('Post') . "\" >";
+         break;
+
+      case "plugin_fusioninventory_transfert" :
+               Dropdown::show('Entity');
+               echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
+                     "value='".__('Post')."'>";
+         break;
+
+      case 'plugin_fusioninventory_task_forceend':
+         echo "&nbsp;<input type='submit' name='massiveaction' class='submit' ".
+               "value='".__('Post')."'>";
+         break;
+
+   }
+
+   if (strstr($options['action'], 'plugin_fusioninventory_agentmodule')) {
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+      $a_modules = $pfAgentmodule->find();
+      foreach ($a_modules as $data) {
+         if ($options['action'] == "plugin_fusioninventory_agentmodule".$data['modulename']) {
+            Dropdown::showYesNo($options['action']);
+            echo "&nbsp;<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . __('Post') . "\" >";
+         }
+      }
    }
    return "";
 }
@@ -1337,6 +1368,84 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                }
             }
          }
+         break;
+
+      case 'plugin_fusinvdeploy_targetDeployTask' :
+         $taskjob = new PluginFusioninventoryDeployTaskjob;
+         $tasks = array();
+
+         //get old datas
+         $oldjobs = $taskjob->find("plugin_fusinvdeploy_tasks_id = '".$data['tasks_id']."'");
+
+         switch($data['itemtype']) {
+            case 'PluginFusioninventoryDeployGroup':
+            case 'Computer':
+
+            // TODO: rename 'tasks' variables into 'job'
+            // The 'separate jobs' option allows to create a taskjob for each computer
+            // (I can't see the point but it may be
+            // usefull for some people ... even if it creates 500 jobs for just a
+            // single deployment package targetted ... i prefer not to comment
+            // furthermore :) ).
+
+            if (array_key_exists('separate_jobs', $data)) {
+               foreach ($data['item'] as $key => $val) {
+                  $task = new StdClass;
+                  $task->package_id = $data['packages_id'];
+                  $task->method = 'deployinstall';
+                  $task->retry_nb = 3;
+                  $task->retry_time = 0;
+                  //add new datas
+                  $task->action = array(array($data['itemtype'] => $key));
+                  $tasks[] = $task;
+               }
+            } else {
+               $task = new StdClass;
+               $task->package_id = $data['packages_id'];
+               $task->method = 'deployinstall';
+               $task->retry_nb = 3;
+               $task->retry_time = 0;
+               $task->action = array();
+               //add new datas
+               foreach ($data['item'] as $key => $val) {
+                  $task->action[] = array($data['itemtype'] => $key);
+               }
+               $tasks[] = $task;
+            }
+            break;
+
+         }
+            if ($data['tasks_id'] == 0) {
+               $pfTask = new PluginFusioninventoryTask();
+               $input = array();
+               $input['name'] = 'Deploy';
+               $input['communication'] = 'push';
+               $input['date_scheduled'] = date("Y-m-d H:i:s");
+               $data['tasks_id'] = $pfTask->add($input);
+            }
+            $params = array(
+               'tasks_id'        => $data['tasks_id'],
+               'tasks' => json_encode($tasks)
+            );
+            $taskjob->saveDatas($params);
+
+            //reimport old jobs
+            foreach($oldjobs as $job) {
+               $sql = "INSERT INTO glpi_plugin_fusinvdeploy_taskjobs (";
+               foreach ($job as $key => $val) {
+                  $sql .= "`$key`, ";
+               }
+               $sql = substr($sql, 0, -2).") VALUES (";
+               foreach ($job as $val) {
+                  if (is_numeric($val) && (int)$val == $val) {
+                     $sql .= "$val, ";
+                  }
+                  else $sql .= "'$val', ";
+               }
+               $sql = substr($sql, 0, -2).");";
+
+               $DB->query($sql);
+            }
          break;
 
       case "plugin_fusioninventory_unknown_import" :
