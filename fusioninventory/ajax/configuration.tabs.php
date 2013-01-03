@@ -47,7 +47,7 @@ Html::header_nocache();
 
 Session::checkRight("config","w");
 
-if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "r")) {
+if (PluginFusioninventoryProfile::haveRight("configuration", "r")) {
    switch($_POST['glpi_tab']) {
 
       case -1: // All

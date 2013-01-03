@@ -54,7 +54,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
 
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "task", "r");
+      return PluginFusioninventoryProfile::haveRight("task", "r");
    }
 
 

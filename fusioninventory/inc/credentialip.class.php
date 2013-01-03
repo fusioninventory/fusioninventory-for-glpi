@@ -55,11 +55,11 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
    }
 
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credentialip', 'w');
+      return PluginFusioninventoryProfile::haveRight('credentialip', 'w');
    }
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight('fusioninventory', 'credentialip', 'r');
+      return PluginFusioninventoryProfile::haveRight('credentialip', 'r');
    }
 
 
@@ -140,7 +140,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
       //Leave empty !
       $buttons = array();
-      if (PluginFusioninventoryProfile::haveRight('fusioninventory', 'credential', 'r')) {
+      if (PluginFusioninventoryProfile::haveRight('credential', 'r')) {
          $buttons["credential.php"] = __('Authentication for remote devices (VMware)', 'fusioninventory');
 
       }

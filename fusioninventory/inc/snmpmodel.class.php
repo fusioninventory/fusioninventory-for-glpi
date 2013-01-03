@@ -46,13 +46,27 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
+   /**
+   * Get name of this type
+   *
+   * @return text name of this type by language of the user connected
+   *
+   **/
+   static function getTypeName($nb=0) {
+
+      return __('SNMP models', 'fusioninventory');
+
+   }
+
+   
+   
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "model", "w");
+      return PluginFusioninventoryProfile::haveRight("model", "w");
    }
 
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "model", "r");
+      return PluginFusioninventoryProfile::haveRight("model", "r");
    }
 
 
@@ -104,7 +118,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
    function showForm($id, $options=array()) {
       global $CFG_GLPI;
 
-      PluginFusioninventoryProfile::checkRight("fusioninventory", "model","r");
+      PluginFusioninventoryProfile::checkRight("model","r");
 
       if ($id!='') {
          $this->getFromDB($id);
@@ -162,7 +176,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_2'><td colspan='2'>";
-      if(PluginFusioninventoryProfile::haveRight("fusioninventory", "model","w")) {
+      if(PluginFusioninventoryProfile::haveRight("model","w")) {
          if ($id=='') {
             echo "<div align='center'><input type='submit' name='add' value=\"" . __('Add') .
 
@@ -373,10 +387,6 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       /*
        * Manage models migration
        */
-      
-      if ($folder == '') {
-         $folder = GLPI_ROOT.'/plugins/fusinvsnmp/models';
-      }
       
       $NewModelList = array();
       foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) {

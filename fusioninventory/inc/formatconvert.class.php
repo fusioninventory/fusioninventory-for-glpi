@@ -81,6 +81,38 @@ class PluginFusioninventoryFormatconvert {
               && !is_array($datainventory['CONTENT']['BIOS'])) {
          unset($datainventory['CONTENT']['BIOS']);
       }
+      
+      // Hack for Network discovery and inventory
+      if (isset($datainventory['CONTENT']['DEVICE'])
+              AND !is_array($datainventory['CONTENT']['DEVICE'])) {
+         $datainventory['CONTENT']['DEVICE'] = array($datainventory['CONTENT']['DEVICE']);
+      } else if (isset($datainventory['CONTENT']['DEVICE'])
+              AND !is_int(key($datainventory['CONTENT']['DEVICE']))) {
+         $datainventory['CONTENT']['DEVICE'] = array($datainventory['CONTENT']['DEVICE']);
+      }
+      if (isset($datainventory['CONTENT']['DEVICE'])) {
+         foreach ($datainventory['CONTENT']['DEVICE'] as $num=>$data) {
+            if (isset($data['INFO']['IPS']['IP'])
+                    AND !is_array($data['INFO']['IPS']['IP'])) {
+               $datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP'] = 
+                     array($datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP']);
+            } else if (isset($data['INFO']['IPS']['IP'])
+                    AND !is_int(key($data['INFO']['IPS']['IP']))) {
+               $datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP'] = 
+                     array($datainventory['CONTENT']['DEVICE'][$num]['INFO']['IPS']['IP']);
+            }
+            
+            if (isset($data['PORTS']['PORT'])
+                    AND !is_array($data['PORTS']['PORT'])) {
+               $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'] = 
+                     array($datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT']);
+            } else if (isset($data['PORTS']['PORT'])
+                    AND !is_int(key($data['PORTS']['PORT']))) {
+               $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'] = 
+                     array($datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT']);
+            }
+         }
+      }
       return $datainventory;
    }
    
@@ -1074,7 +1106,14 @@ class PluginFusioninventoryFormatconvert {
                                         'RAM'          => 'ram',
                                         'MEMORY'       => 'memory',
                                         'MAC'          => 'mac'));
-      
+      $a_listfield = array('cpu');
+      foreach ($a_listfield as $field) {
+         if (!isset($array_tmp[$field])
+                 || $array_tmp[$field] == '') {
+            $array_tmp[$field] = 0;
+         }
+      }
+         
       if (strstr($array_tmp['networkequipmentfirmwares_id'], "CW_VERSION")
               OR strstr($array_tmp['networkequipmentfirmwares_id'], "CW_INTERIM_VERSION")) {
          $explode = explode("$", $array_tmp['networkequipmentfirmwares_id']);
@@ -1093,6 +1132,11 @@ class PluginFusioninventoryFormatconvert {
                                         'UPTIME'  => 'uptime',
                                         'CPU'     => 'cpu',
                                         'MEMORY'  => 'memory'));
+      if (!isset($array_tmp['cpu'])
+              || $array_tmp['cpu'] == '') {
+         $array_tmp['cpu'] = 0;
+      }
+      
       $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
       $a_inventory['PluginFusioninventoryNetworkEquipment'] = $array_tmp;
       
@@ -1108,10 +1152,10 @@ class PluginFusioninventoryFormatconvert {
       foreach ($array['PORTS']['PORT'] as $a_port) {
          $array_tmp = $thisc->addValues($a_port, 
                                         array( 
-                                           'IFNAME'   => 'name',
-                                           'IFNUMBER' => 'logical_number',
-                                           'MAC'      => 'mac',
-                                           'IFSPEED'   => 'speed',
+                                           'IFNAME'            => 'name',
+                                           'IFNUMBER'          => 'logical_number',
+                                           'MAC'               => 'mac',
+                                           'IFSPEED'           => 'speed',
                                            'IFDESCR'           => 'ifdescr',
                                            'IFINERRORS'        => 'ifinerrors',
                                            'IFINOCTETS'        => 'ifinoctets',
@@ -1119,7 +1163,8 @@ class PluginFusioninventoryFormatconvert {
                                            'IFLASTCHANGE'      => 'iflastchange',
                                            'IFMTU'             => 'ifmtu',
                                            'IFOUTERRORS'       => 'ifouterrors',
-                                           'IFSTATUS'          => 'iftatus',
+                                           'IFOUTOCTETS'       => 'ifoutoctets',
+                                           'IFSTATUS'          => 'ifstatus',
                                            'IFTYPE'            => 'iftype',
                                            'TRUNK'             => 'trunk'));
          if ($array_tmp['trunk'] == '') {
@@ -1129,6 +1174,15 @@ class PluginFusioninventoryFormatconvert {
          if ($array_tmp['ifdescr'] == '') {
             $array_tmp['ifdescr'] = $array_tmp['name'];
          }
+         $a_listfield = array('ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu',
+                              'speed');
+         foreach ($a_listfield as $field) {
+            if (!isset($array_tmp[$field])
+                    || $array_tmp[$field] == '') {
+               $array_tmp[$field] = 0;
+            }
+         }
+         $array_tmp['ifspeed'] = $array_tmp['speed'];
          
          $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
          
@@ -1148,26 +1202,41 @@ class PluginFusioninventoryFormatconvert {
                $a_inventory['connection-lldp'][$a_port['IFNUMBER']] = $array_tmp;
             } else {
                // MAC
-               foreach ($a_port['CONNECTIONS']['CONNECTION'] as $keymac=>$mac) {
-                  if ($keymac == 'MAC') {
-                     $a_inventory['connection-mac'][$a_port['IFNUMBER']][] = $mac;
+               if (isset($a_port['CONNECTIONS']['CONNECTION'])) {
+                  if (!is_array($a_port['CONNECTIONS']['CONNECTION'])) {
+                     $a_port['CONNECTIONS']['CONNECTION'] = array($a_port['CONNECTIONS']['CONNECTION']);
+                  } else if (!is_int(key($a_port['CONNECTIONS']['CONNECTION']))) {
+                     $a_port['CONNECTIONS']['CONNECTION'] = array($a_port['CONNECTIONS']['CONNECTION']);
                   }
+                  
+                  foreach ($a_port['CONNECTIONS']['CONNECTION'] as $keymac=>$mac) {
+                     if ($keymac == 'MAC') {
+                        $a_inventory['connection-mac'][$a_port['IFNUMBER']][] = $mac;
+                     }
+                  }
+                  $a_inventory['connection-mac'][$a_port['IFNUMBER']] = array_unique($a_inventory['connection-mac'][$a_port['IFNUMBER']]);
                }
-               $a_inventory['connection-mac'][$a_port['IFNUMBER']] = array_unique($a_inventory['connection-mac'][$a_port['IFNUMBER']]);
             }
          }
          
          // VLAN
          if (isset($a_port['VLANS'])) {
+            if (!is_array($a_port['VLANS'])) {
+               $a_port['VLANS'] = array($a_port['VLANS']);
+            } else if (!is_int(key($a_port['VLANS']))) {
+               $a_port['VLANS'] = array($a_port['VLANS']);
+            }
+                  
             foreach ($a_port['VLANS'] as $a_vlan) {
                $array_tmp = $thisc->addValues($a_vlan, 
                                               array( 
                                                  'NAME'  => 'name',
                                                  'NUMBER' => 'tag'));
-               
+               if (isset($array_tmp['tag'])) {
+                  $a_inventory['vlans'][$a_port['IFNUMBER']][$array_tmp['tag']] = $array_tmp;
+               }
             }
          }
-         $a_inventory['vlans'][$a_port['IFNUMBER']][$array_tmp['tag']] = $array_tmp;
       }
       return $a_inventory;
    }

@@ -46,14 +46,14 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-importxmlfile");
 
-PluginFusioninventoryProfile::checkRight("fusioninventory", "importxmlcomputer","w");
+PluginFusioninventoryProfile::checkRight("importxmlcomputer","w");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 $pfInventoryComputerImportXML = new PluginFusioninventoryInventoryComputerImportXML();
 
 if (isset($_FILES['importfile']['tmp_name'])) {
-   PluginFusioninventoryProfile::checkRight("fusioninventory", "importxmlcomputer","w");
+   PluginFusioninventoryProfile::checkRight("importxmlcomputer","w");
 
    if ($_FILES['importfile']['tmp_name'] != '') {
       $_SESSION["plugin_fusioninventory_disablelocks"] = 1;

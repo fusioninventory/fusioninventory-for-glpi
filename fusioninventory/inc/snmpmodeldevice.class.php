@@ -47,12 +47,12 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventorySnmpmodeldevice extends CommonDBTM {
 
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "w");
+      return PluginFusioninventoryProfile::haveRight("model", "w");
    }
 
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight("fusinvsnmp", "model", "r");
+      return PluginFusioninventoryProfile::haveRight("model", "r");
    }
 
 

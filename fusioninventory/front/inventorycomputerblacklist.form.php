@@ -46,14 +46,14 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-blacklist");
 
-PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","r");
+PluginFusioninventoryProfile::checkRight("blacklist","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 $pfInventoryComputerBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
 
 if (isset ($_POST["add"])) {
-   PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","w");
+   PluginFusioninventoryProfile::checkRight("blacklist","w");
    if (!empty($_POST['value'])) {
       $pfInventoryComputerBlacklist->add($_POST);
    } else {
@@ -61,11 +61,11 @@ if (isset ($_POST["add"])) {
    }
    Html::back();
 } else if (isset ($_POST["update"])) {
-   PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","w");
+   PluginFusioninventoryProfile::checkRight("blacklist","w");
    $pfInventoryComputerBlacklist->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-   PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","w");
+   PluginFusioninventoryProfile::checkRight("blacklist","w");
    $pfInventoryComputerBlacklist->delete($_POST);
    Html::redirect("blacklist.php");
 }

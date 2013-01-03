@@ -46,6 +46,8 @@ class Hub extends PHPUnit_Framework_TestCase {
    public function testSetModuleInventoryOff() {
       global $DB,$CFG_GLPI;
 
+      $DB->connect();
+      
       $Install = new Install();
       $Install->testInstall(0);
 
@@ -63,7 +65,9 @@ class Hub extends PHPUnit_Framework_TestCase {
 
 
    public function testSetModuleInventoryOn() {
-      $DB = new DB();
+      global $DB;
+      
+      $DB->connect();
 
       $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
          SET `is_active`='1'
@@ -74,8 +78,10 @@ class Hub extends PHPUnit_Framework_TestCase {
 
 
    public function testSendinventories() {
-      global $CFG_GLPI;
+      global $CFG_GLPI,$DB;
 
+      $DB->connect();
+      
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
@@ -230,7 +236,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
 </REQUEST>';
 
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $pfTinvsnmpNetworkPortConnectionLog = new PluginFusinvsnmpNetworkPortConnectionLog();
+      $pfTinvsnmpNetworkPortConnectionLog = new PluginFusioninventoryNetworkPortConnectionLog();
       $networkEquipment = new NetworkEquipment();
       $networkPort = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();

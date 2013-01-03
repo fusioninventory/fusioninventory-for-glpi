@@ -49,7 +49,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 Html::header(__('FusionInventory'),$_SERVER['PHP_SELF'],"utils","report");
 
-PluginFusioninventoryProfile::checkRight("fusioninventory","reportnetworkequipment","r");
+PluginFusioninventoryProfile::checkRight("reportnetworkequipment","r");
 
 if (isset($_GET["networkports_id"])) {
    $ports_id = $_GET["networkports_id"];

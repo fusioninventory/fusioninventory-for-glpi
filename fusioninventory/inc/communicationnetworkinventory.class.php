@@ -60,13 +60,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
    
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment", "w");
+      return PluginFusioninventoryProfile::haveRight("networkequipment", "w");
    }
 
    
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "networkequipment", "r");
+      return PluginFusioninventoryProfile::haveRight("networkequipment", "r");
    }
    
    

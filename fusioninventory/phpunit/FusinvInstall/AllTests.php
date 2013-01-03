@@ -49,7 +49,7 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
          return;
       }
 
-       $comparaisonSQLFile = "plugin_".$pluginname."-0.84+1.0-empty.sql";
+       $comparaisonSQLFile = "plugin_".$pluginname."-empty.sql";
        // See http://joefreeman.co.uk/blog/2009/07/php-script-to-compare-mysql-database-schemas/
 
        $file_content = file_get_contents("../../".$pluginname."/install/mysql/".$comparaisonSQLFile);
@@ -141,9 +141,7 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
                   if ($data['Extra'] == 'auto_increment') {
                      $construct .= ' AUTO_INCREMENT';
                   } else {
-//                     if ($data['Type'] != 'datetime') {
-                        $construct .= " DEFAULT '".$data['Default']."'";
-//                     }
+                     $construct .= " DEFAULT '".$data['Default']."'";
                   }
                }
             }

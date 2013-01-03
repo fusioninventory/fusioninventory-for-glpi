@@ -44,7 +44,9 @@ class Switchinventory extends PHPUnit_Framework_TestCase {
 
 
    public function testSetModuleInventoryOn() {
-      $DB = new DB();
+      global $DB;
+      
+      $DB->connect();
 
       $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
          SET `is_active`='1'
@@ -62,6 +64,8 @@ class Switchinventory extends PHPUnit_Framework_TestCase {
 
    public function testSendinventories() {
       global $DB;
+      
+      $DB->connect();
 
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
@@ -486,12 +490,11 @@ Compiled Wed 18-Aug-10 04:40 by prod_rel_team</COMMENTS>
          $this->testSendinventory("toto", $switch1);
          // Check unknown device created with name
          $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-         $pfSNMPUnknownDevice = new PluginFusinvsnmpUnknownDevice();
-
+         
          $a_unknown = $pfUnknownDevice->find("`name`='juniperswitch3'");
          $this->assertEquals(count($a_unknown), 1, 'Unknown device juniperswitch3 not right creatd with LLDP infos');
          $unknown = current($a_unknown);
-         $a_unknown = $pfSNMPUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$unknown['id']."'");
+         $a_unknown = $pfUnknownDevice->find("`plugin_fusioninventory_unknowndevices_id`='".$unknown['id']."'");
          $this->assertEquals(count($a_unknown), 1, 'Unknown SNMP device juniperswitch3 not right creatd with LLDP infos');
          $snmpunknown = current($a_unknown);
          $this->assertEquals($snmpunknown['sysdescr'],
@@ -504,6 +507,9 @@ Compiled Wed 18-Aug-10 04:40 by prod_rel_team</COMMENTS>
 
 
    function testSendinventory($xmlFile='', $xmlstring='', $create='0') {
+      global $DB;
+      
+      $DB->connect();
 
       if (empty($xmlFile)) {
          echo "testSendinventory with no arguments...\n";

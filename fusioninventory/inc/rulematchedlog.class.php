@@ -78,7 +78,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       $array_ret = array();
       if ($item->getType() == 'PluginFusioninventoryAgent') {
-         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "r")) {
+         if (PluginFusioninventoryProfile::haveRight("agent", "r")) {
              $array_ret[0] = self::createTabEntry(__('Import informations', 'fusioninventory'));
 
          }

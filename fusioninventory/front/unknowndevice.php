@@ -48,7 +48,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","unknown");
 
-PluginFusioninventoryProfile::checkRight("fusioninventory", "unknowndevice","r");
+PluginFusioninventoryProfile::checkRight("unknowndevice","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

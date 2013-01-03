@@ -57,12 +57,12 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "task", "w");
+      return PluginFusioninventoryProfile::haveRight("task", "w");
    }
 
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "task", "r");
+      return PluginFusioninventoryProfile::haveRight("task", "r");
    }
 
 

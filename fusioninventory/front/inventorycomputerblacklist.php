@@ -46,7 +46,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-blacklist");
 
-PluginFusioninventoryProfile::checkRight("fusinvinventory", "blacklist","r");
+PluginFusioninventoryProfile::checkRight("blacklist","r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

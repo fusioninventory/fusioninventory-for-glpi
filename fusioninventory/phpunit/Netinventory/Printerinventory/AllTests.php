@@ -44,7 +44,9 @@ class Printerinventory extends PHPUnit_Framework_TestCase {
 
 
    public function testSetModuleInventoryOn() {
-      $DB = new DB();
+      global $DB;
+      
+      $DB->connect();
 
       $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
          SET `is_active`='1'
@@ -62,6 +64,8 @@ class Printerinventory extends PHPUnit_Framework_TestCase {
 
    public function testSendinventories() {
       global $DB;
+      
+      $DB->connect();
       
       $plugin = new Plugin();
       $plugin->getFromDBbyDir("fusioninventory");
@@ -177,6 +181,9 @@ class Printerinventory extends PHPUnit_Framework_TestCase {
 
 
    function testSendinventory($xmlFile='', $xmlstring='', $create='0') {
+      global $DB;
+      
+      $DB->connect();
 
       if (empty($xmlFile)) {
          echo "testSendinventory with no arguments...\n";

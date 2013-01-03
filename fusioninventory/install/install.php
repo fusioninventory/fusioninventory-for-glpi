@@ -165,8 +165,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
     * Create DB structure
     */
       $migration->displayMessage("Creation tables in database");
-      $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-"
-                 .$version."-empty.sql";
+      $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/plugin_fusioninventory-empty.sql";
       if (!$DB->runFile($DB_file)) {
          $migration->displayMessage("Error on creation tables in database");
       }
@@ -205,11 +204,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
     * Manage profiles
     */
       $migration->displayMessage("Initialize profiles");
-      $plugin = new Plugin();
-      $data = $plugin->find("`name` = 'FusionInventory'");
-      $fields = current($data);
-      $plugins_id = $fields['id'];
-      PluginFusioninventoryProfile::initProfile('fusioninventory', $plugins_id);
+      PluginFusioninventoryProfile::initProfile('fusioninventory');
 
 
 
@@ -244,38 +239,33 @@ function pluginFusioninventoryInstall($version, $migration='') {
     * Register Agent TASKS
     */
       $migration->displayMessage("Initialize agent TASKS");
-      PluginFusioninventoryProfile::changeProfile($plugins_id);
+      PluginFusioninventoryProfile::changeProfile();
       $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
       $input = array();
-      $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "WAKEONLAN";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
       $input = array();
-      $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "INVENTORY";
       $input['is_active']  = 1;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
       $input = array();
-      $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "ESX";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
       $input = array();
-      $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "NETWORKINVENTORY";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $PluginFusioninventoryAgentmodule->add($input);
 
       $input = array();
-      $input['plugins_id'] = $plugins_id;
       $input['modulename'] = "NETWORKDISCOVERY";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());

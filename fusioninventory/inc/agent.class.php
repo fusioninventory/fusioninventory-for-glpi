@@ -63,12 +63,12 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
 
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "w");
+      return PluginFusioninventoryProfile::haveRight("agent", "w");
    }
 
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight("fusioninventory", "agent", "r");
+      return PluginFusioninventoryProfile::haveRight("agent", "r");
    }
 
 
