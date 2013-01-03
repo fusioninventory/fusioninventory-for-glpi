@@ -787,6 +787,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    
    
    
+   /**
+    * Display agent infos for a computer
+    * 
+    * @param type $computers_id id of the computer
+    */
    function showInfoForComputer($computers_id) {
       
       if ($this->getAgentWithComputerid($computers_id)) {
