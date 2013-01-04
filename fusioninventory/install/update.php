@@ -5046,7 +5046,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['fields'] = array(
          'id' =>  array(
                   'type' => 'autoincrement',
-                  'value' => iNULL
+                  'value' => NULL
          ),
          'plugin_fusioninventory_deployfiles_id' =>  array(
                   'type' => 'int(11) NOT NULL',
