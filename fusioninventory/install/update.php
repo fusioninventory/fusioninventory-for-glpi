@@ -760,7 +760,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
  
       $a_table['oldfields']  = array();
 
-      $a_table['renamefields'] = array();
+      $a_table['renamefields'] = array(
+        'plugin_fusinvsnmp_constructdevices_id' => 'plugin_fusioninventory_snmpmodelconstructdevices_id'
+      );
 
       $a_table['keys']   = array();
       $a_table['keys'][] = array('field' => 'plugin_fusioninventory_snmpmodelconstructdevices_id', 
