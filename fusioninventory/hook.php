@@ -1088,7 +1088,7 @@ function plugin_fusioninventory_MassiveActions($type) {
             $array["plugin_fusioninventory_assign_auth"]       = __('Assign SNMP authentication', 'fusioninventory');
          }
          if(PluginFusioninventoryProfile::haveRight("fusioninventory", "model","w")) {
-            $array["plugin_fusioninventory_assign_model"]      = __('Assign SNMP model', 'fusioninventory')
+            $array["plugin_fusioninventory_assign_model"]      = __('Assign SNMP model', 'fusioninventory');
          }
 
          return $array;

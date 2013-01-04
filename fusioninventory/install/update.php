@@ -723,10 +723,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       );
 
       $a_table['renamefields'] = array(
-         'ID' => 'id';
-         'ifaddr_start' => 'ip_start';
-         'ifaddr_end' => 'ip_end';
-         'FK_entities' => 'entities_id';
+         'ID' => 'id',
+         'ifaddr_start' => 'ip_start',
+         'ifaddr_end' => 'ip_end',
+         'FK_entities' => 'entities_id'
       );
 
       $a_table['keys']   = array(
@@ -4338,7 +4338,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             'type' => 'autoincrement',
             'value' => NULL
          ),
-         'plugin_fusioninventory_deployorders_id' = array(
+         'plugin_fusioninventory_deployorders_id' => array(
             'type' => 'int(11) NOT NULL',
             'value' => NULL
          ),
@@ -4373,12 +4373,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             'field' => 'itemtype',
             'name' => '',
             'type' => 'KEY'
-         );
+         ),
          array(
             'field' => 'items_id',
             'name' => '',
             'type' => 'KEY'
-         );
+         )
       );
 
       $a_table['oldkeys'] = array(
@@ -4658,10 +4658,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   'value' => NULL
          ),
          'value' =>  array(
-                  'type' => 'varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''',
+                  'type' => "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
                   'value' => NULL
          ),
-         'plugin_fusioninventory_deploycommands_id' =  array(
+         'plugin_fusioninventory_deploycommands_id' =>  array(
                   'type' => 'int(11) NOT NULL',
                   'value' => NULL
          ),
@@ -4990,7 +4990,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   'value' => NULL
          ),
          'comment' =>  array(
-                  'type' => 'text COLLATE utf8_unicode_ci NOT NULL DEFAULT ''',
+                  'type' => "text COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
                   'value' => NULL
          ),
          'entities_id' =>  array(
