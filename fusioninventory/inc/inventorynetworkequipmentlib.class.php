@@ -289,7 +289,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                $this->importConnectionLLDP($a_inventory['connection-lldp'][$a_port['logical_number']],
                        $networkports_id);
             } else if (isset($a_inventory['connection-mac'][$a_port['logical_number']])) {
-               $this->importConnectionMac();
+               $this->importConnectionMac($a_inventory['connection-mac'][$a_port['logical_number']]);
             }
 
             // Vlan
@@ -338,8 +338,29 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
    
    
    
-   function importConnectionMac() {
+   function importConnectionMac($a_portconnection) {
       
+/*
+Array
+(
+    [0] => 00:23:18:cf:0d:93
+    [1] => f0:ad:4e:00:19:f7
+    [2] => f0:ad:4e:10:39:f9
+)
+ */
+      if (count($a_portconnection) == 0) { // case 0 mac, not touch
+
+         
+      } else if (count($a_portconnection) == 1) { // Case only 1 mac
+
+      
+      } else if (count($a_portconnection) == 2) { // Case 2 mac (detect phone)
+
+         
+      } else { // Case more than 2 mac
+         
+         
+      }
    }
    
    

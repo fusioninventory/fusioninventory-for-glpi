@@ -1210,10 +1210,11 @@ class PluginFusioninventoryFormatconvert {
                   } else if (!is_int(key($a_port['CONNECTIONS']['CONNECTION']))) {
                      $a_port['CONNECTIONS']['CONNECTION'] = array($a_port['CONNECTIONS']['CONNECTION']);
                   }
-                  
-                  foreach ($a_port['CONNECTIONS']['CONNECTION'] as $keymac=>$mac) {
-                     if ($keymac == 'MAC') {
-                        $a_inventory['connection-mac'][$a_port['IFNUMBER']][] = $mac;
+                  foreach ($a_port['CONNECTIONS']['CONNECTION'] as $dataconn) {
+                     foreach ($dataconn as $keymac=>$mac) {
+                        if ($keymac == 'MAC') {
+                           $a_inventory['connection-mac'][$a_port['IFNUMBER']][] = $mac;
+                        }
                      }
                   }
                   $a_inventory['connection-mac'][$a_port['IFNUMBER']] = array_unique($a_inventory['connection-mac'][$a_port['IFNUMBER']]);
