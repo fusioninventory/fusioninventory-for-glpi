@@ -2489,58 +2489,59 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
 
-   /*
-    * Table glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks
-    */
-      $newTable = "glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks";
-      $migration->renameTable("glpi_plugin_fusinvsnmp_constructdevicewalks",
-                              $newTable);
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "construct_device_id",
-                                 "plugin_fusioninventory_snmpmodelconstructdevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_constructdevices_id",
-                                 "plugin_fusioninventory_snmpmodelconstructdevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodelconstructdevices_id",
-                                 "plugin_fusioninventory_snmpmodelconstructdevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "log",
-                                 "log",
-                                 "text DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                              "plugin_fusioninventory_snmpmodelconstructdevices_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "log",
-                              "text DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
-
-
+    /*
+     * Table glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks
+     */
+/*
+       $newTable = "glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks";
+       $migration->renameTable("glpi_plugin_fusinvsnmp_constructdevicewalks",
+                               $newTable);
+       if (!TableExists($newTable)) {
+          $query = "CREATE TABLE `".$newTable."` (
+                      `id` int(11) NOT NULL AUTO_INCREMENT,
+                       PRIMARY KEY (`id`)
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+          $DB->query($query);
+       }
+ 
+          $migration->changeField($newTable,
+                                  "ID",
+                                  "id",
+                                  "int(11) NOT NULL AUTO_INCREMENT");
+          $migration->changeField($newTable,
+                                  "id",
+                                  "id",
+                                  "int(11) NOT NULL AUTO_INCREMENT");
+          $migration->changeField($newTable,
+                                  "construct_device_id",
+                                  "plugin_fusioninventory_snmpmodelconstructdevices_id",
+                                  "int(11) NOT NULL DEFAULT '0'");
+          $migration->changeField($newTable,
+                                  "plugin_fusinvsnmp_constructdevices_id",
+                                  "plugin_fusioninventory_snmpmodelconstructdevices_id",
+                                  "int(11) NOT NULL DEFAULT '0'");
+          $migration->changeField($newTable,
+                                  "plugin_fusioninventory_snmpmodelconstructdevices_id",
+                                  "plugin_fusioninventory_snmpmodelconstructdevices_id",
+                                  "int(11) NOT NULL DEFAULT '0'");
+          $migration->changeField($newTable,
+                                  "log",
+                                  "log",
+                                  "text DEFAULT NULL");
+       $migration->migrationOneTable($newTable);
+          $migration->addField($newTable,
+                               "id",
+                               "int(11) NOT NULL AUTO_INCREMENT");
+          $migration->addField($newTable,
+                               "plugin_fusioninventory_snmpmodelconstructdevices_id",
+                               "int(11) NOT NULL DEFAULT '0'");
+          $migration->addField($newTable,
+                               "log",
+                               "text DEFAULT NULL");
+       $migration->migrationOneTable($newTable);
+       $DB->list_fields($newTable, false);
+*/ 
+ 
 
    /*
     * Table glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids
@@ -4678,7 +4679,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       $a_table['keys'] = array(
          array(
-            'field' => 'plugin_fusinvdeploy_commands_id',
+            'field' => 'plugin_fusioninventory_deploycommands_id',
             'name' => '',
             'type' => 'KEY'
          ),
@@ -4740,7 +4741,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       $a_table['keys'] = array(
          array(
-            'field' => 'plugin_fusioninventory_deploycommands_id',
+            'field' => 'plugin_fusioninventory_deployorders_id',
             'name' => '',
             'type' => 'KEY'
          ),
