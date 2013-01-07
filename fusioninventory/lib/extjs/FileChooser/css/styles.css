@@ -1,0 +1,180 @@
+/* ---- Begin Button Styles --- */
+.chmod_button {
+   background-image: url(../images/document_gear.png) !important;
+}
+.chmod_directory_button {
+   background-image: url(../images/folder_gear.png) !important;
+}
+.crop_button {
+   background-image: url(../images/selection.png) !important;
+}
+.delete_button {
+   background-image: url(../images/delete.png) !important;
+}
+.delete_directory_button {
+   background-image: url(../images/folder_delete.png) !important;
+}
+.download_button {
+   background-image: url(../images/download.png) !important;
+}
+.edit_image_button {
+   background-image: url(../images/photo_scenery.png) !important;
+}
+.lock_button {
+   background-image: url(../images/lock.png) !important;
+}
+.new_directory_button {
+   background-image: url(../images/folder_new.png) !important;
+}
+.rename_button {
+   background-image: url(../images/element_into_input.png) !important;
+}
+.rename_directory_button {
+   background-image: url(../images/folder_edit.png) !important;
+}
+.resize_button {
+   background-image: url(../images/drawing_utensils.png) !important;
+}
+.rotate_button {
+   background-image: url(../images/replace2.png) !important;
+}
+.save_button {
+   background-image: url(../images/disk_blue.png) !important;
+}
+.unlock_button {
+   background-image: url(../images/lock_open.png) !important;
+}
+.upload_button {
+   background-image: url(../images/upload.png) !important;
+}
+/* ---- End Button Styles --- */
+
+/* ---- Begin Icon Styles --- */
+.save_success_icon {
+   padding-left: 25px !important;
+   background-image: url(../images/disk_blue_ok.png) !important;
+   background-position: 3px 3px;
+   background-repeat: no-repeat;
+}
+.save_error_icon {
+   padding-left: 25px !important;
+   background-image: url(../images/disk_blue_error.png) !important;
+   background-position: 3px 3px;
+   background-repeat: no-repeat;
+}
+.save_warning_icon {
+   padding-left: 25px !important;
+   background-image: url(../images/disk_blue_warning.png) !important;
+   background-position: 3px 3px;
+   background-repeat: no-repeat;
+}
+/* ---- End Icon Styles --- */
+
+/* EXT Overrides */
+.x-form-field-wrap .x-form-file-trigger {
+   background-image: url(../images/folder_explore.png);
+   cursor: pointer;
+   margin-left:2px;
+   border:none;
+}
+img.x-tree-node-icon.folder-closed {
+   background-image: url(../images/folder.png);
+}
+img.x-tree-node-icon.folder-open {
+   background-image: url(../images/folder-open.gif);
+}
+img.x-tree-node-icon.file {
+   background-image: url(../images/leaf.gif);
+}
+
+#FileChooser .x-grid3-row {
+   border:none;
+   cursor: default;
+   border-bottom: 1px solid #E4E4E2;
+   width:100%;
+}
+
+#FileChooser .x-grid3-row-over {
+   border-bottom:1px solid #FFEEC1;
+   background: repeat-x left top #EFEFEF;
+}
+/*--------------------*/
+
+/* ImageChooser styles */
+#ImageChooser .thumb{
+    background: #dddddd;
+    padding: 3px;
+}
+#ImageChooser .thumb img{
+    height: 60px;
+    width: 80px;
+}
+#ImageChooser .thumb-wrap{
+    float: left;
+    margin: 4px;
+    margin-right: 0;
+    padding: 5px;
+}
+#ImageChooser .thumb-wrap span{
+    display: block;
+    overflow: hidden;
+    text-align: center;
+}
+#ImageChooser .x-view-over{
+    border: 1px solid #dddddd;
+    background: #efefef;
+    padding: 4px;
+}
+#ImageChooser .x-view-selected{
+    background: #DFEDFF;
+    border: 1px solid #6593cf;
+    padding: 4px;
+}
+#ImageChooser .x-view-selected .thumb{
+    background: transparent;
+}
+#ImageChooser .x-view-selected span{
+    color: #1A4D8F;
+}
+/*--------------------*/
+
+/* Loading Mask Styles */
+#loading-container {
+   background-color: #fff;
+   z-index: 20000;
+}
+#loading-mask {
+   background-color: #fff;
+   height: 100%;
+   left: 0;
+   position: absolute;
+   top: 0;
+   width: 100%;
+   z-index: 20001;
+}
+#loading-wrapper {
+   height: auto;
+   position: absolute;
+   top: 40%;
+   width: 100%;
+   z-index: 20002;
+}
+#loading-indicator {
+   color: #999;
+   font-family: Tahoma, Geneva, sans-serif;
+   font-size: 10px;
+   margin: auto;
+   text-align: center;
+   width: 312px;
+}
+/*--------------------*/
+
+/* Resizable Element Fixes */
+.x-resizble-cropper {
+   border: 2px dashed;
+}
+.x-resizble-cropper .x-resizable-handle {
+   background: none;
+   display: block;
+   opacity: 1;
+}
