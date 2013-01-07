@@ -55,7 +55,7 @@ class PluginFusioninventoryDeployInstall extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       switch(get_class($item)) {
-         case 'PluginFusioninventoryDeployPackage': return __('Installation');
+         case 'PluginFusioninventoryDeployPackage': return __('Installation','fusioninventory');
 
       }
    }
@@ -76,7 +76,7 @@ class PluginFusioninventoryDeployInstall extends CommonDBTM {
       if (!PluginFusioninventoryDeployPackage::canEdit($id)) {
          $disabled = "true";
          PluginFusioninventoryDeployPackage::showEditDeniedMessage($id,
-               __('One or more active tasks (#task#) use this package. Edition denied.'));
+               __('One or more active tasks (#task#) use this package. Edition denied.','fusioninventory'));
 
       }
 
@@ -110,9 +110,9 @@ class PluginFusioninventoryDeployInstall extends CommonDBTM {
          </table>";
 
       // Include JS
-      require GLPI_ROOT."/plugins/fusinvdeploy/js/package_check.front.php";
-      require GLPI_ROOT."/plugins/fusinvdeploy/js/package_file.front.php";
-      require GLPI_ROOT."/plugins/fusinvdeploy/js/package_action.front.php";
+      require GLPI_ROOT."/plugins/fusioninventory/front/deploypackage_check.front.php";
+      require GLPI_ROOT."/plugins/fusioninventory/front/deploypackage_file.front.php";
+      require GLPI_ROOT."/plugins/fusioninventory/front/deploypackage_action.front.php";
    }
 
 }

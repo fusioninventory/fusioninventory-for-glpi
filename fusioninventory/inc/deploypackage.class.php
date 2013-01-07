@@ -157,12 +157,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
       if ($this->canCreate()) {
-         $buttons["package.form.php?new=1"] = __('Add a package');
+         $buttons["deploypackage.form.php?new=1"] = __('Add a package');
 
          $title = "";
       }
 
-      Html::displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_mini_package.png", $title, $title, $buttons);
+      Html::displayTitle(GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_package.png", $title, $title, $buttons);
    }
 
 
@@ -225,14 +225,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       //load extjs plugins library
       echo "<link rel='stylesheet' type='text/css' href='".GLPI_ROOT.
-            "/plugins/fusinvdeploy/lib/extjs/FileChooser/css/styles.css'>";
+            "/plugins/fusioninventory/lib/extjs/FileChooser/css/styles.css'>";
 
       echo "<script type='text/javascript'>";
-      require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/FileUploadField.js";
-      require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/Spinner.js";
-      require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/SpinnerField.js";
-      require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/GridDragDropRowOrder.js";
-      require_once GLPI_ROOT."/plugins/fusinvdeploy/lib/extjs/FileChooser/FileChooser.js";
+      require_once GLPI_ROOT."/plugins/fusioninventory/lib/extjs/FileUploadField.js";
+      require_once GLPI_ROOT."/plugins/fusioninventory/lib/extjs/Spinner.js";
+      require_once GLPI_ROOT."/plugins/fusioninventory/lib/extjs/SpinnerField.js";
+      require_once GLPI_ROOT."/plugins/fusioninventory/lib/extjs/GridDragDropRowOrder.js";
+      require_once GLPI_ROOT."/plugins/fusioninventory/lib/extjs/FileChooser/FileChooser.js";
       echo "</script>";
 
       return true;
@@ -285,12 +285,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       if (!self::canEdit($this->getField('id'))) {
          $task = new PluginFusioninventoryDeployTask;
          $tasks_url = "";
-         $taskjobs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
+         $taskjobs = getAllDatasFromTable('glpi_plugin_fusioninventory_deploytaskjobs',
                   "definition LIKE '%\"PluginFusioninventoryDeployPackage\":\"".$this->getField('id')."%'");
          foreach($taskjobs as $job) {
-            $task->getFromDB($job['plugin_fusinvdeploy_tasks_id']);
+            $task->getFromDB($job['plugin_fusioninventory_deploytasks_id']);
             $tasks_url .= "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.form.php?id="
-                  .$job['plugin_fusinvdeploy_tasks_id']."'>".$task->fields['name']."</a>, ";
+                  .$job['plugin_fusioninventory_deploytasks_id']."'>".$task->fields['name']."</a>, ";
          }
          $tasks_url = substr($tasks_url, 0, -2);
 
@@ -334,7 +334,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                //Find Orders created by Package object
                $orders = $o_order->find(
                   "`type` = " . $order_type .
-                  " AND `plugin_fusinvdeploy_packages_id` = " . $o_package->fields['id'],
+                  " AND `plugin_fusioninventory_deploypackages_id` = " . $o_package->fields['id'],
                   "",
                   "1"
                );
@@ -364,7 +364,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                         $i_check['value'] /= 1024 * 1024;
                      }
                      $i_check['ranking'] = $check_idx;
-                     $i_check['plugin_fusinvdeploy_orders_id'] = $o_order->fields['id'];
+                     $i_check['plugin_fusioninventory_deployorders_id'] = $o_order->fields['id'];
                      //logDebug(print_r($i_check,true));
                      $o_check->add($i_check);
                   }
@@ -387,7 +387,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      $i_file['sha512'] = $file_idx;
                      $i_file['shortsha512'] = substr($file_idx,0,6);
 
-                     $i_file['plugin_fusinvdeploy_orders_id'] = $o_order->fields['id'];
+                     $i_file['plugin_fusioninventory_deployorders_id'] = $o_order->fields['id'];
                      $o_file->add($i_file);
 
                      //Attach Multipart
@@ -397,8 +397,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                         $i_filepart = array();
                         $i_filepart['sha512'] = $part;
                         $i_filepart['shortsha512'] = substr($part, 0, 6);
-                        $i_filepart['plugin_fusinvdeploy_orders_id'] = $o_order->fields['id'];
-                        $i_filepart['plugin_fusinvdeploy_files_id']  = $o_file->fields['id'];
+                        $i_filepart['plugin_fusioninventory_deployorders_id'] = $o_order->fields['id'];
+                        $i_filepart['plugin_fusioninventory_deployfiles_id']  = $o_file->fields['id'];
                      }
                   }
 
@@ -408,7 +408,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      //logDebug("actions properties " . print_r(array_keys(get_object_vars($action)),true) );
                      $o_action = new PluginFusioninventoryDeployAction();
                      $i_action = array();
-                     $i_action['plugin_fusinvdeploy_orders_id'] = $o_order->fields['id'];
+                     $i_action['plugin_fusioninventory_deployorders_id'] = $o_order->fields['id'];
                      $o_action->add($i_action);
 
                      $d_action_props = array_keys(get_object_vars($action));
@@ -441,7 +441,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                                           break;
                                     }
                                     $i_retcheck['value'] = $d_retcheck->{'values'}[0];
-                                    $i_retcheck['plugin_fusinvdeploy_commands_id'] = $o_action->fields['id'];
+                                    $i_retcheck['plugin_fusioninventory_deploycommands_id'] = $o_action->fields['id'];
                                     //logDebug("DEBUG Command Status : " . print_r($i_retcheck,true));
                                     $o_retcheck->add($i_retcheck);
                                  }
@@ -480,7 +480,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      $i_action['itemtype'] = get_class($o_action_sub) ;
                      $i_action['items_id'] = $o_action_sub->fields['id'];
                      $i_action['ranking'] = $action_idx;
-                     $i_action['plugin_fusinvdeploy_orders_id'] = $o_order->fields['id'];
+                     $i_action['plugin_fusioninventory_deployorders_id'] = $o_order->fields['id'];
                      $o_action->update($i_action);
                   }
                }
@@ -508,14 +508,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       //duplicate orders
       $order_obj = new PluginFusioninventoryDeployOrder;
-      $orders = $order_obj->find("plugin_fusinvdeploy_packages_id = '".$package_oldId."'");
+      $orders = $order_obj->find("plugin_fusioninventory_deploypackages_id = '".$package_oldId."'");
 
       foreach($orders as $order_oldId => $order) {
          //create new order for this new package
          $order_param = array(
             'type' => $order['type'],
             'create_date' => date("Y-m-d H:i:s"),
-            'plugin_fusinvdeploy_packages_id' => $package_newId
+            'plugin_fusioninventory_deploypackages_id' => $package_newId
          );
          $order_newId = $order_obj->add($order_param);
          unset($order_param);
@@ -523,38 +523,38 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
          //duplicate checks
          $check_obj = new PluginFusioninventoryDeployCheck;
-         $checks = $check_obj->find("plugin_fusinvdeploy_orders_id = '".$order_oldId."'");
+         $checks = $check_obj->find("plugin_fusioninventory_deployorders_id = '".$order_oldId."'");
          foreach ($checks as $check_oldId => $check) {
             //create new check for this new order
             unset($check['id']);
-            $check['plugin_fusinvdeploy_orders_id'] = $order_newId;
+            $check['plugin_fusioninventory_deployorders_id'] = $order_newId;
             $check_newId = $check_obj->add($check);
          }
 
          //duplicate files
          $file_obj = new PluginFusioninventoryDeployFile;
-         $files = $file_obj->find("plugin_fusinvdeploy_orders_id = '".$order_oldId."'");
+         $files = $file_obj->find("plugin_fusioninventory_deployorders_id = '".$order_oldId."'");
          foreach ($files as $file_oldId => $file) {
             //create new file for this new order
             unset($file['id']);
-            $file['plugin_fusinvdeploy_orders_id'] = $order_newId;
+            $file['plugin_fusioninventory_deployorders_id'] = $order_newId;
             $file_newId = $file_obj->add($file);
 
             //duplicate fileparts
             $filepart_obj = new PluginFusioninventoryDeployFilepart;
-            $fileparts = $filepart_obj->find("plugin_fusinvdeploy_files_id = '".$order_oldId."'");
+            $fileparts = $filepart_obj->find("plugin_fusioninventory_deployfiles_id = '".$order_oldId."'");
             foreach ($fileparts as $filepart_oldId => $filepart) {
                //create new filepart for this new file
                unset($filepart['id']);
-               $filepart['plugin_fusinvdeploy_orders_id'] = $order_newId;
-               $filepart['plugin_fusinvdeploy_files_id'] = $file_newId;
+               $filepart['plugin_fusioninventory_deployorders_id'] = $order_newId;
+               $filepart['plugin_fusioninventory_deployfiles_id'] = $file_newId;
                $filepart_newId = $filepart_obj->add($filepart);
             }
          }
 
          //duplicate actions
          $action_obj = new PluginFusioninventoryDeployAction;
-         $actions = $action_obj->find("plugin_fusinvdeploy_orders_id = '".$order_oldId."'");
+         $actions = $action_obj->find("plugin_fusioninventory_deployorders_id = '".$order_oldId."'");
          foreach ($actions as $action_oldId => $action) {
             //duplicate actions subitem
             $action_subitem_obj = new $action['itemtype'];
@@ -571,28 +571,28 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
                //duplicate commandstatus
                $commandstatus_obj = new PluginFusioninventoryDeployAction_Commandstatus;
-               $commandstatus = $commandstatus_obj->find("plugin_fusinvdeploy_commands_id = '".$command_oldId."'");
+               $commandstatus = $commandstatus_obj->find("plugin_fusioninventory_deploycommands_id = '".$command_oldId."'");
                foreach ($commandstatus as $commandstatus_oldId => $commandstate) {
                   //create new commandstatus for this command
                   unset($commandstate['id']);
-                  $commandstate['plugin_fusinvdeploy_commands_id'] = $command_newId;
+                  $commandstate['plugin_fusioninventory_deploycommands_id'] = $command_newId;
                   $commandstatus_newId = $commandstatus_obj->add($commandstate);
                }
 
                //duplicate commandenvvariables
                $commandenvvariables_obj = new PluginFusioninventoryDeployAction_Commandenvvariable;
-               $commandenvvariables = $commandenvvariables_obj->find("plugin_fusinvdeploy_commands_id = '".$command_oldId."'");
+               $commandenvvariables = $commandenvvariables_obj->find("plugin_fusioninventory_deploycommands_id = '".$command_oldId."'");
                foreach ($commandenvvariables as $commandenvvariable_oldId => $commandenvvariable) {
                   //create new commandenvvariable for this command
                   unset($commandenvvariable['id']);
-                  $commandenvvariable['plugin_fusinvdeploy_commands_id'] = $command_newId;
+                  $commandenvvariable['plugin_fusioninventory_deploycommands_id'] = $command_newId;
                   $commandenvvariable_newId = $commandenvvariables_obj->add($commandenvvariable);
                }
             }
 
             //create new action for this new order
             unset($action['id']);
-            $action['plugin_fusinvdeploy_orders_id'] = $order_newId;
+            $action['plugin_fusioninventory_deployorders_id'] = $order_newId;
             $action['items_id'] = $action_subitem_newId;
             $action_newId = $action_obj->add($action);
          }
@@ -623,20 +623,20 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $task = new PluginFusioninventoryDeployTask;
       $tasks_url = "";
 
-      $taskjobs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
+      $taskjobs = getAllDatasFromTable('glpi_plugin_fusioninventory_deploytaskjobs',
                "definition LIKE '%\"PluginFusioninventoryDeployPackage\":\"".$id."%'");
 
       # A task can have more than one taskjobs is an Install and Uninstall function are associated
       # to the same tasks
       $jobs_seen = array();
       foreach($taskjobs as $job) {
-         if (isset($jobs_seen[$job['plugin_fusinvdeploy_tasks_id']])) {
+         if (isset($jobs_seen[$job['plugin_fusioninventory_deploytasks_id']])) {
             continue;
          }
-         $task->getFromDB($job['plugin_fusinvdeploy_tasks_id']);
+         $task->getFromDB($job['plugin_fusioninventory_deploytasks_id']);
          $tasks_url .= "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.form.php?id="
-               .$job['plugin_fusinvdeploy_tasks_id']."'>".$task->fields['name']."</a>, ";
-         $jobs_seen[$job['plugin_fusinvdeploy_tasks_id']]=1;
+               .$job['plugin_fusioninventory_deploytasks_id']."'>".$task->fields['name']."</a>, ";
+         $jobs_seen[$job['plugin_fusioninventory_deploytasks_id']]=1;
       }
       $tasks_url = substr($tasks_url, 0, -2);
 

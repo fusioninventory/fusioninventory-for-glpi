@@ -55,7 +55,7 @@ class PluginFusioninventoryDeployAction_Mkdir extends CommonDBTM {
    static function getActions($moves_id) {
       $response = array();
 
-      $mkdirs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_mkdirs', "`id`='$moves_id'");
+      $mkdirs = getAllDatasFromTable('glpi_plugin_fusioninventory_deployactions_mkdirs', "`id`='$moves_id'");
       foreach ($mkdirs as $mkdir) {
          if (!empty($mkdir['path']))
             $response['mkdir']['list'][] = $mkdir['path'];

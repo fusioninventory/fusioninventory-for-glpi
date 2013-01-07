@@ -141,9 +141,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       Html::displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_group.png", $title, $title, $buttons);
    }
 
-   function getSearchURL($full=true) {
+   /*function getSearchURL($full=true) {
       return Toolbox::getItemTypeSearchURL('PluginFusioninventoryDeployTask', $full);
-   }
+   }*/
 
    function showForm($ID, $options = array()) {
 
@@ -205,7 +205,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $rand = mt_rand();
 
       $query = "SELECT DISTINCT `itemtype`
-                FROM `glpi_plugin_fusinvdeploy_groups_staticdatas` as `staticdatas`
+                FROM `glpi_plugin_fusioninventory_deploygroups_staticdatas` as `staticdatas`
                 WHERE `staticdatas`.`groups_id` = '$groupID'
                 ORDER BY `itemtype`";
 
@@ -229,7 +229,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             echo "</table></div>";
 
             echo "<form method='post' name='group_form$rand' id='group_form$rand' action=\"".
-                   $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/group.form.php\">";
+                   $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/deploygroup.form.php\">";
             echo "<input type='hidden' name='type' value='static' />";
 
             echo "<div class='spaced'>";
@@ -258,7 +258,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
                $itemtable = getTableForItemType($itemtype);
                $query = "SELECT `$itemtable`.*,
                                 `staticdatas`.`id` AS IDD
-                         FROM `glpi_plugin_fusinvdeploy_groups_staticdatas` as `staticdatas`,
+                         FROM `glpi_plugin_fusioninventory_deploygroups_staticdatas` as `staticdatas`,
                               `$itemtable`";
                $query .= " WHERE `$itemtable`.`id` = `staticdatas`.`items_id`
                                  AND `staticdatas`.`itemtype` = '$itemtype'
@@ -330,7 +330,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       Html::closeForm();
 
       echo "<form name='group_search' id='group_search' method='POST' action='"
-         .$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/group.form.php'>";
+         .$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/deploygroup.form.php'>";
       echo "<input type='hidden' name='groupID' value='$groupID' />";
       echo "<input type='hidden' name='type' value='static' />";
       echo "<div class='center'>";
@@ -364,7 +364,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       //get datas
       $dynamic_group = new PluginFusioninventoryDeployGroup_Dynamicdata;
       $query = "SELECT *
-         FROM glpi_plugin_fusinvdeploy_groups_dynamicdatas
+         FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
          WHERE groups_id = '$groupID'";
       $res = $DB->query($query);
       $num = $DB->numrows($res);
@@ -376,7 +376,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       //show form
       echo "<form name='group_search' method='POST' action='"
-         .$CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/group.form.php'>";
+         .$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/deploygroup.form.php'>";
       echo "<input type='hidden' name='groupID' value='$groupID' />";
       echo "<input type='hidden' name='type' value='dynamic' />";
       echo "<div class='center'>";
@@ -502,12 +502,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
                              'value'      => $fields['operatingsystems_id']);
 
       Ajax::updateItemOnInputTextEvent("search_operatingsystems_id", "operatingsystems_dropdown",
-                                     $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/dropdown_operatingsystems.php",
+                                     $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/deploydropdown_operatingsystems.php",
                                      $params_os);
 
       //load default operatingsystems_dropdown
       Ajax::updateItem("operatingsystems_dropdown",
-                                     $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/dropdown_operatingsystems.php",
+                                     $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/deploydropdown_operatingsystems.php",
                                      $params_os, /*false,*/ "search_operatingsystems_id");
 
       echo "<span id='operatingsystems_dropdown'>";
@@ -535,7 +535,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       self::ajaxLoad(
          'group_search_submit',
          'group_results',
-         $CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/ajax/group_results.php",
+         $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/deploygroup_results.php",
          array(
             'itemtype'              => 'group_search_itemtype',
             'locations_id'          => 'dropdown_locations_id',
@@ -741,7 +741,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       global $DB;
 
       $sql = " SELECT id, name
-               FROM glpi_plugin_fusinvdeploy_groups
+               FROM glpi_plugin_fusioninventory_deploygroups
                ORDER BY name";
 
       $res  = $DB->query($sql);

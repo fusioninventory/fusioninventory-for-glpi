@@ -88,7 +88,7 @@ class PluginFusioninventoryMenu {
       echo "<table>";
       echo "<tr>";
       echo "<td>";
-      
+
       /*
        * General
        */
@@ -111,11 +111,15 @@ class PluginFusioninventoryMenu {
          $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryUnknownDevice');
       }
 
+      $a_menu[2]['name'] = __('Groups of computers');
+      $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_group.png";
+      $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/deploygroup.php";
+
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('General', 'fusioninventory'), $a_menu, $type,
                                                              $width_status);
       }
-      
+
       /*
        * Tasks
        */
@@ -241,7 +245,29 @@ class PluginFusioninventoryMenu {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('Networking', 'fusioninventory'), $a_menu, $type,
                                                              $width_status);
       }
-      
+
+      /*
+       * Deploy
+       */
+      $a_menu = array();
+
+      if (PluginFusioninventoryProfile::haveRight("packages", "r")) {
+         $a_menu[0]['name'] = __('Package management');
+
+         $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_package.png";
+         $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/deploypackage.php";
+      }
+
+      $a_menu[1]['name'] = __('Mirror servers');
+
+      $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_files.png";
+      $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/deploymirror.php";
+
+      if (!empty($a_menu)) {
+         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Deploy', 'fusioninventory'), $a_menu, $type,
+                                                             $width_status);
+      }
+
       echo "</td>";
       echo "</tr>";
       echo "</table>";

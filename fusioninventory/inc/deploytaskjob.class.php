@@ -60,7 +60,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
       $sql = " SELECT *
                FROM `".$this->getTable()."`
-               WHERE `plugin_fusinvdeploy_tasks_id` = '$tasks_id'
+               WHERE `plugin_fusioninventory_deploytasks_id` = '$tasks_id'
                AND (method = 'deployinstall' OR method = 'deployuninstall')";
 
       $res  = $DB->query($sql);
@@ -118,7 +118,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
       //remove old jobs from task
       $query = "DELETE FROM ".$this->getTable()."
-      WHERE plugin_fusinvdeploy_tasks_id = '".$tasks_id."'";
+      WHERE plugin_fusioninventory_deploytasks_id = '".$tasks_id."'";
       $res = $DB->query($query);
 
       //get plugin id
@@ -140,7 +140,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
          $sql_tasks[] = "INSERT INTO ".$this->getTable()."
          (
-            plugin_fusinvdeploy_tasks_id, name, date_creation, entities_id,
+            plugin_fusioninventory_deploytasks_id, name, date_creation, entities_id,
             plugins_id, method, definition, action,
             retry_nb, retry_time, periodicity_type, periodicity_count
          ) VALUES (

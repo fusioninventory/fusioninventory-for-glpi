@@ -68,8 +68,8 @@ class PluginFusioninventoryDeployAction_Commandstatus extends CommonDBTM {
       $codeMatrice['REGEX_OK'] = 'okPattern';
       $codeMatrice['REGEX_KO'] = 'errorPattern';
 
-      $commands = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_commandstatus',
-                                       "`plugin_fusinvdeploy_commands_id`='$commands_id'");
+      $commands = getAllDatasFromTable('glpi_plugin_fusioninventory_deployactions_commandstatus',
+                                       "`plugin_fusioninventory_deploycommands_id`='$commands_id'");
       foreach ($commands as $command) {
          $response[] = array( 'type' => $codeMatrice[$command['type']],
                               'values' => array ( $command['value'] ) );

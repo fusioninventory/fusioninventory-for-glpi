@@ -48,14 +48,14 @@ class PluginFusioninventoryDeployFile_Mirror extends CommonDBTM {
 
    static function cleanForFile($files_id) {
       global $DB;
-      $query = "DELETE FROM `glpi_plugin_fusinvdeploy_files_mirrors`
-                WHERE `plugin_fusinvdeploy_files_id`='$files_id'";
+      $query = "DELETE FROM `glpi_plugin_fusioninventory_deployfiles_mirrors`
+                WHERE `plugin_fusioninventory_deployfiles_id`='$files_id'";
       $DB->query($query);
    }
 
    static function getList() {
       global $CFG_GLPI;
-      $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_mirrors');
+      $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deploymirrors');
 
       $mirrors = array();
       foreach ($results as $result) {

@@ -55,34 +55,52 @@ class PluginFusioninventoryStaticmisc {
    **/
    static function task_methods() {
 
-      $a_tasks = array();
-      $a_tasks[] = array('module'          => 'fusioninventory',
-                         'method'          => 'wakeonlan',
-                         'name'            => __('Wake On LAN', 'fusioninventory'),
-                         'use_rest'        => false);
+      $a_tasks = array(
+            array(   'module'          => 'fusioninventory',
+                     'method'          => 'wakeonlan',
+                     'name'            => __('Wake On LAN', 'fusioninventory'),
+                     'use_rest'        => false
+            ),
 
-      $a_tasks[] =  array('module'         => 'fusioninventory',
-                          'method'         => 'inventory',
-                          'selection_type' => 'devices',
-                          'hidetask'       => 1,
-                          'name'           => __('Computer Inventory', 'fusioninventory'),
-                          'use_rest'       => false);
+            array(   'module'         => 'fusioninventory',
+                     'method'         => 'inventory',
+                     'selection_type' => 'devices',
+                     'hidetask'       => 1,
+                     'name'           => __('Computer Inventory', 'fusioninventory'),
+                     'use_rest'       => false
+            ),
 
-      $a_tasks[] = array('module'         => 'fusioninventory',
-                         'method'         => 'ESX',
-                         'selection_type' => 'devices',
-                         'name'           => __('VMware host remote inventory', 'fusioninventory'),
-                         'use_rest'       => true);
+            array(   'module'         => 'fusioninventory',
+                     'method'         => 'ESX',
+                     'selection_type' => 'devices',
+                     'name'           => __('VMware host remote inventory', 'fusioninventory'),
+                     'use_rest'       => true
+            ),
 
-      $a_tasks[] = array('module'         => 'fusioninventory',
-                         'method'         => 'networkdiscovery',
-                         'name'           => __('Network discovery', 'fusioninventory'));
+            array(   'module'         => 'fusioninventory',
+                     'method'         => 'networkdiscovery',
+                     'name'           => __('Network discovery', 'fusioninventory')
+            ),
 
+            array(   'module'         => 'fusioninventory',
+                     'method'         => 'networkinventory',
+                     'name'           => __('Network inventory (SNMP)', 'fusioninventory')
+            ),
 
-      $a_tasks[] = array('module'         => 'fusioninventory',
-                         'method'         => 'networkinventory',
-                         'name'           => __('Network inventory (SNMP)', 'fusioninventory'));
-      
+            array(   'module'         => 'fusioninventory',
+                     'method'         => 'deployinstall',
+                     'name'           => __('Package deployment', 'fusioninventory'),
+                     'task'           => "DEPLOY",
+                     'use_rest'       => true
+            ),
+
+            array(   'module'         => 'fusioninventory',
+                     'method'         => 'deployuninstall',
+                     'name'           => __('Package uninstall', 'fusioninventory'),
+                     'task'           => "DEPLOY",
+                     'use_rest'       => true
+            )
+      );
       return $a_tasks;
    }
 
@@ -159,63 +177,70 @@ class PluginFusioninventoryStaticmisc {
    **/
    static function profiles() {
 
-      return array(array('profil'  => 'agent',
-                         'name'    => __('Agents', 'fusioninventory')),
+      return array(
+         array('profil'  => 'agent',
+               'name'    => __('Agents', 'fusioninventory')),
 
-                   array('profil'  => 'remotecontrol',
-                         'name'    => __('Agent remote control', 'fusioninventory')),
+         array('profil'  => 'remotecontrol',
+               'name'    => __('Agent remote control', 'fusioninventory')),
 
-                   array('profil'  => 'configuration',
-                         'name'    => __('Configuration', 'fusioninventory')),
+         array('profil'  => 'configuration',
+               'name'    => __('Configuration', 'fusioninventory')),
 
-                   array('profil'  => 'wol',
-                         'name'    => __('Wake On LAN', 'fusioninventory')),
+         array('profil'  => 'wol',
+               'name'    => __('Wake On LAN', 'fusioninventory')),
 
-                   array('profil'  => 'unknowndevice',
-                         'name'    => __('Unknown devices', 'fusioninventory')),
+         array('profil'  => 'unknowndevice',
+               'name'    => __('Unknown devices', 'fusioninventory')),
 
-                   array('profil'  => 'task',
-                         'name'    => _n('Task', 'Tasks', 2)),
+         array('profil'  => 'task',
+               'name'    => _n('Task', 'Tasks', 2)),
 
-                   array('profil'  => 'iprange',
-                         'name'    => __('IP range configuration', 'fusioninventory')),
+         array('profil'  => 'iprange',
+               'name'    => __('IP range configuration', 'fusioninventory')),
 
-                   array('profil'  => 'credential',
-                         'name'    => __('Authentication for remote devices (VMware)', 'fusioninventory')),
+         array('profil'  => 'credential',
+               'name'    => __('Authentication for remote devices (VMware)', 'fusioninventory')),
 
-                   array('profil'  => 'credentialip',
-                         'name'    => __('Remote devices to inventory (VMware)', 'fusioninventory')),
+         array('profil'  => 'credentialip',
+               'name'    => __('Remote devices to inventory (VMware)', 'fusioninventory')),
 
-                   array('profil'  => 'existantrule',
-                         'name'    => __('Existance criteria', 'fusioninventory')),
+         array('profil'  => 'existantrule',
+               'name'    => __('Existance criteria', 'fusioninventory')),
 
-                   array('profil'  => 'importxml',
-                         'name'    => __('computer XML manual import', 'fusioninventory')),
+         array('profil'  => 'importxml',
+               'name'    => __('computer XML manual import', 'fusioninventory')),
 
-                   array('profil'  => 'blacklist',
-                         'name'    => __('Fields blacklist', 'fusioninventory')),
+         array('profil'  => 'blacklist',
+               'name'    => __('Fields blacklist', 'fusioninventory')),
 
-                   array('profil'  => 'ESX',
-                         'name'    => __('VMware host', 'fusioninventory')),
-          
-                   array('profil'  => 'configsecurity',
-                          'name'    => __('SNMP authentication', 'fusioninventory')),
+         array('profil'  => 'ESX',
+               'name'    => __('VMware host', 'fusioninventory')),
 
-                   array('profil'  => 'networkequipment',
-                          'name'    => __('Network equipment SNMP', 'fusioninventory')),
+         array('profil'  => 'configsecurity',
+                'name'    => __('SNMP authentication', 'fusioninventory')),
 
-                   array('profil'  => 'printer',
-                          'name'    => __('Printer SNMP', 'fusioninventory')),
+         array('profil'  => 'networkequipment',
+                'name'    => __('Network equipment SNMP', 'fusioninventory')),
 
-                   array('profil'  => 'model',
-                          'name'    => __('SNMP model', 'fusioninventory')),
+         array('profil'  => 'printer',
+                'name'    => __('Printer SNMP', 'fusioninventory')),
 
-                   array('profil'  => 'reportprinter',
-                          'name'    => __('Printers report', 'fusioninventory')),
+         array('profil'  => 'model',
+                'name'    => __('SNMP model', 'fusioninventory')),
 
-                   array('profil'  => 'reportnetworkequipment',
-                          'name'    => __('Network report')));
+         array('profil'  => 'reportprinter',
+                'name'    => __('Printers report', 'fusioninventory')),
 
+         array('profil'  => 'reportnetworkequipment',
+                'name'    => __('Network report')),
+
+         array('profil'  => 'packages',
+                'name'    => __('Manage packages')),
+
+         array('profil'  => 'status',
+                'name'    => __('Deployment status'))
+      );
 
    }
 
@@ -487,9 +512,94 @@ class PluginFusioninventoryStaticmisc {
       return $selection_type;
    }
 
+   /*
+    * Deploy definition
+    */
 
+   static function task_definitiontype_deployinstall($a_itemtype) {
+      return array(0 => Dropdown::EMPTY_VALUE,
+                   'PluginFusioninventoryDeployPackage' => __('Package'));
+   }
 
+   static function task_definitiontype_deployuninstall($a_itemtype) {
+      return array(0 => Dropdown::EMPTY_VALUE,
+                   'PluginFusioninventoryDeployPackage' => __('Package'));
+   }
 
+   static function task_definitionselection_PluginFusioninventoryDeployPackage_deployinstall() {
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'definitionselectiontoadd';
+      return Dropdown::show("PluginFusioninventoryDeployPackage", $options);
+   }
+
+   static function task_definitionselection_PluginFusioninventoryDeployPackage_deployuninstall() {
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'definitionselectiontoadd';
+      return Dropdown::show("PluginFusioninventoryDeployPackage", $options);
+   }
+
+   static function task_definitionselection_PluginFusioninventoryDeployGroup_deployinstall() {
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
+   }
+
+   static function task_definitionselection_PluginFusioninventoryDeployGroup_deployuninstall() {
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
+   }
+
+   static function task_actionselection_Computer_deployinstall() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      $options['condition']   = '`id` IN (SELECT `items_id` FROM `glpi_plugin_fusioninventory_agents`)';
+      return Dropdown::show("Computer", $options);
+   }
+   static function task_actionselection_Computer_deployuninstall() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      $options['condition']   = '`id` IN (SELECT `items_id` FROM `glpi_plugin_fusioninventory_agents`)';
+      return Dropdown::show("Computer", $options);
+   }
+
+   static function task_actionselection_Group_deployinstall() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("Group", $options);
+   }
+
+   static function task_actiontype_deployinstall($a_itemtype) {
+      return array(0 => Dropdown::EMPTY_VALUE,
+                   'PluginFusioninventoryDeployGroup' => __('Group of computers'),
+
+                   'Computer' => __('Computers'),
+
+                   'Group' => __('Group')
+
+                  );
+   }
+
+   static function task_actiontype_deployuninstall($a_itemtype) {
+      return array(0 => Dropdown::EMPTY_VALUE,
+                   'PluginFusioninventoryDeployGroup' => __('Group of computers'),
+
+                   'Computer' => __('Computers'),
+
+                   'Group' => __('Group')
+
+                  );
+   }
 }
 
 ?>

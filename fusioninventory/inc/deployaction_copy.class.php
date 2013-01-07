@@ -55,7 +55,7 @@ class PluginFusioninventoryDeployAction_Copy extends CommonDBTM {
    static function getActions($copies_id) {
       $response = array();
 
-      $copies = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_copies', "`id`='$copies_id'");
+      $copies = getAllDatasFromTable('glpi_plugin_fusioninventory_deployactions_copies', "`id`='$copies_id'");
       foreach ($copies as $copy) {
          if (!empty($copy['from']) && !empty($copy['to'])) {
             $response['copy'] = array('from' =>$copy['from'], 'to' => $copy['to']);

@@ -63,7 +63,7 @@ class PluginFusioninventoryDeployFilepart extends CommonDBTM {
 
    static function getForFile($files_id) {
       $filepart_obj = new self;
-      $results = $filepart_obj->find("`plugin_fusinvdeploy_files_id`='$files_id'",
+      $results = $filepart_obj->find("`plugin_fusioninventory_deployfiles_id`='$files_id'",
             "id ASC");
 
       $fileparts = array();
@@ -76,8 +76,8 @@ class PluginFusioninventoryDeployFilepart extends CommonDBTM {
    }
 
    static function getIdsForFile($files_id) {
-      $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_fileparts',
-                                      "`plugin_fusinvdeploy_files_id`='$files_id'");
+      $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deployfileparts',
+                                      "`plugin_fusioninventory_deployfiles_id`='$files_id'");
 
       $fileparts = array();
       foreach ($results as $result) {

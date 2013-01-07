@@ -55,7 +55,7 @@ class PluginFusioninventoryDeployAction_Message extends CommonDBTM {
    static function getActions($commands_id) {
       $response = array();
 
-      $commands = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_messages',
+      $commands = getAllDatasFromTable('glpi_plugin_fusioninventory_deployactions_messages',
                                        "`id`='$commands_id'");
       foreach ($commands as $command) {
          if (!empty($command['message']) || !empty($command['name'])) {

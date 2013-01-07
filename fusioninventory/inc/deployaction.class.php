@@ -62,7 +62,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
    static function getForOrder($orders_id) {
       $action = new self;
-      $results = $action->find("`plugin_fusinvdeploy_orders_id`='$orders_id'", "ranking ASC");
+      $results = $action->find("`plugin_fusioninventory_deployorders_id`='$orders_id'", "ranking ASC");
       $actions = array();
 
       foreach ($results as $result) {
@@ -93,8 +93,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                       itemtype as {$render}itemtype,
                       items_id as {$render}items_id,
                       ranking as {$render}ranking
-               FROM `glpi_plugin_fusinvdeploy_actions`
-               WHERE `plugin_fusinvdeploy_orders_id` = '$order_id'";
+               FROM `glpi_plugin_fusioninventory_deployactions`
+               WHERE `plugin_fusioninventory_deployorders_id` = '$order_id'";
 
       $qry  = $DB->query($sql);
 
@@ -175,7 +175,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                       itemtype as {$render}itemtype,
                       items_id as {$render}items_id,
                       ranking as {$render}ranking
-               FROM `glpi_plugin_fusinvdeploy_actions`
+               FROM `glpi_plugin_fusioninventory_deployactions`
                WHERE `id` = '$id'
                ORDER BY ranking";
       $qry  = $DB->query($sql);
@@ -292,11 +292,11 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       // Adding ACTION
       $data   = array('itemtype'                       => $params['itemtype'],
                       'items_id'                       => $items_id,
-                      'plugin_fusinvdeploy_orders_id'  => $order_id);
+                      'plugin_fusioninventory_deployorders_id'  => $order_id);
 
       //get max previous ranking
       $sql_ranking = "SELECT ranking FROM ".$this->getTable()."
-         WHERE plugin_fusinvdeploy_orders_id = '$order_id' ORDER BY ranking DESC";
+         WHERE plugin_fusioninventory_deployorders_id = '$order_id' ORDER BY ranking DESC";
       $res_ranking = $DB->query($sql_ranking);
       if ($DB->numrows($res_ranking) == 0) $ranking = 0;
       else {
@@ -409,7 +409,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             $data   = array('id'                         =>  $params["id"],
                          'itemtype'                       => $params['itemtype'],
                          'items_id'                       => $items_id,
-                         'plugin_fusinvdeploy_orders_id'  => $order_id);
+                         'plugin_fusioninventory_deployorders_id'  => $order_id);
             $action->update($data);
 
             $res = "{success:true}";
@@ -442,7 +442,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       $actions = new $this;
       if ($ranking_moved < $ranking_destination) {
          //get all rows between this two rows
-         $rows_id = $actions->find("plugin_fusinvdeploy_orders_id = '$order_id'
+         $rows_id = $actions->find("plugin_fusioninventory_deployorders_id = '$order_id'
                AND ranking > '$ranking_moved'
                AND ranking <= '$ranking_destination'"
          );
@@ -457,7 +457,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          }
       } else {
          //get all rows between this two rows
-         $rows_id = $actions->find("plugin_fusinvdeploy_orders_id = '$order_id'
+         $rows_id = $actions->find("plugin_fusioninventory_deployorders_id = '$order_id'
                AND ranking < '$ranking_moved'
                AND ranking >= '$ranking_destination'"
          );

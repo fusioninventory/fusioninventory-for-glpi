@@ -55,7 +55,7 @@ class PluginFusioninventoryDeployAction_Delete extends CommonDBTM {
    static function getActions($moves_id) {
       $response = array();
 
-      $deletes = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_deletes', "`id`='$moves_id'");
+      $deletes = getAllDatasFromTable('glpi_plugin_fusioninventory_deployactions_deletes', "`id`='$moves_id'");
       foreach ($deletes as $delete) {
          if (!empty($delete['path']))
             $response['delete']['list'][] = $delete['path'];

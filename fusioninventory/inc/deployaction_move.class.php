@@ -55,7 +55,7 @@ class PluginFusioninventoryDeployAction_Move extends CommonDBTM {
    static function getActions($moves_id) {
       $response = array();
 
-      $moves = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_moves', "`id`='$moves_id'");
+      $moves = getAllDatasFromTable('glpi_plugin_fusioninventory_deployactions_moves', "`id`='$moves_id'");
       foreach ($moves as $move) {
          if (!empty($move['from']) && !empty($move['to'])) {
             $response['move'] = array('from' =>$move['from'], 'to' => $move['to']);

@@ -70,8 +70,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     */
    static function cleanForPackage($orders_id) {
       global $DB;
-      $query = "DELETE FROM `glpi_plugin_fusinvdeploy_checks`
-                WHERE `plugin_fusinvdeploy_orders_id`='$orders_id'";
+      $query = "DELETE FROM `glpi_plugin_fusioninventory_deploychecks`
+                WHERE `plugin_fusioninventory_deployorders_id`='$orders_id'";
       $DB->query($query);
    }
 
@@ -82,7 +82,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     */
    static function getForOrder($orders_id) {
       $check = new self;
-      $results = $check->find("`plugin_fusinvdeploy_orders_id`='$orders_id'", "ranking ASC");
+      $results = $check->find("`plugin_fusioninventory_deployorders_id`='$orders_id'", "ranking ASC");
 
       $checks = array();
       foreach ($results as $result) {
@@ -130,7 +130,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       $actions = new $this;
       if ($ranking_moved < $ranking_destination) {
          //get all rows between this two rows
-         $rows_id = $actions->find("plugin_fusinvdeploy_orders_id = '$order_id'
+         $rows_id = $actions->find("plugin_fusioninventory_deployorders_id = '$order_id'
                AND ranking > '$ranking_moved'
                AND ranking <= '$ranking_destination'"
          );
@@ -145,7 +145,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          }
       } else {
          //get all rows between this two rows
-         $rows_id = $actions->find("plugin_fusinvdeploy_orders_id = '$order_id'
+         $rows_id = $actions->find("plugin_fusioninventory_deployorders_id = '$order_id'
                AND ranking < '$ranking_moved'
                AND ranking >= '$ranking_destination'"
          );

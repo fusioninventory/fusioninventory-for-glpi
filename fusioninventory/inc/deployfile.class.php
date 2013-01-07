@@ -88,8 +88,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    static function cleanForPackage($orders_id) {
       global $DB;
-      $query = "DELETE FROM `glpi_plugin_fusinvdeploy_files`
-                WHERE `plugin_fusinvdeploy_orders_id`='$orders_id'";
+      $query = "DELETE FROM `glpi_plugin_fusioninventory_deployfiles`
+                WHERE `plugin_fusioninventory_deployorders_id`='$orders_id'";
       $DB->query($query);
    }
 
@@ -111,8 +111,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                      uncompress as {$render}uncompress,
                      DATE_FORMAT(create_date,'%d/%m/%Y') as {$render}dateadd,
                      filesize as {$render}filesize
-              FROM `glpi_plugin_fusinvdeploy_files`
-              WHERE `plugin_fusinvdeploy_orders_id` = '$order_id'
+              FROM `glpi_plugin_fusioninventory_deployfiles`
+              WHERE `plugin_fusioninventory_deployorders_id` = '$order_id'
               AND sha512 <> ''"; # ignoring partially downloaded files
 
       $qry = $DB->query($sql);
@@ -128,8 +128,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    }
 
    static function getForOrder($orders_id) {
-      $results = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files',
-                                      "`plugin_fusinvdeploy_orders_id`='$orders_id' AND sha512 <> ''");
+      $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deployfiles',
+                                      "`plugin_fusioninventory_deployorders_id`='$orders_id' AND sha512 <> ''");
 
       $files = array();
       foreach ($results as $result) {
@@ -152,7 +152,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          $tasks_list = $taskjobstate->getTaskjobsAgent($agents_id);
          foreach ($tasks_list as $itemtype => $states_list) {
             foreach ($states_list as $status) {
-               $results_jobs = getAllDatasFromTable('glpi_plugin_fusinvdeploy_taskjobs',
+               $results_jobs = getAllDatasFromTable('glpi_plugin_fusioninventory_deploytaskjobs',
                                      "`id`='".$status['plugin_fusioninventory_taskjobs_id']."'");
 
                foreach ($results_jobs as $jobs) {
@@ -165,12 +165,12 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
 
                foreach ($packages_id as $package_id) {
-                  $orders = getAllDatasFromTable('glpi_plugin_fusinvdeploy_orders',
-                                                 "`plugin_fusinvdeploy_packages_id`='$package_id'");
+                  $orders = getAllDatasFromTable('glpi_plugin_fusioninventory_deployorders',
+                                                 "`plugin_fusioninventory_deploypackages_id`='$package_id'");
 
                   foreach ($orders as $order) {
-                     $results_files = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files',
-                                         "`plugin_fusinvdeploy_orders_id`='".$order['id']."' AND sha512 <> ''");
+                     $results_files = getAllDatasFromTable('glpi_plugin_fusioninventory_deployfiles',
+                                         "`plugin_fusioninventory_deployorders_id`='".$order['id']."' AND sha512 <> ''");
 
 
                      foreach ($results_files as $result_file) {
@@ -264,7 +264,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          'create_date' => date('Y-m-d H:i:s'),
          'p2p_retention_days' => $p2p_retention_days,
          'uncompress' => $uncompress,
-         'plugin_fusinvdeploy_orders_id' => $order_id
+         'plugin_fusioninventory_deployorders_id' => $order_id
       );
       $file_id = $this->add($data);
 
@@ -286,8 +286,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                   array(
                      'sha512'                        => $part_sha512,
                      'shortsha512'                   => $part_short_sha512,
-                     'plugin_fusinvdeploy_orders_id' => $order_id,
-                     'plugin_fusinvdeploy_files_id'  => $file_id
+                     'plugin_fusioninventory_deployorders_id' => $order_id,
+                     'plugin_fusioninventory_deployfiles_id'  => $file_id
                   )
                );
                unlink($tmpFilepart);
@@ -317,7 +317,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    function checkPresenceFile($sha512, $order_id) {
       global $DB;
 
-      $rows = $this->find("plugin_fusinvdeploy_orders_id = '$order_id'
+      $rows = $this->find("plugin_fusioninventory_deployorders_id = '$order_id'
             AND shortsha512 = '".substr($sha512, 0, 6 )."'
             AND sha512 = '$sha512'"
       );
@@ -333,8 +333,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       $files=array();
 
-      $results_files = getAllDatasFromTable('glpi_plugin_fusinvdeploy_files',
-                          "`plugin_fusinvdeploy_orders_id`='".$order_id."' AND sha512 <> ''");
+      $results_files = getAllDatasFromTable('glpi_plugin_fusioninventory_deployfiles',
+                          "`plugin_fusioninventory_deployorders_id`='".$order_id."' AND sha512 <> ''");
 
 
       foreach ($results_files as $result_file) {
@@ -380,10 +380,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $ids = $PluginFusioninventoryDeployFilepart->getIdsForFile($id);
 
       //verify that the file is not used by another package, in this case ignore file suppression
-      $sql = "SELECT DISTINCT plugin_fusinvdeploy_packages_id
-         FROM glpi_plugin_fusinvdeploy_orders orders
-      LEFT JOIN glpi_plugin_fusinvdeploy_files files
-         ON files.plugin_fusinvdeploy_orders_id = orders.id
+      $sql = "SELECT DISTINCT plugin_fusioninventory_deploypackages_id
+         FROM glpi_plugin_fusioninventory_deployorders orders
+      LEFT JOIN glpi_plugin_fusioninventory_deployfiles files
+         ON files.plugin_fusioninventory_deployorders_id = orders.id
       WHERE files.sha512 = '$sha512'";
       $res = $DB->query($sql);
       if ($DB->numrows($res) == 1) {
@@ -455,7 +455,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       if ($render == 'install') {
          $render_uninstall = PluginFusioninventoryDeployOrder::getRender('uninstall');
          $order_uninstall_id = PluginFusioninventoryDeployOrder::getIdForPackage($package_id,$render_uninstall);
-         $a_uninstall_files = $this->find("`plugin_fusinvdeploy_orders_id`='".$order_uninstall_id."'");
+         $a_uninstall_files = $this->find("`plugin_fusioninventory_deployorders_id`='".$order_uninstall_id."'");
          if (count($a_uninstall_files) == 0) {
             $uninstall = 1;
          }

@@ -104,7 +104,7 @@ class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommu
                switch ($group->getField('type')) {
                   case 'STATIC':
                      $query = "SELECT items_id
-                     FROM glpi_plugin_fusinvdeploy_groups_staticdatas
+                     FROM glpi_plugin_fusioninventory_deploygroups_staticdatas
                      WHERE groups_id = '$items_id'
                      AND itemtype = 'Computer'";
                      $res = $DB->query($query);
@@ -114,7 +114,7 @@ class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommu
                      break;
                   case 'DYNAMIC':
                      $query = "SELECT fields_array
-                     FROM glpi_plugin_fusinvdeploy_groups_dynamicdatas
+                     FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
                      WHERE groups_id = '$items_id'";
                      $res = $DB->query($query);
                      $row = $DB->fetch_assoc($res);

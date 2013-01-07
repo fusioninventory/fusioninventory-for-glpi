@@ -119,7 +119,7 @@ class PluginFusioninventoryDeployConfig extends CommonDBTM {
 
       if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
-               <input class='submit' type='submit' name='plugin_fusinvdeploy_config_set'
+               <input class='submit' type='submit' name='plugin_fusioninventory_deployconfig_set'
                       value='" . __('Update') . "'></td></tr>";
       }
       echo "</table>";

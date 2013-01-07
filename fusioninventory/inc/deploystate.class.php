@@ -81,9 +81,9 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
          tasks.name as task_name, tasks.id as task_id,
          taskjobstatus.id as status_id, taskjobstatus.state as status,
          taskjobstatus.itemtype, taskjobstatus.items_id
-      FROM glpi_plugin_fusinvdeploy_taskjobs taskjobs
-      INNER JOIN glpi_plugin_fusinvdeploy_tasks tasks
-         ON tasks.id = taskjobs.plugin_fusinvdeploy_tasks_id
+      FROM glpi_plugin_fusioninventory_deploytaskjobs taskjobs
+      INNER JOIN glpi_plugin_fusioninventory_deploytasks tasks
+         ON tasks.id = taskjobs.plugin_fusioninventory_deploytasks_id
       LEFT JOIN glpi_plugin_fusioninventory_taskjobstates taskjobstatus
          ON taskjobs.id = taskjobstatus.plugin_fusioninventory_taskjobs_id
       ";
@@ -215,9 +215,9 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
       //get all tasks with job and status
       $i = 0;
       $query_tasks = "SELECT DISTINCT(tasks.name), tasks.id, tasks.date_scheduled as date
-         FROM glpi_plugin_fusinvdeploy_tasks tasks
-         INNER JOIN glpi_plugin_fusinvdeploy_taskjobs jobs
-            ON jobs.plugin_fusinvdeploy_tasks_id = tasks.id
+         FROM glpi_plugin_fusioninventory_deploytasks tasks
+         INNER JOIN glpi_plugin_fusioninventory_deploytaskjobs jobs
+            ON jobs.plugin_fusioninventory_deploytasks_id = tasks.id
             AND jobs.method = 'deployinstall' OR jobs.method = 'deployuninstall'
          INNER JOIN glpi_plugin_fusioninventory_taskjobstates status
             ON status.plugin_fusioninventory_taskjobs_id = jobs.id
@@ -234,8 +234,8 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
          //get all job for this task
          $j = 0;
          $query_jobs = "SELECT id, action
-            FROM glpi_plugin_fusinvdeploy_taskjobs
-            WHERE plugin_fusinvdeploy_tasks_id = '".$row_tasks['id']."'";
+            FROM glpi_plugin_fusioninventory_deploytaskjobs
+            WHERE plugin_fusioninventory_deploytasks_id = '".$row_tasks['id']."'";
          $res_jobs = $DB->query($query_jobs);
          while ($row_jobs = $DB->fetch_assoc($res_jobs)) {
             $actions = importArrayFromDB($row_jobs['action']);
@@ -320,9 +320,9 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
          case 'all':
             //get all tasks
             $query_tasks = "SELECT DISTINCT(tasks.name), tasks.id, tasks.date_scheduled as date
-               FROM glpi_plugin_fusinvdeploy_tasks tasks
-               INNER JOIN glpi_plugin_fusinvdeploy_taskjobs jobs
-                  ON jobs.plugin_fusinvdeploy_tasks_id = tasks.id
+               FROM glpi_plugin_fusioninventory_deploytasks tasks
+               INNER JOIN glpi_plugin_fusioninventory_deploytaskjobs jobs
+                  ON jobs.plugin_fusioninventory_deploytasks_id = tasks.id
                   AND jobs.method = 'deployinstall' OR jobs.method = 'deployuninstall'
                INNER JOIN glpi_plugin_fusioninventory_taskjobstates status
                   ON status.plugin_fusioninventory_taskjobs_id = jobs.id
@@ -342,8 +342,8 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
          case 'task':
             //get all job for this task
             $query_jobs = "SELECT id, action
-               FROM glpi_plugin_fusinvdeploy_taskjobs
-               WHERE plugin_fusinvdeploy_tasks_id = '$items_id'";
+               FROM glpi_plugin_fusioninventory_deploytaskjobs
+               WHERE plugin_fusioninventory_deploytasks_id = '$items_id'";
             $res_jobs = $DB->query($query_jobs);
             while ($row_jobs = $DB->fetch_assoc($res_jobs)) {
                $actions = importArrayFromDB($row_jobs['action']);

@@ -54,13 +54,13 @@ class PluginFusioninventoryDeployAction_Command extends CommonDBTM {
 
    function cleanDBonPurge() {
       $temp = new PluginFusioninventoryDeployAction_Commandstatus();
-      $temp->deleteByCriteria(array('plugin_fusinvdeploy_commands_id' => $this->fields['id']));
+      $temp->deleteByCriteria(array('plugin_fusioninventory_deploycommands_id' => $this->fields['id']));
    }
 
    static function getActions($commands_id, $action_id) {
       $response = array();
 
-      $commands = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_commands',
+      $commands = getAllDatasFromTable('glpi_plugin_fusioninventory_deployactions_commands',
                                        "`id`='$commands_id'");
 
       foreach ($commands as $command) {

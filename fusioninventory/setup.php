@@ -254,12 +254,34 @@ function plugin_init_fusioninventory() {
                         = '../fusioninventory/front/inventorycomputerblacklist.form.php';
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-blacklist']
                         = '../fusioninventory/front/inventorycomputerblacklist.php';
-         
+
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['models'] = '../fusioninventory/front/snmpmodel.form.php?add=1';
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['models'] = '../fusioninventory/front/snmpmodel.php';
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['configsecurity'] = '../fusioninventory/front/configsecurity.form.php?add=1';
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['configsecurity'] = '../fusioninventory/front/configsecurity.php';
+
+         /*
+          * Deploy submenu entries
+          */
+
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['packages'] =
+            '../fusioninventory/front/deploypackage.form.php?add=1';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['packages'] =
+            '../fusioninventory/front/deploypackage.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['mirror'] =
+            '../fusioninventory/front/deploymirror.form.php?add=1';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['mirror'] =
+            '../fusioninventory/front/deploymirror.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['task'] =
+            '../fusioninventory/front/deploytask.form.php?add=1';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['task'] =
+            '../fusioninventory/front/deploytask.php';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['group'] =
+            '../fusioninventory/front/deploygroup.form.php?add=1';
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['group'] =
+            '../fusioninventory/front/deploygroup.php';
+
 
 
          if (PluginFusioninventoryProfile::haveRight("agent","r")) {

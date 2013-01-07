@@ -62,8 +62,8 @@ class PluginFusioninventoryDeployAction_Commandenvvariable extends CommonDBTM {
 
    static function getForCommand($commands_id) {
       $response = array();
-      $commands = getAllDatasFromTable('glpi_plugin_fusinvdeploy_actions_commandenvvariables',
-                                       "`plugin_fusinvdeploy_commands_id`='$commands_id'");
+      $commands = getAllDatasFromTable('glpi_plugin_fusioninventory_deployactions_commandenvvariables',
+                                       "`plugin_fusioninventory_deploycommands_id`='$commands_id'");
       foreach ($commands as $command) {
          $response[] = array( 'name'  => $command['name'],
                               'value' => $command['value']);
