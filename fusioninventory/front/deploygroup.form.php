@@ -61,7 +61,7 @@ if (isset($_REQUEST['type'])) {
 if (isset($_POST["add"])) {
    $group->check(-1, 'w', $_POST);
    $newID = $group->add($_POST);
-   Html::redirect(GLPI_ROOT."/plugins/fusinvdeploy/front/deploygroup.form.php?id=".$newID);
+   Html::redirect(GLPI_ROOT."/plugins/fusioninventory/front/deploygroup.form.php?id=".$newID);
 
 } else if (isset($_POST["delete"])) {
    $group->check($_REQUEST['id'], 'd');
