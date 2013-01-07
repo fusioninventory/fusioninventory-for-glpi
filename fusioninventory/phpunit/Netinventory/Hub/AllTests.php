@@ -249,12 +249,14 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $this->assertEquals(count($a_list), 1, 'switch 1 not added in GLPI');
          $a_switch = current($a_list);
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
-               AND `items_id`='".$a_switch['id']."'");
+               AND `items_id`='".$a_switch['id']."'
+               AND `name`='Fa0/1'");
          $this->assertEquals(count($a_ports), 1, 'switch 1 haven\'t port fa0/1 added in GLPI');
          $a_port = current($a_ports);
          $contactport_id = $networkPort->getContact($a_port['id']);
          $networkPort->getFromDB($contactport_id);
-         if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+         if (isset($networkPort->fields['itemtype'])
+                 &&$networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
             $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
             $this->assertEquals($pfUnknownDevice->fields['hub'],
                               '1', 'No hub connected on port fa0/1 of switch 1');
@@ -275,7 +277,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       //$this->testSendinventory("toto", $switch2);
          // CHECK 1 : verify hub always here and connected
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
-               AND `items_id`='".$a_switch['id']."'");
+               AND `items_id`='".$a_switch['id']."'
+               AND `name`='Fa0/1'");
          $this->assertEquals(count($a_ports), 1, '(2)switch 1 haven\'t port fa0/1 added in GLPI');
          $a_port = current($a_ports);
          $contactport_id = $networkPort->getContact($a_port['id']);
@@ -310,7 +313,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       $this->testSendinventory("toto", $switch2bis);
          // CHECK 1 : verify hub always here and connected
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
-               AND `items_id`='".$a_switch['id']."'");
+               AND `items_id`='".$a_switch['id']."'
+               AND `name`='Fa0/1'");
          $this->assertEquals(count($a_ports), 1, '(3)switch 1 haven\'t port fa0/1 added in GLPI');
          $a_port = current($a_ports);
          $contactport_id = $networkPort->getContact($a_port['id']);
@@ -362,7 +366,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       //$this->testSendinventory("toto", $switch2);
          // CHECK 1 : verify hub always on port 1 of switch 1
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
-               AND `items_id`='".$a_switch['id']."'");
+               AND `items_id`='".$a_switch['id']."'
+               AND `name`='Fa0/1'");
          $this->assertEquals(count($a_ports), 1, '(4)switch 1 haven\'t port fa0/1 added in GLPI');
          $a_port = current($a_ports);
          $contactport_id = $networkPort->getContact($a_port['id']);
@@ -426,7 +431,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       $this->testSendinventory("toto", $switch2bis);
          // CHECK 1 : Verify have hub on port 1 of switch 1
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
-               AND `items_id`='".$a_switch['id']."'");
+               AND `items_id`='".$a_switch['id']."'
+               AND `name`='Fa0/1'");
          $this->assertEquals(count($a_ports), 1, '(6)switch 1 haven\'t port fa0/1 added in GLPI');
          $a_port = current($a_ports);
          $contactport_id = $networkPort->getContact($a_port['id']);
@@ -466,7 +472,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       $this->testSendinventory("toto", $switch1biscdp);
         // CHECK 1 : Verify have no hub on port 1 of switch 1
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
-               AND `items_id`='".$a_switch['id']."'");
+               AND `items_id`='".$a_switch['id']."'
+               AND `name`='Fa0/1'");
          $this->assertEquals(count($a_ports), 1, '(7)switch 1 haven\'t port fa0/1 added in GLPI');
          $a_port = current($a_ports);
          $contactport_id = $networkPort->getContact($a_port['id']);
@@ -499,7 +506,8 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       $this->testSendinventory("toto", $switch1biscdp);
          // CHECK 1 : Verify have no hub on port 1 of switch 1
          $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
-               AND `items_id`='".$a_switch['id']."'");
+               AND `items_id`='".$a_switch['id']."'
+               AND `name`='Fa0/1'");
          $this->assertEquals(count($a_ports), 1, '(8)switch 1 haven\'t port fa0/1 added in GLPI');
          $a_port = current($a_ports);
          $contactport_id = $networkPort->getContact($a_port['id']);

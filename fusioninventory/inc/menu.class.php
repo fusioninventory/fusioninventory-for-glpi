@@ -172,7 +172,7 @@ class PluginFusioninventoryMenu {
       }
       
       if (PluginFusioninventoryProfile::haveRight("existantrule", "r")) {
-         $a_menu[3]['name'] = __('Entity rules (Computer)', 'fusioninventory');
+         $a_menu[3]['name'] = __('Computer entity rules', 'fusioninventory');
          $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[3]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/inventoryruleentity.php";
       }

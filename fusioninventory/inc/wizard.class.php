@@ -441,21 +441,15 @@ class PluginFusioninventoryWizard {
       $_SESSION['plugin_fusioninventory_wizard'] = array();
 
       $a_buttons = array();
-      if ($plugin->isInstalled('fusinvsnmp')
-         && $plugin->isActivated('fusinvsnmp')) {
-
-         $a_buttons[] = array(__('Discover the network', 'fusioninventory'),
-
-                               'w_iprange',
-                               'networkscan.png',
-                               'filNetDiscovery');
-      }
+      $a_buttons[] = array(__('Discover the network', 'fusioninventory'),
+                              'w_iprange',
+                              'networkscan.png',
+                              'filNetDiscovery');
 
       $a_buttons[] = array(__('Inventory devices', 'fusioninventory'),
-
-                                'w_inventorychoice',
-                                'general_inventory.png',
-                                '');
+                              'w_inventorychoice',
+                              'general_inventory.png',
+                              '');
 
       echo "<center>".__('Welcome in FusionInventory. Begin configuration?', 'fusioninventory')."</center><br/>";
 
@@ -476,8 +470,6 @@ class PluginFusioninventoryWizard {
       $plugin = new Plugin();
 
       $a_buttons = array();
-      if ($plugin->isInstalled('fusinvinventory')
-         && $plugin->isActivated('fusinvinventory')) {
 
 //         $a_buttons[] = array(__('Computers and peripherals'),
 
@@ -486,21 +478,14 @@ class PluginFusioninventoryWizard {
 //                               'filInventoryComputer');
 
 
-         $a_buttons[] = array(__('ESX servers', 'fusioninventory'),
-
-                               'w_remotedevices',
-                               '',
-                               'filInventoryESX');
-      }
-      if ($plugin->isInstalled('fusinvsnmp')
-         && $plugin->isActivated('fusinvsnmp')) {
-
-         $a_buttons[] = array(__('Network devices and printers', 'fusioninventory'),
-
-                                'w_iprange',
-                                'general_inventory.png',
-                                'filInventorySNMP');
-      }
+      $a_buttons[] = array(__('ESX servers', 'fusioninventory'),
+                              'w_remotedevices',
+                              '',
+                              'filInventoryESX');
+      $a_buttons[] = array(__('Network devices and printers', 'fusioninventory'),
+                              'w_iprange',
+                              'general_inventory.png',
+                              'filInventorySNMP');
 
       PluginFusioninventoryWizard::displayButtons($a_buttons, $ariane);
    }

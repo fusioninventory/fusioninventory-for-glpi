@@ -289,7 +289,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                $this->importConnectionLLDP($a_inventory['connection-lldp'][$a_port['logical_number']],
                        $networkports_id);
             } else if (isset($a_inventory['connection-mac'][$a_port['logical_number']])) {
-               $this->importConnectionMac();
+               $this->importConnectionMac($a_inventory['connection-mac'][$a_port['logical_number']],
+                       $networkports_id);
             }
 
             // Vlan
@@ -338,8 +339,184 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
    
    
    
-   function importConnectionMac() {
+   function importConnectionMac($a_portconnection, $networkports_id) {
       
+      $wire = new NetworkPort_NetworkPort();
+      $networkPort = new NetworkPort();
+      
+      $portID = 0;
+      
+      $count = count($a_portconnection);
+      if ($this->getValue('trunk') != '1') {
+         if ($count == '2') {
+            // detect if phone IP is one of the 2 devices
+            $phonecase = 0;
+            $macNotPhone_id = 0;
+            $macNotPhone = '';
+            $phonePort_id = 0;
+            foreach ($a_portconnection as $ifmac) {
+               $a_ports = $networkPort->find("`mac`='".$ifmac."'","", 1);
+               $a_port = current($a_ports);
+               if ($a_port['itemtype'] == 'Phone') {
+                  // Connect phone on switch port and other (computer..) in this phone
+                  $phonePort_id = $a_port['id'];
+                  $phonecase++;
+               } else {
+                  $macNotPhone_id = $a_port['id'];
+                  $macNotPhone = $ifmac;
+               }
+            }
+            if ($phonecase == '1') {
+               $wire->add(array('networkports_id_1'=> $networkports_id,
+                                'networkports_id_2' => $phonePort_id));
+               $networkPort->getFromDB($phonePort_id);
+               $Phone = new Phone();
+               $Phone->getFromDB($networkPort->fields['items_id']);
+               $a_portsPhone = $networkPort->find("`items_id`='".$networkPort->fields['items_id']."'
+                                                AND `itemtype`='Phone'
+                                                AND `name`='Link'", '', 1);
+               $portLink_id = 0;
+               if (count($a_portsPhone) == '1') {
+                  $a_portPhone = current($a_portsPhone);
+                  $portLink_id = $a_portPhone['id'];
+               } else {
+                  // Create Port Link
+                  $input = array();
+                  $input['name'] = 'Link';
+                  $input['itemtype'] = 'Phone';
+                  $input['items_id'] = $Phone->fields['id'];
+                  $input['entities_id'] = $Phone->fields['entities_id'];
+                  $portLink_id = $networkPort->add($input);
+               }
+               $opposite_id = false;
+               if ($opposite_id == $wire->getOppositeContact($portLink_id)) {
+                  if ($opposite_id != $macNotPhone_id) {
+                     $this->disconnectDB($portLink_id); // disconnect this port
+                     $this->disconnectDB($macNotPhone_id);     // disconnect destination port
+                  }
+               }
+               if (!isset($macNotPhone_id)) {
+                  // Create unknown ports
+                  $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                  $unknown_infos = array();
+                  $unknown_infos["name"] = '';
+                  if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
+                     $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                  }
+                  $newID=$PluginFusioninventoryUnknownDevice->add($unknown_infos);
+                  // Add networking_port
+                  $port_add = array();
+                  $port_add["items_id"] = $newID;
+                  $port_add["itemtype"] = 'PluginFusioninventoryUnknownDevice';
+                  $port_add['mac'] = $macNotPhone;
+                  $macNotPhone_id = $networkPort->add($port_add);
+               }
+               $wire->add(array('networkports_id_1'=> $portLink_id,
+                                'networkports_id_2' => $macNotPhone_id));
+            } else {
+               $pfiud = new PluginFusioninventoryUnknownDevice;
+               $pfiud->hubNetwork($this);
+            }
+         } else if ($count > 1) { // MultipleMac
+            $pfiud = new PluginFusioninventoryUnknownDevice;
+            $pfiud->hubNetwork($this);
+         } else { // One mac on port
+            foreach ($a_portconnection as $ifmac) { //Only 1 time
+               $a_ports = $networkPort->find("`mac`='".$ifmac."'","", 1);
+               if (count($a_ports) > 0) {
+                  $a_port = current($a_ports);
+                  $hub = 0;
+                  $id = $networkPort->getContact($a_port['id']);
+                  $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                  if ($id AND $networkPort->getFromDB($id)) {
+                     if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                        $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
+                        if ($pfUnknownDevice->fields['hub'] == '1') {
+                           $hub = 1;
+                        }
+                     }
+                  }
+                  $direct_id = $networkPort->getContact($networkports_id);
+                  if ($id AND $id != $networkports_id
+                          AND $hub == '0') {
+
+                     $directconnect = 0;
+                     if (!$direct_id) {
+                        $directconnect = 1;
+                     } else {
+                        $networkPort->getFromDB($direct_id);
+                        if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                           // 1. Hub connected to this switch port
+                           $pfUnknownDevice->connectPortToHub(array($a_port), $networkPort->fields['items_id']);
+                        } else {
+                           // 2. direct connection
+                           $directconnect = 1;
+                        }
+                     }
+                     if ($directconnect == '1') {
+                        $this->disconnectDB($networkports_id); // disconnect this port
+                        $this->disconnectDB($a_port['id']);     // disconnect destination port
+                        $wire->add(array('networkports_id_1'=> $networkports_id,
+                                         'networkports_id_2' => $a_port['id']));
+                     }
+                  } else if ($id and $hub == '1') {
+                     $directconnect = 0;
+                     if (!$direct_id) {
+                        $directconnect = 1;
+                     } else {
+                        $networkPort->getFromDB($direct_id);
+                        $ddirect = $networkPort->fields;
+                        $networkPort->getFromDB($id);
+                        if ($ddirect['items_id'] == $networkPort->fields['items_id']
+                                AND $ddirect['itemtype'] == $networkPort->fields['itemtype']) {
+                           // 1.The hub where this device is connected is yet connected to this switch port
+
+                           // => Do nothing
+                        } else {
+                           // 2. The hub where this device is connected to is not connected to this switch port
+                           if ($ddirect['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+                              // b. We have a hub connected to the switch port
+                              $pfUnknownDevice->connectPortToHub(array($a_port), $ddirect['items_id']);
+                           } else {
+                              // a. We have a direct connexion to another device (on the switch port)
+                              $directconnect = 1;
+                           }
+                        }
+                     }
+                     if ($directconnect == '1') {
+                        $this->disconnectDB($networkports_id); // disconnect this port
+                        $this->disconnectDB($a_port['id']);     // disconnect destination port
+                        $wire->add(array('networkports_id_1'=> $networkports_id,
+                                         'networkports_id_2' => $a_port['id']));
+                     }
+                  } else if ($id) {
+                     // Yet connected
+                  } else {
+                     // Not connected
+                     $this->disconnectDB($networkports_id); // disconnect this port
+                     $wire->add(array('networkports_id_1'=> $networkports_id,
+                                      'networkports_id_2' => $a_port['id']));
+                  }
+               } else {
+                  // Create unknown device
+                  $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                  $input = array();
+                  $input['name'] = '';
+                  if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
+                     $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                  }
+                  $newID = $pluginFusioninventoryUnknownDevice->add($input);
+                  $input['itemtype'] = "PluginFusioninventoryUnknownDevice";
+                  $input['items_id'] = $newID;
+                  $input['mac'] = $ifmac;
+                  $newPortID = $networkPort->add($input);
+                  $this->disconnectDB($networkports_id); // disconnect this port
+                  $wire->add(array('networkports_id_1'=> $networkports_id,
+                                   'networkports_id_2' => $newPortID));
+               }
+            }
+         }
+      }
    }
    
    

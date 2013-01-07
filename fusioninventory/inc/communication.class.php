@@ -303,7 +303,7 @@ class PluginFusioninventoryCommunication {
       $user   = new User();
 
       ob_start();
-      if (!$_SESSION['glpiID']) {
+      if (!isset($_SESSION['glpiID'])) {
          $users_id  = $config->getValue('users_id');
          $_SESSION['glpiID'] = $users_id;
          $user->getFromDB($users_id);
