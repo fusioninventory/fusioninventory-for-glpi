@@ -4271,591 +4271,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Deploy Update Begin
     */
-
-      /*
-       * glpi_plugin_fusioninventory_deployactions
-       */
-
-      $a_table = array();
-
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deployactions';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_actions'
-      );
-
-      $a_table['fields'] = array(
-         'id' => array(
-            'type' => 'autoincrement',
-            'value' => NULL
-         ),
-         'plugin_fusioninventory_deployorders_id' => array(
-            'type' => 'int(11) NOT NULL',
-            'value' => NULL
-         ),
-         'itemtype' =>
-            array(
-               'type' => 'varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL',
-               'value' => NULL),
-         'items_id' => array(
-            'type' => 'int(11) NOT NULL' ,
-            'value' => NULL
-         ),
-         'ranking' => array(
-            'type' => 'int(6) NOT NULL DEFAULT 0' ,
-            'value' => NULL
-         ),
-      );
-
-      $a_table['oldfields'] = array(
-      );
-
-      $a_table['renamefields'] = array(
-         'plugin_fusinvdeploy_orders_id' => 'plugin_fusioninventory_deployorders_id'
-      );
-
-      $a_table['keys'] = array(
-         array(
-            'field' => 'plugin_fusioninventory_deployorders_id',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-         array(
-            'field' => 'itemtype',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-         array(
-            'field' => 'items_id',
-            'name' => '',
-            'type' => 'KEY'
-         )
-      );
-
-      $a_table['oldkeys'] = array(
-         'plugin_fusinvdeploy_orders_id'
-      );
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-      /*
-       * glpi_plugin_fusioninventory_deployactions_commands
-       */
-
-      $a_table = array();
-
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deployactions_commands';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_actions_commands'
-      );
-
-      $a_table['fields'] = array(
-         'id' =>  array(
-                  'type' => 'autoincrement',
-                  'value' => NULL
-               ),
-         'exec' =>  array(
-                  'type' => "varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
-                  'value' => NULL
-               ),
-      );
-
-      $a_table['oldfields'] = array(
-      );
-
-      $a_table['renamefields'] = array(
-      );
-
-      $a_table['keys'] = array(
-      );
-
-      $a_table['oldkeys'] = array(
-      );
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-      /*
-       * glpi_plugin_fusioninventory_deployactions_deletes
-       */
-
-      $a_table = array();
-
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deployactions_deletes';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_actions_deletes'
-      );
-
-      $a_table['fields'] = array(
-         'id' =>  array(
-                  'type' => 'autoincrement',
-                  'value' => NULL
-               ),
-         'path' =>  array(
-                  'type' => "varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
-                  'value' => NULL
-               ),
-      );
-
-      $a_table['oldfields'] = array(
-      );
-
-      $a_table['renamefields'] = array(
-      );
-
-      $a_table['keys'] = array(
-      );
-
-      $a_table['oldkeys'] = array(
-      );
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
-      /*
-       * glpi_plugin_fusioninventory_deployactions_mkdirs
-       */
-
-      $a_table = array();
-
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deployactions_mkdirs';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_actions_mkdirs'
-      );
-
-      $a_table['fields'] = array(
-         'id' =>  array(
-                  'type' => 'autoincrement',
-                  'value' => NULL
-               ),
-         'path' =>  array(
-                  'type' => "varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
-                  'value' => NULL
-               )
-      );
-
-      $a_table['oldfields'] = array(
-      );
-
-      $a_table['renamefields'] = array(
-      );
-
-      $a_table['keys'] = array(
-      );
-
-      $a_table['oldkeys'] = array(
-      );
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
-      /*
-       * glpi_plugin_fusioninventory_deployactions_moves
-       */
-
-      $a_table = array();
-
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deployactions_moves';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_actions_moves'
-      );
-
-      $a_table['fields'] = array(
-         'id' =>  array(
-                  'type' => 'autoincrement',
-                  'value' => NULL
-               ),
-         'from' =>  array(
-                  'type' => "varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
-                  'value' => NULL
-               ),
-         'to' =>  array(
-                  'type' => "varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
-                  'value' => NULL
-               )
-      );
-
-      $a_table['oldfields'] = array(
-      );
-
-      $a_table['renamefields'] = array(
-      );
-
-      $a_table['keys'] = array(
-      );
-
-      $a_table['oldkeys'] = array(
-      );
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
-      /*
-       * glpi_plugin_fusioninventory_deployactions_copies
-       */
-
-      $a_table = array();
-
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deployactions_copies';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_actions_copies'
-      );
-
-      $a_table['fields'] = array(
-         'id' =>  array(
-                  'type' => 'autoincrement',
-                  'value' => NULL
-               ),
-         'from' =>  array(
-                  'type' => "varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
-                  'value' => NULL
-               ),
-         'to' =>  array(
-                  'type' => "varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
-                  'value' => NULL
-               )
-      );
-
-      $a_table['oldfields'] = array(
-      );
-
-      $a_table['renamefields'] = array(
-      );
-
-      $a_table['keys'] = array(
-      );
-
-      $a_table['oldkeys'] = array(
-      );
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
-      /*
-       * glpi_plugin_fusioninventory_deployactions_commandenvvariables
-       */
-
-      $a_table = array();
-
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deployactions_commandenvvariables';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_actions_commandenvvariables'
-      );
-
-      $a_table['fields'] = array(
-         'id' =>  array(
-                  'type' => 'autoincrement',
-                  'value' => NULL
-               ),
-         'name' =>  array(
-                  'type' => 'varchar(255) COLLATE utf8_unicode_ci NOT NULL',
-                  'value' => NULL
-               ),
-         'value' =>  array(
-                  'type' => "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
-                  'value' => NULL
-               ),
-         'plugin_fusioninventory_deploycommands_id' =>  array(
-                  'type' => 'int(11) NOT NULL',
-                  'value' => NULL
-               ),
-      );
-
-      $a_table['oldfields'] = array(
-      );
-
-      $a_table['renamefields'] = array(
-         'plugin_fusinvdeploy_commands_id' => 'plugin_fusioninventory_deploycommands_id'
-      );
-
-      $a_table['keys'] = array(
-         array(
-            'field' => 'plugin_fusioninventory_deploycommands_id',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-      );
-
-      $a_table['oldkeys'] = array(
-         'plugin_fusinvdeploy_commands_id',
-      );
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-      /*
-       * glpi_plugin_fusioninventory_deployactions_commandstatus
-       */
-
-      $a_table = array();
-
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deployactions_commandstatus';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_actions_commandstatus'
-      );
-
-      $a_table['fields'] = array(
-         'id' =>  array(
-                  'type' => 'autoincrement',
-                  'value' => NULL
-         ),
-         'type' =>  array(
-                  'type' => 'varchar(255) COLLATE utf8_unicode_ci NOT NULL',
-                  'value' => NULL
-         ),
-         'value' =>  array(
-                  'type' => "varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
-                  'value' => NULL
-         ),
-         'plugin_fusioninventory_deploycommands_id' =>  array(
-                  'type' => 'int(11) NOT NULL',
-                  'value' => NULL
-         ),
-      );
-
-      $a_table['oldfields'] = array(
-      );
-
-      $a_table['renamefields'] = array(
-         'plugin_fusinvdeploy_commands_id' => 'plugin_fusioninventory_deploycommands_id'
-      );
-
-      $a_table['keys'] = array(
-         array(
-            'field' => 'plugin_fusioninventory_deploycommands_id',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-      );
-
-      $a_table['oldkeys'] = array(
-         'plugin_fusinvdeploy_commands_id',
-      );
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-      /*
-       * glpi_plugin_fusioninventory_deploychecks
-       */
-
-      $a_table = array();
-
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deploychecks';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_checks'
-      );
-
-      $a_table['fields'] = array(
-         'id' =>  array(
-            'type' => 'autoincrement',
-            'value' => NULL
-         ),
-         'type' =>  array(
-            'type' => 'varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL',
-            'value' => NULL
-         ),
-         'path' =>  array(
-            'type' => "varchar(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci".
-                      " NOT NULL DEFAULT ''",
-            'value' => NULL
-         ),
-         'value' =>  array(
-            'type' => "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci".
-                      " NOT NULL DEFAULT ''",
-            'value' => NULL
-         ),
-         'ranking' =>  array(
-            'type' => 'int(11) NOT NULL DEFAULT 0',
-            'value' => NULL
-         ),
-         'plugin_fusioninventory_deployorders_id' =>  array(
-                  'type' => 'int(11) NOT NULL',
-                  'value' => NULL
-         ),
-      );
-
-      $a_table['oldfields'] = array(
-      );
-
-      $a_table['renamefields'] = array(
-         'plugin_fusinvdeploy_orders_id' => 'plugin_fusioninventory_deployorders_id'
-      );
-
-      $a_table['keys'] = array(
-         array(
-            'field' => 'plugin_fusioninventory_deployorders_id',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-      );
-
-      $a_table['oldkeys'] = array(
-         'plugin_fusinvdeploy_orders_id',
-      );
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-      /*
-       * glpi_plugin_fusioninventory_deployfileparts
-       */
-
-      $a_table = array();
-
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deployfileparts';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_checks'
-      );
-
-      $a_table['fields'] = array(
-         'id' =>  array(
-                  'type' => 'autoincrement',
-                  'value' => NULL
-         ),
-         'sha512' =>  array(
-                  'type' => 'varchar(128) COLLATE utf8_unicode_ci NOT NULL',
-                  'value' => NULL
-         ),
-         'shortsha512' =>  array(
-                  'type' => 'varchar(6) COLLATE utf8_unicode_ci NOT NULL',
-                  'value' => NULL
-         ),
-         'plugin_fusioninventory_deployorders_id' =>  array(
-                  'type' => 'int(11) NOT NULL',
-                  'value' => NULL
-         ),
-         'plugin_fusioninventory_deployfiles_id' =>  array(
-                  'type' => 'int(11) NOT NULL',
-                  'value' => NULL
-         ),
-      );
-
-      $a_table['oldfields'] = array(
-      );
-
-      $a_table['renamefields'] = array(
-         'plugin_fusinvdeploy_orders_id' => 'plugin_fusioninventory_deployorders_id',
-         'plugin_fusinvdeploy_files_id' => 'plugin_fusioninventory_deployfiles_id'
-      );
-
-      $a_table['keys'] = array(
-         array(
-            'field' => 'shortsha512',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-         array(
-            'field' => 'plugin_fusioninventory_deployorders_id',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-         array(
-            'field' => 'plugin_fusioninventory_deployfiles_id',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-      );
-
-      $a_table['oldkeys'] = array(
-         'plugin_fusinvdeploy_orders_id',
-         'plugin_fusinvdeploy_files_id',
-      );
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
-      /*
-       * glpi_plugin_fusioninventory_deployfiles
-       */
-
-      $a_table = array();
-
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deployfiles';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_files'
-      );
-
-      $a_table['fields'] = array(
-         'id' =>  array(
-                  'type' => 'autoincrement',
-                  'value' => NULL
-         ),
-         'name' =>  array(
-                  'type' => 'varchar(255) COLLATE utf8_unicode_ci NOT NULL',
-                  'value' => NULL
-         ),
-         'is_p2p' =>  array(
-                  'type' => 'tinyint(1) NOT NULL DEFAULT 0',
-                  'value' => NULL
-         ),
-         'mimetype' =>  array(
-                  'type' => "char(255) NOT NULL DEFAULT 'na'",
-                  'value' => NULL
-         ),
-         'create_date' =>  array(
-                  'type' => 'datetime NOT NULL',
-                  'value' => NULL
-         ),
-         'p2p_retention_days' =>  array(
-                  'type' => 'int(11) NOT NULL DEFAULT 0',
-                  'value' => NULL
-         ),
-         'uncompress' =>  array(
-                  'type' => 'tinyint(1) NOT NULL DEFAULT 0',
-                  'value' => NULL
-         ),
-         'sha512' =>  array(
-                  'type' => 'varchar(128) COLLATE utf8_unicode_ci NOT NULL',
-                  'value' => NULL
-         ),
-         'shortsha512' =>  array(
-                  'type' => 'varchar(6) COLLATE utf8_unicode_ci NOT NULL',
-                  'value' => NULL
-         ),
-         'filesize' =>  array(
-                  'type' => 'bigint(20) NOT NULL DEFAULT 0',
-                  'value' => NULL
-         ),
-         'plugin_fusioninventory_deployorders_id' =>  array(
-                  'type' => 'int(11) NOT NULL',
-                  'value' => NULL
-         )
-      );
-
-      $a_table['oldfields'] = array(
-      );
-
-      $a_table['renamefields'] = array(
-         'plugin_fusinvdeploy_orders_id' => 'plugin_fusioninventory_deployorders_id'
-      );
-
-      $a_table['keys'] = array(
-         array(
-            'field' => 'shortsha512',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-         array(
-            'field' => 'plugin_fusioninventory_deployorders_id',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-      );
-
-      $a_table['oldkeys'] = array(
-         'plugin_fusinvdeploy_orders_id',
-      );
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
+      
       /*
        * glpi_plugin_fusioninventory_deployorders
        */
@@ -4918,6 +4334,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       migrateTablesFusionInventory($migration, $a_table);
 
+      /*
+      * import old datas as json in order table before migrate this table
+      */
+      
+      migrateTablesFromFusinvDeploy($migration);
+
+
+      
+
 
       /*
        * glpi_plugin_fusioninventory_deploypackages
@@ -4978,65 +4403,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       );
 
       $a_table['oldkeys'] = array(
-      );
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-      /*
-       * glpi_plugin_fusioninventory_deployfiles_mirrors
-       */
-
-      $a_table = array();
-
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deployfiles_mirrors';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_files_mirrors'
-      );
-
-      $a_table['fields'] = array(
-         'id' =>  array(
-                  'type' => 'autoincrement',
-                  'value' => NULL
-         ),
-         'plugin_fusioninventory_deployfiles_id' =>  array(
-                  'type' => 'int(11) NOT NULL',
-                  'value' => NULL
-         ),
-         'plugin_fusioninventory_deploymirrors_id' =>  array(
-                  'type' => 'int(11) NOT NULL',
-                  'value' => NULL
-         ),
-         'ranking' =>  array(
-                  'type' => 'int(11) NOT NULL DEFAULT 0',
-                  'value' => NULL
-         ),
-      );
-
-      $a_table['oldfields'] = array(
-      );
-
-      $a_table['renamefields'] = array(
-         'plugin_fusinvdeploy_files_id' => 'plugin_fusioninventory_deployfiles_id',
-         'plugin_fusinvdeploy_mirrors_id' => 'plugin_fusioninventory_deploymirrors_id'
-      );
-
-      $a_table['keys'] = array(
-         array(
-            'field' => 'plugin_fusioninventory_deployfiles_id',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-         array(
-            'field' => 'plugin_fusioninventory_deploymirrors_id',
-            'name' => '',
-            'type' => 'KEY'
-         ),
-      );
-
-      $a_table['oldkeys'] = array(
-         'plugin_fusinvdeploy_files_id',
-         'plugin_fusinvdeploy_mirrors_id'
       );
 
       migrateTablesFusionInventory($migration, $a_table);
@@ -5109,50 +4475,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       migrateTablesFusionInventory($migration, $a_table);
 
-      /*
-       * glpi_plugin_fusioninventory_deployactions_messages
-       */
-
-      $a_table = array();
-
-      //table name
-      $a_table['name'] = 'glpi_plugin_fusioninventory_deployactions_messages';
-      $a_table['oldname'] = array(
-         'glpi_plugin_fusinvdeploy_actions_messages'
-      );
-
-      $a_table['fields'] = array(
-         'id' =>  array(
-            'type' => 'autoincrement',
-            'value' => NULL
-         ),
-         'name' =>  array(
-            'type' => 'varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL',
-            'value' => NULL
-         ),
-         'message' =>  array(
-            'type' => "varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
-            'value' => NULL
-         ),
-         'type' =>  array(
-            'type' => 'varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL',
-            'value' => NULL
-         ),
-      );
-
-      $a_table['oldfields'] = array(
-      );
-
-      $a_table['renamefields'] = array(
-      );
-
-      $a_table['keys'] = array(
-      );
-
-      $a_table['oldkeys'] = array(
-      );
-
-      migrateTablesFusionInventory($migration, $a_table);
 
       /*
        * glpi_plugin_fusioninventory_deploygroups
@@ -8035,6 +7357,188 @@ function migrateTablesFusionInventory($migration, $a_table) {
    $migration->migrationOneTable($a_table['name']);
       
    $DB->list_fields($a_table['name'], false);
+}
+
+/**
+ * Migrate tables from plugin fusinvdeploy to fusioninventory
+ *    all datas in exploded tables are merged and stored in json in order table
+ * @param  Migration $migration 
+ * @return nothing
+ */
+function migrateTablesFromFusinvDeploy ($migration) {
+   global $DB;
+
+
+   //add json field in deploy order table to store datas from old misc tables
+   $migration->addField("glpi_plugin_fusioninventory_deployorders",
+                                 "json",
+                                 "TEXT NOT NULL DEFAULT ''");
+   $migration->migrationOneTable("glpi_plugin_fusioninventory_deployorders");
+
+   $final_datas = array();
+
+   //== glpi_plugin_fusioninventory_deployorders ==
+   $o_query = "SELECT * FROM glpi_plugin_fusioninventory_deployorders";
+   $o_res = $DB->query($o_query);
+   while($o_datas = $DB->fetch_assoc($o_res)) {
+      $order_id = $o_datas['id'];
+
+      $o_line = array();
+      $of_line = array();
+
+
+
+      //=== Checks ===
+      $c_query = "SELECT type, path, value, ranking, 'error' as `return`
+         FROM glpi_plugin_fusinvdeploy_checks
+         WHERE plugin_fusinvdeploy_orders_id = $order_id";
+      $c_res = $DB->query($c_query);
+      $c_i = 0;
+      while ($c_datas = $DB->fetch_assoc($c_res)) {
+         foreach ($c_datas as $c_key => $c_value) {
+            //construct job check entry
+            $o_line['checks'][$c_i][$c_key] = $c_value;
+         }
+          $c_i++;
+      }
+
+
+      //=== Files ===
+      $f_query = "SELECT id, name, is_p2p as p2p,  
+         p2p_retention_days as `p2p-retention-duration`, uncompress, sha512
+         FROM glpi_plugin_fusinvdeploy_files
+         WHERE plugin_fusinvdeploy_orders_id = $order_id";
+      $f_res = $DB->query($f_query);
+      while ($f_datas = $DB->fetch_assoc($f_res)) {
+         //construct job file entry
+         $o_line['associatedFiles'][] = $f_datas['sha512'];
+
+         foreach ($f_datas as $f_key => $f_value) {
+            //we don't store the sha512 field in json
+            if ($f_key == "sha512" || $f_key == "id" ) continue;
+
+            //construct order file entry
+            $of_line['associatedFiles'][$f_datas['sha512']][$f_key] = $f_value;
+         }
+
+         //add mirror(s) to file
+         $fm_query = "SELECT mirrors.url as url
+            FROM glpi_plugin_fusinvdeploy_files_mirrors as files_mirrors
+            INNER JOIN glpi_plugin_fusinvdeploy_mirrors as mirrors
+               ON files_mirrors.plugin_fusinvdeploy_mirrors_id = mirrors.id
+            WHERE files_mirrors.plugin_fusinvdeploy_files_id = ".$f_datas['id'];
+         $fm_res = $DB->query($fm_query);
+         while ($fm_datas = $DB->fetch_assoc($fm_res)) {
+            $of_line['associatedFiles'][$f_datas['sha512']]['mirrors'][]  = $fm_datas['url'];
+         }
+
+         //add multipart file datas
+         $fmp_query = "SELECT sha512
+            FROM glpi_plugin_fusinvdeploy_fileparts
+            WHERE plugin_fusinvdeploy_files_id =".$f_datas['id'];
+         $fmp_res = $DB->query($fmp_query);
+         while ($fmp_datas = $DB->fetch_assoc($fmp_res)) {
+            $of_line['associatedFiles'][$f_datas['sha512']]['multiparts'][] = $fmp_datas['sha512'];
+         }
+      }
+
+      
+      //=== Actions ===
+      $cmdStatus['RETURNCODE_OK'] = 'okCode';
+      $cmdStatus['RETURNCODE_KO'] = 'errorCode';
+      $cmdStatus['REGEX_OK'] = 'okPattern';
+      $cmdStatus['REGEX_KO'] = 'errorPattern';
+
+      $a_query = "SELECT *
+         FROM glpi_plugin_fusinvdeploy_actions
+         WHERE plugin_fusinvdeploy_orders_id = $order_id";
+      $a_res = $DB->query($a_query);
+      while ($a_datas = $DB->fetch_assoc($a_res)) {
+         $a_i = 0;
+         
+         //table for action itemtype
+         $a_table = getTableForItemType($a_datas['itemtype']);
+
+         //get table fields
+         $at_query = "SELECT *
+            FROM $a_table
+            WHERE id = ".$a_datas['items_id'];
+         $at_res = $DB->query($at_query);
+         $fields = array();
+         while($at_datas = $DB->fetch_assoc($at_res)) {
+            foreach($at_datas as $at_key => $at_value) {
+               //we don't store the id field of action itemtype table in json
+               if ($at_key == "id") continue;
+
+               //construct job actions entry
+               $o_line['actions'][$a_i][$at_key] = $at_value;
+            }
+
+            //specifice case for commands : we must add status and env vars
+            if ($a_datas['itemtype'] === "PluginFusinvdeployAction_Command") {
+               $ret_cmd_query = "SELECT type, value
+                  FROM glpi_plugin_fusinvdeploy_actions_commandstatus
+                  WHERE plugin_fusinvdeploy_commands_id = ".$at_datas['id'];
+               $ret_cmd_res = $DB->query($ret_cmd_query);
+               while ($res_cmd_datas = $DB->fetch_assoc($ret_cmd_res)) {
+                  //construct command status array entry
+                  $o_line['actions'][$a_i]['retChecks'][] = array(
+                     'type'  => $cmdStatus[$res_cmd_datas['type']],
+                     'value' => array($res_cmd_datas['value'])
+                  );
+               }
+            }
+
+            $a_i++;
+         }
+
+      }
+
+      $final_datas[$order_id]['jobs'] = $o_line;
+      $final_datas[$order_id]['associatedFiles'] = $of_line;
+   }
+   
+   //store json in order table
+   foreach ($final_datas as $order_id => $data) {
+      $json = $DB->escape(json_encode($data, JSON_NUMERIC_CHECK)); 
+
+      $order_query = "UPDATE glpi_plugin_fusioninventory_deployorders 
+         SET json = '$json'
+         WHERE id = $order_id";
+      $order_res = $DB->query($order_query);
+
+   }
+
+
+   //drop unused tables
+   $old_deploy_tables = array(
+      'glpi_plugin_fusinvdeploy_actions', 
+      'glpi_plugin_fusinvdeploy_actions_commandenvvariables', 
+      'glpi_plugin_fusinvdeploy_actions_commands', 
+      'glpi_plugin_fusinvdeploy_actions_commandstatus', 
+      'glpi_plugin_fusinvdeploy_actions_copies', 
+      'glpi_plugin_fusinvdeploy_actions_deletes', 
+      'glpi_plugin_fusinvdeploy_actions_messages', 
+      'glpi_plugin_fusinvdeploy_actions_mkdirs', 
+      'glpi_plugin_fusinvdeploy_actions_moves', 
+      'glpi_plugin_fusinvdeploy_checks', 
+      'glpi_plugin_fusinvdeploy_fileparts', 
+      'glpi_plugin_fusinvdeploy_files', 
+      'glpi_plugin_fusinvdeploy_files_mirrors'
+   );
+   foreach ($old_deploy_tables as $table) {
+      $migration->dropTable($table);
+   }
+
+
+   //drop unused views
+   $old_deploy_views = array(
+      'glpi_plugin_fusinvdeploy_taskjobs', 
+      'glpi_plugin_fusinvdeploy_tasks'
+   );
+   foreach ($old_deploy_views as $view) {
+      $DB->query("DROP VIEW $view");
+   }   
 }
 
 ?>
