@@ -134,7 +134,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
     */
    static function getForOrder($orders_id) {
       $check = new self;
-      $results = $check->find("`plugin_fusioninventory_deployorders_id`='$orders_id'", "ranking ASC");
+      $results = $check->find("`plugin_fusioninventory_deployorders_id`='$orders_id'", 
+                              "ranking ASC");
 
       $checks = array();
       foreach ($results as $result) {
@@ -150,10 +151,11 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
          $tmp['return'] = "error";
 
-    if ($tmp['type'] == "fileSizeGreater" || $tmp['type'] == "fileSizeLower" || $tmp['type'] == "fileSizeEquals") {
-# according to the requirment, We want Bytes!
-             $tmp['value'] *= 1024 * 1024;
-    }
+         if ($tmp['type'] == "fileSizeGreater" || $tmp['type'] == "fileSizeLower" 
+               || $tmp['type'] == "fileSizeEquals") {
+            # according to the requirment, We want Bytes!
+            $tmp['value'] *= 1024 * 1024;
+         }
          $checks[] = $tmp;
       }
 
