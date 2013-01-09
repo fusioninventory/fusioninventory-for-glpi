@@ -1819,6 +1819,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "last_fusioninventory_update",
                               "datetime DEFAULT NULL");
          $migration->addField($newTable,
+                              "remote_addr",
+                              "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable,
                               "serialized_inventory",
                               "blob");
          $migration->addKey($newTable,
