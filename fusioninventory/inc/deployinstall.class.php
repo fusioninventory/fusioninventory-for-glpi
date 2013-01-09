@@ -69,14 +69,15 @@ class PluginFusioninventoryDeployInstall extends CommonDBTM {
       }
    }
 
-   static function showForm($id){
+   static function showForm($id) {
       global $CFG_GLPI;
 
       $disabled = "false";
       if (!PluginFusioninventoryDeployPackage::canEdit($id)) {
          $disabled = "true";
          PluginFusioninventoryDeployPackage::showEditDeniedMessage($id,
-               __('One or more active tasks (#task#) use this package. Edition denied.','fusioninventory'));
+               __('One or more active tasks (#task#) use this package. Edition denied.',
+                  'fusioninventory'));
 
       }
 

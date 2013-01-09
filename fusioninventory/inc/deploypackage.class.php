@@ -62,7 +62,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
-   function defineTabs($options=array()){
+   function defineTabs($options=array()) {
 
       $ong = array();
       if ($this->fields['id'] > 0){
@@ -162,12 +162,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          $title = "";
       }
 
-      Html::displayTitle(GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_package.png", $title, $title, $buttons);
+      Html::displayTitle(GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_package.png", 
+                         $title, $title, $buttons);
    }
 
 
 
-   function showMenu($options=array())  {
+   function showMenu($options=array()) {
 
       $this->displaylist = false;
 
@@ -225,7 +226,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return true;
    }
 
-   function getAllDatas()  {
+   function getAllDatas() {
       global $DB;
 
       $sql = " SELECT id, name
@@ -273,17 +274,20 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          $task = new PluginFusioninventoryDeployTask;
          $tasks_url = "";
          $taskjobs = getAllDatasFromTable('glpi_plugin_fusioninventory_deploytaskjobs',
-                  "definition LIKE '%\"PluginFusioninventoryDeployPackage\":\"".$this->getField('id')."%'");
+                  "definition LIKE '%\"PluginFusioninventoryDeployPackage\":\"".
+                  $this->getField('id')."%'");
          foreach($taskjobs as $job) {
             $task->getFromDB($job['plugin_fusioninventory_deploytasks_id']);
-            $tasks_url .= "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.form.php?id="
-                  .$job['plugin_fusioninventory_deploytasks_id']."'>".$task->fields['name']."</a>, ";
+            $tasks_url .= "<a href='".$CFG_GLPI["root_doc"].
+                           "/plugins/fusioninventory/front/task.form.php?id=".
+                           $job['plugin_fusioninventory_deploytasks_id']."'>".
+                           $task->fields['name']."</a>, ";
          }
          $tasks_url = substr($tasks_url, 0, -2);
 
 
-         Session::addMessageAfterRedirect(str_replace('#task#',
-               $tasks_url, __('One or more active tasks (#task#) use this package. Deletion denied.')));
+         Session::addMessageAfterRedirect(str_replace('#task#', $tasks_url, 
+                     __('One or more active tasks (#task#) use this package. Deletion denied.')));
 
          Html::redirect(GLPI_ROOT."/plugins/fusioninventory/front/task.form.php?id="
                .$this->getField('id'));
@@ -335,7 +339,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
                   //Create Checks
                   foreach( $order_data->checks as $check_idx => $d_check) {
-                     //logDebug("checks debug:\n" . $check_idx . "\n" . print_r($d_check,true) . "\n");
+                     //logDebug("checks debug:\n" . $check_idx ."\n" . print_r($d_check,true)."\n");
                      $o_check = new PluginFusioninventoryDeployCheck();
                      $i_check = array();
                      $i_check['type'] = mysql_real_escape_string($d_check->{'type'});
@@ -347,7 +351,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      if (  $i_check['type'] == "fileSizeGreater" ||
                            $i_check['type'] == "fileSizeLower" ||
                            $i_check['type'] == "fileSizeEquals" ) {
-                     # according to the requirement, We want Bytes!
+                        # according to the requirement, We want Bytes!
                         $i_check['value'] /= 1024 * 1024;
                      }
                      $i_check['ranking'] = $check_idx;
@@ -357,7 +361,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   }
 
                   //Create Files
-                  //TODO(&COMMENTS): During import, associatedFiles should be retrieved from DB and rehashed if
+                  //TODO(&COMMENTS): During import, 
+                  //associatedFiles should be retrieved from DB and rehashed if
                   //they don't exist. This is the Order who should have a reference to the file and
                   //not the opposite!!!!
                   foreach( $order_data->associatedFiles as $file_idx => $d_file) {
@@ -367,7 +372,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      $i_file['name'] = $d_file->{'name'};
                      $i_file['uncompress'] = $d_file->{'uncompress'};
                      $i_file['is_p2p'] = $d_file->{'p2p'};
-                     $i_file['p2p_retention_days'] = $d_file->{'p2p-retention-duration'} / (24*3600);
+                     $i_file['p2p_retention_days'] = $d_file->{'p2p-retention-duration'}/(24*3600);
                      $i_file['mimetype'] = $d_file->{'mimetype'};
                      $i_file['create_date'] = $d_file->{'create_date'};
                      $i_file['filesize'] = $d_file->{'filesize'};
@@ -391,8 +396,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
                   //Create Actions
                   foreach( $order_data->actions as $action_idx => $action ) {
-                     //logDebug("actions Debug:\n" . $action_idx . "\n" . print_r($action,true) . "\n");
-                     //logDebug("actions properties " . print_r(array_keys(get_object_vars($action)),true) );
+                     //logDebug("actions Debug:\n".$action_idx . "\n".print_r($action,true) . "\n");
+                     //logDebug("actions properties .print_r(array_keys(get_object_vars($action)),true));
                      $o_action = new PluginFusioninventoryDeployAction();
                      $i_action = array();
                      $i_action['plugin_fusioninventory_deployorders_id'] = $o_order->fields['id'];
@@ -408,7 +413,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                               $i_action_sub = array();
                               $i_action_sub['exec'] = mysql_real_escape_string($d_action_sub->{'exec'});
                               $o_action_sub->add($i_action_sub);
-                              if ( isset($d_action_sub->{'retChecks'}) && !empty($d_action_sub->{'retChecks'}) ){
+                              if ( isset($d_action_sub->{'retChecks'}) 
+                                    && !empty($d_action_sub->{'retChecks'}) ){
                                  # Create CommandStatus
                                  foreach( $d_action_sub->{'retChecks'} as $retcheck_idx => $d_retcheck ) {
                                     $o_retcheck = new PluginFusioninventoryDeployAction_Commandstatus();
@@ -529,7 +535,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
             //duplicate fileparts
             $filepart_obj = new PluginFusioninventoryDeployFilepart;
-            $fileparts = $filepart_obj->find("plugin_fusioninventory_deployfiles_id = '".$order_oldId."'");
+            $fileparts = $filepart_obj->find(
+               "plugin_fusioninventory_deployfiles_id = '".$order_oldId."'");
             foreach ($fileparts as $filepart_oldId => $filepart) {
                //create new filepart for this new file
                unset($filepart['id']);
@@ -541,7 +548,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
          //duplicate actions
          $action_obj = new PluginFusioninventoryDeployAction;
-         $actions = $action_obj->find("plugin_fusioninventory_deployorders_id = '".$order_oldId."'");
+         $actions = $action_obj->find(
+            "plugin_fusioninventory_deployorders_id = '".$order_oldId."'");
          foreach ($actions as $action_oldId => $action) {
             //duplicate actions subitem
             $action_subitem_obj = new $action['itemtype'];
@@ -558,7 +566,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
                //duplicate commandstatus
                $commandstatus_obj = new PluginFusioninventoryDeployAction_Commandstatus;
-               $commandstatus = $commandstatus_obj->find("plugin_fusioninventory_deploycommands_id = '".$command_oldId."'");
+               $commandstatus = $commandstatus_obj->find(
+                  "plugin_fusioninventory_deploycommands_id = '".$command_oldId."'");
                foreach ($commandstatus as $commandstatus_oldId => $commandstate) {
                   //create new commandstatus for this command
                   unset($commandstate['id']);
@@ -568,7 +577,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
                //duplicate commandenvvariables
                $commandenvvariables_obj = new PluginFusioninventoryDeployAction_Commandenvvariable;
-               $commandenvvariables = $commandenvvariables_obj->find("plugin_fusioninventory_deploycommands_id = '".$command_oldId."'");
+               $commandenvvariables = $commandenvvariables_obj->find(
+                  "plugin_fusioninventory_deploycommands_id = '".$command_oldId."'");
                foreach ($commandenvvariables as $commandenvvariable_oldId => $commandenvvariable) {
                   //create new commandenvvariable for this command
                   unset($commandenvvariable['id']);
@@ -594,7 +604,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                                                          :$new_package->getLink());
 
       // Do not display quotes
-      Session::addMessageAfterRedirect(__('Item successfully added')."&nbsp;: ".stripslashes($display));
+      Session::addMessageAfterRedirect(__('Item successfully added')."&nbsp;: ".
+                                       stripslashes($display));
 
       unset($_SESSION['tmp_clone_package']);
 
@@ -621,8 +632,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             continue;
          }
          $task->getFromDB($job['plugin_fusioninventory_deploytasks_id']);
-         $tasks_url .= "<a href='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.form.php?id="
-               .$job['plugin_fusioninventory_deploytasks_id']."'>".$task->fields['name']."</a>, ";
+         $tasks_url .= "<a href='".$CFG_GLPI["root_doc"].
+                     "/plugins/fusioninventory/front/task.form.php?id="
+                     .$job['plugin_fusioninventory_deploytasks_id']."'>".
+                     $task->fields['name']."</a>, ";
          $jobs_seen[$job['plugin_fusioninventory_deploytasks_id']]=1;
       }
       $tasks_url = substr($tasks_url, 0, -2);

@@ -69,7 +69,7 @@ class PluginFusioninventoryDeployUninstall extends CommonDBTM {
       }
    }
 
-   static function showForm($id){
+   static function showForm($id) {
       global $CFG_GLPI;
 
       $disabled = "false";
