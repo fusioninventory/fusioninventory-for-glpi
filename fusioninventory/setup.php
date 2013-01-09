@@ -222,6 +222,9 @@ function plugin_init_fusioninventory() {
             $report_list["report/not_queried_recently.php"] = __('Number of days since last inventory', 'fusioninventory');
 
          }
+         if (Session::haveRight("computer", "r")) {
+            $report_list["report/computer_last_inventory.php"] = __('Computers not inventoried since xx days', 'fusioninventory');
+         }
          $PLUGIN_HOOKS['reports']['fusioninventory'] = $report_list;
          
 
