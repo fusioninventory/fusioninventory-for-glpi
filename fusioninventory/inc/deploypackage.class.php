@@ -301,8 +301,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       if (!isset($datas['jobs']['associatedFiles'])) return;
       echo "<ul>";
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
-         //echo $sha512;
-         $filename = $datas['associatedFiles']['associatedFiles'][$sha512]['name'];
+         $filename = $datas['associatedFiles'][$sha512]['name'];
          echo "<li>$filename</li>";
       }
       echo "<ul>";
@@ -312,7 +311,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       if (!isset($datas['jobs']['actions'])) return;
       echo "<ul>";
       foreach ($datas['jobs']['actions'] as $action) {
-         echo "<li>".$action['exec']."</li>";
+         $keys = array_keys($action);
+         $action_type = array_shift($keys);
+         echo "<li>$action_type - ";
+         foreach ($action[$action_type] as $key => $value) {
+            if (is_array($value)) continue;
+            echo "$key : $value; ";
+         }
+         echo"</li>";
       }
       echo "<ul>";
    }
