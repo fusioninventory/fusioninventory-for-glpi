@@ -280,12 +280,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "</table>";
       Html::closeForm();
 
-      // === debug ===
-      echo "DEBUG";
-      echo "<textarea cols='132' rows='25'>";
-      echo json_encode($datas, JSON_PRETTY_PRINT);
-      echo "</textarea>";
-      // === debug ===
+      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
+         // === debug ===
+         echo "<span class='red'><b>DEBUG</b></span>";
+         echo "<textarea cols='132' rows='25' style='border:0'>";
+         echo json_encode($datas, JSON_PRETTY_PRINT);
+         echo "</textarea>";
+         // === debug ===
+      }
    }
 
    static function displayChecksForm($order_type, $packages_id, $datas) {
