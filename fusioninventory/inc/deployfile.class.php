@@ -60,6 +60,20 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       return true;
    }
 
+   static function displayForm($order_type, $packages_id, $datas) {
+      echo "<div style='display:none' id='files_block' >";
+      echo "<hr>";
+      echo "</div>";
+
+      if (!isset($datas['jobs']['associatedFiles'])) return;
+      echo "<ul>";
+      foreach ($datas['jobs']['associatedFiles'] as $sha512) {
+         $filename = $datas['associatedFiles'][$sha512]['name'];
+         echo "<li>$filename</li>";
+      }
+      echo "<ul>";
+   }
+
    function getEmpty() {
       $this->fields['retention'] = 0;
    }

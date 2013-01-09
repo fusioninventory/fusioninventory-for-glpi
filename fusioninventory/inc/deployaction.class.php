@@ -60,6 +60,27 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       return true;
    }
 
+   static function displayForm($order_type, $packages_id, $datas) {
+      echo "<div style='display:none' id='actions_block' >";
+
+      echo "<hr>";
+      echo "</div>";
+
+      if (!isset($datas['jobs']['actions'])) return;
+      echo "<ul>";
+      foreach ($datas['jobs']['actions'] as $action) {
+         $keys = array_keys($action);
+         $action_type = array_shift($keys);
+         echo "<li>$action_type - ";
+         foreach ($action[$action_type] as $key => $value) {
+            if (is_array($value)) continue;
+            echo "$key : $value; ";
+         }
+         echo"</li>";
+      }
+      echo "<ul>";
+   }
+
    static function getForOrder($orders_id) {
       $action = new self;
       $results = $action->find("`plugin_fusioninventory_deployorders_id`='$orders_id'", "ranking ASC");

@@ -251,13 +251,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
       
       echo "<tr>";
-      echo "<th>Checks";
+      echo "<th>".__("Checks");
       self::plusButton("checks_block");
       echo "</th>";
-      echo "<th>Files";
+      echo "<th>".__("Files");
       self::plusButton("actions_block");
       echo "</th>";
-      echo "<th>Actions";
+      echo "<th>".__("Actions");
       self::plusButton("files_block");
       echo "</th>";
       echo "</tr>";
@@ -265,15 +265,15 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
 
       echo "<td style='width:33%'>&nbsp;";
-      self::displayChecksForm($order_type, $packages_id, $datas);
+      PluginFusioninventoryDeployCheck::displayForm($order_type, $packages_id, $datas);
       echo "</td>";
 
       echo "<td style='width:33%'>&nbsp;";
-      self::displayFilesForm($order_type, $packages_id, $datas);
+      PluginFusioninventoryDeployFile::displayForm($order_type, $packages_id, $datas);
       echo "</td>";
 
       echo "<td style='width:33%'>&nbsp;";
-      self::displayActionsForm($order_type, $packages_id, $datas);
+      PluginFusioninventoryDeployAction::displayForm($order_type, $packages_id, $datas);
       echo "</td>";
 
       echo "</tr>";
@@ -288,41 +288,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "</textarea>";
          // === debug ===
       }
-   }
-
-   static function displayChecksForm($order_type, $packages_id, $datas) {
-      if (!isset($datas['jobs']['checks'])) return;
-      echo "<ul>";
-      foreach ($datas['jobs']['checks'] as $check) {
-         echo "<li>".$check['type']." ".$check['path']." ".$check['value']."</li>";
-      }
-      echo "<ul>";
-   }
-
-   static function displayFilesForm($order_type, $packages_id, $datas) {
-      if (!isset($datas['jobs']['associatedFiles'])) return;
-      echo "<ul>";
-      foreach ($datas['jobs']['associatedFiles'] as $sha512) {
-         $filename = $datas['associatedFiles'][$sha512]['name'];
-         echo "<li>$filename</li>";
-      }
-      echo "<ul>";
-   }
-
-   static function displayActionsForm($order_type, $packages_id, $datas) {
-      if (!isset($datas['jobs']['actions'])) return;
-      echo "<ul>";
-      foreach ($datas['jobs']['actions'] as $action) {
-         $keys = array_keys($action);
-         $action_type = array_shift($keys);
-         echo "<li>$action_type - ";
-         foreach ($action[$action_type] as $key => $value) {
-            if (is_array($value)) continue;
-            echo "$key : $value; ";
-         }
-         echo"</li>";
-      }
-      echo "<ul>";
    }
 
    

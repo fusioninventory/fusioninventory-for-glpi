@@ -7397,6 +7397,11 @@ function migrateTablesFromFusinvDeploy ($migration) {
       $c_i = 0;
       while ($c_datas = $DB->fetch_assoc($c_res)) {
          foreach ($c_datas as $c_key => $c_value) {
+            //specific case for filesytem sizes, convert to bytes
+            if (!is_empty($c_value) && is_numeric($c_value)) {
+               $c_value = $c_value * 1024 * 1024;
+            }
+
             //construct job check entry
             $o_line['checks'][$c_i][$c_key] = $c_value;
          }

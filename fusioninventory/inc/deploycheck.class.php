@@ -58,9 +58,73 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    const FREE_SPACE       = 'freespaceGreater'; //Disk free space
 
    static function getTypeName($nb=0) {
-
       return __('Audits');
+   }
 
+   static function displayForm($order_type, $packages_id, $datas) {
+      global $CFG_GLPI;
+
+      $rand = mt_rand();
+
+      echo "<div style='display:none' id='checks_block' >";
+
+      echo "<span id='showCheckType'>&nbsp;</span>";
+      echo "<script type='text/javascript'>";
+      Ajax::UpdateItemJsCode("showCheckType",
+                                $CFG_GLPI["root_doc"].
+                                "/plugins/fusioninventory/ajax/deploy_dropdownchecktype.php",
+                                array('rand' => $rand),
+                                "dropdown_deploy_checktype");
+      echo "</script>";
+
+
+      echo "<span id='showCheckValue'>&nbsp;</span>";
+      
+      echo "<hr>";
+      echo "</div>";
+
+      if (!isset($datas['jobs']['checks'])) return;
+      echo "<ul>";
+      foreach ($datas['jobs']['checks'] as $check) {
+         echo "<li>".$check['type']." ".$check['path']." ".$check['value']."</li>";
+      }
+      echo "<ul>";
+   }
+
+   static function dropdownCheckType($rand) {
+      global $CFG_GLPI;
+
+      $checks_types = array(
+         '',
+         'winkeyExists'     => __("winkeyExists"),
+         'winkeyMissing'    => __("winkeyMissing"),
+         'winkeyEquals'     => __("winkeyEquals"),
+         'fileExists'       => __("fileExists"),
+         'fileMissing'      => __("fileMissing"),
+         'fileSizeGreater'  => __("fileSizeGreater"),
+         'fileSizeEquals'   => __("fileSizeEquals"),
+         'fileSizeLower'    => __("fileSizeLower"),
+         'fileSHA512'       => __("fileSHA512"),
+         'freespaceGreater' => __("freespaceGreater")
+      );
+      Dropdown::showFromArray("deploy_checktype", $checks_types, array('rand' => $rand));
+
+      //ajax update of check value span
+      $params = array('checktype' => '__VALUE__',
+                      'rand'      => $rand,
+                      'myname'    => 'method',
+                      'typename'  => "");
+      Ajax::updateItemOnEvent("dropdown_deploy_checktype".$rand,
+                              "showCheckValue",
+                              $CFG_GLPI["root_doc"].
+                              "/plugins/fusioninventory/ajax/deploy_displaycheckvalue.php",
+                              $params,
+                              array("change", "load"));
+
+   }
+
+   static function ajaxDisplayCheckValue($checktype, $rand) {
+      echo $checktype;
    }
 
    /**
