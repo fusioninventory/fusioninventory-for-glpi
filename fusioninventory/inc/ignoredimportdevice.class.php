@@ -64,7 +64,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
    function showDevices() {
       global $DB;
       
-      $rule = new PluginFusioninventoryRuleImportEquipment();
+      $rule = new PluginFusioninventoryInventoryRuleImport();
       $entity = new Entity();
 
       $start = 0;
@@ -73,45 +73,49 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       }
 
       $nb_elements = countElementsInTableForMyEntities($this->getTable());
-      echo "<table class='tab_cadre' >";
-      echo "<tr>";
-      echo "<td colspan='8'>";
       Html::printAjaxPager('',$start,$nb_elements);
-      echo "</td>";
-      echo "</tr>";
+      
+      echo "<br/><table class='tab_cadrehov' >";
 
-      echo "<tr>";
+      echo "<tr class='tab_bg_1'>";
       echo "<th>";
       echo __('Name');
-
       echo "</th>";
+      
       echo "<th>";
       echo __('Rule name');
-
       echo "</th>";
+      
       echo "<th>";
       echo __('Date');
-
       echo "</th>";
+      
       echo "<th>";
       echo __('Type');
-
       echo "</th>";
+      
       echo "<th>";
       echo __('Entity');
-
       echo "</th>";
+
+      echo "<th>";
+      echo __('Serial');
+      echo "</th>";
+
+      echo "<th>";
+      echo __('UUID');
+      echo "</th>";
+
       echo "<th>";
       echo __('IP');
-
       echo "</th>";
+      
       echo "<th>";
       echo __('MAC');
-
       echo "</th>";
+      
       echo "<th>";
       echo __('Module', 'fusioninventory');
-
       echo "</th>";
       echo "</tr>";
 
@@ -151,6 +155,14 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
          echo "</td>";
 
          echo "<td align='center'>";
+         echo $data['serial'];
+         echo "</td>";
+
+         echo "<td align='center'>";
+         echo $data['uuid'];
+         echo "</td>";
+         
+         echo "<td align='center'>";
          $a_ip = importArrayFromDB($data['ip']);
          echo implode("<br/>", $a_ip);
          echo "</td>";
@@ -171,14 +183,9 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
          echo "</tr>";
       }
 
-      echo "<tr>";
-      echo "<td colspan='7'>";
+      echo "</table><br/>";
+      
       Html::printAjaxPager('',$start,$nb_elements);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "</table>";
-
    }
 }
 
