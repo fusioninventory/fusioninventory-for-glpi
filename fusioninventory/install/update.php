@@ -7497,10 +7497,14 @@ function migrateTablesFromFusinvDeploy ($migration) {
       $final_datas[$order_id]['jobs'] = $o_line;
       $final_datas[$order_id]['associatedFiles'] = $of_line;
    }
+
+   $options = 0;
+   if (version_compare(PHP_VERSION, '5.3.3') >= 0) $options = $options | JSON_NUMERIC_CHECK;
+   if (version_compare(PHP_VERSION, '5.4.0') >= 0) $options = $options | JSON_UNESCAPED_SLASHES;
    
    //store json in order table
    foreach ($final_datas as $order_id => $data) {
-      $json = $DB->escape(json_encode($data, JSON_NUMERIC_CHECK)); 
+      $json = $DB->escape(json_encode($data, $options)); 
 
       $order_query = "UPDATE glpi_plugin_fusioninventory_deployorders 
          SET json = '$json'
