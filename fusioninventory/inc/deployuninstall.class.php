@@ -63,57 +63,10 @@ class PluginFusioninventoryDeployUninstall extends CommonDBTM {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch(get_class($item)) {
          case 'PluginFusioninventoryDeployPackage':
-            $obj = new self;
-            $obj->showForm($_POST['id']);
+            PluginFusioninventoryDeployPackage::showOrderTypeForm(
+                     PluginFusioninventoryDeployOrder::UNINSTALLATION_ORDER, 
+                     $_POST['id']);
             break;
       }
    }
-
-   static function showForm($id) {
-      global $CFG_GLPI;
-
-      $disabled = "false";
-      if (!PluginFusioninventoryDeployPackage::canEdit($id)) {
-         $disabled = "true";
-         PluginFusioninventoryDeployPackage::showEditDeniedMessage($id,
-               __('One or more active tasks (#task#) use this package. Edition denied.'));
-
-      }
-
-      if(isset($_POST["glpi_tab"])) {
-         switch($_POST["glpi_tab"]){
-            case -1 :
-               $render = "alluninstall";
-               break;
-            default:
-               $render = "uninstall";
-               break;
-         }
-      }
-
-      echo "<table class='deploy_extjs'>
-            <tbody>
-               <tr>
-                  <td id='".$render."Check'>
-                  </td>
-               </tr>
-               <tr><td><br /></td></tr>
-               <tr>
-                  <td id='".$render."File'></td></td>
-               </tr>
-               <tr><td><br /></td></tr>
-               <tr>
-                  <td id='".$render."Action'></td>
-               </tr>
-            </tbody>
-         </table>";
-
-      // Include JS
-      require GLPI_ROOT."/plugins/fusinvdeploy/js/package_check.front.php";
-      require GLPI_ROOT."/plugins/fusinvdeploy/js/package_file.front.php";
-      require GLPI_ROOT."/plugins/fusinvdeploy/js/package_action.front.php";
-   }
-
 }
-
-?>

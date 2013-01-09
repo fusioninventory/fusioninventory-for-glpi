@@ -226,6 +226,24 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return true;
    }
 
+   static function showOrderTypeForm($order_type, $packages_id) {
+      $disabled = "false";
+      if (!PluginFusioninventoryDeployPackage::canEdit($id)) {
+         $disabled = "true";
+         PluginFusioninventoryDeployPackage::showEditDeniedMessage($id,
+               __('One or more active tasks (#task#) use this package. Edition denied.',
+                  'fusioninventory'));
+
+      }
+
+      $o_order = new PluginFusioninventoryDeployOrder;
+      $found = $o_order->find("plugin_fusioninventory_deploypackages_id = $packages_id 
+                               AND type = $order_type");
+      $order = array_shift($found);
+
+      echo $order['json'];
+   }
+
    function getAllDatas() {
       global $DB;
 

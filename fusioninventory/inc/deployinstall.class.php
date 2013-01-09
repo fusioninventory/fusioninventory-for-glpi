@@ -63,37 +63,11 @@ class PluginFusioninventoryDeployInstall extends CommonDBTM {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch(get_class($item)) {
          case 'PluginFusioninventoryDeployPackage':
-            $obj = new self;
-            $obj->showForm($_POST['id']);
+            PluginFusioninventoryDeployPackage::showOrderTypeForm(
+                     PluginFusioninventoryDeployOrder::INSTALLATION_ORDER, 
+                     $_POST['id']);
             break;
       }
    }
-
-   static function showForm($id) {
-      global $CFG_GLPI;
-
-      $disabled = "false";
-      if (!PluginFusioninventoryDeployPackage::canEdit($id)) {
-         $disabled = "true";
-         PluginFusioninventoryDeployPackage::showEditDeniedMessage($id,
-               __('One or more active tasks (#task#) use this package. Edition denied.',
-                  'fusioninventory'));
-
-      }
-
-      if(isset($_POST["glpi_tab"])) {
-         switch($_POST["glpi_tab"]){
-            case -1 :
-               $render = "allinstall";
-               break;
-            default:
-               $render = "install";
-               break;
-         }
-      }
-
-   }
-
 }
 
-?>
