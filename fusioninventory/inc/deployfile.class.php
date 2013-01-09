@@ -58,9 +58,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       return true;
    }
 
-   static function displayForm($order_type, $packages_id, $datas) {
+   static function displayForm($order_type, $packages_id, $datas, $rand) {
       global $CFG_GLPI;
-      echo "<div style='display:none' id='files_block' >";
+      echo "<div style='display:none' id='files_block$rand' >";
       echo "<hr>";
       echo "</div>";
 

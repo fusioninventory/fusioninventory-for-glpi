@@ -61,16 +61,14 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       return __('Audits');
    }
 
-   static function displayForm($order_type, $packages_id, $datas) {
+   static function displayForm($order_type, $packages_id, $datas, $rand) {
       global $CFG_GLPI;
 
-      $rand = mt_rand();
+      echo "<div style='display:none' id='checks_block$rand' >";
 
-      echo "<div style='display:none' id='checks_block' >";
-
-      echo "<span id='showCheckType'>&nbsp;</span>";
+      echo "<span id='showCheckType$rand'>&nbsp;</span>";
       echo "<script type='text/javascript'>";
-      Ajax::UpdateItemJsCode("showCheckType",
+      Ajax::UpdateItemJsCode("showCheckType$rand",
                                 $CFG_GLPI["root_doc"].
                                 "/plugins/fusioninventory/ajax/deploy_dropdownchecktype.php",
                                 array('rand' => $rand),
@@ -78,7 +76,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "</script>";
 
 
-      echo "<span id='showCheckValue'>&nbsp;</span>";
+      echo "<span id='showCheckValue$rand'>&nbsp;</span>";
       
       echo "<hr>";
       echo "</div>";
@@ -87,6 +85,11 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       if (!isset($datas['jobs']['checks'])) return;
       echo "<table class='tab_cadre' style='width:100%'>";
       foreach ($datas['jobs']['checks'] as $check) {
+         //specific case for filesystem size
+         if (!empty($check['value']) && is_numeric($check['value'])) {
+            $check['value'] = $check['value']." MB";
+         }
+
          echo "<tr>";
          echo "<td><input type='checkbox' /></td>";
          echo "<td>".$check['type']."</td>";
@@ -125,7 +128,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                       'myname'    => 'method',
                       'typename'  => "");
       Ajax::updateItemOnEvent("dropdown_deploy_checktype".$rand,
-                              "showCheckValue",
+                              "showCheckValue$rand",
                               $CFG_GLPI["root_doc"].
                               "/plugins/fusioninventory/ajax/deploy_displaycheckvalue.php",
                               $params,

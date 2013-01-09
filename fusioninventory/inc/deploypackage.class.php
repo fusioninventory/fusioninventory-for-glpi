@@ -229,6 +229,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    static function displayOrderTypeForm($order_type, $packages_id) {
       global $CFG_GLPI;
 
+      $rand = mt_rand();
+
       $disabled = "false";
       if (!PluginFusioninventoryDeployPackage::canEdit($packages_id)) {
          $disabled = "true";
@@ -248,13 +250,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       
       echo "<tr>";
       echo "<th>".__("Checks");
-      self::plusButton("checks_block");
+      self::plusButton("checks_block$rand");
       echo "</th>";
       echo "<th>".__("Files");
-      self::plusButton("actions_block");
+      self::plusButton("actions_block$rand");
       echo "</th>";
       echo "<th>".__("Actions");
-      self::plusButton("files_block");
+      self::plusButton("files_block$rand");
       echo "</th>";
       echo "</tr>";
 
@@ -262,19 +264,19 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       echo "<td style='width:33%; vertical-align:top'>&nbsp;";
       echo "<form name='addcheck' method='post' action='test.php'>";
-      PluginFusioninventoryDeployCheck::displayForm($order_type, $packages_id, $datas);
+      PluginFusioninventoryDeployCheck::displayForm($order_type, $packages_id, $datas, $rand);
       echo "</form>";
       echo "</td>";
 
       echo "<td style='width:33%; vertical-align:top'>&nbsp;";
       echo "<form name='addfile' method='post' action='test.php'>";
-      PluginFusioninventoryDeployFile::displayForm($order_type, $packages_id, $datas);
+      PluginFusioninventoryDeployFile::displayForm($order_type, $packages_id, $datas, $rand);
       echo "</form>";
       echo "</td>";
 
       echo "<td style='width:33%; vertical-align:top'>&nbsp;";
       echo "<form name='addaction' method='post' action='test.php'>";
-      PluginFusioninventoryDeployAction::displayForm($order_type, $packages_id, $datas);
+      PluginFusioninventoryDeployAction::displayForm($order_type, $packages_id, $datas, $rand);
       echo "</form>";
       echo "</td>";
 

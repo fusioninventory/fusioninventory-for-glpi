@@ -58,8 +58,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       return true;
    }
 
-   static function displayForm($order_type, $packages_id, $datas) {
-      echo "<div style='display:none' id='actions_block' >";
+   static function displayForm($order_type, $packages_id, $datas, $rand) {
+      echo "<div style='display:none' id='actions_block$rand' >";
 
       echo "<hr>";
       echo "</div>";
