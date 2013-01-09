@@ -7458,6 +7458,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
          //get type
          $type = strtolower(str_replace("PluginFusinvdeployAction_", "", $a_datas['itemtype']));
+         $type = str_replace("command", "cmd", $type);
          
          //table for action itemtype
          $a_table = getTableForItemType($a_datas['itemtype']);
