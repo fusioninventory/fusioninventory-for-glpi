@@ -220,20 +220,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $this->showFormButtons($options);
 
       echo "<div id='tabcontent'></div>";
-      echo "<script type='text/javascript'>loadDefaultTab();
-      </script>";
-
-      //load extjs plugins library
-      echo "<link rel='stylesheet' type='text/css' href='".GLPI_ROOT.
-            "/plugins/fusioninventory/lib/extjs/FileChooser/css/styles.css'>";
-
-      echo "<script type='text/javascript'>";
-      require_once GLPI_ROOT."/plugins/fusioninventory/lib/extjs/FileUploadField.js";
-      require_once GLPI_ROOT."/plugins/fusioninventory/lib/extjs/Spinner.js";
-      require_once GLPI_ROOT."/plugins/fusioninventory/lib/extjs/SpinnerField.js";
-      require_once GLPI_ROOT."/plugins/fusioninventory/lib/extjs/GridDragDropRowOrder.js";
-      require_once GLPI_ROOT."/plugins/fusioninventory/lib/extjs/FileChooser/FileChooser.js";
-      echo "</script>";
+      echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
       return true;
    }

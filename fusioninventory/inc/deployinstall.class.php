@@ -91,28 +91,6 @@ class PluginFusioninventoryDeployInstall extends CommonDBTM {
          }
       }
 
-      // Display front JS
-      echo "<table class='deploy_extjs'>
-            <tbody>
-               <tr>
-                  <td id='".$render."Check'>
-                  </td>
-               </tr>
-               <tr><td><br /></td></tr>
-               <tr>
-                  <td id='".$render."File'></td></td>
-               </tr>
-               <tr><td><br /></td></tr>
-               <tr>
-                  <td id='".$render."Action'></td>
-               </tr>
-            </tbody>
-         </table>";
-
-      // Include JS
-      require GLPI_ROOT."/plugins/fusioninventory/front/deploypackage_check.front.php";
-      require GLPI_ROOT."/plugins/fusioninventory/front/deploypackage_file.front.php";
-      require GLPI_ROOT."/plugins/fusioninventory/front/deploypackage_action.front.php";
    }
 
 }
