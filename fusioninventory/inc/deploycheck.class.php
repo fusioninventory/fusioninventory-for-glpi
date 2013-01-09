@@ -85,11 +85,20 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
       //display stored checks datas
       if (!isset($datas['jobs']['checks'])) return;
-      echo "<ul>";
+      echo "<table class='tab_cadre' style='width:100%'>";
       foreach ($datas['jobs']['checks'] as $check) {
-         echo "<li>".$check['type']." ".$check['path']." ".$check['value']."</li>";
+         echo "<tr>";
+         echo "<td><input type='checkbox' /></td>";
+         echo "<td>".$check['type']."</td>";
+         echo "<td>".$check['path']."</td>";
+         echo "<td>".$check['value']."</td>";
+         echo "</tr>";
       }
-      echo "<ul>";
+      echo "<tr><td colspan='2'>";
+      echo "<input type='button'  name='delete' value=\"".
+         __('Delete', 'fusioninventory')."\" class='submit'>";
+      echo "</td></tr>";
+      echo "</table>";
    }
 
    static function dropdownCheckType($rand) {
@@ -126,6 +135,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
    static function displayAjaxCheckValue($checktype, $rand) {
       echo $checktype;
+
+      echo "&nbsp;<input type='submit' name='itemaddcheck' value=\"".
+         __('Add')."\" class='submit' >";
    }
 
    /**

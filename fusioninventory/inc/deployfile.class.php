@@ -59,18 +59,29 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    }
 
    static function displayForm($order_type, $packages_id, $datas) {
+      global $CFG_GLPI;
       echo "<div style='display:none' id='files_block' >";
       echo "<hr>";
       echo "</div>";
 
       //display stored files datas
       if (!isset($datas['jobs']['associatedFiles'])) return;
-      echo "<ul>";
+      echo "<table class='tab_cadre' style='width:100%'>";
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
+         echo "<tr>";
+         echo "<td><input type='checkbox' /></td>";
          $filename = $datas['associatedFiles'][$sha512]['name'];
-         echo "<li>$filename</li>";
+         echo "<td>";
+         echo "<img src='".$CFG_GLPI['root_doc'].
+               "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
+         echo"&nbsp;$filename";
+         echo "</td>";
       }
-      echo "<ul>";
+      echo "<tr><td colspan='2'>";
+      echo "<input type='button'  name='delete' value=\"".
+         __('Delete', 'fusioninventory')."\" class='submit'>";
+      echo "</td></tr>";
+      echo "</table>";
    }
 
    static function getExtensionsWithAutoAction() {

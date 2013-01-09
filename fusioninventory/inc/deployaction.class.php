@@ -66,18 +66,24 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
       //display stored actions datas
       if (!isset($datas['jobs']['actions'])) return;
-      echo "<ul>";
+      echo "<table class='tab_cadre' style='width:100%'>";
       foreach ($datas['jobs']['actions'] as $action) {
+         echo "<tr>";
+         echo "<td><input type='checkbox' /></td>";
          $keys = array_keys($action);
          $action_type = array_shift($keys);
-         echo "<li>$action_type - ";
+         echo "<td>$action_type</td>";
          foreach ($action[$action_type] as $key => $value) {
             if (is_array($value)) continue;
-            echo "$key : $value; ";
+            echo "<td>$key : $value;</td>";
          }
-         echo"</li>";
+         echo "</tr>";
       }
-      echo "<ul>";
+      echo "<tr><td colspan='2'>";
+      echo "<input type='button'  name='delete' value=\"".
+         __('Delete', 'fusioninventory')."\" class='submit'>";
+      echo "</td></tr>";
+      echo "</table>";
    }
 
    static function getForOrder($orders_id) {

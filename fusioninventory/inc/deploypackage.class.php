@@ -244,10 +244,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $order = array_shift($found);
       $datas = json_decode($order['json'], true);
 
-
-      echo "<form method='post' name='form_package' action='".
-            $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/deploypackage.form.php''>";
-
       echo "<table class='tab_cadre_fixe'>";
       
       echo "<tr>";
@@ -264,16 +260,22 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
 
-      echo "<td style='width:33%'>&nbsp;";
+      echo "<td style='width:33%; vertical-align:top'>&nbsp;";
+      echo "<form name='addcheck' method='post' action='test.php'>";
       PluginFusioninventoryDeployCheck::displayForm($order_type, $packages_id, $datas);
+      echo "</form>";
       echo "</td>";
 
-      echo "<td style='width:33%'>&nbsp;";
+      echo "<td style='width:33%; vertical-align:top'>&nbsp;";
+      echo "<form name='addfile' method='post' action='test.php'>";
       PluginFusioninventoryDeployFile::displayForm($order_type, $packages_id, $datas);
+      echo "</form>";
       echo "</td>";
 
-      echo "<td style='width:33%'>&nbsp;";
+      echo "<td style='width:33%; vertical-align:top'>&nbsp;";
+      echo "<form name='addaction' method='post' action='test.php'>";
       PluginFusioninventoryDeployAction::displayForm($order_type, $packages_id, $datas);
+      echo "</form>";
       echo "</td>";
 
       echo "</tr>";
