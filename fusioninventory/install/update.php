@@ -7418,7 +7418,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
             if ($f_key == "sha512" || $f_key == "id" ) continue;
 
             //construct order file entry
-            $of_line['associatedFiles'][$f_datas['sha512']][$f_key] = $f_value;
+            $of_line[$f_datas['sha512']][$f_key] = $f_value;
          }
 
          //add mirror(s) to file
@@ -7429,7 +7429,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
             WHERE files_mirrors.plugin_fusinvdeploy_files_id = ".$f_datas['id'];
          $fm_res = $DB->query($fm_query);
          while ($fm_datas = $DB->fetch_assoc($fm_res)) {
-            $of_line['associatedFiles'][$f_datas['sha512']]['mirrors'][]  = $fm_datas['url'];
+            $of_line[$f_datas['sha512']]['mirrors'][]  = $fm_datas['url'];
          }
 
          //add multipart file datas
@@ -7438,7 +7438,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
             WHERE plugin_fusinvdeploy_files_id =".$f_datas['id'];
          $fmp_res = $DB->query($fmp_query);
          while ($fmp_datas = $DB->fetch_assoc($fmp_res)) {
-            $of_line['associatedFiles'][$f_datas['sha512']]['multiparts'][] = $fmp_datas['sha512'];
+            $of_line[$f_datas['sha512']]['multiparts'][] = $fmp_datas['sha512'];
          }
       }
 
@@ -7453,8 +7453,11 @@ function migrateTablesFromFusinvDeploy ($migration) {
          FROM glpi_plugin_fusinvdeploy_actions
          WHERE plugin_fusinvdeploy_orders_id = $order_id";
       $a_res = $DB->query($a_query);
+      $a_i = 0;
       while ($a_datas = $DB->fetch_assoc($a_res)) {
-         $a_i = 0;
+
+         //get type
+         $type = strtolower(str_replace("PluginFusinvdeployAction_", "", $a_datas['itemtype']));
          
          //table for action itemtype
          $a_table = getTableForItemType($a_datas['itemtype']);
@@ -7471,7 +7474,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                if ($at_key == "id") continue;
 
                //construct job actions entry
-               $o_line['actions'][$a_i][$at_key] = $at_value;
+               $o_line['actions'][$a_i][$type][$at_key] = $at_value;
             }
 
             //specifice case for commands : we must add status and env vars
@@ -7482,16 +7485,14 @@ function migrateTablesFromFusinvDeploy ($migration) {
                $ret_cmd_res = $DB->query($ret_cmd_query);
                while ($res_cmd_datas = $DB->fetch_assoc($ret_cmd_res)) {
                   //construct command status array entry
-                  $o_line['actions'][$a_i]['retChecks'][] = array(
+                  $o_line['actions'][$a_i][$type]['retChecks'][] = array(
                      'type'  => $cmdStatus[$res_cmd_datas['type']],
                      'value' => array($res_cmd_datas['value'])
                   );
                }
             }
-
-            $a_i++;
          }
-
+         $a_i++;
       }
 
       $final_datas[$order_id]['jobs'] = $o_line;
