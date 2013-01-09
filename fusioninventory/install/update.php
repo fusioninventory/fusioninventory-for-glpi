@@ -7398,7 +7398,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
       while ($c_datas = $DB->fetch_assoc($c_res)) {
          foreach ($c_datas as $c_key => $c_value) {
             //specific case for filesytem sizes, convert to bytes
-            if (!is_empty($c_value) && is_numeric($c_value)) {
+            if (!empty($c_value) && is_numeric($c_value)) {
                $c_value = $c_value * 1024 * 1024;
             }
 
