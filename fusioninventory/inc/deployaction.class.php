@@ -64,6 +64,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       echo "<hr>";
       echo "</div>";
 
+      //display stored actions datas
       if (!isset($datas['jobs']['actions'])) return;
       echo "<ul>";
       foreach ($datas['jobs']['actions'] as $action) {

@@ -46,14 +46,14 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
-   const WINKEY_EXISTS   = 'winkeyExists';    //Registry key present
+   const WINKEY_EXISTS    = 'winkeyExists';     //Registry key present
    const WINKEY_MISSING   = 'winkeyMissing';    //Registry key missing
-   const WINKEY_EQUAL     = 'winkeyEquals';      //Registry equals a value
-   const FILE_EXISTS     = 'fileExists';      //File is present
+   const WINKEY_EQUAL     = 'winkeyEquals';     //Registry equals a value
+   const FILE_EXISTS      = 'fileExists';       //File is present
    const FILE_MISSING     = 'fileMissing';      //File is missing
-   const FILE_SIZEGREATER = 'fileSizeGreater';         //File size
-   const FILE_SIZEEQUAL   = 'fileSizeEquals';         //File size
-   const FILE_SIZELOWER   = 'fileSizeLower';         //File size
+   const FILE_SIZEGREATER = 'fileSizeGreater';  //File size
+   const FILE_SIZEEQUAL   = 'fileSizeEquals';   //File size
+   const FILE_SIZELOWER   = 'fileSizeLower';    //File size
    const FILE_SHA512      = 'fileSHA512';       //File sha512 checksum
    const FREE_SPACE       = 'freespaceGreater'; //Disk free space
 
@@ -83,6 +83,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<hr>";
       echo "</div>";
 
+      //display stored checks datas
       if (!isset($datas['jobs']['checks'])) return;
       echo "<ul>";
       foreach ($datas['jobs']['checks'] as $check) {
@@ -123,7 +124,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
    }
 
-   static function ajaxDisplayCheckValue($checktype, $rand) {
+   static function displayAjaxCheckValue($checktype, $rand) {
       echo $checktype;
    }
 

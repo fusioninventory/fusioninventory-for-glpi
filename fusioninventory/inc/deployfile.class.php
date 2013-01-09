@@ -63,6 +63,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<hr>";
       echo "</div>";
 
+      //display stored files datas
       if (!isset($datas['jobs']['associatedFiles'])) return;
       echo "<ul>";
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
