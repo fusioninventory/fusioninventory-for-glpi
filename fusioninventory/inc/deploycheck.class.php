@@ -87,7 +87,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       foreach ($datas['jobs']['checks'] as $check) {
          //specific case for filesystem size
          if (!empty($check['value']) && is_numeric($check['value'])) {
-            $check['value'] = $check['value']." MB";
+            $check['value'] = round($check['value'] / (1024 * 1024))." MB";
          }
 
          echo "<tr>";
