@@ -128,18 +128,6 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    }
 
    /**
-    * Clean all checks when an order is purged
-    * @param orders_id the order ID
-    * @return nothing
-    */
-   static function cleanForPackage($orders_id) {
-      global $DB;
-      $query = "DELETE FROM `glpi_plugin_fusioninventory_deploychecks`
-                WHERE `plugin_fusioninventory_deployorders_id`='$orders_id'";
-      $DB->query($query);
-   }
-
-   /**
     * Get all checks for an order
     * @param orders_id the order ID
     * @return an array with all checks, or an empty array is nothing defined
@@ -172,66 +160,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       return $checks;
    }
 
-   function update_ranking($params = array())  {
 
-      //get params
-      $id_moved = $params['id'];
-      $old_ranking = $params['old_ranking'];
-      $new_ranking = $params['new_ranking'];
-      $package_id = $params['package_id'];
-      $render = $params['render'];
-
-      //get order id
-      $render_type   = PluginFusioninventoryDeployOrder::getRender($render);
-      $order_id = PluginFusioninventoryDeployOrder::getIdForPackage($package_id,$render_type);
-
-      //get rankings
-      $action_moved = new $this;
-      $action_moved->getFromDB($id_moved);
-      $ranking_moved = $action_moved->getField('ranking');
-      $ranking_destination = $new_ranking;
-
-      $actions = new $this;
-      if ($ranking_moved < $ranking_destination) {
-         //get all rows between this two rows
-         $rows_id = $actions->find("plugin_fusioninventory_deployorders_id = '$order_id'
-               AND ranking > '$ranking_moved'
-               AND ranking <= '$ranking_destination'"
-         );
-
-         //decrement ranking for all this rows
-         foreach($rows_id as $id => $values) {
-            $options = array();
-            $options['id'] = $id;
-            $options['ranking'] = $values['ranking']-1;
-            $actions->update($options);
-            unset($options);
-         }
-      } else {
-         //get all rows between this two rows
-         $rows_id = $actions->find("plugin_fusioninventory_deployorders_id = '$order_id'
-               AND ranking < '$ranking_moved'
-               AND ranking >= '$ranking_destination'"
-         );
-
-         //decrement ranking for all this rows
-         foreach($rows_id as $id => $values) {
-            $options = array();
-            $options['id'] = $id;
-            $options['ranking'] = $values['ranking']+1;
-            $actions->update($options);
-            unset($options);
-         }
-      }
-
-      //set ranking to moved row
-      $options['id'] = $id_moved;
-      $options['ranking'] = $ranking_destination;
-      $action_moved->update($options);
-
-      return "{success:true}";
-
-   }
 }
 
 ?>

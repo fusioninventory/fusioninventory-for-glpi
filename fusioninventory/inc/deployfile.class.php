@@ -47,9 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-
       return __('Files');
-
    }
 
    static function canCreate() {
@@ -74,17 +72,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<ul>";
    }
 
-   function getEmpty() {
-      $this->fields['retention'] = 0;
-   }
-
-   function prepareInputForAdd($input) {
-      if (isset($result['p2p-retention-duration'])) {
-         $tmp['p2p-retention-duration'] = 0;
-      }
-      return $input;
-   }
-
    static function getExtensionsWithAutoAction() {
       $ext = array();
 
@@ -100,50 +87,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       return $ext;
    }
 
-   static function cleanForPackage($orders_id) {
-      global $DB;
-      $query = "DELETE FROM `glpi_plugin_fusioninventory_deployfiles`
-                WHERE `plugin_fusioninventory_deployorders_id`='$orders_id'";
-      $DB->query($query);
-   }
-
-   function getDatas($params)  {
-      global $DB;
-
-      if(isset($params['package_id'])){
-         $package_id = $params['package_id'];
-         $render = $params['render'];
-      } else {
-         exit;
-      }
-
-      $render_type   = PluginFusioninventoryDeployOrder::getRender($render);
-      $order_id      = PluginFusioninventoryDeployOrder::getIdForPackage($package_id,$render_type);
-
-      $sql = "SELECT id as {$render}id, name as {$render}file, mimetype as {$render}mimetype,
-                     is_p2p as {$render}p2p, p2p_retention_days as {$render}validity,
-                     uncompress as {$render}uncompress,
-                     DATE_FORMAT(create_date,'%d/%m/%Y') as {$render}dateadd,
-                     filesize as {$render}filesize
-              FROM `glpi_plugin_fusioninventory_deployfiles`
-              WHERE `plugin_fusioninventory_deployorders_id` = '$order_id'
-              AND sha512 <> ''"; # ignoring partially downloaded files
-
-      $qry = $DB->query($sql);
-      $nb = $DB->numrows($qry);
-      $res = array();
-
-      while($row = $DB->fetch_assoc($qry)){
-         $row[$render.'filesize'] = self::processFilesize($row[$render.'filesize']);
-         $res[$render.'files'][] = $row;
-      }
-
-      return json_encode($res);
-   }
-
    static function getForOrder($orders_id) {
       $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deployfiles',
-                                      "`plugin_fusioninventory_deployorders_id`='$orders_id' AND sha512 <> ''");
+                                      "`plugin_fusioninventory_deployorders_id`='".$orders_id.
+                                      "' AND sha512 <> ''");
 
       $files = array();
       foreach ($results as $result) {
@@ -171,20 +118,23 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
                foreach ($results_jobs as $jobs) {
                   $definitions = importArrayFromDB($jobs['definition']);
-                  foreach($definitions as $key => $definition)
+                  foreach($definitions as $key => $definition) {
                      foreach($definition as $value) {
                         $packages_id[] = $value;
                      }
+                  }
                }
 
 
                foreach ($packages_id as $package_id) {
                   $orders = getAllDatasFromTable('glpi_plugin_fusioninventory_deployorders',
-                                                 "`plugin_fusioninventory_deploypackages_id`='$package_id'");
+                                                 "`plugin_fusioninventory_deploypackages_id`='".
+                                                 $package_id."'");
 
                   foreach ($orders as $order) {
-                     $results_files = getAllDatasFromTable('glpi_plugin_fusioninventory_deployfiles',
-                                         "`plugin_fusioninventory_deployorders_id`='".$order['id']."' AND sha512 <> ''");
+                     $results_files =getAllDatasFromTable('glpi_plugin_fusioninventory_deployfiles',
+                                         "`plugin_fusioninventory_deployorders_id`='".$order['id'].
+                                         "' AND sha512 <> ''");
 
 
                      foreach ($results_files as $result_file) {
@@ -336,7 +286,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             AND sha512 = '$sha512'"
       );
       if (count($rows) > 0) {
-        return true;
+         return true;
       }
 
       return false;
@@ -348,7 +298,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $files=array();
 
       $results_files = getAllDatasFromTable('glpi_plugin_fusioninventory_deployfiles',
-                          "`plugin_fusioninventory_deployorders_id`='".$order_id."' AND sha512 <> ''");
+                          "`plugin_fusioninventory_deployorders_id`='".
+                          $order_id."' AND sha512 <> ''");
 
 
       foreach ($results_files as $result_file) {
@@ -436,7 +387,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    }
 
-   function uploadFile()  {
+   function uploadFile() {
 
       if(isset($_GET['package_id'])){
          $package_id = $_GET['package_id'];
@@ -451,7 +402,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       }
 
       //if file sent is from server
-      if (isset($_POST['itemtype']) && $_POST['itemtype'] == 'fileserver') return $this->uploadFileFromServer();
+      if (isset($_POST['itemtype']) && $_POST['itemtype'] == 'fileserver') {
+         return $this->uploadFileFromServer();
+      }
 
       //if file sed is from http post
       foreach($_FILES as $FILES_key => $FILES_value) {
@@ -469,7 +422,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       if ($render == 'install') {
          $render_uninstall = PluginFusioninventoryDeployOrder::getRender('uninstall');
          $order_uninstall_id = PluginFusioninventoryDeployOrder::getIdForPackage($package_id,$render_uninstall);
-         $a_uninstall_files = $this->find("`plugin_fusioninventory_deployorders_id`='".$order_uninstall_id."'");
+         $a_uninstall_files = $this->find("`plugin_fusioninventory_deployorders_id`='".
+                                          $order_uninstall_id."'");
          if (count($a_uninstall_files) == 0) {
             $uninstall = 1;
          }
@@ -477,7 +431,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       if (isset ($_POST["id"]) and !$_POST['id']) {
 
-        //file uploaded?
+         //file uploaded?
          $filename = null;
          $file_tmp_name = null;
          if (isset($_FILES['file']['tmp_name']) and !empty($_FILES['file']['tmp_name'])){
@@ -547,14 +501,15 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
       $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
-      $server_upload_path = $PluginFusioninventoryConfig->getValue($plugins_id, 'server_upload_path');
+      $server_upload_path = $PluginFusioninventoryConfig->getValue($plugins_id, 
+                                                                   'server_upload_path');
 
 
       $package_id = $_GET['package_id'];
       $render     = $_GET['render'];
 
       if (preg_match('/\.\./', $_POST['file_server'])) {
-    die;
+         die;
       }
 
       $render   = PluginFusioninventoryDeployOrder::getRender($render);
