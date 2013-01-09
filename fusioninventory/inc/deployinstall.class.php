@@ -63,7 +63,7 @@ class PluginFusioninventoryDeployInstall extends CommonDBTM {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch(get_class($item)) {
          case 'PluginFusioninventoryDeployPackage':
-            PluginFusioninventoryDeployPackage::showOrderTypeForm(
+            PluginFusioninventoryDeployPackage::displayOrderTypeForm(
                      PluginFusioninventoryDeployOrder::INSTALLATION_ORDER, 
                      $_POST['id']);
             break;

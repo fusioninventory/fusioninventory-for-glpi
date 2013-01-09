@@ -226,11 +226,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return true;
    }
 
-   static function showOrderTypeForm($order_type, $packages_id) {
+   static function displayOrderTypeForm($order_type, $packages_id) {
+      global $CFG_GLPI;
+
       $disabled = "false";
-      if (!PluginFusioninventoryDeployPackage::canEdit($id)) {
+      if (!PluginFusioninventoryDeployPackage::canEdit($packages_id)) {
          $disabled = "true";
-         PluginFusioninventoryDeployPackage::showEditDeniedMessage($id,
+         PluginFusioninventoryDeployPackage::showEditDeniedMessage($packages_id,
                __('One or more active tasks (#task#) use this package. Edition denied.',
                   'fusioninventory'));
 
@@ -240,8 +242,89 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $found = $o_order->find("plugin_fusioninventory_deploypackages_id = $packages_id 
                                AND type = $order_type");
       $order = array_shift($found);
+      $datas = json_decode($order['json'], true);
 
-      echo $order['json'];
+
+      echo "<form method='post' name='form_package' action='".
+            $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/deploypackage.form.php''>";
+
+      echo "<table class='tab_cadre_fixe'>";
+      
+      echo "<tr>";
+      echo "<th>Checks";
+      self::plusButton("checks_block");
+      echo "</th>";
+      echo "<th>Files";
+      self::plusButton("actions_block");
+      echo "</th>";
+      echo "<th>Actions";
+      self::plusButton("files_block");
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+
+      echo "<td style='width:33%'>&nbsp;";
+      self::displayChecksForm($order_type, $packages_id, $datas);
+      echo "</td>";
+
+      echo "<td style='width:33%'>&nbsp;";
+      self::displayFilesForm($order_type, $packages_id, $datas);
+      echo "</td>";
+
+      echo "<td style='width:33%'>&nbsp;";
+      self::displayActionsForm($order_type, $packages_id, $datas);
+      echo "</td>";
+
+      echo "</tr>";
+      echo "</table>";
+      Html::closeForm();
+
+      // === debug ===
+      echo "DEBUG";
+      echo "<textarea cols='132' rows='25'>";
+      echo json_encode($datas, JSON_PRETTY_PRINT);
+      echo "</textarea>";
+      // === debug ===
+   }
+
+   static function displayChecksForm($order_type, $packages_id, $datas) {
+      if (!isset($datas['jobs']['checks'])) return;
+      echo "<ul>";
+      foreach ($datas['jobs']['checks'] as $check) {
+         echo "<li>".$check['type']." ".$check['path']." ".$check['value']."</li>";
+      }
+      echo "<ul>";
+   }
+
+   static function displayFilesForm($order_type, $packages_id, $datas) {
+      if (!isset($datas['jobs']['associatedFiles'])) return;
+      echo "<ul>";
+      foreach ($datas['jobs']['associatedFiles'] as $sha512) {
+         //echo $sha512;
+         $filename = $datas['associatedFiles']['associatedFiles'][$sha512]['name'];
+         echo "<li>$filename</li>";
+      }
+      echo "<ul>";
+   }
+
+   static function displayActionsForm($order_type, $packages_id, $datas) {
+      if (!isset($datas['jobs']['actions'])) return;
+      echo "<ul>";
+      foreach ($datas['jobs']['actions'] as $action) {
+         echo "<li>".$action['exec']."</li>";
+      }
+      echo "<ul>";
+   }
+
+   
+   static function plusButton($dom_id) {
+      global $CFG_GLPI;
+
+      echo "&nbsp;";
+      echo "<img onClick=\"Ext.get('".$dom_id."').setDisplayed('block')\"
+                 title=\"".__('Add')."\" alt=\"".__('Add')."\"
+                 class='pointer' src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
    }
 
    function getAllDatas() {
