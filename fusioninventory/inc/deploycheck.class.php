@@ -95,17 +95,17 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       global $CFG_GLPI;
 
       $checks_types = array(
-         '',
-         'winkeyExists'     => __("winkeyExists"),
-         'winkeyMissing'    => __("winkeyMissing"),
-         'winkeyEquals'     => __("winkeyEquals"),
-         'fileExists'       => __("fileExists"),
-         'fileMissing'      => __("fileMissing"),
-         'fileSizeGreater'  => __("fileSizeGreater"),
-         'fileSizeEquals'   => __("fileSizeEquals"),
-         'fileSizeLower'    => __("fileSizeLower"),
-         'fileSHA512'       => __("fileSHA512"),
-         'freespaceGreater' => __("freespaceGreater")
+         '--',
+         self::WINKEY_EXISTS    => __("winkeyExists"),
+         self::WINKEY_MISSING   => __("winkeyMissing"),
+         self::WINKEY_EQUAL     => __("winkeyEquals"),
+         self::FILE_EXISTS      => __("fileExists"),
+         self::FILE_MISSING     => __("fileMissing"),
+         self::FILE_SIZEGREATER => __("fileSizeGreater"),
+         self::FILE_SIZEEQUAL   => __("fileSizeEquals"),
+         self::FILE_SIZELOWER   => __("fileSizeLower"),
+         self::FILE_SHA512      => __("fileSHA512"),
+         self::FREE_SPACE       => __("freespaceGreater")
       );
       Dropdown::showFromArray("deploy_checktype", $checks_types, array('rand' => $rand));
 
