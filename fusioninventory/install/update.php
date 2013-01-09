@@ -7389,9 +7389,10 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
 
       //=== Checks ===
-      $c_query = "SELECT type, path, value, ranking, 'error' as `return`
+      $c_query = "SELECT type, path, value, 'error' as `return`
          FROM glpi_plugin_fusinvdeploy_checks
-         WHERE plugin_fusinvdeploy_orders_id = $order_id";
+         WHERE plugin_fusinvdeploy_orders_id = $order_id
+         ORDER BY ranking ASC";
       $c_res = $DB->query($c_query);
       $c_i = 0;
       while ($c_datas = $DB->fetch_assoc($c_res)) {
@@ -7451,13 +7452,16 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
       $a_query = "SELECT *
          FROM glpi_plugin_fusinvdeploy_actions
-         WHERE plugin_fusinvdeploy_orders_id = $order_id";
+         WHERE plugin_fusinvdeploy_orders_id = $order_id
+         ORDER BY ranking ASC";
       $a_res = $DB->query($a_query);
       $a_i = 0;
       while ($a_datas = $DB->fetch_assoc($a_res)) {
 
          //get type
          $type = strtolower(str_replace("PluginFusinvdeployAction_", "", $a_datas['itemtype']));
+
+         //specific case for command type
          $type = str_replace("command", "cmd", $type);
          
          //table for action itemtype
@@ -7474,8 +7478,13 @@ function migrateTablesFromFusinvDeploy ($migration) {
                //we don't store the id field of action itemtype table in json
                if ($at_key == "id") continue;
 
-               //construct job actions entry
-               $o_line['actions'][$a_i][$type][$at_key] = $at_value;
+               //specific case for 'path' field
+               if ($at_key == "path") {
+                  $o_line['actions'][$a_i][$type]['list'][] = $at_value;
+               } else {
+                  //construct job actions entry
+                  $o_line['actions'][$a_i][$type][$at_key] = $at_value;
+               }
             }
 
             //specifice case for commands : we must add status and env vars
