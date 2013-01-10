@@ -46,19 +46,23 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
-   const WINKEY_EXISTS    = 'winkeyExists';     //Registry key present
-   const WINKEY_MISSING   = 'winkeyMissing';    //Registry key missing
-   const WINKEY_EQUAL     = 'winkeyEquals';     //Registry equals a value
-   const FILE_EXISTS      = 'fileExists';       //File is present
-   const FILE_MISSING     = 'fileMissing';      //File is missing
-   const FILE_SIZEGREATER = 'fileSizeGreater';  //File size
-   const FILE_SIZEEQUAL   = 'fileSizeEquals';   //File size
-   const FILE_SIZELOWER   = 'fileSizeLower';    //File size
-   const FILE_SHA512      = 'fileSHA512';       //File sha512 checksum
-   const FREE_SPACE       = 'freespaceGreater'; //Disk free space
-
    static function getTypeName($nb=0) {
       return __('Audits');
+   }
+
+   static function getTypes() {
+      return array(
+         'winkeyExists'     => __("winkeyExists"),
+         'winkeyMissing'    => __("winkeyMissing"),
+         'winkeyEquals'     => __("winkeyEquals"),
+         'fileExists'       => __("fileExists"),
+         'fileMissing'      => __("fileMissing"),
+         'fileSizeGreater'  => __("fileSizeGreater"),
+         'fileSizeEquals'   => __("fileSizeEquals"),
+         'fileSizeLower'    => __("fileSizeLower"),
+         'fileSHA512'       => __("fileSHA512"),
+         'freespaceGreater' => __("freespaceGreater")
+      );
    }
 
    static function displayForm($order_type, $packages_id, $datas, $rand) {
@@ -111,19 +115,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    static function dropdownType($rand) {
       global $CFG_GLPI;
 
-      $checks_types = array(
-         '--',
-         self::WINKEY_EXISTS    => __("winkeyExists"),
-         self::WINKEY_MISSING   => __("winkeyMissing"),
-         self::WINKEY_EQUAL     => __("winkeyEquals"),
-         self::FILE_EXISTS      => __("fileExists"),
-         self::FILE_MISSING     => __("fileMissing"),
-         self::FILE_SIZEGREATER => __("fileSizeGreater"),
-         self::FILE_SIZEEQUAL   => __("fileSizeEquals"),
-         self::FILE_SIZELOWER   => __("fileSizeLower"),
-         self::FILE_SHA512      => __("fileSHA512"),
-         self::FREE_SPACE       => __("freespaceGreater")
-      );
+      $checks_types = self::getTypes();
+      array_unshift($checks_types, "---");
       Dropdown::showFromArray("deploy_checktype", $checks_types, array('rand' => $rand));
 
       //ajax update of check value span

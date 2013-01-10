@@ -58,6 +58,17 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       return true;
    }
 
+   static function getTypes() {
+       return array(
+         'cmd'     => __('cmd'),
+         'move'    => __('move'),
+         'copy'    => __('copy'),
+         'delete'  => __('delete'),
+         'mkdir'   => __('mkdir'),
+         'message' => __('message')
+      );
+   }
+
    static function displayForm($order_type, $packages_id, $datas, $rand) {
       global $CFG_GLPI;
       
@@ -107,15 +118,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
    static function dropdownType($rand) {
       global $CFG_GLPI;
 
-      $actions_types = array(
-         '--',
-         'cmd'     => __('cmd'),
-         'move'    => __('move'),
-         'copy'    => __('copy'),
-         'delete'  => __('delete'),
-         'mkdir'   => __('mkdir'),
-         'message' => __('message')
-      );
+      $actions_types = self::getTypes();
+      array_unshift($actions_types, "---");
 
 
       Dropdown::showFromArray("deploy_actiontype", $actions_types, array('rand' => $rand));

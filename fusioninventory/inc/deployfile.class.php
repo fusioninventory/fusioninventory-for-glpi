@@ -58,6 +58,13 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       return true;
    }
 
+   static function getTypes() {
+      return array(
+         'Computer' => __("Upload from computer"),
+         'Server'   => __("Upload from server")
+      );
+   }
+
    static function displayForm($order_type, $packages_id, $datas, $rand) {
       global $CFG_GLPI;
 
@@ -105,8 +112,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    static function dropdownType($rand) {
       global $CFG_GLPI;
 
-
-      Dropdown::showFromArray("deploy_filetype", array("---", "test", "test2"), array('rand' => $rand));
+      $file_types = self::getTypes();
+      array_unshift($file_types, "---");
+      Dropdown::showFromArray("deploy_filetype", $file_types, array('rand' => $rand));
 
       //ajax update of file value span
       $params = array(
