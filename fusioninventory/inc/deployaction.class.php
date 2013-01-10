@@ -59,8 +59,26 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
    }
 
    static function displayForm($order_type, $packages_id, $datas, $rand) {
-      echo "<div style='display:none' id='actions_block$rand' >";
+      global $CFG_GLPI;
+      
+      echo "<div style='display:none' id='actions_block$rand'>";
 
+      echo "<span id='showActionType$rand'>&nbsp;</span>";
+      echo "<script type='text/javascript'>";
+      $params = array(
+         'rand'    => $rand,
+         'subtype' => "action"
+      );
+      Ajax::UpdateItemJsCode("showActionType$rand",
+                             $CFG_GLPI["root_doc"].
+                             "/plugins/fusioninventory/ajax/deploydropdown_packagesubtypes.php",
+                             $params,
+                             "dropdown_deploy_actiontype");
+      echo "</script>";
+
+
+      echo "<span id='showActionValue$rand'>&nbsp;</span>";
+      
       echo "<hr>";
       echo "</div>";
 
@@ -84,6 +102,33 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          __('Delete', 'fusioninventory')."\" class='submit'>";
       echo "</td></tr>";
       echo "</table>";
+   }
+
+   static function dropdownType($rand) {
+      global $CFG_GLPI;
+
+
+      Dropdown::showFromArray("deploy_actiontype", array("test", "test2"), array('rand' => $rand));
+
+      //ajax update of check value span
+      /*$params = array('checktype' => '__VALUE__',
+                      'rand'      => $rand,
+                      'myname'    => 'method',
+                      'typename'  => "");
+      Ajax::updateItemOnEvent("dropdown_deploy_checktype".$rand,
+                              "showCheckValue$rand",
+                              $CFG_GLPI["root_doc"].
+                              "/plugins/fusioninventory/ajax/deploy_displaycheckvalue.php",
+                              $params,
+                              array("change", "load"));*/
+
+   }
+
+   static function displayAjaxCheckValue($checktype, $rand) {
+      echo $checktype;
+
+      echo "&nbsp;<input type='submit' name='itemaddcheck' value=\"".
+         __('Add')."\" class='submit' >";
    }
 
    static function getForOrder($orders_id) {

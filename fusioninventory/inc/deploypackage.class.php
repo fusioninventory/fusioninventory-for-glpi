@@ -247,10 +247,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       self::plusButton("checks_block$rand");
       echo "</th>";
       echo "<th>".__("Files");
-      self::plusButton("actions_block$rand");
+      self::plusButton("files_block$rand");
       echo "</th>";
       echo "<th>".__("Actions");
-      self::plusButton("files_block$rand");
+      self::plusButton("actions_block$rand");
       echo "</th>";
       echo "</tr>";
 

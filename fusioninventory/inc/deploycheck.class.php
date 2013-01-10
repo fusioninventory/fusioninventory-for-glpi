@@ -68,11 +68,15 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
       echo "<span id='showCheckType$rand'>&nbsp;</span>";
       echo "<script type='text/javascript'>";
+      $params = array(
+         'rand'    => $rand,
+         'subtype' => "check"
+      );
       Ajax::UpdateItemJsCode("showCheckType$rand",
-                                $CFG_GLPI["root_doc"].
-                                "/plugins/fusioninventory/ajax/deploy_dropdownchecktype.php",
-                                array('rand' => $rand),
-                                "dropdown_deploy_checktype");
+                             $CFG_GLPI["root_doc"].
+                             "/plugins/fusioninventory/ajax/deploydropdown_packagesubtypes.php",
+                             $params,
+                             "dropdown_deploy_checktype");
       echo "</script>";
 
 
@@ -104,7 +108,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "</table>";
    }
 
-   static function dropdownCheckType($rand) {
+   static function dropdownType($rand) {
       global $CFG_GLPI;
 
       $checks_types = array(

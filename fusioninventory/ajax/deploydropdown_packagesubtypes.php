@@ -46,6 +46,16 @@ header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 Session::checkCentralAccess();
 
-PluginFusioninventoryDeployCheck::dropdownCheckType($_REQUEST['rand']);
+if (!isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) exit;
 
-?>
+switch ($_REQUEST['subtype']) {
+   case 'check':
+      PluginFusioninventoryDeployCheck::dropdownType($_REQUEST['rand']);
+      break;
+   case 'file':
+      PluginFusioninventoryDeployFile::dropdownType($_REQUEST['rand']);
+      break;
+   case 'action':
+      PluginFusioninventoryDeployAction::dropdownType($_REQUEST['rand']);
+      break;
+}
