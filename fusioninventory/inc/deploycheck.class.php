@@ -127,21 +127,22 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       Dropdown::showFromArray("deploy_checktype", $checks_types, array('rand' => $rand));
 
       //ajax update of check value span
-      $params = array('checktype' => '__VALUE__',
-                      'rand'      => $rand,
-                      'myname'    => 'method',
-                      'typename'  => "");
+      $params = array(
+                      'value'  => '__VALUE__',
+                      'rand'   => $rand,
+                      'myname' => 'method',
+                      'type'   => "check");
       Ajax::updateItemOnEvent("dropdown_deploy_checktype".$rand,
                               "showCheckValue$rand",
                               $CFG_GLPI["root_doc"].
-                              "/plugins/fusioninventory/ajax/deploy_displaycheckvalue.php",
+                              "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                               $params,
                               array("change", "load"));
 
    }
 
-   static function displayAjaxCheckValue($checktype, $rand) {
-      echo $checktype;
+   static function displayAjaxValue($value, $rand) {
+      echo $value;
 
       echo "&nbsp;<input type='submit' name='itemaddcheck' value=\"".
          __('Add')."\" class='submit' >";

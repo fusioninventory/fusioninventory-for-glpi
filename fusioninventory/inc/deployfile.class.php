@@ -106,21 +106,30 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       global $CFG_GLPI;
 
 
-      Dropdown::showFromArray("deploy_filetype", array("test", "test2"), array('rand' => $rand));
+      Dropdown::showFromArray("deploy_filetype", array("---", "test", "test2"), array('rand' => $rand));
 
-      //ajax update of check value span
-      /*$params = array('checktype' => '__VALUE__',
-                      'rand'      => $rand,
-                      'myname'    => 'method',
-                      'typename'  => "");
-      Ajax::updateItemOnEvent("dropdown_deploy_checktype".$rand,
-                              "showCheckValue$rand",
+      //ajax update of file value span
+      $params = array(
+                      'value'  => '__VALUE__',
+                      'rand'   => $rand,
+                      'myname' => 'method',
+                      'type'   => "file");
+      Ajax::updateItemOnEvent("dropdown_deploy_filetype".$rand,
+                              "showFileValue$rand",
                               $CFG_GLPI["root_doc"].
-                              "/plugins/fusioninventory/ajax/deploy_displaycheckvalue.php",
+                              "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                               $params,
-                              array("change", "load"));*/
+                              array("change", "load"));
 
    }
+
+   static function displayAjaxValue($value, $rand) {
+      echo $value;
+
+      echo "&nbsp;<input type='submit' name='itemaddfile' value=\"".
+         __('Add')."\" class='submit' >";
+   }
+
 
 
    static function getExtensionsWithAutoAction() {

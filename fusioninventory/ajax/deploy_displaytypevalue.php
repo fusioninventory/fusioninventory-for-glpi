@@ -46,6 +46,17 @@ header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 Session::checkCentralAccess();
 
-PluginFusioninventoryDeployCheck::displayAjaxCheckValue($_REQUEST['checktype'], $_REQUEST['rand']);
+if (!isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) exit;
 
+switch ($_REQUEST['type']) {
+   case 'check':
+      PluginFusioninventoryDeployCheck::displayAjaxValue($_REQUEST['value'], $_REQUEST['rand']);
+      break;
+   case 'file':
+      PluginFusioninventoryDeployFile::displayAjaxValue($_REQUEST['value'], $_REQUEST['rand']);
+      break;
+   case 'action':
+      PluginFusioninventoryDeployAction::displayAjaxValue($_REQUEST['value'], $_REQUEST['rand']);
+      break;
+}
 ?>

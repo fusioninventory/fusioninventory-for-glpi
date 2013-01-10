@@ -107,27 +107,38 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
    static function dropdownType($rand) {
       global $CFG_GLPI;
 
+      $actions_types = array(
+         '--',
+         'cmd'     => __('cmd'),
+         'move'    => __('move'),
+         'copy'    => __('copy'),
+         'delete'  => __('delete'),
+         'mkdir'   => __('mkdir'),
+         'message' => __('message')
+      );
 
-      Dropdown::showFromArray("deploy_actiontype", array("test", "test2"), array('rand' => $rand));
 
-      //ajax update of check value span
-      /*$params = array('checktype' => '__VALUE__',
-                      'rand'      => $rand,
-                      'myname'    => 'method',
-                      'typename'  => "");
-      Ajax::updateItemOnEvent("dropdown_deploy_checktype".$rand,
-                              "showCheckValue$rand",
+      Dropdown::showFromArray("deploy_actiontype", $actions_types, array('rand' => $rand));
+
+      //ajax update of action value span
+       $params = array(
+                      'value'  => '__VALUE__',
+                      'rand'   => $rand,
+                      'myname' => 'method',
+                      'type'   => "action");
+      Ajax::updateItemOnEvent("dropdown_deploy_actiontype".$rand,
+                              "showActionValue$rand",
                               $CFG_GLPI["root_doc"].
-                              "/plugins/fusioninventory/ajax/deploy_displaycheckvalue.php",
+                              "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                               $params,
-                              array("change", "load"));*/
+                              array("change", "load"));
 
    }
 
-   static function displayAjaxCheckValue($checktype, $rand) {
-      echo $checktype;
+   static function displayAjaxValue($type, $rand) {
+      echo $type;
 
-      echo "&nbsp;<input type='submit' name='itemaddcheck' value=\"".
+      echo "&nbsp;<input type='submit' name='itemaddaction' value=\"".
          __('Add')."\" class='submit' >";
    }
 
