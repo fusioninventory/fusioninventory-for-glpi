@@ -179,14 +179,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
    function showList() {
-      echo "<center>";
-      echo "<table class='tab_cadre_navigation'><tr><td>";
-
       self::title();
       Search::show('PluginFusioninventoryDeployPackage');
-
-      echo "</td></tr></table>";
-      echo "</center>";
    }
 
 
