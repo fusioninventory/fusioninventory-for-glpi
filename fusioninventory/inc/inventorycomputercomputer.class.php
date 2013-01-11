@@ -126,7 +126,9 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          return;
       }
 
-      echo '<table class="tab_glpi">';
+
+      
+      echo '<table class="tab_glpi" width="100%">';
       echo '<tr>';
       echo '<th colspan="2">'.__('FusionInventory', 'fusioninventory').'</th>';
       echo '</tr>';
@@ -142,7 +144,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
       if ($a_computerextend['remote_addr'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('Contact address', 'fusioninventory').'</td>';
+         echo '<td>'.__('Public contact address', 'fusioninventory').'</td>';
          echo '<td>'.$a_computerextend['remote_addr'].'</td>';
          echo '</tr>';
       }

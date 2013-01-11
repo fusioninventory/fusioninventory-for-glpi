@@ -503,7 +503,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          return;
       }
 
-      echo '<table class="tab_glpi">';
+      echo '<table class="tab_glpi" width="100%">';
       echo '<tr>';
       echo '<th colspan="2">'.__('FusionInventory', 'fusioninventory').'</th>';
       echo '</tr>';
