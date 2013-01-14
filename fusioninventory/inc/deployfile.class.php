@@ -70,7 +70,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       echo "<div style='display:none' id='files_block$rand'>";
 
-      echo "<span id='showFileType$rand'>&nbsp;</span>";
+      echo "<span id='showFileType$rand'></span>";
       echo "<script type='text/javascript'>";
       $params = array(
          'rand'    => $rand,
@@ -84,7 +84,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "</script>";
 
 
-      echo "<span id='showFileValue$rand'>&nbsp;</span>";
+      echo "<span id='showFileValue$rand'></span>";
       
       echo "<hr>";
       echo "</div>";
@@ -114,7 +114,14 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       $file_types = self::getTypes();
       array_unshift($file_types, "---");
+
+      echo "<table class='package_item'>";
+      echo "<tr>";
+      echo "<th>".__("Source")."</th>";
+      echo "<td>";
       Dropdown::showFromArray("deploy_filetype", $file_types, array('rand' => $rand));
+      echo "</td>";
+      echo "</tr></table>";
 
       //ajax update of file value span
       $params = array(
@@ -131,11 +138,19 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    }
 
-   static function displayAjaxValue($value, $rand) {
-      echo $value;
+   static function displayAjaxValue($source, $rand) {
 
+      echo "<table class='package_item'>";
+      echo "<tr>";
+      echo "<td>";
+      echo $source;
+      echo "</td>";
+      echo "</tr><tr>";
+      echo "<td></td><td>";
       echo "&nbsp;<input type='submit' name='itemaddfile' value=\"".
          __('Add')."\" class='submit' >";
+      echo "</td>";
+      echo "</tr></table>";
    }
 
 

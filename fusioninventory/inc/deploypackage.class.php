@@ -256,19 +256,19 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
 
-      echo "<td style='width:33%; vertical-align:top'>&nbsp;";
+      echo "<td style='width:33%; vertical-align:top'>";
       echo "<form name='addcheck' method='post' action='test.php'>";
       PluginFusioninventoryDeployCheck::displayForm($order_type, $packages_id, $datas, $rand);
       echo "</form>";
       echo "</td>";
 
-      echo "<td style='width:33%; vertical-align:top'>&nbsp;";
+      echo "<td style='width:33%; vertical-align:top'>";
       echo "<form name='addfile' method='post' action='test.php'>";
       PluginFusioninventoryDeployFile::displayForm($order_type, $packages_id, $datas, $rand);
       echo "</form>";
       echo "</td>";
 
-      echo "<td style='width:33%; vertical-align:top'>&nbsp;";
+      echo "<td style='width:33%; vertical-align:top'>";
       echo "<form name='addaction' method='post' action='test.php'>";
       PluginFusioninventoryDeployAction::displayForm($order_type, $packages_id, $datas, $rand);
       echo "</form>";

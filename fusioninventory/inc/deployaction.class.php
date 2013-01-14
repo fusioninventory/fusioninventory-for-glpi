@@ -121,8 +121,13 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       $actions_types = self::getTypes();
       array_unshift($actions_types, "---");
 
-
+      echo "<table class='package_item'>";
+      echo "<tr>";
+      echo "<th>".__("Type")."</th>";
+      echo "<td>";
       Dropdown::showFromArray("deploy_actiontype", $actions_types, array('rand' => $rand));
+      echo "</td>";
+      echo "</tr></table>";
 
       //ajax update of action value span
        $params = array(
@@ -140,10 +145,18 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
    }
 
    static function displayAjaxValue($type, $rand) {
-      echo $type;
 
+      echo "<table class='package_item'>";
+      echo "<tr>";
+      echo "<td>";
+      echo $type;
+      echo "</td>";
+      echo "</tr><tr>";
+      echo "<td></td><td>";
       echo "&nbsp;<input type='submit' name='itemaddaction' value=\"".
          __('Add')."\" class='submit' >";
+      echo "</td>";
+      echo "</tr></table>";
    }
 
    static function getForOrder($orders_id) {

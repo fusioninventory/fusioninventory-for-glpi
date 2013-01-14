@@ -70,7 +70,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
       echo "<div style='display:none' id='checks_block$rand' >";
 
-      echo "<span id='showCheckType$rand'>&nbsp;</span>";
+      echo "<span id='showCheckType$rand'></span>";
       echo "<script type='text/javascript'>";
       $params = array(
          'rand'    => $rand,
@@ -84,7 +84,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "</script>";
 
 
-      echo "<span id='showCheckValue$rand'>&nbsp;</span>";
+      echo "<span id='showCheckValue$rand'></span>";
       
       echo "<hr>";
       echo "</div>";
@@ -117,7 +117,13 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
       $checks_types = self::getTypes();
       array_unshift($checks_types, "---");
+      echo "<table class='package_item'>";
+      echo "<tr>";
+      echo "<th>".__("Type")."</th>";
+      echo "<td>";
       Dropdown::showFromArray("deploy_checktype", $checks_types, array('rand' => $rand));
+      echo "</td>";
+      echo "</tr></table>";
 
       //ajax update of check value span
       $params = array(
@@ -132,13 +138,83 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                               $params,
                               array("change", "load"));
 
+
    }
 
    static function displayAjaxValue($value, $rand) {
-      echo $value;
+      $value_type = "input";
+      switch ($value) {
+         case "winkeyExists":
+         case "winkeyMissing":
+            $path_label = __("Key");
+            $value_label = false;
+            break;
+         case "winkeyEquals":
+            $path_label = __("Key");
+            $value_label = "Key value";
+            break;
+         case "fileExists":
+         case "fileMissing":
+            $path_label = __("File");
+            $value_label = false;
+            break;
+         case "fileSizeGreater":
+         case "fileSizeEquals":
+         case "fileSizeLower":
+            $path_label = __("File");
+            $value_label = "Value";
+            $value_type = "input+unit";
+            break;
+         case "fileSHA512":
+            $path_label = __("File");
+            $value_label = "Value";
+            $value_type = "textarea";
+            break;
+         case "freespaceGreater":
+            $path_label = __("Disk or directory");
+            $value_label = "Value";
+            $value_type = "input+unit";
+            break;
+      }
 
-      echo "&nbsp;<input type='submit' name='itemaddcheck' value=\"".
+      echo "<table class='package_item'>";
+      echo "<tr>";
+      echo "<th>$path_label</th>";
+      echo "<td><input type='text' name='path' id='check_path$rand' /></td>";
+      echo "</tr>";
+      if ($value_label !== false) {
+         echo "<tr>";
+         echo "<th>$value_label</th>";
+         switch ($value_type) {
+            case "textarea":
+               echo "<td><textarea name='value' id='check_value$rand' rows='5'></textarea></td>";
+               break;
+            case "input":
+               echo "<td><input type='text' name='value' id='check_value$rand' /></td>";
+               break;
+            case "input+unit":
+               echo "<td><input type='text' name='value' id='check_value$rand' /></td>";
+               echo "</tr><tr>";
+               echo "<th>".__("Unit")."</th>";
+               echo "<td>";
+               Dropdown::showFromArray('unit', array(
+                  "MB" => __("MiB"),
+                  "GB" => __("GiB")
+               ));
+               echo "</td>";
+               break;
+
+         }
+         echo "</tr>";
+      }
+
+      echo "<tr><td></td><td>";
+      echo "<input type='submit' name='itemaddcheck' value=\"".
          __('Add')."\" class='submit' >";
+      echo "</td></tr>";
+
+      echo "</table>";
+      
    }
 
    /**

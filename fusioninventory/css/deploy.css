@@ -1,0 +1,12 @@
+table.package_item {
+   width: 100%;
+}
+table.package_item th {
+   width: 120px;
+}
+
+table.package_item input[type=text], 
+table.package_item textarea,
+table.package_item select {
+   width: 100%;
+}
