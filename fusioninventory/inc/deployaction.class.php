@@ -96,17 +96,27 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       //display stored actions datas
       if (!isset($datas['jobs']['actions'])) return;
       echo "<form name='removeactions' method='post' action='deploypackage.form.php?remove_item'>";
-      echo "<table class='tab_cadre' style='width:100%'>";
+      echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployAction' />";
+      echo "<input type='hidden' name='orders_id' value='$orders_id' />";
+      echo "<table class='tab_cadrehov' style='width:100%'>";
       $i=0;
       foreach ($datas['jobs']['actions'] as $action) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         echo "<td><input type='checkbox' /></td>";
+         echo "<td><input type='checkbox' name='action_entries[]' value='$i' /></td>";
          $keys = array_keys($action);
          $action_type = array_shift($keys);
          echo "<td>$action_type</td>";
          foreach ($action[$action_type] as $key => $value) {
-            if (is_array($value)) continue;
-            echo "<td>$key : $value;</td>";
+            echo "<td>";
+            if (is_array($value) ) {
+               if ($key === "list") {
+                  foreach($value as $list) {
+                     echo $list;
+                     echo "</td><td>";
+                  }
+               } 
+            } else echo "$key : $value;";
+            echo "</td>";
          }
          echo "</tr>";
          $i++;
@@ -200,6 +210,20 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
    static function add_item($params) {
       echo "action::add_item";
+      exit;
+   }
+
+   static function remove_item($params) {
+      //get current order json
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+
+      //remove selected checks
+      foreach ($params['action_entries'] as $index) {
+         unset($datas['jobs']['actions'][$index]);
+      }
+
+      //update order
+      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
    static function getForOrder($orders_id) {

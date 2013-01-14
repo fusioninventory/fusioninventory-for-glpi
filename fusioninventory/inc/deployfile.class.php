@@ -93,7 +93,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       //display stored files datas
       if (!isset($datas['jobs']['associatedFiles'])) return;
       echo "<form name='removefiles' method='post' action='deploypackage.form.php?remove_item'>";
-      echo "<table class='tab_cadre' style='width:100%'>";
+      echo "<table class='tab_cadrehov' style='width:100%'>";
       $i = 0;
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));

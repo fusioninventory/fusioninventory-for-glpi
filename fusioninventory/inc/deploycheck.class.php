@@ -95,7 +95,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployCheck' />";
       if (!isset($datas['jobs']['checks'])) return;
-      echo "<table class='tab_cadre' style='width:100%'>";
+      echo "<table class='tab_cadrehov' style='width:100%'>";
       $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {
          //specific case for filesystem size
