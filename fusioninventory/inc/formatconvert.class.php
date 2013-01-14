@@ -207,6 +207,9 @@ class PluginFusioninventoryFormatconvert {
                                         'WINOWNER' => 'winowner',
                                         'WINCOMPANY' => 'wincompany'));
       $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
+      if (isset($_SERVER['REMOTE_ADDR'])) {
+         $array_tmp['remote_addr'] = $_SERVER['REMOTE_ADDR'];
+      }
       $a_inventory['fusioninventorycomputer'] = $array_tmp;
       if (!empty($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
          $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] 

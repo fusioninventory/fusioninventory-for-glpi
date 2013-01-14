@@ -82,19 +82,17 @@ function plugin_init_fusioninventory() {
               array('addtabon' => array('Computer','Monitor','Printer','NetworkEquipment')));
 
       Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
-                 array('addtabon' => array('Computer')));
+              array('addtabon' => array('Computer')));
       Plugin::registerClass('PluginFusioninventoryInventoryComputerComputer',
-                 array('addtabon' => array('Computer')));
+              array('addtabon' => array('Computer')));
       Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
       Plugin::registerClass('PluginFusioninventoryInventoryComputerStorage',
-                 array('addtabon' => array('Computer')));
+              array('addtabon' => array('Computer')));
 
-      
-      
          //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleEntity');
       Plugin::registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
-                            array('rulecollections_types'=>true));
+              array('rulecollections_types'=>true));
       Plugin::registerClass('PluginFusioninventoryRulematchedlog',
               array('addtabon' => array('Computer',
                                         'PluginFusioninventoryAgent',
@@ -105,21 +103,21 @@ function plugin_init_fusioninventory() {
       //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleImport');
       Plugin::registerClass('PluginFusioninventoryInventoryRuleImportCollection',
-                            array('rulecollections_types'=>true));
+              array('rulecollections_types'=>true));
       Plugin::registerClass('PluginFusioninventoryConstructDevice');
       
       // Networkinventory and networkdiscovery
       Plugin::registerClass('PluginFusioninventorySnmpmodel');
       Plugin::registerClass('PluginFusioninventoryNetworkEquipment',
-                  array('addtabon' => array('NetworkEquipment')));
+              array('addtabon' => array('NetworkEquipment')));
       Plugin::registerClass('PluginFusioninventoryPrinter');
       Plugin::registerClass('PluginFusioninventoryPrinterCartridge');
       Plugin::registerClass('PluginFusioninventoryConfigSecurity');
       Plugin::registerClass('PluginFusioninventoryNetworkPortLog',
-                 array('addtabon' => array('NetworkPort')));
+              array('addtabon' => array('NetworkPort')));
       Plugin::registerClass('PluginFusinvsnmpAgentconfig');
       Plugin::registerClass('PluginFusioninventoryNetworkPort',
-                            array('classname'=>'glpi_networkports'));
+              array('classname'=>'glpi_networkports'));
       Plugin::registerClass('PluginFusioninventoryStateDiscovery');
       Plugin::registerClass('PluginFusioninventoryPrinterLogReport');
 
@@ -223,6 +221,9 @@ function plugin_init_fusioninventory() {
 
             $report_list["report/not_queried_recently.php"] = __('Number of days since last inventory', 'fusioninventory');
 
+         }
+         if (Session::haveRight("computer", "r")) {
+            $report_list["report/computer_last_inventory.php"] = __('Computers not inventoried since xx days', 'fusioninventory');
          }
          $PLUGIN_HOOKS['reports']['fusioninventory'] = $report_list;
          

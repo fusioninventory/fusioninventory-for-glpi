@@ -308,6 +308,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_ignoredimportdevices` (
    `ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `mac` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `rules_id` int(11) NOT NULL DEFAULT '0',
+   `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `serial` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -413,6 +416,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
   `winowner` varchar(255) DEFAULT NULL,
   `wincompany` varchar(255) DEFAULT NULL,
   `last_fusioninventory_update` datetime DEFAULT NULL,
+  `remote_addr` varchar(255) DEFAULT NULL,
   `serialized_inventory` blob,
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`),

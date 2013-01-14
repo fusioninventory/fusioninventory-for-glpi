@@ -1422,78 +1422,46 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
 
-
    /*
     * Table glpi_plugin_fusioninventory_ignoredimportdevices
     */
-      $newTable = "glpi_plugin_fusioninventory_ignoredimportdevices";
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "name",
-                                 "name",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "date",
-                                 "date",
-                                 "datetime DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "itemtype",
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "entities_id",
-                                 "entities_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "ip",
-                                 "ip",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "mac",
-                                 "mac",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "rules_id",
-                                 "rules_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                                 "name",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "date",
-                                 "datetime DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "entities_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "ip",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "mac",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "rules_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-      $migration->migrationOneTable($newTable);
-         $migration->dropField($newTable,
-                                 "method",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_ignoredimportdevices';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement', 
+                                               'value'   => '');
+      $a_table['fields']['name']       = array('type'    => 'string',  
+                                               'value'   => NULL);
+      $a_table['fields']['date']       = array('type'    => 'datetime',  
+                                               'value'   => NULL);
+      $a_table['fields']['itemtype']   = array('type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL",  
+                                               'value'   => NULL);
+      $a_table['fields']['entities_id']= array('type'    => 'integer',  
+                                               'value'   => NULL);
+      $a_table['fields']['ip']         = array('type'    => 'string',  
+                                               'value'   => 'push');
+      $a_table['fields']['mac']        = array('type'    => 'string',  
+                                               'value'   => 'push');
+      $a_table['fields']['rules_id']   = array('type'    => 'integer',  
+                                               'value'   => NULL);
+      $a_table['fields']['method']     = array('type'    => 'string',  
+                                               'value'   => 'push');
+      $a_table['fields']['serial']     = array('type'    => 'string',  
+                                               'value'   => 'push');
+      $a_table['fields']['uuid']       = array('type'    => 'string',  
+                                               'value'   => 'push');
+      
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
 
 
 
@@ -1533,42 +1501,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                                  "method",
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
-
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_ignoredimportdevices
-    */
-      $newTable = "glpi_plugin_fusioninventory_inventorycomputercriterias";
-      $migration->renameTable("glpi_plugin_fusinvinventory_criterias", $newTable);
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "name",
-                                 "name",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "comment",
-                                 "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                              "name",
-                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                              "comment",
-                              "text COLLATE utf8_unicode_ci DEFAULT NULL");
       $migration->migrationOneTable($newTable);
       $DB->list_fields($newTable, false);
 
@@ -1890,6 +1822,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                               "last_fusioninventory_update",
                               "datetime DEFAULT NULL");
+         $migration->addField($newTable,
+                              "remote_addr",
+                              "varchar(255) DEFAULT NULL");
          $migration->addField($newTable,
                               "serialized_inventory",
                               "blob");
