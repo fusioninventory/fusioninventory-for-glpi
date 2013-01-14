@@ -223,6 +223,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    static function displayOrderTypeForm($order_type, $packages_id) {
       global $CFG_GLPI;
 
+      $subtypes = array('check', 'file', 'action');
       $rand = mt_rand();
 
       $disabled = "false";
@@ -241,51 +242,29 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $datas = json_decode($order['json'], true);
 
       echo "<table class='tab_cadre_fixe'>";
-      
       echo "<tr>";
-      echo "<th>".__("Audits");
-      self::plusButton("checks_block$rand");
-      echo "</th>";
-      echo "<th>".__("Files");
-      self::plusButton("files_block$rand");
-      echo "</th>";
-      echo "<th>".__("Actions");
-      self::plusButton("actions_block$rand");
-      echo "</th>";
+      foreach ($subtypes as $subtype) {
+         echo "<th>".__("Audits");
+         self::plusButton($subtype."s_block$rand");
+         echo "</th>";
+      }
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-
-      echo "<td style='width:33%; vertical-align:top'>";
-      echo "<form name='addcheck' method='post' action='deploypackage.form.php?add_item'>";
-      echo "<input type='hidden' name='packages_id' value='$packages_id' />";
-      echo "<input type='hidden' name='order_type' value='$order_type' />";
-      echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployCheck' />";
-      PluginFusioninventoryDeployCheck::displayForm($order_type, $packages_id, $datas, $rand);
-      Html::closeForm();
-      echo "</td>";
-
-      echo "<td style='width:33%; vertical-align:top'>";
-      echo "<form name='addfile' method='post' action='deploypackage.form.php?add_item'>";
-      echo "<input type='hidden' name='packages_id' value='$packages_id' />";
-      echo "<input type='hidden' name='order_type' value='$order_type' />";
-      echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployFile' />";
-      PluginFusioninventoryDeployFile::displayForm($order_type, $packages_id, $datas, $rand);
-      Html::closeForm();
-      echo "</td>";
-
-      echo "<td style='width:33%; vertical-align:top'>";
-      echo "<form name='addaction' method='post' action='deploypackage.form.php?add_item'>";
-      echo "<input type='hidden' name='packages_id' value='$packages_id' />";
-      echo "<input type='hidden' name='order_type' value='$order_type' />";
-      echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployAction' />";
-      PluginFusioninventoryDeployAction::displayForm($order_type, $packages_id, $datas, $rand);
-      Html::closeForm();
-      echo "</td>";
-
+      foreach ($subtypes as $subtype) {
+         echo "<td style='width:33%; vertical-align:top'>";
+         echo "<form name='add$subtype' method='post' action='deploypackage.form.php?add_item'>";
+         echo "<input type='hidden' name='packages_id' value='$packages_id' />";
+         echo "<input type='hidden' name='order_type' value='$order_type' />";
+         echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeploy".
+            ucfirst($subtype)."' />";
+         $classname = "PluginFusioninventoryDeploy".ucfirst($subtype);
+         $classname::displayForm($order_type, $packages_id, $datas, $rand);
+         Html::closeForm();
+         echo "</td>";
+      }
       echo "</tr>";
       echo "</table>";
-      Html::closeForm();
 
       if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
          // === debug ===
