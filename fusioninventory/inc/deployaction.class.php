@@ -64,8 +64,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          'move'    => __('move'),
          'copy'    => __('copy'),
          'delete'  => __('delete'),
-         'mkdir'   => __('mkdir'),
-         'message' => __('message')
+         'mkdir'   => __('mkdir')
       );
    }
 
@@ -146,12 +145,47 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
    static function displayAjaxValue($type, $rand) {
 
+      $value_type_1 = "input";
+
+      switch ($type) {
+         case 'move':
+         case 'copy':
+            $value_label_1 = __("From");
+            $value_label_2 = __("To");
+            break;
+         case 'cmd':
+            $value_label_1 = __("exec");
+            $value_label_2 = false;
+            $value_type_1  = "textarea";
+            break;
+         case 'delete':
+         case 'mkdir':
+            $value_label_1 = __("path");
+            $value_label_2 = false;
+            break;
+      }
+
       echo "<table class='package_item'>";
       echo "<tr>";
+      echo "<th>$value_label_1</th>";
       echo "<td>";
-      echo $type;
+      switch ($value_type_1) {
+         case "input":
+            echo "<input type='text' name='path1' />";
+            break;
+         case "textarea":
+            echo "<textarea name='path1' rows='5'></textarea>";
+            break;
+      }
       echo "</td>";
-      echo "</tr><tr>";
+      echo "</tr>";
+      if ($value_label_2 !== false) {
+         echo "<tr>";
+         echo "<th>$value_label_2</th>";
+         echo "<td><input type='text' name='path1'</td>";
+         echo "</tr>";
+      }
+      echo "<tr>";
       echo "<td></td><td>";
       echo "&nbsp;<input type='submit' name='itemaddaction' value=\"".
          __('Add')."\" class='submit' >";
