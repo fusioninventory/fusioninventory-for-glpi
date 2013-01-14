@@ -93,11 +93,13 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       //display stored files datas
       if (!isset($datas['jobs']['associatedFiles'])) return;
       echo "<form name='removefiles' method='post' action='deploypackage.form.php?remove_item'>";
+      echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployFile' />";
+      echo "<input type='hidden' name='orders_id' value='$orders_id' />";
       echo "<table class='tab_cadrehov' style='width:100%'>";
       $i = 0;
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         echo "<td><input type='checkbox' /></td>";
+         echo "<td><input type='checkbox' name='file_entries[]' value='$i' /></td>";
          $filename = $datas['associatedFiles'][$sha512]['name'];
          echo "<td>";
          echo "<img src='".$CFG_GLPI['root_doc'].
@@ -177,6 +179,25 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    static function add_item($params) {
       echo "file::add_item";
+      exit;
+   }
+
+   static function remove_item($params) {
+      //get current order json
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+
+      //remove selected checks
+      foreach ($params['file_entries'] as $index) {
+         //get sha512
+         $sha512 = $datas['jobs']['associatedFiles'][$index];
+
+         //remove file
+         unset($datas['jobs']['associatedFiles'][$index]);
+         unset($datas['associatedFiles'][$sha512]);
+      }
+
+      //update order
+      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
    static function getForOrder($orders_id) {
