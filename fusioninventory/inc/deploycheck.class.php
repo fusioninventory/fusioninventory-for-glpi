@@ -212,22 +212,35 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<input type='submit' name='itemaddcheck' value=\"".
          __('Add')."\" class='submit' >";
       echo "</td></tr>";
-
       echo "</table>";
-      
    }
 
    static function add_item($params) {
       if (!isset($params['value'])) $params['value'] = "";
 
-      $json_entry = array(
+   if (!empty($params['value']) && is_numeric($params['value'])) {
+         $params['value'] = $params['value']  * 1024 * 1024;
+      }
+
+      //prepare new check entry to insert in json
+      $new_entry = array(
          'type'   => $params['deploy_checktype'],
          'path'   => $params['path'],
          'value'  => $params['value'],
          'return' => "error"
       );
-      
-      exit;
+
+      //get current order json
+      $datas = json_decode(
+         PluginFusioninventoryDeployOrder::getJson($params['packages_id'], 
+                                                   $params['order_type']), 
+         true);
+
+      //add new entry
+      $datas['jobs']['checks'][] = $new_entry;
+
+      //update order
+      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
    /**

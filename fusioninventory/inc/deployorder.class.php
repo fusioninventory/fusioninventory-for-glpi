@@ -95,6 +95,24 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
    }
 
+   static function getJson($packages_id, $order_type) {
+      $order = new self;
+      $found = $order->find(
+         "plugin_fusioninventory_deploypackages_id = $packages_id AND type = $order_type");
+      if (!empty($found)) {
+         $found = array_shift($found);
+         return $found['json'];
+      } else return false;
+   }
+
+   static function updateOrderJson($orders_id, $datas) {
+      $order = new PluginFusioninventoryDeployOrder;
+      return $order->update(array(
+         'id'   => $orders_id,
+         'json' => addcslashes(json_encode($datas), "\\")
+      ));
+   }
+
    /**
     * TODO:
     * Create Orders from JSON format import/export

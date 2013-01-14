@@ -240,6 +240,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                                AND type = $order_type");
       $order = array_shift($found);
       $datas = json_decode($order['json'], true);
+      $orders_id = $order['id'];
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
@@ -255,6 +256,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<td style='width:33%; vertical-align:top'>";
          echo "<form name='add$subtype' method='post' action='deploypackage.form.php?add_item'>";
          echo "<input type='hidden' name='packages_id' value='$packages_id' />";
+         echo "<input type='hidden' name='orders_id' value='$orders_id' />";
          echo "<input type='hidden' name='order_type' value='$order_type' />";
          echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeploy".
             ucfirst($subtype)."' />";
