@@ -55,7 +55,10 @@ $package = new PluginFusioninventoryDeployPackage();
 
 // item add
 if (isset($_REQUEST['add_item'])) {
-   PluginFusioninventoryDeployPackage::add_item($_REQUEST);
+   PluginFusioninventoryDeployPackage::alter_json('add_item', $_REQUEST);
+   Html::back();
+} elseif (isset($_REQUEST['remove_item'])) {
+   PluginFusioninventoryDeployPackage::alter_json('remove_item', $_REQUEST);
    Html::back();
 }
 

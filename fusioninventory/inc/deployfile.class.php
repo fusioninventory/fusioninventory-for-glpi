@@ -65,7 +65,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       );
    }
 
-   static function displayForm($order_type, $packages_id, $datas, $rand) {
+   static function displayForm($orders_id, $datas, $rand) {
       global $CFG_GLPI;
 
       echo "<div style='display:none' id='files_block$rand'>";
@@ -88,12 +88,15 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       
       echo "<hr>";
       echo "</div>";
+      Html::closeForm();
 
       //display stored files datas
       if (!isset($datas['jobs']['associatedFiles'])) return;
+      echo "<form name='removefiles' method='post' action='deploypackage.form.php?remove_item'>";
       echo "<table class='tab_cadre' style='width:100%'>";
+      $i = 0;
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
-         echo "<tr>";
+         echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          echo "<td><input type='checkbox' /></td>";
          $filename = $datas['associatedFiles'][$sha512]['name'];
          echo "<td>";
@@ -101,12 +104,14 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
          echo"&nbsp;$filename";
          echo "</td>";
+         $i++;
       }
       echo "<tr><td colspan='2'>";
-      echo "<input type='button'  name='delete' value=\"".
+      echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       echo "</td></tr>";
       echo "</table>";
+      Html::closeForm();
    }
 
    static function dropdownType($rand) {

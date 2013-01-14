@@ -95,13 +95,11 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
    }
 
-   static function getJson($packages_id, $order_type) {
+   static function getJson($orders_id) {
       $order = new self;
-      $found = $order->find(
-         "plugin_fusioninventory_deploypackages_id = $packages_id AND type = $order_type");
-      if (!empty($found)) {
-         $found = array_shift($found);
-         return $found['json'];
+      $order->getFromDB($orders_id);
+      if (!empty($order->fields['json'])) {
+         return $order->fields['json'];
       } else return false;
    }
 

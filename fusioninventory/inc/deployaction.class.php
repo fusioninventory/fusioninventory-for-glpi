@@ -68,7 +68,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       );
    }
 
-   static function displayForm($order_type, $packages_id, $datas, $rand) {
+   static function displayForm($orders_id, $datas, $rand) {
       global $CFG_GLPI;
       
       echo "<div style='display:none' id='actions_block$rand'>";
@@ -91,12 +91,15 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       
       echo "<hr>";
       echo "</div>";
+      Html::closeForm();
 
       //display stored actions datas
       if (!isset($datas['jobs']['actions'])) return;
+      echo "<form name='removeactions' method='post' action='deploypackage.form.php?remove_item'>";
       echo "<table class='tab_cadre' style='width:100%'>";
+      $i=0;
       foreach ($datas['jobs']['actions'] as $action) {
-         echo "<tr>";
+         echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          echo "<td><input type='checkbox' /></td>";
          $keys = array_keys($action);
          $action_type = array_shift($keys);
@@ -106,12 +109,14 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             echo "<td>$key : $value;</td>";
          }
          echo "</tr>";
+         $i++;
       }
       echo "<tr><td colspan='2'>";
-      echo "<input type='button'  name='delete' value=\"".
+      echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       echo "</td></tr>";
       echo "</table>";
+      Html::closeForm();
    }
 
    static function dropdownType($rand) {

@@ -255,14 +255,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       foreach ($subtypes as $subtype) {
          echo "<td style='width:33%; vertical-align:top'>";
          echo "<form name='add$subtype' method='post' action='deploypackage.form.php?add_item'>";
-         echo "<input type='hidden' name='packages_id' value='$packages_id' />";
          echo "<input type='hidden' name='orders_id' value='$orders_id' />";
-         echo "<input type='hidden' name='order_type' value='$order_type' />";
          echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeploy".
             ucfirst($subtype)."' />";
          $classname = "PluginFusioninventoryDeploy".ucfirst($subtype);
-         $classname::displayForm($order_type, $packages_id, $datas, $rand);
-         Html::closeForm();
+         $classname::displayForm($orders_id, $datas, $rand);
          echo "</td>";
       }
       echo "</tr>";
@@ -278,14 +275,21 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }
    }
 
-   static function add_item($params) {
+   static function alter_json($action_type, $params) {
       //route to sub class
       if (in_array($params['itemtype'], array(
          'PluginFusioninventoryDeployCheck',
          'PluginFusioninventoryDeployFile',
          'PluginFusioninventoryDeployAction'
       ))) {
-         $params['itemtype']::add_item($params);
+         switch ($action_type) {
+            case "add_item" : 
+               $params['itemtype']::add_item($params);
+               break;
+            case "remove_item" : 
+               $params['itemtype']::remove_item($params);
+               break;
+         }
       } else {
          Html::displayErrorAndDie ("package subtype not found");
       }

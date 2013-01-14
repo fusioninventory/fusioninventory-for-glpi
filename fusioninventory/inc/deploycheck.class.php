@@ -65,7 +65,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       );
    }
 
-   static function displayForm($order_type, $packages_id, $datas, $rand) {
+   static function displayForm($orders_id, $datas, $rand) {
       global $CFG_GLPI;
 
       echo "<div style='display:none' id='checks_block$rand' >";
@@ -88,28 +88,35 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       
       echo "<hr>";
       echo "</div>";
+      Html::closeForm();
 
       //display stored checks datas
+      echo "<form name='removecheck' method='post' action='deploypackage.form.php?remove_item'>";
+      echo "<input type='hidden' name='orders_id' value='$orders_id' />";
+      echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployCheck' />";
       if (!isset($datas['jobs']['checks'])) return;
       echo "<table class='tab_cadre' style='width:100%'>";
+      $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {
          //specific case for filesystem size
          if (!empty($check['value']) && is_numeric($check['value'])) {
             $check['value'] = round($check['value'] / (1024 * 1024))." MB";
          }
 
-         echo "<tr>";
-         echo "<td><input type='checkbox' /></td>";
+         echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
+         echo "<td><input type='checkbox' name='check_entries[]' value='$i' /></td>";
          echo "<td>".$check['type']."</td>";
          echo "<td>".$check['path']."</td>";
          echo "<td>".$check['value']."</td>";
          echo "</tr>";
+         $i++;
       }
       echo "<tr><td colspan='2'>";
-      echo "<input type='button'  name='delete' value=\"".
+      echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       echo "</td></tr>";
       echo "</table>";
+      Html::closeForm();
    }
 
    static function dropdownType($rand) {
@@ -231,13 +238,23 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       );
 
       //get current order json
-      $datas = json_decode(
-         PluginFusioninventoryDeployOrder::getJson($params['packages_id'], 
-                                                   $params['order_type']), 
-         true);
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
 
       //add new entry
       $datas['jobs']['checks'][] = $new_entry;
+
+      //update order
+      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+   }
+
+   static function remove_item($params) {
+      //get current order json
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+
+      //remove selected checks
+      foreach ($params['check_entries'] as $index) {
+         unset($datas['jobs']['checks'][$index]);
+      }
 
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
