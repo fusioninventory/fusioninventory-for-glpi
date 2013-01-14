@@ -218,7 +218,16 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    }
 
    static function add_item($params) {
-      echo "check::add_item";
+      if (!isset($params['value'])) $params['value'] = "";
+
+      $json_entry = array(
+         'type'   => $params['deploy_checktype'],
+         'path'   => $params['path'],
+         'value'  => $params['value'],
+         'return' => "error"
+      );
+      
+      exit;
    }
 
    /**

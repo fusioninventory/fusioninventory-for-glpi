@@ -258,6 +258,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       echo "<td style='width:33%; vertical-align:top'>";
       echo "<form name='addcheck' method='post' action='deploypackage.form.php?add_item'>";
+      echo "<input type='hidden' name='packages_id' value='$packages_id' />";
+      echo "<input type='hidden' name='order_type' value='$order_type' />";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployCheck' />";
       PluginFusioninventoryDeployCheck::displayForm($order_type, $packages_id, $datas, $rand);
       Html::closeForm();
@@ -265,6 +267,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       echo "<td style='width:33%; vertical-align:top'>";
       echo "<form name='addfile' method='post' action='deploypackage.form.php?add_item'>";
+      echo "<input type='hidden' name='packages_id' value='$packages_id' />";
+      echo "<input type='hidden' name='order_type' value='$order_type' />";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployFile' />";
       PluginFusioninventoryDeployFile::displayForm($order_type, $packages_id, $datas, $rand);
       Html::closeForm();
@@ -272,6 +276,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       echo "<td style='width:33%; vertical-align:top'>";
       echo "<form name='addaction' method='post' action='deploypackage.form.php?add_item'>";
+      echo "<input type='hidden' name='packages_id' value='$packages_id' />";
+      echo "<input type='hidden' name='order_type' value='$order_type' />";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployAction' />";
       PluginFusioninventoryDeployAction::displayForm($order_type, $packages_id, $datas, $rand);
       Html::closeForm();
