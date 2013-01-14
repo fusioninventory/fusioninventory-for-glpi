@@ -53,6 +53,13 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 $package = new PluginFusioninventoryDeployPackage();
 
+// item add
+if (isset($_REQUEST['add_item'])) {
+   PluginFusioninventoryDeployPackage::add_item($_REQUEST);
+   Html::back();
+}
+
+//general form
 if (isset ($_POST["add"])) {
 // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
    $newID = $package->add($_POST);

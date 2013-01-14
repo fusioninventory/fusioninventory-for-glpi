@@ -193,6 +193,10 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       echo "</tr></table>";
    }
 
+   static function add_item($params) {
+      echo "action::add_item";
+   }
+
    static function getForOrder($orders_id) {
       $action = new self;
       $results = $action->find("`plugin_fusioninventory_deployorders_id`='$orders_id'", 

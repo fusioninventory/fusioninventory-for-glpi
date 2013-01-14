@@ -170,6 +170,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       return $ext;
    }
 
+   static function add_item($params) {
+      echo "file::add_item";
+   }
+
    static function getForOrder($orders_id) {
       $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deployfiles',
                                       "`plugin_fusioninventory_deployorders_id`='".$orders_id.

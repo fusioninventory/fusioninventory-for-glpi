@@ -243,7 +243,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
       
       echo "<tr>";
-      echo "<th>".__("Checks");
+      echo "<th>".__("Audits");
       self::plusButton("checks_block$rand");
       echo "</th>";
       echo "<th>".__("Files");
@@ -257,21 +257,24 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
 
       echo "<td style='width:33%; vertical-align:top'>";
-      echo "<form name='addcheck' method='post' action='test.php'>";
+      echo "<form name='addcheck' method='post' action='deploypackage.form.php?add_item'>";
+      echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployCheck' />";
       PluginFusioninventoryDeployCheck::displayForm($order_type, $packages_id, $datas, $rand);
-      echo "</form>";
+      Html::closeForm();
       echo "</td>";
 
       echo "<td style='width:33%; vertical-align:top'>";
-      echo "<form name='addfile' method='post' action='test.php'>";
+      echo "<form name='addfile' method='post' action='deploypackage.form.php?add_item'>";
+      echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployFile' />";
       PluginFusioninventoryDeployFile::displayForm($order_type, $packages_id, $datas, $rand);
-      echo "</form>";
+      Html::closeForm();
       echo "</td>";
 
       echo "<td style='width:33%; vertical-align:top'>";
-      echo "<form name='addaction' method='post' action='test.php'>";
+      echo "<form name='addaction' method='post' action='deploypackage.form.php?add_item'>";
+      echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployAction' />";
       PluginFusioninventoryDeployAction::displayForm($order_type, $packages_id, $datas, $rand);
-      echo "</form>";
+      Html::closeForm();
       echo "</td>";
 
       echo "</tr>";
@@ -285,6 +288,19 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo json_encode($datas, JSON_PRETTY_PRINT);
          echo "</textarea>";
          // === debug ===
+      }
+   }
+
+   static function add_item($params) {
+      //route to sub class
+      if (in_array($params['itemtype'], array(
+         'PluginFusioninventoryDeployCheck',
+         'PluginFusioninventoryDeployFile',
+         'PluginFusioninventoryDeployAction'
+      ))) {
+         $params['itemtype']::add_item($params);
+      } else {
+         Html::displayErrorAndDie ("package subtype not found");
       }
    }
 

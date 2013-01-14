@@ -217,6 +217,10 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       
    }
 
+   static function add_item($params) {
+      echo "check::add_item";
+   }
+
    /**
     * Get all checks for an order
     * @param orders_id the order ID
