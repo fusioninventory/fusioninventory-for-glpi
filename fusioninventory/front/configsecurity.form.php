@@ -44,27 +44,28 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-PluginFusioninventoryProfile::checkRight("configsecurity","r");
+PluginFusioninventoryProfile::checkRight("configsecurity", "r");
 
 $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
 $config = new PluginFusioninventoryConfig();
 
-Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","configsecurity");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
+         "fusioninventory", "configsecurity");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 
 if (isset ($_POST["add"])) {
-   PluginFusioninventoryProfile::checkRight("configsecurity","w");
+   PluginFusioninventoryProfile::checkRight("configsecurity", "w");
    $new_ID = 0;
    $new_ID = $pfConfigSecurity->add($_POST);
    Html::back();
 } else if (isset ($_POST["update"])) {
-   PluginFusioninventoryProfile::checkRight("configsecurity","w");
+   PluginFusioninventoryProfile::checkRight("configsecurity", "w");
    $pfConfigSecurity->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-   PluginFusioninventoryProfile::checkRight("configsecurity","w");
+   PluginFusioninventoryProfile::checkRight("configsecurity", "w");
    $pfConfigSecurity->delete($_POST);
    Html::redirect("configsecurity.php");
 }

@@ -44,8 +44,8 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-Session::checkRight("networking","r");
-PluginFusioninventoryProfile::checkRight("networkequipment","w");
+Session::checkRight("networking", "r");
+PluginFusioninventoryProfile::checkRight("networkequipment", "w");
 
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
    $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();

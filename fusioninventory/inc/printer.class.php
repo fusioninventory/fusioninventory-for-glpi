@@ -126,7 +126,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
    function showForm($id, $options=array()) {
       global $DB;
 
-      PluginFusioninventoryProfile::checkRight("printer","r");
+      PluginFusioninventoryProfile::checkRight("printer", "r");
 
       $this->oFusionInventory_printer->id = $id;
 

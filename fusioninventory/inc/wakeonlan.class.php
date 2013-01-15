@@ -260,7 +260,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       foreach ($a_os as $os_id=>$data) {
          $comma = '';
          if ($i > 0) {
-            $comma = ',';
+            $comma = ', ';
          }
          $osfind .= $comma.$os_id;
          $i++;
@@ -295,7 +295,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          }
 
          $where = " AND `glpi_plugin_fusioninventory_agents`.`ID` IN (";
-         $where .= implode(',', $a_agentsid);
+         $where .= implode(', ', $a_agentsid);
          $where .= ")
             AND `ip` != '127.0.0.1' ";
 
@@ -311,7 +311,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                if ($communication == 'push') {
                   $agentStatus = $pfTaskjob->getStateAgent(1, $data['a_id']);
                   if ($agentStatus ==  true) {
-                     if (!in_array($a_agentList,$data['a_id'])) {
+                     if (!in_array($a_agentList, $data['a_id'])) {
                         $a_agentList[] = $data['a_id'];
                         if (count($a_agentList) >= $nb_agentsMax) {
                            return $a_agentList;
@@ -319,7 +319,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                      }
                   }
                } else if ($communication == 'pull') {
-                  if (!in_array($a_agentList,$data['a_id'])) {
+                  if (!in_array($a_agentList, $data['a_id'])) {
                      $a_agentList[] = $data['a_id'];
                      if (count($a_agentList) > $nb_agentsMax) {
                         return $a_agentList;

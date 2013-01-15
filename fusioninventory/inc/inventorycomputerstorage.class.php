@@ -180,8 +180,8 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
                   }
                   $a_link = array($id."-0");
                   echo "<div class='storage' id='storage".$id."-0'
-                     onmouseover='chbgHover([\"".implode('","', $a_link)."\"])'
-                     onmouseout='chbgOut([\"".implode('","', $a_link)."\"])'
+                     onmouseover='chbgHover([\"".implode('", "', $a_link)."\"])'
+                     onmouseout='chbgOut([\"".implode('", "', $a_link)."\"])'
                    style='width: ".$wid."px;".
                        "left: ".$a_pos[$id]."px'>";
                   echo $a_storage['name'];
@@ -237,8 +237,8 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
                               $a_link = $this->getStorageLinks($a_link, $id, $lev, $a_position);
                               
                               echo "<div class='storage' id='storage".$id."-".$i."'
-                                  onmouseover='chbgHover([\"".implode('","', $a_link)."\"])'
-                                  onmouseout='chbgOut([\"".implode('","', $a_link)."\"])'
+                                  onmouseover='chbgHover([\"".implode('", "', $a_link)."\"])'
+                                  onmouseout='chbgOut([\"".implode('", "', $a_link)."\"])'
                                  style='width: ".$wid."px;".
                                    "left: ".$position_temp."px'>";
                               echo $a_storage['name'];

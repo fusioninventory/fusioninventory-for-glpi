@@ -185,7 +185,7 @@ class PluginFusioninventoryCommunicationRest {
          return true;
       }
 
-      $handle = fopen($url,'rb');
+      $handle = fopen($url, 'rb');
       if (!$handle) {
          return false;
       } else {

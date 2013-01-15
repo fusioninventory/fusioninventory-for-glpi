@@ -661,7 +661,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       }
 
       $where = " AND `glpi_plugin_fusioninventory_agents`.`ID` IN (";
-      $where .= implode(',', $a_agentsid);
+      $where .= implode(', ', $a_agentsid);
       $where .= ")
          AND `ip` != '127.0.0.1' ";
 
@@ -675,9 +675,9 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       if ($result) {
          while ($data=$DB->fetch_array($result)) {
             if ($communication == 'push') {
-               $agentStatus = $pfTaskjob->getStateAgent("1",$data['a_id']);
+               $agentStatus = $pfTaskjob->getStateAgent("1", $data['a_id']);
                if ($agentStatus ==  true) {
-                  if (!in_array($a_agentList,$data['a_id'])) {
+                  if (!in_array($a_agentList, $data['a_id'])) {
                      $a_agentList[] = $data['a_id'];
                      if (count($a_agentList) >= $nb_agentsMax) {
                         return $a_agentList;
@@ -685,7 +685,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   }
                }
             } else if ($communication == 'pull') {
-               if (!in_array($data['a_id'],$a_agentList)) {
+               if (!in_array($data['a_id'], $a_agentList)) {
                   $a_agentList[] = $data['a_id'];
                   if (count($a_agentList) > $nb_agentsMax) {
                      return $a_agentList;

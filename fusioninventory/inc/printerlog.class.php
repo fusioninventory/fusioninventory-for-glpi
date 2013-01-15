@@ -228,7 +228,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                 WHERE `printers_id` = '".$id."';";
       $result_num=$DB->query($query);
       if ($result_num) {
-         $field = $DB->result($result_num,0,0);
+         $field = $DB->result($result_num, 0, 0);
          if ($field) {
             $num += $field;
          }
@@ -288,7 +288,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
    function showForm($id, $options=array()) {
 
-      if (!PluginFusioninventoryProfile::haveRight("printer","r")) {
+      if (!PluginFusioninventoryProfile::haveRight("printer", "r")) {
          return false;
       }
 
@@ -353,7 +353,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['id']."'>";
       }
 
-      if (!PluginFusioninventoryProfile::haveRight("printer","w")) {
+      if (!PluginFusioninventoryProfile::haveRight("printer", "w")) {
          return false;
       }
 
@@ -377,7 +377,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
     * Show printer graph form
     **/
    function showGraph($id, $options=array()) {
-      global $DB,$CFG_GLPI;
+      global $DB, $CFG_GLPI;
 
       $where=''; $begin=''; $end=''; $timeUnit='day'; $graphField='pages_total'; $pagecounters = array();$graphType='day';
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
@@ -445,7 +445,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       $where = " WHERE `printers_id` IN(".$printersIds.")";
       if ($begin!='' || $end!='') {
-         $where .= " AND " .getDateRequest("`date`",$begin,$end);
+         $where .= " AND " .getDateRequest("`date`", $begin, $end);
       }
       $group = '';
       switch ($timeUnit) {
@@ -625,8 +625,8 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                   switch($timeUnit) {
 
                      case 'day':
-                        $time=mktime(0,0,0,$data['month'],$data['day'],$data['year']);
-                        $dayofweek=date("w",$time);
+                        $time=mktime(0, 0, 0, $data['month'], $data['day'], $data['year']);
+                        $dayofweek=date("w", $time);
                         if ($dayofweek==0) {
                            $dayofweek=7;
                         }
@@ -676,7 +676,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
             } else if (count($datas) > 60) {
                $continue = 0;
             } else if (count($datas) == '1') {
-               $input[$num] = array_merge(array('' => "0"),$input[$num]);
+               $input[$num] = array_merge(array('' => "0"), $input[$num]);
             } else if (count($datas) == '0') {
                $continue = '-1';
             } else {

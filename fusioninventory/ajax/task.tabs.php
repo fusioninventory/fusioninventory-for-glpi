@@ -132,11 +132,11 @@ $item = new $_REQUEST['itemtype']();
 
 if (($item instanceof CommonDBTM)
     && $item->isNewItem()
-    && (!isset($_REQUEST["id"]) || !$item->can($_REQUEST["id"],'r'))) {
+    && (!isset($_REQUEST["id"]) || !$item->can($_REQUEST["id"], 'r'))) {
    exit();
 }
 
-CommonGLPI::displayStandardTab($item, $_REQUEST['glpi_tab'],'');
+CommonGLPI::displayStandardTab($item, $_REQUEST['glpi_tab'], '');
 
 Html::ajaxFooter();
 

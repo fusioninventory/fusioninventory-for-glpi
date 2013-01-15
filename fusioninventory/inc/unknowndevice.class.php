@@ -58,12 +58,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("unknowndevice","w");
+      return PluginFusioninventoryProfile::haveRight("unknowndevice", "w");
    }
 
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight("unknowndevice","r");
+      return PluginFusioninventoryProfile::haveRight("unknowndevice", "r");
    }
 
 
@@ -187,7 +187,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $ong[2]=__('Import');
 
          $ptc = new PluginFusioninventoryConfig;
-         if (($ptc->isActive('fusioninventory', 'remotehttpagent', '')) AND(PluginFusioninventoryProfile::haveRight("remotecontrol","w"))) {
+         if (($ptc->isActive('fusioninventory', 'remotehttpagent', '')) AND(PluginFusioninventoryProfile::haveRight("remotecontrol", "w"))) {
             $ong[3]=__('Job', 'fusioninventory');
 
          }
@@ -210,7 +210,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    **/
    function showForm($id, $options=array()) {
 
-      //PluginFusioninventoryProfile::checkRight("networking","r");
+      //PluginFusioninventoryProfile::checkRight("networking", "r");
 
       if ($id!='') {
          $this->getFromDB($id);
@@ -385,7 +385,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * @return nothing
    *
    **/
-   function importForm($target,$id) {
+   function importForm($target, $id) {
 
       echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
       echo "<table  class='tab_cadre_fixe'>";
@@ -582,7 +582,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
           AND (`name` != 'Link' OR `name` IS NULL)");
       foreach ($a_ports as $data) {
          if (!isset($a_portUsed[$data['id']])) {
-            //plugin_fusioninventory_addLogConnection("remove",$port_id);
+            //plugin_fusioninventory_addLogConnection("remove", $port_id);
             $this->disconnectDB($data['id']);
             $Netport->deleteFromDB($data['id']);
          }
@@ -607,7 +607,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $nn = new NetworkPort_NetworkPort();
 
       $data = current($a_port);
-       //plugin_fusioninventory_addLogConnection("remove",$port_id);
+       //plugin_fusioninventory_addLogConnection("remove", $port_id);
       $this->disconnectDB($data['id']);
       // Search free port
       $query = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
@@ -633,7 +633,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $nn->add(array('networkports_id_1'=> $data['id'],
                      'networkports_id_2' => $freeport_id));
 
-      //plugin_fusioninventory_addLogConnection("make",$port_id);
+      //plugin_fusioninventory_addLogConnection("make", $port_id);
       return $freeport_id;
    }
 
@@ -802,7 +802,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             $result_port=$DB->query($query_port);
             if ($result_port) {
                while ($data_port=$DB->fetch_array($result_port)) {
-                  //plugin_fusioninventory_addLogConnection("remove",$data_port['ID']);
+                  //plugin_fusioninventory_addLogConnection("remove", $data_port['ID']);
                   $this->disconnectDB($data_port['id']);
                   $np = new NetworkPort();
                   $np->deleteFromDB($data_port['id']);
@@ -828,7 +828,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    **/
    static function writeXML($items_id, $xml, $pluginname='fusioninventory/xml', $itemtype='PluginFusioninventoryUnknownDevice') {
 
-      $folder = substr($items_id,0,-1);
+      $folder = substr($items_id, 0, -1);
       if (empty($folder)) {
          $folder = '0';
       }
@@ -856,7 +856,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    static function purgeUnknownDevice($parm) {
 
       // Delete XML file if exist
-      $folder = substr($parm->fields["id"],0,-1);
+      $folder = substr($parm->fields["id"], 0, -1);
       if (empty($folder)) {
          $folder = '0';
       }
@@ -885,7 +885,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
     * @return nothing
     *
    **/
-   function import($items_id,$Import=0, $NoImport=0) {
+   function import($items_id, $Import=0, $NoImport=0) {
       global $DB;
 
       $NetworkPort = new NetworkPort();
@@ -938,7 +938,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $pfPrinter->update($data);
             }
 
-            $this->deleteFromDB($items_id,1);
+            $this->deleteFromDB($items_id, 1);
             $Import++;
             break;
 
@@ -992,7 +992,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $pfNetworkEquipment->update($data);
             }
             
-            $this->deleteFromDB($items_id,1);
+            $this->deleteFromDB($items_id, 1);
             $Import++;
             break;
 
@@ -1016,7 +1016,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $NetworkPort->update($data_Port);
             }
 
-            $this->deleteFromDB($items_id,1);
+            $this->deleteFromDB($items_id, 1);
             $Import++;
             break;
 
@@ -1041,7 +1041,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $NetworkPort->update($data_Port);
             }
 
-            $this->deleteFromDB($items_id,1);
+            $this->deleteFromDB($items_id, 1);
             $Import++;
             break;
 
@@ -1063,7 +1063,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $NetworkPort->update($data_Port);
             }
 
-            $this->deleteFromDB($items_id,1);
+            $this->deleteFromDB($items_id, 1);
             $Import++;
             break;
 

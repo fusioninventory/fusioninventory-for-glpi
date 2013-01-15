@@ -96,7 +96,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                   $a_agentlist[$agent_id] = 1;
                } else {
                   $pfAgent->getFromDB($agent_id);
-                  $agentStatus = $pfTaskjob->getStateAgent('1',$agent_id);
+                  $agentStatus = $pfTaskjob->getStateAgent('1', $agent_id);
                   if ($agentStatus) {
                      $a_agentlist[$agent_id] = 1;
                   }
@@ -112,7 +112,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                $a_ip = $pfAgent->getIPs($data['id']);
                foreach($a_ip as $ip) {
                   if ($pfTask->fields['communication'] == 'push') {
-                     $agentStatus = $pfTaskjob->getStateAgent('1',$data['id']);
+                     $agentStatus = $pfTaskjob->getStateAgent('1', $data['id']);
                      if ($agentStatus) {
                         $a_agentlist[$data['id']] = 1;
                      }

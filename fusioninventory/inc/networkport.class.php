@@ -195,10 +195,10 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
       $contact_id = $nn->getOppositeContact($p_port);
       if ($contact_id AND $nn->getFromDBForNetworkPort($contact_id)) {
-         $nn->delete($nn->fields,1);
+         $nn->delete($nn->fields, 1);
       }
       if ($nn->getFromDBForNetworkPort($p_port)) {
-         $nn->delete($nn->fields,1);
+         $nn->delete($nn->fields, 1);
       }
    }
 
@@ -301,7 +301,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             $query = "SELECT *
                       FROM `glpi_networkequipments`
                       WHERE `id`='".$array["itemtype"]."'
-                      LIMIT 0,1;";
+                      LIMIT 0, 1;";
             if ($result=$DB->query($query)) {
                $data = $DB->fetch_array($result);
                $array["name"] = $data["name"];
@@ -494,7 +494,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                           FROM `glpi_networkports`
                           WHERE `ip`='".$IP."'
                           ORDER BY `itemtype`
-                          LIMIT 0,1";
+                          LIMIT 0, 1";
             $resultPort = $DB->query($queryPort);
             $dataPort = $DB->fetch_assoc($resultPort);
             if (isset($dataPort['id'])) {
@@ -828,7 +828,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $networkPort = new NetworkPort();
       
       foreach ($this->portMacs as $ifmac) {
-         $a_ports = $networkPort->find("`mac`='".$ifmac."'","", 1);
+         $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);
          if (count($a_ports) > 0) {
             $a_port = current($a_ports);
             if ($a_port['itemtype'] == 'Phone') {

@@ -53,7 +53,7 @@ include (GLPI_ROOT . "/inc/includes.php");
  *    2.1.0 config version field 2.1.0
  **/
 
-if (Session::haveRight("config","w") && Session::haveRight("profile","w")) {
+if (Session::haveRight("config", "w") && Session::haveRight("profile", "w")) {
    $config = new PluginFusioninventoryConfig();
    if (!TableExists("glpi_plugin_fusioninventory_agents")) {
       PluginFusioninventorySetup::update("1.1.0");
@@ -86,7 +86,7 @@ if (Session::haveRight("config","w") && Session::haveRight("profile","w")) {
    Html::back();
 } else {
 
-   Html::header(__('Access denied'),$_SERVER['PHP_SELF'],"plugins","fusioninventory");
+   Html::header(__('Access denied'), $_SERVER['PHP_SELF'], "plugins", "fusioninventory");
    echo "<div align='center'><br><br><img src=\"".$CFG_GLPI['root_doc']."/pics/warning.png\"
               alt=\"warning\"><br><br>";
    echo "<b>".__('Access denied')."</b></div>";

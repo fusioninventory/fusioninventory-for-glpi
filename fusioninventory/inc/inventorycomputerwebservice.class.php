@@ -59,8 +59,8 @@ class PluginFusioninventoryInventoryComputerWebservice {
    static function loadInventory($params, $protocol) {
 
       if (isset ($params['help'])) {
-         return array('base64'  => 'string,mandatory',
-                      'help'    => 'bool,optional');
+         return array('base64'  => 'string, mandatory',
+                      'help'    => 'bool, optional');
       }
       if (!isset ($_SESSION['glpiID'])) {
          return PluginWebservicesMethodCommon::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);

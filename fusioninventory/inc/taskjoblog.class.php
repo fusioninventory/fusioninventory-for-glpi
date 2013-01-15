@@ -189,7 +189,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    *
    **/
    function showHistory($taskjobs_id, $width="950", $options=array()) {
-      global $DB,$CFG_GLPI;
+      global $DB, $CFG_GLPI;
 
       $this->javascriptHistory();
       $a_uniqid = array();
@@ -213,7 +213,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
             AND `state`!="3"
             '.$where.'
-         GROUP BY uniqid,plugin_fusioninventory_agents_id
+         GROUP BY uniqid, plugin_fusioninventory_agents_id
          ORDER BY `id` DESC';
       $result = $DB->query($query);
       // ***** Display for all status running / prepared
@@ -261,19 +261,19 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       // ***** Display for statejob OK
       if (count($a_uniqid) > 0) {
-         $where .= " AND `uniqid` NOT IN ('".implode("','", $a_uniqid)."')";
+         $where .= " AND `uniqid` NOT IN ('".implode("', '", $a_uniqid)."')";
          $query = 'SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates`
             WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
                AND `state`!="3"
                '.$where.'
-            GROUP BY uniqid,plugin_fusioninventory_agents_id
+            GROUP BY uniqid, plugin_fusioninventory_agents_id
             ORDER BY `id` DESC';
       }
       $querycount = 'SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstates`
          WHERE `plugin_fusioninventory_taskjobs_id`="'.$taskjobs_id.'"
             AND `state`="3"
             '.$where.'
-         GROUP BY uniqid,plugin_fusioninventory_agents_id';
+         GROUP BY uniqid, plugin_fusioninventory_agents_id';
       $resultcount = $DB->query($querycount);
       $a_datacount = $DB->fetch_assoc($resultcount);
       $number = $a_datacount['cpt'];
@@ -290,12 +290,12 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "<table class='tab_cadre' >";
             echo "<tr>";
             echo "<td colspan='5'>";
-            Html::printAjaxPager('',$start,$number);
+            Html::printAjaxPager('', $start, $number);
             echo "</td>";
             echo "</tr>";
 
             $query = str_replace('`state`!="3"', '`state`="3"', $query);
-            $query .= ' LIMIT '.intval($start).','.intval($_SESSION['glpilist_limit']);
+            $query .= ' LIMIT '.intval($start).', '.intval($_SESSION['glpilist_limit']);
             $result = $DB->query($query);
             echo "<tr>";
             echo "<th></th>";
@@ -312,12 +312,12 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
             echo "</tr>";
 
             while ($data=$DB->fetch_array($result)) {
-               $this->showHistoryLines($data['id'], 0, 0,5);
+               $this->showHistoryLines($data['id'], 0, 0, 5);
             }
 
             echo "<tr>";
             echo "<td colspan='5'>";
-            Html::printAjaxPager('',$start,$number);
+            Html::printAjaxPager('', $start, $number);
             echo "</td>";
             echo "</tr>";
             echo "</table>";
@@ -674,7 +674,7 @@ function appear_array(id){
             }
          }
          // Search for code to display lang traduction ==pluginname::9876==
-         $datas['comment'] = str_replace(",[", "<br/>[", $datas['comment']);
+         $datas['comment'] = str_replace(", [", "<br/>[", $datas['comment']);
          $text .= $datas['comment'];
          $text .= "</td>";
       }
@@ -736,7 +736,7 @@ function appear_array(id){
             OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '3'
             OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '4'
             OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '5')
-         GROUP BY glpi_plugin_fusioninventory_taskjobstates.uniqid,plugin_fusioninventory_agents_id";
+         GROUP BY glpi_plugin_fusioninventory_taskjobstates.uniqid, plugin_fusioninventory_agents_id";
       $result=$DB->query($query);
       if ($result) {
          while ($datajob=$DB->fetch_array($result)) {
@@ -787,7 +787,7 @@ function appear_array(id){
     * @return nothing
     */
    function displayShortLogs($taskjobs_id, $veryshort=0) {
-      global $DB,$CFG_GLPI;
+      global $DB, $CFG_GLPI;
       
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       

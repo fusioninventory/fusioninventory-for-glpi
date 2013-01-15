@@ -302,7 +302,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>".__('Inventory frequency (in hours)', 'fusioninventory')."&nbsp;:</td>";
       echo "<td width='20%'>";
       Dropdown::showInteger("inventory_frequence",
-                            $this->getValue('inventory_frequence'),1,240);
+                            $this->getValue('inventory_frequence'), 1, 240);
       echo "</td>";
       echo "</tr>";
 
@@ -310,7 +310,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>".__('Delete tasks after', 'fusioninventory')." :</td>";
       echo "<td>";
       Dropdown::showInteger("delete_task",
-                            $this->getValue('delete_task'),1,240, 1,
+                            $this->getValue('delete_task'), 1, 240, 1,
                             array(),
                             array('unit'=>'day'));
 
@@ -666,12 +666,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("threads_networkdiscovery", 
-                            $pfConfig->getValue('threads_networkdiscovery'),1,400);
+                            $pfConfig->getValue('threads_networkdiscovery'), 1, 400);
       echo "</td>";
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("threads_networkinventory", 
-                            $pfConfig->getValue('threads_networkinventory'),1,400);
+                            $pfConfig->getValue('threads_networkinventory'), 1, 400);
       echo "</td>";
       echo "</tr>";
       
@@ -837,7 +837,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    
    
    static function loadCache() {
-      global $DB,$PF_CONFIG;
+      global $DB, $PF_CONFIG;
 
       $PF_CONFIG = array();
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_configs`";

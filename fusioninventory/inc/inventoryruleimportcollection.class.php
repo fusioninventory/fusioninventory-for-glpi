@@ -60,15 +60,15 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
 
 
-   function prepareInputDataForProcess($input,$params) {
-      return array_merge($input,$params);
+   function prepareInputDataForProcess($input, $params) {
+      return array_merge($input, $params);
    }
 
 
 
    function getRuleClassName() {
       $rule_class = array();
-      if (preg_match('/(.*)Collection/',get_class($this),$rule_class)) {
+      if (preg_match('/(.*)Collection/', get_class($this), $rule_class)) {
          return $rule_class[1];
       }
       return "";

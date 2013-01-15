@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 include_once (GLPI_ROOT . "/inc/includes.php");
 
 if (!defined("GLPI_PLUGIN_DOC_DIR")){
-   define("GLPI_PLUGIN_DOC_DIR",GLPI_ROOT . "/files/_plugins");
+   define("GLPI_PLUGIN_DOC_DIR", GLPI_ROOT . "/files/_plugins");
 }
 //Session::checkLoginUser();
 
@@ -63,7 +63,7 @@ if (isset($_GET['file'])) {
    $filename = $filepslit[1];
 
    // Security test : document in $docDir
-   if (strstr($filepath,"../") || strstr($filepath,"..\\")){
+   if (strstr($filepath, "../") || strstr($filepath, "..\\")){
       echo "Security attack !!!";
       Event::log($filepath, "sendFile", 1, "security",
                  $_SESSION["glpiname"]." tries to get a non standard file.");
@@ -85,7 +85,7 @@ if (isset($_GET['file'])) {
       header("Content-type: application/force-download");
 
 
-      $f=fopen($file,"r");
+      $f=fopen($file, "r");
 
       if (!$f){
          echo "Error opening file $filepath";

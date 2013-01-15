@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT','../../..');
+define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 
 header("Content-Type: text/html; charset=UTF-8");
@@ -58,7 +58,7 @@ if (isset($_POST["type"]) && isset($_POST["actortype"])) {
          // Only steal or own ticket whit empty assign
          if ($_POST["actortype"]=='assign') {
             $right = "own_ticket";
-            if (!Session::haveRight("assign_ticket","1")) {
+            if (!Session::haveRight("assign_ticket", "1")) {
                $right = 'id';
             }
          }

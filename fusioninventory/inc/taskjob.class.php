@@ -114,7 +114,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       
-      if (PluginFusioninventoryProfile::haveRight("task","r")) {
+      if (PluginFusioninventoryProfile::haveRight("task", "r")) {
          return __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
       }
       return '';
@@ -204,7 +204,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       if ($id) {
          echo $this->getTypeName()." - ".__('ID')." $id ";
          if ($ismultientities) {
-            echo "(".Dropdown::getDropdownName('glpi_entities',$this->fields['entities_id']) . ")";
+            echo "(".Dropdown::getDropdownName('glpi_entities', $this->fields['entities_id']) . ")";
          }
       } else {
          if ($ismultientities) {
@@ -240,7 +240,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                          'taskjobs_id'=>$id );
          Ajax::updateItemOnEvent("dropdown_method".$randmethod,
                                  "methodupdate",
-                                 $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskmethodupdate.php",
+                                 $CFG_GLPI["root_doc"].
+                                    "/plugins/fusioninventory/ajax/taskmethodupdate.php",
                                  $params);
          echo "</div>";
       }
@@ -251,11 +252,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<td height='18'>".__('Comments')."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<textarea cols='40' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
-      echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' value='".$_POST['id']."' />";
+      echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' ".
+              "value='".$_POST['id']."' />";
       $a_methods = array();
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       foreach ($a_methods as $datas) {
-         echo "<input type='hidden' name='method-".$datas['method']."' value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
+         echo "<input type='hidden' name='method-".$datas['method']."' ".
+                 "value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
       }
       echo "</td>";
       echo "<th width='25%'>";
@@ -279,7 +282,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       $rowspan = 4;
       if ($pfTask->fields["is_advancedmode"] == '1') {
-         echo "<td height='18'>".__('Time between task start and start this action', 'fusioninventory')."&nbsp;:</td>";
+         echo "<td height='18'>";
+         echo __('Time between task start and start this action', 'fusioninventory')."&nbsp;:";
+         echo "</td>";
          echo "<td align='center'>";
          Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
          $a_time = array();
@@ -292,7 +297,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
          $a_time['months'] = __('months');
 
-         Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$this->fields['periodicity_type']));
+         Dropdown::showFromArray("periodicity_type", 
+                                 $a_time, 
+                                 array('value'=>$this->fields['periodicity_type']));
          echo "</td>";
       } else {
          if ($this->fields['id'] > 0) {
@@ -344,7 +351,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "</td>";
          echo "<td valign='top' align='center' colspan='2'>";
          echo "<input type='submit' name='delete' value=\"".__('Purge', 'fusioninventory')."\"
-                         class='submit' ".Html::addConfirmationOnAction(__('Confirm the final deletion ?', 'fusioninventory')).">";
+                         class='submit' ".
+               Html::addConfirmationOnAction(__('Confirm the final deletion ?', 'fusioninventory')).
+                 ">";
          echo "</td>";
       }
       echo '</tr>';
@@ -428,7 +437,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                $class->getFromDB($item_id);
                $name = $class->getName();
             }
-            echo "<option value='".$item_type.'-'.$item_id."'>[".$class->getTypeName()."] ".$name."</option>";
+            echo "<option value='".$item_type.'-'.$item_id."'>[".$class->getTypeName()."] ".
+                    $name."</option>";
          }
          echo "</select>";
       } else {
@@ -462,7 +472,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return value rand of the dropdown
    *
    **/
-   function dropdownMethod($myname,$value=0,$entity_restrict='') {
+   function dropdownMethod($myname, $value=0, $entity_restrict='') {
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
 
@@ -496,7 +506,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
 
-   function dropdownType($myname,$method,$value=0, $taskjobs_id=0, $entity_restrict='') {
+   function dropdownType($myname, $method, $value=0, $taskjobs_id=0, $entity_restrict='') {
       global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -550,7 +560,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return value rand of the dropdown
    *
    **/
-   function dropdownvalue($myname,$definitiontype,$method,$deftypeid,$taskjobs_id,$value=0,$entity_restrict='', $title = 0) {
+   function dropdownvalue($myname, $definitiontype, $method, $deftypeid, $taskjobs_id, $value=0, $entity_restrict='', $title = 0) {
       global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -577,7 +587,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          $iddropdown = "dropdown_".$_POST['name']."selectiontoadd";
       }
 
-      echo "<br/><center><input type='button' id='add_button_".$_POST['name'].$taskjobs_id."' name='add_button_".$_POST['name']."' value=\"".__('Add')."\" class='submit'></center>";
+      echo "<br/><center><input type='button' id='add_button_".$_POST['name'].$taskjobs_id."' ".
+              "name='add_button_".$_POST['name']."' value=\"".__('Add')."\" class='submit'></center>";
       $params = array('items_id'  => '__VALUE0__',
                       'add_button_'.$_POST['name'].$taskjobs_id => '__VALUE1__',
                       'itemtype'  => $definitiontype,
@@ -585,9 +596,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                       'myname'    => 'items_id',
                       'type'      => $_POST['name'],
                       'taskjobs_id'=>$taskjobs_id);
-      Ajax::updateItemOnEvent(array($iddropdown.$rand ,"add_button_".$_POST['name'].$taskjobs_id),
+      Ajax::updateItemOnEvent(array($iddropdown.$rand , "add_button_".$_POST['name'].$taskjobs_id),
                               "Additem_$rand",
-                              $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobaddtype.php",
+                              $CFG_GLPI["root_doc"].
+                                 "/plugins/fusioninventory/ajax/taskjobaddtype.php",
                               $params,
                               array("click"),
                               "-1",
@@ -600,7 +612,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
    function showList($id, $name) {
-      global $DB,$CFG_GLPI;
+      global $DB, $CFG_GLPI;
 
       $ok = 0;
       $ok = $this->getFromDB($id);
@@ -639,7 +651,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</table>";
 
       if ($nb > 0) {
-         echo "<center><input type='button' id='delete".$name.$id."' name='delete".$name.$id."' value=\"".__('Delete', 'fusioninventory')."\" class='submit'></center>";
+         echo "<center><input type='button' id='delete".$name.$id."' name='delete".$name.$id."' ".
+                 "value=\"".__('Delete', 'fusioninventory')."\" class='submit'></center>";
 
          $params = array($name.'item' => '__CHECKBOX__',
                          'type'      => $name,
@@ -716,7 +729,7 @@ return namelist;
                               $out .=  "'+checkboxvalues('".$key."')+'";
 
                            } else {
-                              if (preg_match("/'/",$val)) {
+                              if (preg_match("/'/", $val)) {
                                  $out .=  rawurlencode($val);
                               } else {
                                  $out .=  $val;
@@ -753,13 +766,13 @@ return namelist;
    * @return value rand of the dropdown
    *
    **/
-   function dropdownActionType($myname,$method,$value=0,$entity_restrict='') {
+   function dropdownActionType($myname, $method, $value=0, $entity_restrict='') {
       global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_actioninitiontype = array();
       $a_actioninitiontype[''] = '------';
-      $a_actioninitiontype['PluginFusioninventoryAgent'] = PluginFusioninventoryAgent::getTypeName();
+      $a_actioninitiontype['PluginFusioninventoryAgent']= PluginFusioninventoryAgent::getTypeName();
       foreach ($a_methods as $datas) {
          if ($method == $datas['method']) {
             $module = ucfirst($datas['module']);
@@ -781,7 +794,11 @@ return namelist;
             'method'=>$method,
             'actiontypeid'=>'dropdown_'.$myname.$rand
             );
-      Ajax::UpdateItemOnSelectEvent('dropdown_ActionType'.$rand,"show_ActionList",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactionlist.php",$params);
+      Ajax::UpdateItemOnSelectEvent('dropdown_ActionType'.$rand, 
+                                    "show_ActionList", 
+                                    $CFG_GLPI["root_doc"].
+                                       "/plugins/fusioninventory/ajax/dropdownactionlist.php", 
+                                    $params);
 
       return $rand;
    }
@@ -801,7 +818,7 @@ return namelist;
    * @return value rand of the dropdown
    *
    **/
-   function dropdownAction($myname,$actiontype,$method,$actiontypeid,$value=0,$entity_restrict='') {
+   function dropdownAction($myname, $actiontype, $method, $actiontypeid, $value=0, $entity_restrict='') {
       global $CFG_GLPI;
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $module = '';
@@ -839,8 +856,9 @@ return namelist;
 
 
       Ajax::UpdateItemOnEvent('addAObject', 'show_ActionListEmpty',
-                            $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactionselection.php",
-                            $params, array("click"));
+                              $CFG_GLPI["root_doc"].
+                                 "/plugins/fusioninventory/ajax/dropdownactionselection.php",
+                              $params, array("click"));
 
    }
 
@@ -919,7 +937,8 @@ return namelist;
          ELSE 0
       END AS timing_task
       FROM ".$pfTaskjob->getTable()."
-      LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
+      LEFT JOIN `glpi_plugin_fusioninventory_tasks` 
+         ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
       WHERE `is_active`='1'
          AND `status` = '0'
          AND `".$pfTaskjob->getTable()."`.`execution_id`=`glpi_plugin_fusioninventory_tasks`.`execution_id`
@@ -957,7 +976,8 @@ return namelist;
         `glpi_plugin_fusioninventory_tasks`.`execution_id`,
         `glpi_plugin_fusioninventory_tasks`.`date_scheduled`
          FROM ".$pfTaskjob->getTable()."
-      LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
+      LEFT JOIN `glpi_plugin_fusioninventory_tasks` 
+         ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
       WHERE `is_active`='1'
          AND `status` = '0'
          AND `".$pfTaskjob->getTable()."`.`execution_id`=`glpi_plugin_fusioninventory_tasks`.`execution_id` + 1
@@ -966,7 +986,8 @@ return namelist;
       while ($data=$DB->fetch_array($result)) {
          $query2 = "SELECT * FROM `".getTableForItemType("PluginFusioninventoryTaskjobstate")."`
             LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs`
-               ON `plugin_fusioninventory_taskjobstates_id` = `".getTableForItemType("PluginFusioninventoryTaskjobstate")."`.`id`
+               ON `plugin_fusioninventory_taskjobstates_id` = `".
+                  getTableForItemType("PluginFusioninventoryTaskjobstate")."`.`id`
             WHERE `plugin_fusioninventory_taskjobs_id`='".$data['id']."'
                   AND `glpi_plugin_fusioninventory_taskjoblogs`.`state`='3'
                   AND `date`>='".$data['date_scheduled']."'
@@ -1031,7 +1052,8 @@ return namelist;
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
 
-      $period = $pfTaskjob->periodicityToTimestamp($data['periodicity_type'], $data['periodicity_count']);
+      $period = $pfTaskjob->periodicityToTimestamp($data['periodicity_type'], 
+                                                   $data['periodicity_count']);
 
       // Calculate next execution from last
       $queryJob = "SELECT * FROM `".$pfTaskjob->getTable()."`
@@ -1048,15 +1070,20 @@ return namelist;
       $resultJob = $DB->query($queryJob);
       $nb_finished = 0;
       while ($dataJob=$DB->fetch_array($resultJob)) {
-         $a_taskjobstateuniqs = $pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'", 'id DESC', 1);
+         $a_taskjobstateuniqs = $pfTaskjobstate->find(
+                           "`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'", 
+                           'id DESC', 
+                           1);
          $a_taskjobstateuniq = current($a_taskjobstateuniqs);
-         $a_taskjobstate = $pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'
-            AND `uniqid`='".$a_taskjobstateuniq['uniqid']."'");
+         $a_taskjobstate = $pfTaskjobstate->find(
+                           "`plugin_fusioninventory_taskjobs_id`='".$dataJob['id']."'
+                              AND `uniqid`='".$a_taskjobstateuniq['uniqid']."'");
          $taskjobstatefinished = 0;
 
          foreach ($a_taskjobstate as $statedata) {
-            $a_joblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$statedata['id']."'
-               AND (`state`='2' OR `state`='4' OR `state`='5')");
+            $a_joblog = $pfTaskjoblog->find(
+                           "`plugin_fusioninventory_taskjobstates_id`='".$statedata['id']."'
+                              AND (`state`='2' OR `state`='4' OR `state`='5')");
             if (count($a_joblog) > 0) {
                $taskjobstatefinished++;
             }
@@ -1108,12 +1135,14 @@ return namelist;
                for($i=2; ($data['date_scheduled_timestamp'] + $periodtotal) <= date('U'); $i++) {
                   $periodtotal = $period * $i;
                }
-               $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $periodtotal);
+               $data['date_scheduled'] = date("Y-m-d H:i:s", 
+                                              $data['date_scheduled_timestamp'] + $periodtotal);
             } else if ($data['date_scheduled_timestamp'] > date('U')) {
                // Don't update date next execution
 
             } else {
-               $data['date_scheduled'] = date("Y-m-d H:i:s", $data['date_scheduled_timestamp'] + $period);
+               $data['date_scheduled'] = date("Y-m-d H:i:s", 
+                                              $data['date_scheduled_timestamp'] + $period);
             }
          }
          $data['execution_id'] = $exe + 1;
@@ -1147,7 +1176,8 @@ return namelist;
                `glpi_plugin_fusioninventory_tasks`.`communication`,
                UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
             FROM ".$pfTaskjob->getTable()."
-            LEFT JOIN `glpi_plugin_fusioninventory_tasks` ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
+            LEFT JOIN `glpi_plugin_fusioninventory_tasks` 
+               ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
             WHERE `is_active`='1'
                AND `status` = '0'
                AND `glpi_plugin_fusioninventory_tasks`.`id`='".$tasks_id."'
@@ -1351,11 +1381,11 @@ return namelist;
          ini_set('display_errors', 'On');
          // Recommended development settings
          error_reporting(E_ALL | E_STRICT);
-         set_error_handler(array('Toolbox','userErrorHandlerDebug'));
+         set_error_handler(array('Toolbox', 'userErrorHandlerDebug'));
       } else {
-         ini_set('display_errors','Off');
+         ini_set('display_errors', 'Off');
          error_reporting(E_ALL);
-         set_error_handler(array('Toolbox','userErrorHandlerNormal'));
+         set_error_handler(array('Toolbox', 'userErrorHandlerNormal'));
       }
 
    }
@@ -1392,7 +1422,8 @@ return namelist;
        */
 
       echo "<div align='center'>";
-      echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] . "/plugins/fusioninventory/front/taskjob.form.php\">";
+      echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] . 
+               "/plugins/fusioninventory/front/taskjob.form.php\">";
 
       echo "<table  class='tab_cadre_fixe'>";
 
@@ -1430,7 +1461,7 @@ return namelist;
       echo __('Scheduled date', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td align='center'>";
-      Html::showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
+      Html::showDateTimeFormItem("date_scheduled", date("Y-m-d H:i:s"), 1);
       echo "</td>";
       echo "</tr>";
 
@@ -1462,7 +1493,8 @@ return namelist;
 
       $this->getFromDB($taskjobs_id);
 
-      $a_taskjob = $this->find("`plugin_fusioninventory_tasks_id`='".$this->fields['plugin_fusioninventory_tasks_id']."'
+      $a_taskjob = $this->find(
+         "`plugin_fusioninventory_tasks_id`='".$this->fields['plugin_fusioninventory_tasks_id']."'
             AND `rescheduled_taskjob_id`='0' ", "id");
       $i = 1;
       $tab = 0;
@@ -1527,13 +1559,14 @@ return namelist;
          if ($DB->numrows($result) != 0) {
             $task = $DB->fetch_assoc($result);
             if ($task['communication'] == 'pull') {
-               $has_recent_log_entries = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
-                        AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
+               $has_recent_log_entries = $pfTaskjoblog->find(
+                       "`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
+                          AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
                # No news from the agent since 4 hour. The agent is probably crached. Let's cancel the task
                if (count($has_recent_log_entries) == 1) {
                      $a_statustmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
-                                                AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
-                                                AND (`state`='2' OR `state`='1') ");
+                              AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
+                              AND (`state`='2' OR `state`='1') ");
                      foreach($a_statustmp as $datatmp) {
                         $pfTaskjobstate->changeStatusFinish($datatmp['id'],
                                                             0,
@@ -1543,10 +1576,12 @@ return namelist;
                      }
                }
             } else if ($task['communication'] == 'push') {
-               $a_valid = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
-                        AND ADDTIME(`date`, '00:10:00') < NOW()", "id DESC", "1");
-               $a_valid4h = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
-                        AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
+               $a_valid = $pfTaskjoblog->find(
+                       "`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
+                          AND ADDTIME(`date`, '00:10:00') < NOW()", "id DESC", "1");
+               $a_valid4h = $pfTaskjoblog->find(
+                       "`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
+                          AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
 
                if (count($a_valid) == '1') {
                   // Get agent status
@@ -1694,9 +1729,11 @@ return namelist;
       $pfTaskjoblog   = new PluginFusioninventoryTaskjoblog();
 
       // all taskjobs
-      $a_taskjobstates = $pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='".$parm->fields["id"]."'");
+      $a_taskjobstates = $pfTaskjobstate->find(
+              "`plugin_fusioninventory_taskjobs_id`='".$parm->fields["id"]."'");
       foreach($a_taskjobstates as $a_taskjobstate) {
-         $a_taskjoblogs = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$a_taskjobstate['id']."'");
+         $a_taskjoblogs = $pfTaskjoblog->find(
+                 "`plugin_fusioninventory_taskjobstates_id`='".$a_taskjobstate['id']."'");
          foreach($a_taskjoblogs as $a_taskjoblog) {
             $pfTaskjoblog->delete($a_taskjoblog, 1);
          }
@@ -1790,7 +1827,7 @@ return namelist;
          echo "<tr class='tab_bg_1'>";
          $link_item = $pfTaskjob->getFormURL();
          $link  = $link_item;
-         $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
+         $link .= (strpos($link, '?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
          echo "<td><a href='".$link."'>".$pfTaskjob->getNameID(1)."</a></td>";
          echo "<td>".Dropdown::getYesNo($pfTask->fields['is_active'])."</td>";
          echo "<td>".$pfTask->fields['date_scheduled']."</td>";
@@ -1881,12 +1918,14 @@ return namelist;
       }
 
       if (strstr($_SERVER['PHP_SELF'], 'wizard')) {
-         echo "<a href=\"javascript:showHideDiv('tabsbody','tabsbodyimg','".$CFG_GLPI["root_doc"].
-                    "/pics/deplier_down.png','".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">";
-         echo "<img alt='' name='tabsbodyimg' src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_up.png\">";
+         echo "<a href=\"javascript:showHideDiv('tabsbody', 'tabsbodyimg', '".$CFG_GLPI["root_doc"].
+                    "/pics/deplier_down.png', '".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">";
+         echo "<img alt='' name='tabsbodyimg' ".
+                 "src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_up.png\">";
          echo "</a>&nbsp;&nbsp;";
 
-         echo "<a href=\"".$_SERVER['PHP_SELF']."?wizz=".$_GET['wizz']."&ariane=".$_GET['ariane']."\">";
+         echo "<a href=\"".$_SERVER['PHP_SELF']."?wizz=".$_GET['wizz'].
+                 "&ariane=".$_GET['ariane']."\">";
          echo __('List');
 
          echo "</a>";
@@ -1899,7 +1938,8 @@ return namelist;
       $a_methods = array();
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       foreach ($a_methods as $datas) {
-         echo "<input type='hidden' name='method-".$datas['method']."' value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
+         echo "<input type='hidden' name='method-".$datas['method']."' ".
+                 "value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
       }
 
       echo "<tr class='tab_bg_1'>";
@@ -1926,7 +1966,9 @@ return namelist;
 
       $com['pull'] = __('Agent contacts the server (pull)', 'fusioninventory');
 
-      Dropdown::showFromArray("communication", $com, array('value'=>$pfTask->fields["communication"]));
+      Dropdown::showFromArray("communication", 
+                              $com, 
+                              array('value'=>$pfTask->fields["communication"]));
       echo "</td>";
       echo "<td>".__('Periodicity')."&nbsp;:</td>";
       echo "<td>";
@@ -1941,7 +1983,9 @@ return namelist;
 
       $a_time['months'] = ucfirst(__('month(s)', 'fusioninventory'));
 
-      Dropdown::showFromArray("periodicity_type", $a_time, array('value'=>$pfTask->fields['periodicity_type']));
+      Dropdown::showFromArray("periodicity_type", 
+                              $a_time, 
+                              array('value'=>$pfTask->fields['periodicity_type']));
       echo "</td>";
       echo "</tr>";
 
@@ -1957,10 +2001,20 @@ return namelist;
                'myname'=>"method"
                );
          echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
+         Ajax::UpdateItemJsCode("show_DefinitionType_id", 
+                                $CFG_GLPI["root_doc"].
+                                   "/plugins/fusioninventory/ajax/dropdowndefinitiontype.php", 
+                                $params, 
+                                true, 
+                                "dropdown_method".$rand);
          echo "</script>";
          echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
+         Ajax::UpdateItemJsCode("show_ActionType_id", 
+                                $CFG_GLPI["root_doc"].
+                                   "/plugins/fusioninventory/ajax/dropdownactiontype.php", 
+                                $params, 
+                                true, 
+                                "dropdown_method".$rand);
          echo "</script>";
       } else  {
          $this->showFormButtons(array());
@@ -1990,20 +2044,22 @@ return namelist;
          $data = current($a_tasksjobs);
          $pfTaskjob->getFromDB($data['id']);
          echo "<tr class='tab_bg_1'>";
-         echo "<td><input type='checkbox' name='taskjobstoforcerun[]' value='".$data['id']."' checked /></td>";
+         echo "<td><input type='checkbox' name='taskjobstoforcerun[]' value='".$data['id']."' ".
+                 "checked /></td>";
          $link_item = $pfTaskjob->getFormURL();
          $link  = $link_item;
-         $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
+         $link .= (strpos($link, '?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
          echo "<td><a href='".$link."'>".$pfTaskjob->getNameID(1)."</a></td>";
          echo "<tr class='tab_bg_1'>";
       } else {
          foreach ($a_list as $data) {
             $pfTaskjob->getFromDB($data['id']);
             echo "<tr class='tab_bg_1'>";
-            echo "<td><input type='checkbox' name='taskjobstoforcerun[]' value='".$data['id']."' /></td>";
+            echo "<td><input type='checkbox' name='taskjobstoforcerun[]' ".
+                    "value='".$data['id']."' /></td>";
             $link_item = $pfTaskjob->getFormURL();
             $link  = $link_item;
-            $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
+            $link .= (strpos($link, '?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
             echo "<td><a href='".$link."'>".$pfTaskjob->getNameID(1)."</a></td>";
             echo "<tr class='tab_bg_1'>";
          }
@@ -2092,7 +2148,8 @@ return namelist;
       $params['typename'] = $type;
       echo "<script type='text/javascript'>";
       Ajax::UpdateItemJsCode("show".$type."list".$taskjobs_id."_",
-                                $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlist.php",
+                                $CFG_GLPI["root_doc"].
+                                   "/plugins/fusioninventory/ajax/dropdownlist.php",
                                 $params);
       echo "</script>";
    }
@@ -2119,7 +2176,8 @@ return namelist;
       $params['typename'] = $type;
       echo "<script type='text/javascript'>";
       Ajax::UpdateItemJsCode("show".$type."list".$taskjobs_id."_",
-                                $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlist.php",
+                                $CFG_GLPI["root_doc"].
+                                   "/plugins/fusioninventory/ajax/dropdownlist.php",
                                 $params);
       echo "</script>";
    }
@@ -2157,13 +2215,15 @@ return namelist;
                       'taskjobs_id'=>$id );
       Ajax::updateItemOnEvent("dropdown_method".$randmethod,
                               "show".$name."Type".$id,
-                              $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowntype.php",
+                              $CFG_GLPI["root_doc"].
+                                 "/plugins/fusioninventory/ajax/dropdowntype.php",
                               $params,
                               array("change", "load"));
       if ($this->fields['method'] != "") {
          echo "<script type='text/javascript'>";
          Ajax::UpdateItemJsCode("show".$name."Type".$id,
-                                $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowntype.php",
+                                $CFG_GLPI["root_doc"].
+                                   "/plugins/fusioninventory/ajax/dropdowntype.php",
                                 $params,
                                 "dropdown_method".$randmethod);
          echo "</script>";
@@ -2176,7 +2236,8 @@ return namelist;
       echo "<script type='text/javascript'>";
       $params['taskjobs_id'] = $id;
       Ajax::UpdateItemJsCode("show".$name."list".$id."_",
-                                $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlist.php",
+                                $CFG_GLPI["root_doc"].
+                                   "/plugins/fusioninventory/ajax/dropdownlist.php",
                                 $params,
                                 "dropdown_method".$randmethod);
       echo "</script>";

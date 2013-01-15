@@ -55,7 +55,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    *
    *@return nothing
    **/
-   static function bar($pourcentage,$message='',$order='') {
+   static function bar($pourcentage, $message='', $order='') {
       if ((!empty($pourcentage)) AND ($pourcentage < 0)) {
          $pourcentage = "";
       } else if ((!empty($pourcentage)) AND ($pourcentage > 100)) {
@@ -143,7 +143,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    **/
    static function reenableusemode() {
       if ($_SESSION['glpi_use_mode']==Session::DEBUG_MODE){
-         ini_set('display_errors','On');
+         ini_set('display_errors', 'On');
          error_reporting(E_ALL | E_STRICT);
          set_error_handler("userErrorHandler");
       }
@@ -163,7 +163,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    *
    *@return value code of this bar
    **/
-   static function getProgressBar($width,$percent,$options=array()) {
+   static function getProgressBar($width, $percent, $options=array()) {
       global $CFG_GLPI;
 
       $param = array();

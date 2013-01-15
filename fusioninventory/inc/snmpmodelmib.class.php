@@ -48,9 +48,9 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
 
 
    function showFormList($id, $options=array()) {
-      global $DB,$CFG_GLPI;
+      global $DB, $CFG_GLPI;
 
-      if (!PluginFusioninventoryProfile::haveRight("model","r")) {
+      if (!PluginFusioninventoryProfile::haveRight("model", "r")) {
          return false;
       } else if ((isset($id)) AND (!empty($id))) {
          $query = "SELECT `itemtype`
@@ -116,7 +116,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                echo "</td>";
 
                echo "<td align='center'>";
-               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiblabels",$data["plugin_fusioninventory_snmpmodelmiblabels_id"]);
+               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiblabels", $data["plugin_fusioninventory_snmpmodelmiblabels_id"]);
                echo "</td>";
 
                echo "<td align='center'>";
@@ -126,7 +126,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                echo "</td>";
 
                echo "<td align='center'>";
-               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids",$data["plugin_fusioninventory_snmpmodelmiboids_id"]);
+               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids", $data["plugin_fusioninventory_snmpmodelmiboids_id"]);
                echo "</td>";
 
                echo "<td align='center'>";
@@ -198,7 +198,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                      return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
                      __('Uncheck All', 'fusioninventory')."</a>";
             echo "</td><td align='left' colspan='6' width='80%'>";
-            if(PluginFusioninventoryProfile::haveRight("model","w")) {
+            if(PluginFusioninventoryProfile::haveRight("model", "w")) {
                echo "<input class='submit' type='submit' name='delete_oid' value='" .
                      __('Delete', 'fusioninventory') . "'>";
             }
@@ -282,7 +282,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
          $types[$mapping['id']]=$mapping->getTranslation($mapping);
       }
 
-      Dropdown::showFromArray("plugin_fusioninventory_mappings_id",$types,
+      Dropdown::showFromArray("plugin_fusioninventory_mappings_id", $types,
                               array('used'=>$mappings_used));
 
       echo "</td>";
@@ -296,7 +296,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'><td colspan='7' align='center'>";
-      if(PluginFusioninventoryProfile::haveRight("model","w")) {
+      if(PluginFusioninventoryProfile::haveRight("model", "w")) {
          echo "<input type='hidden' name='plugin_fusioninventory_snmpmodels_id' value='".$id."'/>";
          echo "<input type='submit' name='add_oid' value=\"".__('Post').
 
@@ -314,7 +314,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
 
    function deleteMib($item_coche) {
 
-      PluginFusioninventoryProfile::checkRight("model","w");
+      PluginFusioninventoryProfile::checkRight("model", "w");
       $size = count($item_coche);
       for ($i = 0; $i < $size; $i++) {
          $this->getFromDB($item_coche[$i]);
@@ -342,7 +342,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
 
 
 
-   function oidList($p_sxml_node,$p_id) {
+   function oidList($p_sxml_node, $p_id) {
       global $DB;
 
       $pfToolbox = new PluginFusioninventoryToolbox();
@@ -364,14 +364,14 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
             case 0:
                $pfToolbox->addGet($p_sxml_node,
                   $data['mapping_name'],
-                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',$data['plugin_fusioninventory_snmpmodelmiboids_id']),
+                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids', $data['plugin_fusioninventory_snmpmodelmiboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
 
             case 1:
                $pfToolbox->addWalk($p_sxml_node,
                   $data['mapping_name'],
-                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',$data['plugin_fusioninventory_snmpmodelmiboids_id']),
+                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids', $data['plugin_fusioninventory_snmpmodelmiboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
 

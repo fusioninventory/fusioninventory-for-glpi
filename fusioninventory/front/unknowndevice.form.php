@@ -47,9 +47,9 @@ include (GLPI_ROOT . "/inc/includes.php");
 $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
 $ptt  = new PluginFusioninventoryTask();
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory","unknown");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "unknown");
 
-PluginFusioninventoryProfile::checkRight("unknowndevice","r");
+PluginFusioninventoryProfile::checkRight("unknowndevice", "r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
@@ -58,7 +58,7 @@ if (isset($_GET["id"])) {
    $id = $_GET["id"];
 }
 if (isset ($_POST["add"])) {
-   PluginFusioninventoryProfile::checkRight("unknowndevice","w");
+   PluginFusioninventoryProfile::checkRight("unknowndevice", "w");
    if (isset($_POST['items_id'])
           AND ($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
       $_POST['itemtype'] = '1';
@@ -66,38 +66,38 @@ if (isset ($_POST["add"])) {
    $pfUnknownDevice->add($_POST);
    Html::back();
 } else if (isset($_POST["delete"])) {
-   PluginFusioninventoryProfile::checkRight("unknowndevice","w");
+   PluginFusioninventoryProfile::checkRight("unknowndevice", "w");
 
-   $pfUnknownDevice->check($_POST['id'],'w');
+   $pfUnknownDevice->check($_POST['id'], 'w');
 
    $pfUnknownDevice->delete($_POST);
 
    $pfUnknownDevice->redirectToList();
 } else if (isset($_POST["restore"])) {
 
-   $pfUnknownDevice->check($_POST['id'],'d');
+   $pfUnknownDevice->check($_POST['id'], 'd');
 
    if ($pfUnknownDevice->restore($_POST)) {
-      Event::log($_POST["id"],"PluginFusioninventoryUnknownDevice", 4, "inventory",
+      Event::log($_POST["id"], "PluginFusioninventoryUnknownDevice", 4, "inventory",
                $_SESSION["glpiname"]." ".__('restoration of the item', 'fusioninventory')." ".$pfUnknownDevice->getField('name'));
    }
    $pfUnknownDevice->redirectToList();
 
 } else if (isset($_POST["purge"]) || isset($_GET["purge"])) {
-   PluginFusioninventoryProfile::checkRight("unknowndevice","w");
+   PluginFusioninventoryProfile::checkRight("unknowndevice", "w");
 
-   $pfUnknownDevice->check($_POST['id'],'w');
+   $pfUnknownDevice->check($_POST['id'], 'w');
 
-   $pfUnknownDevice->delete($_POST,1);
+   $pfUnknownDevice->delete($_POST, 1);
    $pfUnknownDevice->redirectToList();
 } else if (isset($_POST["update"])) {
-   $pfUnknownDevice->check($_POST['id'],'w');
+   $pfUnknownDevice->check($_POST['id'], 'w');
    $pfUnknownDevice->update($_POST);
    Html::back();
 } else if (isset($_POST["import"])) {
    $Import = 0;
    $NoImport = 0;
-   list($Import, $NoImport) = $pfUnknownDevice->import($_POST['id'],$Import,$NoImport);
+   list($Import, $NoImport) = $pfUnknownDevice->import($_POST['id'], $Import, $NoImport);
     Session::addMessageAfterRedirect(__('Number of imported devices', 'fusioninventory')." : ".$Import);
     Session::addMessageAfterRedirect(__('Number of devices not imported because type not defined', 'fusioninventory')." : ".$NoImport);
    if ($Import == "0") {

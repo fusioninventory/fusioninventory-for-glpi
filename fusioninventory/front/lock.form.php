@@ -51,7 +51,7 @@ if(isset($_POST["unlock_field_fusioninventory"])){
    if ($typeright == "networkequipment") {
       $typeright = "networking";
    }
-   if (Session::haveRight($typeright,"w")) {
+   if (Session::haveRight($typeright, "w")) {
       if (isset($_POST["lockfield_fusioninventory"]) && count($_POST["lockfield_fusioninventory"])){
          $tab=PluginFusioninventoryLock::exportChecksToArray($_POST["lockfield_fusioninventory"]);
             PluginFusioninventoryLock::setLockArray($_POST['type'], $_POST["id"], $tab);

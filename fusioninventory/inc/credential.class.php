@@ -344,7 +344,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
             $p[$key] = $value;
          }
          $condition = "`itemtype`='".$p['itemtype']."'";
-         $condition.= getEntitiesRestrictRequest(" AND","glpi_plugin_fusioninventory_credentials",
+         $condition.= getEntitiesRestrictRequest(" AND", "glpi_plugin_fusioninventory_credentials",
                                                  "entities_id", $_SESSION['glpiactiveentities'],
                                                  true);
          $results   = getAllDatasFromTable('glpi_plugin_fusioninventory_credentials',
@@ -361,7 +361,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
                "/pics/add_dropdown.png' style='cursor:pointer; margin-left:2px;'
                onClick=\"var w = window.open('".
                Toolbox::getItemTypeFormURL('PluginFusioninventoryCredential')."?popup=1&amp;rand=".
-               $rand."' ,'glpipopup', 'height=400, ".
+               $rand."' , 'glpipopup', 'height=400, ".
                "width=1000, top=100, left=100, scrollbars=yes' );w.focus();\">";
          }
       }

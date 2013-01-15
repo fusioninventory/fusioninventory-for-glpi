@@ -47,11 +47,11 @@ if (!defined('GLPI_ROOT')) {
 include (GLPI_ROOT."/inc/includes.php");
 
 if (PluginFusioninventoryProfile::haveRight("agents", "r")
-      OR PluginFusioninventoryProfile::haveRight("remotecontrol","r")
-      OR PluginFusioninventoryProfile::haveRight("configuration","r")
-      OR PluginFusioninventoryProfile::haveRight("wol","r")
-      OR PluginFusioninventoryProfile::haveRight("unknowndevice","r")
-      OR PluginFusioninventoryProfile::haveRight("task","r")
+      OR PluginFusioninventoryProfile::haveRight("remotecontrol", "r")
+      OR PluginFusioninventoryProfile::haveRight("configuration", "r")
+      OR PluginFusioninventoryProfile::haveRight("wol", "r")
+      OR PluginFusioninventoryProfile::haveRight("unknowndevice", "r")
+      OR PluginFusioninventoryProfile::haveRight("task", "r")
       ) {
    Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
                 "fusioninventory", "menu");

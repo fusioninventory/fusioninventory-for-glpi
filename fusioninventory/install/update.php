@@ -1441,17 +1441,17 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['fields']['entities_id']= array('type'    => 'integer',  
                                                'value'   => NULL);
       $a_table['fields']['ip']         = array('type'    => 'string',  
-                                               'value'   => 'push');
+                                               'value'   => NULL);
       $a_table['fields']['mac']        = array('type'    => 'string',  
-                                               'value'   => 'push');
+                                               'value'   => NULL);
       $a_table['fields']['rules_id']   = array('type'    => 'integer',  
                                                'value'   => NULL);
       $a_table['fields']['method']     = array('type'    => 'string',  
-                                               'value'   => 'push');
+                                               'value'   => NULL);
       $a_table['fields']['serial']     = array('type'    => 'string',  
-                                               'value'   => 'push');
+                                               'value'   => NULL);
       $a_table['fields']['uuid']       = array('type'    => 'string',  
-                                               'value'   => 'push');
+                                               'value'   => NULL);
       
       $a_table['oldfields']  = array();
 
@@ -1464,6 +1464,35 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       migrateTablesFusionInventory($migration, $a_table);
 
 
+      
+
+   /*
+    * Table glpi_plugin_fusioninventory_inventorycomputercriterias
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_inventorycomputercriterias';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement', 
+                                               'value'   => '');
+      $a_table['fields']['name']       = array('type'    => 'string',  
+                                               'value'   => NULL);
+      $a_table['fields']['comment']    = array('type'    => 'text',  
+                                               'value'   => NULL);
+      
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => 'name', 'name' => '', 'type' => 'INDEX');
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+      
+      
 
    /*
     * Table glpi_plugin_fusioninventory_rulematchedlogs
