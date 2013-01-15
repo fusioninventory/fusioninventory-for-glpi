@@ -91,6 +91,11 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       foreach (array(PluginFusioninventoryDeployOrder::INSTALLATION_ORDER,
                      PluginFusioninventoryDeployOrder::UNINSTALLATION_ORDER) as $type) {
          $tmp['type'] = $type;
+         $tmp['json'] = json_encode(array('jobs' => array(
+            'checks' => array(),
+            'associatedFiles' => array(),
+            'actions' => array()
+         ), 'associatedFiles' => array()));
          $order->add($tmp);
       }
    }
