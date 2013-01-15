@@ -176,7 +176,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_2'><td colspan='2'>";
-      if(PluginFusioninventoryProfile::haveRight("model","w")) {
+      if(PluginFusioninventoryProfile::haveRight("model", "w")) {
          if ($id=='') {
             echo "<div align='center'><input type='submit' name='add' value=\"" . __('Add') .
 
@@ -212,7 +212,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
     * @return OID list in array
     *
    **/
-   function oidlist($ID_Device,$type) {
+   function oidlist($ID_Device, $type) {
       global $DB;
 
       $oids = array();
@@ -250,7 +250,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
             $oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] =
-               Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',$data['plugin_fusioninventory_snmpmodelmiboids_id']);
+               Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids', $data['plugin_fusioninventory_snmpmodelmiboids_id']);
          }
          return $oids;
       }
@@ -273,7 +273,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
                $pfNetworkEquipment = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
                $NetworkEquipment = new NetworkEquipment();
                if($NetworkEquipment->getFromDB($device_id)) {
-                  $NetworkEquipment->check($device_id,'r');
+                  $NetworkEquipment->check($device_id, 'r');
                   $a_data = $pfNetworkEquipment->find("`networkequipments_id`='".$device_id."'", "", "1");
                   $data = current($a_data);
                   $sysdescr = $data["sysdescr"];
@@ -290,7 +290,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
                $pfPrinter = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
                $Printer = new Printer();
                if($Printer->getFromDB($device_id)) {
-                  $Printer->check($device_id,'r');
+                  $Printer->check($device_id, 'r');
                   $a_data = $pfPrinter->find("`printers_id`='".$device_id."'", "", "1");
                   $data = current($a_data);
                   $sysdescr = $data["sysdescr"];
@@ -310,7 +310,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       $sysdescr = trim($sysdescr);
       $modelgetted = '';
       if (!empty($sysdescr)) {
-         $xml = @simplexml_load_file(GLPI_ROOT.'/plugins/fusioninventory/tools/networkdiscovery.xml','SimpleXMLElement', LIBXML_NOCDATA);
+         $xml = @simplexml_load_file(GLPI_ROOT.'/plugins/fusioninventory/tools/networkdiscovery.xml', 'SimpleXMLElement', LIBXML_NOCDATA);
          foreach ($xml->DEVICE as $device) {
             $device->SYSDESCR = str_replace("\r", "", $device->SYSDESCR);
             $device->SYSDESCR = str_replace("\n", "", $device->SYSDESCR);
@@ -327,7 +327,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
             $query = "SELECT *
                       FROM `glpi_plugin_fusioninventory_snmpmodels`
                       WHERE `discovery_key`='".$modelgetted."'
-                      LIMIT 0,1";
+                      LIMIT 0, 1";
             $result = $DB->query($query);
             $data = $DB->fetch_assoc($result);
             $plugin_fusinvsnmp_models_id = $data['id'];
@@ -422,13 +422,13 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "<td align='center'>";
       Html::createProgressBar("Importing SNMP models, please wait...");
       foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) {
-         $importexport->import($file,0,1);
+         $importexport->import($file, 0, 1);
          $i++;
          if (substr($i, -1) == '0') {
-            Html::changeProgressBarPosition($i,$nb,"$i / $nb");
+            Html::changeProgressBarPosition($i, $nb, "$i / $nb");
          }
       }
-      Html::changeProgressBarPosition($nb,$nb,"$nb / $nb");
+      Html::changeProgressBarPosition($nb, $nb, "$nb / $nb");
       echo "</td>";
       echo "</table>";
 

@@ -44,12 +44,12 @@
 $USEDBREPLICATE=1;
 $DBCONNECTION_REQUIRED=0;
 
-$NEEDED_ITEMS=array("search","computer","infocom","setup","networking","printer");
+$NEEDED_ITEMS=array("search", "computer", "infocom", "setup", "networking", "printer");
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER['PHP_SELF'],"utils","report");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
 Session::checkRight("computer", "r");
 

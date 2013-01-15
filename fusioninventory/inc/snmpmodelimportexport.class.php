@@ -98,10 +98,10 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
          while ($data=$DB->fetch_array($result)) {
             $xml .= "      <oidobject>\n";
             $xml .= "         <object>".
-               Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmibobjects",$data["plugin_fusioninventory_snmpmodelmibobjects_id"]).
+               Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmibobjects", $data["plugin_fusioninventory_snmpmodelmibobjects_id"]).
                "</object>\n";
             $xml .= "         <oid>".
-               Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids",$data["plugin_fusioninventory_snmpmodelmiboids_id"])."</oid>\n";
+               Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids", $data["plugin_fusioninventory_snmpmodelmiboids_id"])."</oid>\n";
             $xml .= "         <portcounter>".$data["oid_port_counter"]."</portcounter>\n";
             $xml .= "         <dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
             $xml .= "         <mappings_id>".$data["plugin_fusioninventory_mappings_id"].
@@ -137,7 +137,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       echo "<td align='center'>";
       echo "<input type='file' name='importfile' value=''/>";
 
-      if(PluginFusioninventoryProfile::haveRight("model","w")) {
+      if(PluginFusioninventoryProfile::haveRight("model", "w")) {
     echo "&nbsp;<input type='submit' value='".__('Import')."' class='submit'/>";
       }
       echo "</td>";
@@ -162,7 +162,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       echo "<td align='center'>";
       echo __('Mass import of models in folder plugins/fusioninventory/snmpmodels/', 'fusioninventory')."<br/>";
       echo "<input type='hidden' name='massimport' value='1'/>";
-      if(PluginFusioninventoryProfile::haveRight("model","w")) {
+      if(PluginFusioninventoryProfile::haveRight("model", "w")) {
     echo "&nbsp;<input type='submit' value='".__('Import')."' class='submit'/>";
       }
       echo "</td>";
@@ -174,7 +174,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
 
 
-   function import($file,$message=1,$installation=0) {
+   function import($file, $message=1, $installation=0) {
       global $DB;
 
       if ($installation != 1) {
@@ -256,10 +256,10 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
          $input['plugin_fusioninventory_snmpmodelmibobjects_id'] = 0;
          if (isset($child->object)) {
             $input['plugin_fusioninventory_snmpmodelmibobjects_id'] = Dropdown::importExternal(
-               "PluginFusioninventorySnmpmodelMibObject",$child->object);
+               "PluginFusioninventorySnmpmodelMibObject", $child->object);
          }
          $input['plugin_fusioninventory_snmpmodelmiboids_id'] = Dropdown::importExternal(
-            "PluginFusioninventorySnmpmodelMibOid",$child->oid);
+            "PluginFusioninventorySnmpmodelMibOid", $child->oid);
          $input['oid_port_counter'] = 0;
          if (isset($child->portcounter)) {
             $input['oid_port_counter'] = $child->portcounter;
@@ -387,11 +387,11 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
          if (isset($child->object)) {
             $plugin_fusioninventory_snmpmodelmibobjects_id = Dropdown::importExternal(
-               "PluginFusioninventorySnmpmodelMibObject",$child->object);
+               "PluginFusioninventorySnmpmodelMibObject", $child->object);
          }
          if (isset($child->oid)) {
             $plugin_fusioninventory_snmpmodelmiboids_id = Dropdown::importExternal(
-               "PluginFusioninventorySnmpmodelMibOid",$child->oid);
+               "PluginFusioninventorySnmpmodelMibOid", $child->oid);
          }
          if (isset($child->portcounter)) {
             $oid_port_counter = $child->portcounter;

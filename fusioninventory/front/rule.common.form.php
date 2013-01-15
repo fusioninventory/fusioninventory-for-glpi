@@ -126,7 +126,7 @@ if (isset($_POST["delete_criteria"])) {
 
    Event::log($_POST["id"], "rules", 4, "setup", $_SESSION["glpiname"]." ".__('item\'s deletion'));
 
-   Html::redirect(str_replace('.form','',$_SERVER['PHP_SELF']));
+   Html::redirect(str_replace('.form', '', $_SERVER['PHP_SELF']));
 }
 
 Html::header(__('Setup'), $_SERVER['PHP_SELF'], "admin",

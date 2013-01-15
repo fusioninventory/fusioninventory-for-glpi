@@ -191,7 +191,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       if (count($a_taskjob) > 0) {
-         Dropdown::showYesNo("is_active",$this->fields["is_active"]);
+         Dropdown::showYesNo("is_active", $this->fields["is_active"]);
       }
       echo "</td>";
       echo "</tr>";
@@ -243,9 +243,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<td>".__('Scheduled date', 'fusioninventory')."&nbsp;:</td>";
       echo "<td>";
       if ($id) {
-         Html::showDateTimeFormItem("date_scheduled",$this->fields["date_scheduled"],1,false);
+         Html::showDateTimeFormItem("date_scheduled", $this->fields["date_scheduled"], 1, false);
       } else {
-         Html::showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
+         Html::showDateTimeFormItem("date_scheduled", date("Y-m-d H:i:s"), 1);
       }
       echo "</td>";
       echo "</tr>";
@@ -288,7 +288,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<td colspan='2'></td>";
       echo "<td>".__('Advanced mode', 'fusioninventory')."&nbsp;:</td>";
       echo "<td>";
-      Dropdown::showYesNo("is_advancedmode",$this->fields["is_advancedmode"]);
+      Dropdown::showYesNo("is_advancedmode", $this->fields["is_advancedmode"]);
       echo "</td>";
       echo "</tr>";
 
@@ -361,7 +361,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
    function taskMenu() {
-      global $DB,$CFG_GLPI;
+      global $DB, $CFG_GLPI;
 
       $resultTasksPlanned = $this->getTasksPlanned();
       $resultTasksRunning = $this->getTasksRunning();
@@ -676,7 +676,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
 
       $cell = 'td';
-      if (strstr($_SERVER['PHP_SELF'],'/tasksummary.')) {
+      if (strstr($_SERVER['PHP_SELF'], '/tasksummary.')) {
          $cell ='th';
       }
       echo "<".$cell." align='center' width='33%'>";
@@ -685,7 +685,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</".$cell.">";
 
       $cell = 'td';
-      if (strstr($_SERVER['PHP_SELF'],'/task.')) {
+      if (strstr($_SERVER['PHP_SELF'], '/task.')) {
          $cell ='th';
       }
       echo "<".$cell." align='center' width='33%'>";
@@ -694,7 +694,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</".$cell.">";
 
       $cell = 'td';
-      if (strstr($_SERVER['PHP_SELF'],'/taskjoblog.')) {
+      if (strstr($_SERVER['PHP_SELF'], '/taskjoblog.')) {
          $cell ='th';
       }
       echo "<".$cell." align='center'>";

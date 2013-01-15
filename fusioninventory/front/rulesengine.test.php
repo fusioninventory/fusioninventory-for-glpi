@@ -58,15 +58,15 @@ if ($rulecollection->isRuleRecursive()) {
 }
 $rulecollection->checkGlobal('r');
 
-if (!strpos($_SERVER['PHP_SELF'],"popup")) {
-   Html::header(__('Setup'),$_SERVER['PHP_SELF'],"config","display");
+if (!strpos($_SERVER['PHP_SELF'], "popup")) {
+   Html::header(__('Setup'), $_SERVER['PHP_SELF'], "config", "display");
 }
 
 // Need for RuleEngines
 foreach ($_POST as $key => $val) {
    $_POST[$key] = stripslashes($_POST[$key]);
 }
-$input = $rulecollection->showRulesEnginePreviewCriteriasForm($_SERVER['PHP_SELF'],$_POST);
+$input = $rulecollection->showRulesEnginePreviewCriteriasForm($_SERVER['PHP_SELF'], $_POST);
 
 if (isset($_POST["test_all_rules"])) {
    //Unset values that must not be processed by the rule
@@ -74,10 +74,10 @@ if (isset($_POST["test_all_rules"])) {
    unset($_POST["test_all_rules"]);
 
    echo "<br>";
-   $rulecollection->showRulesEnginePreviewResultsForm($_SERVER['PHP_SELF'],$_POST);
+   $rulecollection->showRulesEnginePreviewResultsForm($_SERVER['PHP_SELF'], $_POST);
 }
 
-if (!strpos($_SERVER['PHP_SELF'],"popup")) {
+if (!strpos($_SERVER['PHP_SELF'], "popup")) {
    Html::footer();
 }
 

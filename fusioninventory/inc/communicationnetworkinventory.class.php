@@ -242,7 +242,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       
       // Write XML file
       if (count($a_inventory) > 0) {
-         $folder = substr($items_id,0,-1);
+         $folder = substr($items_id, 0, -1);
          if (empty($folder)) {
             $folder = '0';
          }
@@ -1038,12 +1038,12 @@ Toolbox::logInFile("K", 'crit'.print_r($input, true));
          $a_text = '';
          foreach ($input as $key=>$data) {
             if (is_array($data)) {
-               $a_text[] = "[".$key."]:".implode(",", $data);
+               $a_text[] = "[".$key."]:".implode(", ", $data);
             } else {
                $a_text[] = "[".$key."]:".$data;
             }
          }
-         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(",", $a_text);
+         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(", ", $a_text);
          $this->addtaskjoblog();
 
          $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();

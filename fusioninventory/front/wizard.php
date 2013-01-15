@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "wizard-start");
 
 PluginFusioninventoryProfile::checkRight("task", "r");
 
@@ -57,7 +57,7 @@ if (!isset($_SERVER['HTTP_REFERER'])
    PluginFusioninventoryMenu::displayMenu("mini");
 }
 if (isset($_GET["wizz"])) {
-   if (method_exists('PluginFusioninventoryWizard',$_GET["wizz"])) {
+   if (method_exists('PluginFusioninventoryWizard', $_GET["wizz"])) {
       $ariane = '';
       if (isset($_GET['ariane'])) {
          $ariane = $_GET['ariane'];

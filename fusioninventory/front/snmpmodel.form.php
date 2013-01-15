@@ -50,7 +50,7 @@ $pfModel = new PluginFusioninventorySnmpmodel();
 $pfModelMib = new PluginFusioninventorySnmpmodelMib();
 $pfImportExport = new PluginFusioninventorySnmpmodelImportExport();
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "models");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
@@ -93,14 +93,14 @@ if(!empty($_POST["item_coche"])) {
    Html::back();
 }
 
-if(PluginFusioninventoryProfile::haveRight("model","r")) {
+if(PluginFusioninventoryProfile::haveRight("model", "r")) {
    if (!isset($_GET["id"])) {
       $pfImportExport->showForm($_SERVER["PHP_SELF"]);
       $pfImportExport->showFormMassImport($_SERVER["PHP_SELF"]);
    }
 }
 
-if(PluginFusioninventoryProfile::haveRight("model","r")) {
+if(PluginFusioninventoryProfile::haveRight("model", "r")) {
    $id = "";
    if (isset($_GET["id"])) {
       $id = $_GET["id"];

@@ -199,12 +199,12 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $a_text = '';
          foreach ($input as $key=>$data) {
             if (is_array($data)) {
-               $a_text[] = "[".$key."]:".implode(",", $data);
+               $a_text[] = "[".$key."]:".implode(", ", $data);
             } else {
                $a_text[] = "[".$key."]:".$data;
             }
          }
-         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(",", $a_text);
+         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(", ", $a_text);
          $this->addtaskjoblog();
 
          $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
@@ -237,7 +237,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $this->rulepassed(0, $input['itemtype'], $input['entities_id']);
          } else if (isset($input['itemtype'])
                 AND !isset($data['action'])) {
-            $this->rulepassed(0, $input['itemtype'],$input['entities_id']);
+            $this->rulepassed(0, $input['itemtype'], $input['entities_id']);
          } else {
             $this->rulepassed(0, "PluginFusioninventoryUnknownDevice", $input['entities_id']);
          }

@@ -114,7 +114,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       
-      if (PluginFusioninventoryProfile::haveRight("task","r")) {
+      if (PluginFusioninventoryProfile::haveRight("task", "r")) {
          return __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
       }
       return '';
@@ -204,7 +204,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       if ($id) {
          echo $this->getTypeName()." - ".__('ID')." $id ";
          if ($ismultientities) {
-            echo "(".Dropdown::getDropdownName('glpi_entities',$this->fields['entities_id']) . ")";
+            echo "(".Dropdown::getDropdownName('glpi_entities', $this->fields['entities_id']) . ")";
          }
       } else {
          if ($ismultientities) {
@@ -462,7 +462,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return value rand of the dropdown
    *
    **/
-   function dropdownMethod($myname,$value=0,$entity_restrict='') {
+   function dropdownMethod($myname, $value=0, $entity_restrict='') {
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
 
@@ -496,7 +496,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
 
-   function dropdownType($myname,$method,$value=0, $taskjobs_id=0, $entity_restrict='') {
+   function dropdownType($myname, $method, $value=0, $taskjobs_id=0, $entity_restrict='') {
       global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -550,7 +550,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return value rand of the dropdown
    *
    **/
-   function dropdownvalue($myname,$definitiontype,$method,$deftypeid,$taskjobs_id,$value=0,$entity_restrict='', $title = 0) {
+   function dropdownvalue($myname, $definitiontype, $method, $deftypeid, $taskjobs_id, $value=0, $entity_restrict='', $title = 0) {
       global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -585,7 +585,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                       'myname'    => 'items_id',
                       'type'      => $_POST['name'],
                       'taskjobs_id'=>$taskjobs_id);
-      Ajax::updateItemOnEvent(array($iddropdown.$rand ,"add_button_".$_POST['name'].$taskjobs_id),
+      Ajax::updateItemOnEvent(array($iddropdown.$rand , "add_button_".$_POST['name'].$taskjobs_id),
                               "Additem_$rand",
                               $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/taskjobaddtype.php",
                               $params,
@@ -600,7 +600,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
    function showList($id, $name) {
-      global $DB,$CFG_GLPI;
+      global $DB, $CFG_GLPI;
 
       $ok = 0;
       $ok = $this->getFromDB($id);
@@ -716,7 +716,7 @@ return namelist;
                               $out .=  "'+checkboxvalues('".$key."')+'";
 
                            } else {
-                              if (preg_match("/'/",$val)) {
+                              if (preg_match("/'/", $val)) {
                                  $out .=  rawurlencode($val);
                               } else {
                                  $out .=  $val;
@@ -753,7 +753,7 @@ return namelist;
    * @return value rand of the dropdown
    *
    **/
-   function dropdownActionType($myname,$method,$value=0,$entity_restrict='') {
+   function dropdownActionType($myname, $method, $value=0, $entity_restrict='') {
       global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -781,7 +781,7 @@ return namelist;
             'method'=>$method,
             'actiontypeid'=>'dropdown_'.$myname.$rand
             );
-      Ajax::UpdateItemOnSelectEvent('dropdown_ActionType'.$rand,"show_ActionList",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactionlist.php",$params);
+      Ajax::UpdateItemOnSelectEvent('dropdown_ActionType'.$rand, "show_ActionList", $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactionlist.php", $params);
 
       return $rand;
    }
@@ -801,7 +801,7 @@ return namelist;
    * @return value rand of the dropdown
    *
    **/
-   function dropdownAction($myname,$actiontype,$method,$actiontypeid,$value=0,$entity_restrict='') {
+   function dropdownAction($myname, $actiontype, $method, $actiontypeid, $value=0, $entity_restrict='') {
       global $CFG_GLPI;
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $module = '';
@@ -1351,11 +1351,11 @@ return namelist;
          ini_set('display_errors', 'On');
          // Recommended development settings
          error_reporting(E_ALL | E_STRICT);
-         set_error_handler(array('Toolbox','userErrorHandlerDebug'));
+         set_error_handler(array('Toolbox', 'userErrorHandlerDebug'));
       } else {
-         ini_set('display_errors','Off');
+         ini_set('display_errors', 'Off');
          error_reporting(E_ALL);
-         set_error_handler(array('Toolbox','userErrorHandlerNormal'));
+         set_error_handler(array('Toolbox', 'userErrorHandlerNormal'));
       }
 
    }
@@ -1430,7 +1430,7 @@ return namelist;
       echo __('Scheduled date', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td align='center'>";
-      Html::showDateTimeFormItem("date_scheduled",date("Y-m-d H:i:s"),1);
+      Html::showDateTimeFormItem("date_scheduled", date("Y-m-d H:i:s"), 1);
       echo "</td>";
       echo "</tr>";
 
@@ -1790,7 +1790,7 @@ return namelist;
          echo "<tr class='tab_bg_1'>";
          $link_item = $pfTaskjob->getFormURL();
          $link  = $link_item;
-         $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
+         $link .= (strpos($link, '?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
          echo "<td><a href='".$link."'>".$pfTaskjob->getNameID(1)."</a></td>";
          echo "<td>".Dropdown::getYesNo($pfTask->fields['is_active'])."</td>";
          echo "<td>".$pfTask->fields['date_scheduled']."</td>";
@@ -1881,8 +1881,8 @@ return namelist;
       }
 
       if (strstr($_SERVER['PHP_SELF'], 'wizard')) {
-         echo "<a href=\"javascript:showHideDiv('tabsbody','tabsbodyimg','".$CFG_GLPI["root_doc"].
-                    "/pics/deplier_down.png','".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">";
+         echo "<a href=\"javascript:showHideDiv('tabsbody', 'tabsbodyimg', '".$CFG_GLPI["root_doc"].
+                    "/pics/deplier_down.png', '".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">";
          echo "<img alt='' name='tabsbodyimg' src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_up.png\">";
          echo "</a>&nbsp;&nbsp;";
 
@@ -1957,10 +1957,10 @@ return namelist;
                'myname'=>"method"
                );
          echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("show_DefinitionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",$params,true,"dropdown_method".$rand);
+         Ajax::UpdateItemJsCode("show_DefinitionType_id", $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdowndefinitiontype.php", $params, true, "dropdown_method".$rand);
          echo "</script>";
          echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("show_ActionType_id",$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php",$params,true,"dropdown_method".$rand);
+         Ajax::UpdateItemJsCode("show_ActionType_id", $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownactiontype.php", $params, true, "dropdown_method".$rand);
          echo "</script>";
       } else  {
          $this->showFormButtons(array());
@@ -1993,7 +1993,7 @@ return namelist;
          echo "<td><input type='checkbox' name='taskjobstoforcerun[]' value='".$data['id']."' checked /></td>";
          $link_item = $pfTaskjob->getFormURL();
          $link  = $link_item;
-         $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
+         $link .= (strpos($link, '?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
          echo "<td><a href='".$link."'>".$pfTaskjob->getNameID(1)."</a></td>";
          echo "<tr class='tab_bg_1'>";
       } else {
@@ -2003,7 +2003,7 @@ return namelist;
             echo "<td><input type='checkbox' name='taskjobstoforcerun[]' value='".$data['id']."' /></td>";
             $link_item = $pfTaskjob->getFormURL();
             $link  = $link_item;
-            $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
+            $link .= (strpos($link, '?') ? '&amp;':'?').'id=' . $pfTaskjob->fields['id'];
             echo "<td><a href='".$link."'>".$pfTaskjob->getNameID(1)."</a></td>";
             echo "<tr class='tab_bg_1'>";
          }

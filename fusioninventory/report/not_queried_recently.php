@@ -44,14 +44,14 @@
 $USEDBREPLICATE=1;
 $DBCONNECTION_REQUIRED=0;
 
-$NEEDED_ITEMS=array("search","computer","infocom","setup","networking","printer");
+$NEEDED_ITEMS=array("search", "computer", "infocom", "setup", "networking", "printer");
 
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
-Html::header(__('FusionInventory'),$_SERVER['PHP_SELF'],"utils","report");
+Html::header(__('FusionInventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
-PluginFusioninventoryProfile::checkRight("reportnetworkequipment","r");
+PluginFusioninventoryProfile::checkRight("reportnetworkequipment", "r");
 
 $nbdays = 1;
 if (isset($_GET["nbdays"])) {

@@ -48,7 +48,7 @@ PluginFusioninventoryProfile::checkRight("model", "r");
 
 $pfConstructdevice_User = new PluginFusinvsnmpConstructdevice_User();
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "models");
 
 if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("model", "w");

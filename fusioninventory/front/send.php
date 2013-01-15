@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../../..');
 }
 if (!defined("GLPI_PLUGIN_DOC_DIR")){
-   define("GLPI_PLUGIN_DOC_DIR",GLPI_ROOT . "/files/_plugins");
+   define("GLPI_PLUGIN_DOC_DIR", GLPI_ROOT . "/files/_plugins");
 }
 Session::checkLoginUser();
 
@@ -54,7 +54,7 @@ if (isset($_GET['file'])) {
    $filename = $_GET['file'];
 
    // Security test : document in $docDir
-   if (strstr($filename,"../") || strstr($filename,"..\\")){
+   if (strstr($filename, "../") || strstr($filename, "..\\")){
       echo "Security attack !!!";
       Event::log($filename, "sendFile", 1, "security",
                  $_SESSION["glpiname"]." tries to get a non standard file.");

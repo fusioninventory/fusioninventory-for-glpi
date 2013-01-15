@@ -148,7 +148,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    // for file stored snmp authentication
    function add_xml() {
       // Get new id
-      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml", 'SimpleXMLElement', LIBXML_NOCDATA);
 
       $id = $xml->incrementID[0];
       $id = $id + 1;
@@ -355,7 +355,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
    function selectbox($selected=0) {
-      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml", 'SimpleXMLElement', LIBXML_NOCDATA);
       $i = -1;
       $selectbox = "<select name='plugin_fusinvsnmp_configsecurities_id' size='1'>\n
                        <option value='0'>-----</option>\n";

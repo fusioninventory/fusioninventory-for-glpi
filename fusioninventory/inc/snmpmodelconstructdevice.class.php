@@ -86,7 +86,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
    
    function manageWalks($json, $devices_id=0) {
-      global $DB,$CFG_GLPI;
+      global $DB, $CFG_GLPI;
 
       $snmpwalk = '';
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
@@ -142,7 +142,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          echo "</th>";
          echo "<td width='130' align='center'>";
          if ($snmpwalk != '') {
-            echo "<a onclick=\"var w = window.open('".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/front/constructmodel.form.php?mapping=".$data->name."' ,'glpipopup', 'height=400, width=1000, top=100, left=100, scrollbars=yes' );w.focus();\"><img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />&nbsp;add a new oid</a>";
+            echo "<a onclick=\"var w = window.open('".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/front/constructmodel.form.php?mapping=".$data->name."' , 'glpipopup', 'height=400, width=1000, top=100, left=100, scrollbars=yes' );w.focus();\"><img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />&nbsp;add a new oid</a>";
          }
          echo "</td>";
          echo "</tr>";
@@ -350,10 +350,10 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          }
          if (count($a_match) > 1
               OR preg_match('/^if/', $a_oid->name)
-              OR preg_match('/ipAdEntAddr/',$a_oid->name)
-              OR preg_match('/^cdp/i',$a_oid->name)
-              OR preg_match('/ipNetToMediaPhysAddress/',$a_oid->name)
-              OR preg_match('/^dot1d/i',$a_oid->name)) {
+              OR preg_match('/ipAdEntAddr/', $a_oid->name)
+              OR preg_match('/^cdp/i', $a_oid->name)
+              OR preg_match('/ipNetToMediaPhysAddress/', $a_oid->name)
+              OR preg_match('/^dot1d/i', $a_oid->name)) {
             $oidportdyn = 1;
          }
          Dropdown::showYesNo("oid_port_dyn_".$a_oid->id, $oidportdyn);
@@ -377,7 +377,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       $query = "SELECT glpi_plugin_fusinvsnmp_constructdevices.id, type
          FROM glpi_plugin_fusinvsnmp_constructdevices
          LEFT JOIN glpi_plugin_fusinvsnmp_constructdevicewalks on glpi_plugin_fusinvsnmp_constructdevices.id = plugin_fusinvsnmp_constructdevices_id
-         WHERE type IN (1,2,3)
+         WHERE type IN (1, 2, 3)
             AND log!=''";
       if ($result = $DB->query($query)) {
          while ($data = $DB->fetch_array($result)) {

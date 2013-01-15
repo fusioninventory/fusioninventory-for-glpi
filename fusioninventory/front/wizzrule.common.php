@@ -54,7 +54,7 @@ $rulecollection->checkGlobal('r');
 
 if (isset($_GET["action"])) {
    $rulecollection->checkGlobal('w');
-   $rulecollection->changeRuleOrder($_GET["id"],$_GET["action"]);
+   $rulecollection->changeRuleOrder($_GET["id"], $_GET["action"]);
    Html::back();
 
 } else if (isset($_POST["action"])) {
@@ -105,7 +105,7 @@ if (isset($_GET["action"])) {
    $rulecollection->checkGlobal('w');
 
    // Current time
-   $start = explode(" ",microtime());
+   $start = explode(" ", microtime());
    $start = $start[0]+$start[1];
 
    // Limit computed from current time
@@ -149,7 +149,7 @@ if (isset($_GET["action"])) {
 
    if ($offset < 0) {
       // Work ended
-      $end   = explode(" ",microtime());
+      $end   = explode(" ", microtime());
       $duree = round($end[0]+$end[1]-$start);
       Html::changeProgressBarMessage(__('Task completed.')." (".Html::timestampToString($duree).")");
       echo "<a href='".$_SERVER['PHP_SELF']."'>".__('Back')."</a>";
@@ -198,7 +198,7 @@ if (isset($_GET["action"])) {
 
 
    echo "<div id='tabspanel' class='center-h'></div>";
-   Ajax::createTabs('tabspanel','tabcontent',$tabs,$rulecollection->getRuleClassName());
+   Ajax::createTabs('tabspanel', 'tabcontent', $tabs, $rulecollection->getRuleClassName());
    echo "<div id='tabcontent'>&nbsp;</div>";
    echo "<script type='text/javascript'>loadDefaultTab();</script>";
 

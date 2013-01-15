@@ -67,10 +67,10 @@ class PluginFusioninventoryInventoryComputerLibhook {
    * @return nothing
    *
    **/
-    function writeXMLFusion($items_id,$xml='') {
+    function writeXMLFusion($items_id, $xml='') {
       if ($xml != '') {
 
-         $folder = substr($items_id,0,-1);
+         $folder = substr($items_id, 0, -1);
          if (empty($folder)) {
             $folder = '0';
          }

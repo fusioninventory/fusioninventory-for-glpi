@@ -73,7 +73,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
 
 
-   function executeActions($output,$params) {
+   function executeActions($output, $params) {
 
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-entityrules",

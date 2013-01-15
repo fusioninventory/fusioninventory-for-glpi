@@ -98,16 +98,16 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          }
          if ($return == 'html') {
             if ($style == 'simple') {
-               Html::displayProgressBar($width,ceil($globalState), array('simple' => 1));
+               Html::displayProgressBar($width, ceil($globalState), array('simple' => 1));
             } else {
-               Html::displayProgressBar($width,ceil($globalState));
+               Html::displayProgressBar($width, ceil($globalState));
             }
          } else if ($return == 'htmlvar') {
             if ($style == 'simple') {
-               return PluginFusioninventoryDisplay::getProgressBar($width,ceil($globalState),
+               return PluginFusioninventoryDisplay::getProgressBar($width, ceil($globalState),
                                                                    array('simple' => 1));
             } else {
-               return PluginFusioninventoryDisplay::getProgressBar($width,ceil($globalState));
+               return PluginFusioninventoryDisplay::getProgressBar($width, ceil($globalState));
             }
          } else {
             return ceil($globalState);
@@ -128,7 +128,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    *
    **/
    function stateTaskjobItem($items_id, $itemtype, $state='all') {
-      global $DB,$CFG_GLPI;
+      global $DB, $CFG_GLPI;
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $icon = "";
@@ -328,7 +328,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
                WHERE `plugin_fusioninventory_taskjobs_id`='".$this->fields['plugin_fusioninventory_taskjobs_id']."'
                      AND `uniqid` != '".$this->fields['uniqid']."'
                      AND `glpi_plugin_fusioninventory_taskjoblogs`.`state`='3'
-                     AND `date`>='".date("Y-m-d H:i:s",$start_taskjob)."'
+                     AND `date`>='".date("Y-m-d H:i:s", $start_taskjob)."'
                GROUP BY `uniqid`";
             $result = $DB->query($query);
             if ($DB->numrows($result) >= ($pfTaskjob->fields['retry_nb'] - 1)) {
@@ -380,7 +380,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $retentiontime = $config->getValue('delete_task');
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $sql = "SELECT * FROM `glpi_plugin_fusioninventory_taskjoblogs`
-         WHERE  `date` < date_add(now(),interval -".$retentiontime." day)
+         WHERE  `date` < date_add(now(), interval -".$retentiontime." day)
          GROUP BY `plugin_fusioninventory_taskjobstates_id`";
       $result=$DB->query($sql);
       if ($result) {

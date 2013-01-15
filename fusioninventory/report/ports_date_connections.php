@@ -47,9 +47,9 @@ $DBCONNECTION_REQUIRED=0;
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
-Html::header(__('FusionInventory'),$_SERVER['PHP_SELF'],"utils","report");
+Html::header(__('FusionInventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
-PluginFusioninventoryProfile::checkRight("reportnetworkequipment","r");
+PluginFusioninventoryProfile::checkRight("reportnetworkequipment", "r");
 
 if (isset($_GET["reset_search"])) {
    resetSearch();
@@ -58,7 +58,7 @@ if (isset($_GET["reset_search"])) {
 if (!isset($_GET["start"])) {
    $_GET["start"] = 0;
 }
-$_GET=getValues($_GET,$_POST);
+$_GET=getValues($_GET, $_POST);
 displaySearchForm();
 
 if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
@@ -71,16 +71,16 @@ if(isset($_POST["dropdown_calendar"]) && isset($_POST["dropdown_sup_inf"])) {
       $_GET["link"][1] = "AND";
 
       $_SESSION["glpisearchcount"]['PluginFusioninventoryNetworkport2'] = 1;
-//      showList('PluginFusioninventoryNetworkport2',$_GET);
+//      showList('PluginFusioninventoryNetworkport2', $_GET);
 } else {
-//   showList('PluginFusioninventoryNetworkport2',$_GET);
+//   showList('PluginFusioninventoryNetworkport2', $_GET);
 }
 Html::footer();
 
 
 
 function displaySearchForm() {
-   global $_SERVER,$_GET,$CFG_GLPI;
+   global $_SERVER, $_GET, $CFG_GLPI;
 
    echo "<form action='".$_SERVER["PHP_SELF"]."' method='post'>";
    echo "<table class='tab_cadre' cellpadding='5'>";
@@ -96,30 +96,30 @@ function displaySearchForm() {
    if (isset($_GET["contains"][1])) {
       if (strstr($_GET["contains"][1], "lt;")) {
          $_GET["dropdown_sup_inf"] = "inf";
-         $_GET["dropdown_calendar"] = str_replace("lt;", "",$_GET["contains"][1]);
-         $_GET["dropdown_calendar"] = str_replace("&", "",$_GET["dropdown_calendar"]);
-         $_GET["dropdown_calendar"] = str_replace("\\", "",$_GET["dropdown_calendar"]);
-         $_GET["dropdown_calendar"] = str_replace("'", "",$_GET["dropdown_calendar"]);
-         $_GET["dropdown_calendar"] = str_replace(" 00:00:00", "",$_GET["dropdown_calendar"]);
+         $_GET["dropdown_calendar"] = str_replace("lt;", "", $_GET["contains"][1]);
+         $_GET["dropdown_calendar"] = str_replace("&", "", $_GET["dropdown_calendar"]);
+         $_GET["dropdown_calendar"] = str_replace("\\", "", $_GET["dropdown_calendar"]);
+         $_GET["dropdown_calendar"] = str_replace("'", "", $_GET["dropdown_calendar"]);
+         $_GET["dropdown_calendar"] = str_replace(" 00:00:00", "", $_GET["dropdown_calendar"]);
          $_GET["contains"][1] = "<".$_GET["dropdown_calendar"];
       }
       if (strstr($_GET["contains"][1], "gt;")) {
          $_GET["dropdown_sup_inf"] = "sup";
-         $_GET["dropdown_calendar"] = str_replace("gt;", "",$_GET["contains"][1]);
-         $_GET["dropdown_calendar"] = str_replace("&", "",$_GET["dropdown_calendar"]);
-         $_GET["dropdown_calendar"] = str_replace("\\", "",$_GET["dropdown_calendar"]);
-         $_GET["dropdown_calendar"] = str_replace("'", "",$_GET["dropdown_calendar"]);
-         $_GET["dropdown_calendar"] = str_replace(" 00:00:00", "",$_GET["dropdown_calendar"]);
+         $_GET["dropdown_calendar"] = str_replace("gt;", "", $_GET["contains"][1]);
+         $_GET["dropdown_calendar"] = str_replace("&", "", $_GET["dropdown_calendar"]);
+         $_GET["dropdown_calendar"] = str_replace("\\", "", $_GET["dropdown_calendar"]);
+         $_GET["dropdown_calendar"] = str_replace("'", "", $_GET["dropdown_calendar"]);
+         $_GET["dropdown_calendar"] = str_replace(" 00:00:00", "", $_GET["dropdown_calendar"]);
          $_GET["contains"][1] = ">".$_GET["dropdown_calendar"];
       }
       if (strstr($_GET["contains"][1], "LIKE")) {
          $_GET["dropdown_sup_inf"] = "equal";
-         $_GET["dropdown_calendar"] = str_replace("=", "",$_GET["contains"][1]);
-         $_GET["dropdown_calendar"] = str_replace("&", "",$_GET["dropdown_calendar"]);
-         $_GET["dropdown_calendar"] = str_replace("\\", "",$_GET["dropdown_calendar"]);
-         $_GET["dropdown_calendar"] = str_replace("'", "",$_GET["dropdown_calendar"]);
-         $_GET["dropdown_calendar"] = str_replace("%", "",$_GET["dropdown_calendar"]);
-         $_GET["dropdown_calendar"] = str_replace("LIKE ", "",$_GET["dropdown_calendar"]);
+         $_GET["dropdown_calendar"] = str_replace("=", "", $_GET["contains"][1]);
+         $_GET["dropdown_calendar"] = str_replace("&", "", $_GET["dropdown_calendar"]);
+         $_GET["dropdown_calendar"] = str_replace("\\", "", $_GET["dropdown_calendar"]);
+         $_GET["dropdown_calendar"] = str_replace("'", "", $_GET["dropdown_calendar"]);
+         $_GET["dropdown_calendar"] = str_replace("%", "", $_GET["dropdown_calendar"]);
+         $_GET["dropdown_calendar"] = str_replace("LIKE ", "", $_GET["dropdown_calendar"]);
          $_GET["contains"][1] = "LIKE '".$_GET["dropdown_calendar"]."%'";
       }
    }
@@ -127,7 +127,7 @@ function displaySearchForm() {
                            array('value'=>(isset($_GET["dropdown_sup_inf"])?$_GET["dropdown_sup_inf"]:"sup")));
    echo "</td>
       <td width='120'>";
-   Html::showDateFormItem("dropdown_calendar",(isset($_GET["dropdown_calendar"])?$_GET["dropdown_calendar"]:0));
+   Html::showDateFormItem("dropdown_calendar", (isset($_GET["dropdown_calendar"])?$_GET["dropdown_calendar"]:0));
    echo "</td>";
 
    echo "<td>".__('Location')."</td>";
@@ -144,8 +144,8 @@ function displaySearchForm() {
 
    echo "<td>";
    //Add parameters to uri to be saved as bookmarks
-   $_SERVER["REQUEST_URI"] = buildBookmarkUrl($_SERVER["REQUEST_URI"],$_GET);
-   Bookmark::showSaveButton(Bookmark::SEARCH,'PluginFusioninventoryNetworkport2');
+   $_SERVER["REQUEST_URI"] = buildBookmarkUrl($_SERVER["REQUEST_URI"], $_GET);
+   Bookmark::showSaveButton(Bookmark::SEARCH, 'PluginFusioninventoryNetworkport2');
    echo "</td>";
 
    echo "<td>";
@@ -178,24 +178,24 @@ function getContainsArray($get) {
 
 
 
-function buildBookmarkUrl($url,$get) {
+function buildBookmarkUrl($url, $get) {
     return $url."?field[0]=3&contains[0]=".getContainsArray($get);
 }
 
 
 
-function getValues($get,$post) {
-   $get=array_merge($get,$post);
+function getValues($get, $post) {
+   $get=array_merge($get, $post);
    if (isset($get["field"])) {
       foreach ($get["field"] as $index => $value) {
          $get["contains"][$index] = stripslashes($get["contains"][$index]);
          $get["contains"][$index] = htmlspecialchars_decode($get["contains"][$index]);
          switch($value) {
             case 14:
-               if (strpos( $get["contains"][$index],"=")==1) {
+               if (strpos( $get["contains"][$index], "=")==1) {
                   $get["dropdown_sup_inf"]="equal";
                } else {
-                  if (strpos( $get["contains"][$index],"<")==1) {
+                  if (strpos( $get["contains"][$index], "<")==1) {
                      $get["dropdown_sup_inf"]="inf";
                   } else {
                      $get["dropdown_sup_inf"]="sup";
@@ -203,7 +203,7 @@ function getValues($get,$post) {
                }
                break;
          }
-         $get["dropdown_calendar"] = substr($get["contains"][$index],1);
+         $get["dropdown_calendar"] = substr($get["contains"][$index], 1);
       }
    }
    return $get;
