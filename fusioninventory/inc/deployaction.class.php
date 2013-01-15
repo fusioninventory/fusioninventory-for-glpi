@@ -194,7 +194,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             echo "<input type='text' name='$name_label_1' />";
             break;
          case "textarea":
-            echo "<textarea name='$name_label_1' rows='5'></textarea>";
+            echo "<textarea name='$name_label_1' rows='3'></textarea>";
             break;
       }
       echo "</td>";
@@ -205,6 +205,15 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          echo "<td><input type='text' name='$name_label_2'</td>";
          echo "</tr>";
       }
+
+      //specific case for cmd : add retcheck form
+      if ($type == "cmd") {
+         echo "<tr>";
+         echo "<th>".__("return code")."</th>";
+         echo "<td></td>";
+         echo "</tr>";
+      }
+
       echo "<tr>";
       echo "<td></td><td>";
       echo "&nbsp;<input type='submit' name='itemaddaction' value=\"".
