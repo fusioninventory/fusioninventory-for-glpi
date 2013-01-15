@@ -95,7 +95,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployCheck' />";
       if (!isset($datas['jobs']['checks']) || empty($datas['jobs']['checks'])) return;
-      echo "<div id='drag_checks'><table class='tab_cadrehov' id='dragtable' style='width:100%'>";
+      echo "<div id='drag_checks'><table class='tab_cadrehov' id='table_check' style='width:100%'>";
       $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {
          //specific case for filesystem size
@@ -256,6 +256,23 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       foreach ($params['check_entries'] as $index) {
          unset($datas['jobs']['checks'][$index]);
       }
+
+      //update order
+      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+   }
+
+   static function move_item($params) {
+      //get current order json
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+
+      //get data on old index
+      $moved_check = $datas['jobs']['checks'][$params['old_index']];
+
+      //remove this old index in json
+      unset($datas['jobs']['checks'][$params['old_index']]);
+
+      //insert it in new index (array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
+      array_splice($datas['jobs']['checks'], $params['new_index'], 0, array($moved_check));
 
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);

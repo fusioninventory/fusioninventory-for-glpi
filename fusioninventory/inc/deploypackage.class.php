@@ -267,8 +267,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "</table>";
 
       //init drag and drop on subtype table
+      echo "<script type='text/javascript'>
+         var rand = $rand;
+         if (orders == null) var orders = {};
+         orders[$rand] = $orders_id;
+         </script>";
       echo "<script type='text/javascript' src='".$CFG_GLPI["root_doc"].
-         "/plugins/fusioninventory/lib/REDIPS_drag/redips-drag-min.js'></script>";
+         "/plugins/fusioninventory/lib/REDIPS_drag/redips-drag-source.js'></script>";
       echo "<script type='text/javascript' src='".$CFG_GLPI["root_doc"].
          "/plugins/fusioninventory/lib/REDIPS_drag/drag_table_rows.js'></script>";
 
@@ -296,6 +301,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                break;
             case "remove_item" : 
                $params['itemtype']::remove_item($params);
+               break;
+            case "move_item" : 
+               $params['itemtype']::move_item($params);
                break;
          }
       } else {

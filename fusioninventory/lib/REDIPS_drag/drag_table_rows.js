@@ -33,11 +33,37 @@ redipsInit = function () {
    };
 
    // row was dropped - event handler
-   rd.event.rowDropped = function () {
+   rd.event.rowDropped = function (targetRow, sourceTable, sourceRowIndex) {
       var pos = rd.getPosition();
 
+      var old_index = sourceRowIndex;
+      var new_index = pos[1];
+      var id = rd.obj.id.replace("table_", "")
+
+      //get id, remove "table_" and capitalize first letter
+      id = id.charAt(0).toUpperCase() + id.slice(1)
+      var itemtype = "PluginFusioninventoryDeploy"+id;
+
+      //send ajax request to update json
+      Ext.Ajax.request({
+         url : '../front/deploypackage.form.php',
+         method: 'POST',
+         params :{
+            "move_item": true, 
+            "old_index": old_index,
+            "new_index": new_index,
+            "itemtype": itemtype,
+            "orders_id": orders[rand]
+         },
+         success: function ( result, request ) {
+            window.location.reload();
+         },
+         failure: function ( result, request ) {
+            console.log("Ajax.error : "+result.responseText)
+         }
+      });
+
       // display message
-      console.log('Dropped: ' + pos[0] + ' ' + pos[1]);
    };
 
    // row was dropped to the source - event handler

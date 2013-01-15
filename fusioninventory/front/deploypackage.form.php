@@ -44,12 +44,7 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 Session::checkLoginUser();
 
-Html::header(__('FusionInventory DEPLOY'),$_SERVER["PHP_SELF"],"plugins",
-   "fusioninventory","packages");
 
-//PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","r");
-
-PluginFusioninventoryMenu::displayMenu("mini");
 
 $package = new PluginFusioninventoryDeployPackage();
 
@@ -60,6 +55,10 @@ if (isset($_REQUEST['add_item'])) {
 } elseif (isset($_REQUEST['remove_item'])) {
    PluginFusioninventoryDeployPackage::alter_json('remove_item', $_REQUEST);
    Html::back();
+} elseif (isset($_REQUEST['move_item'])) { //ajax request
+   PluginFusioninventoryDeployPackage::alter_json('move_item', $_REQUEST);
+   echo "true";
+   exit;
 }
 
 //general form
@@ -77,6 +76,10 @@ if (isset ($_POST["add"])) {
    Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployPackage'));
 }
 
+
+Html::header(__('FusionInventory DEPLOY'),$_SERVER["PHP_SELF"],"plugins",
+   "fusioninventory","packages");
+PluginFusioninventoryMenu::displayMenu("mini");
 $id = "";
 if (isset($_GET["id"])) {
    $id = $_GET["id"];
