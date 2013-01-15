@@ -201,6 +201,23 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
+   static function move_item($params) {
+      //get current order json
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+
+      //get data on old index
+      $moved_check = $datas['jobs']['associatedFiles'][$params['old_index']];
+
+      //remove this old index in json
+      unset($datas['jobs']['associatedFiles'][$params['old_index']]);
+
+      //insert it in new index (array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
+      array_splice($datas['jobs']['associatedFiles'], $params['new_index'], 0, array($moved_check));
+
+      //update order
+      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+   }
+
    static function getForOrder($orders_id) {
       $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deployfiles',
                                       "`plugin_fusioninventory_deployorders_id`='".$orders_id.
