@@ -44,22 +44,22 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-PluginFusioninventoryProfile::checkRight("model","r");
+PluginFusioninventoryProfile::checkRight("model", "r");
 
 $pfConstructdevice_User = new PluginFusinvsnmpConstructdevice_User();
 
-Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
 
 if (isset ($_POST["add"])) {
-   PluginFusioninventoryProfile::checkRight("model","w");
+   PluginFusioninventoryProfile::checkRight("model", "w");
    $pfConstructdevice_User->add($_POST);
    Html::back();
 } else if (isset ($_POST["update"])) {
-   PluginFusioninventoryProfile::checkRight("model","w");
+   PluginFusioninventoryProfile::checkRight("model", "w");
    $pfConstructdevice_User->update($_POST);
    Html::back();
 } else if (isset ($_POST["purge"])) {
-   PluginFusioninventoryProfile::checkRight("model","w");
+   PluginFusioninventoryProfile::checkRight("model", "w");
    $pfConstructdevice_User->delete($_POST);
    Html::back();
 }

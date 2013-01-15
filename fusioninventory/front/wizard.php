@@ -46,9 +46,9 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],"plugins","fusioninventory","wizard-start");
 
-PluginFusioninventoryProfile::checkRight("task","r");
+PluginFusioninventoryProfile::checkRight("task", "r");
 
 if (!isset($_SERVER['HTTP_REFERER'])
         OR (isset($_SERVER['HTTP_REFERER']) AND

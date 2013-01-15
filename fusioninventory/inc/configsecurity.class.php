@@ -60,7 +60,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
    function showForm($id, $options=array()) {
 
-      PluginFusioninventoryProfile::checkRight("configsecurity","r");
+      PluginFusioninventoryProfile::checkRight("configsecurity", "r");
 
       if ($id!='') {
          $this->getFromDB($id);

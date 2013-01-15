@@ -44,9 +44,9 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-importxmlfile");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],"plugins","fusioninventory","fusinvinventory-importxmlfile");
 
-PluginFusioninventoryProfile::checkRight("importxml","w");
+PluginFusioninventoryProfile::checkRight("importxml", "w");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

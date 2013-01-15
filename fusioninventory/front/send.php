@@ -74,7 +74,7 @@ if (isset($_GET['file'])) {
       header("Content-disposition: filename=\"$filename\"");
 //      header("Content-type: ".$mime);
 
-      $f=fopen($file,"r");
+      $f=fopen($file, "r");
 
       if (!$f){
          echo "Error opening file $filename";

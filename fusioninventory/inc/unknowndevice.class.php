@@ -58,12 +58,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("unknowndevice","w");
+      return PluginFusioninventoryProfile::haveRight("unknowndevice", "w");
    }
 
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight("unknowndevice","r");
+      return PluginFusioninventoryProfile::haveRight("unknowndevice", "r");
    }
 
 
@@ -210,7 +210,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    **/
    function showForm($id, $options=array()) {
 
-      //PluginFusioninventoryProfile::checkRight("networking","r");
+      //PluginFusioninventoryProfile::checkRight("networking", "r");
 
       if ($id!='') {
          $this->getFromDB($id);

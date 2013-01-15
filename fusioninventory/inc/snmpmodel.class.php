@@ -118,7 +118,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
    function showForm($id, $options=array()) {
       global $CFG_GLPI;
 
-      PluginFusioninventoryProfile::checkRight("model","r");
+      PluginFusioninventoryProfile::checkRight("model", "r");
 
       if ($id!='') {
          $this->getFromDB($id);

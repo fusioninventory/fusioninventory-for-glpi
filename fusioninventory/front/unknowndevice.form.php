@@ -49,7 +49,7 @@ $ptt  = new PluginFusioninventoryTask();
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory","unknown");
 
-PluginFusioninventoryProfile::checkRight("unknowndevice","r");
+PluginFusioninventoryProfile::checkRight("unknowndevice", "r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
@@ -58,7 +58,7 @@ if (isset($_GET["id"])) {
    $id = $_GET["id"];
 }
 if (isset ($_POST["add"])) {
-   PluginFusioninventoryProfile::checkRight("unknowndevice","w");
+   PluginFusioninventoryProfile::checkRight("unknowndevice", "w");
    if (isset($_POST['items_id'])
           AND ($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
       $_POST['itemtype'] = '1';
@@ -66,7 +66,7 @@ if (isset ($_POST["add"])) {
    $pfUnknownDevice->add($_POST);
    Html::back();
 } else if (isset($_POST["delete"])) {
-   PluginFusioninventoryProfile::checkRight("unknowndevice","w");
+   PluginFusioninventoryProfile::checkRight("unknowndevice", "w");
 
    $pfUnknownDevice->check($_POST['id'],'w');
 
@@ -84,7 +84,7 @@ if (isset ($_POST["add"])) {
    $pfUnknownDevice->redirectToList();
 
 } else if (isset($_POST["purge"]) || isset($_GET["purge"])) {
-   PluginFusioninventoryProfile::checkRight("unknowndevice","w");
+   PluginFusioninventoryProfile::checkRight("unknowndevice", "w");
 
    $pfUnknownDevice->check($_POST['id'],'w');
 

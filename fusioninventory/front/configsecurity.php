@@ -46,9 +46,9 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","configsecurity");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],"plugins","fusioninventory","configsecurity");
 
-PluginFusioninventoryProfile::checkRight("configsecurity","r");
+PluginFusioninventoryProfile::checkRight("configsecurity", "r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

@@ -85,7 +85,7 @@ if (isset($_GET['file'])) {
       header("Content-type: application/force-download");
 
 
-      $f=fopen($file,"r");
+      $f=fopen($file, "r");
 
       if (!$f){
          echo "Error opening file $filepath";

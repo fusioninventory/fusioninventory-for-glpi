@@ -58,7 +58,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
    function export($ID_model) {
       global $DB;
 
-      PluginFusioninventoryProfile::checkRight("model","r");
+      PluginFusioninventoryProfile::checkRight("model", "r");
       $query = "SELECT *
          FROM `glpi_plugin_fusioninventory_snmpmodels`
          WHERE `id`='".$ID_model."'";
@@ -151,7 +151,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
    function showFormMassImport($target) {
 
-      PluginFusioninventoryProfile::checkRight("model","r");
+      PluginFusioninventoryProfile::checkRight("model", "r");
 
       echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 
@@ -178,7 +178,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       global $DB;
 
       if ($installation != 1) {
-         PluginFusioninventoryProfile::checkRight("model","w");
+         PluginFusioninventoryProfile::checkRight("model", "w");
       }
 
       $xml = simplexml_load_file($file, 'SimpleXMLElement', LIBXML_NOCDATA);

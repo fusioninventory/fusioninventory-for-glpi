@@ -46,9 +46,9 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-//Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
+//Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
 
-PluginFusioninventoryProfile::checkRight("model","r");
+PluginFusioninventoryProfile::checkRight("model", "r");
 
 $pfImportExport = new PluginFusioninventorySnmpmodelImportExport();
 
