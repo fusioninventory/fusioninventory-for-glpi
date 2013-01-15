@@ -211,7 +211,10 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       if ($type == "cmd") {
          echo "<tr>";
          echo "<th>".__("return code")."</th>";
-         echo "<td></td>";
+         echo "<td>";
+         PluginFusioninventoryDeployPackage::plusButton("retchecks$rand");
+         echo "<span id='retchecks$rand'></span>";
+         echo "</td>";
          echo "</tr>";
       }
 
