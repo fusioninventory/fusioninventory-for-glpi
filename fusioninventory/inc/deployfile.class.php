@@ -106,6 +106,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
          echo"&nbsp;$filename";
          echo "</td>";
+         echo "<td>";
+         echo self::processFilesize($datas['associatedFiles'][$sha512]['filesize']);
+         echo "</td>";
          echo "<td class='rowhandler'><div class='drag row'></div></td>";
          $i++;
       }
@@ -150,8 +153,15 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       echo "<table class='package_item'>";
       echo "<tr>";
+      echo "<th>".__("File")."</th>";
       echo "<td>";
-      echo $source;
+      switch ($source) {
+         case "Computer":
+            echo "<input type='file' name='file' />";
+            break;
+         case "Server":
+            break;
+      }
       echo "</td>";
       echo "</tr><tr>";
       echo "<td></td><td>";
@@ -180,6 +190,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    static function add_item($params) {
       echo "file::add_item";
+      Html::printCleanArray($params);
+      Html::printCleanArray($_FILES);
       exit;
    }
 

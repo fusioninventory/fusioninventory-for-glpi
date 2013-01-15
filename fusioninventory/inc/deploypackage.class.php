@@ -258,9 +258,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr>";
+      $multipart = "";
       foreach ($subtypes as $subtype) {
+         if ($subtype == "file") $multipart = "enctype='multipart/form-data'";
          echo "<td style='width:316px; vertical-align:top'>";
-         echo "<form name='add$subtype' method='post' action='deploypackage.form.php?add_item'>";
+         echo "<form name='add$subtype' method='post' ".$multipart.
+            " action='deploypackage.form.php?add_item'>";
          echo "<input type='hidden' name='orders_id' value='$orders_id' />";
          echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeploy".
             ucfirst($subtype)."' />";
