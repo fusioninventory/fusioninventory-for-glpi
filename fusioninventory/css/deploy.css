@@ -10,3 +10,15 @@ table.package_item textarea,
 table.package_item select {
    width: 100%;
 }
+
+
+/* drag and drop element */
+.drag {
+   background-image: url("../pics/drag.png");
+   position: relative;
+   cursor: move;
+   /*z-index: 10;*/
+   width: 12px;
+   height: 10px;
+   border:0 !important;
+}

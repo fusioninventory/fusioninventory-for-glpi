@@ -98,7 +98,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       echo "<form name='removeactions' method='post' action='deploypackage.form.php?remove_item'>";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployAction' />";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
-      echo "<table class='tab_cadrehov' style='width:100%'>";
+      echo "<div id='drag_actions'><table class='tab_cadrehov' style='width:100%'>";
       $i=0;
       foreach ($datas['jobs']['actions'] as $action) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
@@ -118,6 +118,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             } else echo "$key : $value;";
             echo "</td>";
          }
+         echo "<td class='rowhandler'><div class='drag row'></div></td>";
          echo "</tr>";
          $i++;
       }
@@ -125,7 +126,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       echo "</td></tr>";
-      echo "</table>";
+      echo "</table></div>";
       Html::closeForm();
    }
 

@@ -95,7 +95,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployCheck' />";
       if (!isset($datas['jobs']['checks'])) return;
-      echo "<table class='tab_cadrehov' style='width:100%'>";
+      echo "<div id='drag_checks'><table class='tab_cadrehov' id='dragtable' style='width:100%'>";
       $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {
          //specific case for filesystem size
@@ -108,6 +108,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          echo "<td>".$check['type']."</td>";
          echo "<td>".$check['path']."</td>";
          echo "<td>".$check['value']."</td>";
+         echo "<td class='rowhandler'><div class='drag row'></div></td>";
          echo "</tr>";
          $i++;
       }
@@ -115,7 +116,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       echo "</td></tr>";
-      echo "</table>";
+      echo "</table></div>";
       Html::closeForm();
    }
 

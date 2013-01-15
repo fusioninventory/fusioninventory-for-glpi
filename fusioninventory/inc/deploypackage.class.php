@@ -242,10 +242,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $datas = json_decode($order['json'], true);
       $orders_id = $order['id'];
 
+      
       echo "<table class='tab_cadre_fixe' id='package'>";
       echo "<tr>";
       foreach ($subtypes as $subtype) {
-         echo "<th>".__("Audits");
+         echo "<th>$subtype";
          self::plusButton($subtype."s_block$rand");
          echo "</th>";
       }
@@ -264,6 +265,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }
       echo "</tr>";
       echo "</table>";
+
+      //init drag and drop on subtype table
+      echo "<script type='text/javascript' src='".$CFG_GLPI["root_doc"].
+         "/plugins/fusioninventory/lib/REDIPS_drag/redips-drag-min.js'></script>";
+      echo "<script type='text/javascript' src='".$CFG_GLPI["root_doc"].
+         "/plugins/fusioninventory/lib/REDIPS_drag/drag_table_rows.js'></script>";
+
 
       if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
          // === debug ===

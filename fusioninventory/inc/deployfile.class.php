@@ -95,7 +95,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<form name='removefiles' method='post' action='deploypackage.form.php?remove_item'>";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployFile' />";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
-      echo "<table class='tab_cadrehov' style='width:100%'>";
+      echo "<div id='drag_files'><table class='tab_cadrehov' style='width:100%'>";
       $i = 0;
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
@@ -106,13 +106,14 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
          echo"&nbsp;$filename";
          echo "</td>";
+         echo "<td class='rowhandler'><div class='drag row'></div></td>";
          $i++;
       }
       echo "<tr><td colspan='2'>";
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       echo "</td></tr>";
-      echo "</table>";
+      echo "</table></div>";
       Html::closeForm();
    }
 
