@@ -214,6 +214,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $this->showFormButtons($options);
 
+      //drag and drop lib
+      echo "<script type='text/javascript' src='".$CFG_GLPI["root_doc"].
+         "/plugins/fusioninventory/lib/REDIPS_drag/redips-drag-source.js'></script>";
+     
+
       echo "<div id='tabcontent'></div>";
       echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
@@ -272,9 +277,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          if (orders == null) var orders = {};
          orders[$rand] = $orders_id;
          </script>";
-      echo "<script type='text/javascript' src='".$CFG_GLPI["root_doc"].
-         "/plugins/fusioninventory/lib/REDIPS_drag/redips-drag-source.js'></script>";
-      echo "<script type='text/javascript' src='".$CFG_GLPI["root_doc"].
+       echo "<script type='text/javascript' src='".$CFG_GLPI["root_doc"].
          "/plugins/fusioninventory/lib/REDIPS_drag/drag_table_rows.js'></script>";
 
 
