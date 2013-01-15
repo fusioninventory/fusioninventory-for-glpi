@@ -93,7 +93,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
     * @return id of inserted line
     *
    **/
-   function insert_connection($status,$array,$plugin_fusioninventory_agentprocesses_id=0) {
+   function insert_connection($status, $array, $plugin_fusioninventory_agentprocesses_id=0) {
       global $DB;
 
       $input = array();
@@ -103,9 +103,9 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       if ($status == "field") {
 
          $query = "INSERT INTO `glpi_plugin_fusioninventory_networkportlogs` (
-                               `networkports_id`,`plugin_fusioninventory_mappings_id`,`value_old`,`value_new`,`date_mod`)
-                   VALUES('".$array["networkports_id"]."','".$array["plugin_fusioninventory_mappings_id"]."',
-                          '".$array["value_old"]."','".$array["value_new"]."',
+                               `networkports_id`, `plugin_fusioninventory_mappings_id`, `value_old`, `value_new`, `date_mod`)
+                   VALUES('".$array["networkports_id"]."', '".$array["plugin_fusioninventory_mappings_id"]."',
+                          '".$array["value_old"]."', '".$array["value_new"]."',
                           '".date("Y-m-d H:i:s")."');";
          $DB->query($query);
       }
@@ -150,7 +150,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
          while ($data=$DB->fetch_array($result)) {
             $type = '';
             $name= '';
-            list($type,$name) = explode("-", $data['field']);
+            list($type, $name) = explode("-", $data['field']);
             if (!isset($listName[$type."-".$name])) {
                $query_del = "DELETE FROM `glpi_plugin_fusioninventory_configlogfields`
                   WHERE id='".$data['id']."' ";
@@ -177,13 +177,13 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       echo "</td><td class='center'>";
 
       if (count($listName)) {
-         if (PluginFusioninventoryProfile::haveRight("configuration","w")) {
+         if (PluginFusioninventoryProfile::haveRight("configuration", "w")) {
             echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_add' value='" . __('Add') . " >>'>";
          }
       }
       echo "<br /><br />";
       if (!empty($options)) {
-         if (PluginFusioninventoryProfile::haveRight("configuration","w")) {
+         if (PluginFusioninventoryProfile::haveRight("configuration", "w")) {
             echo "<input type='submit'  class=\"submit\" name='plugin_fusioninventory_extraction_delete' value='<< " . __('Delete', 'fusioninventory') . "'>";
          }
       }
@@ -209,7 +209,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='3' class='center'>";
-      if (PluginFusioninventoryProfile::haveRight("configuration","w")) {
+      if (PluginFusioninventoryProfile::haveRight("configuration", "w")) {
          echo "<input type='submit' class=\"submit\" name='Clean_history' value='".__('Clean')."' >";
       }
       echo "</td>";
@@ -254,7 +254,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                   break;
 
                default:
-                  $query_delete .= " AND `date_mod` < date_add(now(),interval -".
+                  $query_delete .= " AND `date_mod` < date_add(now(), interval -".
                                        $data['days']." day)";
                   $DB->query($query_delete);
                   break;
@@ -266,7 +266,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
 
-   static function addLog($port,$field,$value_old,$value_new,$mapping,$plugin_fusioninventory_agentprocesses_id=0) {
+   static function addLog($port, $field, $value_old, $value_new, $mapping, $plugin_fusioninventory_agentprocesses_id=0) {
       global $DB;
 
       $pfNetworkPortLog = new PluginFusioninventoryNetworkPortLog();
@@ -289,7 +289,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
          $array["value_new"] = $value_new;
 
          // Ajouter en DB
-         $pfNetworkPortLog->insert_connection("field",$array,$plugin_fusioninventory_agentprocesses_id);
+         $pfNetworkPortLog->insert_connection("field", $array, $plugin_fusioninventory_agentprocesses_id);
       }
    }
 
@@ -346,7 +346,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
             $array["plugin_fusioninventory_mappings_id"] = $a_mapping['id'];
             $array["value_old"] = $pfNetworkPort->getValue($db_field);
             $array["value_new"] = $value_new;
-            $pfNetworkPortLog->insert_connection("field",$array,$_SESSION['glpi_plugin_fusioninventory_processnumber']);
+            $pfNetworkPortLog->insert_connection("field", $array, $_SESSION['glpi_plugin_fusioninventory_processnumber']);
          }
       }
    }
@@ -354,7 +354,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
    // $status = connection or disconnection
-   static function addLogConnection($status,$port,$plugin_fusioninventory_agentprocesses_id=0) {
+   static function addLogConnection($status, $port, $plugin_fusioninventory_agentprocesses_id=0) {
 
       $pfNetworkPortConnectionLog = new PluginFusioninventoryNetworkPortConnectionLog();
       $NetworkPort_NetworkPort=new NetworkPort_NetworkPort();

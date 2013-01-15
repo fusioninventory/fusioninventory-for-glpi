@@ -1517,7 +1517,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       if ($lastid > 0) {
          $whereid = ' AND `id` > "'.$lastid.'"';
       } else {
-         $whereid = " AND `name` IN ('".  implode("','", $a_soft)."')";
+         $whereid = " AND `name` IN ('".  implode("', '", $a_soft)."')";
       }
       
       $sql = "SELECT * FROM `glpi_softwares`
@@ -1539,7 +1539,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       if ($lastid > 0) {
          $whereid = ' AND `id` > "'.$lastid.'"';
       } else {
-         $whereid = " AND `name` IN ('".  implode("','", $a_softVersion)."')";
+         $whereid = " AND `name` IN ('".  implode("', '", $a_softVersion)."')";
       }
       
       $sql = "SELECT * FROM `glpi_softwareversions`
@@ -1948,7 +1948,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $query = "INSERT INTO `glpi_logs`
                           (`items_id`, `itemtype`, `itemtype_link`, `date_mod`, `linked_action`, 
                             `user_name`, `old_value`, `new_value`)
-                   VALUES ".implode(",", $dataLog);
+                   VALUES ".implode(", ", $dataLog);
 
          $DB->query($query); 
          

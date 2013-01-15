@@ -65,11 +65,11 @@ $rule->checkGlobal('r');
 
 $test_rule_output = null;
 
-if (!strpos($_SERVER['PHP_SELF'],"popup")) {
-   Html::header(__('Setup'),$_SERVER['PHP_SELF'],"config","display");
+if (!strpos($_SERVER['PHP_SELF'], "popup")) {
+   Html::header(__('Setup'), $_SERVER['PHP_SELF'], "config", "display");
 }
 
-$rule->showRulePreviewCriteriasForm($_SERVER['PHP_SELF'],$rules_id);
+$rule->showRulePreviewCriteriasForm($_SERVER['PHP_SELF'], $rules_id);
 
 if (isset($_POST["test_rule"])) {
    $params = array();
@@ -77,7 +77,7 @@ if (isset($_POST["test_rule"])) {
    unset($_POST["test_rule"]);
    unset($_POST["rules_id"]);
    unset($_POST["sub_type"]);
-   $rule->getRuleWithCriteriasAndActions($rules_id,1,1);
+   $rule->getRuleWithCriteriasAndActions($rules_id, 1, 1);
 
    // Need for RuleEngines
    foreach ($_POST as $key => $val) {
@@ -86,13 +86,13 @@ if (isset($_POST["test_rule"])) {
    //Add rules specific POST fields to the param array
    $params = $rule->addSpecificParamsForPreview($params);
 
-   $input = $rule->prepareInputDataForProcess($_POST,$params);
+   $input = $rule->prepareInputDataForProcess($_POST, $params);
    //$rule->regex_results = array();
    echo "<br>";
-   $rule->showRulePreviewResultsForm($_SERVER['PHP_SELF'],$input,$params);
+   $rule->showRulePreviewResultsForm($_SERVER['PHP_SELF'], $input, $params);
 }
 
-if (!strpos($_SERVER['PHP_SELF'],"popup")) {
+if (!strpos($_SERVER['PHP_SELF'], "popup")) {
    Html::footer();
 }
 

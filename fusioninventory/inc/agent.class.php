@@ -241,7 +241,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          echo $oComputer->getLink(1);
          echo "<input type='hidden' name='items_id' value='".$this->fields["items_id"]."'/>";
       } else {
-         Computer_Item::dropdownConnect(COMPUTER_TYPE,COMPUTER_TYPE,'items_id',
+         Computer_Item::dropdownConnect(COMPUTER_TYPE, COMPUTER_TYPE, 'items_id',
                                         $_SESSION['glpiactive_entity']);
       }
       echo "</td>";
@@ -268,7 +268,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_networkdiscovery", $this->fields["threads_networkdiscovery"],1,400);
+      Dropdown::showInteger("threads_networkdiscovery", $this->fields["threads_networkdiscovery"], 1, 400);
       echo "</td>";
       echo "<td>".__('Useragent', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
@@ -279,7 +279,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_networkinventory", $this->fields["threads_networkinventory"],1,400);
+      Dropdown::showInteger("threads_networkinventory", $this->fields["threads_networkinventory"], 1, 400);
       echo "</td>";
       echo "<td>".__('Last contact', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";

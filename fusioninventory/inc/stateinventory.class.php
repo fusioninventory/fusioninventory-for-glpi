@@ -81,7 +81,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
       $number = $DB->numrows($resultcount);
 
       // Display the pager
-      Html::printPager($start,$number,$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/stateinventory.php",'');
+      Html::printPager($start, $number, $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/stateinventory.php", '');
 
       echo "<table class='tab_cadre_fixe'>";
 
@@ -104,7 +104,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
          WHERE `method` = 'snmpinventory'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC
-         LIMIT ".intval($start)."," . intval($_SESSION['glpilist_limit']);
+         LIMIT ".intval($start).", " . intval($_SESSION['glpilist_limit']);
       $result=$DB->query($sql);
       while ($data=$DB->fetch_array($result)) {
          echo "<tr class='tab_bg_1'>";

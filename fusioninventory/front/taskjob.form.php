@@ -45,8 +45,8 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 $mytaskjob = new PluginFusioninventoryTaskjob();
 
-Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins",
-             "fusioninventory","tasks");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
+             "fusioninventory", "tasks");
 
 PluginFusioninventoryProfile::checkRight("task", "r");
 
@@ -193,7 +193,7 @@ if (isset($_POST['definition_add'])) {
    }
 } else if (isset($_POST['taskjobstoforcerun'])) {
    // * Force running many tasks (wizard)
-   PluginFusioninventoryProfile::checkRight("task","w");
+   PluginFusioninventoryProfile::checkRight("task", "w");
    $pfTaskjob = new PluginFusioninventoryTaskjob();
    $_SESSION["plugin_fusioninventory_forcerun"] = array();
    foreach ($_POST['taskjobstoforcerun'] as $taskjobs_id) {

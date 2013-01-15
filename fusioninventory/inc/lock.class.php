@@ -131,7 +131,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if ($typeright == "networkequipment") {
          $typeright = "networking";
       }
-      if (Session::haveRight($typeright,"w")) {
+      if (Session::haveRight($typeright, "w")) {
         $can = 1;
       }
 
@@ -295,7 +295,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $pfLock = new PluginFusioninventoryLock();
       $fieldsToLock = PluginFusioninventoryLock::getLockFields($p_table, $p_items_id);
       if (count($fieldsToLock)){
-         $fieldToDel=array_search($p_fieldToDel,$fieldsToLock);
+         $fieldToDel=array_search($p_fieldToDel, $fieldsToLock);
          if (isset($fieldsToLock[$fieldToDel])){
             unset ($fieldsToLock[$fieldToDel]);
          }
@@ -634,9 +634,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
                            $libunserialized = unserialize($infoSections["sections"][$datas['xmlSection']."/".$item->fields['items_id']]);
                            if ($datas['xmlSectionChild'] == "TYPE") {
                               if ($libunserialized[$datas['xmlSectionChild']] != "") {
-                                 $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized[$datas['xmlSectionChild']]);
+                                 $vallib = Dropdown::importExternal($itemtypeLink, $libunserialized[$datas['xmlSectionChild']]);
                               } else {
-                                 $vallib = Dropdown::importExternal($itemtypeLink,$libunserialized["MMODEL"]);
+                                 $vallib = Dropdown::importExternal($itemtypeLink, $libunserialized["MMODEL"]);
                               }
                            } else {
                               $itemdr = new $itemtypeLink();

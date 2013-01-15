@@ -355,7 +355,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             $macNotPhone = '';
             $phonePort_id = 0;
             foreach ($a_portconnection as $ifmac) {
-               $a_ports = $networkPort->find("`mac`='".$ifmac."'","", 1);
+               $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);
                $a_port = current($a_ports);
                if ($a_port['itemtype'] == 'Phone') {
                   // Connect phone on switch port and other (computer..) in this phone
@@ -422,7 +422,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             $pfiud->hubNetwork($this);
          } else { // One mac on port
             foreach ($a_portconnection as $ifmac) { //Only 1 time
-               $a_ports = $networkPort->find("`mac`='".$ifmac."'","", 1);
+               $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);
                if (count($a_ports) > 0) {
                   $a_port = current($a_ports);
                   $hub = 0;

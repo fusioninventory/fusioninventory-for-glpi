@@ -111,7 +111,7 @@ class PluginFusioninventoryStaticmisc {
    *
    * @param $a_itemtype array types yet added for definitions
    *
-   * @return array ('itemtype'=>'value','itemtype'=>'value'...)
+   * @return array ('itemtype'=>'value', 'itemtype'=>'value'...)
    *   itemtype itemtype of object
    *   value name of the itemtype
    **/
@@ -263,7 +263,7 @@ class PluginFusioninventoryStaticmisc {
    *
    * @param $a_itemtype array types yet added for definitions
    *
-   * @return array ('itemtype'=>'value','itemtype'=>'value'...)
+   * @return array ('itemtype'=>'value', 'itemtype'=>'value'...)
    *   itemtype itemtype of object
    *   value name of the itemtype
    **/
@@ -290,7 +290,7 @@ class PluginFusioninventoryStaticmisc {
                 LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c`
                    ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id`
                 WHERE `c`.`itemtype`='PluginFusinvinventoryVmwareESX'";
-      $query.= getEntitiesRestrictRequest(' AND','a');
+      $query.= getEntitiesRestrictRequest(' AND', 'a');
       $results = $DB->query($query);
 
       $agents = array();
@@ -300,7 +300,7 @@ class PluginFusioninventoryStaticmisc {
          $agents[$data['id']] = $data['name'];
       }
       if (!empty($agents)) {
-         return Dropdown::showFromArray('definitionselectiontoadd',$agents);
+         return Dropdown::showFromArray('definitionselectiontoadd', $agents);
       }
    }
 
@@ -329,11 +329,11 @@ class PluginFusioninventoryStaticmisc {
 
       $module = new PluginFusioninventoryAgentmodule();
       $module_infos = $module->getActivationExceptions('esx');
-      $exceptions = json_decode($module_infos['exceptions'],true);
+      $exceptions = json_decode($module_infos['exceptions'], true);
 
       $in = "";
       if (!empty($exceptions)) {
-         $in = " AND `a`.`id` NOT IN (".implode($exceptions,',').")";
+         $in = " AND `a`.`id` NOT IN (".implode($exceptions, ', ').")";
       }
 
       $query = "SELECT `a`.`id`, `a`.`name`
@@ -341,14 +341,14 @@ class PluginFusioninventoryStaticmisc {
                 LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c`
                    ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id`
                 WHERE `c`.`itemtype`='PluginFusioninventoryVmwareESX'";
-      $query.= getEntitiesRestrictRequest(' AND','glpi_plugin_fusioninventory_credentialips');
+      $query.= getEntitiesRestrictRequest(' AND', 'glpi_plugin_fusioninventory_credentialips');
 
       $results = $DB->query($query);
       $credentialips = array();
       while ($data = $DB->fetch_array($results)) {
          $credentialips[$data['id']] = $data['name'];
       }
-      return Dropdown::showFromArray('actionselectiontoadd',$credentialips);
+      return Dropdown::showFromArray('actionselectiontoadd', $credentialips);
    }
 
 

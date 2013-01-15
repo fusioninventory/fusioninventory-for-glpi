@@ -59,9 +59,9 @@ if (!isset($_SESSION['glpilanguage'])) {
    $_SESSION['glpilanguage'] = 'fr_FR';
 }
 
-ini_set('display_errors','On');
+ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
-set_error_handler(array('Toolbox','userErrorHandlerDebug'));
+set_error_handler(array('Toolbox', 'userErrorHandlerDebug'));
 $_SESSION['glpi_use_mode'] = 0;
 $_SESSION['glpiparententities'] = '';
 

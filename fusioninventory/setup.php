@@ -40,13 +40,13 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION","0.84+1.0");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.84+1.0");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
 
-define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE","0");
-define ("PLUGIN_FUSIONINVENTORY_REALVERSION","0.84+1.0 SNAPSHOT");
+define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
+define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.84+1.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
 // Init the hooks of fusioninventory
@@ -199,11 +199,11 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
 
          if (PluginFusioninventoryProfile::haveRight("agents", "r")
-            OR PluginFusioninventoryProfile::haveRight("remotecontrol","r")
-            OR PluginFusioninventoryProfile::haveRight("configuration","r")
-            OR PluginFusioninventoryProfile::haveRight("wol","r")
-            OR PluginFusioninventoryProfile::haveRight("unknowndevice","r")
-            OR PluginFusioninventoryProfile::haveRight("task","r")
+            OR PluginFusioninventoryProfile::haveRight("remotecontrol", "r")
+            OR PluginFusioninventoryProfile::haveRight("configuration", "r")
+            OR PluginFusioninventoryProfile::haveRight("wol", "r")
+            OR PluginFusioninventoryProfile::haveRight("unknowndevice", "r")
+            OR PluginFusioninventoryProfile::haveRight("task", "r")
             ) {
 
             $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
@@ -211,11 +211,11 @@ function plugin_init_fusioninventory() {
          
          
          $report_list = array();
-         if (PluginFusioninventoryProfile::haveRight("reportprinter","r")) {
+         if (PluginFusioninventoryProfile::haveRight("reportprinter", "r")) {
             $report_list["front/printerlogreport.php"] = __('Printed page counter', 'fusioninventory');
 
          }
-         if (PluginFusioninventoryProfile::haveRight("reportnetworkequipment","r")) {
+         if (PluginFusioninventoryProfile::haveRight("reportnetworkequipment", "r")) {
             $report_list["report/switch_ports.history.php"] = __('Switchs ports history', 'fusioninventory');
 
             $report_list["report/ports_date_connections.php"] = __('Unused switchs ports', 'fusioninventory');
@@ -286,8 +286,8 @@ function plugin_init_fusioninventory() {
 
 
 
-         if (PluginFusioninventoryProfile::haveRight("agent","r")) {
-            if (PluginFusioninventoryProfile::haveRight("agents","w")) {
+         if (PluginFusioninventoryProfile::haveRight("agent", "r")) {
+            if (PluginFusioninventoryProfile::haveRight("agents", "w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
             }
 
@@ -342,7 +342,7 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['page']  =
             '/plugins/fusioninventory/front/iprange.php';
 
-         if (PluginFusioninventoryProfile::haveRight("iprange","w")) {
+         if (PluginFusioninventoryProfile::haveRight("iprange", "w")) {
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['iprange'] =
                '../fusioninventory/front/iprange.form.php?add=1';
             $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['iprange'] =
@@ -350,7 +350,7 @@ function plugin_init_fusioninventory() {
          }
 
          if (PluginFusioninventoryCredential::hasAlLeastOneType()) {
-            if (PluginFusioninventoryProfile::haveRight("credential","w")) {
+            if (PluginFusioninventoryProfile::haveRight("credential", "w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredential'] =
                   '../fusioninventory/front/credential.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['PluginFusioninventoryCredential'] =
@@ -358,7 +358,7 @@ function plugin_init_fusioninventory() {
 
             }
 
-            if (PluginFusioninventoryProfile::haveRight("credential","w")) {
+            if (PluginFusioninventoryProfile::haveRight("credential", "w")) {
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredentialIp'] =
                   '../fusioninventory/front/credentialip.form.php?add=1';
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['PluginFusioninventoryCredentialIp'] =
@@ -462,7 +462,7 @@ function plugin_fusioninventory_check_prerequisites() {
       $_SESSION['glpi_plugins'] = array();
    }
    
-   if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
+   if (version_compare(GLPI_VERSION, '0.84', 'lt') || version_compare(GLPI_VERSION, '0.85', 'ge')) {
       echo __('Your GLPI version not compatible, require 0.84', 'fusioninventory');
 
       return false;

@@ -44,9 +44,9 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-Session::checkRight("config","w");
+Session::checkRight("config", "w");
 
-Html::header(__('Features', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","summary");
+Html::header(__('Features', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "summary");
 
 if (isset($_POST['update'])) {
 

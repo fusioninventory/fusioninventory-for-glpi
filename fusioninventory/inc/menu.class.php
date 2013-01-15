@@ -93,7 +93,7 @@ class PluginFusioninventoryMenu {
        * General
        */
       $a_menu = array();
-      if (Session::haveRight("config","w")) {
+      if (Session::haveRight("config", "w")) {
          $a_menu[0]['name'] = __('General configuration', 'fusioninventory');
          $a_menu[0]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
          $a_menu[0]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/config.form.php";
@@ -124,19 +124,19 @@ class PluginFusioninventoryMenu {
        * Tasks
        */
       $a_menu = array();
-      if(PluginFusioninventoryProfile::haveRight("task","r")) {
+      if(PluginFusioninventoryProfile::haveRight("task", "r")) {
          $a_menu[1]['name'] = __('Task management', 'fusioninventory')." (".__s('Summary').")";
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/tasksummary.php";
       }
 
-      if(PluginFusioninventoryProfile::haveRight("task","r")) {
+      if(PluginFusioninventoryProfile::haveRight("task", "r")) {
          $a_menu[2]['name'] = __('Task management', 'fusioninventory')." (".__s('Normal').")";
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTask');
       }
 
-      if (PluginFusioninventoryProfile::haveRight("task","r")) {
+      if (PluginFusioninventoryProfile::haveRight("task", "r")) {
          $a_menu[3]['name'] = __('Running jobs', 'fusioninventory');
          $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_runningjob.png";
          $a_menu[3]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTaskJob');
@@ -158,13 +158,13 @@ class PluginFusioninventoryMenu {
        */
       $a_menu = array();
      
-      if (Session::haveRight("rule_ocs","r")) {
+      if (Session::haveRight("rule_ocs", "r")) {
          $a_menu[1]['name'] = __('Equipment import and link rules', 'fusioninventory');
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryInventoryRuleImport');
       }
 
-      if (Session::haveRight("rule_ocs","r")) {
+      if (Session::haveRight("rule_ocs", "r")) {
          $a_menu[2]['name'] = __('Ignored import devices', 'fusioninventory');
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryIgnoredimportdevice');
@@ -218,7 +218,7 @@ class PluginFusioninventoryMenu {
          $a_menu[5]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/configsecurity.php";
       }
 
-      if (PluginFusioninventoryProfile::haveRight("task","r")) {
+      if (PluginFusioninventoryProfile::haveRight("task", "r")) {
          $a_menu[6]['name'] = __('Discovery status', 'fusioninventory');
          $a_menu[6]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_discovery_status.png";
          $a_menu[6]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/statediscovery.php";
@@ -318,7 +318,7 @@ class PluginFusioninventoryMenu {
       echo "<tr>";
       echo "<th colspan='".count($a_menu)."' nowrap width='".$width."'>
          <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
-         &nbsp;".str_replace("FusionInventory ","",$menu_name)."&nbsp;
+         &nbsp;".str_replace("FusionInventory ", "", $menu_name)."&nbsp;
          <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
       </th>";
       echo "</tr>";
@@ -329,7 +329,7 @@ class PluginFusioninventoryMenu {
       echo "<table>";
       foreach ($a_menu as $menu_id) {
          echo "<tr>";
-         $menu_id['pic'] = str_replace("/menu_","/menu_mini_",$menu_id['pic']);
+         $menu_id['pic'] = str_replace("/menu_", "/menu_mini_", $menu_id['pic']);
          echo "<th>
                <img src='".$menu_id['pic']."' width='16' height='16'/></th>";
          echo "<th colspan='".(count($a_menu) - 1)."' width='".($width - 40)."'>

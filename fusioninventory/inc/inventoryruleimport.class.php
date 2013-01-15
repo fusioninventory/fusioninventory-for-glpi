@@ -370,7 +370,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $where_entity = "";
       if (isset($input['entities_id'])) {
          if (is_array($input['entities_id'])) {
-            $where_entity .= implode($input['entities_id'],',');
+            $where_entity .= implode($input['entities_id'], ', ');
          } else {
             $where_entity .= $input['entities_id'];
          }
@@ -432,7 +432,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             case 'mac':
                $sql_where_temp = " AND `glpi_networkports`.`mac` IN ('";
                if (is_array($input['mac'])) {
-                  $sql_where_temp .= implode("', '",$input['mac']);
+                  $sql_where_temp .= implode("', '", $input['mac']);
                } else {
                   $sql_where_temp .= $input['mac'];
                }
@@ -444,7 +444,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             case 'ip':
                $sql_where .= " AND `glpi_ipaddresses`.`ip` IN ('";
                if (is_array($input['ip'])) {
-                  $sql_where .= implode("', '",$input['ip']);
+                  $sql_where .= implode("', '", $input['ip']);
                } else {
                   $sql_where .= $input['ip'];
                }

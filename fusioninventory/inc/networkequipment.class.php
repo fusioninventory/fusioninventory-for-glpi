@@ -92,14 +92,14 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
 
    function showForm(CommonDBTM $item, $options=array()) {
-      global $DB,$CFG_GLPI;
+      global $DB, $CFG_GLPI;
       
-      if (!PluginFusioninventoryProfile::haveRight("networkequipment","r")) {
+      if (!PluginFusioninventoryProfile::haveRight("networkequipment", "r")) {
          NetworkPort::showForItem($item);
          return;
       }
       $canedit = false;
-      if (PluginFusioninventoryProfile::haveRight("networkequipment","w")) {
+      if (PluginFusioninventoryProfile::haveRight("networkequipment", "w")) {
          $canedit = true;
       }
 
@@ -150,7 +150,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       // * Get all ports compose tha aggregat
       $a_aggregated_ports = array();
-      $query = "SELECT *,glpi_plugin_fusioninventory_networkports.mac as ifmacinternal
+      $query = "SELECT *, glpi_plugin_fusioninventory_networkports.mac as ifmacinternal
       FROM glpi_plugin_fusioninventory_networkports
       LEFT JOIN glpi_networkports
       ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
@@ -178,7 +178,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       }
       
       $query = "
-      SELECT *,glpi_plugin_fusioninventory_networkports.mac as ifmacinternal
+      SELECT *, glpi_plugin_fusioninventory_networkports.mac as ifmacinternal
 
       FROM glpi_plugin_fusioninventory_networkports
 
@@ -220,7 +220,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                   foreach ($a_ports as $port_id) {
                      
                      $query_agp = "
-                     SELECT *,glpi_plugin_fusioninventory_networkports.mac as ifmacinternal
+                     SELECT *, glpi_plugin_fusioninventory_networkports.mac as ifmacinternal
 
                      FROM glpi_plugin_fusioninventory_networkports
 
@@ -267,7 +267,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
     *
     * @return better size format
     */
-   private function byteSize($bytes,$sizeoct=1024) {
+   private function byteSize($bytes, $sizeoct=1024) {
       $size = $bytes / $sizeoct;
       if ($size < $sizeoct) {
          $size = number_format($size, 0);
@@ -561,7 +561,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
    
    function showNetworkPortDetailHeader($data, $monitoring, $query) {
-      global $DB,$CFG_GLPI;
+      global $DB, $CFG_GLPI;
 
       $a_pref = DisplayPreference::getForTypeUser('PluginFusioninventoryNetworkport', 
                                                   Session::getLoginUserID());
@@ -575,7 +575,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo ' ('.$DB->numrows($result).')';
       
       $tmp = " class='pointer' onClick=\"var w = window.open('".$CFG_GLPI["root_doc"].
-             "/front/popup.php?popup=search_config&amp;itemtype=PluginFusioninventoryNetworkPort' ,'glpipopup', ".
+             "/front/popup.php?popup=search_config&amp;itemtype=PluginFusioninventoryNetworkPort' , 'glpipopup', ".
              "'height=400, width=1000, top=100, left=100, scrollbars=yes'); w.focus();\"";
 
       echo " <img alt=\"".__s('Select default items to show')."\" title=\"".
@@ -674,7 +674,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    
    
    function showNetworkPortDetail($data, $monitoring, $aggrega=0) {
-      global $CFG_GLPI,$DB;
+      global $CFG_GLPI, $DB;
       
       $nw = new NetworkPort_NetworkPort();
       $networkName = new NetworkName();
@@ -735,14 +735,14 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                break;
 
             case 5:
-               echo "<td>".$this->byteSize($data["ifspeed"],1000)."bps</td>";
+               echo "<td>".$this->byteSize($data["ifspeed"], 1000)."bps</td>";
                break;
 
             case 6:
                echo "<td>";
-               if (strstr($data["ifstatus"], "up") OR strstr($data["ifinternalstatus"],"1")) {
+               if (strstr($data["ifstatus"], "up") OR strstr($data["ifinternalstatus"], "1")) {
                   echo "<img src='".$CFG_GLPI['root_doc']."/pics/greenbutton.png'/>";
-               } else if (strstr($data["ifstatus"],"down")
+               } else if (strstr($data["ifstatus"], "down")
                            OR strstr($data["ifinternalstatus"], "2")) {
                   echo "<img src='".$CFG_GLPI['root_doc']."/pics/redbutton.png'/>";
                } else if (strstr($data["ifstatus"], "testing")
@@ -761,13 +761,13 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                if ($data["ifinoctets"] == "0") {
                   echo "-";
                } else {
-                  echo $this->byteSize($data["ifinoctets"],1000)."o";
+                  echo $this->byteSize($data["ifinoctets"], 1000)."o";
                }
                echo " / ";
                if ($data["ifinoctets"] == "0") {
                   echo "-";
                } else {
-                  echo $this->byteSize($data["ifoutoctets"],1000)."o";
+                  echo $this->byteSize($data["ifoutoctets"], 1000)."o";
                }
 
                echo "</td>";

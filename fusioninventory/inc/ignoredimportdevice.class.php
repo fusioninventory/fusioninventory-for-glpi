@@ -73,7 +73,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       }
 
       $nb_elements = countElementsInTableForMyEntities($this->getTable());
-      Html::printAjaxPager('',$start,$nb_elements);
+      Html::printAjaxPager('', $start, $nb_elements);
       
       echo "<br/><table class='tab_cadrehov' >";
 
@@ -122,7 +122,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       $query = "SELECT * FROM `".$this->getTable()."`
          WHERE ".getEntitiesRestrictRequest("", $this->getTable(), '', '', $this->maybeRecursive())."
          ORDER BY `date`DESC
-         LIMIT ".intval($start).",".intval($_SESSION['glpilist_limit']);
+         LIMIT ".intval($start).", ".intval($_SESSION['glpilist_limit']);
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          echo "<tr class='tab_bg_1'>";
@@ -185,7 +185,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
       echo "</table><br/>";
       
-      Html::printAjaxPager('',$start,$nb_elements);
+      Html::printAjaxPager('', $start, $nb_elements);
    }
 }
 

@@ -344,7 +344,7 @@ class PluginFusioninventoryFormatconvert {
             foreach ($array['VIDEOS'] as $a_videos) {
                if (is_array($a_videos)
                        && isset($a_videos['NAME'])) {
-                  $array_tmp = $thisc->addValues($a_videos,array(
+                  $array_tmp = $thisc->addValues($a_videos, array(
                                                               'NAME'   => 'designation', 
                                                               'MEMORY' => 'memory'));
                   if (!isset($array_tmp['memory'])) {
@@ -888,7 +888,7 @@ class PluginFusioninventoryFormatconvert {
                $array_tmp = array();
                foreach ($a_inventory['storage'] as $num=>$a_physicalvol) {
                   $volumn = $a_drives['VOLUMN'];
-                  $volumn = substr_replace($volumn ,"",-1);
+                  $volumn = substr_replace($volumn , "", -1);
                   $volumn = str_replace("/dev/", "", $volumn);
                   if ($volumn == $a_physicalvol['name']) {
                      $array_tmp['name'] = $a_drives['VOLUMN'];
@@ -1312,15 +1312,15 @@ class PluginFusioninventoryFormatconvert {
    static function getTypeDrive($data) {
       if (((isset($data['TYPE'])) AND
               ((preg_match("/rom/i", $data["TYPE"])) OR (preg_match("/dvd/i", $data["TYPE"]))
-               OR (preg_match("/blue.{0,1}ray/i", $data["TYPE"]))))
+               OR (preg_match("/blue.{0, 1}ray/i", $data["TYPE"]))))
             OR
          ((isset($data['MODEL'])) AND
               ((preg_match("/rom/i", $data["MODEL"])) OR (preg_match("/dvd/i", $data["MODEL"]))
-               OR (preg_match("/blue.{0,1}ray/i", $data["MODEL"]))))
+               OR (preg_match("/blue.{0, 1}ray/i", $data["MODEL"]))))
             OR
          ((isset($data['NAME'])) AND
               ((preg_match("/rom/i", $data["NAME"])) OR (preg_match("/dvd/i", $data["NAME"]))
-               OR (preg_match("/blue.{0,1}ray/i", $data["NAME"]))))) {
+               OR (preg_match("/blue.{0, 1}ray/i", $data["NAME"]))))) {
          
          return "Drive";
       } else {

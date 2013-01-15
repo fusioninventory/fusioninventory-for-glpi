@@ -78,7 +78,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
             // Detect if agent exists
             if($item->getFromDB($items_id)) {
                if($task->fields['communication'] == 'push') {
-                  $agentStatus = $job->getStateAgent('1',$items_id);
+                  $agentStatus = $job->getStateAgent('1', $items_id);
                   if ($agentStatus) {
                      $agent_actionslist[$items_id] = 1;
                   }

@@ -195,8 +195,8 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     **/
    static function haveRight($p_type, $p_right) {
       $matches=array(
-            ""  => array("","r","w"), // ne doit pas arriver normalement
-            "r" => array("r","w"),
+            ""  => array("", "r", "w"), // ne doit pas arriver normalement
+            "r" => array("r", "w"),
             "w" => array("w"),
                );
       if (isset($_SESSION["glpi_plugin_fusioninventory_profile"][$p_type])
@@ -267,7 +267,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     **/
    function showProfileForm($items_id, $target) {
 
-      if (!Session::haveRight("profile","r")) return false;
+      if (!Session::haveRight("profile", "r")) return false;
 
       echo "<form name='form' method='post' action=\"$target\">";
       echo "<div align='center'>";

@@ -44,15 +44,15 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT."/inc/includes.php");
 
-Session::checkRight("printer","r");
-PluginFusioninventoryProfile::checkRight("printer","r");
+Session::checkRight("printer", "r");
+PluginFusioninventoryProfile::checkRight("printer", "r");
 
 $pfPrinterLog = new PluginFusioninventoryPrinterLog();
 print_r($_POST);
 exit;
 if ((isset($_POST['delete']))) {
 
-   PluginFusioninventoryProfile::checkRight("printer","w");
+   PluginFusioninventoryProfile::checkRight("printer", "w");
 
    if (isset($_POST['limit'])) {
       for ($i=0 ; $i<$_POST['limit'] ; $i++) {

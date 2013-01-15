@@ -46,9 +46,9 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-//Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","models");
+//Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "models");
 
-PluginFusioninventoryProfile::checkRight("model","r");
+PluginFusioninventoryProfile::checkRight("model", "r");
 
 $pfImportExport = new PluginFusioninventorySnmpmodelImportExport();
 
@@ -56,7 +56,7 @@ header("Expires: 0");
 header("Cache-control: private");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Content-Description: File Transfer");
-header('Content-type: application/xml; charset="utf-8"',true);
+header('Content-type: application/xml; charset="utf-8"', true);
 header("Content-disposition: attachment; filename=export.xml");
 
 echo $pfImportExport->export($_GET["model"]);

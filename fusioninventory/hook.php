@@ -341,7 +341,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
       case 'Computer':
          if ($table.'.'.$field == 'glpi_plugin_fusioninventory_networkports.id') {
             if (strstr($data["ITEM_$num"], "$")) {
-               $split=explode("$$$$",$data["ITEM_$num"]);
+               $split=explode("$$$$", $data["ITEM_$num"]);
                $ports = array();
 
                foreach ($split as $portconcat) {
@@ -368,7 +368,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
       case 'Printer':
          if ($table.'.'.$field == 'glpi_plugin_fusioninventory_networkequipments.name') {
             if (strstr($data["ITEM_$num"], "$")) {
-               $split=explode("$$$$",$data["ITEM_$num"]);
+               $split=explode("$$$$", $data["ITEM_$num"]);
                $out = implode("<br/>", $split);
                return $out;
             }
@@ -466,7 +466,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
             case "glpi_plugin_fusioninventory_networkequipments.id" :
                $out = '';
                $NetworkPort = new NetworkPort;
-               $list = explode("$$$$",$data["ITEM_$num"]);
+               $list = explode("$$$$", $data["ITEM_$num"]);
                foreach ($list as $numtmp=>$vartmp) {
                   $NetworkPort->getDeviceData($vartmp, 'PluginFusioninventoryUnknownDevice');
 
@@ -485,7 +485,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
             case "glpi_plugin_fusioninventory_networkports.id" :
                $out = '';
                if (!empty($data["ITEM_$num"])) {
-                  $list = explode("$$$$",$data["ITEM_$num"]);
+                  $list = explode("$$$$", $data["ITEM_$num"]);
                   $np = new NetworkPort;
                   foreach ($list as $numtmp=>$vartmp) {
                      $np->getFromDB($vartmp);
@@ -568,7 +568,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
 
             // ** Location of switch
             case "glpi_locations.id" :
-               $out = Dropdown::getDropdownName("glpi_locations",$data["ITEM_$num"]);
+               $out = Dropdown::getDropdownName("glpi_locations", $data["ITEM_$num"]);
                return "<center>".$out."</center>";
                break;
 
@@ -583,7 +583,7 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
             // ** Display entity name
             case "glpi_entities.name" :
                if ($data["ITEM_$num"] == '') {
-                  $out = Dropdown::getDropdownName("glpi_entities",$data["ITEM_$num"]);
+                  $out = Dropdown::getDropdownName("glpi_entities", $data["ITEM_$num"]);
                   return "<center>".$out."</center>";
                }
                break;
@@ -631,14 +631,14 @@ function plugin_fusioninventory_giveItem($type,$id,$data,$num) {
             // ** Display Old Value (before changement of value)
             case "glpi_plugin_fusinvsnmp_networkportlogs.old_value" :
                // TODO ADD LINK TO DEVICE
-               if ((substr_count($data["ITEM_$num"],":") == 5) AND (empty($data["ITEM_3"]))) {
+               if ((substr_count($data["ITEM_$num"], ":") == 5) AND (empty($data["ITEM_3"]))) {
                   return "<center><b>".$data["ITEM_$num"]."</b></center>";
                }
                break;
 
             // ** Display New Value (new value modified)
             case "glpi_plugin_fusinvsnmp_networkportlogs.new_value" :
-               if ((substr_count($data["ITEM_$num"],":") == 5) AND (empty($data["ITEM_3"]))) {
+               if ((substr_count($data["ITEM_$num"], ":") == 5) AND (empty($data["ITEM_3"]))) {
                   return "<center><b>".$data["ITEM_$num"]."</b></center>";
                }
                break;
@@ -822,7 +822,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             return array();
          } else { // Non template case / editing an existing object
             $array = array ();
-            if (PluginFusioninventoryProfile::haveRight("task","r")) {
+            if (PluginFusioninventoryProfile::haveRight("task", "r")) {
                $array[2] = __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
             }
             if ($_GET['id'] > 0) {
@@ -840,7 +840,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
             if (PluginFusioninventoryProfile::haveRight("printer", "r")) {
                $array[1] = __('FusInv', 'fusioninventory')." ".__('SNMP', 'fusioninventory');
             }
-            if (PluginFusioninventoryProfile::haveRight("task","r")) {
+            if (PluginFusioninventoryProfile::haveRight("task", "r")) {
                $array[2] = __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
             }
             return $array;
@@ -867,7 +867,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
       case 'PluginFusioninventoryUnknownDevice' :
          $array = array ();
          if ($_GET['id'] > 0) {
-            if (PluginFusioninventoryProfile::haveRight("unknowndevice","r")) {
+            if (PluginFusioninventoryProfile::haveRight("unknowndevice", "r")) {
                $array[1] = __('FusInv', 'fusioninventory')." ".__('XML', 'fusioninventory');
 
             }
@@ -877,7 +877,7 @@ function plugin_get_headings_fusioninventory($item,$withtemplate) {
 
       case 'PluginFusioninventoryCredentialIp':
          $array = array();
-         if (PluginFusioninventoryProfile::haveRight("task","r")) {
+         if (PluginFusioninventoryProfile::haveRight("task", "r")) {
             $array[1] = __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
 
          }
@@ -959,7 +959,7 @@ function plugin_headings_fusioninventory_xml($item) {
    $type = get_Class($item);
    $id = $item->getField('id');
 
-   $folder = substr($id,0,-1);
+   $folder = substr($id, 0, -1);
    if (empty($folder)) {
       $folder = '0';
    }
@@ -1155,12 +1155,12 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
          break;
 
       case 'glpi_plugin_fusioninventory_agents.threads_discovery' :
-         Dropdown::showInteger("threads_discovery", $linkfield,1,400);
+         Dropdown::showInteger("threads_discovery", $linkfield, 1, 400);
          return true;
          break;
 
       case 'glpi_plugin_fusioninventory_agents.threads_query' :
-         Dropdown::showInteger("threads_query", $linkfield,1,400);
+         Dropdown::showInteger("threads_query", $linkfield, 1, 400);
          return true;
          break;
 
@@ -1171,7 +1171,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
          $type_list[] = PRINTER_TYPE;
          $type_list[] = PERIPHERAL_TYPE;
          $type_list[] = PHONE_TYPE;
-         Device::dropdownTypes('type',$linkfield,$type_list);
+         Device::dropdownTypes('type', $linkfield, $type_list);
          return true;
          break;
 
@@ -1303,8 +1303,11 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
 
       case "plugin_fusioninventory_unknown_import" :
                if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
+         if ($options['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+               if (PluginFusioninventoryProfile::haveRight("unknowndevice", "w")) {
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . __('Post') . "\" >";
                }
+         }
          break;
 
       case 'plugin_fusioninventory_transfert':
@@ -1449,13 +1452,13 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          break;
 
       case "plugin_fusioninventory_unknown_import" :
-         if (PluginFusioninventoryProfile::haveRight("unknowndevice","w")) {
+         if (PluginFusioninventoryProfile::haveRight("unknowndevice", "w")) {
             $Import = 0;
             $NoImport = 0;
             $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
             foreach ($data['item'] as $key => $val) {
                if ($val == 1) {
-                  list($Import, $NoImport) = $pfUnknownDevice->import($key,$Import,$NoImport);
+                  list($Import, $NoImport) = $pfUnknownDevice->import($key, $Import, $NoImport);
                }
             }
              Session::addMessageAfterRedirect(__('Number of imported devices', 'fusioninventory')." : ".$Import);
@@ -2024,14 +2027,14 @@ function plugin_fusioninventory_addOrderBy($type,$id,$order,$key=0) {
       $displaypref = DisplayPreference::getForTypeUser($type, Session::getLoginUserID());
       if (count($displaypref)) {
          foreach ($displaypref as $val) {
-            array_push($toview,$val);
+            array_push($toview, $val);
          }
       }
 
       // Add searched items
       if (count($_GET['field'])>0) {
          foreach ($_GET['field'] as $key => $val) {
-            if (!in_array($val,$toview) && $val!='all' && $val!='view') {
+            if (!in_array($val, $toview) && $val!='all' && $val!='view') {
                array_push($toview, $val);
             }
          }
@@ -2420,11 +2423,13 @@ function plugin_pre_item_purge_fusioninventory($parm) {
       $networkPort = new NetworkPort();
       if ($networkPort->getFromDB($parm->fields['networkports_id_1'])) {
          if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
-            PluginFusioninventoryNetworkPortLog::addLogConnection("remove",$parm->fields['networkports_id_1']);
+            PluginFusioninventoryNetworkPortLog::addLogConnection("remove",
+                                                                $parm->fields['networkports_id_1']);
          } else {
             $networkPort->getFromDB($parm->fields['networkports_id_2']);
             if (($networkPort->fields['itemtype']) == 'NetworkEquipment') {
-               PluginFusioninventoryNetworkPortLog::addLogConnection("remove",$parm->fields['networkports_id_2']);
+               PluginFusioninventoryNetworkPortLog::addLogConnection("remove",
+                                                                $parm->fields['networkports_id_2']);
             }
          }
       }
@@ -2484,11 +2489,13 @@ function plugin_item_add_fusioninventory($parm) {
       $networkPort = new NetworkPort();
       $networkPort->getFromDB($parm->fields['networkports_id_1']);
       if ($networkPort->fields['itemtype'] == 'NetworkEquipment') {
-         PluginFusioninventoryNetworkPortLog::addLogConnection("make",$parm->fields['networkports_id_1']);
+         PluginFusioninventoryNetworkPortLog::addLogConnection("make",
+                                                               $parm->fields['networkports_id_1']);
       } else {
          $networkPort->getFromDB($parm->fields['networkports_id_2']);
          if ($networkPort->fields['itemtype'] == 'NetworkEquipment') {
-            PluginFusioninventoryNetworkPortLog::addLogConnection("make",$parm->fields['networkports_id_2']);
+            PluginFusioninventoryNetworkPortLog::addLogConnection("make",
+                                                               $parm->fields['networkports_id_2']);
          }
       }
       break;

@@ -82,7 +82,7 @@ class PluginFusioninventoryCommunication {
    function setMessage($message) {
       // avoid xml warnings
       $this->message = @simplexml_load_string(
-         $message,'SimpleXMLElement',
+         $message, 'SimpleXMLElement',
          LIBXML_NOCDATA
       );
    }

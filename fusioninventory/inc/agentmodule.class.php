@@ -323,7 +323,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             $sep  = '';
             foreach ($a_agentList as $agent_id) {
                if ($i> 0) {
-                  $sep  = ',';
+                  $sep  = ', ';
                }
                $where .= $sep.$agent_id;
                $i++;
@@ -343,7 +343,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             $sep  = '';
             foreach ($a_agentList as $agent_id) {
                if ($i> 0) {
-                  $sep  = ',';
+                  $sep  = ', ';
                }
                $where .= $sep.$agent_id;
                $i++;

@@ -59,7 +59,7 @@ class PluginFusioninventoryInventoryRuleEntityCollection extends RuleCollection 
 
 
 
-   function prepareInputDataForProcess($input,$params) {
+   function prepareInputDataForProcess($input, $params) {
 
       return $input;
    }

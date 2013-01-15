@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvsnmpConstructmodel extends CommonDBTM {
-   private $fp, $auth=array(),$key='';
+   private $fp, $auth=array(), $key='';
 
    function connect() {
       global $CFG_GLPI;
@@ -62,7 +62,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          }
       }
       curl_setopt($this->fp, CURLOPT_POST, true);
-      curl_setopt($this->fp,CURLOPT_HTTPHEADER,array('Expect:'));
+      curl_setopt($this->fp, CURLOPT_HTTPHEADER, array('Expect:'));
       return true;
    }
    
@@ -228,7 +228,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    function sendGetsysdescr($sysdescr, $itemtype, $devices_id = 0) {
-      global $CFG_GLPI,$DB;
+      global $CFG_GLPI, $DB;
       
       $getsysdescr = array();
       if ($devices_id > 0) {
@@ -789,7 +789,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    function displayModelsList($data, $nb_devices, $a_sort, $modelimport) {
-      global $CFG_GLPI,$DB;
+      global $CFG_GLPI, $DB;
       
       echo  "<table class='tab_cadre'>";
 
@@ -958,9 +958,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          $this->closeConnection();
          
          $i++;
-         Html::changeProgressBarPosition($i,$nb,"$i / $nb");
+         Html::changeProgressBarPosition($i, $nb, "$i / $nb");
       }
-      Html::changeProgressBarPosition($nb,$nb,"$nb / $nb");
+      Html::changeProgressBarPosition($nb, $nb, "$nb / $nb");
       echo "</td>";
       echo "</tr>";  
       echo "</table>";
@@ -991,9 +991,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             $pfImportExport->import($file, 0);
             
             $i++;
-            Html::changeProgressBarPosition($i,$nb,"$i / $nb");
+            Html::changeProgressBarPosition($i, $nb, "$i / $nb");
          }
-         Html::changeProgressBarPosition($nb,$nb,"$nb / $nb");
+         Html::changeProgressBarPosition($nb, $nb, "$nb / $nb");
          echo "</td>";
          echo "</tr>";  
          echo "</table>";
@@ -1136,9 +1136,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          $message[] = array('oid' => '.1.3.6.1.4.1.1248.1.1.3.1.3.8.0');
       } else if (strstr($sysdescr, 'EPSON Internal 10Base-T')) {
          $message[] = array('oid' => '.1.3.6.1.2.1.25.3.2.1.3.1');
-      } else if (strstr($sysdescr, ',HP,JETDIRECT,J')) {
+      } else if (strstr($sysdescr, ', HP, JETDIRECT, J')) {
          $message[] = array('oid' => '.1.3.6.1.4.1.1229.2.2.2.1.15.1');
-      } else if (strstr($sysdescr, 'SAMSUNG NETWORK PRINTER,ROM')) {
+      } else if (strstr($sysdescr, 'SAMSUNG NETWORK PRINTER, ROM')) {
          $message[] = array('oid' => '.1.3.6.1.4.1.236.11.5.1.1.1.1.0');
       } else if (strstr($sysdescr, 'RICOH NETWORK PRINTER')) {
          $message[] = array('oid' => '.1.3.6.1.4.1.11.2.3.9.1.1.7.0');

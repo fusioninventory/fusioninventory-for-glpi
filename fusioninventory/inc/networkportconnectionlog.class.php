@@ -48,7 +48,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
 
 
    function showForm($input='') {
-      global $DB,$CFG_GLPI;
+      global $DB, $CFG_GLPI;
 
       $NetworkPort = new NetworkPort();
 
@@ -96,7 +96,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
          ".$condition."
          ORDER BY `date`DESC, `plugin_fusioninventory_agentprocesses_id` DESC";
       if (!isset($input['process_number'])) {
-         $query .= " LIMIT 0,500";
+         $query .= " LIMIT 0, 500";
       }
 
       $result = $DB->query($query);

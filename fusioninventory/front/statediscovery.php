@@ -44,9 +44,9 @@ define('GLPI_ROOT', '../../..');
 
 include (GLPI_ROOT . "/inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER["PHP_SELF"],"plugins","fusioninventory","statediscovery");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "statediscovery");
 
-PluginFusioninventoryProfile::checkRight("task","r");
+PluginFusioninventoryProfile::checkRight("task", "r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
