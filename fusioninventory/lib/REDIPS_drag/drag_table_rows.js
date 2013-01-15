@@ -12,9 +12,9 @@ redipsInit = function () {
    // reference to the REDIPS.drag library and message line
    var rd = REDIPS.drag, msg;
    // initialization
-   rd.init("drag_checks");
-   rd.init("drag_files");
-   rd.init("drag_actions");
+   if (document.getElementById("drag_checks")  != null) rd.init("drag_checks");
+   if (document.getElementById("drag_files")   != null) rd.init("drag_files");
+   if (document.getElementById("drag_actions") != null) rd.init("drag_actions");
    // set hover color for TD and TR
    rd.hover.colorTr = '#FFF4DF';
    // set hover border for current TD and TR
