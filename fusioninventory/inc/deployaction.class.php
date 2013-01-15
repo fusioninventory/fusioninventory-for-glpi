@@ -167,16 +167,20 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          case 'move':
          case 'copy':
             $value_label_1 = __("From");
+            $name_label_1 = "from";
             $value_label_2 = __("To");
+            $name_label_2 = "to";
             break;
          case 'cmd':
             $value_label_1 = __("exec");
+            $name_label_1 = "exec";
             $value_label_2 = false;
             $value_type_1  = "textarea";
             break;
          case 'delete':
          case 'mkdir':
             $value_label_1 = __("path");
+            $name_label_1 = "list[]";
             $value_label_2 = false;
             break;
       }
@@ -187,10 +191,10 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       echo "<td>";
       switch ($value_type_1) {
          case "input":
-            echo "<input type='text' name='path1' />";
+            echo "<input type='text' name='$name_label_1' />";
             break;
          case "textarea":
-            echo "<textarea name='path1' rows='5'></textarea>";
+            echo "<textarea name='$name_label_1' rows='5'></textarea>";
             break;
       }
       echo "</td>";
@@ -198,7 +202,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       if ($value_label_2 !== false) {
          echo "<tr>";
          echo "<th>$value_label_2</th>";
-         echo "<td><input type='text' name='path1'</td>";
+         echo "<td><input type='text' name='$name_label_2'</td>";
          echo "</tr>";
       }
       echo "<tr>";
@@ -210,8 +214,21 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
    }
 
    static function add_item($params) {
-      echo "action::add_item";
-      exit;
+      //prepare new action entry to insert in json
+      if (isset($params['list'])) $tmp['list'] = $params['list'];
+      if (isset($params['from'])) $tmp['from'] = $params['from'];
+      if (isset($params['to']))   $tmp['to']   = $params['to'];
+      if (isset($params['exec'])) $tmp['exec'] = $params['exec'];
+      $new_entry[ $params['deploy_actiontype']] = $tmp;
+
+      //get current order json
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+
+      //add new entry
+      $datas['jobs']['actions'][] = $new_entry;
+
+      //update order
+      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
    static function remove_item($params) {
