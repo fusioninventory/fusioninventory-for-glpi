@@ -115,7 +115,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                      echo "</td><td>";
                   }
                } 
-            } else echo "$key : $value;";
+            } else echo "$key : $value";
             echo "</td>";
          }
          echo "<td class='rowhandler'><div class='drag row'></div></td>";
