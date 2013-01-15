@@ -94,7 +94,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<form name='removecheck' method='post' action='deploypackage.form.php?remove_item'>";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployCheck' />";
-      if (!isset($datas['jobs']['checks'])) return;
+      if (!isset($datas['jobs']['checks']) || empty($datas['jobs']['checks'])) return;
       echo "<div id='drag_checks'><table class='tab_cadrehov' id='dragtable' style='width:100%'>";
       $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {

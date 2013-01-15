@@ -94,7 +94,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       Html::closeForm();
 
       //display stored actions datas
-      if (!isset($datas['jobs']['actions'])) return;
+      if (!isset($datas['jobs']['actions']) || empty($datas['jobs']['actions'])) return;
       echo "<form name='removeactions' method='post' action='deploypackage.form.php?remove_item'>";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployAction' />";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";

@@ -91,7 +91,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       Html::closeForm();
 
       //display stored files datas
-      if (!isset($datas['jobs']['associatedFiles'])) return;
+      if (!isset($datas['jobs']['associatedFiles']) || empty($datas['jobs']['associatedFiles'])) return;
       echo "<form name='removefiles' method='post' action='deploypackage.form.php?remove_item'>";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployFile' />";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
