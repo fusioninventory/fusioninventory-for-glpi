@@ -4330,7 +4330,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   'value' => NULL
          ),
          'comment' =>  array(
-                  'type' => "text COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
+                  'type' => "text",
                   'value' => NULL
          ),
          'entities_id' =>  array(
@@ -4406,7 +4406,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             'value' => NULL
          ),
          'comment' =>  array(
-            'type' => "text COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
+            'type' => "text",
             'value' => NULL
          ),
          'date_mod' =>  array(
@@ -4462,7 +4462,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             'value' => NULL
          ),
          'comment' =>  array(
-            'type' => "text COLLATE utf8_unicode_ci NOT NULL DEFAULT ''",
+            'type' => "text",
             'value' => NULL
          ),
          'type' =>  array(
