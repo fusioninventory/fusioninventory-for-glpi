@@ -95,11 +95,12 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<form name='removefiles' method='post' action='deploypackage.form.php?remove_item'>";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployFile' />";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
-      echo "<div id='drag_files'><table class='tab_cadrehov' id='table_file' style='width:100%'>";
+      echo "<div id='drag_files'>";
+      echo "<table class='tab_cadrehov package_item_list' id='table_file'>";
       $i = 0;
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         echo "<td><input type='checkbox' name='file_entries[]' value='$i' /></td>";
+         echo "<td class='control'><input type='checkbox' name='file_entries[]' value='$i' /></td>";
          $filename = $datas['associatedFiles'][$sha512]['name'];
          echo "<td>";
          echo "<img src='".$CFG_GLPI['root_doc'].
@@ -109,7 +110,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo "<td>";
          echo self::processFilesize($datas['associatedFiles'][$sha512]['filesize']);
          echo "</td>";
-         echo "<td class='rowhandler'><div class='drag row'></div></td>";
+         echo "<td class='rowhandler control'><div class='drag row'></div></td>";
          $i++;
       }
       echo "<tr><td colspan='2'>";

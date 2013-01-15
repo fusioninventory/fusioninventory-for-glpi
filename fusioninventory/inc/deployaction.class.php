@@ -98,11 +98,12 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       echo "<form name='removeactions' method='post' action='deploypackage.form.php?remove_item'>";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployAction' />";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
-      echo "<div id='drag_actions'><table class='tab_cadrehov' id='table_action' style='width:100%'>";
+      echo "<div id='drag_actions'>";
+      echo "<table class='tab_cadrehov package_item_list' id='table_action'>";
       $i=0;
       foreach ($datas['jobs']['actions'] as $action) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         echo "<td><input type='checkbox' name='action_entries[]' value='$i' /></td>";
+         echo "<td class='control'><input type='checkbox' name='action_entries[]' value='$i' /></td>";
          $keys = array_keys($action);
          $action_type = array_shift($keys);
          echo "<td>$action_type</td>";
@@ -118,7 +119,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             } else echo "$key : $value";
             echo "</td>";
          }
-         echo "<td class='rowhandler'><div class='drag row'></div></td>";
+         echo "<td class='rowhandler control'><div class='drag row'></div></td>";
          echo "</tr>";
          $i++;
       }

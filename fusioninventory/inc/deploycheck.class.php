@@ -95,7 +95,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployCheck' />";
       if (!isset($datas['jobs']['checks']) || empty($datas['jobs']['checks'])) return;
-      echo "<div id='drag_checks'><table class='tab_cadrehov' id='table_check' style='width:100%'>";
+      echo "<div id='drag_checks'>";
+      echo "<table class='tab_cadrehov package_item_list' id='table_check'>";
       $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {
          //specific case for filesystem size
@@ -104,11 +105,11 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          }
 
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         echo "<td><input type='checkbox' name='check_entries[]' value='$i' /></td>";
+         echo "<td class='control'><input type='checkbox' name='check_entries[]' value='$i' /></td>";
          echo "<td>".$check['type']."</td>";
          echo "<td>".$check['path']."</td>";
-         echo "<td>".$check['value']."</td>";
-         echo "<td class='rowhandler'><div class='drag row'></div></td>";
+         echo "<td class='word-wrap'>".$check['value']."</td>";
+         echo "<td class='rowhandler control'><div class='drag row'></div></td>";
          echo "</tr>";
          $i++;
       }
