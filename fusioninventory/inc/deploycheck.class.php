@@ -101,7 +101,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       foreach ($datas['jobs']['checks'] as $check) {
          //specific case for filesystem size
          if (!empty($check['value']) && is_numeric($check['value'])) {
-            $check['value'] = round($check['value'] / (1024 * 1024))." MB";
+            //$check['value'] = round($check['value'] / (1024 * 1024))." MB";
+            $check['value'] = PluginFusioninventoryDeployFile::processFilesize($check['value']);
          }
 
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
