@@ -240,7 +240,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          echo "<td>";
          Dropdown::showFromArray('retchecks_type[]', $retchecks_entries);
          echo "</td>";
-         echo "<td>=</td><td><input type='text' name='retchecks_value[]' /></td>";
+         echo "<td>&nbsp;=&nbsp;</td><td><input type='text' name='retchecks_value[]' /></td>";
          echo "</tr>";
          echo "</table>";
          echo "</span>";

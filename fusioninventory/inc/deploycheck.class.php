@@ -147,7 +147,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
       echo "<script type='text/javascript'>
          function edit_check(index) {
-            Ext.get('plus_checks_block$rand').remove();
+            if (Ext.get('plus_checks_block$rand')) Ext.get('plus_checks_block$rand').remove();
             Ext.get('checks_block$rand').setDisplayed('block');
             Ext.get('checks_block$rand').load({
                   'url': '".$CFG_GLPI["root_doc"].
