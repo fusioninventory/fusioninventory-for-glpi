@@ -71,7 +71,20 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
    static function displayForm($orders_id, $datas, $rand) {
       global $CFG_GLPI;
       
-      echo "<div style='display:none' id='actions_block$rand'>";
+      if (!isset($datas['index'])) {
+         echo "<div style='display:none' id='actions_block$rand'>";
+      } else {
+         //== edit selected data ==
+         
+         //get current order json
+         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($orders_id), true);
+
+         //get data on index
+         $action = $datas_o['jobs']['actions'][$datas['index']];   
+         $tmp = array_keys($action);
+         $type = array_shift($tmp);
+         $action_values = $action[$type];
+      }
 
       echo "<span id='showActionType$rand'>&nbsp;</span>";
       echo "<script type='text/javascript'>";
@@ -79,6 +92,23 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          'rand'    => $rand,
          'subtype' => "action"
       );
+      if (isset($datas['index'])) {
+         $params['edit']    = "true";
+         $params['type']    = $type;
+         $params['index']   = $datas['index'];
+         if (isset($action_values['from']))  $params['value_1'] = $action_values['from'];
+         if (isset($action_values['exec']))  $params['value_1'] = $action_values['exec'];
+         if (isset($action_values['list']))  
+            $params['value_1'] = array_values($action_values['list'])[0];
+         if (isset($action_values['to']))    $params['value_2'] = $action_values['to'];
+
+         //protect fields
+         foreach($params as &$param) {
+            $param = addslashes($param);
+         }
+      }
+
+         
       Ajax::UpdateItemJsCode("showActionType$rand",
                              $CFG_GLPI["root_doc"].
                              "/plugins/fusioninventory/ajax/deploydropdown_packagesubtypes.php",
@@ -86,11 +116,14 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                              "dropdown_deploy_actiontype");
       echo "</script>";
 
-
+      //Html::printCleanArray($params);    
+      
       echo "<span id='showActionValue$rand'>&nbsp;</span>";
       
       echo "<hr>";
-      echo "</div>";
+      if (!isset($datas['index'])) {
+         echo "</div>";
+      } else return true;
       Html::closeForm();
 
       //display stored actions datas
@@ -109,7 +142,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          $keys = array_keys($action);
          $action_type = array_shift($keys);
          echo "<td title='$action_type'>";
-         echo "<a class='edit'>$action_type</a>";
+         echo "<a class='edit' onclick='edit_action($i)'>$action_type</a>";
          if (isset($action[$action_type]['retChecks'])) {
             echo "<a title='".__('return codes saved for this command')."' class='more'>...</a>";
          }
@@ -137,6 +170,24 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       echo "</td></tr>";
       echo "</table></div>";
       Html::closeForm();
+
+      echo "<script type='text/javascript'>
+         function edit_action(index) {
+            if (Ext.get('plus_actions_block$rand')) Ext.get('plus_actions_block$rand').remove();
+            Ext.get('actions_block$rand').setDisplayed('block');
+            Ext.get('actions_block$rand').load({
+                  'url': '".$CFG_GLPI["root_doc"].
+                             "/plugins/fusioninventory/ajax/deploypackage_form.php',
+                  'scripts': true,
+                  'params' : {
+                     'subtype': 'action',
+                     'index': index, 
+                     'orders_id': $orders_id, 
+                     'rand': '$rand'
+                  }
+               });
+         }
+      </script>";
    }
 
    static function dropdownType($datas) {
@@ -146,36 +197,57 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
       $actions_types = self::getTypes();
       array_unshift($actions_types, "---");
-
       echo "<table class='package_item'>";
       echo "<tr>";
       echo "<th>".__("Type")."</th>";
       echo "<td>";
-      Dropdown::showFromArray("deploy_actiontype", $actions_types, array('rand' => $rand));
+      $options['rand'] = $datas['rand'];
+      if (isset($datas['edit'])) {
+         $options['value'] = $datas['type'];
+      }
+      Dropdown::showFromArray("deploy_actiontype", $actions_types, $options);
       echo "</td>";
       echo "</tr></table>";
 
       //ajax update of action value span
-       $params = array(
-                      'value'  => '__VALUE__',
+      $params = array('value'  => '__VALUE__',
                       'rand'   => $rand,
                       'myname' => 'method',
                       'type'   => "action");
-      Ajax::updateItemOnEvent("dropdown_deploy_actiontype".$rand,
+      if (isset($datas['edit'])) {
+         $params['edit']   = "true";
+         $params['index']  = $datas['index'];
+         $params['value_1'] = addslashes($datas['value_1']);
+         $params['value_2'] = isset($datas['value_2'])?addslashes($datas['value_2']):0;
+      }
+      Ajax::updateItemOnEvent("dropdown_deploy_actiontype$rand",
                               "showActionValue$rand",
                               $CFG_GLPI["root_doc"].
                               "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                               $params,
                               array("change", "load"));
 
+      if (isset($datas['edit'])) {
+         echo "<script type='text/javascript'>";
+         Ajax::UpdateItemJsCode("showActionValue$rand",
+                                $CFG_GLPI["root_doc"].
+                                 "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
+                                $params,
+                                "dropdown_deploy_actiontype$rand");
+         echo "</script>";
+      }
    }
 
    static function displayAjaxValue($datas) {
+
+      //Html::printCleanArray($datas);
 
       $type = $datas['value'];
       $rand  = $datas['rand'];
 
       $value_type_1 = "input";
+      $value_1 = isset($datas['value_1'])?$datas['value_1']:"";
+      $value_2 = isset($datas['value_2'])?$datas['value_2']:"";
 
       switch ($type) {
          case 'move':
@@ -205,10 +277,10 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       echo "<td>";
       switch ($value_type_1) {
          case "input":
-            echo "<input type='text' name='$name_label_1' />";
+            echo "<input type='text' name='$name_label_1' value='$value_1' />";
             break;
          case "textarea":
-            echo "<textarea name='$name_label_1' rows='3'></textarea>";
+            echo "<textarea name='$name_label_1' rows='3'>$value_1</textarea>";
             break;
       }
       echo "</td>";
@@ -216,7 +288,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       if ($value_label_2 !== false) {
          echo "<tr>";
          echo "<th>$value_label_2</th>";
-         echo "<td><input type='text' name='$name_label_2'</td>";
+         echo "<td><input type='text' name='$name_label_2' value='$value_2'/></td>";
          echo "</tr>";
       }
 
@@ -250,8 +322,14 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
       echo "<tr>";
       echo "<td></td><td>";
-      echo "&nbsp;<input type='submit' name='add_item' value=\"".
-         __('Add')."\" class='submit' >";
+      if (isset($datas['edit'])) {
+         echo "<input type='hidden' name='index' value='".$datas['index']."' />";
+         echo "<input type='submit' name='save_item' value=\"".
+            _sx('button','Save')."\" class='submit' >";
+      } else {
+         echo "<input type='submit' name='add_item' value=\"".
+            _sx('button','Add')."\" class='submit' >";
+      }
       echo "</td>";
       echo "</tr></table>";
    }
@@ -281,6 +359,42 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
       //add new entry
       $datas['jobs']['actions'][] = $new_entry;
+
+      //update order
+      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+   }
+
+   static function save_item($params) {
+      //prepare updated action entry to insert in json
+      if (isset($params['list'])) $tmp['list'] = $params['list'];
+      if (isset($params['from'])) $tmp['from'] = $params['from'];
+      if (isset($params['to']))   $tmp['to']   = $params['to'];
+      if (isset($params['exec'])) $tmp['exec'] = $params['exec'];
+
+      //process ret checks
+      if (isset($params['retchecks_type']) && !empty($params['retchecks_type'])) {
+         foreach ($params['retchecks_type'] as $index => $type) {
+            $tmp['retChecks'][] = array(
+               'type' => $type,
+               'value' => array($params['retchecks_value'][$index])
+            );
+         }
+      }
+
+      //append prepared datas to new entry
+      $entry[ $params['deploy_actiontype']] = $tmp;
+
+      //get current order json
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+
+      //unset index 
+      unset($datas['jobs']['actions'][$params['index']]);
+
+      
+
+      //add new datas at index position 
+      //(array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
+      array_splice($datas['jobs']['actions'], $params['index'], 0, array($entry));
 
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
