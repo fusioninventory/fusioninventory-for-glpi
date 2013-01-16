@@ -96,16 +96,19 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          $params['edit']    = "true";
          $params['type']    = $type;
          $params['index']   = $datas['index'];
-         if (isset($action_values['from']))  $params['value_1'] = $action_values['from'];
-         if (isset($action_values['exec']))  $params['value_1'] = $action_values['exec'];
+         if (isset($action_values['from'])) {
+            $params['value_1'] = addslashes($action_values['from']);
+         }
+         if (isset($action_values['exec'])) {
+            $params['value_1'] = addslashes($action_values['exec']);
+         }
          if (isset($action_values['list']))  
             $params['value_1'] = array_values($action_values['list'])[0];
-         if (isset($action_values['to']))    $params['value_2'] = $action_values['to'];
-
-         //protect fields
-         foreach($params as &$param) {
-            $param = addslashes($param);
+         if (isset($action_values['to']))    $params['value_2'] = addslashes($action_values['to']);
+         if (isset($action_values['retChecks']))  {
+            $params['retChecks'] = json_encode($action_values['retChecks']);
          }
+
       }
 
          
@@ -215,10 +218,11 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                       'myname' => 'method',
                       'type'   => "action");
       if (isset($datas['edit'])) {
-         $params['edit']   = "true";
-         $params['index']  = $datas['index'];
-         $params['value_1'] = addslashes($datas['value_1']);
-         $params['value_2'] = isset($datas['value_2'])?addslashes($datas['value_2']):0;
+         $params['edit']      = "true";
+         $params['index']     = $datas['index'];
+         $params['value_1']   = addslashes($datas['value_1']);
+         $params['value_2']   = isset($datas['value_2'])?addslashes($datas['value_2']):0;
+         $params['retChecks'] = isset($datas['retChecks'])?$datas['retChecks']:0;
       }
       Ajax::updateItemOnEvent("dropdown_deploy_actiontype$rand",
                               "showActionValue$rand",
@@ -239,15 +243,13 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
    }
 
    static function displayAjaxValue($datas) {
-
-      //Html::printCleanArray($datas);
-
-      $type = $datas['value'];
-      $rand  = $datas['rand'];
-
+      $type         = $datas['value'];
+      $rand         = $datas['rand'];
+      
       $value_type_1 = "input";
-      $value_1 = isset($datas['value_1'])?$datas['value_1']:"";
-      $value_2 = isset($datas['value_2'])?$datas['value_2']:"";
+      $value_1      = isset($datas['value_1'])?$datas['value_1']:"";
+      $value_2      = isset($datas['value_2'])?$datas['value_2']:"";
+      $retChecks    = isset($datas['retChecks'])?json_decode($datas['retChecks'], true):"";
 
       switch ($type) {
          case 'move':
@@ -295,11 +297,13 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       //specific case for cmd : add retcheck form
       if ($type == "cmd") {
          echo "<tr>";
-         echo "<th>".__("return code");
+         echo "<th>".__("return codes");
          PluginFusioninventoryDeployPackage::plusButton("retchecks$rand", "table");
          echo "</th>";
          echo "<td>";
-         echo "<span id='retchecks$rand' style='display:none'>";
+         $display = "style='display:none'";
+         if (isset($datas['retChecks'])) $display = "style='display:block'";
+         echo "<span id='retchecks$rand' $display>";
          $retchecks_entries = array(
             '--',
             'okCode'       => __("okCode"),
@@ -307,14 +311,32 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             'okPattern'    => __("okPattern"),
             'errorPattern' => __("errorPattern")
          );
-         echo "<table class='table_retchecks'>";
-         echo "<tr>";
-         echo "<td>";
-         Dropdown::showFromArray('retchecks_type[]', $retchecks_entries);
-         echo "</td>";
-         echo "<td>&nbsp;=&nbsp;</td><td><input type='text' name='retchecks_value[]' /></td>";
-         echo "</tr>";
-         echo "</table>";
+         if (!isset($datas['retChecks'])) {
+            echo "<table class='table_retchecks'>";
+            echo "<tr>";
+            echo "<td>";
+            Dropdown::showFromArray('retchecks_type[]', $retchecks_entries);
+            echo "</td>";
+            echo "<td>&nbsp;=&nbsp;</td><td><input type='text' name='retchecks_value[]' /></td>";
+            echo "</tr>";
+            echo "</table>";
+         } else {
+            foreach ($retChecks as $retcheck) {
+               echo "<table class='table_retchecks'>";
+               echo "<tr>";
+               echo "<td>";
+               Dropdown::showFromArray('retchecks_type[]', $retchecks_entries, array(
+                  'value' => $retcheck['type']
+               ));
+               echo "</td>";
+               echo "<td>&nbsp;=&nbsp;</td><td>";
+               echo "<input type='text' name='retchecks_value[]' value='".
+                  $retcheck['value'][0]."' />";
+               echo "</td>";
+               echo "</tr>";
+               echo "</table>";
+            }
+         }
          echo "</span>";
          echo "</td>";
          echo "</tr>";
