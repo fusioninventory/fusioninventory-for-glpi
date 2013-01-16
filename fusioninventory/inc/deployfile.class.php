@@ -102,7 +102,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          echo "<td class='control'><input type='checkbox' name='file_entries[]' value='$i' /></td>";
          $filename = $datas['associatedFiles'][$sha512]['name'];
-         echo "<td class='filename'>";
+         $filesize = $datas['associatedFiles'][$sha512]['filesize'];
+         echo "<td class='filename' title='$filename'>";
          echo "<img src='".$CFG_GLPI['root_doc'].
                "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
          echo"&nbsp;<a href='#'>$filename</a>";
@@ -117,10 +118,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                "/plugins/fusioninventory/pics/uncompress.png' /></a>";
          }
          echo "</td>";
-         echo "<td>";
-         echo self::processFilesize($datas['associatedFiles'][$sha512]['filesize']);
+         echo "<td title='$filesize'>";
+         echo self::processFilesize($filesize);
          echo "</td>";
-         echo "<td class='rowhandler control'><div class='drag row'></div></td>";
+         echo "<td class='rowhandler control' title='".__('drag').
+            "'><div class='drag row'></div></td>";
          $i++;
       }
       echo "<tr><td colspan='2'>";

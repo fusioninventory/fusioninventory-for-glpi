@@ -106,7 +106,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          echo "<td class='control'><input type='checkbox' name='action_entries[]' value='$i' /></td>";
          $keys = array_keys($action);
          $action_type = array_shift($keys);
-         echo "<td>";
+         echo "<td title='$action_type'>";
          echo "<a href='#'>$action_type</a>";
          if (isset($action[$action_type]['retChecks'])) {
             echo "<a title='".__('return codes saved for this command')."' class='more'>...</a>";
@@ -124,7 +124,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             } else echo "$key : $value";
             echo "</td>";
          }
-         echo "<td class='rowhandler control'><div class='drag row'></div></td>";
+         echo "<td class='rowhandler control' title='".__('drag').
+            "'><div class='drag row'></div></td>";
          echo "</tr>";
          $i++;
       }

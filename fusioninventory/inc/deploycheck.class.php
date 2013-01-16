@@ -107,10 +107,12 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          echo "<td class='control'><input type='checkbox' name='check_entries[]' value='$i' /></td>";
-         echo "<td><a href='#' onclick='edit_check($i)'>".$check['type']."</a></td>";
-         echo "<td>".$check['path']."</td>";
-         echo "<td class='word-wrap'>".$check['value']."</td>";
-         echo "<td class='rowhandler control'><div class='drag row'></div></td>";
+         echo "<td title='".$check['type']."'><a href='#' onclick='edit_check($i)'>".
+            $check['type']."</a></td>";
+         echo "<td title='".$check['path']."'>".$check['path']."</td>";
+         echo "<td class='word-wrap' title='".$check['value']."'>".$check['value']."</td>";
+         echo "<td class='rowhandler control' title='".__('drag').
+            "'><div class='drag row'></div></td>";
          echo "</tr>";
          $i++;
       }
