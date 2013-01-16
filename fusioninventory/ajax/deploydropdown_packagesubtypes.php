@@ -50,12 +50,12 @@ if (!isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) exit;
 
 switch ($_REQUEST['subtype']) {
    case 'check':
-      PluginFusioninventoryDeployCheck::dropdownType($_REQUEST['rand']);
+      PluginFusioninventoryDeployCheck::dropdownType($_REQUEST);
       break;
    case 'file':
-      PluginFusioninventoryDeployFile::dropdownType($_REQUEST['rand']);
+      PluginFusioninventoryDeployFile::dropdownType($_REQUEST);
       break;
    case 'action':
-      PluginFusioninventoryDeployAction::dropdownType($_REQUEST['rand']);
+      PluginFusioninventoryDeployAction::dropdownType($_REQUEST);
       break;
 }

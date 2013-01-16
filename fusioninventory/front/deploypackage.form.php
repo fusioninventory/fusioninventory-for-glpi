@@ -48,9 +48,11 @@ Session::checkLoginUser();
 
 $package = new PluginFusioninventoryDeployPackage();
 
-// item add
 if (isset($_REQUEST['add_item'])) {
    PluginFusioninventoryDeployPackage::alter_json('add_item', $_REQUEST);
+   Html::back();
+} elseif (isset($_REQUEST['save_item'])) {
+   PluginFusioninventoryDeployPackage::alter_json('save_item', $_REQUEST);
    Html::back();
 } elseif (isset($_REQUEST['remove_item'])) {
    PluginFusioninventoryDeployPackage::alter_json('remove_item', $_REQUEST);
@@ -63,15 +65,15 @@ if (isset($_REQUEST['add_item'])) {
 
 //general form
 if (isset ($_POST["add"])) {
-// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
    $newID = $package->add($_POST);
    html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployPackage')."?id=".$newID);
 } else if (isset ($_POST["update"])) {
-// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
    $package->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
    $package->delete($_POST);
    Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployPackage'));
 }

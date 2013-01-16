@@ -265,7 +265,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          if ($subtype == "file") $multipart = "enctype='multipart/form-data'";
          echo "<td style='vertical-align:top'>";
          echo "<form name='add$subtype' method='post' ".$multipart.
-            " action='deploypackage.form.php?add_item'>";
+            " action='deploypackage.form.php'>";
          echo "<input type='hidden' name='orders_id' value='$orders_id' />";
          echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeploy".
             ucfirst($subtype)."' />";
@@ -307,6 +307,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             case "add_item" : 
                $params['itemtype']::add_item($params);
                break;
+            case "save_item" : 
+               $params['itemtype']::save_item($params);
+               break;
             case "remove_item" : 
                $params['itemtype']::remove_item($params);
                break;
@@ -323,7 +326,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    static function plusButton($dom_id, $clone = false) {
       global $CFG_GLPI;
 
-      echo "&nbsp;<img onClick='return plusbutton$dom_id()'
+      echo "&nbsp;<img id='plus_$dom_id' onClick='return plusbutton$dom_id()'
                  title='".__('Add')."' alt='".__('Add')."'
                  class='pointer' src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
 

@@ -91,7 +91,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       Html::closeForm();
 
       //display stored files datas
-      if (!isset($datas['jobs']['associatedFiles']) || empty($datas['jobs']['associatedFiles'])) return;
+      if (!isset($datas['jobs']['associatedFiles']) || empty($datas['jobs']['associatedFiles'])) {
+         return;
+      }
       echo "<form name='removefiles' method='post' action='deploypackage.form.php?remove_item'>";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployFile' />";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
@@ -106,7 +108,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo "<td class='filename' title='$filename'>";
          echo "<img src='".$CFG_GLPI['root_doc'].
                "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
-         echo"&nbsp;<a href='#'>$filename</a>";
+         echo"&nbsp;<a class='edit'>$filename</a>";
          if (isset($datas['associatedFiles'][$sha512]['p2p'])) {
             echo "<a title='".__('p2p').", ".__("retention")." : ".
                $datas['associatedFiles'][$sha512]['p2p-retention-duration']." ".__("days").
@@ -133,8 +135,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       Html::closeForm();
    }
 
-   static function dropdownType($rand) {
+   static function dropdownType($datas) {
       global $CFG_GLPI;
+
+      $rand = $datas['rand'];
 
       $file_types = self::getTypes();
       array_unshift($file_types, "---");
@@ -162,7 +166,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    }
 
-   static function displayAjaxValue($source, $rand) {
+   static function displayAjaxValue($datas) {
+
+      $source = $datas['value'];
+      $rand  = $datas['rand'];
 
       echo "<table class='package_item'>";
       echo "<tr>";
@@ -180,7 +187,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<td>";
       if ($source === "Computer") echo "<i>".self::getMaxUploadSize()."</i>";
       echo "</td><td>";
-      echo "&nbsp;<input type='submit' name='itemaddfile' value=\"".
+      echo "&nbsp;<input type='submit' name='add_item' value=\"".
          __('Add')."\" class='submit' >";
       echo "</td>";
       echo "</tr></table>";

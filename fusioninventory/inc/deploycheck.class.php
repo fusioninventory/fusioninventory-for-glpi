@@ -68,7 +68,18 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    static function displayForm($orders_id, $datas, $rand) {
       global $CFG_GLPI;
 
-      echo "<div style='display:none' id='checks_block$rand' >";
+
+      if (!isset($datas['index'])) {
+         echo "<div style='display:none' id='checks_block$rand' >";
+      } else {
+         //== edit selected data ==
+         
+         //get current order json
+         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($orders_id), true);
+
+         //get data on index
+         $check = $datas_o['jobs']['checks'][$datas['index']];         
+      }
 
       echo "<span id='showCheckType$rand'></span>";
       echo "<script type='text/javascript'>";
@@ -76,6 +87,13 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          'rand'    => $rand,
          'subtype' => "check"
       );
+      if (isset($check['type'])) {
+         $params['edit']  = "true";
+         $params['type']  = $check['type'];
+         $params['index'] = $datas['index'];
+         $params['path']  = addslashes($check['path']);
+         $params['value'] = addslashes($check['value']);
+      }
       Ajax::UpdateItemJsCode("showCheckType$rand",
                              $CFG_GLPI["root_doc"].
                              "/plugins/fusioninventory/ajax/deploydropdown_packagesubtypes.php",
@@ -87,7 +105,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<span id='showCheckValue$rand'></span>";
       
       echo "<hr>";
-      echo "</div>";
+      if (!isset($datas['index'])) {
+         echo "</div>";
+      } else return true;
       Html::closeForm();
 
       //display stored checks datas
@@ -106,8 +126,10 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          }
 
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         echo "<td class='control'><input type='checkbox' name='check_entries[]' value='$i' /></td>";
-         echo "<td title='".$check['type']."'><a href='#' onclick='edit_check($i)'>".
+         echo "<td class='control'>";
+         echo "<input type='checkbox' name='check_entries[]' value='$i' />";
+         echo "</td>";
+         echo "<td title='".$check['type']."'><a class='edit' onclick='edit_check($i)'>".
             $check['type']."</a></td>";
          echo "<td title='".$check['path']."'>".$check['path']."</td>";
          echo "<td class='word-wrap' title='".$check['value']."'>".$check['value']."</td>";
@@ -125,14 +147,27 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
       echo "<script type='text/javascript'>
          function edit_check(index) {
-            console.log(index);
+            Ext.get('plus_checks_block$rand').remove();
             Ext.get('checks_block$rand').setDisplayed('block');
+            Ext.get('checks_block$rand').load({
+                  'url': '".$CFG_GLPI["root_doc"].
+                             "/plugins/fusioninventory/ajax/deploypackage_form.php',
+                  'scripts': true,
+                  'params' : {
+                     'subtype': 'check',
+                     'index': index, 
+                     'orders_id': $orders_id, 
+                     'rand': '$rand'
+                  }
+               });
          }
       </script>";
    }
 
-   static function dropdownType($rand) {
+   static function dropdownType($datas) {
       global $CFG_GLPI;
+
+      $rand = $datas['rand'];
 
       $checks_types = self::getTypes();
       array_unshift($checks_types, "---");
@@ -140,7 +175,12 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<tr>";
       echo "<th>".__("Type")."</th>";
       echo "<td>";
-      Dropdown::showFromArray("deploy_checktype", $checks_types, array('rand' => $rand));
+      $options['rand'] = $datas['rand'];
+      if (isset($datas['edit'])) {
+         $options['value'] = $datas['type'];
+      }
+
+      Dropdown::showFromArray("deploy_checktype", $checks_types, $options);
       echo "</td>";
       echo "</tr></table>";
 
@@ -150,17 +190,39 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                       'rand'   => $rand,
                       'myname' => 'method',
                       'type'   => "check");
+      if (isset($datas['edit'])) {
+         $params['edit']   = "true";
+         $params['index']  = $datas['index'];
+         $params['path']   = addslashes($datas['path']);
+         $params['value2'] = addslashes($datas['value']);
+      }
       Ajax::updateItemOnEvent("dropdown_deploy_checktype".$rand,
                               "showCheckValue$rand",
                               $CFG_GLPI["root_doc"].
-                              "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
+                                 "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                               $params,
                               array("change", "load"));
 
+      if (isset($datas['edit'])) {
+         echo "<script type='text/javascript'>";
+         Ajax::UpdateItemJsCode("showCheckValue$rand",
+                                $CFG_GLPI["root_doc"].
+                                 "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
+                                $params,
+                                "dropdown_deploy_checktype$rand");
+         echo "</script>";
+
+      }
 
    }
 
-   static function displayAjaxValue($value, $rand) {
+   static function displayAjaxValue($datas) {
+
+      $value = $datas['value'];
+      $rand  = $datas['rand'];
+
+      $path_value = isset($datas['path'])?$datas['path']:"";
+      $value2 = isset($datas['value2'])?$datas['value2']:"";
       $value_type = "input";
       switch ($value) {
          case "winkeyExists":
@@ -199,27 +261,46 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<table class='package_item'>";
       echo "<tr>";
       echo "<th>$path_label</th>";
-      echo "<td><input type='text' name='path' id='check_path$rand' /></td>";
+      echo "<td><input type='text' name='path' id='check_path$rand' value='$path_value' /></td>";
       echo "</tr>";
       if ($value_label !== false) {
          echo "<tr>";
          echo "<th>$value_label</th>";
          switch ($value_type) {
             case "textarea":
-               echo "<td><textarea name='value' id='check_value$rand' rows='5'></textarea></td>";
+               echo "<td><textarea name='value' id='check_value$rand' rows='5'>".
+                  $value2."</textarea></td>";
                break;
             case "input":
-               echo "<td><input type='text' name='value' id='check_value$rand' /></td>";
+               echo "<td><input type='text' name='value' id='check_value$rand' value='".
+                  $value2."' /></td>";
                break;
             case "input+unit":
-               echo "<td><input type='text' name='value' id='check_value$rand' /></td>";
+               $options['value'] = 'KB';
+               if (isset($datas['edit'])) {
+                  if ($value2 >= (1024 * 1024 * 1024)) {
+                     $value2 = round($value2/ (1024 * 1024 * 1024), 1);
+                     $options['value'] = 'GB';
+                  } elseif ($value2 >= (1024 * 1024)) {
+                     $value2 = round($value2/ (1024 * 1024), 1);
+                     $options['value'] = 'MB';
+                  }  elseif ($value2 >= (1024)) {
+                     $value2 = round($value2/ (1024), 1);
+                     $options['value'] = 'kB';
+                  } else $options['value'] = 'B';
+               }
+               echo "<td><input type='text' name='value' id='check_value$rand' value='".
+                  $value2."' /></td>";
                echo "</tr><tr>";
                echo "<th>".__("Unit")."</th>";
                echo "<td>";
+
                Dropdown::showFromArray('unit', array(
+                  "B"  => __("B"),
+                  "KB" => __("KiB"),
                   "MB" => __("MiB"),
                   "GB" => __("GiB")
-               ));
+               ), $options);
                echo "</td>";
                break;
 
@@ -228,8 +309,14 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       }
 
       echo "<tr><td></td><td>";
-      echo "<input type='submit' name='itemaddcheck' value=\"".
-         __('Add')."\" class='submit' >";
+      if (isset($datas['edit'])) {
+         echo "<input type='hidden' name='index' value='".$datas['index']."' />";
+         echo "<input type='submit' name='save_item' value=\"".
+            _sx('button','Save')."\" class='submit' >";
+      } else {
+         echo "<input type='submit' name='add_item' value=\"".
+            _sx('button','Add')."\" class='submit' >";
+      }
       echo "</td></tr>";
       echo "</table>";
    }
@@ -237,7 +324,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    static function add_item($params) {
       if (!isset($params['value'])) $params['value'] = "";
 
-   if (!empty($params['value']) && is_numeric($params['value'])) {
+      if (!empty($params['value']) && is_numeric($params['value'])) {
          $params['value'] = $params['value']  * 1024 * 1024;
       }
 
@@ -254,6 +341,35 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
       //add new entry
       $datas['jobs']['checks'][] = $new_entry;
+
+      //update order
+      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+   }
+
+   static function save_item($params) {
+      if (!isset($params['value'])) $params['value'] = "";
+
+      if (!empty($params['value']) && is_numeric($params['value'])) {
+         $params['value'] = $params['value']  * 1024 * 1024;
+      }
+
+      //prepare updated check entry to insert in json
+      $entry = array(
+         'type'   => $params['deploy_checktype'],
+         'path'   => $params['path'],
+         'value'  => $params['value'],
+         'return' => "error"
+      );
+
+      //get current order json
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+
+      //unset index 
+      unset($datas['jobs']['checks'][$params['index']]);
+
+      //add new datas at index position 
+      //(array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
+      array_splice($datas['jobs']['checks'], $params['index'], 0, array($entry));
 
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);

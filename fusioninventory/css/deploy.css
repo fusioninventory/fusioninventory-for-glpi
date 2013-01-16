@@ -40,6 +40,9 @@ table.package_item_list .more {
 table.package_item_list .filename {
   width:200px;
 }
+table.package_item_list .edit {
+  cursor: pointer;
+}
 
 
 /* drag and drop element */

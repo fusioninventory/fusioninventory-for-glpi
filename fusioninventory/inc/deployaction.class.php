@@ -103,11 +103,13 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       $i=0;
       foreach ($datas['jobs']['actions'] as $action) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         echo "<td class='control'><input type='checkbox' name='action_entries[]' value='$i' /></td>";
+         echo "<td class='control'>";
+         echo "<input type='checkbox' name='action_entries[]' value='$i' />";
+         echo "</td>";
          $keys = array_keys($action);
          $action_type = array_shift($keys);
          echo "<td title='$action_type'>";
-         echo "<a href='#'>$action_type</a>";
+         echo "<a class='edit'>$action_type</a>";
          if (isset($action[$action_type]['retChecks'])) {
             echo "<a title='".__('return codes saved for this command')."' class='more'>...</a>";
          }
@@ -137,8 +139,10 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       Html::closeForm();
    }
 
-   static function dropdownType($rand) {
+   static function dropdownType($datas) {
       global $CFG_GLPI;
+
+      $rand = $datas['rand'];
 
       $actions_types = self::getTypes();
       array_unshift($actions_types, "---");
@@ -166,7 +170,10 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
    }
 
-   static function displayAjaxValue($type, $rand) {
+   static function displayAjaxValue($datas) {
+
+      $type = $datas['value'];
+      $rand  = $datas['rand'];
 
       $value_type_1 = "input";
 
@@ -243,7 +250,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
       echo "<tr>";
       echo "<td></td><td>";
-      echo "&nbsp;<input type='submit' name='itemaddaction' value=\"".
+      echo "&nbsp;<input type='submit' name='add_item' value=\"".
          __('Add')."\" class='submit' >";
       echo "</td>";
       echo "</tr></table>";

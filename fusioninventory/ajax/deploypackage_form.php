@@ -48,15 +48,17 @@ Session::checkCentralAccess();
 
 if (!isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) exit;
 
-switch ($_REQUEST['type']) {
+switch ($_REQUEST['subtype']) {
    case 'check':
-      PluginFusioninventoryDeployCheck::displayAjaxValue($_REQUEST);
+      PluginFusioninventoryDeployCheck::displayForm($_REQUEST['orders_id'], 
+                                                    $_REQUEST, $_REQUEST['rand']);
       break;
    case 'file':
-      PluginFusioninventoryDeployFile::displayAjaxValue($_REQUEST);
+      PluginFusioninventoryDeployFile::displayForm($_REQUEST['orders_id'], 
+                                                   $_REQUEST, $_REQUEST['rand']);
       break;
    case 'action':
-      PluginFusioninventoryDeployAction::displayAjaxValue($_REQUEST);
+      PluginFusioninventoryDeployAction::displayForm($_REQUEST['orders_id'], 
+                                                     $_REQUEST, $_REQUEST['rand']);
       break;
 }
-?>
