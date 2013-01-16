@@ -243,6 +243,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
    }
 
    static function displayAjaxValue($datas) {
+      global $CFG_GLPI;
+
       $type         = $datas['value'];
       $rand         = $datas['rand'];
       
@@ -318,6 +320,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             Dropdown::showFromArray('retchecks_type[]', $retchecks_entries);
             echo "</td>";
             echo "<td>&nbsp;=&nbsp;</td><td><input type='text' name='retchecks_value[]' /></td>";
+            echo "<td><a class='edit' onclick='removeline(this)'><img src='".
+                  $CFG_GLPI["root_doc"]."/pics/redbutton.png' /></a></td>";
             echo "</tr>";
             echo "</table>";
          } else {
@@ -333,6 +337,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                echo "<input type='text' name='retchecks_value[]' value='".
                   $retcheck['value'][0]."' />";
                echo "</td>";
+               echo "<td><a class='edit' onclick='removeLine$rand(this)'><img src='".
+                  $CFG_GLPI["root_doc"]."/pics/redbutton.png' /></a></td>";
                echo "</tr>";
                echo "</table>";
             }
@@ -354,6 +360,18 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       }
       echo "</td>";
       echo "</tr></table>";
+
+      echo "<script type='text/javascript'>
+         function removeLine$rand(item) {
+            var tag_table = item.parentNode.parentNode.parentNode.parentNode;
+            var parent = tag_table.parentNode;
+            if (parent.childNodes.length > 1) { 
+               parent.removeChild(tag_table);
+            } else {
+               alert('".__("last node, cannot delete it")."');
+            }
+         }
+      </script>";
    }
 
    static function add_item($params) {

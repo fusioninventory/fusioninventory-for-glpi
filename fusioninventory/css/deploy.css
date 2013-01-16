@@ -3,6 +3,7 @@ table.package_item {
 }
 table.package_item th {
    width: 100px;
+   vertical-align: top;
 }
 
 table.package_item input[type=text], 
@@ -12,7 +13,8 @@ table.package_item textarea {
 }
 
 table.package_item input[type=text] {
-   padding-left: 3px;
+   padding: 0 3px;
+   margin-right: 3px;
 }
 
 table.package_item .table_retchecks {
@@ -20,6 +22,9 @@ table.package_item .table_retchecks {
 }
 table.package_item .table_retchecks td {
    padding: 0;
+}
+table.package_item .table_retchecks input {
+   width: 65px;
 }
 
 table.package_item_list {
@@ -52,7 +57,7 @@ table.package_item_list .filename {
   min-width:200px;
   white-space: normal;
 }
-table.package_item_list .edit {
+a.edit {
   cursor: pointer;
 }
 
