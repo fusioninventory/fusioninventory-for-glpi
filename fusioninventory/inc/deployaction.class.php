@@ -210,10 +210,27 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       //specific case for cmd : add retcheck form
       if ($type == "cmd") {
          echo "<tr>";
-         echo "<th>".__("return code")."</th>";
+         echo "<th>".__("return code");
+         PluginFusioninventoryDeployPackage::plusButton("retchecks$rand", "table");
+         echo "</th>";
          echo "<td>";
-         PluginFusioninventoryDeployPackage::plusButton("retchecks$rand");
-         echo "<span id='retchecks$rand'></span>";
+         echo "<span id='retchecks$rand' style='display:none'>";
+         $retchecks_entries = array(
+            '--',
+            'okCode'       => __("okCode"),
+            'errorCode'    => __("errorCode"),
+            'okPattern'    => __("okPattern"),
+            'errorPattern' => __("errorPattern")
+         );
+         echo "<table class='table_retchecks'>";
+         echo "<tr>";
+         echo "<td>";
+         Dropdown::showFromArray('retchecks_type[]', $retchecks_entries);
+         echo "</td>";
+         echo "<td>=</td><td><input type='text' name='retchecks_value[]' /></td>";
+         echo "</tr>";
+         echo "</table>";
+         echo "</span>";
          echo "</td>";
          echo "</tr>";
       }
@@ -232,6 +249,18 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       if (isset($params['from'])) $tmp['from'] = $params['from'];
       if (isset($params['to']))   $tmp['to']   = $params['to'];
       if (isset($params['exec'])) $tmp['exec'] = $params['exec'];
+
+      //process ret checks
+      if (isset($params['retchecks_type']) && !empty($params['retchecks_type'])) {
+         foreach ($params['retchecks_type'] as $index => $type) {
+            $tmp['retChecks'][] = array(
+               'type' => $type,
+               'value' => array($params['retchecks_value'][$index])
+            );
+         }
+      }
+
+      //append prepared datas to new entry
       $new_entry[ $params['deploy_actiontype']] = $tmp;
 
       //get current order json

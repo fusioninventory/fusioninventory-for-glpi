@@ -318,13 +318,28 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
    
-   static function plusButton($dom_id) {
+   static function plusButton($dom_id, $clone = false) {
       global $CFG_GLPI;
 
-      echo "&nbsp;";
-      echo "<img onClick=\"Ext.get('".$dom_id."').setDisplayed('block')\"
-                 title=\"".__('Add')."\" alt=\"".__('Add')."\"
+      echo "&nbsp;<img onClick='return plusbutton$dom_id()'
+                 title='".__('Add')."' alt='".__('Add')."'
                  class='pointer' src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
+
+      echo "<script type='text/javascript>";
+      echo "function plusbutton$dom_id() {";
+        
+      if ($clone !== false) {
+         echo "
+         var root=document.getElementById('$dom_id');
+         if (root.style.display == 'block') {
+            var clone=root.getElementsByTagName('$clone')[0].cloneNode(true);
+            root.appendChild(clone);
+         }
+         ";
+      }
+      echo "
+          Ext.get('".$dom_id."').setDisplayed('block');
+      }</script>";
    }
 
    function getAllDatas() {
