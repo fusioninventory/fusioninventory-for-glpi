@@ -31,6 +31,7 @@ table.package_item_list td {
    overflow: hidden;
   -o-text-overflow: ellipsis; /* pour Opera 9 */
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 table.package_item_list td.word-wrap {
    overflow: auto;
@@ -49,6 +50,7 @@ table.package_item_list .more {
 table.package_item_list .filename {
   width:200px;
   min-width:200px;
+  white-space: normal;
 }
 table.package_item_list .edit {
   cursor: pointer;
