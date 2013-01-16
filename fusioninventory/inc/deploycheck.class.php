@@ -106,7 +106,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          echo "<td class='control'><input type='checkbox' name='check_entries[]' value='$i' /></td>";
-         echo "<td>".$check['type']."</td>";
+         echo "<td><a href='#' onclick='edit_check($i)'>".$check['type']."</a></td>";
          echo "<td>".$check['path']."</td>";
          echo "<td class='word-wrap'>".$check['value']."</td>";
          echo "<td class='rowhandler control'><div class='drag row'></div></td>";
@@ -119,6 +119,13 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "</td></tr>";
       echo "</table></div>";
       Html::closeForm();
+
+      echo "<script type='text/javascript'>
+         function edit_check(index) {
+            console.log(index);
+            Ext.get('checks_block$rand').setDisplayed('block');
+         }
+      </script>";
    }
 
    static function dropdownType($rand) {

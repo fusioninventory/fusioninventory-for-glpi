@@ -105,7 +105,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo "<td class='filename'>";
          echo "<img src='".$CFG_GLPI['root_doc'].
                "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
-         echo"&nbsp;$filename";
+         echo"&nbsp;<a href='#'>$filename</a>";
          if (isset($datas['associatedFiles'][$sha512]['p2p'])) {
             echo "<a title='".__('p2p').", ".__("retention")." : ".
                $datas['associatedFiles'][$sha512]['p2p-retention-duration']." ".__("days").

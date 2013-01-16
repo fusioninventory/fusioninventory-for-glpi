@@ -107,7 +107,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          $keys = array_keys($action);
          $action_type = array_shift($keys);
          echo "<td>";
-         echo $action_type;
+         echo "<a href='#'>$action_type</a>";
          if (isset($action[$action_type]['retChecks'])) {
             echo "<a title='".__('return codes saved for this command')."' class='more'>...</a>";
          }
