@@ -1302,11 +1302,12 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          break;
 
       case "plugin_fusioninventory_unknown_import" :
-               if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
-         if ($options['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
+         if (PluginFusioninventoryProfile::haveRight("fusioninventory", "unknowndevice","w")) {
+            if ($options['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
                if (PluginFusioninventoryProfile::haveRight("unknowndevice", "w")) {
                   echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . __('Post') . "\" >";
                }
+            }
          }
          break;
 
