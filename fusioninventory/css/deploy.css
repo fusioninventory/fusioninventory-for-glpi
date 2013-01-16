@@ -6,6 +6,7 @@ table.package_item th {
 }
 
 table.package_item input[type=text], 
+table.package_item input[type=file], 
 table.package_item textarea,
 table.package_item select {
    width: 100%;

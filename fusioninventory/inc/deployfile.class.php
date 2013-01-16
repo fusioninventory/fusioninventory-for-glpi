@@ -168,14 +168,16 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<td>";
       switch ($source) {
          case "Computer":
-            echo "<input type='file' name='file' />";
+            echo "<input type='file' name='file' value='".__("filename")."' />";
             break;
          case "Server":
             break;
       }
       echo "</td>";
       echo "</tr><tr>";
-      echo "<td></td><td>";
+      echo "<td>";
+      if ($source === "Computer") echo "<i>".self::getMaxUploadSize()."</i>";
+      echo "</td><td>";
       echo "&nbsp;<input type='submit' name='itemaddfile' value=\"".
          __('Add')."\" class='submit' >";
       echo "</td>";
@@ -535,7 +537,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $max_post = (int)(ini_get('post_max_size'));
       $memory_limit = (int)(ini_get('memory_limit'));
 
-      return __('Maximum file size')
+      return __('Max file size')
 
          ." : ".min($max_upload, $max_post, $memory_limit).__('Mio');
 
