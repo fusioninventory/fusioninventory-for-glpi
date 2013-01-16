@@ -1,10 +1,3 @@
-.f_left {
-   float: left;
-}
-.f_right {
-   float: right;
-}
-
 table.package_item {
    width: 100%;
 }
@@ -36,6 +29,13 @@ table.package_item_list td.word-wrap {
 table.package_item_list td.control { 
    padding: 2px 1px;
    width: 14px;
+}
+table.package_item_list .more {
+   float: right;
+   cursor: help;
+}
+table.package_item_list .filename {
+  width:200px;
 }
 
 

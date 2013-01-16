@@ -102,10 +102,20 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
          echo "<td class='control'><input type='checkbox' name='file_entries[]' value='$i' /></td>";
          $filename = $datas['associatedFiles'][$sha512]['name'];
-         echo "<td>";
+         echo "<td class='filename'>";
          echo "<img src='".$CFG_GLPI['root_doc'].
                "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
          echo"&nbsp;$filename";
+         if (isset($datas['associatedFiles'][$sha512]['p2p'])) {
+            echo "<a title='".__('p2p').", ".__("retention")." : ".
+               $datas['associatedFiles'][$sha512]['p2p-retention-duration']." ".__("days").
+               "' class='more'><img src='".$CFG_GLPI['root_doc'].
+               "/plugins/fusioninventory/pics/p2p.png' /></a>";
+         }
+         if (isset($datas['associatedFiles'][$sha512]['uncompress'])) {
+            echo "<a title='".__('uncompress')."' class='more'><img src='".$CFG_GLPI['root_doc'].
+               "/plugins/fusioninventory/pics/uncompress.png' /></a>";
+         }
          echo "</td>";
          echo "<td>";
          echo self::processFilesize($datas['associatedFiles'][$sha512]['filesize']);
@@ -698,7 +708,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          $filesize = round($filesize / 1024, 1)."KB";
 
       } else {
-         $filesize;
+         $filesize = $filesize."B";
       }
       return $filesize;
    }
