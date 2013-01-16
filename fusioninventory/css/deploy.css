@@ -7,9 +7,19 @@ table.package_item th {
 
 table.package_item input[type=text], 
 table.package_item input[type=file], 
-table.package_item textarea,
-table.package_item select {
+table.package_item textarea {
    width: 100%;
+}
+
+table.package_item input[type=text] {
+   padding-left: 3px;
+}
+
+table.package_item .table_retchecks {
+   border-spacing: 0;
+}
+table.package_item .table_retchecks td {
+   padding: 0;
 }
 
 table.package_item_list {
