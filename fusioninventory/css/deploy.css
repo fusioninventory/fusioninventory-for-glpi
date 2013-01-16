@@ -1,3 +1,10 @@
+.f_left {
+   float: left;
+}
+.f_right {
+   float: right;
+}
+
 table.package_item {
    width: 100%;
 }
@@ -42,3 +49,6 @@ table.package_item_list td.control {
    height: 10px;
    border:0 !important;
 }
+
+
+
