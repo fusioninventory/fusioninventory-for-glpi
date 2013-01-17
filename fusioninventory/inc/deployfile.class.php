@@ -434,45 +434,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    function uploadFile() {
 
-      if(isset($_GET['package_id'])){
-         $package_id = $_GET['package_id'];
-         $render     = $_GET['render'];
-      } else {
-         exit;
-      }
-
-      foreach($_POST as $POST_key => $POST_value) {
-         $new_key         = preg_replace('#^'.$render.'#','',$POST_key);
-         $_POST[$new_key] = $POST_value;
-      }
-
       //if file sent is from server
       if (isset($_POST['itemtype']) && $_POST['itemtype'] == 'fileserver') {
          return $this->uploadFileFromServer();
       }
 
-      //if file sed is from http post
-      foreach($_FILES as $FILES_key => $FILES_value) {
-         $new_key          = preg_replace('#^'.$render.'#','',$FILES_key);
-         $_FILES[$new_key] = $FILES_value;
-      }
-
-      $render   = PluginFusioninventoryDeployOrder::getRender($render);
-      $order_id = PluginFusioninventoryDeployOrder::getIdForPackage($package_id,$render);
-
-      // Check if add a file in install and if not have file in uninstall,
-      // we add too this file in unistall
-      $uninstall = 0;
-      $order_uninstall_id = 0;
-      if ($render == 'install') {
-         $render_uninstall = PluginFusioninventoryDeployOrder::getRender('uninstall');
-         $order_uninstall_id = PluginFusioninventoryDeployOrder::getIdForPackage($package_id,$render_uninstall);
-         $a_uninstall_files = $this->find("`plugin_fusioninventory_deployorders_id`='".
-                                          $order_uninstall_id."'");
-         if (count($a_uninstall_files) == 0) {
-            $uninstall = 1;
-         }
-      }
 
       if (isset ($_POST["id"]) and !$_POST['id']) {
 
@@ -489,28 +455,35 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
          //file upload errors
          if (isset($_FILES['file']['error'])) {
+            $msg = "file:'{$filename}', ";
+            $error = true;
             switch ($_FILES['file']['error']) {
                case UPLOAD_ERR_INI_SIZE:
                case UPLOAD_ERR_FORM_SIZE:
-                  print "{success:false, file:'{$filename}',msg:\"{__('Transfer error: the file size is too big')}\"}";
-                  exit;
+                  $msg .= __("Transfer error: the file size is too big");
+                  break;
                case UPLOAD_ERR_PARTIAL:
-                  print "{success:false, file:'{$filename}',msg:\"The uploaded file was only partially uploaded.\"}";
-                  exit;
+                  $msg .= __("he uploaded file was only partially uploaded");
+                  break;
                case UPLOAD_ERR_NO_FILE:
-                  print "{success:false, file:'{$filename}',msg:\"No file was uploaded.\"}";
-                  exit;
+                  $msg .= __("No file was uploaded");
+                  break;
                case UPLOAD_ERR_NO_TMP_DIR:
-                  print "{success:false, file:'{$filename}',msg:\"Missing a temporary folder.\"}";
-                  exit;
+                  $msg .= __("Missing a temporary folder");
+                  break;
                case UPLOAD_ERR_CANT_WRITE:
-                  print "{success:false, file:'{$filename}',msg:\"Failed to write file to disk.\"}";
-                  exit;
+                  $msg .= __("Failed to write file to disk");
+                  break;
                case UPLOAD_ERR_CANT_WRITE:
-                  print "{success:false, file:'{$filename}',msg:\"A PHP extension stopped the file upload.\"}";
-                  exit;
+                  $msg .= __("PHP extension stopped the file upload");
+                  break;
                case UPLOAD_ERR_OK:
                   //no error, continue
+                  $error = false;
+            }
+            if ($error) {
+               Session::addMessageAfterRedirect($msg);
+               return false;
             }
          }
 
@@ -523,23 +496,20 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             'is_p2p' => (($_POST['p2p'] == 'true') ? 1 : 0),
             'uncompress' => (($_POST['uncompress'] == 'true') ? 1 : 0),
             'p2p_retention_days' => is_numeric($_POST['validity']) ? $_POST['validity'] : 0,
-            'order_id' => $order_id
+            'orders_id' => $orders_id
          );
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
-            if ($uninstall == 1) {
-               $data['order_id'] = $order_uninstall_id;
-               $this->addFileInRepo($data);
-            }
-            print "{success:true, file:'{$filename}',msg:\"{$LANG['plugin_fusinvdeploy']['action'][4]}\"}";
-            exit;
+            $msg = "file:'{$filename}', \"{$LANG['plugin_fusinvdeploy']['action'][4]}\"}";
          } else {
-            print "{success:false, file:'{$filename}',msg:\"{__('File missing')}\"}";
-            exit;
+            $msg = "file:'{$filename}', ".__('File missing');
          }
+         Session::addMessageAfterRedirect($msg);
+         return true;
       }
-      print "{success:false, file:'none',msg:\"{__('File missing')}\"}";
+      Session::addMessageAfterRedirect(__('File missing'));
+      return false;
    }
 
    function uploadFileFromServer() {
