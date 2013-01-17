@@ -75,7 +75,7 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["delete"])) {
    // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
    $package->delete($_POST);
-   Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployPackage'));
+   $package->redirectToList();
 }
 
 

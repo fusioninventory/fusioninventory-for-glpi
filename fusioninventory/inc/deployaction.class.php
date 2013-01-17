@@ -469,27 +469,6 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
-
-   static function getForOrder($orders_id) {
-      $action = new self;
-      $results = $action->find("`plugin_fusioninventory_deployorders_id`='$orders_id'", 
-                               "ranking ASC");
-      $actions = array();
-
-      foreach ($results as $result) {
-         $tmp = call_user_func(
-            array(
-               $result['itemtype'],
-               'getActions'
-            ),
-            $result['items_id'],
-            $result['id']
-         );
-
-         if (!empty($tmp)) $actions[] = $tmp;
-      }
-      return $actions;
-   }
 }
 
 ?>

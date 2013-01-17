@@ -400,43 +400,6 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
-
-   /**
-    * Get all checks for an order
-    * @param orders_id the order ID
-    * @return an array with all checks, or an empty array is nothing defined
-    */
-   static function getForOrder($orders_id) {
-      $check = new self;
-      $results = $check->find("`plugin_fusioninventory_deployorders_id`='$orders_id'", 
-                              "ranking ASC");
-
-      $checks = array();
-      foreach ($results as $result) {
-         $tmp = array();
-         if (empty($result['type'])) continue;
-
-         if (isset($result['match'])) {
-            $tmp['match'] = $result['match'];
-         }
-         if ($result['value'] != "")   $tmp['value'] = $result['value'];
-         if ($result['path'] != "")    $tmp['path'] = $result['path'];
-         if ($result['type'] != "")    $tmp['type'] = $result['type'];
-
-         $tmp['return'] = "error";
-
-         if ($tmp['type'] == "fileSizeGreater" || $tmp['type'] == "fileSizeLower" 
-               || $tmp['type'] == "fileSizeEquals") {
-            # according to the requirment, We want Bytes!
-            $tmp['value'] *= 1024 * 1024;
-         }
-         $checks[] = $tmp;
-      }
-
-      return $checks;
-   }
-
-
 }
 
 ?>

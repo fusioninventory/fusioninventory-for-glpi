@@ -252,90 +252,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
-   static function getForOrder($orders_id) {
-      $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deployfiles',
-                                      "`plugin_fusioninventory_deployorders_id`='".$orders_id.
-                                      "' AND sha512 <> ''");
-
-      $files = array();
-      foreach ($results as $result) {
-         $files[] = $result['sha512'];
-      }
-
-      return $files;
-   }
-
-   static function getAssociatedFiles($device_id) {
-      $files = array();
-      $taskjoblog    = new PluginFusioninventoryTaskjoblog();
-      $taskjobstate = new PluginFusioninventoryTaskjobstate();
-
-      //Get the agent ID by his deviceid
-      if ($agents_id = PluginFusioninventoryDeployJob::getAgentByDeviceID($device_id)) {
-
-
-         //Get tasks associated with the agent
-         $tasks_list = $taskjobstate->getTaskjobsAgent($agents_id);
-         foreach ($tasks_list as $itemtype => $states_list) {
-            foreach ($states_list as $status) {
-               $results_jobs = getAllDatasFromTable('glpi_plugin_fusioninventory_deploytaskjobs',
-                                     "`id`='".$status['plugin_fusioninventory_taskjobs_id']."'");
-
-               foreach ($results_jobs as $jobs) {
-                  $definitions = importArrayFromDB($jobs['definition']);
-                  foreach($definitions as $key => $definition) {
-                     foreach($definition as $value) {
-                        $packages_id[] = $value;
-                     }
-                  }
-               }
-
-
-               foreach ($packages_id as $package_id) {
-                  $orders = getAllDatasFromTable('glpi_plugin_fusioninventory_deployorders',
-                                                 "`plugin_fusioninventory_deploypackages_id`='".
-                                                 $package_id."'");
-
-                  foreach ($orders as $order) {
-                     $results_files =getAllDatasFromTable('glpi_plugin_fusioninventory_deployfiles',
-                                         "`plugin_fusioninventory_deployorders_id`='".$order['id'].
-                                         "' AND sha512 <> ''");
-
-
-                     foreach ($results_files as $result_file) {
-                        $tmp = array();
-                        $tmp['uncompress']                = $result_file['uncompress'];
-                        $tmp['name']                      = $result_file['name'];
-                        $tmp['p2p']                    = $result_file['is_p2p'];
-
-                        $mirrors = PluginFusioninventoryDeployFile_Mirror::getList();
-                        $tmp['mirrors'] = $mirrors;
-
-                        $fileparts = PluginFusioninventoryDeployFilepart::getForFile($result_file['id']);
-                        $tmp['multiparts'] = $fileparts;
-
-                        if (isset($result_file['p2p_retention_days'])) {
-                           $tmp['p2p-retention-duration'] = $result_file['p2p_retention_days'] * 3600 * 24;
-                        } else {
-                           $tmp['p2p-retention-duration'] = 0;
-                        }
-                        $files[$result_file['sha512']]         = $tmp;
-                     }
-
-                  }
-               }
-            }
-         }
-      }
-
-      if (count($files) == 0) $files = new stdClass;
-
-      return $files;
-   }
-
-
-
-
    static function getDirBySha512 ($sha512) {
       $first = substr($sha512, 0, 1);
       $second = substr($sha512, 0, 2);
@@ -457,42 +373,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       return false;
    }
 
-   static function getAssociatedFilesForOrder($order_id) {
-      global $DB;
-
-      $files=array();
-
-      $results_files = getAllDatasFromTable('glpi_plugin_fusioninventory_deployfiles',
-                          "`plugin_fusioninventory_deployorders_id`='".
-                          $order_id."' AND sha512 <> ''");
-
-
-      foreach ($results_files as $result_file) {
-         $tmp = array();
-         $tmp['uncompress']   = $result_file['uncompress'];
-         $tmp['name']         = $result_file['name'];
-         $tmp['p2p']          = $result_file['is_p2p'];
-         $tmp['filesize']     = $result_file['filesize'];
-         $tmp['create_date']  = $result_file['create_date'];
-         $tmp['mimetype']     = $result_file['mimetype'];
-
-         $mirrors = PluginFusioninventoryDeployFile_Mirror::getList();
-         $tmp['mirrors'] = $mirrors;
-
-         $fileparts = PluginFusioninventoryDeployFilepart::getForFile($result_file['id']);
-         $tmp['multiparts'] = $fileparts;
-
-         if (isset($result_file['p2p_retention_days'])) {
-            $tmp['p2p-retention-duration'] = $result_file['p2p_retention_days'] * 3600 * 24;
-         } else {
-            $tmp['p2p-retention-duration'] = 0;
-         }
-         $files[$result_file['sha512']]         = $tmp;
-      }
-
-      if (count($files) == 0) $files = new stdClass;
-      return $files;
-   }
 
    function removeFileInRepo($id) {
       global $DB;
