@@ -167,6 +167,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    }
 
    static function displayAjaxValue($datas) {
+      global $CFG_GLPI;
 
       $source = $datas['value'];
       $rand  = $datas['rand'];
@@ -183,6 +184,17 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             break;
       }
       echo "</td>";
+      echo "</tr><tr>";
+      echo "<th>".__("Uncompress")."<img style='float:right' src='".$CFG_GLPI["root_doc"].
+                              "/plugins/fusioninventory//pics/uncompress.png' /></th>";
+      echo "<td><input type='checkbox' name='uncompress' /></td>";
+      echo "</tr><tr>";
+      echo "<th>".__("P2p")."<img style='float:right' src='".$CFG_GLPI["root_doc"].
+                              "/plugins/fusioninventory//pics/p2p.png' /></th>";
+      echo "<td><input type='checkbox' name='p2p' /></td>";
+      echo "</tr><tr>";
+      echo "<th>".__("retention days")."</th>";
+      echo "<td><input type='text' name='p2p-retention-duration' style='width:30px' /></td>";
       echo "</tr><tr>";
       echo "<td>";
       if ($source === "Computer") echo "<i>".self::getMaxUploadSize()."</i>";
