@@ -48,7 +48,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 
    // From RuleCollection
    public $stop_on_first_match = true;
-   //public $right               = 'rule_ocs';
+   //public $right               = 'rule_import';
    public $menu_option         = 'linkcomputer';
 
 
