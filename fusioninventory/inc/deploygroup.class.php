@@ -52,10 +52,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       if ($nb>1) {
          return __('Task');
-
       }
       return __('Groups of computers');
-
    }
 
    static function canCreate() {
@@ -70,6 +68,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return true;
    }
 
+   
+   
    function defineTabs($options=array()) {
 
       $ong = array();
@@ -80,6 +80,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return $ong;
    }
 
+   
+   
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       switch(get_class($item)) {
@@ -99,6 +101,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    }
 
 
+   
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch(get_class($item)) {
          case __CLASS__:
@@ -116,6 +119,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       }
    }
 
+   
+   
    function showMenu($options=array())  {
 
       $this->displaylist = false;
@@ -141,22 +146,20 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       Html::displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_group.png", $title, $title, $buttons);
    }
 
-   /*function getSearchURL($full=true) {
-      return Toolbox::getItemTypeSearchURL('PluginFusioninventoryDeployTask', $full);
-   }*/
 
+   
    function showForm($ID, $options = array()) {
-
+      
       if (isset($_SESSION['groupSearchResults'])) unset($_SESSION['groupSearchResults']);
-
+      
       if ($ID > 0) {
          $this->check($ID,'r');
+         $this->getFromDB($ID);
       } else {
          // Create item
          $this->check(-1,'w');
+         $this->getEmpty();
       }
-
-      $options['colspan'] = 1;
 
       $this->showTabs($options);
       $this->showFormHeader($options);
@@ -165,11 +168,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
-      echo "</td></tr>";
+      echo "</td>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Comments')."&nbsp;:</td>";
-      echo "<td align='center'>";
+      echo "<td rowspan='2'>".__('Comments')."&nbsp;:</td>";
+      echo "<td rowspan='2' align='center'>";
       echo "<textarea cols='40' rows='6' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td>";
       echo "</tr>";
@@ -179,9 +181,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<td align='center'>";
       $types = array(
          'STATIC'    => __('Static group'),
-
          'DYNAMIC'   => __('Dynamic group')
-
       );
       Dropdown::showFromArray("type", $types, array('value'=>$this->fields['type']));
       echo "</td>";
@@ -189,11 +189,55 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
       $this->showFormButtons($options);
+
+$_GET['name'] = '';
+$_GET['itemtype'] = 'Computer';
+Search::manageGetValues('Computer');
+$pfSearch = new PluginFusioninventorySearch();
+$pfSearch->formurl = 'fusioninventory/front/deploygroup_dynamicdata.form.php';
+$pfSearch->customIdVar = 'plugin_fusiosninventory_deploygroup_dynamicdata';
+$_GET[$pfSearch->customIdVar] = '1';
+$pfSearch->showGenericSearch('Computer', $_GET);
+
+echo "<br/><br/>";
+echo "<table class='tab_cadre_fixe'>";
+
+echo "<tr>";
+echo "<th>";
+echo __('Preview', 'monitoring');
+echo "</th>";
+echo "</tr>";
+
+echo "<tr>";
+echo "<td>";
+
+
+$default_entity = 0;
+if (isset($_SESSION['glpiactive_entity'])) {
+   $default_entity = $_SESSION['glpiactive_entity'];
+}
+$entities_isrecursive = 0;
+if (isset($_SESSION['glpiactiveentities'])
+        AND count($_SESSION['glpiactiveentities']) > 1) {
+   $entities_isrecursive = 1;
+}
+
+Search::showList('Computer', $_GET);
+
+echo "</td>";
+echo "</tr>";
+echo "</table>";
+
+      
+      
+      
       $this->addDivForTabs();
 
       return true;
    }
 
+   
+   
    function showStaticForm() {
       global $DB, $CFG_GLPI;
 

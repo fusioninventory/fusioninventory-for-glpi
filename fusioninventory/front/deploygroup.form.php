@@ -161,8 +161,13 @@ if (isset($_POST["add"])) {
    "fusioninventory","group");
 
    PluginFusioninventoryMenu::displayMenu("mini");
-
-   $group->showForm($_REQUEST["id"]);
+   
+   if (!isset($_GET["id"])
+           || $_GET["id"] == '') {
+      $_GET["id"] = 0;
+   }
+   
+   $group->showForm($_GET["id"]);
    Html::footer();
 }
 
