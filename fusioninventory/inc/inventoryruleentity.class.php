@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
    // From Rule
-   //public $right='rule_ocs';
+   //public $right='rule_import';
    public $can_sort=true;
    public $specific_parameters = false;
 
