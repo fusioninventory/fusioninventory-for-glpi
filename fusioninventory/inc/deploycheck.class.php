@@ -88,11 +88,12 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          'subtype' => "check"
       );
       if (isset($check['type'])) {
-         $params['edit']  = "true";
-         $params['type']  = $check['type'];
-         $params['index'] = $datas['index'];
-         $params['path']  = addslashes($check['path']);
-         $params['value'] = addslashes($check['value']);
+         $params['edit']   = "true";
+         $params['type']   = $check['type'];
+         $params['index']  = $datas['index'];
+         $params['path']   = addslashes($check['path']);
+         $params['value']  = addslashes($check['value']);
+         $params['return'] = $check['return'];
       }
       Ajax::UpdateItemJsCode("showCheckType$rand",
                              $CFG_GLPI["root_doc"].
@@ -193,6 +194,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          $params['index']  = $datas['index'];
          $params['path']   = addslashes($datas['path']);
          $params['value2'] = addslashes($datas['value']);
+         $params['return'] = $datas['return'];
       }
       Ajax::updateItemOnEvent("dropdown_deploy_checktype$rand",
                               "showCheckValue$rand",
@@ -219,6 +221,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
       $path_value = isset($datas['path'])?$datas['path']:"";
       $value2 = isset($datas['value2'])?$datas['value2']:"";
+      $return = isset($datas['return'])?$datas['return']:"";
       $value_type = "input";
       switch ($value) {
          case "winkeyExists":
@@ -304,6 +307,16 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          echo "</tr>";
       }
 
+      echo "<tr>";
+      echo "<th>".__("return error")."</th>";
+      echo "<td>";
+      Dropdown::showFromArray('return', array(
+                  "error"  => __("error"),
+                  "ignore" => __("ignore")
+               ), array('value' => $return));
+      echo "</td>";
+      echo "</tr>";
+
       echo "<tr><td></td><td>";
       if (isset($datas['edit'])) {
          echo "<input type='hidden' name='index' value='".$datas['index']."' />";
@@ -329,7 +342,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          'type'   => $params['deploy_checktype'],
          'path'   => $params['path'],
          'value'  => $params['value'],
-         'return' => "error"
+         'return' => $params['return']
       );
 
       //get current order json
@@ -354,7 +367,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          'type'   => $params['deploy_checktype'],
          'path'   => $params['path'],
          'value'  => $params['value'],
-         'return' => "error"
+         'return' => $params['return']
       );
 
       //get current order json
