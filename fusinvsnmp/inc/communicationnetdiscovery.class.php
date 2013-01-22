@@ -120,6 +120,9 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
                }
             }
          }
+      } else {
+         $pfImportExport = new PluginFusinvsnmpImportExport();
+         $errors.=$pfImportExport->import_netdiscovery($p_CONTENT, $p_DEVICEID);
       }
       return $errors;
    }
@@ -132,7 +135,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
     * @param type $p_xml simpleXML object
     */
    function sendCriteria($p_xml) {
-      
+     error_log("dddd"); 
       PluginFusioninventoryLogger::logIfExtradebugAndDebugMode(
          'fusioninventorycommunication',
          'Function PluginFusinvsnmpCommunicationNetDiscovery->sendCriteria().'
@@ -198,6 +201,7 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusinvsnmpCommunicationNetDiscovery";
       $rule = new PluginFusioninventoryRuleImportEquipmentCollection();
       $data = array ();
+error_log(print_r($input, 1));
       $data = $rule->processAllRules($input, array());
       PluginFusioninventoryLogger::logIfExtradebug(
          "pluginFusioninventory-rules",
@@ -666,6 +670,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
     * Used to add log in the task
     */
    function addtaskjoblog() {
+
+      if (!isset($_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'])) {
+         return;
+      }
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfTaskjoblog->addTaskjoblog(
