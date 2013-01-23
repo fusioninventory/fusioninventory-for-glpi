@@ -414,6 +414,11 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                break;
             
             case 'IPS':
+               if (!in_array('ip', $a_lockable)) {
+                  // Use the first IP as the default IP addr. This is not
+                  // always the one expected by the user :(
+                  $this->ptd->setValue('ip', (string)$p_info->IPS[0]->IP);
+               }
                $errors.=$this->importIps($child, $this->ptd->getValue('id'));
                break;
 
