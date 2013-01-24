@@ -49,6 +49,7 @@ class PluginFusioninventorySearch extends CommonDBTM {
    
    public $formurl = 'monitoring/front/componentscatalog_rule.form.php';
    public $customIdVar = 'plugin_monitoring_componentscalalog_id';
+   public $displaydeletebuton = true;
    
    /*
     * ************************************************************************ *
@@ -473,7 +474,9 @@ echo "<tr>";
          echo "<input type='submit' name='updaterule' value=\"Update this rule\" class='submit' >";
          echo "</td>";
          echo "<td colspan='2' class='center'>";
-         echo "<input type='submit' name='deleterule' value=\"Delete this rule\" class='submit' >";
+         if ($this->displaydeletebuton) {
+            echo "<input type='submit' name='deleterule' value=\"Delete this rule\" class='submit' >";
+         }
 
       } else {
          echo "<td colspan='4' class='center'>";

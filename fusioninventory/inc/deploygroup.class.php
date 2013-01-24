@@ -195,9 +195,9 @@ $_GET['name'] = '';
 $_GET['itemtype'] = 'Computer';
 Search::manageGetValues('Computer');
 $pfSearch = new PluginFusioninventorySearch();
-$pfSearch->formurl = 'fusioninventory/front/deploygroup_dynamicdata.form.php';
-$pfSearch->customIdVar = 'plugin_fusiosninventory_deploygroup_dynamicdatas_id';
-
+$pfSearch->formurl            = 'fusioninventory/front/deploygroup_dynamicdata.form.php';
+$pfSearch->customIdVar        = 'plugin_fusiosninventory_deploygroup_dynamicdatas_id';
+$pfSearch->displaydeletebuton = false;
 $query = "SELECT * FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
    WHERE `groups_id`='".$ID."'
    LIMIT 1";
