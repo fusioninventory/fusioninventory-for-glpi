@@ -2,13 +2,63 @@ table.package_item {
    width: 100%;
 }
 table.package_item th {
-   width: 120px;
+   width: 100px;
+   vertical-align: top;
 }
 
 table.package_item input[type=text], 
-table.package_item textarea,
-table.package_item select {
+table.package_item input[type=file], 
+table.package_item textarea {
    width: 100%;
+}
+
+table.package_item input[type=text] {
+   padding: 0 3px;
+   margin-right: 3px;
+}
+
+table.package_item .table_retchecks {
+   border-spacing: 0;
+}
+table.package_item .table_retchecks td {
+   padding: 0;
+}
+table.package_item .table_retchecks input {
+   width: 65px;
+}
+
+table.package_item_list {
+   width: 305px;
+}
+table.package_item_list td {
+   max-width: 70px;
+   vertical-align: top;
+   overflow: hidden;
+  -o-text-overflow: ellipsis; /* pour Opera 9 */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+table.package_item_list td.word-wrap {
+   overflow: auto;
+   word-wrap: break-word;
+   white-space: normal;
+}
+
+table.package_item_list td.control { 
+   padding: 2px 1px;
+   width: 14px;
+}
+table.package_item_list .more {
+   float: right;
+   cursor: help;
+}
+table.package_item_list .filename {
+  width:200px;
+  min-width:200px;
+  white-space: normal;
+}
+a.edit {
+  cursor: pointer;
 }
 
 
@@ -22,3 +72,6 @@ table.package_item select {
    height: 10px;
    border:0 !important;
 }
+
+
+

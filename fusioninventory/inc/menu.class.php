@@ -158,13 +158,13 @@ class PluginFusioninventoryMenu {
        */
       $a_menu = array();
      
-      if (Session::haveRight("rule_ocs", "r")) {
+      if (Session::haveRight("rule_import", "r")) {
          $a_menu[1]['name'] = __('Equipment import and link rules', 'fusioninventory');
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryInventoryRuleImport');
       }
 
-      if (Session::haveRight("rule_ocs", "r")) {
+      if (Session::haveRight("rule_import", "r")) {
          $a_menu[2]['name'] = __('Ignored import devices', 'fusioninventory');
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryIgnoredimportdevice');

@@ -50,13 +50,13 @@ if (!isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) exit;
 
 switch ($_REQUEST['type']) {
    case 'check':
-      PluginFusioninventoryDeployCheck::displayAjaxValue($_REQUEST['value'], $_REQUEST['rand']);
+      PluginFusioninventoryDeployCheck::displayAjaxValue($_REQUEST);
       break;
    case 'file':
-      PluginFusioninventoryDeployFile::displayAjaxValue($_REQUEST['value'], $_REQUEST['rand']);
+      PluginFusioninventoryDeployFile::displayAjaxValue($_REQUEST);
       break;
    case 'action':
-      PluginFusioninventoryDeployAction::displayAjaxValue($_REQUEST['value'], $_REQUEST['rand']);
+      PluginFusioninventoryDeployAction::displayAjaxValue($_REQUEST);
       break;
 }
 ?>

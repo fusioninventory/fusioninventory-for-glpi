@@ -60,24 +60,6 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
    }
 
-   /**
-    * Clean orders and related tables for a package
-    * @param packages_id the package ID
-    * @return nothing
-    */
-   static function cleanForPackage($packages_id) {
-      global $DB;
-
-      $orders = getAllDatasFromTable('glpi_plugin_fusioninventory_deployorders',
-                                     "`plugin_fusioninventory_deploypackages_id`='$packages_id'");
-      foreach ($orders as $order) {
-         PluginFusioninventoryDeployCheck::cleanForPackage($order['id']);
-      }
-
-      $query = "DELETE FROM `glpi_plugin_fusioninventory_deployorders`
-                WHERE `plugin_fusioninventory_deploypackages_id`='$packages_id'";
-      $DB->query($query);
-   }
 
    /**
     * Create installation & uninstallation orders
@@ -176,28 +158,7 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       return $orders;
    }
 
-   static function getOrderDetailsFromPackage($package_id = 0, $order_type = self::INSTALLATION_ORDER) {
-      $orders =  array();
-      if ($package_id != 0) $order_id = PluginFusioninventoryDeployOrder::getIdForPackage($package_id,
-         $order_type);
-      if ( isset($order_id) ) {
 
-         $related_classes = array('PluginFusioninventoryDeployCheck'  => 'checks',
-                                  'PluginFusioninventoryDeployFile'   => 'associatedFiles',
-                                  'PluginFusioninventoryDeployAction' => 'actions');
-
-         foreach ($related_classes as $class => $key) {
-               $tmp            = call_user_func(array($class,'getForOrder'),$order_id);
-               if ($key == 'associatedFiles') $orders[$key] = PluginFusioninventoryDeployFile::getAssociatedFilesForOrder($order_id);
-               else $orders[$key] = $tmp;
-         }
-      }
-
-#      if (!empty($orders)) $orders['uuid'] = $status['uniqid'];
-
-      return $orders;
-
-   }
 }
 
 ?>

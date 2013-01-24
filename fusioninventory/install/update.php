@@ -7374,7 +7374,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
 
       //=== Files ===
-      $f_query = "SELECT id, name, is_p2p as p2p,  
+      $f_query = "SELECT id, name, is_p2p as p2p, filesize,
          p2p_retention_days as `p2p-retention-duration`, uncompress, sha512
          FROM glpi_plugin_fusinvdeploy_files
          WHERE plugin_fusinvdeploy_orders_id = $order_id";

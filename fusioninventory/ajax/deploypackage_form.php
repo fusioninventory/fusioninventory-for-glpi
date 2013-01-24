@@ -3,7 +3,7 @@
 /*
    ------------------------------------------------------------------------
    FusionInventory
-   Copyright (C) 2010-2012 by the FusionInventory Development Team.
+   Copyright (C) 2010-2013 by the FusionInventory Development Team.
 
    http://www.fusioninventory.org/   http://forge.fusioninventory.org/
    ------------------------------------------------------------------------
@@ -23,14 +23,14 @@
    GNU Affero General Public License for more details.
 
    You should have received a copy of the GNU Affero General Public License
-   along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
+   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
 
    ------------------------------------------------------------------------
 
    @package   FusionInventory
    @author    David Durieux
    @co-author
-   @copyright Copyright (c) 2010-2012 FusionInventory team
+   @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -40,28 +40,25 @@
    ------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
-}
-
+define('GLPI_ROOT','../../..');
 include (GLPI_ROOT."/inc/includes.php");
-Session::checkLoginUser();
+header("Content-Type: text/html; charset=UTF-8");
+Html::header_nocache();
+Session::checkCentralAccess();
 
-Html::header(__('Deployment status'),$_SERVER["PHP_SELF"],"plugins",
-             "fusioninventory","deploy");
+if (!isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) exit;
 
-
-PluginFusioninventoryMenu::displayMenu("mini");
-/*
-if (!isset($_GET['sort'])) {
-   $_GET['sort'] = 6;
-   $_GET['order'] = 'DESC';
+switch ($_REQUEST['subtype']) {
+   case 'check':
+      PluginFusioninventoryDeployCheck::displayForm($_REQUEST['orders_id'], 
+                                                    $_REQUEST, $_REQUEST['rand']);
+      break;
+   case 'file':
+      PluginFusioninventoryDeployFile::displayForm($_REQUEST['orders_id'], 
+                                                   $_REQUEST, $_REQUEST['rand']);
+      break;
+   case 'action':
+      PluginFusioninventoryDeployAction::displayForm($_REQUEST['orders_id'], 
+                                                     $_REQUEST, $_REQUEST['rand']);
+      break;
 }
-$_GET['target']="task.php";
-
-Search::show('PluginFusioninventoryDeployTaskjob');*/
-PluginFusioninventoryDeployState::showTasks();
-
-Html::footer();
-
-?>
