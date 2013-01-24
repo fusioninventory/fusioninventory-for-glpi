@@ -1169,6 +1169,7 @@ return namelist;
       $uniqid = '';
 
       if ($this->reinitializeTaskjobs($tasks_id, 1)) {
+
          $pfTaskjob = new PluginFusioninventoryTaskjob();
          $_SESSION['glpi_plugin_fusioninventory']['agents'] = array();
 

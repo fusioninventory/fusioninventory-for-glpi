@@ -45,7 +45,7 @@ if(!defined('GLPI_ROOT')) {
 }
 
 
-require_once(GLPI_ROOT."/plugins/fusioninventory/inc/ocscommunication.class.php");
+require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
 
 class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommunication {
 
@@ -123,11 +123,11 @@ class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommu
                      if (isset($_GET)) {
                         $get_tmp = $_GET;  
                      }
-                     if (isset($_SESSION["glpisearchcount"][$pmCc_Rule->fields['itemtype']])) {
-                        unset($_SESSION["glpisearchcount"][$pmCc_Rule->fields['itemtype']]);
+                     if (isset($_SESSION["glpisearchcount"]['Computer'])) {
+                        unset($_SESSION["glpisearchcount"]['Computer']);
                      }
-                     if (isset($_SESSION["glpisearchcount2"][$pmCc_Rule->fields['itemtype']])) {
-                        unset($_SESSION["glpisearchcount2"][$pmCc_Rule->fields['itemtype']]);
+                     if (isset($_SESSION["glpisearchcount2"]['Computer'])) {
+                        unset($_SESSION["glpisearchcount2"]['Computer']);
                      }
                      
                      $_GET = unserialize($row['fields_array']); 

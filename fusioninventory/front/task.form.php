@@ -56,7 +56,6 @@ if (isset($_POST['forcestart'])) {
    PluginFusioninventoryProfile::checkRight("task", "w");
    $pfTaskjob = new PluginFusioninventoryTaskjob();
    $pfTaskjob->forceRunningTask($_POST['id']);
-
    Html::back();
 } else if (isset($_POST['reset'])) {
    $pFusioninventoryTask    = new PluginFusioninventoryTask();
