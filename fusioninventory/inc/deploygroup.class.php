@@ -149,6 +149,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    
    function showForm($ID, $options = array()) {
+      global $DB;
       
       if (isset($_SESSION['groupSearchResults'])) unset($_SESSION['groupSearchResults']);
       
@@ -195,8 +196,26 @@ $_GET['itemtype'] = 'Computer';
 Search::manageGetValues('Computer');
 $pfSearch = new PluginFusioninventorySearch();
 $pfSearch->formurl = 'fusioninventory/front/deploygroup_dynamicdata.form.php';
-$pfSearch->customIdVar = 'plugin_fusiosninventory_deploygroup_dynamicdata';
-$_GET[$pfSearch->customIdVar] = '1';
+$pfSearch->customIdVar = 'plugin_fusiosninventory_deploygroup_dynamicdatas_id';
+
+$query = "SELECT * FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
+   WHERE `groups_id`='".$ID."'
+   LIMIT 1";
+$result=$DB->query($query);
+$plugin_fusiosninventory_deploygroup_dynamicdatas_id = 0;
+if ($DB->numrows($result) == 1) {
+   $data = $DB->fetch_assoc($result);
+   $plugin_fusiosninventory_deploygroup_dynamicdatas_id = $data['id'];
+} else {
+   $pfDeployGroup_Dynamicdata = new PluginFusioninventoryDeployGroup_Dynamicdata();
+   $input = array();
+   $input['groups_id'] = $ID;
+   $input['fields_array'] = exportArrayToDB(array());
+   $plugin_fusiosninventory_deploygroup_dynamicdatas_id = 
+      $pfDeployGroup_Dynamicdata->add($input);
+}
+
+$_GET[$pfSearch->customIdVar] = $plugin_fusiosninventory_deploygroup_dynamicdatas_id;
 $pfSearch->showGenericSearch('Computer', $_GET);
 
 echo "<br/><br/>";

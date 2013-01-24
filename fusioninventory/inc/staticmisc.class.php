@@ -578,25 +578,30 @@ class PluginFusioninventoryStaticmisc {
       $options['name']        = 'actionselectiontoadd';
       return Dropdown::show("Group", $options);
    }
+   
+   static function task_actionselection_PluginFusioninventoryDeployGroup_deployinstall() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
+   } 
+   
+   
 
    static function task_actiontype_deployinstall($a_itemtype) {
       return array(0 => Dropdown::EMPTY_VALUE,
                    'PluginFusioninventoryDeployGroup' => __('Group of computers'),
-
-                   'Computer' => __('Computers'),
-
-                   'Group' => __('Group')
-
+                   'Computer'                         => __('Computers'),
+                   'Group'                            => __('Group')
                   );
    }
 
    static function task_actiontype_deployuninstall($a_itemtype) {
       return array(0 => Dropdown::EMPTY_VALUE,
                    'PluginFusioninventoryDeployGroup' => __('Group of computers'),
-
-                   'Computer' => __('Computers'),
-
-                   'Group' => __('Group')
+                   'Computer'                         => __('Computers'),
+                   'Group'                            => __('Group')
 
                   );
    }

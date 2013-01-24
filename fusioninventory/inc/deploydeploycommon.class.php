@@ -115,21 +115,42 @@ class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommu
                   case 'DYNAMIC':
                      $query = "SELECT fields_array
                      FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
-                     WHERE groups_id = '$items_id'";
+                     WHERE groups_id = '$items_id'
+                     LIMIT 1";
                      $res = $DB->query($query);
-                     $row = $DB->fetch_assoc($res);
-                     $fields_array = unserialize($row['fields_array']);
-                     if ($fields_array['operatingsystems_id'] != 0) unset($fields_array['operatingsystem_name']);
-                     if ($fields_array['operatingsystems_id'] == 0) unset($fields_array['operatingsystems_id']);
-                     if ($fields_array['locations_id'] == 0) unset($fields_array['locations_id']);
-                     foreach($fields_array as $key =>$field) {
-                        if (trim($field) == '') unset($fields_array[$key]);
+                     $row = $DB->fetch_assoc($res);                         
+                     
+                     if (isset($_GET)) {
+                        $get_tmp = $_GET;  
                      }
-                     $fields_array['limit'] == 999999999;
-                     $datas = PluginWebservicesMethodInventaire::methodListInventoryObjects($fields_array, '');
-                     foreach($datas as $data) {
+                     if (isset($_SESSION["glpisearchcount"][$pmCc_Rule->fields['itemtype']])) {
+                        unset($_SESSION["glpisearchcount"][$pmCc_Rule->fields['itemtype']]);
+                     }
+                     if (isset($_SESSION["glpisearchcount2"][$pmCc_Rule->fields['itemtype']])) {
+                        unset($_SESSION["glpisearchcount2"][$pmCc_Rule->fields['itemtype']]);
+                     }
+                     
+                     $_GET = unserialize($row['fields_array']); 
+                     
+                     $_GET["glpisearchcount"] = count($_GET['field']);
+                     if (isset($_GET['field2'])) {
+                        $_GET["glpisearchcount2"] = count($_GET['field2']);
+                     }
+                     
+                     $pfSearch = new PluginFusioninventorySearch();
+                     Search::manageGetValues('Computer');
+                     $glpilist_limit = $_SESSION['glpilist_limit'];
+                     $_SESSION['glpilist_limit'] = 999999999;
+                     $result = $pfSearch->constructSQL('Computer', 
+                                                       $_GET);
+                     $_SESSION['glpilist_limit'] = $glpilist_limit;
+                     while ($data=$DB->fetch_array($result)) {
                         $computers[] = $data['id'];
                      }
+                     if (count($get_tmp) > 0) {
+                        $_GET = $get_tmp; 
+                     }
+                     
                      break;
                }
                break;

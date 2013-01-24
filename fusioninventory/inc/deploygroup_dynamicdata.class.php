@@ -44,27 +44,17 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBRelation{
+class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBTM{
 
-   // From CommonDBRelation
-   public $itemtype_1 = 'PluginFusioninventoryDeployGroup';
-   public $items_id_1 = 'groups_id';
 
-   /*public $itemtype_2 = 'itemtype';
-   public $items_id_2 = 'items_id';*/
-
-   function can($ID, $right, array &$input=NULL) {
-
-      if ($ID<0) {
-         // Ajout
-         $group = new PluginFusioninventoryDeployGroup();
-
-         if (!$group->getFromDB($input['groups_id'])) {
-            return false;
-         }
-      }
-      return parent::can($ID,$right,$input);
+   static function canCreate() {
+      return true;
    }
+
+   static function canView() {
+      return true;
+   }
+   
 }
 
 ?>
