@@ -107,7 +107,7 @@ class PluginFusioninventoryDeployJob {
     * @param params parameters from the GET HTTP request
     * @return nothing
     */
-   static function update($params = array(),$update_job = true) {
+   static function update($params = array(), $update_job = true) {
       $p['machineid']      = ''; //DeviceId
       $p['part']           = ''; //fragment downloaded
       $p['uuid']           = ''; //Task uuid
@@ -208,7 +208,7 @@ class PluginFusioninventoryDeployJob {
    }
 
    static function sendOk() {
-      header("HTTP/1.1 200",true,200);
+      header("HTTP/1.1 200", true, 200);
    }
 }
 

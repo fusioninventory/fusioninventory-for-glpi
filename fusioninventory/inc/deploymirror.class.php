@@ -78,7 +78,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    }
 
    function showForm($id, $options=array()) {
-      global $DB,$CFG_GLPI;
+      global $DB, $CFG_GLPI;
 
       if ($id!='') {
          $this->getFromDB($id);

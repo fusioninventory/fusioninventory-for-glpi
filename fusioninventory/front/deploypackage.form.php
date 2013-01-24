@@ -65,22 +65,22 @@ if (isset($_REQUEST['add_item'])) {
 
 //general form
 if (isset ($_POST["add"])) {
-   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $newID = $package->add($_POST);
    html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployPackage')."?id=".$newID);
 } else if (isset ($_POST["update"])) {
-   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $package->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $package->delete($_POST);
    $package->redirectToList();
 }
 
 
-Html::header(__('FusionInventory DEPLOY'),$_SERVER["PHP_SELF"],"plugins",
-   "fusioninventory","packages");
+Html::header(__('FusionInventory DEPLOY'), $_SERVER["PHP_SELF"], "plugins",
+   "fusioninventory", "packages");
 PluginFusioninventoryMenu::displayMenu("mini");
 $id = "";
 if (isset($_GET["id"])) {

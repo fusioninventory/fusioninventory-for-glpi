@@ -194,9 +194,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
       if ($ID > 0) {
-         $this->check($ID,'r');
+         $this->check($ID, 'r');
       } else {
-         $this->check(-1,'w');
+         $this->check(-1, 'w');
          $this->getEmpty();
       }
 

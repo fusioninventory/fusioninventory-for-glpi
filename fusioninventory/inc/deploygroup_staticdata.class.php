@@ -63,7 +63,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
             return false;
          }
       }
-      return parent::can($ID,$right,$input);
+      return parent::can($ID, $right, $input);
    }
 }
 

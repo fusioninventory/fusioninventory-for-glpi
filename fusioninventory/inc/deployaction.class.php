@@ -353,10 +353,10 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       if (isset($datas['edit'])) {
          echo "<input type='hidden' name='index' value='".$datas['index']."' />";
          echo "<input type='submit' name='save_item' value=\"".
-            _sx('button','Save')."\" class='submit' >";
+            _sx('button', 'Save')."\" class='submit' >";
       } else {
          echo "<input type='submit' name='add_item' value=\"".
-            _sx('button','Add')."\" class='submit' >";
+            _sx('button', 'Add')."\" class='submit' >";
       }
       echo "</td>";
       echo "</tr></table>";

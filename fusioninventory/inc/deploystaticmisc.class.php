@@ -124,7 +124,7 @@ class PluginFusioninventoryDeployStaticmisc {
   /* static function getDeployActions() {
 
       $options['entity']      = $_SESSION['glpiactive_entity'];
-      $options['entity_sons'] = Session::haveAccessToEntity($_SESSION['glpiactive_entity'],1);
+      $options['entity_sons'] = Session::haveAccessToEntity($_SESSION['glpiactive_entity'], 1);
       $options['name']        = 'actionselectiontoadd';
       return Dropdown::show("Computer", $options);
    }*/

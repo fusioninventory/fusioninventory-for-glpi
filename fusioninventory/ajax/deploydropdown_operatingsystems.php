@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT','../../..');
+define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 Session::checkLoginUser();
 
@@ -69,7 +69,7 @@ if (strlen($_POST['searchText'])>0 && $_POST['searchText']!=$CFG_GLPI["ajax_wild
 
 
 $NBMAX = $CFG_GLPI["dropdown_max"];
-$LIMIT = "LIMIT 0,$NBMAX";
+$LIMIT = "LIMIT 0, $NBMAX";
 
 if ($_POST['searchText']==$CFG_GLPI["ajax_wildcard"]) {
    $LIMIT = "";

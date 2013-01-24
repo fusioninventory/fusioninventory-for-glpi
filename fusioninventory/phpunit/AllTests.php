@@ -96,14 +96,14 @@ if (!defined('GLPI_ROOT')) {
             }
          } else {
             // Standard use of GLPI
-            if (!in_array($plugname,$_SESSION['glpi_plugins'])) {
+            if (!in_array($plugname, $_SESSION['glpi_plugins'])) {
                // Plugin not activated
                return false;
             }
          }
       } else {
          // Is ezComponent class ?
-         if (preg_match('/^ezc([A-Z][a-z]+)/',$classname,$matches)) {
+         if (preg_match('/^ezc([A-Z][a-z]+)/', $classname, $matches)) {
             include_once(GLPI_EZC_BASE);
             ezcBase::autoload($classname);
             return true;
@@ -114,7 +114,7 @@ if (!defined('GLPI_ROOT')) {
 
       // No errors for missing classes due to implementation
       if (!isset($CFG_GLPI['missingclasses'])
-              OR !in_array($item,$CFG_GLPI['missingclasses'])){
+              OR !in_array($item, $CFG_GLPI['missingclasses'])){
          if (file_exists("$dir$item.class.php")) {
             include_once ("$dir$item.class.php");
             if ($_SESSION['glpi_use_mode']==Session::DEBUG_MODE) {
@@ -123,7 +123,7 @@ if (!defined('GLPI_ROOT')) {
 
          } else if (!isset($notfound["x$classname"])) {
             // trigger an error to get a backtrace, but only once (use prefix 'x' to handle empty case)
-            //Toolbox::logInFile('debug',"file $dir$item.class.php not founded trying to load class $classname\n");
+            //Toolbox::logInFile('debug', "file $dir$item.class.php not founded trying to load class $classname\n");
             trigger_error("GLPI autoload : file $dir$item.class.php not founded trying to load class '$classname'");
             $notfound["x$classname"] = true;
          }
@@ -137,7 +137,7 @@ if (!defined('GLPI_ROOT')) {
    restore_error_handler();
 
    error_reporting(E_ALL | E_STRICT);
-   ini_set('display_errors','On');
+   ini_set('display_errors', 'On');
 }
 ini_set("memory_limit", "-1");
 ini_set("max_execution_time", "0");

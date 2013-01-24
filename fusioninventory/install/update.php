@@ -5108,11 +5108,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $result=$DB->query($query);
       if ($DB->numrows($result) == '0') {
          $query = "INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`)
-                     VALUES (NULL,'PluginFusioninventoryPrinterLogReport', '2', '1', '0'),
-             (NULL,'PluginFusioninventoryPrinterLogReport', '18', '2', '0'),
-             (NULL,'PluginFusioninventoryPrinterLogReport', '20', '3', '0'),
-             (NULL,'PluginFusioninventoryPrinterLogReport', '5', '4', '0'),
-             (NULL,'PluginFusioninventoryPrinterLogReport', '6', '5', '0')";
+                     VALUES (NULL, 'PluginFusioninventoryPrinterLogReport', '2', '1', '0'),
+             (NULL, 'PluginFusioninventoryPrinterLogReport', '18', '2', '0'),
+             (NULL, 'PluginFusioninventoryPrinterLogReport', '20', '3', '0'),
+             (NULL, 'PluginFusioninventoryPrinterLogReport', '5', '4', '0'),
+             (NULL, 'PluginFusioninventoryPrinterLogReport', '6', '5', '0')";
          $DB->query($query);
       } else {
          while ($data=$DB->fetch_array($result)) {
@@ -5152,7 +5152,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $result=$DB->query($query);
          if ($DB->numrows($result) == '0') {
             $query = "INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`)
-                        VALUES (NULL,'PluginFusioninventoryNetworkEquipment', '".$num."', '".$rank."', '0')";
+                        VALUES (NULL, 'PluginFusioninventoryNetworkEquipment', '".$num."', '".$rank."', '0')";
             $DB->query($query);
          }
       }
@@ -5224,7 +5224,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_configs`
            WHERE `type`='version'
-           LIMIT 1,10";
+           LIMIT 1, 10";
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $config->delete($data);
@@ -5459,7 +5459,7 @@ function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
 function changeDisplayPreference($olditemtype, $newitemtype) {
    global $DB;
 
-   $query = "SELECT *,count(`id`) as `cnt` FROM `glpi_displaypreferences`
+   $query = "SELECT *, count(`id`) as `cnt` FROM `glpi_displaypreferences`
    WHERE (`itemtype` = '".$newitemtype."'
    OR `itemtype` = '".$olditemtype."')
    group by `users_id`, `num`";
@@ -6641,7 +6641,7 @@ function pluginFusioninventoryUpdatemapping() {
 
 
 function update213to220_ConvertField($migration) {
-   global $FUSIONINVENTORY_MAPPING,$FUSIONINVENTORY_MAPPING_DISCOVERY,$DB;
+   global $FUSIONINVENTORY_MAPPING, $FUSIONINVENTORY_MAPPING_DISCOVERY, $DB;
 
    // ----------------------------------------------------------------------
    //NETWORK MAPPING MAPPING
@@ -7243,7 +7243,7 @@ function update213to220_ConvertField($migration) {
 function pluginFusioninventorychangeDisplayPreference($olditemtype, $newitemtype) {
    global $DB;
    
-   $query = "SELECT *,count(`id`) as `cnt` FROM `glpi_displaypreferences` 
+   $query = "SELECT *, count(`id`) as `cnt` FROM `glpi_displaypreferences` 
    WHERE (`itemtype` = '".$newitemtype."'
    OR `itemtype` = '".$olditemtype."')
    group by `users_id`, `num`";

@@ -71,7 +71,7 @@ if (isset($_POST["add"])) {
 
 } else if (isset($_REQUEST["purge"])) {
    $group->check($_REQUEST['id'], 'd');
-   $ok = $group->delete($_REQUEST,1);
+   $ok = $group->delete($_REQUEST, 1);
 
    $group->redirectToList();
 
@@ -82,7 +82,7 @@ if (isset($_POST["add"])) {
    Html::back();
 
 } else if (isset($_POST["additem"])) {
-   //$group_item->check(-1,'w',$_POST);
+   //$group_item->check(-1, 'w', $_POST);
 
    if ($_REQUEST['type'] == 'static') {
       if (isset($_REQUEST["item"])) {
@@ -118,7 +118,7 @@ if (isset($_POST["add"])) {
 
    Html::back();
 } else if (isset($_POST["updateitem"])) {
-   //$group_item->check(-1,'w',$_POST);
+   //$group_item->check(-1, 'w', $_POST);
    if ($_REQUEST['type'] == 'dynamic') {
       $fields_array = array(
          'itemtype'              => $_REQUEST['itemtype'],
@@ -145,7 +145,7 @@ if (isset($_POST["add"])) {
    if ($_REQUEST['type'] == 'static') {
       if (count($_REQUEST["item"])) {
          foreach ($_REQUEST["item"] as $key => $val) {
-            if ($group_item->can($key,'w')) {
+            if ($group_item->can($key, 'w')) {
                $group_item->delete(array('id' => $key));
             }
          }
@@ -157,8 +157,8 @@ if (isset($_POST["add"])) {
    Html::back();
 
 } else {
-   Html::header(__('FusionInventory DEPLOY'),$_SERVER["PHP_SELF"],"plugins",
-   "fusioninventory","group");
+   Html::header(__('FusionInventory DEPLOY'), $_SERVER["PHP_SELF"], "plugins",
+   "fusioninventory", "group");
 
    PluginFusioninventoryMenu::displayMenu("mini");
    

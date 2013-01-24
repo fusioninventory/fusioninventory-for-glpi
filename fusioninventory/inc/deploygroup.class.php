@@ -154,11 +154,11 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       if (isset($_SESSION['groupSearchResults'])) unset($_SESSION['groupSearchResults']);
       
       if ($ID > 0) {
-         $this->check($ID,'r');
+         $this->check($ID, 'r');
          $this->getFromDB($ID);
       } else {
          // Create item
-         $this->check(-1,'w');
+         $this->check(-1, 'w');
          $this->getEmpty();
       }
 
@@ -261,10 +261,10 @@ echo "</table>";
       global $DB, $CFG_GLPI;
 
       $groupID = $this->fields['id'];
-      if (!$this->can($groupID,'r')) {
+      if (!$this->can($groupID, 'r')) {
          return false;
       }
-      $canedit = $this->can($groupID,'w');
+      $canedit = $this->can($groupID, 'w');
       $rand = mt_rand();
 
       $query = "SELECT DISTINCT `itemtype`
@@ -417,10 +417,10 @@ echo "</table>";
       global $DB, $CFG_GLPI;
 
       $groupID = $this->fields['id'];
-      if (!$this->can($groupID,'r')) {
+      if (!$this->can($groupID, 'r')) {
          return false;
       }
-      $canedit = $this->can($groupID,'w');
+      $canedit = $this->can($groupID, 'w');
 
       $fields = array();
 
@@ -558,7 +558,7 @@ echo "</table>";
       ));
       echo "<hr />";*/
 
-      self::ajaxDisplaySearchTextForDropdown("operatingsystems_id",8, $fields['operatingsystem_name']);
+      self::ajaxDisplaySearchTextForDropdown("operatingsystems_id", 8, $fields['operatingsystem_name']);
       $params_os = array('searchText'     => '__VALUE__',
                              'myname'     => 'operatingsystems_id',
                              'table'      => 'glpi_operatingsystems',

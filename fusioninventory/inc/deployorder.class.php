@@ -145,7 +145,7 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
 
          foreach ($related_classes as $class => $key) {
             foreach ($results as $result) {
-               $tmp            = call_user_func(array($class,'getForOrder'),$result['id']);
+               $tmp            = call_user_func(array($class, 'getForOrder'), $result['id']);
                if ($key == 'associatedFiles') $orders[$key] = $tmp;
                else $orders[$key] = $tmp;
             }

@@ -30,7 +30,7 @@
    @package   FusionInventory
    @author    Alexandre Delaunay
    @co-author
-   @copyright Copyright (c) 2010-2012 FusionInventory team
+   @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
@@ -44,25 +44,25 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 Session::checkLoginUser();
 
-Html::header(__('Mirror servers'),$_SERVER["PHP_SELF"],"plugins",
-   "fusioninventory","mirror");
+Html::header(__('Mirror servers'), $_SERVER["PHP_SELF"], "plugins",
+   "fusioninventory", "mirror");
 
-//PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents","r");
+//PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents", "r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 $mirror = new PluginFusioninventoryDeployMirror();
 
 if (isset ($_POST["add"])) {
-// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $newID = $mirror->add($_POST);
    Html::back();
 } else if (isset ($_POST["update"])) {
-// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $mirror->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package","w");
+// PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
    $mirror->delete($_POST);
    Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployMirror'));
 }

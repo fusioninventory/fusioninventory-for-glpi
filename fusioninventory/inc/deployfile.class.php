@@ -540,7 +540,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       }
 
       $render   = PluginFusioninventoryDeployOrder::getRender($render);
-      $order_id = PluginFusioninventoryDeployOrder::getIdForPackage($package_id,$render);
+      $order_id = PluginFusioninventoryDeployOrder::getIdForPackage($package_id, $render);
 
       if (isset ($_POST["id"]) and !$_POST['id']) {
          $file_path = $server_upload_path.'/'.$_POST['file_server'];

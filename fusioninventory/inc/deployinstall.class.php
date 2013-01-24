@@ -55,7 +55,7 @@ class PluginFusioninventoryDeployInstall extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       switch(get_class($item)) {
-         case 'PluginFusioninventoryDeployPackage': return __('Installation','fusioninventory');
+         case 'PluginFusioninventoryDeployPackage': return __('Installation', 'fusioninventory');
 
       }
    }
