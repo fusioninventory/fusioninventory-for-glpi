@@ -7336,7 +7336,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
    //add json field in deploy order table to store datas from old misc tables
    $migration->addField("glpi_plugin_fusioninventory_deployorders",
                                  "json",
-                                 "TEXT NOT NULL DEFAULT ''");
+                                 "TEXT DEFAULT NULL");
    $migration->migrationOneTable("glpi_plugin_fusioninventory_deployorders");
 
    $final_datas = array();
