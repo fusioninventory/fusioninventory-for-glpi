@@ -111,9 +111,9 @@ class PluginFusioninventoryMenu {
          $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryUnknownDevice');
       }
 
-      $a_menu[2]['name'] = __('Groups of computers');
-      $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_group.png";
-      $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/deploygroup.php";
+      $a_menu[3]['name'] = __('Groups of computers');
+      $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_group.png";
+      $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/deploygroup.php";
 
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('General', 'fusioninventory'), $a_menu, $type,
