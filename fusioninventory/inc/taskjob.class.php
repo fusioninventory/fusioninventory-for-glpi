@@ -603,6 +603,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                               $params,
                               array("click"),
                               "-1",
+                              "-1",
                               array(__('Add')));
 
 
