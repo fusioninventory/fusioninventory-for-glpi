@@ -114,7 +114,11 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
                      $s_type[0] = trim($s_type[0]);
                      $s_type[0] = str_replace(" COLLATE utf8_unicode_ci", "", $s_type[0]);
                      $s_type[0] = str_replace(" CHARACTER SET utf8", "", $s_type[0]);
-                     $a_tables_db[$current_table][$s_line[1]] = str_replace(",", "", $s_type[0]);
+                     $s_type[0] = str_replace(",", "", $s_type[0]);
+                     if (trim($s_type[0]) == 'text') {
+                        $s_type[0] .= ' DEFAULT NULL';
+                     }
+                     $a_tables_db[$current_table][$s_line[1]] = $s_type[0];
                   }
                }
             }
