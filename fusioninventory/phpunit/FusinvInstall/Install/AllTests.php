@@ -66,7 +66,7 @@ class Install extends PHPUnit_Framework_TestCase {
          echo "======= Import save.sql file =======\n";
 
          $FusinvInstall = new FusinvInstall();
-         $FusinvInstall->testDB("fusioninventory");
+         $FusinvInstall->testDB("fusioninventory", "install new version");
       } else {
 
          // Delete if Table of FusionInventory or Tracker yet in DB
@@ -92,7 +92,7 @@ class Install extends PHPUnit_Framework_TestCase {
          Session::loadLanguage("en_GB");
 
          $FusinvInstall = new FusinvInstall();
-         $FusinvInstall->testDB("fusioninventory");
+         $FusinvInstall->testDB("fusioninventory", "install new version");
 
          passthru("mysqldump -h ".$DB->dbhost." -u ".$DB->dbuser." -p".$DB->dbpassword." ".$DB->dbdefault." > save.sql");
          
