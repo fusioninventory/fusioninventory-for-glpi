@@ -48,56 +48,6 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
 
 
     /**
-    * get device from pciid
-    *
-    * @param $section Section of the XML
-    *
-    **/
-    public static function filter($section, $value) {
-
-        switch($section) {
-            case 'CONTROLLERS':
-
-                if(isset($value['PCIID']) AND $value['PCIID'] != '') {
-                    $manufacturer = self::_getDataFromPCIID($value['PCIID']);
-                    if (!empty($manufacturer)) {
-                       $value['MANUFACTURER'] = $manufacturer;
-                    }
-                }
-
-            break;
-
-            case 'USBDEVICES':
-                if(isset($value['VENDORID']) 
-                        AND $value['VENDORID'] != ''
-                        AND isset($value['PRODUCTID'])) {
-
-                    $dataArray = self::_getDataFromUSBID($value['VENDORID'], $value['PRODUCTID']);
-
-                    $dataArray[0] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[0]);
-                    if (!empty($dataArray[0])
-                            AND !isset($value['MANUFACTURER'])) {
-                       $section->addChild('MANUFACTURER', $dataArray[0]);
-                    }
-                    $dataArray[1] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[1]);
-                    if (!empty($dataArray[1])
-                            AND !isset($value['PRODUCTNAME'])) {
-                       $section->addChild('PRODUCTNAME', $dataArray[1]);
-                    }
-
-                }
-
-            break;
-
-            default:
-            break;
-        }
-        return false;
-    }
-
-
-
-    /**
     * get manufacturer from pciid
     *
     * @param $pciid value id of the PCI (vendor identifiant)
@@ -105,7 +55,7 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
     * @return manufacturer name or nothing
     *
     */
-    private static function _getDataFromPCIID($pciid) {
+    static function getDataFromPCIID($pciid) {
        global $DB;
 
       $pciidArray = explode(":", $pciid);
@@ -136,7 +86,7 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
    * @return array (vendor name, device name)
    *
    */
-   private static function _getDataFromUSBID($vendorId, $productId) {
+   static function getDataFromUSBID($vendorId, $productId) {
       global $DB;
 
       $vendorId = strtolower($vendorId);

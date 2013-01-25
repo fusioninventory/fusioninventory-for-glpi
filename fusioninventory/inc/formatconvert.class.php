@@ -370,11 +370,17 @@ class PluginFusioninventoryFormatconvert {
             foreach ($array['CONTROLLERS'] as $a_controllers) {
                if ((isset($a_controllers["NAME"])) 
                        AND (!isset($ignorecontrollers[$a_controllers["NAME"]]))) {
-                  $a_inventory['controller'][] = $thisc->addValues($a_controllers, 
-                                                                    array(
-                                                                       'NAME'          => 'designation', 
-                                                                       'MANUFACTURER'  => 'manufacturers_id',
-                                                                       'type'          => 'interfacetypes_id'));
+                  $array_tmp = $thisc->addValues($a_controllers, 
+                                                 array(
+                                                    'NAME'          => 'designation', 
+                                                    'MANUFACTURER'  => 'manufacturers_id',
+                                                    'type'          => 'interfacetypes_id'));
+                  if (empty($array_tmp['manufacturers_id'])
+                          && isset($a_controllers['PCIID'])) {
+                     $array_tmp['manufacturers_id'] = PluginFusioninventoryInventoryComputerLibfilter::getDataFromPCIID(
+                             $a_controllers['PCIID']);
+                  }
+                  $a_inventory['controller'][] = $array_tmp;
                }
             }
          }
@@ -565,19 +571,41 @@ class PluginFusioninventoryFormatconvert {
       
       // * PERIPHERAL
       $a_inventory['peripheral'] = array();
-      if ($pfConfig->getValue('import_monitor') > 0) {
+      if ($pfConfig->getValue('import_peripheral') > 0) {
          if (isset($array['USBDEVICES'])) {
-            foreach ($array['USBDEVICES'] as $a_monitors) {
-               $array_tmp = $thisc->addValues($a_monitors, 
+            foreach ($array['USBDEVICES'] as $a_peripherals) {
+               $array_tmp = $thisc->addValues($a_peripherals, 
                                               array( 
                                                  'NAME'      => 'name', 
                                                  'MANUFACTURER' => 'manufacturers_id', 
                                                  'SERIAL'       => 'serial',
                                                  'PRODUCTNAME'  => 'productname'));
+               
+               if(isset($a_peripherals['VENDORID']) 
+                        AND $a_peripherals['VENDORID'] != ''
+                        AND isset($a_peripherals['PRODUCTID'])) {
+
+                  $dataArray = PluginFusioninventoryInventoryComputerLibfilter::getDataFromUSBID(
+                             $a_peripherals['VENDORID'], 
+                             $a_peripherals['PRODUCTID']
+                          );
+                  $dataArray[0] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[0]);
+                  if (!empty($dataArray[0]) 
+                          AND empty($array_tmp['manufacturers_id'])) {
+                     $array_tmp['manufacturers_id'] = $dataArray[0];
+                  }
+                  $dataArray[1] = preg_replace('/&(?!\w+;)/', '&amp;', $dataArray[1]);
+                  if (!empty($dataArray[1])
+                          AND empty($a_peripherals['productname'])) {
+                     $a_peripherals['productname'] = $dataArray[1];
+                  }
+               }
+               
                if ($array_tmp['productname'] != '') {
                   $array_tmp['name'] = $array_tmp['productname'];
                }
                unset($array_tmp['productname']);
+               
                if (!($pfConfig->getValue('import_peripheral') == 3
                        && $array_tmp['serial'] == '')) {
                   
