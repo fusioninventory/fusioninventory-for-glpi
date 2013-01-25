@@ -2010,6 +2010,73 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
           }
           
           break;
+       
+      case 'NetworkEquipment':
+         $already_link_tables_tmp = $already_link_tables;
+         array_pop($already_link_tables_tmp);
+
+         $leftjoin_fusioninventory_networkequipments = 1;
+         if ((in_array('glpi_plugin_fusioninventory_networkequipments', $already_link_tables_tmp))
+            OR (in_array('glpi_plugin_fusioninventory_snmpmodels', $already_link_tables_tmp))
+            OR (in_array('glpi_plugin_fusioninventory_configsecurities', $already_link_tables_tmp))) {
+
+            $leftjoin_fusioninventory_networkequipments = 0;
+         }
+
+         switch ($new_table.".".$linkfield) {
+
+            // ** FusionInventory - last inventory
+            case "glpi_plugin_fusioninventory_networkequipments." :
+               if ($leftjoin_fusioninventory_networkequipments == "1") {
+                  return " LEFT JOIN glpi_plugin_fusioninventory_networkequipments 
+                     ON (glpi_networkequipments.id = glpi_plugin_fusioninventory_networkequipments.networkequipments_id) ";
+               }
+               return " ";
+               break;
+
+            // ** FusionInventory - cpu
+            case "glpi_plugin_fusioninventory_networkequipments.plugin_fusioninventory_networkequipments_id" :
+               if ($leftjoin_fusioninventory_networkequipments == "1") {
+                     return " LEFT JOIN glpi_plugin_fusioninventory_networkequipments 
+                        ON (glpi_networkequipments.id = glpi_plugin_fusioninventory_networkequipments.networkequipments_id) ";
+               }
+               return " ";
+               break;
+
+
+            // ** FusionInventory - SNMP models
+            case "glpi_plugin_fusioninventory_snmpmodels.plugin_fusioninventory_snmpmodels_id" :
+               $return = "";
+               if ($leftjoin_fusioninventory_networkequipments == "1") {
+                  $return = " LEFT JOIN glpi_plugin_fusioninventory_networkequipments 
+                     ON (glpi_networkequipments.id = glpi_plugin_fusioninventory_networkequipments.networkequipments_id) ";
+               }
+               return $return." LEFT JOIN glpi_plugin_fusioninventory_snmpmodels 
+                  ON (glpi_plugin_fusioninventory_networkequipments.plugin_fusioninventory_snmpmodels_id = glpi_plugin_fusioninventory_snmpmodels.id) ";
+               break;
+
+            // ** FusionInventory - SNMP authentification
+            case "glpi_plugin_fusioninventory_configsecurities.plugin_fusioninventory_configsecurities_id":
+               $return = "";
+               if ($leftjoin_fusinvsnmp_networkequipments == "1") {
+                  $return = " LEFT JOIN glpi_plugin_fusioninventory_networkequipments 
+                     ON glpi_networkequipments.id = glpi_plugin_fusioninventory_networkequipments.networkequipments_id ";
+               }
+               return $return." LEFT JOIN glpi_plugin_fusioninventory_configsecurities 
+                  ON glpi_plugin_fusioninventory_networkequipments.plugin_fusioninventory_configsecurities_id = glpi_plugin_fusinvsnmp_configsecurities.id ";
+               break;
+
+            case "glpi_plugin_fusioninventory_networkequipments.sysdescr":
+               $return = " ";
+               if ($leftjoin_fusinvsnmp_networkequipments == "1") {
+                  $return = " LEFT JOIN glpi_plugin_fusioninventory_networkequipments 
+                     ON glpi_networkequipments.id = glpi_plugin_fusioninventory_networkequipments.networkequipments_id ";
+               }
+               return $return;
+               break;
+
+         }
+         break;
       
    }
    return "";
