@@ -2550,7 +2550,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->changeField($newTable,
                                  "itemtype",
                                  "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci NOT NULL");
+                                 "varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
          $migration->changeField($newTable,
                                  "vlan",
                                  "vlan",
@@ -2578,7 +2578,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "tinyint(1) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                                  "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci NOT NULL");
+                                 "varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
          $migration->addField($newTable,
                                  "vlan",
                                  "tinyint(1) NOT NULL DEFAULT '0'");
