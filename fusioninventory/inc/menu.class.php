@@ -93,27 +93,27 @@ class PluginFusioninventoryMenu {
        * General
        */
       $a_menu = array();
-      if (Session::haveRight("config", "w")) {
-         $a_menu[0]['name'] = __('General configuration', 'fusioninventory');
-         $a_menu[0]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
-         $a_menu[0]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/config.form.php";
-      }
-
       if (PluginFusioninventoryProfile::haveRight("agent", "r")) {
-         $a_menu[1]['name'] = __('Agents management', 'fusioninventory');
-         $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
-         $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryAgent');
+         $a_menu[0]['name'] = __('Agents management', 'fusioninventory');
+         $a_menu[0]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
+         $a_menu[0]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryAgent');
       }
 
       if (PluginFusioninventoryProfile::haveRight("unknowndevice", "r")) {
-         $a_menu[2]['name'] = __('Unknown device', 'fusioninventory');
-         $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_unknown_device.png";
-         $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryUnknownDevice');
+         $a_menu[1]['name'] = __('Unknown device', 'fusioninventory');
+         $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_unknown_device.png";
+         $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryUnknownDevice');
       }
 
-      $a_menu[3]['name'] = __('Groups of computers');
-      $a_menu[3]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_group.png";
-      $a_menu[3]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/deploygroup.php";
+      $a_menu[2]['name'] = __('Groups of computers');
+      $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_group.png";
+      $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/deploygroup.php";
+      
+      if (Session::haveRight("config", "w")) {
+         $a_menu[3]['name'] = __('General configuration', 'fusioninventory');
+         $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
+         $a_menu[3]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/config.form.php";
+      }
 
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('General', 'fusioninventory'), $a_menu, $type,
