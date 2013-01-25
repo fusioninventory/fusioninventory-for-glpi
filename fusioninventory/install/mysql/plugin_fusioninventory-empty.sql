@@ -861,150 +861,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_computerlicenseinfos` (
 
 -- BEGIN DEPLOY
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployactions`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_deployactions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deployorders_id` int(11) NOT NULL,
-  `itemtype` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `items_id` int(11) NOT NULL,
-  `ranking` int(6) NOT NULL DEFAULT 0,
-  PRIMARY KEY (  `id` ),
-  KEY `plugin_fusioninventory_deployorders_id` (`plugin_fusioninventory_deployorders_id`),
-  KEY `itemtype` (`itemtype`),
-  KEY `items_id` (`items_id`)
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployactions_commands`;
-
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployactions_commands` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `exec` varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (  `id` )
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployactions_deletes`;
-
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployactions_deletes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `path` varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployactions_mkdirs`;
-
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployactions_mkdirs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `path` varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployactions_moves`;
-
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployactions_moves` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `from` varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `to` varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployactions_copies`;
-
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployactions_copies` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `from` varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `to` varchar(1024) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployactions_commandenvvariables`;
-
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployactions_commandenvvariables` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `value` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `plugin_fusioninventory_deploycommands_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_deploycommands_id` (`plugin_fusioninventory_deploycommands_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployactions_commandstatus`;
-
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployactions_commandstatus` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `value` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `plugin_fusioninventory_deploycommands_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_deploycommands_id` (`plugin_fusioninventory_deploycommands_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploychecks`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_deploychecks` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `path` varchar(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `ranking` int(11) NOT NULL DEFAULT 0,
-  `plugin_fusioninventory_deployorders_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_deployorders_id` (`plugin_fusioninventory_deployorders_id`)
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployfileparts`;
-
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployfileparts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sha512` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `shortsha512` varchar(6) COLLATE utf8_unicode_ci NOT NULL,
-  `plugin_fusioninventory_deployorders_id` int(11) NOT NULL,
-  `plugin_fusioninventory_deployfiles_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `shortsha512` (`shortsha512`),
-  KEY `plugin_fusioninventory_deployorders_id` (`plugin_fusioninventory_deployorders_id`),
-  KEY `plugin_fusioninventory_deployfiles_id` (`plugin_fusioninventory_deployfiles_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployfiles`;
-
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployfiles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `is_p2p` tinyint(1) NOT NULL DEFAULT 0,
-  `mimetype` char(255) NOT NULL DEFAULT 'na',
-  `create_date` datetime NOT NULL,
-  `p2p_retention_days` int(11) NOT NULL DEFAULT 0,
-  `uncompress` tinyint(1) NOT NULL DEFAULT 0,
-  `sha512` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `shortsha512` varchar(6) COLLATE utf8_unicode_ci NOT NULL,
-  `filesize` bigint(20) NOT NULL DEFAULT 0,
-  `plugin_fusioninventory_deployorders_id` int(11) NOT NULL,
-PRIMARY KEY (`id`),
-KEY `shortsha512` (`shortsha512`),
-KEY `plugin_fusioninventory_deployorders_id` (`plugin_fusioninventory_deployorders_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployorders`;
 
@@ -1013,6 +869,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployorders` (
   `type` int(11) NOT NULL,
   `create_date` datetime NOT NULL,
   `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL,
+  `json` TEXT DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `create_date` (`create_date`),
@@ -1036,21 +893,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deploypackages` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployfiles_mirrors`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_deployfiles_mirrors` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deployfiles_id` int(11) NOT NULL,
-  `plugin_fusioninventory_deploymirrors_id` int(11) NOT NULL,
-  `ranking` int(11) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  KEY `plugin_fusioninventory_deployfiles_id` (`plugin_fusioninventory_deployfiles_id`),
-  KEY `plugin_fusioninventory_deploymirrors_id` (`plugin_fusioninventory_deploymirrors_id`)
-) ENGINE = MYISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploymirrors`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
@@ -1064,17 +906,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `date_mod` (`date_mod`)
-) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployactions_messages`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_deployactions_messages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `message` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
 
 
