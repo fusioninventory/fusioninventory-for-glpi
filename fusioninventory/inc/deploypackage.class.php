@@ -48,7 +48,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return __('Packages');
+      return __('Packages', 'fusioninventory');
 
    }
 
@@ -78,7 +78,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    function getSearchOptions() {
 
       $tab = array();
-      $tab['common']           = __('Characteristics');;
+      $tab['common']           = __('Characteristics');
 
 
       $tab[1]['table']         = $this->getTable();
@@ -157,11 +157,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    function title() {
 
       $buttons = array();
-      $title = __('Packages');
+      $title = __('Packages', 'fusioninventory');
 
 
       if ($this->canCreate()) {
-         $buttons["deploypackage.form.php?new=1"] = __('Add a package');
+         $buttons["deploypackage.form.php?new=1"] = __('Add a package', 'fusioninventory');
 
          $title = "";
       }
@@ -412,7 +412,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
          Session::addMessageAfterRedirect(str_replace('#task#', $tasks_url, 
-                     __('One or more active tasks (#task#) use this package. Deletion denied.')));
+                     __('One or more active tasks (#task#) use this package. Deletion denied.', 
+                        'fusioninventory')));
 
          Html::redirect(GLPI_ROOT."/plugins/fusioninventory/front/task.form.php?id="
                .$this->getField('id'));
@@ -542,7 +543,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                                                          :$new_package->getLink());
 
       // Do not display quotes
-      Session::addMessageAfterRedirect(__('Item successfully added')."&nbsp;: ".
+      Session::addMessageAfterRedirect(__('Item successfully added', 'fusioninventory')."&nbsp;: ".
                                        stripslashes($display));
 
       unset($_SESSION['tmp_clone_package']);

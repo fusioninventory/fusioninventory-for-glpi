@@ -48,14 +48,14 @@ class PluginFusioninventoryDeployUninstall extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return __('Uninstallation');
+      return __('Uninstallation', 'fusioninventory');
 
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       switch(get_class($item)) {
-         case 'PluginFusioninventoryDeployPackage': return __('Uninstallation');
+         case 'PluginFusioninventoryDeployPackage': return __('Uninstallation', 'fusioninventory');
 
       }
    }

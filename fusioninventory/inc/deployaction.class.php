@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployAction extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-      return __('Actions');
+      return __('Actions', 'fusioninventory');
    }
 
    static function canCreate() {
@@ -60,11 +60,11 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
    static function getTypes() {
        return array(
-         'cmd'     => __('cmd'),
-         'move'    => __('move'),
-         'copy'    => __('copy'),
-         'delete'  => __('delete'),
-         'mkdir'   => __('mkdir')
+         'cmd'     => __('cmd', 'fusioninventory'),
+         'move'    => __('move', 'fusioninventory'),
+         'copy'    => __('copy', 'fusioninventory'),
+         'delete'  => __('delete', 'fusioninventory'),
+         'mkdir'   => __('mkdir', 'fusioninventory')
       );
    }
 
@@ -147,7 +147,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          echo "<td title='$action_type'>";
          echo "<a class='edit' onclick='edit_action($i)'>$action_type</a>";
          if (isset($action[$action_type]['retChecks'])) {
-            echo "<a title='".__('return codes saved for this command')."' class='more'>...</a>";
+            echo "<a title='".__('return codes saved for this command', 'fusioninventory').
+               "' class='more'>...</a>";
          }
          echo "</td>";
          foreach ($action[$action_type] as $key => $value) {
@@ -162,7 +163,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             } else echo "$key : $value";
             echo "</td>";
          }
-         echo "<td class='rowhandler control' title='".__('drag').
+         echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
             "'><div class='drag row'></div></td>";
          echo "</tr>";
          $i++;
@@ -202,7 +203,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       array_unshift($actions_types, "---");
       echo "<table class='package_item'>";
       echo "<tr>";
-      echo "<th>".__("Type")."</th>";
+      echo "<th>".__("Type", 'fusioninventory')."</th>";
       echo "<td>";
       $options['rand'] = $datas['rand'];
       if (isset($datas['edit'])) {
@@ -256,20 +257,20 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       switch ($type) {
          case 'move':
          case 'copy':
-            $value_label_1 = __("From");
+            $value_label_1 = __("From", 'fusioninventory');
             $name_label_1 = "from";
-            $value_label_2 = __("To");
+            $value_label_2 = __("To", 'fusioninventory');
             $name_label_2 = "to";
             break;
          case 'cmd':
-            $value_label_1 = __("exec");
+            $value_label_1 = __("exec", 'fusioninventory');
             $name_label_1 = "exec";
             $value_label_2 = false;
             $value_type_1  = "textarea";
             break;
          case 'delete':
          case 'mkdir':
-            $value_label_1 = __("path");
+            $value_label_1 = __("path", 'fusioninventory');
             $name_label_1 = "list[]";
             $value_label_2 = false;
             break;
@@ -299,7 +300,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       //specific case for cmd : add retcheck form
       if ($type == "cmd") {
          echo "<tr>";
-         echo "<th>".__("return codes");
+         echo "<th>".__("return codes", 'fusioninventory');
          PluginFusioninventoryDeployPackage::plusButton("retchecks$rand", "table");
          echo "</th>";
          echo "<td>";
@@ -308,10 +309,10 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          echo "<span id='retchecks$rand' $display>";
          $retchecks_entries = array(
             '--',
-            'okCode'       => __("okCode"),
-            'errorCode'    => __("errorCode"),
-            'okPattern'    => __("okPattern"),
-            'errorPattern' => __("errorPattern")
+            'okCode'       => __("okCode", 'fusioninventory'),
+            'errorCode'    => __("errorCode", 'fusioninventory'),
+            'okPattern'    => __("okPattern", 'fusioninventory'),
+            'errorPattern' => __("errorPattern", 'fusioninventory')
          );
          if (!isset($datas['retChecks'])) {
             echo "<table class='table_retchecks'>";
@@ -368,7 +369,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             if (parent.childNodes.length > 1) { 
                parent.removeChild(tag_table);
             } else {
-               alert('".__("last node, cannot delete it")."');
+               alert('".__("last node, cannot delete it")."', 'fusioninventory');
             }
          }
       </script>";

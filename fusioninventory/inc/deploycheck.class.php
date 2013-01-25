@@ -47,21 +47,21 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-      return __('Audits');
+      return __('Audits', 'fusioninventory');
    }
 
    static function getTypes() {
       return array(
-         'winkeyExists'     => __("winkeyExists"),
-         'winkeyMissing'    => __("winkeyMissing"),
-         'winkeyEquals'     => __("winkeyEquals"),
-         'fileExists'       => __("fileExists"),
-         'fileMissing'      => __("fileMissing"),
-         'fileSizeGreater'  => __("fileSizeGreater"),
-         'fileSizeEquals'   => __("fileSizeEquals"),
-         'fileSizeLower'    => __("fileSizeLower"),
-         'fileSHA512'       => __("fileSHA512"),
-         'freespaceGreater' => __("freespaceGreater")
+         'winkeyExists'     => __("winkeyExists", 'fusioninventory'),
+         'winkeyMissing'    => __("winkeyMissing", 'fusioninventory'),
+         'winkeyEquals'     => __("winkeyEquals", 'fusioninventory'),
+         'fileExists'       => __("fileExists", 'fusioninventory'),
+         'fileMissing'      => __("fileMissing", 'fusioninventory'),
+         'fileSizeGreater'  => __("fileSizeGreater", 'fusioninventory'),
+         'fileSizeEquals'   => __("fileSizeEquals", 'fusioninventory'),
+         'fileSizeLower'    => __("fileSizeLower", 'fusioninventory'),
+         'fileSHA512'       => __("fileSHA512", 'fusioninventory'),
+         'freespaceGreater' => __("freespaceGreater", 'fusioninventory')
       );
    }
 
@@ -134,7 +134,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
             $check['type']."</a></td>";
          echo "<td title='".$check['path']."'>".$check['path']."</td>";
          echo "<td class='word-wrap' title='".$check['value']."'>".$check['value']."</td>";
-         echo "<td class='rowhandler control' title='".__('drag').
+         echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
             "'><div class='drag row'></div></td>";
          echo "</tr>";
          $i++;
@@ -174,7 +174,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       array_unshift($checks_types, "---");
       echo "<table class='package_item'>";
       echo "<tr>";
-      echo "<th>".__("Type")."</th>";
+      echo "<th>".__("Type", 'fusioninventory')."</th>";
       echo "<td>";
       $options['rand'] = $datas['rand'];
       if (isset($datas['edit'])) {
@@ -226,32 +226,32 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       switch ($value) {
          case "winkeyExists":
          case "winkeyMissing":
-            $path_label = __("Key");
+            $path_label = __("Key", 'fusioninventory');
             $value_label = false;
             break;
          case "winkeyEquals":
-            $path_label = __("Key");
+            $path_label = __("Key", 'fusioninventory');
             $value_label = "Key value";
             break;
          case "fileExists":
          case "fileMissing":
-            $path_label = __("File");
+            $path_label = __("File", 'fusioninventory');
             $value_label = false;
             break;
          case "fileSizeGreater":
          case "fileSizeEquals":
          case "fileSizeLower":
-            $path_label = __("File");
+            $path_label = __("File", 'fusioninventory');
             $value_label = "Value";
             $value_type = "input+unit";
             break;
          case "fileSHA512":
-            $path_label = __("File");
+            $path_label = __("File", 'fusioninventory');
             $value_label = "Value";
             $value_type = "textarea";
             break;
          case "freespaceGreater":
-            $path_label = __("Disk or directory");
+            $path_label = __("Disk or directory", 'fusioninventory');
             $value_label = "Value";
             $value_type = "input+unit";
             break;
@@ -291,14 +291,14 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                echo "<td><input type='text' name='value' id='check_value$rand' value='".
                   $value2."' /></td>";
                echo "</tr><tr>";
-               echo "<th>".__("Unit")."</th>";
+               echo "<th>".__("Unit", 'fusioninventory')."</th>";
                echo "<td>";
 
                Dropdown::showFromArray('unit', array(
-                  "B"  => __("B"),
-                  "KB" => __("KiB"),
-                  "MB" => __("MiB"),
-                  "GB" => __("GiB")
+                  "B"  => __("B", 'fusioninventory'),
+                  "KB" => __("KiB", 'fusioninventory'),
+                  "MB" => __("MiB", 'fusioninventory'),
+                  "GB" => __("GiB", 'fusioninventory')
                ), $options);
                echo "</td>";
                break;
@@ -308,11 +308,11 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       }
 
       echo "<tr>";
-      echo "<th>".__("return error")."</th>";
+      echo "<th>".__("return error", 'fusioninventory')."</th>";
       echo "<td>";
       Dropdown::showFromArray('return', array(
-                  "error"  => __("error"),
-                  "ignore" => __("ignore")
+                  "error"  => __("error", 'fusioninventory'),
+                  "ignore" => __("ignore", 'fusioninventory')
                ), array('value' => $return));
       echo "</td>";
       echo "</tr>";

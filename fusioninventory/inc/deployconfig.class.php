@@ -75,7 +75,7 @@ class PluginFusioninventoryDeployConfig extends CommonDBTM {
             return self::createTabEntry(__('FusionInventory DEPLOY'));
 
          }
-         return __('FusionInventory DEPLOY');
+         return __('FusionInventory DEPLOY', 'fusioninventory');
 
       }
       return '';
@@ -112,7 +112,8 @@ class PluginFusioninventoryDeployConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Root folder for sending files from server')."&nbsp;:</td>";
       echo "<td>";
-      echo "<input type='text' name='server_upload_path' value='".$config->getValue($plugins_id, 'server_upload_path')."' size='60' />";
+      echo "<input type='text' name='server_upload_path' value='".
+         $config->getValue($plugins_id, 'server_upload_path')."' size='60' />";
       echo "</td>";
       echo "<td colspan='2'></td>";;
       echo "</tr>";

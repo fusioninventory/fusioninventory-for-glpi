@@ -109,7 +109,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       return json_encode($json);
    }
 
-   function saveDatas($params)  {
+   function saveDatas($params) {
       global $DB;
 
       $tasks_id = $params['tasks_id'];
@@ -134,9 +134,11 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          $task = get_object_vars($task);
 
          //encode action and definition
-         //$action = exportArrayToDB(array(array($task['action_type'] => $task['action_selection'])));
+         //$action = exportArrayToDB(array(array(
+         //    $task['action_type'] => $task['action_selection'])));
          $action = exportArrayToDB($task['action']);
-         $definition = exportArrayToDB(array(array('PluginFusioninventoryDeployPackage' => $task['package_id'])));
+         $definition = exportArrayToDB(array(array(
+            'PluginFusioninventoryDeployPackage' => $task['package_id'])));
 
          $sql_tasks[] = "INSERT INTO ".$this->getTable()."
          (
@@ -169,7 +171,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
             'value' => 'Group',
          ),
          array(
-            'name' => __('Groups of computers'),
+            'name' => __('Groups of computers', 'fusioninventory'),
 
             'value' => 'PluginFusioninventoryDeployGroup',
          )

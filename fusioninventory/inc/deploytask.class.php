@@ -51,10 +51,10 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
    static function getTypeName($nb=0) {
 
       if ($nb>1) {
-         return __('Group of computers');
+         return __('Group of computers', 'fusioninventory');
 
       }
-      return __('Task');
+      return __('Task', 'fusioninventory');
 
    }
 
@@ -80,7 +80,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       switch(get_class($item)) {
-         case __CLASS__: return __('Order list');
+         case __CLASS__: return __('Order list', 'fusioninventory');
 
       }
    }
@@ -103,16 +103,17 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       global  $CFG_GLPI;
 
       $buttons = array();
-      $title = __('Task');
+      $title = __('Task', 'fusioninventory');
 
 
       if ($this->canCreate()) {
-         $buttons["task.form.php?new=1"] = __('Add task');
+         $buttons["task.form.php?new=1"] = __('Add task', 'fusioninventory');
 
          $title = "";
       }
 
-      Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/pics/task.png", $title, $title, $buttons);
+      Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/pics/task.png", 
+                         $title, $title, $buttons);
    }
 
 
@@ -133,7 +134,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
          echo "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>";
          echo "</div></div></div>";
          echo "<div class='box-mleft'><div class='box-mright'><div class='box-mcenter'>";
-         echo __('Edit impossible, this task is active');
+         echo __('Edit impossible, this task is active', 'fusioninventory');
 
          echo "</div></div></div>";
          echo "<div class='box-bleft'><div class='box-bright'><div class='box-bcenter'>";
@@ -159,9 +160,11 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
       //if task active, delete denied
       if ($this->getField('is_active') == 1) {
-         Session::addMessageAfterRedirect(__('This task is active. delete denied'));
+         Session::addMessageAfterRedirect(
+            __('This task is active. delete denied', 'fusioninventory'));
 
-         Html::redirect(GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id=".$this->getField('id'));
+         Html::redirect(GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id=".
+            $this->getField('id'));
          return false;
       }
 
@@ -174,9 +177,11 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       // clean all sub-tables
       $a_taskjobs = $job->find("`plugin_fusioninventory_tasks_id`='$task_id'");
       foreach($a_taskjobs as $a_taskjob) {
-         $a_taskjobstatuss = $status->find("`plugin_fusioninventory_taskjobs_id`='".$a_taskjob['id']."'");
+         $a_taskjobstatuss = $status->find("`plugin_fusioninventory_taskjobs_id`='".
+            $a_taskjob['id']."'");
          foreach($a_taskjobstatuss as $a_taskjobstatus) {
-            $a_taskjoblogs = $log->find("`plugin_fusioninventory_taskjobstates_id`='".$a_taskjobstatus['id']."'");
+            $a_taskjoblogs = $log->find("`plugin_fusioninventory_taskjobstates_id`='".
+               $a_taskjobstatus['id']."'");
             foreach($a_taskjoblogs as $a_taskjoblog) {
                $log->delete($a_taskjoblog, 1);
             }

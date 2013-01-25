@@ -48,7 +48,7 @@ class PluginFusioninventoryDeployInstall extends CommonDBTM {
 
    static function getTypeName($nb=0) {
 
-      return __('Installation');
+      return __('Installation', 'fusioninventory');
 
    }
 

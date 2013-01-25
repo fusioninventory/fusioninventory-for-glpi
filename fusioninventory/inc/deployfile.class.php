@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-      return __('Files');
+      return __('Files', 'fusioninventory');
    }
 
    static function canCreate() {
@@ -60,8 +60,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    static function getTypes() {
       return array(
-         'Computer' => __("Upload from computer"),
-         'Server'   => __("Upload from server")
+         'Computer' => __("Upload from computer", 'fusioninventory'),
+         'Server'   => __("Upload from server", 'fusioninventory')
       );
    }
 
@@ -110,20 +110,21 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
          echo"&nbsp;<a class='edit'>$filename</a>";
          if (isset($datas['associatedFiles'][$sha512]['p2p'])) {
-            echo "<a title='".__('p2p').", ".__("retention")." : ".
-               $datas['associatedFiles'][$sha512]['p2p-retention-duration']." ".__("days").
-               "' class='more'><img src='".$CFG_GLPI['root_doc'].
+            echo "<a title='".__('p2p', 'fusioninventory').", "
+            .__("retention", 'fusioninventory')." : ".
+               $datas['associatedFiles'][$sha512]['p2p-retention-duration']." ".
+               __("days", 'fusioninventory')."' class='more'><img src='".$CFG_GLPI['root_doc'].
                "/plugins/fusioninventory/pics/p2p.png' /></a>";
          }
          if (isset($datas['associatedFiles'][$sha512]['uncompress'])) {
-            echo "<a title='".__('uncompress')."' class='more'><img src='".$CFG_GLPI['root_doc'].
-               "/plugins/fusioninventory/pics/uncompress.png' /></a>";
+            echo "<a title='".__('uncompress', 'fusioninventory')."' class='more'><img src='".
+               $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/uncompress.png' /></a>";
          }
          echo "</td>";
          echo "<td title='$filesize'>";
          echo self::processFilesize($filesize);
          echo "</td>";
-         echo "<td class='rowhandler control' title='".__('drag').
+         echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
             "'><div class='drag row'></div></td>";
          $i++;
       }
@@ -145,7 +146,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       echo "<table class='package_item'>";
       echo "<tr>";
-      echo "<th>".__("Source")."</th>";
+      echo "<th>".__("Source", 'fusioninventory')."</th>";
       echo "<td>";
       Dropdown::showFromArray("deploy_filetype", $file_types, array('rand' => $rand));
       echo "</td>";
@@ -174,33 +175,43 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       echo "<table class='package_item'>";
       echo "<tr>";
-      echo "<th>".__("File")."</th>";
+      echo "<th>".__("File", 'fusioninventory')."</th>";
       echo "<td>";
       switch ($source) {
          case "Computer":
-            echo "<input type='file' name='file' value='".__("filename")."' />";
+            echo "<input type='file' name='file' value='".__("filename", 'fusioninventory')."' />";
             break;
          case "Server":
+            echo "<input type='text' name='filename' id='server_filename$rand'".
+               " style='width:120px;float:left' />";
+            echo "<input type='button' class='submit' value='".__("Choose", 'fusioninventory').
+               "' onclick='fileModal.show();' style='width:50px' />";
+            Ajax::createModalWindow('fileModal', 
+                        $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/deployfilemodal.php",
+                        array('title' => __('Select the file on server', 'fusioninventory'), 
+                        'extraparams' => array(
+                           'rand' => $rand
+                        )));
             break;
       }
       echo "</td>";
       echo "</tr><tr>";
-      echo "<th>".__("Uncompress")."<img style='float:right' src='".$CFG_GLPI["root_doc"].
+      echo "<th>".__("Uncompress", 'fusioninventory')."<img style='float:right' src='".$CFG_GLPI["root_doc"].
                               "/plugins/fusioninventory//pics/uncompress.png' /></th>";
       echo "<td><input type='checkbox' name='uncompress' /></td>";
       echo "</tr><tr>";
-      echo "<th>".__("P2p")."<img style='float:right' src='".$CFG_GLPI["root_doc"].
+      echo "<th>".__("P2p", 'fusioninventory')."<img style='float:right' src='".$CFG_GLPI["root_doc"].
                               "/plugins/fusioninventory//pics/p2p.png' /></th>";
       echo "<td><input type='checkbox' name='p2p' /></td>";
       echo "</tr><tr>";
-      echo "<th>".__("retention days")."</th>";
+      echo "<th>".__("retention days", 'fusioninventory')."</th>";
       echo "<td><input type='text' name='p2p-retention-duration' style='width:30px' /></td>";
       echo "</tr><tr>";
       echo "<td>";
       if ($source === "Computer") echo "<i>".self::getMaxUploadSize()."</i>";
       echo "</td><td>";
       echo "&nbsp;<input type='submit' name='add_item' value=\"".
-         __('Add')."\" class='submit' >";
+         __('Add', 'fusioninventory')."\" class='submit' >";
       echo "</td>";
       echo "</tr></table>";
    }
@@ -309,7 +320,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $short_sha512 = substr($sha512, 0, 6);
 
       if($this->checkPresenceFile($sha512, $order_id)) {
-         print "{\"success\": \"false\", \"file\": \"{$filename}\", \"msg\": \"File already exists.\"}";
+         print "{\"success\": \"false\", \"file\": \"{".
+            $filename."}\", \"msg\": \"File already exists.\"}";
          exit;
       }
 
@@ -438,9 +450,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $max_post = (int)(ini_get('post_max_size'));
       $memory_limit = (int)(ini_get('memory_limit'));
 
-      return __('Max file size')
+      return __('Max file size', 'fusioninventory')
 
-         ." : ".min($max_upload, $max_post, $memory_limit).__('Mio');
+         ." : ".min($max_upload, $max_post, $memory_limit).__('Mio', 'fusioninventory');
 
    }
 
@@ -472,22 +484,22 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             switch ($_FILES['file']['error']) {
                case UPLOAD_ERR_INI_SIZE:
                case UPLOAD_ERR_FORM_SIZE:
-                  $msg .= __("Transfer error: the file size is too big");
+                  $msg .= __("Transfer error: the file size is too big", 'fusioninventory');
                   break;
                case UPLOAD_ERR_PARTIAL:
-                  $msg .= __("he uploaded file was only partially uploaded");
+                  $msg .= __("he uploaded file was only partially uploaded", 'fusioninventory');
                   break;
                case UPLOAD_ERR_NO_FILE:
-                  $msg .= __("No file was uploaded");
+                  $msg .= __("No file was uploaded", 'fusioninventory');
                   break;
                case UPLOAD_ERR_NO_TMP_DIR:
-                  $msg .= __("Missing a temporary folder");
+                  $msg .= __("Missing a temporary folder", 'fusioninventory');
                   break;
                case UPLOAD_ERR_CANT_WRITE:
-                  $msg .= __("Failed to write file to disk");
+                  $msg .= __("Failed to write file to disk", 'fusioninventory');
                   break;
                case UPLOAD_ERR_CANT_WRITE:
-                  $msg .= __("PHP extension stopped the file upload");
+                  $msg .= __("PHP extension stopped the file upload", 'fusioninventory');
                   break;
                case UPLOAD_ERR_OK:
                   //no error, continue
@@ -515,12 +527,12 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          if ($filename && $this->addFileInRepo($data)) {
             $msg = "file:'{$filename}', \"{$LANG['plugin_fusinvdeploy']['action'][4]}\"}";
          } else {
-            $msg = "file:'{$filename}', ".__('File missing');
+            $msg = "file:'{$filename}', ".__('File missing', 'fusioninventory');
          }
          Session::addMessageAfterRedirect($msg);
          return true;
       }
-      Session::addMessageAfterRedirect(__('File missing'));
+      Session::addMessageAfterRedirect(__('File missing', 'fusioninventory'));
       return false;
    }
 
@@ -562,13 +574,15 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
-            print "{success:true, file:'{$filename}',msg:\"{__('File saved!')}\"}";
+            print "{success:true, file:'{$filename}',".
+               "msg:\"{__('File saved!', 'fusioninventory')}\"}";
             exit;
          } else {
-            print "{success:false, file:'{$filename}',msg:\"{__('Failed to copy file')}\"}";
+            print "{success:false, file:'{$filename}',".
+               "msg:\"{__('Failed to copy file', 'fusioninventory')}\"}";
             exit;
          }
-      } print "{success:false, file:'none',msg:\"{__('File missing')}\"}";
+      } print "{success:false, file:'none',msg:\"{__('File missing', 'fusioninventory')}\"}";
    }
 
    static function processFilesize($filesize) {
