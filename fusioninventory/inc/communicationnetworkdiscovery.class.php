@@ -163,7 +163,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       } else if ((isset($arrayinventory['DNSHOSTNAME'])) AND (!empty($arrayinventory['DNSHOSTNAME']))) {
          $input['name'] = $arrayinventory['DNSHOSTNAME'];
       }
-$arrayinventory['ENTITY'] = 0;
+
       $input['entities_id'] = $arrayinventory['ENTITY'];
       switch ($arrayinventory['TYPE']) {
 
