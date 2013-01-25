@@ -74,12 +74,6 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
              }
           }
        }
-       if (isset($a_tables_ref['glpi_plugin_fusinvdeploy_tasks'])) {
-          unset($a_tables_ref['glpi_plugin_fusinvdeploy_tasks']);
-       }
-       if (isset($a_tables_ref['glpi_plugin_fusinvdeploy_taskjobs'])) {
-          unset($a_tables_ref['glpi_plugin_fusinvdeploy_taskjobs']);
-       }
 
       // * Get tables from MySQL
       $a_tables_db = array();
@@ -93,9 +87,7 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
              AND(!strstr($data[0], "glpi_plugin_fusioninventory_pcidevices"))
              AND(!strstr($data[0], "glpi_plugin_fusioninventory_pcivendors"))
              AND(!strstr($data[0], "glpi_plugin_fusioninventory_usbdevices"))
-             AND(!strstr($data[0], "glpi_plugin_fusioninventory_usbvendors"))
-             AND($data[0] != 'glpi_plugin_fusinvdeploy_tasks')
-             AND($data[0] != 'glpi_plugin_fusinvdeploy_taskjobs')){
+             AND(!strstr($data[0], "glpi_plugin_fusioninventory_usbvendors"))){
             $data[0] = str_replace(" COLLATE utf8_unicode_ci", "", $data[0]);
             $data[0] = str_replace("( ", "(", $data[0]);
             $data[0] = str_replace(" )", ")", $data[0]);
@@ -104,55 +96,51 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       }
 
       foreach($a_tables as $table) {
-         $query = "SHOW COLUMNS FROM ".$table;
+         $query = "SHOW CREATE TABLE ".$table;
          $result = $DB->query($query);
          while ($data=$DB->fetch_array($result)) {
-            $construct = $data['Type'];
-//            if ($data['Type'] == 'text') {
-//               $construct .= ' COLLATE utf8_unicode_ci';
-//            }
-            if ($data['Type'] == 'text') {
-               if ($data['Null'] == 'NO') {
-                  $construct .= ' NOT NULL';
+            $a_lines = explode("\n", $data['Create Table']);
+            
+            foreach ($a_lines as $line) {
+               if (strstr($line, "CREATE TABLE ")
+                       OR strstr($line, "CREATE VIEW")) {
+                  $matches = array();
+                  preg_match("/`(.*)`/", $line, $matches);
+                  $current_table = $matches[1];
                } else {
-                  $construct .= ' DEFAULT NULL';
-               }
-            } else if ($data['Type'] == 'longtext') {
-               if ($data['Null'] == 'NO') {
-                  $construct .= ' NOT NULL';
-               } else {
-                  $construct .= ' DEFAULT NULL';
-               }
-            } else if ($data['Type'] == 'blob') {
-
-            } else {
-               if ((strstr($data['Type'], "char")
-                       OR $data['Type'] == 'datetime'
-                       OR strstr($data['Type'], "int"))
-                       AND $data['Null'] == 'YES'
-                       AND $data['Default'] == '') {
-                  $construct .= ' DEFAULT NULL';
-               } else {
-                  if ($data['Null'] == 'YES') {
-                     $construct .= ' NULL';
-                  } else {
-                     $construct .= ' NOT NULL';
-                  }
-                  if ($data['Extra'] == 'auto_increment') {
-                     $construct .= ' AUTO_INCREMENT';
-                  } else {
-                     $construct .= " DEFAULT '".$data['Default']."'";
+                  if (preg_match("/^`/", trim($line))) {
+                     $s_line = explode("`", $line);
+                     $s_type = explode("COMMENT", $s_line[2]);
+                     $s_type[0] = trim($s_type[0]);
+                     $s_type[0] = str_replace(" COLLATE utf8_unicode_ci", "", $s_type[0]);
+                     $s_type[0] = str_replace(" CHARACTER SET utf8", "", $s_type[0]);
+                     $a_tables_db[$current_table][$s_line[1]] = str_replace(",", "", $s_type[0]);
                   }
                }
             }
-            $a_tables_db[$table][$data['Field']] = $construct;
          }
       }
 
+      foreach ($a_tables_ref as $table=>$data) {
+         $a_tables_ref[$table] = serialize($data);
+      }
+      
+      foreach ($a_tables_db as $table=>$data) {
+         $a_tables_db[$table] = serialize($data);
+      }
+      
        // Compare
       $tables_toremove = array_diff_assoc($a_tables_db, $a_tables_ref);
       $tables_toadd = array_diff_assoc($a_tables_ref, $a_tables_db);
 
+      foreach ($tables_toremove as $table=>$data) {
+         $tables_toremove[$table] = unserialize($data);
+      }
+      
+      foreach ($tables_toadd as $table=>$data) {
+         $tables_toadd[$table] = unserialize($data);
+      }
+      
       // See tables missing or to delete
       $this->assertEquals(count($tables_toadd), 0, 'Tables missing '.print_r($tables_toadd, true));
       $this->assertEquals(count($tables_toremove), 0, 'Tables to delete '.print_r($tables_toremove, true));
