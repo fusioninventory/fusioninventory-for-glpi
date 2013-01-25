@@ -7514,14 +7514,13 @@ function migrateTablesFromFusinvDeploy ($migration) {
       $migration->dropTable($table);
    }
 
-
    //drop unused views
    $old_deploy_views = array(
       'glpi_plugin_fusinvdeploy_taskjobs', 
       'glpi_plugin_fusinvdeploy_tasks'
    );
    foreach ($old_deploy_views as $view) {
-      $DB->query("DROP VIEW $view");
+      $DB->query("DROP VIEW IF EXISTS $view");
    }   
 }
 
