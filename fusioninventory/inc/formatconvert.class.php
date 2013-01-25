@@ -347,7 +347,8 @@ class PluginFusioninventoryFormatconvert {
                   $array_tmp = $thisc->addValues($a_videos, array(
                                                               'NAME'   => 'designation', 
                                                               'MEMORY' => 'memory'));
-                  if (!isset($array_tmp['memory'])) {
+                  if (!isset($array_tmp['memory'])
+                          || !is_numeric($array_tmp['memory'])) {
                      $array_tmp['memory'] = 0;
                   }
                   $a_inventory['graphiccard'][] = $array_tmp;
@@ -748,13 +749,20 @@ class PluginFusioninventoryFormatconvert {
       $a_inventory['antivirus'] = array();
       if (isset($array['ANTIVIRUS'])) {
          foreach ($array['ANTIVIRUS'] as $a_antiviruses) {
-            $a_inventory['antivirus'][] = $thisc->addValues($a_antiviruses, 
-                                                          array( 
-                                                             'NAME'     => 'name', 
-                                                             'COMPANY'  => 'manufacturers_id', 
-                                                             'VERSION'  => 'version',
-                                                             'ENABLED'  => 'is_active',
-                                                             'UPTODATE' => 'uptodate'));
+            $array_tmp = $thisc->addValues($a_antiviruses, 
+                                           array( 
+                                              'NAME'     => 'name', 
+                                              'COMPANY'  => 'manufacturers_id', 
+                                              'VERSION'  => 'version',
+                                              'ENABLED'  => 'is_active',
+                                              'UPTODATE' => 'uptodate'));
+            if ($array_tmp['is_active'] == '') {
+               $array_tmp['is_active'] = 0;
+            }
+            if ($array_tmp['uptodate'] == '') {
+               $array_tmp['uptodate'] = 0;
+            }
+            $a_inventory['antivirus'][] = $array_tmp;
          }
       }
       // * STORAGE/VOLUMES
