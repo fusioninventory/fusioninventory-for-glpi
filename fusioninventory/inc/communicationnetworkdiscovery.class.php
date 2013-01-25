@@ -163,6 +163,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       } else if ((isset($arrayinventory['DNSHOSTNAME'])) AND (!empty($arrayinventory['DNSHOSTNAME']))) {
          $input['name'] = $arrayinventory['DNSHOSTNAME'];
       }
+$arrayinventory['ENTITY'] = 0;
       $input['entities_id'] = $arrayinventory['ENTITY'];
       switch ($arrayinventory['TYPE']) {
 
@@ -267,6 +268,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       if (!isset($_SESSION['glpiactiveentities_string'])) {
          $_SESSION['glpiactiveentities_string'] = "'".$entities_id."'";
       }
+      
+      $_SESSION['glpiactive_entity'] = $entities_id;
 
       $item = new $itemtype();
       if ($items_id == "0") {
@@ -319,7 +322,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          'Function PluginFusinvsnmpCommunicationNetDiscovery->importDevice().'
       );
       
-      $xml = simplexml_load_string($_SESSION['SOURCE_XMLDEVICE'], 'SimpleXMLElement', LIBXML_NOCDATA);
+      $arrayinventory = $_SESSION['SOURCE_XMLDEVICE'];
       $input = array();
       $input['id'] = $item->getID();
 
@@ -335,8 +338,10 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          }
       }
       if (!in_array('serial', $a_lockable)) {
-         if (trim($arrayinventory['SERIAL']) != '') {
-            $input['serial'] = trim($arrayinventory['SERIAL']);
+         if (isset($arrayinventory['SERIAL'])) {
+            if (trim($arrayinventory['SERIAL']) != '') {
+               $input['serial'] = trim($arrayinventory['SERIAL']);
+            }
          }
       }
 
@@ -579,34 +584,35 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             
             // Update SNMP informations
-            $pfNetworkEquipment = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+            $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
             $a_snmpnetworkequipments = $pfNetworkEquipment->find("`networkequipments_id`='".$item->getID()."'");
+            $input = array();
             if (count($a_snmpnetworkequipments) > 0) {
-               $a_snmpnetworkequipment = current($a_snmpnetworkequipments);
-               $pfNetworkEquipment->load($a_snmpnetworkequipment['id']);
-               $pfNetworkEquipment->setValue('id', $a_snmpnetworkequipment['id']);
+               $addItem = false;
+               $input = current($a_snmpnetworkequipments);
             } else {
-               $pfNetworkEquipment->load();
-               $pfNetworkEquipment->setValue('networkequipments_id', $item->getID());
+               $input['networkequipments_id'] = $item->getID();
+               $id = $pfNetworkEquipment->add($input);
+               $pfNetworkEquipment->getFromDB($id);
+               $input = $pfNetworkEquipment->fields;
             }
             // Write XML file
-            if (isset($_SESSION['SOURCE_XMLDEVICE'])
-                    AND is_null($pfNetworkEquipment->getValue('last_fusioninventory_update'))) {
+            if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
                PluginFusioninventoryUnknownDevice::writeXML($input['id'],
                                           $_SESSION['SOURCE_XMLDEVICE'],
                                           "fusinvsnmp",
                                           "NetworkEquipment");
             }
-            $pfNetworkEquipment->setValue('sysdescr', $arrayinventory['DESCRIPTION']);
+            $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
             $pfModel = new PluginFusioninventorySnmpmodel();
             if (isset($arrayinventory['MODELSNMP']) AND !empty($arrayinventory['MODELSNMP'])) {
                $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
                if ($model_id != '0') {
-                  $pfNetworkEquipment->setValue('plugin_fusioninventory_snmpmodels_id', $model_id);
+                  $input['plugin_fusioninventory_snmpmodels_id'] = $model_id;
                }
             }
-            $pfNetworkEquipment->setValue('plugin_fusinvsnmp_configsecurities_id', $arrayinventory['AUTHSNMP']);
-            $pfNetworkEquipment->updateDB();
+            $input['plugin_fusinvsnmp_configsecurities_id'] = $arrayinventory['AUTHSNMP'];
+            $pfNetworkEquipment->update($input);
             break;
 
          case 'Printer':
@@ -654,34 +660,35 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
 
             // Update SNMP informations
-            $pfPrinter = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
+            $pfPrinter = new PluginFusioninventoryPrinter();
             $a_snmpprinters = $pfPrinter->find("`printers_id`='".$item->getID()."'");
+            $input = array();
             if (count($a_snmpprinters) > 0) {
-               $a_snmpprinter = current($a_snmpprinters);
-               $pfPrinter->load($a_snmpprinter['id']);
-               $pfPrinter->setValue('id', $a_snmpprinter['id']);
+               $addItem = false;
+               $input = current($a_snmpprinters);
             } else {
-               $pfPrinter->load();
-               $pfPrinter->setValue('printers_id', $item->getID());
+               $input['printers_id'] = $item->getID();
+               $id = $pfPrinter->add($input);
+               $pfPrinter->getFromDB($id);
+               $input = $pfPrinter->fields;
             }
             // Write XML file
-            if (isset($_SESSION['SOURCE_XMLDEVICE'])
-                    AND is_null($pfPrinter->getValue('last_fusioninventory_update'))) {
+            if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
                PluginFusioninventoryUnknownDevice::writeXML($item->getID(),
                                           $_SESSION['SOURCE_XMLDEVICE'],
                                           "fusinvsnmp",
                                           "Printer");
             }
-            $pfPrinter->setValue('sysdescr', $arrayinventory['DESCRIPTION']);
+            $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
             if (isset($arrayinventory['MODELSNMP']) AND !empty($arrayinventory['MODELSNMP'])) {
                $pfModel = new PluginFusioninventorySnmpmodel();
                $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
                if ($model_id != '0') {
-                  $pfPrinter->setValue('plugin_fusioninventory_snmpmodels_id', $model_id);
+                  $input['plugin_fusioninventory_snmpmodels_id'] = $model_id;
                }
             }
-            $pfPrinter->setValue('plugin_fusinvsnmp_configsecurities_id', $arrayinventory['AUTHSNMP']);
-            $pfPrinter->updateDB();
+            $input['plugin_fusinvsnmp_configsecurities_id'] = $arrayinventory['AUTHSNMP'];
+            $pfPrinter->update($input);
             break;
 
       }

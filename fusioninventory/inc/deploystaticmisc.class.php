@@ -225,7 +225,7 @@ class PluginFusioninventoryDeployStaticmisc {
       global $CFG_GLPI;
 
       return array ('periodicity' => 3600, 'delayStartup' => 3600, 'task' => 'Deploy',
-                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('fusinvdeploy', 'Deploy'));
+                    'remote' => PluginFusioninventoryAgentmodule::getUrlForModule('Deploy'));
    }
 
    static function json_indent($json) {

@@ -281,11 +281,11 @@ class PluginFusioninventoryCommunication {
 
    // new REST protocol
    function handleFusionCommunication() {
-      $response = PluginFusioninventoryRestCommunication::communicate($_GET);
+      $response = PluginFusioninventoryCommunicationRest::communicate($_GET);
       if ($response) {
          echo json_encode($response);
       } else {
-         PluginFusioninventoryRestCommunication::sendError();
+         PluginFusioninventoryCommunicationRest::sendError();
       }
    }
 
