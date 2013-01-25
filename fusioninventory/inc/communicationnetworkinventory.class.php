@@ -1122,7 +1122,7 @@ Toolbox::logInFile("K", 'crit'.print_r($input, true));
       if ($items_id == "0") {
          $input = array();
          $input['date_mod'] = date("Y-m-d H:i:s");
-         if ($class->getFromDB($a_inventory['id'])) {
+         if ($class->getFromDB($a_inventory[$a_inventory['itemtype']]['id'])) {
             $input['entities_id'] = $class->fields['entities_id'];
          } else {
             $input['entities_id'] = 0;
