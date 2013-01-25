@@ -221,45 +221,42 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       $a_modules = $this->find();
       $i = 0;
       foreach ($a_modules as $data) {
-         $plugin->getFromDB($data['plugins_id']);
-         if ($plugin->isActivated($plugin->fields['directory'])) {
-            if ($i == 0)
-               echo "<tr class='tab_bg_1'>";
-            $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-            $modulename = $data["modulename"];
-            foreach ($a_methods as $datamod) {
-               if (isset($datamod['name'])
-                       AND (strtolower($data["modulename"]) == strtolower($datamod['method']))) {
-                  $modulename = $datamod['name'];
-               }
+         if ($i == 0)
+            echo "<tr class='tab_bg_1'>";
+         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+         $modulename = $data["modulename"];
+         foreach ($a_methods as $datamod) {
+            if (isset($datamod['name'])
+                    AND (strtolower($data["modulename"]) == strtolower($datamod['method']))) {
+               $modulename = $datamod['name'];
             }
-            // Hack for snmpquery
-               if ($modulename == 'SNMPQUERY') {
-                  $modulename = __('Network inventory (SNMP)', 'fusioninventory');
-
-               }
-            echo "<td width='50%'>".$modulename." :</td>";
-            echo "<td align='center'>";
-
-            $checked = $data['is_active'];
-            $a_agentList = importArrayFromDB($data['exceptions']);
-            if (in_array($items_id, $a_agentList)) {
-               if ($checked == 1)
-                  $checked = 0;
-               else
-                  $checked = 1;
-            }
-            $check = "";
-            if ($checked == 1)
-               $check = "checked='checked'";
-            echo "<input type='checkbox' name='activation-".$data["modulename"]."' value='Activation' ".$check." />";
-            echo "</td>";
-            if ($i == 1) {
-               echo "</tr>";
-               $i = -1;
-            }
-            $i++;
          }
+         // Hack for snmpquery
+            if ($modulename == 'SNMPQUERY') {
+               $modulename = __('Network inventory (SNMP)', 'fusioninventory');
+
+            }
+         echo "<td width='50%'>".$modulename." :</td>";
+         echo "<td align='center'>";
+
+         $checked = $data['is_active'];
+         $a_agentList = importArrayFromDB($data['exceptions']);
+         if (in_array($items_id, $a_agentList)) {
+            if ($checked == 1)
+               $checked = 0;
+            else
+               $checked = 1;
+         }
+         $check = "";
+         if ($checked == 1)
+            $check = "checked='checked'";
+         echo "<input type='checkbox' name='activation-".$data["modulename"]."' value='Activation' ".$check." />";
+         echo "</td>";
+         if ($i == 1) {
+            echo "</tr>";
+            $i = -1;
+         }
+         $i++;
       }
       if ($i == 1) {
          echo "<td></td>";
