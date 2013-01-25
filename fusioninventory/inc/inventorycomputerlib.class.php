@@ -1390,12 +1390,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             foreach ($a_computerinventory['storage'] as $a_storage) {
                $a_storage['computers_id'] = $items_id;
                $insert_id = $pfInventoryComputerStorage->add($a_storage);
-               $a_uuid[$a_storage['uuid']] = $insert_id;
-               if (isset($a_storage['uuid_link'])) {
-                  if (is_array($a_storage['uuid_link'])) {
-                     $a_links[$insert_id] = $a_storage['uuid_link'];
-                  } else {
-                     $a_links[$insert_id][] = $a_storage['uuid_link'];
+               if (isset($a_storage['uuid'])) {
+                  $a_uuid[$a_storage['uuid']] = $insert_id;
+                  if (isset($a_storage['uuid_link'])) {
+                     if (is_array($a_storage['uuid_link'])) {
+                        $a_links[$insert_id] = $a_storage['uuid_link'];
+                     } else {
+                        $a_links[$insert_id][] = $a_storage['uuid_link'];
+                     }
                   }
                }
             }
