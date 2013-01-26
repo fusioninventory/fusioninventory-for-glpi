@@ -243,7 +243,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
             echo "<tr class='tab_bg_1 center'>";
             echo "<td colspan='2'></td>";
             echo "<td class='center'>";
-            echo "<input type='submit' class='submit' name='update' value='update'/>";
+            echo "<input type='submit' class='submit' name='update' value='".__s('Update')."'/>";
             echo "</td>";
             echo "<td colspan='".(count($a_pref))."'></td>";
             echo "</tr>";
@@ -338,8 +338,8 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                   $link1 = $item->getLink(1);
                   $link = str_replace($item->getName(0), $NetworkPort->fields["mac"],
                                       $item->getLink());
-                  $link2 = str_replace($item->getName(0), $NetworkPort->fields["ip"],
-                                       $item->getLink());
+//                  $link2 = str_replace($item->getName(0), $NetworkPort->fields["ip"],
+//                                       $item->getLink());
                   echo "<tr>";
                   echo "<td align='center'  ".$background_img."
                                            class='tab_bg_1_2'>".$item->getLink(1);
