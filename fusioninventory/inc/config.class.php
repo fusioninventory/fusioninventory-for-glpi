@@ -56,8 +56,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    **/
    function initConfigModule() {
 
-      $plugin_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-
       $input = array();
       $input['version']                = PLUGIN_FUSIONINVENTORY_VERSION;
       $input['ssl_only']               = '0';
@@ -161,7 +159,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    function defineTabs($options=array()){
-      global $CFG_GLPI;
 
       $plugin = new Plugin;
 
@@ -650,8 +647,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       $pfConfig = new PluginFusioninventoryConfig();
       $pfsnmpConfig = new self();
-
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
 
       $pfsnmpConfig->fields['id'] = 1;
       $pfsnmpConfig->showFormHeader($options);

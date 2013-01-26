@@ -53,7 +53,6 @@ class PluginFusioninventoryDeployJob {
       global $DB;
 
       $response      = array();
-      $taskjoblog    = new PluginFusioninventoryTaskjoblog();
       $taskjobstate = new PluginFusioninventoryTaskjobstate();
 
       //Get the agent ID by his deviceid

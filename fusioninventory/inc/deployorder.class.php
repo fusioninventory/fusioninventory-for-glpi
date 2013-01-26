@@ -127,8 +127,6 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
    }
 
    static function getOrderDetails($status = array(), $order_type = self::INSTALLATION_ORDER) {
-      $linked_types = array('PluginFusioninventoryDeployCheck');
-
 
       //get all jobstatus for this task
       $results = array();

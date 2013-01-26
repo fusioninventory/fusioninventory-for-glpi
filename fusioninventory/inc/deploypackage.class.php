@@ -183,7 +183,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
    function showForm($ID, $options=array()) {
-      global $DB, $CFG_GLPI;
+      global $CFG_GLPI;
 
 
       if ($ID > 0) {
@@ -459,7 +459,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          //duplicate files
          $file_obj = new PluginFusioninventoryDeployFile;
          $files = $file_obj->find("plugin_fusioninventory_deployorders_id = '".$order_oldId."'");
-         foreach ($files as $file_oldId => $file) {
+         foreach ($files as $file) {
             //create new file for this new order
             unset($file['id']);
             $file['plugin_fusioninventory_deployorders_id'] = $order_newId;
@@ -469,7 +469,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             $filepart_obj = new PluginFusioninventoryDeployFilepart;
             $fileparts = $filepart_obj->find(
                "plugin_fusioninventory_deployfiles_id = '".$order_oldId."'");
-            foreach ($fileparts as $filepart_oldId => $filepart) {
+            foreach ($fileparts as $filepart) {
                //create new filepart for this new file
                unset($filepart['id']);
                $filepart['plugin_fusioninventory_deployorders_id'] = $order_newId;
@@ -511,7 +511,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                $commandenvvariables_obj = new PluginFusioninventoryDeployAction_Commandenvvariable;
                $commandenvvariables = $commandenvvariables_obj->find(
                   "plugin_fusioninventory_deploycommands_id = '".$command_oldId."'");
-               foreach ($commandenvvariables as $commandenvvariable_oldId => $commandenvvariable) {
+               foreach ($commandenvvariables as $commandenvvariable) {
                   //create new commandenvvariable for this command
                   unset($commandenvvariable['id']);
                   $commandenvvariable['plugin_fusioninventory_deploycommands_id'] = $command_newId;

@@ -54,7 +54,6 @@ class PluginFusioninventoryDeployFile_Mirror extends CommonDBTM {
    }
 
    static function getList() {
-      global $CFG_GLPI;
       $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deploymirrors');
 
       $mirrors = array();

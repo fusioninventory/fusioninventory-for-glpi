@@ -284,7 +284,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    function registerFilepart ($repoPath, $filePath) {
       $sha512 = hash_file('sha512', $filePath);
-      $shortSha512 = substr($sha512, 0, 6);
 
       $dir = $repoPath.'/'.self::getDirBySha512($sha512);
 
@@ -342,8 +341,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          return;
       }
 
-      $partCpt = 0;
-      $currentPartSize = 0;
       $fdPart = null;
       do {
          clearstatcache();
@@ -384,7 +381,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    //TODO on 0.83 rename the function into "checkPresenceFileForOrder"
    function checkPresenceFile($sha512, $order_id) {
-      global $DB;
 
       $rows = $this->find("plugin_fusioninventory_deployorders_id = '$order_id'
             AND shortsha512 = '".substr($sha512, 0, 6 )."'
@@ -424,7 +420,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          //unlink($repoPath.self::getDirBySha512($sha512).'/'.$sha512.'.gz');
 
          // Delete file parts in folder
-         foreach($filepart as $filename => $hash){
+         foreach($filepart as $hash){
             $dir = $repoPath.self::getDirBySha512($hash).'/';
 
             //delete file part

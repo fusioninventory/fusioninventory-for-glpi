@@ -64,8 +64,6 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                AND (method = 'deployinstall' OR method = 'deployuninstall')";
 
       $res  = $DB->query($sql);
-
-      $nb   = $DB->numrows($res);
       $json  = array();
       $temp_tasks = array();
       while($row = $DB->fetch_assoc($res)) {
@@ -78,7 +76,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
 
       $i = 0;
-      foreach ($temp_tasks as $key => $task) {
+      foreach ($temp_tasks as $task) {
          foreach ($task['actions'] as $action) {
             foreach ($task['packages'] as $package) {
 

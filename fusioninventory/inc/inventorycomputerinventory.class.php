@@ -58,7 +58,6 @@ class PluginFusioninventoryInventoryComputerInventory {
    * @return nothing (import ok) / error string (import ko)
    **/
    function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
-      global $DB;
 
       $errors = '';
       $_SESSION["plugin_fusinvinventory_entity"] = 0;
@@ -114,8 +113,6 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          // Hack to remove Memories with Flash types see ticket http://forge.fusioninventory.org/issues/1337
          if (isset($arrayinventory['CONTENT']['MEMORIES'])) {
-            $i = 0;
-            $arrayName = array();
             foreach($arrayinventory['CONTENT']['MEMORIES'] as $key=>$memory) {
                if ((isset($memory['TYPE']))
                        AND (preg_match('/Flash/', $memory['TYPE']))) {
@@ -226,7 +223,6 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          // If transfer is disable, get entity and search only on this entity (see http://forge.fusioninventory.org/issues/1503)
          $pfConfig = new PluginFusioninventoryConfig();
-         $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
 
          //if ($pfConfig->getValue('transfers_id_auto') == '0') {
             $inputent = $input;

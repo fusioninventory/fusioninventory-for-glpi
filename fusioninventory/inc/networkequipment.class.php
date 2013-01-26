@@ -63,8 +63,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    
    
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $DB;
-      
       return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
    }
 
@@ -141,8 +139,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          return;
       } 
       
-      $nw = new NetworkPort_NetworkPort();
-
       $monitoring = 0;
       if (class_exists("PluginMonitoringNetworkport")) {
          $monitoring = 1;

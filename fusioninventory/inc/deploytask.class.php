@@ -118,7 +118,6 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
 
    function showActions($id) {
-      global  $CFG_GLPI;
 
       //load extjs plugins library
       echo "<script type='text/javascript'>";
@@ -157,7 +156,8 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
    }
 
    function pre_deleteItem() {
-
+      global $CFG_GLPI;
+      
       //if task active, delete denied
       if ($this->getField('is_active') == 1) {
          Session::addMessageAfterRedirect(

@@ -161,7 +161,6 @@ class PluginFusioninventoryCommunication {
     **/
    function import($arrayinventory) {
 
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $pfAgent = new PluginFusioninventoryAgent();
 
       PluginFusioninventoryToolbox::logIfExtradebug(
@@ -258,7 +257,6 @@ class PluginFusioninventoryCommunication {
     **/
    function addProlog() {
       $pfConfig = new PluginFusioninventoryConfig();
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
       $this->message->addChild('PROLOG_FREQ', $pfConfig->getValue("inventory_frequence"));
    }
 

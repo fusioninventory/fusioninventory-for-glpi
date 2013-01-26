@@ -391,9 +391,6 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
    static function auth_dropdown($selected="") {
 
-      $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
-      $config = new PluginFusioninventoryConfig();
-
       Dropdown::show("PluginFusioninventoryConfigSecurity",
                       array('name' => "plugin_fusinvsnmp_configsecurities_id",
                            'value' => $selected,

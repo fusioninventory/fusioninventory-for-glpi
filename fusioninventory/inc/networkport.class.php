@@ -424,21 +424,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
 
 
-   function connectPorts() {
-      $wire = new NetworkPort_NetworkPort();
-      $networkPort = new NetworkPort();
-
-      $networkports_id = $this->portModif['networkports_id'];
-      $portID = 0;
-      if ($this->cdp) { // DCP, get device
-
-      } else {
-         
-      }
-   }
-
-
-
    /**
     * Get index of port object
     *

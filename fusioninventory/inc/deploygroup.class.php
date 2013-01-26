@@ -467,7 +467,7 @@ echo "</table>";
    }
 
    function showSearchFields($type = 'static', $fields = array())  {
-      global $DB, $CFG_GLPI;
+      global $CFG_GLPI;
 
       if (count($fields) == 0) {
          $fields = array(
@@ -729,7 +729,6 @@ echo "</table>";
    }
 
    static function showSearchResults($params) {
-      global $CFG_GLPI;
 
       if(isset($params['type'])) $type  = $params['type'];
       else exit;

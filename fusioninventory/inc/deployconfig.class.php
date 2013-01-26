@@ -47,7 +47,6 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployConfig extends CommonDBTM {
 
    function initConfigModule() {
-      global $DB;
 
       $Config = new Config;
       $Config->getFromDB('1');
@@ -97,8 +96,9 @@ class PluginFusioninventoryDeployConfig extends CommonDBTM {
       $config->updateConfigType($plugins_id, 'alert_winpath', $p_post['alert_winpath']);
    }
 
+   
+   
    function showForm($options=array()) {
-      global $CFG_GLPI;
 
       $config = new PluginFusioninventoryConfig;
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');

@@ -99,7 +99,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    function showForm() {
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $plugin = new Plugin();
 
       $a_modules = $this->find();
       foreach ($a_modules as $data) {
@@ -201,8 +200,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    **/
    function showFormAgentException($items_id, $options=array()) {
       global $CFG_GLPI;
-
-      $plugin = new Plugin();
 
       $canedit = 1;
       echo "<br/>";

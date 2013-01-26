@@ -76,7 +76,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $networkName                  = new NetworkName();
       $iPAddress                    = new IPAddress();
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
-      $pfInventoryComputerBatteries = new PluginFusioninventoryInventoryComputerBatteries();
       $pfConfig                     = new PluginFusioninventoryConfig();
       $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();
       $pfInventoryComputerStorage_Storage = new PluginFusioninventoryInventoryComputerStorage_Storage();
