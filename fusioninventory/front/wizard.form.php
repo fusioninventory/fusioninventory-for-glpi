@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
+   define('GLPI_ROOT', realpath('../../..'));
 }
 
 require_once GLPI_ROOT."/inc/includes.php";

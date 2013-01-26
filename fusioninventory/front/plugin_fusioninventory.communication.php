@@ -41,7 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
+   define('GLPI_ROOT', realpath('../../..'));
 }
 
 include_once(GLPI_ROOT."/plugins/fusioninventory/front/communication.php");

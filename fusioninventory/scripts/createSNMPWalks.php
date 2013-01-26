@@ -4,7 +4,7 @@
 # requires: snmpwalk from Net-SNMP
 chdir(dirname($_SERVER["SCRIPT_FILENAME"]));
 
-define('GLPI_ROOT', '../../..');
+define('GLPI_ROOT', realpath('../../..'));
 require_once (GLPI_ROOT . "/inc/includes.php");
 
 $snmpwalkCmd = "snmpwalk";

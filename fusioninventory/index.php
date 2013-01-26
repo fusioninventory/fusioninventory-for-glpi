@@ -41,7 +41,7 @@
  */
 
 if(!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../..');
+   define('GLPI_ROOT', realpath('../..'));
 }
 
 //Agent posting an inventory or asking for orders using REST

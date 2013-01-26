@@ -44,7 +44,7 @@
 $USEDBREPLICATE=1;
 $DBCONNECTION_REQUIRED=0;
 
-define('GLPI_ROOT', '../../..');
+define('GLPI_ROOT', realpath('../../..'));
 include (GLPI_ROOT . "/inc/includes.php");
 
 Html::header(__('FusionInventory'), $_SERVER['PHP_SELF'], "utils", "report");

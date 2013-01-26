@@ -42,7 +42,7 @@
 
 
 if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
+   define('GLPI_ROOT', realpath('../../..'));
 
    include_once (GLPI_ROOT . "/inc/autoload.function.php");
    spl_autoload_register('glpi_autoload');

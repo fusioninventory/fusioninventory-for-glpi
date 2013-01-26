@@ -46,7 +46,7 @@ $DBCONNECTION_REQUIRED=0;
 
 $NEEDED_ITEMS=array("search", "computer", "infocom", "setup", "networking", "printer");
 
-define('GLPI_ROOT', '../../..');
+define('GLPI_ROOT', realpath('../../..'));
 include (GLPI_ROOT . "/inc/includes.php");
 
 Html::header(__('FusionInventory'), $_SERVER['PHP_SELF'], "utils", "report");
