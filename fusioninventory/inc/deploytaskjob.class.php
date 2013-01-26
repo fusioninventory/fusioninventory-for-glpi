@@ -162,17 +162,14 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       return array(
          array(
             'name' => __('Computers'),
-
             'value' => 'Computer',
          ),
          array(
             'name' => __('Group'),
-
             'value' => 'Group',
          ),
          array(
             'name' => __('Groups of computers', 'fusioninventory'),
-
             'value' => 'PluginFusioninventoryDeployGroup',
          )
       );

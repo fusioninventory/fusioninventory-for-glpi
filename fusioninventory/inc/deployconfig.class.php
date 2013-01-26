@@ -72,11 +72,9 @@ class PluginFusioninventoryDeployConfig extends CommonDBTM {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
          if ($_SESSION['glpishow_count_on_tabs']) {
-            return self::createTabEntry(__('FusionInventory DEPLOY'));
-
+            return self::createTabEntry(__('FusionInventory DEPLOY', 'fusioninventory'));
          }
          return __('FusionInventory DEPLOY', 'fusioninventory');
-
       }
       return '';
    }
@@ -110,7 +108,7 @@ class PluginFusioninventoryDeployConfig extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Root folder for sending files from server')."&nbsp;:</td>";
+      echo "<td>".__('Root folder for sending files from server', 'fusioninventory')."&nbsp;:</td>";
       echo "<td>";
       echo "<input type='text' name='server_upload_path' value='".
          $config->getValue($plugins_id, 'server_upload_path')."' size='60' />";

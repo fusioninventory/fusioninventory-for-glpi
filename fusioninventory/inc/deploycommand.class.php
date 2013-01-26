@@ -47,9 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployCommand extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-
-      return __('Execute a command');
-
+      return __('Execute a command', 'fusioninventory');
    }
 
    static function canCreate() {

@@ -53,7 +53,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       if ($nb>1) {
          return __('Task');
       }
-      return __('Groups of computers');
+      return __('Groups of computers', 'fusioninventory');
    }
 
    static function canCreate() {
@@ -87,14 +87,15 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       switch(get_class($item)) {
          case __CLASS__:
             switch($item->fields['type']) {
+            
                case "STATIC":
-                  return __('Static group');
-
+                  return __('Static group', 'fusioninventory');
                   break;
+               
                case "DYNAMIC":
-                  return __('Dynamic group');
-
+                  return __('Dynamic group', 'fusioninventory');
                   break;
+                  
             }
             break;
       }
@@ -135,12 +136,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       global $CFG_GLPI;
       
       $buttons = array();
-      $title = __('Groups of computers');
-
+      $title = __('Groups of computers', 'fusioninventory');
 
       if ($this->canCreate()) {
-         $buttons["group.form.php?new=1"] = __('Add group');
-
+         $buttons["group.form.php?new=1"] = __('Add group', 'fusioninventory');
          $title = "";
       }
 
@@ -182,8 +181,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<td>".__('Type')."&nbsp;:</td>";
       echo "<td align='center'>";
       $types = array(
-         'STATIC'    => __('Static group'),
-         'DYNAMIC'   => __('Dynamic group')
+         'STATIC'    => __('Static group', 'fusioninventory'),
+         'DYNAMIC'   => __('Dynamic group', 'fusioninventory')
       );
       Dropdown::showFromArray("type", $types, array('value'=>$this->fields['type']));
       echo "</td>";
@@ -224,7 +223,7 @@ echo "<table class='tab_cadre_fixe'>";
 
 echo "<tr>";
 echo "<th>";
-echo __('Preview', 'monitoring');
+echo __('Preview');
 echo "</th>";
 echo "</tr>";
 

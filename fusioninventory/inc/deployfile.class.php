@@ -211,7 +211,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       if ($source === "Computer") echo "<i>".self::getMaxUploadSize()."</i>";
       echo "</td><td>";
       echo "&nbsp;<input type='submit' name='add_item' value=\"".
-         __('Add', 'fusioninventory')."\" class='submit' >";
+         __('Add')."\" class='submit' >";
       echo "</td>";
       echo "</tr></table>";
    }

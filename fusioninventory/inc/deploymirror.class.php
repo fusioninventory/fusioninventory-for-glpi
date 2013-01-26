@@ -49,9 +49,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    public $dohistory = true;
 
    static function getTypeName($nb=0) {
-
-      return __('Mirror servers');
-
+      return __('Mirror servers', 'fusioninventory');
    }
 
    static function canCreate() {
@@ -100,7 +98,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       rows='4' name='comment' >".$this->fields["comment"]."</textarea></td></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Mirror server address')."&nbsp;:</td>";
+      echo "<td>".__('Mirror server address', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       echo "<input type='text' name='url' size='40' value='".$this->fields["url"]."'/>";
       echo "</td></tr>";
@@ -121,7 +119,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       $tab[1]['field']         = 'name';
       $tab[1]['linkfield']     = 'name';
       $tab[1]['name']          = __('Name');
-
       $tab[1]['datatype']      = 'itemlink';
       $tab[1]['itemlink_type'] = $this->getType();
 
@@ -129,21 +126,18 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       $tab[19]['field']     = 'date_mod';
       $tab[19]['linkfield'] = '';
       $tab[19]['name']      = __('Last update');
-
       $tab[19]['datatype']  = 'datetime';
 
       $tab[2]['table']     = $this->getTable();
       $tab[2]['field']     = 'url';
       $tab[2]['linkfield'] = 'url';
-      $tab[2]['name']      = __('Mirror server address');
-
+      $tab[2]['name']      = __('Mirror server address', 'fusioninventory');
       $tab[2]['datatype']  = 'string';
 
       $tab[16]['table']     = $this->getTable();
       $tab[16]['field']     = 'comment';
       $tab[16]['linkfield'] = 'comment';
       $tab[16]['name']      = __('Comments');
-
       $tab[16]['datatype']  = 'text';
 
       $tab[80]['table']     = 'glpi_entities';
@@ -151,12 +145,10 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       $tab[80]['linkfield'] = 'entities_id';
       $tab[80]['name']      = __('Entity');
 
-
       $tab[86]['table']     = $this->getTable();
       $tab[86]['field']     = 'is_recursive';
       $tab[86]['linkfield'] = 'is_recursive';
       $tab[86]['name']      = __('Child entities');
-
       $tab[86]['datatype']  = 'bool';
 
       return $tab;

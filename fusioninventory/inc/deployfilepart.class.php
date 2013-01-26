@@ -48,9 +48,7 @@ class PluginFusioninventoryDeployFilepart extends CommonDBTM {
 
 
    static function getTypeName($nb=0) {
-
-      return __('pieces of files');
-
+      return __('pieces of files', 'fusioninventory');
    }
 
    static function canCreate() {

@@ -102,26 +102,26 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
    static function processComment($state, $comment) {
       if ($comment == "") {
          switch ($state) {
+            
             case PluginFusioninventoryTaskjoblog::TASK_OK:
-               $comment = __('Ok');
-
+               $comment = __('Ok', 'fusioninventory');
                break;
+            
             case PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED:
-               $comment = __('Error / rescheduled');
-
+               $comment = __('Error / rescheduled', 'fusioninventory');
                break;
+            
             case PluginFusioninventoryTaskjoblog::TASK_ERROR:
-               $comment = __('Error');
-
+               $comment = __('Error', 'fusioninventory');
                break;
+            
             case PluginFusioninventoryTaskjoblog::TASK_PREPARED:
-               $comment = __('Prepared');
-
+               $comment = __('Prepared', 'fusioninventory');
                break;
+            
          }
       } elseif ($state == PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED) {
-         $comment = __('Error / rescheduled');
-
+         $comment = __('Error / rescheduled', 'fusioninventory');
       }
       return $comment;
    }
