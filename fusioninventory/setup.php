@@ -150,6 +150,9 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
          PluginFusioninventoryProfile::changeprofile($moduleId);
       
+      $PLUGIN_HOOKS['import_item']['fusioninventory'] = array(
+          'Computer' => array('Plugin'));
+      
       if (isset($_SESSION["glpiID"])) {
 
          $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
