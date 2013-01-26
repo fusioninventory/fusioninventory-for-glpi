@@ -415,7 +415,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                      __('One or more active tasks (#task#) use this package. Deletion denied.', 
                         'fusioninventory')));
 
-         Html::redirect(GLPI_ROOT."/plugins/fusioninventory/front/task.form.php?id="
+         Html::redirect($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.form.php?id="
                .$this->getField('id'));
          return false;
       }

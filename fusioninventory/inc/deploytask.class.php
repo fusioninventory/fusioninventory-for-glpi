@@ -163,7 +163,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
          Session::addMessageAfterRedirect(
             __('This task is active. delete denied', 'fusioninventory'));
 
-         Html::redirect(GLPI_ROOT."/plugins/fusinvdeploy/front/task.form.php?id=".
+         Html::redirect($CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/task.form.php?id=".
             $this->getField('id'));
          return false;
       }
