@@ -106,8 +106,8 @@ class PluginFusioninventoryMenu {
       }
 
       $a_menu[2]['name'] = __('Groups of computers');
-      $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_group.png";
-      $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/deploygroup.php";
+      $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_group.png";
+      $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploygroup.php";
       
       if (Session::haveRight("config", "w")) {
          $a_menu[3]['name'] = __('General configuration', 'fusioninventory');
@@ -251,16 +251,14 @@ class PluginFusioninventoryMenu {
       $a_menu = array();
 
       if (PluginFusioninventoryProfile::haveRight("packages", "r")) {
-         $a_menu[0]['name'] = __('Package management');
-
-         $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_package.png";
-         $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/deploypackage.php";
+         $a_menu[0]['name'] = __('Package management', 'fusioninventory');
+         $a_menu[0]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_package.png";
+         $a_menu[0]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploypackage.php";
       }
 
-      $a_menu[1]['name'] = __('Mirror servers');
-
-      $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusioninventory/pics/menu_files.png";
-      $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusioninventory/front/deploymirror.php";
+      $a_menu[1]['name'] = __('Mirror servers', 'fusioninventory');
+      $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_files.png";
+      $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploymirror.php";
 
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('Deploy', 'fusioninventory'), $a_menu, $type,
@@ -330,8 +328,11 @@ class PluginFusioninventoryMenu {
       foreach ($a_menu as $menu_id) {
          echo "<tr>";
          $menu_id['pic'] = str_replace("/menu_", "/menu_mini_", $menu_id['pic']);
-         echo "<th>
-               <img src='".$menu_id['pic']."' width='16' height='16'/></th>";
+         echo "<th>";
+         if (!empty($menu_id['pic'])) {
+            echo "<img src='".$menu_id['pic']."' width='16' height='16'/>";
+         }
+         echo "</th>";
          echo "<th colspan='".(count($a_menu) - 1)."' width='".($width - 40)."'>
                   <a href='".$menu_id['link']."'>".$menu_id['name']."</a></th>";
          echo "</tr>";
