@@ -132,7 +132,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
    function title() {
-
+      global $CFG_GLPI;
+      
       $buttons = array();
       $title = __('Groups of computers');
 
@@ -143,7 +144,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          $title = "";
       }
 
-      Html::displayTitle(GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_group.png", $title, $title, $buttons);
+      Html::displayTitle($CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/menu_group.png", $title, $title, $buttons);
    }
 
 

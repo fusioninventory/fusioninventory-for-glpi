@@ -188,24 +188,25 @@ class PluginFusioninventoryDeployStaticmisc {
    }
 
    static function displayMenu() {
+      global $CFG_GLPI;
 
       $a_menu = array();
       if (PluginFusioninventoryProfile::haveRight("fusinvdeploy", "packages", "r")) {
          $a_menu[0]['name'] = __('Package management');
 
-         $a_menu[0]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_package.png";
-         $a_menu[0]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/package.php";
+         $a_menu[0]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/menu_package.png";
+         $a_menu[0]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/front/package.php";
       }
 
       $a_menu[1]['name'] = __('Mirror servers');
 
-      $a_menu[1]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_files.png";
-      $a_menu[1]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/mirror.php";
+      $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/menu_files.png";
+      $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/front/mirror.php";
 
       $a_menu[2]['name'] = __('Groups of computers');
 
-      $a_menu[2]['pic']  = GLPI_ROOT."/plugins/fusinvdeploy/pics/menu_group.png";
-      $a_menu[2]['link'] = GLPI_ROOT."/plugins/fusinvdeploy/front/group.php";
+      $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/menu_group.png";
+      $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/front/group.php";
 
       return $a_menu;
    }

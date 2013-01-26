@@ -155,6 +155,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
    function title() {
+      global $CFG_GLPI;
 
       $buttons = array();
       $title = __('Packages', 'fusioninventory');
@@ -166,7 +167,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          $title = "";
       }
 
-      Html::displayTitle(GLPI_ROOT."/plugins/fusioninventory/pics/menu_mini_package.png", 
+      Html::displayTitle($CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_mini_package.png", 
                          $title, $title, $buttons);
    }
 

@@ -208,7 +208,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
    }
 
    static function getTaskjobsAllDatasTree() {
-      global $DB;
+      global $DB, $CFG_GLPI;
 
       $res = array();
 
@@ -228,7 +228,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
          $res[$i]['type'] = "task";
          $res[$i]['date'] = $row_tasks['date'];
          $res[$i]['state'] = "null";
-         $res[$i]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/task.png";
+         $res[$i]['icon'] = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/ext/task.png";
          $res[$i]['progress'] = self::getTaskPercent($row_tasks['id']);
 
          //get all job for this task
@@ -269,7 +269,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
                   case 'Computer':
                      $row_status = $DB->fetch_assoc($res_status);
 
-                     $res[$i]['children'][$j]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/computer.png";
+                     $res[$i]['children'][$j]['icon'] = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/ext/computer.png";
                      $res[$i]['children'][$j]['leaf'] = true; //final children
                      $res[$i]['children'][$j]['progress'] = $row_status['state'];
                      $res[$i]['children'][$j]['items_id'] = $row_status['items_id'];
@@ -277,7 +277,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
 
                      break;
                   case 'PluginFusioninventoryDeployGroup':
-                     $res[$i]['children'][$j]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/group.png";
+                     $res[$i]['children'][$j]['icon'] = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/ext/group.png";
                      $res[$i]['children'][$j]['progress'] = self::getTaskPercent($row_jobs['id'], 'group');
 
                      $k = 0;
@@ -289,7 +289,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
                         $res[$i]['children'][$j]['children'][$k]['leaf'] = true;
                         $res[$i]['children'][$j]['children'][$k]['type'] = "Computer";
                         $res[$i]['children'][$j]['children'][$k]['progress'] = $row_status['state'];
-                        $res[$i]['children'][$j]['children'][$k]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/computer.png";
+                        $res[$i]['children'][$j]['children'][$k]['icon'] = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/ext/computer.png";
                         $res[$i]['children'][$j]['children'][$k]['items_id'] = $row_status['items_id'];
                         $res[$i]['children'][$j]['children'][$k]['taskjobs_id'] = $row_jobs['id'];
 
@@ -309,7 +309,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
    }
 
    static function getTaskjobsDatasTreenode($params = array()) {
-      global $DB;
+      global $DB, $CFG_GLPI;
 
       $items_id = $params['items_id'];
       $parent_type = $params['parent_type'];
@@ -334,7 +334,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
                $res[$i]['type']     = "task";
                $res[$i]['state']    = "null";
                $res[$i]['date']     = $row_tasks['date'];
-               $res[$i]['icon']     = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/task.png";
+               $res[$i]['icon']     = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/ext/task.png";
                $res[$i]['progress'] = self::getTaskPercent($row_tasks['id']);
                $i++;
             }
@@ -388,7 +388,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
                         $res_jobs_state = $DB->query($query_jobs_state);
                         $row_jobs_state = $DB->fetch_assoc($res_jobs_state);
 
-                        $res[$i]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/computer.png";
+                        $res[$i]['icon'] = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/ext/computer.png";
                         $res[$i]['leaf'] = true; //final children
                         $res[$i]['progress'] = $row_jobs_state['state'];
                         $res[$i]['items_id'] = $row_status['items_id'];
@@ -396,7 +396,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
 
                         break;
                      case 'PluginFusioninventoryDeployGroup':
-                        $res[$i]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/group.png";
+                        $res[$i]['icon'] = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/ext/group.png";
                         $res[$i]['progress'] = self::getTaskPercent($row_jobs['id'], 'group');
 
                   }
@@ -433,7 +433,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
                   $res[$i]['leaf'] = true;
                   $res[$i]['type'] = "Computer";
                   $res[$i]['progress'] = $row_jobs_state['state'];
-                  $res[$i]['icon'] = GLPI_ROOT."/plugins/fusinvdeploy/pics/ext/computer.png";
+                  $res[$i]['icon'] = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/ext/computer.png";
                   $res[$i]['items_id'] = $row_status['items_id'];
                   $res[$i]['taskjobs_id'] = $items_id;
 

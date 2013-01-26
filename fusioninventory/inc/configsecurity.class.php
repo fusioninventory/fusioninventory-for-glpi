@@ -147,6 +147,8 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
    // for file stored snmp authentication
    function add_xml() {
+      global $CFG_GLPI;
+      
       // Get new id
       $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml", 'SimpleXMLElement', LIBXML_NOCDATA);
 
@@ -224,7 +226,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       $xml_write .= "   </auth>\n";
       $xml_write .= "</snmp>\n";
 
-      $myFile = GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml";
+      $myFile = $CFG_GLPI['root_doc']."/plugins/fusioninventory/scripts/auth.xml";
       $fh = fopen($myFile, 'w') or die("can't open file");
       fwrite($fh, $xml_write);
       fclose($fh);

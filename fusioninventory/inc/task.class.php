@@ -476,7 +476,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
    function displayTaks($condition) {
-      global $DB;
+      global $DB, $CFG_GLPI;
 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
@@ -532,13 +532,13 @@ class PluginFusioninventoryTask extends CommonDBTM {
          }
 
          if ($conditionpic == 'next') {
-            echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_scheduled.png'/></td>";
+            echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_scheduled.png'/></td>";
          } else if ($conditionpic == 'inactives') {
-            echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_disabled.png'/></td>";
+            echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_disabled.png'/></td>";
          } else if ($conditionpic == 'actives') {
-            echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_enabled.png'/></td>";
+            echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_enabled.png'/></td>";
          } else if ($conditionpic == 'running') {
-            echo "<img src='".GLPI_ROOT."/plugins/fusioninventory/pics/task_running.png'/></td>";
+            echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_running.png'/></td>";
          } else {
 
          }
