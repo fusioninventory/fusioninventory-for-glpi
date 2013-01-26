@@ -243,7 +243,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
             echo "<tr class='tab_bg_1 center'>";
             echo "<td colspan='2'></td>";
             echo "<td class='center'>";
-            echo "<input type='submit' class='submit' name='update' value='".__s('Update')."'/>";
+            echo "<input type='submit' class='submit' name='update' value='".__s('Save')."'/>";
             echo "</td>";
             echo "<td colspan='".(count($a_pref))."'></td>";
             echo "</tr>";
