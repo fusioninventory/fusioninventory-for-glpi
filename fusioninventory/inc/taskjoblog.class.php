@@ -103,7 +103,8 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       
       $query = "SELECT * FROM glpi_plugin_fusioninventory_taskjobstates
          LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` 
-            ON `plugin_fusioninventory_taskjobstates_id`=`glpi_plugin_fusioninventory_taskjobstates`.`id`
+            ON `plugin_fusioninventory_taskjobstates_id`=".
+               "`glpi_plugin_fusioninventory_taskjobstates`.`id`
          WHERE `glpi_plugin_fusioninventory_taskjoblogs`.`id`='".$taskjoblogs_id."'
          LIMIT 1";
       $result=$DB->query($query);
@@ -225,7 +226,8 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          echo "<table class='tab_cadre' style='width: ".$width."px'>";
          echo "<tr class='tab_bg_1'>";
          echo "<th width='32'>";
-         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_running.png'/>";
+         echo "<img src='".$CFG_GLPI['root_doc'].
+                  "/plugins/fusioninventory/pics/task_running.png'/>";
          echo "</th>";
          echo "<td>";
          if ($DB->numrows($result) > 0) {
@@ -284,7 +286,8 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          echo "<table class='tab_cadre' width='".$width."'>";
          echo "<tr class='tab_bg_1'>";
          echo "<th width='32'>";
-         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
+         echo "<img src='".$CFG_GLPI['root_doc'].
+                  "/plugins/fusioninventory/pics/task_finished.png'/>";
          echo "</td>";
          echo "<td>";
             echo "<table class='tab_cadre' >";
@@ -340,12 +343,15 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
             echo "<script  type='text/javascript'>
 function close_array(id){
-   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/collapse.png\''+
-      'onClick=\'document.getElementById(\"viewfollowup'+id+'\").hide();appear_array('+id+');\' />&nbsp;<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/refresh.png\' />';
+   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".
+                    $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/collapse.png\''+
+      'onClick=\'document.getElementById(\"viewfollowup'+id+'\").hide();appear_array('+id+');\' />".
+         "&nbsp;<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/refresh.png\' />';
    document.getElementById('plusmoins'+id).style.backgroundColor = '#e4e4e2';
 }
 function appear_array(id){
-   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/expand.png\''+
+   document.getElementById('plusmoins'+id).innerHTML = '<img src=\'".
+                    $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/expand.png\''+
       'onClick=\'document.getElementById(\"viewfollowup'+id+'\").show();close_array('+id+');\' />';
    document.getElementById('plusmoins'+id).style.backgroundColor = '#f2f2f2';
 
@@ -353,8 +359,10 @@ function appear_array(id){
 
       </script>";
 
-      echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/prototype.js'></script>";
-      echo "<script type='text/javascript' src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/effects.js'></script>";
+      echo "<script type='text/javascript' src='".
+              $CFG_GLPI['root_doc']."/plugins/fusioninventory/prototype.js'></script>";
+      echo "<script type='text/javascript' src='".
+              $CFG_GLPI['root_doc']."/plugins/fusioninventory/effects.js'></script>";
    }
 
 
@@ -376,13 +384,16 @@ function appear_array(id){
       $pfTaskjobstate->getFromDB($taskjobstates_id);
 
       $displayforceend = 0;
-      $a_history = $this->find('`plugin_fusioninventory_taskjobstates_id` = "'.$pfTaskjobstate->fields['id'].'"',
+      $a_history = $this->find('`plugin_fusioninventory_taskjobstates_id` = "'.
+                                   $pfTaskjobstate->fields['id'].'"',
                                'id DESC',
                                '1');
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td width='40' id='plusmoins".$pfTaskjobstate->fields["id"]."'><img src='".$CFG_GLPI['root_doc'].
-               "/plugins/fusioninventory/pics/expand.png' onClick='document.getElementById(\"viewfollowup".$pfTaskjobstate->fields["id"].
+      echo "<td width='40' id='plusmoins".$pfTaskjobstate->fields["id"]."'><img src='".
+               $CFG_GLPI['root_doc'].
+               "/plugins/fusioninventory/pics/expand.png' ".
+               "onClick='document.getElementById(\"viewfollowup".$pfTaskjobstate->fields["id"].
                "\").show();close_array(".$pfTaskjobstate->fields["id"].");' /></td>";
 
       echo "<td>";
@@ -409,8 +420,10 @@ function appear_array(id){
 
       Ajax::UpdateItemOnEvent('plusmoins'.$pfTaskjobstate->fields["id"],
                       'viewfollowup'.$pfTaskjobstate->fields["id"],
-                      $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/showtaskjoblogdetail.php",
-                      array('agents_id' => $pfTaskjobstate->fields['plugin_fusioninventory_agents_id'],
+                      $CFG_GLPI['root_doc'].
+                         "/plugins/fusioninventory/ajax/showtaskjoblogdetail.php",
+                      array('agents_id' => 
+                                 $pfTaskjobstate->fields['plugin_fusioninventory_agents_id'],
                           'uniqid' => $pfTaskjobstate->fields['uniqid']),
                       array("click"));
 
@@ -422,9 +435,12 @@ function appear_array(id){
 
       if ($displayforceend == "0") {
          echo "<td align='center'>";
-         echo "<form name='form' method='post' action='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjob.form.php'>";
-         echo "<input type='hidden' name='taskjobstates_id' value='".$pfTaskjobstate->fields['id']."' />";
-         echo "<input type='hidden' name='taskjobs_id' value='".$pfTaskjobstate->fields['plugin_fusioninventory_taskjobs_id']."' />";
+         echo "<form name='form' method='post' action='".
+                 $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjob.form.php'>";
+         echo "<input type='hidden' name='taskjobstates_id' value='".
+                 $pfTaskjobstate->fields['id']."' />";
+         echo "<input type='hidden' name='taskjobs_id' value='".
+                 $pfTaskjobstate->fields['plugin_fusioninventory_taskjobs_id']."' />";
          echo '<input name="forceend" value="'.__('Force the end', 'fusioninventory').'"
              class="submit" type="submit">';
          Html::closeForm();
@@ -433,7 +449,8 @@ function appear_array(id){
       echo "</tr>";
 
       echo "<tr>";
-      echo "<td colspan='".$nb_td."' style='display: none;' id='viewfollowup".$pfTaskjobstate->fields["id"]."' class='tab_bg_4'>";
+      echo "<td colspan='".$nb_td."' style='display: none;' id='viewfollowup".
+              $pfTaskjobstate->fields["id"]."' class='tab_bg_4'>";
       echo "</td>";
       echo "</tr>";
    }
@@ -458,13 +475,16 @@ function appear_array(id){
 
       $text = "<center><table class='tab_cadrehov' style='width: ".$width."px'>";
 
-      $a_jobstates = $pfTaskjobstate->find('`plugin_fusioninventory_agents_id`="'.$agents_id.'" AND `uniqid`="'.$uniqid.'"', '`id` DESC');
+      $a_jobstates = $pfTaskjobstate->find('`plugin_fusioninventory_agents_id`="'.$agents_id.'" '.
+                                              'AND `uniqid`="'.$uniqid.'"', 
+                                           '`id` DESC');
       $a_devices_merged = array();
 
       foreach ($a_jobstates as $data) {
 
          $displayforceend = 0;
-         $a_history = $this->find('`plugin_fusioninventory_taskjobstates_id` = "'.$data['id'].'"', 'id');
+         $a_history = $this->find('`plugin_fusioninventory_taskjobstates_id` = "'.$data['id'].'"', 
+                                  'id');
 
          if (strstr(exportArrayToDB($a_history), "Merged with ")) {
             $classname = $data['itemtype'];
@@ -473,7 +493,8 @@ function appear_array(id){
             $a_devices_merged[] = $Class->getLink(1)."&nbsp;(".$Class->getTypeName().")";
          } else {
             $text .= "<tr>";
-            $text .= "<th colspan='2'><img src='".$CFG_GLPI['root_doc']."/pics/puce.gif' />".__('Process number', 'fusioninventory')."&nbsp;: ".$data['id']."</th>";
+            $text .= "<th colspan='2'><img src='".$CFG_GLPI['root_doc']."/pics/puce.gif' />".
+                         __('Process number', 'fusioninventory')."&nbsp;: ".$data['id']."</th>";
             $text .= "<th>";
             $text .= __('Date');
 
@@ -626,31 +647,41 @@ function appear_array(id){
             break;
 
          case 2:
-            $text .= "<td style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
+            $text .= "<td style='background-color: rgb(0, 255, 0);-moz-border-radius:".
+                 " 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
+                 "align='center'>";
             $text .= "<strong>".__('Ok', 'fusioninventory')."</strong>";
             $finish++;
             break;
 
          case 3:
-            $text .= "<td style='background-color: rgb(255, 120, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
+            $text .= "<td style='background-color: rgb(255, 120, 0);-moz-border-radius: ".
+                 "4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
+                 "align='center'>";
             $text .= "<strong>".__('Error / rescheduled', 'fusioninventory')."</strong>";
             $finish++;
             break;
 
          case 4:
-            $text .= "<td style='background-color: rgb(255, 0, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
+            $text .= "<td style='background-color: rgb(255, 0, 0);-moz-border-radius: ".
+                 "4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
+                 "align='center'>";
             $text .= "<strong>".__('Error')."</strong>";
             $finish++;
             break;
 
          case 5:
-            $text .= "<td style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
+            $text .= "<td style='background-color: rgb(255, 200, 0);-moz-border-radius: ".
+                 "4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
+                 "align='center'>";
             $text .= "<strong>".__('unknown', 'fusioninventory')."</strong>";
             $finish++;
             break;
 
          case 6:
-            $text .= "<td style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center'>";
+            $text .= "<td style='background-color: rgb(255, 200, 0);-moz-border-radius: ".
+                 "4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
+                 "align='center'>";
             $text .= "<strong>".__('Running')."</strong>";
             break;
 
@@ -730,13 +761,16 @@ function appear_array(id){
 
       $query = "SELECT `glpi_plugin_fusioninventory_taskjoblogs`.`state`
          FROM glpi_plugin_fusioninventory_taskjobstates
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` on plugin_fusioninventory_taskjobstates_id=`glpi_plugin_fusioninventory_taskjobstates`.`id`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` 
+            ON plugin_fusioninventory_taskjobstates_id=".
+               "`glpi_plugin_fusioninventory_taskjobstates`.`id`
          WHERE `plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
          AND (`glpi_plugin_fusioninventory_taskjoblogs`.`state` = '2'
             OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '3'
             OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '4'
             OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '5')
-         GROUP BY glpi_plugin_fusioninventory_taskjobstates.uniqid, plugin_fusioninventory_agents_id";
+         GROUP BY glpi_plugin_fusioninventory_taskjobstates.uniqid, ".
+              "plugin_fusioninventory_agents_id";
       $result=$DB->query($query);
       if ($result) {
          while ($datajob=$DB->fetch_array($result)) {
@@ -810,9 +844,11 @@ function appear_array(id){
          $uniqid = $data['uniqid'];
       }
 
-      $query = "SELECT `glpi_plugin_fusioninventory_taskjoblogs`.* FROM `glpi_plugin_fusioninventory_taskjoblogs`
+      $query = "SELECT `glpi_plugin_fusioninventory_taskjoblogs`.* 
+            FROM `glpi_plugin_fusioninventory_taskjoblogs`
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates`
-            ON plugin_fusioninventory_taskjobstates_id = `glpi_plugin_fusioninventory_taskjobstates`.`id`
+            ON plugin_fusioninventory_taskjobstates_id = ".
+              "`glpi_plugin_fusioninventory_taskjobstates`.`id`
          WHERE `uniqid`='".$uniqid."'
          ORDER BY `glpi_plugin_fusioninventory_taskjoblogs`.`id` DESC
          LIMIT 1";
@@ -833,7 +869,8 @@ function appear_array(id){
          $state = '7';
       }      
 
-      $a_taskjobstates = count($pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='".$taskjobs_id."'
+      $a_taskjobstates = count($pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='".
+               $taskjobs_id."'
                AND `state` != '3'
                AND `uniqid`='".$uniqid."'"));
       
@@ -843,34 +880,43 @@ function appear_array(id){
 
          if ($veryshort == '0') {
             echo "<th>";
-            echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_running.png'/>";
+            echo "<img src='".$CFG_GLPI['root_doc'].
+                     "/plugins/fusioninventory/pics/task_running.png'/>";
             echo "</th>";
          }
          echo $this->getDivState($state, 'td');
          echo "<td align='center'>";
-         echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?sort=1&order=DESC&field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+         echo " <a href='".$CFG_GLPI['root_doc'].
+                  "/plugins/fusioninventory/front/taskjoblog.php?sort=1&order=DESC&field[0]=6&".
+                  "searchtype[0]=contains&contains[0]=".$uniqid."&".
+                  "itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
             __('View logs of this execution', 'fusioninventory')."</a>";
          echo "<input type='hidden' name='taskjobstates_id' value='".$taskstates_id."' />";
          echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
-         echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.__('Force the end', 'fusioninventory').'"
-             class="submit" type="submit">';
+         echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.
+                 __('Force the end', 'fusioninventory').'" class="submit" type="submit">';
          echo "</td>";
          if ($veryshort == '0') {
             echo "</tr>";
             echo "<tr class='tab_bg_3'>";
             echo "<th>";
-            echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
+            echo "<img src='".$CFG_GLPI['root_doc'].
+                     "/plugins/fusioninventory/pics/task_finished.png'/>";
             echo "</th>";
             echo "<td colspan='2' align='center'>";
-            echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?sort=1&order=DESC&field[0]=3&searchtype[0]=equals&contains[0]=".$taskjobs_id."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-               __('See all executions', 'fusioninventory')."</a>";
+            echo " <a href='".$CFG_GLPI['root_doc'].
+                     "/plugins/fusioninventory/front/taskjoblog.php?sort=1&order=DESC&".
+                     "field[0]=3&searchtype[0]=equals&contains[0]=".$taskjobs_id."&".
+                     "itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+                     __('See all executions', 'fusioninventory')."</a>";
             echo "</td>";
             echo "</tr>";
          }
       } else { // Finish
          if ($veryshort == '0') {
             echo "<th rowspan='2' height='64'>";
-            echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
+            echo "<img src='".$CFG_GLPI['root_doc'].
+                     "/plugins/fusioninventory/pics/task_finished.png'/>";
             echo "</th>";
          }
          echo $this->getDivState($state, 'td');
@@ -888,8 +934,11 @@ function appear_array(id){
                if ($a_taskjobstates == '0') {
                   echo __('Last run')." (".Html::convDateTime($date).") : ";
                }
-               echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&searchtype[0]=contains&contains[0]=".$uniqid."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-                  __('View logs of this execution', 'fusioninventory')."</a>";
+               echo "<a href='".$CFG_GLPI['root_doc'].
+                       "/plugins/fusioninventory/front/taskjoblog.php?field[0]=6&".
+                       "searchtype[0]=contains&contains[0]=".$uniqid."&".
+                       "itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+                       __('View logs of this execution', 'fusioninventory')."</a>";
             } else {
                if ($a_taskjobstates == '0') {
                   echo __('Last run')." :<br/> ".Html::convDateTime($date)."";
@@ -899,16 +948,19 @@ function appear_array(id){
          if ($a_taskjobstates != '0') {
             echo "<input type='hidden' name='taskjobstates_id' value='".$taskstates_id."' />";
             echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
-            echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.__('Force the end', 'fusioninventory').'"
-                class="submit" type="submit">';
+            echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.
+                     __('Force the end', 'fusioninventory').'" class="submit" type="submit">';
          }
          echo "</td>";
          echo "</tr>";
          if ($veryshort == '0') {
             echo "<tr class='tab_bg_3'>";
             echo "<td colspan='2' align='center'>";
-            echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php?field[0]=3&searchtype[0]=equals&contains[0]=".$taskjobs_id."&itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
-               __('See all executions', 'fusioninventory')."</a>";
+            echo " <a href='".$CFG_GLPI['root_doc'].
+                    "/plugins/fusioninventory/front/taskjoblog.php?field[0]=3&".
+                    "searchtype[0]=equals&contains[0]=".$taskjobs_id."&".
+                    "itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
+                    __('See all executions', 'fusioninventory')."</a>";
             echo "</td>";
             echo "</tr>";
          }
@@ -935,36 +987,49 @@ function appear_array(id){
       switch ($state) {
 
          case 7:
-            return "<".$type." align='center' width='".$width."'>".__('Prepared', 'fusioninventory')."</".$type.">";
+            return "<".$type." align='center' width='".$width."'>".
+                      __('Prepared', 'fusioninventory')."</".$type.">";
             break;
 
          case 1:
-            return "<".$type." align='center' width='".$width."'>".__('Started', 'fusioninventory')."</".$type.">";
+            return "<".$type." align='center' width='".$width."'>".
+                       __('Started', 'fusioninventory')."</".$type.">";
             break;
 
          case 2:
-            return "<".$type." style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
-               "<strong>".__('Ok', 'fusioninventory')."</strong></".$type.">";
+            return "<".$type." style='background-color: rgb(0, 255, 0);-moz-border-radius: 4px;".
+                     "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
+                     "align='center' width='".$width."'>".
+                     "<strong>".__('Ok', 'fusioninventory')."</strong></".$type.">";
             break;
 
          case 3:
-            return "<".$type." style='background-color: rgb(255, 120, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
-               "<strong>".__('Error / rescheduled', 'fusioninventory')."</strong></".$type.">";
+            return "<".$type." style='background-color: rgb(255, 120, 0);-moz-border-radius: 4px;".
+                     "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
+                     "align='center' width='".$width."'>".
+                     "<strong>".__('Error / rescheduled', 'fusioninventory').
+                     "</strong></".$type.">";
             break;
 
          case 4:
-            return "<".$type." style='background-color: rgb(255, 0, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
-               "<strong>".__('Error')."</strong></".$type.">";
+            return "<".$type." style='background-color: rgb(255, 0, 0);-moz-border-radius: 4px;".
+                 "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' ".
+                 "width='".$width."'>".
+                 "<strong>".__('Error')."</strong></".$type.">";
             break;
 
          case 5:
-            return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
-               "<strong>".__('unknown', 'fusioninventory')."</strong></".$type.">";
+            return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;".
+                     "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
+                     "align='center' width='".$width."'>".
+                     "<strong>".__('unknown', 'fusioninventory')."</strong></".$type.">";
             break;
 
          case 6:
-            return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' align='center' width='".$width."'>".
-               "<strong>".__('Running')."</strong></".$type.">";
+            return "<".$type." style='background-color: rgb(255, 200, 0);-moz-border-radius: 4px;".
+                     "-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
+                     "align='center' width='".$width."'>".
+                     "<strong>".__('Running')."</strong></".$type.">";
             break;
 
       }
