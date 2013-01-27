@@ -167,31 +167,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
    ini_set("max_execution_time", "0");
 
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodel.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelimportexport.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/networkcommondbtm.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmib.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmiboid.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmibobject.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodeldevice.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/configlogfield.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/communicationrest.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputercomputer.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerlib.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/ignoredimportdevice.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/networkequipment.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/networkporttype.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/printer.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/printerlog.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/printerlogreport.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/toolbox.class.php");
+   foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc/*.php') as $file) {
+      require_once($file);
+   }
 
    $migration = new $migrationname($current_version);
    $prepare_task = array();
@@ -5315,7 +5293,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    }
 
 
-
+   
+   /*
+    * Update rules
+    */
+   $query = "UPDATE glpi_rules SET `sub_type`='PluginFusioninventoryInventoryRuleImport'
+      WHERE `sub_type`='PluginFusioninventoryRuleImportEquipment'";
+   $DB->query($query);
+   
    /*
     *  Add default rules
     */
@@ -5324,6 +5309,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $pfSetup = new PluginFusioninventorySetup();
       $pfSetup->initRules();
    }
+   // If no rules, add them
+   if (countElementsInTable('glpi_rules', "`sub_type`='PluginFusioninventoryInventoryRuleImport'") == 0) {
+      $migration->displayMessage("Create rules");
+      $pfSetup = new PluginFusioninventorySetup();
+      $pfSetup->initRules();
+   }
+   
 
    PluginFusioninventoryProfile::changeProfile();
 

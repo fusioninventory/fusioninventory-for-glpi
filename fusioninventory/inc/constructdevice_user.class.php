@@ -44,14 +44,14 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvsnmpConstructdevice_User extends CommonDBTM {
+class PluginFusioninventoryConstructdevice_User extends CommonDBTM {
 
-   function canCreate() {
+   static function canCreate() {
       return PluginFusioninventoryProfile::haveRight("model", "w");
    }
 
 
-   function canView() {
+   static function canView() {
       return PluginFusioninventoryProfile::haveRight("model", "r");
    }
 

@@ -47,11 +47,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
 
    // From CommonDBRelation
-   public $itemtype_1 = 'PluginFusioninventoryDeployGroup';
-   public $items_id_1 = 'groups_id';
+   static public $itemtype_1 = 'PluginFusioninventoryDeployGroup';
+   static public $items_id_1 = 'groups_id';
 
-   public $itemtype_2 = 'itemtype';
-   public $items_id_2 = 'items_id';
+   static public $itemtype_2 = 'itemtype';
+   static public $items_id_2 = 'items_id';
 
    function can($ID, $right, array &$input=NULL) {
 

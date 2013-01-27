@@ -60,7 +60,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
    // From Rule
-   //public $right    = 'rule_import';
+   static public $right = 'rule_import';
    public $can_sort = true;
 
 
