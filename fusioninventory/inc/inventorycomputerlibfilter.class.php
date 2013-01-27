@@ -94,7 +94,7 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
       $vendors_name = "";
       $devices_name = "";
 
-      $query_select = "SELECT id, name FROM `glpi_plugin_fusinvinventory_usbvendors`
+      $query_select = "SELECT id, name FROM `glpi_plugin_fusioninventory_usbvendors`
         WHERE `vendorid`='".$vendorId."'
         LIMIT 1";
       $resultSelect = $DB->query($query_select);
@@ -103,7 +103,7 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
          $vendors_id = $data['id'];
          $vendors_name = html_entity_decode($data['name']);
 
-         $query_selectd = "SELECT name FROM `glpi_plugin_fusinvinventory_usbdevices`
+         $query_selectd = "SELECT name FROM `glpi_plugin_fusioninventory_usbdevices`
            WHERE `deviceid`='".$deviceId."'
               AND `plugin_fusinvinventory_usbvendor_id`='".$vendors_id."'
            LIMIT 1";

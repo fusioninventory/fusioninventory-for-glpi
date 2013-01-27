@@ -78,7 +78,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
       $tab[1]['datatype']  = 'itemlink';
 
-      $tab[2]['table']     = 'glpi_plugin_fusinvinventory_criterias';
+      $tab[2]['table']     = 'glpi_plugin_fusioninventory_criterias';
       $tab[2]['field']     = 'name';
       $tab[2]['linkfield'] = 'plugin_fusioninventory_criterium_id';
       $tab[2]['name']      = __('Name');
