@@ -1513,6 +1513,12 @@ $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
             unset($a_logs[$key]);
             $countlog_end--;
          }
+         if ($data['itemtype'] == "SoftwareVersion"
+                 AND $data['id_search_option'] == '0'){
+            unset($a_logs[$key]);
+            $countlog_end--;
+         }
+
       }
 
       $this->assertEquals(($countlog_end - $countlog_start - 1), 0, 'Problem on log, must be 0 : \n'.print_r($a_logs, true));
