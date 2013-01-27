@@ -6,8 +6,7 @@
 // synchronize different repositories.
 chdir(dirname($_SERVER["SCRIPT_FILENAME"]));
 
-define('GLPI_ROOT', realpath('../../..'));
-require_once (GLPI_ROOT . "/inc/includes.php");
+include ("../../../inc/includes.php");
 
 function filepartIsUsed($file) {
    global $DB;

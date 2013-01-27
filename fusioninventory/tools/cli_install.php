@@ -46,11 +46,7 @@ if (in_array('--help', $_SERVER['argv'])) {
 
 chdir(dirname($_SERVER["SCRIPT_FILENAME"]));
 
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', realpath('../../..'));
-}
-
-include (GLPI_ROOT . "/inc/includes.php");
+include ("../../../inc/includes.php");
 
 // Init debug variable
 $_SESSION['glpi_use_mode'] = Session::DEBUG_MODE;

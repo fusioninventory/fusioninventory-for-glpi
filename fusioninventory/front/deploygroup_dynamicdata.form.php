@@ -40,9 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', realpath('../../..'));
-include (GLPI_ROOT . "/inc/includes.php");
-
+include ("../../../inc/includes.php");
 
 Html::header(__('Features'), $_SERVER["PHP_SELF"],
              "plugins", "fusioninventory", "deploygroup");

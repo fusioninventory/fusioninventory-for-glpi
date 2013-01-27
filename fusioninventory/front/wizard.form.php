@@ -40,11 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', realpath('../../..'));
-}
-
-require_once GLPI_ROOT."/inc/includes.php";
+require_once ("../../../inc/includes.php");
 
 Session::checkLoginUser();
 // ** Used for rules in the wizard

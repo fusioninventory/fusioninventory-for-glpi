@@ -41,8 +41,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', realpath('../../..'));
-   include (GLPI_ROOT . "/inc/includes.php");
+   include ("../../../inc/includes.php");
 }
 include_once (GLPI_ROOT . "/inc/includes.php");
 

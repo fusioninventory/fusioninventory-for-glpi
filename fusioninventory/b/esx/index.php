@@ -45,10 +45,7 @@ if (isset($_GET['status'])) {
    return 'ok';
 }
 
-if(!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', realpath('../../../..'));
-}
-include (GLPI_ROOT."/inc/includes.php");
+include ("../../../../inc/includes.php");
 
 $response = false;
 //Agent communication using REST protocol

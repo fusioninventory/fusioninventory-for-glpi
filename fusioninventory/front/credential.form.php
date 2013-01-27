@@ -40,8 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', realpath('../../..'));
-include (GLPI_ROOT . "/inc/includes.php");
+include ("../../../inc/includes.php");
 
 $dropdown = new PluginFusioninventoryCredential();
 include (GLPI_ROOT . "/front/dropdown.common.form.php");

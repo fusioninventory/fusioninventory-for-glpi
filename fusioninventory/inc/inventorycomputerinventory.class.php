@@ -370,7 +370,12 @@ $start = microtime(true);
             $pfInventoryComputerLib->updateComputer($a_computerinventory, $items_id, $no_history);
             
             $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
-Toolbox::logInFile("exetime", (microtime(true) - $start)." (".$items_id.")\n");
+Toolbox::logInFile("exetime", (microtime(true) - $start)." (".$items_id.")\n".
+        memory_get_usage()."\n".
+        memory_get_usage(true)."\n".
+        memory_get_peak_usage()."\n".
+        memory_get_peak_usage()."\n");
+
             $pfInventoryComputerLib->addLog();
 
             if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {

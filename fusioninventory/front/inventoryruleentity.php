@@ -40,9 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', realpath('../../..'));
-
-include (GLPI_ROOT . "/inc/includes.php");
+include ("../../../inc/includes.php");
 
 Session::checkLoginUser();
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "fusinvinventory-ruleentity");

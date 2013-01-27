@@ -40,9 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', realpath('../../..'));
-
-include (GLPI_ROOT . "/inc/includes.php");
+include ("../../../inc/includes.php");
 
 $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
 $ptt  = new PluginFusioninventoryTask();

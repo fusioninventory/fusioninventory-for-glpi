@@ -45,16 +45,14 @@ ini_set("memory_limit", "-1");
 ini_set("max_execution_time", "0");
 ini_set('display_errors', 1);
 
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', realpath('../../..'));
-}
-
 if (session_id()=="") {
    session_start();
 }
 
 $_SESSION['glpi_use_mode'] = 0;
-include_once(GLPI_ROOT."/inc/includes.php");
+if (!defined('GLPI_ROOT')) {
+   include_once("../../../inc/includes.php");
+}
 if (!isset($_SESSION['glpilanguage'])) {
    $_SESSION['glpilanguage'] = 'fr_FR';
 }

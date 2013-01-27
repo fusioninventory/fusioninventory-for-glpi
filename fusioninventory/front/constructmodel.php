@@ -40,11 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', realpath('../../..'));
-}
-
-include (GLPI_ROOT."/inc/includes.php");
+include ("../../../inc/includes.php");
 
 // DEV
 //$_SESSION['plugin_fusioninventory_snmpwalks_id'] = 214;

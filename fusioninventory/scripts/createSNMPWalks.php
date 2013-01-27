@@ -4,8 +4,7 @@
 # requires: snmpwalk from Net-SNMP
 chdir(dirname($_SERVER["SCRIPT_FILENAME"]));
 
-define('GLPI_ROOT', realpath('../../..'));
-require_once (GLPI_ROOT . "/inc/includes.php");
+include ("../../../inc/includes.php");
 
 $snmpwalkCmd = "snmpwalk";
 #$snmpwalkCmd = "ssh 192.168.14.128 --";

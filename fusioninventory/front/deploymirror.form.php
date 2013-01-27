@@ -40,8 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', realpath('../../..'));
-include (GLPI_ROOT . "/inc/includes.php");
+include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
 Html::header(__('Mirror servers'), $_SERVER["PHP_SELF"], "plugins",
