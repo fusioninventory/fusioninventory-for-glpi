@@ -793,9 +793,9 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['antivirus'][] = $array_tmp;
          }
       }
-/* begin code, may works at 90%
       // * STORAGE/VOLUMES
       $a_inventory['storage'] = array();
+/* begin code, may works at 90%
       if (isset($array['PHYSICAL_VOLUMES'])) {
          foreach ($array['PHYSICAL_VOLUMES'] as $a_physicalvolumes) {
             $array_tmp = $thisc->addValues($a_physicalvolumes, 
