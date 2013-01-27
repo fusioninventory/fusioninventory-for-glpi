@@ -165,7 +165,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    **/
    function showForm($id, $options=array()) {
 
-      $pFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
       if ($id!='') {
@@ -201,7 +201,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       if ($this->fields["is_active"]) {
          if ($id!='') {
             $forcerundisplay = 1;
-            $a_taskjobs = $pFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'");
+            $a_taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'");
             foreach ($a_taskjobs as $data) {
                $statejob = $pfTaskjobstate->stateTaskjob($data['id'], '930', 'value');
                if ($statejob != '') {
@@ -219,7 +219,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
          // * Manage reset / reinitialization
          $reset = 0;
-         $a_taskjobs = $pFusioninventoryTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'");
+         $a_taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'");
          foreach ($a_taskjobs as $data) {
             $statejob = $pfTaskjobstate->stateTaskjob($data['id'], '930', 'value');
             if ($statejob == '') {

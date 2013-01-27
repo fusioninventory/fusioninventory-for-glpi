@@ -533,9 +533,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo __('Agent', 'fusioninventory')."&nbsp:";
       echo "</td>";
       echo "<td>";
-      $pFusioninventoryAgent = new PluginFusioninventoryAgent();
-      $pFusioninventoryAgent->getFromDB($agent_id);
-      echo $pFusioninventoryAgent->getLink(1);
+      $pfAgent = new PluginFusioninventoryAgent();
+      $pfAgent->getFromDB($agent_id);
+      echo $pfAgent->getLink(1);
 
       echo "</td>";
       echo "</tr>";

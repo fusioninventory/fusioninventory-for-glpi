@@ -276,7 +276,7 @@ if (isset($_POST['definition_add'])) {
 
 } elseif (isset($_POST['forceend'])) {
    $mytaskjobstate = new PluginFusioninventoryTaskjobstate();
-   $pFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+   $pfTaskjob = new PluginFusioninventoryTaskjob();
    $mytaskjobstate->getFromDB($_POST['taskjobstates_id']);
    $jobstate = $mytaskjobstate->fields;
    $a_taskjobstates = $mytaskjobstate->find("`uniqid`='".$mytaskjobstate->fields['uniqid']."'");
@@ -286,8 +286,8 @@ if (isset($_POST['definition_add'])) {
       }
    }
 
-   $pFusioninventoryTaskjob->getFromDB($jobstate['plugin_fusioninventory_taskjobs_id']);
-   $pFusioninventoryTaskjob->reinitializeTaskjobs($pFusioninventoryTaskjob->fields['plugin_fusioninventory_tasks_id']);
+   $pfTaskjob->getFromDB($jobstate['plugin_fusioninventory_taskjobs_id']);
+   $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
 
    Html::back();
 }

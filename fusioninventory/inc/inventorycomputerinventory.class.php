@@ -255,7 +255,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          $this->rulepassed(0, "Computer");
       } else if (!isset($data['found_equipment'])) {
-         $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+         $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
          $inputdb = array();
          $inputdb['name'] = $input['name'];
          $inputdb['date'] = date("Y-m-d H:i:s");
@@ -285,7 +285,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          }
          $inputdb['rules_id'] = $data['_ruleid'];
          $inputdb['method'] = 'inventory';
-         $pFusioninventoryIgnoredimportdevice->add($inputdb);
+         $pfIgnoredimportdevice->add($inputdb);
       }
    }
 

@@ -208,7 +208,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(", ", $a_text);
          $this->addtaskjoblog();
 
-         $pFusioninventoryIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+         $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
          $inputdb = array();
          $inputdb['name'] = $input['name'];
          $inputdb['date'] = date("Y-m-d H:i:s");
@@ -224,7 +224,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          }
          $inputdb['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
          $inputdb['method'] = 'netdiscovery';
-         $pFusioninventoryIgnoredimportdevice->add($inputdb);
+         $pfIgnoredimportdevice->add($inputdb);
          unset($_SESSION['plugin_fusioninventory_rules_id']);
       }
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {

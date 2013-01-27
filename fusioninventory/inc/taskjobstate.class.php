@@ -289,7 +289,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pFusioninventoryTask = new PluginFusioninventoryTask();
+      $pfTask = new PluginFusioninventoryTask();
 
       $this->getFromDB($taskjobstates_id);
       $input = array();
@@ -310,7 +310,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
                     $pfTaskjob->fields['periodicity_type'],
                     $pfTaskjob->fields['periodicity_count']);
             $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
-                  FROM `".$pFusioninventoryTask->getTable()."`
+                  FROM `".$pfTask->getTable()."`
                WHERE `id`='".$pfTaskjob->fields['plugin_fusioninventory_tasks_id']."'
                   LIMIT 1";
             $result = $DB->query($query);

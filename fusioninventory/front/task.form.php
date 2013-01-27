@@ -58,11 +58,11 @@ if (isset($_POST['forcestart'])) {
    $pfTaskjob->forceRunningTask($_POST['id']);
    Html::back();
 } else if (isset($_POST['reset'])) {
-   $pFusioninventoryTask    = new PluginFusioninventoryTask();
+   $pfTask    = new PluginFusioninventoryTask();
 
-   $pFusioninventoryTask->getFromDB($_POST['id']);
+   $pfTask->getFromDB($_POST['id']);
    $query = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
-         SET `execution_id`='".$pFusioninventoryTask->fields['execution_id']."',
+         SET `execution_id`='".$pfTask->fields['execution_id']."',
             `status`='0'
       WHERE `plugin_fusioninventory_tasks_id`='".$_POST['id']."'";
    $DB->query($query);

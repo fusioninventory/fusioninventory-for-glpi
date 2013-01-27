@@ -2249,10 +2249,10 @@ return namelist;
 
 
    function prepareRunTaskjob($a_taskjob) {
-      $pFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
 
       $uniqid = 0;
-      if ($pFusioninventoryTaskjob->verifyDefinitionActions($a_taskjob['id'])) {
+      if ($pfTaskjob->verifyDefinitionActions($a_taskjob['id'])) {
          // Get module name
          $pluginName = PluginFusioninventoryModule::getModuleName($a_taskjob['plugins_id']);
          if (strstr($pluginName, "fusioninventory")
@@ -2261,7 +2261,7 @@ return namelist;
             $input = array();
             $input['id'] = $a_taskjob['id'];
             $input['execution_id'] = $a_taskjob['execution_id'] + 1;
-            $pFusioninventoryTaskjob->update($input);
+            $pfTaskjob->update($input);
 
             $itemtype = "Plugin".ucfirst($pluginName).ucfirst($a_taskjob['method']);
             $item = new $itemtype;

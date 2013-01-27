@@ -4750,7 +4750,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    // Update profiles
    if (TableExists("glpi_plugin_tracker_profiles")) {
       $profile = new Profile();
-      $pFusioninventoryProfile = new PluginFusioninventoryProfile();
+      $pfProfile = new PluginFusioninventoryProfile();
       $query = "SELECT * FROM `glpi_plugin_tracker_profiles`";
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
@@ -4766,13 +4766,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
             foreach ($newprofile as $old=>$new) {
                if (isset($profiledata[$old])) {
-                  $pFusioninventoryProfile->addProfile($new,
+                  $pfProfile->addProfile($new,
                                                        $profiledata[$old],
                                                        $profiledata['id']);
                }
             }
             if (isset($profiledata["snmp_report"])) {
-               $pFusioninventoryProfile->addProfile("reportnetworkequipment",
+               $pfProfile->addProfile("reportnetworkequipment",
                                                     $profiledata["snmp_report"],
                                                     $profiledata['id']);
             }
