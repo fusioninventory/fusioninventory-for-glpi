@@ -1584,51 +1584,173 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     *  Udpate criteria for blacklist
     */
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputercriterias`
-         WHERE `name`='Manufacturer'";
-      $result = $DB->query($query);
-      if ($DB->numrows($result) == '0') {
-         $query_ins = "INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercriterias` (`name`, `comment`)
-            VALUES ('Manufacturer', 'manufacturer')";
-         $id = $DB->query($query_ins);
-         $query_ins = "INSERT INTO `".$newTable."`
-               (`plugin_fusioninventory_criterium_id`, `value`)
-            VALUES ('".$id."', 'System manufacturer')";
-      }
+      $a_criteria = array();
+      $a_criteria['Serial number'] = 'ssn';
+      $a_criteria['uuid'] = 'uuid';
+      $a_criteria['Mac address'] = 'macAddress';
+      $a_criteria['Windows product key'] = 'winProdKey';
+      $a_criteria['Model'] = 'smodel';
+      $a_criteria['storage serial'] = 'storagesSerial';
+      $a_criteria['drives serial'] = 'drivesSerial';
+      $a_criteria['Asset Tag'] = 'assetTag';
+      $a_criteria['Computer name'] = 'name';
+      $a_criteria['Manufacturer'] = 'manufacturer';
 
-   
+      foreach ($a_criteria as $name=>$comment) {
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputercriterias`
+            WHERE `name`='".$name."'";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == '0') {
+            $query_ins = "INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercriterias` 
+               (`name`, `comment`)
+               VALUES ('".$name."', '".$comment."')";
+            $DB->query($query_ins);
+         }         
+      }
+      $a_criteria = array();
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputercriterias`";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $a_criteria[$data['comment']] = $data['id'];
+      }         
+      
+      
 
     /*
     * Update blacklist
     */
+      // * ssn
       $input = array();
-      $input['03000200-0400-0500-0006-000700080009'] = '2';
-      $input['6AB5B300-538D-1014-9FB5-B0684D007B53'] = '2';
-      $input['01010101-0101-0101-0101-010101010101'] = '2';
-      $input['20:41:53:59:4e:ff'] = '3';
-      $input['02:00:4e:43:50:49'] = '3';
-      $input['e2:e6:16:20:0a:35'] = '3';
-      $input['d2:0a:2d:a0:04:be'] = '3';
-      $input['00:a0:c6:00:00:00'] = '3';
-      $input['d2:6b:25:2f:2c:e7'] = '3';
-      $input['33:50:6f:45:30:30'] = '3';
-      $input['0a:00:27:00:00:00'] = '3';
-      $input['00:50:56:C0:00:01'] = '3';
-      $input['00:50:56:C0:00:08'] = '3';
-      $input['MB-1234567890'] = '1';
-      $input['0'] = '1';
-      foreach ($input as $value=>$type) {
-         $query = "SELECT * FROM `".$newTable."`
-            WHERE `plugin_fusioninventory_criterium_id`='".$type."'
-             AND `value`='".$value."'";
-         $result=$DB->query($query);
-         if ($DB->numrows($result) == '0') {
-            $query = "INSERT INTO `".$newTable."`
-                  (`plugin_fusioninventory_criterium_id`, `value`)
-               VALUES ( '".$type."', '".$value."')";
-            $DB->query($query);
+      $a_input[] = array(
+         'N/A',
+         '(null string)',
+         'INVALID',
+         'SYS-1234567890',
+         'SYS-9876543210',
+         'SN-12345',
+         'SN-1234567890',
+         '1111111111',
+         '1111111',
+         '1',
+         '0123456789',
+         '12345',
+         '123456',
+         '1234567',
+         '12345678',
+         '123456789',
+         '1234567890',
+         '123456789000',
+         '12345678901234567',
+         '0000000000',
+         '000000000',
+         '00000000',
+         '0000000',
+         '0000000',
+         'NNNNNNN',
+         'xxxxxxxxxxx',
+         'EVAL',
+         'IATPASS',
+         'none',
+         'To Be Filled By O.E.M.',
+         'Tulip Computers',
+         'Serial Number xxxxxx',
+         'SN-123456fvgv3i0b8o5n6n7k',
+         'Unknow',
+         'System Serial Number',
+         'MB-1234567890',
+         '0');
+         foreach ($a_input as $value) {
+            $query = "SELECT * FROM `".$newTable."`
+               WHERE `plugin_fusioninventory_criterium_id`='".$a_criteria['ssn']."'
+                AND `value`='".$value."'";
+            $result=$DB->query($query);
+            if ($DB->numrows($result) == '0') {
+               $query = "INSERT INTO `".$newTable."`
+                     (`plugin_fusioninventory_criterium_id`, `value`)
+                  VALUES ( '".$a_criteria['ssn']."', '".$value."')";
+               $DB->query($query);
+            }
          }
-      }
+
+         $a_input[] = array(
+            'FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF',
+            '03000200-0400-0500-0006-000700080009',
+            '6AB5B300-538D-1014-9FB5-B0684D007B53',
+            '01010101-0101-0101-0101-010101010101');
+         foreach ($a_input as $value) {
+            $query = "SELECT * FROM `".$newTable."`
+               WHERE `plugin_fusioninventory_criterium_id`='".$a_criteria['uuid']."'
+                AND `value`='".$value."'";
+            $result=$DB->query($query);
+            if ($DB->numrows($result) == '0') {
+               $query = "INSERT INTO `".$newTable."`
+                     (`plugin_fusioninventory_criterium_id`, `value`)
+                  VALUES ( '".$a_criteria['uuid']."', '".$value."')";
+               $DB->query($query);
+            }
+         }
+
+         $a_input[] = array(
+            '20:41:53:59:4e:ff',
+            '02:00:4e:43:50:49',
+            'e2:e6:16:20:0a:35',
+            'd2:0a:2d:a0:04:be',
+            '00:a0:c6:00:00:00',
+            'd2:6b:25:2f:2c:e7',
+            '33:50:6f:45:30:30',
+            '0a:00:27:00:00:00',
+            '00:50:56:C0:00:01',
+            '00:50:56:C0:00:08',
+            '02:80:37:EC:02:00',
+            '50:50:54:50:30:30');
+         foreach ($a_input as $value) {
+            $query = "SELECT * FROM `".$newTable."`
+               WHERE `plugin_fusioninventory_criterium_id`='".$a_criteria['macAddress']."'
+                AND `value`='".$value."'";
+            $result=$DB->query($query);
+            if ($DB->numrows($result) == '0') {
+               $query = "INSERT INTO `".$newTable."`
+                     (`plugin_fusioninventory_criterium_id`, `value`)
+                  VALUES ( '".$a_criteria['macAddress']."', '".$value."')";
+               $DB->query($query);
+            }
+         }
+
+         $a_input[] = array(
+            'Unknow',
+            'To Be Filled By O.E.M.',
+            '*',
+            'System Product Name',
+            'Product Name',
+            'System Name');
+         foreach ($a_input as $value) {
+            $query = "SELECT * FROM `".$newTable."`
+               WHERE `plugin_fusioninventory_criterium_id`='".$a_criteria['smodel']."'
+                AND `value`='".$value."'";
+            $result=$DB->query($query);
+            if ($DB->numrows($result) == '0') {
+               $query = "INSERT INTO `".$newTable."`
+                     (`plugin_fusioninventory_criterium_id`, `value`)
+                  VALUES ( '".$a_criteria['smodel']."', '".$value."')";
+               $DB->query($query);
+            }
+         }
+
+         $a_input[] = array(
+            'System manufacturer');
+         foreach ($a_input as $value) {
+            $query = "SELECT * FROM `".$newTable."`
+               WHERE `plugin_fusioninventory_criterium_id`='".$a_criteria['manufacturer']."'
+                AND `value`='".$value."'";
+            $result=$DB->query($query);
+            if ($DB->numrows($result) == '0') {
+               $query = "INSERT INTO `".$newTable."`
+                     (`plugin_fusioninventory_criterium_id`, `value`)
+                  VALUES ( '".$a_criteria['manufacturer']."', '".$value."')";
+               $DB->query($query);
+            }
+         }
+
 
 
    /*
