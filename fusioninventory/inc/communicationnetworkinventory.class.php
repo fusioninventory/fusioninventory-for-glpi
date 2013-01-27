@@ -1164,7 +1164,7 @@ Toolbox::logInFile("K", 'crit'.print_r($input, true));
             $input['itemtype'] = $a_inventory['itemtype'];
          }
          // TODO : add import ports
-         PluginFusioninventoryUnknownDevice::writeXML($items_id, $_SESSION['SOURCE_XMLDEVICE']);
+         PluginFusioninventoryUnknownDevice::writeXML($items_id, serialize($_SESSION['SOURCE_XMLDEVICE']));
          $class->update($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
             '[==fusinvsnmp::7==] ==fusinvsnmp::5== Update '.PluginFusioninventoryUnknownDevice::getTypeName().' [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
