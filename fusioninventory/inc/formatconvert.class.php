@@ -793,6 +793,7 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['antivirus'][] = $array_tmp;
          }
       }
+/* begin code, may works at 90%
       // * STORAGE/VOLUMES
       $a_inventory['storage'] = array();
       if (isset($array['PHYSICAL_VOLUMES'])) {
@@ -960,7 +961,7 @@ class PluginFusioninventoryFormatconvert {
             }
          }
       }               
-      
+*/    
       return $a_inventory;
    }
    
