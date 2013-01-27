@@ -717,6 +717,9 @@ class PluginFusioninventoryFormatconvert {
                            $array_tmp['designation'] = $a_storage['DESIGNATION'];
                         }
                      }
+                     if ($array_tmp['capacity'] == '') {
+                        $array_tmp['capacity'] = 0;
+                     }
                      $a_inventory['harddrive'][] = $array_tmp;
                   }
                }
