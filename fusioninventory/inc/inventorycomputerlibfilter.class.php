@@ -105,7 +105,7 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
 
          $query_selectd = "SELECT name FROM `glpi_plugin_fusioninventory_usbdevices`
            WHERE `deviceid`='".$deviceId."'
-              AND `plugin_fusinvinventory_usbvendor_id`='".$vendors_id."'
+              AND `plugin_fusioninventory_usbvendor_id`='".$vendors_id."'
            LIMIT 1";
          $resultSelectd = $DB->query($query_selectd);
          if ($DB->numrows($resultSelectd) > 0) {
