@@ -1620,8 +1620,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     * Update blacklist
     */
       // * ssn
-      $input = array();
-      $a_input[] = array(
+      $a_input = array(
          'N/A',
          '(null string)',
          'INVALID',
@@ -1672,7 +1671,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             }
          }
 
-         $a_input[] = array(
+         // * uuid
+         $a_input = array(
             'FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF',
             '03000200-0400-0500-0006-000700080009',
             '6AB5B300-538D-1014-9FB5-B0684D007B53',
@@ -1690,7 +1690,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             }
          }
 
-         $a_input[] = array(
+         // * macAddress
+         $a_input = array(
             '20:41:53:59:4e:ff',
             '02:00:4e:43:50:49',
             'e2:e6:16:20:0a:35',
@@ -1716,7 +1717,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             }
          }
 
-         $a_input[] = array(
+         // * smodel
+         $a_input = array(
             'Unknow',
             'To Be Filled By O.E.M.',
             '*',
@@ -1736,7 +1738,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             }
          }
 
-         $a_input[] = array(
+         // * manufacturer
+         $a_input = array(
             'System manufacturer');
          foreach ($a_input as $value) {
             $query = "SELECT * FROM `".$newTable."`
