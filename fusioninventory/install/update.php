@@ -1616,6 +1616,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $input['00:50:56:C0:00:01'] = '3';
       $input['00:50:56:C0:00:08'] = '3';
       $input['MB-1234567890'] = '1';
+      $input['0'] = '1';
       foreach ($input as $value=>$type) {
          $query = "SELECT * FROM `".$newTable."`
             WHERE `plugin_fusioninventory_criterium_id`='".$type."'
