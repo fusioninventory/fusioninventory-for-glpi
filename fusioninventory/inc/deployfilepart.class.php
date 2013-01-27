@@ -97,8 +97,8 @@ class PluginFusioninventoryDeployFilepart extends CommonDBTM {
       $short_sha512 = substr($sha512, 0, 6);
 
       //search by shortsha512
-      $PluginFusioninventoryDeployFilepart = new PluginFusioninventoryDeployFilepart;
-      $files = $PluginFusioninventoryDeployFilepart->find("shortsha512='".$short_sha512."'");
+      $pfDeployFilepart = new PluginFusioninventoryDeployFilepart;
+      $files = $pfDeployFilepart->find("shortsha512='".$short_sha512."'");
 
       if (count($files) > 1) {
          //find file with long sha512

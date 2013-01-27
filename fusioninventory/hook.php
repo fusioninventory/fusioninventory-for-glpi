@@ -1507,10 +1507,10 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          
       case 'plugin_fusioninventory_task_forceend':
 
-         $pluginFusioninventoryTaskjob = new PluginFusioninventoryTaskjob();
+         $pfTaskjob = new PluginFusioninventoryTaskjob();
          foreach( $data["item"] as $key => $val) {
-            $pluginFusioninventoryTaskjob->getFromDB($key);
-            $pluginFusioninventoryTaskjob->forceEnd();
+            $pfTaskjob->getFromDB($key);
+            $pfTaskjob->forceEnd();
          }
          break;
          
@@ -2481,8 +2481,8 @@ function plugin_pre_item_purge_fusioninventory($parm) {
                         AND `itemtype` = '1' ";
          $DB->query($query);
 
-         $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
-         $PluginFusinvinventoryLib->removeExternalid($parm->getField('id'));
+         $pfInventoryComputerLib = new PluginFusioninventoryInventoryComputerLib();
+         $pfInventoryComputerLib->removeExternalid($parm->getField('id'));
          // Remove antivirus if set
          PluginFusioninventoryInventoryComputerAntivirus::cleanComputer($parm->getField('id'));
          break;

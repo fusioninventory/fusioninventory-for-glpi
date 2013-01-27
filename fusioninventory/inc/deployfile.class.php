@@ -300,7 +300,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       set_time_limit(600);
 
-      $PluginFusioninventoryDeployFilepart = new PluginFusioninventoryDeployFilepart();
+      $pfDeployFilepart = new PluginFusioninventoryDeployFilepart();
 
       $filename = addslashes($params['filename']);
       $file_tmp_name = $params['file_tmp_name'];
@@ -348,7 +348,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             if (feof($fdIn) || filesize($tmpFilepart)>= $maxPartSize) {
                $part_sha512 = $this->registerFilepart ($repoPath, $tmpFilepart);
                $part_short_sha512 = substr($part_sha512, 0, 6);
-               $PluginFusioninventoryDeployFilepart->add(
+               $pfDeployFilepart->add(
                   array(
                      'sha512'                        => $part_sha512,
                      'shortsha512'                   => $part_short_sha512,
@@ -399,15 +399,15 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
 
-      $PluginFusioninventoryDeployFilepart = new PluginFusioninventoryDeployFilepart();
+      $pfDeployFilepart = new PluginFusioninventoryDeployFilepart();
 
       // Retrieve file informations
       $this->getFromDB($id);
 
       // Delete file in folder
       $sha512 = $this->getField('sha512');
-      $filepart = $PluginFusioninventoryDeployFilepart->getForFile($id);
-      $ids = $PluginFusioninventoryDeployFilepart->getIdsForFile($id);
+      $filepart = $pfDeployFilepart->getForFile($id);
+      $ids = $pfDeployFilepart->getIdsForFile($id);
 
       //verify that the file is not used by another package, in this case ignore file suppression
       $sql = "SELECT DISTINCT plugin_fusioninventory_deploypackages_id
@@ -429,7 +429,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
          // delete parts objects
          foreach($ids as $id => $sha512){
-            $PluginFusioninventoryDeployFilepart->delete(array('id' =>$id));
+            $pfDeployFilepart->delete(array('id' =>$id));
          }
       }
 
@@ -535,8 +535,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    function uploadFileFromServer() {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig;
-      $server_upload_path = $PluginFusioninventoryConfig->getValue($plugins_id, 
+      $pfConfig = new PluginFusioninventoryConfig;
+      $server_upload_path = $pfConfig->getValue($plugins_id, 
                                                                    'server_upload_path');
 
 

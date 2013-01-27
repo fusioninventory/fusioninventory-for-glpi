@@ -226,8 +226,8 @@ function pluginFusioninventoryInstall($version, $migration='') {
     * Add config
     */
       $migration->displayMessage("Initialize configuration");
-      $PluginFusioninventoryConfig = new PluginFusioninventoryConfig();
-      $PluginFusioninventoryConfig->initConfigModule();
+      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig->initConfigModule();
 
       $configLogField = new PluginFusioninventoryConfigLogField();
       $configLogField->initConfig();
@@ -240,36 +240,36 @@ function pluginFusioninventoryInstall($version, $migration='') {
     */
       $migration->displayMessage("Initialize agent TASKS");
       PluginFusioninventoryProfile::changeProfile();
-      $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule();
+      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $input = array();
       $input['modulename'] = "WAKEONLAN";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
-      $PluginFusioninventoryAgentmodule->add($input);
+      $pfAgentmodule->add($input);
 
       $input = array();
       $input['modulename'] = "INVENTORY";
       $input['is_active']  = 1;
       $input['exceptions'] = exportArrayToDB(array());
-      $PluginFusioninventoryAgentmodule->add($input);
+      $pfAgentmodule->add($input);
 
       $input = array();
       $input['modulename'] = "ESX";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
-      $PluginFusioninventoryAgentmodule->add($input);
+      $pfAgentmodule->add($input);
 
       $input = array();
       $input['modulename'] = "NETWORKINVENTORY";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
-      $PluginFusioninventoryAgentmodule->add($input);
+      $pfAgentmodule->add($input);
 
       $input = array();
       $input['modulename'] = "NETWORKDISCOVERY";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
-      $PluginFusioninventoryAgentmodule->add($input);
+      $pfAgentmodule->add($input);
 
 
 
@@ -291,8 +291,8 @@ function pluginFusioninventoryInstall($version, $migration='') {
     * Create rules
     */
       $migration->displayMessage("Create rules");
-      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
-      $PluginFusioninventorySetup->initRules();
+      $pfSetup = new PluginFusioninventorySetup();
+      $pfSetup->initRules();
 
 
 
@@ -300,8 +300,8 @@ function pluginFusioninventoryInstall($version, $migration='') {
     *  Import OCS locks
     */
       $migration->displayMessage("Import OCS locks if exists");
-      $PluginFusioninventoryLock = new PluginFusioninventoryLock();
-      $PluginFusioninventoryLock->importFromOcs();
+      $pfLock = new PluginFusioninventoryLock();
+      $pfLock->importFromOcs();
 
 
    CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', 

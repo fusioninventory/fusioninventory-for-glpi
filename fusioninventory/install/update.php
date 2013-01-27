@@ -5205,8 +5205,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     *  Manage configuration of plugin
     */
       $config = new PluginFusioninventoryConfig();
-      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
-      $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
+      $pfSetup = new PluginFusioninventorySetup();
+      $users_id = $pfSetup->createFusionInventoryUser();
       $a_input = array();
       $a_input['ssl_only'] = 0;
       $a_input['delete_task'] = 20;

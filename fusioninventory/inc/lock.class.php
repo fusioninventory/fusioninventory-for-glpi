@@ -539,7 +539,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    static function deleteLock($item) {
       global $DB;
 
-      $PluginFusinvinventoryLib = new PluginFusioninventoryInventoryComputerLib();
+      $pfInventoryComputerLib = new PluginFusioninventoryInventoryComputerLib();
 
       // Get mapping
       $a_mapping = PluginFusioninventoryInventoryComputerLibhook::getMapping();
@@ -571,7 +571,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                if ($result) {
                   if ($DB->numrows($result) == '1') {
                      $a_serialized = $DB->fetch_assoc($result);
-                     $infoSections = $PluginFusinvinventoryLib->_getInfoSections($a_serialized['internal_id']);
+                     $infoSections = $pfInventoryComputerLib->_getInfoSections($a_serialized['internal_id']);
 
                      // Modify fields
                      $table = getTableNameForForeignKeyField($datas['glpiField']);

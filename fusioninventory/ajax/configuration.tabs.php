@@ -54,8 +54,8 @@ if (PluginFusioninventoryProfile::haveRight("configuration", "r")) {
          $config = new PluginFusioninventoryConfig;
          $config->showForm(array('target'=>$_POST['target']));
 
-         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
-         $PluginFusioninventoryAgentmodule->showForm();
+         $pfAgentmodule = new PluginFusioninventoryAgentmodule;
+         $pfAgentmodule->showForm();
 
          if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration'])) {
             $sessionConfig = $_SESSION['glpi_plugin_fusioninventory']['configuration'];
@@ -80,8 +80,8 @@ if (PluginFusioninventoryProfile::haveRight("configuration", "r")) {
          break;
 
       case 2:
-         $PluginFusioninventoryAgentmodule = new PluginFusioninventoryAgentmodule;
-         $PluginFusioninventoryAgentmodule->showForm();
+         $pfAgentmodule = new PluginFusioninventoryAgentmodule;
+         $pfAgentmodule->showForm();
          break;
 
       default:

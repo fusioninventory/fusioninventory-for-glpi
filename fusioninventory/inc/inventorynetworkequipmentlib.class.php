@@ -397,13 +397,13 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                }
                if (!isset($macNotPhone_id)) {
                   // Create unknown ports
-                  $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                  $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
                   $unknown_infos = array();
                   $unknown_infos["name"] = '';
                   if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
                      $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
                   }
-                  $newID=$PluginFusioninventoryUnknownDevice->add($unknown_infos);
+                  $newID = $pfUnknownDevice->add($unknown_infos);
                   // Add networking_port
                   $port_add = array();
                   $port_add["items_id"] = $newID;
@@ -499,13 +499,13 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   }
                } else {
                   // Create unknown device
-                  $pluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                  $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
                   $input = array();
                   $input['name'] = '';
                   if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
                      $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
                   }
-                  $newID = $pluginFusioninventoryUnknownDevice->add($input);
+                  $newID = $pfUnknownDevice->add($input);
                   $input['itemtype'] = "PluginFusioninventoryUnknownDevice";
                   $input['items_id'] = $newID;
                   $input['mac'] = $ifmac;

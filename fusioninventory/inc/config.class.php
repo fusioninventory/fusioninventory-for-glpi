@@ -63,8 +63,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['inventory_frequence']    = '24';
       $input['agent_port']             = '62354';
       $input['extradebug']             = '0';
-      $PluginFusioninventorySetup = new PluginFusioninventorySetup();
-      $users_id = $PluginFusioninventorySetup->createFusionInventoryUser();
+      $pfSetup = new PluginFusioninventorySetup();
+      $users_id = $pfSetup->createFusionInventoryUser();
       $input['users_id']               = $users_id;
       $input['agent_base_url']         = '';
 
