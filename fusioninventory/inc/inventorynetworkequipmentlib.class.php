@@ -347,11 +347,16 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       
       $wire = new NetworkPort_NetworkPort();
       $networkPort = new NetworkPort();
+      $pfNetworkPort = new PluginFusioninventoryNetworkPort();
       
+      $a_snmpports = current($pfNetworkPort->find("`networkports_id`='".$networkports_id."'", 
+                                                  "", 
+                                                  1));
+      $pfNetworkPort->getFromDB($a_snmpports['id']);
       $portID = 0;
       
       $count = count($a_portconnection);
-      if ($this->getValue('trunk') != '1') {
+      if ($pfNetworkPort->getValue('trunk') != '1') {
          if ($count == '2') {
             // detect if phone IP is one of the 2 devices
             $phonecase = 0;
@@ -395,8 +400,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                $opposite_id = false;
                if ($opposite_id == $wire->getOppositeContact($portLink_id)) {
                   if ($opposite_id != $macNotPhone_id) {
-                     $this->disconnectDB($portLink_id); // disconnect this port
-                     $this->disconnectDB($macNotPhone_id);     // disconnect destination port
+                     $pfNetworkPort->disconnectDB($portLink_id); // disconnect this port
+                     $pfNetworkPort->disconnectDB($macNotPhone_id);     // disconnect destination port
                   }
                }
                if (!isset($macNotPhone_id)) {
@@ -419,11 +424,11 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                                 'networkports_id_2' => $macNotPhone_id));
             } else {
                $pfiud = new PluginFusioninventoryUnknownDevice;
-               $pfiud->hubNetwork($this);
+               $pfiud->hubNetwork($pfNetworkPort);
             }
          } else if ($count > 1) { // MultipleMac
             $pfiud = new PluginFusioninventoryUnknownDevice;
-            $pfiud->hubNetwork($this);
+            $pfiud->hubNetwork($pfNetworkPort);
          } else { // One mac on port
             foreach ($a_portconnection as $ifmac) { //Only 1 time
                $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);
@@ -458,8 +463,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                         }
                      }
                      if ($directconnect == '1') {
-                        $this->disconnectDB($networkports_id); // disconnect this port
-                        $this->disconnectDB($a_port['id']);     // disconnect destination port
+                        $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
+                        $pfNetworkPort->disconnectDB($a_port['id']);     // disconnect destination port
                         $wire->add(array('networkports_id_1'=> $networkports_id,
                                          'networkports_id_2' => $a_port['id']));
                      }
@@ -488,8 +493,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                         }
                      }
                      if ($directconnect == '1') {
-                        $this->disconnectDB($networkports_id); // disconnect this port
-                        $this->disconnectDB($a_port['id']);     // disconnect destination port
+                        $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
+                        $pfNetworkPort->disconnectDB($a_port['id']);     // disconnect destination port
                         $wire->add(array('networkports_id_1'=> $networkports_id,
                                          'networkports_id_2' => $a_port['id']));
                      }
@@ -497,7 +502,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                      // Yet connected
                   } else {
                      // Not connected
-                     $this->disconnectDB($networkports_id); // disconnect this port
+                     $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
                      $wire->add(array('networkports_id_1'=> $networkports_id,
                                       'networkports_id_2' => $a_port['id']));
                   }
@@ -514,7 +519,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   $input['items_id'] = $newID;
                   $input['mac'] = $ifmac;
                   $newPortID = $networkPort->add($input);
-                  $this->disconnectDB($networkports_id); // disconnect this port
+                  $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
                   $wire->add(array('networkports_id_1'=> $networkports_id,
                                    'networkports_id_2' => $newPortID));
                }
