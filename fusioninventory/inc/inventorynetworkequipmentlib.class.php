@@ -64,8 +64,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $networkEquipment->getFromDB($items_id);
 
       if (!isset($_SESSION['glpiactiveentities_string'])) {
-         $_SESSION['glpiactiveentities'] = array($networkEquipment->fields['entities_id']);
          $_SESSION['glpiactiveentities_string'] = $networkEquipment->fields['entities_id'];
+      }
+      if (!isset($_SESSION['glpiactiveentities'])) {
+         $_SESSION['glpiactiveentities'] = array($networkEquipment->fields['entities_id']);
+      }
+      if (!isset($_SESSION['glpiactive_entity'])) {
          $_SESSION['glpiactive_entity'] = $networkEquipment->fields['entities_id'];
       }
          
