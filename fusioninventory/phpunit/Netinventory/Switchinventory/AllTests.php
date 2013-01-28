@@ -304,6 +304,8 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
 </REQUEST>';
 
       $networkPort = new NetworkPort();
+      $networkName = new NetworkName();
+      $iPAddress = new IPAddress();
       $networkEquipment = new NetworkEquipment();
       $a_networkequipments = $networkEquipment->find();
       foreach ($a_networkequipments as $data) {
@@ -322,22 +324,62 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
          // CHECK 1 : Check ip of ports
          $a_ports = $networkPort->find("`name`='Fa0/1'");
          $a_port = current($a_ports);
-         $this->assertEquals($a_port['ip'], "", 'IP of port Fa/01 not right');
+         $ip = '';
+         $a_networkname = $networkName->find("`itemtype`='NetworkPort'
+                           AND `items_id`='".$a_port['id']."'");
+         foreach ($a_networkname as $a_namedata) {
+            $a_ips = $iPAddress->find("`itemtype`='NetworkName'
+                           AND `items_id`='".$a_namedata['id']."'");
+            foreach ($a_ips as $a_ip) {
+               $ip .= $a_ip['name'];
+            }
+         }         
+         $this->assertEquals($ip, "", 'IP of port Fa/01 not right');
          $this->assertEquals($a_port['mac'], "00:1b:54:99:62:45", 'MAC of port Fa/01 not right');
 
          $a_ports = $networkPort->find("`name`='Fa0/0'");
          $a_port = current($a_ports);
-         $this->assertEquals($a_port['ip'], "", 'IP of port Fa0/0 not right');
+         $ip = '';
+         $a_networkname = $networkName->find("`itemtype`='NetworkPort'
+                           AND `items_id`='".$a_port['id']."'");
+         foreach ($a_networkname as $a_namedata) {
+            $a_ips = $iPAddress->find("`itemtype`='NetworkName'
+                           AND `items_id`='".$a_namedata['id']."'");
+            foreach ($a_ips as $a_ip) {
+               $ip .= $a_ip['name'];
+            }
+         }
+         $this->assertEquals($ip, "", 'IP of port Fa0/0 not right');
          $this->assertEquals($a_port['mac'], "00:1b:54:99:62:44", 'MAC of port Fa0/0 not right');
 
          $a_ports = $networkPort->find("`name`='Gi1/0/23'");
          $a_port = current($a_ports);
-         $this->assertEquals($a_port['ip'], "", 'IP of port Gi1/0/23 not right');
+         $ip = '';
+         $a_networkname = $networkName->find("`itemtype`='NetworkPort'
+                           AND `items_id`='".$a_port['id']."'");
+         foreach ($a_networkname as $a_namedata) {
+            $a_ips = $iPAddress->find("`itemtype`='NetworkName'
+                           AND `items_id`='".$a_namedata['id']."'");
+            foreach ($a_ips as $a_ip) {
+               $ip .= $a_ip['name'];
+            }
+         }
+         $this->assertEquals($ip, "", 'IP of port Gi1/0/23 not right');
          $this->assertEquals($a_port['mac'], "00:1b:2b:20:40:97", 'MAC of port Gi1/0/23 not right');
 
          $a_ports = $networkPort->find("`name`='Gi1/0/22'");
          $a_port = current($a_ports);
-         $this->assertEquals($a_port['ip'], "", 'IP of port Gi1/0/22 not right');
+         $ip = '';
+         $a_networkname = $networkName->find("`itemtype`='NetworkPort'
+                           AND `items_id`='".$a_port['id']."'");
+         foreach ($a_networkname as $a_namedata) {
+            $a_ips = $iPAddress->find("`itemtype`='NetworkName'
+                           AND `items_id`='".$a_namedata['id']."'");
+            foreach ($a_ips as $a_ip) {
+               $ip .= $a_ip['name'];
+            }
+         }
+         $this->assertEquals($ip, "", 'IP of port Gi1/0/22 not right');
          $this->assertEquals($a_port['mac'], "00:1b:2b:20:40:96", 'MAC of port Gi1/0/22 not right');
 
          $GLPIlog = new GLPIlogs();
