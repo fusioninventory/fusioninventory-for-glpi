@@ -996,6 +996,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             if (!empty($a_inventory[$a_inventory['itemtype']]['mac'])) {
                $input['mac'][] = $a_inventory[$a_inventory['itemtype']]['mac'];
             }
+            $input['itemtype'] = "NetworkEquipment";
          } else if ($a_inventory['itemtype'] == 'Printer') {
             $input['itemtype'] = "Printer";
             if (isset($a_inventory['networkport'])) {
