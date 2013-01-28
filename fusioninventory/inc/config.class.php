@@ -770,6 +770,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     */
    static function logIfExtradebug($file, $message) {
       if (self::isExtradebugActive()) {
+         if (is_array($message)) {
+            $message = print_r($message, true);
+         }
          Toolbox::logInFile($file, $message);
       }
    }
