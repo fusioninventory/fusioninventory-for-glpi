@@ -46,6 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
+   public $dohistory = true;
 
    static function canCreate() {
       return PluginFusioninventoryProfile::haveRight("configsecurity", "w");
@@ -56,6 +57,14 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       return PluginFusioninventoryProfile::haveRight("configsecurity", "r");
    }
 
+   
+   
+   function defineTabs($options=array()){
+      $ong = array();
+      $this->addStandardTab('Log', $ong, $options);
+      return $ong;
+   }
+   
 
 
    function showForm($id, $options=array()) {

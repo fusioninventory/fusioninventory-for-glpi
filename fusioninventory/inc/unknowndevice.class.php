@@ -966,7 +966,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             }            
             $data['sysdescr'] = $this->fields['sysdescr'];
             $data['plugin_fusioninventory_snmpmodels_id'] = $this->fields['plugin_fusioninventory_snmpmodels_id'];
-            $data['plugin_fusinvsnmp_configsecurities_id'] = $this->fields['plugin_fusinvsnmp_configsecurities_id'];
+            $data['plugin_fusioninventory_configsecurities_id'] = $this->fields['plugin_fusioninventory_configsecurities_id'];
             if ($DB->numrows($result) == 0) {
                $data['printers_id'] = $printer_id;
                $pfPrinter->add($data);
@@ -1015,7 +1015,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
             $data['sysdescr'] = $this->fields['sysdescr'];
             $data['plugin_fusioninventory_snmpmodels_id'] = $this->fields['plugin_fusioninventory_snmpmodels_id'];
-            $data['plugin_fusinvsnmp_configsecurities_id'] = $this->fields['plugin_fusinvsnmp_configsecurities_id'];
+            $data['plugin_fusioninventory_configsecurities_id'] = $this->fields['plugin_fusioninventory_configsecurities_id'];
             if ($DB->numrows($result) == 0) {
                $data['networkequipments_id'] = $NetworkEquipment_id;
                $pfNetworkEquipment->add($data);

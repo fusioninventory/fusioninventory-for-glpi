@@ -47,6 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    protected $static_group_types = array('Computer');
+   public $dohistory = true;
 
    static function getTypeName($nb=0) {
 
@@ -76,7 +77,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       if ($this->fields['id'] > 0){
          $this->addStandardTab(__CLASS__, $ong, $options);
       }
-
+      $this->addStandardTab('Log', $ong, $options);
       return $ong;
    }
 
