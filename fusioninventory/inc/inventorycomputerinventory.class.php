@@ -265,8 +265,8 @@ class PluginFusioninventoryInventoryComputerInventory {
                     AND (!empty($a_computerinventory['computer']['domains_id']))) {
                $input['domain'] = $a_computerinventory['computer']['domains_id'];
             }
-         if (isset($input['serial'])) {
-            $input['serialnumber'] = $input['serial'];
+         if (isset($a_computerinventory['computer']['serial'])) {
+            $input['serial'] = $a_computerinventory['computer']['serial'];
          }
          if ($pfConfig->getValue('transfers_id_auto') != '0') {
             $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
@@ -302,18 +302,19 @@ class PluginFusioninventoryInventoryComputerInventory {
    **/
    function rulepassed($items_id, $itemtype) {
       global $DB;
-if ($items_id > 0) {
-   //exit;
-}
+
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
          "Rule passed : ".$items_id.", ".$itemtype."\n"
       );
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      
       $a_computerinventory = $this->arrayinventory;
-
+      $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation($a_computerinventory, $_SESSION["plugin_fusinvinventory_entity"]);
+      $a_computerinventory = $pfFormatconvert->replaceids($a_computerinventory);
+         
       if ($itemtype == 'Computer') {
          $pfInventoryComputerLib      = new PluginFusioninventoryInventoryComputerLib();
-         $pfFormatconvert             = new PluginFusioninventoryFormatconvert();
          
          $computer   = new Computer();
          if ($items_id == '0') {
@@ -359,10 +360,6 @@ if ($items_id > 0) {
             exit;            
          }
          
-         $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation($a_computerinventory, $_SESSION["plugin_fusinvinventory_entity"]);
-         $a_computerinventory = $pfFormatconvert->replaceids($a_computerinventory);
-
-         
 $start = microtime(true);
          $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 300)");
          if ($DB->result($ret, 0, 0) == 1) {
@@ -405,6 +402,7 @@ Toolbox::logInFile("exetime", (microtime(true) - $start)." (".$items_id.")\n".
  */
          }
       } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
+
          $class = new $itemtype();
          if ($items_id == "0") {
             $input = array();
@@ -436,19 +434,15 @@ Toolbox::logInFile("exetime", (microtime(true) - $start)." (".$items_id.")\n".
             PluginFusioninventoryUnknownDevice::writeXML($items_id, $xml->asXML());
          }
 
-         if (isset($arrayinventory['CONTENT']['HARDWARE']['NAME'])) {
-            $input['name'] = $arrayinventory['CONTENT']['HARDWARE']['NAME'];
+         if (isset($a_computerinventory['computer']['name'])) {
+            $input['name'] = $a_computerinventory['computer']['name'];
          }
          $input['item_type'] = "Computer";
-         if (isset($arrayinventory['CONTENT']['HARDWARE']['WORKGROUP'])) {
-            $input['domain'] = Dropdown::importExternal("Domain",
-                                                        $arrayinventory['CONTENT']['HARDWARE']['WORKGROUP'],
-                                                        $_SESSION["plugin_fusinvinventory_entity"]);
+         if (isset($a_computerinventory['computer']['domains_id'])) {
+            $input['domain'] = $a_computerinventory['computer']['domains_id'];
          }
-         if (isset($arrayinventory['CONTENT']['BIOS']['SSN'])) {
-            $input['serial'] = $arrayinventory['CONTENT']['BIOS']['SSN'];
-         } else if(isset($arrayinventory['CONTENT']['BIOS']['MSN'])) {
-            $input['serial'] = $arrayinventory['CONTENT']['BIOS']['MSN'];
+         if (isset($a_computerinventory['computer']['serial'])) {
+            $input['serial'] = $a_computerinventory['computer']['serial'];
          }
          $class->update($input);
       }

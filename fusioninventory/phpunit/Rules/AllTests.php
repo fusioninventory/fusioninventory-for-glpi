@@ -1259,8 +1259,14 @@ class Rules extends PHPUnit_Framework_TestCase {
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.84/";
       Session::loadLanguage("en_GB");
 
-      // Create computer only with serial and name;
       $computer = new Computer();
+            
+      $a_computers = $computer->find();
+      foreach ($a_computers as $data) {
+         $computer->delete($data, true);
+      }              
+      
+      // Create computer only with serial and name;
       $input = array();
       $input['name'] = "port004";
       $input['serial'] = "XA201220H";
@@ -1270,22 +1276,16 @@ class Rules extends PHPUnit_Framework_TestCase {
       // Activation of rules
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
          // Computer serial + uuid
-         $input = array();
-         $input['is_active']=1;
-         $input['id']=6;
-         $rule_id = $rulecollection->update($input);
+         $DB->query("UPDATE `glpi_rules` SET `is_active`='1'
+            WHERE `name`='Computer serial + uuid'");
 
          // Computer serial
-         $input = array();
-         $input['is_active']=1;
-         $input['id']=7;
-         $rule_id = $rulecollection->update($input);
+         $DB->query("UPDATE `glpi_rules` SET `is_active`='1'
+            WHERE `name`='Computer serial'");
 
          // Computer name
-         $input = array();
-         $input['is_active']=1;
-         $input['id']=10;
-         $rule_id = $rulecollection->update($input);
+         $DB->query("UPDATE `glpi_rules` SET `is_active`='1'
+            WHERE `name`='Computer name'");
 
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/fusion0.84/plugins/fusioninventory/";
