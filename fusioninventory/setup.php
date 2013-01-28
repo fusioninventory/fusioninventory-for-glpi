@@ -156,6 +156,8 @@ function plugin_init_fusioninventory() {
       if (isset($_SESSION["glpiID"])) {
 
          $CFG_GLPI["specif_entities_tables"][] = 'glpi_plugin_fusioninventory_ipranges';
+         
+         $CFG_GLPI["networkport_types"][] = 'PluginFusioninventoryUnknownDevice';
 
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";

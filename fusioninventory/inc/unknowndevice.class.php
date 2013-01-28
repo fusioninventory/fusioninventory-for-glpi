@@ -175,25 +175,61 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       return $tab;
    }
 
+   
+   /**
+    * Display tab
+    *
+    * @param CommonGLPI $item
+    * @param integer $withtemplate
+    *
+    * @return varchar name of the tab(s) to display
+    */
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+
+      $ong = array();
+      if ($item->fields['id'] > 0){
+         $ong[1]=__('Import');
+
+         $pfConfig = new PluginFusioninventoryConfig();
+         if (($pfConfig->isActive('fusioninventory', 'remotehttpagent', ''))
+                 && (PluginFusioninventoryProfile::haveRight("remotecontrol", "w"))) {
+            $ong[2]=__('Job', 'fusioninventory');
+         }
+      }
+      return $ong;
+   }
+
+
+
+   /**
+    * Display content of tab
+    *
+    * @param CommonGLPI $item
+    * @param integer $tabnum
+    * @param interger $withtemplate
+    *
+    * @return boolean true
+    */
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      global $CFG_GLPI;
+      
+      if ($tabnum == 1) {
+         $pfUnknownDevice = new self();
+         $pfUnknownDevice->importForm($CFG_GLPI['root_doc'] . 
+               '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"], 
+                                   $_POST["id"]);
+      }
+      return true;
+   }
+   
 
 
    function defineTabs($options=array()) {
-
-
+      
       $ong = array();
-      if ($this->fields['id'] > 0){
-         $ong[1]=_n('Connection', 'Connections', 2);
-
-         $ong[2]=__('Import');
-
-         $ptc = new PluginFusioninventoryConfig;
-         if (($ptc->isActive('fusioninventory', 'remotehttpagent', '')) AND(PluginFusioninventoryProfile::haveRight("remotecontrol", "w"))) {
-            $ong[3]=__('Job', 'fusioninventory');
-
-         }
-         $ong[4]=__('Historical');
-
-      }
+      $this->addStandardTab('NetworkPort', $ong, $options);
+      $this->addStandardTab('PluginFusioninventoryUnknownDevice', $ong, $options);
+      $this->addStandardTab('Log', $ong, $options);
       return $ong;
    }
 
