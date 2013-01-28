@@ -193,14 +193,13 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    * Display form to add exception of modules activation for each agent
    *
    * @param interger $items_id ID of the agent
-   * @param array $options
    *
    * @return bool true if form is ok
    *
    **/
-   function showFormAgentException($items_id, $options=array()) {
+   function showFormAgentException($items_id) {
       global $CFG_GLPI;
-
+      
       $canedit = 1;
       echo "<br/>";
       if ($canedit) {
