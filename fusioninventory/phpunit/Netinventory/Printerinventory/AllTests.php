@@ -50,7 +50,7 @@ class Printerinventory extends PHPUnit_Framework_TestCase {
 
       $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
          SET `is_active`='1'
-         WHERE `modulename`='SNMPQUERY' ";
+         WHERE `modulename`='NETWORKINVENTORY' ";
       $DB->query($query);
       
       $printer = new Printer();
@@ -84,12 +84,12 @@ class Printerinventory extends PHPUnit_Framework_TestCase {
 
       $input = array();
       $input['entities_id'] = '0';
-      $input['name'] = 'snmpquery';
+      $input['name'] = 'networkinventory';
       $tasks_id = $pfTask->add($input);
 
       $input = array();
       $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
-      $input['method'] = 'snmpquery';
+      $input['method'] = 'networkinventory';
       $input['status'] = 1;
       $taskjobs_id = $pfTaskjob->add($input);
 

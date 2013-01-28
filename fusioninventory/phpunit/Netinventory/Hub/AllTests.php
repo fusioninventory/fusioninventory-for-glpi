@@ -100,7 +100,7 @@ class Hub extends PHPUnit_Framework_TestCase {
 
       $input = array();
       $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
-      $input['method'] = 'ntworkinventory';
+      $input['method'] = 'networkinventory';
       $input['status'] = 1;
       $taskjobs_id = $pfTaskjob->add($input);
 
