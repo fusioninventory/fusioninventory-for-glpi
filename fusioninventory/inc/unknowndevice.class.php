@@ -340,12 +340,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       echo "<td align='center'>".__('SNMP models', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      if (!empty($pfUnknownDevice->fields['item_type'])) {
+      if (!empty($this->fields['item_type'])) {
          Dropdown::show("PluginFusioninventorySnmpmodel",
                      array('name'=>"plugin_fusioninventory_snmpmodels_id",
                            'value'=>$this->fields['plugin_fusioninventory_snmpmodels_id'],
                            'comment'=>1,
-                           'condition'=>"`itemtype`='".$pfUnknownDevice->fields['item_type']."'"));
+                           'condition'=>"`itemtype`='".$this->fields['item_type']."'"));
       }
       echo "</td>";
       echo "</tr>";
@@ -966,11 +966,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $NetworkPort->update($data_Port);
             }
 
-            // Import SNMP if enable
-            if (PluginFusioninventoryModule::getModuleId("fusioninventory")) {
-               $pfUnknownDevice = new PluginFusinvsnmpUnknownDevice();
-               $pfUnknownDevice->import($items_id, $NetworkEquipment_id, 'NetworkEquipment');
-            }
             $pfNetworkEquipment = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
             $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusioninventory_networkequipments";
             $query = "SELECT *

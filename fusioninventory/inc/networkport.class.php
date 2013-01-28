@@ -671,7 +671,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       if ($PortID == "") {
          $NetworkPort = new NetworkPort();
          $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
-         $pluginFusinvsnmpUnknownDevice = new PluginFusinvsnmpUnknownDevice();
 
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_unknowndevices`
             WHERE `mac`='".$sysmac."'
@@ -706,21 +705,11 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             $input = array();
             $input['id'] = $data['id'];
             $input['ip'] = $sysmac;
-            $PluginFusioninventoryUnknownDevice->update($input);
             // Add SNMP informations of unknown device
             if (isset($params['sysdescr'])) {
-               $a_list = $pluginFusinvsnmpUnknownDevice->find("plugin_fusioninventory_unknowndevices_id='".$data['id']."'");
-               $input = array();
                $input['sysdescr'] = $params['sysdescr'];
-               if (count($a_list == '0')) {
-                  $input['plugin_fusioninventory_unknowndevices_id'] = $data['id'];
-                  $pluginFusinvsnmpUnknownDevice->add($input);
-               } else {
-                  $snmpunknow = current($a_list);
-                  $input['id'] = $snmpunknow['id'];
-                  $pluginFusinvsnmpUnknownDevice->update($input);
-               }
             }
+            $PluginFusioninventoryUnknownDevice->update($input);
             return $PortID;
          }
 
@@ -749,21 +738,10 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                if (isset($params['sysname'])) {
                   $input['name'] = $params['sysname'];
                }
-               $PluginFusioninventoryUnknownDevice->update($input);
-               // Add SNMP informations of unknown device
                if (isset($params['sysdescr'])) {
-                  $a_list = $pluginFusinvsnmpUnknownDevice->find("plugin_fusioninventory_unknowndevices_id='".$data['id']."'");
-                  $input = array();
                   $input['sysdescr'] = $params['sysdescr'];
-                  if (count($a_list == '0')) {
-                     $input['plugin_fusioninventory_unknowndevices_id'] = $data['id'];
-                     $pluginFusinvsnmpUnknownDevice->add($input);
-                  } else {
-                     $snmpunknow = current($a_list);
-                     $input['id'] = $snmpunknow['id'];
-                     $pluginFusinvsnmpUnknownDevice->update($input);
-                  }
                }
+               $PluginFusioninventoryUnknownDevice->update($input);
                return $PortID;
             }
          }
@@ -776,6 +754,9 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
             $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
          }
+         if (isset($params['sysdescr'])) {
+            $input['sysdescr'] = $params['sysdescr'];
+         }
          $unkonwn_id = $PluginFusioninventoryUnknownDevice->add($input);
          // Add port
          $input = array();
@@ -786,13 +767,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             $input['name'] = $params['ifdescr'];
          }
          $PortID = $NetworkPort->add($input);
-         // Add SNMP informations of unknown device
-         if (isset($params['sysdescr'])) {
-            $input = array();
-            $input['plugin_fusioninventory_unknowndevices_id'] = $unkonwn_id;
-            $input['sysdescr'] = $params['sysdescr'];
-            $pluginFusinvsnmpUnknownDevice->add($input);
-         }
          return($PortID);
       }
 
