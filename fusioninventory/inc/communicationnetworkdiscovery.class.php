@@ -600,7 +600,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
                PluginFusioninventoryUnknownDevice::writeXML($input['id'],
                                           $_SESSION['SOURCE_XMLDEVICE'],
-                                          "fusinvsnmp",
+                                          "fusioninventory",
                                           "NetworkEquipment");
             }
             $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
@@ -676,7 +676,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
                PluginFusioninventoryUnknownDevice::writeXML($item->getID(),
                                           $_SESSION['SOURCE_XMLDEVICE'],
-                                          "fusinvsnmp",
+                                          "fusioninventory",
                                           "Printer");
             }
             $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
