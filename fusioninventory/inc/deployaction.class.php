@@ -102,8 +102,10 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          if (isset($action_values['exec'])) {
             $params['value_1'] = addslashes($action_values['exec']);
          }
-         if (isset($action_values['list']))  
-            $params['value_1'] = array_values($action_values['list'])[0];
+         if (isset($action_values['list'])) {
+            $tmp = array_values($action_values['list']);
+            $params['value_1'] = $tmp[0];
+         }
          if (isset($action_values['to']))    $params['value_2'] = addslashes($action_values['to']);
          if (isset($action_values['retChecks']))  {
             $params['retChecks'] = json_encode($action_values['retChecks']);
