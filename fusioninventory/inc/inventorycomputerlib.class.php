@@ -1612,8 +1612,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $a_software['softwareversions_id'] = $softwareversions_id;
       $a_software['_no_history'] = $no_history;
 
-      $id = $this->computer_SoftwareVersion->add($a_software, $options, false);
-      $this->addPrepareLog($id, 'Computer_SoftwareVersion');
+      $id = $this->computer_SoftwareVersion->add($a_software, $options);
    }
    
    
