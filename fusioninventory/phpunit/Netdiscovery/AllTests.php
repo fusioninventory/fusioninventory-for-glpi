@@ -70,7 +70,7 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
 
       $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
          SET `is_active` = '1'
-         WHERE `modulename`='NETDISCOVERY'";
+         WHERE `modulename`='NETWORKDISCOVERY'";
       $DB->query($query);
 
 
@@ -81,7 +81,7 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
       $ipranges_id = $pfIPRange->add($input);
 
       $input = array();
-      $input['name'] = 'NETDISCOVERY';
+      $input['name'] = 'NETWORKDISCOVERY';
       $input['is_active'] = 1;
       $input['communication'] = 'pull';
       $input['date_scheduled'] = date('Y-m-d')." 00:00:00";
@@ -90,7 +90,7 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
       $input = array();
       $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
       $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusioninventory");
-      $input['method'] = 'netdiscovery';
+      $input['method'] = 'networkdiscovery';
       $input['definition'] = '[{"PluginFusioninventoryIPRange":"'.$ipranges_id.'"}]';
       $input['action'] = '[{"PluginFusioninventoryAgent":"'.$agents_id.'"}]';
       $pfTaskjob->add($input);
