@@ -637,9 +637,6 @@ class Rules extends PHPUnit_Framework_TestCase {
       $plugin->getFromDBbyDir("fusioninventory");
       $plugin->activate($plugin->fields['id']);
       Plugin::load("fusioninventory");
-      $plugin->getFromDBbyDir("fusinvinventory");
-      $plugin->activate($plugin->fields['id']);
-      Plugin::load("fusinvinventory");
 
       $CFG_GLPI['root_doc'] = "http://127.0.0.1/fusion0.84/";
       Session::loadLanguage("en_GB");
@@ -655,7 +652,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $fields = current($data);
       $plugins_id = $fields['id'];
       $pfConfig = new PluginFusioninventoryConfig();
-      $pfConfig->updateValue($plugins_id, "extradebug", "1");
+      $pfConfig->updateValue("extradebug", "1");
 
       // Activate all modules for all agents
        $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`
@@ -720,7 +717,6 @@ class Rules extends PHPUnit_Framework_TestCase {
 //         $networkEquipment->delete(array('id'=>1), 1);
 
        // ** [TODO] Import printer
-
 
 
       // ** Unknowndevice_Computer => Computer must be created in Computer type
