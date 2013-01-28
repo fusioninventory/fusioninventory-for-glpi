@@ -1074,7 +1074,7 @@ Toolbox::logInFile("K", 'crit'.print_r($input, true));
             $errors .= $this->rulepassed(0, $input['itemtype']);
          } else if (isset($input['itemtype'])
               AND !isset($data['action'])) {
-            $id_xml = $a_inventory['id'];
+            $id_xml = $a_inventory[$a_inventory['itemtype']]['id'];
             $classname = $input['itemtype'];
             $class = new $classname;
             if ($class->getFromDB($id_xml)) {
