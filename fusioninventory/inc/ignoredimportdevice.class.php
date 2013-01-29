@@ -48,7 +48,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
 
    static function getTypeName($nb=0) {
-
+      echo __('Equipment ignored on import', 'fusioninventory');
    }
 
    static function canCreate() {

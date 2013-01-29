@@ -234,61 +234,83 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['reports']['fusioninventory'] = $report_list;
          
 
-         // Tabs for each type
+         // * Tabs for each type
          $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
          $PLUGIN_HOOKS['headings_action']['fusioninventory'] = 'plugin_headings_actions_fusioninventory';
 
-         // Icons add, search...
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['tasks'] = 'front/task.form.php?add=1';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['tasks'] = 'front/task.php';
+         // * Icons add, search...
+         $hook_add = array();
+         $hook_search = array();
+         
+         $hook_add['tasks'] = 'front/task.form.php?add=1';
+         $hook_search['tasks'] = 'front/task.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['unknown'] = 'front/unknowndevice.form.php?add=1';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['unknown'] = 'front/unknowndevice.php';
+         $hook_add['unknown'] = 'front/unknowndevice.form.php?add=1';
+         $hook_search['unknown'] = 'front/unknowndevice.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['inventoryruleimport']
-            = 'front/inventoryruleimport.form.php';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['inventoryruleimport']
-            = 'front/inventoryruleimport.php';
+         $hook_add['inventoryruleimport'] = 'front/inventoryruleimport.form.php';
+         $hook_search['inventoryruleimport'] = 'front/inventoryruleimport.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
+         $hook_search['agents'] = 'front/agent.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-ruleentity']
+         $hook_add['fusinvinventory-ruleentity'] 
                         = '../fusioninventory/front/inventoryruleentity.form.php';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-ruleentity']
+         $hook_search['fusinvinventory-ruleentity']
                         = '../fusioninventory/front/inventoryruleentity.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['fusinvinventory-blacklist']
+         $hook_add['fusinvinventory-blacklist']
                         = '../fusioninventory/front/inventorycomputerblacklist.form.php';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['fusinvinventory-blacklist']
+         $hook_search['fusinvinventory-blacklist']
                         = '../fusioninventory/front/inventorycomputerblacklist.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['models'] = '../fusioninventory/front/snmpmodel.form.php?add=1';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['models'] = '../fusioninventory/front/snmpmodel.php';
+         $hook_add['models'] = '../fusioninventory/front/snmpmodel.form.php?add=1';
+         $hook_search['models'] = '../fusioninventory/front/snmpmodel.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['configsecurity'] = '../fusioninventory/front/configsecurity.form.php?add=1';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['configsecurity'] = '../fusioninventory/front/configsecurity.php';
+         $hook_add['configsecurity'] = '../fusioninventory/front/configsecurity.form.php?add=1';
+         $hook_search['configsecurity'] = '../fusioninventory/front/configsecurity.php';
 
+
+         if (PluginFusioninventoryProfile::haveRight("iprange", "w")) {
+            $hook_add['iprange'] = '../fusioninventory/front/iprange.form.php?add=1';
+            $hook_search['iprange'] = '../fusioninventory/front/iprange.php';
+         }
+
+         if (PluginFusioninventoryCredential::hasAlLeastOneType()) {
+            if (PluginFusioninventoryProfile::haveRight("credential", "w")) {
+               $hook_add['PluginFusioninventoryCredential'] = 
+                  '../fusioninventory/front/credential.form.php?add=1';
+               $hook_search['PluginFusioninventoryCredential'] =
+                  '../fusioninventory/front/credential.php';
+
+            }
+
+            if (PluginFusioninventoryProfile::haveRight("credential", "w")) {
+               $hook_add['PluginFusioninventoryCredentialIp'] =
+                  '../fusioninventory/front/credentialip.form.php?add=1';
+               $hook_search['PluginFusioninventoryCredentialIp'] =
+                  '../fusioninventory/front/credentialip.php';
+
+            }
+         }
+         
          /*
           * Deploy submenu entries
           */
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['packages'] =
-            '../fusioninventory/front/deploypackage.form.php?add=1';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['packages'] =
-            '../fusioninventory/front/deploypackage.php';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['mirror'] =
-            '../fusioninventory/front/deploymirror.form.php?add=1';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['mirror'] =
-            '../fusioninventory/front/deploymirror.php';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['task'] =
-            '../fusioninventory/front/deploytask.form.php?add=1';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['task'] =
-            '../fusioninventory/front/deploytask.php';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['group'] =
-            '../fusioninventory/front/deploygroup.form.php?add=1';
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['group'] =
-            '../fusioninventory/front/deploygroup.php';
+         $hook_add['packages'] = '../fusioninventory/front/deploypackage.form.php?add=1';
+         $hook_search['packages'] = '../fusioninventory/front/deploypackage.php';
+         
+         $hook_add['mirror'] = '../fusioninventory/front/deploymirror.form.php?add=1';
+         $hook_search['mirror'] = '../fusioninventory/front/deploymirror.php';
+         
+         $hook_add['task'] = '../fusioninventory/front/deploytask.form.php?add=1';
+         $hook_search['task'] = '../fusioninventory/front/deploytask.php';
+         
+         $hook_add['group'] = '../fusioninventory/front/deploygroup.form.php?add=1';
+         $hook_search['group'] = '../fusioninventory/front/deploygroup.php';
 
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']    = $hook_add;
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search'] = $hook_search;
 
 
          if (PluginFusioninventoryProfile::haveRight("agent", "r")) {
@@ -308,96 +330,73 @@ function plugin_init_fusioninventory() {
 
          $PLUGIN_HOOKS['webservices']['fusioninventory'] = 'plugin_fusioninventory_registerMethods';
 
-         // Fil ariane
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['title'] = __('Menu', 'fusioninventory');
+         // * Fil ariane
+         $filariane= array();
+         $filariane['menu']['title'] = __('Menu', 'fusioninventory');
+         $filariane['menu']['page']  = '/plugins/fusioninventory/front/wizard.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['menu']['page']  = '/plugins/fusioninventory/front/wizard.php';
+         $filariane['tasks']['title'] = __('Task management', 'fusioninventory');
+         $filariane['tasks']['page']  = '/plugins/fusioninventory/front/task.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['title'] = __('Task management', 'fusioninventory');
+         $filariane['taskjob']['title'] = __('Running jobs', 'fusioninventory');
+         $filariane['taskjob']['page']  = '/plugins/fusioninventory/front/taskjob.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['tasks']['page']  = '/plugins/fusioninventory/front/task.php';
+         $filariane['agents']['title'] = __('Agents management', 'fusioninventory');
+         $filariane['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['taskjob']['title'] = __('Running jobs', 'fusioninventory');
+         $filariane['configuration']['title'] = __('General setup');
+         $filariane['configuration']['page']  = '/plugins/fusioninventory/front/config.form.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['taskjob']['page']  = '/plugins/fusioninventory/front/taskjob.php';
+         $filariane['unknown']['title'] = __('Unknown device', 'fusioninventory');
+         $filariane['unknown']['page']  = '/plugins/fusioninventory/front/unknowndevice.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['title'] = __('Agents management', 'fusioninventory');
+         $filariane['inventoryruleimport']['title'] = __('Equipment import and link rules', 'fusioninventory');
+         $filariane['inventoryruleimport']['page']  = '/plugins/fusioninventory/front/inventoryruleimport.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
+         $filariane['wizard-start']['title'] = __('Wizard', 'fusioninventory');
+         $filariane['wizard-start']['page']  = '/plugins/fusioninventory/front/wizard.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['title'] = __('General setup');
+         $filariane['iprange']['title'] = __('IP range configuration', 'fusioninventory');
+         $filariane['iprange']['page']  = '/plugins/fusioninventory/front/iprange.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configuration']['page']  = '/plugins/fusioninventory/front/config.form.php';
+         $filariane['packages']['title'] = __('Packages', 'fusioninventory');
+         $filariane['packages']['page']  = '/plugins/fusioninventory/front/deploypackage.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['title'] = __('Unknown device', 'fusioninventory');
+         $filariane['group']['title'] = __('Groups of computers', 'fusioninventory');
+         $filariane['group']['page']  = '/plugins/fusioninventory/front/deploygroup.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['unknown']['page']  = '/plugins/fusioninventory/front/unknowndevice.php';
+         $filariane['ignoredimportrules']['title'] = __('Equipment ignored on import', 'fusioninventory');
+         $filariane['ignoredimportrules']['page']  = '/plugins/fusioninventory/front/ignoredimportdevice.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['inventoryruleimport']['title'] = __('Equipment import and link rules', 'fusioninventory');
+         $filariane['fusinvinventory-blacklist']['title'] = __('BlackList');
+         $filariane['fusinvinventory-blacklist']['page']  = '/plugins/fusioninventory/front/inventorycomputerblacklist.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['inventoryruleimport']['page']  = '/plugins/fusioninventory/front/inventoryruleimport.php';
+         $filariane['fusinvinventory-ruleinventory']['title'] = __('Criteria rules', 'fusioninventory');
+         $filariane['fusinvinventory-ruleinventory']['page']  = '/plugins/fusinvinventory/front/ruleinventory.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['wizard-start']['title'] = __('Wizard', 'fusioninventory');
+         $filariane['fusinvinventory-ruleentity']['title'] = __('Entity rules', 'fusioninventory');
+         $filariane['fusinvinventory-ruleentity']['page']  = '/plugins/fusioninventory/front/inventoryruleentity.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['wizard-start']['page']  = '/plugins/fusioninventory/front/wizard.php';
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['title'] =
-            __('IP range configuration', 'fusioninventory');
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['iprange']['page']  =
-            '/plugins/fusioninventory/front/iprange.php';
-
-         if (PluginFusioninventoryProfile::haveRight("iprange", "w")) {
-            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['iprange'] =
-               '../fusioninventory/front/iprange.form.php?add=1';
-            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['iprange'] =
-               '../fusioninventory/front/iprange.php';
-         }
-
-         if (PluginFusioninventoryCredential::hasAlLeastOneType()) {
-            if (PluginFusioninventoryProfile::haveRight("credential", "w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredential'] =
-                  '../fusioninventory/front/credential.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['PluginFusioninventoryCredential'] =
-                  '../fusioninventory/front/credential.php';
-
-            }
-
-            if (PluginFusioninventoryProfile::haveRight("credential", "w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']['PluginFusioninventoryCredentialIp'] =
-                  '../fusioninventory/front/credentialip.form.php?add=1';
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['PluginFusioninventoryCredentialIp'] =
-                  '../fusioninventory/front/credentialip.php';
-
-            }
-         }
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['title'] = __('BlackList');
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-blacklist']['page']  = '/plugins/fusioninventory/front/inventorycomputerblacklist.php';
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['title'] = __('Criteria rules', 'fusioninventory');
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleinventory']['page']  = '/plugins/fusinvinventory/front/ruleinventory.php';
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['title'] = __('Entity rules', 'fusioninventory');
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-ruleentity']['page']  = '/plugins/fusioninventory/front/inventoryruleentity.php';
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['title'] = __('Import agent XML file', 'fusioninventory');
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['fusinvinventory-importxmlfile']['page']  = '/plugins/fusinvinventory/front/inventorycomputerimportxml.php';
+         $filariane['fusinvinventory-importxmlfile']['title'] = __('Import agent XML file', 'fusioninventory');
+         $filariane['fusinvinventory-importxmlfile']['page']  = '/plugins/fusinvinventory/front/inventorycomputerimportxml.php';
          
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['models']['title'] = __('SNMP models');
+         $filariane['models']['title'] = __('SNMP models');
+         $filariane['models']['page']  = '/plugins/fusioninventory/front/snmpmodel.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['models']['page']  = '/plugins/fusioninventory/front/snmpmodel.php';
+         $filariane['configsecurity']['title'] = __('SNMP authentication');
+         $filariane['configsecurity']['page']  = '/plugins/fusioninventory/front/configsecurity.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['title'] = __('SNMP authentication');
+         $filariane['statediscovery']['title'] = __('Discovery status', 'fusioninventory');
+         $filariane['statediscovery']['page']  = '/plugins/fusioninventory/front/statediscovery.php';
+         
+         $filariane['stateinventory']['title'] = __('Inventory status', 'fusioninventory');
+         $filariane['stateinventory']['page']  = '/plugins/fusioninventory/front/stateinventory.php';
+         
+         $filariane['mirror']['title'] = __('Mirror servers', 'fusioninventory');
+         $filariane['mirror']['page']  = '/plugins/fusioninventory/front/deploymirror.php';
+         
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options'] = $filariane;
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['configsecurity']['page']  = '/plugins/fusioninventory/front/configsecurity.php';
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['title'] = __('Discovery status', 'fusioninventory');
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['statediscovery']['page']  = '/plugins/fusioninventory/front/statediscovery.php';
          
          
          // Hack for NetworkEquipment display ports
