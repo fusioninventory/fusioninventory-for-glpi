@@ -45,8 +45,8 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryInventoryComputerInventory {
-   private $p_xml;
    private $arrayinventory = array();
+   private $device_id = '';
 
    /**
    * Import data
@@ -80,7 +80,8 @@ class PluginFusioninventoryInventoryComputerInventory {
    *
    **/
    function sendCriteria($p_DEVICEID, $a_CONTENT, $arrayinventory) {
-
+      
+      $this->device_id = $p_DEVICEID;
       // * Hacks
 
          // Hack to put OS in software
@@ -314,7 +315,8 @@ class PluginFusioninventoryInventoryComputerInventory {
       $a_computerinventory = $pfFormatconvert->replaceids($a_computerinventory);
          
       if ($itemtype == 'Computer') {
-         $pfInventoryComputerLib      = new PluginFusioninventoryInventoryComputerLib();
+         $pfInventoryComputerLib = new PluginFusioninventoryInventoryComputerLib();
+         $pfAgent                = new PluginFusioninventoryAgent();
          
          $computer   = new Computer();
          if ($items_id == '0') {
@@ -348,6 +350,8 @@ class PluginFusioninventoryInventoryComputerInventory {
             $items_id = $computer->add($input);
             $no_history = true;
          }
+         
+         $pfAgent->setAgentWithComputerid($items_id, $this->device_id);
 
          $ret = $DB->query("SELECT IS_USED_LOCK('inventory".$items_id."')");
          if (!is_null($DB->result($ret, 0, 0))) {

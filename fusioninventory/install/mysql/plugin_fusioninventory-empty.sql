@@ -34,8 +34,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
    `version` varchar(255) DEFAULT NULL,
    `lock` tinyint(1) NOT NULL DEFAULT '0',
    `device_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'XML <DEVICE_ID> TAG VALUE',
-   `items_id` int(11) NOT NULL DEFAULT '0',
-   `itemtype` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `computers_id` int(11) NOT NULL DEFAULT '0',
    `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `useragent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `tag` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -45,8 +44,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_agents` (
    PRIMARY KEY (`id`),
    KEY `name` (`name`),
    KEY `device_id` (`device_id`),
-   KEY `item` (`itemtype`,`items_id`),
-   KEY `items_id` (`items_id`)
+   KEY `computers_id` (`computers_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 

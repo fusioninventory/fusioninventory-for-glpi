@@ -340,9 +340,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                   'value'   => NULL);
       $a_table['fields']['device_id']     = array('type'    => 'string',
                                                   'value'   => NULL);
-      $a_table['fields']['items_id']      = array('type'    => 'integer',
-                                                  'value'   => NULL);
-      $a_table['fields']['itemtype']      = array('type'    => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
+      $a_table['fields']['computers_id']  = array('type'    => 'integer',
                                                   'value'   => NULL);
       $a_table['fields']['token']         = array('type'    => 'string',
                                                   'value'   => NULL);
@@ -357,20 +355,21 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['fields']['senddico']      = array('type'    => 'bool',
                                                   'value'   => NULL);
 
-      $a_table['oldfields']  = array();
-      $a_table['oldfields'][] = 'module_snmpquery';
-      $a_table['oldfields'][] = 'module_netdiscovery';
-      $a_table['oldfields'][] = 'module_inventory';
-      $a_table['oldfields'][] = 'module_wakeonlan';
-      $a_table['oldfields'][] = 'core_discovery';
-      $a_table['oldfields'][] = 'threads_discovery';
-      $a_table['oldfields'][] = 'core_query';
-      $a_table['oldfields'][] = 'threads_query';
-      $a_table['oldfields'][] = 'tracker_agent_version';
-      $a_table['oldfields'][] = 'logs';
-      $a_table['oldfields'][] = 'fragment';
-      $a_table['oldfields'][] = 'itemtype';
-      $a_table['oldfields'][] = 'device_type';
+      $a_table['oldfields']  = array(
+         'module_snmpquery',
+         'module_netdiscovery',
+         'module_inventory',
+         'module_wakeonlan',
+         'core_discovery',
+         'threads_discovery',
+         'core_query',
+         'threads_query',
+         'tracker_agent_version',
+         'logs',
+         'fragment',
+         'itemtype',
+         'device_type');
+
 
       $a_table['renamefields'] = array();
       $a_table['renamefields']['ID'] = 'id';
@@ -378,11 +377,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['renamefields']['fusioninventory_agent_version'] = 'version';
       $a_table['renamefields']['key'] = 'device_id';
       $a_table['renamefields']['on_device'] = 'items_id';
+      $a_table['renamefields']['items_id'] = 'computers_id';
 
       $a_table['keys']   = array();
       $a_table['keys'][] = array('field' => 'name', 'name' => '', 'type' => 'INDEX');
       $a_table['keys'][] = array('field' => 'device_id', 'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'items_id', 'name' => '', 'type' => 'INDEX');
+      $a_table['keys'][] = array('field' => 'computers_id', 'name' => '', 'type' => 'INDEX');
 
       $a_table['oldkeys'] = array('key');
 

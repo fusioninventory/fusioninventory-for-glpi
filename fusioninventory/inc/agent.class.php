@@ -115,7 +115,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $tab[7]['table']         = 'glpi_computers';
       $tab[7]['field']         = 'name';
-      $tab[7]['linkfield']     = 'items_id';
+      $tab[7]['linkfield']     = 'computers_id';
       $tab[7]['name']          = __('Computer link', 'fusioninventory');
       $tab[7]['datatype']      = 'itemlink';
       $tab[7]['itemlink_type'] = 'Computer';
@@ -197,16 +197,16 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    /**
    * Display form for agent configuration
    *
-   * @param $items_id integer ID of the agent
+   * @param $computers_id integer ID of the agent
    * @param $options array
    *
    * @return bool true if form is ok
    *
    **/
-   function showForm($items_id, $options=array()) {
+   function showForm($computers_id, $options=array()) {
 
-      if ($items_id!='') {
-         $this->getFromDB($items_id);
+      if ($computers_id!='') {
+         $this->getFromDB($computers_id);
       } else {
          $this->getEmpty();
          $pfConfig = new PluginFusioninventoryConfig();
@@ -235,13 +235,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Computer link', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
-      if (($this->fields["items_id"] != "0") AND ($this->fields["items_id"] != "")) {
+      if (!empty($this->fields["computers_id"])) {
          $oComputer = new Computer();
-         $oComputer->getFromDB($this->fields["items_id"]);
+         $oComputer->getFromDB($this->fields["computers_id"]);
          echo $oComputer->getLink(1);
-         echo "<input type='hidden' name='items_id' value='".$this->fields["items_id"]."'/>";
+         echo "<input type='hidden' name='computers_id' value='".$this->fields["computers_id"]."'/>";
       } else {
-         Computer_Item::dropdownConnect(COMPUTER_TYPE, COMPUTER_TYPE, 'items_id',
+         Computer_Item::dropdownConnect("Computer", "Computer", 'computers_id',
                                         $_SESSION['glpiactive_entity']);
       }
       echo "</td>";
@@ -377,23 +377,23 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    /**
    * Get all IP of an agent or a computer
    *
-   * @param $items_id integer ID of the agent
+   * @param $computers_id integer ID of the agent
    * @param $type 'Agent' by default to get IP of agent or of a computer if set other text
    *
    * @return Array with all IP of this agent or computer
    *
    **/
-   function getIPs($items_id, $type = 'Agent') {
+   function getIPs($computers_id, $type = 'Agent') {
       $ip = array();
       $Computers_id = 0;
       if ($type == 'Agent') {
-         if ($this->getFromDB($items_id)) {
-            $Computers_id = $this->fields['items_id'];
+         if ($this->getFromDB($computers_id)) {
+            $Computers_id = $this->fields['computers_id'];
          } else {
             return array();
          }
       } else {
-         $Computers_id = $items_id;
+         $Computers_id = $computers_id;
       }
       if ($Computers_id != "0") {
          $NetworkPort = new NetworkPort();
@@ -425,14 +425,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    /**
    * Get agent id of a computer
    *
-   * @param $items_id integer ID of the computer
+   * @param $computers_id integer ID of the computer
    *
    * @return agent id or False
    *
    **/
-   function getAgentWithComputerid($items_id) {
+   function getAgentWithComputerid($computers_id) {
 
-      $agent = $this->find("`items_id`='".$items_id."'", "", 1);
+      $agent = $this->find("`computers_id`='".$computers_id."'", "", 1);
 
       if (count($agent) == '1') {
          $data = current($agent);
@@ -447,15 +447,15 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    /**
    * Create links between agent and computer.
    *
-   * @param $items_id integer ID of the computer
+   * @param $computers_id integer ID of the computer
    * @param $device_id value of device_id from XML to identify agent
    *
    * @return Nothing
    *
    **/
-   function setAgentWithComputerid($items_id, $device_id) {
+   function setAgentWithComputerid($computers_id, $device_id) {
 
-      $a_agent = $this->find("`items_id`='".$items_id."'", "", 1);
+      $a_agent = $this->find("`computers_id`='".$computers_id."'", "", 1);
       // Is this computer already linked to an agent?
       if ($agent = array_shift($a_agent)) {
 
@@ -470,13 +470,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          // Clean up the agent list
          $oldAgents = $this->find(
             // computer linked to the wrong agent
-            "(`items_id`='".$items_id."' AND `device_id` <> '".$device_id."')");
+            "(`computers_id`='".$computers_id."' AND `device_id` <> '".$device_id."')");
          foreach ($oldAgents as $oldAgent) {
             $this->delete($oldAgent);
          }
          $oldAgents = $this->find(
             // the same device_id but linked on the wrong computer
-            "(`device_id`='".$device_id."' AND `items_id`<>'".$items_id."')");
+            "(`device_id`='".$device_id."' AND `computers_id`<>'".$computers_id."')");
          foreach ($oldAgents as $oldAgent) {
             $input = array();
             $input['id'] = $agent['id'];
@@ -492,7 +492,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          // Link agent with computer
          $agent = $this->InfosByKey($device_id);
          if (isset($agent['id'])) {
-             $agent['items_id'] = $items_id;
+             $agent['computers_id'] = $computers_id;
              $this->update($agent);
          }
       }
@@ -662,7 +662,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       if ($pfAgent->getFromDB($agent_id)) {
          $computer = new Computer();
-         $computer->getFromDB($pfAgent->fields['items_id']);
+         $computer->getFromDB($pfAgent->fields['computers_id']);
          if ($computer->fields["name"] && $computer->fields["name"] != "localhost") {
             array_push($ret, "http://".$computer->fields["name"].
                ":".$config->getValue('agent_port'));
