@@ -172,13 +172,13 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
          foreach ($a_taskjobstates as $datastate) {
             $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastate['id']."'");
             foreach($a_taskjoblog as $taskjoblog) {
-               if (strstr($taskjoblog['comment'], " ==fusinvsnmp::2==")) {
-                  $nb_found += str_replace(" ==fusinvsnmp::2==", "", $taskjoblog['comment']);
-               } else if (strstr($taskjoblog['comment'], "==fusioninventory::3==")) {
+               if (strstr($taskjoblog['comment'], " ==devicesfound==")) {
+                  $nb_found += str_replace(" ==devicesfound==", "", $taskjoblog['comment']);
+               } else if (strstr($taskjoblog['comment'], "==importdenied==")) {
                   $notimporteddevices++;
-               } else if (strstr($taskjoblog['comment'], "==fusinvsnmp::5==")) {
+               } else if (strstr($taskjoblog['comment'], "==updatetheitem==")) {
                   $updateddevices++;
-               } else if (strstr($taskjoblog['comment'], "==fusinvsnmp::4==")) {
+               } else if (strstr($taskjoblog['comment'], "==addtheitem==")) {
                   $createddevices++;
                } else if ($taskjoblog['state'] == "1") {
                   $nb_threads = str_replace(" threads", "", $taskjoblog['comment']);

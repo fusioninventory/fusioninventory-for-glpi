@@ -113,7 +113,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.' ==fusinvsnmp::1==';
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.' ==devicesqueried==';
                $this->addtaskjoblog();
 
             }
@@ -129,7 +129,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusinvsnmp::6==';
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==inventorystarted==';
                $this->addtaskjoblog();
             }
 //         }
@@ -182,13 +182,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                      } else if ($dchild['ERROR']['TYPE'] == "PRINTER") {
                         $itemtype = "Printer";
                      }
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.$dchild['ERROR']['MESSAGE'].' [['.$itemtype.'::'.$dchild['ERROR']['ID'].']]';
+                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.$dchild['ERROR']['MESSAGE'].' [['.$itemtype.'::'.$dchild['ERROR']['ID'].']]';
                      $this->addtaskjoblog();
                   } else if ($a_inventory['PluginFusioninventory'.$a_inventory['itemtype']]['sysdescr'] == ''
                               && $a_inventory[$a_inventory['itemtype']]['name'] == ''
                               && $a_inventory[$a_inventory['itemtype']]['serial'] == '') {
                          
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] No informations [['.$itemtype.'::'.$dchild['ID'].']]';
+                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] No informations [['.$itemtype.'::'.$dchild['ID'].']]';
                      $this->addtaskjoblog();
                   } else {
                      if (count($a_inventory) > 0) {
@@ -215,7 +215,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                break;
 
             default :
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.__('Unattended element in', 'fusioninventory').' CONTENT : '.$childname;
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.__('Unattended element in', 'fusioninventory').' CONTENT : '.$childname;
                $this->addtaskjoblog();
          }
       }
@@ -317,7 +317,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          }
 //      }
       if (!empty($errors)) {
-         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.$errors.' [['.$itemtype.'::'.$items_id.']]';
+         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.$errors.' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
       }
       return $errors;
@@ -620,7 +620,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                $pfPrinterCartridge->add($input);
             }
          } else {
-            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==fusinvsnmp::7==] '.__('Unattended element in', 'fusioninventory').' CARTRIDGES : '.$name;
+            $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.__('Unattended element in', 'fusioninventory').' CARTRIDGES : '.$name;
             $this->addtaskjoblog();
          }
       }
@@ -1044,7 +1044,7 @@ Toolbox::logInFile("K", 'crit'.print_r($input, true));
                $a_text[] = "[".$key."]:".$data;
             }
          }
-         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(", ", $a_text);
+         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==importdenied== '.implode(", ", $a_text);
          $this->addtaskjoblog();
 
          $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
@@ -1168,11 +1168,11 @@ Toolbox::logInFile("K", 'crit'.print_r($input, true));
          PluginFusioninventoryUnknownDevice::writeXML($items_id, serialize($_SESSION['SOURCE_XMLDEVICE']));
          $class->update($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-            '[==fusinvsnmp::7==] ==fusinvsnmp::5== Update '.PluginFusioninventoryUnknownDevice::getTypeName().' [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
+            '[==detail==] ==updatetheitem== Update '.PluginFusioninventoryUnknownDevice::getTypeName().' [[PluginFusioninventoryUnknownDevice::'.$items_id.']]';
          $this->addtaskjoblog();
       } else {
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-               '[==fusinvsnmp::7==] Update '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
+               '[==detail==] Update '.$class->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
          $errors .= $this->importDevice($itemtype, $items_id, $a_inventory);
       }

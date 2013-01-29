@@ -1096,7 +1096,31 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->migrationOneTable($newTable);
       $DB->list_fields($newTable, false);
 
-
+      // rename comments for new lang system (gettext in 0.84)
+         $a_text = array(
+               'fusinvsnmp::1' => 'devicesqueried',
+               'fusinvsnmp::2' => 'devicesfound',
+               'fusinvsnmp::3' => 'diconotuptodate',
+               'fusinvsnmp::4' => 'addtheitem',
+               'fusinvsnmp::5' => 'updatetheitem',
+               'fusinvsnmp::6' => 'inventorystarted',
+               'fusinvsnmp::7' => 'detail',
+               'fusioninventory::1' => 'badtoken',
+               'fusioninventory::2' => 'agentcrashed',
+               'fusioninventory::3' => 'importdenied'
+            );
+         $query = "SELECT * FROM `".$newTable."`
+            WHERE `comment` LIKE '%==%'";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $comment = $data['comment'];
+            foreach ($a_text as $key=>$value) {
+               $comment = str_replace("==".$key."==", "==".$value."==", $comment);
+            }
+            $DB->query("UPDATE `".$newTable."`
+               SET `comment`='".$comment."'
+               WHERE `id`='".$data['id']."'");
+         }
 
    /*
     * Table glpi_plugin_fusioninventory_taskjobstates

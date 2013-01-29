@@ -158,7 +158,7 @@ class PluginFusioninventoryDeployReport extends CommonDBTM {
                $message = '';
                $date = '';
                $a_failed = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
-                  AND (`comment` LIKE '%failed%' OR `comment` LIKE '%failure%' OR `comment`='==fusioninventory::2==')");
+                  AND (`comment` LIKE '%failed%' OR `comment` LIKE '%failure%' OR `comment`='==agentcrashed==')");
                if (count($a_failed) > 0) {
                   $state = 'failed';
                   $a_message = array();

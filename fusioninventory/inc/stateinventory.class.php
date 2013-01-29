@@ -120,8 +120,8 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
          foreach ($a_taskjobstates as $datastate) {
             $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastate['id']."'");
             foreach($a_taskjoblog as $taskjoblog) {
-               if (strstr($taskjoblog['comment'], " ==fusinvsnmp::1==")) {
-                  $nb_query += str_replace(" ==fusinvsnmp::1==", "", $taskjoblog['comment']);
+               if (strstr($taskjoblog['comment'], " ==devicesqueried==")) {
+                  $nb_query += str_replace(" ==devicesqueried==", "", $taskjoblog['comment']);
                } else if (strstr($taskjoblog['comment'], " No response from remote host")) {
                   $nb_errors++;
                } else if ($taskjoblog['state'] == "1") {

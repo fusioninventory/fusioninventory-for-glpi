@@ -86,7 +86,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.' ==fusinvsnmp::2==';
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.' ==devicesfound==';
                   $this->addtaskjoblog();
                }
             }
@@ -109,7 +109,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                                                       $a_agent['id'],
                                                       'PluginFusioninventoryAgent',
                                                       '1',
-                                                      '==fusinvsnmp::3==');
+                                                      '==diconotuptodate==');
                } else {
 
                   $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
@@ -205,7 +205,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $a_text[] = "[".$key."]:".$data;
             }
          }
-         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==fusioninventory::3== '.implode(", ", $a_text);
+         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==importdenied== '.implode(", ", $a_text);
          $this->addtaskjoblog();
 
          $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
@@ -296,12 +296,12 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $_SESSION['glpiactiveentities_string'] = "'".$entities_id."'";
          }
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-               '[==fusinvsnmp::7==] ==fusinvsnmp::4== '.$item->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
+               '[==detail==] ==addtheitem== '.$item->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
       } else {
 
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-               '[==fusinvsnmp::7==] ==fusinvsnmp::5== '.$item->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
+               '[==detail==] ==updatetheitem== '.$item->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
       }
       $item->getFromDB($items_id);

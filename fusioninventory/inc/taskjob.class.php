@@ -1574,7 +1574,7 @@ return namelist;
                                                             0,
                                                             '',
                                                             1,
-                                                            "==fusioninventory::2==");
+                                                            "==agentcrashed==");
                      }
                }
             } else if ($task['communication'] == 'push') {
@@ -1601,7 +1601,7 @@ return namelist;
                                                                  0,
                                                                  '',
                                                                  1,
-                                                                 "==fusioninventory::1==");
+                                                                 "==badtoken==");
                         }
                         break;
 
@@ -1620,7 +1620,7 @@ return namelist;
                                                                0,
                                                                '',
                                                                1,
-                                                               "==fusioninventory::2==");
+                                                               "==agentcrashed==");
                         }
                         if (count($a_valid4h) == 1) {
                            $a_statetmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
@@ -1631,7 +1631,7 @@ return namelist;
                                                                   0,
                                                                   '',
                                                                   1,
-                                                                  "==fusioninventory::2==");
+                                                                  "==agentcrashed==");
                            }
                            
                            
