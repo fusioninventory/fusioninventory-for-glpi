@@ -376,7 +376,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['renamefields']['last_agent_update'] = 'last_contact';
       $a_table['renamefields']['fusioninventory_agent_version'] = 'version';
       $a_table['renamefields']['key'] = 'device_id';
-      $a_table['renamefields']['on_device'] = 'items_id';
+      $a_table['renamefields']['on_device'] = 'computers_id';
       $a_table['renamefields']['items_id'] = 'computers_id';
 
       $a_table['keys']   = array();
@@ -5303,7 +5303,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $result=$DB->query($query);
       if ($DB->numrows($result) == 0) {
          $DB->query("INSERT INTO `glpi_displaypreferences` 
-            (`id`, `itemtype`, `num`, `rank`, `users_id`) )
+            (`id`, `itemtype`, `num`, `rank`, `users_id`)
          VALUES (NULL,'PluginFusioninventoryTaskjoblog', '2', '1', '0'),
                 (NULL,'PluginFusioninventoryTaskjoblog', '3', '2', '0'),
                 (NULL,'PluginFusioninventoryTaskjoblog', '4', '3', '0'),
