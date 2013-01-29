@@ -299,6 +299,24 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                $comment = str_replace($commentvalue, $Class->getLink(), $comment);
             }
          }
+         // Search for code to display lang traduction ==pluginname::9876==
+         preg_match_all("/==(\w*)\:\:([0-9]*)==/", $comment, $matches);
+         $a_text = array(
+               'fusinvsnmp1' => __('devices queried', 'fusioninventory'),
+               'fusinvsnmp2' => __('devices found', 'fusioninventory'),
+               'fusinvsnmp3' => __("SNMP equipment definition isn't up to date on agent. For the next run, it will get new version from server.", 'fusioninventory'),
+               'fusinvsnmp4' => __('Add the item', 'fusioninventory'),
+               'fusinvsnmp5' => __('Update the item', 'fusioninventory'),
+               'fusinvsnmp6' => __('Inventory started', 'fusioninventory'),
+               'fusinvsnmp7' => __('Detail', 'fusioninventory'),
+               'fusioninventory1' => __('Bad token, impossible to start agent', 'fusioninventory'),
+               'fusioninventory2' => __('Agent stopped/crashed', 'fusioninventory'),
+               'fusioninventory3' => __('Import denied', 'fusioninventory')
+            );
+
+         foreach($matches[0] as $num=>$commentvalue) {
+            $comment = str_replace($commentvalue, $a_text[$matches[1][$num].$matches[2][$num]], $comment);
+         }
          $comment = str_replace(",[", "<br/>[", $comment);
          return $comment;
          break;
