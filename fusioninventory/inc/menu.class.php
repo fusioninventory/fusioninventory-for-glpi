@@ -193,7 +193,7 @@ class PluginFusioninventoryMenu {
       $a_menu = array();
       
       if (PluginFusioninventoryProfile::haveRight("iprange", "r")) {
-         $a_menu[1]['name'] = __('IP range configuration', 'fusioninventory');
+         $a_menu[1]['name'] = __('IP Ranges', 'fusioninventory');
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rangeip.png";
          $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryIPRange');
       }
