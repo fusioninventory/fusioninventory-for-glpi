@@ -993,7 +993,16 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
           (NULL,'PluginFusioninventoryTaskjob', '3', '3', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '4', '4', '0'),
           (NULL,'PluginFusioninventoryTaskjob', '5', '5', '0'),
+
           (NULL,'PluginFusioninventoryInventoryComputerBlacklist', '2', '1', '0'),
+
+          (NULL,'PluginFusioninventoryTaskjoblog', '2', '1', '0'),
+          (NULL,'PluginFusioninventoryTaskjoblog', '3', '2', '0'),
+          (NULL,'PluginFusioninventoryTaskjoblog', '4', '3', '0'),
+          (NULL,'PluginFusioninventoryTaskjoblog', '5', '4', '0'),
+          (NULL,'PluginFusioninventoryTaskjoblog', '6', '5', '0'),
+          (NULL,'PluginFusioninventoryTaskjoblog', '7', '6', '0'),
+          (NULL,'PluginFusioninventoryTaskjoblog', '8', '7', '0'),
 
           (NULL, 'PluginFusioninventorysnmpModel', '3', '1', '0'),
           (NULL, 'PluginFusioninventorysnmpModel', '5', '2', '0'),
