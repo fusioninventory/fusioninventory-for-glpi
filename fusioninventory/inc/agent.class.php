@@ -338,8 +338,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function importToken($arrayinventory) {
 
       if (isset($arrayinventory['DEVICEID'])) {
-         $pta = new PluginFusioninventoryAgent();
-         $a_agent = $pta->find("`device_id`='".$arrayinventory['DEVICEID']."'", "", "1");
+         $pfAgent = new PluginFusioninventoryAgent();
+         $a_agent = $pfAgent->find("`device_id`='".$arrayinventory['DEVICEID']."'", "", "1");
          if (empty($a_agent)) {
             $a_input = array();
             if (isset($arrayinventory['TOKEN'])) {
@@ -350,9 +350,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $a_input['entities_id']  = 0;
             $a_input['last_contact'] = date("Y-m-d H:i:s");
             if (isset($_SERVER['HTTP_USER_AGENT'])) {
-               $a_input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
+               $a_input['useragent'] = $_SERVER['HTTP_USER_AGENT'];
             }
-            return $pta->add($a_input);
+            return $pfAgent->add($a_input);
          } else {
             foreach ($a_agent as $data) {
                $input = array();
@@ -364,7 +364,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                if (isset($_SERVER['HTTP_USER_AGENT'])) {
                   $input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
                }
-               $pta->update($input);
+               $pfAgent->update($input);
                return $data['id'];
             }
          }
