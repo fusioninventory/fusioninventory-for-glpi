@@ -50,12 +50,13 @@ Html::header(__('Features', 'fusioninventory'), $_SERVER["PHP_SELF"],
 $pfConfig = new PluginFusioninventoryConfig();
 
 if (isset($_POST['update'])) {
-   $pfConfig->updateValue('ssl_only', $_POST['ssl_only']);
-   $pfConfig->updateValue('inventory_frequence', $_POST['inventory_frequence']);
-   $pfConfig->updateValue('delete_task', $_POST['delete_task']);
-   $pfConfig->updateValue('agent_port', $_POST['agent_port']);
-   $pfConfig->updateValue('extradebug', $_POST['extradebug']);
-   $pfConfig->updateValue('agent_base_url', $_POST['agent_base_url']);
+   $data = $_POST;
+   unset($data['update']);
+   unset($data['id']);
+   unset($data['_glpi_csrf_token']);
+   foreach ($data as $key=>$value) {
+      $pfConfig->updateValue($key, $value);
+   }
    Html::back();
 }
 
