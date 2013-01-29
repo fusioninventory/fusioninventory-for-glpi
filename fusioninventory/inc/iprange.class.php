@@ -191,7 +191,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          $i++;
       }
 
-      echo "<SCRIPT language=javascript>
+      echo "<script type='text/javascript'>
       function test(id) {
          if (document.getElementById('ip_end' + id).value == '') {
             if (id == 3) {
@@ -201,12 +201,12 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
             }
          }
       }
-      </SCRIPT>";
+      </script>";
 
-      echo "<input type='text' value='".$ipexploded[0]."' name='ip_end0' id='ip_end0' size='3' maxlength='3' onSelect='test(0)'>.";
-      echo "<input type='text' value='".$ipexploded[1]."' name='ip_end1' id='ip_end1' size='3' maxlength='3' onSelect='test(1)'>.";
-      echo "<input type='text' value='".$ipexploded[2]."' name='ip_end2' id='ip_end2' size='3' maxlength='3' onSelect='test(2)'>.";
-      echo "<input type='text' value='".$ipexploded[3]."' name='ip_end3' id='ip_end3' size='3' maxlength='3' onSelect='test(3)'>";
+      echo "<input type='text' value='".$ipexploded[0]."' name='ip_end0' id='ip_end0' size='3' maxlength='3' onfocus='test(0)'>.";
+      echo "<input type='text' value='".$ipexploded[1]."' name='ip_end1' id='ip_end1' size='3' maxlength='3' onfocus='test(1)'>.";
+      echo "<input type='text' value='".$ipexploded[2]."' name='ip_end2' id='ip_end2' size='3' maxlength='3' onfocus='test(2)'>.";
+      echo "<input type='text' value='".$ipexploded[3]."' name='ip_end3' id='ip_end3' size='3' maxlength='3' onfocus='test(3)'>";
       echo "</td>";
       echo "</tr>";
 
