@@ -154,7 +154,6 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
       $pfInventoryComputerCriteria = new PluginFusioninventoryInventoryComputerCriteria();
       $fields = $pfInventoryComputerCriteria->find("");
-      Toolbox::logInFile("COMP", print_r($a_computerinventory, true));
       foreach($fields as $id=>$data) {
 
          switch($data['comment']) {
