@@ -478,6 +478,14 @@ function plugin_fusioninventory_check_prerequisites() {
       return false;
    }
    
+   $a_plugins = array('fusinvinventory', 'fusinvsnmp', 'fusinvdeploy');
+   foreach ($a_plugins as $pluginname) {
+      if (file_exists(GLPI_ROOT.'/plugins/'.$pluginname)) {
+         printf(__('Please remove folder %s in glpi/plugins/', 'fusioninventory'), $pluginname);
+         return false;
+      }      
+   }
+   
    $crontask = new CronTask();
    if ((TableExists("glpi_plugin_fusioninventory_agents")
            AND !FieldExists("glpi_plugin_fusioninventory_agents", "tag"))
