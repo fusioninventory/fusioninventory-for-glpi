@@ -130,7 +130,6 @@ if (isset($_POST["agent_add"])) {
       $input['exceptions'] = exportArrayToDB($a_agentList);
    }
    $input['id']  = $_POST['id'];
-   $input['url'] = $_POST['url'];
 
    $agentmodule->update($input);
    Html::back();
