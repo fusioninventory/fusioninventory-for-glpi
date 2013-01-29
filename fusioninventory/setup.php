@@ -309,19 +309,19 @@ function plugin_init_fusioninventory() {
          $hook_add['group'] = '../fusioninventory/front/deploygroup.form.php?add=1';
          $hook_search['group'] = '../fusioninventory/front/deploygroup.php';
 
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']    = $hook_add;
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search'] = $hook_search;
-
-
          if (PluginFusioninventoryProfile::haveRight("agent", "r")) {
             if (PluginFusioninventoryProfile::haveRight("agents", "w")) {
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search']['agents'] = 'front/agent.php';
+               $hook_search['agents'] = 'front/agent.php';
             }
 
             if (PluginFusioninventoryProfile::haveRight("configuration", "r")) {// Config page
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/config.form.php';
             }
          }
+         
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']    = $hook_add;
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search'] = $hook_search;         
+         
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']
             ["<img  src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/books.png'
                title='".__('Documentation', 'fusioninventory')."'
