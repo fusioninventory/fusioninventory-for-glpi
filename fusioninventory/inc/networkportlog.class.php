@@ -354,7 +354,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 
 
    // $status = connection or disconnection
-   static function addLogConnection($status, $port, $plugin_fusioninventory_agentprocesses_id=0) {
+   static function addLogConnection($status, $port) {
 
       $pfNetworkPortConnectionLog = new PluginFusioninventoryNetworkPortConnectionLog();
       $NetworkPort_NetworkPort=new NetworkPort_NetworkPort();

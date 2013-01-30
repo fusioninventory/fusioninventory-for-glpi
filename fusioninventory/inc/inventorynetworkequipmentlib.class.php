@@ -348,6 +348,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $wire = new NetworkPort_NetworkPort();
       $networkPort = new NetworkPort();
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
+      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       
       $a_snmpports = current($pfNetworkPort->find("`networkports_id`='".$networkports_id."'", 
                                                   "", 
@@ -405,8 +406,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   }
                }
                if (!isset($macNotPhone_id)) {
-                  // Create unknown ports
-                  $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                  // Create unknown ports                  
                   $unknown_infos = array();
                   $unknown_infos["name"] = '';
                   if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
@@ -423,12 +423,10 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                $wire->add(array('networkports_id_1'=> $portLink_id,
                                 'networkports_id_2' => $macNotPhone_id));
             } else {
-               $pfiud = new PluginFusioninventoryUnknownDevice;
-               $pfiud->hubNetwork($pfNetworkPort);
+               $pfUnknownDevice->hubNetwork($pfNetworkPort);
             }
          } else if ($count > 1) { // MultipleMac
-            $pfiud = new PluginFusioninventoryUnknownDevice;
-            $pfiud->hubNetwork($pfNetworkPort);
+            $pfUnknownDevice->hubNetwork($pfNetworkPort);
          } else { // One mac on port
             foreach ($a_portconnection as $ifmac) { //Only 1 time
                $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);
@@ -436,7 +434,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   $a_port = current($a_ports);
                   $hub = 0;
                   $id = $networkPort->getContact($a_port['id']);
-                  $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
                   if ($id AND $networkPort->getFromDB($id)) {
                      if ($networkPort->fields['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
                         $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);

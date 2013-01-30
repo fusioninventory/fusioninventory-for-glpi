@@ -291,7 +291,7 @@ class PluginFusioninventoryCommunication {
 
 // old POST protocol
    function handleOCSCommunication($xml='') {
-
+global $PLUGIN_HOOKS;
       // ***** For debug only ***** //
       //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
       // ********** End ********** //
@@ -300,7 +300,7 @@ class PluginFusioninventoryCommunication {
       $plugin = new Plugin();
       $user   = new User();
 
-      ob_start();
+//      ob_start();
       if (!isset($_SESSION['glpiID'])) {
          $users_id  = $config->getValue('users_id');
          $_SESSION['glpiID'] = $users_id;
@@ -314,19 +314,19 @@ class PluginFusioninventoryCommunication {
          $_SESSION['glpiactiveprofile']['monitor'] = 'w';
          $_SESSION['glpiactiveprofile']['printer'] = 'w';
          $_SESSION['glpiactiveprofile']['peripheral'] = 'w';
-         $plugin->init();
+//         $plugin->init();
       }
-      if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
-         //Plugin::doHook("config");
-         if (count($_SESSION["glpi_plugins"])) {
-            foreach ($_SESSION["glpi_plugins"] as $name) {
-               Plugin::load($name);
-            }
-         }
-         // For plugins which require action after all plugin init
-         Plugin::doHook("post_init");
-      }
-      ob_end_clean();
+//      if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
+//         //Plugin::doHook("config");
+//         if (count($_SESSION["glpi_plugins"])) {
+//            foreach ($_SESSION["glpi_plugins"] as $name) {
+//               Plugin::load($name);
+//            }
+//         }
+//         // For plugins which require action after all plugin init
+//         Plugin::doHook("post_init");
+//      }
+//      ob_end_clean();
 
       $communication  = new PluginFusioninventoryCommunication();
 

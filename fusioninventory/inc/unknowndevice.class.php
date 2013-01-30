@@ -528,7 +528,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $Netport = new NetworkPort();
       // Get port connected on switch port
       $hub_id = 0;
-      $ID = $nn->getOppositeContact($pfNetworkport->getNetworkPorts_id());
+      $ID = $nn->getOppositeContact($pfNetworkport->fields['networkports_id']);
       if ($ID) {
          $Netport->getFromDB($ID);
          if ($Netport->fields["itemtype"] == $this->getType()) {
@@ -556,7 +556,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       // Add source port id in comment of hub
       $h_input = array();
       $h_input['id'] = $hub_id;
-      $h_input['comment'] = "Port : ".$pfNetworkport->getNetworkPorts_id();
+      $h_input['comment'] = "Port : ".$pfNetworkport->fields['networkports_id'];
       $this->update($h_input);
 
 
@@ -744,9 +744,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
                         } else {
                            // We have founded a hub orphelin
-                           $this->disconnectDB($pfNetworkport->getNetworkPorts_id());
+                           $this->disconnectDB($pfNetworkport->fields['networkports_id']);
                            $this->disconnectDB($dataLink['id']);
-                           $nn->add(array('networkports_id_1'=> $pfNetworkport->getNetworkPorts_id(),
+                           $nn->add(array('networkports_id_1'=> $pfNetworkport->fields['networkports_id'],
                                            'networkports_id_2' => $dataLink['id']));
                            $this->releaseHub($this->fields['id'], $pfNetworkport);
                            return $this->fields['id'];
@@ -771,9 +771,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $input["itemtype"] = $this->getType();
       $input["name"] = "Link";
       $port_id = $Netport->add($input);
-      $this->disconnectDB($pfNetworkport->getNetworkPorts_id());
+      $this->disconnectDB($pfNetworkport->fields['networkports_id']);
       $this->disconnectDB($port_id);
-      if ($nn->add(array('networkports_id_1'=> $pfNetworkport->getNetworkPorts_id(),
+      if ($nn->add(array('networkports_id_1'=> $pfNetworkport->fields['networkports_id'],
                          'networkports_id_2' => $port_id))) {
       }
       return $hub_id;
@@ -825,10 +825,13 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    function cleanUnknownSwitch() {
       global $DB;
 
-      $query = "SELECT `glpi_plugin_fusioninventory_unknowndevices`.* FROM `glpi_plugin_fusioninventory_unknowndevices`
-         INNER JOIN `glpi_plugin_fusioninventory_networkequipmentips` ON `glpi_plugin_fusioninventory_unknowndevices`.`ip` = `glpi_plugin_fusioninventory_networkequipmentips`.`ip`
-         WHERE `glpi_plugin_fusioninventory_unknowndevices`.`ip` IS NOT NULL
-            AND `glpi_plugin_fusioninventory_unknowndevices`.`ip` != '' ";
+      $query = "SELECT `glpi_plugin_fusioninventory_unknowndevices`.* 
+                  FROM `glpi_plugin_fusioninventory_unknowndevices`
+               INNER JOIN `glpi_plugin_fusioninventory_networkequipmentips` 
+                  ON `glpi_plugin_fusioninventory_unknowndevices`.`ip` = 
+                        `glpi_plugin_fusioninventory_networkequipmentips`.`ip`
+               WHERE `glpi_plugin_fusioninventory_unknowndevices`.`ip` IS NOT NULL
+                  AND `glpi_plugin_fusioninventory_unknowndevices`.`ip` != '' ";
       $result=$DB->query($query);
       if ($result) {
          while ($data=$DB->fetch_array($result)) {

@@ -247,7 +247,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
                 OR (`networkports_id_source`='".$a_uport['id']."'
                   AND `networkports_id_destination`='".$a_port['id']."'))");
          $this->assertEquals(count($a_logs), 1, '(1) Connection log not created');
-         $DB->query("DELETE FROM `glpi_plugin_fusinvsnmp_networkportconnectionlogs`");
+         $DB->query("DELETE FROM `glpi_plugin_fusioninventory_networkportconnectionlogs`");
 
 
       // * 2. Create switch 2 with connection of mac on switch 1 previously
@@ -275,7 +275,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
                   AND `networkports_id_destination`='".$a_port1sw2['id']."'))");
          $this->assertEquals(count($a_logs), 1, '(2) Connection log not created
                ('.$a_port1sw2['id'].' => '.$a_uport['id'].')');
-         $DB->query("DELETE FROM `glpi_plugin_fusinvsnmp_networkportconnectionlogs`");
+         $DB->query("DELETE FROM `glpi_plugin_fusioninventory_networkportconnectionlogs`");
 
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
