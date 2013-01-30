@@ -213,7 +213,7 @@ class Netdiscovery extends PHPUnit_Framework_TestCase {
 
       // Verify have correct number of devices found in taskjoblog
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjoblogs`
-         WHERE `comment` LIKE '%==fusinvsnmp::2=='";
+         WHERE `comment` LIKE '%==devicesfound=='";
       $result=$DB->query($query);
       $number = 0;
       while ($data=$DB->fetch_array($result)) {
