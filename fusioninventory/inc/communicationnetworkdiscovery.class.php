@@ -598,7 +598,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                   $input['plugin_fusioninventory_snmpmodels_id'] = $model_id;
                }
             }
-            $input['plugin_fusinvsnmp_configsecurities_id'] = $arrayinventory['AUTHSNMP'];
+            $input['plugin_fusioninventory_configsecurities_id'] = $arrayinventory['AUTHSNMP'];
             $pfNetworkEquipment->update($input);
             break;
 

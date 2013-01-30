@@ -310,7 +310,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       $sysdescr = trim($sysdescr);
       $modelgetted = '';
       if (!empty($sysdescr)) {
-         $xml = @simplexml_load_file(GLPI_ROOT.'/plugins/fusioninventory/tools/networkdiscovery.xml', 'SimpleXMLElement', LIBXML_NOCDATA);
+         $xml = @simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml", 'SimpleXMLElement', LIBXML_NOCDATA);
          foreach ($xml->DEVICE as $device) {
             $device->SYSDESCR = str_replace("\r", "", $device->SYSDESCR);
             $device->SYSDESCR = str_replace("\n", "", $device->SYSDESCR);

@@ -160,7 +160,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
       if ($pfConfig->getValue("storagesnmpauth") == "file") {
          $sopt[5191]['table'] = 'glpi_plugin_fusioninventory_printers';
-         $sopt[5191]['field'] = 'plugin_fusinvsnmp_configsecurities_id';
+         $sopt[5191]['field'] = 'plugin_fusioninventory_configsecurities_id';
          $sopt[5191]['linkfield'] = 'id';
          $sopt[5191]['name'] = __('FusInv', 'fusioninventory')." - ".
             __('SNMP authentication', 'fusioninventory');
@@ -209,7 +209,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
       $sopt[5191]['table']='glpi_plugin_fusioninventory_configsecurities';
       $sopt[5191]['field']='name';
-      $sopt[5191]['linkfield']='plugin_fusinvsnmp_configsecurities_id';
+      $sopt[5191]['linkfield']='plugin_fusioninventory_configsecurities_id';
       $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".
                              __('SNMP authentication', 'fusioninventory');
       $sopt[5191]['massiveaction'] = false;
@@ -2167,12 +2167,12 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                return $return." LEFT JOIN glpi_plugin_fusioninventory_configsecurities 
                   ON glpi_plugin_fusioninventory_networkequipments.".
                        "plugin_fusioninventory_configsecurities_id = ".
-                          "glpi_plugin_fusinvsnmp_configsecurities.id ";
+                          "glpi_plugin_fusioninventory_configsecurities.id ";
                break;
 
             case "glpi_plugin_fusioninventory_networkequipments.sysdescr":
                $return = " ";
-               if ($leftjoin_fusinvsnmp_networkequipments == "1") {
+               if ($leftjoin_fusioninventory_networkequipments == "1") {
                   $return = " LEFT JOIN glpi_plugin_fusioninventory_networkequipments 
                      ON glpi_networkequipments.id = ".
                           "glpi_plugin_fusioninventory_networkequipments.networkequipments_id ";
