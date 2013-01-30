@@ -95,7 +95,6 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                if ($pfTask->fields['communication'] == 'pull') {
                   $a_agentlist[$agent_id] = 1;
                } else {
-                  $pfAgent->getFromDB($agent_id);
                   $agentStatus = $pfTaskjob->getStateAgent('1', $agent_id);
                   if ($agentStatus) {
                      $a_agentlist[$agent_id] = 1;

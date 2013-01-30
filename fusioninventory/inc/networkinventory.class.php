@@ -55,6 +55,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfIPRange = new PluginFusioninventoryIPRange();
+      $pfAgent = new PluginFusioninventoryAgent();
       $a_specificity = array();
       $a_specificity['DEVICE'] = array();
       
@@ -407,36 +408,15 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             foreach($a_actions as $a_action) {
                if ((!in_array('.1', $a_action))
                   AND (!in_array('.2', $a_action))) {
-
-                  $query = '';
-                  if ($communication == 'push') {
-                     $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, 
-                                       `ip`, 
-                                       `subnet`, 
-                                       `token`
-                               FROM `glpi_plugin_fusioninventory_agents`
-                        LEFT JOIN `glpi_networkports` 
-                           ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-                        LEFT JOIN `glpi_computers` 
-                           ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-                        WHERE `glpi_networkports`.`itemtype`='Computer'
-                           AND `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'
-                           AND `glpi_networkports`.`ip`!='127.0.0.1'
-                           AND `glpi_networkports`.`ip`!='' ";
-                  } else if ($communication == 'pull') {
-                     $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, token FROM `glpi_plugin_fusioninventory_agents`
-                        WHERE `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'";
-                  }
-                  $result = $DB->query($query);
-                  if ($result) {
-                     while ($data=$DB->fetch_array($result)) {
-                        if ($communication == 'push') {
-                           $agentStatus = $pfTaskjob->getStateAgent('1', $data['a_id']);
-                           if ($agentStatus ==  true) {
-                              $a_agentList[] = $data['a_id'];
-                           }
-                        } else if ($communication == 'pull') {
-                           $a_agentList[] = $data['a_id'];
+                  
+                  $agent_id = current($a_action);
+                  if ($pfAgent->getFromDB($agent_id)) {
+                     if ($communication == 'pull') {
+                        $a_agentList[] = $agent_id;
+                     } else {
+                        $agentStatus = $pfTaskjob->getStateAgent('1', $agent_id);
+                        if ($agentStatus) {
+                           $a_agentList[] = $agent_id;
                         }
                      }
                   }
@@ -450,7 +430,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             $a_agentList = $this->getAgentsSubnet($count_device, $communication);
          }
 
-         if (count($a_agentList) == '0') {
+         if (count($a_agentList) == 0) {
             $a_input = array();
             $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
             $a_input['state'] = 1;
@@ -473,7 +453,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             $input_taskjob['id'] = $pfTaskjob->fields['id'];
             //$input_taskjob['status'] = 0;
             $pfTaskjob->update($input_taskjob);
-         } elseif ($count_device == '0') {
+         } elseif ($count_device == 0) {
             $a_input = array();
             $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
             $a_input['state'] = 1;
