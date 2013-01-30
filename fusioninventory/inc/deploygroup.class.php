@@ -90,11 +90,11 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             switch($item->fields['type']) {
             
                case "STATIC":
-                  return __('Static group', 'fusioninventory');
+                  return array(__('Static group', 'fusioninventory'));
                   break;
                
                case "DYNAMIC":
-                  return __('Dynamic group', 'fusioninventory');
+                  return array(__('Dynamic group', 'fusioninventory'));
                   break;
                   
             }
@@ -105,20 +105,22 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      
       switch(get_class($item)) {
          case __CLASS__:
-            $obj = new self;
-            $obj->getFromDB($_POST["id"]);
-            switch($obj->fields['type']) {
+            
+            switch($item->fields['type']) {
                case "STATIC":
-                  $obj->showStaticForm();
+                  $item->showStaticForm();
                   break;
+               
                case "DYNAMIC":
-                  $obj->showDynamicForm();
+                  $item->showDynamicForm();
                   break;
             }
             break;
       }
+      return true;
    }
 
    
@@ -191,66 +193,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
       $this->showFormButtons($options);
-
-$_GET['name'] = '';
-$_GET['itemtype'] = 'Computer';
-Search::manageGetValues('Computer');
-$pfSearch = new PluginFusioninventorySearch();
-$pfSearch->formurl            = 'fusioninventory/front/deploygroup_dynamicdata.form.php';
-$pfSearch->customIdVar        = 'plugin_fusiosninventory_deploygroup_dynamicdatas_id';
-$pfSearch->displaydeletebuton = false;
-$query = "SELECT * FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
-   WHERE `groups_id`='".$ID."'
-   LIMIT 1";
-$result=$DB->query($query);
-$plugin_fusiosninventory_deploygroup_dynamicdatas_id = 0;
-if ($DB->numrows($result) == 1) {
-   $data = $DB->fetch_assoc($result);
-   $plugin_fusiosninventory_deploygroup_dynamicdatas_id = $data['id'];
-} else {
-   $pfDeployGroup_Dynamicdata = new PluginFusioninventoryDeployGroup_Dynamicdata();
-   $input = array();
-   $input['groups_id'] = $ID;
-   $input['fields_array'] = exportArrayToDB(array());
-   $plugin_fusiosninventory_deploygroup_dynamicdatas_id = 
-      $pfDeployGroup_Dynamicdata->add($input);
-}
-
-$_GET[$pfSearch->customIdVar] = $plugin_fusiosninventory_deploygroup_dynamicdatas_id;
-$pfSearch->showGenericSearch('Computer', $_GET);
-
-echo "<br/><br/>";
-echo "<table class='tab_cadre_fixe'>";
-
-echo "<tr>";
-echo "<th>";
-echo __('Preview');
-echo "</th>";
-echo "</tr>";
-
-echo "<tr>";
-echo "<td>";
-
-
-$default_entity = 0;
-if (isset($_SESSION['glpiactive_entity'])) {
-   $default_entity = $_SESSION['glpiactive_entity'];
-}
-$entities_isrecursive = 0;
-if (isset($_SESSION['glpiactiveentities'])
-        AND count($_SESSION['glpiactiveentities']) > 1) {
-   $entities_isrecursive = 1;
-}
-
-Search::showList('Computer', $_GET);
-
-echo "</td>";
-echo "</tr>";
-echo "</table>";
-
-      
-      
-      
       $this->addDivForTabs();
 
       return true;
@@ -281,10 +223,8 @@ echo "</table>";
       echo "<tr><th colspan='5'>";
       if ($DB->numrows($result)==0) {
          echo __('No associated element');
-
       } else {
          echo __('Associated items');
-
       }
       echo "</th></tr>";
       $totalnb = 0;
@@ -414,59 +354,83 @@ echo "</table>";
       Html::closeForm();
    }
 
+   
+   
+   /**
+    * Display dynamic search form
+    * 
+    * @global type $DB
+    * @global type $CFG_GLPI
+    * 
+    * @return boolean
+    */
+   
    function showDynamicForm() {
       global $DB, $CFG_GLPI;
 
-      $groupID = $this->fields['id'];
-      if (!$this->can($groupID, 'r')) {
-         return false;
+      $ID = $this->fields['id'];
+
+      $_GET['name'] = '';
+      $_GET['itemtype'] = 'Computer';
+      Search::manageGetValues('Computer');
+      $pfSearch = new PluginFusioninventorySearch();
+      $pfSearch->formurl            = 'fusioninventory/front/deploygroup_dynamicdata.form.php';
+      $pfSearch->customIdVar        = 'plugin_fusiosninventory_deploygroup_dynamicdatas_id';
+      $pfSearch->displaydeletebuton = false;
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
+         WHERE `groups_id`='".$ID."'
+         LIMIT 1";
+      $result=$DB->query($query);
+      $plugin_fusiosninventory_deploygroup_dynamicdatas_id = 0;
+      if ($DB->numrows($result) == 1) {
+         $data = $DB->fetch_assoc($result);
+         $plugin_fusiosninventory_deploygroup_dynamicdatas_id = $data['id'];
+      } else {
+         $pfDeployGroup_Dynamicdata = new PluginFusioninventoryDeployGroup_Dynamicdata();
+         $input = array();
+         $input['groups_id'] = $ID;
+         $input['fields_array'] = exportArrayToDB(array());
+         $plugin_fusiosninventory_deploygroup_dynamicdatas_id = 
+            $pfDeployGroup_Dynamicdata->add($input);
       }
-      $canedit = $this->can($groupID, 'w');
 
-      $fields = array();
+      $_GET[$pfSearch->customIdVar] = $plugin_fusiosninventory_deploygroup_dynamicdatas_id;
+      $pfSearch->showGenericSearch('Computer', $_GET);
 
-      //get datas
-      $dynamic_group = new PluginFusioninventoryDeployGroup_Dynamicdata;
-      $query = "SELECT *
-         FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
-         WHERE groups_id = '$groupID'";
-      $res = $DB->query($query);
-      $num = $DB->numrows($res);
-      if ($num > 0) {
-         $data = $DB->fetch_array($res);
-         $dynamic_group->getFromDB($data['id']);
-         $fields = unserialize($dynamic_group->fields['fields_array']);
-      }
-
-      //show form
-      echo "<form name='group_search' method='POST' action='"
-         .$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/deploygroup.form.php'>";
-      echo "<input type='hidden' name='groupID' value='$groupID' />";
-      echo "<input type='hidden' name='type' value='dynamic' />";
-      echo "<div class='center'>";
+      echo "<br/><br/>";
       echo "<table class='tab_cadre_fixe'>";
 
-      $this->showSearchFields('dynamic', $fields);
+      echo "<tr>";
+      echo "<th>";
+      echo __('Preview');
+      echo "</th>";
+      echo "</tr>";
 
-      echo "</table>";
-      echo "</div>";
-      echo "<input type='button' value=\"".__('Test')
+      echo "<tr>";
+      echo "<td>";
 
-         ."\" id='group_search_submit' />&nbsp;";
-      if ($num > 0) {
-         echo "<input type='hidden' name='id' value='".$data['id']."' />";
-         echo "<input type='submit' value=\"".__('Update')."\" class='submit' name='updateitem' />";
-      }  else {
-         echo "<input type='submit' value=\"".__('Add')."\" class='submit' name='additem' />";
+
+      $default_entity = 0;
+      if (isset($_SESSION['glpiactive_entity'])) {
+         $default_entity = $_SESSION['glpiactive_entity'];
       }
-      Html::closeForm();
+      $entities_isrecursive = 0;
+      if (isset($_SESSION['glpiactiveentities'])
+              AND count($_SESSION['glpiactiveentities']) > 1) {
+         $entities_isrecursive = 1;
+      }
 
+      Search::showList('Computer', $_GET);
 
-      //prepare div for ajax results
-      echo "<div id='group_results'></div>";
-
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+      
+      
    }
 
+   
+   
    function showSearchFields($type = 'static', $fields = array())  {
       global $CFG_GLPI;
 
