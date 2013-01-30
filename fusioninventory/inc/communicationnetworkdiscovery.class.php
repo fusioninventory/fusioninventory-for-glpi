@@ -165,25 +165,27 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       }
 
       $input['entities_id'] = $arrayinventory['ENTITY'];
-      switch ($arrayinventory['TYPE']) {
+      if (isset($arrayinventory['TYPE'])) {
+         switch ($arrayinventory['TYPE']) {
 
-         case '1':
-         case 'COMPUTER':
-            $input['itemtype'] = "Computer";
-            // Computer
+            case '1':
+            case 'COMPUTER':
+               $input['itemtype'] = "Computer";
+               // Computer
 
-             break;
+                break;
 
-         case '2':
-         case 'NETWORKING':
-            $input['itemtype'] = "NetworkEquipment";
-             break;
+            case '2':
+            case 'NETWORKING':
+               $input['itemtype'] = "NetworkEquipment";
+                break;
 
-         case '3':
-         case 'PRINTER':
-            $input['itemtype'] = "Printer";
-             break;
+            case '3':
+            case 'PRINTER':
+               $input['itemtype'] = "Printer";
+                break;
 
+         }
       }
 
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
