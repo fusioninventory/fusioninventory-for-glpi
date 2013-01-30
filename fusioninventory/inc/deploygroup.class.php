@@ -653,31 +653,107 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    }
 
    static function showSearchResults($params) {
-
+      global $DB;
+      
       if(isset($params['type'])) $type  = $params['type'];
       else exit;
       $options = array(
          'type'                  => $type,
          'itemtype'              => $params['itemtype'],
-         'locations_id'          => $params['locations_id'],
-         'serial'                => $params['serial'],
-         'operatingsystems_id'   => $params['operatingsystems_id'],
-         'operatingsystem_name'  => $params['operatingsystem_name'],
-         'otherserial'           => $params['otherserial'],
-         'name'                  => $params['name'],
+            'locations_id'          => $params['locations_id'],
+            'serial'                => $params['serial'],
+            'operatingsystems_id'   => $params['operatingsystems_id'],
+            'operatingsystem_name'  => $params['operatingsystem_name'],
+            'otherserial'           => $params['otherserial'],
+            'name'                  => $params['name'],
          'limit'                 => 99999999
       );
 
-      if ($options['operatingsystems_id'] != 0) unset($options['operatingsystem_name']);
-      if ($options['operatingsystems_id'] == 0) unset($options['operatingsystems_id']);
-      if ($options['locations_id'] == 0) unset($options['locations_id']);
-      $nb_items = count(PluginWebservicesMethodInventaire::methodListInventoryObjects($options, ''));
-
-      $options['limit'] = 50;
-      $options['start'] = $params['start'];
-
-      $datas = PluginWebservicesMethodInventaire::methodListInventoryObjects($options, '');
-
+      $query = "SELECT `glpi_computers`.`id` FROM `glpi_computers`";
+      $where = 0;
+      // * Serial
+      if (isset($params['serial'])
+              && !empty($params['serial'])) {
+         if ($where == 0) {
+            $query .= " WHERE ";
+         } else {
+            $query .= " AND ";
+         }
+         $query .= "`serial` LIKE '%".$params['serial']."%'";
+         $where++;
+      }
+      // * Otherserial
+      if (isset($params['otherserial'])
+              && !empty($params['otherserial'])) {
+         if ($where == 0) {
+            $query .= " WHERE ";
+         } else {
+            $query .= " AND ";
+         }
+         $query .= "`otherserial` LIKE '%".$params['otherserial']."%'";
+         $where++;
+      }
+      // * name
+      if (isset($params['name'])
+              && !empty($params['name'])) {
+         if ($where == 0) {
+            $query .= " WHERE ";
+         } else {
+            $query .= " AND ";
+         }
+         $query .= "`name` LIKE '%".$params['name']."%'";
+         $where++;
+      }
+      // * locations_id
+      if (isset($params['locations_id'])
+              && !empty($params['locations_id'])) {
+         if ($where == 0) {
+            $query .= " WHERE ";
+         } else {
+            $query .= " AND ";
+         }
+         $query .= "`locations_id`='".$params['locations_id']."'";
+         $where++;
+      }
+      // * operatingsystems_id
+      if (isset($params['operatingsystems_id'])
+              && !empty($params['operatingsystems_id'])) {
+         if ($where == 0) {
+            $query .= " WHERE ";
+         } else {
+            $query .= " AND ";
+         }
+         $query .= "`operatingsystems_id`='".$params['operatingsystems_id']."'";
+         $where++;
+      }
+      // * operatingsystem_name
+      if (isset($params['operatingsystem_name'])
+              && !empty($params['operatingsystem_name'])) {
+         if ($where == 0) {
+            $query .= " WHERE ";
+         } else {
+            $query .= " AND ";
+         }
+         $query .= "`operatingsystem_name`='".$params['operatingsystem_name']."'";
+         $where++;
+      }
+      $result = $DB->query($query);
+      
+//      if ($options['operatingsystems_id'] != 0) unset($options['operatingsystem_name']);
+//      if ($options['operatingsystems_id'] == 0) unset($options['operatingsystems_id']);
+//      if ($options['locations_id'] == 0) unset($options['locations_id']);
+//      $nb_items = count(PluginWebservicesMethodInventaire::methodListInventoryObjects($options, ''));
+//
+//      $options['limit'] = 50;
+//      $options['start'] = $params['start'];
+      $nb_items = $DB->numrows($result);
+//      $datas = PluginWebservicesMethodInventaire::methodListInventoryObjects($options, '');
+      $datas = array();
+      while ($data=$DB->fetch_array($result)) {
+         $datas[$data['id']] = $data;
+         
+      }
+      
       echo "<div class='center'><br />";
       $nb_col = 5;
 
@@ -688,7 +764,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</tr></thead>";
 
       $stripe = true;
-      $computer = new Computer;
+      $computer = new Computer();
       $i=1;
       echo "<tr class='tab_bg_".(((int)$stripe)+1)."'>";
       foreach ($datas as $row) {
