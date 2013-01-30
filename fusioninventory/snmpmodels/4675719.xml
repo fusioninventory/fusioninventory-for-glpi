@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model>
+   <name>4675719</name>
+   <type>3</type>
+   <key>Printer0093</key>
+   <comments>HP Color LaserJet 2600n
+
+Officejet Pro L7600
+
+Photosmart D7200 series
+
+HL-5140 series
+
+HL-1850_1870N series
+
+HL-5270DN series
+
+DesignJet 500PS+HPGL2 (C7770C)
+
+hp LaserJet 3020
+
+DesignJet 1050C (C6074A)
+
+Deskjet 1280
+
+Lexmark T632
+
+LabelWriter 400
+
+ZTC Z6MPlus-200 dpi
+
+OFFICEJET R40
+
+DesignJet 800 (C7780B)
+
+</comments>
+   <devices>
+      <sysdescr>HP Color LaserJet 2600n</sysdescr>
+      <sysdescr>Officejet Pro L7600</sysdescr>
+      <sysdescr>Photosmart D7200 series</sysdescr>
+      <sysdescr>HL-5140 series</sysdescr>
+      <sysdescr>HL-1850_1870N series</sysdescr>
+      <sysdescr>HL-5270DN series</sysdescr>
+      <sysdescr>DesignJet 500PS+HPGL2 (C7770C)</sysdescr>
+      <sysdescr>hp LaserJet 3020</sysdescr>
+      <sysdescr>DesignJet 1050C (C6074A)</sysdescr>
+      <sysdescr>Deskjet 1280</sysdescr>
+      <sysdescr>Lexmark T632</sysdescr>
+      <sysdescr>LabelWriter 400</sysdescr>
+      <sysdescr>ZTC Z6MPlus-200 dpi</sysdescr>
+      <sysdescr>OFFICEJET R40</sysdescr>
+      <sysdescr>DesignJet 800 (C7780B)</sysdescr>
+   </devices>
+   <oidlist>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.1.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>comments</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>ifName</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>ifIndex</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.6</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>ifPhysAddress</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.3</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>ifType</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.6.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>location</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.1.0</oid>
+         <portcounter>1</portcounter>
+         <dynamicport>0</dynamicport>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.5.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>name</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.4.20.1.2</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>ifaddr</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.4.1.11.2.3.9.1.1.7.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>informations</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+   </oidlist>
+</model>
