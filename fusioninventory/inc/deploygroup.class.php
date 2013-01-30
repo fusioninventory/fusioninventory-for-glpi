@@ -75,52 +75,11 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       $ong = array();
       if ($this->fields['id'] > 0){
-         $this->addStandardTab(__CLASS__, $ong, $options);
+         $this->addStandardTab("PluginFusioninventoryDeployGroup_Staticdata", $ong, $options);
+         $this->addStandardTab("PluginFusioninventoryDeployGroup_Dynamicdata", $ong, $options);
       }
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
-   }
-
-   
-   
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
-      switch(get_class($item)) {
-         case __CLASS__:
-            switch($item->fields['type']) {
-            
-               case "STATIC":
-                  return array(__('Static group', 'fusioninventory'));
-                  break;
-               
-               case "DYNAMIC":
-                  return array(__('Dynamic group', 'fusioninventory'));
-                  break;
-                  
-            }
-            break;
-      }
-   }
-
-
-   
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      
-      switch(get_class($item)) {
-         case __CLASS__:
-            
-            switch($item->fields['type']) {
-               case "STATIC":
-                  $item->showStaticForm();
-                  break;
-               
-               case "DYNAMIC":
-                  $item->showDynamicForm();
-                  break;
-            }
-            break;
-      }
-      return true;
    }
 
    
