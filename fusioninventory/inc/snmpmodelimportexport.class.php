@@ -532,7 +532,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       if (!strstr($_SERVER['PHP_SELF'], "front/plugin.php")
               && !strstr($_SERVER['PHP_SELF'], "front/plugin.form.php")
               &&  $_SERVER['PHP_SELF'] != "cli_install.php") {
-         PluginFusioninventoryProfile::checkRight("snmpmodel", "r");
+         PluginFusioninventoryProfile::checkRight("model", "r");
       }
 
       $xmlstr = "<?xml version='1.0' encoding='UTF-8'?>

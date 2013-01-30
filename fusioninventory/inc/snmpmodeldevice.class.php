@@ -91,7 +91,7 @@ class PluginFusioninventorySnmpmodeldevice extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      $a_devices = $this->find("`plugin_fusinvsnmp_models_id`='".$models_id."'");
+      $a_devices = $this->find("`plugin_fusioninventory_snmpmodels_id`='".$models_id."'");
       foreach ($a_devices as $data) {
          echo "<tr class='tab_bg_3'>";
          echo "<td>";
