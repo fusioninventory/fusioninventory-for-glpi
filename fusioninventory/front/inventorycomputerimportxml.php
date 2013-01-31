@@ -70,7 +70,9 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
                error_log("toto");
                error_log($xml);
                if (!empty($xml)) {
+                  $_SESSION['glpi_fusionionventory_nolock'] = true;
                   $pfCommunication->handleOCSCommunication($xml);
+                  unset($_SESSION['glpi_fusionionventory_nolock']);
                }
                zip_entry_close($zip_entry);
             }
@@ -80,10 +82,11 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
    } else if (preg_match('/\.(ocs|xml)/i', $_FILES['importfile']['name'])) {
 
       $xml = file_get_contents($_FILES['importfile']['tmp_name']);
+      $_SESSION['glpi_fusionionventory_nolock'] = true;
       $pfCommunication->handleOCSCommunication($xml);
+      unset($_SESSION['glpi_fusionionventory_nolock']);
    } else {
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = __('No file to import!', 'fusioninventory');
-
    }
    Html::back();
 }
