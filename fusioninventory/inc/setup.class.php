@@ -344,12 +344,12 @@ class PluginFusioninventorySetup {
          $input['condition']=0;
          $rulecriteria->add($input);
 
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "name";
-         $input['pattern']= 1;
-         $input['condition']=8;
-         $rulecriteria->add($input);
+//         $input = array();
+//         $input['rules_id'] = $rule_id;
+//         $input['criteria'] = "name";
+//         $input['pattern']= 1;
+//         $input['condition']=8;
+//         $rulecriteria->add($input);
 
          // Add action
          $ruleaction = new RuleAction(get_class($rule));
