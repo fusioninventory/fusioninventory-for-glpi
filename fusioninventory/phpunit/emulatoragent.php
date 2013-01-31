@@ -59,6 +59,7 @@ class emulatorAgent {
          }
 
          fclose($fp);
+         Toolbox::logInFile("RETSERV", $zipped."\n");
          if (!gzuncompress($zipped)) {
             echo $zipped;
          }
