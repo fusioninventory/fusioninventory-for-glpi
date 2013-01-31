@@ -162,7 +162,7 @@ class AllTests {
       $suite->addTest(FusinvInstall_AllTests::suite());
       $suite->addTest(InventoryComputer_AllTests::suite());
       $suite->addTest(Rules_AllTests::suite());
-      $suite->addTest(Netinventory_AllTests::suite());
+//      $suite->addTest(Netinventory_AllTests::suite());
       $suite->addTest(Netdiscovery_AllTests::suite());
       return $suite;
    }
