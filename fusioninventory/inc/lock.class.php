@@ -426,7 +426,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       $result = PluginFusioninventoryLock::getLock($tableName, $p_items_id);
       if ($DB->numrows($result)){
-         $row = mysql_fetch_assoc($result);
+         $row = $DB->fetch_assoc($result);
          $lockedFields = importArrayFromDB($row['tablefields']);
          if (count(array_diff($p_fieldsToLock, $lockedFields))) { // old locks --> new locks
             $p_fieldsToLock = array_merge($p_fieldsToLock, $lockedFields);
