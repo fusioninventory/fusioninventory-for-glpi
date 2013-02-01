@@ -5358,7 +5358,30 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                 (NULL,'PluginFusioninventoryTaskjoblog', '7', '6', '0'),
                 (NULL,'PluginFusioninventoryTaskjoblog', '8', '7', '0')");
       }
-   
+
+      
+      // If no PluginFusioninventoryNetworkPort in preferences, add them
+      $query = "SELECT * FROM `glpi_displaypreferences`
+      WHERE `itemtype` = 'PluginFusioninventoryNetworkPort'
+         AND `users_id`='0'";
+      $result=$DB->query($query);
+      if ($DB->numrows($result) == 0) {
+         $DB->query("INSERT INTO `glpi_displaypreferences` 
+            (`id`, `itemtype`, `num`, `rank`, `users_id`)
+         VALUES (NULL,'PluginFusioninventoryNetworkPort', '3', '1', '0'),
+                (NULL,'PluginFusioninventoryNetworkPort', '5', '2', '0'),
+                (NULL,'PluginFusioninventoryNetworkPort', '6', '3', '0'),
+                (NULL,'PluginFusioninventoryNetworkPort', '7', '4', '0'),
+                (NULL,'PluginFusioninventoryNetworkPort', '8', '5', '0'),
+                (NULL,'PluginFusioninventoryNetworkPort', '9', '6', '0'),
+                (NULL,'PluginFusioninventoryNetworkPort', '10', '7', '0'),
+                (NULL,'PluginFusioninventoryNetworkPort', '11', '8', '0'),
+                (NULL,'PluginFusioninventoryNetworkPort', '12', '9', '0'),
+                (NULL,'PluginFusioninventoryNetworkPort', '13', '10', '0'),
+                (NULL,'PluginFusioninventoryNetworkPort', '14', '11', '0')");
+      }
+
+      
    
    /*
     * Convert taskjob definition from PluginFusinvsnmpIPRange to PluginFusioninventoryIPRange
