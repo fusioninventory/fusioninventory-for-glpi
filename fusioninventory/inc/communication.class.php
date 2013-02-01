@@ -52,7 +52,9 @@ class PluginFusioninventoryCommunication {
 
 
    function __construct() {
-      $this->message = new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>");
+      $this->message = new SimpleXMLElement(
+                 "<?xml version='1.0' encoding='UTF-8'?><REPLY></REPLY>"
+              );
       PluginFusioninventoryToolbox::logIfExtradebug(
          'pluginFusioninventory-communication',
          'New PluginFusioninventoryCommunication object.'
@@ -187,16 +189,24 @@ class PluginFusioninventoryCommunication {
       }
 
       if (isset($this->message['CONTENT']['MODULEVERSION'])) {
-         $pfAgent->setAgentVersions($agent['id'], $xmltag, $this->message['CONTENT']['MODULEVERSION']);
+         $pfAgent->setAgentVersions($agent['id'], 
+                                    $xmltag, 
+                                    $this->message['CONTENT']['MODULEVERSION']);
       } else if (isset($this->message['CONTENT']['VERSIONCLIENT'])) {
-         $version = str_replace("FusionInventory-Agent_", "", $this->message['CONTENT']['VERSIONCLIENT']);
+         $version = str_replace("FusionInventory-Agent_", 
+                                "", 
+                                $this->message['CONTENT']['VERSIONCLIENT']);
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
       if (isset($this->message->CONTENT->MODULEVERSION)) {
-         $pfAgent->setAgentVersions($agent['id'], $xmltag, (string)$this->message->CONTENT->MODULEVERSION);
+         $pfAgent->setAgentVersions($agent['id'], 
+                                    $xmltag, 
+                                    (string)$this->message->CONTENT->MODULEVERSION);
       } else if (isset($this->message->CONTENT->VERSIONCLIENT)) {
-         $version = str_replace("FusionInventory-Agent_", "", (string)$this->message->CONTENT->VERSIONCLIENT);
+         $version = str_replace("FusionInventory-Agent_", 
+                                "", 
+                                (string)$this->message->CONTENT->VERSIONCLIENT);
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
@@ -291,13 +301,12 @@ class PluginFusioninventoryCommunication {
 
 // old POST protocol
    function handleOCSCommunication($xml='') {
-global $PLUGIN_HOOKS;
+      
       // ***** For debug only ***** //
       //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
       // ********** End ********** //
 
       $config = new PluginFusioninventoryConfig();
-      $plugin = new Plugin();
       $user   = new User();
 
 //      ob_start();
@@ -375,9 +384,9 @@ global $PLUGIN_HOOKS;
          (!isset($_SERVER["HTTPS"]) OR $_SERVER["HTTPS"] != "on")
       ) {
          $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
-   <REPLY>
+<REPLY>
    <ERROR>SSL REQUIRED BY SERVER</ERROR>
-   </REPLY>");
+</REPLY>");
          $communication->sendMessage($compressmode);
          return;
       }
@@ -391,7 +400,9 @@ global $PLUGIN_HOOKS;
       $pxml = '';
       if ($pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)) {
 
-      } else if ($pxml = @simplexml_load_string(utf8_encode($xml), 'SimpleXMLElement', LIBXML_NOCDATA)) {
+      } else if ($pxml = @simplexml_load_string(utf8_encode($xml), 
+                                                'SimpleXMLElement', 
+                                                LIBXML_NOCDATA)) {
          $xml = utf8_encode($xml);
       } else {
          $xml = preg_replace ('/<FOLDER>.*?<\/SOURCE>/', '', $xml);
@@ -399,9 +410,9 @@ global $PLUGIN_HOOKS;
 
          if (!$pxml) {
             $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
-   <REPLY>
+<REPLY>
    <ERROR>XML not well formed!</ERROR>
-   </REPLY>");
+</REPLY>");
             $communication->sendMessage($compressmode);
             return;
          }

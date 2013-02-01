@@ -692,17 +692,21 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "<tr class='tab_bg_1 center' height='40'".$background_img.">";
 
       if ($aggrega) {
-         echo "<td></td>";
+         echo "<td></td><td>";
       }
-      echo "<td><a href='networkport.form.php?id=".$data["id"]."'>".
+      if (!$aggrega) {
+         if ($data['instantiation_type'] == 'NetworkPortAggregate') {
+            echo "<td>";
+         } else {
+            echo "<td colspan='2'>";
+         }
+      }
+      echo "<a href='networkport.form.php?id=".$data["id"]."'>".
                $data["name"]."</a>";
       Html::showToolTip($data['ifdescr']);
-      echo "</td>";
       if (!$aggrega) {
          if ($data['instantiation_type'] == 'NetworkPortAggregate') {
             echo "<td><i><font style='color: grey'>".__('Aggregation port')."</font></i></td>";
-         } else {
-            echo "<td></td>";
          }
       }
 
