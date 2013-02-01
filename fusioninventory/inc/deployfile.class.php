@@ -276,7 +276,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       if (isset($params['node'])) {
 
          //root node
-         $dir = "/var/www/glpi";
+         $dir = "/var/www/glpi"; // TODO : add config option as 0.83 version
 
          // leaf node
          if ($params['node'] != -1) {
@@ -284,25 +284,48 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          }
          
          if ($handle = opendir($dir)) {
-             while (false !== ($entry = readdir($handle))) {
-                 if ($entry != "." && $entry != "..") {
-                     $filepath = $dir."/".$entry;
-                     $path['text'] = $entry;
-                     $path['id'] = $filepath;
-                     $path['draggable'] = false;
+            $folders = $files = array();
 
-                     if (is_dir($filepath)) {
-                        $path['leaf']      = false;
-                        $path['cls']       = 'folder';
-                     } else {
-                        $path['leaf']      = true;
-                        $path['cls']       = 'file';
-                     }
+            //list files in dir selected
+            //we store folders and files separately to sort them alphabeticaly separatly
+            while (false !== ($entry = readdir($handle))) {
+               if ($entry != "." && $entry != "..") {
+                  $filepath = $dir."/".$entry;
+                  if (is_dir($filepath)) {
+                     $folders[$filepath] = $entry;
+                  } else {
+                     $files[$filepath] = $entry;
+                  }
+               }
+            }
 
-                     $nodes[] = $path;
-                 }
-             }
-             closedir($handle);
+            //sort folders and files (and maintain index association)
+            asort($folders);
+            asort($files);
+
+            //add folders in json
+            foreach ($folders as $filepath => $entry) {
+               $path['text'] = $entry;
+               $path['id'] = $filepath;
+               $path['draggable'] = false;
+               $path['leaf']      = false;
+               $path['cls']       = 'folder';
+
+               $nodes[] = $path;
+            }
+
+            //add files in json
+            foreach ($files as $filepath => $entry) {
+               $path['text'] = $entry;
+               $path['id'] = $filepath;
+               $path['draggable'] = false;
+               $path['leaf']      = true;
+               $path['cls']       = 'file';
+
+               $nodes[] = $path;
+            }
+
+            closedir($handle);
          }        
       }
 
