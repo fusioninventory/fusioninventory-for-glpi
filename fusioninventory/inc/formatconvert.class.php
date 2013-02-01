@@ -639,7 +639,12 @@ class PluginFusioninventoryFormatconvert {
                                                     'IPADDRESS'   => 'ip',
                                                     'IPADDRESS6'  => 'ip',
                                                     'VIRTUALDEV'  => 'virtualdev',
-                                                    'IPSUBNET'    => 'subnet'));
+                                                    'IPSUBNET'    => 'subnet',
+                                                    'SSID'        => 'ssid',
+                                                    'IPGATEWAY'   => 'gateway',
+                                                    'IPMASK'      => 'netmask',
+                                                    'IPDHCP'      => 'dhcpserver'));
+                  
                   if ((isset($array_tmp['name'])
                           && $array_tmp['name'] != '')
                        || (isset($array_tmp['mac'])
