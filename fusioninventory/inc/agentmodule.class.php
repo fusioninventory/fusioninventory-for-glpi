@@ -102,7 +102,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       $a_modules = $this->find();
       foreach ($a_modules as $data) {
-         echo "<form name='form_ic' method='post' action='". Toolbox::getItemTypeFormURL(__CLASS__)."'>";
+         echo "<form name='form_ic' method='post' action='".
+                 Toolbox::getItemTypeFormURL(__CLASS__)."'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
          echo "<th width='130'>".__('Module', 'fusioninventory')."</th>";
@@ -238,15 +239,15 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          $checked = $data['is_active'];
          $a_agentList = importArrayFromDB($data['exceptions']);
          if (in_array($items_id, $a_agentList)) {
+            $checked = 1;
             if ($checked == 1)
                $checked = 0;
-            else
-               $checked = 1;
          }
          $check = "";
          if ($checked == 1)
             $check = "checked='checked'";
-         echo "<input type='checkbox' name='activation-".$data["modulename"]."' value='Activation' ".$check." />";
+         echo "<input type='checkbox' name='activation-".$data["modulename"]."' ".
+                 "value='Activation' ".$check." />";
          echo "</td>";
          if ($i == 1) {
             echo "</tr>";
@@ -263,7 +264,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='4'>";
          echo "<input type='hidden' name='id' value=\"".$items_id."\">";
-         echo "<input type='submit' name='updateexceptions' value=\"".__('Update')."\" class='submit'>";
+         echo "<input type='submit' name='updateexceptions' ".
+                 "value=\"".__('Update')."\" class='submit'>";
          echo "</td>";
          echo "</tr>";
          echo "</table>";
@@ -402,7 +404,8 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       # Construct the path to the JSON back from the agent_base_url.
       # agent_base_url is the initial URL used by the agent
-      return $config->getValue('agent_base_url').'/plugins/fusioninventory/b/'.strtolower($modulename).'/';
+      return $config->getValue('agent_base_url').'/plugins/fusioninventory/b/'.
+              strtolower($modulename).'/';
    }
 }
 
