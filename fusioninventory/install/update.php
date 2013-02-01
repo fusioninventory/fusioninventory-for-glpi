@@ -3793,7 +3793,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
    /*
     * glpi_plugin_fusioninventory_networkequipmentips
+    * Removed in 0.84, but required here for update, we drop in edn of this function
     */
+   if (TableExists("glpi_plugin_fusioninventory_networkequipmentips")
+           || TableExists("glpi_plugin_fusinvsnmp_networkequipmentips")
+           || TableExists("glpi_plugin_tracker_networking_ifaddr")) {
       $newTable = "glpi_plugin_fusioninventory_networkequipmentips";
       $migration->renameTable("glpi_plugin_fusinvsnmp_networkequipmentips",
                               $newTable);
@@ -3848,7 +3852,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             "networkequipments_id");
       $migration->migrationOneTable($newTable);
       $DB->list_fields($newTable, false);
-      
+   }   
       
       
    /*
@@ -4911,6 +4915,64 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
    update213to220_ConvertField($migration);
    
+   
+   /*
+    * Move networkequipment IPs to net system
+    */
+   if (TableExists("glpi_plugin_fusioninventory_networkequipmentips")) {
+      $networkPort = new NetworkPort();
+      $networkName = new NetworkName();
+      $ipAddress = new IPAddress();
+      $networkEquipment = new NetworkEquipment();
+      
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_networkequipments`";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         if ($networkEquipment->getFromDB($data['networkequipments_id'])) {
+            $oldtableip = array();
+            $queryIP = "SELECT * FROM `glpi_plugin_fusioninventory_networkequipmentips`
+               WHERE `networkequipments_id`='".$data['networkequipments_id']."'";
+            $resultIP = $DB->query($queryIP);
+            while ($dataIP = $DB->fetch_array($resultIP)) {
+               $oldtableip[$dataIP['ip']] = $dataIP['ip'];
+            }
+
+            // Get actual IP defined
+            $networknames_id = 0;
+            $a_ports = $networkPort->find("`itemtype`='NetworkEquipment'
+                  AND `items_id`='".$data['networkequipments_id']."'
+                  AND `instantiation_type`='NetworkPortAggregate'
+                  AND `name`='management'", "", 1);
+
+            foreach ($a_ports as $a_port) {
+               $a_networknames = $networkName->find("`itemtype`='NetworkPort'
+                  AND `items_id`='".$a_port['id']."'");
+               foreach ($a_networknames as $a_networkname) {
+                  $networknames_id = $a_networkname['id'];
+                  $a_ipaddresses = $ipAddress->find("`itemtype`='NetworkName'
+                     AND `items_id`='".$a_networkname['id']."'");
+                  foreach ($a_ipaddresses as $a_ipaddress) {
+                     if (isset($oldtableip[$a_ipaddress['name']])) {
+                        unset($oldtableip[$a_ipaddress['name']]);
+                     } else {
+                        $ipAddress->delete($a_ipaddress, 1);
+                     }
+                  }
+               }
+            }
+
+            // Update 
+            foreach ($oldtableip as $ip) {
+               $input = array();
+               $input['itemtype'] = "NetworkName";
+               $input['items_id']  = $networknames_id;
+               $input['name']     = $ip;
+               $ipAddress->add($input);
+            }
+         }
+      }
+   }
+   
 
    /*
     * Table Delete old table not used
@@ -4955,6 +5017,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $a_drop[] = 'glpi_plugin_tracker_tmp_connections';
    $a_drop[] = 'glpi_plugin_tracker_tmp_netports';
    $a_drop[] = 'glpi_plugin_tracker_walks';
+   $a_drop[] = 'glpi_plugin_fusioninventory_networkequipmentips';
    
    foreach ($a_drop as $droptable) {
       if (TableExists($droptable)) {
@@ -5041,23 +5104,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $result=$DB->query($query_select);
    while ($data=$DB->fetch_array($result)) {
       $query_del = "DELETE FROM `glpi_plugin_fusioninventory_networkports`
-         WHERE `id`='".$data["id"]."'";
-      $DB->query($query_del);
-   }
-   
-   
-   
-   /*
-    *  Clean for multiple IP of a switch when this switch is purged but not these IPs
-    */
-   echo "Clean for multiple IP of a switch when this switch is purged but not these IPs\n";
-   $query_select = "SELECT `glpi_plugin_fusioninventory_networkequipmentips`.`id`
-                    FROM `glpi_plugin_fusioninventory_networkequipmentips`
-                          LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
-                    WHERE `glpi_networkequipments`.`id` IS NULL";
-   $result=$DB->query($query_select);
-   while ($data=$DB->fetch_array($result)) {
-      $query_del = "DELETE FROM `glpi_plugin_fusioninventory_networkequipmentips`
          WHERE `id`='".$data["id"]."'";
       $DB->query($query_del);
    }

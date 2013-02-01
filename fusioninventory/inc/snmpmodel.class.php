@@ -270,7 +270,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
          switch($type) {
 
             case 'NetworkEquipment':
-               $pfNetworkEquipment = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
+               $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
                $NetworkEquipment = new NetworkEquipment();
                if($NetworkEquipment->getFromDB($device_id)) {
                   $NetworkEquipment->check($device_id, 'r');
@@ -287,7 +287,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
                break;
 
             case 'Printer':
-               $pfPrinter = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
+               $pfPrinter = new PluginFusioninventoryPrinter();
                $Printer = new Printer();
                if($Printer->getFromDB($device_id)) {
                   $Printer->check($device_id, 'r');

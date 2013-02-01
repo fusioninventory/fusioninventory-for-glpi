@@ -541,6 +541,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $input['itemtype'] = 'NetworkEquipment';
                $input['items_id'] = $item->getID();
                $input['instantiation_type'] = 'NetworkPortAggregate';
+               $input['name'] = "management";
                if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
                   $input['mac'] = $arrayinventory['MAC'];
                }
