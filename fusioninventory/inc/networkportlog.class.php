@@ -513,11 +513,6 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
          }
       }
 
-      $text .= "<tr class='tab_bg_1'>";
-      $text .= "<th colspan='8'>";
-      $text .= "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/report/switch_ports.history.php?networkports_id=".$ID_port."'>Voir l'historique complet</a>";
-      $text .= "</th>";
-      $text .= "</tr>";
       $text .= "</table>";
       return $text;
    }

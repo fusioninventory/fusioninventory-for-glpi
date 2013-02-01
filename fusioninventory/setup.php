@@ -467,7 +467,6 @@ function plugin_fusioninventory_check_prerequisites() {
    
    if (version_compare(GLPI_VERSION, '0.84', 'lt') || version_compare(GLPI_VERSION, '0.85', 'ge')) {
       echo __('Your GLPI version not compatible, require 0.84', 'fusioninventory');
-
       return false;
    }
    $plugin = new Plugin();
@@ -485,15 +484,16 @@ function plugin_fusioninventory_check_prerequisites() {
    }
    
    $crontask = new CronTask();
-   if ((TableExists("glpi_plugin_fusioninventory_agents")
-           AND !FieldExists("glpi_plugin_fusioninventory_agents", "tag"))
-        OR ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob'))
-        OR (TableExists("glpi_plugin_fusioninventory_agentmodules")
-           AND FieldExists("glpi_plugin_fusioninventory_agentmodules", "url"))) {
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` SET `value`='0.80+1.4' WHERE `type`='version'");
-      $DB->query("UPDATE `glpi_plugins` SET `version`='0.80+1.4' WHERE `directory` LIKE 'fusi%'");
+   if ($plugin->isActivated("fusioninventory")) {
+      if ((TableExists("glpi_plugin_fusioninventory_agents")
+              AND !FieldExists("glpi_plugin_fusioninventory_agents", "tag"))
+           OR ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob'))
+           OR (TableExists("glpi_plugin_fusioninventory_agentmodules")
+              AND FieldExists("glpi_plugin_fusioninventory_agentmodules", "url"))) {
+         $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` SET `value`='0.80+1.4' WHERE `type`='version'");
+         $DB->query("UPDATE `glpi_plugins` SET `version`='0.80+1.4' WHERE `directory` LIKE 'fusi%'");
+      }
    }
-
    return true;
 }
 

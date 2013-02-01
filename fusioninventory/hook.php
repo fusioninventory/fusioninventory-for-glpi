@@ -620,7 +620,6 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
          }
          break;
 
-      // * Detail of ports history (plugins/fusinvsnmp/report/switch_ports.history.php)
       case 'PluginFusioninventoryNetworkPortLog' :
          switch ($table.'.'.$field) {
 
@@ -2525,7 +2524,6 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
 
          break;
 
-      // * Detail of ports history (plugins/fusinvsnmp/report/switch_ports.history.php)
       case 'PluginFusioninventoryNetworkPortLog' :
          switch ($table.".".$field) {
 
