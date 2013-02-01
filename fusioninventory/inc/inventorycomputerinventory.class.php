@@ -165,13 +165,14 @@ class PluginFusioninventoryInventoryComputerInventory {
             $input['uuid'] = $a_computerinventory['computer']['uuid'];
          }
          foreach($a_computerinventory['networkport'] as $network) {
-            if (((isset($network['virtualdev'])) AND ($network['virtualdev'] != '1'))
+            if (((isset($network['virtualdev'])) 
+                    && ($network['virtualdev'] != 1))
                     OR (!isset($network['virtualdev']))){
                if ((isset($network['mac'])) AND (!empty($network['mac']))) {
                   $input['mac'][] = $network['mac'];
                }
                foreach ($network['ipaddress'] as $ip) {
-                  if ($ip != '127.0.0.1' AND $ip != '::1') {
+                  if ($ip != '127.0.0.1' && $ip != '::1') {
                      $input['ip'][] = $ip;
                   }
                }
@@ -180,6 +181,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                }
             }
          }
+         
          if ((isset($a_computerinventory['computer']['os_license_number']))
                AND (!empty($a_computerinventory['computer']['os_license_number']))) {
             $input['mskey'] = $a_computerinventory['computer']['os_license_number'];
@@ -264,10 +266,19 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          if ((isset($a_computerinventory['computer']['domains_id'])) 
                     AND (!empty($a_computerinventory['computer']['domains_id']))) {
-               $input['domain'] = $a_computerinventory['computer']['domains_id'];
+               $inputdb['domain'] = $a_computerinventory['computer']['domains_id'];
             }
          if (isset($a_computerinventory['computer']['serial'])) {
-            $input['serial'] = $a_computerinventory['computer']['serial'];
+            $inputdb['serial'] = $a_computerinventory['computer']['serial'];
+         }
+         if (isset($a_computerinventory['computer']['uuid'])) {
+            $inputdb['uuid'] = $a_computerinventory['computer']['uuid'];
+         }
+         if (isset($input['ip'])) {
+            $inputdb['ip'] = $input['ip'];
+         }
+         if (isset($input['mac'])) {
+            $inputdb['mac'] = $input['mac'];
          }
          if ($pfConfig->getValue('transfers_id_auto') != '0') {
             $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();

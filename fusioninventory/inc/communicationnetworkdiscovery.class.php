@@ -216,13 +216,16 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $inputdb['date'] = date("Y-m-d H:i:s");
          $inputdb['itemtype'] = $input['itemtype'];
          if (isset($input['serial'])) {
-            $input['serialnumber'] = $input['serial'];
+            $input['serial'] = $input['serial'];
          }
          if (isset($input['ip'])) {
             $inputdb['ip'] = exportArrayToDB($input['ip']);
          }
          if (isset($input['mac'])) {
             $inputdb['mac'] = exportArrayToDB($input['mac']);
+         }
+         if (isset($input['uuid'])) {
+            $inputdb['uuid'] = $input['uuid'];
          }
          $inputdb['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
          $inputdb['method'] = 'netdiscovery';

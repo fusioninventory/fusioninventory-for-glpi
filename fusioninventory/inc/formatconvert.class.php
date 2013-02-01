@@ -623,9 +623,9 @@ class PluginFusioninventoryFormatconvert {
             $a_networknames = array();
             foreach ($array['NETWORKS'] as $a_networks) {
                $virtual_import = 1;
-               if ($pfConfig->getValue("component_networkcardvirtual") == '0') {
+               if ($pfConfig->getValue("component_networkcardvirtual") == 0) {
                   if (isset($a_networks['VIRTUALDEV'])
-                          AND $a_networks['VIRTUALDEV']=='1') {
+                          && $a_networks['VIRTUALDEV'] == 1) {
 
                      $virtual_import = 0;
                   }
@@ -640,8 +640,15 @@ class PluginFusioninventoryFormatconvert {
                                                     'IPADDRESS6'  => 'ip',
                                                     'VIRTUALDEV'  => 'virtualdev',
                                                     'IPSUBNET'    => 'subnet'));
-                  if (isset($array_tmp['name'])
-                       && $array_tmp['name'] != '') {
+                  if ((isset($array_tmp['name'])
+                          && $array_tmp['name'] != '')
+                       || (isset($array_tmp['mac'])
+                          && $array_tmp['mac'] != '')) {
+                     
+                     if (!isset($array_tmp['virtualdev'])
+                             || $array_tmp['virtualdev'] != 1) {
+                        $array_tmp['virtualdev'] = 0;
+                     }
                      
                      $array_tmp['mac'] = strtolower($array_tmp['mac']);
                      if (isset($a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']])) {
