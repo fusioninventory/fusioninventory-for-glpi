@@ -183,8 +183,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     */
    function getComments() {
 
-      $comment = __('Useragent', 'fusioninventory').' : '.$this->fields['useragent'].'<br/>
-         '.__('Last contact', 'fusioninventory').' : '.Html::convDateTime($this->fields['last_contact']).' minutes';
+      $comment = __('Useragent', 'fusioninventory').' : '.$this->fields['useragent'].'<br/>'.
+         __('Last contact', 'fusioninventory').' : '.
+         Html::convDateTime($this->fields['last_contact']).' minutes';
 
       if (!empty($comment)) {
          return Html::showToolTip($comment, array('display' => false));
@@ -239,7 +240,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $oComputer = new Computer();
          $oComputer->getFromDB($this->fields["computers_id"]);
          echo $oComputer->getLink(1);
-         echo "<input type='hidden' name='computers_id' value='".$this->fields["computers_id"]."'/>";
+         echo "<input type='hidden' name='computers_id' ".
+                 "value='".$this->fields["computers_id"]."'/>";
       } else {
          Computer_Item::dropdownConnect("Computer", "Computer", 'computers_id',
                                         $_SESSION['glpiactive_entity']);
@@ -266,9 +268,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
+      echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
+              "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_networkdiscovery", $this->fields["threads_networkdiscovery"], 1, 400);
+      Dropdown::showInteger("threads_networkdiscovery", 
+                            $this->fields["threads_networkdiscovery"], 
+                            1, 
+                            400);
       echo "</td>";
       echo "<td>".__('Useragent', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
@@ -277,9 +283,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
+      echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
+              "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_networkinventory", $this->fields["threads_networkinventory"], 1, 400);
+      Dropdown::showInteger("threads_networkinventory", 
+                            $this->fields["threads_networkinventory"],  
+                            1,  
+                            400);
       echo "</td>";
       echo "<td>".__('Last contact', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
@@ -315,7 +325,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       global $DB;
 
       $query = "SELECT * FROM `".$this->getTable()."`
-      WHERE `device_id`='".$device_id."' LIMIT 1";
+         WHERE `device_id`='".$device_id."' LIMIT 1";
 
       $agent = array();
       $result = $DB->query($query);
@@ -362,7 +372,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                }
                $input['last_contact'] = date("Y-m-d H:i:s");
                if (isset($_SERVER['HTTP_USER_AGENT'])) {
-                  $input['useragent']    = $_SERVER['HTTP_USER_AGENT'];
+                  $input['useragent'] = $_SERVER['HTTP_USER_AGENT'];
                }
                $pfAgent->update($input);
                return $data['id'];
@@ -457,7 +467,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $a_agent = $this->find("`computers_id`='".$computers_id."'", "", 1);
       // Is this computer already linked to an agent?
-      if ($agent = array_shift($a_agent)) {
+      $agent = array_shift($a_agent);
+      if (is_array($agent)) {
 
          // relation
          if ($agent['device_id'] != $device_id) {
@@ -524,7 +535,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<tr>";
       echo "<th colspan='2'>";
       echo __('Agent state', 'fusioninventory');
-
       echo "</th>";
       echo "</tr>";
 
@@ -536,7 +546,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $pfAgent = new PluginFusioninventoryAgent();
       $pfAgent->getFromDB($agent_id);
       echo $pfAgent->getLink(1);
-
       echo "</td>";
       echo "</tr>";
 
@@ -559,18 +568,15 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
          case 'running':
             echo __('Running');
-
             break;
 
          case 'noanswer':
             echo __('Impossible to communicate with agent!', 'fusioninventory');
-
             break;
 
          case 'waiting':
             $waiting = 1;
             echo __('Available');
-
             echo "<input type='hidden' name='ip' value='".$ip."' />";
             echo "<input type='hidden' name='agent_id' value='".$agent_id."' />";
             break;
@@ -588,7 +594,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          echo "<tr>";
          echo "<th colspan='2'>";
          echo "<input name='startagent' value=\"".__('Force inventory', 'fusioninventory').
-
             "\" class='submit' type='submit'>";
          echo "</th>";
          echo "</tr>";
@@ -750,7 +755,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td width='50%'>";
       $array = explode("/", $_SERVER['HTTP_REFERER']);
-      $create_url = $array[0]."//".$array[2].  str_replace("front/wizard.php", "", $_SERVER['PHP_SELF']);
+      $create_url = $array[0]."//".$array[2].
+              str_replace("front/wizard.php", "", $_SERVER['PHP_SELF']);
       echo __('Communication url of the server', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
