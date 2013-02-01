@@ -185,8 +185,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             echo "<input type='text' name='filename' id='server_filename$rand'".
                " style='width:120px;float:left' />";
             echo "<input type='button' class='submit' value='".__("Choose", 'fusioninventory').
-               "' onclick='fileModal.show();' style='width:50px' />";
-            Ajax::createModalWindow('fileModal', 
+               "' onclick='fileModal$rand.show();' style='width:50px' />";
+            Ajax::createModalWindow("fileModal$rand", 
                         $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/deployfilemodal.php",
                         array('title' => __('Select the file on server', 'fusioninventory'), 
                         'extraparams' => array(
@@ -216,6 +216,121 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "</tr></table>";
    }
 
+   static function showServerFileTree($params) {
+      global $CFG_GLPI;
+
+      $rand = $params['rand'];
+
+      echo "<script type='javascript'>";
+      echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
+         dataUrl:'".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/serverfilestreesons.php'
+      });";
+
+      echo "var Tree_Category$rand = new Ext.tree.TreePanel({
+         collapsible      : false,
+         animCollapse     : false,
+         border           : false,
+         id               : 'tree_projectcategory$rand',
+         el               : 'tree_projectcategory$rand',
+         autoScroll       : true,
+         animate          : false,
+         enableDD         : true,
+         containerScroll  : true,
+         height           : 320,
+         width            : 770,
+         loader           : Tree_Category_Loader$rand,
+         rootVisible      : false, 
+         listeners: {
+            click: function(node, event){
+               if (node.leaf == true) {
+                  console.log('server_filename$rand');
+                  Ext.get('server_filename$rand').dom.value = node.id;
+                  fileModal$rand.hide();
+               }
+            }
+         }
+      });";
+
+      // SET the root node.
+      echo "var Tree_Category_Root$rand = new Ext.tree.AsyncTreeNode({
+         text     : '',
+         draggable   : false,
+         id    : '-1'                  // this IS the id of the startnode
+      });
+      Tree_Category$rand.setRootNode(Tree_Category_Root$rand);";
+
+      // Render the tree.
+      echo "Tree_Category$rand.render();
+            Tree_Category_Root$rand.expand();";
+
+      echo "</script>";
+
+      echo "<div id='tree_projectcategory$rand' ></div>";
+      echo "</div>";
+   }
+
+   static function getServerFileTree($params) {
+
+      $nodes = array();
+
+      if (isset($params['node'])) {
+
+         //root node
+         $dir = "/var/www/glpi"; // TODO : add config option as 0.83 version
+
+         // leaf node
+         if ($params['node'] != -1) {
+            $dir = $params['node'];
+         }
+         
+         if ($handle = opendir($dir)) {
+            $folders = $files = array();
+
+            //list files in dir selected
+            //we store folders and files separately to sort them alphabeticaly separatly
+            while (false !== ($entry = readdir($handle))) {
+               if ($entry != "." && $entry != "..") {
+                  $filepath = $dir."/".$entry;
+                  if (is_dir($filepath)) {
+                     $folders[$filepath] = $entry;
+                  } else {
+                     $files[$filepath] = $entry;
+                  }
+               }
+            }
+
+            //sort folders and files (and maintain index association)
+            asort($folders);
+            asort($files);
+
+            //add folders in json
+            foreach ($folders as $filepath => $entry) {
+               $path['text'] = $entry;
+               $path['id'] = $filepath;
+               $path['draggable'] = false;
+               $path['leaf']      = false;
+               $path['cls']       = 'folder';
+
+               $nodes[] = $path;
+            }
+
+            //add files in json
+            foreach ($files as $filepath => $entry) {
+               $path['text'] = $entry;
+               $path['id'] = $filepath;
+               $path['draggable'] = false;
+               $path['leaf']      = true;
+               $path['cls']       = 'file';
+
+               $nodes[] = $path;
+            }
+
+            closedir($handle);
+         }        
+      }
+
+      print json_encode($nodes);
+   }
 
 
    static function getExtensionsWithAutoAction() {
