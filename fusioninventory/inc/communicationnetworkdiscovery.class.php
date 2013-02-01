@@ -207,7 +207,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $a_text[] = "[".$key."]:".$data;
             }
          }
-         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==importdenied== '.implode(", ", $a_text);
+         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==importdenied== '.
+                                                                  implode(", ", $a_text);
          $this->addtaskjoblog();
 
          $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
@@ -301,12 +302,14 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $_SESSION['glpiactiveentities_string'] = "'".$entities_id."'";
          }
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-               '[==detail==] ==addtheitem== '.$item->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
+               '[==detail==] ==addtheitem== '.$item->getTypeName().
+               ' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
       } else {
 
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
-               '[==detail==] ==updatetheitem== '.$item->getTypeName().' [['.$itemtype.'::'.$items_id.']]';
+               '[==detail==] ==updatetheitem== '.$item->getTypeName().
+               ' [['.$itemtype.'::'.$items_id.']]';
          $this->addtaskjoblog();
       }
       $item->getFromDB($items_id);
@@ -331,14 +334,18 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $input = array();
       $input['id'] = $item->getID();
 
-      $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($item->getType()), $item->getID());
+      $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($item->getType()), 
+                                                             $item->getID());
 
       if (!in_array('name', $a_lockable)) {
-         if (isset($arrayinventory['NETBIOSNAME']) AND !empty($arrayinventory['NETBIOSNAME'])) {
+         if (isset($arrayinventory['NETBIOSNAME']) 
+                 && !empty($arrayinventory['NETBIOSNAME'])) {
             $input['name'] = $arrayinventory['NETBIOSNAME'];
-         } else if (isset($arrayinventory['SNMPHOSTNAME']) AND !empty($arrayinventory['SNMPHOSTNAME'])) {
+         } else if (isset($arrayinventory['SNMPHOSTNAME']) 
+                 && !empty($arrayinventory['SNMPHOSTNAME'])) {
             $input['name'] = $arrayinventory['SNMPHOSTNAME'];
-         } else if (isset($arrayinventory['DNSHOSTNAME']) AND !empty($arrayinventory['DNSHOSTNAME'])) {
+         } else if (isset($arrayinventory['DNSHOSTNAME']) 
+                 &&!empty($arrayinventory['DNSHOSTNAME'])) {
             $input['name'] = $arrayinventory['DNSHOSTNAME'];
          }
       }
@@ -368,7 +375,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                if (isset($arrayinventory['WORKGROUP'])) {
                   $domain = new Domain();
                   if (!in_array('domains_id', $a_lockable)) {
-                     $input['domains_id'] = $domain->import(array('name'=>$arrayinventory['WORKGROUP']));
+                     $input['domains_id'] = $domain->import(
+                               array('name'=>$arrayinventory['WORKGROUP'])
+                             );
                   }
                }
                $item->update($input);
@@ -464,7 +473,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             if (isset($arrayinventory['MODELSNMP']) AND !empty($arrayinventory['MODELSNMP'])) {
                $pfModel = new PluginFusioninventorySnmpmodel();
                $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
-               if (($model_id == '0') AND (isset($arrayinventory['DESCRIPTION'])) AND (!empty($arrayinventory['DESCRIPTION']))) {
+               if (($model_id == '0') 
+                       && (isset($arrayinventory['DESCRIPTION'])) 
+                       && (!empty($arrayinventory['DESCRIPTION']))) {
                   $model_id = $pfModel->getModelBySysdescr($arrayinventory['DESCRIPTION']);
                }
                if ($model_id != '0') {
@@ -576,7 +587,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             
             // Update SNMP informations
             $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-            $a_snmpnetworkequipments = $pfNetworkEquipment->find("`networkequipments_id`='".$item->getID()."'");
+            $a_snmpnetworkequipments = $pfNetworkEquipment->find(
+                       "`networkequipments_id`='".$item->getID()."'"
+                    );
             $input = array();
             if (count($a_snmpnetworkequipments) > 0) {
                $addItem = false;
@@ -617,7 +630,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                   AND `items_id`='".$item->getID()."'");
             $update = 0;
             foreach ($a_printerports as $a_printerport) {
-               if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
+               if (isset($arrayinventory['MAC']) 
+                       && !empty($arrayinventory['MAC'])) {
                   $arrayinventory['MAC'] = strtolower($arrayinventory['MAC']);
                   if ($a_printerport['mac'] == $arrayinventory['MAC']) {
                      $a_printerport['mac'] = $arrayinventory['MAC'];
@@ -638,7 +652,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             if ($update == '0') {
                $input = array();
-               if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
+               if (isset($arrayinventory['MAC']) 
+                       && !empty($arrayinventory['MAC'])) {
                   $input['mac'] = $arrayinventory['MAC'];
                }
                if (isset($arrayinventory['IP'])) {
@@ -671,7 +686,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                                           "Printer");
             }
             $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
-            if (isset($arrayinventory['MODELSNMP']) AND !empty($arrayinventory['MODELSNMP'])) {
+            if (isset($arrayinventory['MODELSNMP']) 
+                    && !empty($arrayinventory['MODELSNMP'])) {
                $pfModel = new PluginFusioninventorySnmpmodel();
                $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
                if ($model_id != '0') {
