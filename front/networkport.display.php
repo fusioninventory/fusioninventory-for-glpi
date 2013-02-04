@@ -36,6 +36,12 @@ if (!defined('GLPI_ROOT')) {
    include ("../../../inc/includes.php");
 }
 
+// Manage for networkport display in networkequipment (glpi or fusion view
+if (isset($_POST['selectview'])) {
+   $_SESSION['plugin_fusioninventory_networkportview'] = $_POST['selectview'];
+   Html::back();
+}
+
 if (isset($_POST["itemtype"])) {
    $itemtype = $_POST["itemtype"];
 } else if (isset($_GET["itemtype"])) {

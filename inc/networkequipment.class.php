@@ -124,6 +124,9 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       if (!isset($_SESSION['plugin_fusioninventory_networkportview'])) {
          $_SESSION['plugin_fusioninventory_networkportview'] = 'fusioninventory';
       }
+      
+      echo "<form action='".$CFG_GLPI['root_doc'].
+         "/plugins/fusioninventory/front/networkport.display.php' method='post'>";
       echo __('Display the view', 'fusioninventory');
       echo ' <i>'.$_SESSION['plugin_fusioninventory_networkportview']."</i>. ";
       echo __('If you prefer, you can display the view', 'fusioninventory');
@@ -138,6 +141,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          NetworkPort::showForItem($item);
          return;
       } 
+      Html::closeForm();
       
       $monitoring = 0;
       if (class_exists("PluginMonitoringNetworkport")) {
