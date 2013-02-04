@@ -721,7 +721,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "<tr class='tab_bg_1 center' height='40'".$background_img.">";
 
       if ($aggrega) {
-         echo "<td></td><td>";
+         echo "<td style='background-color: #f2f2f2;'></td><td>";
       }
       if (!$aggrega) {
          if ($data['instantiation_type'] == 'NetworkPortAggregate') {
