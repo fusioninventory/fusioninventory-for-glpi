@@ -2665,20 +2665,24 @@ function plugin_item_add_fusioninventory($parm) {
    switch (get_class($parm)) {
 
       case 'NetworkPort_NetworkPort':
-      $networkPort = new NetworkPort();
-      $networkPort->getFromDB($parm->fields['networkports_id_1']);
-      if ($networkPort->fields['itemtype'] == 'NetworkEquipment') {
-         PluginFusioninventoryNetworkPortLog::addLogConnection("make",
-                                                               $parm->fields['networkports_id_1']);
-      } else {
-         $networkPort->getFromDB($parm->fields['networkports_id_2']);
+         $networkPort = new NetworkPort();
+         $networkPort->getFromDB($parm->fields['networkports_id_1']);
          if ($networkPort->fields['itemtype'] == 'NetworkEquipment') {
             PluginFusioninventoryNetworkPortLog::addLogConnection("make",
-                                                               $parm->fields['networkports_id_2']);
+                                                                  $parm->fields['networkports_id_1']);
+         } else {
+            $networkPort->getFromDB($parm->fields['networkports_id_2']);
+            if ($networkPort->fields['itemtype'] == 'NetworkEquipment') {
+               PluginFusioninventoryNetworkPortLog::addLogConnection("make",
+                                                                  $parm->fields['networkports_id_2']);
+            }
          }
-      }
-      break;
-
+         break;
+         
+      case 'NetworkPort':
+         $pfNetworkPort = new PluginFusioninventoryNetworkPort();
+         $pfNetworkPort->add(array('networkports_id' => $parm->fields['id']));
+         break;
    }
    return $parm;
 }

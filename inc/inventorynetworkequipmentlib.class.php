@@ -265,9 +265,11 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                $a_port['items_id'] = $items_id;
                $a_port['itemtype'] = 'NetworkEquipment';
                $networkports_id = $networkPort->add($a_port);
-               $a_port['networkports_id'] = $networkports_id;
-               $pfNetworkPort->add($a_port);
-
+               unset($a_port['id']);
+               $a_pfnetworkport_DB = current($pfNetworkPort->find(
+                       "`networkports_id`='".$networkports_id."'", '', 1));
+               $a_port['id'] = $a_pfnetworkport_DB['id'];
+               $pfNetworkPort->update($a_port);
             } else {
                // Update port
                $networkports_id = $a_ports_DB['id'];

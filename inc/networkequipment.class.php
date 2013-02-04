@@ -142,6 +142,29 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          return;
       } 
       Html::closeForm();
+
+      $canedit = $item->can($item->getID(), 'w');
+      if ($canedit) {
+         $networkPort = new NetworkPort();
+         echo "\n<form method='get' action='" . $networkPort->getFormURL() ."'>\n";
+         echo "<input type='hidden' name='items_id' value='".$item->getID()."'>\n";
+         echo "<input type='hidden' name='itemtype' value='".$item->getType()."'>\n";
+         echo "<div class='firstbloc'><table class='tab_cadre_fixe'>\n";
+         echo "<tr class='tab_bg_2'><td class='center'>\n";
+         _e('Network port type to be added');
+         echo "&nbsp;";
+         Dropdown::showFromArray('instantiation_type',
+                                 NetworkPort::getNetworkPortInstantiationsWithNames(),
+                                 array('value' => 'NetworkPortEthernet'));
+         echo "</td>\n";
+         echo "<td class='tab_bg_2 center' width='50%'>";
+         _e('Add several ports');
+         echo "&nbsp;<input type='checkbox' name='several' value='1'></td>\n";
+         echo "<td>\n";
+         echo "<input type='submit' name='create' value=\""._sx('button','Add')."\" class='submit'>\n";
+         echo "</td></tr></table></div>\n";
+         Html::closeForm();
+      }
       
       $monitoring = 0;
       if (class_exists("PluginMonitoringNetworkport")) {

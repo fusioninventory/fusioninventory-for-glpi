@@ -173,7 +173,8 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['use_massive_action']['fusioninventory'] = 1;
 
       $PLUGIN_HOOKS['item_add']['fusioninventory'] = array(
-            'NetworkPort_NetworkPort'=>'plugin_item_add_fusioninventory'
+            'NetworkPort_NetworkPort' => 'plugin_item_add_fusioninventory',
+            'NetworkPort'             => 'plugin_item_add_fusioninventory'
           );
 
 
