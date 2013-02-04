@@ -5653,6 +5653,32 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
    PluginFusioninventorySnmpmodel::importAllModels();
 
+   /*
+    * Manage devices with is_dynamic
+    */
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_networkequipments`";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $DB->query("UPDATE `glpi_networkequipments` SET `is_dynamic`='1'
+                        WHERE `id`='".$data['networkequipments_id']."'");
+      }
+      
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputercomputers`";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $DB->query("UPDATE `glpi_computers` SET `is_dynamic`='1'
+                        WHERE `id`='".$data['computers_id']."'");
+      }
+
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_printers`";
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $DB->query("UPDATE `glpi_printers` SET `is_dynamic`='1'
+                        WHERE `id`='".$data['printers_id']."'");
+      }
+      
+   
+   
    // Update networkports types
    $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
    $pfNetworkporttype->init();
