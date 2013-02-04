@@ -677,7 +677,6 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       
       $nw = new NetworkPort_NetworkPort();
       $networkName = new NetworkName();
-      $iPAddress = new IPAddress();
       
       $background_img = "";
       if (($data["trunk"] == "1") AND (strstr($data["ifstatus"], "up")
