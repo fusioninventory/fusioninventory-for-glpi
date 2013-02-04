@@ -307,7 +307,10 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                   $link1 = $item->getLink(1);
                   $link = str_replace($item->getName(0), $NetworkPort->fields["mac"],
                                       $item->getLink());
-                  $link2 = str_replace($item->getName(0), $NetworkPort->fields["ip"],
+                  // Get ips
+                  $a_ips = PluginFusioninventoryToolbox::getIPforDevice('PluginFusioninventoryUnknownDevice', 
+                                                                        $item->getID());
+                  $link2 = str_replace($item->getName(0), implode(", ", $a_ips),
                                        $item->getLink());
                   if ($item->fields['accepted'] == 1) {
                      echo "<tr>";
