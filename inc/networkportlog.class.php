@@ -400,7 +400,6 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                WHERE `networkports_id_source`='".$ID_port."'
                   OR `networkports_id_destination`='".$ID_port."'
                ORDER BY `date_mod` DESC
-               LIMIT 30
                )
             AS `DerivedTable1`
             UNION ALL
@@ -416,12 +415,10 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                         `glpi_plugin_fusioninventory_mappings`.`id`
                WHERE `networkports_id`='".$ID_port."'
                ORDER BY `date_mod` DESC
-               LIMIT 30
                )
             AS `DerivedTable2`)
          AS `MainTable`
-         ORDER BY `date_mod` DESC, `id` DESC
-         LIMIT 30";
+         ORDER BY `date_mod` DESC, `id` DESC";
 
       $text = "<table class='tab_cadre' cellpadding='5' width='950'>";
 
