@@ -2680,9 +2680,12 @@ function plugin_item_add_fusioninventory($parm) {
          break;
          
       case 'NetworkPort':
-         $pfNetworkPort = new PluginFusioninventoryNetworkPort();
-         $pfNetworkPort->add(array('networkports_id' => $parm->fields['id']));
+         if ($parm->fields['itemtype'] == 'NetworkEquipment') {
+            $pfNetworkPort = new PluginFusioninventoryNetworkPort();
+            $pfNetworkPort->add(array('networkports_id' => $parm->fields['id']));
+         }
          break;
+         
    }
    return $parm;
 }
