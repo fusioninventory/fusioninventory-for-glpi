@@ -135,7 +135,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       foreach ($maps as $mapfields) {
       # TODO: untested
          $listName[$mapfields['itemtype']."-".$mapfields['name']]=
-            $mapping->getTranslation($mapfields["locale"]);
+            $mapping->getTranslation($mapfields);
       }
 
       if (!empty($listName)) {

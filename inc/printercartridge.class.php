@@ -70,7 +70,7 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
          $mapping->getFromDB($a_cartridge['plugin_fusioninventory_mappings_id']);
-         echo $mapping->getTranslation($mapping);
+         echo $mapping->getTranslation($mapping['locale']);
          echo " : ";
          echo "</td>";
          echo "<td align='center'>";

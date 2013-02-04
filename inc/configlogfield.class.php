@@ -165,7 +165,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
          while ($data=$DB->fetch_array($result)) {
             echo "<tr class='tab_bg_1'>";
             echo "<td align='left'>";
-            echo $mapping->getTranslation($data['locale']);
+            echo $mapping->getTranslation($data);
             echo "</td>";
 
             echo "<td align='center'>";
