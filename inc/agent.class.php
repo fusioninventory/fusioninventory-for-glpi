@@ -387,45 +387,27 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    /**
    * Get all IP of an agent or a computer
    *
-   * @param $computers_id integer ID of the agent
+   * @param $items_id integer ID of the item
    * @param $type 'Agent' by default to get IP of agent or of a computer if set other text
    *
    * @return Array with all IP of this agent or computer
    *
    **/
-   function getIPs($computers_id, $type = 'Agent') {
+   function getIPs($items_id, $type = 'Agent') {
       $ip = array();
-      $Computers_id = 0;
+      $computers_id = 0;
       if ($type == 'Agent') {
-         if ($this->getFromDB($computers_id)) {
-            $Computers_id = $this->fields['computers_id'];
+         if ($this->getFromDB($items_id)) {
+            $computers_id = $this->fields['computers_id'];
          } else {
             return array();
          }
       } else {
-         $Computers_id = $computers_id;
+         $computers_id = $items_id;
       }
-      if ($Computers_id != "0") {
-         $NetworkPort = new NetworkPort();
-         $networkName = new NetworkName();
-         $iPAddress = new IPAddress();
-         $a_ports = $NetworkPort->find("`itemtype`='Computer'
-                                          AND `items_id`='".$Computers_id."'
-                                             AND `instantiation_type` != 'NetworkPortLocal'");
-         foreach($a_ports as $a_port) {
-            $a_networknames = $networkName->find("`itemtype`='NetworkPort'
-                                                 AND `items_id`='".$a_port['id']."'");
-            foreach ($a_networknames as $a_networkname) {
-               $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
-                                                 AND `items_id`='".$a_networkname['id']."'");
-               foreach($a_ipaddresses as $data) {
-                  if ($data['name'] != '127.0.0.1'
-                          && $data['name'] != '::1') {
-                     $ip[] = $data['name'];
-                  }
-               }
-            }
-         }
+      
+      if ($Computers_id > 0) {
+         $ip = PluginFusioninventoryToolbox::getIPforDevice('Computer', $computers_id);
       }
       return $ip;
    }
