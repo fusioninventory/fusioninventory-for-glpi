@@ -383,10 +383,14 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                                                                  "Merged with ".$changestate);
             }
       }
-      $snmpauthlist=$pfConfigSecurity->find("`is_deleted`='0'");
-      if (count($snmpauthlist)){
-         foreach ($snmpauthlist as $snmpauth){
-            $pfToolbox->addAuth($sxml_option, $snmpauth['id']);
+      $a_versions = array(3, 2, 1);
+      foreach ($a_versions as $version) {
+         $snmpauthlist=$pfConfigSecurity->find("`is_deleted`='0' 
+                                                   AND `snmpversion`='".$version."'");
+         if (count($snmpauthlist)){
+            foreach ($snmpauthlist as $snmpauth){
+               $pfToolbox->addAuth($sxml_option, $snmpauth['id']);
+            }
          }
       }
       return $this->message;
