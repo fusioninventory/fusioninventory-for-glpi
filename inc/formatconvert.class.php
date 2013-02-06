@@ -1007,25 +1007,14 @@ class PluginFusioninventoryFormatconvert {
          if (!(!isset($array_tmp['name'])
                  || $array_tmp['name'] == '')) {
             if (count($array_tmp) > 0) {
-               if ($array_tmp['manufacturers_id'] != '') {
-                  // Replace Manufacturer::processName
-                  $output = array();
-                  $rulecollection = new RuleDictionnarySoftwareCollection();
-//                  $output = $rulecollection->processAllRules(array("name" => stripslashes($array_tmp['manufacturers_id'])),
-//                                                                   $output, array());
-                  if (isset($output["name"])) {
-                     $array_tmp['manufacturers_id'] = $output["name"];
-                  }
-               } else {
-                  $array_tmp['manufacturers_id'] = 0;
-               }
-
-               $res_rule = $rulecollection->processAllRules(array(
-                                                               "name"         => $array_tmp['name'],
-                                                               "manufacturer" => $array_tmp['manufacturers_id'],
-                                                               "old_version"  => $array_tmp['version'],
-                                                               "entities_id"  => $entities_id_software),
-                       array(), array(), TRUE);
+               $res_rule = $rulecollection->processAllRules(
+                                            array(
+                                                "name"         => $array_tmp['name'],
+                                                "manufacturer" => $array_tmp['manufacturers_id'],
+                                                "old_version"  => $array_tmp['version'],
+                                                "entities_id"  => $entities_id_software
+                                             )
+                                          );
 
                if (isset($res_rule['_ignore_import']) 
                        && $res_rule['_ignore_import'] == 1) {
