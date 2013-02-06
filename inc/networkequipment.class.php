@@ -162,7 +162,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          _e('Add several ports');
          echo "&nbsp;<input type='checkbox' name='several' value='1'></td>\n";
          echo "<td>\n";
-         echo "<input type='submit' name='create' value=\""._sx('button','Add')."\" ".
+         echo "<input type='submit' name='create' value=\""._sx('button', 'Add')."\" ".
                  "class='submit'>\n";
          echo "</td></tr></table></div>\n";
          Html::closeForm();

@@ -86,7 +86,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
          return new $name ();
       }
       else {
-         return null;
+         return NULL;
       }
    }
 

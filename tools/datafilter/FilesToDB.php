@@ -6,7 +6,7 @@ fileUSBtoDB();
 
 
 function filePCItoDB() {
-   $pciFile = fopen("pci.ids","r");
+   $pciFile = fopen("pci.ids", "r");
 
    $sql_creation = "DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_pcivendors`;
 
@@ -77,7 +77,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
 
 
 function fileUSBtoDB() {
-    $usbFile = fopen("usb.ids","r");
+    $usbFile = fopen("usb.ids", "r");
 
    $sql_creation = "DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_usbvendors`;
 
@@ -147,31 +147,27 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
 
 
 
-function fileOUItoTreeFolder()
-{
-    if(!is_dir(LIBSERVERFUSIONINVENTORY_STORAGELOCATION."/DataFilter/oui"))
-    {
-    $ouiFile = fopen(dirname(__FILE__)."/oui.txt","r");
+function fileOUItoTreeFolder() {
+   if(!is_dir(LIBSERVERFUSIONINVENTORY_STORAGELOCATION."/DataFilter/oui")) {
+      $ouiFile = fopen(dirname(__FILE__)."/oui.txt", "r");
 
-    while(!feof($ouiFile))
-    {
-        $buffer = fgets($ouiFile, 4096);
+      while(!feof($ouiFile)) {
+         $buffer = fgets($ouiFile, 4096);
 
-        $stack = array();
-        if (preg_match("/^(\S+)\s*\(hex\)\t{2}(.+)/i", $buffer, $stack))
-        {
-
+         $stack = array();
+         if (preg_match("/^(\S+)\s*\(hex\)\t{2}(.+)/i", $buffer, $stack)) {
             $OUI = $stack[1];
             $OUI = strtr($OUI, "-", ":");
             $organization = $stack[2];
 
-            if (!is_dir(LIBSERVERFUSIONINVENTORY_STORAGELOCATION."/DataFilter/oui/$OUI/$organization"))
-            {
-                mkdir (LIBSERVERFUSIONINVENTORY_STORAGELOCATION."/DataFilter/oui/$OUI/$organization",0777,TRUE);
+            if (!is_dir(LIBSERVERFUSIONINVENTORY_STORAGELOCATION."/DataFilter/oui/$OUI/$organization")) {
+              mkdir(LIBSERVERFUSIONINVENTORY_STORAGELOCATION."/DataFilter/oui/$OUI/$organization", 
+                    0777, 
+                    TRUE);
             }
-
-        }
-    }
-    }
+         }
+      }
+   }
 }
+
 ?>

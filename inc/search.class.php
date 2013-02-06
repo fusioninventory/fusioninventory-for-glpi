@@ -255,7 +255,7 @@ echo "<td colspan='2'>";
                $group       = '';
                $nb_in_group = 0;
 
-               $group .= "<optgroup label=\"".Toolbox::substr($val,0,$str_limit)."\">";
+               $group .= "<optgroup label=\"".Toolbox::substr($val, 0, $str_limit)."\">";
             } else {
                if (!isset($val['nosearch']) || ($val['nosearch'] == FALSE)) {
                   $nb_in_group ++;
@@ -601,14 +601,14 @@ $p = array();
       // Add searched items
       if (count($p['field'])>0) {
          foreach ($p['field'] as $key => $val) {
-            if (!in_array($val,$toview) && $val!='all' && $val!='view') {
+            if (!in_array($val, $toview) && $val!='all' && $val!='view') {
                array_push($toview, $val);
             }
          }
       }
 
       // Add order item
-      if (!in_array($p['sort'],$toview)) {
+      if (!in_array($p['sort'], $toview)) {
          array_push($toview, $p['sort']);
       }
 
@@ -663,7 +663,7 @@ $p = array();
       }
 
       // Search all case :
-      if (in_array("all",$p['field'])) {
+      if (in_array("all", $p['field'])) {
          foreach ($searchopt[$itemtype] as $key => $val) {
             // Do not search on Group Name
             if (is_array($val)) {
@@ -736,8 +736,8 @@ $p = array();
                   $NOT     = 0;
                   $tmplink = "";
                   if (is_array($p['link']) && isset($p['link'][$key])) {
-                     if (strstr($p['link'][$key],"NOT")) {
-                        $tmplink = " ".str_replace(" NOT","",$p['link'][$key]);
+                     if (strstr($p['link'][$key], "NOT")) {
+                        $tmplink = " ".str_replace(" NOT", "", $p['link'][$key]);
                         $NOT     = 1;
                      } else {
                         $tmplink = " ".$p['link'][$key];
@@ -753,7 +753,7 @@ $p = array();
                      }
                      // Find key
                      $item_num = array_search($p['field'][$key], $toview);
-                     $HAVING .= Search::addHaving($LINK, $NOT,$itemtype, $p['field'][$key],
+                     $HAVING .= Search::addHaving($LINK, $NOT, $itemtype, $p['field'][$key],
                                                 $p['searchtype'][$key], $p['contains'][$key], 0,
                                                 $item_num);
                   } else {
@@ -919,7 +919,7 @@ $p = array();
       // Meta Search / Search All / Count tickets
       if ($_SESSION["glpisearchcount2"][$itemtype]>0
           || !empty($HAVING)
-          || in_array('all',$p['field'])) {
+          || in_array('all', $p['field'])) {
 
          $GROUPBY = " GROUP BY `$itemtable`.`id`";
       }
@@ -946,12 +946,12 @@ $p = array();
                $LINK = "";
 
                // For AND NOT statement need to take into account all the group by items
-               if (strstr($p['link2'][$key],"AND NOT")
+               if (strstr($p['link2'][$key], "AND NOT")
                    || isset($searchopt[$p['itemtype2'][$key]][$p['field2'][$key]]["usehaving"])) {
 
                   $NOT = 0;
-                  if (strstr($p['link2'][$key],"NOT")) {
-                     $tmplink = " ".str_replace(" NOT","",$p['link2'][$key]);
+                  if (strstr($p['link2'][$key], "NOT")) {
+                     $tmplink = " ".str_replace(" NOT", "", $p['link2'][$key]);
                      $NOT     = 1;
                   } else {
                      $tmplink = " ".$p['link2'][$key];
@@ -968,7 +968,7 @@ $p = array();
                   // Manage Link if not first item
                   if (is_array($p['link2'])
                       && isset($p['link2'][$key])
-                      && strstr($p['link2'][$key],"NOT")) {
+                      && strstr($p['link2'][$key], "NOT")) {
 
                      $tmplink = " ".str_replace(" NOT", "", $p['link2'][$key]);
                      $NOT     = 1;
@@ -1079,7 +1079,7 @@ $p = array();
 
          } else {
             $result_num = $DBread->query($query_num);
-            $numrows    = $DBread->result($result_num,0,0);
+            $numrows    = $DBread->result($result_num, 0, 0);
          }
       }
 

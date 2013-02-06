@@ -193,7 +193,7 @@ class Printerinventory extends PHPUnit_Framework_TestCase {
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/fusion0.83/plugins/fusioninventory/front/communication.php";
       if (empty($xmlstring)) {
-         $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+         $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
       } else {
          $xml = simplexml_load_string($xmlstring);
       }

@@ -71,17 +71,17 @@ class PluginFusioninventoryToolbox {
     * @param type $maxlength
     * @return type
     */
-   static function gzdecode($data, &$filename='', &$error='', $maxlength=null) {
+   static function gzdecode($data, &$filename='', &$error='', $maxlength=NULL) {
        $len = strlen($data);
        if ($len < 18 || strcmp(substr($data, 0, 2), "\x1f\x8b")) {
            $error = "Not in GZIP format.";
-           return null;  // Not GZIP format (See RFC 1952)
+           return NULL;  // Not GZIP format (See RFC 1952)
        }
        $method = ord(substr($data, 2, 1));  // Compression method
        $flags  = ord(substr($data, 3, 1));  // Flags
        if ($flags & 31 != $flags) {
            $error = "Reserved bits not allowed.";
-           return null;
+           return NULL;
        }
        // NOTE: $mtime may be negative (PHP integer limitations)
        $mtime = unpack("V", substr($data, 4, 4));
@@ -154,7 +154,7 @@ class PluginFusioninventoryToolbox {
        $bodylen = $len-$headerlen-8;
        if ($bodylen < 1) {
            // IMPLEMENTATION BUG!
-           return null;
+           return NULL;
        }
        $body = substr($data, $headerlen, $bodylen);
        $data = "";

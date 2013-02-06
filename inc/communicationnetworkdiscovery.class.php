@@ -537,10 +537,10 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             
             $NetworkPort = new NetworkPort();
             $a_networkPortAggregates = current($NetworkPort->find(
-                    "`itemtype`='NetworkEquipment' AND `items_id`='".$item->getID()."'
-                       AND `instantiation_type`='NetworkPortAggregate'"
-                    , ""
-                    , 1));
+                    "`itemtype`='NetworkEquipment' AND `items_id`='".$item->getID()."'".
+                       " AND `instantiation_type`='NetworkPortAggregate'",
+                    "",
+                    1));
             $networkports_id = 0;
             if (isset($a_networkPortAggregates['id'])) {
                if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
@@ -564,9 +564,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             
             $networkName = new NetworkName();
             $a_networknames = current($networkName->find(
-                    "`itemtype`='NetworkPort' AND `items_id`='".$networkports_id."'"
-                    , ""
-                    , 1));
+                    "`itemtype`='NetworkPort' AND `items_id`='".$networkports_id."'",
+                    "",
+                    1));
             $networknames_id = 0;
             if (isset($a_networknames['id'])) {
                $networknames_id = $a_networknames['id'];

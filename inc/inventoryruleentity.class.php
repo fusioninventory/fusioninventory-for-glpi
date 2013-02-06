@@ -101,7 +101,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
                      //Get the TAG from the regex's results
                      $res = RuleAction::getRegexResultById($action->fields["value"],
                                                            $this->regex_results[0]);
-                     if ($res != null) {
+                     if (!is_null($res)) {
                         //Get the entity associated with the TAG
                         $target_entity = EntityData::getEntityIDByTag($res);
                         if ($target_entity != '') {

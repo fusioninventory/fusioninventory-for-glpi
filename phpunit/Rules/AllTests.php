@@ -662,20 +662,20 @@ class Rules extends PHPUnit_Framework_TestCase {
 
       // ** Import Computer => Computer must be created in Computer type
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_string($XML['Computer'], 'SimpleXMLElement', LIBXML_NOCDATA);
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/fusion0.84/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
       $pfAgent = new PluginFusioninventoryAgent();
       $a_agent = $pfAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
+      $this->assertEquals(count($a_agent), 1, 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
       $computer = new Computer();
       $a_computer = $computer->find("`name`='port004'");
-      $this->assertEquals(count($a_computer), 1 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
+      $this->assertEquals(count($a_computer), 1, 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
       $computerdata = current($a_computer);
-      $this->assertEquals($computerdata['entities_id'], 0 , 'Problem On computer entity, must be created in root entity instead '.$computerdata['entities_id']);
+      $this->assertEquals($computerdata['entities_id'], 0, 'Problem On computer entity, must be created in root entity instead '.$computerdata['entities_id']);
       $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
+      $this->assertEquals(count($a_unknown), 0, 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
 //      $computer->delete(array('id'=>1), 1);
 
       // ** Import networkequipment  => networkequipment must be created in network equipment (SNMP inventory)
@@ -709,11 +709,11 @@ class Rules extends PHPUnit_Framework_TestCase {
          $this->testSendinventory("toto", $XML['NetworkEquipment'], 0);
          $networkEquipment = new NetworkEquipment();
          $a_switch = $networkEquipment->find("`name`='switch2960-002'");
-         $this->assertEquals(count($a_switch), 1 , 'Problem import switch (switch2960-002) not right created!');
+         $this->assertEquals(count($a_switch), 1, 'Problem import switch (switch2960-002) not right created!');
          $switchdata = current($a_switch);
-         $this->assertEquals($switchdata['entities_id'], 0 , 'Problem On switch entity, must be created in root entity instead '.$switchdata['entities_id']);
+         $this->assertEquals($switchdata['entities_id'], 0, 'Problem On switch entity, must be created in root entity instead '.$switchdata['entities_id']);
          $a_unknown = $pfUnknownDevice->find();
-         $this->assertEquals(count($a_unknown), 0 , 'Problem import switch (switch2960-002), unknown device created');
+         $this->assertEquals(count($a_unknown), 0, 'Problem import switch (switch2960-002), unknown device created');
 //         $networkEquipment->delete(array('id'=>1), 1);
 
        // ** [TODO] Import printer
@@ -743,41 +743,41 @@ class Rules extends PHPUnit_Framework_TestCase {
 
       $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
       $a_computer = $computer->find("`name`='Test2'");
-      $this->assertEquals(count($a_computer), 1 , 'Problem import discovered Computer (Test2) not right created!');
+      $this->assertEquals(count($a_computer), 1, 'Problem import discovered Computer (Test2) not right created!');
       $computerdata = current($a_computer);
-      $this->assertEquals($computerdata['entities_id'], 0 , 'Problem On computer entity, must be created in root entity instead '.$computerdata['entities_id']);
+      $this->assertEquals($computerdata['entities_id'], 0, 'Problem On computer entity, must be created in root entity instead '.$computerdata['entities_id']);
       $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
+      $this->assertEquals(count($a_unknown), 0, 'Problem import discovered Computer (Test2), unknown device created');
 //      $computer->delete(array('id'=>1), 1);
 
 
       // ** Unknowndevice_NetworkEquipment => NetworkEquipment must be created in NetworkEquipment type
       $this->testSendinventory("toto", $XML['Unknowndevice_NetworkEquipment'], 0);
       $a_networkequipment = $networkEquipment->find("`name`='Procurve 2524'");
-      $this->assertEquals(count($a_networkequipment), 1 , 'Problem import discovered networkequipment (Procurve 2524) not right created!');
+      $this->assertEquals(count($a_networkequipment), 1, 'Problem import discovered networkequipment (Procurve 2524) not right created!');
       $switchdata = current($a_networkequipment);
-      $this->assertEquals($switchdata['entities_id'], 0 , 'Problem On switch entity, must be created in root entity instead '.$switchdata['entities_id']);
+      $this->assertEquals($switchdata['entities_id'], 0, 'Problem On switch entity, must be created in root entity instead '.$switchdata['entities_id']);
       $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered networkequipment (Procurve 2524), unknown device created');
+      $this->assertEquals(count($a_unknown), 0, 'Problem import discovered networkequipment (Procurve 2524), unknown device created');
 
 
       // ** Unknowndevice_Printer => Printer must be created in Printer type
       $this->testSendinventory("toto", $XML['Unknowndevice_Printer'], 0);
       $printer = new Printer();
       $a_printer = $printer->find("`name`='COPIEUR-1'");
-      $this->assertEquals(count($a_printer), 1 , 'Problem import discovered printer (COPIEUR-1) not right created!');
+      $this->assertEquals(count($a_printer), 1, 'Problem import discovered printer (COPIEUR-1) not right created!');
       $printerdata = current($a_printer);
-      $this->assertEquals($printerdata['entities_id'], 0 , 'Problem On printer entity, must be created in root entity instead '.$printerdata['entities_id']);
+      $this->assertEquals($printerdata['entities_id'], 0, 'Problem On printer entity, must be created in root entity instead '.$printerdata['entities_id']);
       $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered printer (COPIEUR-1), unknown device created');
+      $this->assertEquals(count($a_unknown), 0, 'Problem import discovered printer (COPIEUR-1), unknown device created');
 
 
       // ** Unknowndevice_notype => type not defined in discovery created into unknown devices
       $this->testSendinventory("toto", $XML['Unknowndevice_notype'], 0);
       $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 1 , 'Problem import discovered device with no type not right created!');
+      $this->assertEquals(count($a_unknown), 1, 'Problem import discovered device with no type not right created!');
       $unknowndata = current($a_unknown);
-      $this->assertEquals($unknowndata['entities_id'], 0 , 'Problem On unknown entity, must be created in root entity instead '.$unknowndata['entities_id']);
+      $this->assertEquals($unknowndata['entities_id'], 0, 'Problem On unknown entity, must be created in root entity instead '.$unknowndata['entities_id']);
       $unknown = current($a_unknown);
       $pfUnknownDevice->delete($unknown, 1);
 
@@ -869,26 +869,26 @@ class Rules extends PHPUnit_Framework_TestCase {
 
       // ** Import Computer XML
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_string($XML['Computer'], 'SimpleXMLElement', LIBXML_NOCDATA);
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/fusion0.84/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
       $pfAgent = new PluginFusioninventoryAgent();
       $a_agent = $pfAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
+      $this->assertEquals(count($a_agent), 1, 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
       $computer = new Computer();
       $a_computer = $computer->find("`name`='port004'");
-      $this->assertEquals(count($a_computer), 2 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
+      $this->assertEquals(count($a_computer), 2, 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
       $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
+      $this->assertEquals(count($a_unknown), 0, 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
 
 
       // ** Import discovered Computer
       $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
       $a_computer = $computer->find("`name`='Test2'");
-      $this->assertEquals(count($a_computer), 2 , 'Problem import discovered Computer (Test2) not right created!');
+      $this->assertEquals(count($a_computer), 2, 'Problem import discovered Computer (Test2) not right created!');
       $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
+      $this->assertEquals(count($a_unknown), 0, 'Problem import discovered Computer (Test2), unknown device created');
 
 
       $rulecollection->delete(array('id'=>$rule_id), 1);
@@ -990,46 +990,46 @@ class Rules extends PHPUnit_Framework_TestCase {
 
       // ** Import Computer XML (have name)
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_string($XML['Computer'], 'SimpleXMLElement', LIBXML_NOCDATA);
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/fusion0.84/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
       $pfAgent = new PluginFusioninventoryAgent();
       $a_agent = $pfAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
+      $this->assertEquals(count($a_agent), 1, 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
       $computer = new Computer();
       $a_computer = $computer->find("`name`='port004'");
-      $this->assertEquals(count($a_computer), 3 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
+      $this->assertEquals(count($a_computer), 3, 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
       $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
+      $this->assertEquals(count($a_unknown), 0, 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
 
 
       // ** Import discovered Computer (have name)
       $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
       $a_computer = $computer->find("`name`='Test2'");
-      $this->assertEquals(count($a_computer), 3 , 'Problem import discovered Computer (Test2) not right created!');
+      $this->assertEquals(count($a_computer), 3, 'Problem import discovered Computer (Test2) not right created!');
       $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
+      $this->assertEquals(count($a_unknown), 0, 'Problem import discovered Computer (Test2), unknown device created');
 
 
       // ** Import Computer XML (not have name)
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $xmltmp = $XML['Computer'];
       $xmltmp = str_replace(">port004<", "><", $xmltmp);
-      $xml = simplexml_load_string($xmltmp,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_string($xmltmp, 'SimpleXMLElement', LIBXML_NOCDATA);
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/fusion0.84/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($xmltmp);
       $pfAgent = new PluginFusioninventoryAgent();
       $a_agent = $pfAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
+      $this->assertEquals(count($a_agent), 1, 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
       $computer = new Computer();
       $a_computer = $computer->find("`name`='port004'");
-      $this->assertEquals(count($a_computer), 3 , 'Problem import Computer without name have been created into Computer instead unknown');
+      $this->assertEquals(count($a_computer), 3, 'Problem import Computer without name have been created into Computer instead unknown');
       $a_computer = $computer->find("`name`=''");
-      $this->assertEquals(count($a_computer), 0 , 'Problem import Computer without name have been created into Computer instead unknown');
+      $this->assertEquals(count($a_computer), 0, 'Problem import Computer without name have been created into Computer instead unknown');
       $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 1 , 'Problem import Computer without name , unknown device not created');
+      $this->assertEquals(count($a_unknown), 1, 'Problem import Computer without name, unknown device not created');
 
 
       // ** Import discovered Computer (not have name)
@@ -1037,11 +1037,11 @@ class Rules extends PHPUnit_Framework_TestCase {
       $xmltmp = str_replace(">Test2<", "><", $xmltmp);
       $this->testSendinventory("toto", $xmltmp, 0);
       $a_computer = $computer->find("`name`='Test2'");
-      $this->assertEquals(count($a_computer), 3 , 'Problem import discovered Computer without name have been created into Computer instead unknown');
+      $this->assertEquals(count($a_computer), 3, 'Problem import discovered Computer without name have been created into Computer instead unknown');
       $a_computer = $computer->find("`name`=''");
-      $this->assertEquals(count($a_computer), 0 , 'Problem import Computer without name have been created into Computer instead unknown');
+      $this->assertEquals(count($a_computer), 0, 'Problem import Computer without name have been created into Computer instead unknown');
       $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 2 , 'Problem import discovered Computer without name, unknown device not created');
+      $this->assertEquals(count($a_unknown), 2, 'Problem import discovered Computer without name, unknown device not created');
 
 
       $input = array();
@@ -1161,17 +1161,17 @@ class Rules extends PHPUnit_Framework_TestCase {
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $pfUnknownDevice->delete(array('id'=>2), 1);
       $pfUnknownDevice->delete(array('id'=>3), 1);
-      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_string($XML['Computer'], 'SimpleXMLElement', LIBXML_NOCDATA);
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/fusion0.84/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
       $pfAgent = new PluginFusioninventoryAgent();
       $a_agent = $pfAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
+      $this->assertEquals(count($a_agent), 1, 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
       $a_computer = $computer->find("`name`='port004'");
-      $this->assertEquals(count($a_computer), 1 , 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
+      $this->assertEquals(count($a_computer), 1, 'Problem import Computer ('.(string)$xml->DEVICEID.') not right created!');
       $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
+      $this->assertEquals(count($a_unknown), 0, 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device created');
 
 
 
@@ -1180,9 +1180,9 @@ class Rules extends PHPUnit_Framework_TestCase {
       $computer->delete(array('id'=>6), 1);
       $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
       $a_computer = $computer->find("`name`='Test2'");
-      $this->assertEquals(count($a_computer), 1 , 'Problem import discovered Computer (Test2) not right created!');
+      $this->assertEquals(count($a_computer), 1, 'Problem import discovered Computer (Test2) not right created!');
       $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 0 , 'Problem import discovered Computer (Test2), unknown device created');
+      $this->assertEquals(count($a_unknown), 0, 'Problem import discovered Computer (Test2), unknown device created');
 
 
       // ** Import Computer XML (have name but not exist in DB)
@@ -1191,26 +1191,26 @@ class Rules extends PHPUnit_Framework_TestCase {
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $pfUnknownDevice->delete(array('id'=>2), 1);
       $pfUnknownDevice->delete(array('id'=>3), 1);
-      $xml = simplexml_load_string($XML['Computer'],'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_string($XML['Computer'], 'SimpleXMLElement', LIBXML_NOCDATA);
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/fusion0.84/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
       $pfAgent = new PluginFusioninventoryAgent();
       $a_agent = $pfAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
+      $this->assertEquals(count($a_agent), 1, 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
       $a_computer = $computer->find("`name`='port004'");
-      $this->assertEquals(count($a_computer), 0 , 'Problem import Computer ('.(string)$xml->DEVICEID.') is created!');
+      $this->assertEquals(count($a_computer), 0, 'Problem import Computer ('.(string)$xml->DEVICEID.') is created!');
       $a_unknown = $pfUnknownDevice->find();
-      $this->assertEquals(count($a_unknown), 1 , 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device not created');
+      $this->assertEquals(count($a_unknown), 1, 'Problem import Computer ('.(string)$xml->DEVICEID.'), unknown device not created');
 
 
       // ** Import discovered Computer (have name but not exist in DB)
       $computer->delete(array('id'=>2), 1);
       $this->testSendinventory("toto", $XML['Unknowndevice_Computer'], 0);
       $a_computer = $computer->find("`name`='Test2'");
-      $this->assertEquals(count($a_computer), 0 , 'Problem import discovered Computer (Test2) created!');
+      $this->assertEquals(count($a_computer), 0, 'Problem import discovered Computer (Test2) created!');
       $a_unknown = $pfUnknownDevice->find("`name`='Test2'");
-      $this->assertEquals(count($a_unknown), 1 , 'Problem import discovered Computer (Test2), unknown device not created');
+      $this->assertEquals(count($a_unknown), 1, 'Problem import discovered Computer (Test2), unknown device not created');
 
 
       // ** Import Computer XML (not have name)
@@ -1219,18 +1219,18 @@ class Rules extends PHPUnit_Framework_TestCase {
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $xmltmp = $XML['Computer'];
       $xmltmp = str_replace(">port004<", "><", $xmltmp);
-      $xml = simplexml_load_string($xmltmp,'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_string($xmltmp, 'SimpleXMLElement', LIBXML_NOCDATA);
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/fusion0.84/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($xmltmp);
       $pfAgent = new PluginFusioninventoryAgent();
       $a_agent = $pfAgent->find("`device_id`='".(string)$xml->DEVICEID."'");
-      $this->assertEquals(count($a_agent), 1 , 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
+      $this->assertEquals(count($a_agent), 1, 'Problem on prolog, agent ('.(string)$xml->DEVICEID.') not right created!');
       $computer = new Computer();
       $a_computer = $computer->find("`serial`='XA201220H'");
-      $this->assertEquals(count($a_computer), 0 , 'Problem import Computer without name have been created into Computer instead unknown');
+      $this->assertEquals(count($a_computer), 0, 'Problem import Computer without name have been created into Computer instead unknown');
       $a_unknown = $pfUnknownDevice->find("`serial`='XA201220H'");
-      $this->assertEquals(count($a_unknown), 2 , 'Problem import Computer without name , unknown device not created');
+      $this->assertEquals(count($a_unknown), 2, 'Problem import Computer without name, unknown device not created');
 
 
       $input = array();
@@ -1291,7 +1291,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $emulatorAgent->server_urlpath = "/fusion0.84/plugins/fusioninventory/";
       $prologXML = $emulatorAgent->sendProlog($XML['Computer']);
       $a_computers = $computer->find("`serial`='XA201220H'");
-      $this->assertEquals(count($a_computers), 1 , 'Problem on global criteria of rules,
+      $this->assertEquals(count($a_computers), 1, 'Problem on global criteria of rules,
          these criteria must be valided to valid the rule (Computer serial + UUID)!\n
          Return code on send inventory : '.$prologXML);
 
@@ -1312,7 +1312,7 @@ class Rules extends PHPUnit_Framework_TestCase {
       $emulatorAgent = new emulatorAgent;
       $emulatorAgent->server_urlpath = "/fusion0.84/plugins/fusioninventory/";
       if (empty($xmlstring)) {
-         $xml = simplexml_load_file($xmlFile,'SimpleXMLElement', LIBXML_NOCDATA);
+         $xml = simplexml_load_file($xmlFile, 'SimpleXMLElement', LIBXML_NOCDATA);
       } else {
          $xml = simplexml_load_string($xmlstring);
       }

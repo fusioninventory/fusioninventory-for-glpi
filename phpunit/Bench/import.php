@@ -5,7 +5,7 @@ if (isset($_SERVER['argv'])
 
    
 } else {
-   echo "problem with arg";
+   echo "problem with arg\n";
    exit (0);
 }
 
@@ -15,7 +15,7 @@ $emulatorAgent->server_urlpath = "/glpi084/plugins/fusioninventory/";
 $emulatorAgent->server_ip = "127.0.0.1";
 
 $overload = 0;
-$start_time = microtime(true);
+$start_time = microtime(TRUE);
 
 $inputXML = file_get_contents($_SERVER['argv'][1]);
 $prologXML = $emulatorAgent->sendProlog($inputXML);
@@ -26,7 +26,7 @@ if (strstr("SERVER OVERLOADED", $prologXML)) {
    $overload++;
 }
  
-echo "Time: ".(microtime(true) - $start_time);
+echo "Time: ".(microtime(TRUE) - $start_time);
 echo " seconds ";
 echo "(overload: ".$overload.")\n";
 
