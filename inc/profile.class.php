@@ -267,7 +267,9 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     **/
    function showProfileForm($items_id, $target) {
 
-      if (!Session::haveRight("profile", "r")) return FALSE;
+      if (!Session::haveRight("profile", "r")) {
+         return FALSE;
+      }
 
       echo "<form name='form' method='post' action=\"$target\">";
       echo "<div align='center'>";

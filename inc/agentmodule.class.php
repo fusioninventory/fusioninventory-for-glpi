@@ -139,8 +139,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "<td align='center'>";
          $checked = $data['is_active'];
          $check = "";
-         if ($checked == 1)
+         if ($checked == 1) {
             $check = "checked='checked'";
+         }
          echo "<input type='checkbox' name='activation' value='Activation' ".$check." />";
          echo "</td>";
          echo "<td>";
@@ -218,8 +219,9 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       $a_modules = $this->find();
       $i = 0;
       foreach ($a_modules as $data) {
-         if ($i == 0)
+         if ($i == 0) {
             echo "<tr class='tab_bg_1'>";
+         }
          $a_methods = PluginFusioninventoryStaticmisc::getmethods();
          $modulename = $data["modulename"];
          foreach ($a_methods as $datamod) {
@@ -240,12 +242,14 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          $a_agentList = importArrayFromDB($data['exceptions']);
          if (in_array($items_id, $a_agentList)) {
             $checked = 1;
-            if ($checked == 1)
+            if ($checked == 1) {
                $checked = 0;
+            }
          }
          $check = "";
-         if ($checked == 1)
+         if ($checked == 1) {
             $check = "checked='checked'";
+         }
          echo "<input type='checkbox' name='activation-".$data["modulename"]."' ".
                  "value='Activation' ".$check." />";
          echo "</td>";

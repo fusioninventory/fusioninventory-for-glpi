@@ -262,13 +262,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
    * give state of a config field for a fusioninventory plugin
    *
-   * @param $plugin_id plugin id
    * @param $name field name
-   * @param $module ?
    *
    * @return TRUE for an existing field, FALSE otherwise
    **/
-   function isActive($plugin_id, $name, $module) {
+   function isActive($name) {
       if (!($this->getValue($name))) {
          return FALSE;
       } else {
@@ -294,7 +292,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('SSL-only for agent', 'fusioninventory')."&nbsp;:</td>";
       echo "<td width='20%'>";
-      Dropdown::showYesNo("ssl_only", $this->isActive($plugin_id, 'ssl_only', ''));
+      Dropdown::showYesNo("ssl_only", $this->isActive('ssl_only'));
       echo "</td>";
       echo "<td>".__('Inventory frequency (in hours)', 'fusioninventory')."&nbsp;:</td>";
       echo "<td width='20%'>";
@@ -322,7 +320,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Extra-debug', 'fusioninventory')." :</td>";
       echo "<td>";
-      Dropdown::showYesNo("extradebug", $this->isActive($plugin_id, 'extradebug', ''));
+      Dropdown::showYesNo("extradebug", $this->isActive('extradebug'));
       echo "</td>";
       echo "<td>";
       echo __('Service URL', 'fusioninventory').'&nbsp;';

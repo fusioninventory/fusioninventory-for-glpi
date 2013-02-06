@@ -107,11 +107,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                   }
                }
 
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $a_CONTENT['PROCESSNUMBER'];
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 
+                                                                     $a_CONTENT['PROCESSNUMBER'];
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.' ==devicesqueried==';
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.
+                                                                      ' ==devicesqueried==';
                $this->addtaskjoblog();
 
             }
@@ -122,7 +124,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                                                          'PluginFusioninventoryAgent');
             }
             if (isset($a_CONTENT['AGENT']['START'])) {
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $a_CONTENT['PROCESSNUMBER'];
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 
+                                                                     $a_CONTENT['PROCESSNUMBER'];
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
@@ -179,13 +182,16 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                      } else if ($dchild['ERROR']['TYPE'] == "PRINTER") {
                         $itemtype = "Printer";
                      }
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.$dchild['ERROR']['MESSAGE'].' [['.$itemtype.'::'.$dchild['ERROR']['ID'].']]';
+                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.
+                             $dchild['ERROR']['MESSAGE'].' [['.$itemtype.'::'.
+                             $dchild['ERROR']['ID'].']]';
                      $this->addtaskjoblog();
                   } else if ($a_inventory['PluginFusioninventory'.$a_inventory['itemtype']]['sysdescr'] == ''
                               && $a_inventory[$a_inventory['itemtype']]['name'] == ''
                               && $a_inventory[$a_inventory['itemtype']]['serial'] == '') {
                          
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] No informations [['.$itemtype.'::'.$dchild['ID'].']]';
+                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = 
+                              '[==detail==] No informations [['.$itemtype.'::'.$dchild['ID'].']]';
                      $this->addtaskjoblog();
                   } else {
                      if (count($a_inventory) > 0) {
@@ -200,7 +206,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             case 'AGENT' :
                if (isset($this->arrayinventory['CONTENT']['AGENT']['AGENTVERSION'])) {
                   $agent = $pfAgent->InfosByKey($this->arrayinventory['DEVICEID']);
-                  $agent['fusioninventory_agent_version'] = $this->arrayinventory['CONTENT']['AGENT']['AGENTVERSION'];
+                  $agent['fusioninventory_agent_version'] = 
+                                       $this->arrayinventory['CONTENT']['AGENT']['AGENTVERSION'];
                   $agent['last_agent_update'] = date("Y-m-d H:i:s");
                   $pfAgent->update($agent);
                }
@@ -213,7 +220,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                break;
 
             default :
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.__('Unattended element in', 'fusioninventory').' CONTENT : '.$childname;
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.
+                           __('Unattended element in', 'fusioninventory').' CONTENT : '.$childname;
                $this->addtaskjoblog();
          }
       }
@@ -247,7 +255,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder)) {
             mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder, 0777, TRUE);
          }
-         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder."/".$items_id, 'w');
+         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder."/".
+                           $items_id, 'w');
          fwrite($fileopen, print_r($a_inventory, TRUE));
          fclose($fileopen);
        }
@@ -316,7 +325,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 //         }
 ////      }
 //      if (!empty($errors)) {
-//         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.$errors.' [['.$itemtype.'::'.$items_id.']]';
+//         $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '[==detail==] '.$errors.' [['.
+//         $itemtype.'::'.$items_id.']]';
 //         $this->addtaskjoblog();
 //      }
 //      return $errors;
@@ -599,7 +609,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          if ($plugin_fusioninventory_mappings) {
             $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
             $a_cartridges = $pfPrinterCartridge->find("`printers_id`='".$this->deviceId."'
-               AND `plugin_fusioninventory_mappings_id`='".$plugin_fusioninventory_mappings['id']."'",
+               AND `plugin_fusioninventory_mappings_id`='".
+                    $plugin_fusioninventory_mappings['id']."'",
                "", 1);
             if (!is_numeric($child)) {
                $child = 0;
@@ -615,7 +626,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                // Add
                $input = array();
                $input['printers_id'] = $this->deviceId;
-               $input['plugin_fusioninventory_mappings_id'] = $plugin_fusioninventory_mappings['id'];
+               $input['plugin_fusioninventory_mappings_id'] = 
+                                                $plugin_fusioninventory_mappings['id'];
                $input['state'] = $child;
                $pfPrinterCartridge->add($input);
             }
@@ -828,8 +840,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                   break;
 
                default:
-                  $errors.=__('Unattended element in', 'fusioninventory').' CONNECTION (CDP='.$p_cdp.') : '
-                           .$childname."\n";
+                  $errors.=__('Unattended element in', 'fusioninventory').
+                           ' CONNECTION (CDP='.$p_cdp.') : '.
+                           $childname."\n";
 
             }
          }
@@ -853,8 +866,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                   break;
 
                default:
-                  $errors.=__('Unattended element in', 'fusioninventory').' CONNECTION (CDP='.$p_cdp.') : '
-                           .$childname."\n";
+                  $errors .= __('Unattended element in', 'fusioninventory').
+                             ' CONNECTION (CDP='.$p_cdp.') : '.
+                             $childname."\n";
 
             }
          }
@@ -882,7 +896,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                break;
 
             default :
-               $errors.=__('Unattended element in', 'fusioninventory').' VLANS : '.$child->getName()."\n";
+               $errors .= __('Unattended element in', 'fusioninventory').' VLANS : '.
+                          $child->getName()."\n";
 
          }
       }
@@ -1026,7 +1041,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          }
 
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusioninventoryCommunicationNetworkInventory";
+      $_SESSION['plugin_fusioninventory_classrulepassed'] = 
+                                 "PluginFusioninventoryCommunicationNetworkInventory";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array();
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
@@ -1034,8 +1050,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $data = $rule->processAllRules($input, array());
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    $data);
-      if (isset($data['action'])
-              AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
+      if (isset($data['action']) 
+              && ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
 
          $a_text = '';
          foreach ($input as $key=>$data) {
@@ -1139,7 +1155,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             $inputrulelog['date'] = date('Y-m-d H:i:s');
             $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
             if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-               $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+               $inputrulelog['plugin_fusioninventory_agents_id'] = 
+                                                   $_SESSION['plugin_fusioninventory_agents_id'];
             }
             $inputrulelog['items_id'] = $items_id;
             $inputrulelog['itemtype'] = $itemtype;

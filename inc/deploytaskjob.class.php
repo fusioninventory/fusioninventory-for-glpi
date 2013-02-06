@@ -177,7 +177,9 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       global $DB;
 
       $res = '';
-      if (!isset($params['get'])) exit;
+      if (!isset($params['get'])) {
+         exit;
+      }
       switch($params['get']) {
          case "type";
             $res = array(

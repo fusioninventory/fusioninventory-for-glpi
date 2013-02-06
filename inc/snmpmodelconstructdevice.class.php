@@ -53,7 +53,9 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo  "<table width='950' align='center'>
          <tr>
          <td>
-         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$id."'>Back to device form information</a>
+         <a href='".$CFG_GLPI['root_doc'].
+            "/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$id."'>".
+            "Back to device form information</a>
          </td>
          </tr>
          </table>";
@@ -142,7 +144,11 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          echo "</th>";
          echo "<td width='130' align='center'>";
          if ($snmpwalk != '') {
-            echo "<a onclick=\"var w = window.open('".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/front/constructmodel.form.php?mapping=".$data->name."' , 'glpipopup', 'height=400, width=1000, top=100, left=100, scrollbars=yes' );w.focus();\"><img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />&nbsp;add a new oid</a>";
+            echo "<a onclick=\"var w = window.open('".$CFG_GLPI["root_doc"].
+                    "/plugins/fusinvsnmp/front/constructmodel.form.php?mapping=".$data->name.
+                    "' , 'glpipopup', 'height=400, width=1000, top=100, left=100, scrollbars=yes')".
+                    ";w.focus();\"><img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />".
+                    "&nbsp;add a new oid</a>";
          }
          echo "</td>";
          echo "</tr>";
@@ -155,15 +161,18 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                $found = array();
                $iso = $a_oids->numeric_oid;
                $iso = preg_replace("/^.1./", "iso.", $iso);
-               preg_match_all("/".$a_oids->numeric_oid."(\.\d+){".$a_oids->nboids_after."} = (.*\n)/", $snmpwalk, $found);
+               preg_match_all("/".$a_oids->numeric_oid."(\.\d+){".$a_oids->nboids_after."}".
+                       " = (.*\n)/", $snmpwalk, $found);
                if (isset($found[0][0])) {
                   $a_oidfound[$a_oids->id] = $found[0];
                } else {     
-                  preg_match_all("/".$a_oids->mib_oid."(?:\.\d+){".$a_oids->nboids_after."} = (?:.*)\n/", $snmpwalk, $found);
+                  preg_match_all("/".$a_oids->mib_oid."(?:\.\d+){".$a_oids->nboids_after."}".
+                          " = (?:.*)\n/", $snmpwalk, $found);
                   if (isset($found[0][0])) {
                      $a_oidfound[$a_oids->id] = $found[0];
                   } else { 
-                     preg_match_all("/".$iso."(\.\d+){".$a_oids->nboids_after."} = (.*\n)/", $snmpwalk, $found);
+                     preg_match_all("/".$iso."(\.\d+){".$a_oids->nboids_after."}".
+                             " = (.*\n)/", $snmpwalk, $found);
                      if (isset($found[0][0])) {
                         $a_oidfound[$a_oids->id] = $found[0];
                      }
@@ -171,7 +180,8 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                }
             } 
             if (isset($a_mibs2[$data->id])) { // This mapping has yet a value on server
-               if (isset($a_mibs[$a_oids->id."-".$data->id])) { // if this value is related with this oid
+               if (isset($a_mibs[$a_oids->id."-".$data->id])) { 
+                  // if this value is related with this oid
                   if (!isset($a_oidfound[$a_oids->id])) {
                      $a_oidfound[$a_oids->id] = array('?=?');
                   }
@@ -181,19 +191,39 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          if (count($a_oidfound) == '1') {
             foreach ($a_oidfound as $oid_id => $a_found) {               
                if (isset($a_mibs[$oid_id."-".$data->id])) {
-                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr, "green", $json->mibs->$id);
+                  $this->displayOid($json->oids->$oid_id, 
+                                    $data->id, 
+                                    $a_found, 
+                                    $json->device->sysdescr, 
+                                    "green", 
+                                    $json->mibs->$id);
                } else if ($json->oids->$oid_id->percentage->$id > 49) {
-                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr, "blue");
+                  $this->displayOid($json->oids->$oid_id, 
+                                    $data->id, 
+                                    $a_found, 
+                                    $json->device->sysdescr, 
+                                    "blue");
                }else {
-                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr);
+                  $this->displayOid($json->oids->$oid_id, 
+                                    $data->id, 
+                                    $a_found, 
+                                    $json->device->sysdescr);
                }
             }
          } else if (count($a_oidfound) > 1) {
             foreach ($a_oidfound as $oid_id => $a_found) {
                if (isset($a_mibs[$oid_id."-".$data->id])) {
-                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr, "green", $json->mibs->$id);
+                  $this->displayOid($json->oids->$oid_id, 
+                                    $data->id, 
+                                    $a_found, 
+                                    $json->device->sysdescr, 
+                                    "green", 
+                                    $json->mibs->$id);
                } else {
-                  $this->displayOid($json->oids->$oid_id, $data->id, $a_found, $json->device->sysdescr);
+                  $this->displayOid($json->oids->$oid_id, 
+                                    $data->id, 
+                                    $a_found, 
+                                    $json->device->sysdescr);
                }
             }
          } else {
@@ -211,9 +241,18 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                   $oids_id_temp = $dot1dBasePortIfIndex;
                }
                if (isset($a_mibs2[$data->id])) {
-                  $this->displayOid($json->oids->$oids_id_temp, $data->id, array(), $json->device->sysdescr, "green", $json->mibs->$id);
+                  $this->displayOid($json->oids->$oids_id_temp, 
+                                    $data->id, 
+                                    array(), 
+                                    $json->device->sysdescr, 
+                                    "green", 
+                                    $json->mibs->$id);
                } else {
-                  $this->displayOid($json->oids->$oids_id_temp, $data->id, array(), $json->device->sysdescr, "blue");
+                  $this->displayOid($json->oids->$oids_id_temp, 
+                                    $data->id, 
+                                    array(), 
+                                    $json->device->sysdescr, 
+                                    "blue");
                }
             }
          }
@@ -239,9 +278,18 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo "</table>";
       if ($portcounter != '') {
                   $id = "0";
-         $this->displayOid($json->oids->$portcounteroid, 0, array(), $json->device->sysdescr, "green", $json->mibs->$id);
+         $this->displayOid($json->oids->$portcounteroid, 
+                           0, 
+                           array(), 
+                           $json->device->sysdescr, 
+                           "green", 
+                           $json->mibs->$id);
       } else {
-         $this->displayOid($json->oids->$portcounteroid, 0, array(), $json->device->sysdescr, "blue");
+         $this->displayOid($json->oids->$portcounteroid, 
+                           0, 
+                           array(), 
+                           $json->device->sysdescr, 
+                           "blue");
       }
       if ($snmpwalk == '') {
          return FALSE;
@@ -275,7 +323,8 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo "</th>";
       echo "<th colspan='2' style='text-align: left;'>";
 
-      echo "&nbsp;&nbsp;&nbsp;<input type='checkbox' name='oidsselected[]' value='".$a_oid->id."-".$mappings_id."' ".$checked."/>&nbsp;";
+      echo "&nbsp;&nbsp;&nbsp;<input type='checkbox' name='oidsselected[]' value='".$a_oid->id."-".
+              $mappings_id."' ".$checked."/>&nbsp;";
       echo "&nbsp;<font color='#ff0000'>";
 //      } else {
 //         echo "&nbsp;&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
@@ -376,7 +425,8 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
       $query = "SELECT glpi_plugin_fusinvsnmp_constructdevices.id, type
          FROM glpi_plugin_fusinvsnmp_constructdevices
-         LEFT JOIN glpi_plugin_fusinvsnmp_constructdevicewalks on glpi_plugin_fusinvsnmp_constructdevices.id = plugin_fusinvsnmp_constructdevices_id
+         LEFT JOIN glpi_plugin_fusinvsnmp_constructdevicewalks ON ".
+              "glpi_plugin_fusinvsnmp_constructdevices.id = plugin_fusinvsnmp_constructdevices_id
          WHERE type IN (1, 2, 3)
             AND log!=''";
       if ($result = $DB->query($query)) {
@@ -389,15 +439,20 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                   `glpi_plugin_fusioninventory_mappings`.`itemtype`
                FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                     ON `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
+                     ON `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.".
+                        "`plugin_fusioninventory_mappings_id`=
                         `glpi_plugin_fusioninventory_mappings`.`id`
                WHERE plugin_fusinvsnmp_constructdevices_id='".$data["id"]."' ";
             if ($result_mibs = $DB->query($query_mibs)) {
                while ($data_mibs = $DB->fetch_array($result_mibs)) {
-                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['itemtype'] = $data_mibs['itemtype'];
-                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['mapping_name'] = $data_mibs['mapping_name'];
-                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['oid_port_counter'] = $data_mibs['oid_port_counter'];
-                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['oid_port_dyn'] = $data_mibs['oid_port_dyn'];
+                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['itemtype'] = 
+                                 $data_mibs['itemtype'];
+                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['mapping_name'] = 
+                                 $data_mibs['mapping_name'];
+                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['oid_port_counter'] = 
+                                 $data_mibs['oid_port_counter'];
+                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['oid_port_dyn'] = 
+                                 $data_mibs['oid_port_dyn'];
                   $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['vlan'] = $data_mibs['vlan'];
                   $count_mib++;
                }
@@ -415,7 +470,8 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                            `glpi_plugin_fusioninventory_mappings`.`name` AS `mapping_name`
                         FROM `glpi_plugin_fusinvsnmp_modelmibs`
                            LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                              ON `glpi_plugin_fusinvsnmp_modelmibs`.`plugin_fusioninventory_snmpmodels_id`=
+                              ON `glpi_plugin_fusinvsnmp_modelmibs`.".
+                                 "`plugin_fusioninventory_snmpmodels_id`=
                                  `glpi_plugin_fusioninventory_mappings`.`id`
                         WHERE `plugin_fusioninventory_snmpmodels_id`='".$data_models['id']."' ";
                      if ($result_mib_model = $DB->query($query_mibs_model)) {
@@ -465,18 +521,21 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                   `glpi_plugin_fusioninventory_mappings`.`itemtype`
                FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                     ON `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.`plugin_fusioninventory_mappings_id`=
+                     ON `glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids`.".
+                        "`plugin_fusioninventory_mappings_id`=
                         `glpi_plugin_fusioninventory_mappings`.`id`
                WHERE `plugin_fusinvsnmp_constructdevices_id`='".$data["id"]."' ";
                if ($result_mibs = $DB->query($query_mibs)) {
                   while ($data_mibs = $DB->fetch_array($result_mibs)) {
                      $a_input = array();
                      $a_input['plugin_fusioninventory_snmpmodels_id'] = $id;
-                     $a_input['plugin_fusinvsnmp_miboids_id'] = $data_mibs['plugin_fusinvsnmp_miboids_id'];
+                     $a_input['plugin_fusinvsnmp_miboids_id'] = 
+                                    $data_mibs['plugin_fusinvsnmp_miboids_id'];
                      $a_input['oid_port_counter'] = $data_mibs['oid_port_counter'];
                      $a_input['oid_port_dyn'] = $data_mibs['oid_port_dyn'];
                      $a_input['vlan'] = $data_mibs['vlan'];
-                     $a_input['links_oid_fields'] = $data_mibs['itemtype']."||".$data_mibs['mapping_name'];
+                     $a_input['links_oid_fields'] = 
+                                    $data_mibs['itemtype']."||".$data_mibs['mapping_name'];
                      $a_input['is_active'] = 1;
                      $ptmn->add($a_input);
                   }
@@ -511,13 +570,14 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                   AND itemtype='".NETWORKING_TYPE."' ";
       if ($result = $DB->query($query)) {
          while ($data = $DB->fetch_array($result)) {
-            while(strlen($num) < 4)
+            while(strlen($num) < 4) {
                $num = "0" . $num;
-            $query_update = "UPDATE glpi_plugin_fusioninventory_snmpmodels
-               SET discovery_key='Networking".$num."'
-                  WHERE id='".$data['id']."'";
-            $DB->query($query_update);
-            $num++;
+               $query_update = "UPDATE glpi_plugin_fusioninventory_snmpmodels
+                  SET discovery_key='Networking".$num."'
+                     WHERE id='".$data['id']."'";
+               $DB->query($query_update);
+               $num++;
+            }
          }
       }
       // Printers
@@ -541,13 +601,15 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                   AND itemtype='".PRINTER_TYPE."' ";
       if ($result = $DB->query($query)) {
          while ($data = $DB->fetch_array($result)) {
-            while(strlen($num) < 4)
+            while(strlen($num) < 4) {
                $num = "0" . $num;
-            $query_update = "UPDATE glpi_plugin_fusioninventory_snmpmodels
-               SET discovery_key='Printer".$num."'
-                  WHERE id='".$data['id']."'";
-            $DB->query($query_update);
-            $num++;
+
+               $query_update = "UPDATE glpi_plugin_fusioninventory_snmpmodels
+                  SET discovery_key='Printer".$num."'
+                     WHERE id='".$data['id']."'";
+               $DB->query($query_update);
+               $num++;
+            }
          }
       }
    }
@@ -585,7 +647,8 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       if ($result_models = $DB->query($query_models)) {
          while ($data = $DB->fetch_array($result_models)) {
             $xml = $pfiie->export($data['id']);
-            file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/snmpmodels/".$data['name'].".xml", $xml);
+            file_put_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/snmpmodels/".$data['name'].
+                              ".xml", $xml);
          }
       }
    }

@@ -120,11 +120,11 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
             $link1 = $item->getLink(1);
 
             $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?id=" . $NetworkPort->fields["id"] . "\">";
-            if (rtrim($NetworkPort->fields["name"]) != "")
+            if (rtrim($NetworkPort->fields["name"]) != "") {
                $link .= $NetworkPort->fields["name"];
-            else
+            } else {
                $link .= __('Without name');
-
+            }
             $link .= "</a>";
             echo $link." ".__('on', 'fusioninventory')." ".$link1;
             echo "</td>";
@@ -143,11 +143,11 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
             $item->getFromDB($NetworkPort->fields["items_id"]);
             $link1 = $item->getLink(1);
             $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?id=" . $NetworkPort->fields["id"] . "\">";
-            if (rtrim($NetworkPort->fields["name"]) != "")
+            if (rtrim($NetworkPort->fields["name"]) != "") {
                $link .= $NetworkPort->fields["name"];
-            else
+            } else {
                $link .= __('Without name');
-
+            }
             $link .= "</a>";
             echo $link." ".__('on', 'fusioninventory')." ".$link1;
             echo "</td>";

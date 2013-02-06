@@ -45,7 +45,9 @@ header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 Session::checkCentralAccess();
 
-if (!isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) exit;
+if (!isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) {
+   exit;
+}
 
 switch ($_REQUEST['subtype']) {
    case 'check':

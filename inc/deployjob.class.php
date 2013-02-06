@@ -72,7 +72,9 @@ class PluginFusioninventoryDeployJob {
                WHERE jobs.id = '".$status['plugin_fusioninventory_taskjobs_id']."'
                AND is_active = '1'";
                $res = $DB->query($sql);
-               if ($DB->numrows($res) == 0) break;
+               if ($DB->numrows($res) == 0) {
+                  break;
+               }
 
                switch ($itemtype) {
                   default:
@@ -91,7 +93,9 @@ class PluginFusioninventoryDeployJob {
                }
                if ($ordertype != -1) {
                   $orderDetails = PluginFusioninventoryDeployOrder::getOrderDetails($status, $ordertype);
-                  if (count($orderDetails) == 0) return FALSE;
+                  if (count($orderDetails) == 0) {
+                     return FALSE;
+                  }
                   $response[] = $orderDetails;
                }
             }
@@ -177,7 +181,9 @@ class PluginFusioninventoryDeployJob {
      //change task to finish and replanned if retry available
      if ($p['status'] != "" && $p['currentStep'] == "" || $p['status'] == "ko") {
         $error = "0";
-        if ($p['status'] == 'ko') $error = "1";
+        if ($p['status'] == 'ko') {
+           $error = "1";
+        }
         //set status to finished and reinit job
         $taskjobstate = new PluginFusioninventoryTaskjobstate();
         $taskjobstate->changeStatusFinish(

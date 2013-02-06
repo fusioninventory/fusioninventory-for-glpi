@@ -1021,8 +1021,9 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                         echo "<img src=\"" . $CFG_GLPI["root_doc"] . "/pics/delete.png\" alt='".
                                 __('Delete', 'fusioninventory') . "' title='" . 
                                 __('Delete', 'fusioninventory') . "'></a>";
-                     } else
+                     } else {
                         echo "&nbsp;";
+                     }
                      echo "</td>";
                      echo "</tr>";
                   }

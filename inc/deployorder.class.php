@@ -87,7 +87,9 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       $order->getFromDB($orders_id);
       if (!empty($order->fields['json'])) {
          return $order->fields['json'];
-      } else return FALSE;
+      } else {
+         return FALSE;
+      }
    }
 
    static function updateOrderJson($orders_id, $datas) {
@@ -144,14 +146,19 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
          foreach ($related_classes as $class => $key) {
             foreach ($results as $result) {
                $tmp            = call_user_func(array($class, 'getForOrder'), $result['id']);
-               if ($key == 'associatedFiles') $orders[$key] = $tmp;
-               else $orders[$key] = $tmp;
+               if ($key == 'associatedFiles') {
+                  $orders[$key] = $tmp;
+               } else {
+                  $orders[$key] = $tmp;
+               }
             }
          }
       }
 
       //set uuid order to jobstatus[id]
-      if (!empty($orders)) $orders['uuid'] = $status['id'];
+      if (!empty($orders)) {
+         $orders['uuid'] = $status['id'];
+      }
 
       return $orders;
    }

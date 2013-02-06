@@ -108,14 +108,18 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<hr>";
       if (!isset($datas['index'])) {
          echo "</div>";
-      } else return TRUE;
+      } else {
+         return TRUE;
+      }
       Html::closeForm();
 
       //display stored checks datas
       echo "<form name='removecheck' method='post' action='deploypackage.form.php?remove_item'>";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployCheck' />";
-      if (!isset($datas['jobs']['checks']) || empty($datas['jobs']['checks'])) return;
+      if (!isset($datas['jobs']['checks']) || empty($datas['jobs']['checks'])) {
+         return;
+      }
       echo "<div id='drag_checks'>";
       echo "<table class='tab_cadrehov package_item_list' id='table_check'>";
       $i = 0;
@@ -286,7 +290,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                   }  elseif ($value2 >= (1024)) {
                      $value2 = round($value2/ (1024), 1);
                      $options['value'] = 'kB';
-                  } else $options['value'] = 'B';
+                  } else {
+                     $options['value'] = 'B';
+                  }
                }
                echo "<td><input type='text' name='value' id='check_value$rand' value='".
                   $value2."' /></td>";
@@ -331,7 +337,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    }
 
    static function add_item($params) {
-      if (!isset($params['value'])) $params['value'] = "";
+      if (!isset($params['value'])) {
+         $params['value'] = "";
+      }
 
       if (!empty($params['value']) && is_numeric($params['value'])) {
          $params['value'] = $params['value']  * 1024 * 1024;
@@ -356,7 +364,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    }
 
    static function save_item($params) {
-      if (!isset($params['value'])) $params['value'] = "";
+      if (!isset($params['value'])) {
+         $params['value'] = "";
+      }
 
       if (!empty($params['value']) && is_numeric($params['value'])) {
          $params['value'] = $params['value']  * 1024 * 1024;

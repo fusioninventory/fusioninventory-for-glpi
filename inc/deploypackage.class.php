@@ -259,7 +259,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "<tr>";
       $multipart = "";
       foreach ($subtypes as $subtype) {
-         if ($subtype == "file") $multipart = "enctype='multipart/form-data'";
+         if ($subtype == "file") {
+            $multipart = "enctype='multipart/form-data'";
+         }
          echo "<td style='vertical-align:top'>";
          echo "<form name='add$subtype' method='post' ".$multipart.
             " action='deploypackage.form.php'>";
@@ -377,7 +379,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       foreach ($taskjobs_a as $job) {
          $task = new PluginFusioninventoryTask;
          $task->getFromDB($job['plugin_fusioninventory_tasks_id']);
-         if ($task->getField('is_active') == 1) return FALSE;
+         if ($task->getField('is_active') == 1) {
+            return FALSE;
+         }
       }
       return TRUE;
    }
@@ -418,13 +422,17 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
    public function package_clone($new_name = '') {
 
-      if ($this->getField('id') < 0) return FALSE;
+      if ($this->getField('id') < 0) {
+         return FALSE;
+      }
 
       $_SESSION['tmp_clone_package'] = TRUE;
 
       //duplicate package
       $package_oldId = $this->getField('id');
-      if ($new_name == "") $new_name = $this->getField('name');
+      if ($new_name == "") {
+         $new_name = $this->getField('name');
+      }
       $params = $this->fields;
       unset($params['id']);
       $params['name'] = $new_name;

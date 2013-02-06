@@ -1489,8 +1489,9 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                foreach ($job as $val) {
                   if (is_numeric($val) && (int)$val == $val) {
                      $sql .= "$val, ";
+                  } else {
+                     $sql .= "'$val', ";
                   }
-                  else $sql .= "'$val', ";
                }
                $sql = substr($sql, 0, -2).");";
 

@@ -159,8 +159,9 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center' colspan='2'>" . __('Start of IP range', 'fusioninventory') . "</td>";
       echo "<td align='center' colspan='2'>";
-      if (empty($this->fields["ip_start"]))
+      if (empty($this->fields["ip_start"])) {
          $this->fields["ip_start"] = "...";
+      }
       $ipexploded = explode(".", $this->fields["ip_start"]);
       $i = 0;
       foreach ($ipexploded as $ipnum) {
@@ -180,8 +181,9 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "<td align='center' colspan='2'>" . __('End of IP range', 'fusioninventory') . "</td>";
       echo "<td align='center' colspan='2'>";
       unset($ipexploded);
-      if (empty($this->fields["ip_end"]))
+      if (empty($this->fields["ip_end"])) {
          $this->fields["ip_end"] = "...";
+      }
       $ipexploded = explode(".", $this->fields["ip_end"]);
       $i = 0;
       foreach ($ipexploded as $ipnum) {

@@ -50,8 +50,12 @@ if (!isset($_REQUEST["id"])) {
 $group = new PluginFusioninventoryDeployGroup();
 
 if (isset($_REQUEST['type'])) {
-   if ($_REQUEST['type'] == 'static') $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
-   if ($_REQUEST['type'] == 'dynamic') $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
+   if ($_REQUEST['type'] == 'static') {
+      $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
+   }
+   if ($_REQUEST['type'] == 'dynamic') {
+      $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
+   }  
 }
 
 if (isset($_POST["add"])) {

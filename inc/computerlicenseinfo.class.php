@@ -103,14 +103,17 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
             if ($licenseInfo['is_update']||$licenseInfo['is_trial']||$licenseInfo['is_oem']) {
                 $options = array();
 
-                if ($licenseInfo['is_update'])
+                if ($licenseInfo['is_update']) {
                    array_push($options, 'update');
+                }
 
-                if ($licenseInfo['is_trial'])
+                if ($licenseInfo['is_trial']) {
                    array_push($options, 'trial');
+                }
 
-                if ($licenseInfo['is_oem'])
+                if ($licenseInfo['is_oem']) {
                    array_push($options, 'OEM');
+                }
                 
                 echo implode(', ', $options);
             }

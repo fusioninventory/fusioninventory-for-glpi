@@ -106,7 +106,9 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             $tmp = array_values($action_values['list']);
             $params['value_1'] = $tmp[0];
          }
-         if (isset($action_values['to']))    $params['value_2'] = addslashes($action_values['to']);
+         if (isset($action_values['to'])) {
+            $params['value_2'] = addslashes($action_values['to']);
+         }
          if (isset($action_values['retChecks']))  {
             $params['retChecks'] = json_encode($action_values['retChecks']);
          }
@@ -128,11 +130,15 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       echo "<hr>";
       if (!isset($datas['index'])) {
          echo "</div>";
-      } else return TRUE;
+      } else {
+         return TRUE;
+      }
       Html::closeForm();
 
       //display stored actions datas
-      if (!isset($datas['jobs']['actions']) || empty($datas['jobs']['actions'])) return;
+      if (!isset($datas['jobs']['actions']) || empty($datas['jobs']['actions'])) {
+         return;
+      }
       echo "<form name='removeactions' method='post' action='deploypackage.form.php?remove_item'>";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployAction' />";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
@@ -162,7 +168,9 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                      echo "</td><td>";
                   }
                } 
-            } else echo "$key : $value";
+            } else {
+               echo "$key : $value";
+            }
             echo "</td>";
          }
          echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
@@ -307,7 +315,9 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          echo "</th>";
          echo "<td>";
          $display = "style='display:none'";
-         if (isset($datas['retChecks'])) $display = "style='display:block'";
+         if (isset($datas['retChecks'])) {
+            $display = "style='display:block'";
+         }
          echo "<span id='retchecks$rand' $display>";
          $retchecks_entries = array(
             '--',
@@ -379,10 +389,18 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
    static function add_item($params) {
       //prepare new action entry to insert in json
-      if (isset($params['list'])) $tmp['list'] = $params['list'];
-      if (isset($params['from'])) $tmp['from'] = $params['from'];
-      if (isset($params['to']))   $tmp['to']   = $params['to'];
-      if (isset($params['exec'])) $tmp['exec'] = $params['exec'];
+      if (isset($params['list'])) {
+         $tmp['list'] = $params['list'];
+      }
+      if (isset($params['from'])) {
+         $tmp['from'] = $params['from'];
+      }
+      if (isset($params['to'])) {
+         $tmp['to']   = $params['to'];
+      }
+      if (isset($params['exec'])) {
+         $tmp['exec'] = $params['exec'];
+      }
 
       //process ret checks
       if (isset($params['retchecks_type']) && !empty($params['retchecks_type'])) {
@@ -409,10 +427,18 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
    static function save_item($params) {
       //prepare updated action entry to insert in json
-      if (isset($params['list'])) $tmp['list'] = $params['list'];
-      if (isset($params['from'])) $tmp['from'] = $params['from'];
-      if (isset($params['to']))   $tmp['to']   = $params['to'];
-      if (isset($params['exec'])) $tmp['exec'] = $params['exec'];
+      if (isset($params['list'])) {
+         $tmp['list'] = $params['list'];
+      }
+      if (isset($params['from'])) {
+         $tmp['from'] = $params['from'];
+      }
+      if (isset($params['to'])) {
+         $tmp['to']   = $params['to'];
+      }
+      if (isset($params['exec'])) {
+         $tmp['exec'] = $params['exec'];
+      }
 
       //process ret checks
       if (isset($params['retchecks_type']) && !empty($params['retchecks_type'])) {

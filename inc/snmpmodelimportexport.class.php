@@ -470,7 +470,9 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
     */
    function importMass() {
       ini_set("max_execution_time", "0");
-      foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) $this->import($file, 0, 1);
+      foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) {
+         $this->import($file, 0, 1);
+      }
       PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
    }
 

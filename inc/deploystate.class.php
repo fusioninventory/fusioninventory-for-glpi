@@ -131,8 +131,10 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
 
       $res = array();
 
-      if (!isset($params['items_id'])) exit;
-      if (!isset($params['taskjobs_id'])) exit;
+      if (!isset($params['items_id'])
+              || !isset($params['taskjobs_id'])) {
+         exit;
+      }
 
       $query = "SELECT DISTINCT plugin_fusioninventory_taskjobstates_id, id, date, state, comment
       FROM (
@@ -173,7 +175,9 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
 
       $res = array();
 
-      if (!isset($params['status_id'])) exit;
+      if (!isset($params['status_id'])) {
+         exit;
+      }
 
       $query = "SELECT id, state, comment, date
       FROM glpi_plugin_fusioninventory_taskjoblogs
@@ -477,11 +481,15 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
                LIMIT 1";
             $res_jobs_state = $DB->query($query_jobs_state);
             $row_jobs_state = $DB->fetch_assoc($res_jobs_state);
-            if ($row_jobs_state['state'] != PluginFusioninventoryTaskjoblog::TASK_OK) continue;
+            if ($row_jobs_state['state'] != PluginFusioninventoryTaskjoblog::TASK_OK) {
+               continue;
+            }
 
             $finished = TRUE;
          }
-         if ($finished) return "100%";
+         if ($finished) {
+            return "100%";
+         }
 
          $tmp = array_pop($a_taskjobs);
          $taskjobs_id = $tmp['id'];

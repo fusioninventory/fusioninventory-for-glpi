@@ -111,9 +111,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    
    function showForm($ID, $options = array()) {
-      global $DB;
       
-      if (isset($_SESSION['groupSearchResults'])) unset($_SESSION['groupSearchResults']);
+      if (isset($_SESSION['groupSearchResults'])) {
+         unset($_SESSION['groupSearchResults']);
+      }
       
       if ($ID > 0) {
          $this->check($ID, 'r');
@@ -149,7 +150,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       Dropdown::showFromArray("type", $types, array('value'=>$this->fields['type']));
       echo "</td>";
       echo "</tr>";
-
 
       $this->showFormButtons($options);
       $this->addDivForTabs();
@@ -539,9 +539,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    static function ajaxLoad($to_observe, $toupdate, $url, $params_id, $type) {
       $start = 0;
-      if (isset($_REQUEST['start'])) $start = $_REQUEST['start'];
-
-
+      if (isset($_REQUEST['start'])) {
+         $start = $_REQUEST['start'];
+      }
+      
       echo "<script type='text/javascript'>
       Ext.onReady(function() {
          function loadResults() {
@@ -563,7 +564,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          Ext.get('$to_observe').on('click', function() {
             loadResults();
          });";
-      if (isset($_REQUEST['start'])) echo "setTimeout(function(thisObj) { loadResults(); }, 200, this);";
+      if (isset($_REQUEST['start'])) {
+         echo "setTimeout(function(thisObj) { loadResults(); }, 200, this);";
+      }
 
       echo "})
       </script>";
@@ -655,8 +658,11 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    static function showSearchResults($params) {
       global $DB;
       
-      if(isset($params['type'])) $type  = $params['type'];
-      else exit;
+      if (isset($params['type'])) {
+         $type  = $params['type'];
+      } else {
+         exit;
+      }
       $options = array(
          'type'                  => $type,
          'itemtype'              => $params['itemtype'],
@@ -759,7 +765,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       echo "<table class='tab_cadrehov' style='width:950px'>";
       echo "<thead><tr>";
-      if ($type == 'static') echo "<th></th>";
+      if ($type == 'static') {
+         echo "<th></th>";
+      }
       echo "<th colspan='".($nb_col*2)."'>".__('Computers')."</th>";
       echo "</tr></thead>";
 
@@ -792,7 +800,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          echo "<input type='submit' class='submit' value="
             .__('Add')." name='additem' />";
          Html::closeArrowMassives(array());
-      } else echo "<br />";
+      } else {
+         echo "<br />";
+      }
 
       self::printGroupPager('', $params['start'], $nb_items);
 

@@ -208,7 +208,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<td><input type='text' name='p2p-retention-duration' style='width:30px' /></td>";
       echo "</tr><tr>";
       echo "<td>";
-      if ($source === "Computer") echo "<i>".self::getMaxUploadSize()."</i>";
+      if ($source === "Computer") {
+         echo "<i>".self::getMaxUploadSize()."</i>";
+      }
       echo "</td><td>";
       echo "&nbsp;<input type='submit' name='add_item' value=\"".
          __('Add')."\" class='submit' >";
@@ -585,8 +587,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          } /*elseif(isset($_POST['url']) and !empty($_POST['url'])) {
             $filename = $_POST['filename'];
          }*/
-         if (isset($_FILES['file']['name']) and !empty($_FILES['file']['name']))
+         if (isset($_FILES['file']['name']) 
+                 && !empty($_FILES['file']['name'])) {
             $filename = $_FILES['file']['name'];
+         }
 
          //file upload errors
          if (isset($_FILES['file']['error'])) {

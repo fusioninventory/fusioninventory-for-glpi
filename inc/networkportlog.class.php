@@ -457,11 +457,11 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                      $item->getFromDB($np->fields["items_id"]);
                      $link1 = $item->getLink(1);
                      $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?id=" . $np->fields["id"] . "\">";
-                     if (rtrim($np->fields["name"]) != "")
+                     if (rtrim($np->fields["name"]) != "") {
                         $link .= $np->fields["name"];
-                     else
+                     } else {
                         $link .= __('Without name');
-
+                     }
                      $link .= "</a>";
                      $text .= "<td align='center'>".$link." ".__('on', 'fusioninventory')." ".$link1."</td>";
                   } else {
@@ -475,11 +475,11 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
                      $item->getFromDB($np->fields["items_id"]);
                      $link1 = $item->getLink(1);
                      $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?id=" . $np->fields["id"] . "\">";
-                     if (rtrim($np->fields["name"]) != "")
+                     if (rtrim($np->fields["name"]) != "") {
                         $link .= $np->fields["name"];
-                     else
+                     } else {
                         $link .= __('Without name');
-
+                     }
                      $link .= "</a>";
                      $text .= "<td align='center'>".$link." ".__('on', 'fusioninventory')." ".$link1."</td>";
                   } else {

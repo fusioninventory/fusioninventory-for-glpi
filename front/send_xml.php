@@ -91,7 +91,9 @@ if (isset($_GET['file'])) {
       } else {
          // Pour que les \x00 ne devienne pas \0
          $mc=Toolbox::get_magic_quotes_runtime();
-         if ($mc) @ini_set('magic_quotes_runtime', 0);
+         if ($mc) {
+            @ini_set('magic_quotes_runtime', 0);
+         }
          $fsize=filesize($file);
 
          if ($fsize){
@@ -100,7 +102,9 @@ if (isset($_GET['file'])) {
 
          }
 
-         if ($mc) @ini_set('magic_quotes_runtime', $mc);
+         if ($mc) {
+            @ini_set('magic_quotes_runtime', $mc);
+         }
       }
    }
 }
