@@ -322,8 +322,8 @@ class PluginFusioninventoryInventoryComputerInventory {
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       
       $a_computerinventory = $this->arrayinventory;
-      $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation($a_computerinventory, $_SESSION["plugin_fusinvinventory_entity"]);
       $a_computerinventory = $pfFormatconvert->replaceids($a_computerinventory);
+      $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation($a_computerinventory, $_SESSION["plugin_fusinvinventory_entity"]);
          
       if ($itemtype == 'Computer') {
          $pfInventoryComputerLib = new PluginFusioninventoryInventoryComputerLib();
