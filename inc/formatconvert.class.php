@@ -1026,8 +1026,7 @@ class PluginFusioninventoryFormatconvert {
                                                                "old_version"  => $array_tmp['version'],
                                                                "entities_id"  => $entities_id_software),
                        array(), array(), true);
-               print_r($res_rule);
-               print_r($array_tmp);
+
                if (isset($res_rule['_ignore_import']) 
                        && $res_rule['_ignore_import'] == 1) {
 
