@@ -150,6 +150,8 @@ require_once 'Netinventory/AllTests.php';
 require_once 'GLPIlogs/AllTests.php';
 require_once 'Netdiscovery/AllTests.php';
 
+require_once '1_Unit/Software.php';
+
 require_once 'emulatoragent.php';
 
 class AllTests {
@@ -160,10 +162,13 @@ class AllTests {
       }
       $suite->addTest(GLPIInstall_AllTests::suite());
       $suite->addTest(FusinvInstall_AllTests::suite());
-      $suite->addTest(InventoryComputer_AllTests::suite());
-      $suite->addTest(Rules_AllTests::suite());
-//      $suite->addTest(Netinventory_AllTests::suite());
-      $suite->addTest(Netdiscovery_AllTests::suite());
+//      $suite->addTest(InventoryComputer_AllTests::suite());
+//      $suite->addTest(Rules_AllTests::suite());
+////      $suite->addTest(Netinventory_AllTests::suite());
+//      $suite->addTest(Netdiscovery_AllTests::suite());
+      
+      $suite->addTest(Software_AllTests::suite());
+      
       return $suite;
    }
 }
