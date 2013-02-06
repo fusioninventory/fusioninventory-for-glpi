@@ -42,15 +42,22 @@
 
 class Update extends PHPUnit_Framework_TestCase {
 
-   public function testUpdate() {
+   public function testUpdate2_3_3() {
 
       $Update = new Update();
-      $Update->Update("2.3.3");
-      $Update->Update("2.1.3");
+      $Update->update("2.3.3");
    }
+   
+   
+   public function testUpdate2_1_3() {
+
+      $Update = new Update();
+      $Update->update("2.1.3");
+   }
+   
 
 
-   function Update($version = '') {
+   function update($version = '') {
       global $DB;
       $DB->connect();
       

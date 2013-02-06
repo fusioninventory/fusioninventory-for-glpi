@@ -311,7 +311,7 @@ class FusinvInstall_AllTests  {
 
       $suite = new PHPUnit_Framework_TestSuite('FusinvInstall');
       $suite->addTest(Install_AllTests::suite());
-//      $suite->addTest(Update_AllTests::suite());
+      $suite->addTest(Update_AllTests::suite());
       return $suite;
    }
 }
