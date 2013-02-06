@@ -64,7 +64,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       $tab[2]['datatype'] = 'itemlink';
       $tab[2]['itemlink_type']  = 'Printer';
-//      $tab[2]['forcegroupby'] = true;
+//      $tab[2]['forcegroupby'] = TRUE;
 
 
 //      $tab[1]['table'] = "glpi_printers";
@@ -74,7 +74,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
 //      $tab[1]['datatype'] = 'itemlink';
 //      $tab[1]['itemlink_type']  = 'Printer';
-//      $tab[1]['forcegroupby'] = true;
+//      $tab[1]['forcegroupby'] = TRUE;
 
       $tab[24]['table'] = 'glpi_locations';
       $tab[24]['field'] = 'name';
@@ -257,7 +257,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          }
          return $datas;
       }
-      return false;
+      return FALSE;
    }
 
 
@@ -281,7 +281,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
             return $output;
          }
       }
-      return false;
+      return FALSE;
    }
 
 
@@ -289,7 +289,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
    function showForm($id, $options=array()) {
 
       if (!PluginFusioninventoryProfile::haveRight("printer", "r")) {
-         return false;
+         return FALSE;
       }
 
       // display stats
@@ -328,7 +328,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       // Get history
       $data = $this->getEntries($id, $_GET['start'], $limit);
       if (!($data)) {
-         return false;
+         return FALSE;
       }
 
       echo "<div align='center'><form method='post' name='printer_history_form'
@@ -354,15 +354,15 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       }
 
       if (!PluginFusioninventoryProfile::haveRight("printer", "w")) {
-         return false;
+         return FALSE;
       }
 
       echo "<input type='hidden' name='limit' value='".$limit."'>";
       echo "<tr class='tab_bg_1'><td colspan='3'>";
       echo "<div align='center'><a onclick= \"if (markAllRows('printer_history_form'))
-                 return false;\"
+                 return FALSE;\"
                  href='".$_SERVER['PHP_SELF']."?select=all'>".__('Check All', 'fusioninventory')."</a>";
-      echo " - <a onclick= \"if ( unMarkAllRows('printer_history_form') ) return false;\"
+      echo " - <a onclick= \"if ( unMarkAllRows('printer_history_form') ) return FALSE;\"
                   href='".$_SERVER['PHP_SELF']."?select=none'>".__('Uncheck All', 'fusioninventory')."</a> ";
       echo "<input type='submit' name='delete' value=\"".__('Delete', 'fusioninventory')."\" class='submit' >
             </div></td></tr>";
@@ -709,7 +709,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                         'unit'      => '',
                         'type'      => $type,
                         'height'    => 400,
-                        'showtotal' => false));
+                        'showtotal' => FALSE));
          }
       }
    }

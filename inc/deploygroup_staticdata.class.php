@@ -60,7 +60,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
          $group = new PluginFusioninventoryDeployGroup();
 
          if (!$group->getFromDB($input['groups_id'])) {
-            return false;
+            return FALSE;
          }
       }
       return parent::can($ID, $right, $input);

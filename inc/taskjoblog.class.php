@@ -127,7 +127,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $sopt[1]['field']         = 'id';
       $sopt[1]['name']          = __('ID');
 
-      $sopt[1]['massiveaction'] = false; // implicit field is id
+      $sopt[1]['massiveaction'] = FALSE; // implicit field is id
 
       $sopt[2]['table']          = 'glpi_plugin_fusioninventory_tasks';
       $sopt[2]['field']          = 'name';
@@ -154,7 +154,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $sopt[5]['name']          = __('Date');
 
       $sopt[5]['datatype']      = 'datetime';
-      $sopt[5]['massiveaction'] = false;
+      $sopt[5]['massiveaction'] = FALSE;
 
       $sopt[6]['table']          = 'glpi_plugin_fusioninventory_taskjobstates';
       $sopt[6]['field']          = 'uniqid';
@@ -186,7 +186,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    *     - items_id integer id of item to display history
    *     - itemtype value type of item to display
    *
-   * @return bool true if form is ok
+   * @return bool TRUE if form is ok
    *
    **/
    function showHistory($taskjobs_id, $width="950", $options=array()) {
@@ -330,7 +330,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
          echo "</table>";
       }
       echo "</center>";
-      return true;
+      return TRUE;
    }
 
 
@@ -787,7 +787,7 @@ function appear_array(id){
                   'unit'      => '',
                   'type'      => 'pie',
                   'height'    => 150,
-                  'showtotal' => false));
+                  'showtotal' => FALSE));
 
    }
 

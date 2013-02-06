@@ -65,7 +65,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
               $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/profile.php');
       }
 
-      return true;
+      return TRUE;
    }
 
    
@@ -77,7 +77,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     * @param $p_right Right (NULL, r, w)
     * @param $p_profiles_id Profile id
     *
-    * @return integer the new id of the added item (or false if fail)
+    * @return integer the new id of the added item (or FALSE if fail)
     **/
     static function addProfile($p_type, $p_right, $p_profiles_id=NULL) {
       if (is_null($p_profiles_id)) {
@@ -105,7 +105,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     * @param $p_right Right (NULL, r, w)
     * @param $p_profiles_id Profile id
     *
-    * @return boolean : true on success
+    * @return boolean : TRUE on success
     **/
    function updateProfile($p_id, $p_type, $p_right, $p_profiles_id=NULL) {
       if (is_null($p_profiles_id)) {
@@ -147,7 +147,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     * @param type $profiles_id id of the profile
     * @param type $type value type of right (example : agent, remotecontrol, configuration...)
     *
-    * @return true or false
+    * @return TRUE or FALSE
     */
    static function profileExists($profiles_id, $type) {
       global $DB;
@@ -156,9 +156,9 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       $query.= " AND `profiles_id`='$profiles_id'";
       $results = $DB->query($query);
       if ($DB->numrows($results) > 0) {
-         return true;
+         return TRUE;
       } else {
-         return false;
+         return FALSE;
       }
    }
 
@@ -191,7 +191,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     * @param $p_type Right type ('wol', 'agents'...)
     * @param $p_right Right (NULL, r, w)
     *
-    * @return boolean : true if right is ok
+    * @return boolean : TRUE if right is ok
     **/
    static function haveRight($p_type, $p_right) {
       $matches=array(
@@ -202,9 +202,9 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       if (isset($_SESSION["glpi_plugin_fusioninventory_profile"][$p_type])
                 && in_array($_SESSION["glpi_plugin_fusioninventory_profile"][$p_type],
                             $matches[$p_right])) {
-         return true;
+         return TRUE;
       } else {
-         return false;
+         return FALSE;
       }
    }
 
@@ -267,7 +267,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     **/
    function showProfileForm($items_id, $target) {
 
-      if (!Session::haveRight("profile", "r")) return false;
+      if (!Session::haveRight("profile", "r")) return FALSE;
 
       echo "<form name='form' method='post' action=\"$target\">";
       echo "<div align='center'>";

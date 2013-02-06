@@ -51,7 +51,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
 
    function __construct() {
       parent::__construct("glpi_printers");
-      $this->dohistory=true;
+      $this->dohistory=TRUE;
       $this->oFusionInventory_printer = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
       $this->oFusionInventory_printer->type = 'PluginFusioninventoryPrinter';
    }
@@ -70,11 +70,11 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
 
 
    static function canCreate() {
-      return true;
+      return TRUE;
    }
 
    static function canView() {
-      return true;
+      return TRUE;
    }
 
 
@@ -190,7 +190,7 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
       Dropdown::show("PluginFusioninventorySnmpmodel",
                      array('name'=>"plugin_fusioninventory_snmpmodels_id",
                            'value'=>$this->oFusionInventory_printer->fields['plugin_fusioninventory_snmpmodels_id'],
-                           'comment'=>false,
+                           'comment'=>FALSE,
                            'used'=>$exclude_models));
       echo "</td>";
       echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";

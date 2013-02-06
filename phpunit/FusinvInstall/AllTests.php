@@ -140,8 +140,8 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       $tables_toadd = array_diff($a_tables_ref_tableonly, $a_tables_db_tableonly);
 
       // See tables missing or to delete
-      $this->assertEquals(count($tables_toadd), 0, 'Tables missing '.$when.' '.print_r($tables_toadd, true));
-      $this->assertEquals(count($tables_toremove), 0, 'Tables to delete '.$when.' '.print_r($tables_toremove, true));
+      $this->assertEquals(count($tables_toadd), 0, 'Tables missing '.$when.' '.print_r($tables_toadd, TRUE));
+      $this->assertEquals(count($tables_toremove), 0, 'Tables to delete '.$when.' '.print_r($tables_toremove, TRUE));
 
       // See if fields are same
       foreach ($a_tables_db as $table=>$data) {
@@ -149,12 +149,12 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
             $fields_toremove = array_diff_assoc($data, $a_tables_ref[$table]);
             $fields_toadd = array_diff_assoc($a_tables_ref[$table], $data);
             $diff = "======= DB ============== Ref =======> ".$table."\n";
-            $diff .= print_r($data, true);
-            $diff .= print_r($a_tables_ref[$table], true);
+            $diff .= print_r($data, TRUE);
+            $diff .= print_r($a_tables_ref[$table], TRUE);
 
             // See tables missing or to delete
-            $this->assertEquals(count($fields_toadd), 0, 'Fields missing/not good in '.$when.' '.$table.' '.print_r($fields_toadd, true)." into ".$diff);
-            $this->assertEquals(count($fields_toremove), 0, 'Fields to delete in '.$when.' '.$table.' '.print_r($fields_toremove, true)." into ".$diff);
+            $this->assertEquals(count($fields_toadd), 0, 'Fields missing/not good in '.$when.' '.$table.' '.print_r($fields_toadd, TRUE)." into ".$diff);
+            $this->assertEquals(count($fields_toremove), 0, 'Fields to delete in '.$when.' '.$table.' '.print_r($fields_toremove, TRUE)." into ".$diff);
 
          }
       }
@@ -311,7 +311,7 @@ class FusinvInstall_AllTests  {
 
       $suite = new PHPUnit_Framework_TestSuite('FusinvInstall');
       $suite->addTest(Install_AllTests::suite());
-      $suite->addTest(Update_AllTests::suite());
+//      $suite->addTest(Update_AllTests::suite());
       return $suite;
    }
 }

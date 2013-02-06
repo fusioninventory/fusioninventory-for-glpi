@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryAgent extends CommonDBTM {
 
-   public $dohistory = true;
+   public $dohistory = TRUE;
 
    /**
    * Get name of this type
@@ -111,7 +111,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[6]['linkfield'] = 'device_id';
       $tab[6]['name']      = __('Device_id', 'fusioninventory');
       $tab[6]['datatype']  = 'text';
-      $tab[6]['massiveaction'] = false;
+      $tab[6]['massiveaction'] = FALSE;
 
       $tab[7]['table']         = 'glpi_computers';
       $tab[7]['field']         = 'name';
@@ -125,27 +125,27 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $tab[8]['linkfield'] = 'version';
       $tab[8]['name']      = __('Version');
       $tab[8]['datatype']  = 'text';
-      $tab[8]['massiveaction'] = false;
+      $tab[8]['massiveaction'] = FALSE;
 
       $tab[9]['table']     = $this->getTable();
       $tab[9]['field']     = 'token';
       $tab[9]['linkfield'] = 'token';
       $tab[9]['name']      = __('Token');
       $tab[9]['datatype']  = 'text';
-      $tab[9]['massiveaction'] = false;
+      $tab[9]['massiveaction'] = FALSE;
 
       $tab[10]['table']     = $this->getTable();
       $tab[10]['field']     = 'useragent';
       $tab[10]['linkfield'] = 'useragent';
       $tab[10]['name']      = __('Useragent', 'fusioninventory');
       $tab[10]['datatype']  = 'text';
-      $tab[10]['massiveaction'] = false;
+      $tab[10]['massiveaction'] = FALSE;
 
       $tab[11]['table']     = $this->getTable();
       $tab[11]['field']     = 'tag';
       $tab[11]['name']      = __('FusionInventory tag', 'fusioninventory');
       $tab[11]['datatype']  = 'text';
-      $tab[11]['massiveaction'] = false;
+      $tab[11]['massiveaction'] = FALSE;
 
       $i = 20;
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
@@ -156,7 +156,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $tab[$i]['linkfield']     = $data["modulename"];
          $tab[$i]['name']          = __('Module', 'fusioninventory')." - ".$data["modulename"];
          $tab[$i]['datatype']      = 'bool';
-         $tab[$i]['massiveaction'] = false;
+         $tab[$i]['massiveaction'] = FALSE;
          $i++;
       }
       return $tab;
@@ -188,7 +188,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          Html::convDateTime($this->fields['last_contact']).' minutes';
 
       if (!empty($comment)) {
-         return Html::showToolTip($comment, array('display' => false));
+         return Html::showToolTip($comment, array('display' => FALSE));
       }
       return $comment;
    }
@@ -201,7 +201,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    * @param $computers_id integer ID of the agent
    * @param $options array
    *
-   * @return bool true if form is ok
+   * @return bool TRUE if form is ok
    *
    **/
    function showForm($computers_id, $options=array()) {
@@ -308,7 +308,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $this->showFormButtons($options);
       $this->addDivForTabs();
 
-      return true;
+      return TRUE;
    }
 
 
@@ -431,7 +431,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $this->getFromDB($data['id']);
          return $data['id'];
       }
-      return false;
+      return FALSE;
    }
 
 
@@ -628,7 +628,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if (!empty($agents)) {
          return array_pop($agents);
       } else {
-         return false;
+         return FALSE;
       }
    }
 

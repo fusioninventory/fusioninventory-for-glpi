@@ -85,7 +85,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                $licence_endlink .= "<input type='hidden' name='fusinvinventory_licenseinfos_id' value='".$licenseInfo['id']."' />";
                $licence_endlink .= "<input type='hidden' name='softwarelicenses_id' value='0' />";
                $licence_endlink .= "<input type='submit' class='button' name='associate' value='".__('Dissociate')."'>";
-               $licence_endlink .= Html::closeForm(false);
+               $licence_endlink .= Html::closeForm(FALSE);
             }
 
             echo "<tr class='tab_bg_1'>";
@@ -135,7 +135,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                      'serial' => $licenseInfo['serial']
                   );
                 Ajax::updateItem("softwarelicenses_id_$rand",
-                              $CFG_GLPI["root_doc"]."/plugins/fusinvinventory/ajax/dropdownsoftwarelicenses.php?key=".$licenseInfo['serial'], $params, false);
+                              $CFG_GLPI["root_doc"]."/plugins/fusinvinventory/ajax/dropdownsoftwarelicenses.php?key=".$licenseInfo['serial'], $params, FALSE);
                echo "<span id='softwarelicenses_id_$rand'></span>";
                Html::closeForm();
                echo "</td>";

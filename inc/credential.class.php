@@ -169,7 +169,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       $tab[3]['field']         = 'itemtype';
       $tab[3]['name']          = __('Type');
 
-      $tab[3]['massiveaction'] = false;
+      $tab[3]['massiveaction'] = FALSE;
 
       $tab[4]['table'] = $this->getTable();
       $tab[4]['field'] = 'username';
@@ -195,7 +195,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       }
 
       if (!$input['itemtype']) {
-          Session::addMessageAfterRedirect(__('It\'s mandatory to select a type and at least one field'), true, ERROR);
+          Session::addMessageAfterRedirect(__('It\'s mandatory to select a type and at least one field'), TRUE, ERROR);
          $input = array();
 
       }
@@ -221,14 +221,14 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     *
     * @param $credential_itemtype for example PluginFusinvinventoryVmwareESX
     *
-    * @return the label associated with the itemtype, or false if no credential found
+    * @return the label associated with the itemtype, or FALSE if no credential found
     */
    static function getLabelByItemtype($credential_itemtype) {
       $credentialtypes = self::findItemtypeType($credential_itemtype);
       if (!empty($credentialtypes)) {
          return $credentialtypes['name'];
       }
-      return false;
+      return FALSE;
    }
 
 
@@ -346,7 +346,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
          $condition = "`itemtype`='".$p['itemtype']."'";
          $condition.= getEntitiesRestrictRequest(" AND", "glpi_plugin_fusioninventory_credentials",
                                                  "entities_id", $_SESSION['glpiactiveentities'],
-                                                 true);
+                                                 TRUE);
          $results   = getAllDatasFromTable('glpi_plugin_fusioninventory_credentials',
                                            $condition);
          $types = array();
@@ -372,7 +372,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    /**
     * Check if there's at least one credential itemetype
     *
-    * @return true if there's at least one type, false otherwise
+    * @return TRUE if there's at least one type, FALSE otherwise
     */
    static function hasAlLeastOneType() {
       $types = self::getCredentialsItemTypes();

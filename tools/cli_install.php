@@ -91,7 +91,7 @@ class CliMigration extends Migration {
    }
 
 
-   function displayWarning($msg, $red=false) {
+   function displayWarning($msg, $red=FALSE) {
 
       if ($red) {
          $msg = "** $msg";

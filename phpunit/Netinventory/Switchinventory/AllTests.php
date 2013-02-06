@@ -389,7 +389,7 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team</COMMENTS>
          // Verify not have networkport_networkport with networkports_id = 0
          $zombieConnect = $networkPort_NetworkPort->find("`networkports_id_1`='0'
             OR `networkports_id_2`='0'");
-         $this->assertEquals(count($zombieConnect), 0, 'Zombie connections detected : '.print_r($zombieConnect, true));
+         $this->assertEquals(count($zombieConnect), 0, 'Zombie connections detected : '.print_r($zombieConnect, TRUE));
 
          // Verify have only 2 switches
          $this->assertEquals(count($networkEquipment->find()), 2, '[1] May have 2 switches created');

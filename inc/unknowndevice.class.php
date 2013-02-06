@@ -42,7 +42,7 @@
 
 class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
-   public $dohistory = true;
+   public $dohistory = TRUE;
 
    /**
    * Get name of this type
@@ -208,7 +208,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
     * @param integer $tabnum
     * @param interger $withtemplate
     *
-    * @return boolean true
+    * @return boolean TRUE
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       global $CFG_GLPI;
@@ -219,7 +219,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                '/plugins/fusioninventory/front/unknowndevice.form.php?id='.$_POST["id"], 
                                    $_POST["id"]);
       }
-      return true;
+      return TRUE;
    }
    
 
@@ -241,7 +241,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * @param $id integer id of the unknown device
    * @param $options array
    *
-   * @return bool true if form is ok
+   * @return bool TRUE if form is ok
    *
    **/
    function showForm($id, $options=array()) {
@@ -407,7 +407,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<div id='tabcontent'></div>";
       echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
-      return true;
+      return TRUE;
    }
 
 
@@ -506,9 +506,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $this->update($input);
          $delete_port = $np->getFromDB($port['id']);
          $np->delete($delete_port, 1);
-         return true;
+         return TRUE;
       }
-      return false;
+      return FALSE;
    }
 
 
@@ -708,7 +708,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       if (isset($a_portglpi[$data['id']])) {
          return $a_portglpi[$data['id']];
       }
-      return false;
+      return FALSE;
    }
 
 

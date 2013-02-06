@@ -88,7 +88,7 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
          $pfInventoryComputerStorage->showStorage($item->getID());
       }
 
-      return true;
+      return TRUE;
    }
 
    

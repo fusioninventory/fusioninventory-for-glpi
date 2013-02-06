@@ -1094,7 +1094,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             array("plugin_fusioninventory_taskjobstates_id", "state", "date"),
                             "plugin_fusioninventory_taskjobstates_id");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
       // rename comments for new lang system (gettext in 0.84)
          $a_text = array(
@@ -1199,7 +1199,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             array("plugin_fusioninventory_agents_id", "state"),
                             "plugin_fusioninventory_agents_id");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
 
 
@@ -1420,7 +1420,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "date_mod");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
       
       
 
@@ -1533,7 +1533,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "method",
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
 
 
@@ -1576,7 +1576,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "plugin_fusioninventory_criterium_id");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
       
    pluginFusioninventorychangeDisplayPreference("5153", "PluginFusioninventoryUnknownDevice");
@@ -1799,7 +1799,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->addKey($newTable,
                           "uptodate");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
       
       
@@ -1882,7 +1882,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "computers_id");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
       
       
       
@@ -1917,7 +1917,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "name");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
       
       
 
@@ -1990,7 +1990,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                              "last_fusioninventory_update");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
       // Migrate libserialization
       require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputercomputer.class.php");
@@ -2091,7 +2091,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "computers_id");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
       
 
@@ -2132,7 +2132,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "level");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
       
       
@@ -2175,7 +2175,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "plugin_fusioninventory_inventorycomputerstorages_id_2");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
       
       
       
@@ -2213,7 +2213,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "sysdescr",
                               "text COLLATE utf8_unicode_ci DEFAULT NULL");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
       
 
@@ -2268,7 +2268,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "comment",
                                  "text COLLATE utf8_unicode_ci DEFAULT NULL");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
 
 
@@ -2323,7 +2323,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "comment",
                                  "text COLLATE utf8_unicode_ci DEFAULT NULL");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
 
 
@@ -2388,7 +2388,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "comment",
                                  "text COLLATE utf8_unicode_ci DEFAULT NULL");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
 
 
@@ -2461,7 +2461,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "plugin_fusioninventory_mappings_id");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
          $configLogField = new PluginFusioninventoryConfigLogField();
          $configLogField->initConfig();
@@ -2579,7 +2579,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                            "releasedsnmpmodel_id",
                            "int(11) NOT NULL DEFAULT '0'");
    $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, false);
+   $DB->list_fields($newTable, FALSE);
 
 
 
@@ -2715,7 +2715,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             "unicity",
                             "UNIQUE");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
 
 
@@ -2798,7 +2798,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "date_mod");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
 
 
@@ -3036,7 +3036,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "plugin_fusioninventory_mappings_id");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
 
 
@@ -3109,7 +3109,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "itemtype");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
 
 
@@ -3160,7 +3160,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "import",
                               "tinyint(1) NOT NULL DEFAULT '0'");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
 
       
@@ -3269,7 +3269,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "plugin_fusioninventory_snmpmodels_id");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
       
       
@@ -3406,7 +3406,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             array("printers_id", "date"),
                             "printers_id");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
       
       
@@ -3503,7 +3503,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "cartridges_id");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
       
       
@@ -3659,7 +3659,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "networkports_id");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
       
       
       
@@ -3787,7 +3787,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             array("plugin_fusioninventory_snmpmodels_id", "plugin_fusioninventory_configsecurities_id"),
                             "plugin_fusioninventory_snmpmodels_id");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
       
       
@@ -3851,7 +3851,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "networkequipments_id");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
    }   
       
       
@@ -4057,7 +4057,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "date_mod");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
       
       
@@ -4173,7 +4173,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "is_deleted");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
       
       
       
@@ -4275,7 +4275,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "nb_import",
                                  "int(11) NOT NULL DEFAULT '0'");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
       
       
@@ -4361,7 +4361,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "activation_date",
                               "datetime DEFAULT NULL");
       $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, false);
+      $DB->list_fields($newTable, FALSE);
 
 
    /*
@@ -7533,7 +7533,7 @@ function migrateTablesFusionInventory($migration, $a_table) {
                               $new,
                               $a_table['fields'][$new]['type'], 
                               array('value' => $a_table['fields'][$new]['value'],
-                                    'update'=> true));
+                                    'update'=> TRUE));
    }      
 
    foreach ($a_table['oldfields'] as $field) {
@@ -7573,7 +7573,7 @@ function migrateTablesFusionInventory($migration, $a_table) {
    }
    $migration->migrationOneTable($a_table['name']);
       
-   $DB->list_fields($a_table['name'], false);
+   $DB->list_fields($a_table['name'], FALSE);
 }
 
 /**

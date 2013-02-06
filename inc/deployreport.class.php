@@ -82,7 +82,7 @@ class PluginFusioninventoryDeployReport extends CommonDBTM {
     * @param integer $tabnum
     * @param interger $withtemplate
     *
-    * @return boolean true
+    * @return boolean TRUE
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
@@ -92,7 +92,7 @@ class PluginFusioninventoryDeployReport extends CommonDBTM {
             $pfReport->showReport($item->getID());
          }
       }
-      return true;
+      return TRUE;
    }
 
 

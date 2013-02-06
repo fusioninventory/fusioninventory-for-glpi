@@ -74,7 +74,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     * @param integer $tabnum
     * @param interger $withtemplate
     *
-    * @return boolean true
+    * @return boolean TRUE
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
@@ -85,7 +85,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          $pfAgentmodule = new self();
          $pfAgentmodule->showFormAgentException($item->getID());
       }
-      return true;
+      return TRUE;
    }
 
 
@@ -93,7 +93,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    /**
    * Display form forconfiguration of agent modules
    *
-   * @return bool true if form is ok
+   * @return bool TRUE if form is ok
    *
    **/
    function showForm() {
@@ -114,15 +114,15 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          $a_methods = PluginFusioninventoryStaticmisc::getmethods();
          $modulename = $data["modulename"];
-         $use_rest = false;
+         $use_rest = FALSE;
 
          foreach ($a_methods as $datamod) {
 
             if ((strtolower($data["modulename"]) == strtolower($datamod['method'])) ||
                 isset($datamod['task'])
                   && (strtolower($data["modulename"]) == strtolower($datamod['task']))) {
-               if (isset($datamod['use_rest']) && $datamod['use_rest'] == true) {
-                  $use_rest = true;
+               if (isset($datamod['use_rest']) && $datamod['use_rest'] == TRUE) {
+                  $use_rest = TRUE;
                }
                if (isset($datamod['name'])) {
                   $modulename = $datamod['name'];
@@ -185,7 +185,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          Html::closeForm();
          echo "<br/>";
       }
-      return true;
+      return TRUE;
    }
 
 
@@ -195,7 +195,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    *
    * @param interger $items_id ID of the agent
    *
-   * @return bool true if form is ok
+   * @return bool TRUE if form is ok
    *
    **/
    function showFormAgentException($items_id) {
@@ -372,16 +372,16 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       if ($agentModule['is_active'] == 0) {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
          if (in_array($items_id, $a_agentList)) {
-            return true;
+            return TRUE;
          } else {
-            return false;
+            return FALSE;
          }
       } else {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);
          if (in_array($items_id, $a_agentList)) {
-            return false;
+            return FALSE;
          } else {
-            return true;
+            return TRUE;
          }
       }
    }

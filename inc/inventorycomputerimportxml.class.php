@@ -50,7 +50,7 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
    /**
    * Display form for import XML
    *
-   * @return bool true if form is ok
+   * @return bool TRUE if form is ok
    *
    **/
    function showForm() {
@@ -91,7 +91,7 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
       echo "</table>";
 
       Html::closeForm();
-      return true;
+      return TRUE;
    }
 
 

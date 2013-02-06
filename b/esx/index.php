@@ -47,7 +47,7 @@ if (isset($_GET['status'])) {
 
 include ("../../../../inc/includes.php");
 
-$response = false;
+$response = FALSE;
 //Agent communication using REST protocol
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
    switch ($_GET['action']) {

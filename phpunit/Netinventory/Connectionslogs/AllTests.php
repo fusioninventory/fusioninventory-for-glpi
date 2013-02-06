@@ -236,7 +236,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
          $this->assertEquals(count($a_ports), 1, '(1) switch 1 have not port created in GLPI');
          $a_port = current($a_ports);
          $ret = $networkPort_NetworkPort->getFromDBForNetworkPort($a_port['id']);
-         $this->assertEquals($ret, true, '(1) Port 1 of switch 1 not connected in GLPI');
+         $this->assertEquals($ret, TRUE, '(1) Port 1 of switch 1 not connected in GLPI');
          // Check 2 : Get if portconnectionlog is added
          $a_ports = $networkPort->find("`mac`='00:23:18:cf:0d:94'");
          $a_uport = current($a_ports);
@@ -254,7 +254,7 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal</COMMENTS>
       $this->testSendinventory("toto", $switch2, 1);
          // CHECK 1 : Get connection deleted in GLPI
          $ret = $networkPort_NetworkPort->getFromDBForNetworkPort($a_port['id']);
-         $this->assertEquals($ret, false, '(2) Port 1 of switch 1 is yet connected in GLPI');
+         $this->assertEquals($ret, FALSE, '(2) Port 1 of switch 1 is yet connected in GLPI');
          $a_ports = $networkPort->find("`mac`='00:1a:6c:9a:fa:85'");
          $this->assertEquals(count($a_ports), 1, '(2) switch 2 have not port created in GLPI');
          $a_port1sw2 = current($a_ports);

@@ -75,7 +75,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          //== edit selected data ==
          
          //get current order json
-         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($orders_id), true);
+         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($orders_id), TRUE);
 
          //get data on index
          $check = $datas_o['jobs']['checks'][$datas['index']];         
@@ -108,7 +108,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<hr>";
       if (!isset($datas['index'])) {
          echo "</div>";
-      } else return true;
+      } else return TRUE;
       Html::closeForm();
 
       //display stored checks datas
@@ -227,7 +227,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          case "winkeyExists":
          case "winkeyMissing":
             $path_label = __("Key", 'fusioninventory');
-            $value_label = false;
+            $value_label = FALSE;
             break;
          case "winkeyEquals":
             $path_label = __("Key", 'fusioninventory');
@@ -236,7 +236,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          case "fileExists":
          case "fileMissing":
             $path_label = __("File", 'fusioninventory');
-            $value_label = false;
+            $value_label = FALSE;
             break;
          case "fileSizeGreater":
          case "fileSizeEquals":
@@ -262,7 +262,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<th>$path_label</th>";
       echo "<td><input type='text' name='path' id='check_path$rand' value='$path_value' /></td>";
       echo "</tr>";
-      if ($value_label !== false) {
+      if ($value_label !== FALSE) {
          echo "<tr>";
          echo "<th>$value_label</th>";
          switch ($value_type) {
@@ -346,7 +346,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       );
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
       //add new entry
       $datas['jobs']['checks'][] = $new_entry;
@@ -371,7 +371,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       );
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
       //unset index 
       unset($datas['jobs']['checks'][$params['index']]);
@@ -386,7 +386,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
    static function remove_item($params) {
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
       //remove selected checks
       foreach ($params['check_entries'] as $index) {
@@ -399,7 +399,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
    static function move_item($params) {
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
       //get data on old index
       $moved_check = $datas['jobs']['checks'][$params['old_index']];

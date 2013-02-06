@@ -1263,7 +1263,7 @@ class Rules extends PHPUnit_Framework_TestCase {
             
       $a_computers = $computer->find();
       foreach ($a_computers as $data) {
-         $computer->delete($data, true);
+         $computer->delete($data, TRUE);
       }              
       
       // Create computer only with serial and name;

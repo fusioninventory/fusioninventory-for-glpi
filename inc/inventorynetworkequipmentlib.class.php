@@ -400,7 +400,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   $input['entities_id'] = $Phone->fields['entities_id'];
                   $portLink_id = $networkPort->add($input);
                }
-               $opposite_id = false;
+               $opposite_id = FALSE;
                if ($opposite_id == $wire->getOppositeContact($portLink_id)) {
                   if ($opposite_id != $macNotPhone_id) {
                      $pfNetworkPort->disconnectDB($portLink_id); // disconnect this port

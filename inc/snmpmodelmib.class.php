@@ -51,7 +51,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
       global $DB, $CFG_GLPI;
 
       if (!PluginFusioninventoryProfile::haveRight("model", "r")) {
-         return false;
+         return FALSE;
       } else if ((isset($id)) AND (!empty($id))) {
          $query = "SELECT `itemtype`
                    FROM `glpi_plugin_fusioninventory_snmpmodels`
@@ -192,10 +192,10 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
             echo "<table class='tab_cadre_fixe'>";
             echo "<tr>";
             echo "<td><img src=\"".$CFG_GLPI["root_doc"]."/pics/arrow-left.png\" alt=''></td>
-                  <td align='center'><a onclick= \"if ( markCheckboxes('oid_list') ) return false;\"
+                  <td align='center'><a onclick= \"if ( markCheckboxes('oid_list') ) return FALSE;\"
                       href='".$_SERVER['PHP_SELF']."?select=all'>".__('Check All', 'fusioninventory')."</a></td>";
             echo "<td>/</td><td align='center'><a onclick= \"if ( unMarkCheckboxes('oid_list') )
-                     return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
+                     return FALSE;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
                      __('Uncheck All', 'fusioninventory')."</a>";
             echo "</td><td align='left' colspan='6' width='80%'>";
             if(PluginFusioninventoryProfile::haveRight("model", "w")) {

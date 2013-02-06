@@ -48,8 +48,8 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
    // From Rule
    //public $right='rule_import';
-   public $can_sort=true;
-   public $specific_parameters = false;
+   public $can_sort=TRUE;
+   public $specific_parameters = FALSE;
 
 
 
@@ -178,31 +178,31 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
 
 
-   function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=false) {
+   function displayAdditionalRuleCondition($condition, $criteria, $name, $value, $test=FALSE) {
       if ($test) {
-         return false;
+         return FALSE;
       }
 
       switch ($condition) {
          case Rule::PATTERN_FIND:
-            return false;
+            return FALSE;
             break;
 
          case PluginFusioninventoryInventoryRuleImport::PATTERN_IS_EMPTY :
             Dropdown::showYesNo($name, 0, 0);
-            return true;
+            return TRUE;
 
          case Rule::PATTERN_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
-            return true;
+            return TRUE;
 
          case Rule::PATTERN_DOES_NOT_EXISTS:
             echo Dropdown::showYesNo($name, 1, 0);
-            return true;
+            return TRUE;
 
       }
 
-      return false;
+      return FALSE;
    }
 }
 

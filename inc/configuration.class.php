@@ -79,7 +79,7 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
       $this->showTabs($options);
       $this->addDivForTabs();
 
-      return true;
+      return TRUE;
    }
 }
 

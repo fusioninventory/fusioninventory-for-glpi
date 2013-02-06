@@ -53,11 +53,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
    static function canCreate() {
-      return true;
+      return TRUE;
    }
 
    static function canView() {
-      return true;
+      return TRUE;
    }
 
 
@@ -69,7 +69,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          $this->addStandardTab('PluginFusioninventoryDeployInstall', $ong, $options);
          $this->addStandardTab('PluginFusioninventoryDeployUninstall', $ong, $options);
       }
-      $ong['no_all_tab'] = true;
+      $ong['no_all_tab'] = TRUE;
       return $ong;
    }
 
@@ -167,7 +167,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
    function showMenu($options=array()) {
 
-      $this->displaylist = false;
+      $this->displaylist = FALSE;
 
       $this->fields['id'] = -1;
       $this->showList();
@@ -219,7 +219,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "<div id='tabcontent'></div>";
       echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
-      return true;
+      return TRUE;
    }
 
    static function displayOrderTypeForm($order_type, $packages_id) {
@@ -241,7 +241,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $found = $o_order->find("plugin_fusioninventory_deploypackages_id = $packages_id 
                                AND type = $order_type");
       $order = array_shift($found);
-      $datas = json_decode($order['json'], true);
+      $datas = json_decode($order['json'], TRUE);
       $orders_id = $order['id'];
 
       
@@ -320,7 +320,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
    
-   static function plusButton($dom_id, $clone = false) {
+   static function plusButton($dom_id, $clone = FALSE) {
       global $CFG_GLPI;
 
       echo "&nbsp;<img id='plus_$dom_id' onClick='return plusbutton$dom_id()'
@@ -330,11 +330,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "<script type='text/javascript>";
       echo "function plusbutton$dom_id() {";
         
-      if ($clone !== false) {
+      if ($clone !== FALSE) {
          echo "
          var root=document.getElementById('$dom_id');
          if (root.style.display == 'block') {
-            var clone=root.getElementsByTagName('$clone')[0].cloneNode(true);
+            var clone=root.getElementsByTagName('$clone')[0].cloneNode(TRUE);
             root.appendChild(clone);
          }
          ";
@@ -377,9 +377,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       foreach ($taskjobs_a as $job) {
          $task = new PluginFusioninventoryTask;
          $task->getFromDB($job['plugin_fusioninventory_tasks_id']);
-         if ($task->getField('is_active') == 1) return false;
+         if ($task->getField('is_active') == 1) return FALSE;
       }
-      return true;
+      return TRUE;
    }
 
 
@@ -410,17 +410,17 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
          Html::redirect($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.form.php?id="
                .$this->getField('id'));
-         return false;
+         return FALSE;
       }
 
-      return true;
+      return TRUE;
    }
 
    public function package_clone($new_name = '') {
 
-      if ($this->getField('id') < 0) return false;
+      if ($this->getField('id') < 0) return FALSE;
 
-      $_SESSION['tmp_clone_package'] = true;
+      $_SESSION['tmp_clone_package'] = TRUE;
 
       //duplicate package
       $package_oldId = $this->getField('id');

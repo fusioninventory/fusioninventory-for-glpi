@@ -44,7 +44,7 @@ include ("../../../inc/includes.php");
 
 Session::checkLoginUser();
 
-Plugin::load('fusioninventory', true);
+Plugin::load('fusioninventory', TRUE);
 
 $dropdown = new PluginFusioninventorySnmpmodelMibOid();
 include (GLPI_ROOT . "/front/dropdown.common.php");

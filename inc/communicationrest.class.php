@@ -68,10 +68,10 @@ class PluginFusioninventoryCommunicationRest {
 
             }
          } else {
-            $response = false;
+            $response = FALSE;
          }
       } else {
-         $response = false;
+         $response = FALSE;
       }
       return $response;
    }
@@ -109,7 +109,7 @@ class PluginFusioninventoryCommunicationRest {
     * Send to the agent an OK code
     */
    static function sendOk() {
-      header("HTTP/1.1 200", true, 200);
+      header("HTTP/1.1 200", TRUE, 200);
    }
 
 
@@ -119,7 +119,7 @@ class PluginFusioninventoryCommunicationRest {
     * when the request sent by the agent is invalid
     */
    static function sendError() {
-      header("HTTP/1.1 400", true, 400);
+      header("HTTP/1.1 400", TRUE, 400);
    }
 
 
@@ -176,21 +176,21 @@ class PluginFusioninventoryCommunicationRest {
     *
     * @param url the url to test
     *
-    * @return true if url is valid, false otherwise
+    * @return TRUE if url is valid, FALSE otherwise
     */
    static function testRestURL($url) {
 
-      //If fopen is not allowed, we cannot check and then return true...
+      //If fopen is not allowed, we cannot check and then return TRUE...
       if (!ini_get('allow_url_fopen')) {
-         return true;
+         return TRUE;
       }
 
       $handle = fopen($url, 'rb');
       if (!$handle) {
-         return false;
+         return FALSE;
       } else {
          fclose($handle);
-         return true;
+         return TRUE;
       }
    }   
 

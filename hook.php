@@ -151,7 +151,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5190]['name']=__('FusInv', 'fusioninventory')." - ".
          __('SNMP models', 'fusioninventory');
 
-      $sopt[5190]['massiveaction'] = false;
+      $sopt[5190]['massiveaction'] = FALSE;
 
 
       $pfConfig = new PluginFusioninventoryConfig();
@@ -165,7 +165,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5191]['name'] = __('FusInv', 'fusioninventory')." - ".
             __('SNMP authentication', 'fusioninventory');
 
-         $sopt[5191]['massiveaction'] = false;
+         $sopt[5191]['massiveaction'] = FALSE;
       } else {
          $sopt[5191]['table']='glpi_plugin_fusioninventory_configsecurities';
          $sopt[5191]['field']='name';
@@ -175,7 +175,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
          $sopt[5191]['datatype'] = 'itemlink';
          $sopt[5191]['itemlink_type'] = 'PluginFusioninventoryConfigSecurity';
-         $sopt[5191]['massiveaction'] = false;
+         $sopt[5191]['massiveaction'] = FALSE;
       }
 
       $sopt[5194]['table']='glpi_plugin_fusioninventory_printers';
@@ -201,7 +201,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5190]['name']=__('FusInv', 'fusioninventory')." - ".
          __('SNMP models', 'fusioninventory');
 
-      $sopt[5190]['massiveaction'] = false;
+      $sopt[5190]['massiveaction'] = FALSE;
 
       $pfConfig = new PluginFusioninventoryConfig();
 
@@ -212,7 +212,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5191]['linkfield']='plugin_fusioninventory_configsecurities_id';
       $sopt[5191]['name']=__('FusInv', 'fusioninventory')." - ".
                              __('SNMP authentication', 'fusioninventory');
-      $sopt[5191]['massiveaction'] = false;
+      $sopt[5191]['massiveaction'] = FALSE;
 
       $sopt[5194]['table']='glpi_plugin_fusioninventory_networkequipments';
       $sopt[5194]['field']='last_fusioninventory_update';
@@ -437,14 +437,14 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             // ** Display pic / link for exporting model
             case "glpi_plugin_fusioninventory_snmpmodels.id" :
                $out = "<div align='center'><form>";
-               $out .= Html::closeForm(false);
+               $out .= Html::closeForm(FALSE);
                $out .= "<form method='get' action='";
                $out .= $CFG_GLPI['root_doc'] . "/plugins/fusinvsnmp/front/models.export.php' ".
                        "target='_blank'>
                   <input type='hidden' name='model' value='" . $data["id"] . "' />
                   <input name='export' src='" . $CFG_GLPI['root_doc'];
                $out.= "/pics/right.png' title='Exporter' value='Exporter' type='image'>";
-               $out .= Html::closeForm(false);
+               $out .= Html::closeForm(FALSE);
                $out .= "</div>";
                return "<center>".$out."</center>";
                break;
@@ -652,7 +652,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                $out = '';
                $map = new PluginFusioninventoryMapping;
                $mapfields = $map->get('NetworkEquipment', $data["ITEM_$num"]);
-               if ($mapfields != false) {
+               if ($mapfields != FALSE) {
                   $out = _get('_LANG[\'plugin_fusinvsnmp\'][\'mapping\'][$mapfields["locale"]]');
                }
                return $out;
@@ -759,7 +759,7 @@ function plugin_fusioninventory_searchOptionsValues($item) {
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $elements = $pfTaskjoblog->dropdownStateValues();
       Dropdown::showFromArray($item['name'], $elements, array('value'=>$item['value']));
-      return true;
+      return TRUE;
    } else if ($item['searchoption']['table'] == 'glpi_plugin_fusioninventory_taskjobstates'
            AND $item['searchoption']['field'] == 'uniqid') {
       $elements = array();
@@ -771,7 +771,7 @@ function plugin_fusioninventory_searchOptionsValues($item) {
          $elements[$data['uniqid']] = $data['uniqid'];
       }
       Dropdown::showFromArray($item['name'], $elements, array('value'=>$item['value']));
-      return true;
+      return TRUE;
    }
 }
 
@@ -815,12 +815,12 @@ function plugin_fusioninventory_install() {
       pluginFusioninventoryInstall(PLUGIN_FUSIONINVENTORY_VERSION);
    }
 
-   return true;
+   return TRUE;
 }
 
 
 
-// Uninstall process for plugin : need to return true if succeeded
+// Uninstall process for plugin : need to return TRUE if succeeded
 function plugin_fusioninventory_uninstall() {
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
    return PluginFusioninventorySetup::uninstall();
@@ -918,7 +918,7 @@ function plugin_get_headings_fusioninventory($item, $withtemplate) {
          break;
 
    }
-   return false;
+   return FALSE;
 }
 
 // Define headings actions added by the plugin
@@ -961,7 +961,7 @@ function plugin_headings_actions_fusioninventory($item) {
          return $array;
          break;
    }
-   return false;
+   return FALSE;
 }
 
 
@@ -1182,37 +1182,37 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
          $type_list[] = 'Phone';
          Dropdown::showItemTypes($linkfield, $type_list,
                                           array('value' => 0));
-         return true;
+         return TRUE;
          break;
       
       case 'glpi_plugin_fusioninventory_configsecurities.name':
          Dropdown::show("PluginFusioninventoryConfigSecurity",
                         array('name' => $linkfield));
-         return true;
+         return TRUE;
          break;
 
       case 'glpi_plugin_fusioninventory_snmpmodels.name':
          Dropdown::show("PluginFusioninventorySnmpmodel",
                         array('name' => $linkfield,
-                              'comment' => false));
-         return true;
+                              'comment' => FALSE));
+         return TRUE;
          break;
 
       case 'glpi_plugin_fusioninventory_agents.id' :
          Dropdown::show("PluginFusinvsnmpAgent",
                         array('name' => $linkfield,
-                              'comment' => false));
-         return true;
+                              'comment' => FALSE));
+         return TRUE;
          break;
 
       case 'glpi_plugin_fusioninventory_agents.threads_discovery' :
          Dropdown::showInteger("threads_discovery", $linkfield, 1, 400);
-         return true;
+         return TRUE;
          break;
 
       case 'glpi_plugin_fusioninventory_agents.threads_query' :
          Dropdown::showInteger("threads_query", $linkfield, 1, 400);
-         return true;
+         return TRUE;
          break;
 
       case 'glpi_plugin_fusioninventory_snmpmodels.itemtype' :
@@ -1223,7 +1223,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
          $type_list[] = PERIPHERAL_TYPE;
          $type_list[] = PHONE_TYPE;
          Device::dropdownTypes('type', $linkfield, $type_list);
-         return true;
+         return TRUE;
          break;
 
       case 'glpi_entities.name' :
@@ -1232,12 +1232,12 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
                            array('name' => "entities_id",
                            'value' => $_SESSION["glpiactive_entity"]));
          }
-         return true;
+         return TRUE;
          break;
 
    }
 
-   return false;
+   return FALSE;
 }
 
 
@@ -1324,7 +1324,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
             Dropdown::show("PluginFusioninventorySnmpmodel",
                            array('name' => "snmp_model",
                                  'value' => "name",
-                                 'comment' => false,
+                                 'comment' => FALSE,
                                  'used' => $exclude_models));
             echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
                __('Post') . "\" >";
@@ -1802,18 +1802,18 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 //      case 'glpi_plugin_fusioninventory_agents.id' :
 //         Dropdown::show("PluginFusioninventoryAgent",
 //                        array('name' => $linkfield,
-//                              'comment' => false));
-//         return true;
+//                              'comment' => FALSE));
+//         return TRUE;
 //         break;
 //
 //      case 'glpi_plugin_fusioninventory_agents.nb_process_query' :
 //         Dropdown::showInteger("nb_process_query", $linkfield, 1, 200);
-//         return true;
+//         return TRUE;
 //         break;
 //
 //      case 'glpi_plugin_fusioninventory_agents.nb_process_discovery' :
 //         Dropdown::showInteger("nb_process_discovery", $linkfield, 1, 400);
-//         return true;
+//         return TRUE;
 //         break;
 //
 //      case 'glpi_plugin_fusioninventory_agents.logs' :
@@ -1826,27 +1826,27 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 
 //         Dropdown::showFromArray('logs', $ArrayValues,
 //                                 array('value'=>$linkfield));
-//         return true;
+//         return TRUE;
 //         break;
 //
 //      case 'glpi_plugin_fusioninventory_agents.core_discovery' :
 //         Dropdown::showInteger("core_discovery", $linkfield, 1, 32);
-//         return true;
+//         return TRUE;
 //         break;
 //
 //      case 'glpi_plugin_fusioninventory_agents.core_query' :
 //         Dropdown::showInteger("core_query", $linkfield, 1, 32);
-//         return true;
+//         return TRUE;
 //         break;
 //
 //      case 'glpi_plugin_fusioninventory_agents.threads_discovery' :
 //         Dropdown::showInteger("threads_discovery", $linkfield, 1, 400);
-//         return true;
+//         return TRUE;
 //         break;
 //
 //      case 'glpi_plugin_fusioninventory_agents.threads_query' :
 //         Dropdown::showInteger("threads_query", $linkfield, 1, 400);
-//         return true;
+//         return TRUE;
 //         break;
 //
 //      case 'glpi_entities.name' :
@@ -1855,10 +1855,10 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 //                           array('name' => "entities_id",
 //                           'value' => $_SESSION["glpiactive_entity"]));
 //         }
-//         return true;
+//         return TRUE;
 //         break;
 //   }
-//   return false;
+//   return FALSE;
 //}
 
 
@@ -1986,7 +1986,7 @@ function plugin_fusioninventory_addSelect($type, $id, $num) {
 
 
 function plugin_fusioninventory_forceGroupBy($type) {
-    return false;
+    return FALSE;
 }
 
 
@@ -2549,7 +2549,7 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
                if (!empty($val)) {
                   $map = new PluginFusioninventoryMapping;
                   $mapfields = $map->get('NetworkEquipment', $val);
-                  if ($mapfields != false) {
+                  if ($mapfields != FALSE) {
                      $val = $mapfields['tablefields'];
                   } else {
                      $val = '';
@@ -2844,7 +2844,7 @@ function plugin_item_transfer_fusioninventory($parm) {
 
          break;
    }
-   return false;
+   return FALSE;
 }
 
 

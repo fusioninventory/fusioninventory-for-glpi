@@ -184,7 +184,7 @@ class PluginFusioninventoryNetworkCommonDBTM extends CommonDBTM {
     *@param $p_field field
     *@param $p_value Value
     *@param $p_object=NULL Object to update
-    *@return true if value set / false if unknown field
+    *@return TRUE if value set / FALSE if unknown field
     **/
    function setValue($p_field, $p_value, $p_object=NULL, $p_default='') {
       // TODO : replace $p_default by check default value in DB ?
@@ -200,14 +200,14 @@ class PluginFusioninventoryNetworkCommonDBTM extends CommonDBTM {
                }
             }
          }
-         return true;
+         return TRUE;
       } else {
          foreach ($this->ptcdLinkedObjects as $object) {
             if ($object->setValue($p_field, $p_value)) {
-               return true;
+               return TRUE;
             }
          }
-         return false;
+         return FALSE;
       }
    }
 }

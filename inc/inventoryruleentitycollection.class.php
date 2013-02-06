@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryRuleEntityCollection extends RuleCollection {
 
    // From RuleCollection
-   public $stop_on_first_match=true;
+   public $stop_on_first_match=TRUE;
    //public $right='rule_import';
    public $menu_option='test';
 

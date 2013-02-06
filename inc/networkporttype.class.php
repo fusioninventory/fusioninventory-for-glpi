@@ -337,9 +337,9 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
          OR `othername`='".$type."')
          AND `import`='1'");
       if (count($a_ports) > 0) {
-         return true;
+         return TRUE;
       }
-      return false;
+      return FALSE;
    }
 
 

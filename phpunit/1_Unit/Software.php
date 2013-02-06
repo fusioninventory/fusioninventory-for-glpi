@@ -117,6 +117,28 @@ class Software extends PHPUnit_Framework_TestCase {
          $input['field']         = 'name';
          $input['value']         = 'indepnet';
          $ruleAction->add($input); 
+         
+      // * Add rule Modify version
+         $input = array();
+         $input['sub_type']   = 'RuleDictionnarySoftware';
+         $input['name']       = 'glpi0.83';
+         $input['match']      = 'AND';
+         $input['is_active']  = 1;
+         $rules_id = $rule->add($input); 
+
+         $input = array();
+         $input['rules_id']   = $rules_id;
+         $input['criteria']   = 'name';
+         $input['condition']  = 0;
+         $input['pattern']    = 'glpi0.83';
+         $ruleCriteria->add($input);
+         
+         $input = array();
+         $input['rules_id']      = $rules_id;
+         $input['action_type']   = 'assign';
+         $input['field']         = 'version';
+         $input['value']         = '0.83';
+         $ruleAction->add($input); 
    }
    
    
@@ -254,8 +276,31 @@ class Software extends PHPUnit_Framework_TestCase {
       global $DB;
 
       $DB->connect();
+      
+      $_SESSION["plugin_fusinvinventory_entity"] = 0;
 
-      // PluginFusioninventoryFormatconvert::computerSoftwareTransformation
+      $a_software = array();
+      $a_software['SOFTWARES'][] = array(
+                'PUBLISHER' => 'indepnet',
+                'NAME'      => 'glpi0.83',
+                'VERSION'   => '0.84'
+            );
+      
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      
+      $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
+
+      $a_reference = array();
+      $a_reference['software']["glpi0.83$$$$0.83"] = array(
+               'name'                  => 'glpi0.83',
+               'manufacturers_id'      => 2,
+               'version'               => '0.83',
+               'is_template_computer'  => 0,
+               'is_deleted_computer'   => 0,
+               'entities_id'           => 0
+            );
+      
+      $this->assertEquals($a_reference, $a_return);
       
    }
 }

@@ -77,7 +77,7 @@ if (!defined('GLPI_ROOT')) {
 
       // empty classname or non concerted plugin
       if (empty($classname) || is_numeric($classname)) {
-         return false;
+         return FALSE;
       }
 
       $dir=GLPI_ROOT . "/inc/";
@@ -92,13 +92,13 @@ if (!defined('GLPI_ROOT')) {
             $plugin = new Plugin();
             if (count($plugin->find("directory='$plugname' AND state=".Plugin::ACTIVATED)) == 0) {
                // Plugin does not exists or not activated
-               return false;
+               return FALSE;
             }
          } else {
             // Standard use of GLPI
             if (!in_array($plugname, $_SESSION['glpi_plugins'])) {
                // Plugin not activated
-               return false;
+               return FALSE;
             }
          }
       } else {
@@ -106,7 +106,7 @@ if (!defined('GLPI_ROOT')) {
          if (preg_match('/^ezc([A-Z][a-z]+)/', $classname, $matches)) {
             include_once(GLPI_EZC_BASE);
             ezcBase::autoload($classname);
-            return true;
+            return TRUE;
          } else {
             $item=strtolower($classname);
          }
@@ -125,7 +125,7 @@ if (!defined('GLPI_ROOT')) {
             // trigger an error to get a backtrace, but only once (use prefix 'x' to handle empty case)
             //Toolbox::logInFile('debug', "file $dir$item.class.php not founded trying to load class $classname\n");
             trigger_error("GLPI autoload : file $dir$item.class.php not founded trying to load class '$classname'");
-            $notfound["x$classname"] = true;
+            $notfound["x$classname"] = TRUE;
          }
       }
    }

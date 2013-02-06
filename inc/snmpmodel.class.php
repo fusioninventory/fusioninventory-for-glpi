@@ -106,8 +106,8 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       $tab[7]['field'] = 'sysdescr';
 //      $tab[7]['linkfield'] = 'sysdescr';
       $tab[7]['name'] = __('Sysdescr', 'fusioninventory');
-      $tab[7]['forcegroupby']  = true;
-      $tab[7]['splititems']    = true;
+      $tab[7]['forcegroupby']  = TRUE;
+      $tab[7]['splititems']    = TRUE;
 
       
       return $tab;

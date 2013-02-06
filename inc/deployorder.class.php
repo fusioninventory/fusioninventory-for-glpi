@@ -87,7 +87,7 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       $order->getFromDB($orders_id);
       if (!empty($order->fields['json'])) {
          return $order->fields['json'];
-      } else return false;
+      } else return FALSE;
    }
 
    static function updateOrderJson($orders_id, $datas) {

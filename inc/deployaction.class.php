@@ -51,11 +51,11 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
    }
 
    static function canCreate() {
-      return true;
+      return TRUE;
    }
 
    static function canView() {
-      return true;
+      return TRUE;
    }
 
    static function getTypes() {
@@ -77,7 +77,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          //== edit selected data ==
          
          //get current order json
-         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($orders_id), true);
+         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($orders_id), TRUE);
 
          //get data on index
          $action = $datas_o['jobs']['actions'][$datas['index']];   
@@ -128,7 +128,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       echo "<hr>";
       if (!isset($datas['index'])) {
          echo "</div>";
-      } else return true;
+      } else return TRUE;
       Html::closeForm();
 
       //display stored actions datas
@@ -254,7 +254,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       $value_type_1 = "input";
       $value_1      = isset($datas['value_1'])?$datas['value_1']:"";
       $value_2      = isset($datas['value_2'])?$datas['value_2']:"";
-      $retChecks    = isset($datas['retChecks'])?json_decode($datas['retChecks'], true):"";
+      $retChecks    = isset($datas['retChecks'])?json_decode($datas['retChecks'], TRUE):"";
 
       switch ($type) {
          case 'move':
@@ -267,14 +267,14 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          case 'cmd':
             $value_label_1 = __("exec", 'fusioninventory');
             $name_label_1 = "exec";
-            $value_label_2 = false;
+            $value_label_2 = FALSE;
             $value_type_1  = "textarea";
             break;
          case 'delete':
          case 'mkdir':
             $value_label_1 = __("path", 'fusioninventory');
             $name_label_1 = "list[]";
-            $value_label_2 = false;
+            $value_label_2 = FALSE;
             break;
       }
 
@@ -292,7 +292,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       }
       echo "</td>";
       echo "</tr>";
-      if ($value_label_2 !== false) {
+      if ($value_label_2 !== FALSE) {
          echo "<tr>";
          echo "<th>$value_label_2</th>";
          echo "<td><input type='text' name='$name_label_2' value='$value_2'/></td>";
@@ -398,7 +398,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       $new_entry[ $params['deploy_actiontype']] = $tmp;
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
       //add new entry
       $datas['jobs']['actions'][] = $new_entry;
@@ -428,7 +428,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       $entry[ $params['deploy_actiontype']] = $tmp;
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
       //unset index 
       unset($datas['jobs']['actions'][$params['index']]);
@@ -445,7 +445,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
    static function remove_item($params) {
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
       //remove selected checks
       foreach ($params['action_entries'] as $index) {
@@ -458,7 +458,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
    static function move_item($params) {
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
       //get data on old index
       $moved_check = $datas['jobs']['actions'][$params['old_index']];

@@ -55,12 +55,12 @@ class PluginFusioninventoryDeployStaticmisc {
                          'method'         => self::DEPLOYMETHOD_INSTALL,
                          'name'           => __('Package deployment', 'fusioninventory'),
                          'task'           => "DEPLOY",
-                         'use_rest'       => true),
+                         'use_rest'       => TRUE),
                    array('module'         => 'fusinvdeploy',
                          'method'         => self::DEPLOYMETHOD_UNINSTALL,
                          'name'           => __('Package uninstall', 'fusioninventory'),
                          'task'           => "DEPLOY",
-                         'use_rest'       => true)
+                         'use_rest'       => TRUE)
                          );
    }
 
@@ -207,7 +207,7 @@ class PluginFusioninventoryDeployStaticmisc {
       $indentStr   = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
       $newLine     = "<br />";
       $prevChar    = '';
-      $outOfQuotes = true;
+      $outOfQuotes = TRUE;
 
       for ($i=0; $i<=$strLen; $i++) {
 

@@ -102,7 +102,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
          $pfAntivirus->showForm($item->getID());
       }
 
-      return true;
+      return TRUE;
    }
 
 
@@ -131,7 +131,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
    * @param $items_id integer ID of the antivirus
    * @param $options array
    *
-   * @return bool true if form is ok
+   * @return bool TRUE if form is ok
    *
    **/
    function showForm($items_id, $options=array()) {
@@ -189,7 +189,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
          echo "</tr>";     
       }
       echo "</table>";
-      return true;
+      return TRUE;
    }
 
 

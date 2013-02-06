@@ -245,10 +245,10 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             $folder = '0';
          }
          if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder)) {
-            mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder, 0777, true);
+            mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder, 0777, TRUE);
          }
          $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder."/".$items_id, 'w');
-         fwrite($fileopen, print_r($a_inventory, true));
+         fwrite($fileopen, print_r($a_inventory, TRUE));
          fclose($fileopen);
        }
 
@@ -1030,7 +1030,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = array();
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
-                                                   "Input data : ".print_r($input, true));
+                                                   "Input data : ".print_r($input, TRUE));
       $data = $rule->processAllRules($input, array());
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    $data);

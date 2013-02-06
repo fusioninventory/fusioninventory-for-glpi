@@ -49,7 +49,7 @@ class PluginFusioninventorySearch extends CommonDBTM {
    
    public $formurl = 'monitoring/front/componentscatalog_rule.form.php';
    public $customIdVar = 'plugin_monitoring_componentscalalog_id';
-   public $displaydeletebuton = true;
+   public $displaydeletebuton = TRUE;
    
    /*
     * ************************************************************************ *
@@ -140,14 +140,14 @@ echo "<td colspan='2'>";
          if ($i == 0) {
             echo "<input type='hidden' disabled id='add_search_count' name='add_search_count'
                    value='1'>";
-            echo "<a href='#' onClick = \"document.getElementById('add_search_count').disabled=false;
+            echo "<a href='#' onClick = \"document.getElementById('add_search_count').disabled=FALSE;
                    document.forms['searchform$itemtype'].submit();\">";
             echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/plus.png\" alt='+' title=\"".
                    __s('Add a search criterion')."\"></a>&nbsp;&nbsp;&nbsp;&nbsp;";
             if ($_SESSION["glpisearchcount"][$itemtype] > 1) {
                echo "<input type='hidden' disabled id='delete_search_count'
                       name='delete_search_count' value='1'>";
-               echo "<a href='#' onClick = \"document.getElementById('delete_search_count').disabled=false;
+               echo "<a href='#' onClick = \"document.getElementById('delete_search_count').disabled=FALSE;
                       document.forms['searchform$itemtype'].submit();\">";
                echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/moins.png\" alt='-' title=\"".
                       __s('Delete a search criterion')."\"></a>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -155,7 +155,7 @@ echo "<td colspan='2'>";
             if (is_array($linked) && (count($linked) > 0)) {
                echo "<input type='hidden' disabled id='add_search_count2' name='add_search_count2'
                       value='1'>";
-               echo "<a href='#' onClick=\"document.getElementById('add_search_count2').disabled=false;
+               echo "<a href='#' onClick=\"document.getElementById('add_search_count2').disabled=FALSE;
                       document.forms['searchform$itemtype'].submit();\">";
                echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/meta_plus.png\" alt='+' title=\"".
                       __s('Add a global search criterion')."\"></a>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -163,7 +163,7 @@ echo "<td colspan='2'>";
                if ($_SESSION["glpisearchcount2"][$itemtype] > 0) {
                   echo "<input type='hidden' disabled id='delete_search_count2'
                          name='delete_search_count2' value='1'>";
-                  echo "<a href='#' onClick=\"document.getElementById('delete_search_count2').disabled=false;
+                  echo "<a href='#' onClick=\"document.getElementById('delete_search_count2').disabled=FALSE;
                          document.forms['searchform$itemtype'].submit();\">";
                   echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/meta_moins.png\" alt='-' title=\"".
                          __s('Delete a global search criterion')."\"></a>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -236,7 +236,7 @@ echo "<td colspan='2'>";
          }
 
          reset($options);
-         $first_group = true;
+         $first_group = TRUE;
          $str_limit   = 28; // Not $_SESSION['glpidropdown_chars_limit'] because must be really to short (5 or 10) and search engine will be unusable
          $nb_in_group = 0;
          $group       = '';
@@ -247,7 +247,7 @@ echo "<td colspan='2'>";
                if (!$first_group) {
                   $group .= "</optgroup>\n";
                } else {
-                  $first_group = false;
+                  $first_group = FALSE;
                }
                if ($nb_in_group) {
                   echo $group;
@@ -257,7 +257,7 @@ echo "<td colspan='2'>";
 
                $group .= "<optgroup label=\"".Toolbox::substr($val,0,$str_limit)."\">";
             } else {
-               if (!isset($val['nosearch']) || ($val['nosearch'] == false)) {
+               if (!isset($val['nosearch']) || ($val['nosearch'] == FALSE)) {
                   $nb_in_group ++;
                   $group .= "<option title=\"".Html::cleanInputText($val["name"]).
                                            "\" value='$key'";
@@ -422,13 +422,13 @@ echo "<td colspan='2'>";
 /*      echo "<tr><td colspan='2'>".$LANG['search'][4];
       echo "&nbsp;<select name='sort' size='1'>";
       reset($options);
-      $first_group=true;
+      $first_group=TRUE;
       foreach ($options as $key => $val) {
          if (!is_array($val)) {
             if (!$first_group) {
                echo "</optgroup>\n";
             } else {
-               $first_group=false;
+               $first_group=FALSE;
             }
             echo "<optgroup label=\"$val\">";
          } else {
@@ -576,7 +576,7 @@ $p = array();
       }
       // hack for States
       if (isset($CFG_GLPI['union_search_type'][$itemtype])) {
-         $entity_restrict = true;
+         $entity_restrict = TRUE;
       } else {
          $entity_restrict = $item->isEntityAssign();
       }
@@ -687,7 +687,7 @@ $p = array();
          $LINK = " AND " ;
          if ($first) {
             $LINK  = " ";
-            $first = false;
+            $first = FALSE;
          }
          $COMMONWHERE .= $LINK."`$itemtable`.`is_deleted` = '".$p['is_deleted']."' ";
       }
@@ -697,7 +697,7 @@ $p = array();
          $LINK = " AND " ;
          if ($first) {
             $LINK  = " ";
-            $first = false;
+            $first = FALSE;
          }
          $COMMONWHERE .= $LINK."`$itemtable`.`is_template` = '0' ";
       }
@@ -707,11 +707,11 @@ $p = array();
          $LINK = " AND " ;
          if ($first) {
             $LINK  = " ";
-            $first = false;
+            $first = FALSE;
          }
 
          if ($itemtype == 'Entity') {
-            $COMMONWHERE .= getEntitiesRestrictRequest($LINK, $itemtable, 'id', '', true);
+            $COMMONWHERE .= getEntitiesRestrictRequest($LINK, $itemtable, 'id', '', TRUE);
 
          } else if (isset($CFG_GLPI["union_search_type"][$itemtype])) {
             // Will be replace below in Union/Recursivity Hack
@@ -805,7 +805,7 @@ $p = array();
                      $WHERE .= $globallink;
                   }
                   $WHERE .= " ( ";
-                  $first2 = true;
+                  $first2 = TRUE;
 
                   $items = array();
 
@@ -825,7 +825,7 @@ $p = array();
                            $tmplink = $LINK;
                            if ($first2) {
                               $tmplink = " ";
-                              $first2  = false;
+                              $first2  = FALSE;
                            }
                            $WHERE .= Search::addWhere($tmplink, $NOT, $itemtype, $key2,
                                                     $p['searchtype'][$key], $p['contains'][$key]);
@@ -994,15 +994,15 @@ $p = array();
       $DBread = DBConnection::getReadConnection();
 
       // If no research limit research to display item and compute number of item using simple request
-      $nosearch = true;
+      $nosearch = TRUE;
       for ($i=0 ; $i<$_SESSION["glpisearchcount"][$itemtype] ; $i++) {
          if (isset($p['contains'][$i]) && strlen($p['contains'][$i])>0) {
-            $nosearch = false;
+            $nosearch = FALSE;
          }
       }
 
       if ($_SESSION["glpisearchcount2"][$itemtype]>0) {
-         $nosearch = false;
+         $nosearch = FALSE;
       }
 
       $LIMIT   = "";
@@ -1022,13 +1022,13 @@ $p = array();
                        FROM `$itemtable`".
                        $COMMONLEFTJOIN;
 
-         $first = true;
+         $first = TRUE;
 
          if (!empty($COMMONWHERE)) {
             $LINK = " AND " ;
             if ($first) {
                $LINK  = " WHERE ";
-               $first = false;
+               $first = FALSE;
             }
             $query_num .= $LINK.$COMMONWHERE;
          }
@@ -1094,7 +1094,7 @@ $p = array();
          } else {
             $WHERE = ' WHERE '.$WHERE.' ';
          }
-         $first = false;
+         $first = FALSE;
       }
 
       if (!empty($HAVING)) {
@@ -1116,14 +1116,14 @@ $p = array();
 
       // Create QUERY
       if (isset($CFG_GLPI["union_search_type"][$itemtype])) {
-         $first = true;
+         $first = TRUE;
          $QUERY = "";
          foreach ($CFG_GLPI[$CFG_GLPI["union_search_type"][$itemtype]] as $ctype) {
             $ctable = getTableForItemType($ctype);
             $citem  = new $ctype();
             if ($citem->canView()) {
                if ($first) {
-                  $first = false;
+                  $first = FALSE;
                } else {
                   $QUERY .= " UNION ";
                }
@@ -1208,7 +1208,7 @@ $p = array();
       if ($result) {
          return $result;
       } else {
-         return false;
+         return FALSE;
       }      
    }
    

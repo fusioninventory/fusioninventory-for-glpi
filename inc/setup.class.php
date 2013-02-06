@@ -93,7 +93,7 @@ class PluginFusioninventorySetup {
          $Rule->delete($data);
       }
 
-      return true;
+      return TRUE;
    }
 
 

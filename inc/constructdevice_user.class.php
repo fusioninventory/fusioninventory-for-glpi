@@ -72,7 +72,7 @@ class PluginFusioninventoryConstructdevice_User extends CommonDBTM {
          $pfConstructdevice_User = new self();
          $pfConstructdevice_User->showForm($item->getID());
       }
-      return true;
+      return TRUE;
    }
    
 
@@ -110,7 +110,7 @@ class PluginFusioninventoryConstructdevice_User extends CommonDBTM {
       
       $this->showFormButtons($options);
 
-      return true;
+      return TRUE;
    }
    
    

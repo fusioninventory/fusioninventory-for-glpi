@@ -244,9 +244,9 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          $this->displayOid($json->oids->$portcounteroid, 0, array(), $json->device->sysdescr, "blue");
       }
       if ($snmpwalk == '') {
-         return false;
+         return FALSE;
       }
-      return true;
+      return TRUE;
    }
    
    
@@ -270,7 +270,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo "<th width='150'>";
       //echo $a_oid->percentage."%";
       if (isset($a_oid->percentage->$mappings_id)) {
-        Html::displayProgressBar(150, $a_oid->percentage->$mappings_id, array('simple' => true));
+        Html::displayProgressBar(150, $a_oid->percentage->$mappings_id, array('simple' => TRUE));
       }
       echo "</th>";
       echo "<th colspan='2' style='text-align: left;'>";

@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
-   public $dohistory = true;
+   public $dohistory = TRUE;
 
    static function canCreate() {
       return PluginFusioninventoryProfile::haveRight("configsecurity", "w");
@@ -149,7 +149,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       echo "<div id='tabcontent'></div>";
       echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
-      return true;
+      return TRUE;
    }
 
 
@@ -403,7 +403,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       Dropdown::show("PluginFusioninventoryConfigSecurity",
                       array('name' => "plugin_fusioninventory_configsecurities_id",
                            'value' => $selected,
-                           'comment' => false));
+                           'comment' => FALSE));
    }
 }
 

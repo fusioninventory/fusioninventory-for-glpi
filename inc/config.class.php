@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryConfig extends CommonDBTM {
-   public $displaylist = false;
+   public $displaylist = FALSE;
 
 
    /**
@@ -217,7 +217,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param integer $tabnum
     * @param interger $withtemplate
     *
-    * @return boolean true
+    * @return boolean TRUE
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
@@ -228,7 +228,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       } else if ($tabnum == '2') {
          $item->showFormNetworkInventory();
       }
-      return true;
+      return TRUE;
    }
 
 
@@ -241,7 +241,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    * @param $name field name
    * @param $module ?
    *
-   * @return field value for an existing field, false otherwise
+   * @return field value for an existing field, FALSE otherwise
    **/
    function getValue($name) {
       global $PF_CONFIG;
@@ -266,13 +266,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    * @param $name field name
    * @param $module ?
    *
-   * @return true for an existing field, false otherwise
+   * @return TRUE for an existing field, FALSE otherwise
    **/
    function isActive($plugin_id, $name, $module) {
       if (!($this->getValue($name))) {
-         return false;
+         return FALSE;
       } else {
-         return true;
+         return TRUE;
       }
    }
 
@@ -281,7 +281,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
    * Display form for config
    *
-   * @return bool true if form is ok
+   * @return bool TRUE if form is ok
    *
    **/
    function showForm($options=array()) {
@@ -339,10 +339,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      $options['candel'] = false;
+      $options['candel'] = FALSE;
       $this->showFormButtons($options);
 
-      return true;
+      return TRUE;
    }
 
 
@@ -352,7 +352,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    *
    * @param $options array
    *
-   * @return bool true if form is ok
+   * @return bool TRUE if form is ok
    *
    **/
    static function showFormInventory($options=array()) {
@@ -626,10 +626,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      $options['candel'] = false;
+      $options['candel'] = FALSE;
       $pfConfig->showFormButtons($options);
 
-      return true;
+      return TRUE;
    }
 
 
@@ -639,7 +639,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    *
    * @param $options array
    *
-   * @return bool true if form is ok
+   * @return bool TRUE if form is ok
    *
    **/
    static function showFormNetworkInventory($options=array()) {
@@ -670,7 +670,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
       
-      $options['candel'] = false;
+      $options['candel'] = FALSE;
       $pfsnmpConfig->showFormButtons($options);
 
       $pfConfigLogField = new PluginFusioninventoryConfigLogField();
@@ -679,7 +679,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
       $pfNetworkporttype->showNetworkporttype();
       
-      return true;
+      return TRUE;
    }
    
 
@@ -692,7 +692,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param $value field value
     * @param $module ?
     *
-    * @return integer the new id of the added item (or false if fail)
+    * @return integer the new id of the added item (or FALSE if fail)
     **/
    function addValue($name, $value) {
       $existing_value = $this->getValue($name);
@@ -712,7 +712,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param $name field name
     * @param $value field value
     *
-    * @return boolean : true on success
+    * @return boolean : TRUE on success
     **/
    function updateValue($name, $value) {
       $config = current($this->find("`type`='".$name."'"));
@@ -730,7 +730,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *
     * @param $field_id field id
     *
-    * @return boolean : true on success
+    * @return boolean : TRUE on success
     **/
    function deleteConfig($field_id) {
       return $this->delete(array('id'=>$field_id));
@@ -743,7 +743,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *
     * @param $plugin_id Plugin id
     *
-    * @return boolean : true on success
+    * @return boolean : TRUE on success
     **/
    function cleanConfig($plugin_id) {
       global $DB;
@@ -771,7 +771,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    static function logIfExtradebug($file, $message) {
       if (self::isExtradebugActive()) {
          if (is_array($message)) {
-            $message = print_r($message, true);
+            $message = print_r($message, TRUE);
          }
          Toolbox::logInFile($file, $message);
       }
@@ -785,7 +785,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param $field_id field id
     * @param $value field value
     *
-    * @return boolean : true on success
+    * @return boolean : TRUE on success
     **/
    function updateConfig($field_id, $value) {
       return $this->update(array('id'=>$field_id, 'value'=>$value));
@@ -800,7 +800,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     * @param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
     * @param $p_value Value
     *
-    * @return boolean : true on success
+    * @return boolean : TRUE on success
     **/
    function updateConfigType($p_plugins_id, $p_type, $p_value) {
       $config = current($this->find("`plugins_id`='".$p_plugins_id."'
@@ -808,7 +808,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       if (isset($config['id'])) {
          return $this->updateConfig($config['id'], $p_value);
       }
-      return false;
+      return FALSE;
    }
 
 
@@ -822,13 +822,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    * @param $p_plugins_id integer id of the plugin
    * @param $p_type value name of the config field to retrieve
    *
-   * @return bool true if field is active or false
+   * @return bool TRUE if field is active or FALSE
    **/
    function is_active($p_plugins_id, $p_type) {
       if (!($this->getValue($p_type))) {
-         return false;
+         return FALSE;
       } else {
-         return true;
+         return TRUE;
       }
    }
    

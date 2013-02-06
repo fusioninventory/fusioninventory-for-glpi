@@ -111,9 +111,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if (isset($input['comment'])) {
             unset($input['comment']);
          }
-         $history = true;
+         $history = TRUE;
          if ($no_history) {
-            $history = false;
+            $history = FALSE;
          }
          $computer->update($input, $history);
          
@@ -127,7 +127,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       
       // * Computer fusion (ext)
          $db_computer = array();
-         if ($no_history === false) {
+         if ($no_history === FALSE) {
             $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputercomputers`
                 WHERE `computers_id` = '$computers_id'
                 LIMIT 1";
@@ -142,7 +142,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if (count($db_computer) == '0') { // Add
             $a_computerinventory['fusioninventorycomputer']['computers_id'] = $computers_id;
             $pfInventoryComputerComputer->add($a_computerinventory['fusioninventorycomputer'], 
-                                              array(), false);
+                                              array(), FALSE);
          } else { // Update
             $idtmp = $db_computer['id'];
             unset($db_computer['id']);
@@ -162,7 +162,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Processors
          if ($pfConfig->getValue("component_processor") != 0) {
             $db_processors = array();
-            if ($no_history === false) {
+            if ($no_history === FALSE) {
                $query = "SELECT `glpi_items_deviceprocessors`.`id`, `designation`, `frequence`, 
                      `frequency`, `serial`, `manufacturers_id` FROM `glpi_items_deviceprocessors`
                   LEFT JOIN `glpi_deviceprocessors` 
@@ -220,7 +220,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Memories
          if ($pfConfig->getValue("component_memory") != 0) {
             $db_memories = array();
-            if ($no_history === false) {
+            if ($no_history === FALSE) {
                $query = "SELECT `glpi_items_devicememories`.`id`, `designation`, `size`, 
                      `frequence`, `serial`, `devicememorytypes_id` FROM `glpi_items_devicememories`
                   LEFT JOIN `glpi_devicememories` ON `devicememories_id`=`glpi_devicememories`.`id`
@@ -275,7 +275,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Hard drive
          if ($pfConfig->getValue("component_harddrive") != 0) {
             $db_harddrives = array();
-            if ($no_history === false) {
+            if ($no_history === FALSE) {
                $query = "SELECT `glpi_items_deviceharddrives`.`id`, `serial`
                      FROM `glpi_items_deviceharddrives`
                   WHERE `items_id` = '$computers_id'
@@ -329,7 +329,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Graphiccard
          if ($pfConfig->getValue("component_graphiccard") != 0) {
             $db_graphiccards = array();
-            if ($no_history === false) {
+            if ($no_history === FALSE) {
                $query = "SELECT `glpi_items_devicegraphiccards`.`id`, `designation`, `memory` 
                      FROM `glpi_items_devicegraphiccards`
                   LEFT JOIN `glpi_devicegraphiccards` 
@@ -386,7 +386,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Sound         
          if ($pfConfig->getValue("component_soundcard") != 0) {
             $db_soundcards = array();
-            if ($no_history === false) {
+            if ($no_history === FALSE) {
                $query = "SELECT `glpi_items_devicesoundcards`.`id`, `designation`, `comment`,
                      `manufacturers_id` FROM `glpi_items_devicesoundcards`
                   LEFT JOIN `glpi_devicesoundcards` 
@@ -442,7 +442,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Controllers
          if ($pfConfig->getValue("component_control") != 0) {
             $db_controls = array();
-            if ($no_history === false) {
+            if ($no_history === FALSE) {
                $query = "SELECT `glpi_items_devicecontrols`.`id`, `interfacetypes_id`,
                      `manufacturers_id`, `designation` FROM `glpi_items_devicecontrols`
                   LEFT JOIN `glpi_devicecontrols` ON `devicecontrols_id`=`glpi_devicecontrols`.`id`
@@ -498,7 +498,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("import_software") != 0) {
             $entities_id = $_SESSION["plugin_fusinvinventory_entity"];
             $db_software = array();
-            if ($no_history === false) {
+            if ($no_history === FALSE) {
                $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
                           `glpi_softwares`.`name`,
                           `glpi_softwareversions`.`name` AS version,
@@ -529,7 +529,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software", $entities_id));
                $options = array();
                if ($nb_unicity == 0) {
-                  $options['disable_unicity_check'] = true;
+                  $options['disable_unicity_check'] = TRUE;
                }
                $a_softwareInventory = array();
                $a_softwareVersionInventory = array();
@@ -551,7 +551,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      foreach ($a_computerinventory['software'] as $keysoft=>$a_software) {
                         if (isset($this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']])) {
                            $a_software['softwares_id'] = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                           $a_software['_no_message'] = true;
+                           $a_software['_no_message'] = TRUE;
                            $this->addSoftware($a_software,
                                               $computers_id,
                                               $no_history,
@@ -571,7 +571,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                               $a_softwareVersionInventory, 
                                               $lastSoftwareVid);
                   foreach ($a_computerinventory['software'] as $a_software) {
-                     $a_software['_no_message'] = true;
+                     $a_software['_no_message'] = TRUE;
                      if (count($a_computerinventory['software']) > 50) {
                         if (isset($this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']])) {
                            $a_software['softwares_id'] = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
@@ -613,7 +613,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                                                               $entities_id));
                      $options = array();
                      if ($nb_unicity == 0) {
-                        $options['disable_unicity_check'] = true;
+                        $options['disable_unicity_check'] = TRUE;
                      }
                      $ret = $DB->query("SELECT GET_LOCK('software', 300)");
                      if ($DB->result($ret, 0, 0) == 1) {
@@ -628,7 +628,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                                     $a_softwareVersionInventory, 
                                                     $lastSoftwareVid);
                         foreach($a_computerinventory['software'] as $a_software) {
-                           $a_software['_no_message'] = true;
+                           $a_software['_no_message'] = TRUE;
                            if (count($a_computerinventory['software']) > 50) {
                               if (isset($this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']])) {
                                  $a_software['softwares_id'] = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
@@ -651,7 +651,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Virtualmachines
          if ($pfConfig->getValue("import_vm") != 0) {
             $db_computervirtualmachine = array();
-            if ($no_history === false) {
+            if ($no_history === FALSE) {
                $query = "SELECT `id`, `name`, `uuid`, `virtualmachinesystems_id` 
                      FROM `glpi_computervirtualmachines`
                   WHERE `computers_id` = '$computers_id'";
@@ -715,7 +715,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                if (count($a_computerinventory['virtualmachine']) != 0) {
                   foreach($a_computerinventory['virtualmachine'] as $a_virtualmachine) {
                      $a_virtualmachine['computers_id'] = $computers_id;
-                     $computerVirtualmachine->add($a_virtualmachine, array(), false);
+                     $computerVirtualmachine->add($a_virtualmachine, array(), FALSE);
                   }
                }
             }
@@ -724,7 +724,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * ComputerDisk
          if ($pfConfig->getValue("import_volume") != 0) {
             $db_computerdisk = array();
-            if ($no_history === false) {
+            if ($no_history === FALSE) {
                $query = "SELECT `id`, `name`, `device`, `mountpoint` FROM `glpi_computerdisks`
                    WHERE `computers_id` = '$computers_id'";
                $result = $DB->query($query);         
@@ -779,7 +779,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   foreach($a_computerinventory['computerdisk'] as $a_computerdisk) {
                      $a_computerdisk['computers_id'] = $computers_id;
                      $a_computerdisk['_no_history'] = $no_history;
-                     $computerDisk->add($a_computerdisk, array(), false);
+                     $computerDisk->add($a_computerdisk, array(), FALSE);
                   }
                }
             }
@@ -789,7 +789,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Networkports
          if ($pfConfig->getValue("component_networkcard") != 0) {
             $db_networkport = array();
-            if ($no_history === false) {
+            if ($no_history === FALSE) {
                $query = "SELECT `id`, `name`, `mac`, `instantiation_type` FROM `glpi_networkports`
                    WHERE `items_id` = '$computers_id'
                      AND `itemtype`='Computer'";
@@ -857,7 +857,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                               $input['items_id'] = $a_networknames_find['id'];
                               $input['itemtype'] = 'NetworkName';
                               $input['name'] = $ip;
-                              $iPAddress->add($input, array(), false);
+                              $iPAddress->add($input, array(), FALSE);
                            }
                         }
                      }
@@ -886,20 +886,20 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $a_networkport['items_id'] = $computers_id;
                      $a_networkport['itemtype'] = "Computer";
                      $a_networkport['_no_history'] = $no_history;
-                     $a_networkport['items_id'] = $networkPort->add($a_networkport, array(), false);
+                     $a_networkport['items_id'] = $networkPort->add($a_networkport, array(), FALSE);
                      unset($a_networkport['_no_history']);
                      $a_networkport['is_recursive'] = 0;
                      $a_networkport['itemtype'] = 'NetworkPort';
                      unset($a_networkport['name']);
             $a_networkport['_no_history'] = $no_history;
-                     $a_networknames_id = $networkName->add($a_networkport, array(), false);
+                     $a_networknames_id = $networkName->add($a_networkport, array(), FALSE);
                      foreach ($a_networkport['ipaddress'] as $ip) {
                         $input = array();
                         $input['items_id'] = $a_networknames_id;
                         $input['itemtype'] = 'NetworkName';
                         $input['name'] = $ip;
             $input['_no_history'] = $no_history;
-                        $iPAddress->add($input, array(), false);
+                        $iPAddress->add($input, array(), FALSE);
                      }
                   }
                }
@@ -909,7 +909,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          
       // * Antivirus
          $db_antivirus = array();
-         if ($no_history === false) {
+         if ($no_history === FALSE) {
             $query = "SELECT `id`, `name`, `version` 
                   FROM `glpi_plugin_fusioninventory_inventorycomputerantiviruses`
                WHERE `computers_id` = '$computers_id'";
@@ -958,7 +958,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if (count($a_computerinventory['antivirus']) != 0) {
                foreach($a_computerinventory['antivirus'] as $a_antivirus) {
                   $a_antivirus['computers_id'] = $computers_id;
-                  $pfInventoryComputerAntivirus->add($a_antivirus, array(), false);
+                  $pfInventoryComputerAntivirus->add($a_antivirus, array(), FALSE);
                }
             }
          }
@@ -967,7 +967,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Batteries
          /* Standby, see ticket http://forge.fusioninventory.org/issues/1907
          $db_batteries = array();
-         if ($no_history === false) {
+         if ($no_history === FALSE) {
             $query = "SELECT `id`, `name`, `serial` 
                   FROM `glpi_plugin_fusioninventory_inventorycomputerbatteries`
                WHERE `computers_id` = '$computers_id'";
@@ -1016,7 +1016,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if (count($a_computerinventory['batteries']) != 0) {
                foreach($a_computerinventory['batteries'] as $a_batteries) {
                   $a_batteries['computers_id'] = $computers_id;
-                  $pfInventoryComputerBatteries->add($a_batteries, array(), false);
+                  $pfInventoryComputerBatteries->add($a_batteries, array(), FALSE);
                }
             }
          }
@@ -1028,7 +1028,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("import_monitor") != 0) {
             $db_monitors = array();
             $computer_Item = new Computer_Item();
-            if ($no_history === false) {
+            if ($no_history === FALSE) {
                if ($pfConfig->getValue('import_monitor') == 1) {
                   // Global import
                   $query = "SELECT `glpi_monitors`.`name`, `glpi_monitors`.`manufacturers_id`,
@@ -1145,7 +1145,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("import_printer") != 0) {
             $db_printers = array();
             $computer_Item = new Computer_Item();
-            if ($no_history === false) {
+            if ($no_history === FALSE) {
                if ($pfConfig->getValue('import_printer') == 1) {
                   // Global import
                   $query = "SELECT `glpi_printers`.`name`, `glpi_printers`.`serial`,
@@ -1259,7 +1259,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("import_peripheral") != 0) {
             $db_peripherals = array();
             $computer_Item = new Computer_Item();
-            if ($no_history === false) {
+            if ($no_history === FALSE) {
                if ($pfConfig->getValue('import_peripheral') == 1) {
                   // Global import
                   $query = "SELECT `glpi_peripherals`.`name`, `glpi_peripherals`.`manufacturers_id`,
@@ -1374,7 +1374,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * storage
       // Manage by uuid to correspond with GLPI data
 //         $db_storage = array();
-//         if ($no_history === false) {
+//         if ($no_history === FALSE) {
 //            $query = "SELECT `id`, `uuid` FROM `glpi_plugin_fusioninventory_inventorycomputerstorages`
 //                WHERE `computers_id` = '$computers_id'";
 //            $result = $DB->query($query);         
@@ -1444,7 +1444,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Computer';
       $data['items_id'] = $computers_id;
       $data['_no_history'] = $no_history;
-      $item_DeviceProcessor->add($data, array(), false);      
+      $item_DeviceProcessor->add($data, array(), FALSE);      
    }
    
    
@@ -1467,7 +1467,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Computer';
       $data['items_id'] = $computers_id;
       $data['_no_history'] = $no_history;
-      $item_DeviceMemory->add($data, array(), false);
+      $item_DeviceMemory->add($data, array(), FALSE);
    }
    
    
@@ -1490,7 +1490,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Computer';
       $data['items_id'] = $computers_id;
       $data['_no_history'] = $no_history;
-      $item_DeviceHardDrive->add($data, array(), false);
+      $item_DeviceHardDrive->add($data, array(), FALSE);
    }
    
    
@@ -1513,7 +1513,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Computer';
       $data['items_id'] = $computers_id;
       $data['_no_history'] = $no_history;
-      $item_DeviceGraphicCard->add($data, array(), false);      
+      $item_DeviceGraphicCard->add($data, array(), FALSE);      
    }
    
    
@@ -1536,7 +1536,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Computer';
       $data['items_id'] = $computers_id;
       $data['_no_history'] = $no_history;
-      $item_DeviceSoundCard->add($data, array(), false);
+      $item_DeviceSoundCard->add($data, array(), FALSE);
    }
    
    
@@ -1559,7 +1559,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Computer';
       $data['items_id'] = $computers_id;
       $data['_no_history'] = $no_history;
-      $item_DeviceControl->add($data, array(), false);
+      $item_DeviceControl->add($data, array(), FALSE);
    }
    
    
@@ -1645,7 +1645,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
     * 
     * @param array $a_software
     * @param integer $computers_id id of the computer
-    * @param boolean $no_history set true if not want history
+    * @param boolean $no_history set TRUE if not want history
     * @param array $options
     * 
     * @return nothing
@@ -1662,7 +1662,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                     WHERE `manufacturers_id` = '".$a_software['manufacturers_id']."'
                           AND `name` = '".$a_software['name']."' " .
                           getEntitiesRestrictRequest('AND', 'glpi_softwares', 'entities_id', 
-                                                     $a_software['entities_id'], true).
+                                                     $a_software['entities_id'], TRUE).
                     " LIMIT 1";
 
             $res_soft = $DB->query($sql);
@@ -1681,17 +1681,17 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       }
       
       if ($add == 1) {
-         $a_software['softwares_id'] = $this->software->add($a_software, $options, false);
+         $a_software['softwares_id'] = $this->software->add($a_software, $options, FALSE);
          $this->addPrepareLog($a_software['softwares_id'], 'Software');
          $new = 1; 
       }
       
       $options = array();
-      $options['disable_unicity_check'] = true;
+      $options['disable_unicity_check'] = TRUE;
       if ($new == 1) {
          $a_software['name'] = $a_software['version'];
    $a_software['_no_history'] = $no_history;
-         $softwareversions_id = $this->softwareVersion->add($a_software, $options, false);
+         $softwareversions_id = $this->softwareVersion->add($a_software, $options, FALSE);
          $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
       } else {
          $softwareversions_id = 0;
@@ -1700,7 +1700,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          } else {
             $a_software['name'] = $a_software['version'];
       $a_software['_no_history'] = $no_history;
-            $softwareversions_id = $this->softwareVersion->add($a_software, $options, false);
+            $softwareversions_id = $this->softwareVersion->add($a_software, $options, FALSE);
             $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
          }
       }
@@ -1809,7 +1809,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Monitor';
       $data['items_id'] = $monitors_id;
       $data['_no_history'] = $no_history;
-      $computer_Item->add($data, array(), false);      
+      $computer_Item->add($data, array(), FALSE);      
    }
    
    
@@ -1904,7 +1904,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Printer';
       $data['items_id'] = $printers_id;
       $data['_no_history'] = $no_history;
-      $computer_Item->add($data, array(), false);      
+      $computer_Item->add($data, array(), FALSE);      
    }
    
    
@@ -2002,7 +2002,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $data['itemtype'] = 'Peripheral';
       $data['items_id'] = $peripherals_id;
       $data['_no_history'] = $no_history;
-      $computer_Item->add($data, array(), false);      
+      $computer_Item->add($data, array(), FALSE);      
    }
 
 

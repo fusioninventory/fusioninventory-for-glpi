@@ -154,7 +154,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             $pfTaskjob->manageTasksByObject($item->getType(), $item->getID());
          }
       }
-      return true;
+      return TRUE;
    }
 
 
@@ -165,7 +165,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @param $items_id integer id of the taskjob
    * @param $options array
    *
-   * @return bool true if form is ok
+   * @return bool TRUE if form is ok
    *
    **/
    function showForm($id, $options=array()) {
@@ -369,7 +369,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       </script>";
 
-      return true;
+      return TRUE;
    }
 
 
@@ -711,15 +711,15 @@ return namelist;
                      // Get it from a Ext.Element object
                      $out = "Ext.get('$toupdate').load({
                          url: '$url',
-                         scripts: true";
+                         scripts: TRUE";
 
                      if (count($parameters)) {
                         $out .= ",
                             params:'";
-                        $first = true;
+                        $first = TRUE;
                         foreach ($parameters as $key => $val) {
                            if ($first) {
-                              $first = false;
+                              $first = FALSE;
                            } else {
                               $out .= "&";
                            }
@@ -1036,7 +1036,7 @@ return namelist;
    *
    * @param $tasks_id integer id of the task
    *
-   * @return bool true if all taskjob are ready (so finished from old runnning job)
+   * @return bool TRUE if all taskjob are ready (so finished from old runnning job)
    *
    **/
    function reinitializeTaskjobs($tasks_id, $disableTimeVerification = 0) {
@@ -1108,7 +1108,7 @@ return namelist;
             $resultJob2 = $DB->query($queryJob2);
             if ($DB->numrows($resultJob2) == $nb_taskjobs) {
                $finished = 1;
-               return true;
+               return TRUE;
             } else {
                $finished = 0;
             }
@@ -1148,9 +1148,9 @@ return namelist;
          }
          $data['execution_id'] = $exe + 1;
          $pfTask->update($data);
-         return true;
+         return TRUE;
       } else {
-         return false;
+         return FALSE;
       }
    }
 
@@ -1252,7 +1252,7 @@ return namelist;
    * @param $ip value IP address of the computer where agent is installed
    * @param $agentid integer id of the agent
    *
-   * @return bool true if agent is ready else false
+   * @return bool TRUE if agent is ready else FALSE
    *
    **/
    function getStateAgent($ip, $agentid) {
@@ -1260,7 +1260,7 @@ return namelist;
       $this->disableDebug();
 
       if (empty($ip)) {
-         return false;
+         return FALSE;
       }
 
       $ctx = stream_context_create(array(
@@ -1270,11 +1270,11 @@ return namelist;
           )
       );
 
-      $ret = false;
+      $ret = FALSE;
       foreach(PluginFusioninventoryAgent::getAgentStatusURLs($agentid) as $url) {
          $str = @file_get_contents($url, 0, $ctx);
-         if ($str !== false && strstr($str, "waiting")) {
-            $ret = true;
+         if ($str !== FALSE && strstr($str, "waiting")) {
+            $ret = TRUE;
             break;
          }
       }
@@ -1308,8 +1308,8 @@ return namelist;
 
       $str="noanswer";
       foreach(PluginFusioninventoryAgent::getAgentStatusURLs($items_id) as $url) {
-         $str = @file_get_contents($url, false, $ctx);
-         if ($str !== false) {
+         $str = @file_get_contents($url, FALSE, $ctx);
+         if ($str !== FALSE) {
             break;
          }
       }
@@ -1338,20 +1338,20 @@ return namelist;
    *
    * @param $agent_id integer id of the agent
    *
-   * @return bool true if agent wake up
+   * @return bool TRUE if agent wake up
    *
    **/
    function startAgentRemotly($agent_id) {
 
-      $ret = false;
+      $ret = FALSE;
 
       $this->disableDebug();
 
       $ctx = stream_context_create(array('http' => array('timeout' => 2)));
       foreach (PluginFusioninventoryAgent::getAgentRunURLs($agent_id) as $runURL) {
          if (!$ret) {
-            if (@file_get_contents($runURL, 0, $ctx) !== false) {
-               $ret = true;
+            if (@file_get_contents($runURL, 0, $ctx) !== FALSE) {
+               $ret = TRUE;
                break;
             }
          }
@@ -1674,7 +1674,7 @@ return namelist;
     */
    function verifyDefinitionActions($items_id) {
 
-      $return = true;
+      $return = TRUE;
       $this->getFromDB($items_id);
       $input = array();
       $input['id'] = $this->fields['id'];
@@ -1692,7 +1692,7 @@ return namelist;
       }
       if (count($a_definitions) == '0') {
          $input['definition'] = '';
-         $return = false;
+         $return = FALSE;
       } else {
          $input['definition'] = exportArrayToDB($a_definitions);
       }
@@ -1708,7 +1708,7 @@ return namelist;
       }
       if (count($a_actions) == '0') {
          $input['action'] = '';
-         $return = false;
+         $return = FALSE;
       } else {
          $input['action'] = exportArrayToDB($a_actions);
       }
@@ -1793,9 +1793,9 @@ return namelist;
          echo "</table>";
          echo "</center>";
          echo "<br/>";
-         return false;
+         return FALSE;
       }
-      return true;
+      return TRUE;
    }
 
 
@@ -2007,7 +2007,7 @@ return namelist;
                                 $CFG_GLPI["root_doc"].
                                    "/plugins/fusioninventory/ajax/dropdowndefinitiontype.php", 
                                 $params, 
-                                true, 
+                                TRUE, 
                                 "dropdown_method".$rand);
          echo "</script>";
          echo "<script type='text/javascript'>";
@@ -2015,7 +2015,7 @@ return namelist;
                                 $CFG_GLPI["root_doc"].
                                    "/plugins/fusioninventory/ajax/dropdownactiontype.php", 
                                 $params, 
-                                true, 
+                                TRUE, 
                                 "dropdown_method".$rand);
          echo "</script>";
       } else  {

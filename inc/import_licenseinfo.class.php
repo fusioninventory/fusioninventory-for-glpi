@@ -56,7 +56,7 @@ class PluginFusinvinventoryImport_LicenseInfo extends CommonDBTM {
    *     - if update : id of the license
    * @param $dataSection array all values of the section 
    *
-   * @return id of the license or false
+   * @return id of the license or FALSE
    *
    **/
    function AddUpdateItem($type, $items_id, $dataSection) {

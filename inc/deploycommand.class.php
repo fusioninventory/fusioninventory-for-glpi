@@ -51,11 +51,11 @@ class PluginFusioninventoryDeployCommand extends CommonDBTM {
    }
 
    static function canCreate() {
-      return true;
+      return TRUE;
    }
 
    static function canView() {
-      return true;
+      return TRUE;
    }
 
 }

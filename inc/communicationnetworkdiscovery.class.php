@@ -592,7 +592,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                     );
             $input = array();
             if (count($a_snmpnetworkequipments) > 0) {
-               $addItem = false;
+               $addItem = FALSE;
                $input = current($a_snmpnetworkequipments);
             } else {
                $input['networkequipments_id'] = $item->getID();
@@ -670,7 +670,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $a_snmpprinters = $pfPrinter->find("`printers_id`='".$item->getID()."'");
             $input = array();
             if (count($a_snmpprinters) > 0) {
-               $addItem = false;
+               $addItem = FALSE;
                $input = current($a_snmpprinters);
             } else {
                $input['printers_id'] = $item->getID();

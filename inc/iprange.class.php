@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryIPRange extends CommonDBTM {
 
-   public $dohistory = true;
+   public $dohistory = TRUE;
 
    static function getTypeName($nb=0) {
 
@@ -73,7 +73,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
    function getComments() {
       $comment = $this->fields['ip_start']." -> ".$this->fields['ip_end'];
-      return Html::showToolTip($comment, array('display' => false));
+      return Html::showToolTip($comment, array('display' => FALSE));
    }
 
 
@@ -234,7 +234,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
     *
     * @param $a_input array of IPs
     *
-    * @return true or false
+    * @return TRUE or FALSE
     */
    function checkip($a_input) {
 
@@ -249,7 +249,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       }
 
       if ($count == '0') {
-         return true;
+         return TRUE;
       } else {
           Session::addMessageAfterRedirect("<font color='#ff0000'>".__('Bad IP', 'fusioninventory').
 
@@ -260,7 +260,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
             __('End of IP range', 'fusioninventory')." : ".
             $a_input['ip_end0'].".".$a_input['ip_end1'].".".
             $a_input['ip_end2'].".".$a_input['ip_end3']);
-         return false;
+         return FALSE;
       }
    }
 

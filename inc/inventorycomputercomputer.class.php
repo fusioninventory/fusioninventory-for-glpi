@@ -106,7 +106,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
             $pfRulematchedlog->showForm($item->getID(), 'Computer');
          }
       }
-      return true;
+      return TRUE;
    }
 
 

@@ -160,7 +160,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    * @param $items_id integer ID of the task
    * @param $options array
    *
-   * @return bool true if form is ok
+   * @return bool TRUE if form is ok
    *
    **/
    function showForm($id, $options=array()) {
@@ -243,7 +243,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<td>".__('Scheduled date', 'fusioninventory')."&nbsp;:</td>";
       echo "<td>";
       if ($id) {
-         Html::showDateTimeFormItem("date_scheduled", $this->fields["date_scheduled"], 1, false);
+         Html::showDateTimeFormItem("date_scheduled", $this->fields["date_scheduled"], 1, FALSE);
       } else {
          Html::showDateTimeFormItem("date_scheduled", date("Y-m-d H:i:s"), 1);
       }
@@ -295,7 +295,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $this->showFormButtons($options);
       $this->addDivForTabs();
 
-      return true;
+      return TRUE;
    }
 
 

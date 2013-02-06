@@ -91,7 +91,7 @@ class PluginFusioninventoryDeployJob {
                }
                if ($ordertype != -1) {
                   $orderDetails = PluginFusioninventoryDeployOrder::getOrderDetails($status, $ordertype);
-                  if (count($orderDetails) == 0) return false;
+                  if (count($orderDetails) == 0) return FALSE;
                   $response[] = $orderDetails;
                }
             }
@@ -106,7 +106,7 @@ class PluginFusioninventoryDeployJob {
     * @param params parameters from the GET HTTP request
     * @return nothing
     */
-   static function update($params = array(), $update_job = true) {
+   static function update($params = array(), $update_job = TRUE) {
       $p['machineid']      = ''; //DeviceId
       $p['part']           = ''; //fragment downloaded
       $p['uuid']           = ''; //Task uuid
@@ -193,7 +193,7 @@ class PluginFusioninventoryDeployJob {
    /**
     * Get an agent ID by his deviceid
     * @param device_id the agent's device_id
-    * @return the agent ID if agent found, or false
+    * @return the agent ID if agent found, or FALSE
     */
    static function getAgentByDeviceID($device_id) {
       $result = getAllDatasFromTable('glpi_plugin_fusioninventory_agents',
@@ -202,12 +202,12 @@ class PluginFusioninventoryDeployJob {
          $agent = array_pop($result);
          return $agent['id'];
       } else {
-         return false;
+         return FALSE;
       }
    }
 
    static function sendOk() {
-      header("HTTP/1.1 200", true, 200);
+      header("HTTP/1.1 200", TRUE, 200);
    }
 }
 

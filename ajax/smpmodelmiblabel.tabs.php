@@ -42,7 +42,7 @@
 
 include ("../../../inc/includes.php");
 
-Plugin::load('fusioninventory', true);
+Plugin::load('fusioninventory', TRUE);
 
 $dropdown = new PluginFusioninventorySnmpmodelMibLabel();
 include (GLPI_ROOT . "/ajax/dropdown.common.tabs.php");

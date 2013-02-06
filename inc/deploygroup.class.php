@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    protected $static_group_types = array('Computer');
-   public $dohistory = true;
+   public $dohistory = TRUE;
 
    static function getTypeName($nb=0) {
 
@@ -58,15 +58,15 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    }
 
    static function canCreate() {
-      return true;
+      return TRUE;
    }
 
    static function canView() {
-      return true;
+      return TRUE;
    }
 
    function canCreateItem() {
-      return true;
+      return TRUE;
    }
 
    
@@ -86,7 +86,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    
    function showMenu($options=array())  {
 
-      $this->displaylist = false;
+      $this->displaylist = FALSE;
 
       $this->fields['id'] = -1;
       $this->showList();
@@ -154,7 +154,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $this->showFormButtons($options);
       $this->addDivForTabs();
 
-      return true;
+      return TRUE;
    }
 
    
@@ -164,7 +164,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       $groupID = $this->fields['id'];
       if (!$this->can($groupID, 'r')) {
-         return false;
+         return FALSE;
       }
       $canedit = $this->can($groupID, 'w');
       $rand = mt_rand();
@@ -279,7 +279,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       if ($canedit && $totalnb > 0) {
          echo "</table>";
 
-         Html::openArrowMassives("group_form$rand", true);
+         Html::openArrowMassives("group_form$rand", TRUE);
          echo "<input type='hidden' name='groups_id' value='$groupID'>";
          Html::closeArrowMassives(array('deleteitem' => __('Delete')));
 
@@ -335,7 +335,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $pfSearch = new PluginFusioninventorySearch();
       $pfSearch->formurl            = 'fusioninventory/front/deploygroup_dynamicdata.form.php';
       $pfSearch->customIdVar        = 'plugin_fusiosninventory_deploygroup_dynamicdatas_id';
-      $pfSearch->displaydeletebuton = false;
+      $pfSearch->displaydeletebuton = FALSE;
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
          WHERE `groups_id`='".$ID."'
          LIMIT 1";
@@ -763,7 +763,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<th colspan='".($nb_col*2)."'>".__('Computers')."</th>";
       echo "</tr></thead>";
 
-      $stripe = true;
+      $stripe = TRUE;
       $computer = new Computer();
       $i=1;
       echo "<tr class='tab_bg_".(((int)$stripe)+1)."'>";
@@ -775,7 +775,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             echo "</td>";
          }
          echo "<td>";
-         echo $computer->getLink(true);
+         echo $computer->getLink(TRUE);
          echo "</td>";
 
          if (($i % $nb_col) == 0) {

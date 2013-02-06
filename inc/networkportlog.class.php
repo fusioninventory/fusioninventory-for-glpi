@@ -73,13 +73,13 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
     * @param integer $tabnum
     * @param interger $withtemplate
     *
-    * @return boolean true
+    * @return boolean TRUE
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       $pfNetworkPortLog = new self();
       echo $pfNetworkPortLog->showHistory($item->getID());
-      return true;
+      return TRUE;
    }
    
    
@@ -226,7 +226,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       echo "<div id='tabcontent'></div>";
       echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
-      return true;
+      return TRUE;
    }
 
 
@@ -495,7 +495,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
 //               $text .= "<td align='center'>".$FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["field"]]['name']."</td>";
                $mapping = new PluginFusioninventoryMapping();
                $mapfields = $mapping->get('NetworkEquipment', $data["field"]);
-               if ($mapfields != false) {
+               if ($mapfields != FALSE) {
                   $text .= "<td align='center'>".
                      $mapping->getTranslation($mapfields)."</td>";
                } else {

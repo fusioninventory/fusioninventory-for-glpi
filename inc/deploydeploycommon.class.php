@@ -179,7 +179,7 @@ class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommu
 
             //get agent if for this computer
             $agents_id = $agent->getAgentWithComputerid($computer_id);
-            if($agents_id === false) {
+            if($agents_id === FALSE) {
                $jobstates_id = $jobstate->add($c_input);
                $jobstate->changeStatusFinish($jobstates_id,
                                                      0,

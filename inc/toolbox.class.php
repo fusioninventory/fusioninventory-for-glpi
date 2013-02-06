@@ -56,7 +56,7 @@ class PluginFusioninventoryToolbox {
       $config = new PluginFusioninventoryConfig();
       if ($config->getValue('extradebug')) {
          if (is_array($message)) {
-            $message = print_r($message, true);
+            $message = print_r($message, TRUE);
          }
          Toolbox::logInFile($file, $message);
       }
@@ -92,12 +92,12 @@ class PluginFusioninventoryToolbox {
        if ($flags & 4) {
            // 2-byte length prefixed EXTRA data in header
            if ($len - $headerlen - 2 < 8) {
-               return false;  // invalid
+               return FALSE;  // invalid
            }
            $extralen = unpack("v", substr($data, 8, 2));
            $extralen = $extralen[1];
            if ($len - $headerlen - 2 - $extralen < 8) {
-               return false;  // invalid
+               return FALSE;  // invalid
            }
            $extra = substr($data, 10, $extralen);
            $headerlen += 2 + $extralen;
@@ -107,11 +107,11 @@ class PluginFusioninventoryToolbox {
        if ($flags & 8) {
            // C-style string
            if ($len - $headerlen - 1 < 8) {
-               return false; // invalid
+               return FALSE; // invalid
            }
            $filenamelen = strpos(substr($data, $headerlen), chr(0));
-           if ($filenamelen === false || $len - $headerlen - $filenamelen - 1 < 8) {
-               return false; // invalid
+           if ($filenamelen === FALSE || $len - $headerlen - $filenamelen - 1 < 8) {
+               return FALSE; // invalid
            }
            $filename = substr($data, $headerlen, $filenamelen);
            $headerlen += $filenamelen + 1;
@@ -121,11 +121,11 @@ class PluginFusioninventoryToolbox {
        if ($flags & 16) {
            // C-style string COMMENT data in header
            if ($len - $headerlen - 1 < 8) {
-               return false;    // invalid
+               return FALSE;    // invalid
            }
            $commentlen = strpos(substr($data, $headerlen), chr(0));
-           if ($commentlen === false || $len - $headerlen - $commentlen - 1 < 8) {
-               return false;    // Invalid header format
+           if ($commentlen === FALSE || $len - $headerlen - $commentlen - 1 < 8) {
+               return FALSE;    // Invalid header format
            }
            $comment = substr($data, $headerlen, $commentlen);
            $headerlen += $commentlen + 1;
@@ -134,14 +134,14 @@ class PluginFusioninventoryToolbox {
        if ($flags & 2) {
            // 2-bytes (lowest order) of CRC32 on header present
            if ($len - $headerlen - 2 < 8) {
-               return false;    // invalid
+               return FALSE;    // invalid
            }
            $calccrc = crc32(substr($data, 0, $headerlen)) & 0xffff;
            $headercrc = unpack("v", substr($data, $headerlen, 2));
            $headercrc = $headercrc[1];
            if ($headercrc != $calccrc) {
                $error = "Header checksum failed.";
-               return false;    // Bad header CRC
+               return FALSE;    // Bad header CRC
            }
            $headerlen += 2;
        }
@@ -166,7 +166,7 @@ class PluginFusioninventoryToolbox {
                break;
            default:
                $error = "Unknown compression method.";
-               return false;
+               return FALSE;
            }
        }  // zero-byte body content is allowed
        // Verifiy CRC32
@@ -175,7 +175,7 @@ class PluginFusioninventoryToolbox {
        $lenOK = $isize == strlen($data);
        if (!$lenOK || !$crcOK) {
            $error = ( $lenOK ? '' : 'Length check FAILED. ') . ( $crcOK ? '' : 'Checksum FAILED.');
-           return false;
+           return FALSE;
        }
        return $data;
    }
@@ -188,7 +188,7 @@ class PluginFusioninventoryToolbox {
     *
     **/
    static function append_simplexml(&$simplexml_to, &$simplexml_from) {
-      static $firstLoop=true;
+      static $firstLoop=TRUE;
 
       //Here adding attributes to parent
       if ($firstLoop) {
@@ -201,7 +201,7 @@ class PluginFusioninventoryToolbox {
          foreach ($simplexml_child->attributes() as $attr_key => $attr_value) {
             $simplexml_temp->addAttribute($attr_key, $attr_value);
          }
-         $firstLoop=false;
+         $firstLoop=FALSE;
          self::append_simplexml($simplexml_temp, $simplexml_child);
       }
       unset($firstLoop);
@@ -261,7 +261,7 @@ class PluginFusioninventoryToolbox {
       $matches    = array();
       $indent     = 0;
 
-      while ($token !== false) {
+      while ($token !== FALSE) {
          // 1. open and closing tags on same line - no change
          if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) {
             $indent=0;
@@ -421,8 +421,8 @@ class PluginFusioninventoryToolbox {
                  && $array2[$key] != $value) {
             $a_return[$key] = $value;
          }
-//         $key2 = false;
-//         $key2 = array_search($value, $array2, true);
+//         $key2 = FALSE;
+//         $key2 = array_search($value, $array2, TRUE);
 //         if ($key2) {
 //            unset($array2[$key2]);
 //         } else {

@@ -59,7 +59,7 @@ class PluginFusioninventoryStaticmisc {
             array(   'module'          => 'fusioninventory',
                      'method'          => 'wakeonlan',
                      'name'            => __('Wake On LAN', 'fusioninventory'),
-                     'use_rest'        => false
+                     'use_rest'        => FALSE
             ),
 
             array(   'module'         => 'fusioninventory',
@@ -67,14 +67,14 @@ class PluginFusioninventoryStaticmisc {
                      'selection_type' => 'devices',
                      'hidetask'       => 1,
                      'name'           => __('Computer Inventory', 'fusioninventory'),
-                     'use_rest'       => false
+                     'use_rest'       => FALSE
             ),
 
             array(   'module'         => 'fusioninventory',
                      'method'         => 'ESX',
                      'selection_type' => 'devices',
                      'name'           => __('VMware host remote inventory', 'fusioninventory'),
-                     'use_rest'       => true
+                     'use_rest'       => TRUE
             ),
 
             array(   'module'         => 'fusioninventory',
@@ -91,14 +91,14 @@ class PluginFusioninventoryStaticmisc {
                      'method'         => 'deploydeployinstall',
                      'name'           => __('Package deployment', 'fusioninventory'),
                      'task'           => "DEPLOY",
-                     'use_rest'       => true
+                     'use_rest'       => TRUE
             ),
 
             array(   'module'         => 'fusioninventory',
                      'method'         => 'deploydeployuninstall',
                      'name'           => __('Package uninstall', 'fusioninventory'),
                      'task'           => "DEPLOY",
-                     'use_rest'       => true
+                     'use_rest'       => TRUE
             )
       );
       return $a_tasks;
@@ -329,7 +329,7 @@ class PluginFusioninventoryStaticmisc {
 
       $module = new PluginFusioninventoryAgentmodule();
       $module_infos = $module->getActivationExceptions('esx');
-      $exceptions = json_decode($module_infos['exceptions'], true);
+      $exceptions = json_decode($module_infos['exceptions'], TRUE);
 
       $in = "";
       if (!empty($exceptions)) {

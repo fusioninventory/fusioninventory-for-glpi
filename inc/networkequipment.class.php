@@ -78,7 +78,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                                  '/plugins/fusioninventory/front/switch_info.form.php'));
       }
 
-      return true;
+      return TRUE;
    }
 
   
@@ -97,9 +97,9 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          NetworkPort::showForItem($item);
          return;
       }
-      $canedit = false;
+      $canedit = FALSE;
       if (PluginFusioninventoryProfile::haveRight("networkequipment", "w")) {
-         $canedit = true;
+         $canedit = TRUE;
       }
 
       $id = $item->getID();
@@ -259,7 +259,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                      $result_agp = $DB->query($query_agp);
                      if ($DB->numrows($result_agp) > 0) {
                         $data_agp = $DB->fetch_assoc($result_agp);
-                        $this->showNetworkPortDetail($data_agp, $monitoring, true);
+                        $this->showNetworkPortDetail($data_agp, $monitoring, TRUE);
                      }
                   }
                }
@@ -486,7 +486,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Html::displayProgressBar(250, $this->fields['cpu'],
-                  array('simple' => true));
+                  array('simple' => TRUE));
       echo "</td>";
 
       echo "<td align='center'>";

@@ -49,7 +49,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    private $portDB = array();
    private $portModif = array();
    private $plugin_fusinvsnmp_networkports_id = 0;
-   private $cdp=false; // true if CDP=1
+   private $cdp=FALSE; // TRUE if CDP=1
    private $portMacs=array();  // MAC addresses
    private $portIps=array();   // IP addresses
    private $portVlans=array(); // number and name for each vlan
@@ -65,12 +65,12 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $tab[1]['field']         = 'name';
       $tab[1]['name']          = __('Name');
       $tab[1]['type']          = 'text';
-      $tab[1]['massiveaction'] = false;
+      $tab[1]['massiveaction'] = FALSE;
 
 //      $tab[2]['table']         = $this->getTable();
 //      $tab[2]['field']         = 'id';
 //      $tab[2]['name']          = __('ID');
-//      $tab[2]['massiveaction'] = false;
+//      $tab[2]['massiveaction'] = FALSE;
 //      $tab[2]['datatype']      = 'number';
 
       $tab[3]['table']         = $this->getTable();
@@ -279,7 +279,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
     *@return nothing
     **/
    function setCDP() {
-      $this->cdp=true;
+      $this->cdp=TRUE;
    }
 
 
@@ -442,7 +442,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          $a_port = current($a_ports);
          return $a_port['id'];
       }
-      return false;
+      return FALSE;
    }
 
    
@@ -782,7 +782,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    
    
    function isPorthasPhone() {
-      $isPhone = false;
+      $isPhone = FALSE;
       
       $networkPort = new NetworkPort();
       
@@ -791,7 +791,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          if (count($a_ports) > 0) {
             $a_port = current($a_ports);
             if ($a_port['itemtype'] == 'Phone') {
-               $isPhone = true;
+               $isPhone = TRUE;
                return $isPhone;
             }
          }

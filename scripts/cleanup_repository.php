@@ -14,7 +14,7 @@ function filepartIsUsed($file) {
 
    $stack = array();
    if (!preg_match('/repository\/.\/..\/(......)(.*)\.gz$/', $file, $stack)) {
-      return true;
+      return TRUE;
    }
 
    $sql = sprintf("SELECT id FROM glpi_plugin_fusinvdeploy_fileparts WHERE shortsha512='%s' AND sha512='%s'",

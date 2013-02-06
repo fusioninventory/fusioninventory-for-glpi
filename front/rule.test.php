@@ -62,7 +62,7 @@ if (isset($_POST["rules_id"])) {
 $rule = new $sub_type();
 $rule->checkGlobal('r');
 
-$test_rule_output = null;
+$test_rule_output = NULL;
 
 if (!strpos($_SERVER['PHP_SELF'], "popup")) {
    Html::header(__('Setup'), $_SERVER['PHP_SELF'], "config", "display");

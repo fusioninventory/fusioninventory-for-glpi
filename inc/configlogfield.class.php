@@ -81,7 +81,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
          foreach ($fields as $name=>$value){
             $input = array();
             $mapfields = $mapping->get($itemtype, $name);
-            if ($mapfields != false) {
+            if ($mapfields != FALSE) {
                $input['plugin_fusioninventory_mappings_id'] = $mapfields['id'];
                $input['days']  = $value;
                $this->add($input);
@@ -98,7 +98,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
     * @global object $DB
     * @param $field name of the field
     *
-    * @return value or false
+    * @return value or FALSE
     */
    function getValue($field) {
       global $DB;
@@ -114,7 +114,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
             return $this->fields['0'];
          }
       }
-      return false;
+      return FALSE;
    }
 
 
@@ -196,7 +196,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
       echo "</table></div>";
       Html::closeForm();
 
-      return true;
+      return TRUE;
    }
 
 

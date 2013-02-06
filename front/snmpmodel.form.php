@@ -104,7 +104,7 @@ if(PluginFusioninventoryProfile::haveRight("model", "r")) {
       $id = $_GET["id"];
    }
    $pfModel->showForm($id);
-   $pfModelMib->showFormList($id, array('create'=>true));
+   $pfModelMib->showFormList($id, array('create'=>TRUE));
 
 }
 Html::footer();

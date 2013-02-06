@@ -65,10 +65,10 @@ if (isset($_POST["type"]) && isset($_POST["actortype"])) {
          $options = array('name'        => '_itil_'.$_POST["actortype"].'[users_id]',
                           'entity'      => $_POST['entity_restrict'],
                           'right'       => $right,
-                          'ldap_import' => true);
-         $withemail = false;
+                          'ldap_import' => TRUE);
+         $withemail = FALSE;
          if ($CFG_GLPI["use_mailing"]) {
-            $withemail = (isset($_POST["allow_email"]) ? $_POST["allow_email"] : false);
+            $withemail = (isset($_POST["allow_email"]) ? $_POST["allow_email"] : FALSE);
             $paramscomment = array('value'       => '__VALUE__',
                                    'allow_email' => $withemail,
                                    'field'       => "_itil_".$_POST["actortype"]);

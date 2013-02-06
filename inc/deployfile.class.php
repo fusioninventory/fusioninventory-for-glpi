@@ -51,11 +51,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    }
 
    static function canCreate() {
-      return true;
+      return TRUE;
    }
 
    static function canView() {
-      return true;
+      return TRUE;
    }
 
    static function getTypes() {
@@ -288,7 +288,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
             //list files in dir selected
             //we store folders and files separately to sort them alphabeticaly separatly
-            while (false !== ($entry = readdir($handle))) {
+            while (FALSE !== ($entry = readdir($handle))) {
                if ($entry != "." && $entry != "..") {
                   $filepath = $dir."/".$entry;
                   if (is_dir($filepath)) {
@@ -307,8 +307,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             foreach ($folders as $filepath => $entry) {
                $path['text'] = $entry;
                $path['id'] = $filepath;
-               $path['draggable'] = false;
-               $path['leaf']      = false;
+               $path['draggable'] = FALSE;
+               $path['leaf']      = FALSE;
                $path['cls']       = 'folder';
 
                $nodes[] = $path;
@@ -318,8 +318,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             foreach ($files as $filepath => $entry) {
                $path['text'] = $entry;
                $path['id'] = $filepath;
-               $path['draggable'] = false;
-               $path['leaf']      = true;
+               $path['draggable'] = FALSE;
+               $path['leaf']      = TRUE;
                $path['cls']       = 'file';
 
                $nodes[] = $path;
@@ -357,7 +357,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    static function remove_item($params) {
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
       //remove selected checks
       foreach ($params['file_entries'] as $index) {
@@ -375,7 +375,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    static function move_item($params) {
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), true);
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
       //get data on old index
       $moved_check = $datas['jobs']['associatedFiles'][$params['old_index']];
@@ -403,7 +403,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $dir = $repoPath.'/'.self::getDirBySha512($sha512);
 
       if (!file_exists ($dir)) {
-         mkdir($dir, 0700, true);
+         mkdir($dir, 0700, TRUE);
       }
       copy ($filePath, $dir.'/'.$sha512.'.gz');
 
@@ -456,7 +456,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          return;
       }
 
-      $fdPart = null;
+      $fdPart = NULL;
       do {
          clearstatcache();
          if (file_exists($tmpFilepart)) {
@@ -502,10 +502,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             AND sha512 = '$sha512'"
       );
       if (count($rows) > 0) {
-         return true;
+         return TRUE;
       }
 
-      return false;
+      return FALSE;
    }
 
 
@@ -578,8 +578,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       if (isset ($_POST["id"]) and !$_POST['id']) {
 
          //file uploaded?
-         $filename = null;
-         $file_tmp_name = null;
+         $filename = NULL;
+         $file_tmp_name = NULL;
          if (isset($_FILES['file']['tmp_name']) and !empty($_FILES['file']['tmp_name'])){
             $file_tmp_name = $_FILES['file']['tmp_name'];
          } /*elseif(isset($_POST['url']) and !empty($_POST['url'])) {
@@ -591,7 +591,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          //file upload errors
          if (isset($_FILES['file']['error'])) {
             $msg = "file:'{$filename}', ";
-            $error = true;
+            $error = TRUE;
             switch ($_FILES['file']['error']) {
                case UPLOAD_ERR_INI_SIZE:
                case UPLOAD_ERR_FORM_SIZE:
@@ -614,11 +614,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                   break;
                case UPLOAD_ERR_OK:
                   //no error, continue
-                  $error = false;
+                  $error = FALSE;
             }
             if ($error) {
                Session::addMessageAfterRedirect($msg);
-               return false;
+               return FALSE;
             }
          }
 
@@ -641,10 +641,10 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             $msg = "file:'{$filename}', ".__('File missing', 'fusioninventory');
          }
          Session::addMessageAfterRedirect($msg);
-         return true;
+         return TRUE;
       }
       Session::addMessageAfterRedirect(__('File missing', 'fusioninventory'));
-      return false;
+      return FALSE;
    }
 
    function uploadFileFromServer() {

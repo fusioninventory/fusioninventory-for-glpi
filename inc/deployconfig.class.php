@@ -84,7 +84,7 @@ class PluginFusioninventoryDeployConfig extends CommonDBTM {
          $pfConfig = new self();
          $pfConfig->showForm($item);
       }
-      return true;
+      return TRUE;
    }
 
    function putForm($p_post) {
@@ -124,7 +124,7 @@ class PluginFusioninventoryDeployConfig extends CommonDBTM {
       echo "</table>";
       Html::closeForm();
 
-      return true;
+      return TRUE;
    }
 }
 

@@ -59,11 +59,11 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
    }
 
    static function canCreate() {
-      return true;
+      return TRUE;
    }
 
    static function canView() {
-      return true;
+      return TRUE;
    }
 
    function defineTabs($options=array()) {
@@ -165,7 +165,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
          Html::redirect($CFG_GLPI["root_doc"]."/plugins/fusinvdeploy/front/task.form.php?id=".
             $this->getField('id'));
-         return false;
+         return FALSE;
       }
 
       $task_id = $this->getField('id');
@@ -191,7 +191,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
       }
 
-      return true;
+      return TRUE;
    }
 
    function post_addItem() {

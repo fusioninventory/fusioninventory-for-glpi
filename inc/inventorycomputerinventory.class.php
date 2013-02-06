@@ -353,13 +353,13 @@ class PluginFusioninventoryInventoryComputerInventory {
                  OR $_SESSION["plugin_fusinvinventory_entity"] == '-1') {
             $_SESSION["plugin_fusinvinventory_entity"] = 0;
          }
-         $no_history = false;
+         $no_history = FALSE;
          // * New
          if ($items_id == '0') {
             $input = array();
             $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
             $items_id = $computer->add($input);
-            $no_history = true;
+            $no_history = TRUE;
          }
          
          $pfAgent->setAgentWithComputerid($items_id, $this->device_id);
@@ -375,16 +375,16 @@ class PluginFusioninventoryInventoryComputerInventory {
             exit;            
          }
          
-$start = microtime(true);
+$start = microtime(TRUE);
          $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 300)");
          if ($DB->result($ret, 0, 0) == 1) {
 
             $pfInventoryComputerLib->updateComputer($a_computerinventory, $items_id, $no_history);
             
             $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
-Toolbox::logInFile("exetime", (microtime(true) - $start)." (".$items_id.")\n".
+Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
         memory_get_usage()."\n".
-        memory_get_usage(true)."\n".
+        memory_get_usage(TRUE)."\n".
         memory_get_peak_usage()."\n".
         memory_get_peak_usage()."\n");
 
@@ -401,7 +401,7 @@ Toolbox::logInFile("exetime", (microtime(true) - $start)." (".$items_id.")\n".
                $inputrulelog['items_id'] = $items_id;
                $inputrulelog['itemtype'] = $itemtype;
                $inputrulelog['method'] = 'inventory';
-               $pfRulematchedlog->add($inputrulelog, array(), false);
+               $pfRulematchedlog->add($inputrulelog, array(), FALSE);
                $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
                unset($_SESSION['plugin_fusioninventory_rules_id']);
             }            
@@ -473,7 +473,7 @@ Toolbox::logInFile("exetime", (microtime(true) - $start)." (".$items_id.")\n".
     * @param type $management_value
     *
     */
-   static function addDefaultStateIfNeeded(&$input, $check_management = false, $management_value = 0) {
+   static function addDefaultStateIfNeeded(&$input, $check_management = FALSE, $management_value = 0) {
       $config = new PluginFusioninventoryConfig();
       $state = $config->getValue("states_id_default");
       if ($state) {

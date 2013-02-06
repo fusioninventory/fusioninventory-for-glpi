@@ -46,18 +46,18 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
-   public $dohistory = true;
+   public $dohistory = TRUE;
 
    static function getTypeName($nb=0) {
       return __('Mirror servers', 'fusioninventory');
    }
 
    static function canCreate() {
-      return true;
+      return TRUE;
    }
 
    static function canView() {
-      return true;
+      return TRUE;
    }
 
    function defineTabs($options=array()) {
@@ -70,7 +70,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          $ong[12]=__('Historical');
 
       }
-      $ong['no_all_tab'] = true;
+      $ong['no_all_tab'] = TRUE;
 
       return $ong;
    }
@@ -108,7 +108,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<script type='text/javascript'>loadDefaultTab();
       </script>";
 
-      return true;
+      return TRUE;
    }
 
    function getSearchOptions() {

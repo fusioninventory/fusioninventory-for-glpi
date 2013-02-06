@@ -110,7 +110,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
    * @param $items_id integer id of the blacklist
    * @param $options array
    *
-   * @return bool true if form is ok
+   * @return bool TRUE if form is ok
    *
    **/
    function showForm($items_id, $options=array()) {
@@ -137,7 +137,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
       $this->showFormButtons();
 
-      return true;
+      return TRUE;
    }
 
 

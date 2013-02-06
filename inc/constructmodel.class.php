@@ -61,9 +61,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             curl_setopt($this->fp, CURLOPT_PROXYUSERPWD, $CFG_GLPI['proxy_user'].":".$CFG_GLPI['proxy_passwd']);
          }
       }
-      curl_setopt($this->fp, CURLOPT_POST, true);
+      curl_setopt($this->fp, CURLOPT_POST, TRUE);
       curl_setopt($this->fp, CURLOPT_HTTPHEADER, array('Expect:'));
-      return true;
+      return TRUE;
    }
    
    
@@ -95,7 +95,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "</tr>";
 
          echo "</table>";
-         return false;
+         return FALSE;
       } else {
          $this->key = $a_userinfos['key'];
          $auth["auth"] = array("login" => $a_userinfos['login'],
@@ -105,7 +105,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
 
          $this->auth = 'login='.$a_userinfos['login'].'&auth='.$this->mcryptText($buffer);
       }         
-      return true;
+      return TRUE;
    }
    
    
@@ -489,7 +489,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "</th>";
          echo "</tr>";
 
-         $datalog = json_decode($retserv, true);
+         $datalog = json_decode($retserv, TRUE);
          arsort($datalog['logs']);
          foreach ($datalog['logs'] as $ldata) {
             echo "<tr class='tab_bg_1'>";
@@ -674,7 +674,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $buffer = json_encode($getsysdescr);
       curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
       $retserv = curl_exec($this->fp);
-      $data = json_decode($retserv, true);
+      $data = json_decode($retserv, TRUE);
 
       echo "<center>";
       if (!isset($_SESSION['glpi_plugin_fusioninventory_constructmodelsort'])) {
@@ -780,7 +780,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $this->displayModelsList($data, $nb_devices, $a_sort, 'ok');
       
       echo "<a id='import'>".$menu."</a>";
-      Html::openArrowMassives("form_model", true);
+      Html::openArrowMassives("form_model", TRUE);
       Html::closeArrowMassives(array('import' => __('Import')),
                                array('import' => 'Import will update existing models'));
       Html::closeForm();
@@ -1091,7 +1091,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $buffer = json_encode($addOid);
       curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
       $retserv = curl_exec($this->fp);
-      $data = json_decode($retserv, true);
+      $data = json_decode($retserv, TRUE);
       
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";

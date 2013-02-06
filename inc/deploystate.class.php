@@ -184,7 +184,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
       while ($row = $DB->fetch_assoc($query_res)) {
          $row['log'] = '';
          $logs_pos = strpos($row['comment'], "log:");
-         if ($logs_pos !== false) {
+         if ($logs_pos !== FALSE) {
             $row['log'] = substr($row['comment'], $logs_pos+4);
             $row['comment'] = substr($row['comment'], 0, $logs_pos);
          }
@@ -198,7 +198,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
          $res[$i]['state']       = $row['state'];
          $res[$i]['date']        = $row['date'];
          $res[$i]['status_id']   = 0;
-         $res[$i]['leaf']        = true;
+         $res[$i]['leaf']        = TRUE;
          $res[$i]['iconCls']     = "no-icon";
 
          $i++;
@@ -261,7 +261,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
                //no status for this job
                if ($DB->numrows($res_status) <= 0) {
                   unset ($res[$i]['children'][$j]);
-                  //$res[$i]['children'][$j]['leaf'] = true;
+                  //$res[$i]['children'][$j]['leaf'] = TRUE;
                   continue;
                }
 
@@ -270,7 +270,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
                      $row_status = $DB->fetch_assoc($res_status);
 
                      $res[$i]['children'][$j]['icon'] = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/ext/computer.png";
-                     $res[$i]['children'][$j]['leaf'] = true; //final children
+                     $res[$i]['children'][$j]['leaf'] = TRUE; //final children
                      $res[$i]['children'][$j]['progress'] = $row_status['state'];
                      $res[$i]['children'][$j]['items_id'] = $row_status['items_id'];
                      $res[$i]['children'][$j]['taskjobs_id'] = $row_jobs['id'];
@@ -286,7 +286,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
                         $computer->getFromDB($row_status['items_id']);
 
                         $res[$i]['children'][$j]['children'][$k]['name'] = $computer->getField('name');
-                        $res[$i]['children'][$j]['children'][$k]['leaf'] = true;
+                        $res[$i]['children'][$j]['children'][$k]['leaf'] = TRUE;
                         $res[$i]['children'][$j]['children'][$k]['type'] = "Computer";
                         $res[$i]['children'][$j]['children'][$k]['progress'] = $row_status['state'];
                         $res[$i]['children'][$j]['children'][$k]['icon'] = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/ext/computer.png";
@@ -370,7 +370,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
                   //no status for this job
                   if ($DB->numrows($res_status) <= 0) {
                      unset ($res[$i]['children'][$j]);
-                     //$res[$i]['children'][$j]['leaf'] = true;
+                     //$res[$i]['children'][$j]['leaf'] = TRUE;
                      continue;
                   }
 
@@ -389,7 +389,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
                         $row_jobs_state = $DB->fetch_assoc($res_jobs_state);
 
                         $res[$i]['icon'] = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/ext/computer.png";
-                        $res[$i]['leaf'] = true; //final children
+                        $res[$i]['leaf'] = TRUE; //final children
                         $res[$i]['progress'] = $row_jobs_state['state'];
                         $res[$i]['items_id'] = $row_status['items_id'];
                         $res[$i]['taskjobs_id'] = $row_jobs['id'];
@@ -430,7 +430,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
                   $computer->getFromDB($row_status['items_id']);
 
                   $res[$i]['name'] = $computer->getField('name');
-                  $res[$i]['leaf'] = true;
+                  $res[$i]['leaf'] = TRUE;
                   $res[$i]['type'] = "Computer";
                   $res[$i]['progress'] = $row_jobs_state['state'];
                   $res[$i]['icon'] = $CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/ext/computer.png";
@@ -456,9 +456,9 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
 
 
          //temporary fix for get a 100% progress when all the jobs for the task are done
-         $finished = false;
+         $finished = FALSE;
          foreach ($a_taskjobs as $job) {
-            $finished = false;
+            $finished = FALSE;
             $query_status = "SELECT id, items_id, state
                FROM (
                   SELECT id, itemtype, items_id, state
@@ -479,7 +479,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
             $row_jobs_state = $DB->fetch_assoc($res_jobs_state);
             if ($row_jobs_state['state'] != PluginFusioninventoryTaskjoblog::TASK_OK) continue;
 
-            $finished = true;
+            $finished = TRUE;
          }
          if ($finished) return "100%";
 

@@ -159,7 +159,7 @@ class PluginFusioninventoryCommunication {
     *
     * @param $arrayinventory array to import
     *
-    * @return true (import ok) / false (import ko)
+    * @return TRUE (import ok) / FALSE (import ko)
     **/
    function import($arrayinventory) {
 
@@ -185,7 +185,7 @@ class PluginFusioninventoryCommunication {
       
       $agent = $pfAgent->InfosByKey($this->message['DEVICEID']);
       if ($xmltag == "PROLOG") {
-         return false;
+         return FALSE;
       }
 
       if (isset($this->message['CONTENT']['MODULEVERSION'])) {
@@ -220,15 +220,15 @@ class PluginFusioninventoryCommunication {
       } else {
          $errors.=__('Unattended element in', 'fusioninventory').' QUERY : *'.$xmltag."*\n";
       }
-      $result=true;
+      $result=TRUE;
       // TODO manage this error ( = delete it)
       if ($errors != '') {
          echo $errors;
          if (isset($_SESSION['glpi_plugin_fusioninventory_processnumber'])) {
-            $result=true;
+            $result=TRUE;
          } else {
             // It's PROLOG
-            $result=false;
+            $result=FALSE;
          }
       }
       return $result;

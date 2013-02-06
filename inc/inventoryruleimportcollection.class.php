@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection {
 
    // From RuleCollection
-   public $stop_on_first_match = true;
+   public $stop_on_first_match = TRUE;
    static public $right        = 'rule_import';
    public $menu_option         = 'linkcomputer';
 
@@ -127,7 +127,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
             $class = new $className;
             if ($class->getFromDB($output["found_equipment"][0])) {
                echo "<td>".__('Link')."</td>";
-               echo "<td>".$class->getLink(true)."</td>";
+               echo "<td>".$class->getLink(TRUE)."</td>";
             }
             echo "</tr>";
          }

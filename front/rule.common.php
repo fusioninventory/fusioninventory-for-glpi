@@ -159,7 +159,7 @@ if (isset($_GET["action"])) {
                   "$manufacturer");
    }
 
-   Html::footer(true);
+   Html::footer(TRUE);
    exit();
 }
 

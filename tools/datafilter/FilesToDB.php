@@ -167,7 +167,7 @@ function fileOUItoTreeFolder()
 
             if (!is_dir(LIBSERVERFUSIONINVENTORY_STORAGELOCATION."/DataFilter/oui/$OUI/$organization"))
             {
-                mkdir (LIBSERVERFUSIONINVENTORY_STORAGELOCATION."/DataFilter/oui/$OUI/$organization",0777,true);
+                mkdir (LIBSERVERFUSIONINVENTORY_STORAGELOCATION."/DataFilter/oui/$OUI/$organization",0777,TRUE);
             }
 
         }

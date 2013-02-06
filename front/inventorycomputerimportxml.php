@@ -70,7 +70,7 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
                error_log("toto");
                error_log($xml);
                if (!empty($xml)) {
-                  $_SESSION['glpi_fusionionventory_nolock'] = true;
+                  $_SESSION['glpi_fusionionventory_nolock'] = TRUE;
                   $pfCommunication->handleOCSCommunication($xml);
                   unset($_SESSION['glpi_fusionionventory_nolock']);
                }
@@ -82,7 +82,7 @@ if (isset($_FILES['importfile']) && $_FILES['importfile']['tmp_name'] != '') {
    } else if (preg_match('/\.(ocs|xml)/i', $_FILES['importfile']['name'])) {
 
       $xml = file_get_contents($_FILES['importfile']['tmp_name']);
-      $_SESSION['glpi_fusionionventory_nolock'] = true;
+      $_SESSION['glpi_fusionionventory_nolock'] = TRUE;
       $pfCommunication->handleOCSCommunication($xml);
       unset($_SESSION['glpi_fusionionventory_nolock']);
    } else {

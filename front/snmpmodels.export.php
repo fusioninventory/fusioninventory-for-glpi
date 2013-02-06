@@ -52,7 +52,7 @@ header("Expires: 0");
 header("Cache-control: private");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Content-Description: File Transfer");
-header('Content-type: application/xml; charset="utf-8"', true);
+header('Content-type: application/xml; charset="utf-8"', TRUE);
 header("Content-disposition: attachment; filename=export.xml");
 
 echo $pfImportExport->export($_GET["model"]);

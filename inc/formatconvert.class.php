@@ -51,7 +51,7 @@ class PluginFusioninventoryFormatconvert {
    
    static function XMLtoArray($xml) {
       $datainventory = array();
-      $datainventory = json_decode(json_encode((array)$xml), true);
+      $datainventory = json_decode(json_encode((array)$xml), TRUE);
       if (isset($datainventory['CONTENT']['ENVS'])) {
          unset($datainventory['CONTENT']['ENVS']);
       }
@@ -120,7 +120,7 @@ class PluginFusioninventoryFormatconvert {
    
    static function JSONtoArray($json) {
       $datainventory = array();
-      $datainventory = json_decode($json, true);
+      $datainventory = json_decode($json, TRUE);
       $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
       return $datainventory;
    }
@@ -984,7 +984,7 @@ class PluginFusioninventoryFormatconvert {
    
    function computerSoftwareTransformation($a_inventory, $entities_id) {
       
-      $entities_id_software = Entity::getUsedConfig('entities_id_software', $_SESSION["plugin_fusinvinventory_entity"], '', true);
+      $entities_id_software = Entity::getUsedConfig('entities_id_software', $_SESSION["plugin_fusinvinventory_entity"], '', TRUE);
       if ($entities_id_software < 0) {
          $entities_id_software = $_SESSION["plugin_fusinvinventory_entity"];
       }
@@ -1025,7 +1025,7 @@ class PluginFusioninventoryFormatconvert {
                                                                "manufacturer" => $array_tmp['manufacturers_id'],
                                                                "old_version"  => $array_tmp['version'],
                                                                "entities_id"  => $entities_id_software),
-                       array(), array(), true);
+                       array(), array(), TRUE);
 
                if (isset($res_rule['_ignore_import']) 
                        && $res_rule['_ignore_import'] == 1) {

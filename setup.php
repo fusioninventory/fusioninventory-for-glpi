@@ -53,7 +53,7 @@ include_once(GLPI_ROOT."/inc/includes.php");
 function plugin_init_fusioninventory() {
    global $PLUGIN_HOOKS, $CFG_GLPI;
 
-   $PLUGIN_HOOKS['csrf_compliant']['fusioninventory'] = true;
+   $PLUGIN_HOOKS['csrf_compliant']['fusioninventory'] = TRUE;
 
    $Plugin = new Plugin();
    $moduleId = 0;
@@ -92,7 +92,7 @@ function plugin_init_fusioninventory() {
          //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleEntity');
       Plugin::registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
-              array('rulecollections_types'=>true));
+              array('rulecollections_types'=>TRUE));
       Plugin::registerClass('PluginFusioninventoryRulematchedlog',
               array('addtabon' => array('Computer',
                                         'PluginFusioninventoryAgent',
@@ -103,7 +103,7 @@ function plugin_init_fusioninventory() {
       //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleImport');
       Plugin::registerClass('PluginFusioninventoryInventoryRuleImportCollection',
-              array('rulecollections_types'=>true));
+              array('rulecollections_types'=>TRUE));
       Plugin::registerClass('PluginFusioninventoryConstructDevice');
       
       // Networkinventory and networkdiscovery
@@ -214,7 +214,7 @@ function plugin_init_fusioninventory() {
          OR PluginFusioninventoryProfile::haveRight("task", "r")
          ) {
 
-         $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = true;
+         $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = TRUE;
       }
       
       // * Tabs for each type
@@ -426,7 +426,7 @@ function plugin_init_fusioninventory() {
             && $_GET['action'] == 'uninstall')
                && (strstr($_SERVER['HTTP_REFERER'], "front/plugin.php"))) {
 
-      if (PluginFusioninventoryModule::getAll(true)) {
+      if (PluginFusioninventoryModule::getAll(TRUE)) {
           Session::addMessageAfterRedirect(__('Other FusionInventory plugins (fusinv...) must be uninstalled before removing the FusionInventory plugin'));
 
          Html::redirect($CFG_GLPI["root_doc"]."/front/plugin.php");
@@ -468,19 +468,19 @@ function plugin_fusioninventory_check_prerequisites() {
    
    if (version_compare(GLPI_VERSION, '0.84', 'lt') || version_compare(GLPI_VERSION, '0.85', 'ge')) {
       echo __('Your GLPI version not compatible, require 0.84', 'fusioninventory');
-      return false;
+      return FALSE;
    }
    $plugin = new Plugin();
    if ($plugin->isActivated("fusioninventory")
            && !TableExists("glpi_plugin_fusioninventory_configs")) {
-      return false;
+      return FALSE;
    }
    
    $a_plugins = array('fusinvinventory', 'fusinvsnmp', 'fusinvdeploy');
    foreach ($a_plugins as $pluginname) {
       if (file_exists(GLPI_ROOT.'/plugins/'.$pluginname)) {
          printf(__('Please remove folder %s in glpi/plugins/', 'fusioninventory'), $pluginname);
-         return false;
+         return FALSE;
       }      
    }
    
@@ -495,19 +495,19 @@ function plugin_fusioninventory_check_prerequisites() {
          $DB->query("UPDATE `glpi_plugins` SET `version`='0.80+1.4' WHERE `directory` LIKE 'fusi%'");
       }
    }
-   return true;
+   return TRUE;
 }
 
 
 
 function plugin_fusioninventory_check_config() {
-   return true;
+   return TRUE;
 }
 
 
 
 function plugin_fusioninventory_haveTypeRight($type,$right) {
-   return true;
+   return TRUE;
 }
 
 ?>

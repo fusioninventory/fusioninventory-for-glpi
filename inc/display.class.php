@@ -168,8 +168,8 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
 
       $param = array();
       $param['title']=__('Progress', 'fusioninventory');
-      $param['simple']=false;
-      $param['forcepadding']=false;
+      $param['simple']=FALSE;
+      $param['forcepadding']=FALSE;
 
       if (is_array($options) && count($options)) {
          foreach ($options as $key => $val) {

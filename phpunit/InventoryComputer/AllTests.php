@@ -123,10 +123,10 @@ class InventoryComputer extends PHPUnit_Framework_TestCase {
        
       $MyDirectory = opendir("InventoryComputer/xml");
       $k = 0;
-      while(false !== ($Entry = readdir($MyDirectory))) {
+      while(FALSE !== ($Entry = readdir($MyDirectory))) {
          if(is_dir('InventoryComputer/xml/'.$Entry)&& $Entry != '.' && $Entry != '..') {
             $myVersion = opendir("InventoryComputer/xml/".$Entry);
-            while(false !== ($xmlFilename = readdir($myVersion))) {
+            while(FALSE !== ($xmlFilename = readdir($myVersion))) {
                if ($xmlFilename != '.' && $xmlFilename != '..') {
                   // We have the XML of each computer inventory
                   $xml = simplexml_load_file("InventoryComputer/xml/".$Entry."/".$xmlFilename, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -331,7 +331,7 @@ echo "# testHardwareModifications\n";
          if (count($a_printerDiff) < count(array_diff_key($a_printerXML, $a_printerDB))) {
             $a_printerDiff = array_diff_key($a_printerXML, $a_printerDB);
          }
-         $this->assertEquals(count($a_printerDiff), 0, 'Difference of printers "'.print_r($a_printerDiff, true).'" ['.$xmlFile.']');
+         $this->assertEquals(count($a_printerDiff), 0, 'Difference of printers "'.print_r($a_printerDiff, TRUE).'" ['.$xmlFile.']');
 
 
          // Verify fields in GLPI
@@ -446,7 +446,7 @@ echo "# testHardwareModifications\n";
          if (count($a_monitorDiff) < count(array_diff_key($a_monitorXML, $a_monitorDB))) {
             $a_monitorDiff = array_diff_key($a_monitorXML, $a_monitorDB);
          }
-         $this->assertEquals(count($a_monitorDiff), 0, 'Difference of monitors "'.print_r($a_monitorDiff, true).'" ('.$xmlFile.')');
+         $this->assertEquals(count($a_monitorDiff), 0, 'Difference of monitors "'.print_r($a_monitorDiff, TRUE).'" ('.$xmlFile.')');
 
    }
 
@@ -1521,7 +1521,7 @@ $XML['Computer'] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 
       }
 
-      $this->assertEquals(($countlog_end - $countlog_start - 1), 0, 'Problem on log, must be 0 : \n'.print_r($a_logs, true));
+      $this->assertEquals(($countlog_end - $countlog_start - 1), 0, 'Problem on log, must be 0 : \n'.print_r($a_logs, TRUE));
    }
 
 
@@ -1563,7 +1563,7 @@ return;
             $countlog_end--;
          }
       }
-      $this->assertEquals(($countlog_end - $countlog_start), 0, 'Problem on log, must be 0 on OS change : \n'.print_r($a_logs, true));
+      $this->assertEquals(($countlog_end - $countlog_start), 0, 'Problem on log, must be 0 on OS change : \n'.print_r($a_logs, TRUE));
    }
 
 
