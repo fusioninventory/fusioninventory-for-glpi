@@ -75,10 +75,6 @@ class Software extends PHPUnit_Framework_TestCase {
          
          
       // * Add rule rename software
-         $rule = new Rule();
-         $ruleCriteria = new RuleCriteria();
-         $ruleAction = new RuleAction();
-         
          $input = array();
          $input['sub_type']   = 'RuleDictionnarySoftware';
          $input['name']       = 'glpi0.84';
@@ -99,7 +95,30 @@ class Software extends PHPUnit_Framework_TestCase {
          $input['field']         = 'name';
          $input['value']         = 'glpi';
          $ruleAction->add($input); 
+         
+      // * Add rule rename manufacturer
+         $input = array();
+         $input['sub_type']   = 'RuleDictionnaryManufacturer';
+         $input['name']       = 'indepnet';
+         $input['match']      = 'AND';
+         $input['is_active']  = 1;
+         $rules_id = $rule->add($input); 
+
+         $input = array();
+         $input['rules_id']   = $rules_id;
+         $input['criteria']   = 'name';
+         $input['condition']  = 0;
+         $input['pattern']    = 'indepnet assoce';
+         $ruleCriteria->add($input);
+         
+         $input = array();
+         $input['rules_id']      = $rules_id;
+         $input['action_type']   = 'assign';
+         $input['field']         = 'name';
+         $input['value']         = 'indepnet';
+         $ruleAction->add($input); 
    }
+   
    
    
    public function testAddSoftwareNormal() {
@@ -201,8 +220,31 @@ class Software extends PHPUnit_Framework_TestCase {
       global $DB;
 
       $DB->connect();
+      
+      $_SESSION["plugin_fusinvinventory_entity"] = 0;
 
-      // PluginFusioninventoryFormatconvert::computerSoftwareTransformation
+      $a_software = array();
+      $a_software['SOFTWARES'][] = array(
+                'PUBLISHER' => 'indepnet assoce',
+                'NAME'      => 'glpi0.84',
+                'VERSION'   => '0.84'
+            );
+      
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      
+      $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
+
+      $a_reference = array();
+      $a_reference['software']["glpi$$$$0.84"] = array(
+               'name'                  => 'glpi',
+               'manufacturers_id'      => 2,
+               'version'               => '0.84',
+               'is_template_computer'  => 0,
+               'is_deleted_computer'   => 0,
+               'entities_id'           => 0
+            );
+      
+      $this->assertEquals($a_reference, $a_return);
       
    }
    
