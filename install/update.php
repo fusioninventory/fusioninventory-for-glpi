@@ -3464,7 +3464,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
          // Update with mapping
          if (FieldExists($newTable, "object_name")) {
-            $pcartridge = new $newTables;
+            $pcartridge = new $newTable;
             $query = "SELECT * FROM `".$newTable."`
                GROUP BY `object_name`";
             $result=$DB->query($query);
