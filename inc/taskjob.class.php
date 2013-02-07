@@ -126,8 +126,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          if ($item->getType() == 'Computer') {
 
             // Possibility to remote agent
-            $allowed = PluginFusioninventoryTaskjob::getAllowurlfopen(1);
-            if ($allowed) {
+            if (PluginFusioninventoryTaskjob::isAllowurlfopen(1)) {
                $pfAgent = new PluginFusioninventoryAgent();
                $pfAgent->forceRemoteAgent();
             }
@@ -1784,7 +1783,7 @@ return namelist;
     *
     * @return boolean
     */
-   static function getAllowurlfopen($wakecomputer=0) {
+   static function isAllowurlfopen($wakecomputer=0) {
 
       if (!ini_get('allow_url_fopen')) {
          echo "<center>";

@@ -103,7 +103,7 @@ if (isset($_POST['forcestart'])) {
    Html::back();
 }
 
-PluginFusioninventoryTaskjob::getAllowurlfopen();
+PluginFusioninventoryTaskjob::isAllowurlfopen();
 
 if (isset($_GET["id"])) {
    $pft->showForm($_GET["id"]);
