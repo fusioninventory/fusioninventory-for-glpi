@@ -92,7 +92,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
 //      $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();
-//      $pfInventoryComputerStorage_Storage = new PluginFusioninventoryInventoryComputerStorage_Storage();
+//      $pfInventoryComputerStorage_Storage = 
+//             new PluginFusioninventoryInventoryComputerStorage_Storage();
             
       $computer->getFromDB($computers_id);
       
@@ -170,12 +171,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   WHERE `items_id` = '$computers_id'
                      AND `itemtype`='Computer'";
                $result = $DB->query($query);         
-               while ($data = $DB->fetch_assoc($result)) {
+               while (($data = $DB->fetch_assoc($result))) {
                   $idtmp = $data['id'];
                   unset($data['id']);            
-                  $data = Toolbox::addslashes_deep($data);
-                  $data = array_map('strtolower', $data);
-                  $db_processors[$idtmp] = $data;
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $data2 = array_map('strtolower', $data1);
+                  $db_processors[$idtmp] = $data2;
                }
             }
 
@@ -230,9 +231,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
                   unset($data['id']);            
-                  $data = Toolbox::addslashes_deep($data);
-   //               $data = array_map('strtolower', $data);
-                  $db_memories[$idtmp] = $data;
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $db_memories[$idtmp] = $data1;
                }
             }
 
@@ -284,9 +284,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
                   unset($data['id']);            
-                  $data = Toolbox::addslashes_deep($data);
-                  $data = array_map('strtolower', $data);
-                  $db_harddrives[$idtmp] = $data;
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $data2 = array_map('strtolower', $data1);
+                  $db_harddrives[$idtmp] = $data2;
                }
             }
 
@@ -340,9 +340,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
                   unset($data['id']);            
-                  $data = Toolbox::addslashes_deep($data);
-                  $data = array_map('strtolower', $data);
-                  $db_graphiccards[$idtmp] = $data;
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $data2 = array_map('strtolower', $data1);
+                  $db_graphiccards[$idtmp] = $data2;
                }
             }
 
@@ -397,9 +397,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
                   unset($data['id']);            
-                  $data = Toolbox::addslashes_deep($data);
-   //               $data = array_map('strtolower', $data);
-                  $db_soundcards[$idtmp] = $data;
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $db_soundcards[$idtmp] = $data1;
                }
             }
 
@@ -452,9 +451,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
                   unset($data['id']);            
-                  $data = Toolbox::addslashes_deep($data);
-                  $data = array_map('strtolower', $data);
-                  $db_controls[$idtmp] = $data;
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $data2 = array_map('strtolower', $data1);
+                  $db_controls[$idtmp] = $data2;
                }
             }
 
@@ -517,8 +516,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['sid'];
                   unset($data['sid']);
-                  $data = Toolbox::addslashes_deep($data);
-                  $db_software[$idtmp] = $data;
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $db_software[$idtmp] = $data1;
                }
             }
             
@@ -549,8 +548,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                                                     $a_softwareVersionInventory, 
                                                                     $lastSoftwareVid);
                      foreach ($a_computerinventory['software'] as $keysoft=>$a_software) {
-                        if (isset($this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']])) {
-                           $a_software['softwares_id'] = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+                        if (isset($this->softList[$a_software['name']."$$$$".
+                                 $a_software['manufacturers_id']])) {
+                           $a_software['softwares_id'] = $this->softList[$a_software['name']."$$$$".
+                                 $a_software['manufacturers_id']];
                            $a_software['_no_message'] = TRUE;
                            $this->addSoftware($a_software,
                                               $computers_id,
@@ -573,8 +574,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   foreach ($a_computerinventory['software'] as $a_software) {
                      $a_software['_no_message'] = TRUE;
                      if (count($a_computerinventory['software']) > 50) {
-                        if (isset($this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']])) {
-                           $a_software['softwares_id'] = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+                        if (isset($this->softList[$a_software['name']."$$$$".
+                                 $a_software['manufacturers_id']])) {
+                           $a_software['softwares_id'] = $this->softList[$a_software['name']."$$$$".
+                                 $a_software['manufacturers_id']];
                         }
                      } else {
                         $a_software['softwares_id'] = -1;
@@ -619,10 +622,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      if ($DB->result($ret, 0, 0) == 1) {
                         foreach ($a_computerinventory['software'] as $keysoft=>$a_software) {
                            $a_softwareInventory[$a_software['name']] = $a_software['name'];
-                           $a_softwareVersionInventory[$a_software['version']] = $a_software['version'];
+                           $a_softwareVersionInventory[$a_software['version']] = 
+                                          $a_software['version'];
                         }
                         if (count($a_computerinventory['software']) > 50) {
-                           $this->loadSoftwares($entities_id, $a_softwareInventory, $lastSoftwareid);
+                           $this->loadSoftwares($entities_id, 
+                                                $a_softwareInventory, 
+                                                $lastSoftwareid);
                         }
                         $this->loadSoftwareVersions($entities_id, 
                                                     $a_softwareVersionInventory, 
@@ -630,8 +636,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         foreach($a_computerinventory['software'] as $a_software) {
                            $a_software['_no_message'] = TRUE;
                            if (count($a_computerinventory['software']) > 50) {
-                              if (isset($this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']])) {
-                                 $a_software['softwares_id'] = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+                              if (isset($this->softList[$a_software['name']."$$$$".
+                                       $a_software['manufacturers_id']])) {
+                                 $a_software['softwares_id'] = $this->softList[$a_software['name'].
+                                       "$$$$".$a_software['manufacturers_id']];
                               }
                            } else {
                               $a_software['softwares_id'] = -1;
@@ -659,9 +667,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
                   unset($data['id']);            
-                  $data = Toolbox::addslashes_deep($data);
-                  $data = array_map('strtolower', $data);
-                  $db_computervirtualmachine[$idtmp] = $data;
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $data2 = array_map('strtolower', $data1);
+                  $db_computervirtualmachine[$idtmp] = $data2;
                }
             }
 
@@ -671,7 +679,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $a_field = array('name', 'uuid', 'virtualmachinesystems_id');
                   foreach ($a_field as $field) {
                      if (isset($a_computervirtualmachine[$field])) {
-                        $simplecomputervirtualmachine[$key][$field] = $a_computervirtualmachine[$field];
+                        $simplecomputervirtualmachine[$key][$field] = 
+                                    $a_computervirtualmachine[$field];
                      }
                   }            
                }
@@ -689,10 +698,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         $input['ram'] = $a_computerinventory['virtualmachine'][$key]['ram'];
                      }
                      if (isset($a_computerinventory['virtualmachine'][$key]['virtualmachinetypes_id'])) {
-                        $input['virtualmachinetypes_id'] = $a_computerinventory['virtualmachine'][$key]['virtualmachinetypes_id'];
+                        $input['virtualmachinetypes_id'] = 
+                             $a_computerinventory['virtualmachine'][$key]['virtualmachinetypes_id'];
                      }
                      if (isset($a_computerinventory['virtualmachine'][$key]['virtualmachinestates_id'])) {
-                        $input['virtualmachinestates_id'] = $a_computerinventory['virtualmachine'][$key]['virtualmachinestates_id'];
+                        $input['virtualmachinestates_id'] = 
+                            $a_computerinventory['virtualmachine'][$key]['virtualmachinestates_id'];
                      }
                      $computerVirtualmachine->update($input);
                      unset($simplecomputervirtualmachine[$key]);
@@ -731,9 +742,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
                   unset($data['id']);            
-                  $data = Toolbox::addslashes_deep($data);
-                  $data = array_map('strtolower', $data);
-                  $db_computerdisk[$idtmp] = $data;
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $data2 = array_map('strtolower', $data1);
+                  $db_computerdisk[$idtmp] = $data2;
                }
             }
             $simplecomputerdisk = array();
@@ -752,7 +763,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $input = array();
                      $input['id'] = $keydb;
                      if (isset($a_computerinventory['computerdisk'][$key]['filesystems_id'])) {
-                        $input['filesystems_id'] = $a_computerinventory['computerdisk'][$key]['filesystems_id'];
+                        $input['filesystems_id'] = 
+                                 $a_computerinventory['computerdisk'][$key]['filesystems_id'];
                      }
                      $input['totalsize'] = $a_computerinventory['computerdisk'][$key]['totalsize'];                  
                      $input['freesize'] = $a_computerinventory['computerdisk'][$key]['freesize'];
@@ -794,15 +806,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                    WHERE `items_id` = '$computers_id'
                      AND `itemtype`='Computer'";
                $result = $DB->query($query);         
-               while ($data = $DB->fetch_assoc($result)) {
+               while (($data = $DB->fetch_assoc($result))) {
                   $idtmp = $data['id'];
                   unset($data['id']);
                   if (is_null($data['mac'])) {
                      $data['mac'] = '';
                   }
-                  $data = Toolbox::addslashes_deep($data);
-                  $data = array_map('strtolower', $data);
-                  $db_networkport[$idtmp] = $data;
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $data2 = array_map('strtolower', $data1);
+                  $db_networkport[$idtmp] = $data2;
                }
             }
             $simplenetworkport = array();
@@ -831,7 +843,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      while ($data = $DB->fetch_assoc($result)) {
                         $db_addresses[$data['id']] = $data['name'];
                      }
-                     $a_computerinventory_ipaddress = $a_computerinventory['networkport'][$key]['ipaddress'];
+                     $a_computerinventory_ipaddress = 
+                                 $a_computerinventory['networkport'][$key]['ipaddress'];
                      foreach ($a_computerinventory_ipaddress as $key2 => $arrays2) {
                         foreach ($db_addresses as $keydb2 => $arraydb2) {
                            if ($arrays2 == $arraydb2) {
@@ -917,9 +930,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             while ($data = $DB->fetch_assoc($result)) {
                $idtmp = $data['id'];
                unset($data['id']);            
-               $data = Toolbox::addslashes_deep($data);
-               $data = array_map('strtolower', $data);
-               $db_antivirus[$idtmp] = $data;
+               $data1 = Toolbox::addslashes_deep($data);
+               $data2 = array_map('strtolower', $data1);
+               $db_antivirus[$idtmp] = $data2;
             }
          }
          $simpleantivirus = array();
@@ -1047,9 +1060,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
                         unset($data['is_global']);
-                        $data = Toolbox::addslashes_deep($data);
-                        $data = array_map('strtolower', $data);
-                        $db_monitors[$idtmp] = $data;
+                        $data1 = Toolbox::addslashes_deep($data);
+                        $data2 = array_map('strtolower', $data1);
+                        $db_monitors[$idtmp] = $data2;
                      }
                   }                  
                } else if ($pfConfig->getValue('import_monitor') == 2) {
@@ -1070,9 +1083,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
                         unset($data['is_global']);
-                        $data = Toolbox::addslashes_deep($data);
-                        $data = array_map('strtolower', $data);
-                        $db_monitors[$idtmp] = $data;
+                        $data1 = Toolbox::addslashes_deep($data);
+                        $data2 = array_map('strtolower', $data1);
+                        $db_monitors[$idtmp] = $data2;
                      }
                   }                  
                } else if ($pfConfig->getValue('import_monitor') == 3) {
@@ -1094,9 +1107,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
                         unset($data['is_global']);
-                        $data = Toolbox::addslashes_deep($data);
-                        $data = array_map('strtolower', $data);
-                        $db_monitors[$idtmp] = $data;
+                        $data1 = Toolbox::addslashes_deep($data);
+                        $data2 = array_map('strtolower', $data1);
+                        $db_monitors[$idtmp] = $data2;
                      }
                   }                  
                }
@@ -1163,9 +1176,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
                         unset($data['is_global']);
-                        $data = Toolbox::addslashes_deep($data);
-                        $data = array_map('strtolower', $data);
-                        $db_printers[$idtmp] = $data;
+                        $data1 = Toolbox::addslashes_deep($data);
+                        $data2 = array_map('strtolower', $data1);
+                        $db_printers[$idtmp] = $data2;
                      }
                   }                  
                } else if ($pfConfig->getValue('import_printer') == 2) {
@@ -1185,9 +1198,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
                         unset($data['is_global']);
-                        $data = Toolbox::addslashes_deep($data);
-                        $data = array_map('strtolower', $data);
-                        $db_printers[$idtmp] = $data;
+                        $data1 = Toolbox::addslashes_deep($data);
+                        $data2 = array_map('strtolower', $data1);
+                        $db_printers[$idtmp] = $data2;
                      }
                   }                  
                } else if ($pfConfig->getValue('import_printer') == 3) {
@@ -1278,9 +1291,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
                         unset($data['is_global']);
-                        $data = Toolbox::addslashes_deep($data);
-                        $data = array_map('strtolower', $data);
-                        $db_peripherals[$idtmp] = $data;
+                        $data1 = Toolbox::addslashes_deep($data);
+                        $data2 = array_map('strtolower', $data1);
+                        $db_peripherals[$idtmp] = $data2;
                      }
                   }                  
                } else if ($pfConfig->getValue('import_peripheral') == 2) {
@@ -1301,9 +1314,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
                         unset($data['is_global']);
-                        $data = Toolbox::addslashes_deep($data);
-                        $data = array_map('strtolower', $data);
-                        $db_peripherals[$idtmp] = $data;
+                        $data1 = Toolbox::addslashes_deep($data);
+                        $data2 = array_map('strtolower', $data1);
+                        $db_peripherals[$idtmp] = $data2;
                      }
                   }                  
                } else if ($pfConfig->getValue('import_peripheral') == 3) {
@@ -1325,9 +1338,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
                         unset($data['is_global']);
-                        $data = Toolbox::addslashes_deep($data);
-                        $data = array_map('strtolower', $data);
-                        $db_peripherals[$idtmp] = $data;
+                        $data1 = Toolbox::addslashes_deep($data);
+                        $data2 = array_map('strtolower', $data1);
+                        $db_peripherals[$idtmp] = $data2;
                      }
                   }                  
                }
@@ -1375,7 +1388,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // Manage by uuid to correspond with GLPI data
 //         $db_storage = array();
 //         if ($no_history === FALSE) {
-//            $query = "SELECT `id`, `uuid` FROM `glpi_plugin_fusioninventory_inventorycomputerstorages`
+//            $query = "SELECT `id`, `uuid` FROM ".
+//                "`glpi_plugin_fusioninventory_inventorycomputerstorages`
 //                WHERE `computers_id` = '$computers_id'";
 //            $result = $DB->query($query);         
 //            while ($data = $DB->fetch_assoc($result)) {
@@ -1695,8 +1709,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
       } else {
          $softwareversions_id = 0;
-         if (isset($this->softVersionList[$a_software['version']."$$$$".$a_software['softwares_id']])) {
-            $softwareversions_id = $this->softVersionList[$a_software['version']."$$$$".$a_software['softwares_id']];
+         if (isset($this->softVersionList[$a_software['version']."$$$$".
+                  $a_software['softwares_id']])) {
+            $softwareversions_id = 
+               $this->softVersionList[$a_software['version']."$$$$".$a_software['softwares_id']];
          } else {
             $a_software['name'] = $a_software['version'];
       $a_software['_no_history'] = $no_history;
@@ -1708,7 +1724,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $a_software['softwareversions_id'] = $softwareversions_id;
       $a_software['_no_history'] = $no_history;
 
-      $id = $this->computer_SoftwareVersion->add($a_software, $options);
+      $this->computer_SoftwareVersion->add($a_software, $options);
    }
    
    

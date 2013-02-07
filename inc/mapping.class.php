@@ -72,7 +72,8 @@ class PluginFusioninventoryMapping extends CommonDBTM {
       global $DB;
 
       $data = current(getAllDatasFromTable("glpi_plugin_fusioninventory_mappings",
-                                   "`itemtype`='".$parm['itemtype']."' AND `name`='".$parm['name']."'"));
+                                   "`itemtype`='".$parm['itemtype']."' AND `name`='".
+                                   $parm['name']."'"));
       if (empty($data)) {
          // Insert
          $query = '';
@@ -80,7 +81,8 @@ class PluginFusioninventoryMapping extends CommonDBTM {
             $query = "INSERT INTO `glpi_plugin_fusioninventory_mappings`
                         (`itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`)
                      VALUES ('".$parm['itemtype']."', '".$parm['name']."', '".$parm['table']."',
-                             '".$parm['tablefield']."', '".$parm['locale']."', '".$parm['shortlocale']."')";
+                             '".$parm['tablefield']."', '".$parm['locale']."', 
+                                '".$parm['shortlocale']."')";
          } else {
             $query = "INSERT INTO `glpi_plugin_fusioninventory_mappings`
                         (`itemtype`, `name`, `table`, `tablefield`, `locale`)
@@ -369,7 +371,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          break;
 
       case 68:
-         return __('printer > consumables > light cyan cartridge (remaining ink)', 'fusioninventory');
+       return __('printer > consumables > light cyan cartridge (remaining ink)', 'fusioninventory');
          break;
 
       case 69:
@@ -393,7 +395,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          break;
 
       case 74:
-         return __('printer > consumables > black photoconductor (remaining ink)', 'fusioninventory');
+       return __('printer > consumables > black photoconductor (remaining ink)', 'fusioninventory');
          break;
 
       case 75:
@@ -401,7 +403,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          break;
 
       case 76:
-         return __('printer > consumables > color photoconductor (remaining ink)', 'fusioninventory');
+       return __('printer > consumables > color photoconductor (remaining ink)', 'fusioninventory');
          break;
 
       case 77:
@@ -409,7 +411,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          break;
 
       case 78:
-         return __('printer > consumables > cyan photoconductor (remaining ink)', 'fusioninventory');
+        return __('printer > consumables > cyan photoconductor (remaining ink)', 'fusioninventory');
          break;
 
       case 79:
@@ -417,7 +419,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          break;
 
       case 80:
-         return __('printer > consumables > yellow photoconductor (remaining ink)', 'fusioninventory');
+      return __('printer > consumables > yellow photoconductor (remaining ink)', 'fusioninventory');
          break;
 
       case 81:
@@ -433,7 +435,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          break;
 
       case 84:
-         return __('printer > consumables > black transfer unit (remaining ink)', 'fusioninventory');
+        return __('printer > consumables > black transfer unit (remaining ink)', 'fusioninventory');
          break;
 
       case 85:
@@ -449,7 +451,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          break;
 
       case 88:
-         return __('printer > consumables > yellow transfer unit (remaining ink)', 'fusioninventory');
+       return __('printer > consumables > yellow transfer unit (remaining ink)', 'fusioninventory');
          break;
 
       case 89:
@@ -457,7 +459,7 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          break;
 
       case 90:
-         return __('printer > consumables > magenta transfer unit (remaining ink)', 'fusioninventory');
+      return __('printer > consumables > magenta transfer unit (remaining ink)', 'fusioninventory');
          break;
 
       case 91:

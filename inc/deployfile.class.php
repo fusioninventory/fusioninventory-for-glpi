@@ -58,6 +58,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       return TRUE;
    }
 
+   
+   
    static function getTypes() {
       return array(
          'Computer' => __("Upload from computer", 'fusioninventory'),
@@ -65,6 +67,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       );
    }
 
+   
+   
    static function displayForm($orders_id, $datas, $rand) {
       global $CFG_GLPI;
 
@@ -136,6 +140,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       Html::closeForm();
    }
 
+   
+   
    static function dropdownType($datas) {
       global $CFG_GLPI;
 
@@ -167,6 +173,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    }
 
+   
+   
    static function displayAjaxValue($datas) {
       global $CFG_GLPI;
 
@@ -196,12 +204,13 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       }
       echo "</td>";
       echo "</tr><tr>";
-      echo "<th>".__("Uncompress", 'fusioninventory')."<img style='float:right' src='".$CFG_GLPI["root_doc"].
-                              "/plugins/fusioninventory//pics/uncompress.png' /></th>";
+      echo "<th>".__("Uncompress", 'fusioninventory')."<img style='float:right' ".
+             "src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory//pics/uncompress.png' /></th>";
       echo "<td><input type='checkbox' name='uncompress' /></td>";
       echo "</tr><tr>";
-      echo "<th>".__("P2p", 'fusioninventory')."<img style='float:right' src='".$CFG_GLPI["root_doc"].
-                              "/plugins/fusioninventory//pics/p2p.png' /></th>";
+      echo "<th>".__("P2p", 'fusioninventory').
+              "<img style='float:right' src='".$CFG_GLPI["root_doc"].
+              "/plugins/fusioninventory//pics/p2p.png' /></th>";
       echo "<td><input type='checkbox' name='p2p' /></td>";
       echo "</tr><tr>";
       echo "<th>".__("retention days", 'fusioninventory')."</th>";
@@ -218,6 +227,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "</tr></table>";
    }
 
+   
+   
    static function showServerFileTree($params) {
       global $CFG_GLPI;
 
@@ -271,6 +282,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "</div>";
    }
 
+   
+   
    static function getServerFileTree($params) {
 
       $nodes = array();
@@ -285,7 +298,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             $dir = $params['node'];
          }
          
-         if ($handle = opendir($dir)) {
+         if (($handle = opendir($dir))) {
             $folders = $files = array();
 
             //list files in dir selected
@@ -335,6 +348,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    }
 
 
+   
    static function getExtensionsWithAutoAction() {
       $ext = array();
 
@@ -350,6 +364,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       return $ext;
    }
 
+   
+   
    static function add_item($params) {
       echo "file::add_item";
       Html::printCleanArray($params);
@@ -357,6 +373,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       exit;
    }
 
+   
+   
    static function remove_item($params) {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
@@ -375,6 +393,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
+   
+   
    static function move_item($params) {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
@@ -392,6 +412,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
+   
+   
    static function getDirBySha512 ($sha512) {
       $first = substr($sha512, 0, 1);
       $second = substr($sha512, 0, 2);
@@ -399,6 +421,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       return "$first/$second";
    }
 
+   
+   
    function registerFilepart ($repoPath, $filePath) {
       $sha512 = hash_file('sha512', $filePath);
 
@@ -412,9 +436,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       return $sha512;
    }
 
+   
+   
    function addFileInRepo ($params) {
-
-
       set_time_limit(600);
 
       $pfDeployFilepart = new PluginFusioninventoryDeployFilepart();
@@ -496,6 +520,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       return $file_id;
    }
 
+   
+   
    //TODO on 0.83 rename the function into "checkPresenceFileForOrder"
    function checkPresenceFile($sha512, $order_id) {
 
@@ -510,6 +536,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       return FALSE;
    }
 
+   
 
    function removeFileInRepo($id) {
       global $DB;
@@ -557,6 +584,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "{success:true}";
    }
 
+   
+   
    static function getMaxUploadSize() {
 
       $max_upload = (int)(ini_get('upload_max_filesize'));
@@ -569,6 +598,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    }
 
+   
+   
    function uploadFile() {
 
       //if file sent is from server
@@ -640,7 +671,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
          //Add file in repo
          if ($filename && $this->addFileInRepo($data)) {
-            $msg = "file:'{$filename}', \"{$LANG['plugin_fusinvdeploy']['action'][4]}\"}";
+            $msg = "file:'{$filename}', \"{".__('File saved!', 'fusioninventory')."}\"}";
          } else {
             $msg = "file:'{$filename}', ".__('File missing', 'fusioninventory');
          }
@@ -651,12 +682,13 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       return FALSE;
    }
 
+   
+   
    function uploadFileFromServer() {
 
       $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
       $pfConfig = new PluginFusioninventoryConfig;
-      $server_upload_path = $pfConfig->getValue($plugins_id, 
-                                                                   'server_upload_path');
+      $server_upload_path = $pfConfig->getValue($plugins_id, 'server_upload_path');
 
 
       $package_id = $_GET['package_id'];
@@ -666,8 +698,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          die;
       }
 
-      $render   = PluginFusioninventoryDeployOrder::getRender($render);
-      $order_id = PluginFusioninventoryDeployOrder::getIdForPackage($package_id, $render);
+      $render1   = PluginFusioninventoryDeployOrder::getRender($render);
+      $order_id = PluginFusioninventoryDeployOrder::getIdForPackage($package_id, $render1);
 
       if (isset ($_POST["id"]) and !$_POST['id']) {
          $file_path = $server_upload_path.'/'.$_POST['file_server'];
@@ -700,6 +732,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       } print "{success:false, file:'none',msg:\"{__('File missing', 'fusioninventory')}\"}";
    }
 
+   
+   
    static function processFilesize($filesize) {
       if ($filesize >= (1024 * 1024 * 1024)) {
          $filesize = round($filesize / (1024 * 1024 * 1024), 1)."GiB";

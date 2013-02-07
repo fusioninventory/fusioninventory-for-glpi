@@ -58,6 +58,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       return TRUE;
    }
 
+   
+   
    static function getTypes() {
        return array(
          'cmd'     => __('cmd', 'fusioninventory'),
@@ -68,6 +70,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       );
    }
 
+   
+   
    static function displayForm($orders_id, $datas, $rand) {
       global $CFG_GLPI;
       
@@ -204,6 +208,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       </script>";
    }
 
+   
+   
    static function dropdownType($datas) {
       global $CFG_GLPI;
 
@@ -253,6 +259,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       }
    }
 
+   
+   
    static function displayAjaxValue($datas) {
       global $CFG_GLPI;
 
@@ -387,6 +395,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       </script>";
    }
 
+   
+   
    static function add_item($params) {
       //prepare new action entry to insert in json
       if (isset($params['list'])) {
@@ -425,6 +435,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
+   
+   
    static function save_item($params) {
       //prepare updated action entry to insert in json
       if (isset($params['list'])) {
@@ -469,6 +481,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
+   
+   
    static function remove_item($params) {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
@@ -482,6 +496,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
+   
+   
    static function move_item($params) {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);

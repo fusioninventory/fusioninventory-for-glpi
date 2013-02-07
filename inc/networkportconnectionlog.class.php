@@ -58,7 +58,8 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
       echo "<th>";
       echo __('PID', 'fusioninventory');
 
-      echo " <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/agentprocess.form.php'>(".__('All').")</a>";
+      echo " <a href='".$CFG_GLPI['root_doc'].
+               "/plugins/fusioninventory/front/agentprocess.form.php'>(".__('All').")</a>";
       echo "</th>";
 
       echo "<th>";
@@ -87,7 +88,8 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
       if (!isset($input['plugin_fusioninventory_agentprocesses_id'])) {
          $condition = '';
       } else {
-         $condition = "WHERE `plugin_fusioninventory_agentprocesses_id`='".$input['plugin_fusioninventory_agentprocesses_id']."'";
+         $condition = "WHERE `plugin_fusioninventory_agentprocesses_id`='".
+                           $input['plugin_fusioninventory_agentprocesses_id']."'";
          if (isset($input['created'])) {
             $condition .= " AND `creation`='".$input['created']."' ";
          }
@@ -105,7 +107,9 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
             echo "<tr class='tab_bg_1 center'>";
 
             echo "<td>";
-            echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/agentprocess.form.php?h_process_number=".$data['plugin_fusioninventory_agentprocesses_id']."'>".
+            echo "<a href='".$CFG_GLPI['root_doc'].
+                    "/plugins/fusioninventory/front/agentprocess.form.php?h_process_number=".
+                    $data['plugin_fusioninventory_agentprocesses_id']."'>".
             $data['plugin_fusioninventory_agentprocesses_id']."</a>";
             echo "</td>";
 
@@ -119,7 +123,8 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
             $item->getFromDB($NetworkPort->fields["items_id"]);
             $link1 = $item->getLink(1);
 
-            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?id=" . $NetworkPort->fields["id"] . "\">";
+            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?id=".
+                        $NetworkPort->fields["id"] . "\">";
             if (rtrim($NetworkPort->fields["name"]) != "") {
                $link .= $NetworkPort->fields["name"];
             } else {
@@ -131,9 +136,11 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
 
             echo "<td>";
             if ($data['creation'] == '1') {
-               echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/connection_ok.png'/>";
+               echo "<img src='".$CFG_GLPI['root_doc'].
+                       "/plugins/fusioninventory/pics/connection_ok.png'/>";
             } else {
-               echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/connection_notok.png'/>";
+               echo "<img src='".$CFG_GLPI['root_doc'].
+                       "/plugins/fusioninventory/pics/connection_notok.png'/>";
             }
             echo "</td>";
 
@@ -142,7 +149,8 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
             $item = new $NetworkPort->fields["itemtype"];
             $item->getFromDB($NetworkPort->fields["items_id"]);
             $link1 = $item->getLink(1);
-            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?id=" . $NetworkPort->fields["id"] . "\">";
+            $link = "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/networkport.form.php?id=".
+                        $NetworkPort->fields["id"] . "\">";
             if (rtrim($NetworkPort->fields["name"]) != "") {
                $link .= $NetworkPort->fields["name"];
             } else {

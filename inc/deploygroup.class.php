@@ -105,7 +105,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          $title = "";
       }
 
-      Html::displayTitle($CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/menu_group.png", $title, $title, $buttons);
+      Html::displayTitle($CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/menu_group.png", 
+                         $title, $title, $buttons);
    }
 
 
@@ -221,8 +222,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
                $itemtable = getTableForItemType($itemtype);
                $query = "SELECT `$itemtable`.*,
                                 `staticdatas`.`id` AS IDD
-                         FROM `glpi_plugin_fusioninventory_deploygroups_staticdatas` as `staticdatas`,
-                              `$itemtable`";
+                         FROM `glpi_plugin_fusioninventory_deploygroups_staticdatas` 
+                                 AS `staticdatas`, `$itemtable`";
                $query .= " WHERE `$itemtable`.`id` = `staticdatas`.`items_id`
                                  AND `staticdatas`.`itemtype` = '$itemtype'
                                  AND `staticdatas`.`groups_id` = '$groupID'";
@@ -250,7 +251,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
                         $sel = "checked";
                      }
                      echo "<td width='10'>";
-                     echo "<input type='checkbox' name='item[".$data["IDD"]."]' value='1' $sel></td>";
+                     echo "<input type='checkbox' name='item[".$data["IDD"]."]' ".
+                             "value='1' $sel></td>";
                   }
 
                   echo "<td class='center top'>".$item->getTypeName()."</td>";
@@ -263,12 +265,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
                $totalnb += $nb;
             }
          }
-
-
       }
-
-
-
 
       echo "<tr class='tab_bg_2'>";
       echo "<td class='center' colspan='2'><b>".($totalnb>0? __('Total').
@@ -325,7 +322,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     */
    
    function showDynamicForm() {
-      global $DB, $CFG_GLPI;
+      global $DB;
 
       $ID = $this->fields['id'];
 
@@ -384,8 +381,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
       echo "</table>";
-      
-      
    }
 
    
@@ -482,27 +477,36 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       ));
       echo "<hr />";*/
 
-      self::ajaxDisplaySearchTextForDropdown("operatingsystems_id", 8, $fields['operatingsystem_name']);
+      self::ajaxDisplaySearchTextForDropdown("operatingsystems_id", 
+                                             $fields['operatingsystem_name'],
+                                             8);
+      
       $params_os = array('searchText'     => '__VALUE__',
                              'myname'     => 'operatingsystems_id',
                              'table'      => 'glpi_operatingsystems',
                              'value'      => $fields['operatingsystems_id']);
 
-      Ajax::updateItemOnInputTextEvent("search_operatingsystems_id", "operatingsystems_dropdown",
-                                     $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/deploydropdown_operatingsystems.php",
-                                     $params_os);
+      Ajax::updateItemOnInputTextEvent("search_operatingsystems_id", 
+                                       "operatingsystems_dropdown",
+                                       $CFG_GLPI["root_doc"].
+                                          "/plugins/fusioninventory/ajax/".
+                                          "deploydropdown_operatingsystems.php",
+                                       $params_os);
 
       //load default operatingsystems_dropdown
       Ajax::updateItem("operatingsystems_dropdown",
-                                     $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/deploydropdown_operatingsystems.php",
-                                     $params_os, /*false,*/ "search_operatingsystems_id");
+                       $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/".
+                          "deploydropdown_operatingsystems.php",
+                       $params_os, /*false,*/ "search_operatingsystems_id");
 
       echo "<span id='operatingsystems_dropdown'>";
-      echo "<select name='operatingsystems_id' id='operatingsystems_id'><option value='0'>".Dropdown::EMPTY_VALUE."</option></select>";
+      echo "<select name='operatingsystems_id' id='operatingsystems_id'><option value='0'>".
+              Dropdown::EMPTY_VALUE."</option></select>";
       echo "</span>\n";
 
-      Html::showToolTip("* ".__('for all')."<br />".__('If no line in the list is selected, the text fields on the left will be used for search.'));
-
+      Html::showToolTip("* ".__('for all')."<br />".
+      __('If no line in the list is selected, the text fields on the left will be used for search.')
+                       );
 
       echo "</td>";
 
@@ -515,6 +519,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
    }
+   
+   
 
    static function groupAjaxLoad($type) {
       global $CFG_GLPI;
@@ -537,6 +543,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    }
 
+   
+   
    static function ajaxLoad($to_observe, $toupdate, $url, $params_id, $type) {
       $start = 0;
       if (isset($_REQUEST['start'])) {
@@ -571,6 +579,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "})
       </script>";
    }
+   
+   
 
    /**
     * Print pager for group list
@@ -654,6 +664,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       // End pager
       echo "</tr></table>";
    }
+   
+   
 
    static function showSearchResults($params) {
       global $DB;
@@ -663,17 +675,17 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       } else {
          exit;
       }
-      $options = array(
-         'type'                  => $type,
-         'itemtype'              => $params['itemtype'],
-            'locations_id'          => $params['locations_id'],
-            'serial'                => $params['serial'],
-            'operatingsystems_id'   => $params['operatingsystems_id'],
-            'operatingsystem_name'  => $params['operatingsystem_name'],
-            'otherserial'           => $params['otherserial'],
-            'name'                  => $params['name'],
-         'limit'                 => 99999999
-      );
+//      $options = array(
+//         'type'                  => $type,
+//         'itemtype'              => $params['itemtype'],
+//            'locations_id'          => $params['locations_id'],
+//            'serial'                => $params['serial'],
+//            'operatingsystems_id'   => $params['operatingsystems_id'],
+//            'operatingsystem_name'  => $params['operatingsystem_name'],
+//            'otherserial'           => $params['otherserial'],
+//            'name'                  => $params['name'],
+//         'limit'                 => 99999999
+//      );
 
       $query = "SELECT `glpi_computers`.`id` FROM `glpi_computers`";
       $where = 0;
@@ -748,7 +760,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 //      if ($options['operatingsystems_id'] != 0) unset($options['operatingsystem_name']);
 //      if ($options['operatingsystems_id'] == 0) unset($options['operatingsystems_id']);
 //      if ($options['locations_id'] == 0) unset($options['locations_id']);
-//      $nb_items = count(PluginWebservicesMethodInventaire::methodListInventoryObjects($options, ''));
+//      $nb_items = count(PluginWebservicesMethodInventaire::methodListInventoryObjects(
+//         $options, ''));
 //
 //      $options['limit'] = 50;
 //      $options['start'] = $params['start'];
@@ -809,6 +822,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</div>";
    }
 
+   
+   
    static function getAllDatas($root = 'groups')  {
       global $DB;
 
@@ -832,9 +847,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return json_encode($json);
    }
 
+   
 
-   static function ajaxDisplaySearchTextForDropdown($id, $size=4, $value) {
-   global $CFG_GLPI;
+   static function ajaxDisplaySearchTextForDropdown($id, $value, $size=4) {
+      global $CFG_GLPI;
 
       echo "<input title=\"".__('Search')." (".$CFG_GLPI['ajax_wildcard']." ".__('for all').")\"
             type='text' value='$value' ondblclick=\"this.value='".

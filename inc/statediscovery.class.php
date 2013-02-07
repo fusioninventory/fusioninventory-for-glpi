@@ -83,7 +83,8 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
       // If discovery and query are finished, we will end Process
       $this->getFromDB($process_id);
       $doEnd = 1;
-      if (($this->fields['threads'] != '0') AND ($this->fields['end_time'] == '0000-00-00 00:00:00')) {
+      if (($this->fields['threads'] != '0') 
+              && ($this->fields['end_time'] == '0000-00-00 00:00:00')) {
          $doEnd = 0;
       }
 
@@ -120,7 +121,8 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
 
       // Total Number of events
       $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstates`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` 
+            ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
          WHERE `method` = 'netdiscovery'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC ";
@@ -130,7 +132,8 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
       $number = $DB->numrows($resultcount);
 
       // Display the pager
-      Html::printPager($start, $number, $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/stateinventory.php", '');
+      Html::printPager($start, $number, $CFG_GLPI['root_doc'].
+              "/plugins/fusinvsnmp/front/stateinventory.php", '');
 
       echo "<table class='tab_cadre_fixe'>";
 
@@ -149,7 +152,8 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
 
       $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.*
             FROM `glpi_plugin_fusioninventory_taskjobstates`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` 
+            ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
          WHERE `method` = 'netdiscovery'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC
@@ -170,7 +174,8 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
          $createddevices = 0;
          $a_taskjobstates = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'");
          foreach ($a_taskjobstates as $datastate) {
-            $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastate['id']."'");
+            $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".
+                                                   $datastate['id']."'");
             foreach($a_taskjoblog as $taskjoblog) {
                if (strstr($taskjoblog['comment'], " ==devicesfound==")) {
                   $nb_found += str_replace(" ==devicesfound==", "", $taskjoblog['comment']);

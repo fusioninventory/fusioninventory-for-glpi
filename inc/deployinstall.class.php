@@ -47,11 +47,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployInstall extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-
       return __('Installation', 'fusioninventory');
-
    }
 
+   
+   
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       switch(get_class($item)) {
@@ -60,6 +60,8 @@ class PluginFusioninventoryDeployInstall extends CommonDBTM {
       }
    }
 
+   
+   
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch(get_class($item)) {
          case 'PluginFusioninventoryDeployPackage':
@@ -71,3 +73,4 @@ class PluginFusioninventoryDeployInstall extends CommonDBTM {
    }
 }
 
+?>

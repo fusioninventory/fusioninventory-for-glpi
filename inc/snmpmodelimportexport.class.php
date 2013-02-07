@@ -98,10 +98,12 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
          while ($data=$DB->fetch_array($result)) {
             $xml .= "      <oidobject>\n";
             $xml .= "         <object>".
-               Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmibobjects", $data["plugin_fusioninventory_snmpmodelmibobjects_id"]).
+               Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmibobjects", 
+                                         $data["plugin_fusioninventory_snmpmodelmibobjects_id"]).
                "</object>\n";
             $xml .= "         <oid>".
-               Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids", $data["plugin_fusioninventory_snmpmodelmiboids_id"])."</oid>\n";
+               Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids", 
+                                   $data["plugin_fusioninventory_snmpmodelmiboids_id"])."</oid>\n";
             $xml .= "         <portcounter>".$data["oid_port_counter"]."</portcounter>\n";
             $xml .= "         <dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
             $xml .= "         <mappings_id>".$data["plugin_fusioninventory_mappings_id"].
@@ -223,7 +225,8 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       $pfModel->getFromDB($models_data['id']);
       $input = array();
       $input['id'] = $pfModel->fields['id'];
-      $input['comment'] = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep((string)$xml->comments));
+      $input['comment'] = Toolbox::clean_cross_side_scripting_deep(
+                              Toolbox::addslashes_deep((string)$xml->comments));
       $pfModel->update($input);
       
       $a_devices = array();
@@ -235,9 +238,11 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       $pfSnmpmodeldevice = new PluginFusioninventorySnmpmodeldevice();
       $pfSnmpmodeldevice->updateDevicesForModel($pfModel->fields['id'], $a_devices);
 
-      $a_oids = $pfModelMib->find("`plugin_fusioninventory_snmpmodels_id`='".$models_data['id']."'");
+      $a_oids = $pfModelMib->find(
+              "`plugin_fusioninventory_snmpmodels_id`='".$models_data['id']."'");
       foreach ($a_oids as $data) {
-         $oid = Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids", $data['plugin_fusioninventory_snmpmodelmiboids_id']);
+         $oid = Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids", 
+                                          $data['plugin_fusioninventory_snmpmodelmiboids_id']);
          $oid_name = '';
          if ($data['plugin_fusioninventory_mappings_id'] != 0) {
             $pfMapping->getFromDB($data['plugin_fusioninventory_mappings_id']);
@@ -245,6 +250,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
          }
          $a_oidsDB[$oid."-".$oid_name] = $data['id'];
       }
+      $mapping_type = '';
       foreach($xml->oidlist->oidobject as $child) {
          $input = array();
          if (isset($a_oidsDB[$child->oid."-".$child->mapping_name])) {
@@ -360,7 +366,8 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       $input['name']          = (string)$xml->name;
       $input['itemtype']      = $type;
       $input['discovery_key'] = (string)$xml->key;
-      //$input['comment']       = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep((string)$xml->comments));
+      //$input['comment']       = Toolbox::clean_cross_side_scripting_deep(
+      //                            Toolbox::addslashes_deep((string)$xml->comments));
       $plugin_fusioninventory_snmpmodels_id = $pfModel->add($input);
       
       $a_devices = array();
@@ -466,7 +473,8 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
 
    /**
-    * This function is used to import in one time all SNMP model in folder fusioninventory/snmpmodels/
+    * This function is used to import in one time all SNMP model in folder 
+    * fusioninventory/snmpmodels/
     */
    function importMass() {
       ini_set("max_execution_time", "0");
@@ -489,13 +497,16 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       $agent = $pta->InfosByKey($agentKey);
 
       if (isset($arrayinventory['AGENT']['START'])) {
-         $ptap->updateState($arrayinventory['PROCESSNUMBER'], array('start_time' => date("Y-m-d H:i:s")), $agent['id']);
+         $ptap->updateState($arrayinventory['PROCESSNUMBER'], 
+                            array('start_time' => date("Y-m-d H:i:s")), $agent['id']);
       } else if (isset($arrayinventory['AGENT']['END'])) {
-         $ptap->updateState($arrayinventory['PROCESSNUMBER'], array('end_time' => date("Y-m-d H:i:s")), $agent['id']);
+         $ptap->updateState($arrayinventory['PROCESSNUMBER'], 
+                            array('end_time' => date("Y-m-d H:i:s")), $agent['id']);
       } else if (isset($arrayinventory['AGENT']['EXIT'])) {
          $ptap->endState($arrayinventory['PROCESSNUMBER'], date("Y-m-d H:i:s"), $agent['id']);
       } else if (isset($arrayinventory['AGENT']['NBIP'])) {
-         $ptap->updateState($arrayinventory['PROCESSNUMBER'], array('nb_ip' => $arrayinventory['AGENT']['NBIP']), $agent['id']);
+         $ptap->updateState($arrayinventory['PROCESSNUMBER'], 
+                            array('nb_ip' => $arrayinventory['AGENT']['NBIP']), $agent['id']);
       }
       if (isset($arrayinventory['AGENT']['AGENTVERSION'])) {
          $agent['last_contact'] = date("Y-m-d H:i:s");
@@ -511,16 +522,19 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
          }
       }
       if ($count_discovery_devices != "0") {
-         $ptap->updateState($_SESSION['glpi_plugin_fusioninventory_processnumber'], array('nb_found' => $count_discovery_devices), $agent['id']);
+         $ptap->updateState($_SESSION['glpi_plugin_fusioninventory_processnumber'], 
+                            array('nb_found' => $count_discovery_devices), $agent['id']);
          if (is_int(key($arrayinventory['DEVICE']))) {
             foreach($arrayinventory['DEVICE'] as $discovery) {
                if (count($discovery) > 0) {
-                  $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
+                  $pfCommunicationNetworkDiscovery = 
+                                    new PluginFusioninventoryCommunicationNetworkDiscovery();
                   $pfCommunicationNetworkDiscovery->sendCriteria($discovery);
                }
             }            
          } else {
-            $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
+            $pfCommunicationNetworkDiscovery = 
+                                    new PluginFusioninventoryCommunicationNetworkDiscovery();
             $pfCommunicationNetworkDiscovery->sendCriteria($arrayinventory['DEVICE']);
          }
       }
@@ -544,7 +558,8 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodeldevices`
                 LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
-                   ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
+                   ON `plugin_fusioninventory_snmpmodels_id`=".
+                        "`glpi_plugin_fusioninventory_snmpmodels`.`id`
                 ORDER BY `sysdescr`";
 
       $result=$DB->query($query);
@@ -571,23 +586,28 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
             $query_serial = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                     ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_mappings_id`=
+                     ON `glpi_plugin_fusioninventory_snmpmodelmibs`.".
+                           "`plugin_fusioninventory_mappings_id`=
                         `glpi_plugin_fusioninventory_mappings`.`id`
-               WHERE `plugin_fusioninventory_snmpmodels_id`='".$data['plugin_fusioninventory_snmpmodels_id']."'
+               WHERE `plugin_fusioninventory_snmpmodels_id`='".
+                    $data['plugin_fusioninventory_snmpmodels_id']."'
                   AND `name`='serial'
                LIMIT 1";
             $result_serial=$DB->query($query_serial);
             if ($DB->numrows($result_serial) > 0) {
                $line = $DB->fetch_assoc($result_serial);
-               $device->addChild('SERIAL', Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',
+               $device->addChild('SERIAL', Dropdown::getDropdownName(
+                                            'glpi_plugin_fusioninventory_snmpmodelmiboids',
                                             $line['plugin_fusioninventory_snmpmodelmiboids_id']));
             }
 
             $query_serial = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                     ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_mappings_id`=
+                     ON `glpi_plugin_fusioninventory_snmpmodelmibs`.".
+                           "`plugin_fusioninventory_mappings_id`=
                         `glpi_plugin_fusioninventory_mappings`.`id`
-               WHERE `plugin_fusioninventory_snmpmodels_id`='".$data['plugin_fusioninventory_snmpmodels_id']."'
+               WHERE `plugin_fusioninventory_snmpmodels_id`='".
+                    $data['plugin_fusioninventory_snmpmodels_id']."'
                   AND ((`name`='macaddr' AND `itemtype`='NetworkEquipment')
                         OR ( `name`='ifPhysAddress' AND `itemtype`='Printer')
                         OR ( `name`='ifPhysAddress' AND `itemtype`='Computer'))
@@ -596,11 +616,13 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
             if ($DB->numrows($result_serial) > 0) {
                $line = $DB->fetch_assoc($result_serial);
                if ($line['name'] == "macaddr") {
-                  $device->addChild('MAC', Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',
-                                                $line['plugin_fusioninventory_snmpmodelmiboids_id']));
+                  $device->addChild('MAC', Dropdown::getDropdownName(
+                                             'glpi_plugin_fusioninventory_snmpmodelmiboids',
+                                             $line['plugin_fusioninventory_snmpmodelmiboids_id']));
                } else {
-                  $device->addChild('MACDYN', Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',
-                                                $line['plugin_fusioninventory_snmpmodelmiboids_id']));
+                  $device->addChild('MACDYN', Dropdown::getDropdownName(
+                                             'glpi_plugin_fusioninventory_snmpmodelmiboids',
+                                             $line['plugin_fusioninventory_snmpmodelmiboids_id']));
                }
             }
       }

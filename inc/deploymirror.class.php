@@ -60,6 +60,8 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       return TRUE;
    }
 
+   
+   
    function defineTabs($options=array()) {
 
       $ong=array();
@@ -75,6 +77,8 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       return $ong;
    }
 
+   
+   
    function showForm($id, $options=array()) {
 
       if ($id!='') {
@@ -111,6 +115,8 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       return TRUE;
    }
 
+   
+   
    function getSearchOptions() {
 
       $tab = array();
@@ -152,7 +158,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
       return $tab;
    }
-
 }
 
 ?>

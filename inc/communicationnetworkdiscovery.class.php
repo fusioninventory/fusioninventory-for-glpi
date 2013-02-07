@@ -82,11 +82,14 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                      }
                   }
 
-                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = $a_CONTENT['PROCESSNUMBER'];
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 
+                                 $a_CONTENT['PROCESSNUMBER'];
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $a_agent['id'];
-                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 
+                                 'PluginFusioninventoryAgent';
                   $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.' ==devicesfound==';
+                  $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = 
+                                 $nb_devices.' ==devicesfound==';
                   $this->addtaskjoblog();
                }
             }
@@ -144,23 +147,30 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
       // Global criterias
 
-      if ((isset($arrayinventory['SERIAL'])) AND (!empty($arrayinventory['SERIAL']))) {
+      if ((isset($arrayinventory['SERIAL'])) 
+              && (!empty($arrayinventory['SERIAL']))) {
          $input['serial'] = $arrayinventory['SERIAL'];
       }
-      if ((isset($arrayinventory['MAC'])) AND (!empty($arrayinventory['MAC']))) {
+      if ((isset($arrayinventory['MAC'])) 
+              && (!empty($arrayinventory['MAC']))) {
          $input['mac'][] = $arrayinventory['MAC'];
       }
-      if ((isset($arrayinventory['IP'])) AND (!empty($arrayinventory['IP']))) {
+      if ((isset($arrayinventory['IP'])) 
+              && (!empty($arrayinventory['IP']))) {
          $input['ip'][] = $arrayinventory['IP'];
       }
-      if ((isset($arrayinventory['MODELSNMP'])) AND (!empty($arrayinventory['MODELSNMP']))) {
+      if ((isset($arrayinventory['MODELSNMP'])) 
+              && (!empty($arrayinventory['MODELSNMP']))) {
          $input['model'] = $arrayinventory['MODELSNMP'];
       }
-      if ((isset($arrayinventory['NETBIOSNAME'])) AND (!empty($arrayinventory['NETBIOSNAME']))) {
+      if ((isset($arrayinventory['NETBIOSNAME'])) 
+              && (!empty($arrayinventory['NETBIOSNAME']))) {
          $input['name'] = $arrayinventory['NETBIOSNAME'];
-      } else if ((isset($arrayinventory['SNMPHOSTNAME'])) AND (!empty($arrayinventory['SNMPHOSTNAME']))) {
+      } else if ((isset($arrayinventory['SNMPHOSTNAME'])) 
+              && (!empty($arrayinventory['SNMPHOSTNAME']))) {
          $input['name'] = $arrayinventory['SNMPHOSTNAME'];
-      } else if ((isset($arrayinventory['DNSHOSTNAME'])) AND (!empty($arrayinventory['DNSHOSTNAME']))) {
+      } else if ((isset($arrayinventory['DNSHOSTNAME'])) 
+              && (!empty($arrayinventory['DNSHOSTNAME']))) {
          $input['name'] = $arrayinventory['DNSHOSTNAME'];
       }
 
@@ -189,15 +199,15 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       }
 
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = "PluginFusioninventoryCommunicationNetworkDiscovery";
+      $_SESSION['plugin_fusioninventory_classrulepassed'] = 
+                     "PluginFusioninventoryCommunicationNetworkDiscovery";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
-      $data = array ();
       $data = $rule->processAllRules($input, array());
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    $data);
 
       if (isset($data['action'])
-              AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
+             && ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
 
          $a_text = '';
          foreach ($input as $key=>$data) {
@@ -238,8 +248,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $_SESSION['glpiactiveentities_string'] = "'".$input['entities_id']."'";
          }
          if (isset($input['itemtype'])
-              AND isset($data['action'])
-              AND ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE)) {
+             && isset($data['action'])
+             && ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_CREATE)) {
 
             $this->rulepassed(0, $input['itemtype'], $input['entities_id']);
          } else if (isset($input['itemtype'])
@@ -289,7 +299,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $inputrulelog['date'] = date('Y-m-d H:i:s');
             $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
             if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-               $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+               $inputrulelog['plugin_fusioninventory_agents_id'] = 
+                              $_SESSION['plugin_fusioninventory_agents_id'];
             }
             $inputrulelog['items_id'] = $items_id;
             $inputrulelog['itemtype'] = $itemtype;
@@ -371,7 +382,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
          case 'Computer':
             // If computer is update with Agent, don't update it
-            if (Dropdown::getDropdownName("glpi_autoupdatesystems", $item->fields['autoupdatesystems_id']) != 'FusionInventory') {
+            if (Dropdown::getDropdownName("glpi_autoupdatesystems", 
+                                          $item->fields['autoupdatesystems_id']) 
+                    != 'FusionInventory') {
                if (isset($arrayinventory['WORKGROUP'])) {
                   $domain = new Domain();
                   if (!in_array('domains_id', $a_lockable)) {
@@ -383,7 +396,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $item->update($input);
                //Manage IP and Mac address
                $NetworkPort = new NetworkPort();
-               $a_computerports = array();
                $a_computerports = $NetworkPort->find("`itemtype`='Computer'
                      AND `items_id`='".$item->getID()."'");
                $update = 0;
@@ -465,7 +477,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
                }
             }
-            $input['plugin_fusioninventory_agents_id'] = $_SESSION['glpi_plugin_fusioninventory_agentid'];
+            $input['plugin_fusioninventory_agents_id'] = 
+                           $_SESSION['glpi_plugin_fusioninventory_agentid'];
             if (isset($arrayinventory['DESCRIPTION']) 
                     AND !empty($arrayinventory['DESCRIPTION'])) {
                $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
@@ -489,7 +502,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
             //Manage IP and Mac address
             $NetworkPort = new NetworkPort();
-            $a_unknownPorts = array();
             $a_unknownPorts = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
                   AND `items_id`='".$item->getID()."'");
             $update = 0;
@@ -625,7 +637,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
             //Manage IP and Mac address
             $NetworkPort = new NetworkPort();
-            $a_printerports = array();
             $a_printerports = $NetworkPort->find("`itemtype`='Printer'
                   AND `items_id`='".$item->getID()."'");
             $update = 0;

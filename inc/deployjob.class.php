@@ -56,7 +56,7 @@ class PluginFusioninventoryDeployJob {
       $taskjobstate = new PluginFusioninventoryTaskjobstate();
 
       //Get the agent ID by his deviceid
-      if ($agents_id = PluginFusioninventoryDeployJob::getAgentByDeviceID($device_id)) {
+      if (($agents_id = PluginFusioninventoryDeployJob::getAgentByDeviceID($device_id))) {
 
          //Get tasks associated with the agent
          $task_list = $taskjobstate->getTaskjobsAgent($agents_id);
@@ -92,7 +92,8 @@ class PluginFusioninventoryDeployJob {
                      break;
                }
                if ($ordertype != -1) {
-                  $orderDetails = PluginFusioninventoryDeployOrder::getOrderDetails($status, $ordertype);
+                  $orderDetails = PluginFusioninventoryDeployOrder::getOrderDetails($status, 
+                                                                                    $ordertype);
                   if (count($orderDetails) == 0) {
                      return FALSE;
                   }
@@ -105,6 +106,8 @@ class PluginFusioninventoryDeployJob {
       return $response;
    }
 
+   
+   
    /**
     * Update agent status for a task
     * @param params parameters from the GET HTTP request
@@ -196,6 +199,8 @@ class PluginFusioninventoryDeployJob {
       self::sendOk();
    }
 
+   
+   
    /**
     * Get an agent ID by his deviceid
     * @param device_id the agent's device_id
@@ -212,6 +217,8 @@ class PluginFusioninventoryDeployJob {
       }
    }
 
+   
+   
    static function sendOk() {
       header("HTTP/1.1 200", TRUE, 200);
    }

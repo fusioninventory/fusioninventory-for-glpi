@@ -230,7 +230,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       echo "<table class='tab_cadre' cellpadding='".$nbcol."' width='1100'>";
 
-      $result = $this->showNetworkPortDetailHeader($data, $monitoring, $query);
+      $result = $this->showNetworkPortDetailHeader($monitoring, $query);
       
       if ($result) {
          while ($data=$DB->fetch_array($result)) {
@@ -597,7 +597,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
 
    
-   function showNetworkPortDetailHeader($data, $monitoring, $query) {
+   function showNetworkPortDetailHeader($monitoring, $query) {
       global $DB, $CFG_GLPI;
 
       $a_pref = DisplayPreference::getForTypeUser('PluginFusioninventoryNetworkport', 
@@ -938,7 +938,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                               $computer_ports_id = $nw->getOppositeContact($data_devicephone["id"]);
                               if ($computer_ports_id) {
                                  $networkport = new NetworkPort();
-                                 $networkport->getFromDB($computer_port_id);
+                                 $networkport->getFromDB($computer_ports_id);
                                  if ($networkport->fields['itemtype'] == 'Computer') {
                                     echo "<hr/>";
                                     echo "<img src='".$CFG_GLPI['root_doc'].

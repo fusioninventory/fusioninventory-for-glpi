@@ -59,6 +59,8 @@ class PluginFusioninventoryDeployFilepart extends CommonDBTM {
       return TRUE;
    }
 
+   
+   
    static function getForFile($files_id) {
       $filepart_obj = new self;
       $results = $filepart_obj->find("`plugin_fusioninventory_deployfiles_id`='$files_id'",
@@ -73,6 +75,8 @@ class PluginFusioninventoryDeployFilepart extends CommonDBTM {
       return $fileparts;
    }
 
+   
+   
    static function getIdsForFile($files_id) {
       $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deployfileparts',
                                       "`plugin_fusioninventory_deployfiles_id`='$files_id'");
@@ -85,12 +89,14 @@ class PluginFusioninventoryDeployFilepart extends CommonDBTM {
       return $fileparts;
    }
 
+   
+   
    static function httpSendFile($params) {
       if (!isset($params['file'])) {
          header("HTTP/1.1 500");
          exit;
-
       }
+      $matches = array();
       preg_match('/.\/..\/([^\/]+)/', $params['file'], $matches);
 
       $sha512 = mysql_real_escape_string($matches[1]);
@@ -125,9 +131,8 @@ class PluginFusioninventoryDeployFilepart extends CommonDBTM {
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
       $sha512 = $file['sha512'];
 
-      $filePath = $repoPath.PluginFusioninventoryDeployFile::getDirBySha512($sha512).'/'.$sha512.'.gz';
-
-
+      $filePath = $repoPath.PluginFusioninventoryDeployFile::getDirBySha512($sha512).
+                                                                              '/'.$sha512.'.gz';
 
       if (!is_file($filePath)) {
          header("HTTP/1.1 404");
@@ -137,7 +142,6 @@ class PluginFusioninventoryDeployFilepart extends CommonDBTM {
          header("HTTP/1.1 403");
          exit;
       }
-
 
       error_reporting(0);
 

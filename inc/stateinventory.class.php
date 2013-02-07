@@ -49,7 +49,8 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
    function __construct() {
       global $CFG_GLPI;
 
-      $CFG_GLPI['glpitablesitemtype']['PluginFusioninventoryStateInventory'] = 'glpi_plugin_fusioninventory_taskjobstates';
+      $CFG_GLPI['glpitablesitemtype']['PluginFusioninventoryStateInventory'] = 
+          'glpi_plugin_fusioninventory_taskjobstates';
    }
 
 
@@ -73,7 +74,8 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
 
       // Total Number of events
       $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstates`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` 
+            ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
          WHERE `method` = 'snmpinventory'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC ";
@@ -81,7 +83,8 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
       $number = $DB->numrows($resultcount);
 
       // Display the pager
-      Html::printPager($start, $number, $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/stateinventory.php", '');
+      Html::printPager($start, $number, $CFG_GLPI['root_doc'].
+              "/plugins/fusinvsnmp/front/stateinventory.php", '');
 
       echo "<table class='tab_cadre_fixe'>";
 
@@ -100,7 +103,8 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
 
       $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.*
             FROM `glpi_plugin_fusioninventory_taskjobstates`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` on `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` 
+            ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
          WHERE `method` = 'snmpinventory'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC
@@ -118,7 +122,8 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
          $nb_errors = 0;
          $a_taskjobstates = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'");
          foreach ($a_taskjobstates as $datastate) {
-            $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastate['id']."'");
+            $a_taskjoblog = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".
+                                                   $datastate['id']."'");
             foreach($a_taskjoblog as $taskjoblog) {
                if (strstr($taskjoblog['comment'], " ==devicesqueried==")) {
                   $nb_query += str_replace(" ==devicesqueried==", "", $taskjoblog['comment']);
@@ -188,7 +193,8 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
             } else {
                $interval = $this->date_diff($start_date, $end_date);
             }
-            echo "<td>".round(($nb_query - $nb_errors) / (strtotime($end_date) - strtotime($start_date)), 2)."</td>";
+            echo "<td>".round(($nb_query - $nb_errors) / 
+                    (strtotime($end_date) - strtotime($start_date)), 2)."</td>";
          }
          echo "<td>".$nb_threads."</td>";
          echo "<td>".$nb_query."</td>";

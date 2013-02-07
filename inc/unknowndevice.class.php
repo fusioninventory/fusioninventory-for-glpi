@@ -51,9 +51,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    *
    **/
    static function getTypeName($nb=0) {
-
       return __('Unknown device', 'fusioninventory');
-
    }
 
 
@@ -348,7 +346,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<td align='center'>" . __('Inventory number') . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='otherserial' value='" . $this->fields["otherserial"] . "' size='35'/>";
+      echo "<input type='text' name='otherserial' value='" . $this->fields["otherserial"].
+              "' size='35'/>";
       echo "</td>";
       echo "</tr>";
 
@@ -372,7 +371,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo __('Sysdescr', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td rowspan='2'>";
-      echo "<textarea name='sysdescr'  cols='45' rows='5' />".$this->fields["sysdescr"]."</textarea>";
+      echo "<textarea name='sysdescr'  cols='45' rows='5' />".$this->fields["sysdescr"].
+              "</textarea>";
 
       echo "<td align='center'>".__('SNMP models', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -389,7 +389,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::auth_dropdown($this->fields['plugin_fusioninventory_configsecurities_id']);
+      PluginFusioninventoryConfigSecurity::auth_dropdown(
+               $this->fields['plugin_fusioninventory_configsecurities_id']);
       echo "</td>";
       echo "</tr>";
 
@@ -678,7 +679,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    function disconnectDB($p_port) {
       $nn = new NetworkPort_NetworkPort();
 
-      if ($nn->getOppositeContact($p_port) AND $nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
+      if ($nn->getOppositeContact($p_port) 
+              && $nn->getFromDBForNetworkPort($nn->getOppositeContact($p_port))) {
          if ($nn->delete($nn->fields)) {
             plugin_item_purge_fusioninventory($nn);
          }
@@ -703,7 +705,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    **/
    function searchIfmacOnHub($a_port, $a_portglpi) {
 
-      $data= array();
       $data = current($a_port);
       if (isset($a_portglpi[$data['id']])) {
          return $a_portglpi[$data['id']];
@@ -746,8 +747,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                            // We have founded a hub orphelin
                            $this->disconnectDB($pfNetworkport->fields['networkports_id']);
                            $this->disconnectDB($dataLink['id']);
-                           $nn->add(array('networkports_id_1'=> $pfNetworkport->fields['networkports_id'],
-                                           'networkports_id_2' => $dataLink['id']));
+                           $nn->add(array('networkports_id_1'=> 
+                                                $pfNetworkport->fields['networkports_id'],
+                                          'networkports_id_2' => $dataLink['id']));
                            $this->releaseHub($this->fields['id'], $pfNetworkport);
                            return $this->fields['id'];
                         }
@@ -802,7 +804,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
       // get all ports of hub
       $releasePorts = array();
-      $a_ports = $Netport->find("`items_id`='".$hub_id."' AND `itemtype`='".$this->getType()."' AND (`name` != 'Link' OR `name` IS NULL)");
+      $a_ports = $Netport->find("`items_id`='".$hub_id."' AND `itemtype`='".$this->getType()."' ".
+                                 "AND (`name` != 'Link' OR `name` IS NULL)");
       foreach ($a_ports as $port_id=>$data) {
          $id = $nn->getOppositeContact($port_id);
          if ($id) {
@@ -865,7 +868,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * @return nothing
    *
    **/
-   static function writeXML($items_id, $xml, $pluginname='fusioninventory/xml', $itemtype='PluginFusioninventoryUnknownDevice') {
+   static function writeXML($items_id, $xml, $pluginname='fusioninventory/xml', 
+                            $itemtype='PluginFusioninventoryUnknownDevice') {
 
       $folder = substr($items_id, 0, -1);
       if (empty($folder)) {
@@ -877,7 +881,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       if (!file_exists(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype."/".$folder)) {
          mkdir(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype."/".$folder);
       }
-      $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype."/".$folder."/".$items_id, 'w');
+      $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/".$pluginname."/".$itemtype."/".$folder."/".
+                           $items_id, 'w');
       fwrite($fileopen, $xml);
       fclose($fileopen);
    }
@@ -900,8 +905,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $folder = '0';
       }
 
-      if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$parm->fields["id"])) {
-         unlink(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".$parm->fields["id"]);
+      if (file_exists(GLPI_PLUGIN_DOC_DIR.
+              "/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".$folder."/".
+              $parm->fields["id"])) {
+         unlink(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/PluginFusioninventoryUnknownDevice/".
+                 $folder."/".$parm->fields["id"]);
       }
 
       // Delete Networkports
@@ -957,7 +965,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             }
 
             // Import SNMP
-            $pfPrinter = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
+            $pfPrinter = new PluginFusioninventoryPrinter();
             $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusioninventory_printers";
             $query = "SELECT *
                       FROM `glpi_plugin_fusioninventory_printers`
@@ -968,8 +976,10 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $data = $DB->fetch_assoc($result);
             }            
             $data['sysdescr'] = $this->fields['sysdescr'];
-            $data['plugin_fusioninventory_snmpmodels_id'] = $this->fields['plugin_fusioninventory_snmpmodels_id'];
-            $data['plugin_fusioninventory_configsecurities_id'] = $this->fields['plugin_fusioninventory_configsecurities_id'];
+            $data['plugin_fusioninventory_snmpmodels_id'] = 
+                           $this->fields['plugin_fusioninventory_snmpmodels_id'];
+            $data['plugin_fusioninventory_configsecurities_id'] = 
+                           $this->fields['plugin_fusioninventory_configsecurities_id'];
             if ($DB->numrows($result) == 0) {
                $data['printers_id'] = $printer_id;
                $pfPrinter->add($data);
@@ -1005,8 +1015,9 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $NetworkPort->update($data_Port);
             }
 
-            $pfNetworkEquipment = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_networkequipments");
-            $_SESSION['glpi_plugins_fusinvsnmp_table'] = "glpi_plugin_fusioninventory_networkequipments";
+            $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+            $_SESSION['glpi_plugins_fusinvsnmp_table'] = 
+                           "glpi_plugin_fusioninventory_networkequipments";
             $query = "SELECT *
                       FROM `glpi_plugin_fusioninventory_networkequipments`
                       WHERE `networkequipments_id`='".$NetworkEquipment_id."' ";
@@ -1017,8 +1028,10 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             }
 
             $data['sysdescr'] = $this->fields['sysdescr'];
-            $data['plugin_fusioninventory_snmpmodels_id'] = $this->fields['plugin_fusioninventory_snmpmodels_id'];
-            $data['plugin_fusioninventory_configsecurities_id'] = $this->fields['plugin_fusioninventory_configsecurities_id'];
+            $data['plugin_fusioninventory_snmpmodels_id'] = 
+                           $this->fields['plugin_fusioninventory_snmpmodels_id'];
+            $data['plugin_fusioninventory_configsecurities_id'] = 
+                           $this->fields['plugin_fusioninventory_configsecurities_id'];
             if ($DB->numrows($result) == 0) {
                $data['networkequipments_id'] = $NetworkEquipment_id;
                $pfNetworkEquipment->add($data);

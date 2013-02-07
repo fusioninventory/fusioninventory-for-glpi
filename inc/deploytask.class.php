@@ -52,10 +52,8 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
       if ($nb>1) {
          return __('Group of computers', 'fusioninventory');
-
       }
       return __('Task', 'fusioninventory');
-
    }
 
    static function canCreate() {
@@ -66,6 +64,8 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       return TRUE;
    }
 
+   
+   
    function defineTabs($options=array()) {
 
       $ong = array();
@@ -77,6 +77,8 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       return $ong;
    }
 
+   
+   
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       switch(get_class($item)) {
@@ -84,6 +86,8 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
       }
    }
+   
+   
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch(get_class($item)) {
@@ -93,11 +97,15 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
             break;
       }
    }
+   
+   
 
    function showList() {
       self::title();
       Search::show('PluginFusioninventoryDeployTask');
    }
+   
+   
 
    function title() {
       global  $CFG_GLPI;
@@ -116,6 +124,7 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
                          $title, $title, $buttons);
    }
 
+   
 
    function showActions($id) {
 
@@ -155,6 +164,8 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       require GLPI_ROOT."/plugins/fusinvdeploy/js/task_job.front.php";
    }
 
+   
+   
    function pre_deleteItem() {
       global $CFG_GLPI;
       
@@ -194,6 +205,8 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       return TRUE;
    }
 
+   
+   
    function post_addItem() {
       $options = array(
          'id'              => $this->getField('id'),

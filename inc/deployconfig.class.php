@@ -67,6 +67,8 @@ class PluginFusioninventoryDeployConfig extends CommonDBTM {
       $FI_Config->addValues($plugins_id, $insert);
    }
 
+   
+   
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
@@ -78,6 +80,8 @@ class PluginFusioninventoryDeployConfig extends CommonDBTM {
       return '';
    }
 
+   
+   
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
@@ -87,6 +91,8 @@ class PluginFusioninventoryDeployConfig extends CommonDBTM {
       return TRUE;
    }
 
+   
+   
    function putForm($p_post) {
 
       $config = new PluginFusioninventoryConfig;

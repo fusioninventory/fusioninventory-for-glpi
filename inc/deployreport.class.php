@@ -112,7 +112,8 @@ class PluginFusioninventoryDeployReport extends CommonDBTM {
 
       echo "<table class='tab_cadre_fixe'>";
       foreach ($a_taskjobs as $datajob) {
-         $a_taskjobstates = $pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='".$datajob['id']."'
+         $a_taskjobstates = $pfTaskjobstate->find("`plugin_fusioninventory_taskjobs_id`='".
+                 $datajob['id']."'
              GROUP BY `plugin_fusioninventory_agents_id`,`uniqid`",
                  "`uniqid` DESC");
          $uniqid = '';
@@ -140,7 +141,8 @@ class PluginFusioninventoryDeployReport extends CommonDBTM {
             }
 
             $a_taskjobstatesuniqid = $pfTaskjobstate->find("`uniqid`='".$datastate['uniqid']."'
-               AND `plugin_fusioninventory_agents_id`='".$datastate['plugin_fusioninventory_agents_id']."'");
+               AND `plugin_fusioninventory_agents_id`='".
+                    $datastate['plugin_fusioninventory_agents_id']."'");
             $pfPackage->getFromDB($datastate['items_id']);
 
             $pfAgent->getFromDB($datastate['plugin_fusioninventory_agents_id']);
@@ -157,8 +159,10 @@ class PluginFusioninventoryDeployReport extends CommonDBTM {
                $state = 'successfull';
                $message = '';
                $date = '';
-               $a_failed = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
-                  AND (`comment` LIKE '%failed%' OR `comment` LIKE '%failure%' OR `comment`='==agentcrashed==')");
+               $a_failed = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".
+                       $datastateuniqid['id']."'
+                  AND (`comment` LIKE '%failed%' OR `comment` LIKE '%failure%' ".
+                       "OR `comment`='==agentcrashed==')");
                if (count($a_failed) > 0) {
                   $state = 'failed';
                   $a_message = array();
@@ -168,7 +172,10 @@ class PluginFusioninventoryDeployReport extends CommonDBTM {
                      preg_match_all("/==(\w*)\:\:([0-9]*)==/", $comment, $matches);
                      if ($matches[1]) {
                         foreach($matches[0] as $num=>$commentvalue) {
-                           $comment = str_replace($commentvalue, $LANG['plugin_'.$matches[1][$num]]["codetasklog"][$matches[2][$num]], $comment);
+                           // TODO : change $LANG to gettext
+                           $comment = str_replace($commentvalue, 
+                              $LANG['plugin_'.$matches[1][$num]]["codetasklog"][$matches[2][$num]], 
+                                                  $comment);
                         }
                      }
                      $a_message[] = $comment;

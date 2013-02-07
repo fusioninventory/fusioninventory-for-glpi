@@ -100,10 +100,8 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
       
       $totalwidthdiv = 830;
       
-      $a_shared = array();
       $a_levels = array();
       $a_levelname = array();
-      $a_links = array();
       $a_children = array();
       $higherlevel = 0;
       $higherwidth = 0;
@@ -124,7 +122,8 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
             }
             $width += $datas['totalsize'];
             $a_levels[$data['level']][$datas['id']] = $datas;
-            $a_children[$datas['id']] = $pficStorage_Storage->getChildren($data['id'], $data['level']);
+            $a_children[$datas['id']] = $pficStorage_Storage->getChildren($data['id'], 
+                                                                          $data['level']);
          }
          if ($higherwidth < $width) {
             $higherwidth = $width;
@@ -149,7 +148,8 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
       $a_size = array();
       foreach ($a_levels as $lev=>$data) {
          if (count($data) > 0) {
-            echo "<div style='position: absolute; top: ".((count($a_levels) - $levelnumber) * 45)."px;left: 130px'>";
+            echo "<div style='position: absolute; top: ".((count($a_levels) - $levelnumber) * 45).
+                    "px;left: 130px'>";
 
             echo "<div class='storage'
                style='width: 120px;".
@@ -217,11 +217,13 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
 
                               if ($remaining_size == 0
                                       && count($a_parent_children) > 1) {
-                                 $wid = (($dataposition['width'] - (5 * (count($a_parent_children) - 1))) 
+                                 $wid = (($dataposition['width'] - 
+                                             (5 * (count($a_parent_children) - 1))) 
                                          * $cursize) / $dataposition['totalsize'];
                                  $a_postmp[$parents_id] += $wid;
                               } else {
-                                 $wid = ($dataposition['width'] * $cursize) / $dataposition['totalsize'];
+                                 $wid = ($dataposition['width'] * $cursize) / 
+                                             $dataposition['totalsize'];
                               }
                               $wid = round($wid);
                               
@@ -265,7 +267,7 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
          function chbgHover(params) {
             for(i=0;i<params.length;i++){
                if(document.getElementById(\'storage\' + params[i])) {
-                  document.getElementById(\'storage\' + params[i]).style.backgroundColor = "#fb8080";
+                 document.getElementById(\'storage\' + params[i]).style.backgroundColor = "#fb8080";
                }
             }    
          }

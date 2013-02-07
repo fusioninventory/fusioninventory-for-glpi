@@ -141,13 +141,15 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          case 'running':
             $search = " AND `state`!='".self::FINISHED."'";
             $title = __('Running tasks', 'fusioninventory');
-            $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_running.png'/>";
+            $icon = "<img src='".$CFG_GLPI['root_doc'].
+                    "/plugins/fusioninventory/pics/task_running.png'/>";
             break;
 
          case 'finished':
             $search = " AND `state`='".self::FINISHED."'";
             $title = __('Finished tasks', 'fusioninventory');
-            $icon = "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/task_finished.png'/>";
+            $icon = "<img src='".$CFG_GLPI['root_doc'].
+                        "/plugins/fusioninventory/pics/task_finished.png'/>";
             break;
 
          case 'all':
@@ -284,7 +286,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    * @return nothing
    *
    **/
-   function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error=0, $message='', $unknown=0, $reinitialize=1) {
+   function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error=0, $message='', 
+                               $unknown=0, $reinitialize=1) {
       global $DB;
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
@@ -318,8 +321,10 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
             $start_taskjob = $data_task['date_scheduled_timestamp'] + $period;
             // 2. See how errors in taskjobstate
             $query = "SELECT * FROM `".$this->getTable()."`
-               LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` on `plugin_fusioninventory_taskjobstates_id` = `".$this->getTable()."`.`id`
-               WHERE `plugin_fusioninventory_taskjobs_id`='".$this->fields['plugin_fusioninventory_taskjobs_id']."'
+               LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` 
+                  ON `plugin_fusioninventory_taskjobstates_id` = `".$this->getTable()."`.`id`
+               WHERE `plugin_fusioninventory_taskjobs_id`='".
+                        $this->fields['plugin_fusioninventory_taskjobs_id']."'
                      AND `uniqid` != '".$this->fields['uniqid']."'
                      AND `glpi_plugin_fusioninventory_taskjoblogs`.`state`='3'
                      AND `date`>='".date("Y-m-d H:i:s", $start_taskjob)."'
@@ -346,7 +351,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
       $pfTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
       
-      $a_taskjobstates = $this->find("`plugin_fusioninventory_taskjobs_id`='".$this->fields['plugin_fusioninventory_taskjobs_id']."'
+      $a_taskjobstates = $this->find("`plugin_fusioninventory_taskjobs_id`='".
+                              $this->fields['plugin_fusioninventory_taskjobs_id']."'
                            AND `state` != '3'
                            AND `uniqid`='".$this->fields['uniqid']."'");
       if (count($a_taskjobstates) == '0') {
@@ -382,7 +388,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
             $pfTaskjobstate->getFromDB($data['plugin_fusioninventory_taskjobstates_id']);
             $pfTaskjobstate->delete($pfTaskjobstate->fields, 1);
             $sql_delete = "DELETE FROM `glpi_plugin_fusioninventory_taskjoblogs`
-               WHERE `plugin_fusioninventory_taskjobstates_id` = '".$data['plugin_fusioninventory_taskjobstates_id']."'";
+               WHERE `plugin_fusioninventory_taskjobstates_id` = '".
+                    $data['plugin_fusioninventory_taskjobstates_id']."'";
             $DB->query($sql_delete);
          }
       }

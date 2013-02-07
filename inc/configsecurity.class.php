@@ -112,7 +112,8 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
-      echo "<td align='center'>" . __('Encryption protocol for authentication ', 'fusioninventory') . "</td>";
+      echo "<td align='center'>".__('Encryption protocol for authentication ', 'fusioninventory').
+              "</td>";
       echo "<td align='center'>";
          $this->showDropdownSNMPAuth($this->fields["authentication"]);
       echo "</td>";
@@ -159,10 +160,11 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       global $CFG_GLPI;
       
       // Get new id
-      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml", 'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml", 
+                                 'SimpleXMLElement', 
+                                 LIBXML_NOCDATA);
 
-      $id = $xml->incrementID[0];
-      $id = $id + 1;
+      $id = $xml->incrementID[0] + 1;
 
       // Write XML file
       $xml_write = "<snmp>\n";
@@ -221,7 +223,8 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       $xml_write .= "      <conf>\n";
       $xml_write .= "         <Num>".$id."</Num>\n";
       $xml_write .= "         <Name><![CDATA[".$_POST["name"]."]]></Name>\n";
-      $xml_write .= "         <snmp_version>".$_POST["plugin_fusioninventory_snmpversions_id"]."</snmp_version>\n";
+      $xml_write .= "         <snmp_version>".$_POST["plugin_fusioninventory_snmpversions_id"].
+                                 "</snmp_version>\n";
       $xml_write .= "         <community><![CDATA[".$_POST["community"]."]]></community>\n";
       $xml_write .= "         <sec_name><![CDATA[".$_POST["username"]."]]></sec_name>\n";
       $xml_write .= "         <auth_protocol>".$_POST["authentication"]."</auth_protocol>\n";
@@ -366,7 +369,9 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
    function selectbox($selected=0) {
-      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml", 'SimpleXMLElement', LIBXML_NOCDATA);
+      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml", 
+                                 'SimpleXMLElement', 
+                                 LIBXML_NOCDATA);
       $i = -1;
       $selectbox = "<select name='plugin_fusinvsnmp_configsecurities_id' size='1'>\n
                        <option value='0'>-----</option>\n";

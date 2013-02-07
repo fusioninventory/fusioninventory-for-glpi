@@ -50,9 +50,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    public $second_level_menu = "fusioninventory";
 
    static function getTypeName($nb=0) {
-
       return __('Authentication for remote devices (VMware)', 'fusioninventory');
-
    }
 
    static function canCreate() {
@@ -93,7 +91,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       switch ($field['type']) {
          case 'credential_itemtype' :
-            $this->showItemtype($ID, $this->fields['itemtype']);
+            $this->showItemtype($ID);
             break;
       }
    }
@@ -104,9 +102,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     * Show itemtype
     *
     * @param type $ID
-    * @param type $value
     */
-   function showItemtype($ID, $value=0) {
+   function showItemtype($ID) {
 
       //Criteria already added : only display the selected itemtype
       if ($ID > 0) {
@@ -153,28 +150,23 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       $tab['common'] = __('Authentication for remote devices (VMware)', 'fusioninventory');
 
-
       $tab[1]['table'] = $this->getTable();
       $tab[1]['field'] = 'name';
       $tab[1]['name'] = __('Name');
-
       $tab[1]['datatype'] = 'itemlink';
 
       $tab[2]['table'] = 'glpi_entities';
       $tab[2]['field'] = 'completename';
       $tab[2]['name'] = __('Entity');
 
-
       $tab[3]['table']         = $this->getTable();
       $tab[3]['field']         = 'itemtype';
       $tab[3]['name']          = __('Type');
-
       $tab[3]['massiveaction'] = FALSE;
 
       $tab[4]['table'] = $this->getTable();
       $tab[4]['field'] = 'username';
       $tab[4]['name'] = __('Login');
-
 
       return $tab;
    }
@@ -195,7 +187,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       }
 
       if (!$input['itemtype']) {
-          Session::addMessageAfterRedirect(__('It\'s mandatory to select a type and at least one field'), TRUE, ERROR);
+          Session::addMessageAfterRedirect(
+                  __('It\'s mandatory to select a type and at least one field'), TRUE, ERROR);
          $input = array();
 
       }
@@ -385,7 +378,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       $buttons = array();
       if (PluginFusioninventoryProfile::haveRight('credential', 'r')) {
-         $buttons["credentialip.php"] = __('Remote devices to inventory (VMware)', 'fusioninventory');
+         $buttons["credentialip.php"] = 
+                  __('Remote devices to inventory (VMware)', 'fusioninventory');
 
       }
    }

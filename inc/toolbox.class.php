@@ -84,8 +84,8 @@ class PluginFusioninventoryToolbox {
            return NULL;
        }
        // NOTE: $mtime may be negative (PHP integer limitations)
-       $mtime = unpack("V", substr($data, 4, 4));
-       $mtime = $mtime[1];
+//       $a_mtime = unpack("V", substr($data, 4, 4));
+//       $mtime = $a_mtime[1];
        $headerlen = 10;
        $extralen  = 0;
        $extra     = "";
@@ -94,8 +94,8 @@ class PluginFusioninventoryToolbox {
            if ($len - $headerlen - 2 < 8) {
                return FALSE;  // invalid
            }
-           $extralen = unpack("v", substr($data, 8, 2));
-           $extralen = $extralen[1];
+           $a_extralen = unpack("v", substr($data, 8, 2));
+           $extralen = $a_extralen[1];
            if ($len - $headerlen - 2 - $extralen < 8) {
                return FALSE;  // invalid
            }
@@ -137,8 +137,8 @@ class PluginFusioninventoryToolbox {
                return FALSE;    // invalid
            }
            $calccrc = crc32(substr($data, 0, $headerlen)) & 0xffff;
-           $headercrc = unpack("v", substr($data, $headerlen, 2));
-           $headercrc = $headercrc[1];
+           $a_headercrc = unpack("v", substr($data, $headerlen, 2));
+           $headercrc = $a_headercrc[1];
            if ($headercrc != $calccrc) {
                $error = "Header checksum failed.";
                return FALSE;    // Bad header CRC
@@ -146,10 +146,10 @@ class PluginFusioninventoryToolbox {
            $headerlen += 2;
        }
        // GZIP FOOTER
-       $datacrc = unpack("V", substr($data, -8, 4));
-       $datacrc = sprintf('%u', $datacrc[1] & 0xFFFFFFFF);
-       $isize = unpack("V", substr($data, -4));
-       $isize = $isize[1];
+       $a_datacrc = unpack("V", substr($data, -8, 4));
+       $datacrc = sprintf('%u', $a_datacrc[1] & 0xFFFFFFFF);
+       $a_isize = unpack("V", substr($data, -4));
+       $isize = $a_isize[1];
        // decompression:
        $bodylen = $len-$headerlen-8;
        if ($bodylen < 1) {
@@ -197,7 +197,8 @@ class PluginFusioninventoryToolbox {
          }
       }
       foreach ($simplexml_from->children() as $simplexml_child) {
-         $simplexml_temp = $simplexml_to->addChild($simplexml_child->getName(), (string)$simplexml_child);
+         $simplexml_temp = $simplexml_to->addChild($simplexml_child->getName(), 
+                                                  (string)$simplexml_child);
          foreach ($simplexml_child->attributes() as $attr_key => $attr_value) {
             $simplexml_temp->addAttribute($attr_key, $attr_value);
          }
@@ -235,10 +236,12 @@ class PluginFusioninventoryToolbox {
             if (count($value->children()) > 0) {
                $this->cleanXML($value);
             } else if (isset($nodes[$key])) {
-               $xml->$key->$i = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value));
+               $xml->$key->$i = Toolbox::clean_cross_side_scripting_deep(
+                                    Toolbox::addslashes_deep($value));
                $i++;
             } else {
-               $xml->$key = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value));
+               $xml->$key = Toolbox::clean_cross_side_scripting_deep(
+                                 Toolbox::addslashes_deep($value));
             }
          }
       }
@@ -301,25 +304,31 @@ class PluginFusioninventoryToolbox {
          $sxml_authentication = $p_sxml_node->addChild('AUTHENTICATION');
             $sxml_authentication->addAttribute('ID', $p_id);
             $sxml_authentication->addAttribute('VERSION',
-                              $pfConfigSecurity->getSNMPVersion($pfConfigSecurity->fields['snmpversion']));
+                       $pfConfigSecurity->getSNMPVersion($pfConfigSecurity->fields['snmpversion']));
             if ($pfConfigSecurity->fields['snmpversion'] == '3') {
-               $sxml_authentication->addAttribute('USERNAME', $pfConfigSecurity->fields['username']);
+               $sxml_authentication->addAttribute('USERNAME', 
+                                                  $pfConfigSecurity->fields['username']);
                if ($pfConfigSecurity->fields['authentication'] == '0') {
 //                  $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
                } else {
                   $sxml_authentication->addAttribute('AUTHPROTOCOL',
-                                 $pfConfigSecurity->getSNMPAuthProtocol($pfConfigSecurity->fields['authentication']));
+                         $pfConfigSecurity->getSNMPAuthProtocol(
+                                 $pfConfigSecurity->fields['authentication']));
                }
-               $sxml_authentication->addAttribute('AUTHPASSPHRASE', $pfConfigSecurity->fields['auth_passphrase']);
+               $sxml_authentication->addAttribute('AUTHPASSPHRASE', 
+                                                  $pfConfigSecurity->fields['auth_passphrase']);
                if ($pfConfigSecurity->fields['encryption'] == '0') {
 //                  $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
                } else {
                   $sxml_authentication->addAttribute('PRIVPROTOCOL',
-                                 $pfConfigSecurity->getSNMPEncryption($pfConfigSecurity->fields['encryption']));
+                                 $pfConfigSecurity->getSNMPEncryption(
+                                          $pfConfigSecurity->fields['encryption']));
                }
-               $sxml_authentication->addAttribute('PRIVPASSPHRASE', $pfConfigSecurity->fields['priv_passphrase']);
+               $sxml_authentication->addAttribute('PRIVPASSPHRASE', 
+                                                   $pfConfigSecurity->fields['priv_passphrase']);
             } else {
-               $sxml_authentication->addAttribute('COMMUNITY', $pfConfigSecurity->fields['community']);
+               $sxml_authentication->addAttribute('COMMUNITY', 
+                                                  $pfConfigSecurity->fields['community']);
             }
       }
    }
@@ -459,9 +468,11 @@ class PluginFusioninventoryToolbox {
       }
       echo '<table>
             <tr>
-            <td><input type="radio" value="1" id="yes'.$rand.'" name="'.$name.'" '.$checked['yes'].' />
+            <td><input type="radio" value="1" id="yes'.$rand.'" name="'.$name.'" '.
+              $checked['yes'].' />
             <label for="yes'.$rand.'">'.__('Yes').'</label></td>
-		   	<td><input type="radio" value="0" id="no'.$rand.'" name="'.$name.'" '.$checked['no'].' />
+		   	<td><input type="radio" value="0" id="no'.$rand.'" name="'.$name.'" '.
+              $checked['no'].' />
             <label for="no'.$rand.'">'.__('No').'</label></td>
             </tr>
             </table>';

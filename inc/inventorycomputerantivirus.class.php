@@ -47,9 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-
       return __('Antivirus', 'fusioninventory');
-
    }
 
    static function canCreate() {

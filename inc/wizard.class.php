@@ -111,10 +111,12 @@ class PluginFusioninventoryWizard {
 
       echo "<style type='text/css'>
       .bgout {
-         background-image: url(".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/wizard_button.png);
+         background-image: url(".$CFG_GLPI['root_doc'].
+              "/plugins/fusioninventory/pics/wizard_button.png);
       }
       .bgover {
-         background-image: url(".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/wizard_button_active.png);
+         background-image: url(".$CFG_GLPI['root_doc'].
+              "/plugins/fusioninventory/pics/wizard_button_active.png);
       }
       </style>";
       echo "<center><table width='950'>";
@@ -134,7 +136,8 @@ class PluginFusioninventoryWizard {
                ."/plugins/fusioninventory/front/wizard.php?wizz=".$array[1].$getariane."'>";
             echo "<strong>".$array[0]."</strong><br/><br/>";
             if ($array[2] != '') {
-               echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/".$array[2]."'/>";
+               echo "<img src='".$CFG_GLPI['root_doc'].
+                       "/plugins/fusioninventory/pics/".$array[2]."'/>";
             }
             echo "</a></td>";
          }
@@ -171,10 +174,12 @@ class PluginFusioninventoryWizard {
 
       echo "<style type='text/css'>
       .bgout {
-         background-image: url(".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/wizard_button.png);
+         background-image: url(".$CFG_GLPI['root_doc'].
+              "/plugins/fusioninventory/pics/wizard_button.png);
       }
       .bgover {
-         background-image: url(".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/wizard_button_active.png);
+         background-image: url(".$CFG_GLPI['root_doc'].
+              "/plugins/fusioninventory/pics/wizard_button_active.png);
       }
       </style>";
       echo "<center><table width='950'>";
@@ -214,7 +219,8 @@ class PluginFusioninventoryWizard {
             call_user_func(array($classname, $options['f']), $options['arg1']);
          } else {
             call_user_func(array($classname, $options['f']));
-            echo "<input type='hidden' name='nexturl' value='".PluginFusioninventoryWizard::getNextStep($filariane)."' />";
+            echo "<input type='hidden' name='nexturl' value='".
+                    PluginFusioninventoryWizard::getNextStep($filariane)."' />";
          }
 
       } else {
@@ -233,17 +239,21 @@ class PluginFusioninventoryWizard {
       echo "<td width='475' align='left' style='background-color: #e1cc7b;' height='30'>";
       echo "&nbsp;<input class='submit' type='submit' name='previous' value='".__('Previous')."'
                onclick='window.location.href=\"".$CFG_GLPI['root_doc'].
-         "/plugins/fusioninventory/front/wizard.php?wizz=".PluginFusioninventoryWizard::getPreviousStep($filariane)."\"'/>";
+         "/plugins/fusioninventory/front/wizard.php?wizz=".
+              PluginFusioninventoryWizard::getPreviousStep($filariane)."\"'/>";
       echo "</td>";
       echo "<td align='right' style='background-color: #e1cc7b;' height='30'>";
       if (isset($options['finish'])) {
-         echo "<input class='submit' type='submit' name='next' value='".__('Finish', 'fusioninventory')."'
-               onclick='window.location.href=\"".$CFG_GLPI['root_doc']."/plugins/fusioninventory/\"'/>";
+         echo "<input class='submit' type='submit' name='next' value='".
+                 __('Finish', 'fusioninventory')."'
+               onclick='window.location.href=\"".
+                 $CFG_GLPI['root_doc']."/plugins/fusioninventory/\"'/>";
 
       } else {
          echo "<input class='submit' type='submit' name='next' value='".__('Next')."'
                onclick='window.location.href=\"".$CFG_GLPI['root_doc'].
-         "/plugins/fusioninventory/front/wizard.php?wizz=".PluginFusioninventoryWizard::getNextStep($filariane)."\"'/>";
+         "/plugins/fusioninventory/front/wizard.php?wizz=".
+                 PluginFusioninventoryWizard::getNextStep($filariane)."\"'/>";
       }
       Html::closeForm();
       echo "&nbsp;&nbsp;";
@@ -451,7 +461,8 @@ class PluginFusioninventoryWizard {
                               'general_inventory.png',
                               '');
 
-      echo "<center>".__('Welcome in FusionInventory. Begin configuration?', 'fusioninventory')."</center><br/>";
+      echo "<center>".__('Welcome in FusionInventory. Begin configuration?', 'fusioninventory').
+              "</center><br/>";
 
       PluginFusioninventoryWizard::displayButtons($a_buttons, $ariane);
    }
@@ -513,7 +524,8 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_iprange($ariane='') {
-      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryWizard", array('f'=>'setIprange'));
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryWizard", 
+                                                   array('f'=>'setIprange'));
    }
 
 
@@ -526,7 +538,9 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_importrules($ariane='') {
-      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryInventoryRuleImportCollection");
+      PluginFusioninventoryWizard::displayShowForm(
+                                             $ariane,
+                                             "PluginFusioninventoryInventoryRuleImportCollection");
    }
 
 
@@ -539,7 +553,9 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_entityrules($ariane='') {
-      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryInventoryRuleEntityCollection");
+      PluginFusioninventoryWizard::displayShowForm(
+                                             $ariane, 
+                                             "PluginFusioninventoryInventoryRuleEntityCollection");
    }
 
 
@@ -565,7 +581,9 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_remotedevices($ariane='') {
-      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryWizard", array('f'=>'setESX'));
+      PluginFusioninventoryWizard::displayShowForm($ariane, 
+                                                   "PluginFusioninventoryWizard", 
+                                                   array('f'=>'setESX'));
    }
 
 
@@ -606,7 +624,8 @@ class PluginFusioninventoryWizard {
       global $DB;
 
       if (isset($_SESSION["plugin_fusioninventory_forcerun"])) {
-         Html::redirect($_SERVER["PHP_SELF"]."?wizz=".PluginFusioninventoryWizard::getNextStep($ariane));
+         Html::redirect($_SERVER["PHP_SELF"]."?wizz=".
+                 PluginFusioninventoryWizard::getNextStep($ariane));
          exit;
       }
 
@@ -622,9 +641,12 @@ class PluginFusioninventoryWizard {
                ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
             LEFT JOIN `glpi_plugin_fusioninventory_tasks`
                ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
-            WHERE `glpi_plugin_fusioninventory_tasks`.`name` = 'wizard - netdiscovery - ".$pfIPRange->fields['name']."'
+            WHERE `glpi_plugin_fusioninventory_tasks`.`name` = 'wizard - netdiscovery - ".
+                 $pfIPRange->fields['name']."'
                AND `is_active`='1'
-               AND `definition`='".exportArrayToDB(array(array('PluginFusioninventoryIPRange' => $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])))."'
+               AND `definition`='".exportArrayToDB(array(
+                   array('PluginFusioninventoryIPRange' => 
+                       $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])))."'
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) > 0) {
@@ -650,7 +672,9 @@ class PluginFusioninventoryWizard {
             $input['name'] = 'wizard - netdiscovery - '.$pfIPRange->fields['name'];
             $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusioninventory");
             $input['method'] = 'netdiscovery';
-            $input['definition'] = exportArrayToDB(array(array('PluginFusioninventoryIPRange' => $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])));
+            $input['definition'] = exportArrayToDB(array(
+                array('PluginFusioninventoryIPRange' => 
+                    $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])));
             $a_agentscan = $pfAgentmodule->getAgentsCanDo('NETDISCOVERY');
             $a_agents = array();
             foreach ($a_agentscan as $data) {
@@ -677,9 +701,12 @@ class PluginFusioninventoryWizard {
                ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
             LEFT JOIN `glpi_plugin_fusioninventory_tasks`
                ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
-            WHERE `glpi_plugin_fusioninventory_tasks`.`name` = 'wizard - netinventory - ".$pfIPRange->fields['name']."'
+            WHERE `glpi_plugin_fusioninventory_tasks`.`name` = 'wizard - netinventory - ".
+                 $pfIPRange->fields['name']."'
                AND `is_active`='1'
-               AND `definition`='".exportArrayToDB(array(array('PluginFusioninventoryIPRange' => $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])))."'
+               AND `definition`='".exportArrayToDB(array(
+                   array('PluginFusioninventoryIPRange' => 
+                       $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])))."'
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) > 0) {
@@ -705,7 +732,9 @@ class PluginFusioninventoryWizard {
             $input['name'] = 'wizard - netinventory - '.$pfIPRange->fields['name'];
             $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusioninventory");
             $input['method'] = 'snmpinventory';
-            $input['definition'] = exportArrayToDB(array(array('PluginFusioninventoryIPRange' => $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])));
+            $input['definition'] = exportArrayToDB(array(
+                array('PluginFusioninventoryIPRange' => 
+                    $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])));
             $a_agentscan = $pfAgentmodule->getAgentsCanDo('SNMPINVENTORY');
             $a_agents = array();
             foreach ($a_agentscan as $data) {
@@ -732,9 +761,12 @@ class PluginFusioninventoryWizard {
                ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
             LEFT JOIN `glpi_plugin_fusioninventory_tasks`
                ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
-            WHERE `glpi_plugin_fusioninventory_tasks`.`name` = 'wizard - esx - ".$pfCredentialIp->fields['name']."'
+            WHERE `glpi_plugin_fusioninventory_tasks`.`name` = 'wizard - esx - ".
+                 $pfCredentialIp->fields['name']."'
                AND `is_active`='1'
-               AND `definition`='".exportArrayToDB(array(array('PluginFusioninventoryCredentialIp' => $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])))."'
+               AND `definition`='".exportArrayToDB(array(
+                   array('PluginFusioninventoryCredentialIp' => 
+                       $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])))."'
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) > 0) {
@@ -760,7 +792,9 @@ class PluginFusioninventoryWizard {
             $input['name'] = 'wizard - esx - '.$pfCredentialIp->fields['name'];
             $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusioninventory");
             $input['method'] = 'ESX';
-            $input['definition'] = exportArrayToDB(array(array('PluginFusioninventoryCredentialIp' => $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])));
+            $input['definition'] = exportArrayToDB(array(
+                array('PluginFusioninventoryCredentialIp' => 
+                    $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])));
             $a_agentscan = $pfAgentmodule->getAgentsCanDo('ESX');
             $a_agents = array();
             foreach ($a_agentscan as $data) {
@@ -840,7 +874,8 @@ class PluginFusioninventoryWizard {
       PluginFusioninventoryWizard::displayShowForm($ariane,
               "PluginFusinvinventoryConfig",
               array('f'=>'showForm',
-                    'arg1'=>array('target'=> $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/configuration.form.php"
+                    'arg1'=>array('target'=> $CFG_GLPI['root_doc'].
+                        "/plugins/fusioninventory/front/configuration.form.php"
               ),
               'noadditem'=>1));
 
@@ -931,7 +966,8 @@ class PluginFusioninventoryWizard {
       echo "<th>".__('End of IP range', 'fusioninventory')."</th>";
       echo "</tr>";
 
-      $a_ipranges = $pfiprange->find("`entities_id` IN (".$_SESSION['glpiactiveentities_string'].")");
+      $a_ipranges = $pfiprange->find("`entities_id` IN (".
+              $_SESSION['glpiactiveentities_string'].")");
       foreach ($a_ipranges as $data) {
          echo "<tr class='tab_bg_1'>";
          echo "<td><input type='radio' name='iprange[]' value='".$data['id']."' /></td>";
@@ -989,7 +1025,8 @@ class PluginFusioninventoryWizard {
       echo "<th colspan='2'>".__('IP')."</th>";
       echo "</tr>";
 
-      $a_credentialips = $pfCredentialIp->find("`entities_id` IN (".$_SESSION['glpiactiveentities_string'].")");
+      $a_credentialips = $pfCredentialIp->find("`entities_id` IN (".
+              $_SESSION['glpiactiveentities_string'].")");
       foreach ($a_credentialips as $data) {
          echo "<tr class='tab_bg_1'>";
          echo "<td><input type='radio' name='credentialip[]' value='".$data['id']."' /></td>";
@@ -1018,7 +1055,8 @@ class PluginFusioninventoryWizard {
       echo "</tr>";
 
 
-      $a_credentials = $pfCredential->find("`entities_id` IN (".$_SESSION['glpiactiveentities_string'].")");
+      $a_credentials = $pfCredential->find("`entities_id` IN (".
+              $_SESSION['glpiactiveentities_string'].")");
       foreach ($a_credentials as $data) {
          $pfCredential->getFromDB($data['id']);
          echo "<tr class='tab_bg_1'>";

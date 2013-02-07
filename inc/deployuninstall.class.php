@@ -47,10 +47,10 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployUninstall extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-
       return __('Uninstallation', 'fusioninventory');
-
    }
+   
+   
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
@@ -59,6 +59,8 @@ class PluginFusioninventoryDeployUninstall extends CommonDBTM {
 
       }
    }
+   
+   
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch(get_class($item)) {

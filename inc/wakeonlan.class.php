@@ -74,9 +74,12 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             if ((!in_array('.1', $a_action))
                AND (!in_array('.2', $a_action))) {
 
-               $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token FROM `glpi_plugin_fusioninventory_agents`
-                  LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-                  LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+               $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, 
+                     token FROM `glpi_plugin_fusioninventory_agents`
+                  LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = 
+                     `glpi_plugin_fusioninventory_agents`.`items_id`
+                  LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = 
+                     `glpi_plugin_fusioninventory_agents`.`items_id`
                   WHERE `glpi_networkports`.`itemtype`='Computer'
                      AND  `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'";
                $result = $DB->query($query);
@@ -139,10 +142,10 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             $pfTaskjoblog->add($a_input);
 
          $pfTaskjobstate->changeStatusFinish($Taskjobstates_id,
-                                                                 0,
-                                                                 'Computer',
-                                                                 1,
-                                                                 "Unable to find agent to run this job");
+                                             0,
+                                             'Computer',
+                                             1,
+                                             "Unable to find agent to run this job");
       } else {
          $nb_computers = ceil(count($a_definitions) / count($a_agentList));
 
@@ -192,7 +195,8 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
       $changestate = 0;
       foreach ($a_Taskjobstates as $data) {
-         $a_networkPort = $NetworkPort->find("`itemtype`='Computer' AND `items_id`='".$data['items_id']."' ");
+         $a_networkPort = $NetworkPort->find("`itemtype`='Computer' AND `items_id`='".
+                                                $data['items_id']."' ");
          $computerip = 0;
          foreach ($a_networkPort as $datanetwork) {
             if ($datanetwork['ip'] != "127.0.0.1") {
@@ -212,28 +216,28 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                      $changestate = $pfTaskjobstate->fields['id'];
                   } else {
                      $pfTaskjobstate->changeStatusFinish($data['id'],
-                                                                       $data['items_id'],
-                                                                       $data['itemtype'],
-                                                                       0,
-                                                                       "Merged with ".$changestate);
+                                                         $data['items_id'],
+                                                         $data['itemtype'],
+                                                         0,
+                                                         "Merged with ".$changestate);
                   }
 
                   // Update taskjobstate (state = 3 : finish); Because we haven't return of agent on this action
                   $pfTaskjobstate->changeStatusFinish($data['id'],
-                                                                        $data['items_id'],
-                                                                        $data['itemtype'],
-                                                                        0,
-                                                                        'WakeOnLan have not return state',
-                                                                        1);
+                                                      $data['items_id'],
+                                                      $data['itemtype'],
+                                                      0,
+                                                      'WakeOnLan have not return state',
+                                                      1);
                }
             }
          }
          if ($computerip == '0') {
             $pfTaskjobstate->changeStatusFinish($data['id'],
-                                                                    $data['items_id'],
-                                                                    $data['itemtype'],
-                                                                    1,
-                                                                    "No IP found on the computer");
+                                                $data['items_id'],
+                                                $data['itemtype'],
+                                                1,
+                                                "No IP found on the computer");
 
          }
       }
@@ -279,7 +283,9 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
          if ($pass == "1") {
             // It's not linux
-            $osfind = str_replace('AND operatingsystems_id IN ', 'AND operatingsystems_id NOT IN ', $osfind);
+            $osfind = str_replace('AND operatingsystems_id IN ', 
+                                  'AND operatingsystems_id NOT IN ', 
+                                  $osfind);
          }
 
          if ($subnet != '') {
@@ -299,9 +305,12 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          $where .= ")
             AND `ip` != '127.0.0.1' ";
 
-         $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token FROM `glpi_plugin_fusioninventory_agents`
-            LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-            LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+         $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token 
+            FROM `glpi_plugin_fusioninventory_agents`
+            LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = 
+               `glpi_plugin_fusioninventory_agents`.`items_id`
+            LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = 
+               `glpi_plugin_fusioninventory_agents`.`items_id`
             WHERE `glpi_networkports`.`itemtype`='Computer'
                ".$subnet."
                ".$osfind."

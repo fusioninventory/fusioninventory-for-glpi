@@ -50,6 +50,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       return __('Audits', 'fusioninventory');
    }
 
+   
+   
    static function getTypes() {
       return array(
          'winkeyExists'     => __("winkeyExists", 'fusioninventory'),
@@ -65,6 +67,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       );
    }
 
+   
+   
    static function displayForm($orders_id, $datas, $rand) {
       global $CFG_GLPI;
 
@@ -169,6 +173,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       </script>";
    }
 
+   
+   
    static function dropdownType($datas) {
       global $CFG_GLPI;
 
@@ -218,6 +224,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       }
    }
 
+   
+   
    static function displayAjaxValue($datas) {
 
       $value = $datas['value'];
@@ -336,6 +344,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "</table>";
    }
 
+   
+   
    static function add_item($params) {
       if (!isset($params['value'])) {
          $params['value'] = "";
@@ -363,6 +373,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
+   
+   
    static function save_item($params) {
       if (!isset($params['value'])) {
          $params['value'] = "";
@@ -393,6 +405,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
+   
+   
 
    static function remove_item($params) {
       //get current order json
@@ -407,6 +421,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
+   
+   
    static function move_item($params) {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);

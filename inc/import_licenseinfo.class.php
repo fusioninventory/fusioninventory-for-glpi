@@ -126,7 +126,9 @@ class PluginFusinvinventoryImport_LicenseInfo extends CommonDBTM {
       $pfLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
       $pfLicenseInfo->getFromDB($items_id);
       if ($pfLicenseInfo->fields['computers_id'] == $idmachine) {
-         $pfLicenseInfo->delete(array("id" => $items_id), 0, $_SESSION["plugin_fusinvinventory_history_add"]);
+         $pfLicenseInfo->delete(array("id" => $items_id), 
+                                0, 
+                                $_SESSION["plugin_fusinvinventory_history_add"]);
       }
    }
 }

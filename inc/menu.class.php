@@ -328,8 +328,7 @@ class PluginFusioninventoryMenu {
 
       $width_max = 950;
 
-      $width = 0;
-      $width="180";
+      $width = 180;
 
       if (($width + $width_status) > $width_max) {
          $width_status = 0;

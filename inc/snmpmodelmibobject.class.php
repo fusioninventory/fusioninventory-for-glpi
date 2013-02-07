@@ -48,7 +48,6 @@ class PluginFusioninventorySnmpmodelMibObject extends CommonDropdown {
    // From CommonDBTM
 
    static function getTypeName($nb=0) {
-
       return "Plugin FusionInventory MIB object";
    }
 }

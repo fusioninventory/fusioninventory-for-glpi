@@ -120,7 +120,11 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       echo "</tr>";
 
       $query = "SELECT * FROM `".$this->getTable()."`
-         WHERE ".getEntitiesRestrictRequest("", $this->getTable(), '', '', $this->maybeRecursive())."
+         WHERE ".getEntitiesRestrictRequest("", 
+                                            $this->getTable(), 
+                                            '', 
+                                            '', 
+                                            $this->maybeRecursive())."
          ORDER BY `date`DESC
          LIMIT ".intval($start).", ".intval($_SESSION['glpilist_limit']);
       $result = $DB->query($query);

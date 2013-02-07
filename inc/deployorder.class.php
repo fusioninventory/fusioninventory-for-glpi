@@ -52,6 +52,8 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
    const INSTALLATION_ORDER   = 0;
    const UNINSTALLATION_ORDER = 1;
 
+   
+   
    static function getRender($render) {
       if ($render == 'install') {
          return PluginFusioninventoryDeployOrder::INSTALLATION_ORDER;
@@ -60,6 +62,7 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
    }
 
+   
 
    /**
     * Create installation & uninstallation orders
@@ -82,6 +85,8 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
    }
 
+   
+   
    static function getJson($orders_id) {
       $order = new self;
       $order->getFromDB($orders_id);
@@ -92,6 +97,8 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
    }
 
+   
+   
    static function updateOrderJson($orders_id, $datas) {
       $order = new PluginFusioninventoryDeployOrder;
       return $order->update(array(
@@ -100,6 +107,8 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       ));
    }
 
+   
+   
    /**
     * TODO:
     * Create Orders from JSON format import/export
@@ -108,6 +117,8 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
 
    }
 
+   
+   
    /**
     * Get order ID associated with a package, by type
     * @param packages_id the package ID
@@ -128,10 +139,11 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
    }
 
+   
+   
    static function getOrderDetails($status = array(), $order_type = self::INSTALLATION_ORDER) {
 
       //get all jobstatus for this task
-      $results = array();
       $package_id = $status['items_id'];
       $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deployorders',
                                   "`plugin_fusioninventory_deploypackages_id`='$package_id'" .
@@ -162,8 +174,6 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
 
       return $orders;
    }
-
-
 }
 
 ?>

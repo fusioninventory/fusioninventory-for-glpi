@@ -375,7 +375,8 @@ function appear_array(id){
    * @return nothing
    *
    **/
-   function showHistoryLines($taskjobstates_id, $displayprocess = 1, $displaytaskjob=0, $nb_td='5') {
+   function showHistoryLines($taskjobstates_id, $displayprocess = 1, $displaytaskjob=0, 
+                             $nb_td='5') {
       global $CFG_GLPI;
 
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();

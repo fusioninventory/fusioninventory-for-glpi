@@ -406,7 +406,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $computers_id = $items_id;
       }
       
-      if ($Computers_id > 0) {
+      if ($computers_id > 0) {
          $ip = PluginFusioninventoryToolbox::getIPforDevice('Computer', $computers_id);
       }
       return $ip;
@@ -666,7 +666,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       # Guess the machine name from the DEVICEID,
       # useful when Windows domain != DNS domain
       $stack = array();
-      if(preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/', $pfAgent->fields['name'], $stack)) {
+      if(preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/', 
+                    $pfAgent->fields['name'], 
+                    $stack)) {
          array_push($ret, "http://".$stack[1].":".$config->getValue('agent_port'));
       }
 

@@ -58,7 +58,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          curl_setopt($this->fp, CURLOPT_PROXYTYPE, 'HTTP');
          curl_setopt($this->fp, CURLOPT_PROXY, $CFG_GLPI['proxy_name']);
          if ($CFG_GLPI['proxy_user'] != '') {
-            curl_setopt($this->fp, CURLOPT_PROXYUSERPWD, $CFG_GLPI['proxy_user'].":".$CFG_GLPI['proxy_passwd']);
+            curl_setopt($this->fp, 
+                        CURLOPT_PROXYUSERPWD, 
+                        $CFG_GLPI['proxy_user'].":".$CFG_GLPI['proxy_passwd']);
          }
       }
       curl_setopt($this->fp, CURLOPT_POST, TRUE);
@@ -90,7 +92,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
          echo "Authentication is not right, verify login and password !<br/>
-            See <a href='http://www.fusioninventory.org/documentation/fi4g/snmpmodels'>documentation</a>";
+            See <a href='http://www.fusioninventory.org/documentation/fi4g/snmpmodels'>".
+                 "documentation</a>";
          echo "</td>";
          echo "</tr>";
 
@@ -133,7 +136,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo "<a href='http://www.fusioninventory.org/documentation/fi4g/snmpmodels'>Documentation</a>";
+      echo "<a href='http://www.fusioninventory.org/documentation/fi4g/snmpmodels'>".
+              "Documentation</a>";
       echo "</td>";
       echo "</tr>";
 
@@ -251,7 +255,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo  "<table width='950' align='center'>
          <tr>
          <td>
-         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?reset=reset'>Back to main menu</a>
+         <a href='".$CFG_GLPI['root_doc'].
+              "/plugins/fusinvsnmp/front/constructmodel.php?reset=reset'>Back to main menu</a>
          </td>
          </tr>
          </table>";
@@ -271,7 +276,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          $this->showUploadSnmpwalk($sysdescr, $itemtype);
          // Upload snmpwalk
          // send to server (it add sysdescr and lock for this user)
-         // server return oids, mapping, oids most used for this kind of device (check with sysdescr)
+         // server return oids, mapping, oids most used for this kind of device 
+         // (check with sysdescr)
       } else {
       
          $edit = 1;
@@ -301,7 +307,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             $id = $devices_id;
          } else {
             $id = $data->device->id;
-            Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$id);
+            Html::redirect($CFG_GLPI['root_doc'].
+                              "/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$id);
          }
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
                    WHERE `construct_device_id`='".$id."'
@@ -319,7 +326,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             }
          }
             
-         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?editoid=".$data->device->id."'>";
+         echo "<a href='".$CFG_GLPI['root_doc'].
+                 "/plugins/fusinvsnmp/front/constructmodel.php?editoid=".$data->device->id."'>";
          if ($edit == '1') {
             echo "Edit oids";
          } else {
@@ -327,10 +335,14 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          }
          echo "</a>";
          echo "&nbsp; &nbsp; | &nbsp; &nbsp;";
-         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?id=".$data->device->id."' target='_blank'>Get SNMP model</a>";
+         echo "<a href='".$CFG_GLPI['root_doc'].
+                 "/plugins/fusinvsnmp/front/constructsendmodel.php?id=".$data->device->id."' ".
+                 "target='_blank'>Get SNMP model</a>";
          if ($data->device->snmpmodels_id > 0) {
             echo "&nbsp; &nbsp; | &nbsp; &nbsp;";
-            echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".$data->device->snmpmodels_id."' target='_blank'>Import SNMP model</a>";
+            echo "<a href='".$CFG_GLPI['root_doc'].
+                    "/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".
+                    $data->device->snmpmodels_id."' target='_blank'>Import SNMP model</a>";
          }
          echo "</th>";
          echo "</tr>";
@@ -453,8 +465,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             echo "snmpwalk file present";
             echo "<form method='post' name='' id=''  action=''>";
             echo "<input type='hidden' name='devices_id' value='".$devices_id."' />";
-            echo "<div align='center'><input type='submit' name='deletesnmpwalkfile' value=\"" . __('Delete permanently') .
-                 "\" class='submit' >";
+            echo "<div align='center'><input type='submit' name='deletesnmpwalkfile' ".
+                    "value=\"".__('Delete permanently')."\" class='submit' >";
             Html::closeForm();
             echo "</td>";
             echo "</tr>";
@@ -575,7 +587,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       
       echo "<tr class='tab_bg_3 center'>";
       echo "<td colspan='2'>";
-      echo "<i>IMPORTANT: This file keep in your GLPI server, and no data of this will be uploaded in central server</i>";
+      echo "<i>IMPORTANT: This file keep in your GLPI server, and no data of this will be ".
+              "uploaded in central server</i>";
       echo "</td>";
       echo "</tr>";
       
@@ -656,7 +669,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
                                  trim($model->model));
             }            
          } else {
-            file_put_contents(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/'.$data->snmpmodel->name.'.xml', 
+            file_put_contents(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/'.$data->snmpmodel->name.
+                                 '.xml', 
                               trim($data->snmpmodel->model));
          }
       }
@@ -687,8 +701,13 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $array_sort['itemtype'] = 'Itemtype';
       $array_sort['stabledevel'] = 'Stable/devel';
       $array_sort['snmpfile'] = 'Snmpfile';
-      Dropdown::showFromArray('sort', $array_sort, array('value' => $_SESSION['glpi_plugin_fusioninventory_constructmodelsort']));
-      echo "&nbsp;<input type='submit' name='updatesort' class='submit' value=\"".__('Update')."\" >";
+      Dropdown::showFromArray('sort', 
+                              $array_sort, 
+                     array(
+                       'value' => $_SESSION['glpi_plugin_fusioninventory_constructmodelsort']
+                     ));
+      echo "&nbsp;<input type='submit' name='updatesort' class='submit' ".
+              "value=\"".__('Update')."\" >";
       Html::closeForm();
       echo "</center>";
       
@@ -771,13 +790,13 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          | <a href='#import'>Import button</a> |</center><br/>";
       
       echo "<a id='not'>".$menu."</a>";
-      $this->displayModelsList($data, $nb_devices, $a_sort, 'not');
+      $this->displayModelsList($data, $a_sort, 'not');
       
       echo "<a id='part'>".$menu."</a>";
-      $this->displayModelsList($data, $nb_devices, $a_sort, 'part');
+      $this->displayModelsList($data, $a_sort, 'part');
 
       echo "<a id='ok'>".$menu."</a>";
-      $this->displayModelsList($data, $nb_devices, $a_sort, 'ok');
+      $this->displayModelsList($data, $a_sort, 'ok');
       
       echo "<a id='import'>".$menu."</a>";
       Html::openArrowMassives("form_model", TRUE);
@@ -788,7 +807,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    
-   function displayModelsList($data, $nb_devices, $a_sort, $modelimport) {
+   function displayModelsList($data, $a_sort, $modelimport) {
       global $CFG_GLPI, $DB;
       
       echo  "<table class='tab_cadre'>";
@@ -811,8 +830,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "<th colspan='5'>";
          echo "Models up to date";
       }
-      
-      
+            
       echo "</th>";
       echo "</tr>";
       
@@ -854,9 +872,12 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
       
-      array_multisort($a_sort[$_SESSION['glpi_plugin_fusioninventory_constructmodelsort']], SORT_ASC, 
-                      $a_sort['itemtype'], SORT_ASC, 
-                      $a_sort['name'], SORT_ASC, 
+      array_multisort($a_sort[$_SESSION['glpi_plugin_fusioninventory_constructmodelsort']], 
+                      SORT_ASC, 
+                      $a_sort['itemtype'], 
+                      SORT_ASC, 
+                      $a_sort['name'], 
+                      SORT_ASC, 
                       $data);
       foreach ($data as $key => $a_models) {
          if ($a_sort['stabledevel'][$key] == $modelimport) {
@@ -866,7 +887,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             echo "<input type='checkbox' name='models[]' value='".$a_models['id']."'/>";
             echo "</td>";
             echo "<td align='center' rowspan='".$nbdevices."'>";
-            echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".$a_models['id']."'>";
+            echo "<a href='".$CFG_GLPI['root_doc'].
+                    "/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".
+                    $a_models['id']."'>";
             echo "<font color='#000000'>".$a_models['name']."</font>";
             echo "</a>";
             echo "</td>";
@@ -887,8 +910,11 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
                echo $a_devices['sysdescr'];
                echo "</td>";
                echo "<td align='center'>";
-               echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$a_devices['id']."'>";
-               echo "<img src='".$CFG_GLPI["root_doc"]."/pics/rapports.png' width='18' height='18' />";
+               echo "<a href='".$CFG_GLPI['root_doc'].
+                       "/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".
+                       $a_devices['id']."'>";
+               echo "<img src='".$CFG_GLPI["root_doc"].
+                       "/pics/rapports.png' width='18' height='18' />";
 
                echo "</a>";
                echo "</td>";
@@ -910,7 +936,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
                   if ($DB->numrows($result) > 0) {
                      $datam = $DB->fetch_assoc($result);
                      if ($datam['name'] == $a_models['name']) {
-                        echo "<img src='".$CFG_GLPI["root_doc"]."/pics/ok.png' width='20' height='20'/>";
+                        echo "<img src='".$CFG_GLPI["root_doc"].
+                                "/pics/ok.png' width='20' height='20'/>";
                      } else {
 //                        echo "May be updated";
                      }
@@ -1041,7 +1068,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<input type='text' name='numeric_oid' value='' size='35'/>";
       echo "</td>";
       echo "<td>";
-      echo "For example we use this oid to get <i>name</i> :<br/> <strong>.1.3.6.1.2.1.1.5.0</strong>";
+      echo "For example we use this oid to get <i>name</i> :<br/> ".
+              "<strong>.1.3.6.1.2.1.1.5.0</strong>";
       echo "</td>";
       echo "</tr>";
       
@@ -1053,7 +1081,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<input type='text' name='mib_oid' value='' size='35'/>";
       echo "</td>";
       echo "<td>";
-      echo "For example we use this mib oid to get <i>name</i> :<br/> <strong>SNMPv2-MIB::sysName.0</strong>";
+      echo "For example we use this mib oid to get <i>name</i> :<br/> ".
+              "<strong>SNMPv2-MIB::sysName.0</strong>";
       echo "</td>";
       echo "</tr>";
       
@@ -1065,8 +1094,10 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       Dropdown::showInteger("nboids_after", 0, 0, 20);
       echo "</td>";
       echo "<td>";
-      echo "* For the oid for <i>name</i> there is no other thing after .1.3.6.1.2.1.1.5.0, so it's <strong>0</strong><br/>
-            * For the oid for <i>ifName</i>, we get the port id like .1.3.6.1.2.1.31.1.1.1.1<strong>.10001</strong>, 
+      echo "* For the oid for <i>name</i> there is no other thing after ".
+              ".1.3.6.1.2.1.1.5.0, so it's <strong>0</strong><br/>
+            * For the oid for <i>ifName</i>, we get the port id like ".
+              ".1.3.6.1.2.1.31.1.1.1.1<strong>.10001</strong>, 
             .1.3.6.1.2.1.31.1.1.1.1<strong>.10002</strong>... so it's <strong>1</strong>";
       echo "</td>";
       echo "</tr>";

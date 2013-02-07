@@ -195,8 +195,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                      $this->addtaskjoblog();
                   } else {
                      if (count($a_inventory) > 0) {
-                        $errors .= $this->sendCriteria($this->arrayinventory['DEVICEID'], 
-                                                       $a_inventory);
+                        $errors .= $this->sendCriteria($a_inventory);
                         $nbDevices++;
                      }
                   }
@@ -270,8 +269,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             break;
 
          case 'NetworkEquipment':
-            $pfInventoryNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
-            $pfInventoryNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $items_id);
+            $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+            $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $items_id);
             break;
 
          default:
@@ -342,17 +341,17 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     *
     * @return errors string to be alimented if import ko / '' if ok
     */
-   function importInfo($itemtype, $items_id, $a_inventory) {
-
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusioninventoryCommunicationNetworkInventory->importInfo().');
-      $errors='';
-      if ($itemtype == 'NetworkEquipment') {
-      } elseif ($itemtype == 'Printer') {
-         $errors.=$this->importInfoPrinter($a_inventory);
-      }
-      return $errors;
-   }
+//   function importInfo($itemtype, $items_id, $a_inventory) {
+//
+//      PluginFusioninventoryCommunication::addLog(
+//              'Function PluginFusioninventoryCommunicationNetworkInventory->importInfo().');
+//      $errors='';
+//      if ($itemtype == 'NetworkEquipment') {
+//      } elseif ($itemtype == 'Printer') {
+//         $errors.=$this->importInfoPrinter($a_inventory);
+//      }
+//      return $errors;
+//   }
 
 
 
@@ -421,12 +420,12 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                if (!in_array('otherserial', $a_lockable)) {
                   $otherserial = $value;
                   if (strstr($otherserial, "chr(hex")) {
-                     $otherserial = str_replace("chr(hex(", "", $otherserial);
-                     $otherserial = str_replace("))", "", $otherserial);
-                     $otherserial = substr($otherserial, 4);
-                     $otherserial = $this->hexToStr($otherserial);
+                     $otherserial1 = str_replace("chr(hex(", "", $otherserial);
+                     $otherserial2 = str_replace("))", "", $otherserial1);
+                     $otherserial3 = substr($otherserial2, 4);
+                     $otherserial4 = $this->hexToStr($otherserial3);
                   }
-                  $this->ptd->setValue('otherserial', $otherserial);
+                  $this->ptd->setValue('otherserial', $otherserial4);
                }
                break;
 
@@ -983,12 +982,11 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    /**
     * Send XML of SNMP device to rules
     *
-    * @param varchar $p_DEVICEID
     * @param simplexml $p_CONTENT
     *
     * @return type
     */
-   function sendCriteria($p_DEVICEID, $a_inventory) {
+   function sendCriteria($a_inventory) {
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkInventory->sendCriteria().');
@@ -1044,14 +1042,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $_SESSION['plugin_fusioninventory_classrulepassed'] = 
                                  "PluginFusioninventoryCommunicationNetworkInventory";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
-      $data = array();
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    "Input data : ".print_r($input, TRUE));
       $data = $rule->processAllRules($input, array());
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    $data);
       if (isset($data['action']) 
-              && ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
+             && ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
 
          $a_text = '';
          foreach ($input as $key=>$data) {

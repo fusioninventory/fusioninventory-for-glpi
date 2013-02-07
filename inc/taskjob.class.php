@@ -49,9 +49,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    *
    **/
    static function getTypeName($nb=0) {
-
       return __('Job', 'fusioninventory');
-
    }
 
 
@@ -254,7 +252,6 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<textarea cols='40' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' ".
               "value='".$_POST['id']."' />";
-      $a_methods = array();
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       foreach ($a_methods as $datas) {
          echo "<input type='hidden' name='method-".$datas['method']."' ".
@@ -560,7 +557,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    * @return value rand of the dropdown
    *
    **/
-   function dropdownvalue($myname, $definitiontype, $method, $deftypeid, $taskjobs_id, $value=0, $entity_restrict='', $title = 0) {
+   function dropdownvalue($myname, $definitiontype, $method, $deftypeid, $taskjobs_id, $value=0, 
+                          $entity_restrict='', $title = 0) {
       global $CFG_GLPI;
 
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
@@ -574,9 +572,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       $rand = '';
       $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
       $iddropdown = '';
-      if (is_callable(array($class, "task_".$_POST['name']."selection_".$definitiontype."_".$method))) {
+      if (is_callable(array($class, "task_".$_POST['name']."selection_".
+            $definitiontype."_".$method))) {
          $rand = call_user_func(array($class,
-                                      "task_".$_POST['name']."selection_".$definitiontype."_".$method),
+                                      "task_".$_POST['name']."selection_".$definitiontype."_".
+                                          $method),
                                 $title);
 
          $iddropdown = "dropdown_".$_POST['name']."selectiontoadd";
@@ -588,7 +588,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
 
       echo "<br/><center><input type='button' id='add_button_".$_POST['name'].$taskjobs_id."' ".
-              "name='add_button_".$_POST['name']."' value=\"".__('Add')."\" class='submit'></center>";
+              "name='add_button_".$_POST['name']."' value=\"".__('Add').
+              "\" class='submit'></center>";
       $params = array('items_id'  => '__VALUE0__',
                       'add_button_'.$_POST['name'].$taskjobs_id => '__VALUE1__',
                       'itemtype'  => $definitiontype,
@@ -613,9 +614,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
 
    function showList($id, $name) {
-      global $DB, $CFG_GLPI;
+      global $CFG_GLPI;
 
-      $ok = 0;
       $ok = $this->getFromDB($id);
       echo "<table class='tab_cadre'>";
       $nb = 0;
@@ -630,7 +630,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
                } else if ($itemtype == "PluginFusioninventoryAgent"
                        AND $items_id == ".2" ) {
-                  $display = __('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
+                  $display = 
+                        __('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
 
                } else {
                   $class = new $itemtype();
@@ -819,8 +820,10 @@ return namelist;
    * @return value rand of the dropdown
    *
    **/
-   function dropdownAction($myname, $actiontype, $method, $actiontypeid, $value=0, $entity_restrict='') {
+   function dropdownAction($myname, $actiontype, $method, $actiontypeid, $value=0, 
+                           $entity_restrict='') {
       global $CFG_GLPI;
+      
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $module = '';
       foreach ($a_methods as $datas) {
@@ -829,7 +832,6 @@ return namelist;
          }
       }
 
-      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $rand = '';
 
       $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
@@ -942,7 +944,8 @@ return namelist;
          ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
       WHERE `is_active`='1'
          AND `status` = '0'
-         AND `".$pfTaskjob->getTable()."`.`execution_id`=`glpi_plugin_fusioninventory_tasks`.`execution_id`
+         AND `".$pfTaskjob->getTable()."`.`execution_id`=`glpi_plugin_fusioninventory_tasks`.".
+              "`execution_id`
          AND UNIX_TIMESTAMP(date_scheduled) <= '".$dateNow."' ";
       $result = $DB->query($query);
       $return = 0;
@@ -981,8 +984,8 @@ return namelist;
          ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
       WHERE `is_active`='1'
          AND `status` = '0'
-         AND `".$pfTaskjob->getTable()."`.`execution_id`=`glpi_plugin_fusioninventory_tasks`.`execution_id` + 1
-         ";
+         AND `".$pfTaskjob->getTable()."`.`execution_id`=`glpi_plugin_fusioninventory_tasks`.".
+              "`execution_id` + 1 ";
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $query2 = "SELECT * FROM `".getTableForItemType("PluginFusioninventoryTaskjobstate")."`
@@ -994,7 +997,6 @@ return namelist;
                   AND `date`>='".$data['date_scheduled']."'
             ORDER BY `".getTableForItemType("PluginFusioninventoryTaskjobstate")."`.`uniqid`";
          $result2 = $DB->query($query2);
-         $nb_retry = 0;
          $nb_retry = $DB->numrows($result2);
          $date_last = 0;
          while ($data2=$DB->fetch_array($result2)) {
@@ -1002,10 +1004,9 @@ return namelist;
          }
 
          if ($nb_retry > 0) {
-            $period = 0;
-            $period = $pfTaskjob->periodicityToTimestamp(
-                    $data['periodicity_type'],
-                    $data['periodicity_count']);
+//            $period = $pfTaskjob->periodicityToTimestamp(
+//                    $data['periodicity_type'],
+//                    $data['periodicity_count']);
 
             if (($date_last + ($data['retry_time'] * 60)) < date('U')) {
                $return = $pfTaskjob->prepareRunTaskjob($data);
@@ -1201,7 +1202,8 @@ return namelist;
          }
          unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
       } else {
-         $_SESSION["MESSAGE_AFTER_REDIRECT"] = __('Unable to run task because some jobs is running yet!', 'fusioninventory');
+         $_SESSION["MESSAGE_AFTER_REDIRECT"] = 
+               __('Unable to run task because some jobs is running yet!', 'fusioninventory');
 
       }
       return $uniqid;
@@ -1442,7 +1444,6 @@ return namelist;
       echo "</td>";
 
       echo "<td align='center'>";
-      $a_methods = array();
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       $a_parseMethods = array();
       $a_parseMethods[''] = "------";
@@ -1555,7 +1556,8 @@ return namelist;
          $sql = "SELECT * FROM `glpi_plugin_fusioninventory_tasks`
             LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
                ON `plugin_fusioninventory_tasks_id`=`glpi_plugin_fusioninventory_tasks`.`id`
-            WHERE `glpi_plugin_fusioninventory_taskjobs`.`id`='".$data['plugin_fusioninventory_taskjobs_id']."'
+            WHERE `glpi_plugin_fusioninventory_taskjobs`.`id`='".
+                 $data['plugin_fusioninventory_taskjobs_id']."'
             LIMIT 1 ";
          $result = $DB->query($sql);
          if ($DB->numrows($result) != 0) {
@@ -1564,10 +1566,12 @@ return namelist;
                $has_recent_log_entries = $pfTaskjoblog->find(
                        "`plugin_fusioninventory_taskjobstates_id`='".$data['id']."'
                           AND ADDTIME(`date`, '04:00:00') < NOW()", "id DESC", "1");
-               # No news from the agent since 4 hour. The agent is probably crached. Let's cancel the task
+               # No news from the agent since 4 hour. The agent is probably crached. 
+               //Let's cancel the task
                if (count($has_recent_log_entries) == 1) {
                      $a_statustmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
-                              AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
+                              AND `plugin_fusioninventory_agents_id`='".
+                                 $data['plugin_fusioninventory_agents_id']."'
                               AND (`state`='2' OR `state`='1') ");
                      foreach($a_statustmp as $datatmp) {
                         $pfTaskjobstate->changeStatusFinish($datatmp['id'],
@@ -1587,15 +1591,17 @@ return namelist;
 
                if (count($a_valid) == '1') {
                   // Get agent status
-                  $agentreturn = $this->getRealStateAgent($data['plugin_fusioninventory_agents_id']);
+                  $agentreturn = $this->getRealStateAgent(
+                                                $data['plugin_fusioninventory_agents_id']);
 
                   switch ($agentreturn) {
 
                      case 'waiting':
                         // token is bad and must force cancel task in server
                         $a_statetmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
-                                                   AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
-                                                   AND (`state`='2' OR `state`='1' OR `state`='0') ");
+                                 AND `plugin_fusioninventory_agents_id`='".
+                                    $data['plugin_fusioninventory_agents_id']."'
+                                 AND (`state`='2' OR `state`='1' OR `state`='0') ");
                         foreach($a_statetmp as $datatmp) {
                            $pfTaskjobstate->changeStatusFinish($datatmp['id'],
                                                                  0,
@@ -1613,8 +1619,9 @@ return namelist;
                      case 'noanswer':
                         // agent crash or computer is shutdown and force cancel task in server
                         $a_statetmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
-                                                   AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
-                                                   AND (`state`='2' OR `state`='1') ");
+                                       AND `plugin_fusioninventory_agents_id`='".
+                                          $data['plugin_fusioninventory_agents_id']."'
+                                       AND (`state`='2' OR `state`='1') ");
                         foreach($a_statetmp as $datatmp) {
                            $pfTaskjobstate->changeStatusFinish($datatmp['id'],
                                                                0,
@@ -1624,7 +1631,8 @@ return namelist;
                         }
                         if (count($a_valid4h) == 1) {
                            $a_statetmp = $pfTaskjobstate->find("`uniqid`='".$data['uniqid']."'
-                                                   AND `plugin_fusioninventory_agents_id`='".$data['plugin_fusioninventory_agents_id']."'
+                                                   AND `plugin_fusioninventory_agents_id`='".
+                                                      $data['plugin_fusioninventory_agents_id']."'
                                                    AND `state`='0' ");
                            foreach($a_statetmp as $datatmp) {
                               $pfTaskjobstate->changeStatusFinish($datatmp['id'],
@@ -1884,7 +1892,8 @@ return namelist;
                   $name = __('Auto managenement dynamic of agents', 'fusioninventory');
 
                } else if ($items_id == '.2') {
-                  $name = __('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
+                  $name = 
+                        __('Auto managenement dynamic of agents (same subnet)', 'fusioninventory');
 
                } else {
                   $name = $class->getLink(1);
@@ -1937,7 +1946,6 @@ return namelist;
       }
       $this->showFormHeader(array());
 
-      $a_methods = array();
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       foreach ($a_methods as $datas) {
          echo "<input type='hidden' name='method-".$datas['method']."' ".
@@ -2033,7 +2041,8 @@ return namelist;
       $pfTaskjob = new self();
       $a_list = $pfTaskjob->find("`method`='".$method."'");
 
-      echo "<form name='form_ic' method='post' action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
+      echo "<form name='form_ic' method='post' action='".Toolbox::getItemTypeFormURL(__CLASS__).
+              "'>";
       echo "<table class='tab_cadre_fixe' style='width:500px'>";
 
       echo "<tr class='tab_bg_1'>";
@@ -2042,7 +2051,8 @@ return namelist;
 
       if (isset($_SESSION['plugin_fusioninventory_wizard'])
               AND isset($_SESSION['plugin_fusioninventory_wizard']['tasks_id'])) {
-         $a_tasksjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$_SESSION['plugin_fusioninventory_wizard']['tasks_id']."'");
+         $a_tasksjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".
+                 $_SESSION['plugin_fusioninventory_wizard']['tasks_id']."'");
          $data = current($a_tasksjobs);
          $pfTaskjob->getFromDB($data['id']);
          echo "<tr class='tab_bg_1'>";
@@ -2306,7 +2316,6 @@ return namelist;
    
    function updateMethod($method, $taskjobs_id) {
       
-      $a_methods = array();
       $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       foreach ($a_methods as $datas) {
          if ($method == $datas['method']) {

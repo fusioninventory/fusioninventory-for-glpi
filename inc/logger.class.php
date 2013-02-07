@@ -56,6 +56,8 @@ class PluginFusioninventoryLogger {
       Toolbox::logInFile($file, $message);
    }
 
+   
+   
    /**
     * log when extra-debug and debug mode is activated
     */

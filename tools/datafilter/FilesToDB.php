@@ -51,7 +51,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
          $vendorId = $stack[1];
          $vendorName = $stack[2];
 
-         $sql_insert_vendor .= "\n(".$v.", '".$vendorId."', '".addslashes(htmlentities($vendorName))."'),";
+         $sql_insert_vendor .= "\n(".$v.", '".$vendorId."', '".
+                 addslashes(htmlentities($vendorName))."'),";
 
       }
 
@@ -61,7 +62,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
          $deviceId = $stack[1];
          $deviceName=$stack[2];
 
-         $sql_insert_device .= "\n(".$d.", '".$deviceId."', '".addslashes(htmlentities($deviceName))."', '".$v."'),";
+         $sql_insert_device .= "\n(".$d.", '".$deviceId."', '".
+                 addslashes(htmlentities($deviceName))."', '".$v."'),";
       }
    }
 
@@ -71,7 +73,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
    $sql_insert_device .= ";";
    $sql_insert_device = str_replace(",;", ";\n", $sql_insert_device);
 
-   file_put_contents("../../install/mysql/pciid.sql", utf8_encode($sql_creation.$sql_insert_vendor."\n\n".$sql_insert_device));
+   file_put_contents("../../install/mysql/pciid.sql", 
+                     utf8_encode($sql_creation.$sql_insert_vendor."\n\n".$sql_insert_device));
 }
 
 
@@ -122,7 +125,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
          $vendorId = $stack[1];
          $vendorName = $stack[2];
 
-         $sql_insert_vendor .= "\n(".$v.", '".$vendorId."', '".addslashes(htmlentities($vendorName))."'),";
+         $sql_insert_vendor .= "\n(".$v.", '".$vendorId."', '".
+                 addslashes(htmlentities($vendorName))."'),";
       }
 
       $stack = array();
@@ -131,7 +135,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
          $deviceId = $stack[1];
          $deviceName=$stack[2];
 
-          $sql_insert_device .= "\n(".$d.", '".$deviceId."', '".addslashes(htmlentities($deviceName))."', '".$v."'),";
+          $sql_insert_device .= "\n(".$d.", '".$deviceId."', '".
+                  addslashes(htmlentities($deviceName))."', '".$v."'),";
       }
    }
 
@@ -141,7 +146,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
    $sql_insert_device .= ";";
    $sql_insert_device = str_replace(",;", ";\n", $sql_insert_device);
 
-   file_put_contents("../../install/mysql/usbid.sql", utf8_encode($sql_creation.$sql_insert_vendor."\n\n".$sql_insert_device));
+   file_put_contents("../../install/mysql/usbid.sql", 
+                     utf8_encode($sql_creation.$sql_insert_vendor."\n\n".$sql_insert_device));
 }
 
 
@@ -160,7 +166,8 @@ function fileOUItoTreeFolder() {
             $OUI = strtr($OUI, "-", ":");
             $organization = $stack[2];
 
-            if (!is_dir(LIBSERVERFUSIONINVENTORY_STORAGELOCATION."/DataFilter/oui/$OUI/$organization")) {
+            if (!is_dir(LIBSERVERFUSIONINVENTORY_STORAGELOCATION.
+                    "/DataFilter/oui/$OUI/$organization")) {
               mkdir(LIBSERVERFUSIONINVENTORY_STORAGELOCATION."/DataFilter/oui/$OUI/$organization", 
                     0777, 
                     TRUE);

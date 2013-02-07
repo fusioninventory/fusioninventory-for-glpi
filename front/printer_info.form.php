@@ -47,7 +47,7 @@ PluginFusioninventoryProfile::checkRight("printer", "r");
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
       PluginFusioninventoryProfile::checkRight("printer", "w");
 
-   $plugin_fusioninventory_printer = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
+   $plugin_fusioninventory_printer = new PluginFusioninventoryPrinter();
 
    $_POST['printers_id'] = $_POST['id'];
    unset($_POST['id']);

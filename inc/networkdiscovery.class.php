@@ -155,10 +155,10 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                   $pfTaskjoblog->add($a_input);
 
                $pfTaskjobstate->changeStatusFinish($Taskjobstates_id,
-                                                                       0,
-                                                                       'PluginFusioninventoryIPRange',
-                                                                       1,
-                                                                       "Unable to find agent to run this job");
+                                                   0,
+                                                   'PluginFusioninventoryIPRange',
+                                                   1,
+                                                   "Unable to find agent to run this job");
                $input_taskjob = array();
                $input_taskjob['id'] = $pfTaskjob->fields['id'];
                //$input_taskjob['status'] = 1;
@@ -225,10 +225,10 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
             $pfTaskjoblog->add($a_input);
 
          $pfTaskjobstate->changeStatusFinish($Taskjobstates_id,
-                                                                 0,
-                                                                 'PluginFusioninventoryIPRange',
-                                                                 1,
-                                                                 "Unable to find agent to run this job");
+                                             0,
+                                             'PluginFusioninventoryIPRange',
+                                             1,
+                                             "Unable to find agent to run this job");
          $input_taskjob = array();
          $input_taskjob['id'] = $pfTaskjob->fields['id'];
          //$input_taskjob['status'] = 1;
@@ -236,7 +236,6 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       } else {
          $iptimes = 0;
          $nbIpadded = 0;
-         $iptimes = 0;
          $break = 0;
          $numberIpByAgent = ceil($count_ip / (count($a_agentlist)));
          $a_iprangelistTmp = $a_iprangelist;
@@ -320,14 +319,17 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $a_versions = importArrayFromDB($pfAgent->fields["version"]);
       if (((isset($a_versions["NETWORKDISCOVERY"])) AND ($a_versions["NETWORKDISCOVERY"] >= 1.3))
               OR !isset($a_versions["NETWORKDISCOVERY"])) {
-         $sxml_option->addChild('DICOHASH', md5_file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml"));
+         $sxml_option->addChild('DICOHASH', 
+                                md5_file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml"));
       }
       if (($pfAgent->fields["senddico"] == "1")) {
 
          if (((isset($a_versions["NETWORKDISCOVERY"]))
                  AND ($a_versions["NETWORKDISCOVERY"] >= 1.3))) {
 
-            $sxml_option->addChild('DICO', file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml"));
+            $sxml_option->addChild('DICO', 
+                                   file_get_contents(
+                                           GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml"));
          }
          $input = array();
          $input['id'] = $pfAgent->fields['id'];
@@ -337,7 +339,8 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
 
       $sxml_param = $sxml_option->addChild('PARAM');
          $sxml_param->addAttribute('CORE_DISCOVERY', "1");
-         $sxml_param->addAttribute('THREADS_DISCOVERY', $pfAgent->fields["threads_networkdiscovery"]);
+         $sxml_param->addAttribute('THREADS_DISCOVERY', 
+                                   $pfAgent->fields["threads_networkdiscovery"]);
          $sxml_param->addAttribute('PID', $current['id']);
 
       $changestate = 0;

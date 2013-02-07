@@ -110,7 +110,8 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                        ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                           AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                   INNER join `glpi_plugin_fusioninventory_snmpmodels`
-                       ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
+                       ON `plugin_fusioninventory_snmpmodels_id`=
+                           `glpi_plugin_fusioninventory_snmpmodels`.`id`
                   WHERE `glpi_networkequipments`.`is_deleted`='0'
                        AND `plugin_fusioninventory_snmpmodels_id`!='0'
                        AND `plugin_fusioninventory_configsecurities_id`!='0'
@@ -152,9 +153,11 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                        ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                           AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                   INNER join `glpi_plugin_fusioninventory_snmpmodels`
-                       ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
+                       ON `plugin_fusioninventory_snmpmodels_id`=
+                           `glpi_plugin_fusioninventory_snmpmodels`.`id`
                   INNER join `glpi_plugin_fusioninventory_configsecurities`
-                       ON `plugin_fusioninventory_configsecurities_id`=`glpi_plugin_fusioninventory_configsecurities`.`id`
+                       ON `plugin_fusioninventory_configsecurities_id`=
+                           `glpi_plugin_fusioninventory_configsecurities`.`id`
                   WHERE `glpi_printers`.`is_deleted`=0
                         AND `plugin_fusioninventory_snmpmodels_id`!='0'
                         AND `plugin_fusioninventory_configsecurities_id`!='0'
@@ -200,13 +203,16 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                           ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                              AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                      INNER join `glpi_plugin_fusioninventory_snmpmodels`
-                          ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
+                          ON `plugin_fusioninventory_snmpmodels_id`=
+                              `glpi_plugin_fusioninventory_snmpmodels`.`id`
                      WHERE `glpi_networkequipments`.`is_deleted`='0'
                           AND `plugin_fusioninventory_snmpmodels_id`!='0'
                           AND `plugin_fusioninventory_configsecurities_id`!='0'
-                          AND `glpi_plugin_fusioninventory_snmpmodels`.`itemtype`='NetworkEquipment'";
+                          AND `glpi_plugin_fusioninventory_snmpmodels`.`itemtype`=
+                                 'NetworkEquipment'";
          if ($pfIPRange->fields['entities_id'] != '-1') {
-           $query .= " AND `glpi_networkequipments`.`entities_id`='".$pfIPRange->fields['entities_id']."' ";
+           $query .= " AND `glpi_networkequipments`.`entities_id`='".
+                        $pfIPRange->fields['entities_id']."' ";
          }
          $query .= " AND inet_aton(`glpi_ipaddresses`.`name`)
                          BETWEEN inet_aton('".$pfIPRange->fields['ip_start']."')
@@ -240,9 +246,11 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                        ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                           AND `glpi_ipaddresses`.`itemtype`='NetworkName'
                   INNER join `glpi_plugin_fusioninventory_snmpmodels`
-                       ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
+                       ON `plugin_fusioninventory_snmpmodels_id`=
+                           `glpi_plugin_fusioninventory_snmpmodels`.`id`
                   INNER join `glpi_plugin_fusioninventory_configsecurities`
-                       ON `plugin_fusioninventory_configsecurities_id`=`glpi_plugin_fusioninventory_configsecurities`.`id`
+                       ON `plugin_fusioninventory_configsecurities_id`=
+                           `glpi_plugin_fusioninventory_configsecurities`.`id`
                   WHERE `glpi_printers`.`is_deleted`=0
                         AND `plugin_fusioninventory_snmpmodels_id`!='0'
                         AND `plugin_fusioninventory_configsecurities_id`!='0'
@@ -317,8 +325,12 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $taskvalid = 0;
          foreach($a_agentsubnet as $subnet=>$a_agentList) {
             if (!isset($a_agentList)
-                    OR (isset($a_agentList) AND is_array($a_agentList) AND count($a_agentList) == '0')
-                    OR (isset($a_agentList) AND !is_array($a_agentList) AND $a_agentList == '')) {
+                    OR (isset($a_agentList) 
+                       && is_array($a_agentList) 
+                       && count($a_agentList) == '0')
+                    OR (isset($a_agentList) 
+                       && !is_array($a_agentList) 
+                       && $a_agentList == '')) {
 
                // No agent available for this subnet
                for ($i=0; $i < 2; $i++) {
@@ -330,7 +342,8 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                      foreach($a_devicesubnet[$subnet][$itemtype] as $items_id=>$num) {
                         $a_input['itemtype'] = $itemtype;
                         $a_input['items_id'] = $items_id;
-                        $a_input['specificity'] = exportArrayToDB($a_specificity['DEVICE'][$itemtype.$items_id]);
+                        $a_input['specificity'] = exportArrayToDB(
+                                          $a_specificity['DEVICE'][$itemtype.$items_id]);
                         $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                            //Add log of taskjob
                            $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
@@ -338,12 +351,13 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                            $a_input['date'] = date("Y-m-d H:i:s");
                            $pfTaskjoblog->add($a_input);
                         $pfTaskjobstate->changeStatusFinish($Taskjobstates_id,
-                                                                                0,
-                                                                                '',
-                                                                                1,
-                                                                                "Unable to find agent to inventory this ".$itemtype,
-                                                                                0,
-                                                                                0);
+                                                            0,
+                                                            '',
+                                                            1,
+                                                            "Unable to find agent to inventory ".
+                                                               "this ".$itemtype,
+                                                            0,
+                                                            0);
                         $a_input['state'] = 1;
                      }
                   }
@@ -371,7 +385,8 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                      foreach($a_devicesubnet[$subnet][$itemtype] as $items_id=>$num) {
                         $a_input['itemtype'] = $itemtype;
                         $a_input['items_id'] = $items_id;
-                        $a_input['specificity'] = exportArrayToDB($a_specificity['DEVICE'][$itemtype.$items_id]);
+                        $a_input['specificity'] = exportArrayToDB(
+                                       $a_specificity['DEVICE'][$itemtype.$items_id]);
                         if ($nbagent == $nb_devicebyagent) {
                            $agent_id = array_pop($a_agentList);
                            $nbagent = 0;
@@ -445,10 +460,10 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                $a_input['date'] = date("Y-m-d H:i:s");
                $pfTaskjoblog->add($a_input);
             $pfTaskjobstate->changeStatusFinish($Taskjobstates_id,
-                                                                    0,
-                                                                    '',
-                                                                    1,
-                                                                    "Unable to find agent to run this job");
+                                                0,
+                                                '',
+                                                1,
+                                                "Unable to find agent to run this job");
             $input_taskjob = array();
             $input_taskjob['id'] = $pfTaskjob->fields['id'];
             //$input_taskjob['status'] = 0;
@@ -468,10 +483,10 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                $a_input['date'] = date("Y-m-d H:i:s");
                $pfTaskjoblog->add($a_input);
             $pfTaskjobstate->changeStatusFinish($Taskjobstates_id,
-                                                                    0,
-                                                                    '',
-                                                                    1,
-                                                                    "No devices to inventory");
+                                                0,
+                                                '',
+                                                1,
+                                                "No devices to inventory");
             $input_taskjob = array();
             $input_taskjob['id'] = $pfTaskjob->fields['id'];
             //$input_taskjob['status'] = 1;
@@ -506,12 +521,14 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
                         case 'NetworkEquipment':
                            $a_input['items_id'] = array_pop($a_NetworkEquipment);
-                           $a_input['specificity'] = exportArrayToDB($a_specificity['DEVICE']['NetworkEquipment'.$a_input['items_id']]);
+                           $a_input['specificity'] = exportArrayToDB(
+                                 $a_specificity['DEVICE']['NetworkEquipment'.$a_input['items_id']]);
                            break;
 
                         case 'Printer':
                            $a_input['items_id'] = array_pop($a_Printer);
-                           $a_input['specificity'] = exportArrayToDB($a_specificity['DEVICE']['Printer'.$a_input['items_id']]);
+                           $a_input['specificity'] = exportArrayToDB(
+                                 $a_specificity['DEVICE']['Printer'.$a_input['items_id']]);
                            break;
 
                      }
@@ -645,9 +662,12 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $where .= ")
          AND `ip` != '127.0.0.1' ";
 
-      $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token FROM `glpi_plugin_fusioninventory_agents`
-         LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-         LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+      $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token 
+         FROM `glpi_plugin_fusioninventory_agents`
+         LEFT JOIN `glpi_networkports` 
+            ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+         LEFT JOIN `glpi_computers` 
+            ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
          WHERE `glpi_networkports`.`itemtype`='Computer'
             ".$subnet."
             ".$where." ";

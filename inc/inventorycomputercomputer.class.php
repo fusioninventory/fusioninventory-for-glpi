@@ -47,7 +47,6 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-
       return "";
    }
 
@@ -68,7 +67,8 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       if ($item->getType() == 'Computer') {
          if (Session::haveRight('computer', "r")) {
             $pfInventoryComputerComputer = new self();
-            $a_computers = $pfInventoryComputerComputer->find("`computers_id`='".$item->getID()."'", '', 1);
+            $a_computers = $pfInventoryComputerComputer->find("`computers_id`='".$item->getID()."'", 
+                                                              '', 1);
             if (count($a_computers) > 0) {
                // Bios/other informations
                $array_ret[0] = self::createTabEntry(__('Advanced informations', 'fusioninventory'));
@@ -178,7 +178,8 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
       if ($a_computerextend['operatingsystem_installationdate'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo "<td>".__('Operating system')." - ".__('Installation')." (".strtolower(__('Date')).")</td>";
+         echo "<td>".__('Operating system')." - ".__('Installation')." (".
+                 strtolower(__('Date')).")</td>";
          echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
          echo '</tr>';
       }
@@ -229,7 +230,9 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
          echo "<tr class='tab_bg_1'>";
          echo "<td width='130' align='center'>";
-         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/send_xml.php?pluginname=fusinvinventory&file=".$folder."/".$id."'>".__('Download')."</a>";
+         echo "<a href='".$CFG_GLPI['root_doc'].
+                 "/plugins/fusioninventory/front/send_xml.php?pluginname=fusinvinventory&file=".
+                 $folder."/".$id."'>".__('Download')."</a>";
          echo "</td>";
          echo "</tr>";
 

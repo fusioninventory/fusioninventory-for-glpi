@@ -356,11 +356,11 @@ class PluginFusioninventoryCommunication {
             $compressmode = 'none';
       } else {
          # try each algorithm successively
-         if ($xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"])) {
+         if (($xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
             $compressmode = "zlib";
-         } else if ($xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"])) {
+         } else if (($xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"]))) {
             $compressmode = "gzip";
-         } else if ($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2))) {
+         } else if (($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2)))) {
             // accept deflate for OCS agent 2.0 compatibility,
             // but use zlib for answer
             if (strstr($xml, "<QUERY>PROLOG</QUERY>")
@@ -398,11 +398,11 @@ class PluginFusioninventoryCommunication {
 
       // Check XML integrity
       $pxml = '';
-      if ($pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)) {
+      if (($pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA))) {
 
-      } else if ($pxml = @simplexml_load_string(utf8_encode($xml), 
+      } else if (($pxml = @simplexml_load_string(utf8_encode($xml), 
                                                 'SimpleXMLElement', 
-                                                LIBXML_NOCDATA)) {
+                                                LIBXML_NOCDATA))) {
          $xml = utf8_encode($xml);
       } else {
          $xml = preg_replace ('/<FOLDER>.*?<\/SOURCE>/', '', $xml);
@@ -421,7 +421,6 @@ class PluginFusioninventoryCommunication {
       $_SESSION['plugin_fusioninventory_compressmode'] = $compressmode;
       
       // Convert XML into PHP array
-      $arrayinventory = array();
       $arrayinventory = PluginFusioninventoryFormatconvert::XMLtoArray($pxml);
       unset($pxml);
       $deviceid = '';

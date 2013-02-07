@@ -59,6 +59,8 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       return Session::haveRight('computer', 'r');
    }
 
+   
+   
    function showForm($computers_id) {
       global $CFG_GLPI;
 
@@ -82,9 +84,11 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                $licence_endlink .= "<form method='post' action='".GLPI_ROOT.
                         "/plugins/fusinvinventory/front/licenseinfo.form.php'>";
 
-               $licence_endlink .= "<input type='hidden' name='fusinvinventory_licenseinfos_id' value='".$licenseInfo['id']."' />";
+               $licence_endlink .= "<input type='hidden' name='fusinvinventory_licenseinfos_id' ".
+                                      "value='".$licenseInfo['id']."' />";
                $licence_endlink .= "<input type='hidden' name='softwarelicenses_id' value='0' />";
-               $licence_endlink .= "<input type='submit' class='button' name='associate' value='".__('Dissociate')."'>";
+               $licence_endlink .= "<input type='submit' class='button' name='associate' ".
+                                      "value='".__('Dissociate')."'>";
                $licence_endlink .= Html::closeForm(FALSE);
             }
 
@@ -122,7 +126,8 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
 
             if (empty($licenseInfo['softwarelicenses_id'])) {
                echo '<tr class="tab_bg_1">';
-               echo "<td>".__('Union between computer and license', 'fuioninventory')."&nbsp;:</td>";
+               echo "<td>".__('Union between computer and license', 'fuioninventory').
+                        "&nbsp;:</td>";
                echo "<td colspan='3'>";
                echo "<form method='post' action='".GLPI_ROOT.
                         "/plugins/fusinvinventory/front/licenseinfo.form.php'>";
@@ -137,8 +142,12 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                      'fullname' => $licenseInfo['fullname'],
                      'serial' => $licenseInfo['serial']
                   );
-                Ajax::updateItem("softwarelicenses_id_$rand",
-                              $CFG_GLPI["root_doc"]."/plugins/fusinvinventory/ajax/dropdownsoftwarelicenses.php?key=".$licenseInfo['serial'], $params, FALSE);
+                Ajax::updateItem(
+                        "softwarelicenses_id_$rand",
+                        $CFG_GLPI["root_doc"]."/plugins/fusinvinventory/ajax/".
+                           "dropdownsoftwarelicenses.php?key=".$licenseInfo['serial'], 
+                        $params, 
+                        FALSE);
                echo "<span id='softwarelicenses_id_$rand'></span>";
                Html::closeForm();
                echo "</td>";
@@ -156,7 +165,9 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       }
    }
 
-   function dropdownSoftwareLicenses($options, $key = "") {
+   
+   
+   function dropdownSoftwareLicenses($options) {
       global $DB;
 
       $query = "SELECT `glpi_softwares`.`name` as sname,
@@ -179,12 +190,15 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
          $licenses[$data['lid']] = $data['sname']." (".$data['serial'].")";
       }
 
-      Dropdown::showFromArray('softwarelicenses_id', $licenses, array('value' => $options['softwarelicenses_id']));
+      Dropdown::showFromArray('softwarelicenses_id', 
+                              $licenses, 
+                              array('value' => $options['softwarelicenses_id']));
 
-      echo "&nbsp;<input type='submit' class='button' name='associate' value='".__('Associate')."'>";
-
+      echo "&nbsp;<input type='submit' class='button' name='associate' ".
+              "value='".__('Associate')."'>";
    }
 
+   
 
    function associate($options) {
 

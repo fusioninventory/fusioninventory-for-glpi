@@ -101,7 +101,7 @@ echo "<form name='searchform$itemtype' method='get' action=\"".
       $item->showFormHeader();
 
 //      echo "<form name='searchform$itemtype' method='get' action=\"".
-//              $CFG_GLPI['root_doc']."/plugins/monitoring/front/componentscatalog_rule.form.php\">";
+//             $CFG_GLPI['root_doc']."/plugins/monitoring/front/componentscatalog_rule.form.php\">";
 //      echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
@@ -124,9 +124,10 @@ echo "<form name='searchform$itemtype' method='get' action=\"".
       if (($_SESSION["glpisearchcount"][$itemtype] + $_SESSION["glpisearchcount2"][$itemtype]) > 1) {
          echo "<td width='10' class='center'>";
          echo "<a href=\"javascript:toggleTableDisplay('searchcriteriastable','searchcriteriasimg',
-                                                       '".$CFG_GLPI["root_doc"]."/pics/deplier_down.png',
-                                                       '".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">";
-         echo "<img alt='' name='searchcriteriasimg' src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_up.png\">";
+                                              '".$CFG_GLPI["root_doc"]."/pics/deplier_down.png',
+                                              '".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">";
+         echo "<img alt='' name='searchcriteriasimg' src=\"".$CFG_GLPI["root_doc"].
+                 "/pics/deplier_up.png\">";
          echo "</td>";
       }
 //      echo "<td>";
@@ -140,14 +141,15 @@ echo "<td colspan='2'>";
          if ($i == 0) {
             echo "<input type='hidden' disabled id='add_search_count' name='add_search_count'
                    value='1'>";
-            echo "<a href='#' onClick = \"document.getElementById('add_search_count').disabled=FALSE;
+            echo "<a href='#' onClick=\"document.getElementById('add_search_count').disabled=FALSE;
                    document.forms['searchform$itemtype'].submit();\">";
             echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/plus.png\" alt='+' title=\"".
                    __s('Add a search criterion')."\"></a>&nbsp;&nbsp;&nbsp;&nbsp;";
             if ($_SESSION["glpisearchcount"][$itemtype] > 1) {
                echo "<input type='hidden' disabled id='delete_search_count'
                       name='delete_search_count' value='1'>";
-               echo "<a href='#' onClick = \"document.getElementById('delete_search_count').disabled=FALSE;
+               echo "<a href='#' onClick=\"document.getElementById('delete_search_count').".
+                        "disabled=FALSE;
                       document.forms['searchform$itemtype'].submit();\">";
                echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/moins.png\" alt='-' title=\"".
                       __s('Delete a search criterion')."\"></a>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -155,7 +157,8 @@ echo "<td colspan='2'>";
             if (is_array($linked) && (count($linked) > 0)) {
                echo "<input type='hidden' disabled id='add_search_count2' name='add_search_count2'
                       value='1'>";
-               echo "<a href='#' onClick=\"document.getElementById('add_search_count2').disabled=FALSE;
+               echo "<a href='#' onClick=\"document.getElementById('add_search_count2').".
+                       "disabled=FALSE;
                       document.forms['searchform$itemtype'].submit();\">";
                echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/meta_plus.png\" alt='+' title=\"".
                       __s('Add a global search criterion')."\"></a>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -163,10 +166,12 @@ echo "<td colspan='2'>";
                if ($_SESSION["glpisearchcount2"][$itemtype] > 0) {
                   echo "<input type='hidden' disabled id='delete_search_count2'
                          name='delete_search_count2' value='1'>";
-                  echo "<a href='#' onClick=\"document.getElementById('delete_search_count2').disabled=FALSE;
+                  echo "<a href='#' onClick=\"document.getElementById('delete_search_count2').".
+                          "disabled=FALSE;
                          document.forms['searchform$itemtype'].submit();\">";
-                  echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/meta_moins.png\" alt='-' title=\"".
-                         __s('Delete a global search criterion')."\"></a>&nbsp;&nbsp;&nbsp;&nbsp;";
+                  echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/meta_moins.png\" ".
+                          "alt='-' title=\"".
+                          __s('Delete a global search criterion')."\"></a>&nbsp;&nbsp;&nbsp;&nbsp;";
                }
             }
 
@@ -178,9 +183,9 @@ echo "<td colspan='2'>";
 //                      document.forms['searchform$itemtype'].submit();\">
 //                      <img src=\"".$CFG_GLPI["root_doc"]."/pics/showdeleted".
 //                       (!$p['is_deleted']?'_no':'').".png\" name='img_deleted' alt=\"".
-//                       (!$p['is_deleted']?__s('Show the dustbin'):__s("Don't show deleted items")).
+//                      (!$p['is_deleted']?__s('Show the dustbin'):__s("Don't show deleted items")).
 //                      "\" title=\"".
-//                       (!$p['is_deleted']?__s('Show the dustbin'):__s("Don't show deleted items")).
+//                      (!$p['is_deleted']?__s('Show the dustbin'):__s("Don't show deleted items")).
 //                      "\"></a>";
 //               echo '&nbsp;&nbsp;';
 //            }
@@ -237,7 +242,8 @@ echo "<td colspan='2'>";
 
          reset($options);
          $first_group = TRUE;
-         $str_limit   = 28; // Not $_SESSION['glpidropdown_chars_limit'] because must be really to short (5 or 10) and search engine will be unusable
+         $str_limit   = 28; // Not $_SESSION['glpidropdown_chars_limit'] because must be 
+                            //really to short (5 or 10) and search engine will be unusable
          $nb_in_group = 0;
          $group       = '';
 
@@ -404,8 +410,8 @@ echo "<td colspan='2'>";
                Ajax::updateItem("show_".$itemtype."_".$i."_$rand",
                                 $CFG_GLPI["root_doc"]."/ajax/updateMetaSearch.php", $params);
                echo "<script type='text/javascript' >";
-               echo "window.document.getElementById('itemtype2_".$itemtype."_".$i."_$rand').value='".
-                                                    $p['itemtype2'][$i]."';";
+               echo "window.document.getElementById('itemtype2_".$itemtype."_".$i."_$rand').".
+                                                    "value='".$p['itemtype2'][$i]."';";
                echo "</script>\n";
             }
             echo "</td></tr></table>";
@@ -469,18 +475,21 @@ echo "<td colspan='2'>";
 echo "<tr>";
       if (isset($_GET['id'])) {
          echo "<td colspan='2' class='center'>";
-         echo "<input type='hidden' name='".$this->customIdVar."' value='".$_GET[$this->customIdVar]."' >";
+         echo "<input type='hidden' name='".$this->customIdVar."' value='".
+                 $_GET[$this->customIdVar]."' >";
          echo "<input type='hidden' name='id' value='".$_GET['id']."' >";
          echo "<input type='submit' name='updaterule' value=\"Update this rule\" class='submit' >";
          echo "</td>";
          echo "<td colspan='2' class='center'>";
          if ($this->displaydeletebuton) {
-            echo "<input type='submit' name='deleterule' value=\"Delete this rule\" class='submit' >";
+            echo "<input type='submit' name='deleterule' value=\"Delete this rule\" ".
+                    "class='submit' >";
          }
 
       } else {
          echo "<td colspan='4' class='center'>";
-         echo "<input type='hidden' name='".$this->customIdVar."' value='".$_GET[$this->customIdVar]."' >";
+         echo "<input type='hidden' name='".$this->customIdVar."' value='".
+                 $_GET[$this->customIdVar]."' >";
          echo "<input type='submit' name='addrule' value=\"Add this rule\" class='submit' >";
       }
       echo "</td>";
@@ -891,16 +900,17 @@ $p = array();
                if (!isset($searchopt[$p['itemtype2'][$i]])) {
                   $searchopt[$p['itemtype2'][$i]] = &Search::getOptions($p['itemtype2'][$i]);
                }
-               if (!in_array($searchopt[$p['itemtype2'][$i]][$p['field2'][$i]]["table"]."_".$p['itemtype2'][$i],
+               if (!in_array($searchopt[$p['itemtype2'][$i]][$p['field2'][$i]]["table"]."_".
+                                 $p['itemtype2'][$i],
                              $already_link_tables2)) {
 
                   $FROM .= Search::addLeftJoin($p['itemtype2'][$i],
-                                             getTableForItemType($p['itemtype2'][$i]),
-                                             $already_link_tables2,
-                                             $searchopt[$p['itemtype2'][$i]][$p['field2'][$i]]["table"],
-                                             $searchopt[$p['itemtype2'][$i]][$p['field2'][$i]]["linkfield"],
-                                             1, $p['itemtype2'][$i],
-                                             $searchopt[$p['itemtype2'][$i]][$p['field2'][$i]]["joinparams"]);
+                                 getTableForItemType($p['itemtype2'][$i]),
+                                 $already_link_tables2,
+                                 $searchopt[$p['itemtype2'][$i]][$p['field2'][$i]]["table"],
+                                 $searchopt[$p['itemtype2'][$i]][$p['field2'][$i]]["linkfield"],
+                                 1, $p['itemtype2'][$i],
+                                 $searchopt[$p['itemtype2'][$i]][$p['field2'][$i]]["joinparams"]);
                }
             }
          }
@@ -993,7 +1003,8 @@ $p = array();
       // Use a ReadOnly connection if available and configured to be used
       $DBread = DBConnection::getReadConnection();
 
-      // If no research limit research to display item and compute number of item using simple request
+      // If no research limit research to display item and compute number of 
+      // item using simple request
       $nosearch = TRUE;
       for ($i=0 ; $i<$_SESSION["glpisearchcount"][$itemtype] ; $i++) {
          if (isset($p['contains'][$i]) && strlen($p['contains'][$i])>0) {
@@ -1105,9 +1116,11 @@ $p = array();
       if (($items_id_check > 0)) {
          if ($itemtype == "PluginMonitoringNetworkport") {
             if ($WHERE == '') {
-               $WHERE .= " WHERE `".getTableForItemType($itemtype)."`.`networkports_id`='".$items_id_check."' ";
+               $WHERE .= " WHERE `".getTableForItemType($itemtype)."`.`networkports_id`='".
+                              $items_id_check."' ";
             } else {
-               $WHERE .= " AND `".getTableForItemType($itemtype)."`.`networkports_id`='".$items_id_check."' ";
+               $WHERE .= " AND `".getTableForItemType($itemtype)."`.`networkports_id`='".
+                              $items_id_check."' ";
             }
          } else {
             $WHERE .= " AND `".getTableForItemType($itemtype)."`.`id`='".$items_id_check."' ";

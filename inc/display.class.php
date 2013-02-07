@@ -112,7 +112,8 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
       if ($pourcentage == 0) {
          echo "                           <td height='20' width='1'></td>";
       } else {
-         echo "                           <td height='20' width='".(400 - (4 * $pourcentage))."'></td>";
+         echo "                           <td height='20' width='".
+                 (400 - (4 * $pourcentage))."'></td>";
       }
       echo "                        </tr>
                               </tbody>

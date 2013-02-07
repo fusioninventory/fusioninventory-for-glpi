@@ -196,7 +196,6 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    function showFormAgent($agents_id) {
 
       $rule = new PluginFusioninventoryInventoryRuleImport();
-      $pfAgent = new PluginFusioninventoryAgent();
 
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
 

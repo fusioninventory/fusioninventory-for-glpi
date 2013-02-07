@@ -353,7 +353,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             }
          }
       }
-      $a_agents = array();
       $a_agents = $pfAgent->find($where);
       return $a_agents;
    }

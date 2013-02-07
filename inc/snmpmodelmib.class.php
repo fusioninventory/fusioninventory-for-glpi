@@ -66,10 +66,12 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                           `glpi_plugin_fusioninventory_mappings`.`locale`
                    FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
                         LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
-                        ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_snmpmodels_id`=
+                        ON `glpi_plugin_fusioninventory_snmpmodelmibs`.".
+                              "`plugin_fusioninventory_snmpmodels_id`=
                            `glpi_plugin_fusioninventory_snmpmodels`.`id`
                         LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                        ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_mappings_id`=
+                        ON `glpi_plugin_fusioninventory_snmpmodelmibs`.".
+                              "`plugin_fusioninventory_mappings_id`=
                            `glpi_plugin_fusioninventory_mappings`.`id`
                    WHERE `glpi_plugin_fusioninventory_snmpmodels`.`id`='".$id."';";
          $result = $DB->query($query);
@@ -116,7 +118,8 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                echo "</td>";
 
                echo "<td align='center'>";
-               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiblabels", $data["plugin_fusioninventory_snmpmodelmiblabels_id"]);
+               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiblabels", 
+                                             $data["plugin_fusioninventory_snmpmodelmiblabels_id"]);
                echo "</td>";
 
                echo "<td align='center'>";
@@ -126,7 +129,8 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                echo "</td>";
 
                echo "<td align='center'>";
-               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids", $data["plugin_fusioninventory_snmpmodelmiboids_id"]);
+               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids", 
+                                              $data["plugin_fusioninventory_snmpmodelmiboids_id"]);
                echo "</td>";
 
                echo "<td align='center'>";
@@ -154,7 +158,8 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                echo "<td align='center'>";
                $mapping = new PluginFusioninventoryMapping();
                $mapping->getFromDB($data['plugin_fusioninventory_mappings_id']);
-               echo $mapping->getTranslation($mapping->fields['locale'])." (".$mapping->fields['name'].")";
+               echo $mapping->getTranslation($mapping->fields['locale'])." (".
+                       $mapping->fields['name'].")";
                if (isset($mapping->fields['id'])) {
                   $mappings_used[$mapping->fields['id']] = 1;
                }
@@ -193,7 +198,8 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
             echo "<tr>";
             echo "<td><img src=\"".$CFG_GLPI["root_doc"]."/pics/arrow-left.png\" alt=''></td>
                   <td align='center'><a onclick= \"if ( markCheckboxes('oid_list') ) return FALSE;\"
-                      href='".$_SERVER['PHP_SELF']."?select=all'>".__('Check All', 'fusioninventory')."</a></td>";
+                      href='".$_SERVER['PHP_SELF']."?select=all'>".
+                    __('Check All', 'fusioninventory')."</a></td>";
             echo "<td>/</td><td align='center'><a onclick= \"if ( unMarkCheckboxes('oid_list') )
                      return FALSE;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
                      __('Uncheck All', 'fusioninventory')."</a>";
@@ -352,7 +358,8 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                        `glpi_plugin_fusioninventory_snmpmodelmibs`.*
                 FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
                      LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                               ON `glpi_plugin_fusioninventory_snmpmodelmibs`.`plugin_fusioninventory_mappings_id`=
+                               ON `glpi_plugin_fusioninventory_snmpmodelmibs`.".
+                                      "`plugin_fusioninventory_mappings_id`=
                                   `glpi_plugin_fusioninventory_mappings`.`id`
                 WHERE `plugin_fusioninventory_snmpmodels_id`='".$p_id."'
                   AND `is_active`='1'
@@ -364,14 +371,16 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
             case 0:
                $pfToolbox->addGet($p_sxml_node,
                   $data['mapping_name'],
-                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids', $data['plugin_fusioninventory_snmpmodelmiboids_id']),
+                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids', 
+                                            $data['plugin_fusioninventory_snmpmodelmiboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
 
             case 1:
                $pfToolbox->addWalk($p_sxml_node,
                   $data['mapping_name'],
-                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids', $data['plugin_fusioninventory_snmpmodelmiboids_id']),
+                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids', 
+                                            $data['plugin_fusioninventory_snmpmodelmiboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
 

@@ -361,11 +361,13 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "<tr class='tab_bg_1'><td colspan='3'>";
       echo "<div align='center'><a onclick= \"if (markAllRows('printer_history_form'))
                  return FALSE;\"
-                 href='".$_SERVER['PHP_SELF']."?select=all'>".__('Check All', 'fusioninventory')."</a>";
+                 href='".$_SERVER['PHP_SELF']."?select=all'>".
+                 __('Check All', 'fusioninventory')."</a>";
       echo " - <a onclick= \"if ( unMarkAllRows('printer_history_form') ) return FALSE;\"
-                  href='".$_SERVER['PHP_SELF']."?select=none'>".__('Uncheck All', 'fusioninventory')."</a> ";
-      echo "<input type='submit' name='delete' value=\"".__('Delete', 'fusioninventory')."\" class='submit' >
-            </div></td></tr>";
+                  href='".$_SERVER['PHP_SELF']."?select=none'>".
+                  __('Uncheck All', 'fusioninventory')."</a> ";
+      echo "<input type='submit' name='delete' value=\"".__('Delete', 'fusioninventory').
+            "\" class='submit' ></div></td></tr>";
       echo "</table>";
       Html::closeForm();
       echo "</div>";
@@ -379,7 +381,12 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
    function showGraph($id, $options=array()) {
       global $DB, $CFG_GLPI;
 
-      $where=''; $begin=''; $end=''; $timeUnit='day'; $graphField='pages_total'; $pagecounters = array();$graphType='day';
+      $where=''; 
+      $begin=''; 
+      $end=''; 
+      $timeUnit='day'; 
+      $graphField='pages_total'; 
+      $pagecounters = array();$graphType='day';
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_begin'])) {
          $begin=$_SESSION['glpi_plugin_fusioninventory_graph_begin'];
       }
@@ -403,10 +410,12 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       }
       if (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'])) {
          $printerCompAdd=$_SESSION['glpi_plugin_fusioninventory_graph_printerCompAdd'];
-         if (!key_exists($printerCompAdd, $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
+         if (!key_exists($printerCompAdd, 
+                         $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'])) {
             $oPrinter = new Printer();
             if ($oPrinter->getFromDB($printerCompAdd)){
-               $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'][$printerCompAdd] = $oPrinter->getField('name');
+               $_SESSION['glpi_plugin_fusioninventory_graph_printersComp'][$printerCompAdd] = 
+                     $oPrinter->getField('name');
             }
          }
       } elseif (isset($_SESSION['glpi_plugin_fusioninventory_graph_printerCompRemove'])) {
@@ -463,7 +472,8 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
             break;
       }
 
-      echo "<form method='post' name='snmp_form' id='snmp_form' action='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/printer_info.form.php'>";
+      echo "<form method='post' name='snmp_form' id='snmp_form' action='".
+              $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/printer_info.form.php'>";
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       $mapping = new PluginFusioninventoryMapping();
       $maps = $mapping->find("`itemtype`='Printer'");
@@ -519,7 +529,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
       echo "<tr class='tab_bg_2'>";
       echo "<td class='center' colspan='4'>
-               <input type='submit' class='submit' name='graph_plugin_fusioninventory_printer_period'
+              <input type='submit' class='submit' name='graph_plugin_fusioninventory_printer_period'
                       value='" . __('Update') . "'/>";
       echo "</td>";
       echo "</tr>\n";
@@ -542,7 +552,8 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       Dropdown::show('Printer', array('name'    =>'graph_printerCompAdd',
                                       'entiry'  => $_SESSION['glpiactive_entity'],
                                       'used'    => $printersused));
-      echo "&nbsp;<input type='submit' value=\"".__('Add')."\" class='submit' name='graph_plugin_fusioninventory_printer_add'>";
+      echo "&nbsp;<input type='submit' value=\"".__('Add')."\" class='submit' ".
+              "name='graph_plugin_fusioninventory_printer_add'>";
       echo "</td>";
       echo "</tr>\n";
 
@@ -553,7 +564,8 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       $printersTmp[0] = "-----";
       asort($printersTmp);
       Dropdown::showFromArray('graph_printerCompRemove', $printersTmp);
-      echo "&nbsp;<input type='submit' value=\"".__('Delete', 'fusioninventory')."\" class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
+      echo "&nbsp;<input type='submit' value=\"".__('Delete', 'fusioninventory')."\" ".
+              "class='submit' name='graph_plugin_fusioninventory_printer_remove'>";
       echo "</td>";
       echo "</tr>\n";
 
@@ -631,7 +643,8 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                            $dayofweek=7;
                         }
 
-                        $date= $calendarDay[$dayofweek%7]." ".$data['day']." ".$calendarMonth[$data['month']];
+                        $date= $calendarDay[$dayofweek%7]." ".$data['day']." ".
+                                  $calendarMonth[$data['month']];
                         break;
 
                      case 'week':
@@ -654,7 +667,8 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                      }
                      $oPrinter->getFromDB($data['printers_id']);
 
-                     $input[$oPrinter->getName()][$date] = $data[$graphField] - $pages[$data['printers_id']];
+                     $input[$oPrinter->getName()][$date] = 
+                              $data[$graphField] - $pages[$data['printers_id']];
                      $pages[$data['printers_id']] = $data[$graphField];
                   } else {
                      $oPrinter->getFromDB($data['printers_id']);

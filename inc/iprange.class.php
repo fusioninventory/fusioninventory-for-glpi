@@ -170,10 +170,14 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          }
          $i++;
       }
-      echo "<input type='text' value='".$ipexploded[0]."' name='ip_start0' id='ip_start0' size='3' maxlength='3' >.";
-      echo "<input type='text' value='".$ipexploded[1]."' name='ip_start1' id='ip_start1' size='3' maxlength='3' >.";
-      echo "<input type='text' value='".$ipexploded[2]."' name='ip_start2' id='ip_start2' size='3' maxlength='3' >.";
-      echo "<input type='text' value='".$ipexploded[3]."' name='ip_start3' id='ip_start3' size='3' maxlength='3' >";
+      echo "<input type='text' value='".$ipexploded[0].
+              "' name='ip_start0' id='ip_start0' size='3' maxlength='3' >.";
+      echo "<input type='text' value='".$ipexploded[1].
+              "' name='ip_start1' id='ip_start1' size='3' maxlength='3' >.";
+      echo "<input type='text' value='".$ipexploded[2].
+              "' name='ip_start2' id='ip_start2' size='3' maxlength='3' >.";
+      echo "<input type='text' value='".$ipexploded[3].
+              "' name='ip_start3' id='ip_start3' size='3' maxlength='3' >";
       echo "</td>";
       echo "</tr>";
 
@@ -199,16 +203,21 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
             if (id == 3) {
                document.getElementById('ip_end' + id).value = '254';
             } else {
-               document.getElementById('ip_end' + id).value = document.getElementById('ip_start' + id).value;
+               document.getElementById('ip_end' + id).value = ".
+                  "document.getElementById('ip_start' + id).value;
             }
          }
       }
       </script>";
 
-      echo "<input type='text' value='".$ipexploded[0]."' name='ip_end0' id='ip_end0' size='3' maxlength='3' onfocus='test(0)'>.";
-      echo "<input type='text' value='".$ipexploded[1]."' name='ip_end1' id='ip_end1' size='3' maxlength='3' onfocus='test(1)'>.";
-      echo "<input type='text' value='".$ipexploded[2]."' name='ip_end2' id='ip_end2' size='3' maxlength='3' onfocus='test(2)'>.";
-      echo "<input type='text' value='".$ipexploded[3]."' name='ip_end3' id='ip_end3' size='3' maxlength='3' onfocus='test(3)'>";
+      echo "<input type='text' value='".$ipexploded[0].
+              "' name='ip_end0' id='ip_end0' size='3' maxlength='3' onfocus='test(0)'>.";
+      echo "<input type='text' value='".$ipexploded[1].
+              "' name='ip_end1' id='ip_end1' size='3' maxlength='3' onfocus='test(1)'>.";
+      echo "<input type='text' value='".$ipexploded[2].
+              "' name='ip_end2' id='ip_end2' size='3' maxlength='3' onfocus='test(2)'>.";
+      echo "<input type='text' value='".$ipexploded[3].
+              "' name='ip_end3' id='ip_end3' size='3' maxlength='3' onfocus='test(3)'>";
       echo "</td>";
       echo "</tr>";
 
@@ -254,7 +263,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          return TRUE;
       } else {
           Session::addMessageAfterRedirect("<font color='#ff0000'>".__('Bad IP', 'fusioninventory').
-
             "</font><br/>".
             __('Start of IP range', 'fusioninventory')." : ".
             $a_input['ip_start0'].".".$a_input['ip_start1'].".".

@@ -140,7 +140,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * add multiple configuration values
     *
-    * @param $plugin_id plugin id
     * @param $values array of configuration values, indexed by name
     *
     * @return nothing
@@ -237,9 +236,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
    * Get configuration value
    *
-   * @param $plugin_id plugin id
    * @param $name field name
-   * @param $module ?
    *
    * @return field value for an existing field, FALSE otherwise
    **/
@@ -285,8 +282,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    function showForm($options=array()) {
       global $CFG_GLPI;
       
-      $plugin_id = PluginFusioninventoryModule::getModuleId('fusioninventory');
-
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
@@ -327,13 +322,15 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Html::showToolTip('ex: http://192.168.20.1/glpi');
       echo "&nbsp;:";
       if (!file_exists($this->getValue('agent_base_url').'/plugins/fusioninventory/index.php')
-            AND !file_get_contents($this->getValue('agent_base_url').'/plugins/fusioninventory/index.php')) {
+            && !file_get_contents($this->getValue('agent_base_url').
+                                    '/plugins/fusioninventory/index.php')) {
            echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\">";
       }
       
       echo "</td>";
       echo "<td>";
-      echo "<input type='text' name='agent_base_url' size='50' value='".$this->getValue('agent_base_url')."'/>";
+      echo "<input type='text' name='agent_base_url' size='50' ".
+               "value='".$this->getValue('agent_base_url')."'/>";
       echo "</td>";
       echo "</tr>";
 
@@ -614,7 +611,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<td colspan='2'>";
-      echo __('Model for automatic computers transfer in an other entity', 'fusioninventory')."&nbsp:";
+      echo __('Model for automatic computers transfer in an other entity', 'fusioninventory').
+              "&nbsp:";
       echo "</td>";
       echo "<td colspan='2'>";
       Dropdown::show("Transfer",
@@ -656,12 +654,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
+      echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
+              "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("threads_networkdiscovery", 
                             $pfConfig->getValue('threads_networkdiscovery'), 1, 400);
       echo "</td>";
-      echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
+      echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
+              "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showInteger("threads_networkinventory", 
                             $pfConfig->getValue('threads_networkinventory'), 1, 400);
@@ -672,7 +672,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $pfsnmpConfig->showFormButtons($options);
 
       $pfConfigLogField = new PluginFusioninventoryConfigLogField();
-      $pfConfigLogField->showForm(array('target'=>$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/configlogfield.form.php"));
+      $pfConfigLogField->showForm(array(
+          'target'=>$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/configlogfield.form.php")
+          );
 
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
       $pfNetworkporttype->showNetworkporttype();
@@ -685,10 +687,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Add configuration value, if not already present
     *
-    * @param $plugin_id plugin id
     * @param $name field name
     * @param $value field value
-    * @param $module ?
     *
     * @return integer the new id of the added item (or FALSE if fail)
     **/
@@ -706,7 +706,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    /**
     * Update configuration value
     *
-    * @param $plugin_id plugin id
     * @param $name field name
     * @param $value field value
     *
@@ -807,27 +806,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          return $this->updateConfig($config['id'], $p_value);
       }
       return FALSE;
-   }
-
-
-
-
-
-
-   /**
-   * give state of a config field for a fusioninventory plugin
-   *
-   * @param $p_plugins_id integer id of the plugin
-   * @param $p_type value name of the config field to retrieve
-   *
-   * @return bool TRUE if field is active or FALSE
-   **/
-   function is_active($p_plugins_id, $p_type) {
-      if (!($this->getValue($p_type))) {
-         return FALSE;
-      } else {
-         return TRUE;
-      }
    }
    
    

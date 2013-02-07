@@ -83,7 +83,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $criterias = array ();
       $criterias['entities_id']['table']     = 'glpi_entities';
       $criterias['entities_id']['field']     = 'entities_id';
-      $criterias['entities_id']['name']      = __('Assets to import', 'fusioninventory').' : '.__('Destination of equipment entity', 'fusioninventory');
+      $criterias['entities_id']['name']      = __('Assets to import', 'fusioninventory').' : '.
+                           __('Destination of equipment entity', 'fusioninventory');
 
       $criterias['entities_id']['linkfield'] = 'entities_id';
       $criterias['entities_id']['type']      = 'dropdown';
@@ -98,7 +99,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
       $criterias['states_id']['table']           = 'glpi_states';
       $criterias['states_id']['field']           = 'name';
-      $criterias['states_id']['name']            = __('Search GLPI equipment with the status', 'fusioninventory');
+      $criterias['states_id']['name']            = 
+                     __('Search GLPI equipment with the status', 'fusioninventory');
 
       $criterias['states_id']['linkfield']       = 'state';
       $criterias['states_id']['type']            = 'dropdown';
@@ -106,40 +108,47 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $criterias['states_id']['is_global']       = TRUE;
       $criterias['states_id']['allow_condition'] = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
 
-      $criterias['model']['name']           = __('Assets to import', 'fusioninventory').' : '.__('Model');
+      $criterias['model']['name']  = __('Assets to import', 'fusioninventory').' : '.__('Model');
 
 
-      $criterias['mac']['name']             = __('Assets to import', 'fusioninventory').' : '.__('MAC');
+      $criterias['mac']['name']    = __('Assets to import', 'fusioninventory').' : '.__('MAC');
 
 
-      $criterias['ip']['name']              = __('Assets to import', 'fusioninventory').' : '.__('IP');
+      $criterias['ip']['name']     = __('Assets to import', 'fusioninventory').' : '.__('IP');
 
 
-      $criterias['serial']['name']          = __('Assets to import', 'fusioninventory').' : '.__('Serial Number');
+      $criterias['serial']['name'] = __('Assets to import', 'fusioninventory').' : '.
+                                       __('Serial Number');
 
 
-//      $criterias['hdserial']['name']        = __('Assets to import', 'fusioninventory').' : '.__('Hard disk serial number');
+//      $criterias['hdserial']['name']        = __('Assets to import', 'fusioninventory').' : '.
+//                   __('Hard disk serial number');
 
 //
-//      $criterias['partitionserial']['name'] = __('Assets to import', 'fusioninventory').' : '.__('Partition serial number');
+//      $criterias['partitionserial']['name'] = __('Assets to import', 'fusioninventory').' : '.
+//       __('Partition serial number');
 
 
-      $criterias['uuid']['name']            = __('Assets to import', 'fusioninventory').' : '.__('UUID');
+      $criterias['uuid']['name']  = __('Assets to import', 'fusioninventory').' : '.__('UUID');
 
 
-      $criterias['mskey']['name']           = __('Assets to import', 'fusioninventory').' : '.__('Serial of the operating system');
+      $criterias['mskey']['name'] = __('Assets to import', 'fusioninventory').' : '.
+                                       __('Serial of the operating system');
 
 
-      $criterias['name']['name']            = __('Assets to import', 'fusioninventory').' : '.__('Name');
+      $criterias['name']['name']  = __('Assets to import', 'fusioninventory').' : '.__('Name');
 
 
-      $criterias['tag']['name']             = __('Assets to import', 'fusioninventory').' : '.__('FusionInventory tag', 'fusioninventory');
+      $criterias['tag']['name']   = __('Assets to import', 'fusioninventory').' : '.
+                                       __('FusionInventory tag', 'fusioninventory');
 
 
-      $criterias['osname']['name']          = __('Assets to import', 'fusioninventory').' : '.__('Operating system');
+      $criterias['osname']['name'] = __('Assets to import', 'fusioninventory').' : '.
+                                       __('Operating system');
 
 
-      $criterias['itemtype']['name']        = __('Assets to import', 'fusioninventory').' : '.__('Item type');
+      $criterias['itemtype']['name'] = __('Assets to import', 'fusioninventory').' : '.
+                                          __('Item type');
 
       $criterias['itemtype']['type']        = 'dropdown_itemtype';
       $criterias['itemtype']['is_global']       = FALSE;
@@ -168,9 +177,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
    static function getRuleActionValues() {
 
-      return array(self::RULE_ACTION_LINK_OR_CREATE    => __('Link if possible, else create device', 'fusioninventory'),
+      return array(self::RULE_ACTION_LINK_OR_CREATE    => 
+                           __('Link if possible, else create device', 'fusioninventory'),
 
-                   self::RULE_ACTION_LINK_OR_NO_CREATE => __('Link if possible, else import denied', 'fusioninventory'),
+                   self::RULE_ACTION_LINK_OR_NO_CREATE => 
+                           __('Link if possible, else import denied', 'fusioninventory'),
 
                    self::RULE_ACTION_DENIED            => __('Import denied', 'fusioninventory'));
 
@@ -333,7 +344,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             foreach ($criteria as $crit) {
                if (!isset($input[$criterion]) || $input[$criterion] == '') {
                   $definition_criteria = $this->getCriteria($crit->fields['criteria']);
-                  if (isset($definition_criteria['is_global']) AND $definition_criteria['is_global']) {
+                  if (isset($definition_criteria['is_global']) 
+                          && $definition_criteria['is_global']) {
                      $continue = FALSE;
                   }
                } else if ($crit->fields["condition"] == Rule::PATTERN_FIND) {
@@ -421,9 +433,11 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
             case 'model':
                $sql_from_temp = " LEFT JOIN `glpi_".strtolower("[typename]")."models`
-                                 ON (`glpi_".strtolower("[typename]")."models`.`id` = `[typetable]`.`".strtolower("[typename]models_id")."`
+                                 ON (`glpi_".strtolower("[typename]")."models`.`id` = ".
+                                     "`[typetable]`.`".strtolower("[typename]models_id")."`
                                      AND `glpi_networkports`.`itemtype` = '[typename]') ";
-               $sql_where_temp = " AND `[typetable]`.`".strtolower("[typename]")."models_id` = '".$input["serial"]."'";
+               $sql_where_temp = " AND `[typetable]`.`".strtolower("[typename]")."models_id` = '".
+                                    $input["serial"]."'";
 
                $sql_from .= $sql_from_temp;
                $sql_where  .= $sql_where_temp;
@@ -527,7 +541,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          }
 
          if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
-            $sql_where_temp .= " AND `[typetable]`.`entities_id`='".$_SESSION['plugin_fusioninventory_entityrestrict']."'";
+            $sql_where_temp .= " AND `[typetable]`.`entities_id`='".
+                                    $_SESSION['plugin_fusioninventory_entityrestrict']."'";
          }
 
          $item = new $itemtype();
@@ -591,7 +606,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          $inputrulelog['method'] = $class->getMethod();
       }
       if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-         $inputrulelog['plugin_fusioninventory_agents_id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+         $inputrulelog['plugin_fusioninventory_agents_id'] = 
+                        $_SESSION['plugin_fusioninventory_agents_id'];
       }
 
       PluginFusioninventoryToolbox::logIfExtradebug(
@@ -636,7 +652,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                               if ($criteria->fields['criteria'] == 'itemtype') {
                                  $itemtype = $criteria->fields['pattern'];
                                  if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
-                                    $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
+                                    $_SESSION['plugin_fusioninventory_rules_id'] = 
+                                                   $this->fields['id'];
                                     $class->rulepassed("0", $itemtype);
                                     return $output;
                                  } else {
@@ -810,7 +827,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             $types[$itemtype] = $item->getTypeName();
          }
       }
-      $types["PluginFusioninventoryUnknownDevice"] = PluginFusioninventoryUnknownDevice::getTypeName();
+      $types["PluginFusioninventoryUnknownDevice"] = 
+                     PluginFusioninventoryUnknownDevice::getTypeName();
       return $types;
    }
 

@@ -89,9 +89,9 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $tab[7]['field']         = 'iflastchange';
       $tab[7]['name']          = __('Last change', 'fusioninventory');
 
-      $tab[8]['table']         = $this->getTable();
-      $tab[8]['field']         = 'ifinoctets';
-      $tab[8]['name']          = __('Number of bytes received / Number of bytes sent', 'fusioninventory');
+      $tab[8]['table']  = $this->getTable();
+      $tab[8]['field']  = 'ifinoctets';
+      $tab[8]['name']   = __('Number of bytes received / Number of bytes sent', 'fusioninventory');
 
       $tab[9]['table']         = $this->getTable();
       $tab[9]['field']         = 'ifinerrors';
@@ -164,10 +164,12 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
       $queryVerif = "SELECT *
                      FROM `glpi_networkports_networkports`
-                     WHERE (`networkports_id_1` = '".$this->getValue('id')."' OR `networkports_id_1` = '".$destination_port."')
-                           AND (`networkports_id_2` = '".$this->getValue('id')."' OR `networkports_id_2` = '".$destination_port."');";
+                     WHERE (`networkports_id_1` = '".$this->getValue('id')."' 
+                              OR `networkports_id_1` = '".$destination_port."')
+                           AND (`networkports_id_2` = '".$this->getValue('id')."' 
+                              OR `networkports_id_2` = '".$destination_port."');";
 
-      if ($resultVerif=$DB->query($queryVerif)) {
+      if (($resultVerif = $DB->query($queryVerif))) {
          if ($DB->numrows($resultVerif) == "0") { // no existing connection between those 2 ports
             $this->disconnectDB($this->getValue('id')); // disconnect this port
             $this->disconnectDB($destination_port);     // disconnect destination port
@@ -291,7 +293,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $query = "SELECT *
                 FROM `glpi_networkports`
                 WHERE `id`='".$id."';";
-      if ($result=$DB->query($query)) {
+      if (($result = $DB->query($query))) {
          $data = $DB->fetch_array($result);
          $array["items_id"] = $data["items_id"];
          $array["itemtype"] = $data["itemtype"];
@@ -302,7 +304,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                       FROM `glpi_networkequipments`
                       WHERE `id`='".$array["itemtype"]."'
                       LIMIT 0, 1;";
-            if ($result=$DB->query($query)) {
+            if (($result = $DB->query($query))) {
                $data = $DB->fetch_array($result);
                $array["name"] = $data["name"];
             }
@@ -411,13 +413,15 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       foreach ($vlanDB as $vlans_id) {
          if (!isset($vlanfound[$vlans_id])) {
             $networkPort_Vlan->unassignVlan($this->portModif['networkports_id'], $vlans_id);
-            PluginFusioninventoryNetworkPortLog::networkport_addLog($this->portModif['networkports_id'], '', 'vmvlan');
+            PluginFusioninventoryNetworkPortLog::networkport_addLog(
+                     $this->portModif['networkports_id'], '', 'vmvlan');
          }
       }
       foreach ($vlanfound as $vlans_id) {
          if (!isset($vlanDB[$vlans_id])) {
             $networkPort_Vlan->assignVlan($this->portModif['networkports_id'], $vlans_id, $tagged);
-            PluginFusioninventoryNetworkPortLog::networkport_addLog($this->portModif['networkports_id'], $number." [".$name."]", 'vmvlan');
+            PluginFusioninventoryNetworkPortLog::networkport_addLog(
+                     $this->portModif['networkports_id'], $number." [".$name."]", 'vmvlan');
          }
       }
    }
@@ -464,9 +468,9 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
          $queryPort = "SELECT *
                        FROM `glpi_plugin_fusioninventory_networkports`
-                            LEFT JOIN `glpi_networkports`
-                                      ON `glpi_plugin_fusioninventory_networkports`.`networkports_id`=
-                                         `glpi_networkports`.`id`
+                       LEFT JOIN `glpi_networkports`
+                          ON `glpi_plugin_fusioninventory_networkports`.`networkports_id`=
+                             `glpi_networkports`.`id`
                        WHERE (`ifdescr`='".$ifDescr."'
                                 OR `glpi_networkports`.`name`='".$ifDescr."')
                              AND `glpi_networkports`.`items_id`='".$data["networkequipments_id"]."'
@@ -721,7 +725,8 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          $result = $DB->query($query);
          if ($DB->numrows($result) == "1") {
             $data = $DB->fetch_assoc($result);
-            if ($PluginFusioninventoryUnknownDevice->convertUnknownToUnknownNetwork($data['items_id'])) {
+            if ($PluginFusioninventoryUnknownDevice->convertUnknownToUnknownNetwork(
+                    $data['items_id'])) {
                // Add port
                $input = array();
                $input['items_id'] = $data['items_id'];
@@ -769,16 +774,9 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          $PortID = $NetworkPort->add($input);
          return($PortID);
       }
-
-
       return($PortID);
-
    }
 
-   
-
-
-   
    
    
    function isPorthasPhone() {
@@ -797,8 +795,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          }
       }
       return $isPhone;
-   }
-   
+   }   
 }
 
 ?>

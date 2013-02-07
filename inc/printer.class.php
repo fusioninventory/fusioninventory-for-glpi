@@ -44,18 +44,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBTM {
+class PluginFusioninventoryPrinter extends CommonDBTM {
    private $oFusionInventory_printer;
-
-
-
-   function __construct() {
-      parent::__construct("glpi_printers");
-      $this->dohistory=TRUE;
-      $this->oFusionInventory_printer = new PluginFusioninventoryNetworkCommonDBTM("glpi_plugin_fusioninventory_printers");
-      $this->oFusionInventory_printer->type = 'PluginFusioninventoryPrinter';
-   }
-
 
 
    static function getTypeName($nb=0) {
@@ -171,7 +161,8 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
       echo __('Last inventory', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      echo Html::convDateTime($this->oFusionInventory_printer->fields['last_fusioninventory_update']);
+      echo Html::convDateTime(
+              $this->oFusionInventory_printer->fields['last_fusioninventory_update']);
       echo "</td>";
       echo "</tr>";
 
@@ -189,13 +180,15 @@ class PluginFusioninventoryPrinter extends PluginFusioninventoryNetworkCommonDBT
       }
       Dropdown::show("PluginFusioninventorySnmpmodel",
                      array('name'=>"plugin_fusioninventory_snmpmodels_id",
-                           'value'=>$this->oFusionInventory_printer->fields['plugin_fusioninventory_snmpmodels_id'],
+                           'value'=>
+                    $this->oFusionInventory_printer->fields['plugin_fusioninventory_snmpmodels_id'],
                            'comment'=>FALSE,
                            'used'=>$exclude_models));
       echo "</td>";
       echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
-      PluginFusioninventoryConfigSecurity::auth_dropdown($this->oFusionInventory_printer->fields["plugin_fusinvsnmp_configsecurities_id"]);
+      PluginFusioninventoryConfigSecurity::auth_dropdown(
+              $this->oFusionInventory_printer->fields["plugin_fusinvsnmp_configsecurities_id"]);
       echo "</td>";
       echo "</tr>";
 

@@ -159,7 +159,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          $title = "";
       }
 
-      Html::displayTitle($CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_mini_package.png", 
+      Html::displayTitle($CFG_GLPI['root_doc'].
+                           "/plugins/fusioninventory/pics/menu_mini_package.png", 
                          $title, $title, $buttons);
    }
 
@@ -222,6 +223,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return TRUE;
    }
 
+   
+   
    static function displayOrderTypeForm($order_type, $packages_id) {
       global $CFG_GLPI;
 
@@ -295,6 +298,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }
    }
 
+   
+   
    static function alter_json($action_type, $params) {
       //route to sub class
       if (in_array($params['itemtype'], array(
@@ -322,6 +327,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
    
+   
    static function plusButton($dom_id, $clone = FALSE) {
       global $CFG_GLPI;
 
@@ -346,6 +352,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }</script>";
    }
 
+   
+   
    function getAllDatas() {
       global $DB;
 
@@ -420,6 +428,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return TRUE;
    }
 
+   
+   
    public function package_clone($new_name = '') {
 
       if ($this->getField('id') < 0) {
@@ -457,7 +467,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          //duplicate checks
          $check_obj = new PluginFusioninventoryDeployCheck;
          $checks = $check_obj->find("plugin_fusioninventory_deployorders_id = '".$order_oldId."'");
-         foreach ($checks as $check_oldId => $check) {
+         foreach ($checks as $check) {
             //create new check for this new order
             unset($check['id']);
             $check['plugin_fusioninventory_deployorders_id'] = $order_newId;
@@ -490,7 +500,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          $action_obj = new PluginFusioninventoryDeployAction;
          $actions = $action_obj->find(
             "plugin_fusioninventory_deployorders_id = '".$order_oldId."'");
-         foreach ($actions as $action_oldId => $action) {
+         foreach ($actions as $action) {
             //duplicate actions subitem
             $action_subitem_obj = new $action['itemtype'];
             $action_subitem_oldId = $action['items_id'];
@@ -508,7 +518,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                $commandstatus_obj = new PluginFusioninventoryDeployAction_Commandstatus;
                $commandstatus = $commandstatus_obj->find(
                   "plugin_fusioninventory_deploycommands_id = '".$command_oldId."'");
-               foreach ($commandstatus as $commandstatus_oldId => $commandstate) {
+               foreach ($commandstatus as $commandstate) {
                   //create new commandstatus for this command
                   unset($commandstate['id']);
                   $commandstate['plugin_fusioninventory_deploycommands_id'] = $command_newId;

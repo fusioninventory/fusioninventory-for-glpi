@@ -182,12 +182,12 @@ class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommu
             if($agents_id === FALSE) {
                $jobstates_id = $jobstate->add($c_input);
                $jobstate->changeStatusFinish($jobstates_id,
-                                                     0,
-                                                     '',
-                                                     1,
-                                                     "No agent found for [[Computer::".$computer_id."]]",
-                                                     0,
-                                                     0);
+                                             0,
+                                             '',
+                                             1,
+                                             "No agent found for [[Computer::".$computer_id."]]",
+                                             0,
+                                             0);
             } else {
                $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
 
@@ -218,6 +218,8 @@ class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommu
 
    }
 
+   
+   
    // When agent contact server, this function send datas to agent
    /*
     * $itemtype = type of device in definition
