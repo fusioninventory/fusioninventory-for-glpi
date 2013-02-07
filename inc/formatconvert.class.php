@@ -195,7 +195,6 @@ class PluginFusioninventoryFormatconvert {
             $array_tmp['users_id'] = 0;
          }    
       }
-      $array_tmp['is_ocs_import'] = 1;
       $array_tmp['is_dynamic'] = 1;
       
       $a_inventory['computer'] = $array_tmp;

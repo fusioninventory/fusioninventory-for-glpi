@@ -151,6 +151,7 @@ require_once 'GLPIlogs/AllTests.php';
 require_once 'Netdiscovery/AllTests.php';
 
 require_once '1_Unit/Software.php';
+require_once '1_Unit/ComputerTransformation.php';
 
 require_once 'emulatoragent.php';
 
@@ -168,6 +169,7 @@ class AllTests {
 //      $suite->addTest(Netdiscovery_AllTests::suite());
       
       $suite->addTest(Software_AllTests::suite());
+      $suite->addTest(ComputerTransformation_AllTests::suite());
       
       return $suite;
    }

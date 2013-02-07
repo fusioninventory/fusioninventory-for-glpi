@@ -35,286 +35,112 @@
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
+   @since     2013
 
    ------------------------------------------------------------------------
  */
 
-class Software extends PHPUnit_Framework_TestCase {
-   
-   public function testAddAllRules() {
-      global $DB;
-
-      $DB->connect();
-      
-      // * Add rule ignore
-         $rule = new Rule();
-         $ruleCriteria = new RuleCriteria();
-         $ruleAction = new RuleAction();
-         
-         $input = array();
-         $input['sub_type']   = 'RuleDictionnarySoftware';
-         $input['name']       = 'glpi';
-         $input['match']      = 'AND';
-         $input['is_active']  = 1;
-         $rules_id = $rule->add($input); 
-
-         $input = array();
-         $input['rules_id']   = $rules_id;
-         $input['criteria']   = 'name';
-         $input['condition']  = 0;
-         $input['pattern']    = 'glpi';
-         $ruleCriteria->add($input);
-         
-         $input = array();
-         $input['rules_id']      = $rules_id;
-         $input['action_type']   = 'assign';
-         $input['field']         = '_ignore_import';
-         $input['value']         = 1;
-         $ruleAction->add($input);  
-         
-         
-      // * Add rule rename software
-         $input = array();
-         $input['sub_type']   = 'RuleDictionnarySoftware';
-         $input['name']       = 'glpi0.84';
-         $input['match']      = 'AND';
-         $input['is_active']  = 1;
-         $rules_id = $rule->add($input); 
-
-         $input = array();
-         $input['rules_id']   = $rules_id;
-         $input['criteria']   = 'name';
-         $input['condition']  = 0;
-         $input['pattern']    = 'glpi0.84';
-         $ruleCriteria->add($input);
-         
-         $input = array();
-         $input['rules_id']      = $rules_id;
-         $input['action_type']   = 'assign';
-         $input['field']         = 'name';
-         $input['value']         = 'glpi';
-         $ruleAction->add($input); 
-         
-      // * Add rule rename manufacturer
-         $input = array();
-         $input['sub_type']   = 'RuleDictionnaryManufacturer';
-         $input['name']       = 'indepnet';
-         $input['match']      = 'AND';
-         $input['is_active']  = 1;
-         $rules_id = $rule->add($input); 
-
-         $input = array();
-         $input['rules_id']   = $rules_id;
-         $input['criteria']   = 'name';
-         $input['condition']  = 0;
-         $input['pattern']    = 'indepnet assoce';
-         $ruleCriteria->add($input);
-         
-         $input = array();
-         $input['rules_id']      = $rules_id;
-         $input['action_type']   = 'assign';
-         $input['field']         = 'name';
-         $input['value']         = 'indepnet';
-         $ruleAction->add($input); 
-         
-      // * Add rule Modify version
-         $input = array();
-         $input['sub_type']   = 'RuleDictionnarySoftware';
-         $input['name']       = 'glpi0.83';
-         $input['match']      = 'AND';
-         $input['is_active']  = 1;
-         $rules_id = $rule->add($input); 
-
-         $input = array();
-         $input['rules_id']   = $rules_id;
-         $input['criteria']   = 'name';
-         $input['condition']  = 0;
-         $input['pattern']    = 'glpi0.83';
-         $ruleCriteria->add($input);
-         
-         $input = array();
-         $input['rules_id']      = $rules_id;
-         $input['action_type']   = 'assign';
-         $input['field']         = 'version';
-         $input['value']         = '0.83';
-         $ruleAction->add($input); 
-   }
+class ComputerTransformation extends PHPUnit_Framework_TestCase {
    
    
-   
-   public function testAddSoftwareNormal() {
+   public function testComputerGeneral() {
       global $DB;
 
       $DB->connect();
       
       $_SESSION["plugin_fusinvinventory_entity"] = 0;
 
-      $a_software = array();
-      $a_software['SOFTWARES'][] = array(
-                'PUBLISHER' => 'fusioninventory team',
-                'NAME'      => 'fusioninventory',
-                'VERSION'   => '0.84+1.0'
+      $a_computer = array();
+      $a_computer['HARDWARE'] = array(
+                'ARCHNAME'             => 'i386-freebsd-thread-multi',
+                'CHASSIS_TYPE'         => 'Notebook',
+                'CHECKSUM'             => '131071',
+                'DATELASTLOGGEDUSER'   => 'Fri Feb  1 10:56',
+                'DEFAULTGATEWAY'       => '',
+                'DESCRIPTION'          => 'amd64/-1-11-30 22:04:44',
+                'DNS'                  => '8.8.8.8',
+                'ETIME'                => '1',
+                'IPADDR'               => '',
+                'LASTLOGGEDUSER'       => 'ddurieux',
+                'MEMORY'               => '3802',
+                'NAME'                 => 'pc',
+                'OSCOMMENTS'           => 'GENERIC ()root@farrell.cse.buffalo.edu',
+                'OSNAME'               => 'freebsd',
+                'OSVERSION'            => '9.1-RELEASE',
+                'PROCESSORN'           => '4',
+                'PROCESSORS'           => '2400',
+                'PROCESSORT'           => 'Core i3',
+                'SWAP'                 => '0',
+                'USERDOMAIN'           => '',
+                'USERID'               => 'ddurieux',
+                'UUID'                 => '68405E00-E5BE-11DF-801C-B05981201220',
+                'VMSYSTEM'             => 'Physical',
+                'WORKGROUP'            => 'mydomain.local'
             );
       
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       
-      $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
-
-      $a_reference = array();
-      $a_reference['software']["fusioninventory$$$$0.84+1.0"] = array(
-               'name'                  => 'fusioninventory',
-               'manufacturers_id'      => 1,
-               'version'               => '0.84+1.0',
-               'is_template_computer'  => 0,
-               'is_deleted_computer'   => 0,
-               'entities_id'           => 0
-            );
-      
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+      $date = date('Y-m-d H:i:s');
+      if (isset($a_return['fusioninventorycomputer'])
+              && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
+         $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
+      }
+      $a_reference = array(
+          'fusioninventorycomputer' => Array(
+              'winowner'                     => '',
+              'wincompany'                   => '',
+              'last_fusioninventory_update'  => $date
+          ), 
+          'soundcard'               => Array(),
+          'graphiccard'             => Array(),
+          'controller'              => Array(),
+          'processor'               => Array(),
+          'computerdisk'            => Array(),
+          'memory'                  => Array(),
+          'monitor'                 => Array(),
+          'printer'                 => Array(),
+          'peripheral'              => Array(),
+          'networkport'             => Array(),
+          'SOFTWARES'               => Array(),
+          'harddrive'               => Array(),
+          'virtualmachine'          => Array(),
+          'antivirus'               => Array(),
+          'storage'                 => Array()
+          );
+      $a_reference['computer'] = array(
+          'name'                             => 'pc',
+          'comment'                          => 'amd64/-1-11-30 22:04:44',
+          'users_id'                         => 0,
+          'operatingsystems_id'              => 'freebsd',
+          'operatingsystemversions_id'       => '9.1-RELEASE',
+          'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
+          'domains_id'                       => 'mydomain.local',
+          'os_licenseid'                     => '',
+          'os_license_number'                => '',
+          'operatingsystemservicepacks_id'   => 'GENERIC ()root@farrell.cse.buffalo.edu',
+          'manufacturers_id'                 => '',
+          'computermodels_id'                => '',
+          'serial'                           => '',
+          'computertypes_id'                 => 'Notebook',
+          'is_dynamic'                       => 1
+     );
+      // users_id = 0 because user notin DB
       $this->assertEquals($a_reference, $a_return);
       
-   }
-   
-   
-
-   public function testAddSoftwareIgnore() {
-      global $DB;
-
-      $DB->connect();
-
-      $_SESSION["plugin_fusinvinventory_entity"] = 1;
-
-      $a_software = array();
-      $a_software['SOFTWARES'][] = array(
-                'PUBLISHER' => 'indepnet',
-                'NAME'      => 'glpi',
-                'VERSION'   => '0.84'
-            );
-      
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
-      $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
-      
-      $a_reference = array();
-      $a_reference['software'] = array();
-      
-      $this->assertEquals($a_reference, $a_return);
-      
-   }
-   
-   
-
-   public function testAddSoftwareRename() {
-      global $DB;
-
-      $DB->connect();
-      
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
-
-      $a_software = array();
-      $a_software['SOFTWARES'][] = array(
-                'PUBLISHER' => 'indepnet',
-                'NAME'      => 'glpi0.84',
-                'VERSION'   => '0.84'
-            );
-      
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
-      $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
-
-      $a_reference = array();
-      $a_reference['software']["glpi$$$$0.84"] = array(
-               'name'                  => 'glpi',
-               'manufacturers_id'      => 2,
-               'version'               => '0.84',
-               'is_template_computer'  => 0,
-               'is_deleted_computer'   => 0,
-               'entities_id'           => 0
-            );
-      
-      $this->assertEquals($a_reference, $a_return);
-      
-   }
-   
-   
-
-   public function testAddSoftwareRenameManufacturer() {
-      global $DB;
-
-      $DB->connect();
-      
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
-
-      $a_software = array();
-      $a_software['SOFTWARES'][] = array(
-                'PUBLISHER' => 'indepnet assoce',
-                'NAME'      => 'glpi0.84',
-                'VERSION'   => '0.84'
-            );
-      
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
-      $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
-
-      $a_reference = array();
-      $a_reference['software']["glpi$$$$0.84"] = array(
-               'name'                  => 'glpi',
-               'manufacturers_id'      => 2,
-               'version'               => '0.84',
-               'is_template_computer'  => 0,
-               'is_deleted_computer'   => 0,
-               'entities_id'           => 0
-            );
-      
-      $this->assertEquals($a_reference, $a_return);
-      
-   }
-   
-   
-
-   public function testAddSoftwareVersion() {
-      global $DB;
-
-      $DB->connect();
-      
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
-
-      $a_software = array();
-      $a_software['SOFTWARES'][] = array(
-                'PUBLISHER' => 'indepnet',
-                'NAME'      => 'glpi0.83',
-                'VERSION'   => '0.84'
-            );
-      
-      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
-      $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
-
-      $a_reference = array();
-      $a_reference['software']["glpi0.83$$$$0.83"] = array(
-               'name'                  => 'glpi0.83',
-               'manufacturers_id'      => 2,
-               'version'               => '0.83',
-               'is_template_computer'  => 0,
-               'is_deleted_computer'   => 0,
-               'entities_id'           => 0
-            );
-      
-      $this->assertEquals($a_reference, $a_return);
-      
-   }
+   }   
 }
 
 
 
-class Software_AllTests  {
+class ComputerTransformation_AllTests  {
 
    public static function suite() {
 
-      $Install = new Install();
-      $Install->testInstall(0);
+//      $Install = new Install();
+//      $Install->testInstall(0);
       
-      $suite = new PHPUnit_Framework_TestSuite('Software');
+      $suite = new PHPUnit_Framework_TestSuite('ComputerTransformation');
       return $suite;
    }
 }
