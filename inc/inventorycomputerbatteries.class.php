@@ -116,7 +116,7 @@ class PluginFusioninventoryInventoryComputerBatteries extends CommonDBTM {
    **/
    function showForm($items_id, $options=array()) {
 
-      $a_antivirus = $this->find("`computers_id`='".$items_id."'");
+      $a_batteries = $this->find("`computers_id`='".$items_id."'");
       $antivirusData = array();
       
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
@@ -126,19 +126,19 @@ class PluginFusioninventoryInventoryComputerBatteries extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
       
-      foreach ($a_antivirus as $antivirusData) {
+      foreach ($a_batteries as $batteryData) {
          echo "<tr class='tab_bg_1'>";
          echo "<th width='15%'>";
          echo __('Name')."&nbsp;:";
          echo "</th>";
          echo "<th width='35%'>";
-         echo $antivirusData['name'];
+         echo $batteryData['name'];
          echo "</th>";
          echo "<td>";
          echo __('Active')."&nbsp;:";
          echo "</td>";
          echo "<td>";
-         echo Dropdown::getYesNo($antivirusData['is_active']);
+         echo Dropdown::getYesNo($batteryData['is_active']);
          echo "</td>";
          echo "</tr>";
 
@@ -147,13 +147,13 @@ class PluginFusioninventoryInventoryComputerBatteries extends CommonDBTM {
          echo __('Manufacturer')."&nbsp;:";
          echo "</td>";
          echo "<td>";
-         echo Dropdown::getDropdownName('glpi_manufacturers', $antivirusData["manufacturers_id"]);
+         echo Dropdown::getDropdownName('glpi_manufacturers', $batteryData["manufacturers_id"]);
          echo "</td>";
          echo "<td>";
          echo __('Up to date', 'fusioninventory')."&nbsp;:";
          echo "</td>";
          echo "<td>";
-         echo Dropdown::getYesNo($antivirusData['uptodate']);
+         echo Dropdown::getYesNo($batteryData['uptodate']);
          echo "</td>";
          echo "</tr>";
 
@@ -162,7 +162,7 @@ class PluginFusioninventoryInventoryComputerBatteries extends CommonDBTM {
          echo __('Version')."&nbsp;:";
          echo "</td>";
          echo "<td>";
-         echo $antivirusData['version'];
+         echo $batteryData['version'];
          echo "</td>";
          echo "<td colspan='2'>";
          echo "</td>";
