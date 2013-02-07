@@ -200,6 +200,95 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
       // users_id = 0 because user notin DB
       $this->assertEquals($a_reference, $a_return);      
    }   
+   
+   
+
+   public function testComputerOperatingSystem() {
+      global $DB;
+
+      $DB->connect();
+      
+      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+
+      $a_computer = array();
+      $a_computer['HARDWARE'] = array(
+                'NAME'           => 'vbox-winxp',
+                'ARCHNAME'       => 'MSWin32-x86-multi-thread',
+                'CHASSIS_TYPE'   => '',
+                'DESCRIPTION'    => '',
+                'OSCOMMENTS'     => 'Service Pack 3 BAD',
+                'OSNAME'         => 'Microsoft Windows XP Professionnel BAD',
+                'OSVERSION'      => '5.1.2600 BAD',
+                'VMSYSTEM'       => 'VirtualBox',
+                'WINCOMPANY'     => 'siprossii',
+                'WINLANG'        => '1036',
+                'WINOWNER'       => 'test',
+                'WINPRODID'      => '76413-OEM-0054453-04701',
+                'WINPRODKEY'     => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
+                'WORKGROUP'      => 'WORKGROUP'
+            );
+      
+      $a_computer['OPERATINGSYSTEM'] = array(
+          'FULL_NAME'      => 'Microsoft Windows XP Professionnel',
+          'INSTALL_DATE'   => '2012-10-16 08:12:56',
+          'KERNEL_NAME'    => 'MSWin32',
+          'KERNEL_VERSION' => '5.1.2600',
+          'NAME'           => 'Windows',
+          'SERVICE_PACK'   => 'Service Pack 3');
+
+      
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+      $date = date('Y-m-d H:i:s');
+      if (isset($a_return['fusioninventorycomputer'])
+              && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
+         $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
+      }
+      $a_reference = array(
+          'fusioninventorycomputer' => Array(
+              'winowner'                        => 'test',
+              'wincompany'                      => 'siprossii',
+              'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
+              'last_fusioninventory_update'     => $date
+          ), 
+          'soundcard'               => Array(),
+          'graphiccard'             => Array(),
+          'controller'              => Array(),
+          'processor'               => Array(),
+          'computerdisk'            => Array(),
+          'memory'                  => Array(),
+          'monitor'                 => Array(),
+          'printer'                 => Array(),
+          'peripheral'              => Array(),
+          'networkport'             => Array(),
+          'SOFTWARES'               => Array(),
+          'harddrive'               => Array(),
+          'virtualmachine'          => Array(),
+          'antivirus'               => Array(),
+          'storage'                 => Array()
+          );
+      $a_reference['computer'] = array(
+          'name'                             => 'vbox-winxp',
+          'comment'                          => '',
+          'users_id'                         => 0,
+          'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
+          'operatingsystemversions_id'       => '5.1.2600',
+          'uuid'                             => '',
+          'domains_id'                       => 'WORKGROUP',
+          'os_licenseid'                     => '76413-OEM-0054453-04701',
+          'os_license_number'                => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
+          'operatingsystemservicepacks_id'   => 'Service Pack 3',
+          'manufacturers_id'                 => '',
+          'computermodels_id'                => '',
+          'serial'                           => '',
+          'computertypes_id'                 => 'VirtualBox',
+          'is_dynamic'                       => 1,
+          'contact'                          => ''
+     );
+      // users_id = 0 because user notin DB
+      $this->assertEquals($a_reference, $a_return);      
+   }   
 }
 
 
