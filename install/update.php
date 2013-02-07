@@ -195,24 +195,41 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     *  Rename tables from old version of FuionInventory (2.2.1 for example)
     */
-   $migration->renameTable("glpi_plugin_fusioninventory_rangeip", "glpi_plugin_fusioninventory_ipranges");
-   $migration->renameTable("glpi_plugin_fusioninventory_lock", "glpi_plugin_fusioninventory_locks");
-   $migration->renameTable("glpi_plugin_fusioninventory_unknown_device", "glpi_plugin_fusioninventory_unknowndevices");
-   $migration->renameTable("glpi_plugin_fusioninventory_config", "glpi_plugin_fusioninventory_configs");
+   $migration->renameTable("glpi_plugin_fusioninventory_rangeip", 
+                           "glpi_plugin_fusioninventory_ipranges");
+   $migration->renameTable("glpi_plugin_fusioninventory_lock", 
+                           "glpi_plugin_fusioninventory_locks");
+   $migration->renameTable("glpi_plugin_fusioninventory_unknown_device", 
+                           "glpi_plugin_fusioninventory_unknowndevices");
+   $migration->renameTable("glpi_plugin_fusioninventory_config", 
+                           "glpi_plugin_fusioninventory_configs");
 
-   $migration->renameTable("glpi_plugin_fusioninventory_networking_ports", "glpi_plugin_fusinvsnmp_networkports");
-   $migration->renameTable("glpi_plugin_fusioninventory_construct_device", "glpi_plugin_fusinvsnmp_constructdevices");
-   $migration->renameTable("glpi_plugin_fusioninventory_construct_mibs", "glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids");
-   $migration->renameTable("glpi_plugin_fusioninventory_networking", "glpi_plugin_fusioninventory_networkequipments");
-   $migration->renameTable("glpi_plugin_fusioninventory_networking_ifaddr", "glpi_plugin_fusinvsnmp_networkequipmentips");
-   $migration->renameTable("glpi_plugin_fusioninventory_printers", "glpi_plugin_fusinvsnmp_printers");
-   $migration->renameTable("glpi_plugin_fusioninventory_printers_cartridges", "glpi_plugin_fusinvsnmp_printercartridges");
-   $migration->renameTable("glpi_plugin_fusioninventory_printers_history", "glpi_plugin_fusinvsnmp_printerlogs");
-   $migration->renameTable("glpi_plugin_fusioninventory_model_infos", "glpi_plugin_fusioninventory_snmpmodels");
-   $migration->renameTable("glpi_plugin_fusioninventory_mib_networking", "glpi_plugin_fusinvsnmp_modelmibs");
-   $migration->renameTable("glpi_plugin_fusioninventory_snmp_connection", "glpi_plugin_fusinvsnmp_configsecurities");
-   $migration->renameTable("glpi_plugin_fusioninventory_snmp_history", "glpi_plugin_fusinvsnmp_networkportlogs");
-   $migration->renameTable("glpi_plugin_fusioninventory_snmp_history_connections", "glpi_plugin_fusinvsnmp_networkportconnectionlogs");
+   $migration->renameTable("glpi_plugin_fusioninventory_networking_ports", 
+                           "glpi_plugin_fusinvsnmp_networkports");
+   $migration->renameTable("glpi_plugin_fusioninventory_construct_device",  
+                           "glpi_plugin_fusinvsnmp_constructdevices");
+   $migration->renameTable("glpi_plugin_fusioninventory_construct_mibs",  
+                           "glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids");
+   $migration->renameTable("glpi_plugin_fusioninventory_networking",  
+                           "glpi_plugin_fusioninventory_networkequipments");
+   $migration->renameTable("glpi_plugin_fusioninventory_networking_ifaddr",  
+                           "glpi_plugin_fusinvsnmp_networkequipmentips");
+   $migration->renameTable("glpi_plugin_fusioninventory_printers",  
+                           "glpi_plugin_fusinvsnmp_printers");
+   $migration->renameTable("glpi_plugin_fusioninventory_printers_cartridges",  
+                           "glpi_plugin_fusinvsnmp_printercartridges");
+   $migration->renameTable("glpi_plugin_fusioninventory_printers_history",  
+                           "glpi_plugin_fusinvsnmp_printerlogs");
+   $migration->renameTable("glpi_plugin_fusioninventory_model_infos",  
+                           "glpi_plugin_fusioninventory_snmpmodels");
+   $migration->renameTable("glpi_plugin_fusioninventory_mib_networking",  
+                           "glpi_plugin_fusinvsnmp_modelmibs");
+   $migration->renameTable("glpi_plugin_fusioninventory_snmp_connection",  
+                           "glpi_plugin_fusinvsnmp_configsecurities");
+   $migration->renameTable("glpi_plugin_fusioninventory_snmp_history",  
+                           "glpi_plugin_fusinvsnmp_networkportlogs");
+   $migration->renameTable("glpi_plugin_fusioninventory_snmp_history_connections",  
+                           "glpi_plugin_fusinvsnmp_networkportconnectionlogs");
 
    $a_droptable = array('glpi_plugin_fusioninventory_agents_inventory_state',
                         'glpi_plugin_fusioninventory_config_modules',
@@ -288,10 +305,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $prepare_rangeip[] = array("ip_start"=> $data['ifaddr_start'],
                                        "ip_end"  => $data['ifaddr_end'],
                                        "name"    => $data['name']);
-            $prepare_agentConfig[] = array("name" => $data["name"],
-                                           "lock" => $data['lock'],
-                                           "threads_networkinventory"    => $data['nb_process_query'],
-                                           "threads_networkdiscovery" => $data['nb_process_discovery']);
+            $prepare_agentConfig[] = array(
+                                  "name" => $data["name"],
+                                  "lock" => $data['lock'],
+                                  "threads_networkinventory" => $data['nb_process_query'],
+                                  "threads_networkdiscovery" => $data['nb_process_discovery']);
          }
       } else if (TableExists("glpi_plugin_tracker_agents")
                   AND FieldExists("glpi_plugin_tracker_agents",
@@ -299,23 +317,25 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "SELECT * FROM `glpi_plugin_tracker_agents`";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
-            $prepare_agentConfig[] = array("name" => $data["name"],
-                                           "lock" => $data['lock'],
-                                           "threads_networkinventory"    => $data['threads_query'],
-                                           "threads_networkdiscovery" => $data['threads_discovery']);
+            $prepare_agentConfig[] = array(
+                                   "name" => $data["name"],
+                                   "lock" => $data['lock'],
+                                   "threads_networkinventory" => $data['threads_query'],
+                                   "threads_networkdiscovery" => $data['threads_discovery']);
          }
       } else if (TableExists("glpi_plugin_fusioninventory_agents")) {
          if (FieldExists($newTable, "module_snmpquery")) {
             $query = "SELECT * FROM `glpi_plugin_fusioninventory_agents`";
             $result=$DB->query($query);
             while ($data=$DB->fetch_array($result)) {
-               $prepare_agentConfig[] = array("id" => $data["ID"],
-                                              "threads_networkinventory"    => $data['threads_query'],
-                                              "threads_networkdiscovery" => $data['threads_discovery'],
-                                              "NETORKINVENTORY" => $data['module_snmpquery'],
-                                              "NETWORKDISCOVERY" => $data['module_netdiscovery'],
-                                              "INVENTORY" => $data['module_inventory'],
-                                              "WAKEONLAN" => $data['module_wakeonlan']);
+               $prepare_agentConfig[] = array(
+                                 "id" => $data["ID"],
+                                 "threads_networkinventory" => $data['threads_query'],
+                                 "threads_networkdiscovery" => $data['threads_discovery'],
+                                 "NETORKINVENTORY" => $data['module_snmpquery'],
+                                 "NETWORKDISCOVERY" => $data['module_netdiscovery'],
+                                 "INVENTORY" => $data['module_inventory'],
+                                 "WAKEONLAN" => $data['module_wakeonlan']);
             }
          }
       }
@@ -348,10 +368,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                   'value'   => NULL);
       $a_table['fields']['tag']           = array('type'    => 'string',
                                                   'value'   => NULL);
-      $a_table['fields']['threads_networkdiscovery'] = array('type' => "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
-                                                  'value'   => NULL);
-      $a_table['fields']['threads_networkinventory'] = array('type' => "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
-                                                  'value'   => NULL);
+      $a_table['fields']['threads_networkdiscovery'] = array(
+                        'type' => "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
+                        'value'   => NULL);
+      $a_table['fields']['threads_networkinventory'] = array(
+                        'type' => "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
+                        'value'   => NULL);
       $a_table['fields']['senddico']      = array('type'    => 'bool',
                                                   'value'   => NULL);
 
@@ -555,7 +577,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['renamefields']['ID'] = 'id';
       
       $a_table['keys']   = array();
-      $a_table['keys'][] = array('field' => array("type", "plugins_id"), 'name' => 'unicity', 'type' => 'UNIQUE');
+      $a_table['keys'][] = array('field' => array("type", "plugins_id"), 
+                                 'name' => 'unicity', 
+                                 'type' => 'UNIQUE');
 
       $a_table['oldkeys'] = array();
 
@@ -741,7 +765,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['renamefields'] = array(
           'ID' => 'id',
           'construct_device_id' => 'plugin_fusioninventory_snmpmodelconstructdevices_id',
-          'plugin_fusinvsnmp_constructdevices_id' => 'plugin_fusioninventory_snmpmodelconstructdevices_id',
+          'plugin_fusinvsnmp_constructdevices_id' => 
+                                 'plugin_fusioninventory_snmpmodelconstructdevices_id',
       );
 
       $a_table['keys']   = array();
@@ -764,8 +789,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['fields']  = array();
       $a_table['fields']['id']         = array('type'    => 'autoincrement', 
                                                'value'   => '');
-      $a_table['fields']['tablename']  = array('type'    => "varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''", 
-                                               'value'   => NULL);
+      $a_table['fields']['tablename']  = array(
+                        'type'    => "varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''", 
+                        'value'   => NULL);
       $a_table['fields']['items_id']   = array('type'    => 'integer',  
                                                'value'   => NULL);
       $a_table['fields']['tablefields']= array('type'    => 'text',  
@@ -796,8 +822,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['fields']  = array();
       $a_table['fields']['id']         = array('type'    => 'autoincrement', 
                                                'value'   => '');
-      $a_table['fields']['itemtype']   = array('type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL", 
-                                               'value'   => NULL);
+      $a_table['fields']['itemtype']   = array(
+                        'type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL", 
+                        'value'   => NULL);
       $a_table['fields']['name']       = array('type'    => 'string',  
                                                'value'   => NULL);
       $a_table['fields']['table']      = array('type'    => 'string',  
@@ -1438,8 +1465,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => NULL);
       $a_table['fields']['date']       = array('type'    => 'datetime',  
                                                'value'   => NULL);
-      $a_table['fields']['itemtype']   = array('type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL",  
-                                               'value'   => NULL);
+      $a_table['fields']['itemtype']   = array(
+                        'type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL",  
+                        'value'   => NULL);
       $a_table['fields']['entities_id']= array('type'    => 'integer',  
                                                'value'   => NULL);
       $a_table['fields']['ip']         = array('type'    => 'string',  
@@ -1546,7 +1574,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $query = "CREATE TABLE `".$newTable."` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
          $DB->query($query);
       }
          $migration->changeField($newTable,
@@ -1767,7 +1795,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query("CREATE TABLE `".$newTable."` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                        ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
       }
       $migration->addField($newTable,
                            "id",
@@ -1950,7 +1978,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query("CREATE TABLE `".$newTable."` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                        ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
       }
          $migration->addField($newTable,
                               "id",
@@ -2711,7 +2739,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "vlan",
                                  "tinyint(1) NOT NULL DEFAULT '0'");
          $migration->addKey($newTable,
-                            array("plugin_fusioninventory_snmpmodelmiboids_id", "plugin_fusioninventory_snmpmodelconstructdevices_id", "plugin_fusioninventory_mappings_id"),
+                            array("plugin_fusioninventory_snmpmodelmiboids_id", 
+                                  "plugin_fusioninventory_snmpmodelconstructdevices_id", 
+                                  "plugin_fusioninventory_mappings_id"),
                             "unicity",
                             "UNIQUE");
       $migration->migrationOneTable($newTable);
@@ -2730,7 +2760,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
       }
          $migration->changeField($newTable,
                                  "ID",
@@ -2793,7 +2823,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "plugin_fusioninventory_agentprocesses_id",
                               "int(11) NOT NULL DEFAULT '0'");
          $migration->addKey($newTable,
-                            array("networkports_id_source", "networkports_id_destination", "plugin_fusioninventory_agentprocesses_id"),
+                            array("networkports_id_source", 
+                                  "networkports_id_destination", 
+                                  "plugin_fusioninventory_agentprocesses_id"),
                             "networkports_id_source");
          $migration->addKey($newTable,
                             "date_mod");
@@ -2832,7 +2864,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
       }
          $migration->changeField($newTable,
                                  "ID",
@@ -3024,10 +3056,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             array("plugin_fusioninventory_snmpmodels_id", "oid_port_dyn"),
                             "plugin_fusioninventory_snmpmodels_id_2");
          $migration->addKey($newTable,
-                            array("plugin_fusioninventory_snmpmodels_id", "oid_port_counter", "plugin_fusioninventory_mappings_id"),
+                            array("plugin_fusioninventory_snmpmodels_id", 
+                                  "oid_port_counter", 
+                                  "plugin_fusioninventory_mappings_id"),
                             "plugin_fusioninventory_snmpmodels_id_3");
          $migration->addKey($newTable,
-                            array("plugin_fusioninventory_snmpmodels_id", "plugin_fusioninventory_mappings_id"),
+                            array("plugin_fusioninventory_snmpmodels_id", 
+                                  "plugin_fusioninventory_mappings_id"),
                             "plugin_fusioninventory_snmpmodels_id_4");
          $migration->addKey($newTable,
                             "oid_port_dyn");
@@ -3050,7 +3085,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
       }
          $migration->changeField($newTable,
                                  "ID",
@@ -3177,7 +3212,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
       }
          $migration->changeField($newTable,
                                  "id",
@@ -3285,7 +3320,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
       }
          $migration->changeField($newTable,
                                  "id",
@@ -3422,7 +3457,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` bigint(100) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
       }
          $migration->changeField($newTable,
                                  "id",
@@ -3520,7 +3555,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
       }
          $migration->changeField($newTable,
                                  "id",
@@ -3676,7 +3711,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
       }
          $migration->changeField($newTable,
                                  "id",
@@ -3785,7 +3820,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addKey($newTable,
                             "networkequipments_id");
          $migration->addKey($newTable,
-                            array("plugin_fusioninventory_snmpmodels_id", "plugin_fusioninventory_configsecurities_id"),
+                            array("plugin_fusioninventory_snmpmodels_id", 
+                                  "plugin_fusioninventory_configsecurities_id"),
                             "plugin_fusioninventory_snmpmodels_id");
       $migration->migrationOneTable($newTable);
       $DB->list_fields($newTable, FALSE);
@@ -3808,7 +3844,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
       }
          $migration->changeField($newTable,
                                  "id",
@@ -3918,7 +3954,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                      }
 
                      $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
-                        (`date_mod`, `creation`, `networkports_id_source`, `networkports_id_destination`)
+                        (`date_mod`, `creation`, `networkports_id_source`, 
+                         `networkports_id_destination`)
                         VALUES ('".$input['date']."',
                                 '".$input['creation']."',
                                 '".$input['FK_port_source']."',
@@ -4075,7 +4112,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query('CREATE TABLE `'.$newTable.'` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
       }
          $migration->changeField($newTable,
                                  "id",
@@ -4188,7 +4225,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query("CREATE TABLE `".$newTable."` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                        ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
       }
          $migration->changeField($newTable,
                                  "id",
@@ -4288,7 +4325,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query("CREATE TABLE `".$newTable."` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
-                        ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
+                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1");
       }
          $migration->changeField($newTable,
                                  "id",
@@ -4765,106 +4802,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
 
 
-
-   /*
-    * Update serialized sections to mysql_real_escape_string(htmlspecialchars_decode("data"))
-    */
-/*   if (!strstr($current_version, "+")) {// All version before 0.80+1.1 (new versioning)
-      $computer = new Computer();
-      $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
-      $migration->displayMessage("Convert computer inventory, may require some minutes");
-      $pfLib = new PluginFusioninventoryInventoryComputerLib();
-      $query = "SELECT * FROM `glpi_plugin_fusinvinventory_libserialization`";
-      if ($result=$DB->query($query)) {
-         while ($data=$DB->fetch_array($result)) {
-            $infoSections = array();
-            $infoSections["externalId"] = '';
-            $infoSections["sections"] = array();
-            $infoSections["sectionsToModify"] = array();
-
-            // Variables for the recovery and changes in the serialized sections
-            $serializedSections = "";
-            $arraySerializedSections = array();
-            $arraySerializedSectionsTemp = array();
-
-            $infoSections["externalId"] = $data['internal_id'];
-            $serializedSections = htmlspecialchars_decode($data['serialized_sections1'].$data['serialized_sections2'].$data['serialized_sections3'], ENT_QUOTES); // Recover double quotes
-            $arraySerializedSections = explode("\n", $serializedSections); // Recovering a table with one line per entry
-            $previous_infosection = array();
-            foreach ($arraySerializedSections as $valeur) {
-               $arraySerializedSectionsTemp = explode("<<=>>", $valeur); // For each line, we create a table with data separated
-               if (isset($arraySerializedSectionsTemp[0]) AND isset($arraySerializedSectionsTemp[1])) {
-                  if ($arraySerializedSectionsTemp[0] != "" && $arraySerializedSectionsTemp[1] != "") { // that is added to infosections
-                     $infoSections["sections"][$arraySerializedSectionsTemp[0]] = $arraySerializedSectionsTemp[1];
-                  }
-                  $previous_infosection = $arraySerializedSectionsTemp[0];
-               } else if ($valeur != '') {
-                  $infoSections["sections"][$previous_infosection] .= "\n".$valeur;
-               }
-            }
-            $infoSections['sections'] = $pfLib->convertData($infoSections['sections']);
-
-            $serializedSections = "";
-            foreach($infoSections["sections"] as $key => $serializedSection) {
-               if (!strstr($key, "ENVS/")
-                     AND !strstr($key, "PROCESSES/")) {
-
-                  $serializedSections .= $key."<<=>>".$serializedSection."
-";
-               }
-            }
-            if ($computer->getFromDB($data['computers_id'])) {
-               $pfLib->_serializeIntoDB($data['internal_id'], $serializedSections);
-
-               // * Add informations of BIOS (table glpi_plugin_fusinvinventory_computers)
-               $input = array();
-               $input['computers_id'] = $data['computers_id'];
-               foreach($infoSections['sections'] as $name=>$section) {
-                  $split = explode("/", $name);
-                  if (($split[1] > 0) OR (strstr($split[1], 'd'))) {
-                     $dataSection = unserialize($section);
-
-                     if ($split[0] == 'BIOS') {
-                        if (isset($dataSection['BDATE'])) {
-                           $a_split = explode("/", $dataSection['BDATE']);
-                           if (isset($a_split[1]) AND isset($a_split[2])) {
-                              $input['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
-                           }
-                        }
-                        if (isset($dataSection['BVERSION'])) {
-                           $input['bios_version'] = $dataSection['BVERSION'];
-                        }
-                        if (isset($dataSection['BMANUFACTURER'])) {
-                           $input['bios_manufacturers_id'] = Dropdown::importExternal('Manufacturer',
-                                                                                       $dataSection['BMANUFACTURER'],
-                                                                                       $computer->fields['entities_id']);
-                        }
-                     }
-                     if ($split[0] == 'HARDWARE') {
-                        if (isset($dataSection['OSINSTALLDATE'])) {
-                           $input['operatingsystem_installationdate'] = date("Y-m-d", $dataSection['OSINSTALLDATE']);
-                        }
-                        if (isset($dataSection['WINOWNER'])) {
-                           $input['winowner'] = $dataSection['WINOWNER'];
-                        }
-                        if (isset($dataSection['WINCOMPANY'])) {
-                           $input['wincompany'] = $dataSection['WINCOMPANY'];
-                        }
-                     }
-                  }
-               }
-               $pfComputer->add($input);
-            } else {
-               $DB->query("DELETE FROM `glpi_plugin_fusinvinventory_libserialization`
-                  WHERE `internal_id`='".$data['internal_id']."'");
-            }
-         }
-      }
-   }
-*/
    
    /*
-    * Migrate data of table glpi_plugin_fusinvsnmp_agentconfigs into glpi_plugin_fusioninventory_agents
+    * Migrate data of table glpi_plugin_fusinvsnmp_agentconfigs into 
+    * glpi_plugin_fusioninventory_agents
     */
    if (TableExists("glpi_plugin_fusinvsnmp_agentconfigs")) {
 
@@ -5102,7 +5043,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                     FROM `glpi_plugin_fusioninventory_networkports`
                           LEFT JOIN `glpi_networkports`
                                     ON `glpi_networkports`.`id` = `networkports_id`
-                          LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `glpi_networkports`.`items_id`
+                          LEFT JOIN `glpi_networkequipments` 
+                              ON `glpi_networkequipments`.`id` = `glpi_networkports`.`items_id`
                     WHERE `glpi_networkequipments`.`id` IS NULL";
    $result=$DB->query($query_select);
    while ($data=$DB->fetch_array($result)) {
@@ -5119,7 +5061,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    echo "Clean for switch more informations again in DB when switch is purged\n";
    $query_select = "SELECT `glpi_plugin_fusioninventory_networkequipments`.`id`
                     FROM `glpi_plugin_fusioninventory_networkequipments`
-                          LEFT JOIN `glpi_networkequipments` ON `glpi_networkequipments`.`id` = `networkequipments_id`
+                    LEFT JOIN `glpi_networkequipments` 
+                        ON `glpi_networkequipments`.`id` = `networkequipments_id`
                     WHERE `glpi_networkequipments`.`id` IS NULL";
    $result=$DB->query($query_select);
    while ($data=$DB->fetch_array($result)) {
@@ -5258,20 +5201,23 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
    changeDisplayPreference("5153", "PluginFusioninventoryUnknownDevice");
    changeDisplayPreference("5158", "PluginFusioninventoryAgent");
-   changeDisplayPreference("PluginFusinvinventoryBlacklist", "PluginFusioninventoryInventoryComputerBlacklist");
+   changeDisplayPreference("PluginFusinvinventoryBlacklist", 
+                           "PluginFusioninventoryInventoryComputerBlacklist");
    changeDisplayPreference("5151", "PluginFusinvsnmpModel");
    changeDisplayPreference("PluginFusinvsnmpModel", "PluginFusioninventorySnmpmodel");
    changeDisplayPreference("5152", "PluginFusinvsnmpConfigSecurity");
    changeDisplayPreference("5156", "PluginFusinvsnmpPrinterCartridge");
    changeDisplayPreference("5157", "PluginFusinvsnmpNetworkEquipment");
-   changeDisplayPreference("PluginFusinvsnmpNetworkEquipment", "PluginFusioninventoryNetworkEquipment");
+   changeDisplayPreference("PluginFusinvsnmpNetworkEquipment", 
+                           "PluginFusioninventoryNetworkEquipment");
    changeDisplayPreference("5159", "PluginFusinvsnmpIPRange");
    changeDisplayPreference("5162", "PluginFusinvsnmpNetworkPortLog");
    changeDisplayPreference("5167", "PluginFusioninventorySnmpmodelConstructDevice");
    changeDisplayPreference("PluginFusinvsnmpConstructDevice",
                            "PluginFusioninventorySnmpmodelConstructDevice");
    changeDisplayPreference("5168", "PluginFusinvsnmpPrinterLog");
-   changeDisplayPreference("PluginFusinvsnmpPrinterLogReport", "PluginFusioninventoryPrinterLogReport");
+   changeDisplayPreference("PluginFusinvsnmpPrinterLogReport", 
+                           "PluginFusioninventoryPrinterLogReport");
 
    
    /*
@@ -5284,7 +5230,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          AND `users_id`='0'";
       $result=$DB->query($query);
       if ($DB->numrows($result) == '0') {
-         $query = "INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`)
+         $query = "INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, 
+                        `users_id`)
                      VALUES (NULL, 'PluginFusioninventoryPrinterLogReport', '2', '1', '0'),
              (NULL, 'PluginFusioninventoryPrinterLogReport', '18', '2', '0'),
              (NULL, 'PluginFusioninventoryPrinterLogReport', '20', '3', '0'),
@@ -5328,8 +5275,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             AND `users_id`='0'";
          $result=$DB->query($query);
          if ($DB->numrows($result) == '0') {
-            $query = "INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`)
-                        VALUES (NULL, 'PluginFusioninventoryNetworkEquipment', '".$num."', '".$rank."', '0')";
+            $query = "INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, 
+                           `users_id`)
+                        VALUES (NULL, 'PluginFusioninventoryNetworkEquipment', '".$num."', 
+                           '".$rank."', '0')";
             $DB->query($query);
          }
       }
@@ -5633,7 +5582,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
 
-   // Delete data in glpi_logs (agent problem => ticket http://forge.fusioninventory.org/issues/1546)
+   // Delete data in glpi_logs(agent problem => ticket http://forge.fusioninventory.org/issues/1546)
    // ** Token
    $query = "DELETE FROM `glpi_logs`
       WHERE `itemtype`='PluginFusioninventoryAgent'
@@ -5709,7 +5658,8 @@ function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
 
       $fin = time();
       $tps = Html::timestampToString($fin-$deb);
-      echo "<script type='text/javascript'>document.getElementById('migration_message_$id').innerHTML = '<p class=\"center\">$msg ($tps)</p>';</script>\n";
+      echo "<script type='text/javascript'>document.getElementById('migration_message_$id').".
+              "innerHTML = '<p class=\"center\">$msg ($tps)</p>';</script>\n";
    }
    Html::glpi_flush();
 }
@@ -7010,16 +6960,21 @@ function update213to220_ConvertField($migration) {
    $constantsfield['networking > MAC address filters (dot1dTpFdbAddress)'] = 'dot1dTpFdbAddress';
    $constantsfield['Netzwerk > MAC Adressen Filter (dot1dTpFdbAddress)'] = 'dot1dTpFdbAddress';
 
-   $constantsfield['réseaux > adresses physiques mémorisées (ipNetToMediaPhysAddress)'] = 'ipNetToMediaPhysAddress';
-   $constantsfield['networking > Physical addresses in memory (ipNetToMediaPhysAddress)'] = 'ipNetToMediaPhysAddress';
-   $constantsfield['Netzwerk > Physikalische Adressen im Speicher (ipNetToMediaPhysAddress)'] = 'ipNetToMediaPhysAddress';
+   $constantsfield['réseaux > adresses physiques mémorisées (ipNetToMediaPhysAddress)'] = 
+                  'ipNetToMediaPhysAddress';
+   $constantsfield['networking > Physical addresses in memory (ipNetToMediaPhysAddress)'] = 
+                  'ipNetToMediaPhysAddress';
+   $constantsfield['Netzwerk > Physikalische Adressen im Speicher (ipNetToMediaPhysAddress)'] = 
+                  'ipNetToMediaPhysAddress';
 
    $constantsfield['réseaux > instances de ports (dot1dTpFdbPort)'] = 'dot1dTpFdbPort';
    $constantsfield['networking > Port instances (dot1dTpFdbPort)'] = 'dot1dTpFdbPort';
    $constantsfield['Netzwerk > Instanzen des Ports (dot1dTpFdbPort)'] = 'dot1dTpFdbPort';
 
-   $constantsfield['réseaux > numéro de ports associé ID du port (dot1dBasePortIfIndex)'] = 'dot1dBasePortIfIndex';
-   $constantsfield['networking > Port number associated with port ID (dot1dBasePortIfIndex)'] = 'dot1dBasePortIfIndex';
+   $constantsfield['réseaux > numéro de ports associé ID du port (dot1dBasePortIfIndex)'] = 
+                  'dot1dBasePortIfIndex';
+   $constantsfield['networking > Port number associated with port ID (dot1dBasePortIfIndex)'] = 
+                  'dot1dBasePortIfIndex';
    $constantsfield['Netzwerk > Verkn&uuml;pfung der Portnummerierung mit der ID des Ports (dot1dBasePortIfIndex)'] = 'dot1dBasePortIfIndex';
 
    $constantsfield['réseaux > addresses IP'] = 'ipAdEntAddr';
@@ -7290,56 +7245,88 @@ function update213to220_ConvertField($migration) {
    $constantsfield['Tambour Jaune Restant'] = 'drumyellowremaining';
    $constantsfield['Yellow drum Restant'] = 'drumyellowremaining';
 
-   $constantsfield['imprimante > compteur > nombre total de pages imprimées'] = 'pagecountertotalpages';
+   $constantsfield['imprimante > compteur > nombre total de pages imprimées'] = 
+                  'pagecountertotalpages';
    $constantsfield['printer > meter > total number of printed pages'] = 'pagecountertotalpages';
    $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten'] = 'pagecountertotalpages';
 
-   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées'] = 'pagecounterblackpages';
-   $constantsfield['printer > meter > number of printed black and white pages'] = 'pagecounterblackpages';
-   $constantsfield['Drucker > Messung > Gesamtanzahl gedrucker Schwarz/Wei&szlig; Seiten'] = 'pagecounterblackpages';
+   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées'] = 
+                  'pagecounterblackpages';
+   $constantsfield['printer > meter > number of printed black and white pages'] = 
+                  'pagecounterblackpages';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedrucker Schwarz/Wei&szlig; Seiten'] = 
+                  'pagecounterblackpages';
 
-   $constantsfield['imprimante > compteur > nombre de pages couleur imprimées'] = 'pagecountercolorpages';
+   $constantsfield['imprimante > compteur > nombre de pages couleur imprimées'] = 
+                  'pagecountercolorpages';
    $constantsfield['printer > meter > number of printed color pages'] = 'pagecountercolorpages';
-   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Farbseiten'] = 'pagecountercolorpages';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Farbseiten'] = 
+                  'pagecountercolorpages';
 
-   $constantsfield['imprimante > compteur > nombre de pages recto/verso imprimées'] = 'pagecounterrectoversopages';
-   $constantsfield['printer > meter > number of printed duplex pages'] = 'pagecounterrectoversopages';
-   $constantsfield['Drucker > Messung > Anzahl der gedruckten Duplex Seiten'] = 'pagecounterrectoversopages';
+   $constantsfield['imprimante > compteur > nombre de pages recto/verso imprimées'] = 
+                  'pagecounterrectoversopages';
+   $constantsfield['printer > meter > number of printed duplex pages'] = 
+                  'pagecounterrectoversopages';
+   $constantsfield['Drucker > Messung > Anzahl der gedruckten Duplex Seiten'] = 
+                  'pagecounterrectoversopages';
 
    $constantsfield['imprimante > compteur > nombre de pages scannées'] = 'pagecounterscannedpages';
    $constantsfield['printer > meter > nomber of scanned pages'] = 'pagecounterscannedpages';
    $constantsfield['Drucker > Messung > Anzahl der gescannten Seiten'] = 'pagecounterscannedpages';
 
-   $constantsfield['imprimante > compteur > nombre total de pages imprimées (impression)'] = 'pagecountertotalpages_print';
-   $constantsfield['printer > meter > total number of printed pages (print mode)'] = 'pagecountertotalpages_print';
-   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Druck)'] = 'pagecountertotalpages_print';
+   $constantsfield['imprimante > compteur > nombre total de pages imprimées (impression)'] = 
+                  'pagecountertotalpages_print';
+   $constantsfield['printer > meter > total number of printed pages (print mode)'] = 
+                  'pagecountertotalpages_print';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Druck)'] = 
+                  'pagecountertotalpages_print';
 
-   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées (impression)'] = 'pagecounterblackpages_print';
-   $constantsfield['printer > meter > number of printed black and white pages (print mode)'] = 'pagecounterblackpages_print';
-   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seiten (Druck)'] = 'pagecounterblackpages_print';
+   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées (impression)'] = 
+                  'pagecounterblackpages_print';
+   $constantsfield['printer > meter > number of printed black and white pages (print mode)'] = 
+                  'pagecounterblackpages_print';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seiten (Druck)']= 
+                  'pagecounterblackpages_print';
 
-   $constantsfield['imprimante > compteur > nombre de pages couleur imprimées (impression)'] = 'pagecountercolorpages_print';
-   $constantsfield['printer > meter > number of printed color pages (print mode)'] = 'pagecountercolorpages_print';
-   $constantsfield['Drucker > Messung > Gesamtanzahl farbig gedruckter Seiten (Druck)'] = 'pagecountercolorpages_print';
+   $constantsfield['imprimante > compteur > nombre de pages couleur imprimées (impression)'] = 
+                  'pagecountercolorpages_print';
+   $constantsfield['printer > meter > number of printed color pages (print mode)'] = 
+                  'pagecountercolorpages_print';
+   $constantsfield['Drucker > Messung > Gesamtanzahl farbig gedruckter Seiten (Druck)'] = 
+                  'pagecountercolorpages_print';
 
-   $constantsfield['imprimante > compteur > nombre total de pages imprimées (copie)'] = 'pagecountertotalpages_copy';
-   $constantsfield['printer > meter > total number of printed pages (copy mode)'] = 'pagecountertotalpages_copy';
-   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Kopie)'] = 'pagecountertotalpages_copy';
+   $constantsfield['imprimante > compteur > nombre total de pages imprimées (copie)'] = 
+                  'pagecountertotalpages_copy';
+   $constantsfield['printer > meter > total number of printed pages (copy mode)'] = 
+                  'pagecountertotalpages_copy';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Kopie)'] = 
+                  'pagecountertotalpages_copy';
 
-   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées (copie)'] = 'pagecounterblackpages_copy';
-   $constantsfield['printer > meter > number of printed black and white pages (copy mode)'] = 'pagecounterblackpages_copy';
-   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seite (Kopie)'] = 'pagecounterblackpages_copy';
+   $constantsfield['imprimante > compteur > nombre de pages noir et blanc imprimées (copie)'] = 
+                  'pagecounterblackpages_copy';
+   $constantsfield['printer > meter > number of printed black and white pages (copy mode)'] = 
+                  'pagecounterblackpages_copy';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Schwarz/Wei&szlig; Seite (Kopie)'] = 
+                  'pagecounterblackpages_copy';
 
-   $constantsfield['imprimante > compteur > nombre de pages couleur imprimées (copie)'] = 'pagecountercolorpages_copy';
-   $constantsfield['printer > meter > number of printed color pages (copy mode)'] = 'pagecountercolorpages_copy';
-   $constantsfield['Drucker > Messung > Gesamtanzahl farbig gedruckter Seiten (Kopie)'] = 'pagecountercolorpages_copy';
+   $constantsfield['imprimante > compteur > nombre de pages couleur imprimées (copie)'] = 
+                  'pagecountercolorpages_copy';
+   $constantsfield['printer > meter > number of printed color pages (copy mode)'] = 
+                  'pagecountercolorpages_copy';
+   $constantsfield['Drucker > Messung > Gesamtanzahl farbig gedruckter Seiten (Kopie)'] = 
+                  'pagecountercolorpages_copy';
 
-   $constantsfield['imprimante > compteur > nombre total de pages imprimées (fax)'] = 'pagecountertotalpages_fax';
-   $constantsfield['printer > meter > total number of printed pages (fax mode)'] = 'pagecountertotalpages_fax';
-   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Fax)'] = 'pagecountertotalpages_fax';
+   $constantsfield['imprimante > compteur > nombre total de pages imprimées (fax)'] = 
+                  'pagecountertotalpages_fax';
+   $constantsfield['printer > meter > total number of printed pages (fax mode)'] = 
+                  'pagecountertotalpages_fax';
+   $constantsfield['Drucker > Messung > Gesamtanzahl gedruckter Seiten (Fax)'] = 
+                  'pagecountertotalpages_fax';
 
-   $constantsfield['imprimante > compteur > nombre total de pages larges imprimées'] = 'pagecounterlargepages';
-   $constantsfield['printer > meter > total number of large printed pages'] = 'pagecounterlargepages';
+   $constantsfield['imprimante > compteur > nombre total de pages larges imprimées'] = 
+                  'pagecounterlargepages';
+   $constantsfield['printer > meter > total number of large printed pages'] = 
+                  'pagecounterlargepages';
 
    $constantsfield['imprimante > port > adresse MAC'] = 'ifPhysAddress';
    $constantsfield['printer > port > MAC address'] = 'ifPhysAddress';
@@ -7385,7 +7372,8 @@ function update213to220_ConvertField($migration) {
       }
       $migration->displayMessage("$i / $nb");
 
-      // Move connections from glpi_plugin_fusioninventory_snmp_history to glpi_plugin_fusioninventory_snmp_history_connections
+      // Move connections from glpi_plugin_fusioninventory_snmp_history to 
+      // glpi_plugin_fusioninventory_snmp_history_connections
       echo "Moving creation connections history\n";
       $query = "SELECT *
                 FROM `glpi_plugin_tracker_snmp_history`
@@ -7420,7 +7408,8 @@ function update213to220_ConvertField($migration) {
                         $input['creation'] = 1;
                         $input['process_number'] = $data['FK_process'];
                         $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
-                           (`date_mod`, `creation`, `networkports_id_source`, `networkports_id_destination`)
+                           (`date_mod`, `creation`, `networkports_id_source`, 
+                            `networkports_id_destination`)
                            VALUES ('".$input['date']."',
                                    '".$input['creation']."',
                                    '".$input['FK_port_source']."',
@@ -7475,8 +7464,10 @@ function update213to220_ConvertField($migration) {
                         $input['creation'] = 1;
                         $input['process_number'] = $data['FK_process'];
                         if ($input['FK_port_source'] != $input['FK_port_destination']) {
-                           $query_ins = "INSERT INTO `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
-                              (`date_mod`, `creation`, `networkports_id_source`, `networkports_id_destination`)
+                           $query_ins = "INSERT INTO 
+                                 `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
+                              (`date_mod`, `creation`, `networkports_id_source`, 
+                               `networkports_id_destination`)
                               VALUES ('".$input['date']."',
                                       '".$input['creation']."',
                                       '".$input['FK_port_source']."',
@@ -7793,4 +7784,3 @@ function migrateTablesFromFusinvDeploy ($migration) {
 }
 
 ?>
-
