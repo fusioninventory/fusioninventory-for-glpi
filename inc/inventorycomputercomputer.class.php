@@ -125,8 +125,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       if (empty($a_computerextend)) {
          return;
       }
-
-
       
       echo '<table class="tab_glpi" width="100%">';
       echo '<tr>';
