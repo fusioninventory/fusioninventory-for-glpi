@@ -187,13 +187,13 @@ class PluginFusioninventoryWizard {
       echo "<td colspan='2' valign='top' width='950'>";
 
       if (isset($_GET['wizz']) AND (strstr($_GET['wizz'], "rules"))) {
-         if (isset($_GET['id'])) {
-            include (GLPI_ROOT."/plugins/fusioninventory/front/wizzrule.common.form.php");
-         } else {
-            self::addButton();
-            $rulecollection = new $classname();
-            include (GLPI_ROOT."/plugins/fusioninventory/front/wizzrule.common.php");
-         }
+//         if (isset($_GET['id'])) {
+//            include (GLPI_ROOT."/plugins/fusioninventory/front/wizzrule.common.form.php");
+//         } else {
+//            self::addButton();
+//            $rulecollection = new $classname();
+//            include (GLPI_ROOT."/plugins/fusioninventory/front/wizzrule.common.php");
+//         }
       } else if (isset($_GET['id'])) {
          $class = new $classname;
          if ($_GET['wizz'] == 'w_tasks') {
@@ -338,8 +338,8 @@ class PluginFusioninventoryWizard {
       __('Action choice', 'fusioninventory')   => "w_start",
       __('Type of device to inventory', 'fusioninventory')   => "w_inventorychoice",
       __('Import options', 'fusioninventory')   => "w_importcomputeroptions",
-      __('Equipment import and link rules', 'fusioninventory')    => "w_importrules",
-      __('Entity rules', 'fusioninventory')   => "w_entityrules",
+//      __('Equipment import and link rules', 'fusioninventory')    => "w_importrules",
+//      __('Entity rules', 'fusioninventory')   => "w_entityrules",
       __('Agent configuration', 'fusioninventory')   => "w_agentconfig");
    }
 
