@@ -202,21 +202,24 @@ class PluginFusioninventoryFormatconvert {
       
       $array_tmp = $thisc->addValues($array['HARDWARE'], 
                                      array( 
-                                        'OSINSTALLDATE' => 'operatingsystem_installationdate',
-                                        'WINOWNER' => 'winowner',
-                                        'WINCOMPANY' => 'wincompany'));
+                                        'OSINSTALLDATE'  => 'operatingsystem_installationdate',
+                                        'WINOWNER'       => 'winowner',
+                                        'WINCOMPANY'     => 'wincompany'));
       $array_tmp['last_fusioninventory_update'] = date('Y-m-d H:i:s');
       if (isset($_SERVER['REMOTE_ADDR'])) {
          $array_tmp['remote_addr'] = $_SERVER['REMOTE_ADDR'];
       }
+      
       $a_inventory['fusioninventorycomputer'] = $array_tmp;
+      if (isset($array['OPERATINGSYSTEM']['INSTALL_DATE'])
+              && !empty($array['OPERATINGSYSTEM']['INSTALL_DATE'])) {
+         $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] = 
+                     $array['OPERATINGSYSTEM']['INSTALL_DATE'];
+      }
+
       if (!empty($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
          $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] 
-                  = date("Y-m-d", 
-                         $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate']
-                        );
-      } else {
-         unset($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate']);
+                  = $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'];
       }
       
       // * BIOS
@@ -264,12 +267,18 @@ class PluginFusioninventoryFormatconvert {
       }
       
       // * Type of computer
-      if (isset($array['HARDWARE']['CHASSIS_TYPE'])) {
+      if (isset($array['HARDWARE']['CHASSIS_TYPE'])
+              && !empty($array['HARDWARE']['CHASSIS_TYPE'])) {
          $a_inventory['computer']['computertypes_id'] = $array['HARDWARE']['CHASSIS_TYPE'];
-      } else  if (isset($array['BIOS']['TYPE'])) {
+      } else  if (isset($array['BIOS']['TYPE'])
+              && !empty($array['BIOS']['TYPE'])) {
          $a_inventory['computer']['computertypes_id'] = $array['BIOS']['TYPE'];
-      } else if (isset($array['BIOS']['MMODEL'])) {
+      } else if (isset($array['BIOS']['MMODEL'])
+              && !empty($array['BIOS']['MMODEL'])) {
          $a_inventory['computer']['computertypes_id'] = $array['BIOS']['MMODEL'];
+      } else if (isset($array['HARDWARE']['VMSYSTEM'])
+              && !empty($array['HARDWARE']['VMSYSTEM'])) {
+         $a_inventory['computer']['computertypes_id'] = $array['HARDWARE']['VMSYSTEM'];
       }
       
       if (isset($array['BIOS']['SKUNUMBER'])) {
@@ -301,7 +310,8 @@ class PluginFusioninventoryFormatconvert {
                                            'SERVICE_PACK'   => 'operatingsystemservicepacks_id'));
          
          foreach ($array_tmp as $key=>$value) {
-            if ($a_inventory['computer'][$key] != '') {
+            if (isset($a_inventory['computer'][$key])
+                    && $a_inventory['computer'][$key] != '') {
                $a_inventory['computer'][$key] = $value;
             }
          }
