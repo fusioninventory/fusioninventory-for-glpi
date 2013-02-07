@@ -4754,7 +4754,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $sql_query = fread($DBf_handle, filesize($DB_file));
          fclose($DBf_handle);
          foreach ( explode(";\n", "$sql_query") as $sql_line) {
-            if (Toolbox::get_magic_quotes_runtime()) $sql_line=Toolbox::stripslashes_deep($sql_line);
+            if (Toolbox::get_magic_quotes_runtime()) {
+               $sql_line=Toolbox::stripslashes_deep($sql_line);
+            }
             if (!empty($sql_line)) {
                $DB->query($sql_line)/* or die($DB->error())*/;
             }
@@ -5692,13 +5694,17 @@ function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
    static $deb;
 
    if ($created != $id) {
-      if (empty($msg)) $msg=__('Work in progress...');
+      if (empty($msg)) {
+         $msg=__('Work in progress...');
+      }
 
       echo "<div id='migration_message_$id'><p class='center'>$msg</p></div>";
       $created = $id;
       $deb = time();
    } else {
-      if (empty($msg)) $msg=__('Task completed.');
+      if (empty($msg)) {
+         $msg=__('Task completed.');
+      }
 
       $fin = time();
       $tps = Html::timestampToString($fin-$deb);
@@ -7638,7 +7644,9 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
          foreach ($f_datas as $f_key => $f_value) {
             //we don't store the sha512 field in json
-            if ($f_key == "sha512" || $f_key == "id" ) continue;
+            if ($f_key == "sha512" || $f_key == "id" ) {
+               continue;
+            }
 
             //construct order file entry
             $of_line[$f_datas['sha512']][$f_key] = $f_value;
@@ -7698,7 +7706,9 @@ function migrateTablesFromFusinvDeploy ($migration) {
          while($at_datas = $DB->fetch_assoc($at_res)) {
             foreach($at_datas as $at_key => $at_value) {
                //we don't store the id field of action itemtype table in json
-               if ($at_key == "id") continue;
+               if ($at_key == "id") {
+                  continue;
+               }
 
                //specific case for 'path' field
                if ($at_key == "path") {
@@ -7732,8 +7742,12 @@ function migrateTablesFromFusinvDeploy ($migration) {
    }
 
    $options = 0;
-   if (version_compare(PHP_VERSION, '5.3.3') >= 0) $options = $options | JSON_NUMERIC_CHECK;
-   if (version_compare(PHP_VERSION, '5.4.0') >= 0) $options = $options | JSON_UNESCAPED_SLASHES;
+   if (version_compare(PHP_VERSION, '5.3.3') >= 0) {
+      $options = $options | JSON_NUMERIC_CHECK;
+   }
+   if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
+      $options = $options | JSON_UNESCAPED_SLASHES;
+   }
    
    //store json in order table
    foreach ($final_datas as $order_id => $data) {
