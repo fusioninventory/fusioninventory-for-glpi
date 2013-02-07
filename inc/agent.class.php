@@ -787,6 +787,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if ($this->getAgentWithComputerid($computers_id)) {
          
          echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('Agent', 'fusioninventory').'</td>';
+         echo '<td>'.$this->getLink(1).'</td>';
+         echo '</tr>';
+         
+         echo '<tr class="tab_bg_1">';
          echo '<td>'.__('Useragent', 'fusioninventory').'</td>';
          echo '<td>'.$this->fields['useragent'].'</td>';
          echo '</tr>';
