@@ -110,7 +110,7 @@ $plugin = new Plugin();
 
 
 include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
-$current_version = pluginFusioninventoryGetCurrentVersion(PLUGIN_FUSIONINVENTORY_VERSION);
+$current_version = pluginFusioninventoryGetCurrentVersion();
 
 $migration = new CliMigration($current_version);
 

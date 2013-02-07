@@ -801,7 +801,7 @@ function cron_plugin_fusioninventory() {
 function plugin_fusioninventory_install() {
 
    require_once (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
-   $version_detected = pluginFusioninventoryGetCurrentVersion(PLUGIN_FUSIONINVENTORY_VERSION);
+   $version_detected = pluginFusioninventoryGetCurrentVersion();
 
    if ((isset($version_detected))
       AND ($version_detected != PLUGIN_FUSIONINVENTORY_VERSION)

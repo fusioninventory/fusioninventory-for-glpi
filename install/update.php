@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-function pluginFusioninventoryGetCurrentVersion($version) {
+function pluginFusioninventoryGetCurrentVersion() {
    global $DB;
 
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
