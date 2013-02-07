@@ -280,7 +280,7 @@ class PluginFusioninventoryCommunication {
     **/
    function addInventory($items_id) {
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      if ($pfAgentmodule->getAgentCanDo('INVENTORY', $items_id)) {
+      if ($pfAgentmodule->isAgentCanDo('INVENTORY', $items_id)) {
          $this->message->addChild('RESPONSE', "SEND");
       }
    }

@@ -368,7 +368,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    * @return bool
    *
    **/
-   function getAgentCanDo($module_name, $items_id) {
+   function isAgentCanDo($module_name, $items_id) {
 
       $agentModule = $this->getActivationExceptions($module_name);
 

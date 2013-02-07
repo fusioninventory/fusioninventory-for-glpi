@@ -1257,7 +1257,7 @@ return namelist;
    * @return bool TRUE if agent is ready else FALSE
    *
    **/
-   function getStateAgent($ip, $agentid) {
+   function isAgentAlive($ip, $agentid) {
 
       $this->disableDebug();
 

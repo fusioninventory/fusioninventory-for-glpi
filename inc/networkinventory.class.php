@@ -429,8 +429,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                      if ($communication == 'pull') {
                         $a_agentList[] = $agent_id;
                      } else {
-                        $agentStatus = $pfTaskjob->getStateAgent('1', $agent_id);
-                        if ($agentStatus) {
+                        if ($pfTaskjob->isAgentAlive('1', $agent_id)) {
                            $a_agentList[] = $agent_id;
                         }
                      }
@@ -675,8 +674,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       if ($result) {
          while ($data=$DB->fetch_array($result)) {
             if ($communication == 'push') {
-               $agentStatus = $pfTaskjob->getStateAgent("1", $data['a_id']);
-               if ($agentStatus ==  TRUE) {
+               if ($pfTaskjob->isAgentAlive("1", $data['a_id'])) {
                   if (!in_array($a_agentList, $data['a_id'])) {
                      $a_agentList[] = $data['a_id'];
                      if (count($a_agentList) >= $nb_agentsMax) {
