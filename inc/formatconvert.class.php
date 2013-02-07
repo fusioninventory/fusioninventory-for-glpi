@@ -184,6 +184,7 @@ class PluginFusioninventoryFormatconvert {
          $array_tmp['operatingsystemservicepacks_id'] = $array['HARDWARE']['OSCOMMENTS'];
       }
       if (isset($array_tmp['users_id'])) {
+         $array_tmp['contact'] = $array_tmp['users_id'];
          $query = "SELECT `id`
                    FROM `glpi_users`
                    WHERE `name` = '" . $array_tmp['users_id'] . "'
@@ -193,7 +194,7 @@ class PluginFusioninventoryFormatconvert {
             $array_tmp['users_id'] = $DB->result($result, 0, 0);
          } else {
             $array_tmp['users_id'] = 0;
-         }    
+         } 
       }
       $array_tmp['is_dynamic'] = 1;
       
@@ -751,6 +752,10 @@ class PluginFusioninventoryFormatconvert {
       
       // * USERS
       if (isset($array['USERS'])) {
+         if (count($array['USERS']) > 0) {
+            $user_temp = $a_inventory['computer']['contact'];
+            $a_inventory['computer']['contact'] = '';
+         }
          foreach ($array['USERS'] as $a_users) {
             $array_tmp = $thisc->addValues($a_users, 
                                            array( 
@@ -759,7 +764,8 @@ class PluginFusioninventoryFormatconvert {
             $user = '';
             if (isset($array_tmp['login'])) {
                $user = $array_tmp['login'];
-               if (isset($array_tmp['domain'])) {
+               if (isset($array_tmp['domain'])
+                       && !empty($array_tmp['domain'])) {
                   $user .= "@".$array_tmp['domain'];
                }
             }
@@ -774,6 +780,9 @@ class PluginFusioninventoryFormatconvert {
                   $a_inventory['computer']['contact'] = $user;
                }
             }
+         }
+         if (empty($a_inventory['computer']['contact'])) {
+            $a_inventory['computer']['contact'] = $user_temp;
          }
       }
      

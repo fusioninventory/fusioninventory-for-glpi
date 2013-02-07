@@ -123,11 +123,82 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'computermodels_id'                => '',
           'serial'                           => '',
           'computertypes_id'                 => 'Notebook',
-          'is_dynamic'                       => 1
+          'is_dynamic'                       => 1,
+          'contact'                          => 'ddurieux'
      );
       // users_id = 0 because user notin DB
-      $this->assertEquals($a_reference, $a_return);
+      $this->assertEquals($a_reference, $a_return);      
+   }   
+   
+   
+   
+   public function testComputerUsers() {
+      global $DB;
+
+      $DB->connect();
       
+      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+
+      $a_computer = array();
+      $a_computer['HARDWARE'] = array(
+                'NAME'                 => 'pc',
+                'LASTLOGGEDUSER'       => 'ddurieux',
+                'USERID'               => 'ddurieux',
+            );
+      $a_computer['USERS'][] = array('LOGIN'  => 'ddurieux');
+      $a_computer['USERS'][] = array('LOGIN'  => 'admin',
+                                     'DOMAIN' => 'local.com');
+      
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+      $date = date('Y-m-d H:i:s');
+      if (isset($a_return['fusioninventorycomputer'])
+              && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
+         $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
+      }
+      $a_reference = array(
+          'fusioninventorycomputer' => Array(
+              'winowner'                     => '',
+              'wincompany'                   => '',
+              'last_fusioninventory_update'  => $date
+          ), 
+          'soundcard'               => Array(),
+          'graphiccard'             => Array(),
+          'controller'              => Array(),
+          'processor'               => Array(),
+          'computerdisk'            => Array(),
+          'memory'                  => Array(),
+          'monitor'                 => Array(),
+          'printer'                 => Array(),
+          'peripheral'              => Array(),
+          'networkport'             => Array(),
+          'SOFTWARES'               => Array(),
+          'harddrive'               => Array(),
+          'virtualmachine'          => Array(),
+          'antivirus'               => Array(),
+          'storage'                 => Array()
+          );
+      $a_reference['computer'] = array(
+          'name'                             => 'pc',
+          'comment'                          => '',
+          'users_id'                         => 0,
+          'operatingsystems_id'              => '',
+          'operatingsystemversions_id'       => '',
+          'uuid'                             => '',
+          'domains_id'                       => '',
+          'os_licenseid'                     => '',
+          'os_license_number'                => '',
+          'operatingsystemservicepacks_id'   => '',
+          'manufacturers_id'                 => '',
+          'computermodels_id'                => '',
+          'serial'                           => '',
+          'computertypes_id'                 => '',
+          'is_dynamic'                       => 1,
+          'contact'                          => 'ddurieux/admin@local.com'
+     );
+      // users_id = 0 because user notin DB
+      $this->assertEquals($a_reference, $a_return);      
    }   
 }
 
