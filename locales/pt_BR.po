@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2013-01-30 10:31+0100\n"
-"PO-Revision-Date: 2013-01-30 09:32+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2013-02-01 11:13+0000\n"
+"Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -70,41 +70,41 @@ msgstr "Uso de CPU (em %)"
 
 #: hook.php:305
 msgid "devices queried"
-msgstr ""
+msgstr "dispositivos enfileirados"
 
 #: hook.php:306
 msgid "devices found"
-msgstr ""
+msgstr "dispositivos encontrados"
 
 #: hook.php:307
 msgid ""
 "SNMP equipment definition isn't up to date on agent. For the next run, it "
 "will get new version from server."
-msgstr ""
+msgstr "Definição de equipamento SNMP no agente não está atualizado. Para a próxima execução, ele vai obter nova versão do servidor."
 
 #: hook.php:308
 msgid "Add the item"
-msgstr ""
+msgstr "Adicionar o item."
 
 #: hook.php:309
 msgid "Update the item"
-msgstr ""
+msgstr "Atualizar o item."
 
 #: hook.php:310
 msgid "Inventory started"
-msgstr ""
+msgstr "Inventário começou"
 
 #: hook.php:311
 msgid "Detail"
-msgstr ""
+msgstr "Detalhes"
 
 #: hook.php:312
 msgid "Bad token, impossible to start agent"
-msgstr ""
+msgstr "Token incorreto, impossível iniciar o agente"
 
 #: hook.php:313
 msgid "Agent stopped/crashed"
-msgstr ""
+msgstr "Agente parou/travou"
 
 #: hook.php:314 inc/inventoryruleimport.class.php:175
 #: inc/inventoryruleimport.class.php:861
@@ -155,7 +155,7 @@ msgstr[1] "Travas"
 
 #: hook.php:1080 hook.php:1086
 msgid "Target a task"
-msgstr ""
+msgstr "Mirar em uma tarefa"
 
 #: hook.php:1094 hook.php:1105
 msgid "Load the correct SNMP model"
@@ -290,7 +290,7 @@ msgstr "Grupo de computadores"
 
 #: setup.php:368 inc/ignoredimportdevice.class.php:51
 msgid "Equipment ignored on import"
-msgstr ""
+msgstr "Equipamento ignorado na importação"
 
 #: setup.php:374
 msgid "Criteria rules"
@@ -311,11 +311,11 @@ msgstr "Estado de descoberta"
 
 #: setup.php:392
 msgid "Inventory status"
-msgstr ""
+msgstr "Estado do inventário"
 
 #: setup.php:395 inc/deploymirror.class.php:52 inc/menu.class.php:259
 msgid "Mirror servers"
-msgstr ""
+msgstr "Servidores mirrors"
 
 #: setup.php:470
 msgid "Your GLPI version not compatible, require 0.84"
@@ -324,7 +324,7 @@ msgstr "A versão do seu GLPI não é compatível, pois é necessário 0.84"
 #: setup.php:483
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
-msgstr ""
+msgstr "Por favor, remova a pasta %s em glpi/plugins/"
 
 #: front/agent.form.php:58
 msgid "The agent is running"
@@ -735,19 +735,19 @@ msgstr "Auditorias"
 
 #: inc/deploycheck.class.php:55
 msgid "winkeyExists"
-msgstr ""
+msgstr "chavewinExiste"
 
 #: inc/deploycheck.class.php:56
 msgid "winkeyMissing"
-msgstr ""
+msgstr "chavewinFaltando"
 
 #: inc/deploycheck.class.php:57
 msgid "winkeyEquals"
-msgstr ""
+msgstr "chavewinIgual"
 
 #: inc/deploycheck.class.php:58
 msgid "fileExists"
-msgstr ""
+msgstr "arquivoExiste"
 
 #: inc/deploycheck.class.php:59
 msgid "fileMissing"
@@ -775,7 +775,7 @@ msgstr "espaçoLivreMaior"
 
 #: inc/deploycheck.class.php:229 inc/deploycheck.class.php:233
 msgid "Key"
-msgstr ""
+msgstr "Chave"
 
 #: inc/deploycheck.class.php:238 inc/deploycheck.class.php:244
 #: inc/deploycheck.class.php:249 inc/deployfile.class.php:178
@@ -820,7 +820,7 @@ msgstr "ignorar"
 
 #: inc/deploycommand.class.php:50
 msgid "Execute a command"
-msgstr ""
+msgstr "Executar um comando"
 
 #: inc/deployconfig.class.php:74 inc/deployconfig.class.php:76
 msgid "FusionInventory DEPLOY"
@@ -828,11 +828,11 @@ msgstr "FusionInventory DEPLOY"
 
 #: inc/deployconfig.class.php:111
 msgid "Root folder for sending files from server"
-msgstr ""
+msgstr "Pasta raiz para envio de arquivos do servidor"
 
 #: inc/deployfile.class.php:50
 msgid "Files"
-msgstr ""
+msgstr "Arquivos"
 
 #: inc/deployfile.class.php:63
 msgid "Upload from computer"
@@ -924,19 +924,19 @@ msgstr "Arquivo faltando"
 
 #: inc/deployfilepart.class.php:51
 msgid "pieces of files"
-msgstr ""
+msgstr "pedaços de arquivos"
 
 #: inc/deploygroup.class.php:93 inc/deploygroup.class.php:185
 msgid "Static group"
-msgstr ""
+msgstr "Grupo estático"
 
 #: inc/deploygroup.class.php:97 inc/deploygroup.class.php:186
 msgid "Dynamic group"
-msgstr ""
+msgstr "Grupo dinâmico"
 
 #: inc/deploygroup.class.php:143
 msgid "Add group"
-msgstr ""
+msgstr "Adicionar grupo"
 
 #: inc/deployinstall.class.php:51 inc/deployinstall.class.php:58
 msgid "Installation"
@@ -944,7 +944,7 @@ msgstr "Instalação"
 
 #: inc/deploymirror.class.php:100 inc/deploymirror.class.php:133
 msgid "Mirror server address"
-msgstr ""
+msgstr "Endereços de servidores mirrors"
 
 #: inc/deploypackage.class.php:157
 msgid "Add a package"
@@ -976,7 +976,7 @@ msgstr "Erro / replanejado"
 
 #: inc/deploystate.class.php:115
 msgid "Error"
-msgstr ""
+msgstr "Erro"
 
 #: inc/deploystate.class.php:119 inc/statediscovery.class.php:204
 #: inc/stateinventory.class.php:148 inc/taskjoblog.class.php:67
@@ -998,11 +998,11 @@ msgstr "Grupo de computadores"
 
 #: inc/deploystaticmisc.class.php:189
 msgid "Manage packages"
-msgstr ""
+msgstr "Gerenciar pacotes"
 
 #: inc/deploystaticmisc.class.php:192
 msgid "Deployment status"
-msgstr ""
+msgstr "Estado de implantação"
 
 #: inc/deploytask.class.php:57 inc/deploytask.class.php:106
 msgid "Task"
@@ -1010,7 +1010,7 @@ msgstr "Tarefa"
 
 #: inc/deploytask.class.php:83
 msgid "Order list"
-msgstr ""
+msgstr "Lista de ordem"
 
 #: inc/deploytask.class.php:110
 msgid "Add task"
@@ -1030,7 +1030,7 @@ msgstr "Desinstalação"
 
 #: inc/display.class.php:170
 msgid "Progress"
-msgstr ""
+msgstr "Progresso"
 
 #: inc/inventorycomputerantivirus.class.php:173
 #: inc/inventorycomputerbatteries.class.php:155
@@ -2108,7 +2108,7 @@ msgstr "Conectividade"
 
 #: inc/menu.class.php:254
 msgid "Package management"
-msgstr ""
+msgstr "Gerenciamento de pacotes"
 
 #: inc/menu.class.php:264
 msgid "Deploy"

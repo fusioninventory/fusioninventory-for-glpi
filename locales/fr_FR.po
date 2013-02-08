@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Alexandre Brianceau <lostprophet91@gmail.com>, 2013.
 # David Durieux <d.durieux@siprossii.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2013-01-30 10:31+0100\n"
-"PO-Revision-Date: 2013-01-30 09:32+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2013-02-01 10:50+0000\n"
+"Last-Translator: lostprophet91 <lostprophet91@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -70,41 +71,41 @@ msgstr "Utilisation du CPU (en %)"
 
 #: hook.php:305
 msgid "devices queried"
-msgstr ""
+msgstr "périphériques interrogés"
 
 #: hook.php:306
 msgid "devices found"
-msgstr ""
+msgstr "périphériques trouvés"
 
 #: hook.php:307
 msgid ""
 "SNMP equipment definition isn't up to date on agent. For the next run, it "
 "will get new version from server."
-msgstr ""
+msgstr "Les définitions d'équipements SNMP ne sont plus à jour sur l'agent. Au prochain démarrage, il obtiendra la nouvelle version depuis le serveur."
 
 #: hook.php:308
 msgid "Add the item"
-msgstr ""
+msgstr "Ajouter un objet"
 
 #: hook.php:309
 msgid "Update the item"
-msgstr ""
+msgstr "Mise à jour de l'objet"
 
 #: hook.php:310
 msgid "Inventory started"
-msgstr ""
+msgstr "Inventaire débuté"
 
 #: hook.php:311
 msgid "Detail"
-msgstr ""
+msgstr "Détail"
 
 #: hook.php:312
 msgid "Bad token, impossible to start agent"
-msgstr ""
+msgstr "Mauvais jeton, impossible de démarrer l'agent"
 
 #: hook.php:313
 msgid "Agent stopped/crashed"
-msgstr ""
+msgstr "Agent arrêté/crashé"
 
 #: hook.php:314 inc/inventoryruleimport.class.php:175
 #: inc/inventoryruleimport.class.php:861
@@ -150,12 +151,12 @@ msgstr "FusionInventory"
 #: inc/lock.class.php:90 inc/lock.class.php:92 inc/lock.class.php:167
 msgid "Lock"
 msgid_plural "Locks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "verrou"
+msgstr[1] "verrous"
 
 #: hook.php:1080 hook.php:1086
 msgid "Target a task"
-msgstr ""
+msgstr "Cibler une tâche"
 
 #: hook.php:1094 hook.php:1105
 msgid "Load the correct SNMP model"
@@ -286,11 +287,11 @@ msgstr "Paquetages"
 #: setup.php:365 inc/deploygroup.class.php:57 inc/deploygroup.class.php:140
 #: inc/deploytaskjob.class.php:170
 msgid "Groups of computers"
-msgstr ""
+msgstr "Groupe d'ordinateurs"
 
 #: setup.php:368 inc/ignoredimportdevice.class.php:51
 msgid "Equipment ignored on import"
-msgstr ""
+msgstr "Equipement ignoré à l'import"
 
 #: setup.php:374
 msgid "Criteria rules"
@@ -311,11 +312,11 @@ msgstr "Etat des découvertes"
 
 #: setup.php:392
 msgid "Inventory status"
-msgstr ""
+msgstr "Statut de l'inventaire"
 
 #: setup.php:395 inc/deploymirror.class.php:52 inc/menu.class.php:259
 msgid "Mirror servers"
-msgstr ""
+msgstr "Serveurs mirroirs"
 
 #: setup.php:470
 msgid "Your GLPI version not compatible, require 0.84"
@@ -324,7 +325,7 @@ msgstr "Votre version de GLPI n'est pas compatible, la version 0.84 est requise"
 #: setup.php:483
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
-msgstr ""
+msgstr "Merci de supprimer le dossier %s dans glpi/plugins/"
 
 #: front/agent.form.php:58
 msgid "The agent is running"
@@ -672,12 +673,12 @@ msgstr "Création de répértoire"
 
 #: inc/deployaction.class.php:152
 msgid "return codes saved for this command"
-msgstr ""
+msgstr "retourne le code sauvegardé de cette commande"
 
 #: inc/deployaction.class.php:168 inc/deploycheck.class.php:137
 #: inc/deployfile.class.php:127
 msgid "drag"
-msgstr ""
+msgstr "prendre"
 
 #: inc/deployaction.class.php:175 inc/deploycheck.class.php:144
 #: inc/deployfile.class.php:133 inc/networkequipment.class.php:947
@@ -691,7 +692,7 @@ msgstr "Suppression"
 
 #: inc/deployaction.class.php:208 inc/deploycheck.class.php:177
 msgid "Type"
-msgstr ""
+msgstr "Taper"
 
 #: inc/deployaction.class.php:262
 msgid "From"
@@ -731,7 +732,7 @@ msgstr ""
 
 #: inc/deploycheck.class.php:50
 msgid "Audits"
-msgstr ""
+msgstr "Audits"
 
 #: inc/deploycheck.class.php:55
 msgid "winkeyExists"
@@ -788,7 +789,7 @@ msgstr "Disque ou emplacement"
 
 #: inc/deploycheck.class.php:294
 msgid "Unit"
-msgstr ""
+msgstr "Unité"
 
 #: inc/deploycheck.class.php:298
 msgid "B"
@@ -808,7 +809,7 @@ msgstr ""
 
 #: inc/deploycheck.class.php:311
 msgid "return error"
-msgstr ""
+msgstr "retourne une erreur"
 
 #: inc/deploycheck.class.php:314
 msgid "error"
@@ -820,7 +821,7 @@ msgstr "ignorer"
 
 #: inc/deploycommand.class.php:50
 msgid "Execute a command"
-msgstr ""
+msgstr "Exécuter une commande"
 
 #: inc/deployconfig.class.php:74 inc/deployconfig.class.php:76
 msgid "FusionInventory DEPLOY"
@@ -828,11 +829,11 @@ msgstr ""
 
 #: inc/deployconfig.class.php:111
 msgid "Root folder for sending files from server"
-msgstr ""
+msgstr "Chemin du dossier téléversant des fichiers du serveur"
 
 #: inc/deployfile.class.php:50
 msgid "Files"
-msgstr ""
+msgstr "Fichiers"
 
 #: inc/deployfile.class.php:63
 msgid "Upload from computer"
@@ -848,7 +849,7 @@ msgstr "p2p"
 
 #: inc/deployfile.class.php:114
 msgid "retention"
-msgstr ""
+msgstr "rétention"
 
 #: inc/deployfile.class.php:116
 msgid "days"
@@ -880,7 +881,7 @@ msgstr "Décompresser"
 
 #: inc/deployfile.class.php:203
 msgid "P2p"
-msgstr ""
+msgstr "P2P"
 
 #: inc/deployfile.class.php:207
 msgid "retention days"
@@ -900,7 +901,7 @@ msgstr "Erreur de Transfert : Le fichier est trop gros"
 
 #: inc/deployfile.class.php:486
 msgid "he uploaded file was only partially uploaded"
-msgstr ""
+msgstr "Il téléversa un fichier seulement en partie transféré"
 
 #: inc/deployfile.class.php:489
 msgid "No file was uploaded"
@@ -908,7 +909,7 @@ msgstr "Pas de fichiers télécharger"
 
 #: inc/deployfile.class.php:492
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "Manque d'un dossier temporaire"
 
 #: inc/deployfile.class.php:495
 msgid "Failed to write file to disk"
@@ -924,19 +925,19 @@ msgstr "Fichier Perdu"
 
 #: inc/deployfilepart.class.php:51
 msgid "pieces of files"
-msgstr ""
+msgstr "morceaux de fichiers"
 
 #: inc/deploygroup.class.php:93 inc/deploygroup.class.php:185
 msgid "Static group"
-msgstr ""
+msgstr "Groupe statique"
 
 #: inc/deploygroup.class.php:97 inc/deploygroup.class.php:186
 msgid "Dynamic group"
-msgstr ""
+msgstr "Groupe dynamique"
 
 #: inc/deploygroup.class.php:143
 msgid "Add group"
-msgstr ""
+msgstr "Ajouter un groupe"
 
 #: inc/deployinstall.class.php:51 inc/deployinstall.class.php:58
 msgid "Installation"
@@ -944,7 +945,7 @@ msgstr "Installation"
 
 #: inc/deploymirror.class.php:100 inc/deploymirror.class.php:133
 msgid "Mirror server address"
-msgstr ""
+msgstr "Adresse du serveur mirroir"
 
 #: inc/deploypackage.class.php:157
 msgid "Add a package"
@@ -952,11 +953,11 @@ msgstr "Ajouter un Paquetage"
 
 #: inc/deploypackage.class.php:235
 msgid "One or more active tasks (#task#) use this package. Edition denied."
-msgstr ""
+msgstr "Une pour plusieurs tâches actives (#task#) utilise(nt) ce paquet. Edition refusée."
 
 #: inc/deploypackage.class.php:408
 msgid "One or more active tasks (#task#) use this package. Deletion denied."
-msgstr ""
+msgstr "Une pour plusieurs tâches actives (#task#) utilise(nt) ce paquet. Edition refusée."
 
 #: inc/deploypackage.class.php:539
 msgid "Item successfully added"
@@ -976,7 +977,7 @@ msgstr "Erreur / replannifié"
 
 #: inc/deploystate.class.php:115
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #: inc/deploystate.class.php:119 inc/statediscovery.class.php:204
 #: inc/stateinventory.class.php:148 inc/taskjoblog.class.php:67
@@ -998,11 +999,11 @@ msgstr "Groupe d'ordianteurs"
 
 #: inc/deploystaticmisc.class.php:189
 msgid "Manage packages"
-msgstr ""
+msgstr "Gérer les paquets"
 
 #: inc/deploystaticmisc.class.php:192
 msgid "Deployment status"
-msgstr ""
+msgstr "Statut du déploiement"
 
 #: inc/deploytask.class.php:57 inc/deploytask.class.php:106
 msgid "Task"
@@ -1010,7 +1011,7 @@ msgstr "Tâche"
 
 #: inc/deploytask.class.php:83
 msgid "Order list"
-msgstr ""
+msgstr "Trier la liste"
 
 #: inc/deploytask.class.php:110
 msgid "Add task"
@@ -1030,7 +1031,7 @@ msgstr "Désinstaller"
 
 #: inc/display.class.php:170
 msgid "Progress"
-msgstr ""
+msgstr "Progression"
 
 #: inc/inventorycomputerantivirus.class.php:173
 #: inc/inventorycomputerbatteries.class.php:155
@@ -2092,7 +2093,7 @@ msgstr "Matériels ignorés à l'import"
 
 #: inc/menu.class.php:174
 msgid "Computer entity rules"
-msgstr ""
+msgstr "Règles sur l'entité \"ordinateur\""
 
 #: inc/menu.class.php:186
 msgid "Rules"
@@ -2108,7 +2109,7 @@ msgstr "Réseau"
 
 #: inc/menu.class.php:254
 msgid "Package management"
-msgstr ""
+msgstr "Gestion de paquets"
 
 #: inc/menu.class.php:264
 msgid "Deploy"
@@ -2236,7 +2237,7 @@ msgstr "Nettoyage de l'historique"
 
 #: inc/networkporttype.class.php:356
 msgid "Ports types to import (for network equipments)"
-msgstr ""
+msgstr "Types de ports à importer (pour des équipements réseaux)"
 
 #: inc/printercartridge.class.php:62
 msgid "Cartridge(s)"
@@ -2343,7 +2344,7 @@ msgstr "Importation en masse de modèles"
 
 #: inc/snmpmodelimportexport.class.php:163
 msgid "Mass import of models in folder plugins/fusioninventory/snmpmodels/"
-msgstr ""
+msgstr "Import de masse de modèles dans le dossier plugins/fusioninventory/snmpmodels/"
 
 #: inc/snmpmodelimportexport.class.php:213
 msgid "Model already exists"
