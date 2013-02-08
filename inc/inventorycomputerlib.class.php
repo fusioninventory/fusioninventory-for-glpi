@@ -516,8 +516,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['sid'];
                   unset($data['sid']);
-                  $data1 = Toolbox::addslashes_deep($data);
-                  $db_software[$idtmp] = $data1;
+                  $data['name']    = Toolbox::addslashes_deep($data['name']);
+                  $data['version'] = Toolbox::addslashes_deep($data['version']);
+                  $db_software[$idtmp] = $data;
                }
             }
             
