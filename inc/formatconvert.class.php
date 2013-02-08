@@ -1369,16 +1369,19 @@ class PluginFusioninventoryFormatconvert {
       $a_inventory['PluginFusioninventoryPrinter'] = $array_tmp;
       
       // * PORTS
-      foreach ($array['PORTS']['PORT'] as $a_port) {
-         $array_tmp = $thisc->addValues($a_port, 
-                                        array( 
-                                           'IFNAME'   => 'name',
-                                           'IFNUMBER' => 'logical_number',
-                                           'MAC'      => 'mac',
-                                           'IP'       => 'ip',
-                                           'IFTYPE'   => 'iftype'));
-         
-         $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
+      $a_inventory['networkport'] = array();
+      if (isset($array['PORTS'])) {
+         foreach ($array['PORTS']['PORT'] as $a_port) {
+            $array_tmp = $thisc->addValues($a_port, 
+                                           array( 
+                                              'IFNAME'   => 'name',
+                                              'IFNUMBER' => 'logical_number',
+                                              'MAC'      => 'mac',
+                                              'IP'       => 'ip',
+                                              'IFTYPE'   => 'iftype'));
+
+            $a_inventory['networkport'][$a_port['IFNUMBER']] = $array_tmp;
+         }
       }
       
       // TODO

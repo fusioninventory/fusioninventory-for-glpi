@@ -152,6 +152,7 @@ require_once 'Netdiscovery/AllTests.php';
 
 require_once '1_Unit/Software.php';
 require_once '1_Unit/ComputerTransformation.php';
+require_once '1_Unit/PrinterTransformation.php';
 
 require_once 'emulatoragent.php';
 
@@ -170,6 +171,7 @@ class AllTests {
       
       $suite->addTest(Software_AllTests::suite());
       $suite->addTest(ComputerTransformation_AllTests::suite());
+      $suite->addTest(PrinterTransformation_AllTests::suite());
       
       return $suite;
    }
