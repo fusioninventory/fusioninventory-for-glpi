@@ -1013,11 +1013,19 @@ class PluginFusioninventoryFormatconvert {
                                                     $_SESSION["plugin_fusinvinventory_entity"], 
                                                     '', 
                                                     TRUE);
+      
+      $nb_RuleDictionnarySoftware = countElementsInTable("glpi_rules", 
+                                                         "`sub_type`='RuleDictionnarySoftware'
+                                                            AND `is_active`='1'");
+      
       if ($entities_id_software < 0) {
          $entities_id_software = $_SESSION["plugin_fusinvinventory_entity"];
       }
       $a_inventory['software'] = array();
+      
       $rulecollection = new RuleDictionnarySoftwareCollection();
+      $manufacturer = new Manufacturer();
+
       foreach ($a_inventory['SOFTWARES'] as $a_softwares) {
          $array_tmp = $this->addValues($a_softwares, 
                                         array( 
@@ -1035,14 +1043,17 @@ class PluginFusioninventoryFormatconvert {
          if (!(!isset($array_tmp['name'])
                  || $array_tmp['name'] == '')) {
             if (count($array_tmp) > 0) {
-               $res_rule = $rulecollection->processAllRules(
-                                            array(
-                                                "name"         => $array_tmp['name'],
-                                                "manufacturer" => $array_tmp['manufacturers_id'],
-                                                "old_version"  => $array_tmp['version'],
-                                                "entities_id"  => $entities_id_software
-                                             )
-                                          );
+               $res_rule = array();
+               if ($nb_RuleDictionnarySoftware > 0) {
+                  $res_rule = $rulecollection->processAllRules(
+                                               array(
+                                                   "name"         => $array_tmp['name'],
+                                                   "manufacturer" => $array_tmp['manufacturers_id'],
+                                                   "old_version"  => $array_tmp['version'],
+                                                   "entities_id"  => $entities_id_software
+                                                )
+                                             );
+               } 
 
                if (isset($res_rule['_ignore_import']) 
                        && $res_rule['_ignore_import'] == 1) {
