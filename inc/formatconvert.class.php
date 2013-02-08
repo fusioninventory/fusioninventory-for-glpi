@@ -1118,7 +1118,8 @@ class PluginFusioninventoryFormatconvert {
          }
       }
       foreach ($a_key as $key=>$value) {
-         if (!isset($a_return[$value])) {
+         if (!isset($a_return[$value])
+                 || $a_return[$value] == '') {
             $int = 0;
             switch ($value) {
                
@@ -1127,6 +1128,19 @@ class PluginFusioninventoryFormatconvert {
                case 'totalsize':
                case 'memory':
                case 'memory_size':
+               case 'pages_total':
+               case 'pages_n_b':
+               case 'pages_color':
+               case 'pages_recto_verso':
+               case 'scanned':
+               case 'pages_total_print':
+               case 'pages_n_b_print':
+               case 'pages_color_print':
+               case 'pages_total_copy':
+               case 'pages_n_b_copy':
+               case 'pages_color_copy':
+               case 'pages_total_fax':
+               
                   $int = 1;
                   break;
 
@@ -1391,6 +1405,25 @@ class PluginFusioninventoryFormatconvert {
       // CARTRIDGES
       
       // PAGESCOUNTER
+      $a_inventory['pagecounters'] = array();
+      if (isset($array['PAGECOUNTERS'])) {
+         $array_tmp = $thisc->addValues($array['PAGECOUNTERS'], 
+                                        array( 
+                                           'TOTAL'       => 'pages_total',
+                                           'BLACK'       => 'pages_n_b',
+                                           'COLOR'       => 'pages_color',
+                                           'RECTOVERSO'  => 'pages_recto_verso',
+                                           'SCANNED'     => 'scanned',
+                                           'PRINTTOTAL'  => 'pages_total_print',
+                                           'PRINTBLACK'  => 'pages_n_b_print',
+                                           'PRINTCOLOR'  => 'pages_color_print',
+                                           'COPYTOTAL'   => 'pages_total_copy',
+                                           'COPYBLACK'   => 'pages_n_b_copy',
+                                           'COPYCOLOR'   => 'pages_color_copy',
+                                           'FAXTOTAL'    => 'pages_total_fax'
+                                         ));
+         $a_inventory['pagecounters'] = $array_tmp;
+      }
       
       return $a_inventory;
    }

@@ -50,8 +50,8 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
       
       $_SESSION["plugin_fusinvinventory_entity"] = 0;
 
-      $a_computer = array();
-      $a_computer['INFO'] = array(
+      $a_printer = array();
+      $a_printer['INFO'] = array(
                 'COMMENTS'       => 'HP ETHERNET MULTI-ENVIRONMENT',
                 'ID'             => '54',
                 'LOCATION'       => 'Room 102',
@@ -66,7 +66,7 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
       
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       
-      $a_return = $pfFormatconvert->printerInventoryTransformation($a_computer);
+      $a_return = $pfFormatconvert->printerInventoryTransformation($a_printer);
       $date = date('Y-m-d H:i:s');
       if (isset($a_return['PluginFusioninventoryPrinter'])
               && isset($a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'])) {
@@ -77,8 +77,9 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
                   'sysdescr'                    => 'HP ETHERNET MULTI-ENVIRONMENT',
                   'last_fusioninventory_update' => $date
                 ),
-          'networkport' => array(),
-          'itemtype'    => 'Printer'
+          'networkport'    => array(),
+          'pagecounters'   => array(),
+          'itemtype'       => 'Printer'
           );
       $a_reference['Printer'] = array(
                'name'               => 'ARC12-B09-N',
@@ -96,7 +97,68 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
    
    
    public function testPrinterPageCounter() {
+      global $DB;
 
+      $DB->connect();
+      
+      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+
+      $a_printer = array();
+      $a_printer['INFO'] = array(
+                'ID'             => '54',
+                'NAME'           => 'ARC12-B09-N',
+                'TYPE'           => 'PRINTER'
+            );
+      $a_printer['PAGECOUNTERS'] = array(
+                'BLACK'       => 10007,
+                'COLOR'       => 5127,
+                'RECTOVERSO'  => 0,
+                'TOTAL'       => 15134,
+                'COPYTOTAL'   => ''
+            );
+      
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      
+      $a_return = $pfFormatconvert->printerInventoryTransformation($a_printer);
+      $date = date('Y-m-d H:i:s');
+      if (isset($a_return['PluginFusioninventoryPrinter'])
+              && isset($a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'])) {
+         $date = $a_return['PluginFusioninventoryPrinter']['last_fusioninventory_update'];
+      }
+      $a_reference = array(
+          'PluginFusioninventoryPrinter' => Array(
+                  'sysdescr'                    => '',
+                  'last_fusioninventory_update' => $date
+                ),
+          'networkport' => array(),
+          'itemtype'    => 'Printer'
+          );
+      $a_reference['Printer'] = array(
+               'name'               => 'ARC12-B09-N',
+               'id'                 => 54,
+               'serial'             => '',
+               'otherserial'        => '',
+               'manufacturers_id'   => '',
+               'locations_id'       => '',
+               'printermodels_id'   => '',
+               'memory_size'        => 0
+      );
+      $a_reference['pagecounters'] = array(
+               'pages_total'        => 15134,
+               'pages_n_b'          => 10007,
+               'pages_color'        => 5127,
+               'pages_recto_verso'  => 0,
+               'pages_total_copy'   => 0,
+               'scanned'            => 0,
+               'pages_total_print'  => 0,
+               'pages_n_b_print'    => 0,
+               'pages_color_print'  => 0,
+               'pages_n_b_copy'     => 0,
+               'pages_color_copy'   => 0,
+               'pages_total_fax'    => 0
+
+          );
+      $this->assertEquals($a_reference, $a_return);      
    }  
    
    
