@@ -1126,6 +1126,7 @@ class PluginFusioninventoryFormatconvert {
                case 'freesize':
                case 'totalsize':
                case 'memory':
+               case 'memory_size':
                   $int = 1;
                   break;
 
@@ -1357,7 +1358,8 @@ class PluginFusioninventoryFormatconvert {
                                         'ID'           => 'id',
                                         'MANUFACTURER' => 'manufacturers_id',
                                         'LOCATION'     => 'locations_id',
-                                        'MODEL'        => 'printermodels_id'));
+                                        'MODEL'        => 'printermodels_id',
+                                        'MEMORY'       => 'memory_size'));
       
       $a_inventory['Printer'] = $array_tmp;
       $a_inventory['itemtype'] = 'Printer';

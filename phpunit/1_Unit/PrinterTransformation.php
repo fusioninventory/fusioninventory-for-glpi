@@ -59,7 +59,9 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
                 'MODEL'          => 'HP LaserJet P1505n',
                 'NAME'           => 'ARC12-B09-N',
                 'SERIAL'         => 'VRG5XUT4',
-                'TYPE'           => 'PRINTER'
+                'OTHERSERIAL'    => 'chr(hex(fd))chr(hex(e8))',
+                'TYPE'           => 'PRINTER',
+                'MEMORY'         => 64
             );
       
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
@@ -81,11 +83,12 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
       $a_reference['Printer'] = array(
                'name'               => 'ARC12-B09-N',
                'serial'             => 'VRG5XUT4',
-               'otherserial'        => '',
+               'otherserial'        => 'chr(hex(fd))chr(hex(e8))',
                'id'                 => 54,
                'manufacturers_id'   => 'Hewlett Packard',
                'locations_id'       => 'Room 102',
-               'printermodels_id'   => 'HP LaserJet P1505n'
+               'printermodels_id'   => 'HP LaserJet P1505n',
+               'memory_size'        => 64
       );
       $this->assertEquals($a_reference, $a_return);      
    }   
