@@ -90,7 +90,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'fusioninventorycomputer' => Array(
               'winowner'                        => '',
               'wincompany'                      => '',
-              'operatingsystem_installationdate'=> '',
+              'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date
           ), 
           'soundcard'               => Array(),
@@ -162,7 +162,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'fusioninventorycomputer' => Array(
               'winowner'                        => '',
               'wincompany'                      => '',
-              'operatingsystem_installationdate'=> '',
+              'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date
           ), 
           'soundcard'               => Array(),
@@ -331,7 +331,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'fusioninventorycomputer' => Array(
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
-              'operatingsystem_installationdate'=> '',
+              'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date
           ), 
           'soundcard'               => Array(),

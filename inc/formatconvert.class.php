@@ -217,9 +217,8 @@ class PluginFusioninventoryFormatconvert {
                      $array['OPERATINGSYSTEM']['INSTALL_DATE'];
       }
 
-      if (!empty($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
-         $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] 
-                  = $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'];
+      if (empty($a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'])) {
+         $a_inventory['fusioninventorycomputer']['operatingsystem_installationdate'] = "NULL";
       }
       
       // * BIOS
