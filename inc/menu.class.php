@@ -62,9 +62,10 @@ class PluginFusioninventoryMenu {
          echo "<a href='http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/".
                  "wiki/Beta_test'>";
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/beta.png'/></a>";
-//         echo "&nbsp;<a href='https://www.transifex.net/projects/p/FusionInventory/resources/'>";
-//         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/>".
-//                 "</a>";
+         echo "&nbsp;<a href='https://www.transifex.com/projects/p/FusionInventory/resource/".
+                 "plugin-fusioninventory-084/'>";
+         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/Translate.png'/>".
+                 "</a>";
          echo "<H1>Version '".PLUGIN_FUSIONINVENTORY_REALVERSION."'</H1></center><br/>\n";
       }
 
