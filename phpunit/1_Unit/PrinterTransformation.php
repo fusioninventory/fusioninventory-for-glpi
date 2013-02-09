@@ -160,14 +160,7 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
           );
       $this->assertEquals($a_reference, $a_return);      
    }  
-   
-   
-   
-   public function testPrinterCartridge() {
-
-   }  
-
-}
+ }
 
 
 

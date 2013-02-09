@@ -1400,11 +1400,23 @@ class PluginFusioninventoryFormatconvert {
          }
       }
       
-      // TODO
-      
       // CARTRIDGES
+      $a_inventory['cartridge'] = array();
+      if (isset($array['CARTRIDGES'])) {
+         $pfMapping = new PluginFusioninventoryMapping();
+         
+         foreach ($array['CARTRIDGES'] as $name=>$value) {
+            $plugin_fusioninventory_mappings = $pfMapping->get("Printer", strtolower($name));
+            if ($plugin_fusioninventory_mappings) {
+               if (!is_numeric($value)) {
+                  $value = 0;
+               }
+               $a_inventory['cartridge'][$plugin_fusioninventory_mappings['id']] = $value;
+            }
+         }
+      }
       
-      // PAGESCOUNTER
+      // * PAGESCOUNTER
       $a_inventory['pagecounters'] = array();
       if (isset($array['PAGECOUNTERS'])) {
          $array_tmp = $thisc->addValues($array['PAGECOUNTERS'], 
