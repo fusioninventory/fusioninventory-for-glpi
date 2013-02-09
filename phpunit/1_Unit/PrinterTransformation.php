@@ -78,6 +78,7 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
                   'last_fusioninventory_update' => $date
                 ),
           'networkport'    => array(),
+          'cartridge'      => array(),
           'pagecounters'   => array(),
           'itemtype'       => 'Printer'
           );
@@ -131,6 +132,7 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
                   'last_fusioninventory_update' => $date
                 ),
           'networkport' => array(),
+          'cartridge'   => array(),
           'itemtype'    => 'Printer'
           );
       $a_reference['Printer'] = array(
