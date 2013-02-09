@@ -7516,7 +7516,7 @@ function migrateTablesFusionInventory($migration, $a_table) {
    foreach ($a_table['oldname'] as $oldtable) {
       $migration->renameTable($oldtable, $a_table['name']);
    }
-   
+
    if (!TableExists($a_table['name'])) {
       $query = "CREATE TABLE `".$a_table['name']."` (
                      `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -7524,27 +7524,27 @@ function migrateTablesFusionInventory($migration, $a_table) {
                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
       $DB->query($query);
    }
-   
+
    foreach ($a_table['renamefields'] as $old=>$new) {
       $migration->changeField($a_table['name'],
                               $old,
                               $new,
-                              $a_table['fields'][$new]['type'], 
+                              $a_table['fields'][$new]['type'],
                               array('value' => $a_table['fields'][$new]['value'],
                                     'update'=> TRUE));
-   }      
+   }
 
    foreach ($a_table['oldfields'] as $field) {
       $migration->dropField($a_table['name'],
                             $field);
-   }      
+   }
    $migration->migrationOneTable($a_table['name']);
 
    foreach ($a_table['fields'] as $field=>$data) {
       $migration->changeField($a_table['name'],
                               $field,
                               $field,
-                              $data['type'], 
+                              $data['type'],
                               array('value' => $data['value']));
    }
    $migration->migrationOneTable($a_table['name']);
@@ -7552,7 +7552,7 @@ function migrateTablesFusionInventory($migration, $a_table) {
    foreach ($a_table['fields'] as $field=>$data) {
       $migration->addField($a_table['name'],
                            $field,
-                           $data['type'], 
+                           $data['type'],
                            array('value' => $data['value']));
    }
    $migration->migrationOneTable($a_table['name']);
@@ -7560,7 +7560,7 @@ function migrateTablesFusionInventory($migration, $a_table) {
    foreach ($a_table['oldkeys'] as $field) {
       $migration->dropKey($a_table['name'],
                           $field);
-   }      
+   }
    $migration->migrationOneTable($a_table['name']);
 
    foreach ($a_table['keys'] as $data) {
@@ -7570,14 +7570,14 @@ function migrateTablesFusionInventory($migration, $a_table) {
                          $data['type']);
    }
    $migration->migrationOneTable($a_table['name']);
-      
+
    $DB->list_fields($a_table['name'], FALSE);
 }
 
 /**
  * Migrate tables from plugin fusinvdeploy to fusioninventory
  *    all datas in exploded tables are merged and stored in json in order table
- * @param  Migration $migration 
+ * @param  Migration $migration
  * @return nothing
  */
 function migrateTablesFromFusinvDeploy ($migration) {
@@ -7665,7 +7665,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
          }
       }
 
-      
+
       //=== Actions ===
       $cmdStatus['RETURNCODE_OK'] = 'okCode';
       $cmdStatus['RETURNCODE_KO'] = 'errorCode';
@@ -7685,7 +7685,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
          //specific case for command type
          $type = str_replace("command", "cmd", $type);
-         
+
          //table for action itemtype
          $a_table = getTableForItemType($a_datas['itemtype']);
 
@@ -7740,12 +7740,12 @@ function migrateTablesFromFusinvDeploy ($migration) {
    if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
       $options = $options | JSON_UNESCAPED_SLASHES;
    }
-   
+
    //store json in order table
    foreach ($final_datas as $order_id => $data) {
-      $json = $DB->escape(json_encode($data, $options)); 
+      $json = $DB->escape(json_encode($data, $options));
 
-      $order_query = "UPDATE glpi_plugin_fusioninventory_deployorders 
+      $order_query = "UPDATE glpi_plugin_fusioninventory_deployorders
          SET json = '$json'
          WHERE id = $order_id";
       $order_res = $DB->query($order_query);
@@ -7755,18 +7755,18 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
    //drop unused tables
    $old_deploy_tables = array(
-      'glpi_plugin_fusinvdeploy_actions', 
-      'glpi_plugin_fusinvdeploy_actions_commandenvvariables', 
-      'glpi_plugin_fusinvdeploy_actions_commands', 
-      'glpi_plugin_fusinvdeploy_actions_commandstatus', 
-      'glpi_plugin_fusinvdeploy_actions_copies', 
-      'glpi_plugin_fusinvdeploy_actions_deletes', 
-      'glpi_plugin_fusinvdeploy_actions_messages', 
-      'glpi_plugin_fusinvdeploy_actions_mkdirs', 
-      'glpi_plugin_fusinvdeploy_actions_moves', 
-      'glpi_plugin_fusinvdeploy_checks', 
-      'glpi_plugin_fusinvdeploy_fileparts', 
-      'glpi_plugin_fusinvdeploy_files', 
+      'glpi_plugin_fusinvdeploy_actions',
+      'glpi_plugin_fusinvdeploy_actions_commandenvvariables',
+      'glpi_plugin_fusinvdeploy_actions_commands',
+      'glpi_plugin_fusinvdeploy_actions_commandstatus',
+      'glpi_plugin_fusinvdeploy_actions_copies',
+      'glpi_plugin_fusinvdeploy_actions_deletes',
+      'glpi_plugin_fusinvdeploy_actions_messages',
+      'glpi_plugin_fusinvdeploy_actions_mkdirs',
+      'glpi_plugin_fusinvdeploy_actions_moves',
+      'glpi_plugin_fusinvdeploy_checks',
+      'glpi_plugin_fusinvdeploy_fileparts',
+      'glpi_plugin_fusinvdeploy_files',
       'glpi_plugin_fusinvdeploy_files_mirrors'
    );
    foreach ($old_deploy_tables as $table) {
@@ -7775,12 +7775,12 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
    //drop unused views
    $old_deploy_views = array(
-      'glpi_plugin_fusinvdeploy_taskjobs', 
+      'glpi_plugin_fusinvdeploy_taskjobs',
       'glpi_plugin_fusinvdeploy_tasks'
    );
    foreach ($old_deploy_views as $view) {
       $DB->query("DROP VIEW IF EXISTS $view");
-   }   
+   }
 }
 
 ?>
