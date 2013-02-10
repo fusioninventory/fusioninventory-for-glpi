@@ -101,7 +101,7 @@ class PrinterUpdate extends PHPUnit_Framework_TestCase {
       $this->items_id = $printer->add(array('serial'      => 'VRG5XUT5',
                                             'entities_id' => 0));
 
-      //$this->assertGreaterThan(0, $this->items_id);
+      $this->assertGreaterThan(0, $this->items_id);
       
       $pfiPrinterLib->updatePrinter($a_inventory, $this->items_id);
 
