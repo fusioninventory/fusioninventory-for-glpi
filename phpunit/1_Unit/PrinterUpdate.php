@@ -182,9 +182,16 @@ class PrinterUpdate extends PHPUnit_Framework_TestCase {
    
    
    public function testPrinterPagecounter() {
+      global $DB;
+
+      $DB->connect();
+
+      $pfPrinterLog = new PluginFusioninventoryPrinterLog();
       
-      
-      
+      $a_pages = $pfPrinterLog->find("`printers_id`='1'");
+
+      $this->assertEquals(1, count($a_pages));      
+
    }
    
    

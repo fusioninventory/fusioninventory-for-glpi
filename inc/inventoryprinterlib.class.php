@@ -123,6 +123,9 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
         
       // * Ports
          $this->importPorts($a_inventory, $items_id);
+         
+      // Page counters
+         $this->importPageCounters($a_inventory['pagecounters'], $items_id);
    }
    
    
@@ -171,6 +174,31 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
          }
       }
    }
+   
+   
+   
+   /**
+    * 
+    * @param type $p_pagecounters
+    * 
+    * @return string
+    */
+   function importPageCounters($a_pagecounters, $items_id) {
+
+      $pfPrinterLog = new PluginFusioninventoryPrinterLog();
+      //See if have an entry today
+      $a_entires = $pfPrinterLog->find("`printers_id`='".$items_id."'
+         AND LEFT(`date`, 10)='".date("Y-m-d")."'", "", 1);
+      if (count($a_entires) > 0) {
+         return;
+      }
+      
+      $a_pagecounters['printers_id'] = $items_id;
+      $a_pagecounters['date'] = date("Y-m-d H:i:s");
+
+      $pfPrinterLog->add($a_pagecounters);
+   }
+
 }
 
 ?>
