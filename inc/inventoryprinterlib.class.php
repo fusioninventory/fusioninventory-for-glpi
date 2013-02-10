@@ -126,6 +126,10 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
          
       // Page counters
          $this->importPageCounters($a_inventory['pagecounters'], $items_id);
+         
+      // Cartridges
+         $this->importCartridges($a_inventory['cartridge'], $items_id);
+
    }
    
    
@@ -178,8 +182,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
    
    
    /**
-    * 
-    * @param type $p_pagecounters
+    * Import page counters
     * 
     * @return string
     */
@@ -197,6 +200,36 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
       $a_pagecounters['date'] = date("Y-m-d H:i:s");
 
       $pfPrinterLog->add($a_pagecounters);
+   }
+
+
+
+   /**
+    * Import cartridges
+    *
+    **/
+   function importCartridges($a_cartridges, $items_id) {
+
+      $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
+      
+      $a_db = $pfPrinterCartridge->find("`printers_id`='".$items_id."'");
+      $a_dbcartridges = array();
+      foreach ($a_db as $data) {
+         $a_dbcartridges[$data['plugin_fusioninventory_mappings_id']] = $data;
+      }
+      
+      foreach ($a_cartridges as $mappings_id=>$value) {
+         if (isset($a_dbcartridges[$mappings_id])) {
+            $a_dbcartridges[$mappings_id]['state'] = $value;
+            $pfPrinterCartridge->update($a_dbcartridges[$mappings_id]);
+         } else {
+            $input = array();
+            $input['printers_id'] = $items_id;
+            $input['plugin_fusioninventory_mappings_id'] = $mappings_id;
+            $input['state'] = $value;
+            $pfPrinterCartridge->add($input);
+         }
+      }
    }
 
 }

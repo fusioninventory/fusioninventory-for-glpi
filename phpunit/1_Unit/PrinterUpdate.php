@@ -59,7 +59,12 @@ class PrinterUpdate extends PHPUnit_Framework_TestCase {
                   'last_fusioninventory_update' => $this->datelatupdate
                 ),
           'networkport' => array(),
-          'cartridge'   => array(),
+          'cartridge'   => array(
+              '63' => 60, // toner black
+              '71' => 40, // toner cyan
+              '79' => 80, //toner yelllow
+              '75' => 100 // toner magenta
+             ),
           'itemtype'    => 'Printer'
           );
       $a_inventory['Printer'] = array(
@@ -98,6 +103,9 @@ class PrinterUpdate extends PHPUnit_Framework_TestCase {
 
       $this->assertGreaterThan(0, $this->items_id);
       
+      $pfiPrinterLib->updatePrinter($a_inventory, $this->items_id);
+
+      // To be sure not have 2 sme informations
       $pfiPrinterLib->updatePrinter($a_inventory, $this->items_id);
    
       $GLPIlog = new GLPIlogs();
@@ -196,11 +204,80 @@ class PrinterUpdate extends PHPUnit_Framework_TestCase {
    
    
    
-   public function testPrinterCartridge() {
+   public function testPrinterCartridgeBlack() {
       global $DB;
 
       $DB->connect();
+
+      $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
       
+      $a_cartridge = $pfPrinterCartridge->find("`printers_id`='1' 
+                        AND `plugin_fusioninventory_mappings_id`='63'
+                        AND `state`='60'");
+
+      $this->assertEquals(1, count($a_cartridge));      
+   }
+
+   
+   
+   public function testPrinterCartridgeCyan() {
+      global $DB;
+
+      $DB->connect();
+
+      $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
+      
+      $a_cartridge = $pfPrinterCartridge->find("`printers_id`='1' 
+                        AND `plugin_fusioninventory_mappings_id`='71'
+                        AND `state`='40'");
+
+      $this->assertEquals(1, count($a_cartridge));      
+   }
+   
+   
+   
+   public function testPrinterCartridgeYellow() {
+      global $DB;
+
+      $DB->connect();
+
+      $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
+      
+      $a_cartridge = $pfPrinterCartridge->find("`printers_id`='1' 
+                        AND `plugin_fusioninventory_mappings_id`='79'
+                        AND `state`='80'");
+
+      $this->assertEquals(1, count($a_cartridge));        
+   }
+
+   
+   
+   public function testPrinterCartridgeMagenta() {
+      global $DB;
+
+      $DB->connect();
+
+      $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
+      
+      $a_cartridge = $pfPrinterCartridge->find("`printers_id`='1' 
+                        AND `plugin_fusioninventory_mappings_id`='75'
+                        AND `state`='100'");
+
+      $this->assertEquals(1, count($a_cartridge));    
+   }
+   
+   
+   
+   public function testPrinterAllCartridges() {
+      global $DB;
+
+      $DB->connect();
+
+      $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
+      
+      $a_cartridge = $pfPrinterCartridge->find("");
+
+      $this->assertEquals(4, count($a_cartridge));    
    }
  }
 
