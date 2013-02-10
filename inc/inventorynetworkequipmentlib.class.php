@@ -81,7 +81,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $a_ret = PluginFusioninventoryToolbox::checkLock($a_inventory['NetworkEquipment'], 
                                                        $db_networkequipment, $a_lockable);
       $a_inventory['NetworkEquipment'] = $a_ret[0];
-//      $db_networkequipment = $a_ret[1];
          
       $input = $a_inventory['NetworkEquipment'];
       
@@ -133,13 +132,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       
    }
    
-   
-   
-   
-   function addNewNetworkEquipment($a_inventory) {
-      
-   }
-
    
    
    /**

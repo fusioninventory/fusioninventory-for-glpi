@@ -1374,6 +1374,8 @@ class PluginFusioninventoryFormatconvert {
                                         'LOCATION'     => 'locations_id',
                                         'MODEL'        => 'printermodels_id',
                                         'MEMORY'       => 'memory_size'));
+      $array_tmp['is_dynamic'] = 1;
+      $array_tmp['have_ethernet'] = 1;
       
       $a_inventory['Printer'] = $array_tmp;
       $a_inventory['itemtype'] = 'Printer';

@@ -91,7 +91,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $this->agent = $pfAgent->InfosByKey($p_DEVICEID);
 
       $this->arrayinventory = $arrayinventory;
-      $errors = '';
 
       $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $a_CONTENT['PROCESSNUMBER'];
 //      if ($pfTaskjobstate->getFromDB($a_CONTENT['PROCESSNUMBER'])) {
@@ -117,7 +116,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                $this->addtaskjoblog();
 
             }
-            $errors.=$this->importContent($a_CONTENT);
+            
+            $this->importContent($a_CONTENT);
+            
             if (isset($a_CONTENT['AGENT']['END'])) {
                $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
                                                          $this->agent['id'],
@@ -136,7 +137,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 //      } else {
 //         $errors.=$this->importContent($p_CONTENT);
 //      }
-      return $errors;
    }
 
 
@@ -265,7 +265,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       switch ($itemtype) {
 
          case 'Printer':
-            $this->type = 'Printer';
+            $pfiPrinterLib = new PluginFusioninventoryInventoryPrinterLib();
+            $pfiPrinterLib->updatePrinter($a_inventory, $items_id);
             break;
 
          case 'NetworkEquipment':

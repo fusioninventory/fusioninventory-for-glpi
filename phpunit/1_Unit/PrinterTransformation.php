@@ -90,7 +90,9 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
                'manufacturers_id'   => 'Hewlett Packard',
                'locations_id'       => 'Room 102',
                'printermodels_id'   => 'HP LaserJet P1505n',
-               'memory_size'        => 64
+               'memory_size'        => 64,
+               'is_dynamic'         => 1,
+               'have_ethernet'      => 1
       );
       $this->assertEquals($a_reference, $a_return);      
    }   
@@ -143,7 +145,9 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
                'manufacturers_id'   => '',
                'locations_id'       => '',
                'printermodels_id'   => '',
-               'memory_size'        => 0
+               'memory_size'        => 0,
+               'is_dynamic'         => 1,
+               'have_ethernet'      => 1
       );
       $a_reference['pagecounters'] = array(
                'pages_total'        => 15134,
