@@ -95,6 +95,10 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
                'have_ethernet'      => 1
       );
       $this->assertEquals($a_reference, $a_return);      
+      
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
    }   
    
    
@@ -165,6 +169,11 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
 
           );
       $this->assertEquals($a_reference, $a_return);      
+
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
    }  
  }
 

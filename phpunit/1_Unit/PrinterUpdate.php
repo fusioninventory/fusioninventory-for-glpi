@@ -42,52 +42,84 @@
 
 class PrinterUpdate extends PHPUnit_Framework_TestCase {
    
+   public $items_id = 0;
+   public $datelatupdate = '';
+
+   
+   public function testAddPrinter() {
+      global $DB;
+
+      $DB->connect();
+      
+      $this->datelatupdate = date('Y-m-d H:i:s');
+      
+      $a_inventory = array(
+          'PluginFusioninventoryPrinter' => Array(
+                  'sysdescr'                    => 'HP ETHERNET MULTI-ENVIRONMENT',
+                  'last_fusioninventory_update' => $this->datelatupdate
+                ),
+          'networkport' => array(),
+          'cartridge'   => array(),
+          'itemtype'    => 'Printer'
+          );
+      $a_inventory['Printer'] = array(
+               'name'               => 'ARC12-B09-N',
+               'id'                 => 54,
+               'serial'             => 'VRG5XUT5',
+               'otherserial'        => 'chr(hex(fd))chr(hex(e8))',
+               'manufacturers_id'   => 10,
+               'locations_id'       => 102,
+               'printermodels_id'   => 15,
+               'memory_size'        => 64,
+               'is_dynamic'         => 1,
+               'have_ethernet'      => 1
+      );
+      $a_inventory['pagecounters'] = array(
+               'pages_total'        => 15134,
+               'pages_n_b'          => 10007,
+               'pages_color'        => 5127,
+               'pages_recto_verso'  => 0,
+               'pages_total_copy'   => 0,
+               'scanned'            => 0,
+               'pages_total_print'  => 0,
+               'pages_n_b_print'    => 0,
+               'pages_color_print'  => 0,
+               'pages_n_b_copy'     => 0,
+               'pages_color_copy'   => 0,
+               'pages_total_fax'    => 0
+
+          );
+
+      $pfiPrinterLib = new PluginFusioninventoryInventoryPrinterLib();
+      $printer = new Printer();
+      
+      $this->items_id = $printer->add(array('serial'      => 'VRG5XUT5',
+                                            'entities_id' => 0));
+
+      $this->assertGreaterThan(0, $this->items_id);
+      
+      $pfiPrinterLib->updatePrinter($a_inventory, $this->items_id);
+   
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+   }
+   
    
    public function testPrinterGeneral() {
       global $DB;
 
       $DB->connect();
       
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
-
-      $a_inventory = array(
-          'PluginFusioninventoryPrinter' => Array(
-                  'sysdescr'                    => 'HP ETHERNET MULTI-ENVIRONMENT',
-                  'last_fusioninventory_update' => date('Y-m-d H:i:s')
-                ),
-          'networkport'    => array(),
-          'cartridge'      => array(),
-          'pagecounters'   => array(),
-          'itemtype'       => 'Printer'
-          );
-      $a_inventory['Printer'] = array(
-               'name'               => 'ARC12-B09-N',
-               'serial'             => 'VRG5XUT4',
-               'otherserial'        => 'chr(hex(fd))chr(hex(e8))',
-               'id'                 => 54,
-               'manufacturers_id'   => '10',
-               'locations_id'       => '102',
-               'printermodels_id'   => '15',
-               'memory_size'        => 64,
-               'is_dynamic'         => 1,
-               'have_ethernet'      => 1
-      );
-
-      $pfiPrinterLib = new PluginFusioninventoryInventoryPrinterLib();
       $printer = new Printer();
       
-      $items_id = $printer->add(array('serial'      => 'VRG5XUT4',
-                                      'entities_id' => 0));
-      
-      $pfiPrinterLib->updatePrinter($a_inventory, $items_id);
-  
-      $printer->getFromDB($items_id);
+      $printer->getFromDB(1);
       unset($printer->fields['date_mod']);
       $a_reference = array(
           'name'                 => 'ARC12-B09-N',
-          'serial'               => 'VRG5XUT4',
+          'serial'               => 'VRG5XUT5',
           'otherserial'          => 'chr(hex(fd))chr(hex(e8))',
-          'id'                   => (string)$items_id,
+          'id'                   => '1',
           'manufacturers_id'     => '10',
           'locations_id'         => '102',
           'printermodels_id'     => '15',
@@ -123,6 +155,46 @@ class PrinterUpdate extends PHPUnit_Framework_TestCase {
       
       $this->assertEquals($a_reference, $printer->fields);      
    }   
+   
+
+   
+   public function testPrinterSNMPExtension() {
+      global $DB;
+
+      $DB->connect();
+      
+      $pfPrinter = new PluginFusioninventoryPrinter();
+      $a_printer = current($pfPrinter->find("`printers_id`='1'", "", 1));
+      unset($a_printer['last_fusioninventory_update']);
+      $a_reference = array(
+          'id'                                           => '1',
+          'printers_id'                                  => '1',
+          'sysdescr'                                     => 'HP ETHERNET MULTI-ENVIRONMENT',
+          'plugin_fusioninventory_snmpmodels_id'         => '0',
+          'plugin_fusioninventory_configsecurities_id'   => '0',
+          'frequence_days'                               => '1'
+      );
+      
+      $this->assertEquals($a_reference, $a_printer);      
+      
+   }
+
+   
+   
+   public function testPrinterPagecounter() {
+      
+      
+      
+   }
+   
+   
+   
+   public function testPrinterCartridge() {
+      global $DB;
+
+      $DB->connect();
+      
+   }
  }
 
 

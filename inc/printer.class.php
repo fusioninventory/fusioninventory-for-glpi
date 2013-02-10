@@ -70,35 +70,6 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
 
    /**
-    * Load an existing networking printer
-    *
-    *@return nothing
-    **/
-   function load($p_id='') {
-      global $DB;
-
-      parent::load($p_id);
-
-      $query = "SELECT `id`
-                FROM `glpi_plugin_fusioninventory_printers`
-                WHERE `printers_id` = '".$this->getValue('id')."';";
-      $result = $DB->query($query);
-      if ($result) {
-         if ($DB->numrows($result) != 0) {
-            $fusioninventory = $DB->fetch_assoc($result);
-            $this->oFusionInventory_printer->load($fusioninventory['id']);
-            $this->ptcdLinkedObjects[]=$this->oFusionInventory_printer;
-         } else {
-            $this->oFusionInventory_printer->load();
-            $this->oFusionInventory_printer->setValue('printers_id', $this->getValue('id'));
-            $this->ptcdLinkedObjects[]=$this->oFusionInventory_printer;
-         }
-      }
-   }
-
-
-
-   /**
     * Update an existing preloaded printer with the instance values
     *
     *@return nothing
