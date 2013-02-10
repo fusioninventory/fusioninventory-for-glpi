@@ -360,10 +360,6 @@ class PluginFusioninventoryFormatconvert {
                   $array_tmp = $thisc->addValues($a_videos, array(
                                                               'NAME'   => 'designation', 
                                                               'MEMORY' => 'memory'));
-                  if (!isset($array_tmp['memory'])
-                          || !is_numeric($array_tmp['memory'])) {
-                     $array_tmp['memory'] = 0;
-                  }
                   $a_inventory['graphiccard'][] = $array_tmp;
                   if (isset($a_videos['NAME'])) {
                      $ignorecontrollers[$a_videos['NAME']] = 1;
@@ -746,9 +742,6 @@ class PluginFusioninventoryFormatconvert {
                            $array_tmp['designation'] = $a_storage['DESIGNATION'];
                         }
                      }
-                     if ($array_tmp['capacity'] == '') {
-                        $array_tmp['capacity'] = 0;
-                     }
                      $a_inventory['harddrive'][] = $array_tmp;
                   }
                }
@@ -824,12 +817,6 @@ class PluginFusioninventoryFormatconvert {
                                               'VERSION'  => 'version',
                                               'ENABLED'  => 'is_active',
                                               'UPTODATE' => 'uptodate'));
-            if ($array_tmp['is_active'] == '') {
-               $array_tmp['is_active'] = 0;
-            }
-            if ($array_tmp['uptodate'] == '') {
-               $array_tmp['uptodate'] = 0;
-            }
             $a_inventory['antivirus'][] = $array_tmp;
          }
       }
@@ -1121,30 +1108,14 @@ class PluginFusioninventoryFormatconvert {
          if (!isset($a_return[$value])
                  || $a_return[$value] == '') {
             $int = 0;
-            switch ($value) {
-               
-               case 'capacity':
-               case 'freesize':
-               case 'totalsize':
-               case 'memory':
-               case 'memory_size':
-               case 'pages_total':
-               case 'pages_n_b':
-               case 'pages_color':
-               case 'pages_recto_verso':
-               case 'scanned':
-               case 'pages_total_print':
-               case 'pages_n_b_print':
-               case 'pages_color_print':
-               case 'pages_total_copy':
-               case 'pages_n_b_copy':
-               case 'pages_color_copy':
-               case 'pages_total_fax':
-               case 'cpu':
-                  
-                  $int = 1;
-                  break;
-
+            $a_int_values = array('capacity', 'freesize', 'totalsize', 'memory', 'memory_size',
+               'pages_total', 'pages_n_b', 'pages_color', 'pages_recto_verso', 'scanned',
+               'pages_total_print', 'pages_n_b_print', 'pages_color_print', 'pages_total_copy',
+               'pages_n_b_copy', 'pages_color_copy', 'pages_total_fax', 
+               'cpu', 'trunk', 'is_active', 'uptodate',
+               'ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu', 'speed');   
+            if (in_array($value, $a_int_values)) {      
+               $int = 1;
             } 
              
             if ($int == 1) {
@@ -1269,20 +1240,9 @@ class PluginFusioninventoryFormatconvert {
                                               'IFSTATUS'          => 'ifstatus',
                                               'IFTYPE'            => 'iftype',
                                               'TRUNK'             => 'trunk'));
-            if ($array_tmp['trunk'] == '') {
-               $array_tmp['trunk'] = 0;
-            }
             $array_tmp['ifspeed'] = $array_tmp['speed'];
             if ($array_tmp['ifdescr'] == '') {
                $array_tmp['ifdescr'] = $array_tmp['name'];
-            }
-            $a_listfield = array('ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu',
-                                 'speed');
-            foreach ($a_listfield as $field) {
-               if (!isset($array_tmp[$field])
-                       || $array_tmp[$field] == '') {
-                  $array_tmp[$field] = 0;
-               }
             }
             $array_tmp['ifspeed'] = $array_tmp['speed'];
 
