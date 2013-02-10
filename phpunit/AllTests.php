@@ -150,6 +150,7 @@ require_once 'Netinventory/AllTests.php';
 require_once 'GLPIlogs/AllTests.php';
 require_once 'Netdiscovery/AllTests.php';
 
+require_once '1_Unit/FormatConvertData.php';
 require_once '1_Unit/Software.php';
 require_once '1_Unit/ComputerTransformation.php';
 require_once '1_Unit/PrinterTransformation.php';
@@ -171,6 +172,7 @@ class AllTests {
 ////      $suite->addTest(Netinventory_AllTests::suite());
 //      $suite->addTest(Netdiscovery_AllTests::suite());
       
+      $suite->addTest(FormatConvertData_AllTests::suite());
       $suite->addTest(Software_AllTests::suite());
       $suite->addTest(ComputerTransformation_AllTests::suite());
       $suite->addTest(PrinterTransformation_AllTests::suite());
