@@ -831,8 +831,6 @@ function plugin_fusioninventory_uninstall() {
 // Define headings added by the plugin //
 function plugin_get_headings_fusioninventory($item, $withtemplate) {
 
-   $config = new PluginFusioninventoryConfig;
-
    switch (get_class($item)) {
       case 'Computer' :
          $ong = array();
@@ -1396,7 +1394,8 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
 }
 
 function plugin_fusioninventory_MassiveActionsProcess($data) {
-
+   global $DB;
+   
    switch ($data['action']) {
       case "plugin_fusioninventory_manage_locks" :
          if (($data['itemtype'] == "NetworkEquipment")
@@ -2509,7 +2508,7 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
 
          }
 
-         switch ($table.".".$SEARCH_OPTION[$type][$id]["linkfield"]) {
+         switch ($table.".".$field) {
 
             case "glpi_plugin_fusinvsnmp_agents.plugin_fusinvsnmp_agents_id_query" :
                $ADD = "";
@@ -2748,7 +2747,7 @@ function plugin_item_purge_fusioninventory($parm) {
          }
 
          // If hub have no port, delete it
-         foreach ($a_hubs as $unkowndevice_id=>$num) {
+         foreach (array_keys($a_hubs) as $unkowndevice_id) {
             $a_networkports = $NetworkPort->find("`itemtype`='PluginFusioninventoryUnknownDevice'
                AND `items_id`='".$unkowndevice_id."' ");
             if (count($a_networkports) < 2) {

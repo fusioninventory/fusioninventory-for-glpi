@@ -89,7 +89,7 @@ class PluginFusioninventoryCommunicationRest {
       $schedule = array();
 
       if (isset($params['task'])) {
-         foreach ($params['task'] as $task => $version) {
+         foreach (array_keys($params['task']) as $task) {
             foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
                $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($method['module']);
                if (isset($method['use_rest'])

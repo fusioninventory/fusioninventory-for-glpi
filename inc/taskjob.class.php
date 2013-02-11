@@ -1018,8 +1018,8 @@ return namelist;
       }
 
       // Start agents must start in push mode
-      foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agent_id=>$num) {
-         $pfTaskjob->startAgentRemotly($agent_id);
+      foreach (array_keys($_SESSION['glpi_plugin_fusioninventory']['agents']) as $agents_id) {
+         $pfTaskjob->startAgentRemotly($agents_id);
       }
       unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
 
@@ -1195,9 +1195,8 @@ return namelist;
                $uniqid = $pfTaskjob->prepareRunTaskjob($data);
             }
          }
-
-         foreach($_SESSION['glpi_plugin_fusioninventory']['agents'] as $agent_id=>$num) {
-            $pfTaskjob->startAgentRemotly($agent_id);
+         foreach (array_keys($_SESSION['glpi_plugin_fusioninventory']['agents']) as $agents_id) {
+            $pfTaskjob->startAgentRemotly($agents_id);
          }
          unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
       } else {
@@ -1500,7 +1499,7 @@ return namelist;
             AND `rescheduled_taskjob_id`='0' ", "id");
       $i = 1;
       $tab = 0;
-      foreach($a_taskjob as $id=>$datas) {
+      foreach (array_keys($a_taskjob) as $id) {
          $i++;
          if ($id == $taskjobs_id) {
             $tab = $i;

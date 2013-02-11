@@ -471,7 +471,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             //create new check for this new order
             unset($check['id']);
             $check['plugin_fusioninventory_deployorders_id'] = $order_newId;
-            $check_newId = $check_obj->add($check);
+            $check_obj->add($check);
          }
 
          //duplicate files
@@ -492,7 +492,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                unset($filepart['id']);
                $filepart['plugin_fusioninventory_deployorders_id'] = $order_newId;
                $filepart['plugin_fusioninventory_deployfiles_id'] = $file_newId;
-               $filepart_newId = $filepart_obj->add($filepart);
+               $filepart_obj->add($filepart);
             }
          }
 
@@ -522,7 +522,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   //create new commandstatus for this command
                   unset($commandstate['id']);
                   $commandstate['plugin_fusioninventory_deploycommands_id'] = $command_newId;
-                  $commandstatus_newId = $commandstatus_obj->add($commandstate);
+                  $commandstatus_obj->add($commandstate);
                }
 
                //duplicate commandenvvariables
@@ -533,7 +533,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   //create new commandenvvariable for this command
                   unset($commandenvvariable['id']);
                   $commandenvvariable['plugin_fusioninventory_deploycommands_id'] = $command_newId;
-                  $commandenvvariable_newId = $commandenvvariables_obj->add($commandenvvariable);
+                  $commandenvvariables_obj->add($commandenvvariable);
                }
             }
 
@@ -541,7 +541,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             unset($action['id']);
             $action['plugin_fusioninventory_deployorders_id'] = $order_newId;
             $action['items_id'] = $action_subitem_newId;
-            $action_newId = $action_obj->add($action);
+            $action_obj->add($action);
          }
       }
 

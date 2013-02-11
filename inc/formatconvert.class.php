@@ -1011,7 +1011,6 @@ class PluginFusioninventoryFormatconvert {
       $a_inventory['software'] = array();
       
       $rulecollection = new RuleDictionnarySoftwareCollection();
-      $manufacturer = new Manufacturer();
 
       foreach ($a_inventory['SOFTWARES'] as $a_softwares) {
          $array_tmp = $this->addValues($a_softwares, 

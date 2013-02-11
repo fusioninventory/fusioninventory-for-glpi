@@ -3499,15 +3499,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
          // Update with mapping
          if (FieldExists($newTable, "object_name")) {
-            $itemtype = getItemTypeForTable($newTable);
-            $pcartridge = new $itemtype;
             $query = "SELECT * FROM `".$newTable."`
                GROUP BY `object_name`";
             $result=$DB->query($query);
             while ($data=$DB->fetch_array($result)) {
                $pfMapping = new PluginFusioninventoryMapping();
                $mapping = 0;
-               if ($mapping = $pfMapping->get("Printer", $data['object_name'])) {
+               if (($mapping = $pfMapping->get("Printer", $data['object_name']))) {
                   $DB->query("UPDATE `".$newTable."`
                      SET `plugin_fusioninventory_mappings_id`='".$mapping['id']."'
                         WHERE `object_name`='".$data['object_name']."'");
@@ -6851,7 +6849,7 @@ function pluginFusioninventoryUpdatemapping() {
 
 
 function update213to220_ConvertField($migration) {
-   global $FUSIONINVENTORY_MAPPING, $FUSIONINVENTORY_MAPPING_DISCOVERY, $DB;
+   global $DB;
 
    // ----------------------------------------------------------------------
    //NETWORK MAPPING MAPPING
@@ -7694,7 +7692,6 @@ function migrateTablesFromFusinvDeploy ($migration) {
             FROM $a_table
             WHERE id = ".$a_datas['items_id'];
          $at_res = $DB->query($at_query);
-         $fields = array();
          while($at_datas = $DB->fetch_assoc($at_res)) {
             foreach($at_datas as $at_key => $at_value) {
                //we don't store the id field of action itemtype table in json
@@ -7748,8 +7745,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
       $order_query = "UPDATE glpi_plugin_fusioninventory_deployorders
          SET json = '$json'
          WHERE id = $order_id";
-      $order_res = $DB->query($order_query);
-
+      $DB->query($order_query);
    }
 
 

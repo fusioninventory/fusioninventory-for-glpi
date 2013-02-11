@@ -861,7 +861,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      } else {
                         if (count($db_addresses) != 0) {
                            // Delete ip address in DB                     
-                           foreach ($db_addresses as $idtmp => $name) {
+                           foreach (array_keys($db_addresses) as $idtmp) {
                               $iPAddress->delete(array('id'=>$idtmp));
                            }
                         }

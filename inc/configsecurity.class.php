@@ -170,9 +170,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       $xml_write = "<snmp>\n";
       $xml_write .= "   <incrementID>".$id."</incrementID>\n";
       $xml_write .= "   <auth>\n";
-      $i = -1;
-      foreach($xml->auth[0] as $num) {
-         $i++;
+      for ($i=-1; $i < (count($xml->auth[0]) - 1); $i++) {
          $xml_write .= "      <conf>\n";
          $j = 0;
          foreach($xml->auth->conf[$i] as $item) {
@@ -372,12 +370,10 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml", 
                                  'SimpleXMLElement', 
                                  LIBXML_NOCDATA);
-      $i = -1;
       $selectbox = "<select name='plugin_fusinvsnmp_configsecurities_id' size='1'>\n
                        <option value='0'>-----</option>\n";
-      foreach($xml->auth[0] as $num) {
-         $i++;
-
+      for ($i=-1; $i < (count($xml->auth[0]) - 1); $i++) {
+         
          $j = 0;
          foreach($xml->auth->conf[$i] as $item) {
             $j++;

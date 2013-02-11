@@ -446,8 +446,6 @@ class PluginFusioninventoryWizard {
     **/
    static function w_start($ariane='') {
 
-      $plugin = new Plugin();
-
       $_SESSION['plugin_fusioninventory_wizard'] = array();
 
       $a_buttons = array();
@@ -477,8 +475,6 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_inventorychoice($ariane='') {
-
-      $plugin = new Plugin();
 
       $a_buttons = array();
 

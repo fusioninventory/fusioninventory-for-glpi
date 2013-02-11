@@ -53,9 +53,7 @@ class PluginFusioninventorySetup {
       CronTask::Unregister('fusioninventory');
 
       $pfSetup  = new PluginFusioninventorySetup();
-      $pfModule = new PluginFusioninventoryModule();
       $user = new User();
-      $plugins_id = $pfModule->getModuleId("fusioninventory");
 
       if (class_exists('PluginFusioninventoryConfig')) {
          $fusioninventory_config      = new PluginFusioninventoryConfig();
@@ -68,8 +66,8 @@ class PluginFusioninventorySetup {
       }
 
       $query = "SHOW TABLES;";
-      $result=$DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
+      $result = $DB->query($query);
+      while ($data = $DB->fetch_array($result)) {
          if ((strstr($data[0], "glpi_plugin_fusioninventory_"))
                  OR (strstr($data[0], "glpi_plugin_fusinvsnmp_"))
                  OR (strstr($data[0], "glpi_plugin_fusinvinventory_"))

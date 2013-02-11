@@ -806,12 +806,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $releasePorts = array();
       $a_ports = $Netport->find("`items_id`='".$hub_id."' AND `itemtype`='".$this->getType()."' ".
                                  "AND (`name` != 'Link' OR `name` IS NULL)");
-      foreach ($a_ports as $port_id=>$data) {
-         $id = $nn->getOppositeContact($port_id);
+      foreach (array_keys($a_ports) as $ports_id) {
+         $id = $nn->getOppositeContact($ports_id);
          if ($id) {
             $Netport->getFromDB($id);
             if (!isset($a_macOnSwitch[$Netport->fields["mac"]])) {
-               $releasePorts[$port_id] = 1;
+               $releasePorts[$ports_id] = 1;
             }
          }
       }

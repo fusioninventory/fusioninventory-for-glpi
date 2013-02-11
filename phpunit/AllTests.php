@@ -103,6 +103,7 @@ if (!defined('GLPI_ROOT')) {
          }
       } else {
          // Is ezComponent class ?
+         $matches = array();
          if (preg_match('/^ezc([A-Z][a-z]+)/', $classname, $matches)) {
             include_once(GLPI_EZC_BASE);
             ezcBase::autoload($classname);

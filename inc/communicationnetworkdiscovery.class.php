@@ -221,7 +221,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                                                                   implode(", ", $a_text);
          $this->addtaskjoblog();
 
-         $pfignoredimport = new PluginFusioninventoryIgnoredimportdevice();
+         $pfIgnoredimport = new PluginFusioninventoryIgnoredimportdevice();
          $inputdb = array();
          $inputdb['name'] = $input['name'];
          $inputdb['date'] = date("Y-m-d H:i:s");
