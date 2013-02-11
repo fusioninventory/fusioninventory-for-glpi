@@ -153,6 +153,7 @@ require_once 'Netdiscovery/AllTests.php';
 require_once '1_Unit/FormatConvertData.php';
 require_once '1_Unit/Software.php';
 require_once '1_Unit/ComputerTransformation.php';
+require_once '1_Unit/ComputerUpdate.php';
 require_once '1_Unit/PrinterTransformation.php';
 require_once '1_Unit/PrinterUpdate.php';
 require_once '1_Unit/NetworkEquipmentTransformation.php';
@@ -175,6 +176,7 @@ class AllTests {
       $suite->addTest(FormatConvertData_AllTests::suite());
       $suite->addTest(Software_AllTests::suite());
       $suite->addTest(ComputerTransformation_AllTests::suite());
+      $suite->addTest(ComputerUpdate_AllTests::suite());
       $suite->addTest(PrinterTransformation_AllTests::suite());
       $suite->addTest(PrinterUpdate_AllTests::suite());
       $suite->addTest(NetworkEquipmentTransformation_AllTests::suite());
