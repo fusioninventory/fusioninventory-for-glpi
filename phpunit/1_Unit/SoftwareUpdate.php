@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-class Software extends PHPUnit_Framework_TestCase {
+class SoftwareUpdate extends PHPUnit_Framework_TestCase {
    
    public function testAddAllRules() {
       global $DB;
@@ -307,14 +307,14 @@ class Software extends PHPUnit_Framework_TestCase {
 
 
 
-class Software_AllTests  {
+class SoftwareUpdate_AllTests  {
 
    public static function suite() {
 
       $Install = new Install();
       $Install->testInstall(0);
       
-      $suite = new PHPUnit_Framework_TestSuite('Software');
+      $suite = new PHPUnit_Framework_TestSuite('SoftwareUpdate');
       return $suite;
    }
 }

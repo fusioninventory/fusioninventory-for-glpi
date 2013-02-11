@@ -52,7 +52,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    var $log_add = array();
    
    
-   
    function __construct() {
       $this->software                  = new Software();
       $this->softwareVersion           = new SoftwareVersion();

@@ -91,7 +91,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-
+      
       $pfComputer = new self();
       if ($tabnum == '0') {
          if ($item->getID() > 0) {

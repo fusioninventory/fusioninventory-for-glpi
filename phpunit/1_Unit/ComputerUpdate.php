@@ -97,18 +97,133 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'is_dynamic'                       => 1,
           'contact'                          => 'ddurieux'
       );
+      
+      $a_inventory['processor'] = Array(
+            Array(
+                    'manufacturers_id'  => 'Intel Corporation',
+                    'designation'       => 'Core i3',
+                    'frequence'         => 2400,
+                    'serial'            => '',
+                    'frequency'         => 2400
+                ),
+            Array(
+                    'manufacturers_id'  => 'Intel Corporation',
+                    'designation'       => 'Core i3',
+                    'frequence'         => 2400,
+                    'serial'            => '',
+                    'frequency'         => 2400
+                ),
+            Array(
+                    'manufacturers_id'  => 'Intel Corporation',
+                    'designation'       => 'Core i3',
+                    'frequence'         => 2400,
+                    'serial'            => '',
+                    'frequency'         => 2400
+                ),
+            Array(
+                    'manufacturers_id'  => 'Intel Corporation',
+                    'designation'       => 'Core i3',
+                    'frequence'         => 2400,
+                    'serial'            => '',
+                    'frequency'         => 2400
+                )
+        );
+
+      $a_inventory['memory'] = Array(
+            Array(
+                    'size'                 => 2048,
+                    'serial'               => '98F6FF18',
+                    'frequence'            => '1067 MHz',
+                    'devicememorytypes_id' => 'DDR3',
+                    'designation'          => 'DDR3 - SODIMM (None)'
+                ),
+            Array(
+                    'size'                 => 2048,
+                    'serial'               => '95F1833E',
+                    'frequence'            => '1067 MHz',
+                    'devicememorytypes_id' => 'DDR3',
+                    'designation'          => 'DDR3 - SODIMM (None)'
+                )
+        );
+
+      $a_inventory['monitor'] = Array(
+            Array(
+                    'name'              => '',
+                    'comment'           => '',
+                    'serial'            => '',
+                    'manufacturers_id'  => ''
+                )
+      );
+
+      $a_inventory['networkport'] = Array(
+            'em0-00:23:18:cf:0d:93' => Array(
+                    'name'                 => 'em0',
+                    'netmask'              => '255.255.255.0',
+                    'subnet'               => '192.168.30.0',
+                    'mac'                  => '00:23:18:cf:0d:93',
+                    'instantiation_type'   => 'NetworkPortEthernet',
+                    'virtualdev'           => 0,
+                    'ssid'                 => '',
+                    'gateway'              => '',
+                    'dhcpserver'           => '',
+                    'ipaddress'            => Array('192.168.30.198')
+                ),
+            'lo0-' => Array(
+                    'name'                 => 'lo0',
+                    'virtualdev'           => 1,
+                    'mac'                  => '',
+                    'instantiation_type'   => 'NetworkPortLocal',
+                    'subnet'               => '',
+                    'ssid'                 => '',
+                    'gateway'              => '',
+                    'netmask'              => '',
+                    'dhcpserver'           => '',
+                    'ipaddress'            => Array('::1', 'fe80::1', '127.0.0.1')
+                )
+        );
+      
+      $a_inventory['software'] = Array(
+            'GentiumBasic$$$$110' => Array(
+                    'name'                   => 'GentiumBasic',
+                    'version'                => 110,
+                    'manufacturers_id'       => 0,
+                    'entities_id'            => 0,
+                    'is_template_computer'   => 0,
+                    'is_deleted_computer'    => 0
+                ),
+            'ImageMagick$$$$6.8.0.7_1' => Array(
+                    'name'                   => 'ImageMagick',
+                    'version'                => '6.8.0.7_1',
+                    'manufacturers_id'       => 0,
+                    'entities_id'            => 0,
+                    'is_template_computer'   => 0,
+                    'is_deleted_computer'    => 0
+                ),
+            'ORBit2$$$$2.14.19' => Array(
+                    'name'                   => 'ORBit2',
+                    'version'                => '2.14.19',
+                    'manufacturers_id'       => 0,
+                    'entities_id'            => 0,
+                    'is_template_computer'   => 0,
+                    'is_deleted_computer'    => 0
+                )
+          );
 
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
       $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
       
       $a_inventory = $pfFormatconvert->replaceids($a_inventory);
+  
+      $serialized = gzcompress(serialize($a_inventory));
+      $a_inventory['fusioninventorycomputer']['serialized_inventory'] = 
+               Toolbox::addslashes_deep($serialized);
       
       $this->items_id = $computer->add(array('serial'      => 'XB63J7D',
                                              'entities_id' => 0));
 
       $this->assertGreaterThan(0, $this->items_id, FALSE);
-      
+      $_SESSION['glpiactive_entity'] = 0;
       $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
 
       // To be sure not have 2 same informations
@@ -177,6 +292,8 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
       $pfiComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
       $a_computer = current($pfiComputerComputer->find("`computers_id`='1'", "", 1));
       unset($a_computer['last_fusioninventory_update']);
+      $serialized_inventory = $a_computer['serialized_inventory'];
+      unset($a_computer['serialized_inventory']);
       $a_reference = array(
           'id'                               => '1',
           'computers_id'                     => '1',
@@ -186,11 +303,12 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'operatingsystem_installationdate' => '2012-10-16 08:12:56',
           'winowner'                         => 'test',
           'wincompany'                       => 'siprossii',
-          'remote_addr'                      => NULL,
-          'serialized_inventory'             => NULL
+          'remote_addr'                      => NULL
       );
       
       $this->assertEquals($a_reference, $a_computer);      
+      
+      $this->assertNotEquals(NULL, $serialized_inventory);      
       
    }
  }
