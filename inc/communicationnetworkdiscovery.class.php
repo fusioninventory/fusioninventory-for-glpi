@@ -221,7 +221,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                                                                   implode(", ", $a_text);
          $this->addtaskjoblog();
 
-         $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
+         $pfignoredimport = new PluginFusioninventoryIgnoredimportdevice();
          $inputdb = array();
          $inputdb['name'] = $input['name'];
          $inputdb['date'] = date("Y-m-d H:i:s");
@@ -240,7 +240,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          }
          $inputdb['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
          $inputdb['method'] = 'netdiscovery';
-         $pfIgnoredimportdevice->add($inputdb);
+         $pfIgnoredimport->add($inputdb);
          unset($_SESSION['plugin_fusioninventory_rules_id']);
       }
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
@@ -548,20 +548,20 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $item->update($input);
             
             $NetworkPort = new NetworkPort();
-            $a_networkPortAggregates = current($NetworkPort->find(
+            $a_npAggregates = current($NetworkPort->find(
                     "`itemtype`='NetworkEquipment' AND `items_id`='".$item->getID()."'".
                        " AND `instantiation_type`='NetworkPortAggregate'",
                     "",
                     1));
             $networkports_id = 0;
-            if (isset($a_networkPortAggregates['id'])) {
+            if (isset($a_npAggregates['id'])) {
                if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
                   $input = array();
-                  $input['id'] = $a_networkPortAggregates['id'];
+                  $input['id'] = $a_npAggregates['id'];
                   $input['mac'] = $arrayinventory['MAC'];
                   $NetworkPort->update($input);
                }
-               $networkports_id = $a_networkPortAggregates['id'];
+               $networkports_id = $a_npAggregates['id'];
             } else {
                $input = array();
                $input['itemtype'] = 'NetworkEquipment';

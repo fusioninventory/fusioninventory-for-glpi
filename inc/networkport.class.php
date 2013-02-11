@@ -45,7 +45,6 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryNetworkPort extends CommonDBTM {
-   private $glpi_type = "NetworkEquipment"; // NetworkEquipment, Printer...
    private $portDB = array();
    private $portModif = array();
    private $plugin_fusinvsnmp_networkports_id = 0;

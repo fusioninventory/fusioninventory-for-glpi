@@ -45,8 +45,8 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryCommunicationNetworkInventory {
-//   private $sxml, $deviceId, $ptd, $type='', $logFile;
-   private $sxml, $ptd, $logFile, $agent, $unknownDeviceCDP, $arrayinventory;
+   
+   private $ptd, $logFile, $agent, $arrayinventory;
    private $a_ports = array();
 
 

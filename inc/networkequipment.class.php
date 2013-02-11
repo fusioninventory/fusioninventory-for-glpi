@@ -45,9 +45,6 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
-   private $oFusionInventory_networkequipment;
-   private $newPorts=array(), $updatesPorts=array();
-
    
    
    static function canCreate() {
@@ -420,6 +417,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       $DB->query($query);
    }
+
    
    
    function showNetworkEquipmentInformation($id, $options) {
