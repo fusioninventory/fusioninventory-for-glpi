@@ -238,8 +238,12 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          $params['edit']      = "true";
          $params['index']     = $datas['index'];
          $params['value_1']   = addslashes($datas['value_1']);
-         $params['value_2']   = isset($datas['value_2'])?addslashes($datas['value_2']):0;
-         $params['retChecks'] = isset($datas['retChecks'])?$datas['retChecks']:0;
+         if (isset($datas['value_2'])) {
+            $params['value_2']   = addslashes($datas['value_2']);
+         }
+         if (isset($datas['retChecks'])) {
+            $params['retChecks'] = $datas['retChecks'];
+         }
       }
       Ajax::updateItemOnEvent("dropdown_deploy_actiontype$rand",
                               "showActionValue$rand",
@@ -326,7 +330,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          if (isset($datas['retChecks'])) {
             $display = "style='display:block'";
          }
-         echo "<span id='retchecks$rand' $display>";
+         echo "<span id='retchecks$rand' style='display:block'>";
          $retchecks_entries = array(
             '--',
             'okCode'       => __("okCode", 'fusioninventory'),
@@ -334,18 +338,19 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             'okPattern'    => __("okPattern", 'fusioninventory'),
             'errorPattern' => __("errorPattern", 'fusioninventory')
          );
-         if (!isset($datas['retChecks'])) {
-            echo "<table class='table_retchecks'>";
-            echo "<tr>";
-            echo "<td>";
-            Dropdown::showFromArray('retchecks_type[]', $retchecks_entries);
-            echo "</td>";
-            echo "<td>&nbsp;=&nbsp;</td><td><input type='text' name='retchecks_value[]' /></td>";
-            echo "<td><a class='edit' onclick='removeline(this)'><img src='".
-                  $CFG_GLPI["root_doc"]."/pics/redbutton.png' /></a></td>";
-            echo "</tr>";
-            echo "</table>";
-         } else {
+
+         echo "<table class='table_retchecks' style='display:none'>";
+         echo "<tr>";
+         echo "<td>";
+         Dropdown::showFromArray('retchecks_type[]', $retchecks_entries);
+         echo "</td>";
+         echo "<td><input type='text' name='retchecks_value[]' /></td>";
+         echo "<td><a class='edit' onclick='removeLine$rand(this)'><img src='".
+               $CFG_GLPI["root_doc"]."/pics/delete.png' /></a></td>";
+         echo "</tr>";
+         echo "</table>";
+
+         if (isset($datas['retChecks'])) {
             foreach ($retChecks as $retcheck) {
                echo "<table class='table_retchecks'>";
                echo "<tr>";
@@ -354,12 +359,12 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                   'value' => $retcheck['type']
                ));
                echo "</td>";
-               echo "<td>&nbsp;=&nbsp;</td><td>";
+               echo "<td>";
                echo "<input type='text' name='retchecks_value[]' value='".
                   $retcheck['value'][0]."' />";
                echo "</td>";
                echo "<td><a class='edit' onclick='removeLine$rand(this)'><img src='".
-                  $CFG_GLPI["root_doc"]."/pics/redbutton.png' /></a></td>";
+                  $CFG_GLPI["root_doc"]."/pics/delete.png' /></a></td>";
                echo "</tr>";
                echo "</table>";
             }
@@ -386,11 +391,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          function removeLine$rand(item) {
             var tag_table = item.parentNode.parentNode.parentNode.parentNode;
             var parent = tag_table.parentNode;
-            if (parent.childNodes.length > 1) { 
                parent.removeChild(tag_table);
-            } else {
-               alert('".__("last node, cannot delete it")."', 'fusioninventory');
-            }
          }
       </script>";
    }
@@ -455,10 +456,13 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       //process ret checks
       if (isset($params['retchecks_type']) && !empty($params['retchecks_type'])) {
          foreach ($params['retchecks_type'] as $index => $type) {
-            $tmp['retChecks'][] = array(
-               'type' => $type,
-               'value' => array($params['retchecks_value'][$index])
-            );
+            //if type == '0', this means nothing is selected
+            if ($type !== '0') {
+               $tmp['retChecks'][] = array(
+                  'type' => $type,
+                  'value' => array($params['retchecks_value'][$index])
+               );
+            }
          }
       }
 

@@ -334,7 +334,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "&nbsp;<img id='plus_$dom_id' onClick='return plusbutton$dom_id()'
                  title='".__('Add')."' alt='".__('Add')."'
                  class='pointer' src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
-
+      //This should lie in a libjs file instead hardcoded
       echo "<script type='text/javascript>";
       echo "function plusbutton$dom_id() {";
         
@@ -342,8 +342,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "
          var root=document.getElementById('$dom_id');
          if (root.style.display == 'block') {
-            var clone=root.getElementsByTagName('$clone')[0].cloneNode(TRUE);
+            var clone=root.getElementsByTagName('$clone')[0].cloneNode(true);
             root.appendChild(clone);
+            clone.style.display = 'block';
          }
          ";
       }
