@@ -106,6 +106,38 @@ class FormatConvertData extends PHPUnit_Framework_TestCase {
      );
       $this->assertEquals($a_reference, $a_return);      
    }   
+   
+   
+   
+   public function testReplaceids() {
+      global $DB;
+
+      $DB->connect();
+      
+      $a_inventory['software'] = array();
+      $a_inventory['computer'] = array(
+          'name'                             => 'pc',
+          'comment'                          => 'amd64/-1-11-30 22:04:44',
+          'users_id'                         => 0,
+          'operatingsystems_id'              => 'freebsd',
+          'operatingsystemversions_id'       => '9.1-RELEASE'
+          );
+      
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $a_inventory = $pfFormatconvert->replaceids($a_inventory);
+      
+      $a_reference['software'] = array();
+      $a_reference['computer'] = array(
+          'name'                             => 'pc',
+          'comment'                          => 'amd64/-1-11-30 22:04:44',
+          'users_id'                         => 0,
+          'operatingsystems_id'              => 1,
+          'operatingsystemversions_id'       => 1
+          );
+      
+       $this->assertEquals($a_reference, $a_inventory);      
+
+   }
 }
 
 

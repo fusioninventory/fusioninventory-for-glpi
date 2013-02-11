@@ -1135,7 +1135,7 @@ class PluginFusioninventoryFormatconvert {
       foreach ($array as $key=>$value) {
          if (!is_int($key)
                  && $key == "software") {
-            return $array;
+            // do nothing
          } else {
             if (is_array($value)) {
                $array[$key] = $this->replaceids($value);
