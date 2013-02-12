@@ -52,6 +52,6 @@ $items_id = $_GET['items_id'];
 header('Content-disposition: attachment; filename='.$_GET['filename']);
 header('Content-type: text/plain');
 
-call_user_func(array($itemtype, $function), $items_id);
+call_user_func(array('PluginFusioninventoryToolbox', $function), $items_id, $itemtype);
 
 ?>

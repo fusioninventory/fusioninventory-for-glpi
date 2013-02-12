@@ -242,16 +242,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    }
    
    
-   
-   static function sendSerializedInventory($items_id) {
-      
-      $pfInventoryComputerComputer = new self();
-      $pfInventoryComputerComputer->getFromDB($items_id);
-      echo gzuncompress($pfInventoryComputerComputer->fields['serialized_inventory']);
-      
-   }
-   
-   
    function displaySerializedInventory($items_id) {
       global $CFG_GLPI;
       
@@ -287,31 +277,9 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
       
-      $this->displaySerializedValues($data);
+      PluginFusioninventoryToolbox::displaySerializedValues($data);
       
       echo "</table>";
-   }
-   
-   
-   
-   function displaySerializedValues($array) {
-      
-      foreach ($array as $key=>$value) {
-         echo "<tr class='tab_bg_1'>";
-         echo "<th>";
-         echo $key;
-         echo "</th>";
-         echo "<td>";
-         if (is_array($value)) {
-            echo "<table class='tab_cadre' width='100%'>";
-            $this->displaySerializedValues($value);
-            echo "</table>";
-         } else {
-            echo $value;
-         }
-         echo "</td>";
-         echo "</tr>";
-      }
    }
 }
 

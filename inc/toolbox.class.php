@@ -477,6 +477,39 @@ class PluginFusioninventoryToolbox {
             </tr>
             </table>';
    }
+   
+   
+   
+   /**
+    * Display data from serialized inventory field
+    */
+   static function displaySerializedValues($array) {
+      
+      foreach ($array as $key=>$value) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<th>";
+         echo $key;
+         echo "</th>";
+         echo "<td>";
+         if (is_array($value)) {
+            echo "<table class='tab_cadre' width='100%'>";
+            PluginFusioninventoryToolbox::displaySerializedValues($value);
+            echo "</table>";
+         } else {
+            echo $value;
+         }
+         echo "</td>";
+         echo "</tr>";
+      }
+   }
+   
+   
+   
+   static function sendSerializedInventory($items_id, $itemtype) {      
+      $item = new $itemtype();
+      $item->getFromDB($items_id);
+      echo gzuncompress($item->fields['serialized_inventory']);
+   }
 }
 
 ?>
