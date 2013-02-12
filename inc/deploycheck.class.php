@@ -156,9 +156,10 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          echo "</tr>";
          $i++;
       }
-      echo "<tr><td colspan='2'>";
+      echo "<tr><td>";
       Html::checkAllAsCheckbox("checksList$rand", $rand);
-      echo "&nbsp;<input type='submit' name='delete' value=\"".
+      echo "</td><td colspan='2'>";
+      echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       echo "</td></tr>";
       echo "</table></div>";
