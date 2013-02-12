@@ -323,10 +323,6 @@ class PluginFusioninventoryInventoryComputerInventory {
       $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation(
                                              $a_computerinventory, 
                                              $_SESSION["plugin_fusinvinventory_entity"]);
-         
-      $serialized = gzcompress(serialize($a_computerinventory));
-      $a_computerinventory['fusioninventorycomputer']['serialized_inventory'] = 
-               Toolbox::addslashes_deep($serialized);
 
       if ($itemtype == 'Computer') {
          $pfInventoryComputerLib = new PluginFusioninventoryInventoryComputerLib();
@@ -361,10 +357,19 @@ class PluginFusioninventoryInventoryComputerInventory {
          // * New
          if ($items_id == '0') {
             $input = array();
-            $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+            $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];                     
+            if (isset($_SESSION['plugin_fusioninventory_locations_id'])) {
+               $a_computerinventory['computer']['locations_id'] = 
+                                 $_SESSION['plugin_fusioninventory_locations_id'];
+               unset($_SESSION['plugin_fusioninventory_locations_id']);
+            }
             $items_id = $computer->add($input);
             $no_history = TRUE;
          }
+               
+         $serialized = gzcompress(serialize($a_computerinventory));
+         $a_computerinventory['fusioninventorycomputer']['serialized_inventory'] = 
+                  Toolbox::addslashes_deep($serialized);
          
          $pfAgent->setAgentWithComputerid($items_id, $this->device_id);
 
