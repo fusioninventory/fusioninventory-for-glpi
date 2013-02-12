@@ -165,10 +165,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       if ((isset($p_xml->MODELSNMP)) AND (!empty($p_xml->MODELSNMP))) {
          $input['model'] = (string)$p_xml->MODELSNMP;
       }
-      if ((isset($p_xml->NETBIOSNAME)) AND (!empty($p_xml->NETBIOSNAME))) {
-         $input['name'] = (string)$p_xml->NETBIOSNAME;
-      } else if ((isset($p_xml->SNMPHOSTNAME)) AND (!empty($p_xml->SNMPHOSTNAME))) {
+      if ((isset($p_xml->SNMPHOSTNAME)) AND (!empty($p_xml->SNMPHOSTNAME))) {
          $input['name'] = (string)$p_xml->SNMPHOSTNAME;
+      } else if ((isset($p_xml->NETBIOSNAME)) AND (!empty($p_xml->NETBIOSNAME))) {
+         $input['name'] = (string)$p_xml->NETBIOSNAME;
       } else if ((isset($p_xml->DNSHOSTNAME)) AND (!empty($p_xml->DNSHOSTNAME))) {
          $input['name'] = (string)$p_xml->DNSHOSTNAME;
       }
@@ -337,10 +337,10 @@ class PluginFusinvsnmpCommunicationNetDiscovery extends PluginFusinvsnmpCommunic
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($item->getType()), $item->getID());
       
       if (!in_array('name', $a_lockable)) {
-         if (isset($xml->NETBIOSNAME) AND !empty($xml->NETBIOSNAME)) {
-            $input['name'] = (string)$xml->NETBIOSNAME;
-         } else if (isset($xml->SNMPHOSTNAME) AND !empty($xml->SNMPHOSTNAME)) {
+         if (isset($xml->SNMPHOSTNAME) AND !empty($xml->SNMPHOSTNAME)) {
             $input['name'] = (string)$xml->SNMPHOSTNAME;
+         } else if (isset($xml->NETBIOSNAME) AND !empty($xml->NETBIOSNAME)) {
+            $input['name'] = (string)$xml->NETBIOSNAME;
          } else if (isset($xml->DNSHOSTNAME) AND !empty($xml->DNSHOSTNAME)) {
             $input['name'] = (string)$xml->DNSHOSTNAME;
          }
