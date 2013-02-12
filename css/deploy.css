@@ -71,7 +71,7 @@ a.edit {
 .drag {
    background-image: url("../pics/drag.png");
    cursor: move;
-   width: 12px;
+   width: 14px;
    height: 10px;
    border:0 !important;
 }
