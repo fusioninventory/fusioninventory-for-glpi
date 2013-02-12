@@ -2,14 +2,14 @@ table.package_item {
    width: 100%;
 }
 table.package_item th {
-   width: 100px;
+   width: 150px;
    vertical-align: top;
 }
 
 table.package_item input[type=text], 
 table.package_item input[type=file], 
 table.package_item textarea {
-   width: 100%;
+   width: 250px;
 }
 
 table.package_item input[type=text] {
@@ -28,7 +28,7 @@ table.package_item .table_retchecks input {
 }
 
 table.package_item_list {
-   width: 305px;
+   width: 100%;
 }
 table.package_item_list td {
    max-width: 70px;
