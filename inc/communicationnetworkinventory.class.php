@@ -291,45 +291,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
 
    /**
-    * Import PORTS
-    *
-    * @param $p_ports PORTS code to import
-    *
-    * @return errors string to be alimented if import ko / '' if ok
-    **/
-   function importPorts($p_ports) {
-
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusioninventoryCommunicationNetworkInventory->importPorts().');
-      $errors='';
-      if (isset($p_ports['PORT'])) {
-         $a_ports = array();
-         if (is_int(key($p_ports['PORT']))) {
-            $a_ports = $p_ports['PORT'];
-         } else {
-            $a_ports[] = $p_ports['PORT'];
-         }
-         if ($this->type == "Printer") {
-            foreach ($a_ports as $a_port) {
-               $errors .= $this->importPortPrinter($a_port);
-            }
-         }
-      }
-      // Remove ports may not in XML and must be deleted in GLPI DB
-      $networkPort = new NetworkPort();
-      $a_portsDB = $networkPort->find("`itemtype` = '".$this->type."'
-                                       AND `items_id`='".$this->deviceId."'");
-      foreach ($a_portsDB as $data) {
-         if (!isset($this->a_ports[$data['id']])) {
-            $networkPort->delete($data);
-         }
-      }
-      return $errors;
-   }
-
-
-
-   /**
     * Import PORT Printer
     *
     * @param $p_port PORT code to import
@@ -413,67 +374,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       return $errors;
    }
 
-
-   /**
-    * Import VLANS
-    *@param $p_vlans VLANS code to import
-    *@param $pfNetworkPort Port object to connect
-    *
-    *@return errors string to be alimented if import ko / '' if ok
-    **/
-   function importVlans($p_vlans, $pfNetworkPort) {
-
-      $errors='';
-      foreach ($p_vlans as $childname=>$child) {
-         switch ($childname) {
-
-            case 'VLAN' :
-               $errors.=$this->importVlan($child, $pfNetworkPort);
-               break;
-
-            default :
-               $errors .= __('Unattended element in', 'fusioninventory').' VLANS : '.
-                          $child->getName()."\n";
-
-         }
-      }
-      return $errors;
-   }
-
-
-
-   /**
-    * Import VLAN
-    *@param $p_vlan VLAN code to import
-    *@param $p_oPort Port object to connect
-    *@return errors string to be alimented if import ko / '' if ok
-    **/
-   function importVlan($p_vlan, $pfNetworkPort) {
-
-      $errors='';
-      $number='';
-      $name='';
-      foreach ($p_vlan as $childname=>$child) {
-         switch ($childname) {
-
-            case 'NUMBER':
-               $number=$child;
-               break;
-
-            case 'NAME':
-               $name=$child;
-               break;
-
-            default:
-               $errors.=__('Unattended element in', 'fusioninventory').' VLAN : '.$childname."\n";
-
-         }
-      }
-      $pfNetworkPort->addVlan($number, $name);
-      return $errors;
-   }
-
-
+   
 
    /**
     * Get connection IP
