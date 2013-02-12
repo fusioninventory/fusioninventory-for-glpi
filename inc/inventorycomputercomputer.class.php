@@ -71,18 +71,18 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
                                                               '', 1);
             if (count($a_computers) > 0) {
                // Bios/other informations
-               $array_ret[0] = self::createTabEntry(__('Advanced informations', 'fusioninventory'));
+//               $array_ret[0] = self::createTabEntry(__('Advanced informations', 'fusioninventory'));
             }
 
-            $id = $item->getField('id');
-            $folder = substr($id, 0, -1);
-            if (empty($folder)) {
-               $folder = '0';
-            }
-            if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id)) {
-               $array_ret[1] = self::createTabEntry(__('Import informations', 'fusioninventory'));
-
-            }
+//            $id = $item->getField('id');
+//            $folder = substr($id, 0, -1);
+//            if (empty($folder)) {
+//               $folder = '0';
+//            }
+//            if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvinventory/".$folder."/".$id)) {
+//               $array_ret[1] = self::createTabEntry(__('Import informations', 'fusioninventory'));
+//
+//            }
          }
       }
       return $array_ret;
@@ -102,8 +102,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          if ($item->getID() > 0) {
             $pfComputer->display_xml($item);
 
-            $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
-            $pfRulematchedlog->showForm($item->getID(), 'Computer');
          }
       }
       return TRUE;
@@ -240,6 +238,55 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          // echo "</td>";
          // echo "</tr>";
          echo "</table>";
+      }
+   }
+   
+   
+   
+   function displaySerializedInventory($items_id) {
+      
+       $a_computerextend = current($this->find("`computers_id`='".$items_id."'",
+                                               "", 1));
+      
+      $this->getFromDB($a_computerextend['id']);
+      
+      $data = unserialize(gzuncompress($this->fields['serialized_inventory']));
+      
+      echo "<br/>";
+      
+      echo "<table class='tab_cadre_fixe'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>";
+      echo __('Last inventory', 'fusioninventory');
+      echo " (".Html::convDateTime($this->fields['last_fusioninventory_update']).")";
+      echo "</th>";
+      echo "</tr>";
+      
+      $this->displaySerializedValues($data);
+      
+      echo "</table>";
+   }
+   
+   
+   
+   function displaySerializedValues($array) {
+      
+      foreach ($array as $key=>$value) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<th>";
+         echo $key;
+         echo "</th>";
+         echo "<td>";
+         if (is_array($value)) {
+            echo "<table class='tab_cadre' width='100%'>";
+            $this->displaySerializedValues($value);
+            echo "</table>";
+         } else {
+            echo $value;
+         }
+         echo "</td>";
+         echo "</tr>";
       }
    }
 }

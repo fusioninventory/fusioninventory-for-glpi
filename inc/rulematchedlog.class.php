@@ -102,6 +102,10 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       } else if ($tabnum == '1') {
          if ($item->getID() > 0) {
             $pfRulematchedlog->showForm($item->getID(), $item->getType());
+            
+            $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
+            $pfComputer->displaySerializedInventory($item->getID());
+
          }
       }
       return TRUE;
