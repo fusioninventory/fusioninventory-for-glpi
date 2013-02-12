@@ -180,7 +180,8 @@ class PrinterUpdate extends PHPUnit_Framework_TestCase {
           'sysdescr'                                     => 'HP ETHERNET MULTI-ENVIRONMENT',
           'plugin_fusioninventory_snmpmodels_id'         => '0',
           'plugin_fusioninventory_configsecurities_id'   => '0',
-          'frequence_days'                               => '1'
+          'frequence_days'                               => '1',
+          'serialized_inventory'                         => NULL
       );
       
       $this->assertEquals($a_reference, $a_printer);      

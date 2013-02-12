@@ -103,8 +103,11 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
          if ($item->getID() > 0) {
             $pfRulematchedlog->showForm($item->getID(), $item->getType());
             
-            $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
-            $pfComputer->displaySerializedInventory($item->getID());
+            if (get_class($item) == 'Computer') {
+               $pfComputer = new PluginFusioninventoryInventoryComputerComputer();
+               $pfComputer->displaySerializedInventory($item->getID());
+            }
+            
 
          }
       }

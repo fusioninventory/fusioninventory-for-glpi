@@ -262,15 +262,23 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
       $errors='';
       $this->deviceId=$items_id;
+      
+                  
+      $serialized = gzcompress(serialize($a_inventory));
+      
       switch ($itemtype) {
 
          case 'Printer':
-            $pfiPrinterLib = new PluginFusioninventoryInventoryPrinterLib();
+            $pfiPrinterLib = new PluginFusioninventoryInventoryPrinterLib();  
+            $a_inventory['PluginFusioninventoryPrinter']['serialized_inventory'] = 
+                        Toolbox::addslashes_deep($serialized);
             $pfiPrinterLib->updatePrinter($a_inventory, $items_id);
             break;
 
          case 'NetworkEquipment':
-            $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+            $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib(); 
+            $a_inventory['PluginFusioninventoryNetworkEquipment']['serialized_inventory'] = 
+                        Toolbox::addslashes_deep($serialized);
             $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $items_id);
             break;
 
