@@ -71,8 +71,8 @@ $LANG['plugin_fusinvdeploy']['command_envvariable'][1]="Variable d'environnement
 $LANG['plugin_fusinvdeploy']['command_status'][0]="Faites votre choix...";
 $LANG['plugin_fusinvdeploy']['command_status'][3]="Code retour attendu";
 $LANG['plugin_fusinvdeploy']['command_status'][4]="Code retour invalide";
-$LANG['plugin_fusinvdeploy']['command_status'][5]="Expression r&eacute";
-$LANG['plugin_fusinvdeploy']['command_status'][6]="Expression r&eacute";
+$LANG['plugin_fusinvdeploy']['command_status'][5]="Message de succes (regex)";
+$LANG['plugin_fusinvdeploy']['command_status'][6]="Message d'erreur (regex)";
 
 $LANG['plugin_fusinvdeploy']['config'][0]="Adresse du serveur GLPI (sans le http://)";
 $LANG['plugin_fusinvdeploy']['config'][1]="Dossier racine pour l'envoi de fichier depuis le serveur";
