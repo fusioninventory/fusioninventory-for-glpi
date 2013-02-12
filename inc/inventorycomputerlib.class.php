@@ -593,6 +593,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                foreach ($a_computerinventory['software'] as $key => $arrayslower) {
 //                  $arrayslower = array_map('strtolower', $arrays);
                   foreach ($db_software as $keydb => $arraydb) {
+                     unset($arrayslower['is_dynamic']);
                      if ($arrayslower == $arraydb) {
                         unset($a_computerinventory['software'][$key]);
                         unset($db_software[$keydb]);

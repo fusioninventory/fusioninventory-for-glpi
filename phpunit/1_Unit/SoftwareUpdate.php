@@ -168,7 +168,8 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
                'version'               => '0.84+1.0',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
-               'entities_id'           => 0
+               'entities_id'           => 0,
+               'is_dynamic'            => 1
             );
       
       $this->assertEquals($a_reference, $a_return);
@@ -229,7 +230,8 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
                'version'               => '0.84',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
-               'entities_id'           => 0
+               'entities_id'           => 0,
+               'is_dynamic'            => 1
             );
       
       $this->assertEquals($a_reference, $a_return);
@@ -263,7 +265,8 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
                'version'               => '0.84',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
-               'entities_id'           => 0
+               'entities_id'           => 0,
+               'is_dynamic'            => 1
             );
       
       $this->assertEquals($a_reference, $a_return);
@@ -297,7 +300,8 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
                'version'               => '0.83',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
-               'entities_id'           => 0
+               'entities_id'           => 0,
+               'is_dynamic'            => 1
             );
       
       $this->assertEquals($a_reference, $a_return);
