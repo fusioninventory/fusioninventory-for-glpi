@@ -5,13 +5,14 @@
 # Translators:
 # Alexandre Brianceau <lostprophet91@gmail.com>, 2013.
 # David Durieux <d.durieux@siprossii.com>, 2012.
+#  <kiniou@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2013-01-30 10:31+0100\n"
-"PO-Revision-Date: 2013-02-01 10:50+0000\n"
-"Last-Translator: lostprophet91 <lostprophet91@gmail.com>\n"
+"PO-Revision-Date: 2013-02-08 17:17+0000\n"
+"Last-Translator: kiniou <kiniou@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -692,7 +693,7 @@ msgstr "Suppression"
 
 #: inc/deployaction.class.php:208 inc/deploycheck.class.php:177
 msgid "Type"
-msgstr "Taper"
+msgstr "Type"
 
 #: inc/deployaction.class.php:262
 msgid "From"
