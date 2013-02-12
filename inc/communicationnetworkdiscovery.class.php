@@ -163,12 +163,12 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
               && (!empty($arrayinventory['MODELSNMP']))) {
          $input['model'] = $arrayinventory['MODELSNMP'];
       }
-      if ((isset($arrayinventory['NETBIOSNAME'])) 
-              && (!empty($arrayinventory['NETBIOSNAME']))) {
-         $input['name'] = $arrayinventory['NETBIOSNAME'];
-      } else if ((isset($arrayinventory['SNMPHOSTNAME'])) 
+      if ((isset($arrayinventory['SNMPHOSTNAME'])) 
               && (!empty($arrayinventory['SNMPHOSTNAME']))) {
          $input['name'] = $arrayinventory['SNMPHOSTNAME'];
+      } else if ((isset($arrayinventory['NETBIOSNAME'])) 
+              && (!empty($arrayinventory['NETBIOSNAME']))) {
+         $input['name'] = $arrayinventory['NETBIOSNAME'];
       } else if ((isset($arrayinventory['DNSHOSTNAME'])) 
               && (!empty($arrayinventory['DNSHOSTNAME']))) {
          $input['name'] = $arrayinventory['DNSHOSTNAME'];
@@ -349,12 +349,12 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                                                              $item->getID());
 
       if (!in_array('name', $a_lockable)) {
-         if (isset($arrayinventory['NETBIOSNAME']) 
-                 && !empty($arrayinventory['NETBIOSNAME'])) {
-            $input['name'] = $arrayinventory['NETBIOSNAME'];
-         } else if (isset($arrayinventory['SNMPHOSTNAME']) 
+         if (isset($arrayinventory['SNMPHOSTNAME']) 
                  && !empty($arrayinventory['SNMPHOSTNAME'])) {
             $input['name'] = $arrayinventory['SNMPHOSTNAME'];
+         } else if (isset($arrayinventory['NETBIOSNAME']) 
+                 && !empty($arrayinventory['NETBIOSNAME'])) {
+            $input['name'] = $arrayinventory['NETBIOSNAME'];
          } else if (isset($arrayinventory['DNSHOSTNAME']) 
                  &&!empty($arrayinventory['DNSHOSTNAME'])) {
             $input['name'] = $arrayinventory['DNSHOSTNAME'];
