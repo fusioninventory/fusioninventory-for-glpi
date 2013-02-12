@@ -508,16 +508,25 @@ class PluginFusioninventoryToolbox {
    static function sendSerializedInventory($items_id, $itemtype) { 
       header('Content-type: text/plain');
 
-      $item = new $itemtype();
-      $item->getFromDB($items_id);
-      echo gzuncompress($item->fields['serialized_inventory']);
+      if (call_user_func(array($itemtype, 'canView'))) {
+         $item = new $itemtype();
+         $item->getFromDB($items_id);
+         echo gzuncompress($item->fields['serialized_inventory']);
+      } else {
+         Html::displayRightError();
+      }
    }
    
 
    
    static function sendXML($items_id, $itemtype) {    
-      $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$items_id);
-      echo $xml;
+      if (call_user_func(array($itemtype, 'canView'))) {
+         $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$items_id);
+         echo $xml;
+      } else {
+         Html::displayRightError();
+      }
+
    }
 }
 

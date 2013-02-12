@@ -120,7 +120,8 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
                
             }
             
-            if (is_object($itemtype)) {
+            if (is_object($itemtype)
+                    && $itemtype->canView()) {
                $itemtype->displaySerializedInventory($item->getID());
             }
             

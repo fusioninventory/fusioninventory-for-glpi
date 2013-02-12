@@ -60,11 +60,11 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
 
    static function canCreate() {
-      return TRUE;
+      return PluginFusioninventoryProfile::haveRight("printer", "w");
    }
 
    static function canView() {
-      return TRUE;
+      return PluginFusioninventoryProfile::haveRight("printer", "r");
    }
 
 
