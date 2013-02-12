@@ -505,10 +505,19 @@ class PluginFusioninventoryToolbox {
    
    
    
-   static function sendSerializedInventory($items_id, $itemtype) {      
+   static function sendSerializedInventory($items_id, $itemtype) { 
+      header('Content-type: text/plain');
+
       $item = new $itemtype();
       $item->getFromDB($items_id);
       echo gzuncompress($item->fields['serialized_inventory']);
+   }
+   
+
+   
+   static function sendXML($items_id, $itemtype) {    
+      $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$items_id);
+      echo $xml;
    }
 }
 

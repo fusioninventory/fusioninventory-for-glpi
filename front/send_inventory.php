@@ -48,9 +48,10 @@ $itemtype = $_GET['itemtype'];
 $function = $_GET['function'];
 $items_id = $_GET['items_id'];
 
-
+header('Cache-control: private, must-revalidate'); /// IE BUG + SSL
 header('Content-disposition: attachment; filename='.$_GET['filename']);
 header('Content-type: text/plain');
+
 
 call_user_func(array('PluginFusioninventoryToolbox', $function), $items_id, $itemtype);
 
