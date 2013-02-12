@@ -322,7 +322,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       //specific case for cmd : add retcheck form
       if ($type == "cmd") {
          echo "<tr>";
-         echo "<th>".__("return codes", 'fusioninventory');
+         echo "<th>".__("Command checks", 'fusioninventory');
          PluginFusioninventoryDeployPackage::plusButton("retchecks$rand", "table");
          echo "</th>";
          echo "<td>";
@@ -331,12 +331,15 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             $display = "style='display:block'";
          }
          echo "<span id='retchecks$rand' style='display:block'>";
+
+         //TODO : retCheck types are not really intuitive.
+         // It should proposed a dropdown with explicit condition
          $retchecks_entries = array(
             '--',
-            'okCode'       => __("okCode", 'fusioninventory'),
-            'errorCode'    => __("errorCode", 'fusioninventory'),
-            'okPattern'    => __("okPattern", 'fusioninventory'),
-            'errorPattern' => __("errorPattern", 'fusioninventory')
+            'okCode'       => __("Code is equal to", 'fusioninventory'),
+            'errorCode'    => __("Code is not equal to", 'fusioninventory'),
+            'okPattern'    => __("Command output contains", 'fusioninventory'),
+            'errorPattern' => __("Command output does not contains", 'fusioninventory')
          );
 
          echo "<table class='table_retchecks' style='display:none'>";
