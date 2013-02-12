@@ -243,9 +243,19 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
    
    
    
-   function displaySerializedInventory($items_id) {
+   static function sendSerializedInventory($items_id) {
       
-       $a_computerextend = current($this->find("`computers_id`='".$items_id."'",
+      $pfInventoryComputerComputer = new self();
+      $pfInventoryComputerComputer->getFromDB($items_id);
+      echo gzuncompress($pfInventoryComputerComputer->fields['serialized_inventory']);
+      
+   }
+   
+   
+   function displaySerializedInventory($items_id) {
+      global $CFG_GLPI;
+      
+      $a_computerextend = current($this->find("`computers_id`='".$items_id."'",
                                                "", 1));
       
       $this->getFromDB($a_computerextend['id']);
@@ -261,6 +271,20 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo __('Last inventory', 'fusioninventory');
       echo " (".Html::convDateTime($this->fields['last_fusioninventory_update']).")";
       echo "</th>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<th>";
+      echo __('Download', 'fusioninventory');
+      echo "</th>";
+      echo "<td>";
+      echo "<a href='".$CFG_GLPI['root_doc'].
+              "/plugins/fusioninventory/front/send_inventory.php".
+              "?itemtype=PluginFusioninventoryInventoryComputerComputer".
+              "&function=sendSerializedInventory&items_id=".$a_computerextend['id'].
+              "&filename=Computer-".$items_id.".json'".
+              "target='_blank'>PHP Array</a> / <a href=''>XML</a>";
+      echo "</td>";
       echo "</tr>";
       
       $this->displaySerializedValues($data);
