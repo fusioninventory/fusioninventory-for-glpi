@@ -109,10 +109,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo "<td class='control'><input type='checkbox' name='file_entries[]' value='$i' /></td>";
          $filename = $datas['associatedFiles'][$sha512]['name'];
          $filesize = $datas['associatedFiles'][$sha512]['filesize'];
-         echo "<td class='filename' title='$filename'>";
+         echo "<td class='filename'>";
          echo "<img src='".$CFG_GLPI['root_doc'].
                "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
          echo"&nbsp;<a class='edit'>$filename</a>";
+
          if (isset($datas['associatedFiles'][$sha512]['p2p'])) {
             echo "<a title='".__('p2p', 'fusioninventory').", "
             .__("retention", 'fusioninventory')." : ".
@@ -124,8 +125,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             echo "<a title='".__('uncompress', 'fusioninventory')."' class='more'><img src='".
                $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/uncompress.png' /></a>";
          }
-         echo "</td>";
-         echo "<td title='$filesize'>";
+         echo "<br />";
          echo self::processFilesize($filesize);
          echo "</td>";
          echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
