@@ -119,8 +119,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             echo "<a title='".__('p2p', 'fusioninventory').", "
             .__("retention", 'fusioninventory')." : ".
                $datas['associatedFiles'][$sha512]['p2p-retention-duration']." ".
-               __("days", 'fusioninventory')."' class='more'><img src='".$CFG_GLPI['root_doc'].
-               "/plugins/fusioninventory/pics/p2p.png' /></a>";
+               __("days", 'fusioninventory')."' class='more'>";
+               echo "<img src='".$CFG_GLPI['root_doc'].
+               "/plugins/fusioninventory/pics/p2p.png' />";
+               echo "<sup>".$datas['associatedFiles'][$sha512]['p2p-retention-duration']."</sup>";
+               echo "</a>";
          }
          if (isset($datas['associatedFiles'][$sha512]['uncompress'])) {
             echo "<a title='".__('uncompress', 'fusioninventory')."' class='more'><img src='".
