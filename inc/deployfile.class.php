@@ -98,7 +98,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       if (!isset($datas['jobs']['associatedFiles']) || empty($datas['jobs']['associatedFiles'])) {
          return;
       }
-      echo "<form name='removefiles' method='post' action='deploypackage.form.php?remove_item'>";
+      echo "<form name='removefiles' method='post' action='deploypackage.form.php?remove_item' ".
+         "id='filesList$rand'>";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployFile' />";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
       echo "<div id='drag_files'>";
@@ -133,7 +134,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          $i++;
       }
       echo "<tr><td colspan='2'>";
-      echo "<input type='submit' name='delete' value=\"".
+      Html::checkAllAsCheckbox("filesList$rand", $rand);
+      echo "&nbsp;<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       echo "</td></tr>";
       echo "</table></div>";

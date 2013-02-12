@@ -118,7 +118,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       Html::closeForm();
 
       //display stored checks datas
-      echo "<form name='removecheck' method='post' action='deploypackage.form.php?remove_item'>";
+      echo "<form name='removecheck' method='post' action='deploypackage.form.php?remove_item' ".
+         "id='checksList$rand'>";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployCheck' />";
       if (!isset($datas['jobs']['checks']) || empty($datas['jobs']['checks'])) {
@@ -156,7 +157,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          $i++;
       }
       echo "<tr><td colspan='2'>";
-      echo "<input type='submit' name='delete' value=\"".
+      Html::checkAllAsCheckbox("checksList$rand", $rand);
+      echo "&nbsp;<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       echo "</td></tr>";
       echo "</table></div>";
