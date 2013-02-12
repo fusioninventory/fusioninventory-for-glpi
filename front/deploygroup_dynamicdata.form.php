@@ -56,11 +56,11 @@ $pfDeployGroup_Dynamicdata = new PluginFusioninventoryDeployGroup_Dynamicdata();
 if (isset($_GET['updaterule'])) {
    if (!isset($_GET['contains'])
         AND !isset($_GET['reset'])) {
-//      $_SESSION['plugin_monitoring_rules'] = $_POST;
+
    } else {
       $_POST = $_GET;
       $input = array();
-      $input['id'] = $_POST['plugin_fusiosninventory_deploygroup_dynamicdatas_id'];
+      $input['id'] = $_POST['plugin_fusioninventory_deploygroup_dynamicdatas_id'];
       unset($_POST['_glpi_csrf_token']);
       unset($_POST['start']);
       $input['fields_array'] = exportArrayToDB($_POST);
@@ -69,39 +69,13 @@ if (isset($_GET['updaterule'])) {
    }
 } else if (isset($_GET['contains'])
         OR isset($_GET['reset'])) {
-//   if (isset($_SESSION['plugin_monitoring_rules'])) {
-//      unset($_SESSION['plugin_monitoring_rules']);
-//   }
-//   $_SESSION['plugin_monitoring_rules'] = $_POST;
-//   $_SESSION['plugin_monitoring_rules_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
-   //Html::back();
-} else if (isset($_GET['id'])
-        AND !isset($_GET['itemtype'])) {
-   $pmComponentscatalog_rule->getFromDB($_GET['id']);
    
-   $val = importArrayFromDB($pmComponentscatalog_rule->fields['condition']);
-   $nbfields = 1;
-   $nbfields = count($val['field']);
-   foreach ($val as $name=>$data) {
-      if (is_array($data)) {
-         $i =0;
-         foreach ($data as $key => $value) {
-            $val[$name."[".$key."]"] = $value;
-         }
-         unset($val[$name]);
-      }
+   if (isset($_SESSION['plugin_fusioninventory_dynamicgroup'])) {
+      unset($_SESSION['plugin_fusioninventory_dynamicgroup']);
    }
-   $_POST = $val;
-   $_POST["glpisearchcount"] = $nbfields;
-   $_POST['id'] = $_GET['id'];
-   $_POST['name'] = $pmComponentscatalog_rule->fields['name'];
-   $_POST['itemtype'] = $pmComponentscatalog_rule->fields['itemtype'];
-   $_POST['plugin_monitoring_componentscalalog_id'] = $pmComponentscatalog_rule->fields['plugin_monitoring_componentscalalog_id'];
-   $_SERVER['REQUEST_URI'] = str_replace("?id=".$_GET['id'], "", $_SERVER['REQUEST_URI']);
-   
-   
-   unset($_SESSION["glpisearchcount"][$_POST['itemtype']]);
-   unset($_SESSION["glpisearch"]);
+   $_SESSION['plugin_fusioninventory_dynamicgroup'] = $_GET;
+   $_SESSION['plugin_fusioninventory_dynamicgroup_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
+   Html::back();
 }
 
 if (isset($_POST['name'])) {      
