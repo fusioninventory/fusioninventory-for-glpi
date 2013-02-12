@@ -138,10 +138,10 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          echo "<td class='control'>";
          echo "<input type='checkbox' name='check_entries[]' value='$i' />";
          echo "</td>";
-         echo "<td title='".$check['type']."'><a class='edit' onclick='edit_check($i)'>".
-            $check['type']."</a></td>";
-         echo "<td title='".$check['path']."'>".$check['path']."</td>";
-         echo "<td class='word-wrap' title='".$check['value']."'>".$check['value']."</td>";
+         echo "<td>";
+         echo "<a class='edit' onclick='edit_check($i)'>".$check['type']."</a><br />";
+         echo $check['path']." : ".$check['value'];
+         echo "</td>";
          echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
             "'><div class='drag row'></div></td>";
          echo "</tr>";

@@ -156,27 +156,32 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          echo "</td>";
          $keys = array_keys($action);
          $action_type = array_shift($keys);
-         echo "<td title='$action_type'>";
-         echo "<a class='edit' onclick='edit_action($i)'>$action_type</a>";
-         if (isset($action[$action_type]['retChecks'])) {
-            echo "<a title='".__('return codes saved for this command', 'fusioninventory').
-               "' class='more'>...</a>";
-         }
-         echo "</td>";
+         echo "<td>";
+         echo "<a class='edit' onclick='edit_action($i)'>$action_type</a><br />";
+         
          foreach ($action[$action_type] as $key => $value) {
-            echo "<td>";
             if (is_array($value) ) {
                if ($key === "list") {
                   foreach($value as $list) {
                      echo $list;
-                     echo "</td><td>";
+                     echo " * ";
                   }
                } 
             } else {
-               echo "$key : $value";
+               echo "$key : $value * ";
             }
-            echo "</td>";
          }
+         if (isset($action[$action_type]['retChecks'])) {
+            echo "<ul class='retChecks'>";
+            foreach ($action[$action_type]['retChecks'] as $retCheck) {
+               echo "<li>";
+               echo $retCheck['type']." : ".array_shift($retCheck['value']);
+               echo "</li>";
+            }
+            echo "</ul>";
+         }
+         echo "</td>";
+         echo "</td>";
          echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
             "'><div class='drag row'></div></td>";
          echo "</tr>";

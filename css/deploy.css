@@ -53,21 +53,27 @@ table.package_item_list .more {
    cursor: help;
 }
 table.package_item_list .filename {
-  width:200px;
-  min-width:200px;
-  white-space: normal;
+   width:200px;
+   min-width:200px;
+   white-space: normal;
+}
+table.package_item_list ul.retChecks {
+   list-style-type: disc;
+   padding-left:20px;
+}
+
+table.package_item_list ul.retChecks li {
+   margin-left:3px;
 }
 a.edit {
-  cursor: pointer;
+   cursor: pointer;
 }
 
 
 /* drag and drop element */
 .drag {
    background-image: url("../pics/drag.png");
-   position: relative;
    cursor: move;
-   /*z-index: 10;*/
    width: 12px;
    height: 10px;
    border:0 !important;
