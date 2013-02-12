@@ -297,7 +297,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       if (isset($params['node'])) {
 
          //root node
-         $dir = "/var/www/glpi"; // TODO : add config option as 0.83 version
+         $pfConfig = new PluginFusioninventoryConfig();
+         $dir = $pfConfig->getValue('server_upload_path');
 
          // leaf node
          if ($params['node'] != -1) {
@@ -373,12 +374,122 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    
    
    static function add_item($params) {
-      echo "file::add_item";
-      Html::printCleanArray($params);
-      Html::printCleanArray($_FILES);
-      exit;
+      switch ($params['deploy_filetype']) {
+         case 'Server':
+            self::uploadFileFromServer($params);
+            break;
+         default:
+            self::uploadFileFromComputer($params);
+      }
    }
 
+   static function uploadFileFromComputer($params) {
+      if (isset($params["orders_id"])) {
+
+         //file uploaded?
+         if (isset($_FILES['file']['tmp_name']) and !empty($_FILES['file']['tmp_name'])){
+            $file_tmp_name = $_FILES['file']['tmp_name'];
+         } 
+         if (isset($_FILES['file']['name']) 
+                 && !empty($_FILES['file']['name'])) {
+            $filename = $_FILES['file']['name'];
+         }
+
+         //file upload errors
+         if (isset($_FILES['file']['error'])) {
+            $error = true;
+            switch ($_FILES['file']['error']) {
+               case UPLOAD_ERR_INI_SIZE:
+               case UPLOAD_ERR_FORM_SIZE:
+                  $msg .= __("Transfer error: the file size is too big", 'fusioninventory');
+                  break;
+               case UPLOAD_ERR_PARTIAL:
+                  $msg .= __("he uploaded file was only partially uploaded", 'fusioninventory');
+                  break;
+               case UPLOAD_ERR_NO_FILE:
+                  $msg .= __("No file was uploaded", 'fusioninventory');
+                  break;
+               case UPLOAD_ERR_NO_TMP_DIR:
+                  $msg .= __("Missing a temporary folder", 'fusioninventory');
+                  break;
+               case UPLOAD_ERR_CANT_WRITE:
+                  $msg .= __("Failed to write file to disk", 'fusioninventory');
+                  break;
+               case UPLOAD_ERR_CANT_WRITE:
+                  $msg .= __("PHP extension stopped the file upload", 'fusioninventory');
+                  break;
+               case UPLOAD_ERR_OK:
+                  //no error, continue
+                  $error = false;
+            }
+            if ($error) {
+               Session::addMessageAfterRedirect($msg);
+               return false;
+            }
+         }
+
+         //prepare file data for insertion in repo
+         $data = array(
+            'file_tmp_name' => $file_tmp_name,
+            'mime_type' => $_FILES['file']['type'],
+            'filesize' => $_FILES['file']['size'],
+            'filename' => $filename,
+            'is_p2p' => isset($_POST['p2p']) ? 1 : 0,
+            'uncompress' => isset($_POST['uncompress']) ? 1 : 0,
+            'p2p-retention-duration' => is_numeric($params['p2p-retention-duration']) ? 
+               $params['p2p-retention-duration'] : 0,
+            'orders_id' => $params['orders_id']
+         );
+
+         //Add file in repo
+         if ($filename && self::addFileInRepo($data)) {
+            Session::addMessageAfterRedirect(__('File saved!', 'fusioninventory'));
+            return true;
+         } else {
+            Session::addMessageAfterRedirect(__('Failed to copy file', 'fusioninventory'));
+            return false;
+         }
+      }
+      Session::addMessageAfterRedirect(__('File missing', 'fusioninventory'));
+      return false;
+   }
+
+   static function uploadFileFromServer($params) {
+      if (preg_match('/\.\./', $params['filename'])) {
+         die;
+      }
+
+      if (isset($params["orders_id"])) {
+         $file_path = $params['filename'];
+         $filename = basename($file_path);
+         $mime_type = @mime_content_type($file_path);
+         $filesize = filesize($file_path);
+
+         //prepare file data for insertion in repo
+         $data = array(
+            'file_tmp_name' => $file_path,
+            'mime_type' => $mime_type,
+            'filesize' => $filesize,
+            'filename' => $filename,
+            'is_p2p' => isset($_POST['p2p']) ? 1 : 0,
+            'uncompress' => isset($_POST['uncompress']) ? 1 : 0,
+            'p2p-retention-duration' => is_numeric($_POST['p2p-retention-duration']) ? 
+               $_POST['p2p-retention-duration'] : 0,
+            'orders_id' => $params['orders_id']
+         );
+
+         //Add file in repo
+         if ($filename && self::addFileInRepo($data)) {
+            Session::addMessageAfterRedirect(__('File saved!', 'fusioninventory'));
+            return true;
+         } else {
+            Session::addMessageAfterRedirect(__('Failed to copy file', 'fusioninventory'));
+            return false;
+         }
+      }
+      Session::addMessageAfterRedirect(__('File missing', 'fusioninventory'));
+      return false;
+   }
    
    
    static function remove_item($params) {
@@ -444,44 +555,38 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    
    
-   function addFileInRepo ($params) {
+   static function addFileInRepo ($params) {
       set_time_limit(600);
+
+      $deployFile = new self;
 
       $pfDeployFilepart = new PluginFusioninventoryDeployFilepart();
 
       $filename = addslashes($params['filename']);
       $file_tmp_name = $params['file_tmp_name'];
-      $filesize = $params['filesize'];
-      $is_p2p = $params['is_p2p'];
-      $uncompress = $params['uncompress'];
-      $p2p_retention_days = $params['p2p_retention_days'];
-      $order_id = $params['order_id'];
-      $mime_type  = $params['mime_type'];
 
       $maxPartSize = 1024*1024;
-      $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
-      $tmpFilepart = tempnam(GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/", "filestore");
+      $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
+      $tmpFilepart = tempnam(GLPI_PLUGIN_DOC_DIR."/fusioninventory/", "filestore");
 
       $sha512 = hash_file('sha512', $file_tmp_name);
       $short_sha512 = substr($sha512, 0, 6);
 
-      if($this->checkPresenceFile($sha512, $order_id)) {
+      if($deployFile->checkPresenceFile($sha512, $params['orders_id'])) {
          print "{\"success\": \"false\", \"file\": \"{".
             $filename."}\", \"msg\": \"File already exists.\"}";
          exit;
       }
 
-      $data = array(
+      
+      $new_entry = array(
          'name' => $filename,
-         'is_p2p' => $is_p2p,
-         'mimetype' => $mime_type,
-         'filesize' => $filesize,
-         'create_date' => date('Y-m-d H:i:s'),
-         'p2p_retention_days' => $p2p_retention_days,
-         'uncompress' => $uncompress,
-         'plugin_fusioninventory_deployorders_id' => $order_id
+         'is_p2p' => $params['is_p2p'],
+         'mimetype' => $params['mime_type'],
+         'filesize' => $params['filesize'],
+         'p2p-retention-duration' => $params['p2p-retention-duration'],
+         'uncompress' => $params['uncompress'],
       );
-      $file_id = $this->add($data);
 
       $fdIn = fopen ( $file_tmp_name, 'rb' );
       if (!$fdIn) {
@@ -489,20 +594,13 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       }
 
       $fdPart = NULL;
+      $multiparts = array();
       do {
          clearstatcache();
          if (file_exists($tmpFilepart)) {
             if (feof($fdIn) || filesize($tmpFilepart)>= $maxPartSize) {
-               $part_sha512 = $this->registerFilepart ($repoPath, $tmpFilepart);
-               $part_short_sha512 = substr($part_sha512, 0, 6);
-               $pfDeployFilepart->add(
-                  array(
-                     'sha512'                        => $part_sha512,
-                     'shortsha512'                   => $part_short_sha512,
-                     'plugin_fusioninventory_deployorders_id' => $order_id,
-                     'plugin_fusioninventory_deployfiles_id'  => $file_id
-                  )
-               );
+               $part_sha512 = $deployFile->registerFilepart ($repoPath, $tmpFilepart);
+               $multiparts[] = $part_sha512;
                unlink($tmpFilepart);
             }
          }
@@ -517,13 +615,17 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       } while (1);
 
+      $new_entry['multiparts'] = $multiparts;
 
-      $this->update(array(
-         'id' => $file_id,
-         'sha512' => $sha512,
-         'shortsha512' => $short_sha512,
-      ));
-      return $file_id;
+      //get current order json
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
+
+      //add new entry
+      $datas['associatedFiles'][$sha512] = $new_entry;
+      $datas['jobs']['associatedFiles'][] = $sha512;
+
+      //update order
+      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
    
@@ -602,143 +704,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
          ." : ".min($max_upload, $max_post, $memory_limit).__('Mio', 'fusioninventory');
 
-   }
-
-   
-   
-   function uploadFile() {
-
-      //if file sent is from server
-      if (isset($_POST['itemtype']) && $_POST['itemtype'] == 'fileserver') {
-         return $this->uploadFileFromServer();
-      }
-
-
-      if (isset ($_POST["id"]) and !$_POST['id']) {
-
-         //file uploaded?
-         $filename = NULL;
-         $file_tmp_name = NULL;
-         if (isset($_FILES['file']['tmp_name']) and !empty($_FILES['file']['tmp_name'])){
-            $file_tmp_name = $_FILES['file']['tmp_name'];
-         } /*elseif(isset($_POST['url']) and !empty($_POST['url'])) {
-            $filename = $_POST['filename'];
-         }*/
-         if (isset($_FILES['file']['name']) 
-                 && !empty($_FILES['file']['name'])) {
-            $filename = $_FILES['file']['name'];
-         }
-
-         //file upload errors
-         if (isset($_FILES['file']['error'])) {
-            $msg = "file:'{$filename}', ";
-            $error = TRUE;
-            switch ($_FILES['file']['error']) {
-               case UPLOAD_ERR_INI_SIZE:
-               case UPLOAD_ERR_FORM_SIZE:
-                  $msg .= __("Transfer error: the file size is too big", 'fusioninventory');
-                  break;
-               case UPLOAD_ERR_PARTIAL:
-                  $msg .= __("he uploaded file was only partially uploaded", 'fusioninventory');
-                  break;
-               case UPLOAD_ERR_NO_FILE:
-                  $msg .= __("No file was uploaded", 'fusioninventory');
-                  break;
-               case UPLOAD_ERR_NO_TMP_DIR:
-                  $msg .= __("Missing a temporary folder", 'fusioninventory');
-                  break;
-               case UPLOAD_ERR_CANT_WRITE:
-                  $msg .= __("Failed to write file to disk", 'fusioninventory');
-                  break;
-               case UPLOAD_ERR_CANT_WRITE:
-                  $msg .= __("PHP extension stopped the file upload", 'fusioninventory');
-                  break;
-               case UPLOAD_ERR_OK:
-                  //no error, continue
-                  $error = FALSE;
-            }
-            if ($error) {
-               Session::addMessageAfterRedirect($msg);
-               return FALSE;
-            }
-         }
-
-         //prepare file data for insertion in repo
-         $data = array(
-            'file_tmp_name' => $file_tmp_name,
-            'mime_type' => $_FILES['file']['type'],
-            'filesize' => $_FILES['file']['size'],
-            'filename' => $filename,
-            'is_p2p' => (($_POST['p2p'] == 'true') ? 1 : 0),
-            'uncompress' => (($_POST['uncompress'] == 'true') ? 1 : 0),
-            'p2p_retention_days' => is_numeric($_POST['validity']) ? $_POST['validity'] : 0,
-            'orders_id' => $orders_id
-         );
-
-         //Add file in repo
-         if ($filename && $this->addFileInRepo($data)) {
-            $msg = "file:'{$filename}', \"{".__('File saved!', 'fusioninventory')."}\"}";
-         } else {
-            $msg = "file:'{$filename}', ".__('File missing', 'fusioninventory');
-         }
-         Session::addMessageAfterRedirect($msg);
-         return TRUE;
-      }
-      Session::addMessageAfterRedirect(__('File missing', 'fusioninventory'));
-      return FALSE;
-   }
-
-   
-   
-   function uploadFileFromServer() {
-
-      $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvdeploy');
-      $pfConfig = new PluginFusioninventoryConfig;
-      $server_upload_path = $pfConfig->getValue($plugins_id, 'server_upload_path');
-
-
-      $package_id = $_GET['package_id'];
-      $render     = $_GET['render'];
-
-      if (preg_match('/\.\./', $_POST['file_server'])) {
-         die;
-      }
-
-      $render1   = PluginFusioninventoryDeployOrder::getRender($render);
-      $order_id = PluginFusioninventoryDeployOrder::getIdForPackage($package_id, $render1);
-
-      if (isset ($_POST["id"]) and !$_POST['id']) {
-         $file_path = $server_upload_path.'/'.$_POST['file_server'];
-         $filename = basename($file_path);
-         $mime_type = @mime_content_type($file_path);
-         $filesize = filesize($file_path);
-
-         //prepare file data for insertion in repo
-         $data = array(
-            'file_tmp_name' => $file_path,
-            'mime_type' => $mime_type,
-            'filesize' => $filesize,
-            'filename' => $filename,
-            'is_p2p' => (($_POST['p2p'] == 'true') ? 1 : 0),
-            'uncompress' => (($_POST['uncompress'] == 'true') ? 1 : 0),
-            'p2p_retention_days' => is_numeric($_POST['validity']) ? $_POST['validity'] : 0,
-            'order_id' => $order_id
-         );
-
-         //Add file in repo
-         if ($filename && $this->addFileInRepo($data)) {
-            print "{success:true, file:'{$filename}',".
-               "msg:\"{__('File saved!', 'fusioninventory')}\"}";
-            exit;
-         } else {
-            print "{success:false, file:'{$filename}',".
-               "msg:\"{__('Failed to copy file', 'fusioninventory')}\"}";
-            exit;
-         }
-      } print "{success:false, file:'none',msg:\"{__('File missing', 'fusioninventory')}\"}";
-   }
-
-   
+   } 
    
    static function processFilesize($filesize) {
       if ($filesize >= (1024 * 1024 * 1024)) {
