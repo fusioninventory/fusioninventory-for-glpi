@@ -119,10 +119,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                         $a_inventory['PluginFusioninventoryNetworkEquipment'], 
                         $db_networkequipment);
             $a_inventory['PluginFusioninventoryNetworkEquipment'] = $a_ret[0];
-            $db_networkequipment = $a_ret[1];
-            $input = PluginFusioninventoryToolbox::diffArray(
-                        $a_inventory['PluginFusioninventoryNetworkEquipment'], 
-                        $db_networkequipment);
+            $input = $a_inventory['PluginFusioninventoryNetworkEquipment'];
             $input['id'] = $idtmp;
             $pfNetworkEquipment->update($input);
          }

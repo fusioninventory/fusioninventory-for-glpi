@@ -113,10 +113,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
                         $a_inventory['PluginFusioninventoryPrinter'], 
                         $db_printer);
             $a_inventory['PluginFusioninventoryPrinter'] = $a_ret[0];
-            $db_printer = $a_ret[1];
-            $input = PluginFusioninventoryToolbox::diffArray(
-                        $a_inventory['PluginFusioninventoryPrinter'], 
-                        $db_printer);
+            $input = $a_inventory['PluginFusioninventoryPrinter'];
             $input['id'] = $idtmp;
             $pfPrinter->update($input);
          }
