@@ -615,10 +615,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
               "&nbsp:";
       echo "</td>";
       echo "<td colspan='2'>";
-      Dropdown::show("Transfer",
-                     array('name'=>"transfers_id_auto",
-                           'value'=>$pfConfig->getValue('transfers_id_auto'),
-                           'comment'=>0));
+      Transfer::dropdown(array('value'      => $pfConfig->getValue('transfers_id_auto'),
+                               'name'       => "transfers_id_auto",
+                               'emptylabel' => __('No automatic transfer')));
+
       echo "</td>";
       echo "</tr>";
 
