@@ -111,7 +111,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       //deploy config variables
       $input = array();
-      $input['server_upload_path'] = $root_doc.'/files/_plugins/fusioninventory/upload';
+      $input['server_upload_path'] = GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload';
       $input['alert_winpath'] = 1;
 
       foreach ($input as $key => $value) {
