@@ -86,8 +86,8 @@ class Install extends PHPUnit_Framework_TestCase {
                $DB->query("DROP TABLE ".$data[0]);
             }
          }
-
-         passthru("cd ../tools && /usr/local/bin/php -f cli_install.php");
+         
+         passthru("cd ../tools && php -f cli_install.php");
 
          Session::loadLanguage("en_GB");
 
