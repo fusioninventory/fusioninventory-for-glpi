@@ -48,8 +48,8 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
    private $oFusionInventory_printer;
 
 
-   static function getTypeName($nb=0) {
-
+   static function getTypeName() {
+      return "";
    }
 
 

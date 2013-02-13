@@ -119,10 +119,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *
     * @return value name of this itemtype
     **/
-   static function getTypeName($nb=0) {
-
+   static function getTypeName() {
       return __('General setup');
-
    }
 
 

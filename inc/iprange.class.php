@@ -48,7 +48,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
    public $dohistory = TRUE;
 
-   static function getTypeName($nb=0) {
+   static function getTypeName() {
 
       if (isset($_SERVER['HTTP_REFERER']) AND strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
 

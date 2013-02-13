@@ -49,7 +49,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    public $first_level_menu  = "plugins";
    public $second_level_menu = "fusioninventory";
 
-   static function getTypeName($nb=0) {
+   static function getTypeName() {
       return __('Authentication for remote devices (VMware)', 'fusioninventory');
    }
 

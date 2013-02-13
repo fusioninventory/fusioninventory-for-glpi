@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryInventoryComputerBatteries extends CommonDBTM {
 
-   static function getTypeName($nb=0) {
+   static function getTypeName() {
       return __('Batterie', 'fusioninventory');
    }
 

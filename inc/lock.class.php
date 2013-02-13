@@ -49,9 +49,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
 
    static function getTypeName($nb=0) {
-
-      return _n('Lock', 'Locks', 2, 'fusioninventory');
-
+      return _n('Lock', 'Locks', $nb, 'fusioninventory');
    }
 
 

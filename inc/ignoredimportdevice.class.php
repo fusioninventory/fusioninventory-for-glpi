@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
 
-   static function getTypeName($nb=0) {
+   static function getTypeName() {
       echo __('Equipment ignored on import', 'fusioninventory');
    }
 

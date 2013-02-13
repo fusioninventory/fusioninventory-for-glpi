@@ -47,8 +47,8 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
 
-   static function getTypeName($nb=0) {
-
+   static function getTypeName() {
+      return "";
    }
 
    static function canCreate() {

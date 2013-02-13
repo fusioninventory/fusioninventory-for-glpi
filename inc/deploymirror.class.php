@@ -48,7 +48,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
    public $dohistory = TRUE;
 
-   static function getTypeName($nb=0) {
+   static function getTypeName() {
       return __('Mirror servers', 'fusioninventory');
    }
 

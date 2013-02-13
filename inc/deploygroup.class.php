@@ -49,7 +49,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    protected $static_group_types = array('Computer');
    public $dohistory = TRUE;
 
-   static function getTypeName($nb=0) {
+   static function getTypeName() {
 
       if ($nb>1) {
          return __('Task');
