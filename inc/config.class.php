@@ -108,6 +108,15 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       foreach ($input as $key => $value) {
          $this->addValues(array($key => $value));
       }
+
+      //deploy config variables
+      $input = array();
+      $input['server_upload_path'] = $root_doc.'/files/_plugins/fusioninventory/upload';
+      $input['alert_winpath'] = 1;
+
+      foreach ($input as $key => $value) {
+         $this->addValues(array($key => $value));
+      }
       
       
    }
@@ -202,6 +211,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          
          $array_ret[2] = __('Network Inventory', 'fusioninventory');
 
+         $array_ret[3] = __('Package management', 'fusioninventory');
+
          return $array_ret;
       }
       return '';
@@ -226,6 +237,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          $item->showFormInventory();
       } else if ($tabnum == '2') {
          $item->showFormNetworkInventory();
+      } else if ($tabnum == '3') {
+         $item->showFormDeploy();
       }
       return TRUE;
    }
@@ -679,6 +692,39 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
       $pfNetworkporttype->showNetworkporttype();
       
+      return TRUE;
+   }
+
+   /**
+   * Display form for config tab in fusioninventory config form
+   *
+   * @param $options array
+   *
+   * @return bool TRUE if form is ok
+   *
+   **/
+   static function showFormDeploy($options=array()) {
+      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig->fields['id'] = 1;
+      $pfConfig->showFormHeader($options);
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Root folder for sending files from server', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td>";
+      echo "<input type='text' name='server_upload_path' value='".
+         $pfConfig->getValue('server_upload_path')."' size='60' />";
+      echo "</td>";
+      echo "<td colspan='2'></td>";;
+      echo "</tr>";
+
+      if (PluginFusioninventoryProfile::haveRight("fusioninventory", "configuration", "w")) {
+         echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
+               <input class='submit' type='submit' name='plugin_fusioninventory_deployconfig_set'
+                      value='" . __('Update') . "'></td></tr>";
+      }
+      $pfConfig->showFormButtons($options);
+
+
       return TRUE;
    }
    

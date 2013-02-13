@@ -143,7 +143,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       if (!isset($datas['jobs']['actions']) || empty($datas['jobs']['actions'])) {
          return;
       }
-      echo "<form name='removeactions' method='post' action='deploypackage.form.php?remove_item'>";
+      echo "<form name='removeactions' method='post' action='deploypackage.form.php?remove_item' ".
+         "id='actionsList$rand'>";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployAction' />";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
       echo "<div id='drag_actions'>";
@@ -156,33 +157,40 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          echo "</td>";
          $keys = array_keys($action);
          $action_type = array_shift($keys);
-         echo "<td title='$action_type'>";
-         echo "<a class='edit' onclick='edit_action($i)'>$action_type</a>";
-         if (isset($action[$action_type]['retChecks'])) {
-            echo "<a title='".__('return codes saved for this command', 'fusioninventory').
-               "' class='more'>...</a>";
-         }
-         echo "</td>";
+         echo "<td>";
+         echo "<a class='edit' onclick='edit_action($i)'>$action_type</a><br />";
+         
          foreach ($action[$action_type] as $key => $value) {
-            echo "<td>";
             if (is_array($value) ) {
                if ($key === "list") {
                   foreach($value as $list) {
                      echo $list;
-                     echo "</td><td>";
+                     echo " ";
                   }
                } 
             } else {
-               echo "$key : $value";
+               echo "$key $value &nbsp;&nbsp;&nbsp;";
             }
-            echo "</td>";
          }
+         if (isset($action[$action_type]['retChecks'])) {
+            echo "<br />".__("Command checks", 'fusioninventory')." : <ul class='retChecks'>";
+            foreach ($action[$action_type]['retChecks'] as $retCheck) {
+               echo "<li>";
+               echo $retCheck['type']." <b>=</b> ".array_shift($retCheck['value']);
+               echo "</li>";
+            }
+            echo "</ul>";
+         }
+         echo "</td>";
+         echo "</td>";
          echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
             "'><div class='drag row'></div></td>";
          echo "</tr>";
          $i++;
       }
-      echo "<tr><td colspan='2'>";
+      echo "<tr><td>";
+      Html::checkAllAsCheckbox("actionsList$rand", mt_rand());
+      echo "</td><td colspan='2'>";
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       echo "</td></tr>";
@@ -491,6 +499,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
    
    
    static function remove_item($params) {
+      if (!isset($params['action_entries'])) return false;
+      
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 

@@ -249,22 +249,23 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       
       echo "<table class='tab_cadre_fixe' id='package'>";
-      echo "<tr>";
+
+      $multipart = "";
       foreach ($subtypes as $subtype) {
+
+         echo "<tr>";
          echo "<th>";
          echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/$subtype.png' />";
          echo "&nbsp;".$subtype;
          self::plusButton($subtype."s_block$rand");
          echo "</th>";
-      }
-      echo "</tr>";
+         echo "</tr>";
 
-      echo "<tr>";
-      $multipart = "";
-      foreach ($subtypes as $subtype) {
+
          if ($subtype == "file") {
             $multipart = "enctype='multipart/form-data'";
          }
+         echo "<tr>";
          echo "<td style='vertical-align:top'>";
          echo "<form name='add$subtype' method='post' ".$multipart.
             " action='deploypackage.form.php'>";
@@ -274,8 +275,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          $classname = "PluginFusioninventoryDeploy".ucfirst($subtype);
          $classname::displayForm($orders_id, $datas, $rand);
          echo "</td>";
+         echo "</tr>";
       }
-      echo "</tr>";
       echo "</table>";
 
       //init drag and drop on subtype table
@@ -291,9 +292,15 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
          // === debug ===
          echo "<span class='red'><b>DEBUG</b></span>";
-         echo "<textarea cols='132' rows='25' style='border:0'>";
+         echo "<form action='".$CFG_GLPI["root_doc"].
+         "/plugins/fusioninventory/front/deploypackage.form.php' method='POST'>";
+         echo "<textarea cols='132' rows='25' style='border:0' name='json'>";
          echo json_encode($datas, JSON_PRETTY_PRINT);
          echo "</textarea>";
+         echo "<input type='hidden' name='id' value='$orders_id' />";
+         echo "<input type='submit' name='update_json' value=\"".
+            _sx('button','Save')."\" class='submit'>";
+         Html::closeForm();
          // === debug ===
       }
    }
