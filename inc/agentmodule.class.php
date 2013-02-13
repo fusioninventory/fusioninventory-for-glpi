@@ -55,7 +55,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     *
     * @return varchar name of the tab(s) to display
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item) {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
          return __('Agents modules', 'fusioninventory');
@@ -76,7 +76,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
     *
     * @return boolean TRUE
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item) {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
          $pfAgentmodule = new self();

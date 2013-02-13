@@ -57,7 +57,7 @@ class PluginFusioninventoryConstructdevice_User extends CommonDBTM {
 
    
 
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item) {
       if ($this->canView()) {
          return self::createTabEntry('SNMP model tool account');
       }
@@ -66,7 +66,7 @@ class PluginFusioninventoryConstructdevice_User extends CommonDBTM {
 
    
    
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1) {
 
       if ($item->getID() > 0) {
          $pfConstructdevice_User = new self();

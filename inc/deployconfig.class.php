@@ -69,7 +69,7 @@ class PluginFusioninventoryDeployConfig extends CommonDBTM {
 
    
    
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item) {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
          if ($_SESSION['glpishow_count_on_tabs']) {
@@ -82,7 +82,7 @@ class PluginFusioninventoryDeployConfig extends CommonDBTM {
 
    
    
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item) {
 
       if ($item->getType()=='PluginFusioninventoryConfig') {
          $pfConfig = new self();
