@@ -997,9 +997,7 @@ class PluginFusioninventoryFormatconvert {
    function computerSoftwareTransformation($a_inventory, $entities_id) {
       
       $entities_id_software = Entity::getUsedConfig('entities_id_software', 
-                                                    $_SESSION["plugin_fusinvinventory_entity"], 
-                                                    '', 
-                                                    TRUE);
+                                                    $_SESSION["plugin_fusinvinventory_entity"]);
       
       $nb_RuleDictionnarySoftware = countElementsInTable("glpi_rules", 
                                                          "`sub_type`='RuleDictionnarySoftware'
