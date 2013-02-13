@@ -119,10 +119,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                         $a_inventory['PluginFusioninventoryNetworkEquipment'], 
                         $db_networkequipment);
             $a_inventory['PluginFusioninventoryNetworkEquipment'] = $a_ret[0];
-            $db_networkequipment = $a_ret[1];
-            $input = PluginFusioninventoryToolbox::diffArray(
-                        $a_inventory['PluginFusioninventoryNetworkEquipment'], 
-                        $db_networkequipment);
+            $input = $a_inventory['PluginFusioninventoryNetworkEquipment'];
             $input['id'] = $idtmp;
             $pfNetworkEquipment->update($input);
          }
@@ -527,8 +524,79 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
    
    
    
-   function importPortVlan() {
+   function importPortVlan($a_vlans, $networkports_id) {
+      global $DB;
       
+      $networkPort_Vlan = new NetworkPort_Vlan();
+      
+      $db_vlans = array();
+      $query = "SELECT `glpi_networkports_vlans`.`id`, `glpi_vlans`.`name`, `glpi_vlans`.`tag`
+                FROM `glpi_networkports_vlans`
+                LEFT JOIN `glpi_vlans`
+                  ON `vlans_id`=`glpi_vlans`.`id`
+                WHERE `networkports_id` = '$networkports_id'";
+      foreach ($DB->request($query) as $data) {
+         $db_vlans[$data['name']."$$$$".$data['tag']] = $data['id'];
+      }
+      
+      if (count($db_vlans) == 0) {
+         foreach ($a_vlans as $a_vlan) {
+            $this->addVlan($a_vlan, $networkports_id);
+         }
+      } else {
+         foreach ($a_vlans as $key => $arrays) {
+            foreach ($db_vlans as $keydb => $arraydb) {
+               if ($arrays['name']."$$$$".$arrays['tag'] == $keydb) {
+                  unset($a_vlans[$key]);
+                  unset($db_vlans[$keydb]);
+                  break;
+               }
+            }
+         }
+
+         if (count($a_vlans) == 0
+            AND count($db_vlans) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_vlans) != 0) {
+               // Delete vlan in DB
+               foreach ($db_vlans as $idtmp => $id) {
+                  $networkPort_Vlan->delete(array('id'=>$id));
+               }
+            }
+            if (count($a_vlans) != 0) {
+               foreach($a_vlans as $a_vlan) {
+                  $this->addVlan($a_vlan, $networkports_id);
+               }
+            }
+         }
+      }
+   }
+   
+   
+   
+   function addVlan($a_vlan, $networkports_id) {
+      
+      $networkPort_Vlan = new NetworkPort_Vlan();
+      $vlan = new Vlan();
+      
+      $db_vlans = $vlan->find("`tag`='".$a_vlan['tag']."' AND `name`='".$a_vlan['name']."'",
+                             "", 1);
+      $vlans_id = 0;
+      if (count($db_vlans) > 0) {
+         $db_vlan = current($db_vlans);
+         $vlans_id = $db_vlan['id'];
+      } else {
+         $input = array();
+         $input['tag'] = $a_vlan['tag'];
+         $input['name'] = $a_vlan['name'];
+         $vlans_id = $vlan->add($input);
+      }
+
+      $input = array();
+      $input['networkports_id'] = $networkports_id;
+      $input['vlans_id'] = $vlans_id;
+      $networkPort_Vlan->add($input);
    }
 }
 

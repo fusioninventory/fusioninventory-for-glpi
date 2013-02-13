@@ -226,6 +226,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
    `sysdescr` text DEFAULT NULL,
    `plugin_fusioninventory_snmpmodels_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+   `serialized_inventory` longblob,
    PRIMARY KEY (`id`),
    KEY `entities_id` (`entities_id`),
    KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`),
@@ -662,6 +663,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkequipments` (
    `memory` int(11) NOT NULL DEFAULT '0',
    `last_fusioninventory_update` datetime DEFAULT NULL,
    `last_PID_update` int(11) NOT NULL DEFAULT '0',
+   `serialized_inventory` longblob,
    PRIMARY KEY (`id`),
    KEY `networkequipments_id` (`networkequipments_id`),
    KEY `plugin_fusioninventory_snmpmodels_id` (`plugin_fusioninventory_snmpmodels_id`,`plugin_fusioninventory_configsecurities_id`)
@@ -691,6 +693,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_printers` (
    `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
    `frequence_days` int(5) NOT NULL DEFAULT '1',
    `last_fusioninventory_update` datetime DEFAULT NULL,
+   `serialized_inventory` longblob,
    PRIMARY KEY (`id`),
    UNIQUE KEY `unicity` (`printers_id`),
    KEY `plugin_fusioninventory_configsecurities_id` (`plugin_fusioninventory_configsecurities_id`),

@@ -1038,6 +1038,48 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       }
       echo "</tr>";
    }
+      
+   
+   
+   function displaySerializedInventory($items_id) {
+      global $CFG_GLPI;
+      
+      $a_networkequipmentextend = current($this->find("`networkequipments_id`='".$items_id."'",
+                                               "", 1));
+      
+      $this->getFromDB($a_networkequipmentextend['id']);
+      
+      $data = unserialize(gzuncompress($this->fields['serialized_inventory']));
+      
+      echo "<br/>";
+      
+      echo "<table class='tab_cadre_fixe'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>";
+      echo __('Last inventory', 'fusioninventory');
+      echo " (".Html::convDateTime($this->fields['last_fusioninventory_update']).")";
+      echo "</th>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
+      echo "<th>";
+      echo __('Download', 'fusioninventory');
+      echo "</th>";
+      echo "<td>";
+      echo "<a href='".$CFG_GLPI['root_doc'].
+              "/plugins/fusioninventory/front/send_inventory.php".
+              "?itemtype=PluginFusioninventoryNetworkEquipment".
+              "&function=sendSerializedInventory&items_id=".$a_networkequipmentextend['id'].
+              "&filename=NetworkEquipment-".$items_id.".json'".
+              "target='_blank'>PHP Array</a> / <a href=''>XML</a>";
+      echo "</td>";
+      echo "</tr>";
+      
+      PluginFusioninventoryToolbox::displaySerializedValues($data);
+      
+      echo "</table>";
+   }
 }
 
 ?>

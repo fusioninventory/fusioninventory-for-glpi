@@ -262,15 +262,23 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
       $errors='';
       $this->deviceId=$items_id;
+      
+                  
+      $serialized = gzcompress(serialize($a_inventory));
+      
       switch ($itemtype) {
 
          case 'Printer':
-            $pfiPrinterLib = new PluginFusioninventoryInventoryPrinterLib();
+            $pfiPrinterLib = new PluginFusioninventoryInventoryPrinterLib();  
+            $a_inventory['PluginFusioninventoryPrinter']['serialized_inventory'] = 
+                        Toolbox::addslashes_deep($serialized);
             $pfiPrinterLib->updatePrinter($a_inventory, $items_id);
             break;
 
          case 'NetworkEquipment':
-            $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+            $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib(); 
+            $a_inventory['PluginFusioninventoryNetworkEquipment']['serialized_inventory'] = 
+                        Toolbox::addslashes_deep($serialized);
             $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $items_id);
             break;
 
@@ -278,232 +286,6 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             $errors.=__('Unattended element in', 'fusioninventory').' TYPE : '
                               .$a_inventory['itemtype']."\n";
       }
-   }
-
-
-
-   /**
-    * Import PORTS
-    *
-    * @param $p_ports PORTS code to import
-    *
-    * @return errors string to be alimented if import ko / '' if ok
-    **/
-   function importPorts($p_ports) {
-
-      PluginFusioninventoryCommunication::addLog(
-              'Function PluginFusioninventoryCommunicationNetworkInventory->importPorts().');
-      $errors='';
-      if (isset($p_ports['PORT'])) {
-         $a_ports = array();
-         if (is_int(key($p_ports['PORT']))) {
-            $a_ports = $p_ports['PORT'];
-         } else {
-            $a_ports[] = $p_ports['PORT'];
-         }
-         if ($this->type == "Printer") {
-            foreach ($a_ports as $a_port) {
-               $errors .= $this->importPortPrinter($a_port);
-            }
-         }
-      }
-      // Remove ports may not in XML and must be deleted in GLPI DB
-      $networkPort = new NetworkPort();
-      $a_portsDB = $networkPort->find("`itemtype` = '".$this->type."'
-                                       AND `items_id`='".$this->deviceId."'");
-      foreach ($a_portsDB as $data) {
-         if (!isset($this->a_ports[$data['id']])) {
-            $networkPort->delete($data);
-         }
-      }
-      return $errors;
-   }
-
-
-
-   /**
-    * Import PORT Printer
-    *
-    * @param $p_port PORT code to import
-    *
-    * @return errors string to be alimented if import ko / '' if ok
-    **/
-   function importPortPrinter($p_port) {
-
-      $errors='';
-      $networkPort = new NetworkPort();
-      $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
-      $ifType = $p_port['IFTYPE'];
-      $portDB = $networkPort->getEmpty();
-      $portModif = array();
-      if ($pfNetworkporttype->isImportType($ifType)) { // not virtual port
-         $a_ports = $networkPort->find("`itemtype`='Printer'
-                                          AND `items_id`='".$this->deviceId."'
-                                          AND `mac`='".$p_port['MAC']."'",
-                                       "",
-                                       1);
-         if (count($a_ports) == '0'
-                 AND $p_port['IP'] != '') {
-            $a_ports = $networkPort->find("`itemtype`='Printer'
-                                             AND `items_id`='".$this->deviceId."'
-                                             AND `ip`='".$p_port['IP']."'",
-                                          "",
-                                          1);
-         }
-         if (count($a_ports) > 0) {
-            $portDB = current($a_ports);
-         }
-         if ($portDB['entities_id'] != $this->ptd->fields['entities_id']) {
-            $portModif['entities_id'] = $this->ptd->fields['entities_id'];
-         }
-         foreach ($p_port as $name=>$child) {
-            switch ($name) {
-
-               case 'IFNAME':
-                  if ($portDB['name'] != (string)$child) {
-                     $portModif['name'] = (string)$child;
-                  }
-                  break;
-
-               case 'MAC':
-                  if ($portDB['mac'] != (string)$child) {
-                     $portModif['mac'] = (string)$child;
-                  }
-                  break;
-
-               case 'IP':
-                  if ($portDB['ip'] != (string)$child) {
-                     $portModif['ip'] = (string)$child;
-                  }
-                  break;
-
-               case 'IFNUMBER':
-                  if ($portDB['logical_number'] != (string)$child) {
-                     $portModif['logical_number'] = (string)$child;
-                  }
-                  break;
-
-               case 'IFTYPE': // already managed
-                  break;
-
-               default:
-                  $errors.=__('Unattended element in', 'fusioninventory').' PORT : '.$name."\n";
-            }
-         }
-         // Update
-         if (count($portDB) > 0 && $portDB['id'] > 0) {
-            $portModif['id'] = $portDB['id'];
-            $networkPort->update($portModif);
-            $this->a_ports[$portDB['id']] = $portDB['id'];
-         } else {
-            $portModif['items_id'] = $this->deviceId;
-            $portModif['itemtype'] = 'Printer';
-            $newID = $networkPort->add($portModif);
-            $this->a_ports[$newID] = $newID;
-         }
-      }
-      return $errors;
-   }
-
-
-   /**
-    * Import VLANS
-    *@param $p_vlans VLANS code to import
-    *@param $pfNetworkPort Port object to connect
-    *
-    *@return errors string to be alimented if import ko / '' if ok
-    **/
-   function importVlans($p_vlans, $pfNetworkPort) {
-
-      $errors='';
-      foreach ($p_vlans as $childname=>$child) {
-         switch ($childname) {
-
-            case 'VLAN' :
-               $errors.=$this->importVlan($child, $pfNetworkPort);
-               break;
-
-            default :
-               $errors .= __('Unattended element in', 'fusioninventory').' VLANS : '.
-                          $child->getName()."\n";
-
-         }
-      }
-      return $errors;
-   }
-
-
-
-   /**
-    * Import VLAN
-    *@param $p_vlan VLAN code to import
-    *@param $p_oPort Port object to connect
-    *@return errors string to be alimented if import ko / '' if ok
-    **/
-   function importVlan($p_vlan, $pfNetworkPort) {
-
-      $errors='';
-      $number='';
-      $name='';
-      foreach ($p_vlan as $childname=>$child) {
-         switch ($childname) {
-
-            case 'NUMBER':
-               $number=$child;
-               break;
-
-            case 'NAME':
-               $name=$child;
-               break;
-
-            default:
-               $errors.=__('Unattended element in', 'fusioninventory').' VLAN : '.$childname."\n";
-
-         }
-      }
-      $pfNetworkPort->addVlan($number, $name);
-      return $errors;
-   }
-
-
-
-   /**
-    * Get connection IP
-    *
-    *@param $p_port PORT code to import
-    *@return first connection IP or ''
-    **/
-   function getConnectionIP($p_port) {
-      foreach ($p_port->children() as $connectionsName=>$connectionsChild) {
-         switch ($connectionsName) {
-
-            case 'CONNECTIONS':
-               foreach ($connectionsChild->children() as $connectionName=>$connectionChild) {
-
-                  switch ($connectionName) {
-
-                     case 'CONNECTION':
-                        foreach ($connectionChild->children() as $ipName=>$ipChild) {
-
-                           switch ($ipName) {
-
-                              case 'IP':
-                                 if ($ipChild != '') {
-                                    return $ipChild;
-                                 }
-                                 break;
-
-                           }
-                        }
-                        break;
-
-                  }
-               }
-               break;
-
-         }
-      }
-      return '';
    }
 
 
@@ -709,8 +491,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             $input['itemtype'] = $a_inventory['itemtype'];
          }
          // TODO : add import ports
-         PluginFusioninventoryUnknownDevice::writeXML($items_id, 
-                                                      serialize($_SESSION['SOURCE_XMLDEVICE']));
+         PluginFusioninventoryToolbox::writeXML($items_id, 
+                                                serialize($_SESSION['SOURCE_XMLDEVICE']),
+                                                'PluginFusioninventoryUnknownDevice');
          $class->update($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
             '[==detail==] ==updatetheitem== Update '.

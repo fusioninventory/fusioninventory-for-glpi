@@ -50,6 +50,9 @@ class PluginFusioninventoryFormatconvert {
    
    
    static function XMLtoArray($xml) {
+      global $PLUGIN_FUSIONINVENTORY_XML;
+      
+      $PLUGIN_FUSIONINVENTORY_XML = $xml;
       $datainventory = json_decode(json_encode((array)$xml), TRUE);
       if (isset($datainventory['CONTENT']['ENVS'])) {
          unset($datainventory['CONTENT']['ENVS']);
@@ -997,9 +1000,7 @@ class PluginFusioninventoryFormatconvert {
    function computerSoftwareTransformation($a_inventory, $entities_id) {
       
       $entities_id_software = Entity::getUsedConfig('entities_id_software', 
-                                                    $_SESSION["plugin_fusinvinventory_entity"], 
-                                                    '', 
-                                                    TRUE);
+                                                    $_SESSION["plugin_fusinvinventory_entity"]);
       
       $nb_RuleDictionnarySoftware = countElementsInTable("glpi_rules", 
                                                          "`sub_type`='RuleDictionnarySoftware'

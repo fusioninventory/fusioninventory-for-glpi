@@ -291,6 +291,35 @@ class PluginFusioninventoryToolbox {
    
    
    /**
+   * Write XML in a folder from an inventory by agent
+   *
+   * @param $items_id integer id of the unknown device
+   * @param $xml value xml informations (with XML structure)
+   *
+   * @return nothing
+   *
+   **/
+   static function writeXML($items_id, $xml, $itemtype) {
+
+      $folder = substr($items_id, 0, -1);
+      if (empty($folder)) {
+         $folder = '0';
+      }
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype)) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype);
+      }
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder)) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder);
+      }
+      $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder."/".
+                           $items_id, 'w');
+      fwrite($fileopen, $xml);
+      fclose($fileopen);
+   }
+   
+   
+   
+   /**
     * Add AUTHENTICATION string to XML node
     *
     *@param $p_sxml_node XML node to authenticate
@@ -476,6 +505,57 @@ class PluginFusioninventoryToolbox {
             <label for="no'.$rand.'">'.__('No').'</label></td>
             </tr>
             </table>';
+   }
+   
+   
+   
+   /**
+    * Display data from serialized inventory field
+    */
+   static function displaySerializedValues($array) {
+      
+      foreach ($array as $key=>$value) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<th>";
+         echo $key;
+         echo "</th>";
+         echo "<td>";
+         if (is_array($value)) {
+            echo "<table class='tab_cadre' width='100%'>";
+            PluginFusioninventoryToolbox::displaySerializedValues($value);
+            echo "</table>";
+         } else {
+            echo $value;
+         }
+         echo "</td>";
+         echo "</tr>";
+      }
+   }
+   
+   
+   
+   static function sendSerializedInventory($items_id, $itemtype) { 
+      header('Content-type: text/plain');
+
+      if (call_user_func(array($itemtype, 'canView'))) {
+         $item = new $itemtype();
+         $item->getFromDB($items_id);
+         echo gzuncompress($item->fields['serialized_inventory']);
+      } else {
+         Html::displayRightError();
+      }
+   }
+   
+
+   
+   static function sendXML($items_id, $itemtype) {    
+      if (call_user_func(array($itemtype, 'canView'))) {
+         $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$items_id);
+         echo $xml;
+      } else {
+         Html::displayRightError();
+      }
+
    }
 }
 

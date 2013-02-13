@@ -1438,6 +1438,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                                  "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                              "serialized_inventory",
+                              "longblob");
          $migration->addKey($newTable,
                             "entities_id");
          $migration->addKey($newTable,
@@ -3297,6 +3300,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                                  "last_fusioninventory_update",
                                  "datetime DEFAULT NULL");
+         $migration->addField($newTable,
+                              "serialized_inventory",
+                              "longblob");
          $migration->addKey($newTable,
                             "plugin_fusioninventory_configsecurities_id");
          $migration->addKey($newTable,
@@ -3815,6 +3821,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                                  "last_PID_update",
                                  "int(11) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
+                              "serialized_inventory",
+                              "longblob");
          $migration->addKey($newTable,
                             "networkequipments_id");
          $migration->addKey($newTable,
