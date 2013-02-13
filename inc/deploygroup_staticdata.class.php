@@ -68,7 +68,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
    
    
 
-   function getTabNameForItem(CommonGLPI $item) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->fields['type'] == 'STATIC') {
          return __('Static group', 'fusioninventory');
@@ -77,7 +77,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
 
 
    
-   static function displayTabContentForItem(CommonGLPI $item) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       $item->showStaticForm();
    }
    

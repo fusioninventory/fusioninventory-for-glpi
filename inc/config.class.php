@@ -47,17 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryConfig extends CommonDBTM {
    public $displaylist = FALSE;
 
-   /**
-    * Display name of itemtype
-    *
-    * @return value name of this itemtype
-    **/
-   static function getTypeName() {
-      return __('General setup');
-   }
-   
-   
-   
+
    /**
    * Initialize config values of fusioninventory plugin
    *
@@ -118,6 +108,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       foreach ($input as $key => $value) {
          $this->addValues(array($key => $value));
       }
+      
+      
+   }
+
+
+
+   /**
+    * Display name of itemtype
+    *
+    * @return value name of this itemtype
+    **/
+   static function getTypeName() {
+      return __('General setup');
    }
 
 
@@ -125,8 +128,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    static function canCreate() {
       return PluginFusioninventoryProfile::haveRight('configuration', 'w');
    }
-   
-   
 
    static function canView() {
       return PluginFusioninventoryProfile::haveRight('configuration', 'r');
@@ -189,7 +190,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *
     * @return varchar name of the tab(s) to display
     */
-   function getTabNameForItem(CommonGLPI $item) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getType()==__CLASS__) {
          $array_ret = array();
@@ -215,7 +216,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *
     * @return boolean TRUE
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($tabnum == '0') {
          $item->showForm();

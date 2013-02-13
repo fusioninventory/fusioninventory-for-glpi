@@ -62,10 +62,11 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
    
    
-   function defineTabs() {
+   function defineTabs($options=array()) {
 
       $ong=array();
       $ong[1]=__('Main');
+
 
       if ($this->fields['id'] > 0) {
          $ong[12]=__('Historical');
