@@ -110,8 +110,14 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo "<td class='control'><input type='checkbox' name='file_entries[]' value='$i' /></td>";
          $filename = $datas['associatedFiles'][$sha512]['name'];
          $filesize = $datas['associatedFiles'][$sha512]['filesize'];
+         $mimetype = isset($datas['associatedFiles'][$sha512]['mimetype'])?
+            str_replace('/', '__', $datas['associatedFiles'][$sha512]['mimetype']):null;
          echo "<td class='filename'>";
-         echo "<img src='".$CFG_GLPI['root_doc'].
+         if (!empty($mimetype) 
+           && file_exists(GLPI_ROOT."/plugins/fusioninventory/pics/ext/extensions/$mimetype.png")) {
+               echo "<img src='".$CFG_GLPI['root_doc'].
+                  "/plugins/fusioninventory/pics/ext/extensions/$mimetype.png' />";
+         } else echo "<img src='".$CFG_GLPI['root_doc'].
                "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
          echo"&nbsp;<a class='edit'>$filename</a>";
 
