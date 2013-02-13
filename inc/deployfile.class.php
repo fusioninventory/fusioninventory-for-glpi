@@ -418,22 +418,22 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             switch ($_FILES['file']['error']) {
                case UPLOAD_ERR_INI_SIZE:
                case UPLOAD_ERR_FORM_SIZE:
-                  $msg .= __("Transfer error: the file size is too big", 'fusioninventory');
+                  $msg = __("Transfer error: the file size is too big", 'fusioninventory');
                   break;
                case UPLOAD_ERR_PARTIAL:
-                  $msg .= __("he uploaded file was only partially uploaded", 'fusioninventory');
+                  $msg = __("he uploaded file was only partially uploaded", 'fusioninventory');
                   break;
                case UPLOAD_ERR_NO_FILE:
-                  $msg .= __("No file was uploaded", 'fusioninventory');
+                  $msg = __("No file was uploaded", 'fusioninventory');
                   break;
                case UPLOAD_ERR_NO_TMP_DIR:
-                  $msg .= __("Missing a temporary folder", 'fusioninventory');
+                  $msg = __("Missing a temporary folder", 'fusioninventory');
                   break;
                case UPLOAD_ERR_CANT_WRITE:
-                  $msg .= __("Failed to write file to disk", 'fusioninventory');
+                  $msg = __("Failed to write file to disk", 'fusioninventory');
                   break;
                case UPLOAD_ERR_CANT_WRITE:
-                  $msg .= __("PHP extension stopped the file upload", 'fusioninventory');
+                  $msg = __("PHP extension stopped the file upload", 'fusioninventory');
                   break;
                case UPLOAD_ERR_OK:
                   //no error, continue
@@ -446,7 +446,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          }
 
          //prepare file data for insertion in repo
-         $data = array(
+         $datas = array(
             'file_tmp_name' => $file_tmp_name,
             'mime_type' => $_FILES['file']['type'],
             'filesize' => $_FILES['file']['size'],
@@ -459,7 +459,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          );
 
          //Add file in repo
-         if ($filename && self::addFileInRepo($data)) {
+         if ($filename && self::addFileInRepo($datas)) {
             Session::addMessageAfterRedirect(__('File saved!', 'fusioninventory'));
             return true;
          } else {
@@ -483,7 +483,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          $filesize = filesize($file_path);
 
          //prepare file data for insertion in repo
-         $data = array(
+         $datas = array(
             'file_tmp_name' => $file_path,
             'mime_type' => $mime_type,
             'filesize' => $filesize,
@@ -496,7 +496,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          );
 
          //Add file in repo
-         if ($filename && self::addFileInRepo($data)) {
+         if ($filename && self::addFileInRepo($datas)) {
             Session::addMessageAfterRedirect(__('File saved!', 'fusioninventory'));
             return true;
          } else {
