@@ -189,7 +189,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          $i++;
       }
       echo "<tr><td>";
-      Html::checkAllAsCheckbox("actionsList$rand", $rand);
+      Html::checkAllAsCheckbox("actionsList$rand", mt_rand());
       echo "</td><td colspan='2'>";
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
@@ -499,6 +499,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
    
    
    static function remove_item($params) {
+      if (!isset($params['action_entries'])) return false;
+      
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
