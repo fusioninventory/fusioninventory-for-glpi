@@ -488,7 +488,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             'mime_type' => $mime_type,
             'filesize' => $filesize,
             'filename' => $filename,
-            'is_p2p' => isset($_POST['p2p']) ? 1 : 0,
+            'p2p' => isset($_POST['p2p']) ? 1 : 0,
             'uncompress' => isset($_POST['uncompress']) ? 1 : 0,
             'p2p-retention-duration' => is_numeric($_POST['p2p-retention-duration']) ? 
                $_POST['p2p-retention-duration'] : 0,
@@ -521,6 +521,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          //remove file
          unset($datas['jobs']['associatedFiles'][$index]);
          unset($datas['associatedFiles'][$sha512]);
+
+         //remove file in repo
+         self::removeFileInRepo($sha512, $params['orders_id']);
       }
 
       //update order
@@ -557,15 +560,17 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    
    
-   function registerFilepart ($repoPath, $filePath) {
+   function registerFilepart ($repoPath, $filePath, $skip_creation = false) {
       $sha512 = hash_file('sha512', $filePath);
 
-      $dir = $repoPath.'/'.self::getDirBySha512($sha512);
+      if (!$skip_creation) {
+         $dir = $repoPath.'/'.self::getDirBySha512($sha512);
 
-      if (!file_exists ($dir)) {
-         mkdir($dir, 0700, TRUE);
+         if (!file_exists ($dir)) {
+            mkdir($dir, 0700, TRUE);
+         }
+         copy ($filePath, $dir.'/'.$sha512.'.gz');
       }
-      copy ($filePath, $dir.'/'.$sha512.'.gz');
 
       return $sha512;
    }
@@ -577,8 +582,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       $deployFile = new self;
 
-      $pfDeployFilepart = new PluginFusioninventoryDeployFilepart();
-
       $filename = addslashes($params['filename']);
       $file_tmp_name = $params['file_tmp_name'];
 
@@ -589,16 +592,14 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $sha512 = hash_file('sha512', $file_tmp_name);
       $short_sha512 = substr($sha512, 0, 6);
 
-      if($deployFile->checkPresenceFile($sha512, $params['orders_id'])) {
-         print "{\"success\": \"false\", \"file\": \"{".
-            $filename."}\", \"msg\": \"File already exists.\"}";
-         exit;
+      $file_present_in_repo = false;
+      if($deployFile->checkPresenceFile($sha512)) {
+         $file_present_in_repo = true;
       }
-
       
       $new_entry = array(
          'name' => $filename,
-         'is_p2p' => $params['is_p2p'],
+         'p2p' => $params['p2p'],
          'mimetype' => $params['mime_type'],
          'filesize' => $params['filesize'],
          'p2p-retention-duration' => $params['p2p-retention-duration'],
@@ -607,7 +608,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       $fdIn = fopen ( $file_tmp_name, 'rb' );
       if (!$fdIn) {
-         return;
+         return false;
       }
 
       $fdPart = NULL;
@@ -616,9 +617,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          clearstatcache();
          if (file_exists($tmpFilepart)) {
             if (feof($fdIn) || filesize($tmpFilepart)>= $maxPartSize) {
-               $part_sha512 = $deployFile->registerFilepart ($repoPath, $tmpFilepart);
-               $multiparts[] = $part_sha512;
+               $part_sha512 = $deployFile->registerFilepart($repoPath, $tmpFilepart, 
+                                                            $file_present_in_repo);
                unlink($tmpFilepart);
+               
+               $multiparts[] = $part_sha512;
             }
          }
          if (feof($fdIn)) {
@@ -629,7 +632,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          $fdPart = gzopen ($tmpFilepart, 'a');
          gzwrite($fdPart, $data, strlen($data));
          gzclose($fdPart);
-
       } while (1);
 
       $new_entry['multiparts'] = $multiparts;
@@ -643,74 +645,56 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+
+      return true;
    }
 
    
    
-   //TODO on 0.83 rename the function into "checkPresenceFileForOrder"
-   function checkPresenceFile($sha512, $order_id) {
 
-      $rows = $this->find("plugin_fusioninventory_deployorders_id = '$order_id'
-            AND shortsha512 = '".substr($sha512, 0, 6 )."'
-            AND sha512 = '$sha512'"
-      );
-      if (count($rows) > 0) {
-         return TRUE;
-      }
-
-      return FALSE;
-   }
-
-   
-
-   function removeFileInRepo($id) {
+   static function removeFileInRepo($sha512, $orders_id) {
       global $DB;
 
-      $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
+      $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
 
-      $pfDeployFilepart = new PluginFusioninventoryDeployFilepart();
-
-      // Retrieve file informations
-      $this->getFromDB($id);
-
-      // Delete file in folder
-      $sha512 = $this->getField('sha512');
-      $filepart = $pfDeployFilepart->getForFile($id);
-      $ids = $pfDeployFilepart->getIdsForFile($id);
-
-      //verify that the file is not used by another package, in this case ignore file suppression
-      $sql = "SELECT DISTINCT plugin_fusioninventory_deploypackages_id
-         FROM glpi_plugin_fusioninventory_deployorders orders
-      LEFT JOIN glpi_plugin_fusioninventory_deployfiles files
-         ON files.plugin_fusioninventory_deployorders_id = orders.id
-      WHERE files.sha512 = '$sha512'";
-      $res = $DB->query($sql);
-      if ($DB->numrows($res) == 1) {
-         //unlink($repoPath.self::getDirBySha512($sha512).'/'.$sha512.'.gz');
-
-         // Delete file parts in folder
-         foreach($filepart as $hash){
-            $dir = $repoPath.self::getDirBySha512($hash).'/';
-
-            //delete file part
-            unlink($dir.$hash.'.gz');
-         }
-
-         // delete parts objects
-         foreach($ids as $id => $sha512){
-            $pfDeployFilepart->delete(array('id' =>$id));
-         }
+      $order = new PluginFusioninventoryDeployOrder;
+      $rows = $order->find("id != '$orders_id'
+            AND json LIKE '%".substr($sha512, 0, 6 )."%'
+            AND json LIKE '%$sha512%'"
+      );
+      if (count($rows) > 0) {
+         //file found in other order, do not remove part in repo
+         return false;
       }
 
-      // Delete file in DB
-      $this->delete($_POST);
+      //get current order json
+      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($orders_id), TRUE);
+      $multiparts = $datas['associatedFiles'][$sha512]['multiparts'];
 
-      // Reply to JS
-      echo "{success:true}";
+      //parse all files part
+      foreach ($multiparts as $part_sha512) {
+         $dir = $repoPath.self::getDirBySha512($part_sha512).'/';
+
+         //delete file parts
+         unlink($dir.$part_sha512.'.gz');
+      }
+
+      return true;
    }
 
    
    
+   function checkPresenceFile($sha512) {
+      $order = new PluginFusioninventoryDeployOrder;
+
+      $rows = $order->find("json LIKE '%$sha512%'");
+      if (count($rows) > 0) {
+         return true;
+      } else return false;
+   }
+
+   
+
    static function getMaxUploadSize() {
 
       $max_upload = (int)(ini_get('upload_max_filesize'));
