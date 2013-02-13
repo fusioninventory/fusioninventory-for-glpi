@@ -110,6 +110,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo "<td class='control'><input type='checkbox' name='file_entries[]' value='$i' /></td>";
          $filename = $datas['associatedFiles'][$sha512]['name'];
          $filesize = $datas['associatedFiles'][$sha512]['filesize'];
+
+         //mimetype icon
          $mimetype = isset($datas['associatedFiles'][$sha512]['mimetype'])?
             str_replace('/', '__', $datas['associatedFiles'][$sha512]['mimetype']):null;
          echo "<td class='filename'>";
@@ -119,9 +121,13 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                   "/plugins/fusioninventory/pics/ext/extensions/$mimetype.png' />";
          } else echo "<img src='".$CFG_GLPI['root_doc'].
                "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
+
+         //filename      
          echo"&nbsp;<a class='edit'>$filename</a>";
 
-         if (isset($datas['associatedFiles'][$sha512]['p2p'])) {
+         //p2p icon
+         if (isset($datas['associatedFiles'][$sha512]['p2p'])
+            && $datas['associatedFiles'][$sha512]['p2p'] != 0) {
             echo "<a title='".__('p2p', 'fusioninventory').", "
             .__("retention", 'fusioninventory')." : ".
                $datas['associatedFiles'][$sha512]['p2p-retention-duration']." ".
@@ -131,10 +137,15 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                echo "<sup>".$datas['associatedFiles'][$sha512]['p2p-retention-duration']."</sup>";
                echo "</a>";
          }
-         if (isset($datas['associatedFiles'][$sha512]['uncompress'])) {
-            echo "<a title='".__('uncompress', 'fusioninventory')."' class='more'><img src='".
-               $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/uncompress.png' /></a>";
+
+         //uncompress icon
+         if (isset($datas['associatedFiles'][$sha512]['uncompress']) 
+            && $datas['associatedFiles'][$sha512]['uncompress'] != 0) {
+               echo "<a title='".__('uncompress', 'fusioninventory')."' class='more'><img src='".
+                  $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/uncompress.png' /></a>";
          }
+
+         //filesize
          echo "<br />";
          echo self::processFilesize($filesize);
          echo "</td>";
@@ -440,7 +451,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             'mime_type' => $_FILES['file']['type'],
             'filesize' => $_FILES['file']['size'],
             'filename' => $filename,
-            'is_p2p' => isset($_POST['p2p']) ? 1 : 0,
+            'p2p' => isset($_POST['p2p']) ? 1 : 0,
             'uncompress' => isset($_POST['uncompress']) ? 1 : 0,
             'p2p-retention-duration' => is_numeric($params['p2p-retention-duration']) ? 
                $params['p2p-retention-duration'] : 0,
