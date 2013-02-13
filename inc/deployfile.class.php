@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployFile extends CommonDBTM {
 
-   static function getTypeName() {
+   static function getTypeName($nb=0) {
       return __('Files', 'fusioninventory');
    }
 

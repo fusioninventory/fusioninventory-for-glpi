@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventorySnmpmodelMibOid extends CommonDropdown {
    // From CommonDBTM
 
-   static function getTypeName() {
+   static function getTypeName($nb=0) {
       return "Plugin FusionInventory MIB OID";
    }
 }

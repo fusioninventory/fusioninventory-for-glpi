@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventorySnmpmodelMibLabel extends CommonDropdown {
 
-   static function getTypeName() {
+   static function getTypeName($nb=0) {
       return "Plugin FusionInventory MIB label";
    }
 }

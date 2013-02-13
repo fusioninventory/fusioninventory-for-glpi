@@ -52,8 +52,10 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
    * @return text name of this type by language of the user connected
    *
    **/
-   static function getTypeName() {
+   static function getTypeName($nb=0) {
+
       return __('SNMP models', 'fusioninventory');
+
    }
 
    

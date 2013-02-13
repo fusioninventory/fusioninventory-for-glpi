@@ -46,8 +46,10 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
-   static function getTypeName() {
+   static function getTypeName($nb=0) {
+
       return __('BlackList');
+
    }
 
 
