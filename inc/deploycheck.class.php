@@ -54,16 +54,16 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    
    static function getTypes() {
       return array(
-         'winkeyExists'     => __("winkeyExists", 'fusioninventory'),
-         'winkeyMissing'    => __("winkeyMissing", 'fusioninventory'),
-         'winkeyEquals'     => __("winkeyEquals", 'fusioninventory'),
-         'fileExists'       => __("fileExists", 'fusioninventory'),
-         'fileMissing'      => __("fileMissing", 'fusioninventory'),
-         'fileSizeGreater'  => __("fileSizeGreater", 'fusioninventory'),
-         'fileSizeEquals'   => __("fileSizeEquals", 'fusioninventory'),
-         'fileSizeLower'    => __("fileSizeLower", 'fusioninventory'),
-         'fileSHA512'       => __("fileSHA512", 'fusioninventory'),
-         'freespaceGreater' => __("freespaceGreater", 'fusioninventory')
+         'winkeyExists'     => __("Register key exist", 'fusioninventory'),
+         'winkeyMissing'    => __("Register key missing", 'fusioninventory'),
+         'winkeyEquals'     => __("Register key value equals to", 'fusioninventory'),
+         'fileExists'       => __("File exist", 'fusioninventory'),
+         'fileMissing'      => __("File missing", 'fusioninventory'),
+         'fileSizeGreater'  => __("File size greater than", 'fusioninventory'),
+         'fileSizeEquals'   => __("Filesize equal to", 'fusioninventory'),
+         'fileSizeLower'    => __("Filesize lower than", 'fusioninventory'),
+         'fileSHA512'       => __("SHA-512 hash value", 'fusioninventory'),
+         'freespaceGreater' => __("Free space greater", 'fusioninventory')
       );
    }
 
@@ -72,6 +72,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    static function displayForm($orders_id, $datas, $rand) {
       global $CFG_GLPI;
 
+      $checks_types = self::getTypes();
 
       if (!isset($datas['index'])) {
          echo "<div style='display:none' id='checks_block$rand' >";
@@ -140,7 +141,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          echo "<input type='checkbox' name='check_entries[]' value='$i' />";
          echo "</td>";
          echo "<td>";
-         echo "<a class='edit' onclick='edit_check($i)'>".$check['type']."</a><br />";
+         echo "<a class='edit' onclick='edit_check($i)'>".$checks_types[$check['type']]."</a><br />";
          echo $check['path'];
          if (!empty($check['value'])) {
             echo "&nbsp;&nbsp;&nbsp;<b>";
@@ -421,7 +422,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
    static function remove_item($params) {
       if (!isset($params['check_entries'])) return false;
-      
+
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
