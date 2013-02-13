@@ -233,7 +233,7 @@ class PluginFusinvinventoryInventory {
          $pfConfig = new PluginFusioninventoryConfig();
          $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
 
-         if ($pfConfig->getValue($plugins_id, 'transfers_id_auto') == '0') {
+         if ($pfConfig->getValue($plugins_id, 'transfers_id_auto') > 0) {
             $inputent = $input;
             if ((isset($xml->CONTENT->HARDWARE->WORKGROUP)) AND (!empty($xml->CONTENT->HARDWARE->WORKGROUP))) {
                $inputent['domain'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->WORKGROUP);
@@ -353,16 +353,19 @@ class PluginFusinvinventoryInventory {
             if (isset($dataEntity['_ignore_import'])) {
                return;
             }
-            if (isset($dataEntity['entities_id'])) {
-               if ($dataEntity['entities_id'] == "-1") {
-                  $_SESSION["plugin_fusinvinventory_entity"] = 0;
+            $pfConfig = new PluginFusioninventoryConfig();
+            $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
+            if ($pfConfig->getValue($plugins_id, 'transfers_id_auto') > 0) {
+               if (isset($dataEntity['entities_id'])) {
+                  if ($dataEntity['entities_id'] == "-1") {
+                     $_SESSION["plugin_fusinvinventory_entity"] = 0;
+                  } else {
+                     $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
+                  }
                } else {
-                  $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
+                  $_SESSION["plugin_fusinvinventory_entity"] = "N/A";
                }
-            } else {
-               $_SESSION["plugin_fusinvinventory_entity"] = "N/A";
             }
-            
 
             PluginFusioninventoryLogger::logIfExtradebug(
                "pluginFusinvinventory-entityrules",
