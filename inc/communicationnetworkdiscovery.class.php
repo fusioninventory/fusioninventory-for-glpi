@@ -440,9 +440,10 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          case 'PluginFusioninventoryUnknownDevice':
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
-               PluginFusioninventoryUnknownDevice::writeXML($item->getID(), 
-                                                            serialize($_SESSION['SOURCE_XMLDEVICE'])
-                                                            );
+               PluginFusioninventoryToolbox::writeXML($item->getID(), 
+                                                      serialize($_SESSION['SOURCE_XMLDEVICE']),
+                                                      'PluginFusioninventoryUnknownDevice'
+                                                      );
             }
 
 
@@ -614,9 +615,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
-               PluginFusioninventoryUnknownDevice::writeXML($input['id'],
+               PluginFusioninventoryToolbox::writeXML($input['id'],
                                           serialize($_SESSION['SOURCE_XMLDEVICE']),
-                                          "fusioninventory",
                                           "NetworkEquipment");
             }
             $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
@@ -691,9 +691,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
-               PluginFusioninventoryUnknownDevice::writeXML($item->getID(),
+               PluginFusioninventoryToolbox::writeXML($item->getID(),
                                           serialize($_SESSION['SOURCE_XMLDEVICE']),
-                                          "fusioninventory",
                                           "Printer");
             }
             $input['sysdescr'] = $arrayinventory['DESCRIPTION'];

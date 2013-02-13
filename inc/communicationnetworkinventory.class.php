@@ -491,8 +491,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             $input['itemtype'] = $a_inventory['itemtype'];
          }
          // TODO : add import ports
-         PluginFusioninventoryUnknownDevice::writeXML($items_id, 
-                                                      serialize($_SESSION['SOURCE_XMLDEVICE']));
+         PluginFusioninventoryToolbox::writeXML($items_id, 
+                                                serialize($_SESSION['SOURCE_XMLDEVICE']),
+                                                'PluginFusioninventoryUnknownDevice');
          $class->update($input);
          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
             '[==detail==] ==updatetheitem== Update '.

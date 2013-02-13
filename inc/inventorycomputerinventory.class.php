@@ -311,7 +311,7 @@ class PluginFusioninventoryInventoryComputerInventory {
    *
    **/
    function rulepassed($items_id, $itemtype) {
-      global $DB;
+      global $DB, $PLUGIN_FUSIONINVENTORY_XML;
 
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
@@ -414,17 +414,14 @@ Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
                $pfRulematchedlog->add($inputrulelog, array(), FALSE);
                $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
                unset($_SESSION['plugin_fusioninventory_rules_id']);
-            }            
-/*         } else {
-//            $communication = new PluginFusioninventoryCommunication();
-//            $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
-//      <REPLY>
-//      <ERROR>TIMEOUT: SERVER OVERLOADED</ERROR>
-//      </REPLY>");
-//            $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
-//            exit;
-//         }
- */
+            } 
+            // Write XML file
+            if (!empty($PLUGIN_FUSIONINVENTORY_XML)) {
+               PluginFusioninventoryToolbox::writeXML(
+                       $items_id, 
+                       $PLUGIN_FUSIONINVENTORY_XML->asXML(),
+                       'computer');
+            }
          }
       } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
 
@@ -456,8 +453,11 @@ Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
          $input['id'] = $class->fields['id'];
 
          // Write XML file
-         if (isset($xml)) {
-            PluginFusioninventoryUnknownDevice::writeXML($items_id, $xml->asXML());
+         if (!empty($PLUGIN_FUSIONINVENTORY_XML)) {
+            PluginFusioninventoryToolbox::writeXML(
+                    $items_id, 
+                    $PLUGIN_FUSIONINVENTORY_XML->asXML(),
+                    'PluginFusioninventoryUnknownDevice');
          }
 
          if (isset($a_computerinventory['computer']['name'])) {

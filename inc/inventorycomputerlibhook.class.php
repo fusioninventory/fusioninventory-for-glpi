@@ -60,33 +60,6 @@ class PluginFusioninventoryInventoryComputerLibhook {
 
 
    /**
-   * Write XML file into files/_plugins/fusinvinventory
-   *
-   * @param $items_id integer id of the computer
-   *
-   * @return nothing
-   *
-   **/
-    function writeXMLFusion($items_id, $xml='') {
-      if ($xml != '') {
-
-         $folder = substr($items_id, 0, -1);
-         if (empty($folder)) {
-            $folder = '0';
-         }
-         if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder)) {
-            mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder);
-         }
-         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".
-                              $items_id, 'w');
-         fwrite($fileopen, $xml);
-         fclose($fileopen);
-       }
-    }
-
-
-
-   /**
    * Define Mapping for unlock fields
    *
    * @return array of the mapping

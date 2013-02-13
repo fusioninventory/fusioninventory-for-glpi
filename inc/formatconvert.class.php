@@ -50,6 +50,9 @@ class PluginFusioninventoryFormatconvert {
    
    
    static function XMLtoArray($xml) {
+      global $PLUGIN_FUSIONINVENTORY_XML;
+      
+      $PLUGIN_FUSIONINVENTORY_XML = $xml;
       $datainventory = json_decode(json_encode((array)$xml), TRUE);
       if (isset($datainventory['CONTENT']['ENVS'])) {
          unset($datainventory['CONTENT']['ENVS']);

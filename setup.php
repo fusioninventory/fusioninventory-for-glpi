@@ -45,6 +45,8 @@ define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.84+1.0");
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
 
+define ("PLUGIN_FUSIONINVENTORY_XML", '');
+
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
 define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.84+1.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");

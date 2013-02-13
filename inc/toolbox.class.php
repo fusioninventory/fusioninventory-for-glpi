@@ -291,6 +291,35 @@ class PluginFusioninventoryToolbox {
    
    
    /**
+   * Write XML in a folder from an inventory by agent
+   *
+   * @param $items_id integer id of the unknown device
+   * @param $xml value xml informations (with XML structure)
+   *
+   * @return nothing
+   *
+   **/
+   static function writeXML($items_id, $xml, $itemtype) {
+
+      $folder = substr($items_id, 0, -1);
+      if (empty($folder)) {
+         $folder = '0';
+      }
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype)) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype);
+      }
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder)) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder);
+      }
+      $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype."/".$folder."/".
+                           $items_id, 'w');
+      fwrite($fileopen, $xml);
+      fclose($fileopen);
+   }
+   
+   
+   
+   /**
     * Add AUTHENTICATION string to XML node
     *
     *@param $p_sxml_node XML node to authenticate
