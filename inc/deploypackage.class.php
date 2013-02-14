@@ -212,6 +212,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $this->showFormButtons($options);
 
+      if (!PluginFusioninventoryDeployPackage::canEdit($ID)) {
+         PluginFusioninventoryDeployPackage::showEditDeniedMessage($ID,
+               __('One or more active tasks (#task#) use this package. Edition denied.',
+                  'fusioninventory'));
+
+      }
+
+
       //drag and drop lib
       echo "<script type='text/javascript' src='".$CFG_GLPI["root_doc"].
          "/plugins/fusioninventory/lib/REDIPS_drag/redips-drag-source.js'></script>";
@@ -230,15 +238,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $subtypes = array('check', 'file', 'action');
       $rand = mt_rand();
-
-      $disabled = "false";
-      if (!PluginFusioninventoryDeployPackage::canEdit($packages_id)) {
-         $disabled = "true";
-         PluginFusioninventoryDeployPackage::showEditDeniedMessage($packages_id,
-               __('One or more active tasks (#task#) use this package. Edition denied.',
-                  'fusioninventory'));
-
-      }
 
       $o_order = new PluginFusioninventoryDeployOrder;
       $found = $o_order->find("plugin_fusioninventory_deploypackages_id = $packages_id 
@@ -598,6 +597,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }
       $tasks_url = substr($tasks_url, 0, -2);
 
+      //show edition denied message
       echo "<div class='box' style='margin-bottom:20px;'>";
       echo "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>";
       echo "</div></div></div>";
@@ -607,6 +607,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "<div class='box-bleft'><div class='box-bright'><div class='box-bcenter'>";
       echo "</div></div></div>";
       echo "</div>";
+
+      //overlay on tab content
+      echo "<script type='text/javascript'>
+         Ext.onReady(function() {
+            Ext.select('#tabcontent').mask();
+         });
+      </script>";
    }
 }
 
