@@ -184,7 +184,7 @@ class AllTests {
       $suite->addTest(PrinterUpdate_AllTests::suite());
       $suite->addTest(NetworkEquipmentTransformation_AllTests::suite());
             
-//      $suite->addTest(ComputerEntity_AllTests::suite());
+      $suite->addTest(ComputerEntity_AllTests::suite());
       
       return $suite;
    }

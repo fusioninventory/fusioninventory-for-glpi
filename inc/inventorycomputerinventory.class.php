@@ -60,7 +60,7 @@ class PluginFusioninventoryInventoryComputerInventory {
    function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
 
       $errors = '';
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+      $_SESSION["plugin_fusinvinventory_entity"] = -1;
 
       $this->sendCriteria($p_DEVICEID, $arrayinventory);
       
@@ -80,6 +80,12 @@ class PluginFusioninventoryInventoryComputerInventory {
    *
    **/
    function sendCriteria($p_DEVICEID, $arrayinventory) {
+      
+      if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
+         unset($_SESSION['plugin_fusioninventory_entityrestrict']);
+      }
+      $_SESSION['"plugin_fusioninventory_noruleentity'] = FALSE;
+
       
       $this->device_id = $p_DEVICEID;
       // * Hacks
@@ -227,7 +233,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          // (see http://forge.fusioninventory.org/issues/1503)
          $pfConfig = new PluginFusioninventoryConfig();
 
-         //if ($pfConfig->getValue('transfers_id_auto') == '0') {
+         // entity rules
             $inputent = $input;
             if ((isset($a_computerinventory['computer']['domains_id'])) 
                     AND (!empty($a_computerinventory['computer']['domains_id']))) {
@@ -238,16 +244,31 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
             $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
             $dataEntity = $ruleEntity->processAllRules($inputent, array());
-            if (isset($dataEntity['entities_id'])) {
-               //$_SESSION['plugin_fusioninventory_entityrestrict'] = $dataEntity['entities_id'];
-               $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
-               //$input['entities_id'] = $dataEntity['entities_id'];
+            if (isset($dataEntity['_ignore_import'])) {
+               return;
             }
-            if (isset($dataEntity['locations_id'])) {
-               $_SESSION['plugin_fusioninventory_locations_id'] = $dataEntity['locations_id'];
+            if ($pfConfig->getValue('transfers_id_auto') > 0) {
+               if (isset($dataEntity['entities_id'])) {
+                  $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
+                  $input['entities_id'] = $dataEntity['entities_id'];
+               } else {
+                  $_SESSION['"plugin_fusioninventory_noruleentity'] = TRUE;
+                  $input['entities_id'] = 0;
+               }
+               if (isset($dataEntity['locations_id'])) {
+                  $_SESSION['plugin_fusioninventory_locations_id'] = $dataEntity['locations_id'];
+               }
+            } else {
+               if (isset($dataEntity['entities_id'])) {
+                  $_SESSION['plugin_fusioninventory_entityrestrict'] = $dataEntity['entities_id'];
+                  $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
+                  $input['entities_id'] = $dataEntity['entities_id'];
+               } else {
+                  $input['entities_id'] = 0;
+                  $_SESSION['"plugin_fusioninventory_noruleentity'] = TRUE;
+               }
             }
-         //}
-         // End transfer disabled
+         // End entity rules
       $_SESSION['plugin_fusioninventory_classrulepassed'] = 
                      "PluginFusioninventoryInventoryComputerInventory";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
@@ -312,7 +333,7 @@ class PluginFusioninventoryInventoryComputerInventory {
    **/
    function rulepassed($items_id, $itemtype) {
       global $DB, $PLUGIN_FUSIONINVENTORY_XML;
-
+      
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
          "Rule passed : ".$items_id.", ".$itemtype."\n"
@@ -320,9 +341,33 @@ class PluginFusioninventoryInventoryComputerInventory {
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       
       $a_computerinventory = $pfFormatconvert->replaceids($this->arrayinventory);
+      $entities_id = 0;
+      if ($_SESSION['"plugin_fusioninventory_noruleentity']) {
+         if ($items_id == 0) {
+            $entities_id = 0;
+         } else {
+            $item = new $itemtype();
+            $item->getFromDB($items_id);
+            $entities_id = $item->fields['entities_id'];
+         }
+      } else {
+         if ($_SESSION["plugin_fusinvinventory_entity"] >= 0
+                 && !isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
+            $entities_id = $_SESSION["plugin_fusinvinventory_entity"];
+         } else if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
+            if ($items_id == 0) {
+               $entities_id = $_SESSION['plugin_fusioninventory_entityrestrict'];
+            } else {
+               $item = new $itemtype();
+               $item->getFromDB($items_id);
+               $entities_id = $item->fields['entities_id'];
+            }
+         }
+      }
+      
       $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation(
                                              $a_computerinventory, 
-                                             $_SESSION["plugin_fusinvinventory_entity"]);
+                                             $entities_id);
 
       if ($itemtype == 'Computer') {
          $pfInventoryComputerLib = new PluginFusioninventoryInventoryComputerLib();
@@ -330,34 +375,29 @@ class PluginFusioninventoryInventoryComputerInventory {
          
          $computer   = new Computer();
          if ($items_id == '0') {
-            $_SESSION['glpiactiveentities'] = array($_SESSION["plugin_fusinvinventory_entity"]);
-            $_SESSION['glpiactiveentities_string'] = $_SESSION["plugin_fusinvinventory_entity"];
-            $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
+            $_SESSION['glpiactiveentities'] = array($entities_id);
+            $_SESSION['glpiactiveentities_string'] = $entities_id;
+            $_SESSION['glpiactive_entity'] = $entities_id;
          } else {
-            $pfConfig   = new PluginFusioninventoryConfig();
             $computer->getFromDB($items_id);
-            if ($pfConfig->getValue('transfers_id_auto') == 0) {
-               $_SESSION["plugin_fusinvinventory_entity"] = $computer->fields['entities_id'];
+            $_SESSION['glpiactiveentities'] = array($entities_id);
+            $_SESSION['glpiactiveentities_string'] = $entities_id;
+            $_SESSION['glpiactive_entity'] = $entities_id;
+            
+            if ($computer->fields['entities_id'] != $entities_id) {
+               $transfer = new Transfer();
+               $pfConfig = new PluginFusioninventoryConfig();
+               $transfer->getFromDB($pfConfig->getValue('transfers_id_auto'));
+               $item_to_transfer = array("Computer" => array($items_id=>$items_id));
+               $transfer->moveItems($item_to_transfer, $entities_id, $transfer->fields);
             }
-            $_SESSION['glpiactiveentities'] = array($_SESSION["plugin_fusinvinventory_entity"]);
-            $_SESSION['glpiactiveentities_string'] = $_SESSION["plugin_fusinvinventory_entity"];
-            $_SESSION['glpiactive_entity'] = $_SESSION["plugin_fusinvinventory_entity"];
          }
          
-         if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
-            $_SESSION["plugin_fusinvinventory_entity"] = 
-                           $_SESSION['plugin_fusioninventory_entityrestrict'];
-         }
-         if (!isset($_SESSION["plugin_fusinvinventory_entity"])
-                 OR $_SESSION["plugin_fusinvinventory_entity"] == NOT_AVAILABLE
-                 OR $_SESSION["plugin_fusinvinventory_entity"] == '-1') {
-            $_SESSION["plugin_fusinvinventory_entity"] = 0;
-         }
          $no_history = FALSE;
          // * New
          if ($items_id == '0') {
             $input = array();
-            $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];                     
+            $input['entities_id'] = $entities_id;                     
             if (isset($_SESSION['plugin_fusioninventory_locations_id'])) {
                $a_computerinventory['computer']['locations_id'] = 
                                  $_SESSION['plugin_fusioninventory_locations_id'];
