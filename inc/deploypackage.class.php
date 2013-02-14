@@ -579,22 +579,22 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $task = new PluginFusioninventoryDeployTask;
       $tasks_url = "";
 
-      $taskjobs = getAllDatasFromTable('glpi_plugin_fusioninventory_deploytaskjobs',
+      $taskjobs = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobs',
                "definition LIKE '%\"PluginFusioninventoryDeployPackage\":\"".$id."%'");
 
       # A task can have more than one taskjobs is an Install and Uninstall function are associated
       # to the same tasks
       $jobs_seen = array();
       foreach($taskjobs as $job) {
-         if (isset($jobs_seen[$job['plugin_fusioninventory_deploytasks_id']])) {
+         if (isset($jobs_seen[$job['plugin_fusioninventory_tasks_id']])) {
             continue;
          }
-         $task->getFromDB($job['plugin_fusioninventory_deploytasks_id']);
+         $task->getFromDB($job['plugin_fusioninventory_tasks_id']);
          $tasks_url .= "<a href='".$CFG_GLPI["root_doc"].
                      "/plugins/fusioninventory/front/task.form.php?id="
-                     .$job['plugin_fusioninventory_deploytasks_id']."'>".
-                     $task->fields['name']."</a>, ";
-         $jobs_seen[$job['plugin_fusioninventory_deploytasks_id']]=1;
+                     .$job['plugin_fusioninventory_tasks_id']."'>".
+                     $job['name']."</a>, ";
+         $jobs_seen[$job['plugin_fusioninventory_tasks_id']]=1;
       }
       $tasks_url = substr($tasks_url, 0, -2);
 
