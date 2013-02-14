@@ -169,7 +169,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                   }
                } 
             } else {
-               echo "$key $value &nbsp;&nbsp;&nbsp;";
+               echo __(ucfirst($key), 'fusioninventory')." $value ";
             }
          }
          if (isset($action[$action_type]['retChecks'])) {
