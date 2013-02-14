@@ -158,7 +158,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          $keys = array_keys($action);
          $action_type = array_shift($keys);
          echo "<td>";
-         echo "<a class='edit' onclick='edit_action($i)'>$action_type</a><br />";
+         echo "<a class='edit' onclick='edit_action($i)'>".__($action_type, 'fusioninventory').
+            "</a><br />";
          
          foreach ($action[$action_type] as $key => $value) {
             if (is_array($value) ) {
