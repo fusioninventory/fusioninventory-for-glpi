@@ -55,6 +55,9 @@ table.package_item_list ul.retChecks {
 table.package_item_list ul.retChecks li {
    margin-left:3px;
 }
+table.package_item_list tr.selected {
+   background-color: #DFC8C8;
+}
 a.edit {
    cursor: pointer;
 }

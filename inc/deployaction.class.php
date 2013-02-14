@@ -148,7 +148,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployAction' />";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
       echo "<div id='drag_actions'>";
-      echo "<table class='tab_cadrehov package_item_list' id='table_action'>";
+      echo "<table class='tab_cadrehov package_item_list' id='table_action_$rand'>";
       $i=0;
       foreach ($datas['jobs']['actions'] as $action) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
@@ -199,7 +199,19 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
       echo "<script type='text/javascript'>
          function edit_action(index) {
+            //remove all border to previous selected item (remove classes)
+            Ext.select('#table_action_$rand tr').removeClass('selected');
+
+            //add border to selected index (add class)
+            Ext.select('#table_action_$rand tr:nth-child('+(index+1)+')').addClass('selected');
+
+            //scroll to edit form
+            document.getElementById('th_title_action_$rand').scrollIntoView();
+
+            //remove plus button
             if (Ext.get('plus_actions_block$rand')) Ext.get('plus_actions_block$rand').remove();
+            
+            //show and load form
             Ext.get('actions_block$rand').setDisplayed('block');
             Ext.get('actions_block$rand').load({
                   'url': '".$CFG_GLPI["root_doc"].

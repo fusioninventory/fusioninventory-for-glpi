@@ -257,7 +257,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       foreach ($subtypes as $subtype => $label) {
 
          echo "<tr>";
-         echo "<th>";
+         echo "<th id='th_title_{$subtype}_$rand'>";
          echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/$subtype.png' />";
          echo "&nbsp;".__($label, 'fusioninventory');
          self::plusButton($subtype."s_block$rand");

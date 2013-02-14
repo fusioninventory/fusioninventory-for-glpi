@@ -122,7 +122,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployFile' />";
       echo "<input type='hidden' name='orders_id' value='$orders_id' />";
       echo "<div id='drag_files'>";
-      echo "<table class='tab_cadrehov package_item_list' id='table_file'>";
+      echo "<table class='tab_cadrehov package_item_list' id='table_file_$rand'>";
       $i = 0;
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
          echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
@@ -183,7 +183,19 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       echo "<script type='text/javascript'>
          function edit_files(index) {
+            //remove all border to previous selected item (remove classes)
+            Ext.select('#table_file_$rand tr').removeClass('selected');
+
+            //add border to selected index (add class)
+            Ext.select('#table_file_$rand tr:nth-child('+(index+1)+')').addClass('selected');
+
+            //scroll to edit form
+            document.getElementById('th_title_file_$rand').scrollIntoView();
+
+            //remove plus button
             if (Ext.get('plus_files_block$rand')) Ext.get('plus_files_block$rand').remove();
+
+            //show and load form
             Ext.get('files_block$rand').setDisplayed('block');
             Ext.get('files_block$rand').load({
                   'url': '".$CFG_GLPI["root_doc"].

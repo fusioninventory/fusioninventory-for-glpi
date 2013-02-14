@@ -127,7 +127,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          return;
       }
       echo "<div id='drag_checks'>";
-      echo "<table class='tab_cadrehov package_item_list' id='table_check'>";
+      echo "<table class='tab_cadrehov package_item_list' id='table_check_$rand'>";
       $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {
          //specific case for filesystem size
@@ -169,20 +169,33 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
       echo "<script type='text/javascript'>
          function edit_check(index) {
+            //remove all border to previous selected item (remove classes)
+            Ext.select('#table_check_$rand tr').removeClass('selected');
+
+            //add border to selected index (add class)
+            Ext.select('#table_check_$rand tr:nth-child('+(index+1)+')').addClass('selected');
+
+            //scroll to edit form
+            document.getElementById('th_title_check_$rand').scrollIntoView();
+
+            //remove plus button
             if (Ext.get('plus_checks_block$rand')) Ext.get('plus_checks_block$rand').remove();
+
+            //show and load form
             Ext.get('checks_block$rand').setDisplayed('block');
             Ext.get('checks_block$rand').load({
-                  'url': '".$CFG_GLPI["root_doc"].
-                             "/plugins/fusioninventory/ajax/deploypackage_form.php',
-                  'scripts': true,
-                  'params' : {
-                     'subtype': 'check',
-                     'index': index, 
-                     'orders_id': $orders_id, 
-                     'rand': '$rand'
-                  }
-               });
+               'url': '".$CFG_GLPI["root_doc"].
+                          "/plugins/fusioninventory/ajax/deploypackage_form.php',
+               'scripts': true,
+               'params' : {
+                  'subtype': 'check',
+                  'index': index, 
+                  'orders_id': $orders_id, 
+                  'rand': '$rand'
+               }
+            });
          }
+
       </script>";
    }
 
