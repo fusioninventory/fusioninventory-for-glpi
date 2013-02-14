@@ -225,10 +225,13 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       //ajax update of file value span
       $params = array(
-                      'value'  => '__VALUE__',
-                      'rand'   => $rand,
-                      'myname' => 'method',
-                      'type'   => "file");
+                      'value'      => '__VALUE__',
+                      'rand'       => $rand,
+                      'myname'     => 'method',
+                      'type'       => "file", 
+                      'p2p'        => 0,
+                      'uncompress' => 0,
+               );
       if (isset($datas['edit'])) {
          $params['edit']                   = "true";
          $params['index']                  = $datas['index'];
