@@ -174,7 +174,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             }
          }
          if (isset($action[$action_type]['retChecks'])) {
-            echo "<br><b>".__("Command checks", 'fusioninventory')."</b> : <ul class='retChecks'>";
+            echo "<br><b>".__("return codes saved for this command", 'fusioninventory').
+               "</b> : <ul class='retChecks'>";
             foreach ($action[$action_type]['retChecks'] as $retCheck) {
                echo "<li>";
                echo $retCheck['type']." <b>=</b> ".array_shift($retCheck['value']);
