@@ -316,6 +316,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             $name_label_1 = "list[]";
             $value_label_2 = FALSE;
             break;
+         default:
+            return false;
       }
 
       echo "<table class='package_item'>";

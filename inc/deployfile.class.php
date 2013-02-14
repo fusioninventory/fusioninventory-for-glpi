@@ -281,6 +281,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $p2p_ret_value = isset($datas['p2p-retention-duration'])?$datas['p2p-retention-duration']:"";
       $uncompress_checked = $datas['uncompress'] == 1?"checked='checked'":"";
 
+      if (empty($source)) return false;
+
       echo "<table class='package_item'>";
       if (!isset($datas['edit']) || $datas['edit'] !== "true") {
          echo "<tr>";

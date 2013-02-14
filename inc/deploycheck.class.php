@@ -179,7 +179,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
             document.getElementById('th_title_check_$rand').scrollIntoView();
 
             //remove plus button
-            if (Ext.get('plus_checks_block$rand')) Ext.get('plus_checks_block$rand').remove();
+            //if (Ext.get('plus_checks_block$rand')) Ext.get('plus_checks_block$rand').remove();
 
             //show and load form
             Ext.get('checks_block$rand').setDisplayed('block');
@@ -257,6 +257,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       $value = $datas['value'];
       $rand  = $datas['rand'];
 
+
+
       $path_value = isset($datas['path'])?$datas['path']:"";
       $value2 = isset($datas['value2'])?$datas['value2']:"";
       $return = isset($datas['return'])?$datas['return']:"";
@@ -293,6 +295,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
             $value_label = "Value";
             $value_type = "input+unit";
             break;
+         default:
+            return false;
       }
 
       echo "<table class='package_item'>";
