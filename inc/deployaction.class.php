@@ -169,11 +169,11 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                   }
                } 
             } else {
-               echo __(ucfirst($key), 'fusioninventory')." $value ";
+               echo "<b>".__(ucfirst($key), 'fusioninventory')."</b> $value ";
             }
          }
          if (isset($action[$action_type]['retChecks'])) {
-            echo "<br />".__("Command checks", 'fusioninventory')." : <ul class='retChecks'>";
+            echo "<br><b>".__("Command checks", 'fusioninventory')."</b> : <ul class='retChecks'>";
             foreach ($action[$action_type]['retChecks'] as $retCheck) {
                echo "<li>";
                echo $retCheck['type']." <b>=</b> ".array_shift($retCheck['value']);
