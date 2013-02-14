@@ -172,13 +172,13 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             "'><div class='drag row'></div></td>";
          $i++;
       }
-      echo "<tr><td>";
+      echo "<tr><th>";
       Html::checkAllAsCheckbox("filesList$rand", mt_rand());
-      echo "</td><td colspan='2'>";
+      echo "</th><th colspan='3'></th></tr>";
+      echo "</table></div>";
+      echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
-      echo "</td></tr>";
-      echo "</table></div>";
       Html::closeForm();
 
       echo "<script type='text/javascript'>
