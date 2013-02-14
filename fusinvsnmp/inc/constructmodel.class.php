@@ -50,8 +50,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    function connect() {
       global $CFG_GLPI;
       
-      //$this->fp = curl_init('http://93.93.45.69:9000/');
-      $this->fp = curl_init('http://snmp.fusioninventory.org/');
+      $this->fp = curl_init('http://127.0.0.1:9000/');
+      //$this->fp = curl_init('http://snmp.fusioninventory.org/');
       curl_setopt($this->fp, CURLOPT_RETURNTRANSFER, 1);
       if ($CFG_GLPI['proxy_name'] != '') {
          curl_setopt($this->fp, CURLOPT_PROXYPORT, $CFG_GLPI['proxy_port']);
@@ -1109,7 +1109,9 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          };
          </script>';
       } else if ($data['oidcreation'] == 'yetexist') {
-         echo "This oid yet exist on server !";
+         echo "WARNING: This oid yet exist on server !";
+      } else if ($data['oidcreation'] == 'notcomplete') {
+         echo "WARNING: This oid is not complete !";
       }
       echo "</th>";
       echo "</tr>";
