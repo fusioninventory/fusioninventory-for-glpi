@@ -612,12 +612,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "</div></div></div>";
       echo "</div>";
 
-      //overlay on tab content
-      echo "<script type='text/javascript'>
-         Ext.onReady(function() {
-            Ext.select('#tabcontent').mask();
-         });
-      </script>";
    }
 }
 
