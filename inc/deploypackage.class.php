@@ -236,7 +236,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    static function displayOrderTypeForm($order_type, $packages_id) {
       global $CFG_GLPI;
 
-      $subtypes = array('check', 'file', 'action');
+      $subtypes = array(
+         'check'  => __("Audits", 'fusioninventory'),
+         'file'  => __("Files", 'fusioninventory'),
+         'action' => __("Actions", 'fusioninventory')
+      );
       $rand = mt_rand();
 
       $o_order = new PluginFusioninventoryDeployOrder;
@@ -250,12 +254,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "<table class='tab_cadre_fixe' id='package'>";
 
       $multipart = "";
-      foreach ($subtypes as $subtype) {
+      foreach ($subtypes as $subtype => $label) {
 
          echo "<tr>";
          echo "<th>";
          echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/$subtype.png' />";
-         echo "&nbsp;".$subtype;
+         echo "&nbsp;".__($label, 'fusioninventory');
          self::plusButton($subtype."s_block$rand");
          echo "</th>";
          echo "</tr>";
