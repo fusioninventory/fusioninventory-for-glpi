@@ -62,10 +62,6 @@ if (isset($_REQUEST['update_json'])) {
 } elseif (isset($_REQUEST['remove_item'])) {
    PluginFusioninventoryDeployPackage::alter_json('remove_item', $_REQUEST);
    Html::back();
-} elseif (isset($_REQUEST['move_item'])) { //ajax request
-   PluginFusioninventoryDeployPackage::alter_json('move_item', $_REQUEST);
-   echo "true";
-   exit;
 }
 
 //general form

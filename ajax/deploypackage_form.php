@@ -45,6 +45,12 @@ header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 Session::checkCentralAccess();
 
+if (isset($_REQUEST['move_item'])) { //ajax request
+   PluginFusioninventoryDeployPackage::alter_json('move_item', $_REQUEST);
+   echo "true";
+   exit;
+}
+
 if (!isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) {
    exit;
 }
