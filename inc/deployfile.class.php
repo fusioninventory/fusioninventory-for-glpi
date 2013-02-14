@@ -192,22 +192,38 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
             //scroll to edit form
             document.getElementById('th_title_file_$rand').scrollIntoView();
 
-            //remove plus button
-            if (Ext.get('plus_files_block$rand')) Ext.get('plus_files_block$rand').remove();
-
             //show and load form
             Ext.get('files_block$rand').setDisplayed('block');
             Ext.get('files_block$rand').load({
+               'url': '".$CFG_GLPI["root_doc"].
+                          "/plugins/fusioninventory/ajax/deploypackage_form.php',
+               'scripts': true,
+               'params' : {
+                  'subtype': 'file',
+                  'index': index, 
+                  'orders_id': $orders_id, 
+                  'rand': '$rand'
+               }
+            });
+
+            //change plus button behavior 
+            //(for always have possibility to add an item also in edit mode)
+            Ext.get('plus_files_block$rand').on('click', function() {
+               //empty sub value
+               Ext.fly('showFileValue$rand').update('');
+
+               //replace type select
+               Ext.get('showFileType$rand').load({
                   'url': '".$CFG_GLPI["root_doc"].
                              "/plugins/fusioninventory/ajax/deploypackage_form.php',
                   'scripts': true,
                   'params' : {
                      'subtype': 'file',
-                     'index': index, 
                      'orders_id': $orders_id, 
                      'rand': '$rand'
                   }
                });
+            });
          }
       </script>";
    }
@@ -280,8 +296,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $p2p_checked = $datas['p2p'] == 1?"checked='checked'":"";
       $p2p_ret_value = isset($datas['p2p-retention-duration'])?$datas['p2p-retention-duration']:"";
       $uncompress_checked = $datas['uncompress'] == 1?"checked='checked'":"";
-
-      if (empty($source)) return false;
 
       echo "<table class='package_item'>";
       if (!isset($datas['edit']) || $datas['edit'] !== "true") {

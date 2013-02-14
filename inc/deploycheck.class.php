@@ -178,9 +178,6 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
             //scroll to edit form
             document.getElementById('th_title_check_$rand').scrollIntoView();
 
-            //remove plus button
-            //if (Ext.get('plus_checks_block$rand')) Ext.get('plus_checks_block$rand').remove();
-
             //show and load form
             Ext.get('checks_block$rand').setDisplayed('block');
             Ext.get('checks_block$rand').load({
@@ -193,6 +190,25 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                   'orders_id': $orders_id, 
                   'rand': '$rand'
                }
+            });
+
+            //change plus button behavior 
+            //(for always have possibility to add an item also in edit mode)
+            Ext.get('plus_checks_block$rand').on('click', function() {
+               //empty sub value
+               Ext.fly('showCheckValue$rand').update('');
+
+               //replace type select
+               Ext.get('showCheckType$rand').load({
+                  'url': '".$CFG_GLPI["root_doc"].
+                             "/plugins/fusioninventory/ajax/deploypackage_form.php',
+                  'scripts': true,
+                  'params' : {
+                     'subtype': 'check',
+                     'orders_id': $orders_id, 
+                     'rand': '$rand'
+                  }
+               });
             });
          }
 
