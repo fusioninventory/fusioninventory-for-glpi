@@ -511,7 +511,9 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
    
    
    static function remove_item($params) {
-      if (!isset($params['action_entries'])) return false;
+      if (!isset($params['action_entries'])) {
+         return FALSE;
+      }
       
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);

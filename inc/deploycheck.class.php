@@ -146,8 +146,12 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          echo $check['path'];
          if (!empty($check['value'])) {
             echo "&nbsp;&nbsp;&nbsp;<b>";
-            if (strpos($check['type'], "Greater") !== false) echo "&gt;";
-            elseif (strpos($check['type'], "Lower") !== false) echo "&lt;";
+            if (strpos($check['type'], "Greater") !== FALSE) {
+               echo "&gt;";
+            }
+            elseif (strpos($check['type'], "Lower") !== FALSE) {
+               echo "&lt;";
+            }
             else echo "=";
             echo "</b>&nbsp;&nbsp;&nbsp;";
             echo $check['value'];
@@ -435,7 +439,9 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
    
 
    static function remove_item($params) {
-      if (!isset($params['check_entries'])) return false;
+      if (!isset($params['check_entries'])) {
+         return FALSE;
+      }
 
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);

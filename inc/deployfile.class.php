@@ -132,7 +132,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
          //mimetype icon
          $mimetype = isset($datas['associatedFiles'][$sha512]['mimetype'])?
-            str_replace('/', '__', $datas['associatedFiles'][$sha512]['mimetype']):null;
+            str_replace('/', '__', $datas['associatedFiles'][$sha512]['mimetype']):NULL;
          echo "<td class='filename'>";
          if (!empty($mimetype) 
            && file_exists(GLPI_ROOT."/plugins/fusioninventory/pics/ext/extensions/$mimetype.png")) {
@@ -490,7 +490,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    
    
    static function remove_item($params) {
-      if (!isset($params['file_entries'])) return false;
+      if (!isset($params['file_entries'])) {
+         return FALSE;
+      }
 
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
@@ -571,7 +573,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
          //file upload errors
          if (isset($_FILES['file']['error'])) {
-            $error = true;
+            $error = TRUE;
             switch ($_FILES['file']['error']) {
                case UPLOAD_ERR_INI_SIZE:
                case UPLOAD_ERR_FORM_SIZE:
@@ -594,11 +596,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                   break;
                case UPLOAD_ERR_OK:
                   //no error, continue
-                  $error = false;
+                  $error = FALSE;
             }
             if ($error) {
                Session::addMessageAfterRedirect($msg);
-               return false;
+               return FALSE;
             }
          }
 
@@ -618,14 +620,14 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          //Add file in repo
          if ($filename && self::addFileInRepo($datas)) {
             Session::addMessageAfterRedirect(__('File saved!', 'fusioninventory'));
-            return true;
+            return TRUE;
          } else {
             Session::addMessageAfterRedirect(__('Failed to copy file', 'fusioninventory'));
-            return false;
+            return FALSE;
          }
       }
       Session::addMessageAfterRedirect(__('File missing', 'fusioninventory'));
-      return false;
+      return FALSE;
    }
 
    static function uploadFileFromServer($params) {
@@ -655,14 +657,14 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          //Add file in repo
          if ($filename && self::addFileInRepo($datas)) {
             Session::addMessageAfterRedirect(__('File saved!', 'fusioninventory'));
-            return true;
+            return TRUE;
          } else {
             Session::addMessageAfterRedirect(__('Failed to copy file', 'fusioninventory'));
-            return false;
+            return FALSE;
          }
       }
       Session::addMessageAfterRedirect(__('File missing', 'fusioninventory'));
-      return false;
+      return FALSE;
    }
 
    
@@ -676,7 +678,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    
    
-   function registerFilepart ($repoPath, $filePath, $skip_creation = false) {
+   function registerFilepart ($repoPath, $filePath, $skip_creation = FALSE) {
       $sha512 = hash_file('sha512', $filePath);
 
       if (!$skip_creation) {
@@ -708,9 +710,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $sha512 = hash_file('sha512', $file_tmp_name);
       $short_sha512 = substr($sha512, 0, 6);
 
-      $file_present_in_repo = false;
+      $file_present_in_repo = FALSE;
       if($deployFile->checkPresenceFile($sha512)) {
-         $file_present_in_repo = true;
+         $file_present_in_repo = TRUE;
       }
       
       $new_entry = array(
@@ -724,7 +726,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       $fdIn = fopen ( $file_tmp_name, 'rb' );
       if (!$fdIn) {
-         return false;
+         return FALSE;
       }
 
       $fdPart = NULL;
@@ -762,7 +764,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
 
-      return true;
+      return TRUE;
    }
 
    
@@ -780,7 +782,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       );
       if (count($rows) > 0) {
          //file found in other order, do not remove part in repo
-         return false;
+         return FALSE;
       }
 
       //get current order json
@@ -795,7 +797,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          unlink($dir.$part_sha512.'.gz');
       }
 
-      return true;
+      return TRUE;
    }
 
    
@@ -805,8 +807,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       $rows = $order->find("json LIKE '%$sha512%'");
       if (count($rows) > 0) {
-         return true;
-      } else return false;
+         return TRUE;
+      }
+      return FALSE;
    }
 
    

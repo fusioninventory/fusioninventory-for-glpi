@@ -302,7 +302,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "</textarea>";
          echo "<input type='hidden' name='id' value='$orders_id' />";
          echo "<input type='submit' name='update_json' value=\"".
-            _sx('button','Save')."\" class='submit'>";
+            _sx('button', 'Save')."\" class='submit'>";
          Html::closeForm();
          // === debug ===
       }
