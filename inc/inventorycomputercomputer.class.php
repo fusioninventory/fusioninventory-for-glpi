@@ -171,6 +171,10 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       
       $this->getFromDB($a_computerextend['id']);
       
+      if (empty($this->fields['serialized_inventory'])) {
+         return;
+      }
+      
       $data = unserialize(gzuncompress($this->fields['serialized_inventory']));
       
       echo "<br/>";
