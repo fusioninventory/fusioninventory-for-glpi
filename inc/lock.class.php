@@ -49,9 +49,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
 
    static function getTypeName($nb=0) {
-
-      return _n('Lock', 'Locks', 2, 'fusioninventory');
-
+      return _n('Lock', 'Locks', $nb)." (".strtolower(_n('Field', 'Fields', 2)).")";
    }
 
 
@@ -87,11 +85,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       if (Session::haveRight(strtolower($itemtype), "w")) {
          if ($_SESSION['glpishow_count_on_tabs']) {
-            return self::createTabEntry(_n('Lock', 'Locks', 2, 'fusioninventory'), 
+            return self::createTabEntry(PluginFusioninventoryLock::getTypeName(2), 
                                         self::countForLock($item));
          }
-         return _n('Lock', 'Locks', 2, 'fusioninventory');
-
+         return PluginFusioninventoryLock::getTypeName(2);
       }
       return '';
    }
