@@ -1049,6 +1049,10 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       
       $this->getFromDB($a_networkequipmentextend['id']);
       
+      if (empty($this->fields['serialized_inventory'])) {
+         return;
+      }
+      
       $data = unserialize(gzuncompress($this->fields['serialized_inventory']));
       
       echo "<br/>";

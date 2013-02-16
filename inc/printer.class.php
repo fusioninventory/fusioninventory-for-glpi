@@ -195,6 +195,10 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       
       $this->getFromDB($a_printerextend['id']);
       
+      if (empty($this->fields['serialized_inventory'])) {
+         return;
+      }
+      
       $data = unserialize(gzuncompress($this->fields['serialized_inventory']));
       
       echo "<br/>";
