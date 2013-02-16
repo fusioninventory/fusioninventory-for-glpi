@@ -376,11 +376,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
 
-      $option_import = array();
-      $option_import['1'] = __('Yes, managed by FusionInventory', 'fusioninventory');
-      $option_import['2'] = __('No, managed only by FusionInventory', 'fusioninventory');
-      $option_import['0'] = __('No, managed manually', 'fusioninventory');
-
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
       echo _n('Monitor', 'Monitors', 2)."&nbsp;:";
@@ -433,9 +428,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo _n('Processor', 'Processors', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray("component_processor", $option_import,
-                              array('value' =>
-                                 $pfConfig->getValue('component_processor')));
+      Dropdown::showYesNo("component_processor", $pfConfig->getValue('component_processor'));
       echo "</td>";
       echo "</tr>";
 
@@ -459,9 +452,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo _n('Memory', 'Memories', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray("component_memory", $option_import,
-                              array('value' =>
-                                 $pfConfig->getValue('component_memory')));
+      Dropdown::showYesNo("component_memory", $pfConfig->getValue('component_memory'));
       echo "</td>";
       echo "</tr>";
 
@@ -470,17 +461,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo _n('Software', 'Software', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray("import_software", $option_import,
-                              array('value' =>
-                                 $pfConfig->getValue('import_software')));
+      Dropdown::showYesNo("import_software", $pfConfig->getValue('import_software'));
       echo "</td>";
       echo "<td>";
       echo _n('Hard drive', 'Hard drives', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray("component_harddrive", $option_import,
-                              array('value' =>
-                                 $pfConfig->getValue('component_harddrive')));
+      Dropdown::showYesNo("component_harddrive", $pfConfig->getValue('component_harddrive'));
       echo "</td>";
       echo "</tr>";
 
@@ -489,17 +476,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo _n('Volume', 'Volumes', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray("import_volume", $option_import,
-                              array('value' =>
-                                 $pfConfig->getValue('import_volume')));
+      Dropdown::showYesNo("import_volume", $pfConfig->getValue('import_volume'));
       echo "</td>";
       echo "<td>";
       echo _n('Network card', 'Network cards', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray("component_networkcard", $option_import,
-                              array('value' =>
-                                 $pfConfig->getValue('component_networkcard')));
+      Dropdown::showYesNo("component_networkcard", $pfConfig->getValue('component_networkcard'));
       echo "</td>";
       echo "</tr>";
 
@@ -527,9 +510,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo _n('Graphic card', 'Graphic cards', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray("component_graphiccard", $option_import,
-                              array('value' =>
-                                 $pfConfig->getValue('component_graphiccard')));
+      Dropdown::showYesNo("component_graphiccard", $pfConfig->getValue('component_graphiccard'));
       echo "</td>";
       echo "</tr>";
 
@@ -540,9 +521,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo _n('Sound card', 'Sound cards', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray("component_soundcard", $option_import,
-                              array('value' =>
-                                 $pfConfig->getValue('component_soundcard')));
+      Dropdown::showYesNo("component_soundcard", $pfConfig->getValue('component_soundcard'));
       echo "</td>";
       echo "</tr>";
 
@@ -551,17 +530,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo _n('Virtual machine', 'Virtual machines', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray("import_vm", $option_import,
-                              array('value' =>
-                                 $pfConfig->getValue('import_vm')));
+      Dropdown::showYesNo("import_vm", $pfConfig->getValue('import_vm'));
       echo "</td>";
       echo "<td>";
       echo _n('Drive', 'Drives', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray("component_drive", $option_import,
-                              array('value' =>
-                                 $pfConfig->getValue('component_drive')));
+      Dropdown::showYesNo("component_drive", $pfConfig->getValue('component_drive'));
       echo "</td>";
       echo "</tr>";
 
@@ -580,9 +555,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo __('Network drives', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray("component_networkdrive", $option_import,
-                              array('value' =>
-                                 $pfConfig->getValue('component_networkdrive')));
+      Dropdown::showYesNo("component_networkdrive", $pfConfig->getValue('component_networkdrive'));
       echo "</td>";
       echo "</tr>";
 
@@ -600,9 +573,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo _n('Controller', 'Controllers', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray("component_control", $option_import,
-                              array('value' =>
-                                 $pfConfig->getValue('component_control')));
+      Dropdown::showYesNo("component_control", $pfConfig->getValue('component_control'));
       echo "</td>";
       echo "</tr>";
 
