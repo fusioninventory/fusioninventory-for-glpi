@@ -205,7 +205,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (count($db_processors) != 0) {
                      // Delete processor in DB
                      foreach ($db_processors as $idtmp => $data) {
-                        $item_DeviceProcessor->delete(array('id'=>$idtmp));
+                        $item_DeviceProcessor->delete(array('id'=>$idtmp), 1);
                      }
                   }
                   if (count($a_computerinventory['processor']) != 0) {
@@ -259,7 +259,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (count($db_memories) != 0) {
                      // Delete processor in DB
                      foreach ($db_memories as $idtmp => $data) {
-                        $item_DeviceMemory->delete(array('id'=>$idtmp));
+                        $item_DeviceMemory->delete(array('id'=>$idtmp), 1);
                      }
                   }
                   if (count($a_computerinventory['memory']) != 0) {
@@ -312,7 +312,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (count($db_harddrives) != 0) {
                      // Delete hard drive in DB
                      foreach ($db_harddrives as $idtmp => $data) {
-                        $item_DeviceHardDrive->delete(array('id'=>$idtmp));
+                        $item_DeviceHardDrive->delete(array('id'=>$idtmp), 1);
                      }
                   }
                   if (count($a_computerinventory['harddrive']) != 0) {
@@ -369,7 +369,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (count($db_graphiccards) != 0) {
                      // Delete graphiccard in DB
                      foreach ($db_graphiccards as $idtmp => $data) {
-                        $item_DeviceGraphicCard->delete(array('id'=>$idtmp));
+                        $item_DeviceGraphicCard->delete(array('id'=>$idtmp), 1);
                      }
                   }
                   if (count($a_computerinventory['graphiccard']) != 0) {
@@ -425,7 +425,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (count($db_soundcards) != 0) {
                      // Delete soundcard in DB
                      foreach ($db_soundcards as $idtmp => $data) {
-                        $item_DeviceSoundCard->delete(array('id'=>$idtmp));
+                        $item_DeviceSoundCard->delete(array('id'=>$idtmp), 1);
                      }
                   }
                   if (count($a_computerinventory['soundcard']) != 0) {
@@ -480,7 +480,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (count($db_controls) != 0) {
                      // Delete controller in DB
                      foreach ($db_controls as $idtmp => $data) {
-                        $item_DeviceControl->delete(array('id'=>$idtmp));
+                        $item_DeviceControl->delete(array('id'=>$idtmp), 1);
                      }
                   }
                   if (count($a_computerinventory['controller']) != 0) {
@@ -609,7 +609,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (count($db_software) != 0) {
                      // Delete softwares in DB
                      foreach ($db_software as $idtmp => $data) {
-                        $this->computer_SoftwareVersion->delete(array('id'=>$idtmp));
+                        $this->computer_SoftwareVersion->delete(array('id'=>$idtmp), 1);
                      }
                   }
                   if (count($a_computerinventory['software']) != 0) {
@@ -721,7 +721,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                if (count($db_computervirtualmachine) != 0) {
                   // Delete virtualmachine in DB
                   foreach ($db_computervirtualmachine as $idtmp => $data) {
-                     $computerVirtualmachine->delete(array('id'=>$idtmp));
+                     $computerVirtualmachine->delete(array('id'=>$idtmp), 1);
                   }
                }
                if (count($a_computerinventory['virtualmachine']) != 0) {
@@ -785,7 +785,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                if (count($db_computerdisk) != 0) {
                   // Delete computerdisk in DB
                   foreach ($db_computerdisk as $idtmp => $data) {
-                     $computerDisk->delete(array('id'=>$idtmp));
+                     $computerDisk->delete(array('id'=>$idtmp), 1);
                   }
                }
                if (count($a_computerinventory['computerdisk']) != 0) {
@@ -862,7 +862,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         if (count($db_addresses) != 0) {
                            // Delete ip address in DB                     
                            foreach (array_keys($db_addresses) as $idtmp) {
-                              $iPAddress->delete(array('id'=>$idtmp));
+                              $iPAddress->delete(array('id'=>$idtmp), 1);
                            }
                         }
                         if (count($a_computerinventory_ipaddress) != 0) {
@@ -891,7 +891,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                if (count($db_networkport) != 0) {
                   // Delete networkport in DB
                   foreach ($db_networkport as $idtmp => $data) {
-                     $networkPort->delete(array('id'=>$idtmp));
+                     $networkPort->delete(array('id'=>$idtmp), 1);
                   }
                }
                if (count($a_computerinventory['networkport']) != 0) {
@@ -966,7 +966,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          } else {
             if (count($db_antivirus) != 0) {
                foreach ($db_antivirus as $idtmp => $data) {
-                  $pfInventoryComputerAntivirus->delete(array('id'=>$idtmp));
+                  $pfInventoryComputerAntivirus->delete(array('id'=>$idtmp), 1);
                }
             }
             if (count($a_computerinventory['antivirus']) != 0) {
@@ -1024,7 +1024,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          } else {
             if (count($db_batteries) != 0) {
                foreach ($db_batteries as $idtmp => $data) {
-                  $pfInventoryComputerBatteries->delete(array('id'=>$idtmp));
+                  $pfInventoryComputerBatteries->delete(array('id'=>$idtmp), 1);
                }
             }
             if (count($a_computerinventory['batteries']) != 0) {
@@ -1056,7 +1056,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 0) {
-                        $computer_Item->delete(array('id' => $data['link_id']));
+                        $computer_Item->delete(array('id' => $data['link_id']), 1);
                      } else {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
@@ -1079,7 +1079,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 1) {
-                        $computer_Item->delete(array('id' => $data['link_id']));
+                        $computer_Item->delete(array('id' => $data['link_id']), 1);
                      } else {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
@@ -1103,7 +1103,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['serial'] == ''
                              || $data['is_global'] == 1) {
-                        $computer_Item->delete(array('id' => $data['link_id']));
+                        $computer_Item->delete(array('id' => $data['link_id']), 1);
                      } else {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
@@ -1141,7 +1141,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (count($db_monitors) != 0) {
                      // Delete monitors links in DB
                      foreach ($db_monitors as $idtmp => $data) {
-                        $computer_Item->delete(array('id'=>$idtmp));
+                        $computer_Item->delete(array('id'=>$idtmp), 1);
                      }
                   }
                   if (count($a_computerinventory['monitor']) != 0) {
@@ -1172,7 +1172,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 0) {
-                        $computer_Item->delete(array('id' => $data['link_id']));
+                        $computer_Item->delete(array('id' => $data['link_id']), 1);
                      } else {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
@@ -1194,7 +1194,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 1) {
-                        $computer_Item->delete(array('id' => $data['link_id']));
+                        $computer_Item->delete(array('id' => $data['link_id']), 1);
                      } else {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
@@ -1217,7 +1217,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['serial'] == ''
                              || $data['is_global'] == 1) {
-                        $computer_Item->delete(array('id' => $data['link_id']));
+                        $computer_Item->delete(array('id' => $data['link_id']), 1);
                      } else {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
@@ -1256,7 +1256,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (count($db_printers) != 0) {
                      // Delete printers links in DB
                      foreach ($db_printers as $idtmp => $data) {
-                        $computer_Item->delete(array('id'=>$idtmp));
+                        $computer_Item->delete(array('id'=>$idtmp), 1);
                      }
                   }
                   if (count($a_computerinventory['printer']) != 0) {
@@ -1287,7 +1287,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 0) {
-                        $computer_Item->delete(array('id' => $data['link_id']));
+                        $computer_Item->delete(array('id' => $data['link_id']), 1);
                      } else {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
@@ -1310,7 +1310,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 1) {
-                        $computer_Item->delete(array('id' => $data['link_id']));
+                        $computer_Item->delete(array('id' => $data['link_id']), 1);
                      } else {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
@@ -1334,7 +1334,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['serial'] == ''
                              || $data['is_global'] == 1) {
-                        $computer_Item->delete(array('id' => $data['link_id']));
+                        $computer_Item->delete(array('id' => $data['link_id']), 1);
                      } else {
                         $idtmp = $data['link_id'];
                         unset($data['link_id']);
@@ -1372,7 +1372,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (count($db_peripherals) != 0) {
                      // Delete peripherals links in DB
                      foreach ($db_peripherals as $idtmp => $data) {
-                        $computer_Item->delete(array('id'=>$idtmp));
+                        $computer_Item->delete(array('id'=>$idtmp), 1);
                      }
                   }
                   if (count($a_computerinventory['peripheral']) != 0) {
