@@ -863,20 +863,6 @@ function plugin_get_headings_fusioninventory($item, $withtemplate) {
          }
          break;
 
-      case 'Printer' :
-         if ($withtemplate) { // new object / template case
-            return array();
-         } else { // Non template case / editing an existing object
-            $array = array ();
-            if (PluginFusioninventoryProfile::haveRight("printer", "r")) {
-               $array[1] = __('FusInv', 'fusioninventory')." ".__('SNMP', 'fusioninventory');
-            }
-            if (PluginFusioninventoryProfile::haveRight("task", "r")) {
-               $array[2] = __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
-            }
-            return $array;
-         }
-         break;
 
       case 'Profile' :
          if ($withtemplate) { // new object / template case
@@ -927,16 +913,6 @@ function plugin_headings_actions_fusioninventory($item) {
       case 'Computer' :
          $array = array();
          $array[3] = "plugin_headings_fusioninventory_tasks";
-         return $array;
-         break;
-
-      case 'Printer' :
-         $array = array();
-         if (PluginFusioninventoryProfile::haveRight("printer", "r")) {
-            $array[1] = "plugin_headings_fusinvsnmp_printerInfo";
-         }
-         $array[2] = "plugin_headings_fusioninventory_tasks";
-         $array[3] = "plugin_headings_fusioninventory_xml";
          return $array;
          break;
 
@@ -1029,29 +1005,6 @@ function plugin_headings_fusioninventory_networkingInfo($type, $id) {
    $snmp = new PluginFusioninventoryNetworkEquipment();
    $snmp->showForm($_POST['id'],
            array('target'=>$CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/switch_info.form.php'));
-}
-
-
-
-function plugin_headings_fusioninventory_printerInfo($type, $id) {
-   global $CFG_GLPI;
-
-   $plugin_fusinvsnmp_printer = new PluginFusioninventoryPrinter();
-   $plugin_fusinvsnmp_printer->showForm($_POST['id'],
-               array('target' => $CFG_GLPI['root_doc'].
-                                    '/plugins/fusinvsnmp/front/printer_info.form.php'));
-   echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
-
-   $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
-   $pfPrinterCartridge->showForm($_POST['id'],
-               array('target' => $CFG_GLPI['root_doc'].
-                                    '/plugins/fusinvsnmp/front/printer_info.form.php'));
-
-   $pfPrinterLog = new PluginFusioninventoryPrinterLog();
-   $pfPrinterLog->showGraph($_POST['id'],
-               array('target' => $CFG_GLPI['root_doc'].
-                                    '/plugins/fusinvsnmp/front/printer_info.form.php'));
-
 }
 
 

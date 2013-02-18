@@ -112,7 +112,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventorySnmpmodel');
       Plugin::registerClass('PluginFusioninventoryNetworkEquipment',
               array('addtabon' => array('NetworkEquipment')));
-      Plugin::registerClass('PluginFusioninventoryPrinter');
+      Plugin::registerClass('PluginFusioninventoryPrinter',
+              array('addtabon' => array('Printer')));
       Plugin::registerClass('PluginFusioninventoryPrinterCartridge');
       Plugin::registerClass('PluginFusioninventoryConfigSecurity');
       Plugin::registerClass('PluginFusioninventoryNetworkPortLog',

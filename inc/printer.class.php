@@ -45,8 +45,6 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryPrinter extends CommonDBTM {
-   private $oFusionInventory_printer;
-
 
    static function getTypeName($nb=0) {
 
@@ -67,6 +65,37 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       return PluginFusioninventoryProfile::haveRight("printer", "r");
    }
 
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
+   }
+
+
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      global $CFG_GLPI;
+      
+      if ($item->getID() > 0) {
+         $pfPrinter = new PluginFusioninventoryPrinter();
+         $pfPrinter->showForm($item,
+                     array('target' => $CFG_GLPI['root_doc'].
+                                          '/plugins/fusioninventory/front/printer_info.form.php'));
+         echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
+
+         $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
+         $pfPrinterCartridge->showForm($item->getID(),
+                     array('target' => $CFG_GLPI['root_doc'].
+                                          '/plugins/fusioninventory/front/printer_info.form.php'));
+
+         $pfPrinterLog = new PluginFusioninventoryPrinterLog();
+         $pfPrinterLog->showGraph($item->getID(),
+                     array('target' => $CFG_GLPI['root_doc'].
+                                          '/plugins/fusioninventory/front/printer_info.form.php'));
+      }
+
+      return TRUE;
+   }
+   
 
 
    /**
@@ -79,28 +108,27 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       parent::updateDB();
       // update last_fusioninventory_update even if no other update
       $this->setValue('last_fusioninventory_update', date("Y-m-d H:i:s"));
-      $this->oFusionInventory_printer->updateDB();
+      $this->updateDB();
    }
 
 
 
-   function showForm($id, $options=array()) {
+   function showForm(Printer $item, $options=array()) {
       global $DB;
 
       PluginFusioninventoryProfile::checkRight("printer", "r");
 
-      $this->oFusionInventory_printer->id = $id;
-
-      if (!$data = $this->oFusionInventory_printer->find("`printers_id`='".$id."'", '', 1)) {
+      $id = $item->getID();
+      if (!$data = $this->find("`printers_id`='".$id."'", '', 1)) {
          // Add in database if not exist
          $input = array();
          $input['printers_id'] = $id;
          $_SESSION['glpi_plugins_fusinvsnmp_table'] = 'glpi_printers';
-         $ID_tn = $this->oFusionInventory_printer->add($input);
-         $this->oFusionInventory_printer->getFromDB($ID_tn);
+         $ID_tn = $this->add($input);
+         $this->getFromDB($ID_tn);
       } else {
          foreach ($data as $datas) {
-            $this->oFusionInventory_printer->fields = $datas;
+            $this->fields = $datas;
          }
       }
 
@@ -125,7 +153,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       echo "<textarea name='sysdescr' cols='45' rows='5'>";
-      echo $this->oFusionInventory_printer->fields['sysdescr'];
+      echo $this->fields['sysdescr'];
       echo "</textarea>";
       echo "</td>";
       echo "<td align='center'>";
@@ -133,7 +161,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       echo Html::convDateTime(
-              $this->oFusionInventory_printer->fields['last_fusioninventory_update']);
+              $this->fields['last_fusioninventory_update']);
       echo "</td>";
       echo "</tr>";
 
@@ -152,14 +180,14 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       Dropdown::show("PluginFusioninventorySnmpmodel",
                      array('name'=>"plugin_fusioninventory_snmpmodels_id",
                            'value'=>
-                    $this->oFusionInventory_printer->fields['plugin_fusioninventory_snmpmodels_id'],
+                    $this->fields['plugin_fusioninventory_snmpmodels_id'],
                            'comment'=>FALSE,
                            'used'=>$exclude_models));
       echo "</td>";
       echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       PluginFusioninventoryConfigSecurity::auth_dropdown(
-              $this->oFusionInventory_printer->fields["plugin_fusinvsnmp_configsecurities_id"]);
+              $this->fields["plugin_fusioninventory_configsecurities_id"]);
       echo "</td>";
       echo "</tr>";
 
