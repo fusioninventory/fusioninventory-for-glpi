@@ -440,7 +440,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       }
 
       echo "<form method='post' name='snmp_form' id='snmp_form' action='".
-              $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/printer_info.form.php'>";
+              $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/printer_info.form.php'>";
       echo "<table class='tab_cadre' cellpadding='5' width='950'>";
       $mapping = new PluginFusioninventoryMapping();
       $maps = $mapping->find("`itemtype`='Printer'");
@@ -454,7 +454,6 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='4'>";
       echo __('Printed page counter', 'fusioninventory');
-
       echo "</th>";
       echo "</tr>";
 
@@ -506,7 +505,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td class='left' rowspan='3'>".__('Printers')."&nbsp;:</td>";
+      echo "<td class='left' rowspan='3'>".__('Printer')."&nbsp;:</td>";
       echo "<td class='left' rowspan='3'>";
       echo $printersList;
       echo "</td>";
@@ -561,11 +560,11 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          $query = "SELECT `printers_id`, DAY(`date`)-1 AS `day`, WEEK(`date`) AS `week`,
                     MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
                     `$graphField`
-             FROM `glpi_plugin_fusinvsnmp_printerlogs`"
+             FROM `glpi_plugin_fusioninventory_printerlogs`"
              .$where
              .$group."
              ORDER BY `year`, `month`, `day`, `printers_id`";
-
+         
          $input = array();
          $result = $DB->query($query);
 
