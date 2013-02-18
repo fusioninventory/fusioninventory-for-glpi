@@ -293,6 +293,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
    }   
    
    
+   
    public function testComputerOperatingSystemOCSType() {
       global $DB;
 
@@ -370,6 +371,63 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
      );
       // users_id = 0 because user notin DB
       $this->assertEquals($a_reference, $a_return); 
+   }
+   
+   
+   
+   public function testComputerProcessor() {
+      global $DB;
+
+      $DB->connect();
+      
+      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+
+      $a_computer = array();
+      $a_computer['HARDWARE'] = array(
+                'NAME'           => 'vbox-winxp',
+                'ARCHNAME'       => 'MSWin32-x86-multi-thread',
+                'CHASSIS_TYPE'   => '',
+                'DESCRIPTION'    => '',
+                'OSCOMMENTS'     => 'Service Pack 3 BAD',
+                'OSNAME'         => 'Microsoft Windows XP Professionnel BAD',
+                'OSVERSION'      => '5.1.2600 BAD',
+                'VMSYSTEM'       => 'VirtualBox',
+                'WINCOMPANY'     => 'siprossii',
+                'WINLANG'        => '1036',
+                'WINOWNER'       => 'test',
+                'WINPRODID'      => '76413-OEM-0054453-04701',
+                'WINPRODKEY'     => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
+                'WORKGROUP'      => 'WORKGROUP'
+            );
+
+      $a_computer['CPUS'] = Array(
+            Array(
+                'EXTERNAL_CLOCK' => 133,
+                'FAMILYNAME'     => 'Core i3',
+                'FAMILYNUMBER'   => 6,
+                'ID'             => '55 06 02 00 FF FB EB BF',
+                'MANUFACTURER'   => 'Intel Corporation',
+                'MODEL'          => '37',
+                'NAME'           => 'Core i3',
+                'SPEED'          => 2400,
+                'STEPPING'       => 5
+                ));
+ 
+     
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+      
+      $a_reference[0] = array(
+                    'manufacturers_id'  => 'Intel Corporation',
+                    'designation'       => 'Core i3',
+                    'frequence'         => 2400,
+                    'serial'            => '',
+                    'frequency'         => 2400,
+                    'is_dynamic'        => 1
+          );
+      
+      $this->assertEquals($a_reference, $a_return['processor']); 
    }
 }
 

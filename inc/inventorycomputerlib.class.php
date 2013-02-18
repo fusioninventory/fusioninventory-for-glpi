@@ -164,7 +164,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $db_processors = array();
             if ($no_history === FALSE) {
                $query = "SELECT `glpi_items_deviceprocessors`.`id`, `designation`, `frequence`, 
-                     `frequency`, `serial`, `manufacturers_id` FROM `glpi_items_deviceprocessors`
+                     `frequency`, `serial`, `manufacturers_id`, `is_dynamic`
+                  FROM `glpi_items_deviceprocessors`
                   LEFT JOIN `glpi_deviceprocessors` 
                      ON `deviceprocessors_id`=`glpi_deviceprocessors`.`id`
                   WHERE `items_id` = '$computers_id'
@@ -178,7 +179,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $db_processors[$idtmp] = $data2;
                }
             }
-
             if (count($db_processors) == 0) {
                foreach ($a_computerinventory['processor'] as $a_processor) {
                   $this->addProcessor($a_processor, $computers_id, $no_history);

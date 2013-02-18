@@ -84,7 +84,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
          unset($_SESSION['plugin_fusioninventory_entityrestrict']);
       }
-      $_SESSION['"plugin_fusioninventory_noruleentity'] = FALSE;
+      $_SESSION['plugin_fusioninventory_noruleentity'] = FALSE;
 
       
       $this->device_id = $p_DEVICEID;
@@ -252,7 +252,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                   $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
                   $input['entities_id'] = $dataEntity['entities_id'];
                } else {
-                  $_SESSION['"plugin_fusioninventory_noruleentity'] = TRUE;
+                  $_SESSION['plugin_fusioninventory_noruleentity'] = TRUE;
                   $input['entities_id'] = 0;
                }
                if (isset($dataEntity['locations_id'])) {
@@ -265,7 +265,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                   $input['entities_id'] = $dataEntity['entities_id'];
                } else {
                   $input['entities_id'] = 0;
-                  $_SESSION['"plugin_fusioninventory_noruleentity'] = TRUE;
+                  $_SESSION['plugin_fusioninventory_noruleentity'] = TRUE;
                }
             }
          // End entity rules
@@ -342,7 +342,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       
       $a_computerinventory = $pfFormatconvert->replaceids($this->arrayinventory);
       $entities_id = 0;
-      if ($_SESSION['"plugin_fusioninventory_noruleentity']) {
+      if ($_SESSION['plugin_fusioninventory_noruleentity']) {
          if ($items_id == 0) {
             $entities_id = 0;
          } else {
@@ -354,9 +354,13 @@ class PluginFusioninventoryInventoryComputerInventory {
          if ($_SESSION["plugin_fusinvinventory_entity"] >= 0
                  && !isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
             $entities_id = $_SESSION["plugin_fusinvinventory_entity"];
-         } else if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
+         } else {
             if ($items_id == 0) {
-               $entities_id = $_SESSION['plugin_fusioninventory_entityrestrict'];
+               if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
+                  $entities_id = $_SESSION['plugin_fusioninventory_entityrestrict'];
+               } else {
+                  $entities_id = 0;
+               }
             } else {
                $item = new $itemtype();
                $item->getFromDB($items_id);

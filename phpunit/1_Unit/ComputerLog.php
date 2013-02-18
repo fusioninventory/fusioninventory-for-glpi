@@ -40,16 +40,29 @@
    ------------------------------------------------------------------------
  */
 
-class ComputerUpdate extends PHPUnit_Framework_TestCase {
+class ComputerLog extends PHPUnit_Framework_TestCase {
    
-   public $items_id = 0;
-   public $datelatupdate = '';
-
-   
-   public function testAddComputer() {
+   public function testLogAddComputer() {
       global $DB;
 
       $DB->connect();
+      
+      $Install = new Install();
+      $Install->testInstall(0);
+
+      // Get last glpi_logs id
+      $query = "SELECT * FROM `glpi_logs`
+         ORDER BY `id` DESC
+         LIMIT 1";
+      
+      $result = $DB->query($query);
+      $a_log = $DB->fetch_assoc($result);
+      $logs_id = $a_log['id'];
+      
+      
+      
+      
+      
       
       $date = date('Y-m-d H:i:s');
       
@@ -222,13 +235,27 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
       $a_inventory['fusioninventorycomputer']['serialized_inventory'] = 
                Toolbox::addslashes_deep($serialized);
       
-      $this->items_id = $computer->add(array('serial'      => 'XB63J7D',
+      $computers_id = $computer->add(array('serial'      => 'XB63J7D',
                                              'entities_id' => 0));
 
-      $this->assertGreaterThan(0, $this->items_id, FALSE);
+      $this->assertGreaterThan(0, $computers_id, FALSE);
       $_SESSION['glpiactive_entity'] = 0;
-      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
+      $pfiComputerLib->updateComputer($a_inventory, $computers_id, TRUE);
 
+      $query = "SELECT * FROM `glpi_logs`
+         WHERE `id` > '".$logs_id."'";
+      $result = $DB->query($query);
+      $a_logs = array();
+      $a_reference = array();
+
+      while ($data=$DB->fetch_array($result)) {
+         $a_logs[$data['id']] = $data;
+         $a_reference[$data['id']] = array();
+      }
+      $this->assertEquals($a_reference, $a_logs, "Log may be empty");
+      
+return;
+      
       // To be sure not have 2 same informations
       $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
    
@@ -236,366 +263,15 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
-   
-   
-   public function testComputerGeneral() {
-      global $DB;
-
-      $DB->connect();
-      
-      $computer = new Computer();
-      
-      $computer->getFromDB(1);
-      unset($computer->fields['date_mod']);
-      $a_reference = array(
-          'name'                             => 'pc',
-          'id'                               => '1',
-          'entities_id'                      => '0',
-          'serial'                           => 'XB63J7D',
-          'otherserial'                      => NULL,
-          'contact'                          => 'ddurieux',
-          'contact_num'                      => NULL,
-          'users_id_tech'                    => '0',
-          'groups_id_tech'                   => '0',
-          'comment'                          => NULL,
-          'operatingsystems_id'              => '1',
-          'operatingsystemversions_id'       => '1',
-          'operatingsystemservicepacks_id'   => '1',
-          'os_license_number'                => NULL,
-          'os_licenseid'                     => NULL,
-          'autoupdatesystems_id'             => '0',
-          'locations_id'                     => '0',
-          'domains_id'                       => '1',
-          'networks_id'                      => '0',
-          'computermodels_id'                => '0',
-          'computertypes_id'                 => '1',
-          'is_template'                      => '0',
-          'template_name'                    => NULL,
-          'manufacturers_id'                 => '0',
-          'is_deleted'                       => '0',
-          'notepad'                          => NULL,
-          'is_dynamic'                       => '1',
-          'users_id'                         => '0',
-          'groups_id'                        => '0',
-          'states_id'                        => '0',
-          'ticket_tco'                       => '0.0000',
-          'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220'
-      );
-      
-      $this->assertEquals($a_reference, $computer->fields);      
-   }   
-   
-
-   
-   public function testComputerExtension() {
-      global $DB;
-
-      $DB->connect();
-      
-      $pfiComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
-      $a_computer = current($pfiComputerComputer->find("`computers_id`='1'", "", 1));
-      unset($a_computer['last_fusioninventory_update']);
-      $serialized_inventory = $a_computer['serialized_inventory'];
-      unset($a_computer['serialized_inventory']);
-      $a_reference = array(
-          'id'                               => '1',
-          'computers_id'                     => '1',
-          'bios_date'                        => NULL,
-          'bios_version'                     => NULL,
-          'bios_manufacturers_id'            => '0',
-          'operatingsystem_installationdate' => '2012-10-16 08:12:56',
-          'winowner'                         => 'test',
-          'wincompany'                       => 'siprossii',
-          'remote_addr'                      => NULL
-      );
-      
-      $this->assertEquals($a_reference, $a_computer);      
-      
-      $this->assertNotEquals(NULL, $serialized_inventory);      
-      
-   }  
-   
-
-   
-   public function testSoftwareadded() {
-      global $DB;
-
-      $DB->connect();
-      
-      $nbsoftware = countElementsInTable("glpi_softwares");
-      
-      $this->assertEquals(3, $nbsoftware);   
-   }
-   
-   
-      
-   public function testSoftwareGentiumBasicadded() {
-      global $DB;
-
-      $DB->connect();
-      
-      $software = new Software();
-            
-      $software->getFromDB(1);
-      unset($software->fields['date_mod']);
-      $a_reference = array(
-          'id'                      => '1',
-          'name'                    => 'GentiumBasic',
-          'entities_id'             => '0',
-          'is_recursive'            => '0',
-          'comment'                 => NULL,
-          'locations_id'            => '0',
-          'users_id_tech'           => '0',
-          'groups_id_tech'          => '0',
-          'is_update'               => '0',
-          'softwares_id'            => '-1',
-          'manufacturers_id'        => '1',
-          'is_deleted'              => '0',
-          'is_template'             => '0',
-          'template_name'           => NULL,
-          'notepad'                 => NULL,
-          'users_id'                => '0',
-          'groups_id'               => '0',
-          'ticket_tco'              => '0.0000',
-          'is_helpdesk_visible'     => '1',
-          'softwarecategories_id'   => '0'
-      );
-      
-      $this->assertEquals($a_reference, $software->fields);
-   } 
-
-   
-   
-   public function testSoftwareImageMagickadded() {
-      global $DB;
-
-      $DB->connect();
-      
-      $software = new Software();
-      
-      $software->getFromDB(2);
-      unset($software->fields['date_mod']);
-      $a_reference = array(
-          'id'                      => '2',
-          'name'                    => 'ImageMagick',
-          'entities_id'             => '0',
-          'is_recursive'            => '0',
-          'comment'                 => NULL,
-          'locations_id'            => '0',
-          'users_id_tech'           => '0',
-          'groups_id_tech'          => '0',
-          'is_update'               => '0',
-          'softwares_id'            => '-1',
-          'manufacturers_id'        => '2',
-          'is_deleted'              => '0',
-          'is_template'             => '0',
-          'template_name'           => NULL,
-          'notepad'                 => NULL,
-          'users_id'                => '0',
-          'groups_id'               => '0',
-          'ticket_tco'              => '0.0000',
-          'is_helpdesk_visible'     => '1',
-          'softwarecategories_id'   => '0'
-      );
-      
-      $this->assertEquals($a_reference, $software->fields);
-   }
-    
-   
-   
-   public function testSoftwareORBit2added() {
-      global $DB;
-
-      $DB->connect();
-      
-      $software = new Software();
-      
-      $software->getFromDB(3);
-      unset($software->fields['date_mod']);
-      $a_reference = array(
-          'id'                      => '3',
-          'name'                    => 'ORBit2',
-          'entities_id'             => '0',
-          'is_recursive'            => '0',
-          'comment'                 => NULL,
-          'locations_id'            => '0',
-          'users_id_tech'           => '0',
-          'groups_id_tech'          => '0',
-          'is_update'               => '0',
-          'softwares_id'            => '-1',
-          'manufacturers_id'        => '3',
-          'is_deleted'              => '0',
-          'is_template'             => '0',
-          'template_name'           => NULL,
-          'notepad'                 => NULL,
-          'users_id'                => '0',
-          'groups_id'               => '0',
-          'ticket_tco'              => '0.0000',
-          'is_helpdesk_visible'     => '1',
-          'softwarecategories_id'   => '0'
-      );
-      
-      $this->assertEquals($a_reference, $software->fields);
-   }
-      
-   
-   
-   public function testSoftwareVersionGentiumBasicadded() {
-      global $DB;
-
-      $DB->connect();
-      
-      $softwareVersion = new SoftwareVersion();
-            
-      $softwareVersion->getFromDB(1);
-      unset($softwareVersion->fields['date_mod']);
-      $a_reference = array(
-          'id'                   => '1',
-          'name'                 => '110',
-          'entities_id'          => '0',
-          'is_recursive'         => '0',
-          'softwares_id'         => '1',
-          'states_id'            => '0',
-          'comment'              => NULL,
-          'operatingsystems_id'  => '0'
-      );
-      
-      $this->assertEquals($a_reference, $softwareVersion->fields);
-   } 
-      
-   
-   
-   public function testSoftwareVersionImageMagickadded() {
-      global $DB;
-
-      $DB->connect();
-      
-      $softwareVersion = new SoftwareVersion();
-            
-      $softwareVersion->getFromDB(2);
-      unset($softwareVersion->fields['date_mod']);
-      $a_reference = array(
-          'id'                   => '2',
-          'name'                 => '6.8.0.7_1',
-          'entities_id'          => '0',
-          'is_recursive'         => '0',
-          'softwares_id'         => '2',
-          'states_id'            => '0',
-          'comment'              => NULL,
-          'operatingsystems_id'  => '0'
-      );
-      
-      $this->assertEquals($a_reference, $softwareVersion->fields);
-   } 
-      
-   
-   
-   public function testSoftwareVersionORBit2added() {
-      global $DB;
-
-      $DB->connect();
-      
-      $softwareVersion = new SoftwareVersion();
-            
-      $softwareVersion->getFromDB(3);
-      unset($softwareVersion->fields['date_mod']);
-      $a_reference = array(
-          'id'                   => '3',
-          'name'                 => '2.14.19',
-          'entities_id'          => '0',
-          'is_recursive'         => '0',
-          'softwares_id'         => '3',
-          'states_id'            => '0',
-          'comment'              => NULL,
-          'operatingsystems_id'  => '0'
-      );
-      
-      $this->assertEquals($a_reference, $softwareVersion->fields);
-   }
-   
-
-   
-   public function testComputerSoftwareGentiumBasic() {
-      global $DB;
-
-      $DB->connect();
-                  
-      $computer_SoftwareVersion = new Computer_SoftwareVersion();
-            
-      $computer_SoftwareVersion->getFromDB(1);
-      
-      $a_reference = array(
-          'id'                   => '1',
-          'computers_id'         => '1',
-          'softwareversions_id'  => '1',
-          'is_deleted_computer'  => '0',
-          'is_template_computer' => '0',
-          'entities_id'          => '0',
-          'is_deleted'           => '0',
-          'is_dynamic'           => '1'
-      );
-      
-      $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);      
-   }
-   
-
-   
-   public function testComputerSoftwareImageMagick() {
-      global $DB;
-
-      $DB->connect();
-                  
-      $computer_SoftwareVersion = new Computer_SoftwareVersion();
-            
-      $computer_SoftwareVersion->getFromDB(2);
-      
-      $a_reference = array(
-          'id'                   => '2',
-          'computers_id'         => '1',
-          'softwareversions_id'  => '2',
-          'is_deleted_computer'  => '0',
-          'is_template_computer' => '0',
-          'entities_id'          => '0',
-          'is_deleted'           => '0',
-          'is_dynamic'           => '1'
-      );
-      
-      $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);      
-   }
-   
-
-   
-   public function testComputerSoftwareORBit2() {
-      global $DB;
-
-      $DB->connect();
-                  
-      $computer_SoftwareVersion = new Computer_SoftwareVersion();
-            
-      $computer_SoftwareVersion->getFromDB(3);
-      
-      $a_reference = array(
-          'id'                   => '3',
-          'computers_id'         => '1',
-          'softwareversions_id'  => '3',
-          'is_deleted_computer'  => '0',
-          'is_template_computer' => '0',
-          'entities_id'          => '0',
-          'is_deleted'           => '0',
-          'is_dynamic'           => '1'
-      );
-      
-      $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);      
-   }
  }
 
 
 
-class ComputerUpdate_AllTests  {
+class ComputerLog_AllTests  {
 
    public static function suite() {
 
-      $suite = new PHPUnit_Framework_TestSuite('ComputerUpdate');
+      $suite = new PHPUnit_Framework_TestSuite('ComputerLog');
       return $suite;
    }
 }

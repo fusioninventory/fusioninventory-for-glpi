@@ -51,6 +51,9 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
 
       $DB->connect();
       
+      $Install = new Install();
+      $Install->testInstall(0);
+      
       $date = date('Y-m-d H:i:s');
       
       $_SESSION["plugin_fusinvinventory_entity"] = 0;
@@ -104,28 +107,32 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'is_dynamic'        => 1
                 ),
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'is_dynamic'        => 1
                 ),
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'is_dynamic'        => 1
                 ),
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'is_dynamic'        => 1
                 )
         );
 
@@ -586,6 +593,63 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
       );
       
       $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);      
+   }
+   
+   
+   
+   public function testComputerProcessorLink() {
+      global $DB;
+
+      $DB->connect();
+
+      $a_dataLink = getAllDatasFromTable("glpi_items_deviceprocessors", 
+                                         "`itemtype`='Computer'
+                                            AND `items_id`='1'");
+      
+      $a_reference = array(
+          '1' => array(
+                     'id'                    => '1',
+                     'items_id'              => '1',
+                     'itemtype'              => 'Computer',
+                     'deviceprocessors_id'   => '1',
+                     'frequency'             => '2400',
+                     'serial'                => '',
+                     'is_deleted'            => '0',
+                     'is_dynamic'            => '1'
+                 ),
+          '2' => array(
+                     'id' => '2',
+                     'items_id'              => '1',
+                     'itemtype'              => 'Computer',
+                     'deviceprocessors_id'   => '1',
+                     'frequency'             => '2400',
+                     'serial'                => '',
+                     'is_deleted'            => '0',
+                     'is_dynamic'            => '1'
+                 ),
+          '3' => array(
+                     'id' => '3',
+                     'items_id'              => '1',
+                     'itemtype'              => 'Computer',
+                     'deviceprocessors_id'   => '1',
+                     'frequency'             => '2400',
+                     'serial'                => '',
+                     'is_deleted'            => '0',
+                     'is_dynamic'            => '1'
+                 ),
+          '4' => array(
+                     'id' => '4',
+                     'items_id'              => '1',
+                     'itemtype'              => 'Computer',
+                     'deviceprocessors_id'   => '1',
+                     'frequency'             => '2400',
+                     'serial'                => '',
+                     'is_deleted'            => '0',
+                     'is_dynamic'            => '1'
+                 )
+      );
+      
+      $this->assertEquals($a_reference, $a_dataLink);      
    }
  }
 

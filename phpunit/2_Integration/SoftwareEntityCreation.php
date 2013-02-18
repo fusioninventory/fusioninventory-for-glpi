@@ -40,33 +40,24 @@
    ------------------------------------------------------------------------
  */
 
-class ComputerEntity extends PHPUnit_Framework_TestCase {
+class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
    
   
       /*
-      Tests:
+      Tests: Add computer in entity 1
        
-       * (step1) entity rule => entity 1     |  transfers_id_auto = 1
+       * (step1: new install) entities_id_software = -2 (current entity)
        
-            * add pc1            => entity 1
-            * update pc1         => entity 1
-            * transfert manual   => pc1 entity 0    
-            * update pc1         => entity 1
+            * add pc1 => Software in entity 1
       
-       * (step2) entity rule => entity 1     |  transfers_id_auto = 0
+       * (step2: new install) entities_id_software = 0 (root entity)
        
-            * add pc1            => entity 1
-            * update pc1         => entity 1
-            * transfert manual   => pc1 entity 0    
-            * update pc1         => entity 0
-        
-       * (step3) no entity rule              |  transfers_id_auto = 1
+            * add pc1 => Software in entity 0
+
+       * (step3: current install) entities_id_software = -2 (current entity)
        
-            * add pc1            => entity 0
-            * update pc1         => entity 0
-            * transfert manual   => pc1 entity 1    
-            * update pc1         => entity 1
-       
+            * delete pc1   
+            * add pc1 with same softwares => Software duplucate (name) in entity 1
       
       */
       
@@ -80,7 +71,6 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
       $Install->testInstall(0);
       
       $GLPIlog = new GLPIlogs();
-      $transfer = new Transfer();
       
       $DB->query("INSERT INTO `glpi_entities` 
          (`id`, `name`, `entities_id`, `completename`, `level`) 
@@ -88,15 +78,21 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
       
     
       $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION['glpiname'] = 'glpi';
       $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
-      $pfConfig = new PluginFusioninventoryConfig();
       $computer = new Computer();
+      $software = new Software();
       
       $a_inventory = array();
       $a_inventory['CONTENT']['HARDWARE'] = array(
           'NAME' => 'pc1'
       );
-
+      $a_inventory['CONTENT']['SOFTWARES'][] = array(
+          'COMMENTS' => "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
+          'NAME'     => "curl",
+          'VERSION'  => "7.24.0_1"
+          );
+      
       // * Add rule ignore
          $rule = new Rule();
          $ruleCriteria = new RuleCriteria();
@@ -123,8 +119,6 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
          $input['value']         = 1;
          $ruleAction->add($input);  
 
-      $pfConfig->updateValue('transfers_id_auto', 1);
-
       // ** Add
          $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
 
@@ -132,78 +126,46 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
          $GLPIlog->testPHPlogs();
 
          $computer->getFromDB(1);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'Add computer');     
-
-      // ** Update
-         $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
-
-         $GLPIlog->testSQLlogs();
-         $GLPIlog->testPHPlogs();
-
-         $nbComputers = countElementsInTable("glpi_computers");
-         $this->assertEquals(1, $nbComputers, 'Nb computer for update computer');
-
-         $computer->getFromDB(1);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'Update computer');
-
-
-      // ** Transfer to entity 0
-         $transfer->getFromDB(1);
-         $item_to_transfer = array("Computer" => array(1 => 1));
-         $transfer->moveItems($item_to_transfer, 0, $transfer->fields);
-
-         $GLPIlog->testSQLlogs();
-         $GLPIlog->testPHPlogs();
-
-         $computer->getFromDB(1);
-         $this->assertEquals(0, $computer->fields['entities_id'], 'manual transfer computer');
-
-      // ** Update
-         $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
-
-         $GLPIlog->testSQLlogs();
-         $GLPIlog->testPHPlogs();
-
-         $nbComputers = countElementsInTable("glpi_computers");
-         $this->assertEquals(1, $nbComputers, 'Nb computer for update computer');
-
-         $computer->getFromDB(1);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'Update computer after '.
-                  'manual transfer');
-
+         $this->assertEquals(1, $computer->fields['entities_id'], 'Add computer');
+         
+         $software->getFromDB(1);
+         $this->assertEquals(1, $software->fields['entities_id'], 'Add computer');
+         
    }   
-   
+
    
    
    public function testAddComputerStep2() {
-      global $DB, $PF_CONFIG;
+      global $DB;
 
       $DB->connect();
-
+      
       $Install = new Install();
       $Install->testInstall(0);
       
       $GLPIlog = new GLPIlogs();
-      $transfer = new Transfer();
       
       $DB->query("INSERT INTO `glpi_entities` 
-         (`id`, `name`, `entities_id`, `completename`, `level`) 
-         VALUES (1, 'entity1', 0, 'Entité racine > entity1', 2)");
+         (`id`, `name`, `entities_id`, `completename`, `level`, `entities_id_software`) 
+         VALUES (1, 'entity1', 0, 'Entité racine > entity1', 2, 0)");
       
     
       $_SESSION['glpiactive_entity'] = 0;
-      $PF_CONFIG = array();
-      
+      $_SESSION['glpiname'] = 'glpi';
       $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
-      $pfConfig = new PluginFusioninventoryConfig();
       $computer = new Computer();
+      $software = new Software();
       
-      $pfConfig->updateValue('transfers_id_auto', 0);
-      
+      $a_inventory = array();
       $a_inventory['CONTENT']['HARDWARE'] = array(
           'NAME' => 'pc1'
       );
-
+      $a_inventory['CONTENT']['SOFTWARES'][] = array(
+          'COMMENTS' => "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
+          'NAME'     => "curl",
+          'VERSION'  => "7.24.0_1"
+          );
+      
       // * Add rule ignore
          $rule = new Rule();
          $ruleCriteria = new RuleCriteria();
@@ -237,81 +199,40 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
          $GLPIlog->testPHPlogs();
 
          $computer->getFromDB(1);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'Add computer');     
-
-      // ** Update
-         $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
-
-         $GLPIlog->testSQLlogs();
-         $GLPIlog->testPHPlogs();
-
-         $nbComputers = countElementsInTable("glpi_computers");
-         $this->assertEquals(1, $nbComputers, 'Nb computer for update computer');
-
-         $computer->getFromDB(1);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'Update computer');
-
-
-      // ** Transfer to entity 0
-         $transfer->getFromDB(1);
-         $item_to_transfer = array("Computer" => array(1 => 1));
-         $transfer->moveItems($item_to_transfer, 0, $transfer->fields);
-
-         $GLPIlog->testSQLlogs();
-         $GLPIlog->testPHPlogs();
-
-         $computer->getFromDB(1);
-         $this->assertEquals(0, $computer->fields['entities_id'], 'manual transfer computer');
-
-      // ** Update
-         $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
-
-         $GLPIlog->testSQLlogs();
-         $GLPIlog->testPHPlogs();
-
-         $nbComputers = countElementsInTable("glpi_computers");
-         $this->assertEquals(2, $nbComputers, 'Nb computer for update computer');
-
-         $computer->getFromDB(1);
-         $this->assertEquals(0, $computer->fields['entities_id'], 'Update computer 1 after '.
-                  'manual transfer');
-
-         $computer->getFromDB(2);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'Update computer 2 after '.
-                  'manual transfer');
-
+         $this->assertEquals(1, $computer->fields['entities_id'], 'Add computer');
+         
    }   
-   
+
    
    
    public function testAddComputerStep3() {
-      global $DB, $PF_CONFIG;
+      global $DB;
 
       $DB->connect();
-
-      $Install = new Install();
-      $Install->testInstall(0);
       
       $GLPIlog = new GLPIlogs();
-      $transfer = new Transfer();
       
-      $DB->query("INSERT INTO `glpi_entities` 
-         (`id`, `name`, `entities_id`, `completename`, `level`) 
-         VALUES (1, 'entity1', 0, 'Entité racine > entity1', 2)");
+      $DB->query("UPDATE `glpi_entities` 
+         SET `entities_id_software` = '-2' 
+         WHERE `id`='1'");
       
-    
       $_SESSION['glpiactive_entity'] = 0;
-      $PF_CONFIG = array();
-      
+      $_SESSION['glpiname'] = 'glpi';
       $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
-      $pfConfig = new PluginFusioninventoryConfig();
       $computer = new Computer();
+      $software = new Software();
+
+      $computer->add(array('name' => 'pc2', 'entities_id' => 1));
       
-      $pfConfig->updateValue('transfers_id_auto', 1);
-      
+      $a_inventory = array();
       $a_inventory['CONTENT']['HARDWARE'] = array(
           'NAME' => 'pc2'
       );
+      $a_inventory['CONTENT']['SOFTWARES'][] = array(
+          'COMMENTS' => "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
+          'NAME'     => "curl",
+          'VERSION'  => "7.24.0_1"
+          );
 
       // ** Add
          $pfiComputerInv->import("pc2-2013-02-13", "", $a_inventory); // creation
@@ -319,58 +240,28 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
          $GLPIlog->testSQLlogs();
          $GLPIlog->testPHPlogs();
 
-         $computer->getFromDB(1);
-         $this->assertEquals(0, $computer->fields['entities_id'], 'Add computer');     
-
-      // ** Update
-         $pfiComputerInv->import("pc2-2013-02-13", "", $a_inventory); // creation
-
-         $GLPIlog->testSQLlogs();
-         $GLPIlog->testPHPlogs();
-
-         $nbComputers = countElementsInTable("glpi_computers");
-         $this->assertEquals(1, $nbComputers, 'Nb computer for update computer');
-
-         $computer->getFromDB(1);
-         $this->assertEquals(0, $computer->fields['entities_id'], 'Update computer');
-
-
-      // ** Transfer to entity 1
-         $transfer->getFromDB(1);
-         $item_to_transfer = array("Computer" => array(1 => 1));
-         $transfer->moveItems($item_to_transfer, 1, $transfer->fields);
-
-         $GLPIlog->testSQLlogs();
-         $GLPIlog->testPHPlogs();
-
-         $computer->getFromDB(1);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'manual transfer computer');
-
-      // ** Update
-         $pfiComputerInv->import("pc2-2013-02-13", "", $a_inventory); // creation
-
-         $GLPIlog->testSQLlogs();
-         $GLPIlog->testPHPlogs();
-
-         $nbComputers = countElementsInTable("glpi_computers");
-         $this->assertEquals(1, $nbComputers, 'Nb computer for update computer');
-
-         $computer->getFromDB(1);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'Update computer 1 after '.
-                  'manual transfer');
-
-   }
+         $computer->getFromDB(2);
+         $this->assertEquals(1, $computer->fields['entities_id'], 'Add computer');
+         
+         $nbSoftwares = countElementsInTable("glpi_softwares");
+         $this->assertEquals(2, $nbSoftwares, 'Nb softwares');
+         
+         $software->getFromDB(2);
+         $this->assertEquals(1, $software->fields['entities_id'], 'Entity software of pc2');
+            
+        
+   }   
  }
 
 
 
-class ComputerEntity_AllTests  {
+class SoftwareEntityCreation_AllTests  {
 
    public static function suite() {
 
  
      
-      $suite = new PHPUnit_Framework_TestSuite('ComputerEntity');
+      $suite = new PHPUnit_Framework_TestSuite('SoftwareEntityCreation');
       return $suite;
    }
 }

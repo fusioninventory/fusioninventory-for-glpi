@@ -419,6 +419,7 @@ class PluginFusioninventoryFormatconvert {
                      $array_tmp['designation'] = $a_cpus['TYPE'];
                   }
                   $array_tmp['frequency'] = $array_tmp['frequence'];
+                  $array_tmp['is_dynamic'] = 1; 
                   $a_inventory['processor'][] = $array_tmp;
                }
             }
@@ -1000,14 +1001,14 @@ class PluginFusioninventoryFormatconvert {
    function computerSoftwareTransformation($a_inventory, $entities_id) {
       
       $entities_id_software = Entity::getUsedConfig('entities_id_software', 
-                                                    $_SESSION["plugin_fusinvinventory_entity"]);
+                                                    $entities_id);
       
       $nb_RuleDictionnarySoftware = countElementsInTable("glpi_rules", 
                                                          "`sub_type`='RuleDictionnarySoftware'
                                                             AND `is_active`='1'");
       
       if ($entities_id_software < 0) {
-         $entities_id_software = $_SESSION["plugin_fusinvinventory_entity"];
+         $entities_id_software = $entities_id;
       }
       $a_inventory['software'] = array();
       

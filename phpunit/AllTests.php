@@ -158,8 +158,10 @@ require_once '1_Unit/ComputerUpdate.php';
 require_once '1_Unit/PrinterTransformation.php';
 require_once '1_Unit/PrinterUpdate.php';
 require_once '1_Unit/NetworkEquipmentTransformation.php';
+require_once '1_Unit/ComputerLog.php';
 
 require_once '2_Integration/ComputerEntity.php';
+require_once '2_Integration/SoftwareEntityCreation.php';
 
 require_once 'emulatoragent.php';
 
@@ -183,9 +185,10 @@ class AllTests {
       $suite->addTest(PrinterTransformation_AllTests::suite());
       $suite->addTest(PrinterUpdate_AllTests::suite());
       $suite->addTest(NetworkEquipmentTransformation_AllTests::suite());
+//      $suite->addTest(ComputerLog_AllTests::suite());
             
       $suite->addTest(ComputerEntity_AllTests::suite());
-      
+      $suite->addTest(SoftwareEntityCreation_AllTests::suite());
       return $suite;
    }
 }
