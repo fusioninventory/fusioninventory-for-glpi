@@ -48,10 +48,12 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
 
 
 
-   function showForm($id, $options=array()) {
+   function showForm(Printer $item, $options=array()) {
 
       // ** Get link OID fields
       $mapping_name=array();
+      
+      $id = $item->getID();
       $a_cartridges = $this->find("`printers_id`='".$id."'");
 
       echo "<div align='center'><form method='post' name='snmp_form' id='snmp_form'
@@ -70,7 +72,7 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
          $mapping->getFromDB($a_cartridge['plugin_fusioninventory_mappings_id']);
-         echo $mapping->getTranslation($mapping['locale']);
+         echo $mapping->getTranslation($mapping->fields);
          echo " : ";
          echo "</td>";
          echo "<td align='center'>";

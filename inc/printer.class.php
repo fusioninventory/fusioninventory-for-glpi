@@ -83,7 +83,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
          echo '<div id="overDivYFix" STYLE="visibility:hidden">fusinvsnmp_1</div>';
 
          $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
-         $pfPrinterCartridge->showForm($item->getID(),
+         $pfPrinterCartridge->showForm($item,
                      array('target' => $CFG_GLPI['root_doc'].
                                           '/plugins/fusioninventory/front/printer_info.form.php'));
 

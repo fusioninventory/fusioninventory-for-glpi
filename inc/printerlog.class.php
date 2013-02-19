@@ -542,23 +542,38 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       echo "</table>";
       Html::closeForm();
 
-      $elementsField=array('pages_total'=>$pagecounters['pagecountertotalpages'],
-                      'pages_n_b'=>$pagecounters['pagecounterblackpages'],
-                      'pages_color'=>$pagecounters['pagecountercolorpages'],
-                      'pages_recto_verso'=>$pagecounters['pagecounterrectoversopages'],
-                      'scanned'=>$pagecounters['pagecounterscannedpages'],
-                      'pages_total_print'=>$pagecounters['pagecountertotalpages_print'],
-                      'pages_n_b_print'=>$pagecounters['pagecounterblackpages_print'],
-                      'pages_color_print'=>$pagecounters['pagecountercolorpages_print'],
-                      'pages_total_copy'=>$pagecounters['pagecountertotalpages_copy'],
-                      'pages_n_b_copy'=>$pagecounters['pagecounterblackpages_copy'],
-                      'pages_color_copy'=>$pagecounters['pagecountercolorpages_copy'],
-                      'pages_total_fax'=>$pagecounters['pagecountertotalpages_fax']);
+      $elementsField=array(
+          'pages_total'       => $pagecounters['pagecountertotalpages'],
+          'pages_n_b'         => $pagecounters['pagecounterblackpages'],
+          'pages_color'       => $pagecounters['pagecountercolorpages'],
+          'pages_recto_verso' => $pagecounters['pagecounterrectoversopages'],
+          'scanned'           => $pagecounters['pagecounterscannedpages'],
+          'pages_total_print' => $pagecounters['pagecountertotalpages_print'],
+          'pages_n_b_print'   => $pagecounters['pagecounterblackpages_print'],
+          'pages_color_print' => $pagecounters['pagecountercolorpages_print'],
+          'pages_total_copy'  => $pagecounters['pagecountertotalpages_copy'],
+          'pages_n_b_copy'    => $pagecounters['pagecounterblackpages_copy'],
+          'pages_color_copy'  => $pagecounters['pagecountercolorpages_copy'],
+          'pages_total_fax'   => $pagecounters['pagecountertotalpages_fax']);
 
       echo "<br/>";
+      $a_graph = array();
       foreach($elementsField as $graphField=>$name) {
          $query = "SELECT `printers_id`, DAY(`date`)-1 AS `day`, WEEK(`date`) AS `week`,
-                    MONTH(`date`) AS `month`, YEAR(`date`) AS `year`,
+                    MONTH(`date`) AS `month`, YEAR(`date`) AS `year`, `date`, 
+                    `$graphField`
+             FROM `glpi_plugin_fusioninventory_printerlogs`"
+             .$where.
+                " AND `".$graphField."` > 0 "
+             .$group;
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == 0) {
+            unset($elementsField[$graphField]);
+         }
+      }
+      foreach($elementsField as $graphField=>$name) {
+         $query = "SELECT `printers_id`, DAY(`date`)-1 AS `day`, WEEK(`date`) AS `week`,
+                    MONTH(`date`) AS `month`, YEAR(`date`) AS `year`, `date`, 
                     `$graphField`
              FROM `glpi_plugin_fusioninventory_printerlogs`"
              .$where
@@ -567,32 +582,6 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          
          $input = array();
          $result = $DB->query($query);
-
-         $calendarDay = array (
-               __('Monday'),
-               __('Tuesday'),
-               __('Wednesday'),
-               __('Thursday'),
-               __('Friday'),
-               __('Saturday'),
-               __('Sunday'),
-               __('Sunday')
-         );
-
-         $calendarMonth = array (
-               __('January'),
-               __('February'),
-               __('March'),
-               __('April'),
-               __('May'),
-               __('June'),
-               __('July'),
-               __('August'),
-               __('September'),
-               __('October'),
-               __('November'),
-               __('December')
-         );
 
          if ($result) {
             if ($DB->numrows($result) != 0) {
@@ -603,67 +592,46 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                   switch($timeUnit) {
 
                      case 'day':
-                        $time=mktime(0, 0, 0, $data['month'], $data['day'], $data['year']);
-                        $dayofweek=date("w", $time);
-                        if ($dayofweek==0) {
-                           $dayofweek=7;
-                        }
-
-                        $date= $calendarDay[$dayofweek%7]." ".$data['day']." ".
-                                  $calendarMonth[$data['month']];
+                        $split = explode(" ", $data['date']);
+                        $date = $split[0];
                         break;
 
                      case 'week':
-                        $date= $data['day']."/".$data['month'];
+                        $split = explode(" ", $data['date']);
+                        $date = $split[0];
                         break;
 
                      case 'month':
-                        $date= $data['month']."/".$data['year'];
+                        $split = explode(" ", $data['date']);
+                        $split2 = explode("-", $split[0]);
+                        $date = $split2[0]."-".$split2[1];
                         break;
 
                      case 'year':
-                        $date = $data['year'];
+                        $split = explode(" ", $data['date']);
+                        $split2 = explode("-", $split[0]);
+                        $date = $split2[0];
                         break;
 
                   }
 
                   if ($graphType == 'day') {
                      if (!isset($pages[$data['printers_id']])) {
-                        $pages[$data['printers_id']] = 0;
+                        $pages[$data['printers_id']] = $data[$graphField];
+                     } else {
+                        $input[] = array('x' => $date,
+                                         'y' => $data[$graphField] - $pages[$data['printers_id']]);
+                        $pages[$data['printers_id']] = $data[$graphField];
                      }
-                     $oPrinter->getFromDB($data['printers_id']);
-
-                     $input[$oPrinter->getName()][$date] = 
-                              $data[$graphField] - $pages[$data['printers_id']];
-                     $pages[$data['printers_id']] = $data[$graphField];
                   } else {
-                     $oPrinter->getFromDB($data['printers_id']);
-                     $input[$oPrinter->getName()][$date] = $data[$graphField];
+                     $input[] = array('x' => $date,
+                                      'y' => $data[$graphField]);
                   }
                }
             }
          }
-// TODO : correct title (not total of printed)
-         $type = 'line';
-         if ($graphType == 'day') {
-            $type = 'bar';
-         }
 
          $continue = 1;
-         foreach($input as $num=>$datas) {
-            if (array_sum($datas) == '0') {
-               $continue = '-1';
-            } else if (count($datas) > 60) {
-               $continue = 0;
-            } else if (count($datas) == '1') {
-               $input[$num] = array_merge(array('' => "0"), $input[$num]);
-            } else if (count($datas) == '0') {
-               $continue = '-1';
-            } else {
-               array_shift($datas);
-               $input[$num] = $datas;
-            }
-         }
 
          if (($continue == '0') OR ($continue == '-1')) {
             echo "<table class='tab_cadre' cellpadding='5' width='900'>";
@@ -677,21 +645,48 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
             echo "<td align='center'>";
             if ($continue == '0') {
                echo __('Too datas to display', 'fusioninventory');
-
             }
             echo "</td>";
             echo "</tr>";
 
             echo "</table><br/>";
          } else {
-            Stat::showGraph($input,
-                     array('title'  => $name,
-                        'unit'      => '',
-                        'type'      => $type,
-                        'height'    => 400,
-                        'showtotal' => FALSE));
+            if (count($input > 0)) {
+               $split = explode(' > ', $name);
+               $a_graph[] = array(
+                   'key'    => $split[count($split) - 1],
+                   'values' => $input
+               );
+            }
          }
       }
+      // Display graph
+      echo '<div id="chartPrinter">'.
+             '<svg style="height: 400px; width: 950px;"></svg>'.
+           '</div>';
+
+      echo "<script type='text/javascript'>
+      function drawGraph() {
+         var chart = nv.models.multiBarChart();
+
+         chart.yAxis
+             .tickFormat(d3.format(',0f'));
+
+        d3.select('#chartPrinter svg')
+           .datum(exampleData())
+          .transition().duration(500).call(chart);
+
+        nv.utils.windowResize(chart.update);
+    }
+    ";
+      
+   echo '   function exampleData() {
+      return '.json_encode($a_graph).'
+   }
+   
+   drawGraph();
+</script>';
+
    }
 }
 
