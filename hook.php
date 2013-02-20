@@ -1947,7 +1947,7 @@ function plugin_fusioninventory_forceGroupBy($type) {
 
 function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $linkfield,
                                             &$already_link_tables) {
-    
+
    switch ($itemtype) {
 
       case 'PluginFusioninventoryAgent':
@@ -2134,6 +2134,18 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                return $return;
                break;
 
+         }
+         break;
+         
+      case 'PluginFusioninventorySnmpmodel':
+         
+         if ($new_table.".".$linkfield == 
+                  'glpi_plugin_fusioninventory_snmpmodeldevices.'.
+                     'plugin_fusioninventory_snmpmodeldevices_id') {
+            return " LEFT JOIN `glpi_plugin_fusioninventory_snmpmodeldevices` 
+                        ON (`glpi_plugin_fusioninventory_snmpmodels`.`id` = 
+                        `glpi_plugin_fusioninventory_snmpmodeldevices`.".
+                           "`plugin_fusioninventory_snmpmodels_id` )  ";
          }
          break;
       
