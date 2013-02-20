@@ -999,7 +999,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          
       } else {
          // Import each model
-         $pfImportExport = new PluginFusinvsnmpImportExport();
+         $pfImportExport = new PluginFusioninventorySnmpmodelImportExport();
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr class='tab_bg_1'>";
          echo "<th align='center'>";
@@ -1024,7 +1024,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "</td>";
          echo "</tr>";  
          echo "</table>";
-         PluginFusinvsnmpImportExport::exportDictionnaryFile();
+         PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
       }
       $dir = GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/';
       $objects = scandir($dir);

@@ -478,9 +478,30 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
     */
    function importMass() {
       ini_set("max_execution_time", "0");
+      $nb = 0;
+      foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) {
+         $nb++;
+      }
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th align='center'>";
+      echo "Importing SNMP models, please wait...";
+      echo "</th>";
+      echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      Html::createProgressBar("Importing SNMP models, please wait...");
+      $i = 0;
       foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) {
          $this->import($file, 0, 1);
+         $i++;
+         if (substr($i, -1) == '0') {
+            Html::changeProgressBarPosition($i, $nb, "$i / $nb");
+         }
       }
+      Html::changeProgressBarPosition($nb, $nb, "$nb / $nb");
+      echo "</td>";
+      echo "</table>";
       PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
    }
 

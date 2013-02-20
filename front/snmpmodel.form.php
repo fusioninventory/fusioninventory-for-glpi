@@ -64,12 +64,12 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["delete"])) {
    PluginFusioninventoryProfile::checkRight("model", "w");
    $pfModel->delete($_POST);
-   PluginFusinvsnmpImportExport::exportDictionnaryFile();
+   PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
    Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/model.php");
 } else if (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
    PluginFusioninventoryProfile::checkRight("model", "w");
    $pfImportExport->import($_FILES['importfile']['tmp_name']);
-   PluginFusinvsnmpImportExport::exportDictionnaryFile();
+   PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
    Html::back();
 } else if (isset($_GET["is_active"])) {
    PluginFusioninventoryProfile::checkRight("model", "w");
