@@ -365,6 +365,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
       </script>";
 
+      echo "<br/>";
+      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfTaskjoblog->showHistory($id);
+      
       return TRUE;
    }
 

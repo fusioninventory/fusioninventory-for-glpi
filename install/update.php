@@ -5636,7 +5636,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                         WHERE `id`='".$data['printers_id']."'");
       }
       
-   
+   // Disable is_advancedmode in tasks
+      $DB->query("UPDATE `glpi_plugin_fusioninventory_tasks`
+         SET `is_advancedmode`='0'");
+      
+      
    
    // Update networkports types
    $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
