@@ -499,7 +499,7 @@ class PluginFusioninventorySetup {
       $input['is_active']=1;
       $input['name']='Printer import';
       $input['match']='AND';
-      $input['sub_type'] = 'PluginFusioninventoryRuleImportEquipment';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
       $input['ranking'] = $ranking;
       $rule_id = $rulecollection->add($input);
 
