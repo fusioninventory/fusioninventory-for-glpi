@@ -309,10 +309,6 @@ function pluginFusioninventoryInstall($version, $migration='') {
                       array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
 
 
-   $migration->displayMessage("Create rules");
-   $pfSetup = new PluginFusioninventorySetup();
-   $pfSetup->initRules();
-   
    $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
    $pfNetworkporttype->init();
 
