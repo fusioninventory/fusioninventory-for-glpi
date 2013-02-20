@@ -102,8 +102,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       }
       
       $input = array();
-      $input['threads_networkdiscovery'] = 1;
-      $input['threads_networkinventory'] = 1;
+      $input['threads_networkdiscovery'] = 20;
+      $input['threads_networkinventory'] = 10;
 
       foreach ($input as $key => $value) {
          $this->addValues(array($key => $value));
