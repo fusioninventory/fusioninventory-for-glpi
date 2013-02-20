@@ -312,6 +312,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
                   case '117':
                   case '62':
                   case '169':
+                  case '56':
                      $import = 1;
                      break;
 
