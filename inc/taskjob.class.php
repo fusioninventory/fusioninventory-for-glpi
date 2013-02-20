@@ -715,7 +715,7 @@ return namelist;
                      // Get it from a Ext.Element object
                      $out = "Ext.get('$toupdate').load({
                          url: '$url',
-                         scripts: TRUE";
+                         scripts: true";
 
                      if (count($parameters)) {
                         $out .= ",
