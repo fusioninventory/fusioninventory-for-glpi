@@ -82,7 +82,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
             $this->getFromDB($id);
 
             echo "<br>";
-            $target = $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/model.form.php';
+            $target = $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/snmpmodel.form.php';
             echo "<div align='center'><form method='post' name='oid_list' id='oid_list'
                        action=\"".$target."\">";
 
@@ -230,7 +230,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
       global $CFG_GLPI;
 
       echo "<br>";
-      $target = $CFG_GLPI['root_doc'].'/plugins/fusinvsnmp/front/model.form.php';
+      $target = $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/snmpmodel.form.php';
       echo "<div align='center'><form method='post' name='oid_add' id='oid_add'
                  action=\"".$target."\">";
 

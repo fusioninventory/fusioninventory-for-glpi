@@ -125,7 +125,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
          $this->getEmpty();
       }
 
-      $target = $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/model.form.php';
+      $target = $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/snmpmodel.form.php';
             $this->showTabs($id);
       echo "<div align='center'><form method='post' name='' id=''  action=\"" . $target . "\">";
 
