@@ -60,7 +60,7 @@
 }
 
 
-td > input[type=radio] {
+/*td > input[type=radio] {
 	padding: 0;
 	margin: 0;
 	float: left;
@@ -75,7 +75,7 @@ td > label {
    line-height: 18px;
    display: inline-block;
    border: 1px solid transparent;   
-}
+}*/
 
 td:not(#foo) > input:hover + label, td:not(#foo) > input:focus + label,
 td:not(#foo) > input + label:hover, td:not(#foo) > input:focus + label { 
