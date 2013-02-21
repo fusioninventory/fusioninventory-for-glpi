@@ -2137,6 +2137,62 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
 
          }
          break;
+
+      case 'Printer':
+         $already_link_tables_tmp = $already_link_tables;
+         array_pop($already_link_tables_tmp);
+         $leftjoin_fusioninventory_printers = 1;
+         if ((in_array('glpi_plugin_fusioninventory_printers', $already_link_tables_tmp))
+              OR in_array('glpi_plugin_fusioninventory_snmpmodels', $already_link_tables_tmp)) {
+
+            $leftjoin_fusioninventory_printers = 0;
+         }
+         switch ($new_table.".".$linkfield) {
+
+            // ** FusionInventory - last inventory
+            case "glpi_plugin_fusioninventory_printers.plugin_fusioninventory_printers_id" :
+               if ($leftjoin_fusioninventory_printers == "1") {
+                  return " LEFT JOIN glpi_plugin_fusioninventory_printers 
+                     ON (glpi_printers.id = glpi_plugin_fusioninventory_printers.printers_id) ";
+               }
+               return " ";
+               break;
+
+            // ** FusionInventory - SNMP models
+            case "glpi_plugin_fusioninventory_snmpmodels.plugin_fusioninventory_snmpmodels_id" :
+               $return = "";
+               if ($leftjoin_fusioninventory_printers == "1") {
+                  $return = " LEFT JOIN glpi_plugin_fusioninventory_printers 
+                     ON (glpi_printers.id = glpi_plugin_fusioninventory_printers.printers_id) ";
+               }
+               return $return." LEFT JOIN glpi_plugin_fusioninventory_snmpmodels 
+                  ON (glpi_plugin_fusioninventory_printers.plugin_fusioninventory_snmpmodels_id = 
+                           glpi_plugin_fusioninventory_snmpmodels.id) ";
+               break;
+               
+            // ** FusionInventory - SNMP authentification
+            case "glpi_plugin_fusioninventory_configsecurities.id":
+               $return = "";
+               if ($leftjoin_fusioninventory_printers == "1") {
+                  $return = " LEFT JOIN glpi_plugin_fusioninventory_printers 
+                     ON glpi_printers.id = glpi_plugin_fusioninventory_printers.printers_id ";
+               }
+               return $return." LEFT JOIN glpi_plugin_fusioninventory_configsecurities 
+                  ON glpi_plugin_fusioninventory_printers.plugin_fusioninventory_configsecurities_id 
+                        = glpi_plugin_fusioninventory_configsecurities.id ";
+               break;
+
+            case "glpi_plugin_fusioninventory_printers.plugin_fusioninventory_printers_id":
+               $return = " ";
+               if ($leftjoin_fusioninventory_printers == "1") {
+                  $return = " LEFT JOIN glpi_plugin_fusioninventory_printers 
+                     ON glpi_printers.id = glpi_plugin_fusioninventory_printers.printers_id ";
+               }
+               return $return;
+               break;
+
+         }
+         break;
          
       case 'PluginFusioninventorySnmpmodel':
          
