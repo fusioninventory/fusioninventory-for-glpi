@@ -47,7 +47,7 @@ PluginFusioninventoryProfile::checkRight("networkequipment", "w");
 
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
    $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-   $pfNetworkEquipment->update_network_infos($_POST['id'], $_POST['model_infos'], $_POST['plugin_fusinvsnmp_configsecurities_id'], $_POST['sysdescr']);
+   $pfNetworkEquipment->update_network_infos($_POST['id'], $_POST['model_infos'], $_POST['plugin_fusioninventory_configsecurities_id'], $_POST['sysdescr']);
 } else if ((isset($_POST["GetRightModel"])) && (isset($_POST['id']))) {
    $pfModel = new PluginFusioninventorySnmpmodel();
    $pfModel->getrightmodel($_POST['id'], NETWORKING_TYPE);
