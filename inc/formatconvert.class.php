@@ -1289,13 +1289,11 @@ class PluginFusioninventoryFormatconvert {
 
             // VLAN
             if (isset($a_port['VLANS'])) {
-               if (!is_array($a_port['VLANS'])) {
-                  $a_port['VLANS'] = array($a_port['VLANS']);
-               } else if (!is_int(key($a_port['VLANS']))) {
-                  $a_port['VLANS'] = array($a_port['VLANS']);
+               if (!is_int(key($a_port['VLANS']['VLAN']))) {
+                  $a_port['VLANS']['VLAN'] = array($a_port['VLANS']['VLAN']);
                }
 
-               foreach ($a_port['VLANS'] as $a_vlan) {
+               foreach ($a_port['VLANS']['VLAN'] as $a_vlan) {
                   $array_tmp = $thisc->addValues($a_vlan, 
                                                  array( 
                                                     'NAME'  => 'name',
