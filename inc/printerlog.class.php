@@ -53,17 +53,16 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       $tab['common'] = __('History meter printer', 'fusioninventory');
 
 
-      $tab[1]['table'] = $this->getTable();
-      $tab[1]['field'] = 'id';
-      $tab[1]['name'] = 'id';
-
-      $tab[2]['table'] = "glpi_printers";
-      $tab[2]['field'] = 'name';
-      $tab[2]['linkfield'] = 'printers_id';
-      $tab[2]['name'] = __('Name');
-      $tab[2]['datatype'] = 'itemlink';
-      $tab[2]['itemlink_type']  = 'Printer';
-
+      $tab[1]['table'] = "glpi_printers";
+      $tab[1]['field'] = 'name';
+      $tab[1]['linkfield'] = 'printers_id';
+      $tab[1]['name'] = __('Name');
+      $tab[1]['datatype'] = 'itemlink';
+      $tab[1]['itemlink_type']  = 'Printer';
+      
+      $tab[2]['table'] = $this->getTable();
+      $tab[2]['field'] = 'id';
+      $tab[2]['name'] = 'id';
 
       $tab[24]['table'] = 'glpi_locations';
       $tab[24]['field'] = 'name';

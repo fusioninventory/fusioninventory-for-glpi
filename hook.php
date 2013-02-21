@@ -2205,6 +2205,48 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                            "`plugin_fusioninventory_snmpmodels_id` )  ";
          }
          break;
+         
+      case 'PluginFusioninventoryPrinterLogReport':
+//echo $new_table.".".$linkfield."<br/>";         
+         switch ($new_table.".".$linkfield) {
+
+            case 'glpi_locations.locations_id':
+               return " LEFT JOIN `glpi_locations` 
+                  ON (`glpi_printers`.`locations_id` = `glpi_locations`.`id`) ";
+               break;
+            
+            case 'glpi_printertypes.printertypes_id':
+               return " LEFT JOIN `glpi_printertypes` 
+                  ON (`glpi_printers`.`printertypes_id` = `glpi_printertypes`.`id`) ";
+               break;
+            
+            case 'glpi_states.states_id':
+               return " LEFT JOIN `glpi_states` 
+                  ON (`glpi_printers`.`states_id` = `glpi_states`.`id`) ";
+               break;
+
+            case 'glpi_users.users_id':
+               return " LEFT JOIN `glpi_users` AS glpi_users 
+                  ON (`glpi_printers`.`users_id` = `glpi_users`.`id`) ";
+               break;
+            
+            case 'glpi_manufacturers.manufacturers_id':
+               return " LEFT JOIN `glpi_manufacturers` 
+                  ON (`glpi_printers`.`manufacturers_id` = `glpi_manufacturers`.`id`) ";
+               break;
+            
+            case 'glpi_networkports.printers_id':
+               return " LEFT JOIN `glpi_networkports` 
+                  ON (`glpi_printers`.`id` = `glpi_networkports`.`items_id` AND `glpi_networkports`.`itemtype` = 'Printer') ";
+               break;
+
+            case 'glpi_plugin_fusioninventory_printerlogs.plugin_fusioninventory_printerlogs_id':
+               return " LEFT JOIN `glpi_plugin_fusioninventory_printerlogs` 
+                  ON (`glpi_plugin_fusioninventory_printerlogs`.`printers_id` = `glpi_printers`.`id`) ";
+               break;
+               
+         }         
+         break;
       
    }
    return "";
