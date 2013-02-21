@@ -1139,7 +1139,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
                             'message' => 'Value between "MDL:" and ";" OR "MODEL:" and ";"');
       } else if (strstr($sysdescr, 'EPSON Built-in')) {
          $message[] = array('oid' => '.1.3.6.1.4.1.1248.1.1.3.1.3.8.0');
-      } else if (strstr($sysdescr, 'EPSON Internal 10Base-T')) {
+      } else if (strstr($sysdescr, 'EPSON Internal 10Base-T')
+              OR strstr($sysdescr, 'EPSON Type-B 10Base-T/100Base')) {
          $message[] = array('oid' => '.1.3.6.1.2.1.25.3.2.1.3.1');
       } else if (strstr($sysdescr, ',HP,JETDIRECT,J')) {
          $message[] = array('oid' => '.1.3.6.1.4.1.1229.2.2.2.1.15.1');
