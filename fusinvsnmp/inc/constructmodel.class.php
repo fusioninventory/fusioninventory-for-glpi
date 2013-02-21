@@ -1144,6 +1144,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          $message[] = array('oid' => '.1.3.6.1.2.1.25.3.2.1.3.1');
       } else if (strstr($sysdescr, ',HP,JETDIRECT,J')) {
          $message[] = array('oid' => '.1.3.6.1.4.1.1229.2.2.2.1.15.1');
+      } else if ($sysdescr == 'D-Link DPR-1020 Print Server')) {
+         $message[] = array('oid' => '.1.3.6.1.4.1.171.11.10.1.3.2.1.2.1');
       } else if (strstr($sysdescr, 'SAMSUNG NETWORK PRINTER,ROM')) {
          $message[] = array('oid' => '.1.3.6.1.4.1.236.11.5.1.1.1.1.0');
       } else if (strstr($sysdescr, 'RICOH NETWORK PRINTER')) {
