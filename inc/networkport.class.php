@@ -413,7 +413,8 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
       // Detect IP Phone
       if ($PortID == "") {
-         if (strstr($model, "Phone")) {
+         if (strstr($model, "Phone")
+               || $model == '') {
             $queryPort = "SELECT glpi_networkports.*
                            FROM `glpi_phones`
                               LEFT JOIN `glpi_networkports`
