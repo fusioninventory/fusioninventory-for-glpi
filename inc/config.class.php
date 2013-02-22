@@ -740,19 +740,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * Delete configuration field
-    *
-    * @param $field_id field id
-    *
-    * @return boolean : TRUE on success
-    **/
-   function deleteConfig($field_id) {
-      return $this->delete(array('id'=>$field_id));
-   }
-
-
-
-   /**
     * Check if extradebug mode is activate
     */
    static function isExtradebugActive() {
