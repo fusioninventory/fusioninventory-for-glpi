@@ -1076,7 +1076,22 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
               "?itemtype=PluginFusioninventoryNetworkEquipment".
               "&function=sendSerializedInventory&items_id=".$a_networkequipmentextend['id'].
               "&filename=NetworkEquipment-".$items_id.".json'".
-              "target='_blank'>PHP Array</a> / <a href=''>XML</a>";
+              "target='_blank'>PHP Array</a> ";
+      
+      $folder = substr($items_id, 0, -1);
+      if (empty($folder)) {
+         $folder = '0';
+      }
+      if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/NetworkEquipment/".$folder."/".$items_id)) {
+         echo "/ <a href='".$CFG_GLPI['root_doc'].
+        "/plugins/fusioninventory/front/send_inventory.php".
+        "?itemtype=networkequipment".
+        "&function=sendXML&items_id=NetworkEquipment/".$folder."/".$items_id.
+        "&filename=NetworkEquipment-".$items_id.".xml'".
+        "target='_blank'>XML</a>";
+      }
+
+      
       echo "</td>";
       echo "</tr>";
       

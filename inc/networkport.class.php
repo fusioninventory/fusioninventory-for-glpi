@@ -251,17 +251,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
 
    /**
-    * Get MAC addresses to connect
-    *
-    *@return array of MAC addresses
-    **/
-   function getMacsToConnect() {
-      return $this->portMacs;
-   }
-
-
-
-   /**
     *
     */
    function deleteMacToConnect($mac) {

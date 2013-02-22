@@ -241,6 +241,12 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
       $networkports_id = 0;
       foreach ($a_inventory['networkport'] as $a_port) {
+         if (isset($a_inventory['connection-mac'][$a_port['logical_number']])
+                 && count($a_inventory['connection-mac'][$a_port['logical_number']]) > 1
+                 && $a_port['trunk'] != 1) {
+            $a_port['trunk'] = -1;
+         }
+         
          $ifType = $a_port['iftype'];
          if ($pfNetworkporttype->isImportType($ifType)) {
             $a_ports_DB = current($networkPort->find(
@@ -415,10 +421,10 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                $wire->add(array('networkports_id_1'=> $portLink_id,
                                 'networkports_id_2' => $macNotPhone_id));
             } else {
-               $pfUnknownDevice->hubNetwork($pfNetworkPort);
+               $pfUnknownDevice->hubNetwork($pfNetworkPort, $a_portconnection);
             }
          } else if ($count > 1) { // MultipleMac
-            $pfUnknownDevice->hubNetwork($pfNetworkPort);
+            $pfUnknownDevice->hubNetwork($pfNetworkPort, $a_portconnection);
          } else { // One mac on port
             foreach ($a_portconnection as $ifmac) { //Only 1 time
                $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);

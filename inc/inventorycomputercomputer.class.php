@@ -211,7 +211,6 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
               "&function=sendXML&items_id=computer/".$folder."/".$items_id.
               "&filename=Computer-".$items_id.".xml'".
               "target='_blank'>XML</a>";
-
             }
 
       

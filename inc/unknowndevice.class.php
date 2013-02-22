@@ -523,7 +523,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * @return bool
    *
    **/
-   function hubNetwork($pfNetworkport) {
+   function hubNetwork($pfNetworkport, $a_mac) {
 
       $nn = new NetworkPort_NetworkPort();
       $Netport = new NetworkPort();
@@ -541,16 +541,16 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             } else {
                // It's a direct connection, so disconnect and create a hub
                $this->disconnectDB($ID);
-               $hub_id = $this->createHub($pfNetworkport);
+               $hub_id = $this->createHub($pfNetworkport, $a_mac);
             }
          } else {
             // It's a direct connection, so disconnect and create a hub
             $this->disconnectDB($ID);
-            $hub_id = $this->createHub($pfNetworkport);
+            $hub_id = $this->createHub($pfNetworkport, $a_mac);
          }
       } else {
          // No connections found and create a hub
-         $hub_id = $this->createHub($pfNetworkport);
+         $hub_id = $this->createHub($pfNetworkport, $a_mac);
       }
       // State : Now we have hub and it's id
 
@@ -572,7 +572,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          }
       }
 
-      foreach ($pfNetworkport->getMacsToConnect() as $ifmac) {
+      foreach ($a_mac as $ifmac) {
          $a_ports = $Netport->find("`mac`='".$ifmac."'", "", 1);
          if (count($a_ports) == "1") {
             if (!$this->searchIfmacOnHub($a_ports, $a_portglpi)) {
@@ -722,14 +722,14 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * @return id of the hub (unknowndevice)
    *
    **/
-   function createHub($pfNetworkport) {
+   function createHub($pfNetworkport, $a_mac) {
 
       $Netport = new NetworkPort();
       $nn = new NetworkPort_NetworkPort();
       //$pfAgentsProcesses = new PluginFusionInventoryAgentsProcesses;
 
       // Find in the mac connected to the if they are in hub without link port connected
-      foreach ($pfNetworkport->getMacsToConnect() as $ifmac) {
+      foreach ($a_mac as $ifmac) {
          $a_ports = $Netport->find("`mac`='".$ifmac."'");
          foreach ($a_ports as $data) {
             $ID = $nn->getOppositeContact($pfNetworkport->getNetworkPorts_id());
@@ -750,7 +750,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                            $nn->add(array('networkports_id_1'=> 
                                                 $pfNetworkport->fields['networkports_id'],
                                           'networkports_id_2' => $dataLink['id']));
-                           $this->releaseHub($this->fields['id'], $pfNetworkport);
+                           $this->releaseHub($this->fields['id'], $pfNetworkport, $a_mac);
                            return $this->fields['id'];
                         }
                      }
@@ -792,13 +792,13 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    * @return nothing
    *
    **/
-   function releaseHub($hub_id, $pfNetworkport) {
+   function releaseHub($hub_id, $pfNetworkport, $a_mac) {
 
       $Netport = new NetworkPort();
       $nn = new NetworkPort_NetworkPort();
 
       $a_macOnSwitch = array();
-      foreach ($pfNetworkport->getMacsToConnect() as $ifmac) {
+      foreach ($a_mac as $ifmac) {
          $a_macOnSwitch["$ifmac"] = 1;
       }
 
