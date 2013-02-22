@@ -444,10 +444,10 @@ class PluginFusioninventoryFormatconvert {
                if ($pfConfig->getValue('import_volume') == 1) {
                   $array_tmp = $thisc->addValues($a_drives, 
                                                  array( 
-                                                    'VOLUMN' => 'device',                                               
-                                                    'FILESYSTEM' => 'filesystems_id',
-                                                    'TOTAL' => 'totalsize', 
-                                                    'FREE' => 'freesize'));
+                                                    'VOLUMN'      => 'device',                                               
+                                                    'FILESYSTEM'  => 'filesystems_id',
+                                                    'TOTAL'       => 'totalsize', 
+                                                    'FREE'        => 'freesize'));
                   if ((isset($a_drives['LABEL'])) AND (!empty($a_drives['LABEL']))) {
                      $array_tmp['name'] = $a_drives['LABEL'];
                   } else if (((!isset($a_drives['VOLUMN'])) 
@@ -592,7 +592,7 @@ class PluginFusioninventoryFormatconvert {
             foreach ($array['USBDEVICES'] as $a_peripherals) {
                $array_tmp = $thisc->addValues($a_peripherals, 
                                               array( 
-                                                 'NAME'      => 'name', 
+                                                 'NAME'         => 'name', 
                                                  'MANUFACTURER' => 'manufacturers_id', 
                                                  'SERIAL'       => 'serial',
                                                  'PRODUCTNAME'  => 'productname'));
@@ -653,7 +653,6 @@ class PluginFusioninventoryFormatconvert {
                                                     'MACADDR'     => 'mac', 
                                                     'TYPE'        => 'instantiation_type',
                                                     'IPADDRESS'   => 'ip',
-                                                    'IPADDRESS6'  => 'ip',
                                                     'VIRTUALDEV'  => 'virtualdev',
                                                     'IPSUBNET'    => 'subnet',
                                                     'SSID'        => 'ssid',
@@ -678,12 +677,18 @@ class PluginFusioninventoryFormatconvert {
                                    = $array_tmp['ip'];
                         }
                      } else {
-                        if (isset($array_tmp['ip'])) {
+                        if (isset($array_tmp['ip'])
+                                && $array_tmp['ip'] != '') {
                            $array_tmp['ipaddress'] = array($array_tmp['ip']);
                            unset($array_tmp['ip']);
                         } else {
                            $array_tmp['ipaddress'] = array();
                         }
+                        if (isset($a_networks['IPADDRESS6'])
+                              && $a_networks['IPADDRESS6'] != '') {
+                           $array_tmp['ipaddress'][] = $a_networks['IPADDRESS6'];
+                        }
+                        
                         if (isset($array_tmp["instantiation_type"])
                                 AND $array_tmp["instantiation_type"] == 'Ethernet') {
                            $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
@@ -1202,9 +1207,9 @@ class PluginFusioninventoryFormatconvert {
       $array_tmp = $thisc->addValues($array['INFO'], 
                                      array( 
                                         'COMMENTS' => 'sysdescr',
-                                        'UPTIME'  => 'uptime',
-                                        'CPU'     => 'cpu',
-                                        'MEMORY'  => 'memory'));
+                                        'UPTIME'   => 'uptime',
+                                        'CPU'      => 'cpu',
+                                        'MEMORY'   => 'memory'));
       if (!isset($array_tmp['cpu'])
               || $array_tmp['cpu'] == '') {
          $array_tmp['cpu'] = 0;
@@ -1296,7 +1301,7 @@ class PluginFusioninventoryFormatconvert {
                foreach ($a_port['VLANS']['VLAN'] as $a_vlan) {
                   $array_tmp = $thisc->addValues($a_vlan, 
                                                  array( 
-                                                    'NAME'  => 'name',
+                                                    'NAME'   => 'name',
                                                     'NUMBER' => 'tag'));
                   if (isset($array_tmp['tag'])) {
                      $a_inventory['vlans'][$a_port['IFNUMBER']][$array_tmp['tag']] = $array_tmp;
