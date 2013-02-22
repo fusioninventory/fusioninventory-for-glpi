@@ -1219,6 +1219,7 @@ class PluginFusioninventoryFormatconvert {
       $a_inventory['PluginFusioninventoryNetworkEquipment'] = $array_tmp;
       
       // * Internal ports
+      $a_inventory['internalport'] = array();
       if (isset($array['INFO']['IPS'])) {
          foreach ($array['INFO']['IPS']['IP'] as $IP) {
             $a_inventory['internalport'][] = $IP;
@@ -1282,7 +1283,11 @@ class PluginFusioninventoryFormatconvert {
                      foreach ($a_port['CONNECTIONS']['CONNECTION'] as $dataconn) {
                         foreach ($dataconn as $keymac=>$mac) {
                            if ($keymac == 'MAC') {
-                              $a_inventory['connection-mac'][$a_port['IFNUMBER']][] = $mac;
+                              if (is_array($mac)) {
+                                 $a_inventory['connection-mac'][$a_port['IFNUMBER']] = $mac;
+                              } else {
+                                 $a_inventory['connection-mac'][$a_port['IFNUMBER']][] = $mac;
+                              }                              
                            }
                         }
                      }

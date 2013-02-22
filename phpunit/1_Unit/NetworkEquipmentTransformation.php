@@ -117,8 +117,83 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }   
+   
+   
+   
+   public function testNetworkEquipmentConnectionMac() {
+      global $DB;
+
+      $DB->connect();
+      
+      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+
+      $a_inventory = array();
+      $a_inventory['INFO'] = array(
+                'COMMENTS'       => 'Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2010 by Cisco Systems, Inc.
+Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
+                'ID'             => '55',
+                'MAC'            => '00:1b:2b:20:40:80',
+                'NAME'           => 'sw1.siprossii.com',
+                'SERIAL'         => 'CAT1109RGVK',
+                'TYPE'           => 'NETWORKING'
+            );
+      $a_inventory['PORTS']['PORT'][1] = array(
+          'CONNECTIONS' => array(
+               'CONNECTION' => array(
+                     'MAC' => array(
+                           '00:0f:fe:0d:30:70'
+                      )
+                )
+           ),
+          'IFNAME'   => 'Fa0/1',
+          'IFNUMBER' => 1,
+          'IFTYPE'   => 6,
+          'MAC'      => 'b4:39:d6:3a:7f:3a'
+      );
+      $a_inventory['PORTS']['PORT'][2] = array(
+          'CONNECTIONS' => array(
+               'CONNECTION' => array(
+                     'MAC' => array(
+                           '00:0f:fe:0d:30:76',
+                           '00:0f:fe:0d:30:77',
+                           '00:0f:fe:0d:30:78'
+                      )
+                )
+           ),
+          'IFNAME'   => 'Fa0/2',
+          'IFNUMBER' => 2,
+          'IFTYPE'   => 6,
+          'MAC'      => 'b4:39:d6:3a:7f:3e'
+      );
+      
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      
+      $a_return = $pfFormatconvert->networkequipmentInventoryTransformation($a_inventory);
+
+      $a_reference = array(
+               '00:0f:fe:0d:30:70'
+          
+      );
+      $this->assertEquals($a_reference, $a_return['connection-mac'][1]); 
+      
+      
+      $a_reference = array();
+      $a_reference = array(
+               '00:0f:fe:0d:30:76',
+               '00:0f:fe:0d:30:77',
+               '00:0f:fe:0d:30:78'
+          
+      );
+      $this->assertEquals($a_reference, $a_return['connection-mac'][2]);      
+      
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+   } 
     
- }
+}
 
 
 
