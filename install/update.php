@@ -525,7 +525,33 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                $prepare_Config['ssl_only'] = $data['ssl_only'];
             }
          }
+//         $query = "SELECT *  FROM `glpi_plugin_tracker_config`
+//            WHERE `type`='version'
+//            LIMIT 1, 10";
+//         $result=$DB->query($query);
+//         while ($data=$DB->fetch_array($result)) {
+//            $DB->query("DELETE FROM `glpi_plugin_tracker_config`
+//               WHERE `ID`='".$data['ID']."'");
+//         }
       }
+      if (TableExists('glpi_plugin_fusioninventory_configs')) {
+         $id = 'id';
+         if (FieldExists('glpi_plugin_fusioninventory_configs', 'ID')) {
+            $id = 'ID';
+         }
+         
+         $query = "SELECT *  FROM `glpi_plugin_fusioninventory_configs`
+            WHERE `type`='version'
+            LIMIT 1, 10";
+         $result=$DB->query($query);
+         while ($data=$DB->fetch_array($result)) {
+            $DB->query("DELETE FROM `glpi_plugin_fusioninventory_configs`
+               WHERE `".$id."`='".$data[$id]."'");
+         }
+         
+      }
+      
+      
       $a_table = array();
       $a_table['name'] = 'glpi_plugin_fusioninventory_configs';
       $a_table['oldname'] = array('glpi_plugin_tracker_config');
@@ -537,7 +563,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => NULL);
       $a_table['fields']['value']      = array('type'    => 'string', 
                                                'value'   => NULL);
-
+      
       $a_table['oldfields']  = array();
       $a_table['oldfields'][] = 'version';
       $a_table['oldfields'][] = 'URL_agent_conf';
@@ -562,12 +588,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['oldfields'][] = 'activation_snmp_printer';
       $a_table['oldfields'][] = 'plugins_id';
       $a_table['oldfields'][] = 'module';
-
+      
       $a_table['renamefields'] = array();
       $a_table['renamefields']['ID'] = 'id';
       
       $a_table['keys']   = array();
-      $a_table['keys'][] = array('field' => array("type", "plugins_id"), 
+      $a_table['keys'][] = array('field' => array("type"), 
                                  'name' => 'unicity', 
                                  'type' => 'UNIQUE');
 
