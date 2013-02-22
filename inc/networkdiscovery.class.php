@@ -103,7 +103,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
          }
       }
       if ($dynagent == '1') {
-         $a_agents = $pfAgentmodule->getAgentsCanDo('NETDISCOVERY');
+         $a_agents = $pfAgentmodule->getAgentsCanDo('NETWORKDISCOVERY');
          foreach($a_agents as $data) {
             if (($count_ip / 10) >= count($a_agentlist)) {
                $pfAgent->getFromDB($data['id']);

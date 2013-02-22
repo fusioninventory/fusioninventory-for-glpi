@@ -592,7 +592,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    * Set agent version of each module
    *
    * @param $agent_id integer ID of the agent
-   * @param $module value Module name (WAKEONLAN, NETDISCOVERY, INVENTORY, SNMPQUERY...)
+   * @param $module value Module name (WAKEONLAN, NETWORKDISCOVERY, INVENTORY, NETWORKINVENTORY...)
    * @param $version value version of the module
    *
    * @return nothing

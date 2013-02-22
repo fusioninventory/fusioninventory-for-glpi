@@ -671,7 +671,7 @@ class PluginFusioninventoryWizard {
             $input['definition'] = exportArrayToDB(array(
                 array('PluginFusioninventoryIPRange' => 
                     $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])));
-            $a_agentscan = $pfAgentmodule->getAgentsCanDo('NETDISCOVERY');
+            $a_agentscan = $pfAgentmodule->getAgentsCanDo('NETWORKDISCOVERY');
             $a_agents = array();
             foreach ($a_agentscan as $data) {
                $a_agents[] = array('PluginFusioninventoryAgent' => $data['id']);
