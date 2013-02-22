@@ -4,15 +4,16 @@
 # 
 # Translators:
 # Alexandre Brianceau <lostprophet91@gmail.com>, 2013.
-# David Durieux <d.durieux@siprossii.com>, 2012.
+# David Durieux <d.durieux@siprossii.com>, 2012-2013.
 #  <kiniou@gmail.com>, 2013.
+# Mathieu Simon <mathieu.sim@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2013-01-30 10:31+0100\n"
-"PO-Revision-Date: 2013-02-08 17:17+0000\n"
-"Last-Translator: kiniou <kiniou@gmail.com>\n"
+"PO-Revision-Date: 2013-02-22 19:27+0000\n"
+"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -705,7 +706,7 @@ msgstr "Vers"
 
 #: inc/deployaction.class.php:268
 msgid "exec"
-msgstr ""
+msgstr "exec"
 
 #: inc/deployaction.class.php:275
 msgid "path"
@@ -725,11 +726,11 @@ msgstr "Code d'erreur"
 
 #: inc/deployaction.class.php:316
 msgid "okPattern"
-msgstr ""
+msgstr "okPattern"
 
 #: inc/deployaction.class.php:317
 msgid "errorPattern"
-msgstr ""
+msgstr "errorPattern"
 
 #: inc/deploycheck.class.php:50
 msgid "Audits"
@@ -737,15 +738,15 @@ msgstr "Audits"
 
 #: inc/deploycheck.class.php:55
 msgid "winkeyExists"
-msgstr ""
+msgstr "winkeyExists"
 
 #: inc/deploycheck.class.php:56
 msgid "winkeyMissing"
-msgstr ""
+msgstr "winkeyMissing"
 
 #: inc/deploycheck.class.php:57
 msgid "winkeyEquals"
-msgstr ""
+msgstr "winkeyEquals"
 
 #: inc/deploycheck.class.php:58
 msgid "fileExists"
@@ -753,27 +754,27 @@ msgstr "Fichier existant"
 
 #: inc/deploycheck.class.php:59
 msgid "fileMissing"
-msgstr ""
+msgstr "fileMissing"
 
 #: inc/deploycheck.class.php:60
 msgid "fileSizeGreater"
-msgstr ""
+msgstr "fileSizeGreater"
 
 #: inc/deploycheck.class.php:61
 msgid "fileSizeEquals"
-msgstr ""
+msgstr "fileSizeEquals"
 
 #: inc/deploycheck.class.php:62
 msgid "fileSizeLower"
-msgstr ""
+msgstr "fileSizeLower"
 
 #: inc/deploycheck.class.php:63
 msgid "fileSHA512"
-msgstr ""
+msgstr "fileSHA512"
 
 #: inc/deploycheck.class.php:64
 msgid "freespaceGreater"
-msgstr ""
+msgstr "freespeaceGreater"
 
 #: inc/deploycheck.class.php:229 inc/deploycheck.class.php:233
 msgid "Key"
@@ -794,19 +795,19 @@ msgstr "Unité"
 
 #: inc/deploycheck.class.php:298
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: inc/deploycheck.class.php:299
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #: inc/deploycheck.class.php:300
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #: inc/deploycheck.class.php:301
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #: inc/deploycheck.class.php:311
 msgid "return error"
@@ -826,7 +827,7 @@ msgstr "Exécuter une commande"
 
 #: inc/deployconfig.class.php:74 inc/deployconfig.class.php:76
 msgid "FusionInventory DEPLOY"
-msgstr ""
+msgstr "FusionInventory DEPLOY"
 
 #: inc/deployconfig.class.php:111
 msgid "Root folder for sending files from server"
@@ -894,7 +895,7 @@ msgstr "Taille maximum de fichier"
 
 #: inc/deployfile.class.php:451
 msgid "Mio"
-msgstr ""
+msgstr "Mio"
 
 #: inc/deployfile.class.php:483
 msgid "Transfer error: the file size is too big"
@@ -1051,7 +1052,7 @@ msgstr "Valeur en liste noire"
 
 #: inc/inventorycomputerchemistry.class.php:54
 msgid "Chemistry"
-msgstr ""
+msgstr "Chimie"
 
 #: inc/inventorycomputercomputer.class.php:74
 msgid "Advanced informations"
@@ -2122,7 +2123,7 @@ msgstr "FusionInventory SNMP"
 
 #: inc/networkequipment.class.php:127
 msgid "Display the view"
-msgstr "Afficher la vue"
+msgstr "Affiche la vue"
 
 #: inc/networkequipment.class.php:129
 msgid "If you prefer, you can display the view"

@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Mathieu Simon <mathieu.sim@gmail.com>, 2012.
+# Mathieu Simon <mathieu.sim@gmail.com>, 2012-2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2013-01-30 10:31+0100\n"
-"PO-Revision-Date: 2013-01-30 09:32+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2013-02-16 10:55+0000\n"
+"Last-Translator: Mathieu Simon <mathieu.sim@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +24,7 @@ msgstr ""
 #: hook.php:875 hook.php:878 hook.php:894 hook.php:905 hook.php:915
 #: inc/inventorycomputercomputer.class.php:221 inc/taskjob.class.php:118
 msgid "FusInv"
-msgstr ""
+msgstr "FusInv"
 
 #: hook.php:52 hook.php:185 hook.php:221 hook.php:1013
 #: inc/inventorycomputercomputer.class.php:138
@@ -70,11 +70,11 @@ msgstr "CPU-Last (in %)"
 
 #: hook.php:305
 msgid "devices queried"
-msgstr ""
+msgstr "abgefragte Geräte"
 
 #: hook.php:306
 msgid "devices found"
-msgstr ""
+msgstr "gefundene Geräte"
 
 #: hook.php:307
 msgid ""
@@ -84,27 +84,27 @@ msgstr ""
 
 #: hook.php:308
 msgid "Add the item"
-msgstr ""
+msgstr "Element hinzufügen"
 
 #: hook.php:309
 msgid "Update the item"
-msgstr ""
+msgstr "Element aktualisieren"
 
 #: hook.php:310
 msgid "Inventory started"
-msgstr ""
+msgstr "Inventar gestartet"
 
 #: hook.php:311
 msgid "Detail"
-msgstr ""
+msgstr "Details"
 
 #: hook.php:312
 msgid "Bad token, impossible to start agent"
-msgstr ""
+msgstr "Falscher Token, kann Agent nicht starten"
 
 #: hook.php:313
 msgid "Agent stopped/crashed"
-msgstr ""
+msgstr "Agent gestoppt / abgestürzt"
 
 #: hook.php:314 inc/inventoryruleimport.class.php:175
 #: inc/inventoryruleimport.class.php:861
@@ -191,7 +191,7 @@ msgstr "Netzwerkdiscovery"
 #: inc/agentmodule.class.php:232 inc/config.class.php:666
 #: inc/staticmisc.class.php:87
 msgid "Network inventory (SNMP)"
-msgstr ""
+msgstr "Netzwerkinventar (SNMP)"
 
 #: hook.php:1159 inc/taskjoblog.class.php:444 inc/taskjoblog.class.php:897
 #: inc/taskjoblog.class.php:952
@@ -201,7 +201,7 @@ msgstr "Beendigung erzwingen"
 #: hook.php:1276 inc/deployreport.class.php:124
 #: inc/deploystaticmisc.class.php:83
 msgid "Package"
-msgstr ""
+msgstr "Paket"
 
 #: hook.php:1288
 msgid "Create a job for each computer"
@@ -225,7 +225,7 @@ msgstr "Seitenzähler"
 
 #: setup.php:224
 msgid "Switchs ports history"
-msgstr ""
+msgstr "Switchports Verlauf"
 
 #: setup.php:226
 msgid "Unused switchs ports"
@@ -281,7 +281,7 @@ msgstr "IP-Adressbereich Konfiguration"
 #: setup.php:362 inc/deploypackage.class.php:51
 #: inc/deploypackage.class.php:153
 msgid "Packages"
-msgstr ""
+msgstr "Pakete"
 
 #: setup.php:365 inc/deploygroup.class.php:57 inc/deploygroup.class.php:140
 #: inc/deploytaskjob.class.php:170
@@ -311,11 +311,11 @@ msgstr "Discovery-Status"
 
 #: setup.php:392
 msgid "Inventory status"
-msgstr ""
+msgstr "Inventarstatus"
 
 #: setup.php:395 inc/deploymirror.class.php:52 inc/menu.class.php:259
 msgid "Mirror servers"
-msgstr ""
+msgstr "Spiegelserver"
 
 #: setup.php:470
 msgid "Your GLPI version not compatible, require 0.84"
@@ -340,7 +340,7 @@ msgstr "Funktionen"
 
 #: front/inventorycomputerimportxml.php:64
 msgid "Can't read zip file!"
-msgstr ""
+msgstr "Kann keine ZP-Datei erstellen!"
 
 #: front/inventorycomputerimportxml.php:85
 msgid "No file to import!"
@@ -366,7 +366,7 @@ msgstr "Enddatum"
 
 #: front/rule.common.php:171 front/wizzrule.common.php:171
 msgid "Rules applied"
-msgstr ""
+msgstr "Regeln angewendet"
 
 #: front/rule.common.php:182 front/wizzrule.common.php:182
 msgid "Local rules"
@@ -406,7 +406,7 @@ msgstr "Agent"
 
 #: inc/agent.class.php:100 inc/agent.class.php:187 inc/agent.class.php:284
 msgid "Last contact"
-msgstr ""
+msgstr "Letzter Kontakt"
 
 #: inc/agent.class.php:106 inc/agent.class.php:255
 msgid "locked"
@@ -414,7 +414,7 @@ msgstr "gesperrt"
 
 #: inc/agent.class.php:112 inc/agent.class.php:229
 msgid "Device_id"
-msgstr ""
+msgstr "Device ID"
 
 #: inc/agent.class.php:119 inc/agent.class.php:236
 msgid "Computer link"
@@ -428,7 +428,7 @@ msgstr "Benutzer-Agent"
 #: inc/agent.class.php:146 inc/agent.class.php:292 inc/agent.class.php:805
 #: inc/inventoryruleimport.class.php:136
 msgid "FusionInventory tag"
-msgstr ""
+msgstr "FusionInventory Tag"
 
 #: inc/agent.class.php:526
 msgid "Agent state"
@@ -482,7 +482,7 @@ msgstr "Seriennummer"
 
 #: inc/computerlicenseinfo.class.php:99
 msgid "Full name"
-msgstr ""
+msgstr "Vollständiger Name"
 
 #: inc/computerlicenseinfo.class.php:101
 msgid "Option"
@@ -490,7 +490,7 @@ msgstr "Option"
 
 #: inc/computerlicenseinfo.class.php:122
 msgid "Union between computer and license"
-msgstr ""
+msgstr "Verbindung zwischen Computer und Lizenz"
 
 #: inc/config.class.php:202 inc/staticmisc.class.php:69
 msgid "Computer Inventory"
@@ -506,7 +506,7 @@ msgstr "Nur SSL für die Kommunikation mit dem Agent verwenden"
 
 #: inc/config.class.php:299
 msgid "Inventory frequency (in hours)"
-msgstr ""
+msgstr "Periodizität des Inventars (in Stunden)"
 
 #: inc/config.class.php:307
 msgid "Delete tasks after"
@@ -530,15 +530,15 @@ msgstr "Import-Optionen"
 
 #: inc/config.class.php:372
 msgid "Yes, managed by FusionInventory"
-msgstr ""
+msgstr "Ja, verwaltet durch FusionInventory"
 
 #: inc/config.class.php:373
 msgid "No, managed only by FusionInventory"
-msgstr ""
+msgstr "Nein, nicht verwaltet durch FusionInventory"
 
 #: inc/config.class.php:374
 msgid "No, managed manually"
-msgstr ""
+msgstr "Nein, manuell verwaltet"
 
 #: inc/config.class.php:383 inc/config.class.php:393 inc/config.class.php:414
 #: inc/config.class.php:441
@@ -648,27 +648,27 @@ msgstr "Remote-Inventarisierung von Geräten"
 
 #: inc/deployaction.class.php:50
 msgid "Actions"
-msgstr ""
+msgstr "Aktionen"
 
 #: inc/deployaction.class.php:63
 msgid "cmd"
-msgstr ""
+msgstr "CMD"
 
 #: inc/deployaction.class.php:64
 msgid "move"
-msgstr ""
+msgstr "Verschieben"
 
 #: inc/deployaction.class.php:65
 msgid "copy"
-msgstr ""
+msgstr "Kopieren"
 
 #: inc/deployaction.class.php:66
 msgid "delete"
-msgstr ""
+msgstr "Löschen"
 
 #: inc/deployaction.class.php:67
 msgid "mkdir"
-msgstr ""
+msgstr "Ordner erstellen"
 
 #: inc/deployaction.class.php:152
 msgid "return codes saved for this command"
@@ -687,27 +687,27 @@ msgstr ""
 #: inc/taskjob.class.php:417 inc/taskjob.class.php:656
 #: inc/taskjob.class.php:668
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: inc/deployaction.class.php:208 inc/deploycheck.class.php:177
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: inc/deployaction.class.php:262
 msgid "From"
-msgstr ""
+msgstr "Von"
 
 #: inc/deployaction.class.php:264
 msgid "To"
-msgstr ""
+msgstr "Nach"
 
 #: inc/deployaction.class.php:268
 msgid "exec"
-msgstr ""
+msgstr "Ausführen"
 
 #: inc/deployaction.class.php:275
 msgid "path"
-msgstr ""
+msgstr "Pfad"
 
 #: inc/deployaction.class.php:305
 msgid "return codes"
@@ -719,7 +719,7 @@ msgstr ""
 
 #: inc/deployaction.class.php:315
 msgid "errorCode"
-msgstr ""
+msgstr "Fehlercode"
 
 #: inc/deployaction.class.php:316
 msgid "okPattern"
@@ -784,11 +784,11 @@ msgstr ""
 
 #: inc/deploycheck.class.php:254
 msgid "Disk or directory"
-msgstr ""
+msgstr "Festplatte oder Ordner"
 
 #: inc/deploycheck.class.php:294
 msgid "Unit"
-msgstr ""
+msgstr "EInheit"
 
 #: inc/deploycheck.class.php:298
 msgid "B"
@@ -824,7 +824,7 @@ msgstr ""
 
 #: inc/deployconfig.class.php:74 inc/deployconfig.class.php:76
 msgid "FusionInventory DEPLOY"
-msgstr ""
+msgstr "FusionInventory DEPLOY"
 
 #: inc/deployconfig.class.php:111
 msgid "Root folder for sending files from server"
@@ -832,7 +832,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:50
 msgid "Files"
-msgstr ""
+msgstr "Dateien"
 
 #: inc/deployfile.class.php:63
 msgid "Upload from computer"
@@ -844,7 +844,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:113
 msgid "p2p"
-msgstr ""
+msgstr "P2P"
 
 #: inc/deployfile.class.php:114
 msgid "retention"
@@ -852,23 +852,23 @@ msgstr ""
 
 #: inc/deployfile.class.php:116
 msgid "days"
-msgstr ""
+msgstr "Tage"
 
 #: inc/deployfile.class.php:120
 msgid "uncompress"
-msgstr ""
+msgstr "dekomprimieren"
 
 #: inc/deployfile.class.php:149
 msgid "Source"
-msgstr ""
+msgstr "Quelle"
 
 #: inc/deployfile.class.php:182
 msgid "filename"
-msgstr ""
+msgstr "Dateiname"
 
 #: inc/deployfile.class.php:187
 msgid "Choose"
-msgstr ""
+msgstr "Auswählen"
 
 #: inc/deployfile.class.php:191
 msgid "Select the file on server"
@@ -876,11 +876,11 @@ msgstr ""
 
 #: inc/deployfile.class.php:199
 msgid "Uncompress"
-msgstr ""
+msgstr "Dekomprimieren"
 
 #: inc/deployfile.class.php:203
 msgid "P2p"
-msgstr ""
+msgstr "P2P"
 
 #: inc/deployfile.class.php:207
 msgid "retention days"
@@ -888,7 +888,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:449
 msgid "Max file size"
-msgstr ""
+msgstr "Maximale Dateigrösse"
 
 #: inc/deployfile.class.php:451
 msgid "Mio"
@@ -904,7 +904,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:489
 msgid "No file was uploaded"
-msgstr ""
+msgstr "Dateien wurde nicht heraufgeladen"
 
 #: inc/deployfile.class.php:492
 msgid "Missing a temporary folder"
@@ -912,7 +912,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:495
 msgid "Failed to write file to disk"
-msgstr ""
+msgstr "Datei konnte nicht gespeichert werden"
 
 #: inc/deployfile.class.php:498
 msgid "PHP extension stopped the file upload"
@@ -920,7 +920,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:526 inc/deployfile.class.php:531
 msgid "File missing"
-msgstr ""
+msgstr "Datei fehlt"
 
 #: inc/deployfilepart.class.php:51
 msgid "pieces of files"
@@ -928,27 +928,27 @@ msgstr ""
 
 #: inc/deploygroup.class.php:93 inc/deploygroup.class.php:185
 msgid "Static group"
-msgstr ""
+msgstr "Statische Gruppe"
 
 #: inc/deploygroup.class.php:97 inc/deploygroup.class.php:186
 msgid "Dynamic group"
-msgstr ""
+msgstr "Dynamische Gruppe"
 
 #: inc/deploygroup.class.php:143
 msgid "Add group"
-msgstr ""
+msgstr "Gruppe hinzufügen"
 
 #: inc/deployinstall.class.php:51 inc/deployinstall.class.php:58
 msgid "Installation"
-msgstr ""
+msgstr "Installation"
 
 #: inc/deploymirror.class.php:100 inc/deploymirror.class.php:133
 msgid "Mirror server address"
-msgstr ""
+msgstr "Spiegelserver Adresse"
 
 #: inc/deploypackage.class.php:157
 msgid "Add a package"
-msgstr ""
+msgstr "Paket hinzufügen"
 
 #: inc/deploypackage.class.php:235
 msgid "One or more active tasks (#task#) use this package. Edition denied."
@@ -976,7 +976,7 @@ msgstr "Fehler / Erneuter Versuch geplant"
 
 #: inc/deploystate.class.php:115
 msgid "Error"
-msgstr ""
+msgstr "Fehler"
 
 #: inc/deploystate.class.php:119 inc/statediscovery.class.php:204
 #: inc/stateinventory.class.php:148 inc/taskjoblog.class.php:67
@@ -986,11 +986,11 @@ msgstr "Vorbereitet"
 
 #: inc/deploystaticmisc.class.php:56 inc/staticmisc.class.php:92
 msgid "Package deployment"
-msgstr ""
+msgstr "Paketverteilung"
 
 #: inc/deploystaticmisc.class.php:61 inc/staticmisc.class.php:99
 msgid "Package uninstall"
-msgstr ""
+msgstr "Paketdeinstallieren"
 
 #: inc/deploystaticmisc.class.php:88 inc/deploytask.class.php:54
 msgid "Group of computers"
@@ -998,19 +998,19 @@ msgstr ""
 
 #: inc/deploystaticmisc.class.php:189
 msgid "Manage packages"
-msgstr ""
+msgstr "Pakete verwalten"
 
 #: inc/deploystaticmisc.class.php:192
 msgid "Deployment status"
-msgstr ""
+msgstr "Verteilstatus"
 
 #: inc/deploytask.class.php:57 inc/deploytask.class.php:106
 msgid "Task"
-msgstr ""
+msgstr "Aufgabe"
 
 #: inc/deploytask.class.php:83
 msgid "Order list"
-msgstr ""
+msgstr "Sortierung"
 
 #: inc/deploytask.class.php:110
 msgid "Add task"
@@ -1026,11 +1026,11 @@ msgstr ""
 
 #: inc/deployuninstall.class.php:51 inc/deployuninstall.class.php:58
 msgid "Uninstallation"
-msgstr ""
+msgstr "Deinstallation"
 
 #: inc/display.class.php:170
 msgid "Progress"
-msgstr ""
+msgstr "Fortschritt"
 
 #: inc/inventorycomputerantivirus.class.php:173
 #: inc/inventorycomputerbatteries.class.php:155
@@ -1040,7 +1040,7 @@ msgstr "Aktuell"
 #: inc/inventorycomputerbatteries.class.php:51
 #: inc/inventorycomputerbatteries.class.php:88
 msgid "Batterie"
-msgstr ""
+msgstr "Batterie"
 
 #: inc/inventorycomputerblacklist.class.php:77
 #: inc/inventorycomputerblacklist.class.php:127
@@ -1049,11 +1049,11 @@ msgstr "Werte in der schwarzen Liste"
 
 #: inc/inventorycomputerchemistry.class.php:54
 msgid "Chemistry"
-msgstr ""
+msgstr "Chemie"
 
 #: inc/inventorycomputercomputer.class.php:74
 msgid "Advanced informations"
-msgstr ""
+msgstr "Erweiterte Informationen"
 
 #: inc/inventorycomputercomputer.class.php:83 inc/rulematchedlog.class.php:82
 #: inc/rulematchedlog.class.php:87
@@ -1066,11 +1066,11 @@ msgstr ""
 
 #: inc/inventorycomputercomputer.class.php:157
 msgid "Date du BIOS"
-msgstr ""
+msgstr "BIOS Datum"
 
 #: inc/inventorycomputercomputer.class.php:164
 msgid "Version du BIOS"
-msgstr ""
+msgstr "BIOS-Version"
 
 #: inc/inventorycomputerimportxml.class.php:67
 msgid "Import XML file from an Agent"
@@ -1079,11 +1079,11 @@ msgstr "Import von einer XML-Datei eines Agents"
 #: inc/inventorycomputerstorage.class.php:51
 #: inc/inventorycomputerstorage_storage.class.php:51
 msgid "Storage"
-msgstr ""
+msgstr "Speicher"
 
 #: inc/inventorycomputerstoragetype.class.php:51
 msgid "Storage type"
-msgstr ""
+msgstr "Speichertyp"
 
 #: inc/inventorycomputerwebservice.class.php:74
 msgid "Computer injected into GLPI"
@@ -1116,11 +1116,11 @@ msgstr "FusionInventory-Verbindung"
 
 #: inc/inventoryruleimport.class.php:171
 msgid "Link if possible, else create device"
-msgstr ""
+msgstr "Verknüpfe wenn möglich, ansonsten Gerät erstellen"
 
 #: inc/inventoryruleimport.class.php:173
 msgid "Link if possible, else import denied"
-msgstr ""
+msgstr "Verknüpfe wenn möglich, ansonten Import verweigern"
 
 #: inc/inventoryruleimport.class.php:205
 msgid "equal"
@@ -1133,7 +1133,7 @@ msgstr "leer"
 #: inc/inventoryruleimport.class.php:856
 #: inc/inventoryruleimportcollection.class.php:110
 msgid "Device created"
-msgstr ""
+msgstr "Gerät erstellt"
 
 #: inc/iprange.class.php:57
 msgid "Communication mode"
@@ -2032,7 +2032,7 @@ msgstr "Graue Tintenpatrone"
 #: inc/mapping.class.php:978 inc/printerlog.class.php:178
 #: inc/printerlogreport.class.php:179
 msgid "Total number of printed pages (print)"
-msgstr ""
+msgstr "Seitenzahl"
 
 #: inc/mapping.class.php:982 inc/printerlog.class.php:184
 #: inc/printerlogreport.class.php:186
@@ -2080,11 +2080,11 @@ msgstr "Grundlegende Konfiguration"
 
 #: inc/menu.class.php:119
 msgid "General"
-msgstr ""
+msgstr "Allgemein"
 
 #: inc/menu.class.php:152
 msgid "Tasks"
-msgstr ""
+msgstr "Audits"
 
 #: inc/menu.class.php:168
 msgid "Ignored import devices"
@@ -2096,7 +2096,7 @@ msgstr ""
 
 #: inc/menu.class.php:186
 msgid "Rules"
-msgstr ""
+msgstr "Regeln"
 
 #: inc/menu.class.php:226
 msgid "Network inventory status"
@@ -2104,15 +2104,15 @@ msgstr ""
 
 #: inc/menu.class.php:244
 msgid "Networking"
-msgstr ""
+msgstr "Netzwerk"
 
 #: inc/menu.class.php:254
 msgid "Package management"
-msgstr ""
+msgstr "Paketverwaltung"
 
 #: inc/menu.class.php:264
 msgid "Deploy"
-msgstr ""
+msgstr "Verteilung"
 
 #: inc/networkequipment.class.php:66
 msgid "FusionInventory SNMP"
@@ -2144,29 +2144,29 @@ msgstr "Keine Daten verfügbar"
 
 #: inc/networkequipment.class.php:518
 msgid "Uptime"
-msgstr ""
+msgstr "Uptime"
 
 #: inc/networkequipment.class.php:545 inc/task.class.php:279
 #: inc/taskjob.class.php:296 inc/taskjob.class.php:1853
 #: inc/taskjob.class.php:1984
 msgid "day(s)"
-msgstr ""
+msgstr "Tag(e)"
 
 #: inc/networkequipment.class.php:546 inc/task.class.php:277
 #: inc/taskjob.class.php:294 inc/taskjob.class.php:1847
 #: inc/taskjob.class.php:1982
 msgid "hour(s)"
-msgstr ""
+msgstr "Stunde(n)"
 
 #: inc/networkequipment.class.php:547 inc/task.class.php:275
 #: inc/taskjob.class.php:292 inc/taskjob.class.php:1841
 #: inc/taskjob.class.php:1980
 msgid "Minute(s)"
-msgstr ""
+msgstr "Minute(n)"
 
 #: inc/networkequipment.class.php:548
 msgid "sec(s)"
-msgstr ""
+msgstr "Sekunde(n)"
 
 #: inc/networkequipment.class.php:568
 msgid "Ports array"
@@ -2186,23 +2186,23 @@ msgstr "Andere Verbindunge (mit Computer, Drucker...)"
 
 #: inc/networkequipment.class.php:613
 msgid "Monitoring"
-msgstr ""
+msgstr "Monitoring"
 
 #: inc/networkequipment.class.php:637
 msgid "Traffic received/sent"
-msgstr ""
+msgstr "Traffic erhalten/gesendet"
 
 #: inc/networkequipment.class.php:641
 msgid "Errors received/sent"
-msgstr ""
+msgstr "Fehler erhalten/gesendet"
 
 #: inc/networkequipment.class.php:645 inc/networkport.class.php:102
 msgid "Duplex"
-msgstr ""
+msgstr "Duplex"
 
 #: inc/networkport.class.php:90
 msgid "Last change"
-msgstr ""
+msgstr "Letzte Änderung"
 
 #: inc/networkport.class.php:94
 msgid "Number of bytes received / Number of bytes sent"
@@ -2214,13 +2214,13 @@ msgstr ""
 
 #: inc/networkportconnectionlog.class.php:59
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: inc/networkportconnectionlog.class.php:129
 #: inc/networkportconnectionlog.class.php:152 inc/networkportlog.class.php:469
 #: inc/networkportlog.class.php:487
 msgid "on"
-msgstr ""
+msgstr "ein"
 
 #: inc/networkportlog.class.php:62
 msgid "FusionInventory historical"
@@ -2240,7 +2240,7 @@ msgstr ""
 
 #: inc/printercartridge.class.php:62
 msgid "Cartridge(s)"
-msgstr ""
+msgstr "Kartusche(n)"
 
 #: inc/printerlog.class.php:53 inc/printerlog.class.php:338
 #: inc/printerlogreport.class.php:60
@@ -2261,11 +2261,11 @@ msgstr "Zähler"
 
 #: inc/printerlog.class.php:364 inc/snmpmodelmib.class.php:196
 msgid "Check All"
-msgstr ""
+msgstr "Alle auswählen"
 
 #: inc/printerlog.class.php:366 inc/snmpmodelmib.class.php:199
 msgid "Uncheck All"
-msgstr ""
+msgstr "Auswahle entfernen"
 
 #: inc/printerlog.class.php:489
 msgid "Time unit"
@@ -2335,7 +2335,7 @@ msgstr "Dynamische Ports (.x)"
 
 #: inc/snmpmodelimportexport.class.php:132
 msgid "SNMP model import"
-msgstr ""
+msgstr "SNMP Modellimport"
 
 #: inc/snmpmodelimportexport.class.php:159
 msgid "Mass import of models"
@@ -2347,7 +2347,7 @@ msgstr ""
 
 #: inc/snmpmodelimportexport.class.php:213
 msgid "Model already exists"
-msgstr ""
+msgstr "Modell existiert bereits"
 
 #: inc/snmpmodelmib.class.php:92
 msgid "OID list"
@@ -2363,7 +2363,7 @@ msgstr "Objekt"
 
 #: inc/snmpmodelmib.class.php:98 inc/snmpmodelmib.class.php:241
 msgid "OID"
-msgstr ""
+msgstr "OID"
 
 #: inc/snmpmodelmib.class.php:101 inc/snmpmodelmib.class.php:244
 msgid "Linked fields"
@@ -2393,7 +2393,7 @@ msgstr "Verknüpfte Geräte"
 
 #: inc/statediscovery.class.php:147
 msgid "Devices imported"
-msgstr ""
+msgstr "Geräte importiert"
 
 #: inc/statediscovery.class.php:210 inc/stateinventory.class.php:154
 #: inc/taskjoblog.class.php:69 inc/taskjoblog.class.php:645
@@ -2448,7 +2448,7 @@ msgstr "Existenzregeln"
 
 #: inc/staticmisc.class.php:212
 msgid "computer XML manual import"
-msgstr ""
+msgstr "Computer manuell über XML importieren"
 
 #: inc/staticmisc.class.php:215
 msgid "Fields blacklist"
@@ -2545,11 +2545,11 @@ msgstr "Zeitabstand zwischen 2 Versuchen (in Minuten)"
 
 #: inc/taskjob.class.php:353
 msgid "Purge"
-msgstr ""
+msgstr "Löschen"
 
 #: inc/taskjob.class.php:355
 msgid "Confirm the final deletion ?"
-msgstr ""
+msgstr "Definitiv löschen?"
 
 #: inc/taskjob.class.php:434 inc/taskjob.class.php:633
 #: inc/taskjob.class.php:881 inc/taskjob.class.php:1887
