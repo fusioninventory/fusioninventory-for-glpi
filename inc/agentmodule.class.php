@@ -218,11 +218,11 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
       $a_modules = $this->find();
       $i = 0;
+      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
       foreach ($a_modules as $data) {
          if ($i == 0) {
             echo "<tr class='tab_bg_1'>";
          }
-         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
          $modulename = $data["modulename"];
          foreach ($a_methods as $datamod) {
             if (isset($datamod['name'])
@@ -230,20 +230,16 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
                $modulename = $datamod['name'];
             }
          }
-         // Hack for snmpquery
-            if ($modulename == 'SNMPQUERY') {
-               $modulename = __('Network inventory (SNMP)', 'fusioninventory');
-
-            }
          echo "<td width='50%'>".$modulename." :</td>";
          echo "<td align='center'>";
 
          $checked = $data['is_active'];
          $a_agentList = importArrayFromDB($data['exceptions']);
          if (in_array($items_id, $a_agentList)) {
-            $checked = 1;
             if ($checked == 1) {
                $checked = 0;
+            } else {
+               $checked = 1;
             }
          }
          $check = "";
