@@ -141,9 +141,6 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   LEFT JOIN `glpi_plugin_fusioninventory_printers`
                           ON `printers_id`=`glpi_printers`.`id`
                   LEFT JOIN `glpi_networkports`
-                          ON `items_id`=`glpi_printers`.`id`
-                             AND `itemtype`='Printer'
-                  LEFT JOIN `glpi_networkports`
                        ON `glpi_networkports`.`items_id`=`glpi_printers`.`id`
                           AND `glpi_networkports`.`itemtype`='Printer'
                   LEFT JOIN `glpi_networknames`
@@ -163,8 +160,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                         AND `plugin_fusioninventory_configsecurities_id`!='0'
                         AND `glpi_plugin_fusioninventory_snmpmodels`.`itemtype`='Printer'
                         AND `glpi_printers`.`id` = '".$items_id."'
-                        AND `glpi_networkports`.`ip` IS NOT NULL
-                        AND `glpi_networkports`.`ip`!=''
+                        AND `glpi_ipaddresses`.`name`!=''
                   LIMIT 1";
                $result=$DB->query($query);
                while ($data=$DB->fetch_array($result)) {
