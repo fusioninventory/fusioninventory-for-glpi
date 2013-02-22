@@ -64,12 +64,8 @@ if (Session::haveRight("config", "w") && Session::haveRight("profile", "w")) {
       PluginFusioninventorySetup::update("2.0.2");
    }
    if (FieldExists("glpi_plugin_fusioninventory_configs", "version")) {
-      if ($config->getValue('version') == "2.0.2") {
-         $DB->query("UPDATE `glpi_plugin_fusioninventory_configs`
-                     SET `version` = '2.1.1'
-                     WHERE `id`=1");
-      }
-      if ($config->getValue('version') == "2.1.0") {
+      if ($config->getValue('version') == "2.0.2"
+              || $config->getValue('version') == "2.1.0") {
          $DB->query("UPDATE `glpi_plugin_fusioninventory_configs`
                      SET `version` = '2.1.1'
                      WHERE `id`=1");

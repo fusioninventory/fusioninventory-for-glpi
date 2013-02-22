@@ -74,7 +74,7 @@ class Switchinventory extends PHPUnit_Framework_TestCase {
 
       // Active extra-debug
       $pfConfig = new PluginFusioninventoryConfig();
-      $pfConfig->updateConfigType($plugin->fields['id'], "extradebug", "1");
+      $pfConfig->updateValue("extradebug", "1");
 
       // Add task and taskjob
       $pfTask = new PluginFusioninventoryTask();

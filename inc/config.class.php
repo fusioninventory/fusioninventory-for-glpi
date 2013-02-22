@@ -753,23 +753,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
 
    /**
-    * Clean config
-    *
-    * @param $plugin_id Plugin id
-    *
-    * @return boolean : TRUE on success
-    **/
-   function cleanConfig($plugin_id) {
-      global $DB;
-
-      $delete = "DELETE FROM `".$this->getTable()."`
-                 WHERE `plugins_id`='".$plugin_id."';";
-      return $DB->query($delete);
-   }
-
-
-
-   /**
     * Check if extradebug mode is activate
     */
    static function isExtradebugActive() {
@@ -789,40 +772,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          }
          Toolbox::logInFile($file, $message);
       }
-   }
-
-
-
-   /**
-    * Update configuration field
-    *
-    * @param $field_id field id
-    * @param $value field value
-    *
-    * @return boolean : TRUE on success
-    **/
-   function updateConfig($field_id, $value) {
-      return $this->update(array('id'=>$field_id, 'value'=>$value));
-   }
-
-
-
-   /**
-    * Update config type
-    *
-    * @param $p_plugins_id Plugin id
-    * @param $p_type Config type ('ssl_only', 'URL_agent_conf'...)
-    * @param $p_value Value
-    *
-    * @return boolean : TRUE on success
-    **/
-   function updateConfigType($p_plugins_id, $p_type, $p_value) {
-      $config = current($this->find("`plugins_id`='".$p_plugins_id."'
-                          AND `type`='".$p_type."'"));
-      if (isset($config['id'])) {
-         return $this->updateConfig($config['id'], $p_value);
-      }
-      return FALSE;
    }
    
    
