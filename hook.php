@@ -800,8 +800,10 @@ function cron_plugin_fusioninventory() {
 
 function plugin_fusioninventory_install() {
 
-   Html::header(__('Setup'), $_SERVER['PHP_SELF'], "config", "plugins");
-   
+   if ($_SERVER['PHP_SELF'] != "cli_install.php") {
+      Html::header(__('Setup'), $_SERVER['PHP_SELF'], "config", "plugins");
+   }
+      
    require_once (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion();
 
