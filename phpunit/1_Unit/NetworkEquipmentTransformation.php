@@ -42,6 +42,113 @@
 
 class NetworkEquipmentTransformation extends PHPUnit_Framework_TestCase {
    
+   public function testConvertXMLtoArray1() {
+      global $DB;
+
+      $DB->connect();
+      
+      $xml_source = '<?xml version="1.0"?>
+<REQUEST>
+<CONTENT>
+   <DEVICE>
+      <INFO>
+        <COMMENTS>ProCurve J9085A</COMMENTS>
+        <FIRMWARE>R.10.06 R.11.60</FIRMWARE>
+        <ID>123</ID>
+        <IPS>
+          <IP>192.168.1.56</IP>
+          <IP>192.168.10.56</IP>
+        </IPS>
+        <LOCATION>BAT A - Niv 3</LOCATION>
+        <MAC>b4:39:d6:3a:7f:00</MAC>
+        <MODEL>J9085A</MODEL>
+        <NAME>FR-SW01</NAME>
+        <SERIAL>CN536H7J</SERIAL>
+        <TYPE>NETWORKING</TYPE>
+        <UPTIME>8 days, 01:48:57.95</UPTIME>
+      </INFO>
+      <PORTS>
+        <PORT>
+          <CONNECTIONS>
+            <CONNECTION>
+              <MAC>00:40:9d:3b:7f:c4</MAC>
+            </CONNECTION>
+          </CONNECTIONS>
+          <IFDESCR>3</IFDESCR>
+          <IFNAME>3</IFNAME>
+          <IFNUMBER>3</IFNUMBER>
+          <IFSTATUS>1</IFSTATUS>
+          <IFTYPE>6</IFTYPE>
+          <MAC>b4:39:d6:3b:22:bd</MAC>
+          <VLANS>
+            <VLAN>
+              <NAME>VLAN160</NAME>
+              <NUMBER>160</NUMBER>
+            </VLAN>
+          </VLANS>
+        </PORT>  
+      </PORTS>
+   </DEVICE>
+</CONTENT>
+</REQUEST>';
+      
+      $xml = simplexml_load_string($xml_source, 'SimpleXMLElement', LIBXML_NOCDATA);
+      
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $a_return = $pfFormatconvert->XMLtoArray($xml);
+      
+      $a_reference = array(
+          'CONTENT' => array(
+          'DEVICE' => array(
+              array(
+               'INFO' => array(
+                        'COMMENTS' => 'ProCurve J9085A',
+                        'FIRMWARE' => 'R.10.06 R.11.60',
+                        'ID'       => '123',
+                        'IPS'      => array(
+                                 'IP' => array('192.168.1.56', '192.168.10.56')
+                            ),
+                        'LOCATION' => 'BAT A - Niv 3',
+                        'MAC'      => 'b4:39:d6:3a:7f:00',
+                        'MODEL'    => 'J9085A',
+                        'NAME'     => 'FR-SW01',
+                        'SERIAL'   => 'CN536H7J',
+                        'TYPE'     => 'NETWORKING',
+                        'UPTIME'   => '8 days, 01:48:57.95'
+                   ),
+               'PORTS' => array(
+                       'PORT' => array(
+                           array(
+                                'CONNECTIONS' => array(
+                                         'CONNECTION' => array(
+                                             'MAC' => array('00:40:9d:3b:7f:c4')
+                                             )
+                                    ),
+
+                                'IFDESCR'  => '3',
+                                'IFNAME'   => '3',
+                                'IFNUMBER' => '3',
+                                'IFSTATUS' => '1',
+                                'IFTYPE'   => '6',
+                                'MAC'      => 'b4:39:d6:3b:22:bd',
+                                'VLANS'    => array(
+                                         'VLAN' => array(
+                                                  'NAME'   => 'VLAN160',
+                                                  'NUMBER' => '160'
+                                             )
+                                    )
+                               )
+                           )
+                   )
+                )
+              )
+              )
+      );
+      
+      $this->assertEquals($a_reference, $a_return);
+   }
+   
+   
    
    public function testNetworkEquipmentGeneral() {
       global $DB;

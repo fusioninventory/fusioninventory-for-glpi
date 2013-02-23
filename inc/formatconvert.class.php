@@ -113,6 +113,15 @@ class PluginFusioninventoryFormatconvert {
                $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'] = 
                      array($datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT']);
             }
+            foreach ($datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'] 
+                                 as $numport=>$a_port) {                                    
+                           Toolbox::logInFile("PORT", print_r($a_port, true));
+               if (isset($a_port['CONNECTIONS']['CONNECTION']['MAC'])
+                       && !is_array($a_port['CONNECTIONS']['CONNECTION']['MAC'])) {
+                  $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'][$numport]['CONNECTIONS']['CONNECTION']['MAC'] = 
+                  array($a_port['CONNECTIONS']['CONNECTION']['MAC']);
+               }
+            }
          }
       }
       return $datainventory;
@@ -1283,11 +1292,7 @@ class PluginFusioninventoryFormatconvert {
                      foreach ($a_port['CONNECTIONS']['CONNECTION'] as $dataconn) {
                         foreach ($dataconn as $keymac=>$mac) {
                            if ($keymac == 'MAC') {
-                              if (is_array($mac)) {
-                                 $a_inventory['connection-mac'][$a_port['IFNUMBER']] = $mac;
-                              } else {
-                                 $a_inventory['connection-mac'][$a_port['IFNUMBER']][] = $mac;
-                              }                              
+                              $a_inventory['connection-mac'][$a_port['IFNUMBER']] = $mac;
                            }
                         }
                      }
