@@ -115,11 +115,18 @@ class PluginFusioninventoryFormatconvert {
             }
             foreach ($datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'] 
                                  as $numport=>$a_port) {                                    
-                           Toolbox::logInFile("PORT", print_r($a_port, true));
-               if (isset($a_port['CONNECTIONS']['CONNECTION']['MAC'])
+               if (isset($a_port['CONNECTIONS'])
+                       && isset($a_port['CONNECTIONS']['CONNECTION'])
+                       && isset($a_port['CONNECTIONS']['CONNECTION']['MAC'])
                        && !is_array($a_port['CONNECTIONS']['CONNECTION']['MAC'])) {
                   $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'][$numport]['CONNECTIONS']['CONNECTION']['MAC'] = 
-                  array($a_port['CONNECTIONS']['CONNECTION']['MAC']);
+                        array($a_port['CONNECTIONS']['CONNECTION']['MAC']);
+               }
+               if (isset($a_port['VLANS'])
+                       && isset($a_port['VLANS']['VLAN'])
+                       && !is_int(key($a_port['VLANS']['VLAN']))) {
+                  $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'][$numport]['VLANS']['VLAN'] = 
+                        array($a_port['VLANS']['VLAN']);
                }
             }
          }

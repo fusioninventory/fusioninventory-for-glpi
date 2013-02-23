@@ -133,9 +133,99 @@ class NetworkEquipmentTransformation extends PHPUnit_Framework_TestCase {
                                 'MAC'      => 'b4:39:d6:3b:22:bd',
                                 'VLANS'    => array(
                                          'VLAN' => array(
+                                             array(
                                                   'NAME'   => 'VLAN160',
                                                   'NUMBER' => '160'
                                              )
+                                         )
+                                    )
+                               )
+                           )
+                   )
+                )
+              )
+              )
+      );
+      
+      $this->assertEquals($a_reference, $a_return);
+   }
+   
+   
+   
+   public function testConvertXMLtoArrayMultiVlan() {
+      global $DB;
+
+      $DB->connect();
+      
+      $xml_source = '<?xml version="1.0"?>
+<REQUEST>
+<CONTENT>
+   <DEVICE>
+      <INFO>
+        <ID>123</ID>
+        <NAME>FR-SW01</NAME>
+        <SERIAL>CN536H7J</SERIAL>
+        <TYPE>NETWORKING</TYPE>
+      </INFO>
+      <PORTS>
+        <PORT>
+          <IFDESCR>3</IFDESCR>
+          <IFNAME>3</IFNAME>
+          <IFNUMBER>3</IFNUMBER>
+          <IFSTATUS>1</IFSTATUS>
+          <IFTYPE>6</IFTYPE>
+          <MAC>b4:39:d6:3b:22:bd</MAC>
+          <VLANS>
+            <VLAN>
+              <NAME>VLAN160</NAME>
+              <NUMBER>160</NUMBER>
+            </VLAN>
+            <VLAN>
+              <NAME>VLAN161</NAME>
+              <NUMBER>161</NUMBER>
+            </VLAN>
+          </VLANS>
+        </PORT>  
+      </PORTS>
+   </DEVICE>
+</CONTENT>
+</REQUEST>';
+      
+      $xml = simplexml_load_string($xml_source, 'SimpleXMLElement', LIBXML_NOCDATA);
+      
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $a_return = $pfFormatconvert->XMLtoArray($xml);
+      
+      $a_reference = array(
+          'CONTENT' => array(
+          'DEVICE' => array(
+              array(
+               'INFO' => array(
+                        'ID'       => '123',
+                        'NAME'     => 'FR-SW01',
+                        'SERIAL'   => 'CN536H7J',
+                        'TYPE'     => 'NETWORKING'
+                   ),
+               'PORTS' => array(
+                       'PORT' => array(
+                           array(
+                                'IFDESCR'  => '3',
+                                'IFNAME'   => '3',
+                                'IFNUMBER' => '3',
+                                'IFSTATUS' => '1',
+                                'IFTYPE'   => '6',
+                                'MAC'      => 'b4:39:d6:3b:22:bd',
+                                'VLANS'    => array(
+                                         'VLAN' => array(
+                                             array(
+                                                  'NAME'   => 'VLAN160',
+                                                  'NUMBER' => '160'
+                                             ),
+                                             array(
+                                                  'NAME'   => 'VLAN161',
+                                                  'NUMBER' => '161'
+                                             )
+                                         )
                                     )
                                )
                            )
