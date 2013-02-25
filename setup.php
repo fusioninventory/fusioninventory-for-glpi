@@ -215,6 +215,7 @@ function plugin_init_fusioninventory() {
          OR PluginFusioninventoryProfile::haveRight("wol", "r")
          OR PluginFusioninventoryProfile::haveRight("unknowndevice", "r")
          OR PluginFusioninventoryProfile::haveRight("task", "r")
+         OR PluginFusioninventoryProfile::haveRight("packages", "r")
          ) {
 
          $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = TRUE;

@@ -44,26 +44,26 @@ include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "wizard-start");
 
-PluginFusioninventoryProfile::checkRight("task", "r");
-
 if (!isset($_SERVER['HTTP_REFERER'])
         OR (isset($_SERVER['HTTP_REFERER']) AND
         !strstr($_SERVER['HTTP_REFERER'], "wizard.php")
         AND !isset($_GET['wizz']))) {
    PluginFusioninventoryMenu::displayMenu("mini");
 }
-if (isset($_GET["wizz"])) {
-   if (method_exists('PluginFusioninventoryWizard', $_GET["wizz"])) {
-      $ariane = '';
-      if (isset($_GET['ariane'])) {
-         $ariane = $_GET['ariane'];
-      }
-      PluginFusioninventoryWizard::$_GET["wizz"]($ariane);
-   }
-} else {
-   PluginFusioninventoryWizard::w_start();
-}
 
+if (PluginFusioninventoryProfile::haveRight("task", "w")) {
+   if (isset($_GET["wizz"])) {
+      if (method_exists('PluginFusioninventoryWizard', $_GET["wizz"])) {
+         $ariane = '';
+         if (isset($_GET['ariane'])) {
+            $ariane = $_GET['ariane'];
+         }
+         PluginFusioninventoryWizard::$_GET["wizz"]($ariane);
+      }
+   } else {
+      PluginFusioninventoryWizard::w_start();
+   }
+}
 Html::footer();
 
 ?>
