@@ -281,22 +281,19 @@ function plugin_init_fusioninventory() {
             $hook_search['iprange'] = '../fusioninventory/front/iprange.php';
          }
 
-         if (PluginFusioninventoryCredential::hasAlLeastOneType()) {
-            if (PluginFusioninventoryProfile::haveRight("credential", "w")) {
-               $hook_add['PluginFusioninventoryCredential'] = 
-                  '../fusioninventory/front/credential.form.php?add=1';
-               $hook_search['PluginFusioninventoryCredential'] =
-                  '../fusioninventory/front/credential.php';
+         if (PluginFusioninventoryProfile::haveRight("credential", "w")) {
+            $hook_add['PluginFusioninventoryCredential'] = 
+               '../fusioninventory/front/credential.form.php?add=1';
+            $hook_search['PluginFusioninventoryCredential'] =
+               '../fusioninventory/front/credential.php';
+          }
 
-            }
+         if (PluginFusioninventoryProfile::haveRight("credential", "w")) {
+            $hook_add['PluginFusioninventoryCredentialIp'] =
+               '../fusioninventory/front/credentialip.form.php?add=1';
+            $hook_search['PluginFusioninventoryCredentialIp'] =
+               '../fusioninventory/front/credentialip.php';
 
-            if (PluginFusioninventoryProfile::haveRight("credential", "w")) {
-               $hook_add['PluginFusioninventoryCredentialIp'] =
-                  '../fusioninventory/front/credentialip.form.php?add=1';
-               $hook_search['PluginFusioninventoryCredentialIp'] =
-                  '../fusioninventory/front/credentialip.php';
-
-            }
          }
 
          /*

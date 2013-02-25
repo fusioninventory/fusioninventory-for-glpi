@@ -1068,6 +1068,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       migrateTablesFusionInventory($migration, $a_table);
 
+      // * Update method name changed
+      $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
+         SET `method`='InventoryComputerESX'
+         WHERE `method`='ESX'");
+      
 
 
    /*

@@ -221,28 +221,26 @@ class PluginFusioninventoryMenu {
          $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryIPRange');
       }
 
-      if (PluginFusioninventoryCredential::hasAlLeastOneType()
-            && PluginFusioninventoryProfile::haveRight("credential", "r")) {
-         $a_menu[2]['name'] = __('Authentication for remote devices (VMware)', 'fusioninventory');
+      if (PluginFusioninventoryProfile::haveRight("credentialip", "r")) {
+         $a_menu[2]['name'] = __('Remote devices to inventory (VMware)', 'fusioninventory');
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/pics/menu_authentification.png";
-         $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredential');
-      }
-
-      if (PluginFusioninventoryCredential::hasAlLeastOneType()
-            && PluginFusioninventoryProfile::haveRight("credentialip", "r")) {
-         $a_menu[3]['name'] = __('Remote devices to inventory (VMware)', 'fusioninventory');
-         $a_menu[3]['pic']  = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_credentialips.png";
-         $a_menu[3]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredentialip');
+         $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredentialip');
       }
       
       if (PluginFusioninventoryProfile::haveRight("configsecurity", "r")) {
-         $a_menu[5]['name'] = __('SNMP authentication', 'fusioninventory');
+         $a_menu[4]['name'] = __('SNMP authentication', 'fusioninventory');
+         $a_menu[4]['pic']  = $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/pics/menu_authentification.png";
+         $a_menu[4]['link'] = $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/configsecurity.php";
+      }
+
+      if (PluginFusioninventoryProfile::haveRight("credential", "r")) {
+         $a_menu[5]['name'] = __('Authentication for remote devices (VMware)', 'fusioninventory');
          $a_menu[5]['pic']  = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_authentification.png";
-         $a_menu[5]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/configsecurity.php";
+         $a_menu[5]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredential');
       }
 
       if (PluginFusioninventoryProfile::haveRight("task", "r")) {

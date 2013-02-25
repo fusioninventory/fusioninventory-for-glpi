@@ -67,15 +67,12 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       return array(array('name'  => 'itemtype',
                          'label' => __('Type'),
-
                          'type'  => 'credential_itemtype'),
                    array('name'  => 'username',
                          'label' => __('Login'),
-
                          'type'  => 'text'),
                    array('name'  => 'password',
                          'label' => __('Password'),
-
                          'type'  => 'password'));
    }
 
@@ -150,23 +147,23 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       $tab['common'] = __('Authentication for remote devices (VMware)', 'fusioninventory');
 
-      $tab[1]['table'] = $this->getTable();
-      $tab[1]['field'] = 'name';
-      $tab[1]['name'] = __('Name');
-      $tab[1]['datatype'] = 'itemlink';
+      $tab[1]['table']     = $this->getTable();
+      $tab[1]['field']     = 'name';
+      $tab[1]['name']      = __('Name');
+      $tab[1]['datatype']  = 'itemlink';
 
-      $tab[2]['table'] = 'glpi_entities';
-      $tab[2]['field'] = 'completename';
-      $tab[2]['name'] = __('Entity');
+      $tab[2]['table']  = 'glpi_entities';
+      $tab[2]['field']  = 'completename';
+      $tab[2]['name']   = __('Entity');
 
-      $tab[3]['table']         = $this->getTable();
-      $tab[3]['field']         = 'itemtype';
-      $tab[3]['name']          = __('Type');
-      $tab[3]['massiveaction'] = FALSE;
+      $tab[3]['table']           = $this->getTable();
+      $tab[3]['field']           = 'itemtype';
+      $tab[3]['name']            = __('Type');
+      $tab[3]['massiveaction']   = FALSE;
 
-      $tab[4]['table'] = $this->getTable();
-      $tab[4]['field'] = 'username';
-      $tab[4]['name'] = __('Login');
+      $tab[4]['table']  = $this->getTable();
+      $tab[4]['field']  = 'username';
+      $tab[4]['name']   = __('Login');
 
       return $tab;
    }
@@ -253,18 +250,8 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     * Get all modules that can declare credentials
     */
    static function getCredentialsItemTypes() {
-      $itemtypes = array();
-      foreach (PluginFusioninventoryModule::getAll() as $data) {
-         $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
-
-         if (is_callable(array($class, 'credential_types'))) {
-            $res = call_user_func(array($class, 'credential_types'));
-            foreach ($res as $credential) {
-               $itemtypes[$credential['itemtype']] = $credential['name'];
-            }
-         }
-      }
-      return $itemtypes;
+     return array ('PluginFusioninventoryInventoryComputerESX' => 
+                           __('VMware host', 'fusioninventory'));
    }
 
 
@@ -293,7 +280,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     */
    static function dropdownCredentials($params = array()) {
       global $CFG_GLPI;
-
+      
       $p = array();
       if ($params['id'] == -1) {
          $p['value']    = '';
