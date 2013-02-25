@@ -1072,7 +1072,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
          SET `method`='InventoryComputerESX'
          WHERE `method`='ESX'");
-      
+      $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
+         SET `method`='networkinventory'
+         WHERE `method`='snmpinventory'");
+      $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
+         SET `method`='networkdiscovery'
+         WHERE `method`='netdiscovery'");
+
 
 
    /*
