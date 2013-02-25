@@ -158,7 +158,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          $keys = array_keys($action);
          $action_type = array_shift($keys);
          echo "<td>";
-         echo "<a class='edit' onclick='edit_action($i)'>$action_type</a><br />";
+         echo "<a class='edit' onclick='edit_action($i)'>".__($action_type, 'fusioninventory').
+            "</a><br />";
          
          foreach ($action[$action_type] as $key => $value) {
             if (is_array($value) ) {
@@ -169,11 +170,12 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                   }
                } 
             } else {
-               echo "$key $value &nbsp;&nbsp;&nbsp;";
+               echo "<b>".__(ucfirst($key), 'fusioninventory')."</b> $value ";
             }
          }
          if (isset($action[$action_type]['retChecks'])) {
-            echo "<br />".__("Command checks", 'fusioninventory')." : <ul class='retChecks'>";
+            echo "<br><b>".__("return codes saved for this command", 'fusioninventory').
+               "</b> : <ul class='retChecks'>";
             foreach ($action[$action_type]['retChecks'] as $retCheck) {
                echo "<li>";
                echo $retCheck['type']." <b>=</b> ".array_shift($retCheck['value']);
@@ -208,22 +210,38 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             //scroll to edit form
             document.getElementById('th_title_action_$rand').scrollIntoView();
 
-            //remove plus button
-            if (Ext.get('plus_actions_block$rand')) Ext.get('plus_actions_block$rand').remove();
-            
             //show and load form
             Ext.get('actions_block$rand').setDisplayed('block');
             Ext.get('actions_block$rand').load({
+               'url': '".$CFG_GLPI["root_doc"].
+                          "/plugins/fusioninventory/ajax/deploypackage_form.php',
+               'scripts': true,
+               'params' : {
+                  'subtype': 'action',
+                  'index': index, 
+                  'orders_id': $orders_id, 
+                  'rand': '$rand'
+               }
+            });
+
+            //change plus button behavior 
+            //(for always have possibility to add an item also in edit mode)
+            Ext.get('plus_actions_block$rand').on('click', function() {
+               //empty sub value
+               Ext.fly('showActionValue$rand').update('');
+
+               //replace type select
+               Ext.get('showActionType$rand').load({
                   'url': '".$CFG_GLPI["root_doc"].
                              "/plugins/fusioninventory/ajax/deploypackage_form.php',
                   'scripts': true,
                   'params' : {
                      'subtype': 'action',
-                     'index': index, 
                      'orders_id': $orders_id, 
                      'rand': '$rand'
                   }
                });
+            });
          }
       </script>";
    }
@@ -316,6 +334,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
             $name_label_1 = "list[]";
             $value_label_2 = FALSE;
             break;
+         default:
+            return false;
       }
 
       echo "<table class='package_item'>";

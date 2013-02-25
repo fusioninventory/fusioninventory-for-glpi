@@ -359,7 +359,11 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          ";
       }
       echo "
-          Ext.get('".$dom_id."').setDisplayed('block');
+         //show block associated to plus button
+         Ext.get('".$dom_id."').setDisplayed('block');
+
+         //remove all border to previous selected item (remove classes)
+         Ext.select('table.package_item_list tr.selected ').removeClass('selected');
       }</script>";
    }
 
