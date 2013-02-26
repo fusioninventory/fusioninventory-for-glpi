@@ -834,7 +834,21 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      // Get networkname
                      $a_networknames_find = current($networkName->find("`items_id`='".$keydb."'
                                                           AND `itemtype`='NetworkPort'", "", 1));
-
+                     if (!isset($a_networknames_find['id'])) {
+                        $a_networkport['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                        $a_networkport['items_id'] = $computers_id;
+                        $a_networkport['itemtype'] = "Computer";
+                        $a_networkport['_no_history'] = $no_history;
+                        $a_networkport['items_id'] = $keydb;
+                        unset($a_networkport['_no_history']);
+                        $a_networkport['is_recursive'] = 0;
+                        $a_networkport['itemtype'] = 'NetworkPort';
+                        unset($a_networkport['name']);
+                        $a_networkport['_no_history'] = $no_history;
+                        $a_networknames_id = $networkName->add($a_networkport, array(), FALSE);
+                        $a_networknames_find['id'] = $a_networknames_id;
+                     }                     
+                     
                      // Same networkport, verify ipaddresses
                      $db_addresses = array();
                      $query = "SELECT `id`, `name` FROM `glpi_ipaddresses`
