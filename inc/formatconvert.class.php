@@ -1071,12 +1071,12 @@ class PluginFusioninventoryFormatconvert {
                   if (isset($res_rule["name"])) {
                      $array_tmp['name'] = $res_rule["name"];
                   }
-                  if (isset($res_rule["version"]) && $res_rule["version"]!= '') {
+                  if (isset($res_rule["version"])) {
                      $array_tmp['version'] = $res_rule["version"];
                   }
                   if (isset($res_rule["manufacturer"])) {
                      $array_tmp['manufacturers_id'] = Dropdown::import("Manufacturer", 
-                                                                       $res_rule["manufacturer"]);
+                                                   array('name' => $res_rule["manufacturer"]));
                   } else if ($array_tmp['manufacturers_id'] != ''
                           && $array_tmp['manufacturers_id'] != '0') {
                      if (!isset($this->manufacturer_cache[$array_tmp['manufacturers_id']])) {
