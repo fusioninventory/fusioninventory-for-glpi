@@ -882,9 +882,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         if (count($a_computerinventory_ipaddress) != 0) {
                            foreach ($a_computerinventory_ipaddress as $ip) {
                               $input = array();
-                              $input['items_id'] = $a_networknames_find['id'];
-                              $input['itemtype'] = 'NetworkName';
-                              $input['name'] = $ip;
+                              $input['items_id']   = $a_networknames_find['id'];
+                              $input['itemtype']   = 'NetworkName';
+                              $input['name']       = $ip;
+                              $input['is_dynamic'] = 1;
                               $iPAddress->add($input, array(), FALSE);
                            }
                         }
@@ -923,9 +924,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $a_networknames_id = $networkName->add($a_networkport, array(), FALSE);
                      foreach ($a_networkport['ipaddress'] as $ip) {
                         $input = array();
-                        $input['items_id'] = $a_networknames_id;
-                        $input['itemtype'] = 'NetworkName';
-                        $input['name'] = $ip;
+                        $input['items_id']   = $a_networknames_id;
+                        $input['itemtype']   = 'NetworkName';
+                        $input['name']       = $ip;
+                        $input['is_dynamic'] = 1;
             $input['_no_history'] = $no_history;
                         $iPAddress->add($input, array(), FALSE);
                      }
