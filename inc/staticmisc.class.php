@@ -88,14 +88,14 @@ class PluginFusioninventoryStaticmisc {
             ),
 
             array(   'module'         => 'fusioninventory',
-                     'method'         => 'deploydeployinstall',
+                     'method'         => 'deployinstall',
                      'name'           => __('Package deployment', 'fusioninventory'),
                      'task'           => "DEPLOY",
                      'use_rest'       => TRUE
             ),
 
             array(   'module'         => 'fusioninventory',
-                     'method'         => 'deploydeployuninstall',
+                     'method'         => 'deployuninstall',
                      'name'           => __('Package uninstall', 'fusioninventory'),
                      'task'           => "DEPLOY",
                      'use_rest'       => TRUE
@@ -522,21 +522,21 @@ class PluginFusioninventoryStaticmisc {
     * Deploy definition
     */
 
-   static function task_definitiontype_deploydeployinstall($a_itemtype) {
+   static function task_definitiontype_deployinstall($a_itemtype) {
       return array(0 => Dropdown::EMPTY_VALUE,
                    'PluginFusioninventoryDeployPackage' => __('Package'));
    }
 
    
    
-   static function task_definitiontype_deploydeployuninstall($a_itemtype) {
+   static function task_definitiontype_deployuninstall($a_itemtype) {
       return array(0 => Dropdown::EMPTY_VALUE,
                    'PluginFusioninventoryDeployPackage' => __('Package'));
    }
 
    
    
-   static function task_definitionselection_PluginFusioninventoryDeployPackage_deploydeployinstall() {
+   static function task_definitionselection_PluginFusioninventoryDeployPackage_deployinstall() {
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'definitionselectiontoadd';
@@ -545,7 +545,7 @@ class PluginFusioninventoryStaticmisc {
 
    
    
-   static function task_definitionselection_PluginFusioninventoryDeployPackage_deploydeployuninstall() {
+   static function task_definitionselection_PluginFusioninventoryDeployPackage_deployuninstall() {
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'definitionselectiontoadd';
@@ -554,7 +554,7 @@ class PluginFusioninventoryStaticmisc {
 
    
    
-   static function task_definitionselection_PluginFusioninventoryDeployGroup_deploydeployinstall() {
+   static function task_definitionselection_PluginFusioninventoryDeployGroup_deployinstall() {
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'actionselectiontoadd';
@@ -563,7 +563,7 @@ class PluginFusioninventoryStaticmisc {
 
    
    
-   static function task_definitionselection_PluginFusioninventoryDeployGroup_deploydeployuninstall() {
+   static function task_definitionselection_PluginFusioninventoryDeployGroup_deployuninstall() {
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'actionselectiontoadd';
@@ -572,7 +572,7 @@ class PluginFusioninventoryStaticmisc {
 
    
    
-   static function task_actionselection_Computer_deploydeployinstall() {
+   static function task_actionselection_Computer_deployinstall() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -584,7 +584,7 @@ class PluginFusioninventoryStaticmisc {
    
    
    
-   static function task_actionselection_Computer_deploydeployuninstall() {
+   static function task_actionselection_Computer_deployuninstall() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -596,7 +596,7 @@ class PluginFusioninventoryStaticmisc {
    
    
 
-   static function task_actionselection_Group_deploydeployinstall() {
+   static function task_actionselection_Group_deployinstall() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -606,7 +606,7 @@ class PluginFusioninventoryStaticmisc {
    
    
    
-   static function task_actionselection_PluginFusioninventoryDeployGroup_deploydeployinstall() {
+   static function task_actionselection_PluginFusioninventoryDeployGroup_deployinstall() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -616,7 +616,7 @@ class PluginFusioninventoryStaticmisc {
    
    
 
-   static function task_actiontype_deploydeployinstall($a_itemtype) {
+   static function task_actiontype_deployinstall($a_itemtype) {
       return array(0 => Dropdown::EMPTY_VALUE,
                    'PluginFusioninventoryDeployGroup' => __('Group of computers'),
                    'Computer'                         => __('Computers'),
@@ -626,7 +626,7 @@ class PluginFusioninventoryStaticmisc {
    
    
 
-   static function task_actiontype_deploydeployuninstall($a_itemtype) {
+   static function task_actiontype_deployuninstall($a_itemtype) {
       return array(0 => Dropdown::EMPTY_VALUE,
                    'PluginFusioninventoryDeployGroup' => __('Group of computers'),
                    'Computer'                         => __('Computers'),
