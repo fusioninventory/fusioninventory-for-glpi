@@ -55,7 +55,7 @@ $pfTask->menuTasksLogs();
 
 $pfTask->taskMenu();
 if (isset($_GET['see'])) {
-   $pfTask->displayTaks($_GET['see']);
+   $pfTask->displayTask($_GET['see']);
 }
 
 Html::footer();

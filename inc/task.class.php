@@ -483,7 +483,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
 
-   function displayTaks($condition) {
+   function displayTask($condition) {
       global $DB, $CFG_GLPI;
 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
