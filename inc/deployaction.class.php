@@ -68,7 +68,7 @@ class PluginFusioninventoryDeployAction {
 
    
    
-   static function displayForm($orders_id, $datas, $rand) {
+   static function displayForm($order, $datas, $rand) {
       global $CFG_GLPI;
       
       if (!isset($datas['index'])) {
@@ -77,7 +77,7 @@ class PluginFusioninventoryDeployAction {
          //== edit selected data ==
          
          //get current order json
-         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($orders_id), TRUE);
+         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order['id']), TRUE);
 
          //get data on index
          $action = $datas_o['jobs']['actions'][$datas['index']];   
@@ -139,11 +139,11 @@ class PluginFusioninventoryDeployAction {
       if (!isset($datas['jobs']['actions']) || empty($datas['jobs']['actions'])) {
          return;
       }
+      echo "<div id='drag_".PluginFusioninventoryDeployOrder::getOrderTypeLabel($order['type'])."_actions'>";
       echo "<form name='removeactions' method='post' action='deploypackage.form.php?remove_item' ".
          "id='actionsList$rand'>";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployAction' />";
-      echo "<input type='hidden' name='orders_id' value='$orders_id' />";
-      echo "<div id='drag_actions'>";
+      echo "<input type='hidden' name='orders_id' value='{$order['id']}' />";
       echo "<table class='tab_cadrehov package_item_list' id='table_action_$rand'>";
       $i=0;
       foreach ($datas['jobs']['actions'] as $action) {
@@ -189,11 +189,12 @@ class PluginFusioninventoryDeployAction {
       echo "<tr><th>";
       Html::checkAllAsCheckbox("actionsList$rand", mt_rand());
       echo "</th><th colspan='3'></th></tr>";
-      echo "</table></div>";
+      echo "</table>";
       echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       Html::closeForm();
+      echo "</div>"; // close div drag_actions
 
       echo "<script type='text/javascript'>
          function edit_action(index) {
@@ -215,7 +216,7 @@ class PluginFusioninventoryDeployAction {
                'params' : {
                   'subtype': 'action',
                   'index': index, 
-                  'orders_id': $orders_id, 
+                  'orders_id': {$order['id']}, 
                   'rand': '$rand'
                }
             });
@@ -233,7 +234,7 @@ class PluginFusioninventoryDeployAction {
                   'scripts': true,
                   'params' : {
                      'subtype': 'action',
-                     'orders_id': $orders_id, 
+                     'orders_id': {$order['id']}, 
                      'rand': '$rand'
                   }
                });

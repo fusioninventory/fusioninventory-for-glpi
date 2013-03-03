@@ -65,7 +65,7 @@ class PluginFusioninventoryDeployFile {
 
    
    
-   static function displayForm($orders_id, $datas, $rand) {
+   static function displayForm($order, $datas, $rand) {
       global $CFG_GLPI;
 
       if (!isset($datas['index'])) {
@@ -74,7 +74,7 @@ class PluginFusioninventoryDeployFile {
          //== edit selected data ==
          
          //get current order json
-         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($orders_id), TRUE);
+         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order['id']), TRUE);
 
          //get data on index
          $sha512 = $datas_o['jobs']['associatedFiles'][$datas['index']];   
@@ -95,7 +95,7 @@ class PluginFusioninventoryDeployFile {
          $params['p2p-retention-duration'] = $file['p2p-retention-duration'];
          $params['uncompress']             = $file['uncompress'];
       }
-      Ajax::UpdateItemJsCode("showFileType$rand",
+      Ajax::updateItemJsCode("showFileType$rand",
                              $CFG_GLPI["root_doc"].
                              "/plugins/fusioninventory/ajax/deploydropdown_packagesubtypes.php",
                              $params,
@@ -113,11 +113,11 @@ class PluginFusioninventoryDeployFile {
       if (!isset($datas['jobs']['associatedFiles']) || empty($datas['jobs']['associatedFiles'])) {
          return;
       }
+      echo "<div id='drag_".PluginFusioninventoryDeployOrder::getOrderTypeLabel($order['type'])."_files'>";
       echo "<form name='removefiles' method='post' action='deploypackage.form.php?remove_item' ".
          "id='filesList$rand'>";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployFile' />";
-      echo "<input type='hidden' name='orders_id' value='$orders_id' />";
-      echo "<div id='drag_files'>";
+      echo "<input type='hidden' name='orders_id' value='{$order['id']}' />";
       echo "<table class='tab_cadrehov package_item_list' id='table_file_$rand'>";
       $i = 0;
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
@@ -171,11 +171,12 @@ class PluginFusioninventoryDeployFile {
       echo "<tr><th>";
       Html::checkAllAsCheckbox("filesList$rand", mt_rand());
       echo "</th><th colspan='3'></th></tr>";
-      echo "</table></div>";
+      echo "</table>";
       echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       Html::closeForm();
+      echo "</div>"; // close div drag_files
 
       echo "<script type='text/javascript'>
          function edit_files(index) {
@@ -196,8 +197,8 @@ class PluginFusioninventoryDeployFile {
                'scripts': true,
                'params' : {
                   'subtype': 'file',
-                  'index': index, 
-                  'orders_id': $orders_id, 
+                  'index': index,
+                  'orders_id': {$order['id']},
                   'rand': '$rand'
                }
             });
@@ -215,7 +216,7 @@ class PluginFusioninventoryDeployFile {
                   'scripts': true,
                   'params' : {
                      'subtype': 'file',
-                     'orders_id': $orders_id, 
+                     'orders_id': {$order['id']},
                      'rand': '$rand'
                   }
                });

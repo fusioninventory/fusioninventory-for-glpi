@@ -63,7 +63,7 @@ class PluginFusioninventoryDeployCheck {
 
    
    
-   static function displayForm($orders_id, $datas, $rand) {
+   static function displayForm($order, $datas, $rand) {
       global $CFG_GLPI;
 
       $checks_types = self::getTypes();
@@ -74,7 +74,7 @@ class PluginFusioninventoryDeployCheck {
          //== edit selected data ==
          
          //get current order json
-         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($orders_id), TRUE);
+         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order['id']), TRUE);
 
          //get data on index
          $check = $datas_o['jobs']['checks'][$datas['index']];         
@@ -94,13 +94,12 @@ class PluginFusioninventoryDeployCheck {
          $params['value']  = addslashes($check['value']);
          $params['return'] = $check['return'];
       }
-      Ajax::UpdateItemJsCode("showCheckType$rand",
+      Ajax::updateItemJsCode("showCheckType$rand",
                              $CFG_GLPI["root_doc"].
                              "/plugins/fusioninventory/ajax/deploydropdown_packagesubtypes.php",
                              $params,
                              "dropdown_deploy_checktype");
       echo "</script>";
-
 
       echo "<span id='showCheckValue$rand'></span>";
       
@@ -113,14 +112,14 @@ class PluginFusioninventoryDeployCheck {
       Html::closeForm();
 
       //display stored checks datas
+      echo "<div id='drag_".PluginFusioninventoryDeployOrder::getOrderTypeLabel($order['type'])."_checks'>";
       echo "<form name='removecheck' method='post' action='deploypackage.form.php?remove_item' ".
          "id='checksList$rand'>";
-      echo "<input type='hidden' name='orders_id' value='$orders_id' />";
+      echo "<input type='hidden' name='orders_id' value='{$order['id']}' />";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployCheck' />";
       if (!isset($datas['jobs']['checks']) || empty($datas['jobs']['checks'])) {
          return;
       }
-      echo "<div id='drag_checks'>";
       echo "<table class='tab_cadrehov package_item_list' id='table_check_$rand'>";
       $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {
@@ -159,11 +158,12 @@ class PluginFusioninventoryDeployCheck {
       echo "<tr><th>";
       Html::checkAllAsCheckbox("checksList$rand", mt_rand());
       echo "</th><th colspan='3'></th></tr>";
-      echo "</table></div>";
+      echo "</table>";
       echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       Html::closeForm();
+      echo "</div>"; // close div drag_checks
 
       echo "<script type='text/javascript'>
          function edit_check(index) {
@@ -184,13 +184,13 @@ class PluginFusioninventoryDeployCheck {
                'scripts': true,
                'params' : {
                   'subtype': 'check',
-                  'index': index, 
-                  'orders_id': $orders_id, 
+                  'index': index,
+                  'orders_id': {$order['id']},
                   'rand': '$rand'
                }
             });
 
-            //change plus button behavior 
+            //change plus button behavior
             //(for always have possibility to add an item also in edit mode)
             Ext.get('plus_checks_block$rand').on('click', function() {
                //empty sub value
@@ -203,7 +203,7 @@ class PluginFusioninventoryDeployCheck {
                   'scripts': true,
                   'params' : {
                      'subtype': 'check',
-                     'orders_id': $orders_id, 
+                     'orders_id': {$order['id']},
                      'rand': '$rand'
                   }
                });
