@@ -66,9 +66,10 @@ a.edit {
 /* drag and drop element */
 .drag {
    background-image: url("../pics/drag.png");
+   background-repeat: repeat-x;
    cursor: move;
-   width: 14px;
-   height: 10px;
+   width: 16px;
+   height: 16px;
    border:0 !important;
 }
 
