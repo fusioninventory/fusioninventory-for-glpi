@@ -63,9 +63,14 @@ if (isset($_REQUEST['move_item'])) { //ajax request
    exit;
 }
 
-if (!isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) {
+//if (isset($_GET['orders_id'] && isset($_GET[''])
+
+if (!isset($_REQUEST['orders_id']) && !isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) {
    exit;
 }
+
+
+// What is the point in sending arguments from $_REQUEST along with the $_REQUEST ... -- kiniou
 
 switch ($_REQUEST['subtype']) {
    case 'check':
