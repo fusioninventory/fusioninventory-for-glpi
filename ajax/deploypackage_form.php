@@ -46,8 +46,20 @@ Html::header_nocache();
 Session::checkCentralAccess();
 
 if (isset($_REQUEST['move_item'])) { //ajax request
-   PluginFusioninventoryDeployPackage::alter_json('move_item', $_REQUEST);
-   echo "true";
+
+   json_response = array(
+      "success" => TRUE,
+      "reason" => ''
+   );
+
+   if (PluginFusioninventoryProfile::haveRight("packages", "w")) {
+      PluginFusioninventoryDeployPackage::alter_json('move_item', $_REQUEST);
+   } else {
+      json_response['success'] = FALSE;
+      json_response['reason'] = __('Package modification is forbidden by your profile.';
+   }
+
+   echo json_encode( json_response );
    exit;
 }
 
