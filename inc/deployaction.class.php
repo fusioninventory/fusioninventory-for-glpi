@@ -54,8 +54,8 @@ class PluginFusioninventoryDeployAction {
       return TRUE;
    }
 
-   
-   
+
+
    static function getTypes() {
        return array(
          'cmd'     => __('cmd', 'fusioninventory'),
@@ -66,21 +66,21 @@ class PluginFusioninventoryDeployAction {
       );
    }
 
-   
-   
+
+
    static function displayForm($order, $datas, $rand) {
       global $CFG_GLPI;
-      
+
       if (!isset($datas['index'])) {
          echo "<div style='display:none' id='actions_block$rand'>";
       } else {
          //== edit selected data ==
-         
+
          //get current order json
          $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order['id']), TRUE);
 
          //get data on index
-         $action = $datas_o['jobs']['actions'][$datas['index']];   
+         $action = $datas_o['jobs']['actions'][$datas['index']];
          $tmp = array_keys($action);
          $type = array_shift($tmp);
          $action_values = $action[$type];
@@ -115,18 +115,18 @@ class PluginFusioninventoryDeployAction {
 
       }
 
-         
-      Ajax::UpdateItemJsCode("showActionType$rand",
+
+      Ajax::updateItemJsCode("showActionType$rand",
                              $CFG_GLPI["root_doc"].
                              "/plugins/fusioninventory/ajax/deploydropdown_packagesubtypes.php",
                              $params,
                              "dropdown_deploy_actiontype");
       echo "</script>";
 
-      //Html::printCleanArray($params);    
-      
+      //Html::printCleanArray($params);
+
       echo "<span id='showActionValue$rand'>&nbsp;</span>";
-      
+
       echo "<hr>";
       if (!isset($datas['index'])) {
          echo "</div>";
@@ -156,7 +156,7 @@ class PluginFusioninventoryDeployAction {
          echo "<td>";
          echo "<a class='edit' onclick='edit_action($i)'>".__($action_type, 'fusioninventory').
             "</a><br />";
-         
+
          foreach ($action[$action_type] as $key => $value) {
             if (is_array($value) ) {
                if ($key === "list") {
@@ -164,7 +164,7 @@ class PluginFusioninventoryDeployAction {
                      echo $list;
                      echo " ";
                   }
-               } 
+               }
             } else {
                echo "<b>".__(ucfirst($key), 'fusioninventory')."</b> $value ";
             }
@@ -215,13 +215,13 @@ class PluginFusioninventoryDeployAction {
                'scripts': true,
                'params' : {
                   'subtype': 'action',
-                  'index': index, 
-                  'orders_id': {$order['id']}, 
+                  'index': index,
+                  'orders_id': {$order['id']},
                   'rand': '$rand'
                }
             });
 
-            //change plus button behavior 
+            //change plus button behavior
             //(for always have possibility to add an item also in edit mode)
             Ext.get('plus_actions_block$rand').on('click', function() {
                //empty sub value
@@ -234,7 +234,7 @@ class PluginFusioninventoryDeployAction {
                   'scripts': true,
                   'params' : {
                      'subtype': 'action',
-                     'orders_id': {$order['id']}, 
+                     'orders_id': {$order['id']},
                      'rand': '$rand'
                   }
                });
@@ -243,8 +243,8 @@ class PluginFusioninventoryDeployAction {
       </script>";
    }
 
-   
-   
+
+
    static function dropdownType($datas) {
       global $CFG_GLPI;
 
@@ -289,7 +289,7 @@ class PluginFusioninventoryDeployAction {
 
       if (isset($datas['edit'])) {
          echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("showActionValue$rand",
+         Ajax::updateItemJsCode("showActionValue$rand",
                                 $CFG_GLPI["root_doc"].
                                  "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                                 $params,
@@ -298,14 +298,14 @@ class PluginFusioninventoryDeployAction {
       }
    }
 
-   
-   
+
+
    static function displayAjaxValue($datas) {
       global $CFG_GLPI;
 
       $type         = $datas['value'];
       $rand         = $datas['rand'];
-      
+
       $value_type_1 = "input";
       $value_1      = isset($datas['value_1'])?$datas['value_1']:"";
       $value_2      = isset($datas['value_2'])?$datas['value_2']:"";
@@ -436,8 +436,8 @@ class PluginFusioninventoryDeployAction {
       </script>";
    }
 
-   
-   
+
+
    static function add_item($params) {
       //prepare new action entry to insert in json
       if (isset($params['list'])) {
@@ -476,8 +476,8 @@ class PluginFusioninventoryDeployAction {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
-   
-   
+
+
    static function save_item($params) {
       //prepare updated action entry to insert in json
       if (isset($params['list'])) {
@@ -512,12 +512,12 @@ class PluginFusioninventoryDeployAction {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
-      //unset index 
+      //unset index
       unset($datas['jobs']['actions'][$params['index']]);
 
-      
 
-      //add new datas at index position 
+
+      //add new datas at index position
       //(array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
       array_splice($datas['jobs']['actions'], $params['index'], 0, array($entry));
 
@@ -525,13 +525,13 @@ class PluginFusioninventoryDeployAction {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
-   
-   
+
+
    static function remove_item($params) {
       if (!isset($params['action_entries'])) {
          return FALSE;
       }
-      
+
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
@@ -544,8 +544,8 @@ class PluginFusioninventoryDeployAction {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
-   
-   
+
+
    static function move_item($params) {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);

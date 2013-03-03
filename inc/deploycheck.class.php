@@ -48,21 +48,21 @@ class PluginFusioninventoryDeployCheck {
 
    static function getTypes() {
       return array(
-         'winkeyExists'     => __("Register key exist", 'fusioninventory'),
-         'winkeyMissing'    => __("Register key missing", 'fusioninventory'),
-         'winkeyEquals'     => __("Register key value equals to", 'fusioninventory'),
-         'fileExists'       => __("File exist", 'fusioninventory'),
-         'fileMissing'      => __("File missing", 'fusioninventory'),
-         'fileSizeGreater'  => __("File size greater than", 'fusioninventory'),
-         'fileSizeEquals'   => __("Filesize equal to", 'fusioninventory'),
-         'fileSizeLower'    => __("Filesize lower than", 'fusioninventory'),
-         'fileSHA512'       => __("SHA-512 hash value", 'fusioninventory'),
-         'freespaceGreater' => __("Free space greater", 'fusioninventory')
+         'winkeyExists'     => __("Registry key exists", 'fusioninventory'),
+         'winkeyMissing'    => __("Registry key missing", 'fusioninventory'),
+         'winkeyEquals'     => __("Registry key value equals to", 'fusioninventory'),
+         'fileExists'       => __("File exists", 'fusioninventory'),
+         'fileMissing'      => __("File is missing", 'fusioninventory'),
+         'fileSizeGreater'  => __("File size is greater than", 'fusioninventory'),
+         'fileSizeEquals'   => __("File size is equal to", 'fusioninventory'),
+         'fileSizeLower'    => __("File size is lower than", 'fusioninventory'),
+         'fileSHA512'       => __("SHA-512 hash value is", 'fusioninventory'),
+         'freespaceGreater' => __("Free space is greater than", 'fusioninventory')
       );
    }
 
-   
-   
+
+
    static function displayForm($order, $datas, $rand) {
       global $CFG_GLPI;
 
@@ -72,12 +72,12 @@ class PluginFusioninventoryDeployCheck {
          echo "<div style='display:none' id='checks_block$rand' >";
       } else {
          //== edit selected data ==
-         
+
          //get current order json
          $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order['id']), TRUE);
 
          //get data on index
-         $check = $datas_o['jobs']['checks'][$datas['index']];         
+         $check = $datas_o['jobs']['checks'][$datas['index']];
       }
 
       echo "<span id='showCheckType$rand'></span>";
@@ -102,7 +102,7 @@ class PluginFusioninventoryDeployCheck {
       echo "</script>";
 
       echo "<span id='showCheckValue$rand'></span>";
-      
+
       echo "<hr>";
       if (!isset($datas['index'])) {
          echo "</div>";
@@ -213,8 +213,8 @@ class PluginFusioninventoryDeployCheck {
       </script>";
    }
 
-   
-   
+
+
    static function dropdownType($datas) {
       global $CFG_GLPI;
 
@@ -255,7 +255,7 @@ class PluginFusioninventoryDeployCheck {
 
       if (isset($datas['edit'])) {
          echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("showCheckValue$rand",
+         Ajax::updateItemJsCode("showCheckValue$rand",
                                 $CFG_GLPI["root_doc"].
                                  "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                                 $params,
@@ -264,8 +264,8 @@ class PluginFusioninventoryDeployCheck {
       }
    }
 
-   
-   
+
+
    static function displayAjaxValue($datas) {
 
       $value = $datas['value'];
@@ -388,8 +388,8 @@ class PluginFusioninventoryDeployCheck {
       echo "</table>";
    }
 
-   
-   
+
+
    static function add_item($params) {
       if (!isset($params['value'])) {
          $params['value'] = "";
@@ -417,8 +417,8 @@ class PluginFusioninventoryDeployCheck {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
-   
-   
+
+
    static function save_item($params) {
       if (!isset($params['value'])) {
          $params['value'] = "";
@@ -439,18 +439,18 @@ class PluginFusioninventoryDeployCheck {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
-      //unset index 
+      //unset index
       unset($datas['jobs']['checks'][$params['index']]);
 
-      //add new datas at index position 
+      //add new datas at index position
       //(array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
       array_splice($datas['jobs']['checks'], $params['index'], 0, array($entry));
 
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
-   
-   
+
+
 
    static function remove_item($params) {
       if (!isset($params['check_entries'])) {
@@ -469,8 +469,8 @@ class PluginFusioninventoryDeployCheck {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
-   
-   
+
+
    static function move_item($params) {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);

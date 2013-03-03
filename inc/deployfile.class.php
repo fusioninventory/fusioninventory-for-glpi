@@ -54,8 +54,8 @@ class PluginFusioninventoryDeployFile {
       return TRUE;
    }
 
-   
-   
+
+
    static function getTypes() {
       return array(
          'Computer' => __("Upload from computer", 'fusioninventory'),
@@ -63,8 +63,8 @@ class PluginFusioninventoryDeployFile {
       );
    }
 
-   
-   
+
+
    static function displayForm($order, $datas, $rand) {
       global $CFG_GLPI;
 
@@ -72,13 +72,13 @@ class PluginFusioninventoryDeployFile {
          echo "<div style='display:none' id='files_block$rand' >";
       } else {
          //== edit selected data ==
-         
+
          //get current order json
          $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order['id']), TRUE);
 
          //get data on index
-         $sha512 = $datas_o['jobs']['associatedFiles'][$datas['index']];   
-         $file = $datas_o['associatedFiles'][$sha512]; 
+         $sha512 = $datas_o['jobs']['associatedFiles'][$datas['index']];
+         $file = $datas_o['associatedFiles'][$sha512];
       }
 
 
@@ -104,7 +104,7 @@ class PluginFusioninventoryDeployFile {
 
 
       echo "<span id='showFileValue$rand'></span>";
-      
+
       echo "<hr>";
       echo "</div>";
       Html::closeForm();
@@ -130,14 +130,14 @@ class PluginFusioninventoryDeployFile {
          $mimetype = isset($datas['associatedFiles'][$sha512]['mimetype'])?
             str_replace('/', '__', $datas['associatedFiles'][$sha512]['mimetype']):NULL;
          echo "<td class='filename'>";
-         if (!empty($mimetype) 
+         if (!empty($mimetype)
            && file_exists(GLPI_ROOT."/plugins/fusioninventory/pics/ext/extensions/$mimetype.png")) {
                echo "<img src='".$CFG_GLPI['root_doc'].
                   "/plugins/fusioninventory/pics/ext/extensions/$mimetype.png' />";
          } else echo "<img src='".$CFG_GLPI['root_doc'].
                "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
 
-         //filename      
+         //filename
          echo"&nbsp;<a class='edit' onclick='edit_files($i)'>$filename</a>";
 
          //p2p icon
@@ -154,7 +154,7 @@ class PluginFusioninventoryDeployFile {
          }
 
          //uncompress icon
-         if (isset($datas['associatedFiles'][$sha512]['uncompress']) 
+         if (isset($datas['associatedFiles'][$sha512]['uncompress'])
             && $datas['associatedFiles'][$sha512]['uncompress'] != 0) {
                echo "<a title='".__('uncompress', 'fusioninventory')."' class='more'><img src='".
                   $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/uncompress.png' /></a>";
@@ -203,7 +203,7 @@ class PluginFusioninventoryDeployFile {
                }
             });
 
-            //change plus button behavior 
+            //change plus button behavior
             //(for always have possibility to add an item also in edit mode)
             Ext.get('plus_files_block$rand').on('click', function() {
                //empty sub value
@@ -225,8 +225,8 @@ class PluginFusioninventoryDeployFile {
       </script>";
    }
 
-   
-   
+
+
    static function dropdownType($datas) {
       global $CFG_GLPI;
 
@@ -253,7 +253,7 @@ class PluginFusioninventoryDeployFile {
                       'value'      => '__VALUE__',
                       'rand'       => $rand,
                       'myname'     => 'method',
-                      'type'       => "file", 
+                      'type'       => "file",
                       'p2p'        => 0,
                       'uncompress' => 0,
                );
@@ -272,7 +272,7 @@ class PluginFusioninventoryDeployFile {
                               array("change", "load"));
       if (isset($datas['edit'])) {
          echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("showFileValue$rand",
+         Ajax::updateItemJsCode("showFileValue$rand",
                                 $CFG_GLPI["root_doc"].
                                  "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                                 $params,
@@ -282,8 +282,8 @@ class PluginFusioninventoryDeployFile {
 
    }
 
-   
-   
+
+
    static function displayAjaxValue($datas) {
       global $CFG_GLPI;
 
@@ -309,9 +309,9 @@ class PluginFusioninventoryDeployFile {
                   " style='width:120px;float:left' />";
                echo "<input type='button' class='submit' value='".__("Choose", 'fusioninventory').
                   "' onclick='fileModal$rand.show();' style='width:50px' />";
-               Ajax::createModalWindow("fileModal$rand", 
+               Ajax::createModalWindow("fileModal$rand",
                         $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/deployfilemodal.php",
-                        array('title' => __('Select the file on server', 'fusioninventory'), 
+                        array('title' => __('Select the file on server', 'fusioninventory'),
                         'extraparams' => array(
                            'rand' => $rand
                         )));
@@ -331,7 +331,7 @@ class PluginFusioninventoryDeployFile {
       echo "<td><input type='checkbox' name='p2p' $p2p_checked /></td>";
       echo "</tr><tr>";
       echo "<th>".__("retention days", 'fusioninventory')."</th>";
-      echo "<td><input type='text' name='p2p-retention-duration' style='width:30px' 
+      echo "<td><input type='text' name='p2p-retention-duration' style='width:30px'
          value='$p2p_ret_value' /></td>";
       echo "</tr><tr>";
       echo "<td>";
@@ -351,8 +351,8 @@ class PluginFusioninventoryDeployFile {
       echo "</tr></table>";
    }
 
-   
-   
+
+
    static function showServerFileTree($params) {
       global $CFG_GLPI;
 
@@ -376,7 +376,7 @@ class PluginFusioninventoryDeployFile {
          height           : 320,
          width            : 770,
          loader           : Tree_Category_Loader$rand,
-         rootVisible      : false, 
+         rootVisible      : false,
          listeners: {
             click: function(node, event){
                if (node.leaf == true) {
@@ -406,8 +406,8 @@ class PluginFusioninventoryDeployFile {
       echo "</div>";
    }
 
-   
-   
+
+
    static function getServerFileTree($params) {
 
       $nodes = array();
@@ -422,7 +422,7 @@ class PluginFusioninventoryDeployFile {
          if ($params['node'] != -1) {
             $dir = $params['node'];
          }
-         
+
          if (($handle = opendir($dir))) {
             $folders = $files = array();
 
@@ -466,14 +466,14 @@ class PluginFusioninventoryDeployFile {
             }
 
             closedir($handle);
-         }        
+         }
       }
 
       print json_encode($nodes);
    }
 
 
-   
+
    static function getExtensionsWithAutoAction() {
       $ext = array();
 
@@ -489,8 +489,8 @@ class PluginFusioninventoryDeployFile {
       return $ext;
    }
 
-   
-   
+
+
    static function add_item($params) {
       switch ($params['deploy_filetype']) {
          case 'Server':
@@ -500,8 +500,8 @@ class PluginFusioninventoryDeployFile {
             self::uploadFileFromComputer($params);
       }
    }
-   
-   
+
+
    static function remove_item($params) {
       if (!isset($params['file_entries'])) {
          return FALSE;
@@ -527,8 +527,8 @@ class PluginFusioninventoryDeployFile {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
-   
-   
+
+
    static function move_item($params) {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
@@ -578,8 +578,8 @@ class PluginFusioninventoryDeployFile {
          //file uploaded?
          if (isset($_FILES['file']['tmp_name']) and !empty($_FILES['file']['tmp_name'])){
             $file_tmp_name = $_FILES['file']['tmp_name'];
-         } 
-         if (isset($_FILES['file']['name']) 
+         }
+         if (isset($_FILES['file']['name'])
                  && !empty($_FILES['file']['name'])) {
             $filename = $_FILES['file']['name'];
          }
@@ -625,7 +625,7 @@ class PluginFusioninventoryDeployFile {
             'filename' => $filename,
             'p2p' => isset($_POST['p2p']) ? 1 : 0,
             'uncompress' => isset($_POST['uncompress']) ? 1 : 0,
-            'p2p-retention-duration' => is_numeric($params['p2p-retention-duration']) ? 
+            'p2p-retention-duration' => is_numeric($params['p2p-retention-duration']) ?
                $params['p2p-retention-duration'] : 0,
             'orders_id' => $params['orders_id']
          );
@@ -662,7 +662,7 @@ class PluginFusioninventoryDeployFile {
             'filename' => $filename,
             'p2p' => isset($_POST['p2p']) ? 1 : 0,
             'uncompress' => isset($_POST['uncompress']) ? 1 : 0,
-            'p2p-retention-duration' => is_numeric($_POST['p2p-retention-duration']) ? 
+            'p2p-retention-duration' => is_numeric($_POST['p2p-retention-duration']) ?
                $_POST['p2p-retention-duration'] : 0,
             'orders_id' => $params['orders_id']
          );
@@ -680,8 +680,8 @@ class PluginFusioninventoryDeployFile {
       return FALSE;
    }
 
-   
-   
+
+
    static function getDirBySha512 ($sha512) {
       $first = substr($sha512, 0, 1);
       $second = substr($sha512, 0, 2);
@@ -689,8 +689,8 @@ class PluginFusioninventoryDeployFile {
       return "$first/$second";
    }
 
-   
-   
+
+
    function registerFilepart ($repoPath, $filePath, $skip_creation = FALSE) {
       $sha512 = hash_file('sha512', $filePath);
 
@@ -706,8 +706,8 @@ class PluginFusioninventoryDeployFile {
       return $sha512;
    }
 
-   
-   
+
+
    static function addFileInRepo ($params) {
       set_time_limit(600);
 
@@ -727,7 +727,7 @@ class PluginFusioninventoryDeployFile {
       if($deployFile->checkPresenceFile($sha512)) {
          $file_present_in_repo = TRUE;
       }
-      
+
       $new_entry = array(
          'name' => $filename,
          'p2p' => $params['p2p'],
@@ -748,10 +748,10 @@ class PluginFusioninventoryDeployFile {
          clearstatcache();
          if (file_exists($tmpFilepart)) {
             if (feof($fdIn) || filesize($tmpFilepart)>= $maxPartSize) {
-               $part_sha512 = $deployFile->registerFilepart($repoPath, $tmpFilepart, 
+               $part_sha512 = $deployFile->registerFilepart($repoPath, $tmpFilepart,
                                                             $file_present_in_repo);
                unlink($tmpFilepart);
-               
+
                $multiparts[] = $part_sha512;
             }
          }
@@ -780,8 +780,8 @@ class PluginFusioninventoryDeployFile {
       return TRUE;
    }
 
-   
-   
+
+
 
    static function removeFileInRepo($sha512, $orders_id) {
       global $DB;
@@ -813,8 +813,8 @@ class PluginFusioninventoryDeployFile {
       return TRUE;
    }
 
-   
-   
+
+
    function checkPresenceFile($sha512) {
       $order = new PluginFusioninventoryDeployOrder;
 
@@ -825,7 +825,7 @@ class PluginFusioninventoryDeployFile {
       return FALSE;
    }
 
-   
+
 
    static function getMaxUploadSize() {
 
@@ -837,8 +837,8 @@ class PluginFusioninventoryDeployFile {
 
          ." : ".min($max_upload, $max_post, $memory_limit).__('Mio', 'fusioninventory');
 
-   } 
-   
+   }
+
    static function processFilesize($filesize) {
       if ($filesize >= (1024 * 1024 * 1024)) {
          $filesize = round($filesize / (1024 * 1024 * 1024), 1)."GiB";
