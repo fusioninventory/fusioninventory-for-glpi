@@ -44,14 +44,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryDeployCheck extends CommonDBTM {
+class PluginFusioninventoryDeployCheck {
 
-   static function getTypeName($nb=0) {
-      return __('Audits', 'fusioninventory');
-   }
-
-   
-   
    static function getTypes() {
       return array(
          'winkeyExists'     => __("Register key exist", 'fusioninventory'),
