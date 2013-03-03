@@ -43,7 +43,6 @@
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
-$package = new PluginFusioninventoryDeployPackage();
 
 if (isset($_REQUEST['update_json'])) {
    $order = new PluginFusioninventoryDeployOrder();
@@ -64,6 +63,7 @@ if (isset($_REQUEST['update_json'])) {
    Html::back();
 }
 
+$package = new PluginFusioninventoryDeployPackage();
 //general form
 if (isset ($_POST["add"])) {
    PluginFusioninventoryProfile::checkRight("packages", "w");
