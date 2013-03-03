@@ -392,6 +392,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       Session::initNavigateListItems($this->getType());
 
+      //The following $_GET assignment code seems unneeded since it doesn't
+      // use Search class to show the tasks list
       unset($_GET['field']);
       unset($_GET['searchtype']);
       unset($_GET['contains']);
@@ -409,7 +411,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $_GET['itemtype'] = array('PluginFusioninventoryTask');
       }
 
-      Search::manageGetValues($this->getType());
+      //The taskMenu method doesn't use the preceding search parameters and
+      // it kills the search form in "Normal Task" list display
+      //Search::manageGetValues($this->getType());
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
@@ -473,10 +477,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
 
       echo "<div class='center' id='searchform' style='display:none'>";
-
-//      Search::show($this->getType());
-      Search::manageGetValues($this->getType());
-      Search::showGenericSearch($this->getType(), $_GET);
 
       echo "</div>";
    }
