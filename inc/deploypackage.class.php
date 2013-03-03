@@ -219,12 +219,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       }
 
-
-      //drag and drop lib
-      echo "<script type='text/javascript' src='".$CFG_GLPI["root_doc"].
-         "/plugins/fusioninventory/lib/REDIPS_drag/redips-drag-source.js'></script>";
-     
-
       echo "<div id='tabcontent'></div>";
       echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
@@ -249,8 +243,15 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $order = array_shift($found);
       $datas = json_decode($order['json'], TRUE);
       $orders_id = $order['id'];
+      $order_type = PluginFusioninventoryDeployOrder::getOrderTypeLabel($order['type']);
 
-      
+
+      //init drag and drop on subtype table
+      echo "<script type='text/javascript'>
+         var rand = $rand;
+         if (orders == null) var orders = {};
+         orders[$rand] = $orders_id;
+         </script>";
       echo "<table class='tab_cadre_fixe' id='package'>";
 
       $multipart = "";
@@ -276,7 +277,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeploy".
             ucfirst($subtype)."' />";
          $classname = "PluginFusioninventoryDeploy".ucfirst($subtype);
-         $classname::displayForm($orders_id, $datas, $rand);
+         $classname::displayForm($order, $datas, $rand);
+         echo "<script type='text/javascript'>";
+         echo "redipsInit('drag_".$order_type."_".$subtype."s');";
+         echo "</script>";
          echo "</td>";
          echo "</tr>";
       }

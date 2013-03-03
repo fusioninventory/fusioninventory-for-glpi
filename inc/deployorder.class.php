@@ -62,7 +62,16 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
    }
 
-   
+   static function getOrderTypeLabel($order_type) {
+      switch($order_type) {
+         case PluginFusioninventoryDeployOrder::INSTALLATION_ORDER:
+            return('install');
+            break;
+         case PluginFusioninventoryDeployOrder::UNINSTALLATION_ORDER:
+            return('uninstall');
+            break;
+      }
+   }
 
    /**
     * Create installation & uninstallation orders
