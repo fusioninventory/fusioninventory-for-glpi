@@ -63,7 +63,16 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       return PluginFusioninventoryProfile::haveRight("task", "r");
    }
 
+   static function getJoinQuery() {
 
+      return(
+         array(
+            'taskjobs' =>
+               "LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` as taskjob\n".
+               "ON taskjob.`plugin_fusioninventory_tasks_id` = task.`id`"
+         )
+      );
+   }
 
    function getSearchOptions() {
 

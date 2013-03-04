@@ -647,7 +647,105 @@ class PluginFusioninventoryTask extends CommonDBTM {
       return $DB->query($query);
    }
 
+   /**
+   *  Get tasks filtered by relevant criterias
+   *  @param $filter criterias to filter in the request
+   **/
+   static function getItemsFromDB($filter) {
 
+      global $DB;
+      $select = array("tasks"=>"task.*");
+      $from = '`glpi_plugin_fusioninventory_tasks` as task';
+      $where = array();
+      $leftjoin = array();
+
+      // Filter active tasks
+      if (     isset($filter['is_active'])
+            && is_bool($filter['is_active']) ) {
+         $where[] = "task.`is_active` = " . $filter['is_active'];
+      }
+
+      //Filter by running taskjobs
+      if (     isset( $filter['is_running'] )
+            && is_bool( $filter['is_running'] ) ) {
+         //TODO: get running taskjobs
+         // add taskjobs table JOIN statement if not already set
+         if ( !isset( $leftjoin['taskjobs'] ) ) {
+               $leftjoin_bak = $leftjoin;
+               $leftjoin_tmp = PluginFusioninventoryTaskJob::getJoinQuery();
+               $leftjoin = array_merge( $leftjoin_bak, $leftjoin_tmp );
+            if (!isset( $select["taskjobs"]) ) {
+               $select['taskjobs'] = "taskjob.*";
+            }
+         }
+      }
+
+      //Filter by definition classes
+      if (     isset($filter['definitions'])
+            && is_array($filter['definitions']) ) {
+         $where_tmp = array();
+         //check classes existence and append them to the query filter
+         foreach($filter['definitions'] as $itemclass => $itemid) {
+            if ( class_exists($itemclass) ) {
+               $cond = "taskjob.`definition` LIKE '%\"".$itemclass."\"";
+               //adding itemid if not empty
+               if ( !empty($itemid) )
+                     $cond .= ":\"".$itemid."\"";
+               //closing LIKE statement
+               $cond .= "%'";
+               $where_tmp[] = $cond;
+            }
+         }
+         //join every filtered conditions
+         if( count($where_tmp) > 0) {
+            // add taskjobs table JOIN statement if not already set
+            if ( !isset( $leftjoin['taskjobs'] ) ) {
+               $leftjoin_bak = $leftjoin;
+               $leftjoin_tmp = PluginFusioninventoryTaskJob::getJoinQuery();
+               $leftjoin = array_merge( $leftjoin_bak, $leftjoin_tmp );
+            }
+            if (!isset( $select["taskjobs"]) ) {
+               $select['taskjobs'] = "taskjob.*";
+            }
+            $where[] = "( " . implode("OR", $where_tmp) . " )";
+         }
+      }
+
+      //TODO: Filter by action classes
+
+      //TODO: Filter by list of IDs
+      if (     isset($filter['by_ids'])
+            && is_bool($filter['by_entities']) ) {
+      }
+
+      // Filter by entity
+      if (     isset($filter['by_entities'])
+            && is_bool($filter['by_entities']) ) {
+         $where[] = getEntitiesRestrictRequest( "", 'task' );
+      }
+
+      $results = NULL;
+      $query =
+         implode(
+            "\n", array(
+               "SELECT ".implode(',',$select),
+               "FROM `glpi_plugin_fusioninventory_tasks` as task",
+               implode("\n",$leftjoin),
+               "WHERE\n    ".implode("\nAND ",$where)
+            )
+         );
+
+      Toolbox::logDebug("getItemsFromDB");
+      Toolbox::logDebug("query : \n" .$query);
+
+      $results = array();
+      $r = $DB->query($query);
+      if ($r) {
+         $results = PluginFusioninventoryToolbox::fetchAssocByTable($r);
+      }
+      Toolbox::logDebug(print_r($results,TRUE));
+      return($results);
+   }
 
    function getTasksInerror() {
       global $DB;
