@@ -332,7 +332,7 @@ class PluginFusioninventoryDeployAction {
             $value_label_2 = FALSE;
             break;
          default:
-            return false;
+            return FALSE;
       }
 
       echo "<table class='package_item'>";

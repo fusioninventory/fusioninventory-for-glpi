@@ -310,7 +310,7 @@ class PluginFusioninventoryDeployCheck {
             $value_type = "input+unit";
             break;
          default:
-            return false;
+            return FALSE;
       }
 
       echo "<table class='package_item'>";

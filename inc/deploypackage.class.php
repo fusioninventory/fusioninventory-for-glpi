@@ -56,18 +56,18 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
    static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight('packages' , 'w');
+      return PluginFusioninventoryProfile::haveRight('packages', 'w');
    }
 
    static function canView() {
-      return PluginFusioninventoryProfile::haveRight('packages' , 'r');
+      return PluginFusioninventoryProfile::haveRight('packages', 'r');
    }
 
    static function canDelete() {
       return self::canEdit();
    }
    static function canEdit() {
-      return PluginFusioninventoryProfile::haveRight('packages' , 'w');
+      return PluginFusioninventoryProfile::haveRight('packages', 'w');
    }
 
    function canEditItem() {
@@ -113,7 +113,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
    function pre_deleteItem() {
-      $ret = $this->checkEdit(__("Deletion",'fusioninventory'));
+      $ret = $this->checkEdit(__("Deletion", 'fusioninventory'));
       return $ret;
    }
 
