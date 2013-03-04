@@ -523,14 +523,14 @@ class PluginFusioninventoryStaticmisc {
     */
 
    static function task_definitiontype_deployinstall($a_itemtype) {
-      return array(0 => Dropdown::EMPTY_VALUE,
+      return array('' => Dropdown::EMPTY_VALUE,
                    'PluginFusioninventoryDeployPackage' => __('Package'));
    }
 
 
 
    static function task_definitiontype_deployuninstall($a_itemtype) {
-      return array(0 => Dropdown::EMPTY_VALUE,
+      return array('' => Dropdown::EMPTY_VALUE,
                    'PluginFusioninventoryDeployPackage' => __('Package'));
    }
 
@@ -645,7 +645,7 @@ class PluginFusioninventoryStaticmisc {
 
 
    static function task_actiontype_deployinstall($a_itemtype) {
-      return array(0 => Dropdown::EMPTY_VALUE,
+      return array('' => Dropdown::EMPTY_VALUE,
                    'PluginFusioninventoryDeployGroup' => __('Group of computers'),
                    'Computer'                         => __('Computers'),
                    'Group'                            => __('Group')
@@ -655,8 +655,7 @@ class PluginFusioninventoryStaticmisc {
 
 
    static function task_actiontype_deployuninstall($a_itemtype) {
-      return array(0 => Dropdown::EMPTY_VALUE,
-                   'PluginFusioninventoryDeployGroup' => __('Group of computers'),
+      return array('' => Dropdown::EMPTY_VALUE,
                    'Computer'                         => __('Computers'),
                    'Group'                            => __('Group')
 
