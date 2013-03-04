@@ -577,8 +577,22 @@ class PluginFusioninventoryStaticmisc {
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'actionselectiontoadd';
-      $options['condition']   = '`id` IN (SELECT `items_id`
-                                          FROM `glpi_plugin_fusioninventory_agents`)';
+      $options['condition']   =
+         implode( "\n",
+            array(
+               '`id` IN ( ',
+               '  SELECT agents.`computers_id`',
+               '  FROM `glpi_plugin_fusioninventory_agents` as agents',
+               '  LEFT JOIN `glpi_plugin_fusioninventory_agentmodules` as module',
+               '  ON module.modulename = "DEPLOY"',
+               '  WHERE',
+               '        (  module.is_active=1',
+               '           AND module.exceptions NOT LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+               '     OR (  module.is_active=0',
+               '           AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+               ')'
+            )
+         );
       return Dropdown::show("Computer", $options);
    }
 
@@ -589,8 +603,22 @@ class PluginFusioninventoryStaticmisc {
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
       $options['name']        = 'actionselectiontoadd';
-      $options['condition']   = '`id` IN (SELECT `items_id`
-                                          FROM `glpi_plugin_fusioninventory_agents`)';
+      $options['condition']   =
+         implode( "\n",
+            array(
+               '`id` IN ( ',
+               '  SELECT agents.`computers_id`',
+               '  FROM `glpi_plugin_fusioninventory_agents` as agents',
+               '  LEFT JOIN `glpi_plugin_fusioninventory_agentmodules` as module',
+               '  ON module.modulename = "DEPLOY"',
+               '  WHERE',
+               '        (  module.is_active=1',
+               '           AND module.exceptions NOT LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+               '     OR (  module.is_active=0',
+               '           AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+               ')'
+            )
+         );
       return Dropdown::show("Computer", $options);
    }
 
