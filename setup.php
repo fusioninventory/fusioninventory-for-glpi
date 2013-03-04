@@ -130,15 +130,15 @@ function plugin_init_fusioninventory() {
 
       // ##### 3. get informations of the plugin #####
 
-      $a_plugin = plugin_version_fusioninventory();
-      $moduleId = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
+      $Plugin->getFromDBbyDir('fusioninventory');
+      $moduleId = $Plugin->fields['id'];
       
       // Load config
       PluginFusioninventoryConfig::loadCache();
 
       // ##### 4. Set in session module_id #####
 
-      $_SESSION["plugin_".$a_plugin['shortname']."_moduleid"] = $moduleId;
+      $_SESSION["plugin_fuioninventory_moduleid"] = $moduleId;
 
       // ##### 5. Set in session XMLtags of methods #####
 
