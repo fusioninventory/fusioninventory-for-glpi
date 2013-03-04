@@ -56,14 +56,12 @@ if (isset($_REQUEST['move_item'])) { //ajax request
       PluginFusioninventoryDeployPackage::alter_json('move_item', $_REQUEST);
    } else {
       $json_response['success'] = FALSE;
-      $json_response['reason'] = __('Package modification is forbidden by your profile.';
+      $json_response['reason'] = __('Package modification is forbidden by your profile.');
    }
 
    echo json_encode( $json_response );
    exit;
 }
-
-//if (isset($_GET['orders_id'] && isset($_GET[''])
 
 if (!isset($_REQUEST['orders_id']) && !isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) {
    exit;
