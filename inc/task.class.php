@@ -40,6 +40,7 @@
    ------------------------------------------------------------------------
  */
 
+
 class PluginFusioninventoryTask extends CommonDBTM {
 
    /**
@@ -120,7 +121,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $sopt[30]['linkfield']      = '';
       $sopt[30]['name']           = __('ID');
 
-
       return $sopt;
    }
 
@@ -149,8 +149,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
       return $ong;
    }
 
-   
-   
+
+
    /**
    * Display form for task configuration
    *
@@ -258,8 +258,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       $com['pull'] = __('Agent contacts the server (pull)', 'fusioninventory');
 
-      Dropdown::showFromArray("communication", 
-                              $com,  
+      Dropdown::showFromArray("communication",
+                              $com,
                               array('value'=>$this->fields["communication"]));
       echo "</td>";
       echo "</tr>";
@@ -278,8 +278,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       $a_time['months'] = ucfirst(__('month(s)', 'fusioninventory'));
 
-      Dropdown::showFromArray("periodicity_type",  
-                              $a_time,  
+      Dropdown::showFromArray("periodicity_type",
+                              $a_time,
                               array('value'=>$this->fields['periodicity_type']));
       echo "</td>";
       echo "</tr>";
@@ -299,8 +299,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       return TRUE;
    }
-
-
 
    /**
    * Purge task and taskjob
@@ -372,7 +370,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
               getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks'));
       $a_tasksInactives = $this->find("`is_active` = '0' ".
               getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks'));
-      $a_tasksAll = $this->find(getEntitiesRestrictRequest("", 
+      $a_tasksAll = $this->find(getEntitiesRestrictRequest("",
                                                            'glpi_plugin_fusioninventory_tasks'));
 
 
@@ -755,19 +753,19 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       $query = "SELECT `glpi_plugin_fusioninventory_tasks`.*
          FROM `glpi_plugin_fusioninventory_tasks`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS taskjobs 
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS taskjobs
             ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS taskjobstates 
-            ON taskjobstates.`id` = 
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS taskjobstates
+            ON taskjobstates.`id` =
             (SELECT id
              FROM glpi_plugin_fusioninventory_taskjobstates
              WHERE plugin_fusioninventory_taskjobs_id = taskjobs.`id`
              ORDER BY id DESC
              LIMIT 1
             )
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` 
-            ON `glpi_plugin_fusioninventory_taskjoblogs`.`id` = 
-            (SELECT `id` 
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs`
+            ON `glpi_plugin_fusioninventory_taskjoblogs`.`id` =
+            (SELECT `id`
             FROM `glpi_plugin_fusioninventory_taskjoblogs`
             WHERE `plugin_fusioninventory_taskjobstates_id`= taskjobstates.`id`
             ORDER BY id DESC LIMIT 1 )
