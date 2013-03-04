@@ -47,7 +47,7 @@ Session::checkCentralAccess();
 
 if (isset($_REQUEST['move_item'])) { //ajax request
 
-   json_response = array(
+   $json_response = array(
       "success" => TRUE,
       "reason" => ''
    );
@@ -55,11 +55,11 @@ if (isset($_REQUEST['move_item'])) { //ajax request
    if (PluginFusioninventoryProfile::haveRight("packages", "w")) {
       PluginFusioninventoryDeployPackage::alter_json('move_item', $_REQUEST);
    } else {
-      json_response['success'] = FALSE;
-      json_response['reason'] = __('Package modification is forbidden by your profile.';
+      $json_response['success'] = FALSE;
+      $json_response['reason'] = __('Package modification is forbidden by your profile.';
    }
 
-   echo json_encode( json_response );
+   echo json_encode( $json_response );
    exit;
 }
 
@@ -74,15 +74,15 @@ if (!isset($_REQUEST['orders_id']) && !isset($_REQUEST['rand']) && !isset($_REQU
 
 switch ($_REQUEST['subtype']) {
    case 'check':
-      PluginFusioninventoryDeployCheck::displayForm($_REQUEST['orders_id'], 
+      PluginFusioninventoryDeployCheck::displayForm($_REQUEST['orders_id'],
                                                     $_REQUEST, $_REQUEST['rand']);
       break;
    case 'file':
-      PluginFusioninventoryDeployFile::displayForm($_REQUEST['orders_id'], 
+      PluginFusioninventoryDeployFile::displayForm($_REQUEST['orders_id'],
                                                    $_REQUEST, $_REQUEST['rand']);
       break;
    case 'action':
-      PluginFusioninventoryDeployAction::displayForm($_REQUEST['orders_id'], 
+      PluginFusioninventoryDeployAction::displayForm($_REQUEST['orders_id'],
                                                      $_REQUEST, $_REQUEST['rand']);
       break;
 }
