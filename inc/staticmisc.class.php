@@ -89,7 +89,7 @@ class PluginFusioninventoryStaticmisc {
 
             array(   'module'         => 'fusioninventory',
                      'method'         => 'deployinstall',
-                     'name'           => __('Package deployment', 'fusioninventory'),
+                     'name'           => __('Package install', 'fusioninventory'),
                      'task'           => "DEPLOY",
                      'use_rest'       => TRUE
             ),
