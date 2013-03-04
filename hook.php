@@ -50,46 +50,50 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5150]['linkfield'] = 'id';
          $sopt[5150]['name']      = __('FusInv', 'fusioninventory')." - ".
             __('Last inventory', 'fusioninventory');
-
          $sopt[5150]['datatype']  = 'datetime';
          $sopt[5150]['itemlink_type'] = 'PluginFusioninventoryInventoryComputerLib';
+         $sopt[5150]['massiveaction'] = FALSE;
 
          $sopt[5151]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5151]['field']     = 'name';
          $sopt[5151]['linkfield'] = '';
          $sopt[5151]['name']      = 'Antivirus name';
          $sopt[5151]['datatype']  = 'text';
+         $sopt[5151]['massiveaction'] = FALSE;
 
          $sopt[5152]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5152]['field']     = 'version';
          $sopt[5152]['linkfield'] = '';
          $sopt[5152]['name']      = 'Antivirus version';
          $sopt[5152]['datatype']  = 'text';
+         $sopt[5152]['massiveaction'] = FALSE;
 
          $sopt[5153]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5153]['field']     = 'is_active';
          $sopt[5153]['linkfield'] = '';
          $sopt[5153]['name']      = 'Antivirus activé';
          $sopt[5153]['datatype']  = 'bool';
+         $sopt[5153]['massiveaction'] = FALSE;
 
          $sopt[5154]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5154]['field']     = 'uptodate';
          $sopt[5154]['linkfield'] = '';
          $sopt[5154]['name']      = 'Antivirus à jour';
          $sopt[5154]['datatype']  = 'bool';
+         $sopt[5154]['massiveaction'] = FALSE;
 
          $sopt[5155]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5155]['field']     = 'bios_date';
          $sopt[5155]['linkfield'] = '';
          $sopt[5155]['name']      = __('BIOS', 'fusioninventory')."-".__('Date');
-
          $sopt[5155]['datatype']  = 'date';
+         $sopt[5155]['massiveaction'] = FALSE;
 
          $sopt[5156]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5156]['field']     = 'bios_version';
          $sopt[5156]['linkfield'] = '';
          $sopt[5156]['name']      = __('BIOS', 'fusioninventory')."-".__('Version');
-
+         $sopt[5156]['massiveaction'] = FALSE;
 
          $sopt[5157]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5157]['field']     = 'operatingsystem_installationdate';
@@ -116,7 +120,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5192]['field']='name';
       $sopt[5192]['linkfield']='';
       $sopt[5192]['name']=__('FusInv', 'fusioninventory')." - ".__('Switch');
-
       $sopt[5192]['itemlink_type'] = 'NetworkEquipment';
 
       // Port of switch
@@ -124,7 +127,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5193]['field']='id';
       $sopt[5193]['linkfield']='';
       $sopt[5193]['name']=__('FusInv', 'fusioninventory')." - ".__('Hardware ports');
-
       $sopt[5193]['forcegroupby']='1';
    }
 
@@ -134,7 +136,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5192]['field']='name';
       $sopt[5192]['linkfield']='';
       $sopt[5192]['name']=__('FusInv', 'fusioninventory')." - ".__('Switch');
-
       $sopt[5192]['itemlink_type'] = 'NetworkEquipment';
 
       // Port of switch
@@ -142,7 +143,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5193]['field']='id';
       $sopt[5193]['linkfield']='';
       $sopt[5193]['name']=__('FusInv', 'fusioninventory')." - ".__('Hardware ports');
-
       $sopt[5193]['forcegroupby']='1';
 
       $sopt[5190]['table']='glpi_plugin_fusioninventory_snmpmodels';
@@ -150,7 +150,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5190]['linkfield']='plugin_fusioninventory_snmpmodels_id';
       $sopt[5190]['name']=__('FusInv', 'fusioninventory')." - ".
          __('SNMP models', 'fusioninventory');
-
       $sopt[5190]['massiveaction'] = FALSE;
 
 
@@ -183,14 +182,13 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5194]['linkfield']='';
       $sopt[5194]['name']=__('FusInv', 'fusioninventory')." - ".
          __('Last inventory', 'fusioninventory');
-
       $sopt[5194]['datatype'] = 'datetime';
+      $sopt[5194]['massiveaction'] = FALSE;
 
       $sopt[5196]['table']         = 'glpi_plugin_fusioninventory_printers';
       $sopt[5196]['field']         = 'sysdescr';
       $sopt[5196]['linkfield']     = '';
       $sopt[5196]['name']          = __('Sysdescr', 'fusioninventory');
-
       $sopt[5196]['datatype']      = 'text';
    }
 
@@ -200,7 +198,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5190]['linkfield']='plugin_fusioninventory_snmpmodels_id';
       $sopt[5190]['name']=__('FusInv', 'fusioninventory')." - ".
          __('SNMP models', 'fusioninventory');
-
       $sopt[5190]['massiveaction'] = FALSE;
 
       $pfConfig = new PluginFusioninventoryConfig();
@@ -219,8 +216,8 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5194]['linkfield']='';
       $sopt[5194]['name']=__('FusInv', 'fusioninventory')." - ".
          __('Last inventory', 'fusioninventory');
-
       $sopt[5194]['datatype'] = 'datetime';
+      $sopt[5194]['massiveaction'] = FALSE;
 
       $sopt[5195]['table']='glpi_plugin_fusioninventory_networkequipments';
       $sopt[5195]['field']='cpu';
@@ -234,7 +231,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       $sopt[5196]['field']         = 'sysdescr';
       $sopt[5196]['linkfield']     = '';
       $sopt[5196]['name']          = __('Sysdescr', 'fusioninventory');
-
       $sopt[5196]['datatype']      = 'text';
 
    }   
