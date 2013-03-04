@@ -44,32 +44,26 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryDeployCheck extends CommonDBTM {
+class PluginFusioninventoryDeployCheck {
 
-   static function getTypeName($nb=0) {
-      return __('Audits', 'fusioninventory');
-   }
-
-   
-   
    static function getTypes() {
       return array(
-         'winkeyExists'     => __("Register key exist", 'fusioninventory'),
-         'winkeyMissing'    => __("Register key missing", 'fusioninventory'),
-         'winkeyEquals'     => __("Register key value equals to", 'fusioninventory'),
-         'fileExists'       => __("File exist", 'fusioninventory'),
-         'fileMissing'      => __("File missing", 'fusioninventory'),
-         'fileSizeGreater'  => __("File size greater than", 'fusioninventory'),
-         'fileSizeEquals'   => __("Filesize equal to", 'fusioninventory'),
-         'fileSizeLower'    => __("Filesize lower than", 'fusioninventory'),
-         'fileSHA512'       => __("SHA-512 hash value", 'fusioninventory'),
-         'freespaceGreater' => __("Free space greater", 'fusioninventory')
+         'winkeyExists'     => __("Registry key exists", 'fusioninventory'),
+         'winkeyMissing'    => __("Registry key missing", 'fusioninventory'),
+         'winkeyEquals'     => __("Registry key value equals to", 'fusioninventory'),
+         'fileExists'       => __("File exists", 'fusioninventory'),
+         'fileMissing'      => __("File is missing", 'fusioninventory'),
+         'fileSizeGreater'  => __("File size is greater than", 'fusioninventory'),
+         'fileSizeEquals'   => __("File size is equal to", 'fusioninventory'),
+         'fileSizeLower'    => __("File size is lower than", 'fusioninventory'),
+         'fileSHA512'       => __("SHA-512 hash value is", 'fusioninventory'),
+         'freespaceGreater' => __("Free space is greater than", 'fusioninventory')
       );
    }
 
-   
-   
-   static function displayForm($orders_id, $datas, $rand) {
+
+
+   static function displayForm($order, $datas, $rand) {
       global $CFG_GLPI;
 
       $checks_types = self::getTypes();
@@ -78,12 +72,12 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          echo "<div style='display:none' id='checks_block$rand' >";
       } else {
          //== edit selected data ==
-         
+
          //get current order json
-         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($orders_id), TRUE);
+         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order['id']), TRUE);
 
          //get data on index
-         $check = $datas_o['jobs']['checks'][$datas['index']];         
+         $check = $datas_o['jobs']['checks'][$datas['index']];
       }
 
       echo "<span id='showCheckType$rand'></span>";
@@ -100,16 +94,15 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
          $params['value']  = addslashes($check['value']);
          $params['return'] = $check['return'];
       }
-      Ajax::UpdateItemJsCode("showCheckType$rand",
+      Ajax::updateItemJsCode("showCheckType$rand",
                              $CFG_GLPI["root_doc"].
                              "/plugins/fusioninventory/ajax/deploydropdown_packagesubtypes.php",
                              $params,
                              "dropdown_deploy_checktype");
       echo "</script>";
 
-
       echo "<span id='showCheckValue$rand'></span>";
-      
+
       echo "<hr>";
       if (!isset($datas['index'])) {
          echo "</div>";
@@ -119,14 +112,14 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       Html::closeForm();
 
       //display stored checks datas
+      echo "<div id='drag_".PluginFusioninventoryDeployOrder::getOrderTypeLabel($order['type'])."_checks'>";
       echo "<form name='removecheck' method='post' action='deploypackage.form.php?remove_item' ".
          "id='checksList$rand'>";
-      echo "<input type='hidden' name='orders_id' value='$orders_id' />";
+      echo "<input type='hidden' name='orders_id' value='{$order['id']}' />";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployCheck' />";
       if (!isset($datas['jobs']['checks']) || empty($datas['jobs']['checks'])) {
          return;
       }
-      echo "<div id='drag_checks'>";
       echo "<table class='tab_cadrehov package_item_list' id='table_check_$rand'>";
       $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {
@@ -165,11 +158,12 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "<tr><th>";
       Html::checkAllAsCheckbox("checksList$rand", mt_rand());
       echo "</th><th colspan='3'></th></tr>";
-      echo "</table></div>";
+      echo "</table>";
       echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       Html::closeForm();
+      echo "</div>"; // close div drag_checks
 
       echo "<script type='text/javascript'>
          function edit_check(index) {
@@ -190,13 +184,13 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                'scripts': true,
                'params' : {
                   'subtype': 'check',
-                  'index': index, 
-                  'orders_id': $orders_id, 
+                  'index': index,
+                  'orders_id': {$order['id']},
                   'rand': '$rand'
                }
             });
 
-            //change plus button behavior 
+            //change plus button behavior
             //(for always have possibility to add an item also in edit mode)
             Ext.get('plus_checks_block$rand').on('click', function() {
                //empty sub value
@@ -209,7 +203,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
                   'scripts': true,
                   'params' : {
                      'subtype': 'check',
-                     'orders_id': $orders_id, 
+                     'orders_id': {$order['id']},
                      'rand': '$rand'
                   }
                });
@@ -219,8 +213,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       </script>";
    }
 
-   
-   
+
+
    static function dropdownType($datas) {
       global $CFG_GLPI;
 
@@ -261,7 +255,7 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
 
       if (isset($datas['edit'])) {
          echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("showCheckValue$rand",
+         Ajax::updateItemJsCode("showCheckValue$rand",
                                 $CFG_GLPI["root_doc"].
                                  "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                                 $params,
@@ -270,8 +264,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    static function displayAjaxValue($datas) {
 
       $value = $datas['value'];
@@ -394,8 +388,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       echo "</table>";
    }
 
-   
-   
+
+
    static function add_item($params) {
       if (!isset($params['value'])) {
          $params['value'] = "";
@@ -423,8 +417,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
-   
-   
+
+
    static function save_item($params) {
       if (!isset($params['value'])) {
          $params['value'] = "";
@@ -445,18 +439,18 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
-      //unset index 
+      //unset index
       unset($datas['jobs']['checks'][$params['index']]);
 
-      //add new datas at index position 
+      //add new datas at index position
       //(array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
       array_splice($datas['jobs']['checks'], $params['index'], 0, array($entry));
 
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
-   
-   
+
+
 
    static function remove_item($params) {
       if (!isset($params['check_entries'])) {
@@ -475,8 +469,8 @@ class PluginFusioninventoryDeployCheck extends CommonDBTM {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
-   
-   
+
+
    static function move_item($params) {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);

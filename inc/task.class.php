@@ -40,6 +40,7 @@
    ------------------------------------------------------------------------
  */
 
+
 class PluginFusioninventoryTask extends CommonDBTM {
 
    /**
@@ -120,7 +121,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $sopt[30]['linkfield']      = '';
       $sopt[30]['name']           = __('ID');
 
-
       return $sopt;
    }
 
@@ -149,8 +149,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
       return $ong;
    }
 
-   
-   
+
+
    /**
    * Display form for task configuration
    *
@@ -258,8 +258,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       $com['pull'] = __('Agent contacts the server (pull)', 'fusioninventory');
 
-      Dropdown::showFromArray("communication", 
-                              $com,  
+      Dropdown::showFromArray("communication",
+                              $com,
                               array('value'=>$this->fields["communication"]));
       echo "</td>";
       echo "</tr>";
@@ -278,8 +278,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       $a_time['months'] = ucfirst(__('month(s)', 'fusioninventory'));
 
-      Dropdown::showFromArray("periodicity_type",  
-                              $a_time,  
+      Dropdown::showFromArray("periodicity_type",
+                              $a_time,
                               array('value'=>$this->fields['periodicity_type']));
       echo "</td>";
       echo "</tr>";
@@ -299,8 +299,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       return TRUE;
    }
-
-
 
    /**
    * Purge task and taskjob
@@ -372,7 +370,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
               getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks'));
       $a_tasksInactives = $this->find("`is_active` = '0' ".
               getEntitiesRestrictRequest("AND", 'glpi_plugin_fusioninventory_tasks'));
-      $a_tasksAll = $this->find(getEntitiesRestrictRequest("", 
+      $a_tasksAll = $this->find(getEntitiesRestrictRequest("",
                                                            'glpi_plugin_fusioninventory_tasks'));
 
 
@@ -392,6 +390,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       Session::initNavigateListItems($this->getType());
 
+      //The following $_GET assignment code seems unneeded since it doesn't
+      // use Search class to show the tasks list
       unset($_GET['field']);
       unset($_GET['searchtype']);
       unset($_GET['contains']);
@@ -409,7 +409,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
          $_GET['itemtype'] = array('PluginFusioninventoryTask');
       }
 
-      Search::manageGetValues($this->getType());
+      //The taskMenu method doesn't use the preceding search parameters and
+      // it kills the search form in "Normal Task" list display
+      //Search::manageGetValues($this->getType());
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
@@ -474,16 +476,12 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       echo "<div class='center' id='searchform' style='display:none'>";
 
-//      Search::show($this->getType());
-      Search::manageGetValues($this->getType());
-      Search::showGenericSearch($this->getType(), $_GET);
-
       echo "</div>";
    }
 
 
 
-   function displayTaks($condition) {
+   function displayTask($condition) {
       global $DB, $CFG_GLPI;
 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
@@ -647,7 +645,105 @@ class PluginFusioninventoryTask extends CommonDBTM {
       return $DB->query($query);
    }
 
+   /**
+   *  Get tasks filtered by relevant criterias
+   *  @param $filter criterias to filter in the request
+   **/
+   static function getItemsFromDB($filter) {
 
+      global $DB;
+      $select = array("tasks"=>"task.*");
+      $from = '`glpi_plugin_fusioninventory_tasks` as task';
+      $where = array();
+      $leftjoin = array();
+
+      // Filter active tasks
+      if (     isset($filter['is_active'])
+            && is_bool($filter['is_active']) ) {
+         $where[] = "task.`is_active` = " . $filter['is_active'];
+      }
+
+      //Filter by running taskjobs
+      if (     isset( $filter['is_running'] )
+            && is_bool( $filter['is_running'] ) ) {
+         //TODO: get running taskjobs
+         // add taskjobs table JOIN statement if not already set
+         if ( !isset( $leftjoin['taskjobs'] ) ) {
+               $leftjoin_bak = $leftjoin;
+               $leftjoin_tmp = PluginFusioninventoryTaskJob::getJoinQuery();
+               $leftjoin = array_merge( $leftjoin_bak, $leftjoin_tmp );
+            if (!isset( $select["taskjobs"]) ) {
+               $select['taskjobs'] = "taskjob.*";
+            }
+         }
+      }
+
+      //Filter by definition classes
+      if (     isset($filter['definitions'])
+            && is_array($filter['definitions']) ) {
+         $where_tmp = array();
+         //check classes existence and append them to the query filter
+         foreach($filter['definitions'] as $itemclass => $itemid) {
+            if ( class_exists($itemclass) ) {
+               $cond = "taskjob.`definition` LIKE '%\"".$itemclass."\"";
+               //adding itemid if not empty
+               if ( !empty($itemid) )
+                     $cond .= ":\"".$itemid."\"";
+               //closing LIKE statement
+               $cond .= "%'";
+               $where_tmp[] = $cond;
+            }
+         }
+         //join every filtered conditions
+         if( count($where_tmp) > 0) {
+            // add taskjobs table JOIN statement if not already set
+            if ( !isset( $leftjoin['taskjobs'] ) ) {
+               $leftjoin_bak = $leftjoin;
+               $leftjoin_tmp = PluginFusioninventoryTaskJob::getJoinQuery();
+               $leftjoin = array_merge( $leftjoin_bak, $leftjoin_tmp );
+            }
+            if (!isset( $select["taskjobs"]) ) {
+               $select['taskjobs'] = "taskjob.*";
+            }
+            $where[] = "( " . implode("OR", $where_tmp) . " )";
+         }
+      }
+
+      //TODO: Filter by action classes
+
+      //TODO: Filter by list of IDs
+      if (     isset($filter['by_ids'])
+            && is_bool($filter['by_entities']) ) {
+      }
+
+      // Filter by entity
+      if (     isset($filter['by_entities'])
+            && is_bool($filter['by_entities']) ) {
+         $where[] = getEntitiesRestrictRequest( "", 'task' );
+      }
+
+      $results = NULL;
+      $query =
+         implode(
+            "\n", array(
+               "SELECT ".implode(',',$select),
+               "FROM `glpi_plugin_fusioninventory_tasks` as task",
+               implode("\n",$leftjoin),
+               "WHERE\n    ".implode("\nAND ",$where)
+            )
+         );
+
+      Toolbox::logDebug("getItemsFromDB");
+      Toolbox::logDebug("query : \n" .$query);
+
+      $results = array();
+      $r = $DB->query($query);
+      if ($r) {
+         $results = PluginFusioninventoryToolbox::fetchAssocByTable($r);
+      }
+      Toolbox::logDebug(print_r($results,TRUE));
+      return($results);
+   }
 
    function getTasksInerror() {
       global $DB;
@@ -657,19 +753,19 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       $query = "SELECT `glpi_plugin_fusioninventory_tasks`.*
          FROM `glpi_plugin_fusioninventory_tasks`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS taskjobs 
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS taskjobs
             ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS taskjobstates 
-            ON taskjobstates.`id` = 
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS taskjobstates
+            ON taskjobstates.`id` =
             (SELECT id
              FROM glpi_plugin_fusioninventory_taskjobstates
              WHERE plugin_fusioninventory_taskjobs_id = taskjobs.`id`
              ORDER BY id DESC
              LIMIT 1
             )
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` 
-            ON `glpi_plugin_fusioninventory_taskjoblogs`.`id` = 
-            (SELECT `id` 
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs`
+            ON `glpi_plugin_fusioninventory_taskjoblogs`.`id` =
+            (SELECT `id`
             FROM `glpi_plugin_fusioninventory_taskjoblogs`
             WHERE `plugin_fusioninventory_taskjobstates_id`= taskjobstates.`id`
             ORDER BY id DESC LIMIT 1 )

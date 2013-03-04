@@ -44,11 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryDeployAction extends CommonDBTM {
-
-   static function getTypeName($nb=0) {
-      return __('Actions', 'fusioninventory');
-   }
+class PluginFusioninventoryDeployAction {
 
    static function canCreate() {
       return TRUE;
@@ -58,8 +54,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       return TRUE;
    }
 
-   
-   
+
+
    static function getTypes() {
        return array(
          'cmd'     => __('cmd', 'fusioninventory'),
@@ -70,21 +66,21 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       );
    }
 
-   
-   
-   static function displayForm($orders_id, $datas, $rand) {
+
+
+   static function displayForm($order, $datas, $rand) {
       global $CFG_GLPI;
-      
+
       if (!isset($datas['index'])) {
          echo "<div style='display:none' id='actions_block$rand'>";
       } else {
          //== edit selected data ==
-         
+
          //get current order json
-         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($orders_id), TRUE);
+         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order['id']), TRUE);
 
          //get data on index
-         $action = $datas_o['jobs']['actions'][$datas['index']];   
+         $action = $datas_o['jobs']['actions'][$datas['index']];
          $tmp = array_keys($action);
          $type = array_shift($tmp);
          $action_values = $action[$type];
@@ -119,18 +115,18 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
       }
 
-         
-      Ajax::UpdateItemJsCode("showActionType$rand",
+
+      Ajax::updateItemJsCode("showActionType$rand",
                              $CFG_GLPI["root_doc"].
                              "/plugins/fusioninventory/ajax/deploydropdown_packagesubtypes.php",
                              $params,
                              "dropdown_deploy_actiontype");
       echo "</script>";
 
-      //Html::printCleanArray($params);    
-      
+      //Html::printCleanArray($params);
+
       echo "<span id='showActionValue$rand'>&nbsp;</span>";
-      
+
       echo "<hr>";
       if (!isset($datas['index'])) {
          echo "</div>";
@@ -143,11 +139,11 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       if (!isset($datas['jobs']['actions']) || empty($datas['jobs']['actions'])) {
          return;
       }
+      echo "<div id='drag_".PluginFusioninventoryDeployOrder::getOrderTypeLabel($order['type'])."_actions'>";
       echo "<form name='removeactions' method='post' action='deploypackage.form.php?remove_item' ".
          "id='actionsList$rand'>";
       echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployAction' />";
-      echo "<input type='hidden' name='orders_id' value='$orders_id' />";
-      echo "<div id='drag_actions'>";
+      echo "<input type='hidden' name='orders_id' value='{$order['id']}' />";
       echo "<table class='tab_cadrehov package_item_list' id='table_action_$rand'>";
       $i=0;
       foreach ($datas['jobs']['actions'] as $action) {
@@ -160,7 +156,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
          echo "<td>";
          echo "<a class='edit' onclick='edit_action($i)'>".__($action_type, 'fusioninventory').
             "</a><br />";
-         
+
          foreach ($action[$action_type] as $key => $value) {
             if (is_array($value) ) {
                if ($key === "list") {
@@ -168,7 +164,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                      echo $list;
                      echo " ";
                   }
-               } 
+               }
             } else {
                echo "<b>".__(ucfirst($key), 'fusioninventory')."</b> $value ";
             }
@@ -193,11 +189,12 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       echo "<tr><th>";
       Html::checkAllAsCheckbox("actionsList$rand", mt_rand());
       echo "</th><th colspan='3'></th></tr>";
-      echo "</table></div>";
+      echo "</table>";
       echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
       Html::closeForm();
+      echo "</div>"; // close div drag_actions
 
       echo "<script type='text/javascript'>
          function edit_action(index) {
@@ -218,13 +215,13 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                'scripts': true,
                'params' : {
                   'subtype': 'action',
-                  'index': index, 
-                  'orders_id': $orders_id, 
+                  'index': index,
+                  'orders_id': {$order['id']},
                   'rand': '$rand'
                }
             });
 
-            //change plus button behavior 
+            //change plus button behavior
             //(for always have possibility to add an item also in edit mode)
             Ext.get('plus_actions_block$rand').on('click', function() {
                //empty sub value
@@ -237,7 +234,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
                   'scripts': true,
                   'params' : {
                      'subtype': 'action',
-                     'orders_id': $orders_id, 
+                     'orders_id': {$order['id']},
                      'rand': '$rand'
                   }
                });
@@ -246,8 +243,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       </script>";
    }
 
-   
-   
+
+
    static function dropdownType($datas) {
       global $CFG_GLPI;
 
@@ -292,7 +289,7 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
 
       if (isset($datas['edit'])) {
          echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("showActionValue$rand",
+         Ajax::updateItemJsCode("showActionValue$rand",
                                 $CFG_GLPI["root_doc"].
                                  "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                                 $params,
@@ -301,14 +298,14 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    static function displayAjaxValue($datas) {
       global $CFG_GLPI;
 
       $type         = $datas['value'];
       $rand         = $datas['rand'];
-      
+
       $value_type_1 = "input";
       $value_1      = isset($datas['value_1'])?$datas['value_1']:"";
       $value_2      = isset($datas['value_2'])?$datas['value_2']:"";
@@ -439,8 +436,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       </script>";
    }
 
-   
-   
+
+
    static function add_item($params) {
       //prepare new action entry to insert in json
       if (isset($params['list'])) {
@@ -479,8 +476,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
-   
-   
+
+
    static function save_item($params) {
       //prepare updated action entry to insert in json
       if (isset($params['list'])) {
@@ -515,12 +512,12 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
-      //unset index 
+      //unset index
       unset($datas['jobs']['actions'][$params['index']]);
 
-      
 
-      //add new datas at index position 
+
+      //add new datas at index position
       //(array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
       array_splice($datas['jobs']['actions'], $params['index'], 0, array($entry));
 
@@ -528,13 +525,13 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
-   
-   
+
+
    static function remove_item($params) {
       if (!isset($params['action_entries'])) {
          return FALSE;
       }
-      
+
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
@@ -547,8 +544,8 @@ class PluginFusioninventoryDeployAction extends CommonDBTM {
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
 
-   
-   
+
+
    static function move_item($params) {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);

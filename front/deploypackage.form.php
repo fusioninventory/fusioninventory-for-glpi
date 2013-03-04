@@ -43,7 +43,6 @@
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
-$package = new PluginFusioninventoryDeployPackage();
 
 if (isset($_REQUEST['update_json'])) {
    $order = new PluginFusioninventoryDeployOrder();
@@ -64,17 +63,18 @@ if (isset($_REQUEST['update_json'])) {
    Html::back();
 }
 
+$package = new PluginFusioninventoryDeployPackage();
 //general form
 if (isset ($_POST["add"])) {
-   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
+   PluginFusioninventoryProfile::checkRight("packages", "w");
    $newID = $package->add($_POST);
    html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployPackage')."?id=".$newID);
 } else if (isset ($_POST["update"])) {
-   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
+   PluginFusioninventoryProfile::checkRight("packages", "w");
    $package->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-   // PluginFusioninventoryProfile::checkRight("Fusinvdeloy", "package", "w");
+   PluginFusioninventoryProfile::checkRight("packages", "w");
    $package->delete($_POST);
    $package->redirectToList();
 }
@@ -87,6 +87,7 @@ $id = "";
 if (isset($_GET["id"])) {
    $id = $_GET["id"];
 }
+PluginFusioninventoryProfile::checkRight( "packages", "r");
 $package->showForm($id);
 Html::footer();
 

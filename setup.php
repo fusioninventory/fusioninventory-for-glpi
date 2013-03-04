@@ -51,6 +51,10 @@ define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
 define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.84+1.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
+function script_endswith($scriptname) {
+   return substr($_SERVER['SCRIPT_FILENAME'], -strlen($scriptname))===$scriptname;
+}
+
 // Init the hooks of fusioninventory
 function plugin_init_fusioninventory() {
    global $PLUGIN_HOOKS, $CFG_GLPI;
@@ -162,6 +166,11 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
+      //load drag and drop javascript library on Package Interface
+      if (script_endswith("deploypackage.form.php")) {
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/REDIPS_drag/redips-drag-source.js";
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/REDIPS_drag/drag_table_rows.js";
+      }
 
       if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
          $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/config.form.php?itemtype=pluginfusioninventoryconfig&glpi_tab=1';

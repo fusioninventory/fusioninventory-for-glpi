@@ -46,6 +46,9 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
+   // Tasks running with this package (updated with getRunningTasks method)
+   public $running_tasks = array();
+
    static function getTypeName($nb=0) {
 
       return __('Packages', 'fusioninventory');
@@ -53,27 +56,93 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
    static function canCreate() {
-      return TRUE;
+      return PluginFusioninventoryProfile::haveRight('packages' , 'w');
    }
 
    static function canView() {
+      return PluginFusioninventoryProfile::haveRight('packages' , 'r');
+   }
+
+   static function canDelete() {
+      return self::canEdit();
+   }
+   static function canEdit() {
+      return PluginFusioninventoryProfile::haveRight('packages' , 'w');
+   }
+
+   function canEditItem() {
+
+      //Update running tasks with this package
+      $this->getRunningTasks();
+      if (count($this->running_tasks) > 0) {
+         return FALSE;
+      }
+      return TRUE;
+   }
+
+   function canDeleteItem() {
+
+      if( !$this->canEditItem() ) {
+         return FALSE;
+      }
       return TRUE;
    }
 
 
+   /**
+   *  Check if we can edit (or delete) this item
+   *  If it's not possible display an error message
+   **/
+   function checkEdit() {
+      $error_message = "";
+      // Display error message
+      if ( !$this->canEditItem() ) {
+         $error_message.=
+            "<h3 class='red'>".
+                  __("Modification Denied").
+            "</h3>\n";
 
-   function defineTabs($options=array()) {
-
-      $ong = array();
-      if ($this->fields['id'] > 0){
-         $this->addStandardTab('PluginFusioninventoryDeployInstall', $ong, $options);
-         $this->addStandardTab('PluginFusioninventoryDeployUninstall', $ong, $options);
       }
-      $ong['no_all_tab'] = TRUE;
-      return $ong;
+      if (count($this->running_tasks) > 0) {
+         $error_message .=
+               "<h4>".
+                  __("One or more tasks ").
+               "</h4>\n";
+      }
+      return $error_message;
+   }
+
+   function pre_deleteItem() {
+      $ret = $this->checkEdit(__("Deletion",'fusioninventory'));
+      return $ret;
    }
 
 
+   function post_addItem() {
+      //check whether orders have not already been created
+      if (!isset($_SESSION['tmp_clone_package'])) {
+         //Create installation & uninstallation order
+         PluginFusioninventoryDeployOrder::createOrders($this->fields['id']);
+      }
+   }
+
+   // function : getRunningTasks
+   // desc : get every active tasks running
+
+   function getRunningTasks() {
+
+      $this->running_tasks =
+            PluginFusioninventoryTask::getItemsFromDB(
+               array(
+                  'is_active' => TRUE,
+                  'is_running' => TRUE,
+                  'definitions' => array(
+                     __CLASS__ => $this->fields['id']
+                  ),
+                  'by_entities' => FALSE,
+               )
+            );
+   }
 
    function getSearchOptions() {
 
@@ -124,21 +193,33 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return $tab;
    }
 
+   function getAllDatas() {
+      global $DB;
 
+      $sql = " SELECT id, name
+               FROM `".$this->getTable()."`
+               ORDER BY name";
 
-   function post_addItem() {
-      //check whether orders have not already been created
-      if (!isset($_SESSION['tmp_clone_package'])) {
-         //Create installation & uninstallation order
-         PluginFusioninventoryDeployOrder::createOrders($this->fields['id']);
+      $res  = $DB->query($sql);
+
+      $nb   = $DB->numrows($res);
+      $json  = array();
+      $i = 0;
+      while($row = $DB->fetch_assoc($res)) {
+         $json['packages'][$i]['package_id'] = $row['id'];
+         $json['packages'][$i]['package_name'] = $row['name'];
+
+         $i++;
       }
-   }
+      $json['results'] = $nb;
 
+      return json_encode($json);
+   }
 
 
    function cleanDBonPurge() {
       global $DB;
-      
+
       $query = "DELETE FROM `glpi_plugin_fusioninventory_deployorders`
                 WHERE `plugin_fusioninventory_deploypackages_id`=".$this->fields['id'];
       $DB->query($query);
@@ -160,11 +241,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }
 
       Html::displayTitle($CFG_GLPI['root_doc'].
-                           "/plugins/fusioninventory/pics/menu_mini_package.png", 
+                           "/plugins/fusioninventory/pics/menu_mini_package.png",
                          $title, $title, $buttons);
    }
-
-
 
    function showMenu($options=array()) {
 
@@ -174,18 +253,24 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $this->showList();
    }
 
-
-
    function showList() {
       self::title();
       Search::show('PluginFusioninventoryDeployPackage');
    }
 
+   function defineTabs($options=array()) {
 
+      $ong = array();
+      if ($this->fields['id'] > 0){
+         $this->addStandardTab('PluginFusioninventoryDeployInstall', $ong, $options);
+         $this->addStandardTab('PluginFusioninventoryDeployUninstall', $ong, $options);
+      }
+      $ong['no_all_tab'] = TRUE;
+      return $ong;
+   }
 
    function showForm($ID, $options=array()) {
       global $CFG_GLPI;
-
 
       if ($ID > 0) {
          $this->check($ID, 'r');
@@ -212,45 +297,49 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $this->showFormButtons($options);
 
-      if (!PluginFusioninventoryDeployPackage::canEdit($ID)) {
-         PluginFusioninventoryDeployPackage::showEditDeniedMessage($ID,
-               __('One or more active tasks (#task#) use this package. Edition denied.',
-                  'fusioninventory'));
+      $error_msg = $this->checkEdit();
 
-      }
-
-
-      //drag and drop lib
-      echo "<script type='text/javascript' src='".$CFG_GLPI["root_doc"].
-         "/plugins/fusioninventory/lib/REDIPS_drag/redips-drag-source.js'></script>";
-     
-
+      echo "<div class='box'>";
+      echo $error_msg;
+//      if (!$can_edit) {
+//         PluginFusioninventoryDeployPackage::showEditDeniedMessage($ID,
+//               __('One or more active tasks (#task#) use this package. Edition denied.',
+//                  'fusioninventory'));
+//
+//      }
+      echo "</div>";
       echo "<div id='tabcontent'></div>";
       echo "<script type='text/javascript'>loadDefaultTab();</script>";
+
 
       return TRUE;
    }
 
-   
-   
    static function displayOrderTypeForm($order_type, $packages_id) {
       global $CFG_GLPI;
 
       $subtypes = array(
          'check'  => __("Audits", 'fusioninventory'),
-         'file'  => __("Files", 'fusioninventory'),
+         'file'   => __("Files", 'fusioninventory'),
          'action' => __("Actions", 'fusioninventory')
       );
       $rand = mt_rand();
 
       $o_order = new PluginFusioninventoryDeployOrder;
-      $found = $o_order->find("plugin_fusioninventory_deploypackages_id = $packages_id 
+      $found = $o_order->find("plugin_fusioninventory_deploypackages_id = $packages_id
                                AND type = $order_type");
       $order = array_shift($found);
       $datas = json_decode($order['json'], TRUE);
       $orders_id = $order['id'];
+      $order_type = PluginFusioninventoryDeployOrder::getOrderTypeLabel($order['type']);
 
-      
+
+      //init drag and drop on subtype table
+      echo "<script type='text/javascript'>
+         var rand = $rand;
+         if (orders == null) var orders = {};
+         orders[$rand] = $orders_id;
+         </script>";
       echo "<table class='tab_cadre_fixe' id='package'>";
 
       $multipart = "";
@@ -276,78 +365,28 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeploy".
             ucfirst($subtype)."' />";
          $classname = "PluginFusioninventoryDeploy".ucfirst($subtype);
-         $classname::displayForm($orders_id, $datas, $rand);
+         $classname::displayForm($order, $datas, $rand);
+         echo "<script type='text/javascript'>";
+         echo "redipsInit('drag_".$order_type."_".$subtype."s');";
+         echo "</script>";
          echo "</td>";
          echo "</tr>";
       }
+
       echo "</table>";
 
-      //init drag and drop on subtype table
-      echo "<script type='text/javascript'>
-         var rand = $rand;
-         if (orders == null) var orders = {};
-         orders[$rand] = $orders_id;
-         </script>";
-       echo "<script type='text/javascript' src='".$CFG_GLPI["root_doc"].
-         "/plugins/fusioninventory/lib/REDIPS_drag/drag_table_rows.js'></script>";
-
-
-      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
-         // === debug ===
-         echo "<span class='red'><b>DEBUG</b></span>";
-         echo "<form action='".$CFG_GLPI["root_doc"].
-         "/plugins/fusioninventory/front/deploypackage.form.php' method='POST'>";
-         echo "<textarea cols='132' rows='25' style='border:0' name='json'>";
-         echo json_encode($datas, JSON_PRETTY_PRINT);
-         echo "</textarea>";
-         echo "<input type='hidden' name='id' value='$orders_id' />";
-         echo "<input type='submit' name='update_json' value=\"".
-            _sx('button', 'Save')."\" class='submit'>";
-         Html::closeForm();
-         // === debug ===
-      }
    }
 
-   
-   
-   static function alter_json($action_type, $params) {
-      //route to sub class
-      if (in_array($params['itemtype'], array(
-         'PluginFusioninventoryDeployCheck',
-         'PluginFusioninventoryDeployFile',
-         'PluginFusioninventoryDeployAction'
-      ))) {
-         switch ($action_type) {
-            case "add_item" : 
-               $params['itemtype']::add_item($params);
-               break;
-            case "save_item" : 
-               $params['itemtype']::save_item($params);
-               break;
-            case "remove_item" : 
-               $params['itemtype']::remove_item($params);
-               break;
-            case "move_item" : 
-               $params['itemtype']::move_item($params);
-               break;
-         }
-      } else {
-         Html::displayErrorAndDie ("package subtype not found");
-      }
-   }
-
-   
-   
    static function plusButton($dom_id, $clone = FALSE) {
       global $CFG_GLPI;
 
       echo "&nbsp;<img id='plus_$dom_id' onClick='return plusbutton$dom_id()'
                  title='".__('Add')."' alt='".__('Add')."'
                  class='pointer' src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
-      //This should lie in a libjs file instead hardcoded
+      //This should lie in a libjs file instead inline coded
       echo "<script type='text/javascript>";
       echo "function plusbutton$dom_id() {";
-        
+
       if ($clone !== FALSE) {
          echo "
          var root=document.getElementById('$dom_id');
@@ -367,84 +406,62 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       }</script>";
    }
 
-   
-   
-   function getAllDatas() {
-      global $DB;
-
-      $sql = " SELECT id, name
-               FROM `".$this->getTable()."`
-               ORDER BY name";
-
-      $res  = $DB->query($sql);
-
-      $nb   = $DB->numrows($res);
-      $json  = array();
-      $i = 0;
-      while($row = $DB->fetch_assoc($res)) {
-         $json['packages'][$i]['package_id'] = $row['id'];
-         $json['packages'][$i]['package_name'] = $row['name'];
-
-         $i++;
+   static function display_json_debug() {
+      global $CFG_GLPI;
+      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
+         // === debug ===
+         echo "<span class='red'><b>DEBUG</b></span>";
+         echo "<form id='package_json_debug' action='".$CFG_GLPI["root_doc"].
+         "/plugins/fusioninventory/front/deploypackage.form.php' method='POST'>";
+         echo "<textarea cols='132' rows='25' style='border:0' name='json'>";
+         echo json_encode($datas, JSON_PRETTY_PRINT);
+         echo "</textarea>";
+         echo "<input type='hidden' name='id' value='$orders_id' />";
+         echo "<input type='submit' name='update_json' value=\"".
+            _sx('button', 'Save')."\" class='submit'>";
+         Html::closeForm();
+         // === debug ===
       }
-      $json['results'] = $nb;
 
-      return json_encode($json);
    }
 
+   static function alter_json($action_type, $params) {
+      //route to sub class
+      $item_type = $params['itemtype'];
 
-
-   static function canEdit($id) {
-
-      $taskjobs_a = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobs',
-               "definition LIKE '%\"PluginFusioninventoryDeployPackage\":\"".$id."%'");
-
-      foreach ($taskjobs_a as $job) {
-         $task = new PluginFusioninventoryTask;
-         $task->getFromDB($job['plugin_fusioninventory_tasks_id']);
-         if ($task->getField('is_active') == 1) {
-            return FALSE;
+      if (
+         in_array(
+            $item_type,
+            array(
+               'PluginFusioninventoryDeployCheck',
+               'PluginFusioninventoryDeployFile',
+               'PluginFusioninventoryDeployAction'
+            )
+         )
+      ) {
+         switch ($action_type) {
+            case "add_item" :
+               $item_type::add_item($params);
+               break;
+            case "save_item" :
+               $item_type::save_item($params);
+               break;
+            case "remove_item" :
+               $item_type::remove_item($params);
+               break;
+            case "move_item" :
+               $item_type::move_item($params);
+               break;
          }
+      } else {
+         Toolbox::logDebug("package subtype not found : " . $params['itemtype']);
+         Html::displayErrorAndDie ("package subtype not found");
       }
-      return TRUE;
    }
 
 
 
-   function pre_deleteItem() {
-      global  $CFG_GLPI;
 
-      //if task use this package, delete denied
-      if (!self::canEdit($this->getField('id'))) {
-         $task = new PluginFusioninventoryDeployTask;
-         $tasks_url = "";
-         $taskjobs = getAllDatasFromTable('glpi_plugin_fusioninventory_deploytaskjobs',
-                  "definition LIKE '%\"PluginFusioninventoryDeployPackage\":\"".
-                  $this->getField('id')."%'");
-         foreach($taskjobs as $job) {
-            $task->getFromDB($job['plugin_fusioninventory_deploytasks_id']);
-            $tasks_url .= "<a href='".$CFG_GLPI["root_doc"].
-                           "/plugins/fusioninventory/front/task.form.php?id=".
-                           $job['plugin_fusioninventory_deploytasks_id']."'>".
-                           $task->fields['name']."</a>, ";
-         }
-         $tasks_url = substr($tasks_url, 0, -2);
-
-
-         Session::addMessageAfterRedirect(str_replace('#task#', $tasks_url, 
-                     __('One or more active tasks (#task#) use this package. Deletion denied.', 
-                        'fusioninventory')));
-
-         Html::redirect($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/task.form.php?id="
-               .$this->getField('id'));
-         return FALSE;
-      }
-
-      return TRUE;
-   }
-
-   
-   
    public function package_clone($new_name = '') {
 
       if ($this->getField('id') < 0) {
@@ -580,17 +597,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
-   static function showEditDeniedMessage($id, $message) {
-      global $CFG_GLPI, $CFG_GLPI;
+   function showEditDeniedMessage($message) {
+      global $CFG_GLPI;
+
+      //
 
       $task = new PluginFusioninventoryDeployTask;
       $tasks_url = "";
 
-      $taskjobs = getAllDatasFromTable('glpi_plugin_fusioninventory_taskjobs',
-               "definition LIKE '%\"PluginFusioninventoryDeployPackage\":\"".$id."%'");
-
-      # A task can have more than one taskjobs is an Install and Uninstall function are associated
-      # to the same tasks
       $jobs_seen = array();
       foreach($taskjobs as $job) {
          if (isset($jobs_seen[$job['plugin_fusioninventory_tasks_id']])) {

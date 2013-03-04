@@ -197,7 +197,7 @@ class PluginFusioninventoryToolbox {
          }
       }
       foreach ($simplexml_from->children() as $simplexml_child) {
-         $simplexml_temp = $simplexml_to->addChild($simplexml_child->getName(), 
+         $simplexml_temp = $simplexml_to->addChild($simplexml_child->getName(),
                                                   (string)$simplexml_child);
          foreach ($simplexml_child->attributes() as $attr_key => $attr_value) {
             $simplexml_temp->addAttribute($attr_key, $attr_value);
@@ -287,9 +287,9 @@ class PluginFusioninventoryToolbox {
 
       return $result;
    }
-   
-   
-   
+
+
+
    /**
    * Write XML in a folder from an inventory by agent
    *
@@ -316,9 +316,9 @@ class PluginFusioninventoryToolbox {
       fwrite($fileopen, $xml);
       fclose($fileopen);
    }
-   
-   
-   
+
+
+
    /**
     * Add AUTHENTICATION string to XML node
     *
@@ -335,7 +335,7 @@ class PluginFusioninventoryToolbox {
             $sxml_authentication->addAttribute('VERSION',
                        $pfConfigSecurity->getSNMPVersion($pfConfigSecurity->fields['snmpversion']));
             if ($pfConfigSecurity->fields['snmpversion'] == '3') {
-               $sxml_authentication->addAttribute('USERNAME', 
+               $sxml_authentication->addAttribute('USERNAME',
                                                   $pfConfigSecurity->fields['username']);
                if ($pfConfigSecurity->fields['authentication'] == '0') {
 //                  $sxml_authentication->addAttribute('AUTHPROTOCOL', '');
@@ -344,7 +344,7 @@ class PluginFusioninventoryToolbox {
                          $pfConfigSecurity->getSNMPAuthProtocol(
                                  $pfConfigSecurity->fields['authentication']));
                }
-               $sxml_authentication->addAttribute('AUTHPASSPHRASE', 
+               $sxml_authentication->addAttribute('AUTHPASSPHRASE',
                                                   $pfConfigSecurity->fields['auth_passphrase']);
                if ($pfConfigSecurity->fields['encryption'] == '0') {
 //                  $sxml_authentication->addAttribute('PRIVPROTOCOL', '');
@@ -353,10 +353,10 @@ class PluginFusioninventoryToolbox {
                                  $pfConfigSecurity->getSNMPEncryption(
                                           $pfConfigSecurity->fields['encryption']));
                }
-               $sxml_authentication->addAttribute('PRIVPASSPHRASE', 
+               $sxml_authentication->addAttribute('PRIVPASSPHRASE',
                                                    $pfConfigSecurity->fields['priv_passphrase']);
             } else {
-               $sxml_authentication->addAttribute('COMMUNITY', 
+               $sxml_authentication->addAttribute('COMMUNITY',
                                                   $pfConfigSecurity->fields['community']);
             }
       }
@@ -420,12 +420,12 @@ class PluginFusioninventoryToolbox {
    }
 
 
-   
+
    static function getIPforDevice($itemtype, $items_id) {
       $NetworkPort = new NetworkPort();
       $networkName = new NetworkName();
       $iPAddress   = new IPAddress();
-      
+
       $a_ips = array();
       $a_ports = $NetworkPort->find("`itemtype`='".$itemtype."'
                                        AND `items_id`='".$items_id."'
@@ -446,10 +446,10 @@ class PluginFusioninventoryToolbox {
       }
       return array_unique($a_ips);
    }
-   
-   
+
+
    // *********************** Functions used for inventory *********************** //
-   
+
 
    static function diffArray($array1, $array2) {
 
@@ -470,8 +470,8 @@ class PluginFusioninventoryToolbox {
       return $a_return;
    }
 
-   
-   
+
+
    static function checkLock($data, $db_data, $a_lockable=array()) {
       foreach($a_lockable as $field) {
          if (isset($data[$field])) {
@@ -484,8 +484,8 @@ class PluginFusioninventoryToolbox {
       return array($data, $db_data);
    }
 
-   
-   
+
+
    static function showYesNo($name, $value=0) {
       $rand = mt_rand();
       $checked['yes'] = '';
@@ -506,14 +506,14 @@ class PluginFusioninventoryToolbox {
             </tr>
             </table>';
    }
-   
-   
-   
+
+
+
    /**
     * Display data from serialized inventory field
     */
    static function displaySerializedValues($array) {
-      
+
       foreach ($array as $key=>$value) {
          echo "<tr class='tab_bg_1'>";
          echo "<th>";
@@ -531,10 +531,10 @@ class PluginFusioninventoryToolbox {
          echo "</tr>";
       }
    }
-   
-   
-   
-   static function sendSerializedInventory($items_id, $itemtype) { 
+
+
+
+   static function sendSerializedInventory($items_id, $itemtype) {
       header('Content-type: text/plain');
 
       if (call_user_func(array($itemtype, 'canView'))) {
@@ -545,10 +545,10 @@ class PluginFusioninventoryToolbox {
          Html::displayRightError();
       }
    }
-   
 
-   
-   static function sendXML($items_id, $itemtype) {    
+
+
+   static function sendXML($items_id, $itemtype) {
       if (call_user_func(array($itemtype, 'canView'))) {
          $xml = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$items_id);
          echo $xml;
@@ -556,6 +556,56 @@ class PluginFusioninventoryToolbox {
          Html::displayRightError();
       }
 
+   }
+   /**
+   *  @function fetchAssocByTable
+   *  This function fetch rows from a MySQL result in an array with each table as a key
+   *
+   *  example:
+   *  $query =
+   *     "SELECT table_a.*,table_b.* ".
+   *     "FROM table_b ".
+   *     "LEFT JOIN table_a ON table_a.id = table_b.linked_id";
+   *  $result = mysqli_query( $query );
+   *  print_r( fetchTableAssoc( $result ) )
+   *
+   *  output:
+   *  $results = Array
+   *     (
+   *        [0] => Array
+   *           (
+   *              [table_a] => Array
+   *                 (
+   *                    [id] => 1
+   *                 )
+   *              [table_b] => Array
+   *                 (
+   *                    [id] => 2
+   *                    [linked_id] => 1
+   *                 )
+   *           )
+   *           ...
+   *     )
+   **/
+   static function fetchAssocByTable($mysql_result){
+      $results = array();
+      //get fields header infos
+      $fields = mysqli_fetch_fields($mysql_result);
+      //associate row data as array[table][field]
+      while( $row = mysqli_fetch_row($mysql_result) ) {
+         $result = array();
+         for( $i=0; $i < count( $row ); $i++ ) {
+            $tname = $fields[$i]->table;
+            $fname = $fields[$i]->name;
+            if ( !isset( $result[$tname] ) )
+               $result[$tname] = array();
+            $result[$tname][$fname] = $row[$i];
+         }
+         if (count($result) > 0) {
+            $results[] = $result;
+         }
+      }
+      return $results;
    }
 }
 

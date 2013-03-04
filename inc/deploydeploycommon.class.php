@@ -118,10 +118,10 @@ class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommu
                      WHERE groups_id = '$items_id'
                      LIMIT 1";
                      $res = $DB->query($query);
-                     $row = $DB->fetch_assoc($res);                         
-                     
+                     $row = $DB->fetch_assoc($res);
+
                      if (isset($_GET)) {
-                        $get_tmp = $_GET;  
+                        $get_tmp = $_GET;
                      }
                      if (isset($_SESSION["glpisearchcount"]['Computer'])) {
                         unset($_SESSION["glpisearchcount"]['Computer']);
@@ -129,28 +129,28 @@ class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommu
                      if (isset($_SESSION["glpisearchcount2"]['Computer'])) {
                         unset($_SESSION["glpisearchcount2"]['Computer']);
                      }
-                     
-                     $_GET = unserialize($row['fields_array']); 
-                     
+
+                     $_GET = unserialize($row['fields_array']);
+
                      $_GET["glpisearchcount"] = count($_GET['field']);
                      if (isset($_GET['field2'])) {
                         $_GET["glpisearchcount2"] = count($_GET['field2']);
                      }
-                     
+
                      $pfSearch = new PluginFusioninventorySearch();
                      Search::manageGetValues('Computer');
                      $glpilist_limit = $_SESSION['glpilist_limit'];
                      $_SESSION['glpilist_limit'] = 999999999;
-                     $result = $pfSearch->constructSQL('Computer', 
+                     $result = $pfSearch->constructSQL('Computer',
                                                        $_GET);
                      $_SESSION['glpilist_limit'] = $glpilist_limit;
                      while ($data=$DB->fetch_array($result)) {
                         $computers[] = $data['id'];
                      }
                      if (count($get_tmp) > 0) {
-                        $_GET = $get_tmp; 
+                        $_GET = $get_tmp;
                      }
-                     
+
                      break;
                }
                break;
@@ -218,8 +218,8 @@ class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommu
 
    }
 
-   
-   
+
+
    // When agent contact server, this function send datas to agent
    /*
     * $itemtype = type of device in definition
