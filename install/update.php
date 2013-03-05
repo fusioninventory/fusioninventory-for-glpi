@@ -7648,64 +7648,67 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
 
       //=== Checks ===
-      $c_query = "SELECT type, path, value, 'error' as `return`
-         FROM glpi_plugin_fusinvdeploy_checks
-         WHERE plugin_fusinvdeploy_orders_id = $order_id
-         ORDER BY ranking ASC";
-      $c_res = $DB->query($c_query);
-      $c_i = 0;
-      while ($c_datas = $DB->fetch_assoc($c_res)) {
-         foreach ($c_datas as $c_key => $c_value) {
-            //specific case for filesytem sizes, convert to bytes
-            if (!empty($c_value) && is_numeric($c_value)) {
-               $c_value = $c_value * 1024 * 1024;
-            }
+      if (TableExists("glpi_plugin_fusinvdeploy_checks")) {
+         $c_query = "SELECT type, path, value, 'error' as `return`
+            FROM glpi_plugin_fusinvdeploy_checks
+            WHERE plugin_fusinvdeploy_orders_id = $order_id
+            ORDER BY ranking ASC";
+         $c_res = $DB->query($c_query);
+         $c_i = 0;
+         while ($c_datas = $DB->fetch_assoc($c_res)) {
+            foreach ($c_datas as $c_key => $c_value) {
+               //specific case for filesytem sizes, convert to bytes
+               if (!empty($c_value) && is_numeric($c_value)) {
+                  $c_value = $c_value * 1024 * 1024;
+               }
 
-            //construct job check entry
-            $o_line['checks'][$c_i][$c_key] = $c_value;
+               //construct job check entry
+               $o_line['checks'][$c_i][$c_key] = $c_value;
+            }
+             $c_i++;
          }
-          $c_i++;
       }
 
-
       //=== Files ===
-      $f_query = "SELECT id, name, is_p2p as p2p, filesize,
-         p2p_retention_days as `p2p-retention-duration`, uncompress, sha512
-         FROM glpi_plugin_fusinvdeploy_files
-         WHERE plugin_fusinvdeploy_orders_id = $order_id";
-      $f_res = $DB->query($f_query);
-      while ($f_datas = $DB->fetch_assoc($f_res)) {
-         //construct job file entry
-         $o_line['associatedFiles'][] = $f_datas['sha512'];
+      if (TableExists("glpi_plugin_fusinvdeploy_files")) {
+         $f_query = "SELECT id, name, is_p2p as p2p, filesize,
+            p2p_retention_days as `p2p-retention-duration`, uncompress, sha512
+            FROM glpi_plugin_fusinvdeploy_files
+            WHERE plugin_fusinvdeploy_orders_id = $order_id";
+         $f_res = $DB->query($f_query);
+         while ($f_datas = $DB->fetch_assoc($f_res)) {
+            //construct job file entry
+            $o_line['associatedFiles'][] = $f_datas['sha512'];
 
-         foreach ($f_datas as $f_key => $f_value) {
-            //we don't store the sha512 field in json
-            if ($f_key == "sha512" || $f_key == "id" ) {
-               continue;
+            foreach ($f_datas as $f_key => $f_value) {
+               //we don't store the sha512 field in json
+               if ($f_key == "sha512" || $f_key == "id" ) {
+                  continue;
+               }
+
+               //construct order file entry
+               $of_line[$f_datas['sha512']][$f_key] = $f_value;
             }
 
-            //construct order file entry
-            $of_line[$f_datas['sha512']][$f_key] = $f_value;
-         }
+            //add mirror(s) to file
+            $fm_query = "SELECT mirrors.url as url
+               FROM glpi_plugin_fusinvdeploy_files_mirrors as files_mirrors
+               INNER JOIN glpi_plugin_fusinvdeploy_mirrors as mirrors
+                  ON files_mirrors.plugin_fusinvdeploy_mirrors_id = mirrors.id
+               WHERE files_mirrors.plugin_fusinvdeploy_files_id = ".$f_datas['id'];
+            $fm_res = $DB->query($fm_query);
+            while ($fm_datas = $DB->fetch_assoc($fm_res)) {
+               $of_line[$f_datas['sha512']]['mirrors'][]  = $fm_datas['url'];
+            }
 
-         //add mirror(s) to file
-         $fm_query = "SELECT mirrors.url as url
-            FROM glpi_plugin_fusinvdeploy_files_mirrors as files_mirrors
-            INNER JOIN glpi_plugin_fusinvdeploy_mirrors as mirrors
-               ON files_mirrors.plugin_fusinvdeploy_mirrors_id = mirrors.id
-            WHERE files_mirrors.plugin_fusinvdeploy_files_id = ".$f_datas['id'];
-         $fm_res = $DB->query($fm_query);
-         while ($fm_datas = $DB->fetch_assoc($fm_res)) {
-            $of_line[$f_datas['sha512']]['mirrors'][]  = $fm_datas['url'];
-         }
-
-         //add multipart file datas
-         $fmp_query = "SELECT sha512
-            FROM glpi_plugin_fusinvdeploy_fileparts
-            WHERE plugin_fusinvdeploy_files_id =".$f_datas['id'];
-         $fmp_res = $DB->query($fmp_query);
-         while ($fmp_datas = $DB->fetch_assoc($fmp_res)) {
-            $of_line[$f_datas['sha512']]['multiparts'][] = $fmp_datas['sha512'];
+            //add multipart file datas
+            $fmp_query = "SELECT sha512
+               FROM glpi_plugin_fusinvdeploy_fileparts
+               WHERE plugin_fusinvdeploy_files_id =".$f_datas['id'];
+            $fmp_res = $DB->query($fmp_query);
+            while ($fmp_datas = $DB->fetch_assoc($fmp_res)) {
+               $of_line[$f_datas['sha512']]['multiparts'][] = $fmp_datas['sha512'];
+            }
          }
       }
 
@@ -7716,62 +7719,63 @@ function migrateTablesFromFusinvDeploy ($migration) {
       $cmdStatus['REGEX_OK'] = 'okPattern';
       $cmdStatus['REGEX_KO'] = 'errorPattern';
 
-      $a_query = "SELECT *
-         FROM glpi_plugin_fusinvdeploy_actions
-         WHERE plugin_fusinvdeploy_orders_id = $order_id
-         ORDER BY ranking ASC";
-      $a_res = $DB->query($a_query);
-      $a_i = 0;
-      while ($a_datas = $DB->fetch_assoc($a_res)) {
+      if (TableExists("glpi_plugin_fusinvdeploy_actions")) {
+         $a_query = "SELECT *
+            FROM glpi_plugin_fusinvdeploy_actions
+            WHERE plugin_fusinvdeploy_orders_id = $order_id
+            ORDER BY ranking ASC";
+         $a_res = $DB->query($a_query);
+         $a_i = 0;
+         while ($a_datas = $DB->fetch_assoc($a_res)) {
 
-         //get type
-         $type = strtolower(str_replace("PluginFusinvdeployAction_", "", $a_datas['itemtype']));
+            //get type
+            $type = strtolower(str_replace("PluginFusinvdeployAction_", "", $a_datas['itemtype']));
 
-         //specific case for command type
-         $type = str_replace("command", "cmd", $type);
+            //specific case for command type
+            $type = str_replace("command", "cmd", $type);
 
-         //table for action itemtype
-         $a_table = getTableForItemType($a_datas['itemtype']);
+            //table for action itemtype
+            $a_table = getTableForItemType($a_datas['itemtype']);
 
-         //get table fields
-         $at_query = "SELECT *
-            FROM $a_table
-            WHERE id = ".$a_datas['items_id'];
-         $at_res = $DB->query($at_query);
-         while($at_datas = $DB->fetch_assoc($at_res)) {
-            foreach($at_datas as $at_key => $at_value) {
-               //we don't store the id field of action itemtype table in json
-               if ($at_key == "id") {
-                  continue;
+            //get table fields
+            $at_query = "SELECT *
+               FROM $a_table
+               WHERE id = ".$a_datas['items_id'];
+            $at_res = $DB->query($at_query);
+            while($at_datas = $DB->fetch_assoc($at_res)) {
+               foreach($at_datas as $at_key => $at_value) {
+                  //we don't store the id field of action itemtype table in json
+                  if ($at_key == "id") {
+                     continue;
+                  }
+
+                  //specific case for 'path' field
+                  if ($at_key == "path") {
+                     $o_line['actions'][$a_i][$type]['list'][] = $at_value;
+                  } else {
+                     //construct job actions entry
+                     $o_line['actions'][$a_i][$type][$at_key] = $at_value;
+                  }
                }
 
-               //specific case for 'path' field
-               if ($at_key == "path") {
-                  $o_line['actions'][$a_i][$type]['list'][] = $at_value;
-               } else {
-                  //construct job actions entry
-                  $o_line['actions'][$a_i][$type][$at_key] = $at_value;
+               //specifice case for commands : we must add status and env vars
+               if ($a_datas['itemtype'] === "PluginFusinvdeployAction_Command") {
+                  $ret_cmd_query = "SELECT type, value
+                     FROM glpi_plugin_fusinvdeploy_actions_commandstatus
+                     WHERE plugin_fusinvdeploy_commands_id = ".$at_datas['id'];
+                  $ret_cmd_res = $DB->query($ret_cmd_query);
+                  while ($res_cmd_datas = $DB->fetch_assoc($ret_cmd_res)) {
+                     //construct command status array entry
+                     $o_line['actions'][$a_i][$type]['retChecks'][] = array(
+                        'type'  => $cmdStatus[$res_cmd_datas['type']],
+                        'value' => array($res_cmd_datas['value'])
+                     );
+                  }
                }
             }
-
-            //specifice case for commands : we must add status and env vars
-            if ($a_datas['itemtype'] === "PluginFusinvdeployAction_Command") {
-               $ret_cmd_query = "SELECT type, value
-                  FROM glpi_plugin_fusinvdeploy_actions_commandstatus
-                  WHERE plugin_fusinvdeploy_commands_id = ".$at_datas['id'];
-               $ret_cmd_res = $DB->query($ret_cmd_query);
-               while ($res_cmd_datas = $DB->fetch_assoc($ret_cmd_res)) {
-                  //construct command status array entry
-                  $o_line['actions'][$a_i][$type]['retChecks'][] = array(
-                     'type'  => $cmdStatus[$res_cmd_datas['type']],
-                     'value' => array($res_cmd_datas['value'])
-                  );
-               }
-            }
+            $a_i++;
          }
-         $a_i++;
       }
-
       $final_datas[$order_id]['jobs'] = $o_line;
       $final_datas[$order_id]['associatedFiles'] = $of_line;
    }

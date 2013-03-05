@@ -726,10 +726,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $query =
          implode(
             "\n", array(
-               "SELECT ".implode(',',$select),
+               "SELECT ".implode(',', $select),
                "FROM `glpi_plugin_fusioninventory_tasks` as task",
-               implode("\n",$leftjoin),
-               "WHERE\n    ".implode("\nAND ",$where)
+               implode("\n", $leftjoin),
+               "WHERE\n    ".implode("\nAND ", $where)
             )
          );
 
@@ -741,7 +741,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       if ($r) {
          $results = PluginFusioninventoryToolbox::fetchAssocByTable($r);
       }
-      Toolbox::logDebug(print_r($results,TRUE));
+      Toolbox::logDebug(print_r($results, TRUE));
       return($results);
    }
 
