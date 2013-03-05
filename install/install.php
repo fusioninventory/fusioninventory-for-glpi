@@ -270,6 +270,11 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $input['exceptions'] = exportArrayToDB(array());
       $pfAgentmodule->add($input);
 
+      $input = array();
+      $input['modulename'] = "DEPLOY";
+      $input['is_active']  = 0;
+      $input['exceptions'] = exportArrayToDB(array());
+      $pfAgentmodule->add($input);
 
 
    /*

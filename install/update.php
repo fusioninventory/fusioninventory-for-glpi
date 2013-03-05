@@ -436,6 +436,18 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       migrateTablesFusionInventory($migration, $a_table);
 
 
+   /*
+    * Add Deploy module
+    */
+   $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
+      WHERE `modulename`='DEPLOY'";
+   $result = $DB->query($query);
+   if (!$DB->numrows($result)) {
+      $query_ins= "INSERT INTO `glpi_plugin_fusioninventory_agentmodules`
+            (`modulename`, `is_active`, `exceptions`)
+         VALUES ('DEPLOY', '0', '".exportArrayToDB(array())."')";
+      $DB->query($query_ins);
+   }
 
    /*
     * Add WakeOnLan module appear in version 2.3.0
