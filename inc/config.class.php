@@ -334,12 +334,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo __('Service URL', 'fusioninventory').'&nbsp;';
       Html::showToolTip('ex: http://192.168.20.1/glpi');
       echo "&nbsp;:";
+      $ctx = stream_context_create(array(
+          'http' => array(
+              'timeout' => 3
+              )
+          )
+      ); 
+      PluginFusioninventoryDisplay::disableDebug();
       if (!file_exists($this->getValue('agent_base_url').'/plugins/fusioninventory/index.php')
             && !file_get_contents($this->getValue('agent_base_url').
-                                    '/plugins/fusioninventory/index.php')) {
+                                    '/plugins/fusioninventory/index.php', FALSE, $ctx)) {
            echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\">";
       }
-      
+      PluginFusioninventoryDisplay::reenableusemode();
       echo "</td>";
       echo "<td>";
       echo "<input type='text' name='agent_base_url' size='50' ".

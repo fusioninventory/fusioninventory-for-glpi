@@ -133,7 +133,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    **/
    static function disableDebug() {
       error_reporting(0);
-      set_error_handler("plugin_fusioninventory_empty");
+      set_error_handler(array('PluginFusioninventoryDisplay', 'error_handler'));
    }
 
 
@@ -148,6 +148,13 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
          error_reporting(E_ALL | E_STRICT);
          set_error_handler("userErrorHandler");
       }
+   }
+
+
+
+   static function error_handler($errno, $errstr, $errfile, $errline) {
+//   echo 'ca marche';
+//             return true;
    }
 
 
