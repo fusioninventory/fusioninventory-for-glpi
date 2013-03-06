@@ -123,7 +123,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
       $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstates`
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` 
             ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
-         WHERE `method` = 'netdiscovery'
+         WHERE `method` = 'networkdiscovery'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC ";
 
@@ -133,7 +133,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
 
       // Display the pager
       Html::printPager($start, $number, $CFG_GLPI['root_doc'].
-              "/plugins/fusinvsnmp/front/stateinventory.php", '');
+              "/plugins/fusioninventory/front/stateinventory.php", '');
 
       echo "<table class='tab_cadre_fixe'>";
 
@@ -154,7 +154,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
             FROM `glpi_plugin_fusioninventory_taskjobstates`
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` 
             ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
-         WHERE `method` = 'netdiscovery'
+         WHERE `method` = 'networkdiscovery'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC
          LIMIT ".intval($start).", " . intval($_SESSION['glpilist_limit']);
@@ -207,18 +207,15 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
 
             case 0:
                echo __('Prepared', 'fusioninventory');
-
                break;
 
             case 1:
             case 2:
                echo __('Started', 'fusioninventory');
-
                break;
 
             case 3:
                echo __('Finished tasks', 'fusioninventory');
-
                break;
 
          }
