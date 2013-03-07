@@ -275,6 +275,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       $data = $rule->processAllRules($input, array(), array('class'=>$this));
       PluginFusioninventoryToolbox::logIfExtradebug("pluginFusioninventory-rules",
                                                    $data);
+
       if (isset($data['_no_rule_matches']) AND ($data['_no_rule_matches'] == '1')) {
          $this->rulepassed(0, "Computer");
       } else if (!isset($data['found_equipment'])) {
