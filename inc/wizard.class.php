@@ -637,7 +637,7 @@ class PluginFusioninventoryWizard {
                ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
             LEFT JOIN `glpi_plugin_fusioninventory_tasks`
                ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
-            WHERE `glpi_plugin_fusioninventory_tasks`.`name` = 'wizard - netdiscovery - ".
+            WHERE `glpi_plugin_fusioninventory_tasks`.`name` = 'wizard - networkdiscovery - ".
                  $pfIPRange->fields['name']."'
                AND `is_active`='1'
                AND `definition`='".exportArrayToDB(array(
@@ -656,7 +656,7 @@ class PluginFusioninventoryWizard {
 
             $input = array();
             $input['entities_id'] = $_SESSION['glpiactive_entity'];
-            $input['name'] = 'wizard - netdiscovery - '.$pfIPRange->fields['name'];
+            $input['name'] = 'wizard - networkdiscovery - '.$pfIPRange->fields['name'];
             $input['communication'] = 'push';
             $input['date_scheduled'] = date('Y-m-d H:i:s');
             $input['is_active'] = 0;
@@ -665,9 +665,9 @@ class PluginFusioninventoryWizard {
             $input = array();
             $input['entities_id'] = $_SESSION['glpiactive_entity'];
             $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
-            $input['name'] = 'wizard - netdiscovery - '.$pfIPRange->fields['name'];
+            $input['name'] = 'wizard - networkdiscovery - '.$pfIPRange->fields['name'];
             $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusioninventory");
-            $input['method'] = 'netdiscovery';
+            $input['method'] = 'networkdiscovery';
             $input['definition'] = exportArrayToDB(array(
                 array('PluginFusioninventoryIPRange' => 
                     $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])));
@@ -909,11 +909,11 @@ class PluginFusioninventoryWizard {
       switch ($ariane) {
 
          case 'filNetDiscovery':
-            $method = 'netdiscovery';
+            $method = 'networkdiscovery';
             break;
 
          case 'filInventorySNMP':
-            $method = 'snmpinventory';
+            $method = 'networkinventory';
             break;
 
          case 'filInventoryESX':
