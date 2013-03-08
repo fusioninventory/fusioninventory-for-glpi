@@ -482,6 +482,7 @@ class PluginFusioninventoryFormatconvert {
                   } else if (isset($a_drives['TYPE'])) {
                      $array_tmp['mountpoint'] = $a_drives['TYPE'];
                   }            
+                  $array_tmp['is_dynamic'] = 1;
                   $a_inventory['computerdisk'][] = $array_tmp;
                }
             }

@@ -400,6 +400,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          
          $no_history = FALSE;
          // * New
+         $setdynamic = 1;
          if ($items_id == '0') {
             $input = array();
             $input['entities_id'] = $entities_id;                     
@@ -410,6 +411,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
             $items_id = $computer->add($input);
             $no_history = TRUE;
+            $setdynamic = 0;
          }
                
          $serialized = gzcompress(serialize($a_computerinventory));

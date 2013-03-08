@@ -429,6 +429,68 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
       
       $this->assertEquals($a_reference, $a_return['processor']); 
    }
+   
+   
+   
+   public function testComputerMonitor() {
+      global $DB;
+
+      $DB->connect();
+      
+      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+
+      $a_computer = array();
+      $a_computer['HARDWARE'] = array(
+                'NAME'           => 'vbox-winxp',
+                'ARCHNAME'       => 'MSWin32-x86-multi-thread',
+                'CHASSIS_TYPE'   => '',
+                'DESCRIPTION'    => '',
+                'OSCOMMENTS'     => 'Service Pack 3 BAD',
+                'OSNAME'         => 'Microsoft Windows XP Professionnel BAD',
+                'OSVERSION'      => '5.1.2600 BAD',
+                'VMSYSTEM'       => 'VirtualBox',
+                'WINCOMPANY'     => 'siprossii',
+                'WINLANG'        => '1036',
+                'WINOWNER'       => 'test',
+                'WINPRODID'      => '76413-OEM-0054453-04701',
+                'WINPRODKEY'     => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
+                'WORKGROUP'      => 'WORKGROUP'
+            );
+
+      $a_computer['MONITORS'] = array(
+            array(
+               'BASE64'       => 'AP///////wA4o75h/gQAABsLAQOA////zgAAoFdJmyYQSE...',
+               'CAPTION'      => 'Écran Plug-and-Play',
+               'DESCRIPTION'  => '27/2001',
+               'MANUFACTURER' => 'NEC Technologies, Inc.'
+                ),
+            array(
+               'BASE64'       => 'AP///////wAwrhBAAAAAACgSAQOAGhB46uWVk1ZPkCgoUFQAAAABA...',
+               'CAPTION'      => 'ThinkPad Display 1280x800',
+               'MANUFACTURER' => 'Lenovo',
+               'SERIAL'       => 'UBYVUTFYEIUI'
+             )
+      );
+     
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+      
+      $a_reference = array();
+      $a_reference[0] = array(
+            'manufacturers_id'   => 'NEC Technologies, Inc.',
+            'name'               => 'Écran Plug-and-Play',
+            'comment'            => '27/2001',
+            'serial'             => ''
+          );
+      $a_reference[1] = array(
+            'manufacturers_id'   => 'Lenovo',
+            'name'               => 'ThinkPad Display 1280x800',
+            'serial'             => 'UBYVUTFYEIUI',
+            'comment'            => ''
+          );
+      $this->assertEquals($a_reference, $a_return['monitor']); 
+   }
 }
 
 

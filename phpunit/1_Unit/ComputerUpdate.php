@@ -155,10 +155,10 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
 
       $a_inventory['monitor'] = Array(
             Array(
-                    'name'              => '',
+                    'name'              => 'ThinkPad Display 1280x800',
                     'comment'           => '',
-                    'serial'            => '',
-                    'manufacturers_id'  => ''
+                    'serial'            => 'UBYVUTFYEIUI',
+                    'manufacturers_id'  => 'Lenovo'
                 )
       );
 

@@ -72,7 +72,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
     * 
     * @return nothing
     */
-   function updateComputer($a_computerinventory, $computers_id, $no_history) {
+   function updateComputer($a_computerinventory, $computers_id, $no_history, $setdynamic=0) {
       global $DB;
       
       $computer                     = new Computer();
@@ -144,6 +144,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $pfInventoryComputerComputer->add($a_computerinventory['fusioninventorycomputer'], 
                                               array(), FALSE);
          } else { // Update
+            if (!empty($db_computer['serialized_inventory'])) {
+               $setdynamic = 0;
+            }
             $idtmp = $db_computer['id'];
             unset($db_computer['id']);
             unset($db_computer['computers_id']);
@@ -158,6 +161,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $pfInventoryComputerComputer->update($input);
          }
          
+      // Put all link item dynamic (in case of update computer not yet inventoried with fusion)
+         if ($setdynamic == 1) {
+            $this->setDynamicLinkItems($computers_id);
+         }
          
       // * Processors
          if ($pfConfig->getValue("component_processor") != 0) {
@@ -169,7 +176,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   LEFT JOIN `glpi_deviceprocessors` 
                      ON `deviceprocessors_id`=`glpi_deviceprocessors`.`id`
                   WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'";
+                     AND `itemtype`='Computer'
+                     AND `is_dynamic`='1'";
                $result = $DB->query($query);         
                while (($data = $DB->fetch_assoc($result))) {
                   $idtmp = $data['id'];
@@ -225,7 +233,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      `frequence`, `serial`, `devicememorytypes_id` FROM `glpi_items_devicememories`
                   LEFT JOIN `glpi_devicememories` ON `devicememories_id`=`glpi_devicememories`.`id`
                   WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'";
+                     AND `itemtype`='Computer'
+                     AND `is_dynamic`='1'";
                $result = $DB->query($query);         
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
@@ -278,7 +287,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $query = "SELECT `glpi_items_deviceharddrives`.`id`, `serial`
                      FROM `glpi_items_deviceharddrives`
                   WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'";
+                     AND `itemtype`='Computer'
+                     AND `is_dynamic`='1'";
                $result = $DB->query($query);         
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
@@ -334,7 +344,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   LEFT JOIN `glpi_devicegraphiccards` 
                      ON `devicegraphiccards_id`=`glpi_devicegraphiccards`.`id`
                   WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'";
+                     AND `itemtype`='Computer'
+                     AND `is_dynamic`='1'";
                $result = $DB->query($query);         
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
@@ -391,7 +402,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   LEFT JOIN `glpi_devicesoundcards` 
                      ON `devicesoundcards_id`=`glpi_devicesoundcards`.`id`
                   WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'";
+                     AND `itemtype`='Computer'
+                     AND `is_dynamic`='1'";
                $result = $DB->query($query);         
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
@@ -445,7 +457,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      `manufacturers_id`, `designation` FROM `glpi_items_devicecontrols`
                   LEFT JOIN `glpi_devicecontrols` ON `devicecontrols_id`=`glpi_devicecontrols`.`id`
                   WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'";
+                     AND `itemtype`='Computer'
+                     AND `is_dynamic`='1'";
                $result = $DB->query($query);         
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
@@ -510,7 +523,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                               = `glpi_softwareversions`.`id`)
                    LEFT JOIN `glpi_softwares`
                         ON (`glpi_softwareversions`.`softwares_id` = `glpi_softwares`.`id`)
-                   WHERE `glpi_computers_softwareversions`.`computers_id` = '$computers_id'";
+                   WHERE `glpi_computers_softwareversions`.`computers_id` = '$computers_id'
+                     AND `glpi_computers_softwareversions`.`is_dynamic`='1'";
                $result = $DB->query($query);
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['sid'];
@@ -663,7 +677,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if ($no_history === FALSE) {
                $query = "SELECT `id`, `name`, `uuid`, `virtualmachinesystems_id` 
                      FROM `glpi_computervirtualmachines`
-                  WHERE `computers_id` = '$computers_id'";
+                  WHERE `computers_id` = '$computers_id'
+                     AND `is_dynamic`='1'";
                $result = $DB->query($query);         
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
@@ -737,8 +752,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("import_volume") != 0) {
             $db_computerdisk = array();
             if ($no_history === FALSE) {
-               $query = "SELECT `id`, `name`, `device`, `mountpoint` FROM `glpi_computerdisks`
-                   WHERE `computers_id` = '$computers_id'";
+               $query = "SELECT `id`, `name`, `device`, `mountpoint` 
+                   FROM `glpi_computerdisks`
+                   WHERE `computers_id` = '".$computers_id."'
+                     AND `is_dynamic`='1'";
                $result = $DB->query($query);         
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
@@ -803,9 +820,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("component_networkcard") != 0) {
             $db_networkport = array();
             if ($no_history === FALSE) {
-               $query = "SELECT `id`, `name`, `mac`, `instantiation_type` FROM `glpi_networkports`
+               $query = "SELECT `id`, `name`, `mac`, `instantiation_type` 
+                   FROM `glpi_networkports`
                    WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'";
+                     AND `itemtype`='Computer'
+                     AND `is_dynamic`='1'";
                $result = $DB->query($query);         
                while (($data = $DB->fetch_assoc($result))) {
                   $idtmp = $data['id'];
@@ -1068,7 +1087,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
                      WHERE `itemtype`='Monitor'
                         AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'";
+                        AND `entities_id`='".$entities_id."'
+                        AND `glpi_computers_items`.`is_dynamic`='1'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 0) {
@@ -1091,7 +1111,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
                      WHERE `itemtype`='Monitor'
                         AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'";
+                        AND `entities_id`='".$entities_id."'
+                        AND `glpi_computers_items`.`is_dynamic`='1'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 1) {
@@ -1114,7 +1135,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
                      WHERE `itemtype`='Monitor'
                         AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'";
+                        AND `entities_id`='".$entities_id."'
+                        AND `glpi_computers_items`.`is_dynamic`='1'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['serial'] == ''
@@ -1184,7 +1206,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      LEFT JOIN `glpi_printers` ON `items_id`=`glpi_printers`.`id`
                      WHERE `itemtype`='Printer'
                         AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'";
+                        AND `entities_id`='".$entities_id."'
+                        AND `glpi_computers_items`.`is_dynamic`='1'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 0) {
@@ -1206,7 +1229,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      LEFT JOIN `glpi_printers` ON `items_id`=`glpi_printers`.`id`
                      WHERE `itemtype`='Printer'
                         AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'";
+                        AND `entities_id`='".$entities_id."'
+                        AND `glpi_computers_items`.`is_dynamic`='1'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 1) {
@@ -1228,7 +1252,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      LEFT JOIN `glpi_printers` ON `items_id`=`glpi_printers`.`id`
                      WHERE `itemtype`='Printer'
                         AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'";
+                        AND `entities_id`='".$entities_id."'
+                        AND `glpi_computers_items`.`is_dynamic`='1'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['serial'] == ''
@@ -1299,7 +1324,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      LEFT JOIN `glpi_peripherals` ON `items_id`=`glpi_peripherals`.`id`
                      WHERE `itemtype`='Peripheral'
                         AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'";
+                        AND `entities_id`='".$entities_id."'
+                        AND `glpi_computers_items`.`is_dynamic`='1'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 0) {
@@ -1322,7 +1348,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      LEFT JOIN `glpi_peripherals` ON `items_id`=`glpi_peripherals`.`id`
                      WHERE `itemtype`='Peripheral'
                         AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'";
+                        AND `entities_id`='".$entities_id."'
+                        AND `glpi_computers_items`.`is_dynamic`='1'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['is_global'] == 1) {
@@ -1345,7 +1372,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      LEFT JOIN `glpi_peripherals` ON `items_id`=`glpi_peripherals`.`id`
                      WHERE `itemtype`='Peripheral'
                         AND `computers_id`='".$computers_id."'
-                        AND `entities_id`='".$entities_id."'";
+                        AND `entities_id`='".$entities_id."'
+                        AND `glpi_computers_items`.`is_dynamic`='1'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
                      if ($data['serial'] == ''
@@ -2082,6 +2110,37 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $DB->query($query); 
          
       } 
+   }
+   
+   
+   
+   function setDynamicLinkItems($computers_id) {
+      global $DB;
+      
+      $DB->query("UPDATE `glpi_computerdisks` SET `is_dynamic`='1'
+                     WHERE `computers_id`='".$computers_id."'");
+      
+      $DB->query("UPDATE `glpi_computers_items` SET `is_dynamic`='1'
+                     WHERE `computers_id`='".$computers_id."'");  
+      
+      $DB->query("UPDATE `glpi_computers_softwareversions` SET `is_dynamic`='1'
+                     WHERE `computers_id`='".$computers_id."'"); 
+      
+      $DB->query("UPDATE `glpi_computervirtualmachines` SET `is_dynamic`='1'
+                     WHERE `computers_id`='".$computers_id."'"); 
+      
+      $a_tables = array("glpi_networkports", "glpi_items_devicecases", "glpi_items_devicecontrols",
+                        "glpi_items_devicedrives", "glpi_items_devicegraphiccards",
+                        "glpi_items_deviceharddrives", "glpi_items_devicememories",
+                        "glpi_items_devicemotherboards", "glpi_items_devicenetworkcards",
+                        "glpi_items_devicepcis", "glpi_items_devicepowersupplies",
+                        "glpi_items_deviceprocessors", "glpi_items_devicesoundcards");
+      
+      foreach ($a_tables as $table) {
+         $DB->query("UPDATE `".$table."` SET `is_dynamic`='1'
+                        WHERE `items_id`='".$computers_id."'
+                           AND `itemtype`='Computer'"); 
+      }
    }
 }
 
