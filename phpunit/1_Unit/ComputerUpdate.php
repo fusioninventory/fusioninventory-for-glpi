@@ -107,32 +107,28 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
                     'serial'            => '',
-                    'frequency'         => 2400,
-                    'is_dynamic'        => 1
+                    'frequency'         => 2400
                 ),
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
                     'serial'            => '',
-                    'frequency'         => 2400,
-                    'is_dynamic'        => 1
+                    'frequency'         => 2400
                 ),
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
                     'serial'            => '',
-                    'frequency'         => 2400,
-                    'is_dynamic'        => 1
+                    'frequency'         => 2400
                 ),
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
                     'serial'            => '',
-                    'frequency'         => 2400,
-                    'is_dynamic'        => 1
+                    'frequency'         => 2400
                 )
         );
 
@@ -196,8 +192,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'manufacturers_id'       => 1,
                     'entities_id'            => 0,
                     'is_template_computer'   => 0,
-                    'is_deleted_computer'    => 0,
-                    'is_dynamic'             => 1
+                    'is_deleted_computer'    => 0
                 ),
             'ImageMagick$$$$6.8.0.7_1' => Array(
                     'name'                   => 'ImageMagick',
@@ -205,8 +200,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'manufacturers_id'       => 2,
                     'entities_id'            => 0,
                     'is_template_computer'   => 0,
-                    'is_deleted_computer'    => 0,
-                    'is_dynamic'             => 1
+                    'is_deleted_computer'    => 0
                 ),
             'ORBit2$$$$2.14.19' => Array(
                     'name'                   => 'ORBit2',
@@ -214,8 +208,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'manufacturers_id'       => 3,
                     'entities_id'            => 0,
                     'is_template_computer'   => 0,
-                    'is_deleted_computer'    => 0,
-                    'is_dynamic'             => 1
+                    'is_deleted_computer'    => 0
                 )
           );
 

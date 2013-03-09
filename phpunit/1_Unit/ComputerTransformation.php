@@ -423,8 +423,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
                     'serial'            => '',
-                    'frequency'         => 2400,
-                    'is_dynamic'        => 1
+                    'frequency'         => 2400
           );
       
       $this->assertEquals($a_reference, $a_return['processor']); 

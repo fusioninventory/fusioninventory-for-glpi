@@ -435,7 +435,6 @@ class PluginFusioninventoryFormatconvert {
                      $array_tmp['designation'] = $a_cpus['TYPE'];
                   }
                   $array_tmp['frequency'] = $array_tmp['frequence'];
-                  $array_tmp['is_dynamic'] = 1; 
                   $a_inventory['processor'][] = $array_tmp;
                }
             }
@@ -481,8 +480,7 @@ class PluginFusioninventoryFormatconvert {
                      $array_tmp['mountpoint'] = $a_drives['LETTER'];
                   } else if (isset($a_drives['TYPE'])) {
                      $array_tmp['mountpoint'] = $a_drives['TYPE'];
-                  }            
-                  $array_tmp['is_dynamic'] = 1;
+                  }
                   $a_inventory['computerdisk'][] = $array_tmp;
                }
             }
@@ -1102,7 +1100,6 @@ class PluginFusioninventoryFormatconvert {
                   }
                   $array_tmp['is_template_computer'] = 0;
                   $array_tmp['is_deleted_computer'] = 0;
-                  $array_tmp['is_dynamic'] = 1;
                   if (!isset($a_inventory['software'][$array_tmp['name']."$$$$".$array_tmp['version']])) {
                      $a_inventory['software'][$array_tmp['name']."$$$$".$array_tmp['version']] 
                              = $array_tmp;

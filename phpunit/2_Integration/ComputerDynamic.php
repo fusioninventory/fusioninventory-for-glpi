@@ -74,8 +74,7 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
                  "totalsize"  => 290143,
                  "device"     => '',
                  "name"       => "C:",
-                 "mountpoint" => "C:",
-                 "is_dynamic" => 1
+                 "mountpoint" => "C:"
               )
           ),
           'memory'         => Array(),
@@ -154,8 +153,7 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
                  "totalsize"  => 290143,
                  "device"     => '',
                  "name"       => "C:",
-                 "mountpoint" => "C:",
-                 "is_dynamic" => 1
+                 "mountpoint" => "C:"
               )
           ),
           'memory'         => Array(),
