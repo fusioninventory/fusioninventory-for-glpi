@@ -215,6 +215,93 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
          AND `is_dynamic`='1'");
       $this->assertEquals(1, count($a_computerdisk), '(4)Dynamic');
    }
+   
+   
+   public function testUpdateComputerRemoveProcessor() {
+      global $DB;
+
+      $DB->connect();
+      
+      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+      
+      $a_inventory = array(
+          'computer' => array(
+             'name'                             => 'pcxxx1',
+             'comment'                          => 'amd64/-1-11-30 22:04:44',
+             'users_id'                         => 0,
+             'operatingsystems_id'              => 0,
+             'operatingsystemversions_id'       => 0,
+             'uuid'                             => '68405E00-E5BE-11DF-801C-B05981261220',
+             'domains_id'                       => 0,
+             'manufacturers_id'                 => 0,
+             'computermodels_id'                => 0,
+             'serial'                           => 'XB63J7DH',
+             'computertypes_id'                 => 0,
+             'is_dynamic'                       => 1,
+             'contact'                          => 'ddurieux'
+          ),
+          'fusioninventorycomputer' => Array(
+              'winowner'                        => 'test',
+              'wincompany'                      => 'siprossii',
+              'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
+              'last_fusioninventory_update'     => date('Y-m-d H:i:s')
+          ), 
+          'soundcard'      => Array(),
+          'graphiccard'    => Array(),
+          'controller'     => Array(),
+          'processor'      => Array(
+            Array(
+                    'manufacturers_id'  => 0,
+                    'designation'       => 'Core i3',
+                    'frequence'         => 2400,
+                    'serial'            => '',
+                    'frequency'         => 2400
+                ),
+            Array(
+                    'manufacturers_id'  => 0,
+                    'designation'       => 'Core i3',
+                    'frequence'         => 2400,
+                    'serial'            => '',
+                    'frequency'         => 2400
+                )
+            ),
+          'computerdisk'   => Array(),
+          'memory'         => Array(),
+          'monitor'        => Array(),
+          'printer'        => Array(),
+          'peripheral'     => Array(),
+          'networkport'    => Array(),
+          'software'       => Array(),
+          'harddrive'      => Array(),
+          'virtualmachine' => Array(),
+          'antivirus'      => Array(),
+          'storage'        => Array(),
+          'itemtype'       => 'Computer'
+          );
+      
+      $computer         = new Computer();
+      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $item_DeviceProcessor = new Item_DeviceProcessor();
+      
+      $computers_id = $computer->add(array('serial'      => 'XB63J7DH',
+                                           'entities_id' => 0));
+      
+      $_SESSION['glpiactive_entity'] = 0;
+      $pfiComputerLib->updateComputer($a_inventory, $computers_id, FALSE);
+      
+      $a_processors = $item_DeviceProcessor->find("`items_id`='".$computers_id."'
+         AND `itemtype`='Computer'");
+      $this->assertEquals(2, count($a_processors), 'May have the 2 Processors');
+      
+      // Remove one processor from inventory
+      unset($a_inventory['processor'][1]);
+      $pfiComputerLib->updateComputer($a_inventory, $computers_id, FALSE);
+      
+      $a_processors = $item_DeviceProcessor->find("`items_id`='".$computers_id."'
+         AND `itemtype`='Computer'");
+      $this->assertEquals(1, count($a_processors), 'May have the only 1 processor after 
+                           deleted a processor from inventory');
+   }
  }
 
 
