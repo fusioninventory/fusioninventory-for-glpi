@@ -643,6 +643,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                                  if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
                                     $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                                     $class->rulepassed("0", $itemtype);
+                                    $output['found_equipment'] = array(0, $itemtype);
                                     return $output;
                                  } else {
                                     $output['action'] = self::LINK_RESULT_CREATE;
@@ -656,6 +657,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                            if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
                               $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                               $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
+                              $output['found_equipment'] = array(0, "PluginFusioninventoryUnknownDevice");
                               return $output;
                            } else {
                               $output['action'] = self::LINK_RESULT_CREATE;
@@ -685,6 +687,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                         if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
                            $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                            $class->rulepassed("0", $itemtype);
+                           $output['found_equipment'] = array(0, $itemtype);
                            return $output;
                         } else {
                            $output['action'] = self::LINK_RESULT_CREATE;
@@ -698,6 +701,7 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
                   if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
                      $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                      $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
+                     $output['found_equipment'] = array(0, "PluginFusioninventoryUnknownDevice");
                      return $output;
                   } else {
                      $output['action'] = self::LINK_RESULT_CREATE;
