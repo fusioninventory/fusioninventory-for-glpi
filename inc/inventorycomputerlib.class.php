@@ -857,6 +857,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         $a_networkport['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
                         $a_networkport['items_id'] = $computers_id;
                         $a_networkport['itemtype'] = "Computer";
+                        $a_networkport['is_dynamic'] = 1;
                         $a_networkport['_no_history'] = $no_history;
                         $a_networkport['items_id'] = $keydb;
                         unset($a_networkport['_no_history']);
@@ -933,13 +934,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $a_networkport['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
                      $a_networkport['items_id'] = $computers_id;
                      $a_networkport['itemtype'] = "Computer";
+                     $a_networkport['is_dynamic'] = 1;
                      $a_networkport['_no_history'] = $no_history;
                      $a_networkport['items_id'] = $networkPort->add($a_networkport, array(), FALSE);
                      unset($a_networkport['_no_history']);
                      $a_networkport['is_recursive'] = 0;
                      $a_networkport['itemtype'] = 'NetworkPort';
                      unset($a_networkport['name']);
-            $a_networkport['_no_history'] = $no_history;
+                     $a_networkport['_no_history'] = $no_history;
                      $a_networknames_id = $networkName->add($a_networkport, array(), FALSE);
                      foreach ($a_networkport['ipaddress'] as $ip) {
                         $input = array();
@@ -947,7 +949,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         $input['itemtype']   = 'NetworkName';
                         $input['name']       = $ip;
                         $input['is_dynamic'] = 1;
-            $input['_no_history'] = $no_history;
+                        $input['_no_history'] = $no_history;
                         $iPAddress->add($input, array(), FALSE);
                      }
                   }

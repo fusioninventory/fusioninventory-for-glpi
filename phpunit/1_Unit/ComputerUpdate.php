@@ -644,6 +644,52 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
       
       $this->assertEquals($a_reference, $a_dataLink);      
    }
+   
+   
+   
+   public function testComputerNetworkport() {
+      global $DB;
+
+      $DB->connect();
+
+      $a_dataLink = getAllDatasFromTable("glpi_networkports", 
+                                         "`itemtype`='Computer'
+                                            AND `items_id`='1'");
+      
+      $a_reference = array(
+          '1' => array(
+                     'id'                    => '1',
+                     'items_id'              => '1',
+                     'itemtype'              => 'Computer',
+                     'is_deleted'            => '0',
+                     'is_dynamic'            => '1',
+                     'entities_id'           => '0',
+                     'is_recursive'          => '0',
+                     'logical_number'        => '0',
+                     'name'                  => 'em0',
+                     'instantiation_type'    => 'NetworkPortEthernet',
+                     'mac'                   => '00:23:18:cf:0d:93',
+                     'comment'               => null
+
+                 ),
+          '2' => array(
+                     'id'                    => '2',
+                     'items_id'              => '1',
+                     'itemtype'              => 'Computer',
+                     'is_deleted'            => '0',
+                     'is_dynamic'            => '1',
+                     'entities_id'           => '0',
+                     'is_recursive'          => '0',
+                     'logical_number'        => '0',
+                     'name'                  => 'lo0',
+                     'instantiation_type'    => 'NetworkPortLocal',
+                     'mac'                   => '',
+                     'comment'               => null
+                 )
+      );
+      
+      $this->assertEquals($a_reference, $a_dataLink);      
+   }
  }
 
 
