@@ -6,10 +6,14 @@ table.package_item th {
    vertical-align: top;
 }
 
-table.package_item input[type=text], 
-table.package_item input[type=file], 
+table.package_item input[type=text],
+table.package_item input[type=file],
 table.package_item textarea {
-   width: 250px;
+   width: 400px;
+}
+
+table.package_item textarea {
+   resize: both;
 }
 
 table.package_item input[type=text] {
