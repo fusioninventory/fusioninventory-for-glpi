@@ -667,6 +667,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
       if (     isset( $filter['is_running'] )
             && is_bool( $filter['is_running'] ) ) {
          //TODO: get running taskjobs
+         if ( $filter['is_running'] ) {
+            $where[] = "( task.`execution_id` = taskjob.`execution_id` )";
+         } else {
+            $where[] = "( task.`execution_id` <> taskjob.`execution_id` )";
+         }
          // add taskjobs table JOIN statement if not already set
          if ( !isset( $leftjoin['taskjobs'] ) ) {
                $leftjoin_bak = $leftjoin;
