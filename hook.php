@@ -284,37 +284,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
       case 'glpi_plugin_fusioninventory_taskjoblogs.comment':
          $comment = $data['ITEM_'.$num];
-         $matches = array();
-         // Search for replace [[itemtype::items_id]] by link
-         preg_match_all("/\[\[(.*)\:\:(.*)\]\]/", $comment, $matches);
-         foreach($matches[0] as $num=>$commentvalue) {
-            $classname = $matches[1][$num];
-            if ($classname != '') {
-               $Class = new $classname;
-               $Class->getFromDB($matches[2][$num]);
-               $comment = str_replace($commentvalue, $Class->getLink(), $comment);
-            }
-         }
-         if (strstr($comment, "==")) {
-            preg_match_all("/==([\w\d]+)==/", $comment, $matches);
-            $a_text = array(
-               'devicesqueried'  => __('devices queried', 'fusioninventory'),
-               'devicesfound'    => __('devices found', 'fusioninventory'),
-               'diconotuptodate' => __("SNMP equipment definition isn't up to date on agent. For the next run, it will get new version from server.", 'fusioninventory'),
-               'addtheitem'      => __('Add the item', 'fusioninventory'),
-               'updatetheitem'   => __('Update the item', 'fusioninventory'),
-               'inventorystarted' => __('Inventory started', 'fusioninventory'),
-               'detail'          => __('Detail', 'fusioninventory'),
-               'badtoken'        => __('Bad token, impossible to start agent', 'fusioninventory'),
-               'agentcrashed'    => __('Agent stopped/crashed', 'fusioninventory'),
-               'importdenied'    => __('Import denied', 'fusioninventory')
-            );
-            foreach($matches[0] as $num=>$commentvalue) {
-               $comment = str_replace($commentvalue, $a_text[$matches[1][$num]], $comment);
-            }
-         }
-         $comment = str_replace(",[", "<br/>[", $comment);
-         return $comment;
+         return PluginFusioninventoryTaskjoblog::convertComment($comment);
          break;
          
       case 'glpi_plugin_fusioninventory_taskjobstates.plugin_fusioninventory_agents_id':

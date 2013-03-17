@@ -694,19 +694,7 @@ function appear_array(id){
       $text .= "</td>";
       if ($comment == '1') {
          $text .= "<td align='center'>";
-         $matches = array();
-         // Search for replace [[itemtype::items_id]] by link
-         preg_match_all("/\[\[(.*)\:\:(.*)\]\]/", $datas['comment'], $matches);
-         foreach($matches[0] as $num=>$commentvalue) {
-            $classname = $matches[1][$num];
-            if ($classname != '') {
-               $item = new $classname;
-               $item->getFromDB($matches[2][$num]);
-               $datas['comment'] = str_replace($commentvalue, $item->getLink(), $datas['comment']);
-            }
-         }
-         // Search for code to display lang traduction ==pluginname::9876==
-         $datas['comment'] = str_replace(", [", "<br/>[", $datas['comment']);
+         $datas['comment'] = PluginFusioninventoryTaskjoblog::convertComment($datas['comment']);
          $text .= $datas['comment'];
          $text .= "</td>";
       }
@@ -1075,6 +1063,42 @@ function appear_array(id){
          Search::manageGetValues('PluginFusioninventoryTaskjoblog');
          Search::showList('PluginFusioninventoryTaskjoblog', $params);
       }
+   }
+   
+   
+   
+   static function convertComment($comment) {
+      $matches = array();
+      // Search for replace [[itemtype::items_id]] by link
+      preg_match_all("/\[\[(.*)\:\:(.*)\]\]/", $comment, $matches);
+      foreach($matches[0] as $num=>$commentvalue) {
+         $classname = $matches[1][$num];
+         if ($classname != '') {
+            $Class = new $classname;
+            $Class->getFromDB($matches[2][$num]);
+            $comment = str_replace($commentvalue, $Class->getLink(), $comment);
+         }
+      }
+      if (strstr($comment, "==")) {
+         preg_match_all("/==([\w\d]+)==/", $comment, $matches);
+         $a_text = array(
+            'devicesqueried'  => __('devices queried', 'fusioninventory'),
+            'devicesfound'    => __('devices found', 'fusioninventory'),
+            'diconotuptodate' => __("SNMP equipment definition isn't up to date on agent. For the next run, it will get new version from server.", 'fusioninventory'),
+            'addtheitem'      => __('Add the item', 'fusioninventory'),
+            'updatetheitem'   => __('Update the item', 'fusioninventory'),
+            'inventorystarted' => __('Inventory started', 'fusioninventory'),
+            'detail'          => __('Detail', 'fusioninventory'),
+            'badtoken'        => __('Bad token, impossible to start agent', 'fusioninventory'),
+            'agentcrashed'    => __('Agent stopped/crashed', 'fusioninventory'),
+            'importdenied'    => __('Import denied', 'fusioninventory')
+         );
+         foreach($matches[0] as $num=>$commentvalue) {
+            $comment = str_replace($commentvalue, $a_text[$matches[1][$num]], $comment);
+         }
+      }
+      $comment = str_replace(",[", "<br/>[", $comment);
+      return $comment;
    }
 }
 
