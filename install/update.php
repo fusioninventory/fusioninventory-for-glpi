@@ -182,6 +182,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmp');
    }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload');
+   }
 
 
    /*

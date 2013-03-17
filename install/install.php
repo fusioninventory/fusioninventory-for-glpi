@@ -197,6 +197,9 @@ function pluginFusioninventoryInstall($version, $migration='') {
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment')) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment');
       }
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload');
+      }
 
 
    /*
