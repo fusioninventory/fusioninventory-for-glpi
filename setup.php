@@ -176,6 +176,9 @@ function plugin_init_fusioninventory() {
       if (script_endswith("deploypackage.form.php")) {
          $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/REDIPS_drag/redips-drag-source.js";
          $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/REDIPS_drag/drag_table_rows.js";
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/plusbutton.js";
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/deploy_editsubtype.js";
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/jquery/jquery-1.9.1.min.js";
       }
 
       if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
