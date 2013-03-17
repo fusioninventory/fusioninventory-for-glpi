@@ -51,6 +51,12 @@ define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
 define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.84+1.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
+/*
+ * @function script_endswith()
+ * @param $scriptname : string representing the script to test
+ * test the end of the called scriptname ( this is usefull to load )
+ *
+ */
 function script_endswith($scriptname) {
    return substr($_SERVER['SCRIPT_FILENAME'], -strlen($scriptname))===$scriptname;
 }
