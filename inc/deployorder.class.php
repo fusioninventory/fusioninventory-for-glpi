@@ -52,8 +52,17 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
    const INSTALLATION_ORDER   = 0;
    const UNINSTALLATION_ORDER = 1;
 
-   
-   
+   function __construct($order_type = NULL, $packages_id = NULL) {
+
+      if (
+            (!is_null($order_type) && is_numeric($order_type) )
+         && (!is_null($packages_id) && is_numeric($packages_id) )
+      ) {
+         $found = $this->getFromDBByQuery(" WHERE plugin_fusioninventory_deploypackages_id = $packages_id
+                                  AND type = $order_type");
+      }
+   }
+
    static function getRender($render) {
       if ($render == 'install') {
          return PluginFusioninventoryDeployOrder::INSTALLATION_ORDER;
