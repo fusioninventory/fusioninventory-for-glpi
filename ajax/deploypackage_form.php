@@ -63,24 +63,40 @@ if (isset($_REQUEST['move_item'])) { //ajax request
    exit;
 }
 
-if (!isset($_REQUEST['orders_id']) && !isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) {
+if ( !isset($_REQUEST['orders_id']) && !isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) {
    exit;
 }
 
+if ( !is_numeric($_REQUEST['orders_id']) ) {
+   Toolbox::logDebug("Error: orders_id in request is not an integer");
+   Toolbox::logDebug(var_dump($_REQUEST['orders_id']) );
+   exit;
+}
 
-// What is the point in sending arguments from $_REQUEST along with the $_REQUEST ... -- kiniou
+$order = new PluginFusioninventoryDeployOrder();
 
+$order->getFromDB($_REQUEST['orders_id']);
+
+Toolbox::logDebug(print_r($order,1));
+
+
+//TODO: In the displayForm function, $_REQUEST is somewhat too much for the '$datas' parameter
+// I think we could use only $order -- Kevin 'kiniou' Roy
 switch ($_REQUEST['subtype']) {
    case 'check':
-      PluginFusioninventoryDeployCheck::displayForm($_REQUEST['orders_id'],
-                                                    $_REQUEST, $_REQUEST['rand']);
+      PluginFusioninventoryDeployCheck::displayForm($order, $_REQUEST, $_REQUEST['rand']);
       break;
    case 'file':
-      PluginFusioninventoryDeployFile::displayForm($_REQUEST['orders_id'],
-                                                   $_REQUEST, $_REQUEST['rand']);
+      PluginFusioninventoryDeployFile::displayForm($order, $_REQUEST, $_REQUEST['rand']);
       break;
    case 'action':
-      PluginFusioninventoryDeployAction::displayForm($_REQUEST['orders_id'],
-                                                     $_REQUEST, $_REQUEST['rand']);
+      PluginFusioninventoryDeployAction::displayForm($order, $_REQUEST, $_REQUEST['rand']);
+      break;
+   case 'package_json_debug':
+      if ( isset($order->fields['json']) ) {
+         PluginFusioninventoryDeployPackage::display_json_debug($order);
+      } else {
+         echo "{}";
+      }
       break;
 }

@@ -74,7 +74,8 @@ class PluginFusioninventoryDeployFile {
          //== edit selected data ==
 
          //get current order json
-         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order['id']), TRUE);
+         Toolbox::logDebug($_SERVER['SCRIPT_FILENAME'] . "\n" . print_r($order,1));
+         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order->fields['id']), TRUE);
 
          //get data on index
          $sha512 = $datas_o['jobs']['associatedFiles'][$datas['index']];
@@ -82,7 +83,7 @@ class PluginFusioninventoryDeployFile {
       }
 
 
-      echo "<span id='showFileType$rand'></span>";
+      echo "<span id='show_file_type$rand'></span>";
       echo "<script type='text/javascript'>";
       $params = array(
          'rand'    => $rand,
@@ -95,29 +96,29 @@ class PluginFusioninventoryDeployFile {
          $params['p2p-retention-duration'] = $file['p2p-retention-duration'];
          $params['uncompress']             = $file['uncompress'];
       }
-      Ajax::updateItemJsCode("showFileType$rand",
+
+      Ajax::updateItemJsCode("show_file_type$rand",
                              $CFG_GLPI["root_doc"].
                              "/plugins/fusioninventory/ajax/deploydropdown_packagesubtypes.php",
                              $params,
                              "dropdown_deploy_filetype");
+
       echo "</script>";
 
 
-      echo "<span id='showFileValue$rand'></span>";
+      echo "<span id='show_file_value$rand'></span>";
 
       echo "<hr>";
       echo "</div>";
+
       Html::closeForm();
 
-      //display stored files datas
-      if (!isset($datas['jobs']['associatedFiles']) || empty($datas['jobs']['associatedFiles'])) {
-         return;
-      }
-      echo "<div id='drag_".PluginFusioninventoryDeployOrder::getOrderTypeLabel($order['type'])."_files'>";
-      echo "<form name='removefiles' method='post' action='deploypackage.form.php?remove_item' ".
-         "id='filesList$rand'>";
-      echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployFile' />";
-      echo "<input type='hidden' name='orders_id' value='{$order['id']}' />";
+   }
+
+
+   static function displayList($order, $datas, $rand) {
+      global $CFG_GLPI;
+
       echo "<table class='tab_cadrehov package_item_list' id='table_file_$rand'>";
       $i = 0;
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
@@ -138,7 +139,10 @@ class PluginFusioninventoryDeployFile {
                "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
 
          //filename
-         echo"&nbsp;<a class='edit' onclick='edit_files($i)'>$filename</a>";
+         echo  "&nbsp;".
+               "<a class='edit' ".
+               "  onclick=\"edit_subtype('file', {$order->fields['id']}, $rand, this )\"".
+               ">$filename</a>";
 
          //p2p icon
          if (isset($datas['associatedFiles'][$sha512]['p2p'])
@@ -170,61 +174,13 @@ class PluginFusioninventoryDeployFile {
       }
       echo "<tr><th>";
       Html::checkAllAsCheckbox("filesList$rand", mt_rand());
-      echo "</th><th colspan='3'></th></tr>";
+      echo "</th><th colspan='3' class='mark'></th></tr>";
       echo "</table>";
       echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
-      Html::closeForm();
-      echo "</div>"; // close div drag_files
 
-      echo "<script type='text/javascript'>
-         function edit_files(index) {
-            //remove all border to previous selected item (remove classes)
-            Ext.select('#table_file_$rand tr').removeClass('selected');
-
-            //add border to selected index (add class)
-            Ext.select('#table_file_$rand tr:nth-child('+(index+1)+')').addClass('selected');
-
-            //scroll to edit form
-            document.getElementById('th_title_file_$rand').scrollIntoView();
-
-            //show and load form
-            Ext.get('files_block$rand').setDisplayed('block');
-            Ext.get('files_block$rand').load({
-               'url': '".$CFG_GLPI["root_doc"].
-                          "/plugins/fusioninventory/ajax/deploypackage_form.php',
-               'scripts': true,
-               'params' : {
-                  'subtype': 'file',
-                  'index': index,
-                  'orders_id': {$order['id']},
-                  'rand': '$rand'
-               }
-            });
-
-            //change plus button behavior
-            //(for always have possibility to add an item also in edit mode)
-            Ext.get('plus_files_block$rand').on('click', function() {
-               //empty sub value
-               Ext.fly('showFileValue$rand').update('');
-
-               //replace type select
-               Ext.get('showFileType$rand').load({
-                  'url': '".$CFG_GLPI["root_doc"].
-                             "/plugins/fusioninventory/ajax/deploypackage_form.php',
-                  'scripts': true,
-                  'params' : {
-                     'subtype': 'file',
-                     'orders_id': {$order['id']},
-                     'rand': '$rand'
-                  }
-               });
-            });
-         }
-      </script>";
    }
-
 
 
    static function dropdownType($datas) {
@@ -265,14 +221,14 @@ class PluginFusioninventoryDeployFile {
          $params['uncompress']             = $datas['uncompress'];
       }
       Ajax::updateItemOnEvent("dropdown_deploy_filetype".$rand,
-                              "showFileValue$rand",
+                              "show_file_value$rand",
                               $CFG_GLPI["root_doc"].
                               "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                               $params,
                               array("change", "load"));
       if (isset($datas['edit'])) {
          echo "<script type='text/javascript'>";
-         Ajax::updateItemJsCode("showFileValue$rand",
+         Ajax::updateItemJsCode("show_file_value$rand",
                                 $CFG_GLPI["root_doc"].
                                  "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                                 $params,

@@ -66,7 +66,6 @@ class PluginFusioninventoryDeployCheck {
    static function displayForm($order, $datas, $rand) {
       global $CFG_GLPI;
 
-      $checks_types = self::getTypes();
 
       if (!isset($datas['index'])) {
          echo "<div style='display:none' id='checks_block$rand' >";
@@ -74,13 +73,13 @@ class PluginFusioninventoryDeployCheck {
          //== edit selected data ==
 
          //get current order json
-         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order['id']), TRUE);
+         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order->fields['id']), TRUE);
 
          //get data on index
          $check = $datas_o['jobs']['checks'][$datas['index']];
       }
 
-      echo "<span id='showCheckType$rand'></span>";
+      echo "<span id='show_check_type$rand'></span>";
       echo "<script type='text/javascript'>";
       $params = array(
          'rand'    => $rand,
@@ -94,32 +93,27 @@ class PluginFusioninventoryDeployCheck {
          $params['value']  = addslashes($check['value']);
          $params['return'] = $check['return'];
       }
-      Ajax::updateItemJsCode("showCheckType$rand",
+      Ajax::updateItemJsCode("show_check_type$rand",
                              $CFG_GLPI["root_doc"].
                              "/plugins/fusioninventory/ajax/deploydropdown_packagesubtypes.php",
                              $params,
                              "dropdown_deploy_checktype");
       echo "</script>";
 
-      echo "<span id='showCheckValue$rand'></span>";
+      echo "<span id='show_check_value$rand'></span>";
 
       echo "<hr>";
       if (!isset($datas['index'])) {
          echo "</div>";
-      } else {
-         return TRUE;
       }
-      Html::closeForm();
 
-      //display stored checks datas
-      echo "<div id='drag_".PluginFusioninventoryDeployOrder::getOrderTypeLabel($order['type'])."_checks'>";
-      echo "<form name='removecheck' method='post' action='deploypackage.form.php?remove_item' ".
-         "id='checksList$rand'>";
-      echo "<input type='hidden' name='orders_id' value='{$order['id']}' />";
-      echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployCheck' />";
-      if (!isset($datas['jobs']['checks']) || empty($datas['jobs']['checks'])) {
-         return;
-      }
+   }
+
+   static function displayList($order, $datas, $rand) {
+      global $CFG_GLPI;
+
+      $checks_types = self::getTypes();
+
       echo "<table class='tab_cadrehov package_item_list' id='table_check_$rand'>";
       $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {
@@ -134,7 +128,9 @@ class PluginFusioninventoryDeployCheck {
          echo "<input type='checkbox' name='check_entries[]' value='$i' />";
          echo "</td>";
          echo "<td>";
-         echo "<a class='edit' onclick='edit_check($i)'>".$checks_types[$check['type']].
+         echo "<a class='edit'".
+            "onclick=\"edit_subtype('check', {$order->fields['id']}, $rand ,this)\">".
+            $checks_types[$check['type']].
             "</a><br />";
          echo $check['path'];
          if (!empty($check['value'])) {
@@ -157,60 +153,11 @@ class PluginFusioninventoryDeployCheck {
       }
       echo "<tr><th>";
       Html::checkAllAsCheckbox("checksList$rand", mt_rand());
-      echo "</th><th colspan='3'></th></tr>";
+      echo "</th><th colspan='3' class='mark'></th></tr>";
       echo "</table>";
       echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
-      Html::closeForm();
-      echo "</div>"; // close div drag_checks
-
-      echo "<script type='text/javascript'>
-         function edit_check(index) {
-            //remove all border to previous selected item (remove classes)
-            Ext.select('#table_check_$rand tr').removeClass('selected');
-
-            //add border to selected index (add class)
-            Ext.select('#table_check_$rand tr:nth-child('+(index+1)+')').addClass('selected');
-
-            //scroll to edit form
-            document.getElementById('th_title_check_$rand').scrollIntoView();
-
-            //show and load form
-            Ext.get('checks_block$rand').setDisplayed('block');
-            Ext.get('checks_block$rand').load({
-               'url': '".$CFG_GLPI["root_doc"].
-                          "/plugins/fusioninventory/ajax/deploypackage_form.php',
-               'scripts': true,
-               'params' : {
-                  'subtype': 'check',
-                  'index': index,
-                  'orders_id': {$order['id']},
-                  'rand': '$rand'
-               }
-            });
-
-            //change plus button behavior
-            //(for always have possibility to add an item also in edit mode)
-            Ext.get('plus_checks_block$rand').on('click', function() {
-               //empty sub value
-               Ext.fly('showCheckValue$rand').update('');
-
-               //replace type select
-               Ext.get('showCheckType$rand').load({
-                  'url': '".$CFG_GLPI["root_doc"].
-                             "/plugins/fusioninventory/ajax/deploypackage_form.php',
-                  'scripts': true,
-                  'params' : {
-                     'subtype': 'check',
-                     'orders_id': {$order['id']},
-                     'rand': '$rand'
-                  }
-               });
-            });
-         }
-
-      </script>";
    }
 
 
@@ -247,7 +194,7 @@ class PluginFusioninventoryDeployCheck {
          $params['return'] = $datas['return'];
       }
       Ajax::updateItemOnEvent("dropdown_deploy_checktype$rand",
-                              "showCheckValue$rand",
+                              "show_check_value$rand",
                               $CFG_GLPI["root_doc"].
                                  "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                               $params,
@@ -255,7 +202,7 @@ class PluginFusioninventoryDeployCheck {
 
       if (isset($datas['edit'])) {
          echo "<script type='text/javascript'>";
-         Ajax::updateItemJsCode("showCheckValue$rand",
+         Ajax::updateItemJsCode("show_check_value$rand",
                                 $CFG_GLPI["root_doc"].
                                  "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                                 $params,

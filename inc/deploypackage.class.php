@@ -282,7 +282,10 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $options['colspan'] = 2;
       $this->showTabs($options);
       $this->showFormHeader($options);
-
+      //Add redips_clone element before displaying tabs
+      //If we don't do this, dragged element won't be visible on the other tab not displayed at
+      //first (for reminder, GLPI tabs are displayed dynamically on-demand)
+      echo "<div id='redips_clone'></div>";
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -301,16 +304,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       echo "<div class='box'>";
       echo $error_msg;
-//      if (!$can_edit) {
-//         PluginFusioninventoryDeployPackage::showEditDeniedMessage($ID,
-//               __('One or more active tasks (#task#) use this package. Edition denied.',
-//                  'fusioninventory'));
-//
-//      }
       echo "</div>";
       echo "<div id='tabcontent'></div>";
       echo "<script type='text/javascript'>loadDefaultTab();</script>";
-
 
       return TRUE;
    }
@@ -323,26 +319,28 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          'file'   => __("Files", 'fusioninventory'),
          'action' => __("Actions", 'fusioninventory')
       );
+      $json_subtypes = array(
+         'check'  => 'checks',
+         'file'   => 'associatedFiles',
+         'action' => 'actions'
+      );
       $rand = mt_rand();
 
-      $o_order = new PluginFusioninventoryDeployOrder;
-      $found = $o_order->find("plugin_fusioninventory_deploypackages_id = $packages_id
-                               AND type = $order_type");
-      $order = array_shift($found);
-      $datas = json_decode($order['json'], TRUE);
-      $orders_id = $order['id'];
-      $order_type = PluginFusioninventoryDeployOrder::getOrderTypeLabel($order['type']);
+      $order = new PluginFusioninventoryDeployOrder($order_type, $packages_id);
+      $datas = json_decode($order->fields['json'], TRUE);
+      $orders_id = $order->fields['id'];
+      $order_type = PluginFusioninventoryDeployOrder::getOrderTypeLabel($order->fields['type']);
 
 
       //init drag and drop on subtype table
-      echo "<script type='text/javascript'>
+/*      echo "<script type='text/javascript'>
          var rand = $rand;
          if (orders == null) var orders = {};
          orders[$rand] = $orders_id;
          </script>";
-      echo "<table class='tab_cadre_fixe' id='package'>";
+*/
+      echo "<table class='tab_cadre_fixe' id='package_order_".$orders_id."'>";
 
-      $multipart = "";
       foreach ($subtypes as $subtype => $label) {
 
          echo "<tr>";
@@ -353,70 +351,83 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "</th>";
          echo "</tr>";
 
-
+         $multipart = "";
          if ($subtype == "file") {
             $multipart = "enctype='multipart/form-data'";
          }
          echo "<tr>";
          echo "<td style='vertical-align:top'>";
-         echo "<form name='add$subtype' method='post' ".$multipart.
+
+         echo "<form name='addition$subtype' method='post' ".$multipart.
             " action='deploypackage.form.php'>";
          echo "<input type='hidden' name='orders_id' value='$orders_id' />";
          echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeploy".
             ucfirst($subtype)."' />";
+
          $classname = "PluginFusioninventoryDeploy".ucfirst($subtype);
          $classname::displayForm($order, $datas, $rand);
+         Html::closeForm();
+
+         $json_subtype = $json_subtypes[$subtype];
+         //display stored actions datas
+         if (isset($datas['jobs'][$json_subtype]) && !empty($datas['jobs'][$json_subtype])) {
+            echo "<div id='drag_" . $order_type . "_". $subtype . "s'>";
+            echo "<form name='remove" . $subtype. "s' method='post' action='deploypackage.form.php?remove_item' ".
+               "id='" . $subtype . "sList" . $rand . "'>";
+            echo "<input type='hidden' name='itemtype' value='". $classname . "' />";
+            echo "<input type='hidden' name='orders_id' value='" . $order->fields['id'] . "' />";
+            $classname::displayList($order, $datas, $rand);
+            Html::closeForm();
+            echo "</div>";
+         }
          echo "<script type='text/javascript'>";
-         echo "redipsInit('drag_".$order_type."_".$subtype."s');";
+         echo "redipsInit('$order_type', '$subtype', $orders_id);";
          echo "</script>";
          echo "</td>";
          echo "</tr>";
       }
 
-      echo "</table>";
 
+      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
+         // === debug ===
+         echo "<tr><td>";
+         echo "<span id='package_json_debug'>";
+         self::display_json_debug($order);
+         echo "</span>";
+         echo "</td></tr>";
+      }
+      echo "</table>";
    }
 
    static function plusButton($dom_id, $clone = FALSE) {
       global $CFG_GLPI;
 
-      echo "&nbsp;<img id='plus_$dom_id' onClick='return plusbutton$dom_id()'
-                 title='".__('Add')."' alt='".__('Add')."'
-                 class='pointer' src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png'>";
-      //This should lie in a libjs file instead inline coded
-      echo "<script type='text/javascript>";
-      echo "function plusbutton$dom_id() {";
-
+      echo  "&nbsp;";
+      echo  "<img id='plus_$dom_id' ";
       if ($clone !== FALSE) {
-         echo "
-         var root=document.getElementById('$dom_id');
-         if (root.style.display == 'block') {
-            var clone=root.getElementsByTagName('$clone')[0].cloneNode(true);
-            root.appendChild(clone);
-            clone.style.display = 'block';
-         }
-         ";
+         echo
+            " onClick=\"plusbutton('$dom_id', '$clone')\" ";
+      } else {
+         echo
+            " onClick=\"plusbutton('$dom_id')\" ";
       }
-      echo "
-         //show block associated to plus button
-         Ext.get('".$dom_id."').setDisplayed('block');
-
-         //remove all border to previous selected item (remove classes)
-         Ext.select('table.package_item_list tr.selected ').removeClass('selected');
-      }</script>";
+      echo  " title='".__('Add')."' alt='".__('Add')."' ";
+      echo  " class='pointer' src='".
+            $CFG_GLPI["root_doc"].
+            "/pics/add_dropdown.png'> ";
    }
 
-   static function display_json_debug() {
+   static function display_json_debug($order) {
       global $CFG_GLPI;
       if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE) {
          // === debug ===
          echo "<span class='red'><b>DEBUG</b></span>";
-         echo "<form id='package_json_debug' action='".$CFG_GLPI["root_doc"].
+         echo "<form action='".$CFG_GLPI["root_doc"].
          "/plugins/fusioninventory/front/deploypackage.form.php' method='POST'>";
          echo "<textarea cols='132' rows='25' style='border:0' name='json'>";
-         echo json_encode($datas, JSON_PRETTY_PRINT);
+         echo json_encode(json_decode($order->fields['json'],TRUE), JSON_PRETTY_PRINT);
          echo "</textarea>";
-         echo "<input type='hidden' name='id' value='$orders_id' />";
+         echo "<input type='hidden' name='id' value='{$order->fields['id']}' />";
          echo "<input type='submit' name='update_json' value=\"".
             _sx('button', 'Save')."\" class='submit'>";
          Html::closeForm();

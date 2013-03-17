@@ -77,7 +77,7 @@ class PluginFusioninventoryDeployAction {
          //== edit selected data ==
 
          //get current order json
-         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order['id']), TRUE);
+         $datas_o = json_decode($order->fields['json'], TRUE);
 
          //get data on index
          $action = $datas_o['jobs']['actions'][$datas['index']];
@@ -86,7 +86,7 @@ class PluginFusioninventoryDeployAction {
          $action_values = $action[$type];
       }
 
-      echo "<span id='showActionType$rand'>&nbsp;</span>";
+      echo "<span id='show_action_type$rand'>&nbsp;</span>";
       echo "<script type='text/javascript'>";
       $params = array(
          'rand'    => $rand,
@@ -100,7 +100,9 @@ class PluginFusioninventoryDeployAction {
             $params['value_1'] = addslashes($action_values['from']);
          }
          if (isset($action_values['exec'])) {
-            $params['value_1'] = addslashes($action_values['exec']);
+            $params['value_1'] = urlencode(addslashes($action_values['exec']));
+            //$params['value_1'] = urlencode($action_values['exec']);
+            Toolbox::logDebug("ACTION params : " . $params['value_1']);
          }
          if (isset($action_values['list'])) {
             $tmp = array_values($action_values['list']);
@@ -116,7 +118,7 @@ class PluginFusioninventoryDeployAction {
       }
 
 
-      Ajax::updateItemJsCode("showActionType$rand",
+      Ajax::updateItemJsCode("show_action_type$rand",
                              $CFG_GLPI["root_doc"].
                              "/plugins/fusioninventory/ajax/deploydropdown_packagesubtypes.php",
                              $params,
@@ -125,25 +127,21 @@ class PluginFusioninventoryDeployAction {
 
       //Html::printCleanArray($params);
 
-      echo "<span id='showActionValue$rand'>&nbsp;</span>";
+      echo "<span id='show_action_value$rand'>&nbsp;</span>";
 
       echo "<hr>";
+
       if (!isset($datas['index'])) {
          echo "</div>";
       } else {
          return TRUE;
       }
-      Html::closeForm();
 
-      //display stored actions datas
-      if (!isset($datas['jobs']['actions']) || empty($datas['jobs']['actions'])) {
-         return;
-      }
-      echo "<div id='drag_".PluginFusioninventoryDeployOrder::getOrderTypeLabel($order['type'])."_actions'>";
-      echo "<form name='removeactions' method='post' action='deploypackage.form.php?remove_item' ".
-         "id='actionsList$rand'>";
-      echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeployAction' />";
-      echo "<input type='hidden' name='orders_id' value='{$order['id']}' />";
+   }
+
+   static function displayList($order, $datas, $rand) {
+      global $CFG_GLPI;
+
       echo "<table class='tab_cadrehov package_item_list' id='table_action_$rand'>";
       $i=0;
       foreach ($datas['jobs']['actions'] as $action) {
@@ -154,8 +152,9 @@ class PluginFusioninventoryDeployAction {
          $keys = array_keys($action);
          $action_type = array_shift($keys);
          echo "<td>";
-         echo "<a class='edit' onclick='edit_action($i)'>".__($action_type, 'fusioninventory').
-            "</a><br />";
+         echo "<a class='edit' onclick=\"edit_subtype('action', {$order->fields['id']}, $rand, this)\">";
+         echo __($action_type, 'fusioninventory');
+         echo "</a><br />";
 
          foreach ($action[$action_type] as $key => $value) {
             if (is_array($value) ) {
@@ -166,7 +165,12 @@ class PluginFusioninventoryDeployAction {
                   }
                }
             } else {
-               echo "<b>".__(ucfirst($key), 'fusioninventory')."</b> $value ";
+               echo "<b>".__(ucfirst($key), 'fusioninventory')."</b>";
+               if ($key ==="exec") {
+                  echo "<pre style='border-left:solid lightgrey 3px;margin-left: 5px;padding-left:2px'>$value</pre>";
+               } else {
+                  echo " $value ";
+               }
             }
          }
          if (isset($action[$action_type]['retChecks'])) {
@@ -188,62 +192,12 @@ class PluginFusioninventoryDeployAction {
       }
       echo "<tr><th>";
       Html::checkAllAsCheckbox("actionsList$rand", mt_rand());
-      echo "</th><th colspan='3'></th></tr>";
+      echo "</th><th colspan='3' class='mark'></th></tr>";
       echo "</table>";
       echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
-      Html::closeForm();
-      echo "</div>"; // close div drag_actions
-
-      echo "<script type='text/javascript'>
-         function edit_action(index) {
-            //remove all border to previous selected item (remove classes)
-            Ext.select('#table_action_$rand tr').removeClass('selected');
-
-            //add border to selected index (add class)
-            Ext.select('#table_action_$rand tr:nth-child('+(index+1)+')').addClass('selected');
-
-            //scroll to edit form
-            document.getElementById('th_title_action_$rand').scrollIntoView();
-
-            //show and load form
-            Ext.get('actions_block$rand').setDisplayed('block');
-            Ext.get('actions_block$rand').load({
-               'url': '".$CFG_GLPI["root_doc"].
-                          "/plugins/fusioninventory/ajax/deploypackage_form.php',
-               'scripts': true,
-               'params' : {
-                  'subtype': 'action',
-                  'index': index,
-                  'orders_id': {$order['id']},
-                  'rand': '$rand'
-               }
-            });
-
-            //change plus button behavior
-            //(for always have possibility to add an item also in edit mode)
-            Ext.get('plus_actions_block$rand').on('click', function() {
-               //empty sub value
-               Ext.fly('showActionValue$rand').update('');
-
-               //replace type select
-               Ext.get('showActionType$rand').load({
-                  'url': '".$CFG_GLPI["root_doc"].
-                             "/plugins/fusioninventory/ajax/deploypackage_form.php',
-                  'scripts': true,
-                  'params' : {
-                     'subtype': 'action',
-                     'orders_id': {$order['id']},
-                     'rand': '$rand'
-                  }
-               });
-            });
-         }
-      </script>";
    }
-
-
 
    static function dropdownType($datas) {
       global $CFG_GLPI;
@@ -272,7 +226,7 @@ class PluginFusioninventoryDeployAction {
       if (isset($datas['edit'])) {
          $params['edit']      = "true";
          $params['index']     = $datas['index'];
-         $params['value_1']   = addslashes($datas['value_1']);
+         $params['value_1']   = urlencode($datas['value_1']);
          if (isset($datas['value_2'])) {
             $params['value_2']   = addslashes($datas['value_2']);
          }
@@ -281,7 +235,7 @@ class PluginFusioninventoryDeployAction {
          }
       }
       Ajax::updateItemOnEvent("dropdown_deploy_actiontype$rand",
-                              "showActionValue$rand",
+                              "show_action_value$rand",
                               $CFG_GLPI["root_doc"].
                               "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                               $params,
@@ -289,7 +243,7 @@ class PluginFusioninventoryDeployAction {
 
       if (isset($datas['edit'])) {
          echo "<script type='text/javascript'>";
-         Ajax::updateItemJsCode("showActionValue$rand",
+         Ajax::updateItemJsCode("show_action_value$rand",
                                 $CFG_GLPI["root_doc"].
                                  "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
                                 $params,
@@ -324,6 +278,7 @@ class PluginFusioninventoryDeployAction {
             $name_label_1 = "exec";
             $value_label_2 = FALSE;
             $value_type_1  = "textarea";
+            $value_1 = stripslashes($value_1);
             break;
          case 'delete':
          case 'mkdir':
@@ -455,11 +410,14 @@ class PluginFusioninventoryDeployAction {
 
       //process ret checks
       if (isset($params['retchecks_type']) && !empty($params['retchecks_type'])) {
+         Toolbox::logDebug("retchecks_type : \n" . print_r($params['retchecks_type'],TRUE));
          foreach ($params['retchecks_type'] as $index => $type) {
-            $tmp['retChecks'][] = array(
-               'type' => $type,
-               'value' => array($params['retchecks_value'][$index])
-            );
+            if ($type !== '0') {
+               $tmp['retChecks'][] = array(
+                  'type' => $type,
+                  'value' => array($params['retchecks_value'][$index])
+               );
+            }
          }
       }
 
@@ -514,8 +472,6 @@ class PluginFusioninventoryDeployAction {
 
       //unset index
       unset($datas['jobs']['actions'][$params['index']]);
-
-
 
       //add new datas at index position
       //(array_splice for insertion, ex : http://stackoverflow.com/a/3797526)
