@@ -113,20 +113,22 @@ class PluginFusioninventoryFormatconvert {
                $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'] = 
                      array($datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT']);
             }
-            foreach ($datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'] 
-                                 as $numport=>$a_port) {                                    
-               if (isset($a_port['CONNECTIONS'])
-                       && isset($a_port['CONNECTIONS']['CONNECTION'])
-                       && isset($a_port['CONNECTIONS']['CONNECTION']['MAC'])
-                       && !is_array($a_port['CONNECTIONS']['CONNECTION']['MAC'])) {
-                  $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'][$numport]['CONNECTIONS']['CONNECTION']['MAC'] = 
-                        array($a_port['CONNECTIONS']['CONNECTION']['MAC']);
-               }
-               if (isset($a_port['VLANS'])
-                       && isset($a_port['VLANS']['VLAN'])
-                       && !is_int(key($a_port['VLANS']['VLAN']))) {
-                  $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'][$numport]['VLANS']['VLAN'] = 
-                        array($a_port['VLANS']['VLAN']);
+            if (isset($datainventory['CONTENT']['DEVICE'][$num]['PORTS'])) {
+               foreach ($datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'] 
+                                    as $numport=>$a_port) {                                    
+                  if (isset($a_port['CONNECTIONS'])
+                          && isset($a_port['CONNECTIONS']['CONNECTION'])
+                          && isset($a_port['CONNECTIONS']['CONNECTION']['MAC'])
+                          && !is_array($a_port['CONNECTIONS']['CONNECTION']['MAC'])) {
+                     $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'][$numport]['CONNECTIONS']['CONNECTION']['MAC'] = 
+                           array($a_port['CONNECTIONS']['CONNECTION']['MAC']);
+                  }
+                  if (isset($a_port['VLANS'])
+                          && isset($a_port['VLANS']['VLAN'])
+                          && !is_int(key($a_port['VLANS']['VLAN']))) {
+                     $datainventory['CONTENT']['DEVICE'][$num]['PORTS']['PORT'][$numport]['VLANS']['VLAN'] = 
+                           array($a_port['VLANS']['VLAN']);
+                  }
                }
             }
          }

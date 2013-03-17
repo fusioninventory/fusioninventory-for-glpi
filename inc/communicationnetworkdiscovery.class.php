@@ -137,7 +137,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkDiscovery->sendCriteria().');
 
-      if ((isset($arrayinventory['MAC'])) AND ($arrayinventory['MAC'] == "00:00:00:00:00:00")) {
+      if ((isset($arrayinventory['MAC'])) 
+              && ($arrayinventory['MAC'] == "00:00:00:00:00:00")) {
          unset($arrayinventory['MAC']);
       }
 
@@ -174,6 +175,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $input['name'] = $arrayinventory['DNSHOSTNAME'];
       }
 
+      if (!isset($arrayinventory['ENTITY'])) {
+         $arrayinventory['ENTITY'] = 0;
+      }
       $input['entities_id'] = $arrayinventory['ENTITY'];
       if (isset($arrayinventory['TYPE'])) {
          switch ($arrayinventory['TYPE']) {

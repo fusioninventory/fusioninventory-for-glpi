@@ -103,8 +103,12 @@ class FormatConvertData extends PHPUnit_Framework_TestCase {
           'VMSYSTEM'             => 'Physical',
           'WORKGROUP'            => 'rulezlan.org'
           
-     );
+      );
       $this->assertEquals($a_reference, $a_return);      
+      
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
    }   
    
    
@@ -136,7 +140,45 @@ class FormatConvertData extends PHPUnit_Framework_TestCase {
           );
       
        $this->assertEquals($a_reference, $a_inventory);      
+       
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+   }
+   
+   
+   
+   function testDiscoveryDeviceConvert() {
+      global $DB;
 
+      $DB->connect();
+
+      $sxml = '<?xml version="1.0" encoding="UTF-8" ?>
+<REQUEST>
+  <CONTENT>
+    <DEVICE>
+      <AUTHSNMP>1</AUTHSNMP>
+      <DESCRIPTION>Eaton 5PX 1500</DESCRIPTION>
+      <IP>192.168.20.196</IP>
+      <MAC>00:20:85:f5:2d:19</MAC>
+      <MANUFACTURER>Eaton</MANUFACTURER>
+      <SNMPHOSTNAME>ups25</SNMPHOSTNAME>
+      <TYPE>NETWORKING</TYPE>
+    </DEVICE>
+    <MODULEVERSION>2.2.0</MODULEVERSION>
+    <PROCESSNUMBER>11</PROCESSNUMBER>
+  </CONTENT>
+  <DEVICEID>port004.bureau.siprossii.com-2012-12-20-16-27-27</DEVICEID>
+  <QUERY>NETDISCOVERY</QUERY>
+</REQUEST>';
+      $xml = @simplexml_load_string($sxml, 'SimpleXMLElement', LIBXML_NOCDATA);
+      
+      PluginFusioninventoryFormatconvert::XMLtoArray($xml);
+      
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+      
    }
 }
 
