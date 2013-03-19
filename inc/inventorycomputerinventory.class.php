@@ -435,7 +435,11 @@ $start = microtime(TRUE);
          $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 300)");
          if ($DB->result($ret, 0, 0) == 1) {
 
-            $pfInventoryComputerLib->updateComputer($a_computerinventory, $items_id, $no_history);
+            $pfInventoryComputerLib->updateComputer(
+                    $a_computerinventory, 
+                    $items_id, 
+                    $no_history,
+                    $setdynamic);
             
             $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
 Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
