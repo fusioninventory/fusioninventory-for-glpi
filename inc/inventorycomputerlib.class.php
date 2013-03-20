@@ -507,7 +507,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          
       // * Software
          if ($pfConfig->getValue("import_software") != 0) {
-            $entities_id = $_SESSION["plugin_fusinvinventory_entity"];
+            
+            $entities_id = 0;
+            $a_softfirst = current($a_computerinventory['software']);
+            $entities_id = $a_softfirst['entities_id'];
+            
             $db_software = array();
             if ($no_history === FALSE) {
                $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
@@ -556,11 +560,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $lastSoftwareid = $this->loadSoftwares($entities_id, 
                                                          $a_softwareInventory, 
                                                          $lastSoftwareid);
-                  $ret = $DB->query("SELECT GET_LOCK('softwareversion', 300)");
+                  $ret = $DB->query("SELECT GET_LOCK('softwareversion', 3000)");
                   if ($DB->result($ret, 0, 0) == 1) {
                      $lastSoftwareVid = $this->loadSoftwareVersions($entities_id, 
                                                                     $a_softwareVersionInventory, 
                                                                     $lastSoftwareVid);
+   Toolbox::logInFile("SOFT", print_r($this->softList, true));
+
                      foreach ($a_computerinventory['software'] as $keysoft=>$a_software) {
                         if (isset($this->softList[$a_software['name']."$$$$".
                                  $a_software['manufacturers_id']])) {
@@ -574,10 +580,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                            unset($a_computerinventory['software'][$keysoft]);
                         }
                      }
-                     $ret = $DB->query("SELECT GET_LOCK('softwareversion', 300)");
+                     $ret = $DB->query("SELECT GET_LOCK('softwareversion', 3000)");
                   }
                }
-               $ret = $DB->query("SELECT GET_LOCK('software', 300)");
+               $ret = $DB->query("SELECT GET_LOCK('software', 3000)");
                if ($DB->result($ret, 0, 0) == 1) {
                   if (count($a_computerinventory['software']) > 50) {
                      $this->loadSoftwares($entities_id, $a_softwareInventory, $lastSoftwareid);
@@ -632,7 +638,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      if ($nb_unicity == 0) {
                         $options['disable_unicity_check'] = TRUE;
                      }
-                     $ret = $DB->query("SELECT GET_LOCK('software', 300)");
+                     $ret = $DB->query("SELECT GET_LOCK('software', 3000)");
                      if ($DB->result($ret, 0, 0) == 1) {
                         foreach ($a_computerinventory['software'] as $keysoft=>$a_software) {
                            $a_softwareInventory[$a_software['name']] = $a_software['name'];
@@ -1659,7 +1665,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       
       $sql = "SELECT * FROM `glpi_softwares`
       WHERE `entities_id`='".$entities_id."'".$whereid;
-      $result = $DB->query($sql);         
+      $result = $DB->query($sql); 
+
       while ($data = $DB->fetch_assoc($result)) {
          $this->softList[$data['name']."$$$$".$data['manufacturers_id']] = $data['id'];
       }
