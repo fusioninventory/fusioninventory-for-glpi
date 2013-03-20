@@ -74,7 +74,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
     */
    function updateComputer($a_computerinventory, $computers_id, $no_history, $setdynamic=0) {
       global $DB;
-      
+
       $computer                     = new Computer();
       $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();
       $item_DeviceProcessor         = new Item_DeviceProcessor();
@@ -565,8 +565,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $lastSoftwareVid = $this->loadSoftwareVersions($entities_id, 
                                                                     $a_softwareVersionInventory, 
                                                                     $lastSoftwareVid);
-   Toolbox::logInFile("SOFT", print_r($this->softList, true));
-
                      foreach ($a_computerinventory['software'] as $keysoft=>$a_software) {
                         if (isset($this->softList[$a_software['name']."$$$$".
                                  $a_software['manufacturers_id']])) {
