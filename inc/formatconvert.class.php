@@ -148,7 +148,8 @@ class PluginFusioninventoryFormatconvert {
    
    static function cleanArray($data) {
       foreach ($data as $key=>$value) {
-         if (is_array($value)) {
+         //if (is_array($value)) {
+           if ((array) $value === $value) {
             if (count($value) == 0) {
                $value = '';
             } else {
@@ -1118,7 +1119,8 @@ class PluginFusioninventoryFormatconvert {
    
    static function addValues($array, $a_key) {
       $a_return = array();
-      if (!is_array($array)) {
+      //if (!is_array($array)) {
+      if ((array) $array !== $array) {
          return $a_return;
       }
       $a_keys = array_keys($a_key);
@@ -1160,7 +1162,8 @@ class PluginFusioninventoryFormatconvert {
                  && $key == "software") {
             // do nothing
          } else {
-            if (is_array($value)) {
+            //if (is_array($value)) {
+            if ((array) $value === $value) {
                $array[$key] = $this->replaceids($value);
             } else {
                if ($key == "manufacturers_id") {
