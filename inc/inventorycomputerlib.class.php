@@ -74,7 +74,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
     */
    function updateComputer($a_computerinventory, $computers_id, $no_history, $setdynamic=0) {
       global $DB;
-
+      Toolbox::logInFile("COMP", "1");
       $computer                     = new Computer();
       $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();
       $item_DeviceProcessor         = new Item_DeviceProcessor();
@@ -421,6 +421,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                // Check all fields from source: 'designation', 'memory', 'manufacturers_id'
                foreach ($a_computerinventory['soundcard'] as $key => $arrays) {
    //               $arrayslower = array_map('strtolower', $arrays);
+                  $arrayslower = $arrays;
                   foreach ($db_soundcards as $keydb => $arraydb) {
                      if ($arrayslower == $arraydb) {
                         unset($a_computerinventory['soundcard'][$key]);
