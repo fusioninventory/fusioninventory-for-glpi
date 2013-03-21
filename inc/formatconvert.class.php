@@ -157,7 +157,10 @@ class PluginFusioninventoryFormatconvert {
             }
          } else {
             $value = str_replace("\'", "'", $value);
-            $value = Toolbox::clean_cross_side_scripting_deep(Toolbox::addslashes_deep($value));
+            if (preg_match("/[^[:word:] -:\[\].\(\)]/", $value)) {
+               $value = Toolbox::addslashes_deep($value);
+            }
+            $value = Toolbox::clean_cross_side_scripting_deep($value);
          }
          $data[$key] = $value;
       }
