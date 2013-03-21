@@ -63,6 +63,8 @@ class PluginFusioninventoryCommunicationRest {
                case 'getConfig':
                   $response = self::getConfigByAgent($params);
                   break;
+               case 'getJobs':
+                  $response = self::getJobsByAgent($params);
                case 'wait':
                   break;
 
@@ -110,7 +112,20 @@ class PluginFusioninventoryCommunicationRest {
       return array('configValidityPeriod' => 600, 'schedule' => $schedule);
    }
 
+   /**
+    * Get jobs for an agent
+    * TODO: Deploy module needs this :) -- kiniou
+    */
+   static function getJobsByAgent($params = array()) {
+      $jobs = array();
+      $methods = PluginFusioninventoryStaticmisc::getmethods();
+      if( isset($params['task']) ) {
+         foreach(array_keys($params['task']) as $task) {
 
+         }
+      }
+      return FALSE;
+   }
 
    /**
     * Send to the agent an OK code
