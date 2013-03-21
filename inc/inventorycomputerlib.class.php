@@ -617,7 +617,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             } else {
                foreach ($a_computerinventory['software'] as $key => $arrayslower) {
-//                  $arrayslower = array_map('strtolower', $arrays);
                   foreach ($db_software as $keydb => $arraydb) {
                      if ($arrayslower == $arraydb) {
                         unset($a_computerinventory['software'][$key]);
@@ -628,7 +627,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
                
                if (count($a_computerinventory['software']) == 0
-                  AND count($db_software) == 0) {
+                  && count($db_software) == 0) {
                   // Nothing to do
                } else {
                   if (count($db_software) != 0) {
