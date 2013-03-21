@@ -294,7 +294,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             return NOT_AVAILABLE;
          }
          $itemtype = PluginFusioninventoryTaskjoblog::getStateItemtype($data['ITEM_0']);
-         if ($itemtype == 'PluginFusinvdeployPackage') {
+         if ($itemtype == 'PluginFusioninventoryDeployPackage') {
             $computer = new Computer();
             $computer->getFromDB($pfAgent->fields['items_id']);
             return $computer->getLink(1);
