@@ -120,6 +120,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $sopt[30]['field']          = 'id';
       $sopt[30]['linkfield']      = '';
       $sopt[30]['name']           = __('ID');
+      $sopt[30]['datatype']      = 'number';
 
       return $sopt;
    }

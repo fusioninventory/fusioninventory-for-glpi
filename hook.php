@@ -2080,6 +2080,29 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
 
    switch ($type) {
 
+      case 'PluginFusioninventoryTask' :
+         /*
+          * WARNING: The following is some minor hack in order to select a range of ids.
+          *
+          * More precisely, when using the ID filter, you can now put IDs separated by commas.
+          * This is used by the DeployPackage class when it comes to check running tasks on some
+          * packages.
+          */
+         //check if this range is numeric
+         $ids = explode(',', $val);
+         foreach($ids as $k=>$i) {
+            if (!is_numeric($i)) {
+               unset($ids[$k]);
+            }
+         }
+         Toolbox::logDebug(print_r($ids,1));
+         if (count($ids) > 1) {
+            return $link." `$table`.`id` IN (".implode(',', $ids).")";
+         } else {
+            return "";
+         }
+      break;
+
       case 'PluginFusioninventoryAgent':
          $pfAgentmodule = new PluginFusioninventoryAgentmodule();
          $a_modules = $pfAgentmodule->find();
