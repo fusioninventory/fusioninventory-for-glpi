@@ -92,10 +92,17 @@ class PluginFusioninventoryCommunicationRest {
          foreach (array_keys($params['task']) as $task) {
             foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
                $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($method['module']);
-               if (isset($method['use_rest'])
-                     && $method['use_rest']
-                        && method_exists($class, self::getMethodForParameters($task))) {
+               if (
+                     (isset($method['task']) && strtolower($method['task']) == strtolower($task))
+                  && (isset($method['use_rest']) && $method['use_rest'])
+                  && method_exists($class, self::getMethodForParameters($task))
+               ) {
+                  /*
+                   * Since migration, there is only one plugin in one directory
+                   * It's maybe time to redo this function -- kiniou
+                   */
                   $schedule[] = call_user_func(array($class, self::getMethodForParameters($task)));
+                  break; //Stop the loop since we found the module corresponding to the asked task
                }
             }
          }
