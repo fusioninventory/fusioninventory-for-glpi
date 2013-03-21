@@ -156,7 +156,6 @@ class PluginFusioninventoryFormatconvert {
                $value = PluginFusioninventoryFormatconvert::cleanArray($value);
             }
          } else {
-            $value = str_replace("\'", "'", $value);
             if (preg_match("/[^a-zA-Z0-9 -_\(\)]+/", $value)) {
                $value = Toolbox::addslashes_deep($value);
             }
