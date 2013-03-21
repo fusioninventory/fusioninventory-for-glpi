@@ -690,6 +690,98 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
       
       $this->assertEquals($a_reference, $a_dataLink);      
    }
+   
+   
+   
+   public function testSoftwareUniqueForTwoComputers() {
+      global $DB;
+
+      $DB->connect();
+
+      $date = date('Y-m-d H:i:s');
+      
+      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+      
+      $a_inventory = array(
+          'fusioninventorycomputer' => Array(
+              'winowner'                        => 'test',
+              'wincompany'                      => 'siprossii',
+              'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
+              'last_fusioninventory_update'     => $date
+          ), 
+          'soundcard'      => Array(),
+          'graphiccard'    => Array(),
+          'controller'     => Array(),
+          'processor'      => Array(),
+          'computerdisk'   => Array(),
+          'memory'         => Array(),
+          'monitor'        => Array(),
+          'printer'        => Array(),
+          'peripheral'     => Array(),
+          'networkport'    => Array(),
+          'software'       => Array(),
+          'harddrive'      => Array(),
+          'virtualmachine' => Array(),
+          'antivirus'      => Array(),
+          'storage'        => Array(),
+          'itemtype'       => 'Computer'
+          );
+      $a_inventory['computer'] = array(
+          'name'                             => 'pcJ1',
+          'comment'                          => 'amd64/-1-11-30 22:04:44',
+          'users_id'                         => 0,
+          'operatingsystems_id'              => 'freebsd',
+          'operatingsystemversions_id'       => '9.1-RELEASE',
+          'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
+          'domains_id'                       => 'mydomain.local',
+          'os_licenseid'                     => '',
+          'os_license_number'                => '',
+          'operatingsystemservicepacks_id'   => 'GENERIC ()root@farrell.cse.buffalo.edu',
+          'manufacturers_id'                 => '',
+          'computermodels_id'                => '',
+          'serial'                           => 'XB63J7J1',
+          'computertypes_id'                 => 'Notebook',
+          'is_dynamic'                       => 1,
+          'contact'                          => 'ddurieux'
+      );
+      $a_inventory['software'] = Array(
+            'acrobat_Reader_9.2$$$$1.0.0.0' => Array(
+                    'name'                   => 'acrobat_Reader_9.2',
+                    'version'                => '1.0.0.0',
+                    'manufacturers_id'       => 192,
+                    'entities_id'            => 0,
+                    'is_template_computer'   => 0,
+                    'is_deleted_computer'    => 0
+                )
+          );
+      
+      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      $computer         = new Computer();
+      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
+      $software         = new Software();
+      
+      $a_inventory = $pfFormatconvert->replaceids($a_inventory);
+      
+      $serialized = gzcompress(serialize($a_inventory));
+      $a_inventory['fusioninventorycomputer']['serialized_inventory'] = 
+               Toolbox::addslashes_deep($serialized);
+      
+      $this->items_id = $computer->add(array('serial'      => 'XB63J7J1',
+                                             'entities_id' => 0));
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
+      
+      $a_software = $software->find("`name`='acrobat_Reader_9.2'");
+      $this->assertEquals(1, count($a_software), "First computer added");
+      
+      $a_inventory['computer']['name'] = "pcJ2";
+      $a_inventory['computer']['serial'] = "XB63J7J2";
+      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
+      
+      $a_software = $software->find("`name`='acrobat_Reader_9.2'");
+      $this->assertEquals(1, count($a_software), "Second computer added");
+   }
  }
 
 

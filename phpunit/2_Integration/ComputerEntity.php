@@ -367,8 +367,6 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
 class ComputerEntity_AllTests  {
 
    public static function suite() {
-
- 
      
       $suite = new PHPUnit_Framework_TestSuite('ComputerEntity');
       return $suite;

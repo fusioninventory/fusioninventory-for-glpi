@@ -510,9 +510,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("import_software") != 0) {
             
             $entities_id = 0;
-            $a_softfirst = current($a_computerinventory['software']);
-            $entities_id = $a_softfirst['entities_id'];
-            
+            if (count($a_computerinventory['software']) > 0) {
+               $a_softfirst = current($a_computerinventory['software']);
+               if (isset($a_softfirst['entities_id'])) {
+                  $entities_id = $a_softfirst['entities_id'];
+               }   
+            }
             $db_software = array();
             if ($no_history === FALSE) {
                $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
