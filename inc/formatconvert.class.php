@@ -157,7 +157,7 @@ class PluginFusioninventoryFormatconvert {
             }
          } else {
             $value = str_replace("\'", "'", $value);
-            if (preg_match("/[^[:word:] -:\[\].\(\)]/", $value)) {
+            if (preg_match("/[^a-zA-Z0-9 -_\(\)]+/", $value)) {
                $value = Toolbox::addslashes_deep($value);
             }
             $value = Toolbox::clean_cross_side_scripting_deep($value);
