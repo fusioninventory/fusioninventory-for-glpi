@@ -77,7 +77,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    if ($response) {
       echo json_encode($response);
    } else {
-      PluginFusioninventoryCommunicationRest::sendError();
+      echo json_encode((object)array());
     }
 
 }
