@@ -74,6 +74,7 @@ class PluginFusioninventoryStaticmisc {
                      'method'         => 'InventoryComputerESX',
                      'selection_type' => 'devices',
                      'name'           => __('VMware host remote inventory', 'fusioninventory'),
+                     'task'           => 'ESX',
                      'use_rest'       => TRUE
             ),
 
