@@ -286,7 +286,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
          $comment = $data['ITEM_'.$num];
          return PluginFusioninventoryTaskjoblog::convertComment($comment);
          break;
-         
+
       case 'glpi_plugin_fusioninventory_taskjobstates.plugin_fusioninventory_agents_id':
          $pfAgent = new PluginFusioninventoryAgent();
          $pfAgent->getFromDB($data['ITEM_'.$num]);
@@ -301,14 +301,14 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
          }
          return $pfAgent->getLink(1);
          break;
-        
+
    }
 
    if ($table == "glpi_plugin_fusioninventory_agentmodules") {
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $a_modules = $pfAgentmodule->find();
       foreach ($a_modules as $data2) {
-         if ($table.".".$field == 
+         if ($table.".".$field ==
                  "glpi_plugin_fusioninventory_agentmodules.".$data2['modulename']) {
             if (strstr($data["ITEM_".$num."_0"], '"'.$data['id'].'"')) {
                if ($data['ITEM_'.$num] == '0') {
@@ -322,8 +322,8 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
          }
       }
    }
-   
-   
+
+
    switch ($type) {
 
       case 'Computer':
