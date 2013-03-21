@@ -1125,31 +1125,28 @@ class PluginFusioninventoryFormatconvert {
       if ((array) $array !== $array) {
          return $a_return;
       }
-      $a_keys = array_keys($a_key);
       foreach ($array as $key=>$value) {
-         if (in_array($key, $a_keys)) {
+         if (isset($a_key[$key])) {
             $a_return[$a_key[$key]] = $value;
          }
       }
+      
+      $a_int_values = array('capacity', 'freesize', 'totalsize', 'memory', 'memory_size',
+         'pages_total', 'pages_n_b', 'pages_color', 'pages_recto_verso', 'scanned',
+         'pages_total_print', 'pages_n_b_print', 'pages_color_print', 'pages_total_copy',
+         'pages_n_b_copy', 'pages_color_copy', 'pages_total_fax', 
+         'cpu', 'trunk', 'is_active', 'uptodate',
+         'ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu', 'speed');
+      
       foreach ($a_key as $key=>$value) {
          if (!isset($a_return[$value])
                  || $a_return[$value] == '') {
-            $int = 0;
-            $a_int_values = array('capacity', 'freesize', 'totalsize', 'memory', 'memory_size',
-               'pages_total', 'pages_n_b', 'pages_color', 'pages_recto_verso', 'scanned',
-               'pages_total_print', 'pages_n_b_print', 'pages_color_print', 'pages_total_copy',
-               'pages_n_b_copy', 'pages_color_copy', 'pages_total_fax', 
-               'cpu', 'trunk', 'is_active', 'uptodate',
-               'ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu', 'speed');   
+
             if (in_array($value, $a_int_values)) {      
-               $int = 1;
-            } 
-             
-            if ($int == 1) {
                $a_return[$value] = 0;
             } else {
                $a_return[$value] = '';
-            }            
+            }           
          }
       }
       return $a_return;
