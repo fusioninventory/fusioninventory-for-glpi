@@ -170,7 +170,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("component_processor") != 0) {
             $db_processors = array();
             if ($no_history === FALSE) {
-               $query = "SELECT `glpi_items_deviceprocessors`.`id`, `designation`, `frequence`, 
+               $query = "SELECT `glpi_items_deviceprocessors`.`id`, `designation`, 
                      `frequency`, `serial`, `manufacturers_id`
                   FROM `glpi_items_deviceprocessors`
                   LEFT JOIN `glpi_deviceprocessors` 

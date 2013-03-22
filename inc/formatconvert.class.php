@@ -431,7 +431,7 @@ class PluginFusioninventoryFormatconvert {
                         || isset($a_cpus['TYPE']))) {
                   $array_tmp = $thisc->addValues($a_cpus, 
                                                  array( 
-                                                    'SPEED'        => 'frequence', 
+                                                    'SPEED'        => 'frequency', 
                                                     'MANUFACTURER' => 'manufacturers_id', 
                                                     'SERIAL'       => 'serial',
                                                     'NAME'         => 'designation'));
@@ -439,7 +439,7 @@ class PluginFusioninventoryFormatconvert {
                           && isset($a_cpus['TYPE'])) {
                      $array_tmp['designation'] = $a_cpus['TYPE'];
                   }
-                  $array_tmp['frequency'] = $array_tmp['frequence'];
+//                  $array_tmp['frequency'] = $array_tmp['frequence'];
                   $a_inventory['processor'][] = $array_tmp;
                }
             }
