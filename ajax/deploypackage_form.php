@@ -77,9 +77,6 @@ $order = new PluginFusioninventoryDeployOrder();
 
 $order->getFromDB($_REQUEST['orders_id']);
 
-Toolbox::logDebug(print_r($order,1));
-
-
 //TODO: In the displayForm function, $_REQUEST is somewhat too much for the '$datas' parameter
 // I think we could use only $order -- Kevin 'kiniou' Roy
 switch ($_REQUEST['subtype']) {
