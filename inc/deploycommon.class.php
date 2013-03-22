@@ -44,10 +44,7 @@ if(!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-
-require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
-
-class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommunication {
+class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunication {
 
    // Get all devices and put in taskjobstate each task for each device for each agent
    function prepareRun($taskjobs_id) {
