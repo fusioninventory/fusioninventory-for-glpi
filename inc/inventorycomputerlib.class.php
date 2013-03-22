@@ -170,7 +170,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("component_processor") != 0) {
             $db_processors = array();
             if ($no_history === FALSE) {
-               $query = "SELECT `glpi_items_deviceprocessors`.`id`, `designation`, `frequence`, 
+               $query = "SELECT `glpi_items_deviceprocessors`.`id`, `designation`, 
                      `frequency`, `serial`, `manufacturers_id`
                   FROM `glpi_items_deviceprocessors`
                   LEFT JOIN `glpi_deviceprocessors` 
@@ -350,9 +350,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
                   unset($data['id']);            
-                  $data1 = Toolbox::addslashes_deep($data);
-                  $data2 = array_map('strtolower', $data1);
-                  $db_graphiccards[$idtmp] = $data2;
+                  if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['designation'])) {
+                     $data['designation'] = Toolbox::addslashes_deep($data['designation']);
+                  }
+                  $data['designation'] = trim(strtolower($data['designation']));
+                  $db_graphiccards[$idtmp] = $data;
                }
             }
 
@@ -363,9 +365,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             } else {
                // Check all fields from source: 'designation', 'memory'
                foreach ($a_computerinventory['graphiccard'] as $key => $arrays) {
-                  $arrayslower = array_map('strtolower', $arrays);
+                  $arrays['designation'] = strtolower($arrays['designation']);
                   foreach ($db_graphiccards as $keydb => $arraydb) {
-                     if ($arrayslower == $arraydb) {
+                     if ($arrays == $arraydb) {
                         unset($a_computerinventory['graphiccard'][$key]);
                         unset($db_graphiccards[$keydb]);
                         break;
@@ -510,9 +512,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("import_software") != 0) {
             
             $entities_id = 0;
-            $a_softfirst = current($a_computerinventory['software']);
-            $entities_id = $a_softfirst['entities_id'];
-            
+            if (count($a_computerinventory['software']) > 0) {
+               $a_softfirst = current($a_computerinventory['software']);
+               if (isset($a_softfirst['entities_id'])) {
+                  $entities_id = $a_softfirst['entities_id'];
+               }   
+            }
             $db_software = array();
             if ($no_history === FALSE) {
                $query = "SELECT `glpi_computers_softwareversions`.`id` as sid,
@@ -534,10 +539,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['sid'];
                   unset($data['sid']);
-                  if (preg_match("/[^[:word:] -:\[\].\(\)]/", $data['name'])) {
+                  if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['name'])) {
                      $data['name']    = Toolbox::addslashes_deep($data['name']);
                   }
-                  if (preg_match("/[^[:word:] -:\[\].\(\)]/", $data['version'])) {
+                  if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['version'])) {
                      $data['version'] = Toolbox::addslashes_deep($data['version']);
                   }
                   $db_software[$idtmp] = $data;
@@ -614,7 +619,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             } else {
                foreach ($a_computerinventory['software'] as $key => $arrayslower) {
-//                  $arrayslower = array_map('strtolower', $arrays);
                   foreach ($db_software as $keydb => $arraydb) {
                      if ($arrayslower == $arraydb) {
                         unset($a_computerinventory['software'][$key]);
@@ -625,7 +629,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
                
                if (count($a_computerinventory['software']) == 0
-                  AND count($db_software) == 0) {
+                  && count($db_software) == 0) {
                   // Nothing to do
                } else {
                   if (count($db_software) != 0) {
@@ -841,9 +845,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (is_null($data['mac'])) {
                      $data['mac'] = '';
                   }
-                  $data1 = Toolbox::addslashes_deep($data);
-                  $data2 = array_map('strtolower', $data1);
-                  $db_networkport[$idtmp] = $data2;
+                  if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['name'])) {
+                     $data['name'] = Toolbox::addslashes_deep($data['name']);
+                  }
+                  $db_networkport[$idtmp] = array_map('strtolower', $data);
                }
             }
             $simplenetworkport = array();
