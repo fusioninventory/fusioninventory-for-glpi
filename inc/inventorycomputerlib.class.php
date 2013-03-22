@@ -350,9 +350,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['id'];
                   unset($data['id']);            
-                  $data1 = Toolbox::addslashes_deep($data);
-                  $data2 = array_map('strtolower', $data1);
-                  $db_graphiccards[$idtmp] = $data2;
+                  if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['designation'])) {
+                     $data['designation'] = Toolbox::addslashes_deep($data['designation']);
+                  }
+                  $data['designation'] = trim(strtolower($data['designation']));
+                  $db_graphiccards[$idtmp] = $data;
                }
             }
 
@@ -363,9 +365,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             } else {
                // Check all fields from source: 'designation', 'memory'
                foreach ($a_computerinventory['graphiccard'] as $key => $arrays) {
-                  $arrayslower = array_map('strtolower', $arrays);
+                  $arrays['designation'] = strtolower($arrays['designation']);
                   foreach ($db_graphiccards as $keydb => $arraydb) {
-                     if ($arrayslower == $arraydb) {
+                     if ($arrays == $arraydb) {
                         unset($a_computerinventory['graphiccard'][$key]);
                         unset($db_graphiccards[$keydb]);
                         break;
@@ -537,10 +539,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                while ($data = $DB->fetch_assoc($result)) {
                   $idtmp = $data['sid'];
                   unset($data['sid']);
-                  if (preg_match("/[^a-zA-Z0-9 -_\(\)]+/", $data['name'])) {
+                  if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['name'])) {
                      $data['name']    = Toolbox::addslashes_deep($data['name']);
                   }
-                  if (preg_match("/[^a-zA-Z0-9 -_\(\)]+/", $data['version'])) {
+                  if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['version'])) {
                      $data['version'] = Toolbox::addslashes_deep($data['version']);
                   }
                   $db_software[$idtmp] = $data;
@@ -843,9 +845,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (is_null($data['mac'])) {
                      $data['mac'] = '';
                   }
-                  $data1 = Toolbox::addslashes_deep($data);
-                  $data2 = array_map('strtolower', $data1);
-                  $db_networkport[$idtmp] = $data2;
+                  if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['name'])) {
+                     $data['name'] = Toolbox::addslashes_deep($data['name']);
+                  }
+                  $db_networkport[$idtmp] = array_map('strtolower', $data);
                }
             }
             $simplenetworkport = array();

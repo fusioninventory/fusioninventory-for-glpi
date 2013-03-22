@@ -156,7 +156,11 @@ class PluginFusioninventoryFormatconvert {
                $value = PluginFusioninventoryFormatconvert::cleanArray($value);
             }
          } else {
-            if (preg_match("/[^a-zA-Z0-9 -_\(\)]+/", $value)) {
+            if (strpos($value, "\'")) {
+               $value = str_replace("\'", "'", $value);
+            }
+            
+            if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $value)) {
                $value = Toolbox::addslashes_deep($value);
             }
             $value = Toolbox::clean_cross_side_scripting_deep($value);
@@ -384,6 +388,7 @@ class PluginFusioninventoryFormatconvert {
                   $array_tmp = $thisc->addValues($a_videos, array(
                                                               'NAME'   => 'designation', 
                                                               'MEMORY' => 'memory'));
+                  $array_tmp['designation'] = trim($array_tmp['designation']);
                   $a_inventory['graphiccard'][] = $array_tmp;
                   if (isset($a_videos['NAME'])) {
                      $ignorecontrollers[$a_videos['NAME']] = 1;
