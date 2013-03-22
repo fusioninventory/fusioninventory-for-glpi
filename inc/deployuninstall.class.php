@@ -67,7 +67,8 @@ class PluginFusioninventoryDeployUninstall extends CommonDBTM {
          case 'PluginFusioninventoryDeployPackage':
             PluginFusioninventoryDeployPackage::displayOrderTypeForm(
                      PluginFusioninventoryDeployOrder::UNINSTALLATION_ORDER,
-                     $_POST['id']);
+                     $_POST['id'],
+                     $item);
             break;
       }
    }

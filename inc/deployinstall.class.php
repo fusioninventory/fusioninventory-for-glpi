@@ -67,7 +67,8 @@ class PluginFusioninventoryDeployInstall extends CommonDBTM {
          case 'PluginFusioninventoryDeployPackage':
             PluginFusioninventoryDeployPackage::displayOrderTypeForm(
                      PluginFusioninventoryDeployOrder::INSTALLATION_ORDER,
-                     $_POST['id']);
+                     $_POST['id'],
+                     $item);
             break;
       }
    }
