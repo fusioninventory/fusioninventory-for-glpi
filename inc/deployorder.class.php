@@ -61,8 +61,13 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
          $found = $this->getFromDBByQuery(" WHERE plugin_fusioninventory_deploypackages_id = $packages_id
                                   AND type = $order_type");
       }
+
    }
 
+   /*
+    * The 'Render' things should be renamed to something appropriate
+    * ... don't know yet, so just leaving it as is -- kiniou
+    */
    static function getRender($render) {
       if ($render == 'install') {
          return PluginFusioninventoryDeployOrder::INSTALLATION_ORDER;
