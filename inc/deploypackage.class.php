@@ -141,7 +141,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
          $taskurl_list_names = implode(', ',
             array_map(
-               create_function('$task', 'return $task["task"]["name"];'),
+               create_function('$task', 'return "\"".$task["task"]["name"]."\"";'),
                $this->running_tasks
             )
          );
@@ -154,13 +154,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          * (cf. https://forge.indepnet.net/issues/2476)
          **/
          $taskurl_base =
-            Toolbox::getItemTypeSearchURL("PluginFusioninventoryTask", True);
+            Toolbox::getItemTypeSearchURL("PluginFusioninventoryTaskJob", True);
 
          $taskurl_args = implode("&",
             array(
-               urlencode("field[0]"). "=30",
+               urlencode("field[0]"). "=4",
                urlencode("searchtype[0]") ."=contains",
-               urlencode("contains[0]")."=". urlencode($taskurl_list_ids),
+               urlencode("contains[0]")."= ". urlencode('['.$taskurl_list_names.']'),
                "itemtype=PluginFusioninventoryTask",
                "start=0"
             )

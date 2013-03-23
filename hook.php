@@ -2080,7 +2080,7 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
 
    switch ($type) {
 
-      case 'PluginFusioninventoryTask' :
+      case 'PluginFusioninventoryTaskjob' :
          /*
           * WARNING: The following is some minor hack in order to select a range of ids.
           *
@@ -2088,18 +2088,35 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
           * This is used by the DeployPackage class when it comes to check running tasks on some
           * packages.
           */
-         //check if this range is numeric
-         $ids = explode(',', $val);
-         foreach($ids as $k=>$i) {
-            if (!is_numeric($i)) {
-               unset($ids[$k]);
+         if ($table == 'glpi_plugin_fusioninventory_tasks') {
+            if ($field == 'id') {
+               //check if this range is numeric
+               $ids = explode(',', $val);
+               foreach($ids as $k=>$i) {
+                  if (!is_numeric($i)) {
+                     unset($ids[$k]);
+                  }
+               }
+
+               if (count($ids) >= 1) {
+                  return $link." `$table`.`id` IN (".implode(',', $ids).")";
+               } else {
+                  return "";
+               }
+            } elseif ($field == 'name') {
+               $val = stripslashes($val);
+               //decode a json query to match task names in taskjobs list
+               $names = json_decode($val);
+               if ($names !== NULL && is_array($names)) {
+                  $names = array_map(
+                     create_function('$a', 'return "\"".$a."\"";'),
+                     $names
+                  );
+                  return $link." `$table`.`name` IN (".implode(',', $names) . ")";
+               } else {
+                  return "";
+               }
             }
-         }
-         Toolbox::logDebug(print_r($ids,1));
-         if (count($ids) > 1) {
-            return $link." `$table`.`id` IN (".implode(',', $ids).")";
-         } else {
-            return "";
          }
       break;
 
