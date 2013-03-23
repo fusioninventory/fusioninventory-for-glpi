@@ -69,7 +69,7 @@ if (!function_exists('curl_init')) {
 }
 
 
-$pfConstructmodel = new PluginFusinvsnmpConstructmodel();
+$pfConstructmodel = new PluginFusioninventoryConstructmodel();
 if ($pfConstructmodel->connect()) {
    if ($pfConstructmodel->showAuth()) {
       if (isset($_GET['reset'])) {
@@ -137,11 +137,11 @@ if ($pfConstructmodel->connect()) {
 //              OR isset($_GET['id']))
 //              AND isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])
 //              AND $_SESSION['plugin_fusioninventory_snmpwalks_id'] > 0) {
-//         $pfConstructDevice = new PluginFusinvsnmpConstructDevice();
+//         $pfConstructDevice = new PluginFusioninventorySNMPConstructDevice();
 //         $dataret = $pfConstructmodel->sendGetDevice($_SESSION['plugin_fusioninventory_snmpwalks_id']);
 //         $pfConstructDevice->showForm($_SESSION['plugin_fusioninventory_snmpwalks_id'], $dataret);
       } else if (isset($_GET['editoid'])) {
-         $pfConstructDevice = new PluginFusinvsnmpConstructDevice();
+         $pfConstructDevice = new PluginFusioninventorySNMPConstructDevice();
          $dataret = $pfConstructmodel->sendGetDevice($_GET['editoid']);
          $pfConstructDevice->showForm($_GET['editoid'], $dataret);
       

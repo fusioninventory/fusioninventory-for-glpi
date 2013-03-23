@@ -40,11 +40,11 @@
    ------------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+//include ("../../../inc/includes.php");
 
 Session::checkLoginUser();
 
-$pfConstructmodel = new PluginFusinvsnmpConstructmodel();
+$pfConstructmodel = new PluginFusioninventorySNMPConstructmodel();
 if ($pfConstructmodel->connect()) {
    if ($pfConstructmodel->showAuth()) {
       $pfConstructmodel->getSendModel();

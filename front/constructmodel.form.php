@@ -44,7 +44,7 @@ include ("../../../inc/includes.php");
 Html::popHeader("oids");
 Session::checkLoginUser();
 
-$pfConstructmodel = new PluginFusinvsnmpConstructmodel();
+$pfConstructmodel = new PluginFusioninventorySNMPConstructmodel();
 if (!isset($_POST['numeric_oid'])) {
    $pfConstructmodel->showFormAddOid($_GET['mapping']);
 } else {
