@@ -1,4 +1,4 @@
-= Fusioninventory Plugin
+== Fusioninventory Plugin
 
 This plugin makes GLPI to process various types of tasks for Fusioninventory agents:
 
@@ -16,7 +16,7 @@ If you want to report bugs or check for development status, you can check http:/
 
 Some icons used comes from :
 
-* Dortmund is copyright by http://PC.DE[http://pc.de/icons/] and made available under a
+* Dortmund is copyright by http://http://pc.de/icons/[PC.DE] and made available under a
  http://creativecommons.org/licenses/by/3.0/deed[Creative Commons Attribution 3.0 License].
 
 * Fugue Icons is copyright by http://p.yusukekamiyamane.com/[Yusuke Kamiyamame] and made
