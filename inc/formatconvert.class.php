@@ -546,7 +546,8 @@ class PluginFusioninventoryFormatconvert {
                                                  'SERIAL'       => 'serial',
                                                  'DESCRIPTION'  => 'comment'));
                if (!($pfConfig->getValue('import_monitor') == 3
-                       && $array_tmp['serial'] == '')) {
+                       && (!isset($array_tmp['serial'])
+                           ||$array_tmp['serial'] == ''))) {
                   $add = 1;
                   if (isset($array_tmp['serial'])
                           && $array_tmp['serial'] != ''
@@ -1110,9 +1111,13 @@ class PluginFusioninventoryFormatconvert {
                   }
                   $array_tmp['is_template_computer'] = 0;
                   $array_tmp['is_deleted_computer'] = 0;
-                  if (!isset($a_inventory['software'][$array_tmp['name']."$$$$".$array_tmp['version']])) {
-                     $a_inventory['software'][$array_tmp['name']."$$$$".$array_tmp['version']] 
-                             = $array_tmp;
+                  
+                  $comp_key = $array_tmp['name'].
+                               "$$$$".$array_tmp['version'].
+                               "$$$$".$array_tmp['manufacturers_id'].
+                               "$$$$".$array_tmp['entities_id'];
+                  if (!isset($a_inventory['software'][$comp_key])) {
+                     $a_inventory['software'][$comp_key] = $array_tmp;
                   }
                }
             }

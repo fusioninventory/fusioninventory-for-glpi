@@ -516,7 +516,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $a_softfirst = current($a_computerinventory['software']);
                if (isset($a_softfirst['entities_id'])) {
                   $entities_id = $a_softfirst['entities_id'];
-               }   
+         }
             }
             $db_software = array();
             if ($no_history === FALSE) {
@@ -540,15 +540,19 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $idtmp = $data['sid'];
                   unset($data['sid']);
                   if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['name'])) {
-                     $data['name']    = Toolbox::addslashes_deep($data['name']);
+                     $data['name'] = Toolbox::addslashes_deep($data['name']);
                   }
                   if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['version'])) {
                      $data['version'] = Toolbox::addslashes_deep($data['version']);
                   }
-                  $db_software[$idtmp] = $data;
+                  $comp_key = $data['name'].
+                               "$$$$".$data['version'].
+                               "$$$$".$data['manufacturers_id'].
+                               "$$$$".$data['entities_id'];
+                  $db_software[$comp_key] = $idtmp;
                }
             }
-            
+         
             $lastSoftwareid = 0;
             $lastSoftwareVid = 0;
             
@@ -618,23 +622,29 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $DB->request("SELECT RELEASE_LOCK('software')");
                }
             } else {
+//               foreach ($a_computerinventory['software'] as $key => $arrayslower) {
+//                  foreach ($db_software as $keydb => $arraydb) {
+//                     if ($arrayslower == $arraydb) {
+//                        unset($a_computerinventory['software'][$key]);
+//                        unset($db_software[$keydb]);
+//                        break;
+//                     }
+//                  }
+//               }
                foreach ($a_computerinventory['software'] as $key => $arrayslower) {
-                  foreach ($db_software as $keydb => $arraydb) {
-                     if ($arrayslower == $arraydb) {
-                        unset($a_computerinventory['software'][$key]);
-                        unset($db_software[$keydb]);
-                        break;
-                     }
+                  if (isset($db_software[$key])) {
+                     unset($a_computerinventory['software'][$key]);
+                     unset($db_software[$key]);
                   }
                }
-               
+
                if (count($a_computerinventory['software']) == 0
                   && count($db_software) == 0) {
                   // Nothing to do
                } else {
                   if (count($db_software) != 0) {
                      // Delete softwares in DB
-                     foreach ($db_software as $idtmp => $data) {
+                     foreach ($db_software as $idtmp) {
                         $this->computer_SoftwareVersion->delete(array('id'=>$idtmp), 1);
                      }
                   }
@@ -1498,7 +1508,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          
          
    }
-
+   
    
    
    /**
