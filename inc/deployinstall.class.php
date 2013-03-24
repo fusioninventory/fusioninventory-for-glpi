@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryDeployInstall extends CommonDBTM {
+class PluginFusioninventoryDeployInstall extends PluginFusioninventoryDeployCommon {
 
    static function getTypeName($nb=0) {
       return __('Installation', 'fusioninventory');
@@ -72,6 +72,8 @@ class PluginFusioninventoryDeployInstall extends CommonDBTM {
             break;
       }
    }
+
+
 }
 
 ?>
