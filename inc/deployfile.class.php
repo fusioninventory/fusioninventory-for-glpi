@@ -549,7 +549,7 @@ class PluginFusioninventoryDeployFile {
                   $msg = __("Transfer error: the file size is too big", 'fusioninventory');
                   break;
                case UPLOAD_ERR_PARTIAL:
-                  $msg = __("he uploaded file was only partially uploaded", 'fusioninventory');
+                  $msg = __("The uploaded file was only partially uploaded", 'fusioninventory');
                   break;
                case UPLOAD_ERR_NO_FILE:
                   $msg = __("No file was uploaded", 'fusioninventory');
