@@ -728,7 +728,9 @@ class PluginFusioninventoryDeployFile {
 
       //add new entry
       $datas['associatedFiles'][$sha512] = $new_entry;
-      $datas['jobs']['associatedFiles'][] = $sha512;
+      if (!in_array($sha512,$datas['jobs']['associatedFiles'])) {
+         $datas['jobs']['associatedFiles'][] = $sha512;
+      }
 
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
