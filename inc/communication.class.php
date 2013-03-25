@@ -248,7 +248,14 @@ class PluginFusioninventoryCommunication {
       $moduleRun = $pfTaskjobstate->getTaskjobsAgent($agent_id);
       foreach ($moduleRun as $className => $array) {
          if (class_exists($className)) {
-            if ($className != "PluginFusioninventoryInventoryComputerESX") {
+            /*
+             * TODO: check if use_rest is enabled in Staticmisc::get_methods.
+             * Also, this get_methods function need to be reviewed
+             */
+            if (  $className != "PluginFusioninventoryInventoryComputerESX"
+               && $className != "PluginFusioninventoryDeployinstall"
+               && $className != "PluginFusioninventoryDeployuninstall"
+            ) {
                $class = new $className();
                $sxml_temp = $class->run($array);
                PluginFusioninventoryToolbox::append_simplexml(
