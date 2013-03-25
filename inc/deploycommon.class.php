@@ -223,8 +223,21 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
     * $array = array with different ID
     *
     */
-   function run($itemtype) {
-      return $this->message;
+   function run($taskjobs) {
+      //process the first task planned
+      $taskjob = array_shift($taskjobs);
+      //get order type label
+      $order_type_label = str_replace("PluginFusioninventoryDeploy", "", get_class($this));
+      //get numeric order type from label
+      $order_type = PluginFusioninventoryDeployOrder::getRender($order_type_label);
+      //get order by type and package id
+      $order = new PluginFusioninventoryDeployOrder($order_type, $taskjob['items_id']);
+      //decode order data
+      $order_data = json_decode($order->fields['json'],TRUE);
+      //add uniqid to response data
+      $order_data['jobs']['uuid'] = $taskjob['uniqid'];
+      //return data response as json
+      return json_encode($order_datas);
    }
 }
 

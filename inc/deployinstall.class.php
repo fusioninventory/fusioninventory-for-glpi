@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryDeployInstall extends PluginFusioninventoryDeployCommon {
+class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployCommon {
 
    static function getTypeName($nb=0) {
       return __('Installation', 'fusioninventory');

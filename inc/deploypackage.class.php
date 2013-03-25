@@ -318,8 +318,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $ong = array();
       if ($this->fields['id'] > 0){
-         $this->addStandardTab('PluginFusioninventoryDeployInstall', $ong, $options);
-         $this->addStandardTab('PluginFusioninventoryDeployUninstall', $ong, $options);
+         $this->addStandardTab('PluginFusioninventoryDeployinstall', $ong, $options);
+         $this->addStandardTab('PluginFusioninventoryDeployuninstall', $ong, $options);
       }
       $ong['no_all_tab'] = TRUE;
       return $ong;
