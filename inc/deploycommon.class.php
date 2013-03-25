@@ -237,7 +237,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       //add uniqid to response data
       $order_data['jobs']['uuid'] = $taskjob['uniqid'];
       //return data response as json
-      return json_encode($order_datas);
+      return json_encode($order_data);
    }
 }
 
