@@ -70,11 +70,16 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return PluginFusioninventoryProfile::haveRight('packages', 'w');
    }
 
+   function canEditPackage() {
+      if (count($this->running_tasks) > 0) {
+            return FALSE;
+      }
+      return TRUE;
+   }
+
    function canEditItem() {
 
-      //Update running tasks with this package
-      $this->getRunningTasks();
-      if (count($this->running_tasks) > 0) {
+      if (!$this->canEditPackage()) {
          return FALSE;
       }
       return TRUE;
@@ -82,10 +87,15 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
    function canDeleteItem() {
 
-      if( !$this->canEditItem() ) {
+      if (!$this->canEditPackage()) {
          return FALSE;
       }
       return TRUE;
+   }
+
+   //Check running tasks after getFromDB
+   function post_getFromDB() {
+      $this->getRunningTasks();
    }
 
 
@@ -93,31 +103,76 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    *  Check if we can edit (or delete) this item
    *  If it's not possible display an error message
    **/
-   function checkEdit() {
+   function getEditErrorMessage($order_type=NULL) {
+      global $CFG_GLPI;
       $error_message = "";
-      // Display error message
-      if ( !$this->canEditItem() ) {
-         $error_message.=
-            "<h3 class='red'>".
-                  __("Modification Denied").
-            "</h3>\n";
-
+      $tasklist = array();
+      if (isset($order_type)) {
+         $tasklist = array_filter(
+            $this->running_tasks,
+            create_function('$task' , 'return $task["taskjob"]["method"]=="deploy'.$order_type.'";')
+         );
+      } else {
+         $tasklist = $this->running_tasks;
       }
-      if (count($this->running_tasks) > 0) {
+
+      if (count($tasklist) > 0) {
+
+         // Display error message
+         $error_message .= "<h3 class='red'>";
          $error_message .=
-               "<h4>".
-                  __("One or more tasks ").
-               "</h4>\n";
+            __("Modification Denied", 'fusioninventory');
+         $error_message .= "</h3>\n";
+         $error_message .=
+            "<h4>".
+               _n(
+                  "The following task is running with this package",
+                  "The following tasks are running with this package",
+                  count($this->running_tasks), 'fusioninventory'
+               ).
+            "</h4>\n";
+
+         $taskurl_list_ids = implode( ', ',
+            array_map(
+               create_function('$task', 'return $task["task"]["id"];'),
+               $this->running_tasks
+            )
+         );
+
+         $taskurl_list_names = implode(', ',
+            array_map(
+               create_function('$task', 'return "\"".$task["task"]["name"]."\"";'),
+               $this->running_tasks
+            )
+         );
+
+
+         /**
+         * WARNING:
+         * The following may be considered as a hack until we get
+         * the Search class splitted to get a SearchUrl correctly
+         * (cf. https://forge.indepnet.net/issues/2476)
+         **/
+         $taskurl_base =
+            Toolbox::getItemTypeSearchURL("PluginFusioninventoryTaskJob", True);
+
+         $taskurl_args = implode("&",
+            array(
+               urlencode("field[0]"). "=4",
+               urlencode("searchtype[0]") ."=contains",
+               urlencode("contains[0]")."= ". urlencode('['.$taskurl_list_names.']'),
+               "itemtype=PluginFusioninventoryTask",
+               "start=0"
+            )
+         );
+         $error_message .= "<a href='$taskurl_base?$taskurl_args'>";
+         $error_message .=  $taskurl_list_names;
+         $error_message .= "</a>";
       }
       return $error_message;
    }
 
-   function pre_deleteItem() {
-      $ret = $this->checkEdit(__("Deletion", 'fusioninventory'));
-      return $ret;
-   }
-
-
+   //mmmh I'm not sure if it's still used ... -- kiniou
    function post_addItem() {
       //check whether orders have not already been created
       if (!isset($_SESSION['tmp_clone_package'])) {
@@ -142,6 +197,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   'by_entities' => FALSE,
                )
             );
+
    }
 
    function getSearchOptions() {
@@ -262,8 +318,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $ong = array();
       if ($this->fields['id'] > 0){
-         $this->addStandardTab('PluginFusioninventoryDeployInstall', $ong, $options);
-         $this->addStandardTab('PluginFusioninventoryDeployUninstall', $ong, $options);
+         $this->addStandardTab('PluginFusioninventoryDeployinstall', $ong, $options);
+         $this->addStandardTab('PluginFusioninventoryDeployuninstall', $ong, $options);
       }
       $ong['no_all_tab'] = TRUE;
       return $ong;
@@ -271,7 +327,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
    function showForm($ID, $options=array()) {
       global $CFG_GLPI;
-
       if ($ID > 0) {
          $this->check($ID, 'r');
       } else {
@@ -300,18 +355,18 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $this->showFormButtons($options);
 
-      $error_msg = $this->checkEdit();
-
-      echo "<div class='box'>";
-      echo $error_msg;
-      echo "</div>";
       echo "<div id='tabcontent'></div>";
       echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
       return TRUE;
    }
 
-   static function displayOrderTypeForm($order_type, $packages_id) {
+   /*
+    * TODO: switch to non-static to avoid the $package argument
+    *       -- kiniou
+    */
+
+   static function displayOrderTypeForm($order_type, $packages_id, $package) {
       global $CFG_GLPI;
 
       $subtypes = array(
@@ -329,16 +384,15 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $order = new PluginFusioninventoryDeployOrder($order_type, $packages_id);
       $datas = json_decode($order->fields['json'], TRUE);
       $orders_id = $order->fields['id'];
-      $order_type = PluginFusioninventoryDeployOrder::getOrderTypeLabel($order->fields['type']);
+      $order_type_label = PluginFusioninventoryDeployOrder::getOrderTypeLabel($order->fields['type']);
 
 
-      //init drag and drop on subtype table
-/*      echo "<script type='text/javascript'>
-         var rand = $rand;
-         if (orders == null) var orders = {};
-         orders[$rand] = $orders_id;
-         </script>";
-*/
+      $error_msg = $package->getEditErrorMessage($order_type_label);
+      if(!empty($error_msg)) {
+         Session::addMessageAfterRedirect($error_msg);
+         Html::displayMessageAfterRedirect();
+         echo "<div id='package_order_".$orders_id."_span'>";
+      }
       echo "<table class='tab_cadre_fixe' id='package_order_".$orders_id."'>";
 
       foreach ($subtypes as $subtype => $label) {
@@ -370,10 +424,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
          $json_subtype = $json_subtypes[$subtype];
          //display stored actions datas
-         if (isset($datas['jobs'][$json_subtype]) && !empty($datas['jobs'][$json_subtype])) {
-            echo "<div id='drag_" . $order_type . "_". $subtype . "s'>";
-            echo "<form name='remove" . $subtype. "s' method='post' action='deploypackage.form.php?remove_item' ".
-               "id='" . $subtype . "sList" . $rand . "'>";
+         if (  isset($datas['jobs'][$json_subtype])
+               && !empty($datas['jobs'][$json_subtype])) {
+            echo  "<div id='drag_" . $order_type_label . "_". $subtype . "s'>";
+            echo  "<form name='remove" . $subtype. "s' ".
+                  "method='post' action='deploypackage.form.php?remove_item' ".
+                  "id='" . $subtype . "sList" . $rand . "'>";
             echo "<input type='hidden' name='itemtype' value='". $classname . "' />";
             echo "<input type='hidden' name='orders_id' value='" . $order->fields['id'] . "' />";
             $classname::displayList($order, $datas, $rand);
@@ -381,7 +437,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             echo "</div>";
          }
          echo "<script type='text/javascript'>";
-         echo "redipsInit('$order_type', '$subtype', $orders_id);";
+         echo "redipsInit('$order_type_label', '$subtype', $orders_id);";
          echo "</script>";
          echo "</td>";
          echo "</tr>";
@@ -397,6 +453,14 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "</td></tr>";
       }
       echo "</table>";
+      if (!empty($error_msg)) {
+         echo "</div>";
+         echo "<script type='text/javascript'>
+                  Ext.onReady(function() {
+                     Ext.select('#package_order_".$orders_id."_span').mask();
+                  });
+               </script>";
+      }
    }
 
    static function plusButton($dom_id, $clone = FALSE) {
@@ -425,7 +489,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<form action='".$CFG_GLPI["root_doc"].
          "/plugins/fusioninventory/front/deploypackage.form.php' method='POST'>";
          echo "<textarea cols='132' rows='25' style='border:0' name='json'>";
-         echo json_encode(json_decode($order->fields['json'],TRUE), JSON_PRETTY_PRINT);
+         echo json_encode(
+            json_decode(
+               $order->fields['json'],TRUE
+            ),
+            JSON_PRETTY_PRINT
+         );
          echo "</textarea>";
          echo "<input type='hidden' name='id' value='{$order->fields['id']}' />";
          echo "<input type='submit' name='update_json' value=\"".

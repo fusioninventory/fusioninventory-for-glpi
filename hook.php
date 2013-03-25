@@ -286,7 +286,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
          $comment = $data['ITEM_'.$num];
          return PluginFusioninventoryTaskjoblog::convertComment($comment);
          break;
-         
+
       case 'glpi_plugin_fusioninventory_taskjobstates.plugin_fusioninventory_agents_id':
          $pfAgent = new PluginFusioninventoryAgent();
          $pfAgent->getFromDB($data['ITEM_'.$num]);
@@ -294,21 +294,21 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             return NOT_AVAILABLE;
          }
          $itemtype = PluginFusioninventoryTaskjoblog::getStateItemtype($data['ITEM_0']);
-         if ($itemtype == 'PluginFusinvdeployPackage') {
+         if ($itemtype == 'PluginFusioninventoryDeployPackage') {
             $computer = new Computer();
-            $computer->getFromDB($pfAgent->fields['items_id']);
+            $computer->getFromDB($pfAgent->fields['computers_id']);
             return $computer->getLink(1);
          }
          return $pfAgent->getLink(1);
          break;
-        
+
    }
 
    if ($table == "glpi_plugin_fusioninventory_agentmodules") {
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $a_modules = $pfAgentmodule->find();
       foreach ($a_modules as $data2) {
-         if ($table.".".$field == 
+         if ($table.".".$field ==
                  "glpi_plugin_fusioninventory_agentmodules.".$data2['modulename']) {
             if (strstr($data["ITEM_".$num."_0"], '"'.$data['id'].'"')) {
                if ($data['ITEM_'.$num] == '0') {
@@ -322,8 +322,8 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
          }
       }
    }
-   
-   
+
+
    switch ($type) {
 
       case 'Computer':
@@ -2079,6 +2079,46 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
    $field = $searchopt[$id]["field"];
 
    switch ($type) {
+
+      case 'PluginFusioninventoryTaskjob' :
+         /*
+          * WARNING: The following is some minor hack in order to select a range of ids.
+          *
+          * More precisely, when using the ID filter, you can now put IDs separated by commas.
+          * This is used by the DeployPackage class when it comes to check running tasks on some
+          * packages.
+          */
+         if ($table == 'glpi_plugin_fusioninventory_tasks') {
+            if ($field == 'id') {
+               //check if this range is numeric
+               $ids = explode(',', $val);
+               foreach($ids as $k=>$i) {
+                  if (!is_numeric($i)) {
+                     unset($ids[$k]);
+                  }
+               }
+
+               if (count($ids) >= 1) {
+                  return $link." `$table`.`id` IN (".implode(',', $ids).")";
+               } else {
+                  return "";
+               }
+            } elseif ($field == 'name') {
+               $val = stripslashes($val);
+               //decode a json query to match task names in taskjobs list
+               $names = json_decode($val);
+               if ($names !== NULL && is_array($names)) {
+                  $names = array_map(
+                     create_function('$a', 'return "\"".$a."\"";'),
+                     $names
+                  );
+                  return $link." `$table`.`name` IN (".implode(',', $names) . ")";
+               } else {
+                  return "";
+               }
+            }
+         }
+      break;
 
       case 'PluginFusioninventoryAgent':
          $pfAgentmodule = new PluginFusioninventoryAgentmodule();

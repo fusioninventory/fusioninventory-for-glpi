@@ -63,6 +63,8 @@ class PluginFusioninventoryCommunicationRest {
                case 'getConfig':
                   $response = self::getConfigByAgent($params);
                   break;
+               case 'getJobs':
+                  $response = self::getJobsByAgent($params);
                case 'wait':
                   break;
 
@@ -92,10 +94,17 @@ class PluginFusioninventoryCommunicationRest {
          foreach (array_keys($params['task']) as $task) {
             foreach (PluginFusioninventoryStaticmisc::getmethods() as $method) {
                $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($method['module']);
-               if (isset($method['use_rest'])
-                     && $method['use_rest']
-                        && method_exists($class, self::getMethodForParameters($task))) {
+               if (
+                     (isset($method['task']) && strtolower($method['task']) == strtolower($task))
+                  && (isset($method['use_rest']) && $method['use_rest'])
+                  && method_exists($class, self::getMethodForParameters($task))
+               ) {
+                  /*
+                   * Since migration, there is only one plugin in one directory
+                   * It's maybe time to redo this function -- kiniou
+                   */
                   $schedule[] = call_user_func(array($class, self::getMethodForParameters($task)));
+                  break; //Stop the loop since we found the module corresponding to the asked task
                }
             }
          }
@@ -103,7 +112,20 @@ class PluginFusioninventoryCommunicationRest {
       return array('configValidityPeriod' => 600, 'schedule' => $schedule);
    }
 
+   /**
+    * Get jobs for an agent
+    * TODO: Deploy module needs this :) -- kiniou
+    */
+   static function getJobsByAgent($params = array()) {
+      $jobs = array();
+      $methods = PluginFusioninventoryStaticmisc::getmethods();
+      if( isset($params['task']) ) {
+         foreach(array_keys($params['task']) as $task) {
 
+         }
+      }
+      return FALSE;
+   }
 
    /**
     * Send to the agent an OK code

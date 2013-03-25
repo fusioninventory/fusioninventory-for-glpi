@@ -265,8 +265,8 @@ class PluginFusioninventoryMenu {
 
       if (PluginFusioninventoryProfile::haveRight("model", "r")) {
          $a_menu[8]['name'] = "SNMP models creation";
-         $a_menu[8]['pic']  = "";
-         $a_menu[8]['link'] = $CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php";
+         $a_menu[8]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_constructmodel.png";
+         $a_menu[8]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/constructmodel.php";
       }
 
       if (!empty($a_menu)) {

@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvsnmpConstructmodel extends CommonDBTM {
+class PluginFusioninventoryConstructmodel extends CommonDBTM {
    private $fp, $auth=array(), $key='';
 
    function connect() {
@@ -79,7 +79,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    function showAuth() {
       
       $auth = array();
-      $a_userinfos = PluginFusinvsnmpConstructdevice_User::getUserAccount($_SESSION['glpiID']);
+      $a_userinfos = PluginFusioninventoryConstructdevice_User::getUserAccount($_SESSION['glpiID']);
       if (!isset($a_userinfos['login'])) {
          echo "<table class='tab_cadre_fixe'>";
 
@@ -261,7 +261,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          </tr>
          </table>";
       $a_lock = explode("-", $data->device->lock);
-      $a_userinfos = PluginFusinvsnmpConstructdevice_User::getUserAccount($_SESSION['glpiID']);
+      $a_userinfos = PluginFusioninventoryConstructdevice_User::getUserAccount($_SESSION['glpiID']);
       if ($data->device->id == '0') {
          echo "<table class='tab_cadre_fixe'>";
 
@@ -994,7 +994,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       
       if (count($_POST['models']) == $_POST['nbmodels']) {
          // Import all models
-         $pfModel = new PluginFusinvsnmpModel();
+         $pfModel = new PluginFusioninventorySNMPModel();
          $pfModel->importAllModels(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels');
          
       } else {

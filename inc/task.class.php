@@ -120,6 +120,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       $sopt[30]['field']          = 'id';
       $sopt[30]['linkfield']      = '';
       $sopt[30]['name']           = __('ID');
+      $sopt[30]['datatype']      = 'number';
 
       return $sopt;
    }
@@ -690,10 +691,13 @@ class PluginFusioninventoryTask extends CommonDBTM {
          //check classes existence and append them to the query filter
          foreach($filter['definitions'] as $itemclass => $itemid) {
             if ( class_exists($itemclass) ) {
+
                $cond = "taskjob.`definition` LIKE '%\"".$itemclass."\"";
+
                //adding itemid if not empty
                if ( !empty($itemid) )
                      $cond .= ":\"".$itemid."\"";
+
                //closing LIKE statement
                $cond .= "%'";
                $where_tmp[] = $cond;
@@ -738,15 +742,12 @@ class PluginFusioninventoryTask extends CommonDBTM {
             )
          );
 
-      Toolbox::logDebug("getItemsFromDB");
-      Toolbox::logDebug("query : \n" .$query);
-
       $results = array();
       $r = $DB->query($query);
       if ($r) {
          $results = PluginFusioninventoryToolbox::fetchAssocByTable($r);
       }
-      Toolbox::logDebug(print_r($results, TRUE));
+
       return($results);
    }
 

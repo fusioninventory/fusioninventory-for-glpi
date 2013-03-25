@@ -44,10 +44,7 @@ if(!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-
-require_once(GLPI_ROOT."/plugins/fusioninventory/inc/communication.class.php");
-
-class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommunication {
+class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunication {
 
    // Get all devices and put in taskjobstate each task for each device for each agent
    function prepareRun($taskjobs_id) {
@@ -166,7 +163,7 @@ class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommu
 
       foreach($computers as $computer_id) {
          //Unique Id match taskjobstatuses for an agent(computer)
-//         $uniqid= uniqid();
+         $uniqid= uniqid();
 
          foreach($definitions as $definition) {
             $package->getFromDB($definition['PluginFusioninventoryDeployPackage']);
@@ -226,8 +223,21 @@ class PluginFusioninventoryDeployDeployCommon extends PluginFusioninventoryCommu
     * $array = array with different ID
     *
     */
-   function run($itemtype) {
-      return $this->message;
+   function run($taskjobs) {
+      //process the first task planned
+      $taskjob = array_shift($taskjobs);
+      //get order type label
+      $order_type_label = str_replace("PluginFusioninventoryDeploy", "", get_class($this));
+      //get numeric order type from label
+      $order_type = PluginFusioninventoryDeployOrder::getRender($order_type_label);
+      //get order by type and package id
+      $order = new PluginFusioninventoryDeployOrder($order_type, $taskjob['items_id']);
+      //decode order data
+      $order_data = json_decode($order->fields['json'],TRUE);
+      //add uniqid to response data
+      $order_data['jobs']['uuid'] = $taskjob['uniqid'];
+      //return data response as json
+      return json_encode($order_data);
    }
 }
 

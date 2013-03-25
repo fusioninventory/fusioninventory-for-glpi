@@ -74,6 +74,7 @@ class PluginFusioninventoryStaticmisc {
                      'method'         => 'InventoryComputerESX',
                      'selection_type' => 'devices',
                      'name'           => __('VMware host remote inventory', 'fusioninventory'),
+                     'task'           => 'ESX',
                      'use_rest'       => TRUE
             ),
 
@@ -660,6 +661,14 @@ class PluginFusioninventoryStaticmisc {
       return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
    }
 
+   static function task_deploy_getParameters() {
+      global $CFG_GLPI;
+      $config = new PluginFusioninventoryConfig();
+      return array(
+         "task" => "Deploy",
+         "remote" => $config->getValue('agent_base_url') . "/plugins/fusioninventory/b/deploy/",
+      );
+   }
 }
 
 ?>

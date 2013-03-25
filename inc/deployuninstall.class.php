@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryDeployUninstall extends CommonDBTM {
+class PluginFusioninventoryDeployuninstall extends PluginFusioninventoryDeployCommon {
 
    static function getTypeName($nb=0) {
       return __('Uninstallation', 'fusioninventory');
@@ -67,7 +67,8 @@ class PluginFusioninventoryDeployUninstall extends CommonDBTM {
          case 'PluginFusioninventoryDeployPackage':
             PluginFusioninventoryDeployPackage::displayOrderTypeForm(
                      PluginFusioninventoryDeployOrder::UNINSTALLATION_ORDER,
-                     $_POST['id']);
+                     $_POST['id'],
+                     $item);
             break;
       }
    }

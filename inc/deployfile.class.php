@@ -549,7 +549,7 @@ class PluginFusioninventoryDeployFile {
                   $msg = __("Transfer error: the file size is too big", 'fusioninventory');
                   break;
                case UPLOAD_ERR_PARTIAL:
-                  $msg = __("he uploaded file was only partially uploaded", 'fusioninventory');
+                  $msg = __("The uploaded file was only partially uploaded", 'fusioninventory');
                   break;
                case UPLOAD_ERR_NO_FILE:
                   $msg = __("No file was uploaded", 'fusioninventory');
@@ -728,7 +728,9 @@ class PluginFusioninventoryDeployFile {
 
       //add new entry
       $datas['associatedFiles'][$sha512] = $new_entry;
-      $datas['jobs']['associatedFiles'][] = $sha512;
+      if (!in_array($sha512,$datas['jobs']['associatedFiles'])) {
+         $datas['jobs']['associatedFiles'][] = $sha512;
+      }
 
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);

@@ -1,0 +1,23 @@
+== Fusioninventory Plugin
+
+This plugin makes GLPI to process various types of tasks for Fusioninventory agents:
+
+* Computer inventory
+* Network discovery
+* Network (SNMP) inventory
+* Software deployment
+* VMWare ESX host remote inventory
+
+For further information and documentation, please check http://www.fusioninventory.org .
+
+If you want to report bugs or check for development status, you can check http://forge.fusioninventory.org .
+
+== Third-party
+
+Some icons used comes from :
+
+* Dortmund is copyright by http://http://pc.de/icons/[PC.DE] and made available under a
+ http://creativecommons.org/licenses/by/3.0/deed[Creative Commons Attribution 3.0 License].
+
+* Fugue Icons is copyright by http://p.yusukekamiyamane.com/[Yusuke Kamiyamame] and made
+ available under a http://creativecommons.org/licenses/by/3.0/deed[Creative Commons Attribution 3.0 License].
