@@ -110,7 +110,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       if (isset($order_type)) {
          $tasklist = array_filter(
             $this->running_tasks,
-            create_function('$task' , 'return $task["taskjob"]["method"]=="deploy'.$order_type.'";')
+            create_function('$task', 'return $task["taskjob"]["method"]=="deploy'.$order_type.'";')
          );
       } else {
          $tasklist = $this->running_tasks;
@@ -154,7 +154,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          * (cf. https://forge.indepnet.net/issues/2476)
          **/
          $taskurl_base =
-            Toolbox::getItemTypeSearchURL("PluginFusioninventoryTaskJob", True);
+            Toolbox::getItemTypeSearchURL("PluginFusioninventoryTaskJob", TRUE);
 
          $taskurl_args = implode("&",
             array(
@@ -491,7 +491,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<textarea cols='132' rows='25' style='border:0' name='json'>";
          echo json_encode(
             json_decode(
-               $order->fields['json'],TRUE
+               $order->fields['json'], TRUE
             ),
             JSON_PRETTY_PRINT
          );

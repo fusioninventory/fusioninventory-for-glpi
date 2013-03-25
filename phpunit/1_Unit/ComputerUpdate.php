@@ -665,7 +665,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'name'                  => 'em0',
                      'instantiation_type'    => 'NetworkPortEthernet',
                      'mac'                   => '00:23:18:cf:0d:93',
-                     'comment'               => null
+                     'comment'               => NULL
 
                  ),
           '2' => array(
@@ -680,7 +680,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'name'                  => 'lo0',
                      'instantiation_type'    => 'NetworkPortLocal',
                      'mac'                   => '',
-                     'comment'               => null
+                     'comment'               => NULL
                  )
       );
       

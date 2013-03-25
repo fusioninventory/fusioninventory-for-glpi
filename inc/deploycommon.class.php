@@ -233,7 +233,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       //get order by type and package id
       $order = new PluginFusioninventoryDeployOrder($order_type, $taskjob['items_id']);
       //decode order data
-      $order_data = json_decode($order->fields['json'],TRUE);
+      $order_data = json_decode($order->fields['json'], TRUE);
 
       /*
        * This has to be done properly in each corresponding classes.
