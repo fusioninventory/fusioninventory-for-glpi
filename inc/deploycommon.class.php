@@ -223,7 +223,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
     * $array = array with different ID
     *
     */
-   function run($taskjobs) {
+   function run($taskjobs, $agent) {
       //process the first task planned
       $taskjob = array_shift($taskjobs);
       //get order type label
@@ -234,10 +234,54 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       $order = new PluginFusioninventoryDeployOrder($order_type, $taskjob['items_id']);
       //decode order data
       $order_data = json_decode($order->fields['json'],TRUE);
+
+      /*
+       * This has to be done properly in each corresponding classes.
+       * Meanwhile, I just split the data to rebuild a proper and compliant JSON
+       */
+      $order_job = $order_data['jobs'];
       //add uniqid to response data
-      $order_data['jobs']['uuid'] = $taskjob['uniqid'];
+      $order_job['uuid'] = $taskjob['uniqid'];
+
+      /*
+       * Orders should only contains job data and associatedFiles should be retrieved from the list
+       * inside Orders data.
+       * exemple:
+       * $order_files = array()
+       * foreach($order_job["associatedFiles"] as $hash) {
+       *    if (!isset($order_files[$hash]) {
+       *       $order_files[$hash] = PluginFusioninventoryDeployFile::getByHash($hash);
+       *       $order_files[$hash]['mirrors'] = $mirrors
+       *    }
+       * }
+       */
+      $order_files = $order_data['associatedFiles'];
+
+
+      //Add mirrors to associatedFiles
+      //TODO: Filter mirrors with computer location
+      $mirrors = PluginFusioninventoryDeployMirror::getList($agent);
+      foreach($order_files as $hash => $params) {
+         $order_files[$hash]['mirrors'] = $mirrors;
+      }
+
+      $final_order = array(
+         "jobs" => array(
+            $order_job
+         ),
+         "associatedFiles" => $order_files
+      );
+/*
+      Toolbox::logDebug(print_r(
+         array(
+            "taskjob" => $taskjob,
+            "agent" => $agent,
+            "final_order"=> $final_order,
+         )
+      ,1));
+*/
       //return data response as json
-      return json_encode($order_data);
+      return json_encode($final_order);
    }
 }
 

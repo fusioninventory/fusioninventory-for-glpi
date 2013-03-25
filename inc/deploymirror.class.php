@@ -77,8 +77,28 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       return $ong;
    }
 
-   
-   
+
+   /*
+    * Get and filter mirrors list by computer agent and location.
+    * Location is retrieved from the computer data.
+    */
+
+   static function getList($agent = NULL) {
+      $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deploymirrors');
+
+      $mirrors = array();
+      foreach ($results as $result) {
+          $mirrors[] = $result['url'];
+      }
+
+      //always add default mirror (this server)
+      $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY')
+            ."?action=getFilePart&file=";
+
+      return $mirrors;
+   }
+
+
    function showForm($id, $options=array()) {
 
       if ($id!='') {

@@ -44,53 +44,9 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryDeployFilepart extends CommonDBTM {
+class PluginFusioninventoryDeployFilepart {
 
 
-   static function getTypeName($nb=0) {
-      return __('pieces of files', 'fusioninventory');
-   }
-
-   static function canCreate() {
-      return TRUE;
-   }
-
-   static function canView() {
-      return TRUE;
-   }
-
-   
-   
-   static function getForFile($files_id) {
-      $filepart_obj = new self;
-      $results = $filepart_obj->find("`plugin_fusioninventory_deployfiles_id`='$files_id'",
-            "id ASC");
-
-      $fileparts = array();
-      # TODO, avoid the array push here.
-      foreach ($results as $result) {
-         array_push($fileparts, $result['sha512']);
-      }
-
-      return $fileparts;
-   }
-
-   
-   
-   static function getIdsForFile($files_id) {
-      $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deployfileparts',
-                                      "`plugin_fusioninventory_deployfiles_id`='$files_id'");
-
-      $fileparts = array();
-      foreach ($results as $result) {
-         $fileparts[$result['id']] = $result['sha512'];
-      }
-
-      return $fileparts;
-   }
-
-   
-   
    static function httpSendFile($params) {
       if (!isset($params['file'])) {
          header("HTTP/1.1 500");
@@ -99,44 +55,17 @@ class PluginFusioninventoryDeployFilepart extends CommonDBTM {
       $matches = array();
       preg_match('/.\/..\/([^\/]+)/', $params['file'], $matches);
 
-      $sha512 = mysql_real_escape_string($matches[1]);
+      $sha512 = $matches[1];
       $short_sha512 = substr($sha512, 0, 6);
 
-      //search by shortsha512
-      $pfDeployFilepart = new PluginFusioninventoryDeployFilepart;
-      $files = $pfDeployFilepart->find("shortsha512='".$short_sha512."'");
-
-      if (count($files) > 1) {
-         //find file with long sha512
-         foreach ($files as $file) {
-            if ($file['sha512'] == $sha512) {
-               unset($files);
-               $files = array($file);
-               break;
-            }
-         }
-      }
-      if (count($files) == 0 ) {
-         header("HTTP/1.1 404");
-         exit;
-      }
-
-      if (count($files) > 1) {
-         header("HTTP/1.1 500");
-         exit;
-      }
-
-      $file = array_pop($files);
-
-      $repoPath = GLPI_PLUGIN_DOC_DIR."/fusinvdeploy/files/repository/";
-      $sha512 = $file['sha512'];
+      $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
 
       $filePath = $repoPath.PluginFusioninventoryDeployFile::getDirBySha512($sha512).
                                                                               '/'.$sha512.'.gz';
 
       if (!is_file($filePath)) {
          header("HTTP/1.1 404");
-         print "\n".getcwd().'/'.$filePath."\n\n";
+         print "\n".$filePath."\n\n";
          exit;
       } else if (!is_readable($filePath)) {
          header("HTTP/1.1 403");
