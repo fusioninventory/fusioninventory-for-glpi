@@ -49,28 +49,35 @@ include ("../../../../inc/includes.php");
 
 $response = FALSE;
 //Agent communication using REST protocol
-if (isset($_GET['action']) && isset($_GET['machineid'])) {
+if (isset($_GET['action'])) {
    switch ($_GET['action']) {
       case 'getJobs':
-         $pfAgent = new PluginFusioninventoryAgent();
-         $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-         $pfTaskjob = new PluginFusioninventoryTaskjob();
+         if(isset($_GET['machineid'])) {
+            $pfAgent = new PluginFusioninventoryAgent();
+            $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+            $pfTaskjob = new PluginFusioninventoryTaskjob();
 
-         $a_agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
-         if(isset($a_agent['id'])) {
-            $moduleRun = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
+            $a_agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
+            if(isset($a_agent['id'])) {
+               $moduleRun = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
 
-            foreach ($moduleRun as $className => $array) {
-               if (class_exists($className)) {
-                  if (     $className == "PluginFusioninventoryDeployinstall"
-                        || $className == "PluginFusioninventoryDeployuninstall"
-                  ) {
-                     $class = new $className();
-                     $response = $class->run($array);
+               foreach ($moduleRun as $className => $array) {
+                  if (class_exists($className)) {
+                     if (     $className == "PluginFusioninventoryDeployinstall"
+                           || $className == "PluginFusioninventoryDeployuninstall"
+                     ) {
+                        $class = new $className();
+                        $response = $class->run($array, $a_agent);
+                     }
                   }
                }
             }
          }
+         break;
+
+      case 'getFilePart':
+         PluginFusioninventoryDeployFilepart::httpSendFile($_GET);
+         exit;
          break;
       case 'setStatus':
          //Generic method to update logs
