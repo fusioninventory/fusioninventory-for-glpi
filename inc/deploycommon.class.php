@@ -163,7 +163,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
       foreach($computers as $computer_id) {
          //Unique Id match taskjobstatuses for an agent(computer)
-//         $uniqid= uniqid();
+         $uniqid= uniqid();
 
          foreach($definitions as $definition) {
             $package->getFromDB($definition['PluginFusioninventoryDeployPackage']);
