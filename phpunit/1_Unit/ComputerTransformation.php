@@ -421,7 +421,6 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
       $a_reference[0] = array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
-                    'frequence'         => 2400,
                     'serial'            => '',
                     'frequency'         => 2400
           );
