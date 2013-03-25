@@ -162,7 +162,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["fusioninventory$$$$0.84+1.0"] = array(
+      $a_reference['software']["fusioninventory$$$$0.84+1.0$$$$1$$$$0"] = array(
                'name'                  => 'fusioninventory',
                'manufacturers_id'      => 1,
                'version'               => '0.84+1.0',
@@ -223,7 +223,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["glpi$$$$0.84"] = array(
+      $a_reference['software']["glpi$$$$0.84$$$$2$$$$0"] = array(
                'name'                  => 'glpi',
                'manufacturers_id'      => 2,
                'version'               => '0.84',
@@ -257,7 +257,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["glpi$$$$0.84"] = array(
+      $a_reference['software']["glpi$$$$0.84$$$$2$$$$0"] = array(
                'name'                  => 'glpi',
                'manufacturers_id'      => 2,
                'version'               => '0.84',
@@ -291,7 +291,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["glpi0.83$$$$0.83"] = array(
+      $a_reference['software']["glpi0.83$$$$0.83$$$$2$$$$0"] = array(
                'name'                  => 'glpi0.83',
                'manufacturers_id'      => 2,
                'version'               => '0.83',

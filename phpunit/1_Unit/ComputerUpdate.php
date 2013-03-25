@@ -105,28 +105,24 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
-                    'frequence'         => 2400,
                     'serial'            => '',
                     'frequency'         => 2400
                 ),
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
-                    'frequence'         => 2400,
                     'serial'            => '',
                     'frequency'         => 2400
                 ),
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
-                    'frequence'         => 2400,
                     'serial'            => '',
                     'frequency'         => 2400
                 ),
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
-                    'frequence'         => 2400,
                     'serial'            => '',
                     'frequency'         => 2400
                 )
@@ -186,7 +182,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
         );
       
       $a_inventory['software'] = Array(
-            'GentiumBasic$$$$110' => Array(
+            'GentiumBasic$$$$110$$$$1$$$$0' => Array(
                     'name'                   => 'GentiumBasic',
                     'version'                => 110,
                     'manufacturers_id'       => 1,
@@ -194,7 +190,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'is_template_computer'   => 0,
                     'is_deleted_computer'    => 0
                 ),
-            'ImageMagick$$$$6.8.0.7_1' => Array(
+            'ImageMagick$$$$6.8.0.7_1$$$$2$$$$0' => Array(
                     'name'                   => 'ImageMagick',
                     'version'                => '6.8.0.7_1',
                     'manufacturers_id'       => 2,
@@ -202,7 +198,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'is_template_computer'   => 0,
                     'is_deleted_computer'    => 0
                 ),
-            'ORBit2$$$$2.14.19' => Array(
+            'ORBit2$$$$2.14.19$$$$3$$$$0' => Array(
                     'name'                   => 'ORBit2',
                     'version'                => '2.14.19',
                     'manufacturers_id'       => 3,
@@ -745,7 +741,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'contact'                          => 'ddurieux'
       );
       $a_inventory['software'] = Array(
-            'acrobat_Reader_9.2$$$$1.0.0.0' => Array(
+            'acrobat_Reader_9.2$$$$1.0.0.0$$$$192$$$$0' => Array(
                     'name'                   => 'acrobat_Reader_9.2',
                     'version'                => '1.0.0.0',
                     'manufacturers_id'       => 192,
