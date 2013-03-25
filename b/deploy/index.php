@@ -57,15 +57,17 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $pfTaskjob = new PluginFusioninventoryTaskjob();
 
          $a_agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
-         $moduleRun = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
+         if(isset($a_agent['id'])) {
+            $moduleRun = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
 
-         foreach ($moduleRun as $className => $array) {
-            if (class_exists($className)) {
-               if (     $className == "PluginFusioninventoryDeployinstall"
-                     || $className == "PluginFusioninventoryDeployuninstall"
-               ) {
-                  $class = new $className();
-                  $response = $class->run($array);
+            foreach ($moduleRun as $className => $array) {
+               if (class_exists($className)) {
+                  if (     $className == "PluginFusioninventoryDeployinstall"
+                        || $className == "PluginFusioninventoryDeployuninstall"
+                  ) {
+                     $class = new $className();
+                     $response = $class->run($array);
+                  }
                }
             }
          }
