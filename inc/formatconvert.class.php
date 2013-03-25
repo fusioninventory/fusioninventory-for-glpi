@@ -1046,6 +1046,11 @@ class PluginFusioninventoryFormatconvert {
       $rulecollection = new RuleDictionnarySoftwareCollection();
 
       foreach ($a_inventory['SOFTWARES'] as $a_softwares) {
+         if (isset($a_softwares['PUBLISHER'])
+                 && gettype($a_softwares['PUBLISHER']) == 'array')  {
+            $a_softwares['PUBLISHER'] = current($a_softwares['PUBLISHER']);
+         }
+         
          $array_tmp = $this->addValues($a_softwares, 
                                         array( 
                                            'PUBLISHER'   => 'manufacturers_id', 
@@ -1087,8 +1092,10 @@ class PluginFusioninventoryFormatconvert {
                   if (isset($res_rule["manufacturer"])) {
                      $array_tmp['manufacturers_id'] = Dropdown::import("Manufacturer", 
                                                    array('name' => $res_rule["manufacturer"]));
-                  } else if ($array_tmp['manufacturers_id'] != ''
+                  } else if (isset($array_tmp['manufacturers_id'])
+                          && $array_tmp['manufacturers_id'] != ''
                           && $array_tmp['manufacturers_id'] != '0') {
+
                      if (!isset($this->manufacturer_cache[$array_tmp['manufacturers_id']])) {
                         $new_value = Dropdown::importExternal('Manufacturer',
                                                               $array_tmp['manufacturers_id']);
