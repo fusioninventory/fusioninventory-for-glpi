@@ -61,7 +61,7 @@ class PluginFusioninventoryDeployFilepart {
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
 
       $filePath = $repoPath.PluginFusioninventoryDeployFile::getDirBySha512($sha512).
-                                                                              '/'.$sha512.'.gz';
+                                                                              '/'.$sha512;
 
       if (!is_file($filePath)) {
          header("HTTP/1.1 404");
@@ -76,7 +76,7 @@ class PluginFusioninventoryDeployFilepart {
 
       header('Content-Description: File Transfer');
       header('Content-Type: application/octet-stream');
-      header('Content-Disposition: attachment; filename='.$sha512.'.gz');
+      header('Content-Disposition: attachment; filename='.$sha512);
       header('Content-Transfer-Encoding: binary');
       header('Expires: 0');
       header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
