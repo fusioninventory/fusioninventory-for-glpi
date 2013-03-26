@@ -410,7 +410,7 @@ class PluginFusioninventoryDeployAction {
 
       //process ret checks
       if (isset($params['retchecks_type']) && !empty($params['retchecks_type'])) {
-         Toolbox::logDebug("retchecks_type : \n" . print_r($params['retchecks_type'],TRUE));
+         Toolbox::logDebug("retchecks_type : \n" . print_r($params['retchecks_type'], TRUE));
          foreach ($params['retchecks_type'] as $index => $type) {
             if ($type !== '0') {
                $tmp['retChecks'][] = array(

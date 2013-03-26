@@ -74,7 +74,7 @@ class PluginFusioninventoryDeployFile {
          //== edit selected data ==
 
          //get current order json
-         Toolbox::logDebug($_SERVER['SCRIPT_FILENAME'] . "\n" . print_r($order,1));
+         Toolbox::logDebug($_SERVER['SCRIPT_FILENAME'] . "\n" . print_r($order, 1));
          $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order->fields['id']), TRUE);
 
          //get data on index
@@ -728,7 +728,7 @@ class PluginFusioninventoryDeployFile {
 
       //add new entry
       $datas['associatedFiles'][$sha512] = $new_entry;
-      if (!in_array($sha512,$datas['jobs']['associatedFiles'])) {
+      if (!in_array($sha512, $datas['jobs']['associatedFiles'])) {
          $datas['jobs']['associatedFiles'][] = $sha512;
       }
 
