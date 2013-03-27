@@ -188,7 +188,8 @@ class PluginFusioninventoryDeployAction {
                "</b> : <ul class='retChecks'>";
             foreach ($action[$action_type]['retChecks'] as $retCheck) {
                echo "<li>";
-               echo self::retchecks_entries()[$retCheck['type']]." ".array_shift($retCheck['values']);
+               $retchecks_entries = self::retchecks_entries();
+               echo $retchecks_entries[$retCheck['type']]." ".array_shift($retCheck['values']);
                echo "</li>";
             }
             echo "</ul>";
