@@ -615,13 +615,12 @@ class PluginFusioninventoryToolbox {
       $version = phpversion();
 
       if ( version_compare($version, '5.4' , 'lt') ) {
-         echo json_readable_encode(
-            json_decode(
-               $json, TRUE
-            )
-         );
-      } else if ( version_compare($version, '5.4', 'ge') ) {
          echo pretty_json($json);
+      } else if ( version_compare($version, '5.4', 'ge') ) {
+         echo json_encode(
+            json_decode($json, TRUE),
+            JSON_PRETTY_PRINT
+         );
       }
    }
 }
