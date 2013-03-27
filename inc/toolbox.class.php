@@ -45,8 +45,6 @@ if (!defined('GLPI_ROOT')) {
 }
 
 // add readable json encode for PHP < 5.4
-Toolbox::logDebug("__FILE__".dirname(__FILE__));
-
 include_once( dirname(__FILE__) . "/../lib/pretty_json.php" );
 
 /**
