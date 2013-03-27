@@ -44,6 +44,11 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+// add readable json encode for PHP < 5.4
+Toolbox::logDebug("__FILE__".dirname(__FILE__));
+
+include_once( dirname(__FILE__) . "/../lib/pretty_json.php" );
+
 /**
  * Toolbox of various utility methods
  **/
@@ -606,6 +611,20 @@ class PluginFusioninventoryToolbox {
          }
       }
       return $results;
+   }
+
+   static function displayJson($json) {
+      $version = phpversion();
+
+      if ( version_compare($version, '5.4' , 'lt') ) {
+         echo json_readable_encode(
+            json_decode(
+               $json, TRUE
+            )
+         );
+      } else if ( version_compare($version, '5.4', 'ge') ) {
+         echo pretty_json($json);
+      }
    }
 }
 
