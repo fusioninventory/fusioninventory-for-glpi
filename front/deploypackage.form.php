@@ -46,10 +46,15 @@ Session::checkLoginUser();
 
 if (isset($_REQUEST['update_json'])) {
    $order = new PluginFusioninventoryDeployOrder();
-   $order->update(array(
-      'id' => $_REQUEST['id'],
-      'json' => $DB->escape(preg_replace('/\s+/', '', $_REQUEST['json']))
-   ));
+
+   //flatten json to update
+   $json = json_encode(json_decode($_REQUEST['json'],TRUE));
+   $order->update(
+      array(
+         'id' => $_REQUEST['id'],
+         'json' => $json
+      )
+   );
    Html::back();
    exit;
 } elseif (isset($_REQUEST['add_item'])) {
