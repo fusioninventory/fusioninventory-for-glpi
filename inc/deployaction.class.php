@@ -46,6 +46,16 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployAction {
 
+   static function retchecks_entries() {
+      return array(
+         '--',
+         'okCode'       => __("Code is equal to", 'fusioninventory'),
+         'errorCode'    => __("Code is not equal to", 'fusioninventory'),
+         'okPattern'    => __("Command output contains", 'fusioninventory'),
+         'errorPattern' => __("Command output does not contains", 'fusioninventory')
+      );
+   }
+
    static function canCreate() {
       return TRUE;
    }
@@ -178,7 +188,8 @@ class PluginFusioninventoryDeployAction {
                "</b> : <ul class='retChecks'>";
             foreach ($action[$action_type]['retChecks'] as $retCheck) {
                echo "<li>";
-               echo $retCheck['type']." <b>=</b> ".array_shift($retCheck['value']);
+               $retchecks_entries = self::retchecks_entries();
+               echo $retchecks_entries[$retCheck['type']]." ".array_shift($retCheck['values']);
                echo "</li>";
             }
             echo "</ul>";
@@ -219,7 +230,7 @@ class PluginFusioninventoryDeployAction {
       echo "</tr></table>";
 
       //ajax update of action value span
-      $params = array('value'  => '__VALUE__',
+      $params = array('values'  => '__VALUE__',
                       'rand'   => $rand,
                       'myname' => 'method',
                       'type'   => "action");
@@ -257,7 +268,7 @@ class PluginFusioninventoryDeployAction {
    static function displayAjaxValue($datas) {
       global $CFG_GLPI;
 
-      $type         = $datas['value'];
+      $type         = $datas['values'];
       $rand         = $datas['rand'];
 
       $value_type_1 = "input";
@@ -324,20 +335,11 @@ class PluginFusioninventoryDeployAction {
          }
          echo "<span id='retchecks$rand' style='display:block'>";
 
-         //TODO : retCheck types are not really intuitive.
-         // It should proposed a dropdown with explicit condition
-         $retchecks_entries = array(
-            '--',
-            'okCode'       => __("Code is equal to", 'fusioninventory'),
-            'errorCode'    => __("Code is not equal to", 'fusioninventory'),
-            'okPattern'    => __("Command output contains", 'fusioninventory'),
-            'errorPattern' => __("Command output does not contains", 'fusioninventory')
-         );
 
          echo "<table class='table_retchecks' style='display:none'>";
          echo "<tr>";
          echo "<td>";
-         Dropdown::showFromArray('retchecks_type[]', $retchecks_entries);
+         Dropdown::showFromArray('retchecks_type[]', self::retchecks_entries());
          echo "</td>";
          echo "<td><input type='text' name='retchecks_value[]' /></td>";
          echo "<td><a class='edit' onclick='removeLine$rand(this)'><img src='".
@@ -350,13 +352,13 @@ class PluginFusioninventoryDeployAction {
                echo "<table class='table_retchecks'>";
                echo "<tr>";
                echo "<td>";
-               Dropdown::showFromArray('retchecks_type[]', $retchecks_entries, array(
+               Dropdown::showFromArray('retchecks_type[]', self::retchecks_entries(), array(
                   'value' => $retcheck['type']
                ));
                echo "</td>";
                echo "<td>";
                echo "<input type='text' name='retchecks_value[]' value='".
-                  $retcheck['value'][0]."' />";
+                  $retcheck['values'][0]."' />";
                echo "</td>";
                echo "<td><a class='edit' onclick='removeLine$rand(this)'><img src='".
                   $CFG_GLPI["root_doc"]."/pics/delete.png' /></a></td>";
@@ -415,7 +417,7 @@ class PluginFusioninventoryDeployAction {
             if ($type !== '0') {
                $tmp['retChecks'][] = array(
                   'type' => $type,
-                  'value' => array($params['retchecks_value'][$index])
+                  'values' => array($params['retchecks_value'][$index])
                );
             }
          }
@@ -458,7 +460,7 @@ class PluginFusioninventoryDeployAction {
             if ($type !== '0') {
                $tmp['retChecks'][] = array(
                   'type' => $type,
-                  'value' => array($params['retchecks_value'][$index])
+                  'values' => array($params['retchecks_value'][$index])
                );
             }
          }
