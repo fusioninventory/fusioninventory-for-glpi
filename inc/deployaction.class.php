@@ -107,19 +107,17 @@ class PluginFusioninventoryDeployAction {
          $params['type']    = $type;
          $params['index']   = $datas['index'];
          if (isset($action_values['from'])) {
-            $params['value_1'] = addslashes($action_values['from']);
+            $params['value_1'] = urlencode(addslashes($action_values['from']));
          }
          if (isset($action_values['exec'])) {
             $params['value_1'] = urlencode(addslashes($action_values['exec']));
-            //$params['value_1'] = urlencode($action_values['exec']);
-            Toolbox::logDebug("ACTION params : " . $params['value_1']);
          }
          if (isset($action_values['list'])) {
             $tmp = array_values($action_values['list']);
             $params['value_1'] = $tmp[0];
          }
          if (isset($action_values['to'])) {
-            $params['value_2'] = addslashes($action_values['to']);
+            $params['value_2'] = urlencode(addslashes($action_values['to']));
          }
          if (isset($action_values['retChecks']))  {
             $params['retChecks'] = json_encode($action_values['retChecks']);
@@ -283,6 +281,8 @@ class PluginFusioninventoryDeployAction {
             $name_label_1 = "from";
             $value_label_2 = __("To", 'fusioninventory');
             $name_label_2 = "to";
+            $value_1 = stripslashes($value_1);
+            $value_2 = stripslashes($value_2);
             break;
          case 'cmd':
             $value_label_1 = __("exec", 'fusioninventory');
@@ -296,6 +296,7 @@ class PluginFusioninventoryDeployAction {
             $value_label_1 = __("path", 'fusioninventory');
             $name_label_1 = "list[]";
             $value_label_2 = FALSE;
+            $value_1 = stripslashes($value_1);
             break;
          default:
             return FALSE;
@@ -412,7 +413,6 @@ class PluginFusioninventoryDeployAction {
 
       //process ret checks
       if (isset($params['retchecks_type']) && !empty($params['retchecks_type'])) {
-         Toolbox::logDebug("retchecks_type : \n" . print_r($params['retchecks_type'], TRUE));
          foreach ($params['retchecks_type'] as $index => $type) {
             if ($type !== '0') {
                $tmp['retChecks'][] = array(

@@ -78,7 +78,7 @@ if (isset($_REQUEST['update_json'])) {
       $order->update(
          array(
             'id' => $_REQUEST['id'],
-            'json' => json_encode($json)
+            'json' => addslashes(json_encode($json))
          )
       );
       Html::back();
