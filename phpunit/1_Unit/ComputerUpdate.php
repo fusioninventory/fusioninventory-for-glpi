@@ -298,6 +298,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'computers_id'                     => '1',
           'bios_date'                        => NULL,
           'bios_version'                     => NULL,
+          'bios_assettag'                    => NULL,
           'bios_manufacturers_id'            => '0',
           'operatingsystem_installationdate' => '2012-10-16 08:12:56',
           'winowner'                         => 'test',
