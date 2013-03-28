@@ -446,6 +446,8 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "</td>";
       echo "</table>";
 
+      PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
+      
       // Reload model for networkequipment have sysdescr
       $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
       $a_networkequipments = $pfNetworkEquipment->find("`sysdescr`!=''");
@@ -457,8 +459,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       $a_printers = $pfPrinter->find("`sysdescr`!=''");
       foreach ($a_printers as $a_printer) {
          $pfModel->getrightmodel($a_printer['printers_id'], "Printer");
-      }
-      PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
+      }      
    }
 }
 
