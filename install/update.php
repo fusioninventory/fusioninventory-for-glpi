@@ -1546,7 +1546,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
       $a_table = array();
       $a_table['name'] = 'glpi_plugin_fusioninventory_inventorycomputercriterias';
-      $a_table['oldname'] = array();
+      $a_table['oldname'] = array('glpi_plugin_fusinvinventory_criterias');
 
       $a_table['fields']  = array();
       $a_table['fields']['id']         = array('type'    => 'autoincrement', 
@@ -1613,42 +1613,30 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Table glpi_plugin_fusioninventory_inventorycomputerblacklists
     */
-      $newTable = "glpi_plugin_fusioninventory_inventorycomputerblacklists";
-      $migration->renameTable("glpi_plugin_fusinvinventory_blacklists", $newTable);
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
-                        PRIMARY KEY (`id`)
-                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 'id',
-                                 'id',
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 'plugin_fusioninventory_criterium_id',
-                                 'plugin_fusioninventory_criterium_id',
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 'value',
-                                 'value',
-                                 "varchar(255) DEFAULT NULL");
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_inventorycomputerblacklists';
+      $a_table['oldname'] = array('glpi_plugin_fusinvinventory_blacklists');
 
-      $migration->migrationOneTable($newTable);
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement', 
+                                               'value'   => '');
+      $a_table['fields']['plugin_fusioninventory_criterium_id'] = array('type'    => 'integer',  
+                                                                        'value'   => NULL);
+      $a_table['fields']['value']  = array('type'    => 'string', 
+                                           'value'   => NULL);
 
-         $migration->addField($newTable,
-                                 'id',
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                                 'plugin_fusioninventory_criterium_id',
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 'value',
-                                 "varchar(255) DEFAULT NULL");
-         $migration->addKey($newTable,
-                            "plugin_fusioninventory_criterium_id");
-      $migration->migrationOneTable($newTable);
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => 'plugin_fusioninventory_criterium_id',
+                                 'name' => '',
+                                 'type' => 'KEY');
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
       $DB->list_fields($newTable, FALSE);
 
       
@@ -1694,6 +1682,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     /*
     * Update blacklist
     */
+      $newTable = "glpi_plugin_fusioninventory_inventorycomputerblacklists";
       // * ssn
       $a_input = array(
          'N/A',
@@ -2036,6 +2025,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "datetime DEFAULT NULL");
          $migration->addField($newTable,
                               "bios_version",
+                              "varchar(255) DEFAULT NULL");
+         $migration->addField($newTable,
+                              "bios_assettag",
                               "varchar(255) DEFAULT NULL");
          $migration->addField($newTable,
                               "bios_manufacturers_id",
@@ -5409,6 +5401,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
    $query = "UPDATE glpi_rules SET `sub_type`='PluginFusioninventoryInventoryRuleImport'
       WHERE `sub_type`='PluginFusioninventoryRuleImportEquipment'";
+   $DB->query($query);
+   
+   $query = "UPDATE glpi_rules SET `sub_type`='PluginFusioninventoryInventoryRuleEntity'
+      WHERE `sub_type`='PluginFusinvinventoryRuleEntity'";
    $DB->query($query);
    
    /*

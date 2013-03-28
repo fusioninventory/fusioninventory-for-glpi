@@ -174,10 +174,6 @@ class AllTests {
       }
       $suite->addTest(GLPIInstall_AllTests::suite());
       $suite->addTest(FusinvInstall_AllTests::suite());
-//      $suite->addTest(InventoryComputer_AllTests::suite());
-//      $suite->addTest(Rules_AllTests::suite());
-////      $suite->addTest(Netinventory_AllTests::suite());
-//      $suite->addTest(Netdiscovery_AllTests::suite());
       
       $suite->addTest(FormatConvertData_AllTests::suite());
       $suite->addTest(SoftwareUpdate_AllTests::suite());
