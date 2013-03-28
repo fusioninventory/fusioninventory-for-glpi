@@ -100,11 +100,6 @@ INSERT INTO `glpi_plugins` (`id`, `directory`, `name`, `version`, `state`, `auth
 (9, 'fusinvdeploy', 'FusionInventory DEPLOY', '0.83+2.1', 1, '<a href=''http://www.teclib.com''>TECLIB''</a> and the FusionInventory team', 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/', 'AGPLv3+'),
 (21, 'fusinvsnmp', 'FusionInventory SNMP', '0.83+2.1', 1, '<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>\n                                    & FusionInventory team', 'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/', 'AGPLv3+');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_actions`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -118,11 +113,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions` (
   KEY `items_id` (`items_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_actions_commandenvvariables`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_commandenvvariables` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -133,11 +123,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_commandenvvariables
   KEY `plugin_fusinvdeploy_commands_id` (`plugin_fusinvdeploy_commands_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_actions_commands`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_commands` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -145,11 +130,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_commands` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_actions_commandstatus`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_commandstatus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -160,11 +140,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_commandstatus` (
   KEY `plugin_fusinvdeploy_commands_id` (`plugin_fusinvdeploy_commands_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_actions_copies`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_copies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -173,11 +148,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_copies` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_actions_deletes`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_deletes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -185,11 +155,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_deletes` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_actions_messages`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -199,11 +164,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_messages` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_actions_mkdirs`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_mkdirs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -211,11 +171,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_mkdirs` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_actions_moves`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_moves` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -224,11 +179,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_actions_moves` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_checks`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_checks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -241,11 +191,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_checks` (
   KEY `plugin_fusinvdeploy_orders_id` (`plugin_fusinvdeploy_orders_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_fileparts`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_fileparts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -259,11 +204,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_fileparts` (
   KEY `plugin_fusinvdeploy_files_id` (`plugin_fusinvdeploy_files_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_files`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -282,11 +222,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_files` (
   KEY `plugin_fusinvdeploy_orders_id` (`plugin_fusinvdeploy_orders_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_files_mirrors`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_files_mirrors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -298,11 +233,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_files_mirrors` (
   KEY `plugin_fusinvdeploy_mirrors_id` (`plugin_fusinvdeploy_mirrors_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_groups`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -312,11 +242,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_groups` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_groups_dynamicdatas`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_groups_dynamicdatas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -326,11 +251,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_groups_dynamicdatas` (
   KEY `groups_id` (`groups_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_groups_staticdatas`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_groups_staticdatas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -342,11 +262,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_groups_staticdatas` (
   KEY `items_id` (`items_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_mirrors`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_mirrors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -361,11 +276,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_mirrors` (
   KEY `date_mod` (`date_mod`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_orders`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -378,11 +288,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_orders` (
   KEY `plugin_fusinvdeploy_packages_id` (`plugin_fusinvdeploy_packages_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvdeploy_packages`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_packages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -396,11 +301,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_packages` (
   KEY `date_mod` (`date_mod`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
 
---
--- Stand-in structure for view `glpi_plugin_fusinvdeploy_taskjobs`
---
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_taskjobs` (
 `id` int(11)
 ,`plugin_fusinvdeploy_tasks_id` int(11)
@@ -422,11 +323,8 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_taskjobs` (
 ,`periodicity_type` varchar(255)
 ,`execution_id` bigint(20)
 );
--- --------------------------------------------------------
 
---
--- Stand-in structure for view `glpi_plugin_fusinvdeploy_tasks`
---
+
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_tasks` (
 `id` int(11)
 ,`entities_id` int(11)
@@ -442,11 +340,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvdeploy_tasks` (
 ,`execution_id` bigint(20)
 ,`is_advancedmode` tinyint(1)
 );
--- --------------------------------------------------------
 
---
--- Table structure for table `glpi_plugin_fusinvinventory_antivirus`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_antivirus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -463,11 +357,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_antivirus` (
   KEY `uptodate` (`uptodate`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvinventory_blacklists`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_blacklists` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -477,9 +366,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_blacklists` (
   KEY `plugin_fusioninventory_criterium_id` (`plugin_fusioninventory_criterium_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=71 ;
 
---
--- Dumping data for table `glpi_plugin_fusinvinventory_blacklists`
---
 
 INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`id`, `plugin_fusioninventory_criterium_id`, `value`) VALUES
 (1, 3, '50:50:54:50:30:30'),
@@ -553,11 +439,6 @@ INSERT INTO `glpi_plugin_fusinvinventory_blacklists` (`id`, `plugin_fusioninvent
 (69, 2, 'Not'),
 (70, 2, '.');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvinventory_computers`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_computers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -573,18 +454,10 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_computers` (
   KEY `computers_id` (`computers_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
---
--- Dumping data for table `glpi_plugin_fusinvinventory_computers`
---
 
 INSERT INTO `glpi_plugin_fusinvinventory_computers` (`id`, `computers_id`, `bios_date`, `bios_version`, `bios_assettag`, `bios_manufacturers_id`, `operatingsystem_installationdate`, `winowner`, `wincompany`) VALUES
 (1, 1, '2011-12-22 00:00:00', 'Version 2.20', '0000000000', 1, NULL, NULL, NULL);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvinventory_criterias`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_criterias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -594,9 +467,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_criterias` (
   KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
---
--- Dumping data for table `glpi_plugin_fusinvinventory_criterias`
---
 
 INSERT INTO `glpi_plugin_fusinvinventory_criterias` (`id`, `name`, `comment`) VALUES
 (1, 'Serial number', 'ssn'),
@@ -610,11 +480,6 @@ INSERT INTO `glpi_plugin_fusinvinventory_criterias` (`id`, `name`, `comment`) VA
 (9, 'Computer name', 'name'),
 (10, 'Manufacturer', 'manufacturer');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvinventory_libserialization`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_libserialization` (
   `internal_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
@@ -629,18 +494,10 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_libserialization` (
   KEY `last_fusioninventory_update` (`last_fusioninventory_update`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Dumping data for table `glpi_plugin_fusinvinventory_libserialization`
---
 
 INSERT INTO `glpi_plugin_fusinvinventory_libserialization` (`internal_id`, `computers_id`, `serialized_sections1`, `serialized_sections2`, `serialized_sections3`, `hash`, `last_fusioninventory_update`) VALUES
 ('5153f299884f37.91743984', 1, 'ACCESSLOG/-1<<=>>a:1:{s:7:"LOGDATE";s:19:"2013-03-28 08:34:26";}ACCESSLOG\nBATTERIES/-2<<=>>a:3:{s:9:"CHEMISTRY";s:11:"Lithium Ion";s:12:"MANUFACTURER";s:7:"TOSHIBA";s:6:"SERIAL";s:10:"0000000000";}BATTERIES\nBIOS/1<<=>>a:11:{s:8:"ASSETTAG";s:10:"0000000000";s:5:"BDATE";s:10:"12/22/2011";s:13:"BMANUFACTURER";s:7:"TOSHIBA";s:8:"BVERSION";s:12:"Version 2.20";s:13:"MMANUFACTURER";s:7:"TOSHIBA";s:6:"MMODEL";s:11:"Portable PC";s:3:"MSN";s:10:"0000000000";s:9:"SKUNUMBER";s:10:"0000000000";s:13:"SMANUFACTURER";s:7:"TOSHIBA";s:6:"SMODEL";s:14:"Satellite R630";s:3:"SSN";s:9:"XA201220H";}BIOS\nCPUS/1<<=>>a:9:{s:14:"EXTERNAL_CLOCK";s:3:"133";s:10:"FAMILYNAME";s:7:"Core i3";s:12:"FAMILYNUMBER";s:1:"6";s:2:"ID";s:23:"55 06 02 00 FF FB EB BF";s:12:"MANUFACTURER";s:17:"Intel Corporation";s:5:"MODEL";s:2:"37";s:4:"NAME";s:7:"Core i3";s:5:"SPEED";s:4:"2400";s:8:"STEPPING";s:1:"5";}CPUS\nCPUS/2<<=>>a:9:{s:14:"EXTERNAL_CLOCK";s:3:"133";s:10:"FAMILYNAME";s:7:"Core i3";s:12:"FAMILYNUMBER";s:1:"6";s:2:"ID";s:23:"55 06 02 00 FF FB EB BF";s:12:"MANUFACTURER";s:17:"Intel Corporation";s:5:"MODEL";s:2:"37";s:4:"NAME";s:7:"Core i3";s:5:"SPEED";s:4:"2400";s:8:"STEPPING";s:1:"5";}CPUS\nCPUS/3<<=>>a:9:{s:14:"EXTERNAL_CLOCK";s:3:"133";s:10:"FAMILYNAME";s:7:"Core i3";s:12:"FAMILYNUMBER";s:1:"6";s:2:"ID";s:23:"55 06 02 00 FF FB EB BF";s:12:"MANUFACTURER";s:17:"Intel Corporation";s:5:"MODEL";s:2:"37";s:4:"NAME";s:7:"Core i3";s:5:"SPEED";s:4:"2400";s:8:"STEPPING";s:1:"5";}CPUS\nCPUS/4<<=>>a:9:{s:14:"EXTERNAL_CLOCK";s:3:"133";s:10:"FAMILYNAME";s:7:"Core i3";s:12:"FAMILYNUMBER";s:1:"6";s:2:"ID";s:23:"55 06 02 00 FF FB EB BF";s:12:"MANUFACTURER";s:17:"Intel Corporation";s:5:"MODEL";s:2:"37";s:4:"NAME";s:7:"Core i3";s:5:"SPEED";s:4:"2400";s:8:"STEPPING";s:1:"5";}CPUS\nHARDWARE/1<<=>>a:24:{s:8:"ARCHNAME";s:25:"i386-freebsd-thread-multi";s:12:"CHASSIS_TYPE";s:8:"Notebook";s:8:"CHECKSUM";s:6:"131071";s:18:"DATELASTLOGGEDUSER";s:16:"Thu Mar 28 08:33";s:14:"DEFAULTGATEWAY";s:0:"";s:11:"DESCRIPTION";s:23:"amd64/-1-11-29 20:58:22";s:3:"DNS";s:7:"8.8.8.8";s:5:"ETIME";s:2:"21";s:6:"IPADDR";s:25:"192.168.20.194/10.0.0.254";s:14:"LASTLOGGEDUSER";s:8:"ddurieux";s:6:"MEMORY";s:4:"3802";s:4:"NAME";s:2:"pc";s:10:"OSCOMMENTS";s:38:"GENERIC ()root@farrell.cse.buffalo.edu";s:6:"OSNAME";s:7:"freebsd";s:9:"OSVERSION";s:11:"9.1-RELEASE";s:10:"PROCESSORN";s:1:"4";s:10:"PROCESSORS";s:4:"2400";s:10:"PROCESSORT";s:7:"Core i3";s:4:"SWAP";s:4:"8192";s:10:"USERDOMAIN";s:0:"";s:6:"USERID";s:8:"ddurieux";s:4:"UUID";s:36:"68405E00-E5BE-11DF-801C-B05981201220";s:8:"VMSYSTEM";s:8:"Physical";s:9:"WORKGROUP";s:14:"mydomain.local";}HARDWARE\nMEMORIES/1<<=>>a:8:{s:8:"CAPACITY";s:4:"2048";s:7:"CAPTION";s:5:"DIMM0";s:11:"DESCRIPTION";s:13:"SODIMM (None)";s:16:"MEMORYCORRECTION";s:4:"None";s:8:"NUMSLOTS";s:1:"1";s:12:"SERIALNUMBER";s:8:"98F6FF18";s:5:"SPEED";s:8:"1067 MHz";s:4:"TYPE";s:4:"DDR3";}MEMORIES\nMEMORIES/2<<=>>a:8:{s:8:"CAPACITY";s:4:"2048";s:7:"CAPTION";s:5:"DIMM2";s:11:"DESCRIPTION";s:13:"SODIMM (None)";s:16:"MEMORYCORRECTION";s:4:"None";s:8:"NUMSLOTS";s:1:"2";s:12:"SERIALNUMBER";s:8:"95F1833E";s:5:"SPEED";s:8:"1067 MHz";s:4:"TYPE";s:4:"DDR3";}MEMORIES\nMONITORS/-36<<=>>a:0:{}MONITORS\nNETWORKS/1<<=>>a:9:{s:11:"DESCRIPTION";s:3:"em0";s:9:"IPADDRESS";s:14:"192.168.20.194";s:6:"IPMASK";s:13:"255.255.255.0";s:8:"IPSUBNET";s:12:"192.168.20.0";s:7:"MACADDR";s:17:"00:23:18:cf:0d:93";s:3:"MTU";s:4:"1500";s:6:"STATUS";s:2:"Up";s:4:"TYPE";s:8:"Ethernet";s:10:"VIRTUALDEV";s:0:"";}NETWORKS\nNETWORKS/2<<=>>a:7:{s:11:"DESCRIPTION";s:3:"lo0";s:10:"IPADDRESS6";s:3:"::1";s:7:"IPMASK6";s:39:"ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff";s:9:"IPSUBNET6";s:3:"::1";s:3:"MTU";s:5:"16384";s:6:"STATUS";s:2:"Up";s:10:"VIRTUALDEV";s:1:"1";}NETWORKS\nNETWORKS/3<<=>>a:7:{s:11:"DESCRIPTION";s:3:"lo0";s:10:"IPADDRESS6";s:7:"fe80::1";s:7:"IPMASK6";s:21:"ffff:ffff:ffff:ffff::";s:9:"IPSUBNET6";s:6:"fe80::";s:3:"MTU";s:5:"16384";s:6:"STATUS";s:2:"Up";s:10:"VIRTUALDEV";s:1:"1";}NETWORKS\nNETWORKS/4<<=>>a:7:{s:11:"DESCRIPTION";s:3:"lo0";s:9:"IPADDRESS";s:9:"127.0.0.1";s:6:"IPMASK";s:9:"255.0.0.0";s:8:"IPSUBNET";s:9:"127.0.0.0";s:3:"MTU";s:5:"16384";s:6:"STATUS";s:2:"Up";s:10:"VIRTUALDEV";s:1:"1";}NETWORKS\nNETWORKS/5<<=>>a:7:{s:11:"DESCRIPTION";s:3:"lo1";s:9:"IPADDRESS";s:10:"10.0.0.254";s:6:"IPMASK";s:13:"255.255.255.0";s:8:"IPSUBNET";s:8:"10.0.0.0";s:3:"MTU";s:5:"16384";s:6:"STATUS";s:2:"Up";s:10:"VIRTUALDEV";s:1:"1";}NETWORKS\nOPERATINGSYSTEM/-37<<=>>a:5:{s:9:"FULL_NAME";s:7:"freebsd";s:11:"KERNEL_NAME";s:7:"freebsd";s:14:"KERNEL_VERSION";s:11:"9.1-RELEASE";s:4:"NAME";s:7:"freebsd";s:7:"VERSION";s:11:"9.1-RELEASE";}OPERATINGSYSTEM\nPORTS/-38<<=>>a:3:{s:7:"CAPTION";s:12:"DB-15 female";s:11:"DESCRIPTION";s:4:"None";s:4:"TYPE";s:5:"Other";}PORTS\nPORTS/-39<<=>>a:3:{s:7:"CAPTION";s:5:"RJ-45";s:11:"DESCRIPTION";s:4:"None";s:4:"TYPE";s:12:"Network Port";}PORTS\nPORTS/-40<<=>>a:3:{s:7:"CAPTION";s:16:"Access Bus (USB)";s:11:"DESCRIPTION";s:4:"None";s:4:"TYPE";s:3:"USB";}PORTS\nPORTS/-41<<=>>a:3:{s:7:"CAPTION";s:16:"Access Bus (USB)";s:11:"DESCRIPTION";s:4:"None";s:4:"TYPE";s:3:"USB";}PORTS\nPORTS/-42<<=>>a:3:{s:7:"CAPTION";s:16:"Access Bus (USB)";s:11:"DESCRIPTION";s:4:"None";s:4:"TYPE";s:3:"USB";}PORTS\nPORTS/-43<<=>>a:3:{s:7:"CAPTION";s:22:"Mini Jack (headphones)";s:11:"DESCRIPTION";s:4:"None";s:4:"TYPE";s:5:"Other";}PORTS\nPORTS/-44<<=>>a:3:{s:7:"CAPTION";s:5:"Other";s:11:"DESCRIPTION";s:4:"None";s:4:"TYPE";s:5:"Other";}PORTS\nPORTS/-45<<=>>a:3:{s:7:"CAPTION";s:5:"Other";s:11:"DESCRIPTION";s:4:"None";s:4:"TYPE";s:5:"Other";}PORTS\nPORTS/-46<<=>>a:3:{s:7:"CAPTION";s:5:"Other";s:11:"DESCRIPTION";s:4:"None";s:4:"TYPE";s:5:"Other";}PORTS\nPORTS/-47<<=>>a:3:{s:7:"CAPTION";s:5:"Other";s:11:"DESCRIPTION";s:4:"None";s:4:"TYPE";s:5:"Other";}PORTS\nSLOTS/-156<<=>>a:3:{s:11:"DESCRIPTION";s:5:"Other";s:4:"NAME";s:7:"SD CARD";s:6:"STATUS";s:6:"In Use";}SLOTS\nSLOTS/-157<<=>>a:4:{s:11:"DESCRIPTION";s:14:"x1 PCI Express";s:11:"DESIGNATION";s:1:"1";s:4:"NAME";s:12:"EXPRESS CARD";s:6:"STATUS";s:6:"In Use";}SLOTS\nSOFTWARES/1<<=>>a:3:{s:8:"COMMENTS";s:51:"Gentium Basic and Gentium Book Basic TrueType fonts";s:4:"NAME";s:12:"GentiumBasic";s:7:"VERSION";s:3:"110";}SOFTWARES\nSOFTWARES/2<<=>>a:3:{s:8:"COMMENTS";s:22:"Image processing tools";s:4:"NAME";s:11:"ImageMagick";s:7:"VERSION";s:9:"6.8.0.7_1";}SOFTWARES\nSOFTWARES/3<<=>>a:3:{s:8:"COMMENTS";s:58:"High-performance CORBA ORB with support for the C language";s:4:"NAME";s:6:"ORBit2";s:7:"VERSION";s:7:"2.14.19";}SOFTWARES\nSOFTWARES/4<<=>>a:3:{s:8:"COMMENTS";s:42:"High dynamic-range (HDR) image file format";s:4:"NAME";s:7:"OpenEXR";s:7:"VERSION";s:5:"1.7.1";}SOFTWARES\nSOFTWARES/5<<=>>a:3:{s:8:"COMMENTS";s:17:"ASCII art library";s:4:"NAME";s:5:"aalib";s:7:"VERSION";s:8:"1.4.r5_6";}SOFTWARES\nSOFTWARES/6<<=>>a:3:{s:8:"COMMENTS";s:26:"ALSA compatibility library";s:4:"NAME";s:8:"alsa-lib";s:7:"VERSION";s:6:"1.0.26";}SOFTWARES\nSOFTWARES/7<<=>>a:3:{s:8:"COMMENTS";s:34:"ALSA compatibility library plugins";s:4:"NAME";s:12:"alsa-plugins";s:7:"VERSION";s:6:"1.0.26";}SOFTWARES\nSOFTWARES/8<<=>>a:3:{s:8:"COMMENTS";s:52:"Version 2.2.x of Apache web server with prefork MPM.";s:4:"NAME";s:8:"apache22";s:7:"VERSION";s:8:"2.2.23_4";}SOFTWARES\nSOFTWARES/9<<=>>a:3:{s:8:"COMMENTS";s:40:"Program to list application''s resources";s:4:"NAME";s:6:"appres";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/10<<=>>a:3:{s:8:"COMMENTS";s:26:"Apache Portability Library";s:4:"NAME";s:3:"apr";s:7:"VERSION";s:13:"1.4.6.1.4.1_3";}SOFTWARES\nSOFTWARES/11<<=>>a:3:{s:8:"COMMENTS";s:59:"Standalone version of arguments parsing functions from GLIB";s:4:"NAME";s:15:"argp-standalone";s:7:"VERSION";s:5:"1.3_2";}SOFTWARES\nSOFTWARES/12<<=>>a:3:{s:8:"COMMENTS";s:57:"Spelling checker with better suggestion logic than ispell";s:4:"NAME";s:6:"aspell";s:7:"VERSION";s:10:"0.60.6.1_2";}SOFTWARES\nSOFTWARES/13<<=>>a:3:{s:8:"COMMENTS";s:33:"GNOME accessibility toolkit (ATK)";s:4:"NAME";s:3:"atk";s:7:"VERSION";s:5:"2.0.1";}SOFTWARES\nSOFTWARES/14<<=>>a:3:{s:8:"COMMENTS";s:31:"C++ wrapper for ATK API library";s:4:"NAME";s:5:"atkmm";s:7:"VERSION";s:6:"2.22.5";}SOFTWARES\nSOFTWARES/15<<=>>a:3:{s:8:"COMMENTS";s:55:"ASCII Monitor for system resources and process activity";s:4:"NAME";s:4:"atop";s:7:"VERSION";s:8:"2.0.2.b2";}SOFTWARES\nSOFTWARES/16<<=>>a:3:{s:8:"COMMENTS";s:38:"GUI editor for digital audio waveforms";s:4:"NAME";s:8:"audacity";s:7:"VERSION";s:5:"2.0.3";}SOFTWARES\nSOFTWARES/17<<=>>a:3:{s:8:"COMMENTS";s:59:"Automatically configure source code on many Un*x platforms ";s:4:"NAME";s:8:"autoconf";s:7:"VERSION";s:13:"2.13.000227_6";}SOFTWARES\nSOFTWARES/18<<=>>a:3:{s:8:"COMMENTS";s:58:"Automatically configure source code on many Un*x platforms";s:4:"NAME";s:8:"autoconf";s:7:"VERSION";s:4:"2.69";}SOFTWARES\nSOFTWARES/19<<=>>a:3:{s:8:"COMMENTS";s:31:"Wrapper script for GNU autoconf";s:4:"NAME";s:16:"autoconf-wrapper";s:7:"VERSION";s:8:"20101119";}SOFTWARES\nSOFTWARES/20<<=>>a:3:{s:8:"COMMENTS";s:42:"GNU Standards-compliant Makefile generator";s:4:"NAME";s:8:"automake";s:7:"VERSION";s:6:"1.12.6";}SOFTWARES\nSOFTWARES/21<<=>>a:3:{s:8:"COMMENTS";s:55:"GNU Standards-compliant Makefile generator (legacy 1.4)";s:4:"NAME";s:8:"automake";s:7:"VERSION";s:7:"1.4.6_6";}SOFTWARES\nSOFTWARES/22<<=>>a:3:{s:8:"COMMENTS";s:31:"Wrapper script for GNU automake";s:4:"NAME";s:16:"automake-wrapper";s:7:"VERSION";s:8:"20101119";}SOFTWARES\nSOFTWARES/23<<=>>a:3:{s:8:"COMMENTS";s:31:"Automatic moc for Qt 4 packages";s:4:"NAME";s:8:"automoc4";s:7:"VERSION";s:8:"0.9.88_3";}SOFTWARES\nSOFTWARES/24<<=>>a:3:{s:8:"COMMENTS";s:36:"Service discovery on a local network";s:4:"NAME";s:9:"avahi-app";s:7:"VERSION";s:8:"0.6.29_3";}SOFTWARES\nSOFTWARES/25<<=>>a:3:{s:8:"COMMENTS";s:39:"Dynamic pixel format conversion library";s:4:"NAME";s:4:"babl";s:7:"VERSION";s:5:"0.1.6";}SOFTWARES\nSOFTWARES/26<<=>>a:3:{s:8:"COMMENTS";s:37:"The GNU Project''s Bourne Again SHell";s:4:"NAME";s:4:"bash";s:7:"VERSION";s:6:"4.2.37";}SOFTWARES\nSOFTWARES/27<<=>>a:3:{s:8:"COMMENTS";s:30:"Convert X font from BDF to PCF";s:4:"NAME";s:8:"bdftopcf";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/28<<=>>a:3:{s:8:"COMMENTS";s:25:"BigReqs extension headers";s:4:"NAME";s:12:"bigreqsproto";s:7:"VERSION";s:5:"1.1.1";}SOFTWARES\nSOFTWARES/29<<=>>a:3:{s:8:"COMMENTS";s:58:"A parser generator from FSF, (mostly) compatible with Yacc";s:4:"NAME";s:5:"bison";s:7:"VERSION";s:7:"2.5.1,1";}SOFTWARES\nSOFTWARES/30<<=>>a:3:{s:8:"COMMENTS";s:43:"Bitmap editor and converter utilities for X";s:4:"NAME";s:6:"bitmap";s:7:"VERSION";s:5:"1.0.5";}SOFTWARES\nSOFTWARES/31<<=>>a:3:{s:8:"COMMENTS";s:39:"Bitstream Vera TrueType font collection";s:4:"NAME";s:14:"bitstream-vera";s:7:"VERSION";s:6:"1.10_5";}SOFTWARES\nSOFTWARES/32<<=>>a:3:{s:8:"COMMENTS";s:53:"HTML editor designed for the experienced web designer";s:4:"NAME";s:8:"bluefish";s:7:"VERSION";s:5:"2.2.3";}SOFTWARES\nSOFTWARES/33<<=>>a:3:{s:8:"COMMENTS";s:58:"Garbage collection and memory leak detection for C and C++";s:4:"NAME";s:8:"boehm-gc";s:7:"VERSION";s:3:"7.1";}SOFTWARES\nSOFTWARES/34<<=>>a:3:{s:8:"COMMENTS";s:39:"Fast, teachable, learning spam detector";s:4:"NAME";s:10:"bogofilter";s:7:"VERSION";s:5:"1.2.3";}SOFTWARES\nSOFTWARES/35<<=>>a:3:{s:8:"COMMENTS";s:50:"Free portable C++ libraries (without Boost.Python)";s:4:"NAME";s:10:"boost-libs";s:7:"VERSION";s:8:"1.48.0_2";}SOFTWARES\nSOFTWARES/36<<=>>a:3:{s:8:"COMMENTS";s:57:"Oracle''s Java 6 virtual machine release under the GPL v2";s:4:"NAME";s:17:"bootstrap-openjdk";s:7:"VERSION";s:7:"r306764";}SOFTWARES\nSOFTWARES/37<<=>>a:3:{s:8:"COMMENTS";s:38:"CHI - Unified cache handling interface";s:4:"NAME";s:10:"bsdpan-CHI";s:7:"VERSION";s:4:"0.56";}SOFTWARES\nSOFTWARES/38<<=>>a:3:{s:8:"COMMENTS";s:43:"Carp - alternative warn and die for modules";s:4:"NAME";s:11:"bsdpan-Carp";s:7:"VERSION";s:4:"1.26";}SOFTWARES\nSOFTWARES/39<<=>>a:3:{s:8:"COMMENTS";s:34:"Carp::Assert - executable comments";s:4:"NAME";s:18:"bsdpan-Carp-Assert";s:7:"VERSION";s:4:"0.20";}SOFTWARES\nSOFTWARES/40<<=>>a:3:{s:8:"COMMENTS";s:59:"Class::Accessor::Lite - a minimalistic variant of Class::Ac";s:4:"NAME";s:26:"bsdpan-Class-Accessor-Lite";s:7:"VERSION";s:4:"0.05";}SOFTWARES\nSOFTWARES/41<<=>>a:3:{s:8:"COMMENTS";s:59:"Data::UUID - Perl extension for generating Globally/Univers";s:4:"NAME";s:16:"bsdpan-Data-UUID";s:7:"VERSION";s:5:"1.218";}SOFTWARES\nSOFTWARES/42<<=>>a:3:{s:8:"COMMENTS";s:51:"Devel::Caller - meatier versions of C&lt;caller&gt;";s:4:"NAME";s:19:"bsdpan-Devel-Caller";s:7:"VERSION";s:4:"2.06";}SOFTWARES\nSOFTWARES/43<<=>>a:3:{s:8:"COMMENTS";s:59:"Devel::GlobalDestruction - Expose the flag which marks glob";s:4:"NAME";s:30:"bsdpan-Devel-GlobalDestruction";s:7:"VERSION";s:4:"0.09";}SOFTWARES\nSOFTWARES/44<<=>>a:3:{s:8:"COMMENTS";s:54:"Devel::Symdump - dump symbol names or the symbol table";s:4:"NAME";s:20:"bsdpan-Devel-Symdump";s:7:"VERSION";s:4:"2.08";}SOFTWARES\nSOFTWARES/45<<=>>a:3:{s:8:"COMMENTS";s:59:"Digest::JHash - Perl extension for 32 bit Jenkins Hashing A";s:4:"NAME";s:19:"bsdpan-Digest-JHash";s:7:"VERSION";s:4:"0.07";}SOFTWARES\nSOFTWARES/46<<=>>a:3:{s:8:"COMMENTS";s:59:"Eval::Closure - safely and cleanly create closures via stri";s:4:"NAME";s:19:"bsdpan-Eval-Closure";s:7:"VERSION";s:4:"0.08";}SOFTWARES\nSOFTWARES/47<<=>>a:3:{s:8:"COMMENTS";s:51:"Exporter::Lite - Lightweight exporting of variables";s:4:"NAME";s:20:"bsdpan-Exporter-Lite";s:7:"VERSION";s:4:"0.02";}SOFTWARES\nSOFTWARES/48<<=>>a:3:{s:8:"COMMENTS";s:46:"ExtUtils::MakeMaker - Create a module Makefile";s:4:"NAME";s:25:"bsdpan-ExtUtils-MakeMaker";s:7:"VERSION";s:4:"6.64";}SOFTWARES\nSOFTWARES/49<<=>>a:3:{s:8:"COMMENTS";s:59:"Find::Lib - Helper to smartly find libs to use in the files";s:4:"NAME";s:15:"bsdpan-Find-Lib";s:7:"VERSION";s:4:"1.04";}SOFTWARES\nSOFTWARES/50<<=>>a:3:{s:8:"COMMENTS";s:51:"Log::Any -- Bringing loggers and listeners together";s:4:"NAME";s:14:"bsdpan-Log-Any";s:7:"VERSION";s:4:"0.14";}SOFTWARES\nSOFTWARES/51<<=>>a:3:{s:8:"COMMENTS";s:36:"Log::Fast - Fast and flexible logger";s:4:"NAME";s:15:"bsdpan-Log-Fast";s:7:"VERSION";s:5:"1.0.5";}SOFTWARES\nSOFTWARES/52<<=>>a:3:{s:8:"COMMENTS";s:62:"MRO::Compat - mro::* interface compatibility for Perls &lt; 5.";s:4:"NAME";s:17:"bsdpan-MRO-Compat";s:7:"VERSION";s:4:"0.12";}SOFTWARES\nSOFTWARES/53<<=>>a:3:{s:8:"COMMENTS";s:54:"oose - syntactic sugar to make Moose one-liners easier";s:4:"NAME";s:12:"bsdpan-Moose";s:7:"VERSION";s:6:"2.0604";}SOFTWARES\nSOFTWARES/54<<=>>a:3:{s:8:"COMMENTS";s:59:"MooseX::Params::Validate - an extension of Params::Validate";s:4:"NAME";s:29:"bsdpan-MooseX-Params-Validate";s:7:"VERSION";s:4:"0.18";}SOFTWARES\nSOFTWARES/55<<=>>a:3:{s:8:"COMMENTS";s:55:"PadWalker - play with other peoples'' lexical variables";s:4:"NAME";s:16:"bsdpan-PadWalker";s:7:"VERSION";s:4:"1.96";}SOFTWARES\nSOFTWARES/56<<=>>a:3:{s:8:"COMMENTS";s:54:"PerlIO::Util - A selection of general PerlIO utilities";s:4:"NAME";s:18:"bsdpan-PerlIO-Util";s:7:"VERSION";s:4:"0.72";}SOFTWARES\nSOFTWARES/57<<=>>a:3:{s:8:"COMMENTS";s:59:"Pod::Coverage - Checks if the documentation of a module is ";s:4:"NAME";s:19:"bsdpan-Pod-Coverage";s:7:"VERSION";s:4:"0.22";}SOFTWARES\nSOFTWARES/58<<=>>a:3:{s:8:"COMMENTS";s:19:"Unknown perl module";s:4:"NAME";s:19:"bsdpan-String-CRC32";s:7:"VERSION";s:3:"1.4";}SOFTWARES\nSOFTWARES/59<<=>>a:3:{s:8:"COMMENTS";s:59:"String::RewritePrefix - rewrite strings based on a set of k";s:4:"NAME";s:27:"bsdpan-String-RewritePrefix";s:7:"VERSION";s:5:"0.006";}SOFTWARES\nSOFTWARES/60<<=>>a:3:{s:8:"COMMENTS";s:59:"Sub::Exporter::Progressive - Only use Sub::Exporter if you ";s:4:"NAME";s:31:"bsdpan-Sub-Exporter-Progressive";s:7:"VERSION";s:8:"0.001008";}SOFTWARES\nSOFTWARES/61<<=>>a:3:{s:8:"COMMENTS";s:26:"Sub::Name - (re)name a sub";s:4:"NAME";s:15:"bsdpan-Sub-Name";s:7:"VERSION";s:4:"0.05";}SOFTWARES\nSOFTWARES/62<<=>>a:3:{s:8:"COMMENTS";s:59:"Sub::Uplevel - apparently run a function in a higher stack ";s:4:"NAME";s:18:"bsdpan-Sub-Uplevel";s:7:"VERSION";s:4:"0.24";}SOFTWARES\nSOFTWARES/63<<=>>a:3:{s:8:"COMMENTS";s:56:"Sys::Syslog - Perl interface to the UNIX syslog(3) calls";s:4:"NAME";s:17:"bsdpan-Sys-Syslog";s:7:"VERSION";s:4:"0.32";}SOFTWARES\nSOFTWARES/64<<=>>a:3:{s:8:"COMMENTS";s:56:"Task::Weaken - Ensure that a platform has weaken support";s:4:"NAME";s:18:"bsdpan-Task-Weaken";s:7:"VERSION";s:4:"1.04";}SOFTWARES\nSOFTWARES/65<<=>>a:3:{s:8:"COMMENTS";s:47:"Test::Deep - Extremely flexible deep comparison";s:4:"NAME";s:16:"bsdpan-Test-Deep";s:7:"VERSION";s:5:"0.110";}SOFTWARES\nSOFTWARES/66<<=>>a:3:{s:8:"COMMENTS";s:59:"Test::Fatal - incredibly simple helpers for testing code wi";s:4:"NAME";s:17:"bsdpan-Test-Fatal";s:7:"VERSION";s:5:"0.010";}SOFTWARES\nSOFTWARES/67<<=>>a:3:{s:8:"COMMENTS";s:19:"Unknown perl module";s:4:"NAME";s:20:"bsdpan-Test-MockTime";s:7:"VERSION";s:4:"0.12";}SOFTWARES\nSOFTWARES/68<<=>>a:3:{s:8:"COMMENTS";s:60:"Test::NoWarnings - Make sure you didn''t emit any warnings w";s:4:"NAME";s:22:"bsdpan-Test-NoWarnings";s:7:"VERSION";s:4:"1.04";}SOFTWARES\nSOFTWARES/69<<=>>a:3:{s:8:"COMMENTS";s:59:"Test::Pod::Coverage - Check for pod coverage in your distri";s:4:"NAME";s:24:"bsdpan-Test-Pod-Coverage";s:7:"VERSION";s:4:"1.08";}SOFTWARES\nSOFTWARES/70<<=>>a:3:{s:8:"COMMENTS";s:58:"Test::Requires - Checks to see if the module can be loaded";s:4:"NAME";s:20:"bsdpan-Test-Requires";s:7:"VERSION";s:4:"0.06";}SOFTWARES\nSOFTWARES/71<<=>>a:3:{s:8:"COMMENTS";s:28:"Test::SharedFork - fork test";s:4:"NAME";s:22:"bsdpan-Test-SharedFork";s:7:"VERSION";s:4:"0.21";}SOFTWARES\nSOFTWARES/72<<=>>a:3:{s:8:"COMMENTS";s:59:"Test::Tester - Ease testing test modules built with Test::B";s:4:"NAME";s:18:"bsdpan-Test-Tester";s:7:"VERSION";s:5:"0.108";}SOFTWARES\nSOFTWARES/73<<=>>a:3:{s:8:"COMMENTS";s:56:"Test::Warn - Perl extension to test methods for warnings";s:4:"NAME";s:16:"bsdpan-Test-Warn";s:7:"VERSION";s:4:"0.24";}SOFTWARES\nSOFTWARES/74<<=>>a:3:{s:8:"COMMENTS";s:38:"Test::mysqld - mysqld runner for tests";s:4:"NAME";s:18:"bsdpan-Test-mysqld";s:7:"VERSION";s:4:"0.15";}SOFTWARES\nSOFTWARES/75<<=>>a:3:{s:8:"COMMENTS";s:59:"Time::Duration - rounded or exact English expression of dur";s:4:"NAME";s:20:"bsdpan-Time-Duration";s:7:"VERSION";s:4:"1.06";}SOFTWARES\nSOFTWARES/76<<=>>a:3:{s:8:"COMMENTS";s:59:"Time::Duration::Parse - Parse string that represents time d";s:4:"NAME";s:26:"bsdpan-Time-Duration-Parse";s:7:"VERSION";s:4:"0.06";}SOFTWARES\nSOFTWARES/77<<=>>a:3:{s:8:"COMMENTS";s:52:"The root certificate bundle from the Mozilla Project";s:4:"NAME";s:11:"ca_root_nss";s:7:"VERSION";s:6:"3.14.3";}SOFTWARES\nSOFTWARES/78<<=>>a:3:{s:8:"COMMENTS";s:56:"Vector graphics library with cross-device output support";s:4:"NAME";s:5:"cairo";s:7:"VERSION";s:10:"1.10.2_5,2";}SOFTWARES\nSOFTWARES/79<<=>>a:3:{s:8:"COMMENTS";s:22:"C++ interface to cairo";s:4:"NAME";s:7:"cairomm";s:7:"VERSION";s:8:"1.10.0_1";}SOFTWARES\nSOFTWARES/80<<=>>a:3:{s:8:"COMMENTS";s:44:"Cantarell, a Humanist sans-serif font family";s:4:"NAME";s:15:"cantarell-fonts";s:7:"VERSION";s:6:"0.0.12";}SOFTWARES\nSOFTWARES/81<<=>>a:3:{s:8:"COMMENTS";s:45:"Mark Crispin''s C-client mail access routines";s:4:"NAME";s:7:"cclient";s:7:"VERSION";s:7:"2007f,1";}SOFTWARES\nSOFTWARES/82<<=>>a:3:{s:8:"COMMENTS";s:45:"A CDDA extraction tool (also known as ripper)";s:4:"NAME";s:10:"cdparanoia";s:7:"VERSION";s:7:"3.9.8_9";}SOFTWARES\nSOFTWARES/83<<=>>a:3:{s:8:"COMMENTS";s:59:"CD/DVD/BluRay and ISO-9660 image creation and extraction to";s:4:"NAME";s:8:"cdrtools";s:7:"VERSION";s:6:"3.00_2";}SOFTWARES\nSOFTWARES/84<<=>>a:3:{s:8:"COMMENTS";s:36:"The CELT ultra-low delay audio codec";s:4:"NAME";s:4:"celt";s:7:"VERSION";s:8:"0.11.3_1";}SOFTWARES\nSOFTWARES/85<<=>>a:3:{s:8:"COMMENTS";s:58:"A mostly BSD-licensed web browser based on WebKit and Gtk+";s:4:"NAME";s:8:"chromium";s:7:"VERSION";s:12:"24.0.1312.52";}SOFTWARES\nSOFTWARES/86<<=>>a:3:{s:8:"COMMENTS";s:59:"Lightweight and very featureful GTK+ based e-mail and news ";s:4:"NAME";s:10:"claws-mail";s:7:"VERSION";s:5:"3.9.0";}SOFTWARES\nSOFTWARES/87<<=>>a:3:{s:8:"COMMENTS";s:48:"Recipient addresses keeper plugin for Claws Mail";s:4:"NAME";s:25:"claws-mail-address_keeper";s:7:"VERSION";s:5:"1.0.7";}SOFTWARES\nSOFTWARES/88<<=>>a:3:{s:8:"COMMENTS";s:43:"New mail notification plugin for Claws Mail";s:4:"NAME";s:23:"claws-mail-notification";s:7:"VERSION";s:4:"0.31";}SOFTWARES\nSOFTWARES/89<<=>>a:3:{s:8:"COMMENTS";s:42:"RSS/Atom feed reader plugin for Claws Mail";s:4:"NAME";s:16:"claws-mail-rssyl";s:7:"VERSION";s:6:"0.34,4";}SOFTWARES\nSOFTWARES/90<<=>>a:3:{s:8:"COMMENTS";s:17:"Claws-Mail Themes";s:4:"NAME";s:17:"claws-mail-themes";s:7:"VERSION";s:8:"20120129";}SOFTWARES\nSOFTWARES/91<<=>>a:3:{s:8:"COMMENTS";s:31:"vCalendar plugin for Claws Mail";s:4:"NAME";s:20:"claws-mail-vcalendar";s:7:"VERSION";s:6:"2.0.14";}SOFTWARES\nSOFTWARES/92<<=>>a:3:{s:8:"COMMENTS";s:45:"Computer Modern Font Families in Type 1 Fonts";s:4:"NAME";s:8:"cm-super";s:7:"VERSION";s:7:"0.3.4_4";}SOFTWARES\nSOFTWARES/93<<=>>a:3:{s:8:"COMMENTS";s:35:"A cross-platform Makefile generator";s:4:"NAME";s:5:"cmake";s:7:"VERSION";s:5:"2.8.9";}SOFTWARES\nSOFTWARES/94<<=>>a:3:{s:8:"COMMENTS";s:31:"Modules and Templates for CMake";s:4:"NAME";s:13:"cmake-modules";s:7:"VERSION";s:5:"2.8.9";}SOFTWARES\nSOFTWARES/95<<=>>a:3:{s:8:"COMMENTS";s:55:"A convenience package to install the compat7x libraries";s:4:"NAME";s:14:"compat7x-amd64";s:7:"VERSION";s:19:"7.3.703000.201008_1";}SOFTWARES\nSOFTWARES/96<<=>>a:3:{s:8:"COMMENTS";s:27:"Composite extension headers";s:4:"NAME";s:14:"compositeproto";s:7:"VERSION";s:5:"0.4.2";}SOFTWARES\nSOFTWARES/97<<=>>a:3:{s:8:"COMMENTS";s:41:"Framework for defining and tracking users";s:4:"NAME";s:10:"consolekit";s:7:"VERSION";s:5:"0.4.3";}SOFTWARES\nSOFTWARES/98<<=>>a:3:{s:8:"COMMENTS";s:41:"Common UNIX Printing System: Library cups";s:4:"NAME";s:11:"cups-client";s:7:"VERSION";s:7:"1.5.4_1";}SOFTWARES\nSOFTWARES/99<<=>>a:3:{s:8:"COMMENTS";s:46:"Common UNIX Printing System: Library cupsimage";s:4:"NAME";s:10:"cups-image";s:7:"VERSION";s:5:"1.5.4";}SOFTWARES\nSOFTWARES/100<<=>>a:3:{s:8:"COMMENTS";s:59:"Non-interactive tool to get files from FTP, GOPHER, HTTP(S)";s:4:"NAME";s:4:"curl";s:7:"VERSION";s:8:"7.24.0_2";}SOFTWARES\nSOFTWARES/101<<=>>a:3:{s:8:"COMMENTS";s:36:"Create patchset information from CVS";s:4:"NAME";s:5:"cvsps";s:7:"VERSION";s:5:"2.1_1";}SOFTWARES\nSOFTWARES/102<<=>>a:3:{s:8:"COMMENTS";s:56:"RFC 2222 SASL (Simple Authentication and Security Layer)";s:4:"NAME";s:10:"cyrus-sasl";s:7:"VERSION";s:8:"2.1.26_2";}SOFTWARES\nSOFTWARES/103<<=>>a:3:{s:8:"COMMENTS";s:24:"Damage extension headers";s:4:"NAME";s:11:"damageproto";s:7:"VERSION";s:5:"1.2.1";}SOFTWARES\nSOFTWARES/104<<=>>a:3:{s:8:"COMMENTS";s:37:"The Berkeley DB package, revision 4.1";s:4:"NAME";s:4:"db41";s:7:"VERSION";s:8:"4.1.25_4";}SOFTWARES\nSOFTWARES/105<<=>>a:3:{s:8:"COMMENTS";s:37:"The Berkeley DB package, revision 4.2";s:4:"NAME";s:4:"db42";s:7:"VERSION";s:8:"4.2.52_5";}SOFTWARES\nSOFTWARES/106<<=>>a:3:{s:8:"COMMENTS";s:37:"The Berkeley DB package, revision 4.6";s:4:"NAME";s:4:"db46";s:7:"VERSION";s:8:"4.6.21.4";}SOFTWARES\nSOFTWARES/107<<=>>a:3:{s:8:"COMMENTS";s:56:"A message bus system for inter-application communication";s:4:"NAME";s:4:"dbus";s:7:"VERSION";s:8:"1.4.14_4";}SOFTWARES\nSOFTWARES/108<<=>>a:3:{s:8:"COMMENTS";s:44:"GLib bindings for the D-BUS messaging system";s:4:"NAME";s:9:"dbus-glib";s:7:"VERSION";s:4:"0.94";}SOFTWARES\nSOFTWARES/109<<=>>a:3:{s:8:"COMMENTS";s:41:"A configuration database system for GNOME";s:4:"NAME";s:5:"dconf";s:7:"VERSION";s:7:"0.5.1_4";}SOFTWARES\nSOFTWARES/110<<=>>a:3:{s:8:"COMMENTS";s:59:"Bitstream Vera Fonts clone with a wider range of characters";s:4:"NAME";s:6:"dejavu";s:7:"VERSION";s:4:"2.33";}SOFTWARES\nSOFTWARES/111<<=>>a:3:{s:8:"COMMENTS";s:59:"A couple of command line utilities for working with desktop";s:4:"NAME";s:18:"desktop-file-utils";s:7:"VERSION";s:4:"0.18";}SOFTWARES\nSOFTWARES/112<<=>>a:3:{s:8:"COMMENTS";s:40:"Robert de Bath''s 8086 development tools";s:4:"NAME";s:5:"dev86";s:7:"VERSION";s:7:"0.16.18";}SOFTWARES\nSOFTWARES/113<<=>>a:3:{s:8:"COMMENTS";s:56:"An extremely fast library for floating-point convolution";s:4:"NAME";s:6:"djbfft";s:7:"VERSION";s:6:"0.76_2";}SOFTWARES\nSOFTWARES/114<<=>>a:3:{s:8:"COMMENTS";s:59:"A tool for dumping DMI (SMBIOS) contents in human-readable ";s:4:"NAME";s:9:"dmidecode";s:7:"VERSION";s:4:"2.11";}SOFTWARES\nSOFTWARES/115<<=>>a:3:{s:8:"COMMENTS";s:21:"DMX extension headers";s:4:"NAME";s:8:"dmxproto";s:7:"VERSION";s:5:"2.3.1";}SOFTWARES\nSOFTWARES/116<<=>>a:3:{s:8:"COMMENTS";s:55:"Meta-port for the different versions of the DocBook DTD";s:4:"NAME";s:7:"docbook";s:7:"VERSION";s:3:"1.4";}SOFTWARES\nSOFTWARES/117<<=>>a:3:{s:8:"COMMENTS";s:59:"V3.1 of the DocBook DTD, designed for technical documentati";s:4:"NAME";s:7:"docbook";s:7:"VERSION";s:5:"3.1_4";}SOFTWARES\nSOFTWARES/118<<=>>a:3:{s:8:"COMMENTS";s:59:"V4.1 of the DocBook DTD, designed for technical documentati";s:4:"NAME";s:7:"docbook";s:7:"VERSION";s:5:"4.1_4";}SOFTWARES\nSOFTWARES/119<<=>>a:3:{s:8:"COMMENTS";s:59:"V4.2 of the DocBook DTD, designed for technical documentati";s:4:"NAME";s:7:"docbook";s:7:"VERSION";s:3:"4.2";}SOFTWARES\nSOFTWARES/120<<=>>a:3:{s:8:"COMMENTS";s:59:"DocBook/SGML DTD V4.3, designed for technical documentation";s:4:"NAME";s:7:"docbook";s:7:"VERSION";s:3:"4.3";}SOFTWARES\nSOFTWARES/121<<=>>a:3:{s:8:"COMMENTS";s:59:"DocBook/SGML DTD V4.4, designed for technical documentation";s:4:"NAME";s:7:"docbook";s:7:"VERSION";s:5:"4.4_2";}SOFTWARES\nSOFTWARES/122<<=>>a:3:{s:8:"COMMENTS";s:59:"DocBook/SGML DTD V4.5, designed for technical documentation";s:4:"NAME";s:7:"docbook";s:7:"VERSION";s:5:"4.5_2";}SOFTWARES\nSOFTWARES/123<<=>>a:3:{s:8:"COMMENTS";s:49:"DocBook 5.0, designed for technical documentation";s:4:"NAME";s:7:"docbook";s:7:"VERSION";s:5:"5.0_1";}SOFTWARES\nSOFTWARES/124<<=>>a:3:{s:8:"COMMENTS";s:59:"XML version of the DocBook DTD version controlled for Scrol";s:4:"NAME";s:10:"docbook-sk";s:7:"VERSION";s:7:"4.1.2_4";}SOFTWARES\nSOFTWARES/125<<=>>a:3:{s:8:"COMMENTS";s:59:"Generates various output formats from DocBook SGML document";s:4:"NAME";s:13:"docbook-utils";s:7:"VERSION";s:9:"0.6.14_11";}SOFTWARES\nSOFTWARES/126<<=>>a:3:{s:8:"COMMENTS";s:30:"XML version of the DocBook DTD";s:4:"NAME";s:11:"docbook-xml";s:7:"VERSION";s:5:"4.2_1";}SOFTWARES\nSOFTWARES/127<<=>>a:3:{s:8:"COMMENTS";s:58:"DocBook/XML DTD V4.3, designed for technical documentation";s:4:"NAME";s:11:"docbook-xml";s:7:"VERSION";s:3:"4.3";}SOFTWARES\nSOFTWARES/128<<=>>a:3:{s:8:"COMMENTS";s:58:"DocBook/XML DTD V4.4, designed for technical documentation";s:4:"NAME";s:11:"docbook-xml";s:7:"VERSION";s:5:"4.4_1";}SOFTWARES\nSOFTWARES/129<<=>>a:3:{s:8:"COMMENTS";s:58:"DocBook/XML DTD V4.5, designed for technical documentation";s:4:"NAME";s:11:"docbook-xml";s:7:"VERSION";s:3:"4.5";}SOFTWARES\nSOFTWARES/130<<=>>a:3:{s:8:"COMMENTS";s:23:"XSL DocBook stylesheets";s:4:"NAME";s:11:"docbook-xsl";s:7:"VERSION";s:6:"1.76.1";}SOFTWARES\nSOFTWARES/131<<=>>a:3:{s:8:"COMMENTS";s:52:"Documentation system for C, C++, and other languages";s:4:"NAME";s:7:"doxygen";s:7:"VERSION";s:7:"1.8.3.1";}SOFTWARES\nSOFTWARES/132<<=>>a:3:{s:8:"COMMENTS";s:48:"OpenGL hardware acceleration drivers for the DRI";s:4:"NAME";s:3:"dri";s:7:"VERSION";s:10:"7.11.2_2,2";}SOFTWARES\nSOFTWARES/133<<=>>a:3:{s:8:"COMMENTS";s:22:"DRI2 prototype headers";s:4:"NAME";s:9:"dri2proto";s:7:"VERSION";s:3:"2.6";}SOFTWARES\nSOFTWARES/134<<=>>a:3:{s:8:"COMMENTS";s:25:"The Droid typeface family";s:4:"NAME";s:15:"droid-fonts-ttf";s:7:"VERSION";s:8:"20110324";}SOFTWARES\nSOFTWARES/135<<=>>a:3:{s:8:"COMMENTS";s:53:"DSSSL stylesheets for the DocBook DTD by Norman Walsh";s:4:"NAME";s:21:"dsssl-docbook-modular";s:7:"VERSION";s:8:"1.79_1,1";}SOFTWARES\nSOFTWARES/136<<=>>a:3:{s:8:"COMMENTS";s:18:"Duke Nukem 3D Data";s:4:"NAME";s:11:"duke3d-data";s:7:"VERSION";s:3:"1.0";}SOFTWARES\nSOFTWARES/137<<=>>a:3:{s:8:"COMMENTS";s:36:"Convert a TeX DVI file to PostScript";s:4:"NAME";s:12:"dvipsk-tetex";s:7:"VERSION";s:7:"5.95a_6";}SOFTWARES\nSOFTWARES/138<<=>>a:3:{s:8:"COMMENTS";s:44:"Duke Nukem 3D Port based on JFDuke and EDuke";s:4:"NAME";s:7:"eduke32";s:7:"VERSION";s:10:"20110627_3";}SOFTWARES\nSOFTWARES/139<<=>>a:3:{s:8:"COMMENTS";s:26:"D-Bus bindings for GObject";s:4:"NAME";s:7:"eggdbus";s:7:"VERSION";s:5:"0.6_1";}SOFTWARES\nSOFTWARES/140<<=>>a:3:{s:8:"COMMENTS";s:34:"A full-text search engine for Java";s:4:"NAME";s:13:"elasticsearch";s:7:"VERSION";s:6:"0.20.4";}SOFTWARES\nSOFTWARES/141<<=>>a:3:{s:8:"COMMENTS";s:34:"Dictionary/spellchecking framework";s:4:"NAME";s:7:"enchant";s:7:"VERSION";s:5:"1.6.0";}SOFTWARES\nSOFTWARES/142<<=>>a:3:{s:8:"COMMENTS";s:20:"X.Org Encoding fonts";s:4:"NAME";s:9:"encodings";s:7:"VERSION";s:7:"1.0.4,1";}SOFTWARES\nSOFTWARES/143<<=>>a:3:{s:8:"COMMENTS";s:29:"A software speech synthesizer";s:4:"NAME";s:6:"espeak";s:7:"VERSION";s:9:"1.46.02_1";}SOFTWARES\nSOFTWARES/144<<=>>a:3:{s:8:"COMMENTS";s:59:"Replacement of the simple syslog() API providing structure ";s:4:"NAME";s:8:"eventlog";s:7:"VERSION";s:6:"0.2.12";}SOFTWARES\nSOFTWARES/145<<=>>a:3:{s:8:"COMMENTS";s:23:"XEVIE extension headers";s:4:"NAME";s:7:"evieext";s:7:"VERSION";s:5:"1.1.1";}SOFTWARES\nSOFTWARES/146<<=>>a:3:{s:8:"COMMENTS";s:36:"GNOME 2 multi-format document viewer";s:4:"NAME";s:6:"evince";s:7:"VERSION";s:8:"2.32.0_9";}SOFTWARES\nSOFTWARES/147<<=>>a:3:{s:8:"COMMENTS";s:39:"A port of Adobe XMP SDK to work on UNIX";s:4:"NAME";s:6:"exempi";s:7:"VERSION";s:5:"2.1.1";}SOFTWARES\nSOFTWARES/148<<=>>a:3:{s:8:"COMMENTS";s:27:"XML 1.0 parser written in C";s:4:"NAME";s:5:"expat";s:7:"VERSION";s:7:"2.0.1_2";}SOFTWARES\nSOFTWARES/149<<=>>a:3:{s:8:"COMMENTS";s:59:"Framework to easily create, manipulate, and run FreeBSD jai";s:4:"NAME";s:6:"ezjail";s:7:"VERSION";s:5:"3.2.3";}SOFTWARES\nSOFTWARES/150<<=>>a:3:{s:8:"COMMENTS";s:40:"Visual mail, user, and print face server";s:4:"NAME";s:5:"faces";s:7:"VERSION";s:7:"1.7.7_9";}SOFTWARES\nSOFTWARES/151<<=>>a:3:{s:8:"COMMENTS";s:59:"Collection of GStreamer modules and libraries for videoconf";s:4:"NAME";s:9:"farsight2";s:7:"VERSION";s:8:"0.0.22_1";}SOFTWARES\nSOFTWARES/152<<=>>a:3:{s:8:"COMMENTS";s:59:"Realtime audio/video encoder/converter and streaming server";s:4:"NAME";s:6:"ffmpeg";s:7:"VERSION";s:10:"0.7.13_6,1";}SOFTWARES\nSOFTWARES/153<<=>>a:3:{s:8:"COMMENTS";s:57:"Fast C routines to compute the Discrete Fourier Transform";s:4:"NAME";s:5:"fftw3";s:7:"VERSION";s:5:"3.3.3";}SOFTWARES\nSOFTWARES/154<<=>>a:3:{s:8:"COMMENTS";s:23:"Fixes extension headers";s:4:"NAME";s:10:"fixesproto";s:7:"VERSION";s:3:"5.0";}SOFTWARES\nSOFTWARES/155<<=>>a:3:{s:8:"COMMENTS";s:25:"Free lossless audio codec";s:4:"NAME";s:4:"flac";s:7:"VERSION";s:7:"1.2.1_3";}SOFTWARES\nSOFTWARES/156<<=>>a:3:{s:8:"COMMENTS";s:31:"Fast lexical analyzer generator";s:4:"NAME";s:4:"flex";s:7:"VERSION";s:6:"2.5.37";}SOFTWARES\nSOFTWARES/157<<=>>a:3:{s:8:"COMMENTS";s:31:"Manage locks from shell scripts";s:4:"NAME";s:5:"flock";s:7:"VERSION";s:4:"2.19";}SOFTWARES\nSOFTWARES/158<<=>>a:3:{s:8:"COMMENTS";s:23:"X.Org Adobe 100dpi font";s:4:"NAME";s:17:"font-adobe-100dpi";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/159<<=>>a:3:{s:8:"COMMENTS";s:22:"X.Org Adobe 75dpi font";s:4:"NAME";s:16:"font-adobe-75dpi";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/160<<=>>a:3:{s:8:"COMMENTS";s:30:"X.Org Adobe Utopia 100dpi font";s:4:"NAME";s:24:"font-adobe-utopia-100dpi";s:7:"VERSION";s:5:"1.0.4";}SOFTWARES\nSOFTWARES/161<<=>>a:3:{s:8:"COMMENTS";s:29:"X.Org Adobe Utopia 75dpi font";s:4:"NAME";s:23:"font-adobe-utopia-75dpi";s:7:"VERSION";s:5:"1.0.4";}SOFTWARES\nSOFTWARES/162<<=>>a:3:{s:8:"COMMENTS";s:29:"X.Org Adobe Utopia Type1 font";s:4:"NAME";s:23:"font-adobe-utopia-type1";s:7:"VERSION";s:5:"1.0.4";}SOFTWARES\nSOFTWARES/163<<=>>a:3:{s:8:"COMMENTS";s:18:"X.Org Font aliases";s:4:"NAME";s:10:"font-alias";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/164<<=>>a:3:{s:8:"COMMENTS";s:42:"Computer Modern and standard fonts for TeX";s:4:"NAME";s:13:"font-amsfonts";s:7:"VERSION";s:6:"3.02_1";}SOFTWARES\nSOFTWARES/165<<=>>a:3:{s:8:"COMMENTS";s:32:"X.Org miscellaneous Arabic fonts";s:4:"NAME";s:16:"font-arabic-misc";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/166<<=>>a:3:{s:8:"COMMENTS";s:32:"X.Org Bigelow Holmes 100dpi font";s:4:"NAME";s:14:"font-bh-100dpi";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/167<<=>>a:3:{s:8:"COMMENTS";s:31:"X.Org Bigelow Holmes 75dpi font";s:4:"NAME";s:13:"font-bh-75dpi";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/168<<=>>a:3:{s:8:"COMMENTS";s:50:"X.Org Bigelow Holmes Lucida TypeWriter 100dpi font";s:4:"NAME";s:31:"font-bh-lucidatypewriter-100dpi";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/169<<=>>a:3:{s:8:"COMMENTS";s:49:"X.Org Bigelow Holmes Lucida TypeWriter 75dpi font";s:4:"NAME";s:30:"font-bh-lucidatypewriter-75dpi";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/170<<=>>a:3:{s:8:"COMMENTS";s:31:"X.Org Bigelow & Holmes TTF font";s:4:"NAME";s:11:"font-bh-ttf";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/171<<=>>a:3:{s:8:"COMMENTS";s:31:"X.Org Bigelow Holmes Type1 font";s:4:"NAME";s:13:"font-bh-type1";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/172<<=>>a:3:{s:8:"COMMENTS";s:32:"X.Org Bitstream Vera 100dpi font";s:4:"NAME";s:21:"font-bitstream-100dpi";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/173<<=>>a:3:{s:8:"COMMENTS";s:31:"X.Org Bitstream Vera 75dpi font";s:4:"NAME";s:20:"font-bitstream-75dpi";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/174<<=>>a:3:{s:8:"COMMENTS";s:31:"X.Org Bitstream Vera Type1 font";s:4:"NAME";s:20:"font-bitstream-type1";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/175<<=>>a:3:{s:8:"COMMENTS";s:26:"X.Org Cronyx Cyrillic font";s:4:"NAME";s:20:"font-cronyx-cyrillic";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/176<<=>>a:3:{s:8:"COMMENTS";s:32:"X.Org miscellaneous Cursor fonts";s:4:"NAME";s:16:"font-cursor-misc";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/177<<=>>a:3:{s:8:"COMMENTS";s:32:"X.Org miscellaneous Daewoo fonts";s:4:"NAME";s:16:"font-daewoo-misc";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/178<<=>>a:3:{s:8:"COMMENTS";s:29:"X.Org miscellaneous Dec fonts";s:4:"NAME";s:13:"font-dec-misc";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/179<<=>>a:3:{s:8:"COMMENTS";s:20:"X.Org IBM Type1 font";s:4:"NAME";s:14:"font-ibm-type1";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/180<<=>>a:3:{s:8:"COMMENTS";s:30:"X.Org miscellaneous ISAS fonts";s:4:"NAME";s:14:"font-isas-misc";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/181<<=>>a:3:{s:8:"COMMENTS";s:29:"X.Org miscellaneous JIS fonts";s:4:"NAME";s:13:"font-jis-misc";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/182<<=>>a:3:{s:8:"COMMENTS";s:31:"X.Org miscellaneous Micro fonts";s:4:"NAME";s:15:"font-micro-misc";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/183<<=>>a:3:{s:8:"COMMENTS";s:33:"X.Org miscellaneous Cyrillic font";s:4:"NAME";s:18:"font-misc-cyrillic";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/184<<=>>a:3:{s:8:"COMMENTS";s:33:"X.Org miscellaneous Ethiopic font";s:4:"NAME";s:18:"font-misc-ethiopic";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/185<<=>>a:3:{s:8:"COMMENTS";s:31:"X.Org miscellaneous Meltho font";s:4:"NAME";s:16:"font-misc-meltho";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/186<<=>>a:3:{s:8:"COMMENTS";s:30:"X.Org miscellaneous Misc fonts";s:4:"NAME";s:14:"font-misc-misc";s:7:"VERSION";s:5:"1.1.2";}SOFTWARES\nSOFTWARES/187<<=>>a:3:{s:8:"COMMENTS";s:30:"X.Org miscellaneous Mutt fonts";s:4:"NAME";s:14:"font-mutt-misc";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/188<<=>>a:3:{s:8:"COMMENTS";s:36:"X.Org miscellaneous Schumacher fonts";s:4:"NAME";s:20:"font-schumacher-misc";s:7:"VERSION";s:5:"1.1.2";}SOFTWARES\nSOFTWARES/189<<=>>a:3:{s:8:"COMMENTS";s:26:"X.Org Screen Cyrillic font";s:4:"NAME";s:20:"font-screen-cyrillic";s:7:"VERSION";s:5:"1.0.4";}SOFTWARES\nSOFTWARES/190<<=>>a:3:{s:8:"COMMENTS";s:30:"X.Org miscellaneous Sony fonts";s:4:"NAME";s:14:"font-sony-misc";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/191<<=>>a:3:{s:8:"COMMENTS";s:29:"X.Org miscellaneous Sun fonts";s:4:"NAME";s:13:"font-sun-misc";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/192<<=>>a:3:{s:8:"COMMENTS";s:46:"Create an index of X font files in a directory";s:4:"NAME";s:9:"font-util";s:7:"VERSION";s:5:"1.2.0";}SOFTWARES\nSOFTWARES/193<<=>>a:3:{s:8:"COMMENTS";s:28:"X.Org Winitzki Cyrillic font";s:4:"NAME";s:22:"font-winitzki-cyrillic";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/194<<=>>a:3:{s:8:"COMMENTS";s:24:"X.Org XFree86 Type1 font";s:4:"NAME";s:18:"font-xfree86-type1";s:7:"VERSION";s:5:"1.0.4";}SOFTWARES\nSOFTWARES/195<<=>>a:3:{s:8:"COMMENTS";s:27:"Fontcache extension headers";s:4:"NAME";s:14:"fontcacheproto";s:7:"VERSION";s:5:"0.1.3";}SOFTWARES\nSOFTWARES/196<<=>>a:3:{s:8:"COMMENTS";s:49:"An XML-based font configuration API for X Windows";s:4:"NAME";s:10:"fontconfig";s:7:"VERSION";s:7:"2.9.0,1";}SOFTWARES\nSOFTWARES/197<<=>>a:3:{s:8:"COMMENTS";s:23:"Fonts extension headers";s:4:"NAME";s:10:"fontsproto";s:7:"VERSION";s:5:"2.1.1";}SOFTWARES\nSOFTWARES/198<<=>>a:3:{s:8:"COMMENTS";s:45:"Quickly ping N hosts w/o flooding the network";s:4:"NAME";s:5:"fping";s:7:"VERSION";s:3:"3.4";}SOFTWARES\nSOFTWARES/199<<=>>a:3:{s:8:"COMMENTS";s:59:"An alternative to the OpenGL Utility Toolkit (GLUT) library";s:4:"NAME";s:8:"freeglut";s:7:"VERSION";s:5:"2.8.0";}SOFTWARES\nSOFTWARES/200<<=>>a:3:{s:8:"COMMENTS";s:50:"Library and tools to support IPMI-capable hardware";s:4:"NAME";s:8:"freeipmi";s:7:"VERSION";s:5:"1.2.3";}SOFTWARES\nSOFTWARES/201<<=>>a:3:{s:8:"COMMENTS";s:50:"A free and portable TrueType font rendering engine";s:4:"NAME";s:9:"freetype2";s:7:"VERSION";s:6:"2.4.11";}SOFTWARES\nSOFTWARES/202<<=>>a:3:{s:8:"COMMENTS";s:38:"A file and directory monitoring system";s:4:"NAME";s:5:"gamin";s:7:"VERSION";s:8:"0.1.10_4";}SOFTWARES\nSOFTWARES/203<<=>>a:3:{s:8:"COMMENTS";s:41:"A configuration database system for GNOME";s:4:"NAME";s:6:"gconf2";s:7:"VERSION";s:8:"2.32.0_3";}SOFTWARES\nSOFTWARES/204<<=>>a:3:{s:8:"COMMENTS";s:46:"A graphics library for fast creation of images";s:4:"NAME";s:2:"gd";s:7:"VERSION";s:10:"2.0.35_8,1";}SOFTWARES\nSOFTWARES/205<<=>>a:3:{s:8:"COMMENTS";s:24:"The GNU database manager";s:4:"NAME";s:4:"gdbm";s:7:"VERSION";s:5:"1.9.1";}SOFTWARES\nSOFTWARES/206<<=>>a:3:{s:8:"COMMENTS";s:26:"A graphic library for GTK+";s:4:"NAME";s:10:"gdk-pixbuf";s:7:"VERSION";s:8:"2.23.5_3";}SOFTWARES\nSOFTWARES/207<<=>>a:3:{s:8:"COMMENTS";s:40:"A graph based image processing framework";s:4:"NAME";s:4:"gegl";s:7:"VERSION";s:7:"0.1.8_5";}SOFTWARES\nSOFTWARES/208<<=>>a:3:{s:8:"COMMENTS";s:59:"A getopt(1) replacement that supports GNU-style long option";s:4:"NAME";s:6:"getopt";s:7:"VERSION";s:7:"1.1.4_2";}SOFTWARES\nSOFTWARES/209<<=>>a:3:{s:8:"COMMENTS";s:19:"GNU gettext package";s:4:"NAME";s:7:"gettext";s:7:"VERSION";s:8:"0.18.1.1";}SOFTWARES\nSOFTWARES/210<<=>>a:3:{s:8:"COMMENTS";s:38:"Ghostscript 9.x PostScript interpreter";s:4:"NAME";s:12:"ghostscript9";s:7:"VERSION";s:6:"9.06_1";}SOFTWARES\nSOFTWARES/211<<=>>a:3:{s:8:"COMMENTS";s:54:"Tools and library routines for working with GIF images";s:4:"NAME";s:6:"giflib";s:7:"VERSION";s:7:"4.2.0_2";}SOFTWARES\nSOFTWARES/212<<=>>a:3:{s:8:"COMMENTS";s:30:"The "meta-port" for The Gimp";s:4:"NAME";s:4:"gimp";s:7:"VERSION";s:8:"2.6.12,2";}SOFTWARES\nSOFTWARES/213<<=>>a:3:{s:8:"COMMENTS";s:32:"A GNU Image Manipulation Program";s:4:"NAME";s:8:"gimp-app";s:7:"VERSION";s:10:"2.6.12_1,1";}SOFTWARES\nSOFTWARES/214<<=>>a:3:{s:8:"COMMENTS";s:25:"GutenPrint Printer Driver";s:4:"NAME";s:15:"gimp-gutenprint";s:7:"VERSION";s:5:"5.2.8";}SOFTWARES\nSOFTWARES/215<<=>>a:3:{s:8:"COMMENTS";s:37:"FAM backend for GLib\\''s GIO library";s:4:"NAME";s:15:"gio-fam-backend";s:7:"VERSION";s:8:"2.28.8_1";}SOFTWARES\nSOFTWARES/216<<=>>a:3:{s:8:"COMMENTS";s:39:"Distributed source code management tool";s:4:"NAME";s:3:"git";s:7:"VERSION";s:7:"1.8.1.1";}SOFTWARES\nSOFTWARES/217<<=>>a:3:{s:8:"COMMENTS";s:59:"Some useful routines of C programming (previous stable vers";s:4:"NAME";s:4:"glib";s:7:"VERSION";s:9:"1.2.10_13";}SOFTWARES\nSOFTWARES/218<<=>>a:3:{s:8:"COMMENTS";s:59:"Some useful routines of C programming (current stable versi";s:4:"NAME";s:4:"glib";s:7:"VERSION";s:8:"2.28.8_5";}SOFTWARES\nSOFTWARES/219<<=>>a:3:{s:8:"COMMENTS";s:35:"Network-related giomodules for glib";s:4:"NAME";s:15:"glib-networking";s:7:"VERSION";s:8:"2.28.7_4";}SOFTWARES\nSOFTWARES/220<<=>>a:3:{s:8:"COMMENTS";s:24:"C++ interfaces for glib2";s:4:"NAME";s:6:"glibmm";s:7:"VERSION";s:8:"2.28.2,1";}SOFTWARES\nSOFTWARES/221<<=>>a:3:{s:8:"COMMENTS";s:21:"GLX extension headers";s:4:"NAME";s:7:"glproto";s:7:"VERSION";s:6:"1.4.15";}SOFTWARES\nSOFTWARES/222<<=>>a:3:{s:8:"COMMENTS";s:31:"GNU version of ''make'' utility";s:4:"NAME";s:5:"gmake";s:7:"VERSION";s:6:"3.82_1";}SOFTWARES\nSOFTWARES/223<<=>>a:3:{s:8:"COMMENTS";s:49:"A free library for arbitrary precision arithmetic";s:4:"NAME";s:3:"gmp";s:7:"VERSION";s:5:"5.0.5";}SOFTWARES\nSOFTWARES/224<<=>>a:3:{s:8:"COMMENTS";s:29:"Additional UI API for GNOME 2";s:4:"NAME";s:13:"gnome-desktop";s:7:"VERSION";s:8:"2.32.1_2";}SOFTWARES\nSOFTWARES/225<<=>>a:3:{s:8:"COMMENTS";s:15:"GNOME doc utils";s:4:"NAME";s:15:"gnome-doc-utils";s:7:"VERSION";s:6:"0.20.3";}SOFTWARES\nSOFTWARES/226<<=>>a:3:{s:8:"COMMENTS";s:45:"A collection of icons for the GNOME 2 desktop";s:4:"NAME";s:16:"gnome-icon-theme";s:7:"VERSION";s:8:"2.31.0_2";}SOFTWARES\nSOFTWARES/227<<=>>a:3:{s:8:"COMMENTS";s:41:"A MIME and Application database for GNOME";s:4:"NAME";s:15:"gnome-mime-data";s:7:"VERSION";s:8:"2.18.0_4";}SOFTWARES\nSOFTWARES/228<<=>>a:3:{s:8:"COMMENTS";s:49:"A front-end to mount, umount, and eject using HAL";s:4:"NAME";s:11:"gnome-mount";s:7:"VERSION";s:6:"0.8_10";}SOFTWARES\nSOFTWARES/229<<=>>a:3:{s:8:"COMMENTS";s:25:"GNOME Virtual File System";s:4:"NAME";s:9:"gnome-vfs";s:7:"VERSION";s:8:"2.24.4_1";}SOFTWARES\nSOFTWARES/230<<=>>a:3:{s:8:"COMMENTS";s:59:"Common startup and shutdown subroutines used by GNOME scrip";s:4:"NAME";s:10:"gnome_subr";s:7:"VERSION";s:3:"1.0";}SOFTWARES\nSOFTWARES/231<<=>>a:3:{s:8:"COMMENTS";s:52:"A utility port that creates the GNOME directory tree";s:4:"NAME";s:9:"gnomehier";s:7:"VERSION";s:6:"2.3_12";}SOFTWARES\nSOFTWARES/232<<=>>a:3:{s:8:"COMMENTS";s:21:"The GNU Privacy Guard";s:4:"NAME";s:5:"gnupg";s:7:"VERSION";s:8:"2.0.19_3";}SOFTWARES\nSOFTWARES/233<<=>>a:3:{s:8:"COMMENTS";s:36:"GNU Transport Layer Security library";s:4:"NAME";s:6:"gnutls";s:7:"VERSION";s:9:"2.12.18_1";}SOFTWARES\nSOFTWARES/234<<=>>a:3:{s:8:"COMMENTS";s:59:"Generate interface introspection data for GObject libraries";s:4:"NAME";s:21:"gobject-introspection";s:7:"VERSION";s:8:"0.10.8_3";}SOFTWARES\nSOFTWARES/235<<=>>a:3:{s:8:"COMMENTS";s:39:"Gpac MPEG-4 Systems library and headers";s:4:"NAME";s:12:"gpac-libgpac";s:7:"VERSION";s:9:"0.4.5_6,1";}SOFTWARES\nSOFTWARES/236<<=>>a:3:{s:8:"COMMENTS";s:53:"Generates perfect hash functions for sets of keywords";s:4:"NAME";s:5:"gperf";s:7:"VERSION";s:5:"3.0.3";}SOFTWARES\nSOFTWARES/237<<=>>a:3:{s:8:"COMMENTS";s:40:"A library to make access to GnuPG easier";s:4:"NAME";s:5:"gpgme";s:7:"VERSION";s:5:"1.3.2";}SOFTWARES\nSOFTWARES/238<<=>>a:3:{s:8:"COMMENTS";s:59:"Rendering capabilities for complex non-Roman writing system";s:4:"NAME";s:9:"graphite2";s:7:"VERSION";s:5:"1.2.0";}SOFTWARES\nSOFTWARES/239<<=>>a:3:{s:8:"COMMENTS";s:52:"Graph Visualization Software from AT&T and Bell Labs";s:4:"NAME";s:8:"graphviz";s:7:"VERSION";s:6:"2.30.1";}SOFTWARES\nSOFTWARES/240<<=>>a:3:{s:8:"COMMENTS";s:46:"Collection of globally shared GSetting schemas";s:4:"NAME";s:25:"gsettings-desktop-schemas";s:7:"VERSION";s:5:"3.0.1";}SOFTWARES\nSOFTWARES/241<<=>>a:3:{s:8:"COMMENTS";s:30:"Standard Fonts for Ghostscript";s:4:"NAME";s:7:"gsfonts";s:7:"VERSION";s:6:"8.11_5";}SOFTWARES\nSOFTWARES/242<<=>>a:3:{s:8:"COMMENTS";s:46:"The GNU Scientific Library - mathematical libs";s:4:"NAME";s:3:"gsl";s:7:"VERSION";s:6:"1.15_1";}SOFTWARES\nSOFTWARES/243<<=>>a:3:{s:8:"COMMENTS";s:53:"Development framework for creating media applications";s:4:"NAME";s:9:"gstreamer";s:7:"VERSION";s:7:"0.10.36";}SOFTWARES\nSOFTWARES/244<<=>>a:3:{s:8:"COMMENTS";s:53:"GStreamer plug-in for manipulating MPEG video streams";s:4:"NAME";s:16:"gstreamer-ffmpeg";s:7:"VERSION";s:7:"0.10.13";}SOFTWARES\nSOFTWARES/245<<=>>a:3:{s:8:"COMMENTS";s:59:"GStreamer written collection of plugins handling several me";s:4:"NAME";s:17:"gstreamer-plugins";s:7:"VERSION";s:11:"0.10.36_2,3";}SOFTWARES\nSOFTWARES/246<<=>>a:3:{s:8:"COMMENTS";s:54:"Gstreamer ATSC A/52 stream aka AC-3 (dvd audio) plugin";s:4:"NAME";s:24:"gstreamer-plugins-a52dec";s:7:"VERSION";s:9:"0.10.19,3";}SOFTWARES\nSOFTWARES/247<<=>>a:3:{s:8:"COMMENTS";s:21:"Bad gstreamer-plugins";s:4:"NAME";s:21:"gstreamer-plugins-bad";s:7:"VERSION";s:9:"0.10.23,3";}SOFTWARES\nSOFTWARES/248<<=>>a:3:{s:8:"COMMENTS";s:53:"Core set of typical audio and video gstreamer-plugins";s:4:"NAME";s:22:"gstreamer-plugins-core";s:7:"VERSION";s:7:"0.10_13";}SOFTWARES\nSOFTWARES/249<<=>>a:3:{s:8:"COMMENTS";s:20:"Gstreamer dts plugin";s:4:"NAME";s:21:"gstreamer-plugins-dts";s:7:"VERSION";s:9:"0.10.23,3";}SOFTWARES\nSOFTWARES/250<<=>>a:3:{s:8:"COMMENTS";s:24:"Gstreamer dvd plugin set";s:4:"NAME";s:21:"gstreamer-plugins-dvd";s:7:"VERSION";s:9:"0.10.19,3";}SOFTWARES\nSOFTWARES/251<<=>>a:3:{s:8:"COMMENTS";s:22:"Good gstreamer-plugins";s:4:"NAME";s:22:"gstreamer-plugins-good";s:7:"VERSION";s:9:"0.10.31,3";}SOFTWARES\nSOFTWARES/252<<=>>a:3:{s:8:"COMMENTS";s:20:"Gstreamer png plugin";s:4:"NAME";s:24:"gstreamer-plugins-libpng";s:7:"VERSION";s:9:"0.10.31,3";}SOFTWARES\nSOFTWARES/253<<=>>a:3:{s:8:"COMMENTS";s:28:"Gstreamer mp3 decoder plugin";s:4:"NAME";s:21:"gstreamer-plugins-mad";s:7:"VERSION";s:9:"0.10.19,3";}SOFTWARES\nSOFTWARES/254<<=>>a:3:{s:8:"COMMENTS";s:39:"Gstreamer Plugins Mp3 decoder meta-port";s:4:"NAME";s:21:"gstreamer-plugins-mp3";s:7:"VERSION";s:8:"0.10.0_1";}SOFTWARES\nSOFTWARES/255<<=>>a:3:{s:8:"COMMENTS";s:30:"Gstreamer Ogg bitstream plugin";s:4:"NAME";s:21:"gstreamer-plugins-ogg";s:7:"VERSION";s:9:"0.10.36,3";}SOFTWARES\nSOFTWARES/256<<=>>a:3:{s:8:"COMMENTS";s:34:"Gstreamer pango textoverlay plugin";s:4:"NAME";s:23:"gstreamer-plugins-pango";s:7:"VERSION";s:11:"0.10.36_1,3";}SOFTWARES\nSOFTWARES/257<<=>>a:3:{s:8:"COMMENTS";s:23:"Gstreamer theora plugin";s:4:"NAME";s:24:"gstreamer-plugins-theora";s:7:"VERSION";s:9:"0.10.36,3";}SOFTWARES\nSOFTWARES/258<<=>>a:3:{s:8:"COMMENTS";s:22:"Ugly gstreamer-plugins";s:4:"NAME";s:22:"gstreamer-plugins-ugly";s:7:"VERSION";s:9:"0.10.19,3";}SOFTWARES\nSOFTWARES/259<<=>>a:3:{s:8:"COMMENTS";s:39:"Gstreamer vorbis encoder/decoder plugin";s:4:"NAME";s:24:"gstreamer-plugins-vorbis";s:7:"VERSION";s:9:"0.10.36,3";}SOFTWARES\nSOFTWARES/260<<=>>a:3:{s:8:"COMMENTS";s:21:"Gstreamer xvid plugin";s:4:"NAME";s:22:"gstreamer-plugins-xvid";s:7:"VERSION";s:9:"0.10.23,3";}SOFTWARES\nSOFTWARES/261<<=>>a:3:{s:8:"COMMENTS";s:44:"GNU version of the traditional tape archiver";s:4:"NAME";s:4:"gtar";s:7:"VERSION";s:4:"1.26";}SOFTWARES\nSOFTWARES/262<<=>>a:3:{s:8:"COMMENTS";s:50:"Gimp Toolkit for X11 GUI (previous stable version)";s:4:"NAME";s:3:"gtk";s:7:"VERSION";s:9:"1.2.10_22";}SOFTWARES\nSOFTWARES/263<<=>>a:3:{s:8:"COMMENTS";s:50:"Gimp Toolkit for X11 GUI (previous stable version)";s:4:"NAME";s:3:"gtk";s:7:"VERSION";s:8:"2.24.6_2";}SOFTWARES\nSOFTWARES/264<<=>>a:3:{s:8:"COMMENTS";s:37:"Theme engine for the GTK+-2.0 toolkit";s:4:"NAME";s:12:"gtk-engines2";s:7:"VERSION";s:8:"2.20.2_1";}SOFTWARES\nSOFTWARES/265<<=>>a:3:{s:8:"COMMENTS";s:51:"gtk-update-icon-cache utility from the Gtk+ toolkit";s:4:"NAME";s:21:"gtk-update-icon-cache";s:7:"VERSION";s:8:"2.24.6_1";}SOFTWARES\nSOFTWARES/266<<=>>a:3:{s:8:"COMMENTS";s:24:"OpenGL extension to GTK+";s:4:"NAME";s:8:"gtkglext";s:7:"VERSION";s:8:"1.2.0_10";}SOFTWARES\nSOFTWARES/267<<=>>a:3:{s:8:"COMMENTS";s:27:"C++ wrapper for Gtk+, Pango";s:4:"NAME";s:5:"gtkmm";s:7:"VERSION";s:8:"2.24.2_1";}SOFTWARES\nSOFTWARES/268<<=>>a:3:{s:8:"COMMENTS";s:33:"A GTK+ 2 spell checking component";s:4:"NAME";s:8:"gtkspell";s:7:"VERSION";s:8:"2.0.16_4";}SOFTWARES\nSOFTWARES/269<<=>>a:3:{s:8:"COMMENTS";s:48:"A Unicode/ISO10646 character map and font viewer";s:4:"NAME";s:9:"gucharmap";s:7:"VERSION";s:8:"2.32.1_1";}SOFTWARES\nSOFTWARES/270<<=>>a:3:{s:8:"COMMENTS";s:32:"The "meta-port" for GutenPrint";s:4:"NAME";s:10:"gutenprint";s:7:"VERSION";s:5:"5.2.8";}SOFTWARES\nSOFTWARES/271<<=>>a:3:{s:8:"COMMENTS";s:25:"GutenPrint Printer Driver";s:4:"NAME";s:15:"gutenprint-base";s:7:"VERSION";s:5:"5.2.8";}SOFTWARES\nSOFTWARES/272<<=>>a:3:{s:8:"COMMENTS";s:25:"GutenPrint Printer Driver";s:4:"NAME";s:14:"gutenprint-ijs";s:7:"VERSION";s:5:"5.2.8";}SOFTWARES\nSOFTWARES/273<<=>>a:3:{s:8:"COMMENTS";s:25:"GNOME virtual file system";s:4:"NAME";s:4:"gvfs";s:7:"VERSION";s:7:"1.6.6_3";}SOFTWARES\nSOFTWARES/274<<=>>a:3:{s:8:"COMMENTS";s:56:"Hardware Abstraction Layer for simplifying device access";s:4:"NAME";s:3:"hal";s:7:"VERSION";s:9:"0.5.14_20";}SOFTWARES\nSOFTWARES/275<<=>>a:3:{s:8:"COMMENTS";s:59:"Automatically generating simple manual pages from program o";s:4:"NAME";s:8:"help2man";s:7:"VERSION";s:6:"1.41.1";}SOFTWARES\nSOFTWARES/276<<=>>a:3:{s:8:"COMMENTS";s:58:"A high-color icon theme shell from the FreeDesktop project";s:4:"NAME";s:18:"hicolor-icon-theme";s:7:"VERSION";s:4:"0.12";}SOFTWARES\nSOFTWARES/277<<=>>a:3:{s:8:"COMMENTS";s:56:"Improved spell-checker for Hungarian and other languages";s:4:"NAME";s:8:"hunspell";s:7:"VERSION";s:7:"1.3.2_1";}SOFTWARES\nSOFTWARES/278<<=>>a:3:{s:8:"COMMENTS";s:54:"Library for high quality hyphenation and justification";s:4:"NAME";s:6:"hyphen";s:7:"VERSION";s:5:"2.8.6";}SOFTWARES\nSOFTWARES/279<<=>>a:3:{s:8:"COMMENTS";s:32:"ICE authority file utility for X";s:4:"NAME";s:7:"iceauth";s:7:"VERSION";s:5:"1.0.5";}SOFTWARES\nSOFTWARES/280<<=>>a:3:{s:8:"COMMENTS";s:47:"International Components for Unicode (from IBM)";s:4:"NAME";s:3:"icu";s:7:"VERSION";s:6:"50.1.2";}SOFTWARES\nSOFTWARES/281<<=>>a:3:{s:8:"COMMENTS";s:58:"XML parser library mainly designed for Jabber applications";s:4:"NAME";s:7:"iksemel";s:7:"VERSION";s:5:"1.4_4";}SOFTWARES\nSOFTWARES/282<<=>>a:3:{s:8:"COMMENTS";s:57:"ILM Base libraries a.k.a. Half, IlmThread, Imath, and Iex";s:4:"NAME";s:7:"ilmbase";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/283<<=>>a:3:{s:8:"COMMENTS";s:36:"Imake and other utilities from X.Org";s:4:"NAME";s:5:"imake";s:7:"VERSION";s:7:"1.0.4,1";}SOFTWARES\nSOFTWARES/284<<=>>a:3:{s:8:"COMMENTS";s:23:"Input extension headers";s:4:"NAME";s:10:"inputproto";s:7:"VERSION";s:5:"2.0.2";}SOFTWARES\nSOFTWARES/285<<=>>a:3:{s:8:"COMMENTS";s:53:"Tools to internationalize various kinds of data files";s:4:"NAME";s:8:"intltool";s:7:"VERSION";s:6:"0.41.1";}SOFTWARES\nSOFTWARES/286<<=>>a:3:{s:8:"COMMENTS";s:26:"CLI to manage IPMI systems";s:4:"NAME";s:8:"ipmitool";s:7:"VERSION";s:8:"1.8.12_1";}SOFTWARES\nSOFTWARES/287<<=>>a:3:{s:8:"COMMENTS";s:54:"Lists of the country, language, and currency iso names";s:4:"NAME";s:9:"iso-codes";s:7:"VERSION";s:4:"3.40";}SOFTWARES\nSOFTWARES/288<<=>>a:3:{s:8:"COMMENTS";s:47:"Character entity sets from ISO 8879:1986 (SGML)";s:4:"NAME";s:7:"iso8879";s:7:"VERSION";s:6:"1986_3";}SOFTWARES\nSOFTWARES/289<<=>>a:3:{s:8:"COMMENTS";s:49:"Perl extension interface to convert Japanese text";s:4:"NAME";s:11:"ja-p5-Jcode";s:7:"VERSION";s:4:"2.07";}SOFTWARES\nSOFTWARES/290<<=>>a:3:{s:8:"COMMENTS";s:26:"A low-latency audio server";s:4:"NAME";s:6:"jackit";s:7:"VERSION";s:9:"0.121.3_2";}SOFTWARES\nSOFTWARES/291<<=>>a:3:{s:8:"COMMENTS";s:59:"An object-oriented SGML/XML parser toolkit and DSSSL engine";s:4:"NAME";s:4:"jade";s:7:"VERSION";s:7:"1.2.1_9";}SOFTWARES\nSOFTWARES/292<<=>>a:3:{s:8:"COMMENTS";s:54:"A TeX backend for Jade, for typesetting SGML documents";s:4:"NAME";s:7:"jadetex";s:7:"VERSION";s:6:"3.13_8";}SOFTWARES\nSOFTWARES/293<<=>>a:3:{s:8:"COMMENTS";s:59:"An implementation of the codec specified in the JPEG-2000 s";s:4:"NAME";s:6:"jasper";s:7:"VERSION";s:10:"1.900.1_10";}SOFTWARES\nSOFTWARES/294<<=>>a:3:{s:8:"COMMENTS";s:33:"Updated Java timezone definitions";s:4:"NAME";s:13:"java-zoneinfo";s:7:"VERSION";s:6:"2012.j";}SOFTWARES\nSOFTWARES/295<<=>>a:3:{s:8:"COMMENTS";s:48:"Wrapper script for various Java Virtual Machines";s:4:"NAME";s:13:"javavmwrapper";s:7:"VERSION";s:5:"2.4_3";}SOFTWARES\nSOFTWARES/296<<=>>a:3:{s:8:"COMMENTS";s:59:"Decoder implementation of the JBIG2 image compression forma";s:4:"NAME";s:8:"jbig2dec";s:7:"VERSION";s:6:"0.11_1";}SOFTWARES\nSOFTWARES/297<<=>>a:3:{s:8:"COMMENTS";s:59:"Lossless compression for bi-level images such as scanned pa";s:4:"NAME";s:7:"jbigkit";s:7:"VERSION";s:3:"1.6";}SOFTWARES\nSOFTWARES/298<<=>>a:3:{s:8:"COMMENTS";s:33:"IJG''s jpeg compression utilities";s:4:"NAME";s:4:"jpeg";s:7:"VERSION";s:3:"8_4";}SOFTWARES\nSOFTWARES/299<<=>>a:3:{s:8:"COMMENTS";s:53:"Large Vocabulary Continuous Speech Recognition Engine";s:4:"NAME";s:6:"julius";s:7:"VERSION";s:5:"4.1.2";}SOFTWARES\nSOFTWARES/300<<=>>a:3:{s:8:"COMMENTS";s:18:"Makefile framework";s:4:"NAME";s:6:"kBuild";s:7:"VERSION";s:8:"0.1.9998";}SOFTWARES\nSOFTWARES/301<<=>>a:3:{s:8:"COMMENTS";s:20:"KB extension headers";s:4:"NAME";s:7:"kbproto";s:7:"VERSION";s:5:"1.0.5";}SOFTWARES\nSOFTWARES/302<<=>>a:3:{s:8:"COMMENTS";s:59:"Utility port that creates hierarchy of shared KDE4 director";s:4:"NAME";s:8:"kdehier4";s:7:"VERSION";s:6:"1.0.11";}SOFTWARES\nSOFTWARES/303<<=>>a:3:{s:8:"COMMENTS";s:42:"Linux Audio Developer''s Simple Plugin API";s:4:"NAME";s:6:"ladspa";s:7:"VERSION";s:4:"1.13";}SOFTWARES\nSOFTWARES/304<<=>>a:3:{s:8:"COMMENTS";s:20:"Fast MP3 encoder kit";s:4:"NAME";s:4:"lame";s:7:"VERSION";s:6:"3.99.5";}SOFTWARES\nSOFTWARES/305<<=>>a:3:{s:8:"COMMENTS";s:59:"Light Color Management System -- a color management library";s:4:"NAME";s:4:"lcms";s:7:"VERSION";s:8:"1.19_1,1";}SOFTWARES\nSOFTWARES/306<<=>>a:3:{s:8:"COMMENTS";s:59:"Accurate, fast, and small-footprint color management engine";s:4:"NAME";s:5:"lcms2";s:7:"VERSION";s:3:"2.4";}SOFTWARES\nSOFTWARES/307<<=>>a:3:{s:8:"COMMENTS";s:36:"Java/Swing-based LDAP browser/editor";s:4:"NAME";s:11:"ldapbrowser";s:7:"VERSION";s:7:"2.8.2_3";}SOFTWARES\nSOFTWARES/308<<=>>a:3:{s:8:"COMMENTS";s:14:"The FS library";s:4:"NAME";s:5:"libFS";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/309<<=>>a:3:{s:8:"COMMENTS";s:44:"OpenGL library that renders using GLX or DRI";s:4:"NAME";s:5:"libGL";s:7:"VERSION";s:8:"7.11.2_2";}SOFTWARES\nSOFTWARES/310<<=>>a:3:{s:8:"COMMENTS";s:22:"OpenGL utility library";s:4:"NAME";s:6:"libGLU";s:7:"VERSION";s:8:"7.11.2_1";}SOFTWARES\nSOFTWARES/311<<=>>a:3:{s:8:"COMMENTS";s:37:"Inter Client Exchange library for X11";s:4:"NAME";s:6:"libICE";s:7:"VERSION";s:7:"1.0.7,1";}SOFTWARES\nSOFTWARES/312<<=>>a:3:{s:8:"COMMENTS";s:47:"A library for creating trees of CORBA IDL files";s:4:"NAME";s:6:"libIDL";s:7:"VERSION";s:8:"0.8.14_1";}SOFTWARES\nSOFTWARES/313<<=>>a:3:{s:8:"COMMENTS";s:34:"Session Management library for X11";s:4:"NAME";s:5:"libSM";s:7:"VERSION";s:7:"1.2.0,1";}SOFTWARES\nSOFTWARES/314<<=>>a:3:{s:8:"COMMENTS";s:11:"X11 library";s:4:"NAME";s:6:"libX11";s:7:"VERSION";s:7:"1.4.4,1";}SOFTWARES\nSOFTWARES/315<<=>>a:3:{s:8:"COMMENTS";s:22:"The XScrnSaver library";s:4:"NAME";s:13:"libXScrnSaver";s:7:"VERSION";s:5:"1.2.1";}SOFTWARES\nSOFTWARES/316<<=>>a:3:{s:8:"COMMENTS";s:17:"The XTrap library";s:4:"NAME";s:8:"libXTrap";s:7:"VERSION";s:5:"1.0.0";}SOFTWARES\nSOFTWARES/317<<=>>a:3:{s:8:"COMMENTS";s:39:"Authentication Protocol library for X11";s:4:"NAME";s:6:"libXau";s:7:"VERSION";s:5:"1.0.6";}SOFTWARES\nSOFTWARES/318<<=>>a:3:{s:8:"COMMENTS";s:24:"X Athena Widgets library";s:4:"NAME";s:6:"libXaw";s:7:"VERSION";s:7:"1.0.9,2";}SOFTWARES\nSOFTWARES/319<<=>>a:3:{s:8:"COMMENTS";s:29:"X Composite extension library";s:4:"NAME";s:13:"libXcomposite";s:7:"VERSION";s:7:"0.4.3,1";}SOFTWARES\nSOFTWARES/320<<=>>a:3:{s:8:"COMMENTS";s:36:"X client-side cursor loading library";s:4:"NAME";s:10:"libXcursor";s:7:"VERSION";s:6:"1.1.12";}SOFTWARES\nSOFTWARES/321<<=>>a:3:{s:8:"COMMENTS";s:26:"X Damage extension library";s:4:"NAME";s:10:"libXdamage";s:7:"VERSION";s:5:"1.1.3";}SOFTWARES\nSOFTWARES/322<<=>>a:3:{s:8:"COMMENTS";s:42:"X Display Manager Control Protocol library";s:4:"NAME";s:8:"libXdmcp";s:7:"VERSION";s:5:"1.1.0";}SOFTWARES\nSOFTWARES/323<<=>>a:3:{s:8:"COMMENTS";s:17:"The Xevie library";s:4:"NAME";s:8:"libXevie";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/324<<=>>a:3:{s:8:"COMMENTS";s:21:"X11 Extension library";s:4:"NAME";s:7:"libXext";s:7:"VERSION";s:9:"1.3.0_1,1";}SOFTWARES\nSOFTWARES/325<<=>>a:3:{s:8:"COMMENTS";s:25:"X Fixes extension library";s:4:"NAME";s:9:"libXfixes";s:7:"VERSION";s:3:"5.0";}SOFTWARES\nSOFTWARES/326<<=>>a:3:{s:8:"COMMENTS";s:14:"X font library";s:4:"NAME";s:8:"libXfont";s:7:"VERSION";s:9:"1.4.4_1,1";}SOFTWARES\nSOFTWARES/327<<=>>a:3:{s:8:"COMMENTS";s:22:"The Xfontcache library";s:4:"NAME";s:13:"libXfontcache";s:7:"VERSION";s:5:"1.0.5";}SOFTWARES\nSOFTWARES/328<<=>>a:3:{s:8:"COMMENTS";s:42:"A client-sided font API for X applications";s:4:"NAME";s:6:"libXft";s:7:"VERSION";s:6:"2.1.14";}SOFTWARES\nSOFTWARES/329<<=>>a:3:{s:8:"COMMENTS";s:25:"X Input extension library";s:4:"NAME";s:5:"libXi";s:7:"VERSION";s:7:"1.4.5,1";}SOFTWARES\nSOFTWARES/330<<=>>a:3:{s:8:"COMMENTS";s:20:"X11 Xinerama library";s:4:"NAME";s:11:"libXinerama";s:7:"VERSION";s:7:"1.1.1,1";}SOFTWARES\nSOFTWARES/331<<=>>a:3:{s:8:"COMMENTS";s:35:"X Miscellaneous Utilities libraries";s:4:"NAME";s:6:"libXmu";s:7:"VERSION";s:7:"1.1.0,1";}SOFTWARES\nSOFTWARES/332<<=>>a:3:{s:8:"COMMENTS";s:15:"X print library";s:4:"NAME";s:5:"libXp";s:7:"VERSION";s:7:"1.0.1,1";}SOFTWARES\nSOFTWARES/333<<=>>a:3:{s:8:"COMMENTS";s:16:"X Pixmap library";s:4:"NAME";s:6:"libXpm";s:7:"VERSION";s:5:"3.5.9";}SOFTWARES\nSOFTWARES/334<<=>>a:3:{s:8:"COMMENTS";s:37:"X Resize and Rotate extension library";s:4:"NAME";s:9:"libXrandr";s:7:"VERSION";s:5:"1.3.2";}SOFTWARES\nSOFTWARES/335<<=>>a:3:{s:8:"COMMENTS";s:26:"X Render extension library";s:4:"NAME";s:10:"libXrender";s:7:"VERSION";s:5:"0.9.6";}SOFTWARES\nSOFTWARES/336<<=>>a:3:{s:8:"COMMENTS";s:24:"X Resource usage library";s:4:"NAME";s:7:"libXres";s:7:"VERSION";s:5:"1.0.5";}SOFTWARES\nSOFTWARES/337<<=>>a:3:{s:8:"COMMENTS";s:17:"X Toolkit library";s:4:"NAME";s:5:"libXt";s:7:"VERSION";s:7:"1.1.1,1";}SOFTWARES\nSOFTWARES/338<<=>>a:3:{s:8:"COMMENTS";s:16:"X Test extension";s:4:"NAME";s:7:"libXtst";s:7:"VERSION";s:5:"1.2.0";}SOFTWARES\nSOFTWARES/339<<=>>a:3:{s:8:"COMMENTS";s:25:"X Video Extension library";s:4:"NAME";s:5:"libXv";s:7:"VERSION";s:7:"1.0.6,1";}SOFTWARES\nSOFTWARES/340<<=>>a:3:{s:8:"COMMENTS";s:45:"X Video Extension Motion Compensation library";s:4:"NAME";s:7:"libXvMC";s:7:"VERSION";s:5:"1.0.6";}SOFTWARES\nSOFTWARES/341<<=>>a:3:{s:8:"COMMENTS";s:15:"X DGA Extension";s:4:"NAME";s:11:"libXxf86dga";s:7:"VERSION";s:5:"1.1.2";}SOFTWARES\nSOFTWARES/342<<=>>a:3:{s:8:"COMMENTS";s:21:"X XF86-Misc Extension";s:4:"NAME";s:12:"libXxf86misc";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/343<<=>>a:3:{s:8:"COMMENTS";s:19:"X Vidmode Extension";s:4:"NAME";s:10:"libXxf86vm";s:7:"VERSION";s:5:"1.1.1";}SOFTWARES\nSOFTWARES/344<<=>>a:3:{s:8:"COMMENTS";s:55:"A free library for decoding ATSC A/52 streams, aka AC-3";s:4:"NAME";s:6:"liba52";s:7:"VERSION";s:7:"0.7.4_2";}SOFTWARES\nSOFTWARES/345<<=>>a:3:{s:8:"COMMENTS";s:40:"Library for high-performance 2D graphics";s:4:"NAME";s:11:"libart_lgpl";s:7:"VERSION";s:8:"2.3.21,1";}SOFTWARES\nSOFTWARES/346<<=>>a:3:{s:8:"COMMENTS";s:35:"IPC library used by GnuPG and gpgme";s:4:"NAME";s:9:"libassuan";s:7:"VERSION";s:5:"2.0.3";}SOFTWARES\nSOFTWARES/347<<=>>a:3:{s:8:"COMMENTS";s:41:"A library to access data on a CDDB server";s:4:"NAME";s:7:"libcddb";s:7:"VERSION";s:7:"1.3.2_1";}SOFTWARES\nSOFTWARES/348<<=>>a:3:{s:8:"COMMENTS";s:38:"Compact Disc Input and Control Library";s:4:"NAME";s:7:"libcdio";s:7:"VERSION";s:6:"0.83_1";}SOFTWARES\nSOFTWARES/349<<=>>a:3:{s:8:"COMMENTS";s:37:"Client library for the CMIS interface";s:4:"NAME";s:7:"libcmis";s:7:"VERSION";s:7:"0.1.0_1";}SOFTWARES\nSOFTWARES/350<<=>>a:3:{s:8:"COMMENTS";s:20:"CSS2 parsing library";s:4:"NAME";s:8:"libcroco";s:7:"VERSION";s:7:"0.6.2_1";}SOFTWARES\nSOFTWARES/351<<=>>a:3:{s:8:"COMMENTS";s:59:"Lightweight C library that eases the writing of UNIX daemon";s:4:"NAME";s:9:"libdaemon";s:7:"VERSION";s:4:"0.14";}SOFTWARES\nSOFTWARES/352<<=>>a:3:{s:8:"COMMENTS";s:44:"Database Independent Abstraction Layer for C";s:4:"NAME";s:6:"libdbi";s:7:"VERSION";s:5:"0.8.4";}SOFTWARES\nSOFTWARES/353<<=>>a:3:{s:8:"COMMENTS";s:35:"Free DTS Coherent Acoustics decoder";s:4:"NAME";s:6:"libdca";s:7:"VERSION";s:5:"0.0.5";}SOFTWARES\nSOFTWARES/354<<=>>a:3:{s:8:"COMMENTS";s:21:"DMX extension library";s:4:"NAME";s:6:"libdmx";s:7:"VERSION";s:5:"1.1.1";}SOFTWARES\nSOFTWARES/355<<=>>a:3:{s:8:"COMMENTS";s:43:"Standard library for Window Maker dock apps";s:4:"NAME";s:10:"libdockapp";s:7:"VERSION";s:5:"0.6.2";}SOFTWARES\nSOFTWARES/356<<=>>a:3:{s:8:"COMMENTS";s:59:"Userspace interface to kernel Direct Rendering Module servi";s:4:"NAME";s:6:"libdrm";s:7:"VERSION";s:8:"2.4.31_1";}SOFTWARES\nSOFTWARES/357<<=>>a:3:{s:8:"COMMENTS";s:47:"Portable abstraction library for DVD decryption";s:4:"NAME";s:9:"libdvdcss";s:7:"VERSION";s:6:"1.2.12";}SOFTWARES\nSOFTWARES/358<<=>>a:3:{s:8:"COMMENTS";s:41:"MPlayer version of the libdvdread project";s:4:"NAME";s:10:"libdvdread";s:7:"VERSION";s:7:"4.2.0_2";}SOFTWARES\nSOFTWARES/359<<=>>a:3:{s:8:"COMMENTS";s:53:"Liberation fonts from Red Hat to replace MS TTF fonts";s:4:"NAME";s:20:"liberation-fonts-ttf";s:7:"VERSION";s:8:"2.00.1,1";}SOFTWARES\nSOFTWARES/360<<=>>a:3:{s:8:"COMMENTS";s:14:"A mail library";s:4:"NAME";s:8:"libetpan";s:7:"VERSION";s:5:"1.1_1";}SOFTWARES\nSOFTWARES/361<<=>>a:3:{s:8:"COMMENTS";s:59:"Provides an API to execute callback functions on certain ev";s:4:"NAME";s:8:"libevent";s:7:"VERSION";s:9:"1.4.14b_2";}SOFTWARES\nSOFTWARES/362<<=>>a:3:{s:8:"COMMENTS";s:58:"API for executing callback functions on events or timeouts";s:4:"NAME";s:9:"libevent2";s:7:"VERSION";s:6:"2.0.21";}SOFTWARES\nSOFTWARES/363<<=>>a:3:{s:8:"COMMENTS";s:45:"A library for inspecting program''s backtrace";s:4:"NAME";s:11:"libexecinfo";s:7:"VERSION";s:5:"1.1_3";}SOFTWARES\nSOFTWARES/364<<=>>a:3:{s:8:"COMMENTS";s:45:"Library to read digital camera file meta-data";s:4:"NAME";s:7:"libexif";s:7:"VERSION";s:6:"0.6.20";}SOFTWARES\nSOFTWARES/365<<=>>a:3:{s:8:"COMMENTS";s:53:"Language guessing by N-Gram-Based Text Categorization";s:4:"NAME";s:13:"libexttextcat";s:7:"VERSION";s:5:"3.4.0";}SOFTWARES\nSOFTWARES/366<<=>>a:3:{s:8:"COMMENTS";s:26:"Foreign Function Interface";s:4:"NAME";s:6:"libffi";s:7:"VERSION";s:5:"3.0.9";}SOFTWARES\nSOFTWARES/367<<=>>a:3:{s:8:"COMMENTS";s:19:"The fontenc Library";s:4:"NAME";s:10:"libfontenc";s:7:"VERSION";s:5:"1.1.0";}SOFTWARES\nSOFTWARES/368<<=>>a:3:{s:8:"COMMENTS";s:49:"Library routines for working with Flashpix images";s:4:"NAME";s:6:"libfpx";s:7:"VERSION";s:7:"1.3.1.1";}SOFTWARES\nSOFTWARES/369<<=>>a:3:{s:8:"COMMENTS";s:58:"General purpose crypto library based on code used in GnuPG";s:4:"NAME";s:9:"libgcrypt";s:7:"VERSION";s:7:"1.5.0_1";}SOFTWARES\nSOFTWARES/370<<=>>a:3:{s:8:"COMMENTS";s:26:"GObject collection library";s:4:"NAME";s:6:"libgee";s:7:"VERSION";s:7:"0.6.2.1";}SOFTWARES\nSOFTWARES/371<<=>>a:3:{s:8:"COMMENTS";s:19:"GNOME glade library";s:4:"NAME";s:9:"libglade2";s:7:"VERSION";s:7:"2.6.4_5";}SOFTWARES\nSOFTWARES/372<<=>>a:3:{s:8:"COMMENTS";s:48:"A program that keeps passwords and other secrets";s:4:"NAME";s:16:"libgnome-keyring";s:7:"VERSION";s:8:"2.32.0_2";}SOFTWARES\nSOFTWARES/373<<=>>a:3:{s:8:"COMMENTS";s:44:"Common error values for all GnuPG components";s:4:"NAME";s:12:"libgpg-error";s:7:"VERSION";s:4:"1.10";}SOFTWARES\nSOFTWARES/374<<=>>a:3:{s:8:"COMMENTS";s:47:"A universal digital camera picture control tool";s:4:"NAME";s:10:"libgphoto2";s:7:"VERSION";s:6:"2.4.14";}SOFTWARES\nSOFTWARES/375<<=>>a:3:{s:8:"COMMENTS";s:59:"An extensible i/o abstraction for dealing with structured f";s:4:"NAME";s:6:"libgsf";s:7:"VERSION";s:9:"1.14.21_1";}SOFTWARES\nSOFTWARES/376<<=>>a:3:{s:8:"COMMENTS";s:34:"A character set conversion library";s:4:"NAME";s:8:"libiconv";s:7:"VERSION";s:4:"1.14";}SOFTWARES\nSOFTWARES/377<<=>>a:3:{s:8:"COMMENTS";s:38:"ID3 tags library (part of MAD project)";s:4:"NAME";s:9:"libid3tag";s:7:"VERSION";s:7:"0.15.1b";}SOFTWARES\nSOFTWARES/378<<=>>a:3:{s:8:"COMMENTS";s:48:"Internationalized Domain Names command line tool";s:4:"NAME";s:6:"libidn";s:7:"VERSION";s:4:"1.25";}SOFTWARES\nSOFTWARES/379<<=>>a:3:{s:8:"COMMENTS";s:59:"C library that supports plugin printer driver for Ghostscri";s:4:"NAME";s:6:"libijs";s:7:"VERSION";s:6:"0.35_1";}SOFTWARES\nSOFTWARES/380<<=>>a:3:{s:8:"COMMENTS";s:24:"KSBA is an X.509 Library";s:4:"NAME";s:7:"libksba";s:7:"VERSION";s:5:"1.3.0";}SOFTWARES\nSOFTWARES/381<<=>>a:3:{s:8:"COMMENTS";s:41:"An easy to use C/C++ seam carving library";s:4:"NAME";s:8:"liblqr-1";s:7:"VERSION";s:7:"0.4.1_3";}SOFTWARES\nSOFTWARES/382<<=>>a:3:{s:8:"COMMENTS";s:33:"System independent dlopen wrapper";s:4:"NAME";s:7:"libltdl";s:7:"VERSION";s:5:"2.4.2";}SOFTWARES\nSOFTWARES/383<<=>>a:3:{s:8:"COMMENTS";s:36:"Libmad library (part of MAD project)";s:4:"NAME";s:6:"libmad";s:7:"VERSION";s:9:"0.15.1b_2";}SOFTWARES\nSOFTWARES/384<<=>>a:3:{s:8:"COMMENTS";s:48:"Multi-cipher cryptographic library (used in PHP)";s:4:"NAME";s:9:"libmcrypt";s:7:"VERSION";s:5:"2.5.8";}SOFTWARES\nSOFTWARES/385<<=>>a:3:{s:8:"COMMENTS";s:20:"MikMod Sound Library";s:4:"NAME";s:9:"libmikmod";s:7:"VERSION";s:6:"3.1.12";}SOFTWARES\nSOFTWARES/386<<=>>a:3:{s:8:"COMMENTS";s:55:"Multiple-image Network Graphics (MNG) reference library";s:4:"NAME";s:6:"libmng";s:7:"VERSION";s:8:"1.0.10_2";}SOFTWARES\nSOFTWARES/387<<=>>a:3:{s:8:"COMMENTS";s:41:"Library for Microsoft compression formats";s:4:"NAME";s:9:"libmspack";s:7:"VERSION";s:3:"0.3";}SOFTWARES\nSOFTWARES/388<<=>>a:3:{s:8:"COMMENTS";s:46:"Library and transmitter that implements ICE-19";s:4:"NAME";s:7:"libnice";s:7:"VERSION";s:8:"0.0.13_3";}SOFTWARES\nSOFTWARES/389<<=>>a:3:{s:8:"COMMENTS";s:35:"A library for desktop notifications";s:4:"NAME";s:9:"libnotify";s:7:"VERSION";s:7:"0.7.3_2";}SOFTWARES\nSOFTWARES/390<<=>>a:3:{s:8:"COMMENTS";s:21:"Ogg bitstream library";s:4:"NAME";s:6:"libogg";s:7:"VERSION";s:7:"1.3.0,4";}SOFTWARES\nSOFTWARES/391<<=>>a:3:{s:8:"COMMENTS";s:13:"Old X library";s:4:"NAME";s:7:"liboldX";s:7:"VERSION";s:5:"1.0.1";}SOFTWARES\nSOFTWARES/392<<=>>a:3:{s:8:"COMMENTS";s:37:"Library for camera RAW files decoding";s:4:"NAME";s:10:"libopenraw";s:7:"VERSION";s:7:"0.0.8_4";}SOFTWARES\nSOFTWARES/393<<=>>a:3:{s:8:"COMMENTS";s:54:"A library providing routines for paper size management";s:4:"NAME";s:8:"libpaper";s:7:"VERSION";s:8:"1.1.24_1";}SOFTWARES\nSOFTWARES/394<<=>>a:3:{s:8:"COMMENTS";s:37:"PCI configuration space I/O made easy";s:4:"NAME";s:6:"libpci";s:7:"VERSION";s:6:"3.1.10";}SOFTWARES\nSOFTWARES/395<<=>>a:3:{s:8:"COMMENTS";s:26:"Generic PCI access library";s:4:"NAME";s:12:"libpciaccess";s:7:"VERSION";s:6:"0.12.1";}SOFTWARES\nSOFTWARES/396<<=>>a:3:{s:8:"COMMENTS";s:59:"Library that provides automatic proxy configuration managem";s:4:"NAME";s:8:"libproxy";s:7:"VERSION";s:5:"0.4.6";}SOFTWARES\nSOFTWARES/397<<=>>a:3:{s:8:"COMMENTS";s:56:"This library provides weak aliases for pthread functions";s:4:"NAME";s:16:"libpthread-stubs";s:7:"VERSION";s:5:"0.3_3";}SOFTWARES\nSOFTWARES/398<<=>>a:3:{s:8:"COMMENTS";s:59:"Backend library for the Pidgin multi-protocol messaging cli";s:4:"NAME";s:9:"libpurple";s:7:"VERSION";s:6:"2.10.6";}SOFTWARES\nSOFTWARES/399<<=>>a:3:{s:8:"COMMENTS";s:41:"Full integrated office productivity suite";s:4:"NAME";s:11:"libreoffice";s:7:"VERSION";s:7:"3.5.7_1";}SOFTWARES\nSOFTWARES/400<<=>>a:3:{s:8:"COMMENTS";s:58:"Library for parsing and rendering SVG vector-graphic files";s:4:"NAME";s:8:"librsvg2";s:7:"VERSION";s:8:"2.34.1_1";}SOFTWARES\nSOFTWARES/401<<=>>a:3:{s:8:"COMMENTS";s:53:"Secret Rabbit Code: a Sample Rate Converter for audio";s:4:"NAME";s:13:"libsamplerate";s:7:"VERSION";s:7:"0.1.8_3";}SOFTWARES\nSOFTWARES/402<<=>>a:3:{s:8:"COMMENTS";s:26:"Callback Framework for C++";s:4:"NAME";s:9:"libsigc++";s:7:"VERSION";s:6:"2.2.10";}SOFTWARES\nSOFTWARES/403<<=>>a:3:{s:8:"COMMENTS";s:59:"Reading and writing files containing sampled sound (like WA";s:4:"NAME";s:10:"libsndfile";s:7:"VERSION";s:8:"1.0.25_2";}SOFTWARES\nSOFTWARES/404<<=>>a:3:{s:8:"COMMENTS";s:58:"A SOAP (Simple Object Access Protocol) implementation in C";s:4:"NAME";s:7:"libsoup";s:7:"VERSION";s:6:"2.34.3";}SOFTWARES\nSOFTWARES/405<<=>>a:3:{s:8:"COMMENTS";s:58:"A SOAP (Simple Object Access Protocol) implementation in C";s:4:"NAME";s:13:"libsoup-gnome";s:7:"VERSION";s:8:"2.34.3_2";}SOFTWARES\nSOFTWARES/406<<=>>a:3:{s:8:"COMMENTS";s:50:"A small library for rendering Postscript documents";s:4:"NAME";s:10:"libspectre";s:7:"VERSION";s:7:"0.2.6_1";}SOFTWARES\nSOFTWARES/407<<=>>a:3:{s:8:"COMMENTS";s:55:"Library to convert clothoid splines into Bezier splines";s:4:"NAME";s:8:"libspiro";s:7:"VERSION";s:8:"20071029";}SOFTWARES\nSOFTWARES/408<<=>>a:3:{s:8:"COMMENTS";s:30:"ASN.1 structure parser library";s:4:"NAME";s:8:"libtasn1";s:7:"VERSION";s:4:"2.13";}SOFTWARES\nSOFTWARES/409<<=>>a:3:{s:8:"COMMENTS";s:58:"Theora video codec for the Ogg multimedia streaming system";s:4:"NAME";s:9:"libtheora";s:7:"VERSION";s:7:"1.1.1_3";}SOFTWARES\nSOFTWARES/410<<=>>a:3:{s:8:"COMMENTS";s:37:"Generic shared library support script";s:4:"NAME";s:7:"libtool";s:7:"VERSION";s:5:"2.4.2";}SOFTWARES\nSOFTWARES/411<<=>>a:3:{s:8:"COMMENTS";s:19:"Video4Linux library";s:4:"NAME";s:6:"libv4l";s:7:"VERSION";s:7:"0.8.8_1";}SOFTWARES\nSOFTWARES/412<<=>>a:3:{s:8:"COMMENTS";s:59:"Library and tools for parsing the visio file format structu";s:4:"NAME";s:8:"libvisio";s:7:"VERSION";s:6:"0.0.24";}SOFTWARES\nSOFTWARES/413<<=>>a:3:{s:8:"COMMENTS";s:50:"Provide an easy API to write one''s own vnc server";s:4:"NAME";s:12:"libvncserver";s:7:"VERSION";s:7:"0.9.9_3";}SOFTWARES\nSOFTWARES/414<<=>>a:3:{s:8:"COMMENTS";s:47:"Library to provide file system type information";s:4:"NAME";s:12:"libvolume_id";s:7:"VERSION";s:6:"0.81.1";}SOFTWARES\nSOFTWARES/415<<=>>a:3:{s:8:"COMMENTS";s:31:"Audio compression codec library";s:4:"NAME";s:9:"libvorbis";s:7:"VERSION";s:9:"1.3.3_1,3";}SOFTWARES\nSOFTWARES/416<<=>>a:3:{s:8:"COMMENTS";s:13:"VP8 Codec SDK";s:4:"NAME";s:6:"libvpx";s:7:"VERSION";s:5:"1.1.0";}SOFTWARES\nSOFTWARES/417<<=>>a:3:{s:8:"COMMENTS";s:59:"Tools and library for converting Microsoft WMF (windows met";s:4:"NAME";s:6:"libwmf";s:7:"VERSION";s:9:"0.2.8.4_7";}SOFTWARES\nSOFTWARES/418<<=>>a:3:{s:8:"COMMENTS";s:59:"Tools for importing and exporting WordPerfect(tm) documents";s:4:"NAME";s:6:"libwpd";s:7:"VERSION";s:7:"0.9.4_1";}SOFTWARES\nSOFTWARES/419<<=>>a:3:{s:8:"COMMENTS";s:59:"Library and tools to work with WordPerfect Graphics (WPG) f";s:4:"NAME";s:6:"libwpg";s:7:"VERSION";s:7:"0.2.1_2";}SOFTWARES\nSOFTWARES/420<<=>>a:3:{s:8:"COMMENTS";s:59:"A Microsoft file word processor format import filter librar";s:4:"NAME";s:6:"libwps";s:7:"VERSION";s:5:"0.2.7";}SOFTWARES\nSOFTWARES/421<<=>>a:3:{s:8:"COMMENTS";s:25:"The W3C Reference Library";s:4:"NAME";s:6:"libwww";s:7:"VERSION";s:7:"5.4.0_4";}SOFTWARES\nSOFTWARES/422<<=>>a:3:{s:8:"COMMENTS";s:47:"The X protocol C-language Binding (XCB) library";s:4:"NAME";s:6:"libxcb";s:7:"VERSION";s:3:"1.7";}SOFTWARES\nSOFTWARES/423<<=>>a:3:{s:8:"COMMENTS";s:16:"XKB file library";s:4:"NAME";s:10:"libxkbfile";s:7:"VERSION";s:5:"1.0.7";}SOFTWARES\nSOFTWARES/424<<=>>a:3:{s:8:"COMMENTS";s:17:"The xkbui library";s:4:"NAME";s:8:"libxkbui";s:7:"VERSION";s:7:"1.0.2_1";}SOFTWARES\nSOFTWARES/425<<=>>a:3:{s:8:"COMMENTS";s:15:"XML API for C++";s:4:"NAME";s:8:"libxml++";s:7:"VERSION";s:6:"2.34.2";}SOFTWARES\nSOFTWARES/426<<=>>a:3:{s:8:"COMMENTS";s:28:"XML parser library for GNOME";s:4:"NAME";s:7:"libxml2";s:7:"VERSION";s:7:"2.7.8_5";}SOFTWARES\nSOFTWARES/427<<=>>a:3:{s:8:"COMMENTS";s:28:"The XSLT C library for GNOME";s:4:"NAME";s:7:"libxslt";s:7:"VERSION";s:6:"1.1.28";}SOFTWARES\nSOFTWARES/428<<=>>a:3:{s:8:"COMMENTS";s:58:"Accessibility Toolkit, Linux/i386 binary (Linux Fedora 10)";s:4:"NAME";s:13:"linux-f10-atk";s:7:"VERSION";s:6:"1.24.0";}SOFTWARES\nSOFTWARES/429<<=>>a:3:{s:8:"COMMENTS";s:47:"Vector graphics library Cairo (Linux Fedora 10)";s:4:"NAME";s:15:"linux-f10-cairo";s:7:"VERSION";s:7:"1.8.0_2";}SOFTWARES\nSOFTWARES/430<<=>>a:3:{s:8:"COMMENTS";s:59:"The command line tool for transferring files with URL synta";s:4:"NAME";s:14:"linux-f10-curl";s:7:"VERSION";s:8:"7.19.6_1";}SOFTWARES\nSOFTWARES/431<<=>>a:3:{s:8:"COMMENTS";s:59:"RFC 2222 SASL (Simple Authentication and Security Layer) (L";s:4:"NAME";s:21:"linux-f10-cyrus-sasl2";s:7:"VERSION";s:8:"2.1.22_1";}SOFTWARES\nSOFTWARES/432<<=>>a:3:{s:8:"COMMENTS";s:59:"Linux/i386 binary port of Expat XML-parsing library (Linux ";s:4:"NAME";s:15:"linux-f10-expat";s:7:"VERSION";s:5:"2.0.1";}SOFTWARES\nSOFTWARES/433<<=>>a:3:{s:8:"COMMENTS";s:31:"Adobe Flash Player NPAPI Plugin";s:4:"NAME";s:21:"linux-f10-flashplugin";s:7:"VERSION";s:12:"11.2r202.261";}SOFTWARES\nSOFTWARES/434<<=>>a:3:{s:8:"COMMENTS";s:59:"An XML-based font configuration API for X Windows (Linux Fe";s:4:"NAME";s:20:"linux-f10-fontconfig";s:7:"VERSION";s:5:"2.6.0";}SOFTWARES\nSOFTWARES/435<<=>>a:3:{s:8:"COMMENTS";s:43:"GTK+ library, version 2.X (Linux Fedora 10)";s:4:"NAME";s:14:"linux-f10-gtk2";s:7:"VERSION";s:8:"2.14.7_4";}SOFTWARES\nSOFTWARES/436<<=>>a:3:{s:8:"COMMENTS";s:37:"RPM of the JPEG lib (Linux Fedora 10)";s:4:"NAME";s:14:"linux-f10-jpeg";s:7:"VERSION";s:2:"6b";}SOFTWARES\nSOFTWARES/437<<=>>a:3:{s:8:"COMMENTS";s:59:"The library implementing the SSH2 protocol (Linux Fedora 10";s:4:"NAME";s:17:"linux-f10-libssh2";s:7:"VERSION";s:4:"0.18";}SOFTWARES\nSOFTWARES/438<<=>>a:3:{s:8:"COMMENTS";s:43:"Netscape Portable Runtime (Linux Fedora 10)";s:4:"NAME";s:14:"linux-f10-nspr";s:7:"VERSION";s:5:"4.7.6";}SOFTWARES\nSOFTWARES/439<<=>>a:3:{s:8:"COMMENTS";s:43:"Network Security Services (Linux Fedora 10)";s:4:"NAME";s:13:"linux-f10-nss";s:7:"VERSION";s:13:"3.12.3.99.3_1";}SOFTWARES\nSOFTWARES/440<<=>>a:3:{s:8:"COMMENTS";s:59:"Lightweight Directory Access Protocol libraries (Linux Fedo";s:4:"NAME";s:18:"linux-f10-openldap";s:7:"VERSION";s:8:"2.4.12_1";}SOFTWARES\nSOFTWARES/441<<=>>a:3:{s:8:"COMMENTS";s:37:"The OpenSSL toolkit (Linux Fedora 10)";s:4:"NAME";s:17:"linux-f10-openssl";s:7:"VERSION";s:6:"0.9.8g";}SOFTWARES\nSOFTWARES/442<<=>>a:3:{s:8:"COMMENTS";s:35:"The pango library (Linux Fedora 10)";s:4:"NAME";s:15:"linux-f10-pango";s:7:"VERSION";s:6:"1.28.3";}SOFTWARES\nSOFTWARES/443<<=>>a:3:{s:8:"COMMENTS";s:36:"RPM of the PNG lib (Linux Fedora 10)";s:4:"NAME";s:13:"linux-f10-png";s:7:"VERSION";s:8:"1.2.37_2";}SOFTWARES\nSOFTWARES/444<<=>>a:3:{s:8:"COMMENTS";s:59:"The library that implements an embeddable SQL database engi";s:4:"NAME";s:17:"linux-f10-sqlite3";s:7:"VERSION";s:7:"3.5.9_1";}SOFTWARES\nSOFTWARES/445<<=>>a:3:{s:8:"COMMENTS";s:53:"The TIFF library, Linux/i386 binary (Linux Fedora 10)";s:4:"NAME";s:14:"linux-f10-tiff";s:7:"VERSION";s:5:"3.8.2";}SOFTWARES\nSOFTWARES/446<<=>>a:3:{s:8:"COMMENTS";s:32:"Xorg libraries (Linux Fedora 10)";s:4:"NAME";s:19:"linux-f10-xorg-libs";s:7:"VERSION";s:5:"7.4_1";}SOFTWARES\nSOFTWARES/447<<=>>a:3:{s:8:"COMMENTS";s:35:"MBROLA speech synthesizer for Linux";s:4:"NAME";s:12:"linux-mbrola";s:7:"VERSION";s:5:"3.0.1";}SOFTWARES\nSOFTWARES/448<<=>>a:3:{s:8:"COMMENTS";s:59:"Base set of packages needed in Linux mode for i386/amd64 (L";s:4:"NAME";s:14:"linux_base-f10";s:7:"VERSION";s:4:"10_5";}SOFTWARES\nSOFTWARES/449<<=>>a:3:{s:8:"COMMENTS";s:44:"Linux Libertine G and Linux Biolinum G fonts";s:4:"NAME";s:16:"linuxlibertine-g";s:7:"VERSION";s:8:"20120116";}SOFTWARES\nSOFTWARES/450<<=>>a:3:{s:8:"COMMENTS";s:25:"Linear Programming Solver";s:4:"NAME";s:8:"lp_solve";s:7:"VERSION";s:7:"5.5.2.0";}SOFTWARES\nSOFTWARES/451<<=>>a:3:{s:8:"COMMENTS";s:59:"Small, compilable scripting language providing easy access ";s:4:"NAME";s:3:"lua";s:7:"VERSION";s:7:"5.1.5_5";}SOFTWARES\nSOFTWARES/452<<=>>a:3:{s:8:"COMMENTS";s:49:"Locale and ISO 2022 support for Unicode terminals";s:4:"NAME";s:4:"luit";s:7:"VERSION";s:7:"1.1.0_1";}SOFTWARES\nSOFTWARES/453<<=>>a:3:{s:8:"COMMENTS";s:49:"A non-graphical, text-based World-Wide Web client";s:4:"NAME";s:4:"lynx";s:7:"VERSION";s:9:"2.8.7.2,1";}SOFTWARES\nSOFTWARES/454<<=>>a:3:{s:8:"COMMENTS";s:6:"GNU m4";s:4:"NAME";s:2:"m4";s:7:"VERSION";s:10:"1.4.16_1,1";}SOFTWARES\nSOFTWARES/455<<=>>a:3:{s:8:"COMMENTS";s:36:"A dependency generator for makefiles";s:4:"NAME";s:10:"makedepend";s:7:"VERSION";s:7:"1.0.3,1";}SOFTWARES\nSOFTWARES/456<<=>>a:3:{s:8:"COMMENTS";s:35:"Voices for MBROLA voice synthesizer";s:4:"NAME";s:9:"mbrolavox";s:7:"VERSION";s:5:"3.0.1";}SOFTWARES\nSOFTWARES/457<<=>>a:3:{s:8:"COMMENTS";s:21:"MIME Media Types list";s:4:"NAME";s:12:"mime-support";s:7:"VERSION";s:6:"3.52.2";}SOFTWARES\nSOFTWARES/458<<=>>a:3:{s:8:"COMMENTS";s:46:"Create an index of X font files in a directory";s:4:"NAME";s:9:"mkfontdir";s:7:"VERSION";s:5:"1.0.6";}SOFTWARES\nSOFTWARES/459<<=>>a:3:{s:8:"COMMENTS";s:45:"Creates an index of scalable font files for X";s:4:"NAME";s:11:"mkfontscale";s:7:"VERSION";s:5:"1.0.9";}SOFTWARES\nSOFTWARES/460<<=>>a:3:{s:8:"COMMENTS";s:53:"High performance media player supporting many formats";s:4:"NAME";s:7:"mplayer";s:7:"VERSION";s:15:"1.1.r20120721_1";}SOFTWARES\nSOFTWARES/461<<=>>a:3:{s:8:"COMMENTS";s:51:"Skins for MPlayer''s Graphical User Interface (GUI)";s:4:"NAME";s:13:"mplayer-skins";s:7:"VERSION";s:7:"1.1.3_1";}SOFTWARES\nSOFTWARES/462<<=>>a:3:{s:8:"COMMENTS";s:23:"Shows memory usage data";s:4:"NAME";s:4:"muse";s:7:"VERSION";s:3:"0.2";}SOFTWARES\nSOFTWARES/463<<=>>a:3:{s:8:"COMMENTS";s:35:"Multithreaded SQL database (client)";s:4:"NAME";s:12:"mysql-client";s:7:"VERSION";s:6:"5.6.10";}SOFTWARES\nSOFTWARES/464<<=>>a:3:{s:8:"COMMENTS";s:35:"Multithreaded SQL database (server)";s:4:"NAME";s:12:"mysql-server";s:7:"VERSION";s:6:"5.6.10";}SOFTWARES\nSOFTWARES/465<<=>>a:3:{s:8:"COMMENTS";s:24:"Simple thesaurus library";s:4:"NAME";s:6:"mythes";s:7:"VERSION";s:5:"1.2.3";}SOFTWARES\nSOFTWARES/466<<=>>a:3:{s:8:"COMMENTS";s:18:"Plugins for Nagios";s:4:"NAME";s:14:"nagios-plugins";s:7:"VERSION";s:8:"1.4.16,1";}SOFTWARES\nSOFTWARES/467<<=>>a:3:{s:8:"COMMENTS";s:34:"File manager for the GNOME desktop";s:4:"NAME";s:8:"nautilus";s:7:"VERSION";s:10:"2.32.2.1_2";}SOFTWARES\nSOFTWARES/468<<=>>a:3:{s:8:"COMMENTS";s:50:"An HTTP and WebDAV client library for Unix systems";s:4:"NAME";s:6:"neon29";s:7:"VERSION";s:8:"0.29.6_4";}SOFTWARES\nSOFTWARES/469<<=>>a:3:{s:8:"COMMENTS";s:33:"An extendable SNMP implementation";s:4:"NAME";s:8:"net-snmp";s:7:"VERSION";s:7:"5.7.2_1";}SOFTWARES\nSOFTWARES/470<<=>>a:3:{s:8:"COMMENTS";s:47:"A full-featured integrated environment for Java";s:4:"NAME";s:8:"netbeans";s:7:"VERSION";s:5:"7.2.1";}SOFTWARES\nSOFTWARES/471<<=>>a:3:{s:8:"COMMENTS";s:33:"A low-level cryptographic library";s:4:"NAME";s:6:"nettle";s:7:"VERSION";s:3:"2.6";}SOFTWARES\nSOFTWARES/472<<=>>a:3:{s:8:"COMMENTS";s:59:"Console application which monitors network traffic in real ";s:4:"NAME";s:5:"nload";s:7:"VERSION";s:5:"0.7.4";}SOFTWARES\nSOFTWARES/473<<=>>a:3:{s:8:"COMMENTS";s:48:"A compatibility plugin for Mozilla NPAPI plugins";s:4:"NAME";s:15:"nspluginwrapper";s:7:"VERSION";s:5:"1.4.4";}SOFTWARES\nSOFTWARES/474<<=>>a:3:{s:8:"COMMENTS";s:59:"A platform-neutral API for system level and libc like funct";s:4:"NAME";s:4:"nspr";s:7:"VERSION";s:5:"4.9.4";}SOFTWARES\nSOFTWARES/475<<=>>a:3:{s:8:"COMMENTS";s:59:"Libraries to support development of security-enabled applic";s:4:"NAME";s:3:"nss";s:7:"VERSION";s:6:"3.14.1";}SOFTWARES\nSOFTWARES/476<<=>>a:3:{s:8:"COMMENTS";s:59:"A BSDL Regular Expressions library compatible with POSIX/GN";s:4:"NAME";s:9:"oniguruma";s:7:"VERSION";s:5:"4.7.1";}SOFTWARES\nSOFTWARES/477<<=>>a:3:{s:8:"COMMENTS";s:53:"Motif X11 Toolkit (industry standard GUI (IEEE 1295))";s:4:"NAME";s:10:"open-motif";s:7:"VERSION";s:5:"2.3.4";}SOFTWARES\nSOFTWARES/478<<=>>a:3:{s:8:"COMMENTS";s:21:"OpenCV core libraries";s:4:"NAME";s:11:"opencv-core";s:7:"VERSION";s:7:"2.3.1_6";}SOFTWARES\nSOFTWARES/479<<=>>a:3:{s:8:"COMMENTS";s:57:"Oracle''s Java 6 virtual machine release under the GPL v2";s:4:"NAME";s:8:"openjdk6";s:7:"VERSION";s:3:"b27";}SOFTWARES\nSOFTWARES/480<<=>>a:3:{s:8:"COMMENTS";s:30:"An open-source JPEG 2000 codec";s:4:"NAME";s:8:"openjpeg";s:7:"VERSION";s:7:"1.5.0_1";}SOFTWARES\nSOFTWARES/481<<=>>a:3:{s:8:"COMMENTS";s:38:"Open source LDAP client implementation";s:4:"NAME";s:15:"openldap-client";s:7:"VERSION";s:8:"2.4.33_1";}SOFTWARES\nSOFTWARES/482<<=>>a:3:{s:8:"COMMENTS";s:38:"Open source LDAP server implementation";s:4:"NAME";s:15:"openldap-server";s:7:"VERSION";s:8:"2.4.33_2";}SOFTWARES\nSOFTWARES/483<<=>>a:3:{s:8:"COMMENTS";s:22:"SSL and crypto library";s:4:"NAME";s:7:"openssl";s:7:"VERSION";s:7:"1.0.1_8";}SOFTWARES\nSOFTWARES/484<<=>>a:3:{s:8:"COMMENTS";s:45:"Library and toolset to operate arrays of data";s:4:"NAME";s:3:"orc";s:7:"VERSION";s:8:"0.4.16_1";}SOFTWARES\nSOFTWARES/485<<=>>a:3:{s:8:"COMMENTS";s:54:"Library for loading and enumerating of PKCS#11 modules";s:4:"NAME";s:7:"p11-kit";s:7:"VERSION";s:4:"0.14";}SOFTWARES\nSOFTWARES/486<<=>>a:3:{s:8:"COMMENTS";s:57:"Perl interface to compute differences between two objects";s:4:"NAME";s:17:"p5-Algorithm-Diff";s:7:"VERSION";s:6:"1.1902";}SOFTWARES\nSOFTWARES/487<<=>>a:3:{s:8:"COMMENTS";s:15:"Diff two arrays";s:4:"NAME";s:13:"p5-Array-Diff";s:7:"VERSION";s:4:"0.07";}SOFTWARES\nSOFTWARES/488<<=>>a:3:{s:8:"COMMENTS";s:29:"An NTLM authentication module";s:4:"NAME";s:14:"p5-Authen-NTLM";s:7:"VERSION";s:4:"1.09";}SOFTWARES\nSOFTWARES/489<<=>>a:3:{s:8:"COMMENTS";s:59:"Library of advanced math functions that includes a Perl OO ";s:4:"NAME";s:13:"p5-Bit-Vector";s:7:"VERSION";s:5:"7.2_2";}SOFTWARES\nSOFTWARES/490<<=>>a:3:{s:8:"COMMENTS";s:61:"Report errors from perspective of caller of a "clan" of mod";s:4:"NAME";s:12:"p5-Carp-Clan";s:7:"VERSION";s:4:"6.04";}SOFTWARES\nSOFTWARES/491<<=>>a:3:{s:8:"COMMENTS";s:29:"Automated accessor generation";s:4:"NAME";s:17:"p5-Class-Accessor";s:7:"VERSION";s:4:"0.34";}SOFTWARES\nSOFTWARES/492<<=>>a:3:{s:8:"COMMENTS";s:40:"A working (require Class::Name) and more";s:4:"NAME";s:13:"p5-Class-Load";s:7:"VERSION";s:4:"0.20";}SOFTWARES\nSOFTWARES/493<<=>>a:3:{s:8:"COMMENTS";s:50:"Perl module that describes a singular object class";s:4:"NAME";s:18:"p5-Class-Singleton";s:7:"VERSION";s:3:"1.4";}SOFTWARES\nSOFTWARES/494<<=>>a:3:{s:8:"COMMENTS";s:58:"Perl5 interface to Cipher Block Chaining with DES and IDEA";s:4:"NAME";s:12:"p5-Crypt-CBC";s:7:"VERSION";s:4:"2.32";}SOFTWARES\nSOFTWARES/495<<=>>a:3:{s:8:"COMMENTS";s:35:"Perl5 interface to DES block cipher";s:4:"NAME";s:12:"p5-Crypt-DES";s:7:"VERSION";s:4:"2.05";}SOFTWARES\nSOFTWARES/496<<=>>a:3:{s:8:"COMMENTS";s:59:"Perl5 interface to allow p5-libwww LWP to make https connec";s:4:"NAME";s:15:"p5-Crypt-SSLeay";s:7:"VERSION";s:4:"0.64";}SOFTWARES\nSOFTWARES/497<<=>>a:3:{s:8:"COMMENTS";s:55:"MySQL 5.5 driver for the Perl5 Database Interface (DBI)";s:4:"NAME";s:14:"p5-DBD-mysql55";s:7:"VERSION";s:5:"4.021";}SOFTWARES\nSOFTWARES/498<<=>>a:3:{s:8:"COMMENTS";s:58:"The perl5 Database Interface.  Required for DBD::* modules";s:4:"NAME";s:6:"p5-DBI";s:7:"VERSION";s:5:"1.623";}SOFTWARES\nSOFTWARES/499<<=>>a:3:{s:8:"COMMENTS";s:49:"Parse and validate simple name/value option pairs";s:4:"NAME";s:15:"p5-Data-OptList";s:7:"VERSION";s:5:"0.107";}SOFTWARES\nSOFTWARES/500<<=>>a:3:{s:8:"COMMENTS";s:36:"Gregorian calendar date calculations";s:4:"NAME";s:12:"p5-Date-Calc";s:7:"VERSION";s:3:"6.3";}SOFTWARES\nSOFTWARES/501<<=>>a:3:{s:8:"COMMENTS";s:50:"Perl5 module containing date manipulation routines";s:4:"NAME";s:13:"p5-Date-Manip";s:7:"VERSION";s:4:"6.34";}SOFTWARES\nSOFTWARES/502<<=>>a:3:{s:8:"COMMENTS";s:22:"A date and time object";s:4:"NAME";s:11:"p5-DateTime";s:7:"VERSION";s:4:"0.78";}SOFTWARES\nSOFTWARES/503<<=>>a:3:{s:8:"COMMENTS";s:44:"Parse and format strp and strf time patterns";s:4:"NAME";s:27:"p5-DateTime-Format-Strptime";s:7:"VERSION";s:9:"1.50.00,1";}SOFTWARES\nSOFTWARES/504<<=>>a:3:{s:8:"COMMENTS";s:33:"Localization support for DateTime";s:4:"NAME";s:18:"p5-DateTime-Locale";s:7:"VERSION";s:4:"0.45";}SOFTWARES\nSOFTWARES/505<<=>>a:3:{s:8:"COMMENTS";s:39:"Time zone object base class and factory";s:4:"NAME";s:20:"p5-DateTime-TimeZone";s:7:"VERSION";s:4:"1.56";}SOFTWARES\nSOFTWARES/506<<=>>a:3:{s:8:"COMMENTS";s:49:"Perl5 interface to HMAC Message-Digest Algorithms";s:4:"NAME";s:14:"p5-Digest-HMAC";s:7:"VERSION";s:4:"1.03";}SOFTWARES\nSOFTWARES/507<<=>>a:3:{s:8:"COMMENTS";s:37:"Perl interface to the SHA-1 Algorithm";s:4:"NAME";s:14:"p5-Digest-SHA1";s:7:"VERSION";s:4:"2.13";}SOFTWARES\nSOFTWARES/508<<=>>a:3:{s:8:"COMMENTS";s:39:"Declare version conflicts for your dist";s:4:"NAME";s:22:"p5-Dist-CheckConflicts";s:7:"VERSION";s:4:"0.02";}SOFTWARES\nSOFTWARES/509<<=>>a:3:{s:8:"COMMENTS";s:29:"Produce RFC 2822 date strings";s:4:"NAME";s:20:"p5-Email-Date-Format";s:7:"VERSION";s:5:"1.002";}SOFTWARES\nSOFTWARES/510<<=>>a:3:{s:8:"COMMENTS";s:29:"Determine the locale encoding";s:4:"NAME";s:16:"p5-Encode-Locale";s:7:"VERSION";s:4:"1.03";}SOFTWARES\nSOFTWARES/511<<=>>a:3:{s:8:"COMMENTS";s:59:"Perl module to provide Error/exception support for perl: Er";s:4:"NAME";s:8:"p5-Error";s:7:"VERSION";s:7:"0.17019";}SOFTWARES\nSOFTWARES/512<<=>>a:3:{s:8:"COMMENTS";s:24:"Parse directory listings";s:4:"NAME";s:15:"p5-File-Listing";s:7:"VERSION";s:4:"6.04";}SOFTWARES\nSOFTWARES/513<<=>>a:3:{s:8:"COMMENTS";s:43:"Portable implementation of `which'' in Perl";s:4:"NAME";s:13:"p5-File-Which";s:7:"VERSION";s:4:"1.09";}SOFTWARES\nSOFTWARES/514<<=>>a:3:{s:8:"COMMENTS";s:27:"The base module of Gtk-Perl";s:4:"NAME";s:6:"p5-Gtk";s:7:"VERSION";s:6:"0.7010";}SOFTWARES\nSOFTWARES/515<<=>>a:3:{s:8:"COMMENTS";s:39:"Perl5 module for parsing HTML documents";s:4:"NAME";s:14:"p5-HTML-Parser";s:7:"VERSION";s:4:"3.69";}SOFTWARES\nSOFTWARES/516<<=>>a:3:{s:8:"COMMENTS";s:38:"Some useful data table in parsing HTML";s:4:"NAME";s:14:"p5-HTML-Tagset";s:7:"VERSION";s:4:"3.20";}SOFTWARES\nSOFTWARES/517<<=>>a:3:{s:8:"COMMENTS";s:16:"HTTP Cookie jars";s:4:"NAME";s:15:"p5-HTTP-Cookies";s:7:"VERSION";s:4:"6.01";}SOFTWARES\nSOFTWARES/518<<=>>a:3:{s:8:"COMMENTS";s:24:"Simple HTTP server class";s:4:"NAME";s:14:"p5-HTTP-Daemon";s:7:"VERSION";s:4:"6.01";}SOFTWARES\nSOFTWARES/519<<=>>a:3:{s:8:"COMMENTS";s:54:"Conversion routines for the HTTP protocol date formats";s:4:"NAME";s:12:"p5-HTTP-Date";s:7:"VERSION";s:4:"6.02";}SOFTWARES\nSOFTWARES/520<<=>>a:3:{s:8:"COMMENTS";s:37:"Representation of HTTP style messages";s:4:"NAME";s:15:"p5-HTTP-Message";s:7:"VERSION";s:6:"6.06_1";}SOFTWARES\nSOFTWARES/521<<=>>a:3:{s:8:"COMMENTS";s:56:"Implementation of the HTTP content negotiation algorithm";s:4:"NAME";s:17:"p5-HTTP-Negotiate";s:7:"VERSION";s:4:"6.01";}SOFTWARES\nSOFTWARES/522<<=>>a:3:{s:8:"COMMENTS";s:50:"Open an HTML file with automatic charset detection";s:4:"NAME";s:10:"p5-IO-HTML";s:7:"VERSION";s:4:"0.04";}SOFTWARES\nSOFTWARES/523<<=>>a:3:{s:8:"COMMENTS";s:59:"A drop-in replacement for IO::Socket::INET supporting IPv4 ";s:4:"NAME";s:15:"p5-IO-Socket-IP";s:7:"VERSION";s:4:"0.18";}SOFTWARES\nSOFTWARES/524<<=>>a:3:{s:8:"COMMENTS";s:30:"Perl5 interface to SSL sockets";s:4:"NAME";s:16:"p5-IO-Socket-SSL";s:7:"VERSION";s:4:"1.83";}SOFTWARES\nSOFTWARES/525<<=>>a:3:{s:8:"COMMENTS";s:56:"Simplified Perl5 module to handle I/O on in-core strings";s:4:"NAME";s:12:"p5-IO-String";s:7:"VERSION";s:4:"1.08";}SOFTWARES\nSOFTWARES/526<<=>>a:3:{s:8:"COMMENTS";s:59:"Perl extension to convert to JSON (JavaScript Object Notati";s:4:"NAME";s:7:"p5-JSON";s:7:"VERSION";s:4:"2.53";}SOFTWARES\nSOFTWARES/527<<=>>a:3:{s:8:"COMMENTS";s:36:"Guess media type for a file or a URL";s:4:"NAME";s:17:"p5-LWP-MediaTypes";s:7:"VERSION";s:4:"6.02";}SOFTWARES\nSOFTWARES/528<<=>>a:3:{s:8:"COMMENTS";s:40:"Provide https support for LWP::UserAgent";s:4:"NAME";s:21:"p5-LWP-Protocol-https";s:7:"VERSION";s:4:"6.03";}SOFTWARES\nSOFTWARES/529<<=>>a:3:{s:8:"COMMENTS";s:39:"Provide the stuff missing in List::Util";s:4:"NAME";s:17:"p5-List-MoreUtils";s:7:"VERSION";s:4:"0.33";}SOFTWARES\nSOFTWARES/530<<=>>a:3:{s:8:"COMMENTS";s:26:"Message handling functions";s:4:"NAME";s:17:"p5-Locale-gettext";s:7:"VERSION";s:6:"1.05_3";}SOFTWARES\nSOFTWARES/531<<=>>a:3:{s:8:"COMMENTS";s:59:"A simple interface for creating (not parsing!) MIME message";s:4:"NAME";s:12:"p5-MIME-Lite";s:7:"VERSION";s:6:"3.02.9";}SOFTWARES\nSOFTWARES/532<<=>>a:3:{s:8:"COMMENTS";s:41:"Perl extension for determining MIME types";s:4:"NAME";s:13:"p5-MIME-Types";s:7:"VERSION";s:4:"1.38";}SOFTWARES\nSOFTWARES/533<<=>>a:3:{s:8:"COMMENTS";s:55:"Perl5 modules for dealing with Internet e-mail messages";s:4:"NAME";s:13:"p5-Mail-Tools";s:7:"VERSION";s:4:"2.12";}SOFTWARES\nSOFTWARES/534<<=>>a:3:{s:8:"COMMENTS";s:30:"Build and install Perl modules";s:4:"NAME";s:15:"p5-Module-Build";s:7:"VERSION";s:6:"0.4003";}SOFTWARES\nSOFTWARES/535<<=>>a:3:{s:8:"COMMENTS";s:59:"Loads one of several alternate underlying implementations f";s:4:"NAME";s:24:"p5-Module-Implementation";s:7:"VERSION";s:4:"0.06";}SOFTWARES\nSOFTWARES/536<<=>>a:3:{s:8:"COMMENTS";s:39:"Perl module for runtime module handling";s:4:"NAME";s:17:"p5-Module-Runtime";s:7:"VERSION";s:5:"0.013";}SOFTWARES\nSOFTWARES/537<<=>>a:3:{s:8:"COMMENTS";s:55:"Perl extension for Mozilla CA cert bundle in PEM format";s:4:"NAME";s:13:"p5-Mozilla-CA";s:7:"VERSION";s:8:"20130114";}SOFTWARES\nSOFTWARES/538<<=>>a:3:{s:8:"COMMENTS";s:21:"Low-level HTTP client";s:4:"NAME";s:11:"p5-Net-HTTP";s:7:"VERSION";s:4:"6.05";}SOFTWARES\nSOFTWARES/539<<=>>a:3:{s:8:"COMMENTS";s:51:"Perl extension for manipulating IPv4/IPv6 addresses";s:4:"NAME";s:9:"p5-Net-IP";s:7:"VERSION";s:4:"1.26";}SOFTWARES\nSOFTWARES/540<<=>>a:3:{s:8:"COMMENTS";s:29:"An SMTP client supporting SSL";s:4:"NAME";s:15:"p5-Net-SMTP-SSL";s:7:"VERSION";s:6:"1.01_1";}SOFTWARES\nSOFTWARES/541<<=>>a:3:{s:8:"COMMENTS";s:33:"Object oriented interface to SNMP";s:4:"NAME";s:11:"p5-Net-SNMP";s:7:"VERSION";s:5:"6.0.1";}SOFTWARES\nSOFTWARES/542<<=>>a:3:{s:8:"COMMENTS";s:22:"Perl5 interface to SSL";s:4:"NAME";s:13:"p5-Net-SSLeay";s:7:"VERSION";s:4:"1.52";}SOFTWARES\nSOFTWARES/543<<=>>a:3:{s:8:"COMMENTS";s:49:"Manage deprecation warnings for your distribution";s:4:"NAME";s:29:"p5-Package-DeprecationManager";s:7:"VERSION";s:4:"0.13";}SOFTWARES\nSOFTWARES/544<<=>>a:3:{s:8:"COMMENTS";s:33:"Routines for manipulating stashes";s:4:"NAME";s:16:"p5-Package-Stash";s:7:"VERSION";s:4:"0.34";}SOFTWARES\nSOFTWARES/545<<=>>a:3:{s:8:"COMMENTS";s:59:"Faster and more correct implementation of the Package::Stas";s:4:"NAME";s:19:"p5-Package-Stash-XS";s:7:"VERSION";s:4:"0.26";}SOFTWARES\nSOFTWARES/546<<=>>a:3:{s:8:"COMMENTS";s:46:"Utility functions to aid in parameter checking";s:4:"NAME";s:14:"p5-Params-Util";s:7:"VERSION";s:4:"1.07";}SOFTWARES\nSOFTWARES/547<<=>>a:3:{s:8:"COMMENTS";s:35:"Validate method/function parameters";s:4:"NAME";s:18:"p5-Params-Validate";s:7:"VERSION";s:4:"1.07";}SOFTWARES\nSOFTWARES/548<<=>>a:3:{s:8:"COMMENTS";s:52:"Perl extension for generating and using LALR parsers";s:4:"NAME";s:13:"p5-Parse-Yapp";s:7:"VERSION";s:4:"1.05";}SOFTWARES\nSOFTWARES/549<<=>>a:3:{s:8:"COMMENTS";s:59:"Perl module for postprocessing the output from sgmls and ns";s:4:"NAME";s:10:"p5-SGMLSpm";s:7:"VERSION";s:6:"1.03_1";}SOFTWARES\nSOFTWARES/550<<=>>a:3:{s:8:"COMMENTS";s:42:"Networking constants and support functions";s:4:"NAME";s:9:"p5-Socket";s:7:"VERSION";s:5:"2.007";}SOFTWARES\nSOFTWARES/551<<=>>a:3:{s:8:"COMMENTS";s:50:"A sophisticated exporter for custom-built routines";s:4:"NAME";s:15:"p5-Sub-Exporter";s:7:"VERSION";s:5:"0.984";}SOFTWARES\nSOFTWARES/552<<=>>a:3:{s:8:"COMMENTS";s:40:"Install subroutines into packages easily";s:4:"NAME";s:14:"p5-Sub-Install";s:7:"VERSION";s:5:"0.926";}SOFTWARES\nSOFTWARES/553<<=>>a:3:{s:8:"COMMENTS";s:59:"Perl5 module containing a better/faster date parser for abs";s:4:"NAME";s:11:"p5-TimeDate";s:7:"VERSION";s:6:"1.20,1";}SOFTWARES\nSOFTWARES/554<<=>>a:3:{s:8:"COMMENTS";s:48:"Minimal try/catch with proper localization of $@";s:4:"NAME";s:11:"p5-Try-Tiny";s:7:"VERSION";s:4:"0.12";}SOFTWARES\nSOFTWARES/555<<=>>a:3:{s:8:"COMMENTS";s:40:"Perl module to require() from a variable";s:4:"NAME";s:20:"p5-UNIVERSAL-require";s:7:"VERSION";s:4:"0.13";}SOFTWARES\nSOFTWARES/556<<=>>a:3:{s:8:"COMMENTS";s:59:"Perl5 interface to Uniform Resource Identifier (URI) refere";s:4:"NAME";s:6:"p5-URI";s:7:"VERSION";s:4:"1.60";}SOFTWARES\nSOFTWARES/557<<=>>a:3:{s:8:"COMMENTS";s:31:"Perl binding interface for curl";s:4:"NAME";s:11:"p5-WWW-Curl";s:7:"VERSION";s:4:"4.15";}SOFTWARES\nSOFTWARES/558<<=>>a:3:{s:8:"COMMENTS";s:42:"Database of robots.txt-derived permissions";s:4:"NAME";s:17:"p5-WWW-RobotRules";s:7:"VERSION";s:4:"6.02";}SOFTWARES\nSOFTWARES/559<<=>>a:3:{s:8:"COMMENTS";s:59:"Perl module for building DOM Level 1 compliant document str";s:4:"NAME";s:10:"p5-XML-DOM";s:7:"VERSION";s:4:"1.44";}SOFTWARES\nSOFTWARES/560<<=>>a:3:{s:8:"COMMENTS";s:60:"Perl extension interface to James Clark''s XML parser, expat";s:4:"NAME";s:13:"p5-XML-Parser";s:7:"VERSION";s:6:"2.41_1";}SOFTWARES\nSOFTWARES/561<<=>>a:3:{s:8:"COMMENTS";s:34:"Regular expressions for XML tokens";s:4:"NAME";s:13:"p5-XML-RegExp";s:7:"VERSION";s:4:"0.04";}SOFTWARES\nSOFTWARES/562<<=>>a:3:{s:8:"COMMENTS";s:46:"A simple Perl module for writing XML documents";s:4:"NAME";s:13:"p5-XML-Writer";s:7:"VERSION";s:5:"0.615";}SOFTWARES\nSOFTWARES/563<<=>>a:3:{s:8:"COMMENTS";s:53:"Perl module for querying XML tree structures with XQL";s:4:"NAME";s:10:"p5-XML-XQL";s:7:"VERSION";s:4:"0.68";}SOFTWARES\nSOFTWARES/564<<=>>a:3:{s:8:"COMMENTS";s:27:"YAML implementation in Perl";s:4:"NAME";s:7:"p5-YAML";s:7:"VERSION";s:4:"0.84";}SOFTWARES\nSOFTWARES/565<<=>>a:3:{s:8:"COMMENTS";s:49:"Fast, lightweight YAML and JSON loader and dumper";s:4:"NAME";s:12:"p5-YAML-Syck";s:7:"VERSION";s:4:"1.22";}SOFTWARES\nSOFTWARES/566<<=>>a:3:{s:8:"COMMENTS";s:28:"Perl5 library for WWW access";s:4:"NAME";s:9:"p5-libwww";s:7:"VERSION";s:4:"6.04";}SOFTWARES\nSOFTWARES/567<<=>>a:3:{s:8:"COMMENTS";s:48:"Collection of Perl5 modules for working with XML";s:4:"NAME";s:9:"p5-libxml";s:7:"VERSION";s:4:"0.08";}SOFTWARES\nSOFTWARES/568<<=>>a:3:{s:8:"COMMENTS";s:59:"A script that helps install Postscript fonts in X Window Sy";s:4:"NAME";s:12:"p5-type1inst";s:7:"VERSION";s:7:"0.6.1_5";}SOFTWARES\nSOFTWARES/569<<=>>a:3:{s:8:"COMMENTS";s:41:"File archiver with high compression ratio";s:4:"NAME";s:5:"p7zip";s:7:"VERSION";s:6:"9.20.1";}SOFTWARES\nSOFTWARES/570<<=>>a:3:{s:8:"COMMENTS";s:59:"An open-source framework for the layout and rendering of i1";s:4:"NAME";s:5:"pango";s:7:"VERSION";s:8:"1.28.4_1";}SOFTWARES\nSOFTWARES/571<<=>>a:3:{s:8:"COMMENTS";s:21:"C++ wrapper for Pango";s:4:"NAME";s:7:"pangomm";s:7:"VERSION";s:8:"2.28.2_1";}SOFTWARES\nSOFTWARES/572<<=>>a:3:{s:8:"COMMENTS";s:52:"A default paper size configuration file for libpaper";s:4:"NAME";s:20:"papersize-default-a4";s:7:"VERSION";s:12:"0.0.20120302";}SOFTWARES\nSOFTWARES/573<<=>>a:3:{s:8:"COMMENTS";s:45:"Database of all known IDs used in PCI devices";s:4:"NAME";s:6:"pciids";s:7:"VERSION";s:8:"20121208";}SOFTWARES\nSOFTWARES/574<<=>>a:3:{s:8:"COMMENTS";s:24:"Per-CPU usage statistics";s:4:"NAME";s:8:"pcpustat";s:7:"VERSION";s:3:"1.6";}SOFTWARES\nSOFTWARES/575<<=>>a:3:{s:8:"COMMENTS";s:43:"Perl Compatible Regular Expressions library";s:4:"NAME";s:4:"pcre";s:7:"VERSION";s:4:"8.32";}SOFTWARES\nSOFTWARES/576<<=>>a:3:{s:8:"COMMENTS";s:42:"A C library for dynamically generating PDF";s:4:"NAME";s:6:"pdflib";s:7:"VERSION";s:7:"7.0.5_2";}SOFTWARES\nSOFTWARES/577<<=>>a:3:{s:8:"COMMENTS";s:22:"PEAR framework for PHP";s:4:"NAME";s:4:"pear";s:7:"VERSION";s:7:"1.9.4_1";}SOFTWARES\nSOFTWARES/578<<=>>a:3:{s:8:"COMMENTS";s:55:"PHP Script Tokenises and Sniffs PHP and JavaScript code";s:4:"NAME";s:20:"pear-PHP_CodeSniffer";s:7:"VERSION";s:5:"1.4.0";}SOFTWARES\nSOFTWARES/579<<=>>a:3:{s:8:"COMMENTS";s:50:"PHP_Depend design quality metrics for PHP packages";s:4:"NAME";s:15:"pear-PHP_Depend";s:7:"VERSION";s:5:"1.1.0";}SOFTWARES\nSOFTWARES/580<<=>>a:3:{s:8:"COMMENTS";s:17:"PHP Mess Detector";s:4:"NAME";s:12:"pear-PHP_PMD";s:7:"VERSION";s:5:"1.4.1";}SOFTWARES\nSOFTWARES/581<<=>>a:3:{s:8:"COMMENTS";s:24:"Utility class for timing";s:4:"NAME";s:14:"pear-PHP_Timer";s:7:"VERSION";s:5:"1.0.4";}SOFTWARES\nSOFTWARES/582<<=>>a:3:{s:8:"COMMENTS";s:53:"Convenience wrapper for Symfony\\''s Finder component";s:4:"NAME";s:35:"pear-SebastianBergmann_FinderFacade";s:7:"VERSION";s:5:"1.0.5";}SOFTWARES\nSOFTWARES/583<<=>>a:3:{s:8:"COMMENTS";s:38:"Copy/Paste Detector (CPD) for PHP code";s:4:"NAME";s:29:"pear-SebastianBergmann_PHPCPD";s:7:"VERSION";s:5:"1.4.0";}SOFTWARES\nSOFTWARES/584<<=>>a:3:{s:8:"COMMENTS";s:25:"Symfony2 Finder Component";s:4:"NAME";s:29:"pear-Symfony_Component_Finder";s:7:"VERSION";s:5:"2.1.2";}SOFTWARES\nSOFTWARES/585<<=>>a:3:{s:8:"COMMENTS";s:34:"Extension to PHP\\''s standard DOM";s:4:"NAME";s:25:"pear-TheSeer_fDOMDocument";s:7:"VERSION";s:5:"1.3.2";}SOFTWARES\nSOFTWARES/586<<=>>a:3:{s:8:"COMMENTS";s:29:"PEAR channel components.ez.no";s:4:"NAME";s:16:"pear-channel-ezc";s:7:"VERSION";s:8:"20060124";}SOFTWARES\nSOFTWARES/587<<=>>a:3:{s:8:"COMMENTS";s:29:"PEAR channel pear.pdepend.org";s:4:"NAME";s:20:"pear-channel-pdepend";s:7:"VERSION";s:8:"20100520";}SOFTWARES\nSOFTWARES/588<<=>>a:3:{s:8:"COMMENTS";s:27:"PEAR channel pear.phpmd.org";s:4:"NAME";s:18:"pear-channel-phpmd";s:7:"VERSION";s:8:"20120607";}SOFTWARES\nSOFTWARES/589<<=>>a:3:{s:8:"COMMENTS";s:28:"PEAR channel pear.phpunit.de";s:4:"NAME";s:20:"pear-channel-phpunit";s:7:"VERSION";s:8:"20110327";}SOFTWARES\nSOFTWARES/590<<=>>a:3:{s:8:"COMMENTS";s:29:"PEAR channel pear.symfony.com";s:4:"NAME";s:21:"pear-channel-symfony2";s:7:"VERSION";s:10:"20110826_1";}SOFTWARES\nSOFTWARES/591<<=>>a:3:{s:8:"COMMENTS";s:32:"PEAR channel pear.netpirates.net";s:4:"NAME";s:20:"pear-channel-theseer";s:7:"VERSION";s:10:"20120501_1";}SOFTWARES\nSOFTWARES/592<<=>>a:3:{s:8:"COMMENTS";s:53:"Base package that all ezc components packages rely on";s:4:"NAME";s:13:"pear-ezc_Base";s:7:"VERSION";s:3:"1.8";}SOFTWARES\nSOFTWARES/593<<=>>a:3:{s:8:"COMMENTS";s:55:"Set of classes to do different actions with the console";s:4:"NAME";s:21:"pear-ezc_ConsoleTools";s:7:"VERSION";s:5:"1.6.1";}SOFTWARES\nSOFTWARES/594<<=>>a:3:{s:8:"COMMENTS";s:21:"Alternative PHP Cache";s:4:"NAME";s:8:"pecl-APC";s:7:"VERSION";s:6:"3.1.13";}SOFTWARES\nSOFTWARES/595<<=>>a:3:{s:8:"COMMENTS";s:59:"Provides a wrapper to the ImageMagick/GraphicsMagick librar";s:4:"NAME";s:12:"pecl-imagick";s:7:"VERSION";s:10:"3.1.0.r2_1";}SOFTWARES\nSOFTWARES/596<<=>>a:3:{s:8:"COMMENTS";s:41:"A PECL extension to create PDF on the fly";s:4:"NAME";s:11:"pecl-pdflib";s:7:"VERSION";s:5:"2.1.9";}SOFTWARES\nSOFTWARES/597<<=>>a:3:{s:8:"COMMENTS";s:31:"A Hierarchical Profiler for PHP";s:4:"NAME";s:11:"pecl-xhprof";s:7:"VERSION";s:7:"0.9.2_1";}SOFTWARES\nSOFTWARES/598<<=>>a:3:{s:8:"COMMENTS";s:40:"Practical Extraction and Report Language";s:4:"NAME";s:13:"perl-threaded";s:7:"VERSION";s:8:"5.14.2_2";}SOFTWARES\nSOFTWARES/599<<=>>a:3:{s:8:"COMMENTS";s:59:"Minimalistic, headless, WebKit-based, JavaScript-driven too";s:4:"NAME";s:9:"phantomjs";s:7:"VERSION";s:5:"1.8.1";}SOFTWARES\nSOFTWARES/600<<=>>a:3:{s:8:"COMMENTS";s:24:"KDE multimedia framework";s:4:"NAME";s:6:"phonon";s:7:"VERSION";s:7:"4.6.0_1";}SOFTWARES\nSOFTWARES/601<<=>>a:3:{s:8:"COMMENTS";s:24:"Xdebug extension for PHP";s:4:"NAME";s:10:"php-xdebug";s:7:"VERSION";s:5:"2.2.1";}SOFTWARES\nSOFTWARES/602<<=>>a:3:{s:8:"COMMENTS";s:22:"PHP Scripting Language";s:4:"NAME";s:4:"php5";s:7:"VERSION";s:6:"5.4.11";}SOFTWARES\nSOFTWARES/603<<=>>a:3:{s:8:"COMMENTS";s:35:"The bcmath shared extension for php";s:4:"NAME";s:11:"php5-bcmath";s:7:"VERSION";s:6:"5.4.12";}SOFTWARES\nSOFTWARES/604<<=>>a:3:{s:8:"COMMENTS";s:32:"The bz2 shared extension for php";s:4:"NAME";s:8:"php5-bz2";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/605<<=>>a:3:{s:8:"COMMENTS";s:34:"The ctype shared extension for php";s:4:"NAME";s:10:"php5-ctype";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/606<<=>>a:3:{s:8:"COMMENTS";s:33:"The curl shared extension for php";s:4:"NAME";s:9:"php5-curl";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/607<<=>>a:3:{s:8:"COMMENTS";s:32:"The dom shared extension for php";s:4:"NAME";s:8:"php5-dom";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/608<<=>>a:3:{s:8:"COMMENTS";s:33:"The exif shared extension for php";s:4:"NAME";s:9:"php5-exif";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/609<<=>>a:3:{s:8:"COMMENTS";s:41:"A "meta-port" to install PHP extensions";s:4:"NAME";s:15:"php5-extensions";s:7:"VERSION";s:3:"1.7";}SOFTWARES\nSOFTWARES/610<<=>>a:3:{s:8:"COMMENTS";s:37:"The fileinfo shared extension for php";s:4:"NAME";s:13:"php5-fileinfo";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/611<<=>>a:3:{s:8:"COMMENTS";s:35:"The filter shared extension for php";s:4:"NAME";s:11:"php5-filter";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/612<<=>>a:3:{s:8:"COMMENTS";s:31:"The gd shared extension for php";s:4:"NAME";s:7:"php5-gd";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/613<<=>>a:3:{s:8:"COMMENTS";s:36:"The gettext shared extension for php";s:4:"NAME";s:12:"php5-gettext";s:7:"VERSION";s:6:"5.4.11";}SOFTWARES\nSOFTWARES/614<<=>>a:3:{s:8:"COMMENTS";s:32:"The gmp shared extension for php";s:4:"NAME";s:8:"php5-gmp";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/615<<=>>a:3:{s:8:"COMMENTS";s:33:"The hash shared extension for php";s:4:"NAME";s:9:"php5-hash";s:7:"VERSION";s:6:"5.4.11";}SOFTWARES\nSOFTWARES/616<<=>>a:3:{s:8:"COMMENTS";s:34:"The iconv shared extension for php";s:4:"NAME";s:10:"php5-iconv";s:7:"VERSION";s:6:"5.4.11";}SOFTWARES\nSOFTWARES/617<<=>>a:3:{s:8:"COMMENTS";s:33:"The imap shared extension for php";s:4:"NAME";s:9:"php5-imap";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/618<<=>>a:3:{s:8:"COMMENTS";s:33:"The json shared extension for php";s:4:"NAME";s:9:"php5-json";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/619<<=>>a:3:{s:8:"COMMENTS";s:33:"The ldap shared extension for php";s:4:"NAME";s:9:"php5-ldap";s:7:"VERSION";s:6:"5.4.11";}SOFTWARES\nSOFTWARES/620<<=>>a:3:{s:8:"COMMENTS";s:37:"The mbstring shared extension for php";s:4:"NAME";s:13:"php5-mbstring";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/621<<=>>a:3:{s:8:"COMMENTS";s:35:"The mcrypt shared extension for php";s:4:"NAME";s:11:"php5-mcrypt";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/622<<=>>a:3:{s:8:"COMMENTS";s:34:"The mysql shared extension for php";s:4:"NAME";s:10:"php5-mysql";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/623<<=>>a:3:{s:8:"COMMENTS";s:35:"The mysqli shared extension for php";s:4:"NAME";s:11:"php5-mysqli";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/624<<=>>a:3:{s:8:"COMMENTS";s:36:"The openssl shared extension for php";s:4:"NAME";s:12:"php5-openssl";s:7:"VERSION";s:6:"5.4.11";}SOFTWARES\nSOFTWARES/625<<=>>a:3:{s:8:"COMMENTS";s:34:"The pcntl shared extension for php";s:4:"NAME";s:10:"php5-pcntl";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/626<<=>>a:3:{s:8:"COMMENTS";s:32:"The pdo shared extension for php";s:4:"NAME";s:8:"php5-pdo";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/627<<=>>a:3:{s:8:"COMMENTS";s:38:"The pdo_mysql shared extension for php";s:4:"NAME";s:14:"php5-pdo_mysql";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/628<<=>>a:3:{s:8:"COMMENTS";s:39:"The pdo_sqlite shared extension for php";s:4:"NAME";s:15:"php5-pdo_sqlite";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/629<<=>>a:3:{s:8:"COMMENTS";s:33:"The phar shared extension for php";s:4:"NAME";s:9:"php5-phar";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/630<<=>>a:3:{s:8:"COMMENTS";s:34:"The posix shared extension for php";s:4:"NAME";s:10:"php5-posix";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/631<<=>>a:3:{s:8:"COMMENTS";s:36:"The session shared extension for php";s:4:"NAME";s:12:"php5-session";s:7:"VERSION";s:6:"5.4.11";}SOFTWARES\nSOFTWARES/632<<=>>a:3:{s:8:"COMMENTS";s:38:"The simplexml shared extension for php";s:4:"NAME";s:14:"php5-simplexml";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/633<<=>>a:3:{s:8:"COMMENTS";s:33:"The snmp shared extension for php";s:4:"NAME";s:9:"php5-snmp";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/634<<=>>a:3:{s:8:"COMMENTS";s:33:"The soap shared extension for php";s:4:"NAME";s:9:"php5-soap";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/635<<=>>a:3:{s:8:"COMMENTS";s:33:"The soap shared extension for php";s:4:"NAME";s:9:"php5-soap";s:7:"VERSION";s:6:"5.4.12";}SOFTWARES\nSOFTWARES/636<<=>>a:3:{s:8:"COMMENTS";s:36:"The sockets shared extension for php";s:4:"NAME";s:12:"php5-sockets";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/637<<=>>a:3:{s:8:"COMMENTS";s:36:"The sqlite3 shared extension for php";s:4:"NAME";s:12:"php5-sqlite3";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/638<<=>>a:3:{s:8:"COMMENTS";s:38:"The tokenizer shared extension for php";s:4:"NAME";s:14:"php5-tokenizer";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/639<<=>>a:3:{s:8:"COMMENTS";s:33:"The wddx shared extension for php";s:4:"NAME";s:9:"php5-wddx";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/640<<=>>a:3:{s:8:"COMMENTS";s:32:"The xml shared extension for php";s:4:"NAME";s:8:"php5-xml";s:7:"VERSION";s:6:"5.4.11";}SOFTWARES\nSOFTWARES/641<<=>>a:3:{s:8:"COMMENTS";s:38:"The xmlreader shared extension for php";s:4:"NAME";s:14:"php5-xmlreader";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/642<<=>>a:3:{s:8:"COMMENTS";s:35:"The xmlrpc shared extension for php";s:4:"NAME";s:11:"php5-xmlrpc";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/643<<=>>a:3:{s:8:"COMMENTS";s:38:"The xmlwriter shared extension for php";s:4:"NAME";s:14:"php5-xmlwriter";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/644<<=>>a:3:{s:8:"COMMENTS";s:32:"The xsl shared extension for php";s:4:"NAME";s:8:"php5-xsl";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/645<<=>>a:3:{s:8:"COMMENTS";s:32:"The zip shared extension for php";s:4:"NAME";s:8:"php5-zip";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/646<<=>>a:3:{s:8:"COMMENTS";s:33:"The zlib shared extension for php";s:4:"NAME";s:9:"php5-zlib";s:7:"VERSION";s:6:"5.4.10";}SOFTWARES\nSOFTWARES/647<<=>>a:3:{s:8:"COMMENTS";s:49:"A set of PHP-scripts to manage MySQL over the web";s:4:"NAME";s:10:"phpMyAdmin";s:7:"VERSION";s:5:"3.5.5";}SOFTWARES\nSOFTWARES/648<<=>>a:3:{s:8:"COMMENTS";s:52:"A set of PHP-scripts to administer LDAP over the web";s:4:"NAME";s:12:"phpldapadmin";s:7:"VERSION";s:7:"1.2.3,1";}SOFTWARES\nSOFTWARES/649<<=>>a:3:{s:8:"COMMENTS";s:48:"Pidgin multi-protocol messaging client (GTK+ UI)";s:4:"NAME";s:6:"pidgin";s:7:"VERSION";s:6:"2.10.6";}SOFTWARES\nSOFTWARES/650<<=>>a:3:{s:8:"COMMENTS";s:36:"Low-level pixel manipulation library";s:4:"NAME";s:6:"pixman";s:7:"VERSION";s:6:"0.24.2";}SOFTWARES\nSOFTWARES/651<<=>>a:3:{s:8:"COMMENTS";s:54:"Utility to help to configure compiler and linker flags";s:4:"NAME";s:7:"pkgconf";s:7:"VERSION";s:5:"0.8.9";}SOFTWARES\nSOFTWARES/652<<=>>a:3:{s:8:"COMMENTS";s:35:"Library for manipulating PNG images";s:4:"NAME";s:3:"png";s:7:"VERSION";s:6:"1.5.14";}SOFTWARES\nSOFTWARES/653<<=>>a:3:{s:8:"COMMENTS";s:25:"Speech recognition system";s:4:"NAME";s:12:"pocketsphinx";s:7:"VERSION";s:3:"0.8";}SOFTWARES\nSOFTWARES/654<<=>>a:3:{s:8:"COMMENTS";s:34:"PDF manipulation library and tools";s:4:"NAME";s:6:"podofo";s:7:"VERSION";s:7:"0.9.1_3";}SOFTWARES\nSOFTWARES/655<<=>>a:3:{s:8:"COMMENTS";s:58:"Framework for controlling access to system-wide components";s:4:"NAME";s:9:"policykit";s:7:"VERSION";s:5:"0.9_6";}SOFTWARES\nSOFTWARES/656<<=>>a:3:{s:8:"COMMENTS";s:41:"GNOME frontend to the PolicyKit framework";s:4:"NAME";s:15:"policykit-gnome";s:7:"VERSION";s:7:"0.9.2_6";}SOFTWARES\nSOFTWARES/657<<=>>a:3:{s:8:"COMMENTS";s:58:"Framework for controlling access to system-wide components";s:4:"NAME";s:6:"polkit";s:7:"VERSION";s:4:"0.99";}SOFTWARES\nSOFTWARES/658<<=>>a:3:{s:8:"COMMENTS";s:23:"A PDF rendering library";s:4:"NAME";s:7:"poppler";s:7:"VERSION";s:8:"0.18.4_2";}SOFTWARES\nSOFTWARES/659<<=>>a:3:{s:8:"COMMENTS";s:21:"Poppler encoding data";s:4:"NAME";s:12:"poppler-data";s:7:"VERSION";s:5:"0.4.5";}SOFTWARES\nSOFTWARES/660<<=>>a:3:{s:8:"COMMENTS";s:24:"Glib bindings to poppler";s:4:"NAME";s:12:"poppler-glib";s:7:"VERSION";s:8:"0.18.4_2";}SOFTWARES\nSOFTWARES/661<<=>>a:3:{s:8:"COMMENTS";s:59:"A getopt(3) like library with a number of enhancements, fro";s:4:"NAME";s:4:"popt";s:7:"VERSION";s:4:"1.16";}SOFTWARES\nSOFTWARES/662<<=>>a:3:{s:8:"COMMENTS";s:33:"Portable cross-platform Audio API";s:4:"NAME";s:9:"portaudio";s:7:"VERSION";s:6:"18.1_3";}SOFTWARES\nSOFTWARES/663<<=>>a:3:{s:8:"COMMENTS";s:57:"Manage your ports without external databases or languages";s:4:"NAME";s:10:"portmaster";s:7:"VERSION";s:6:"3.14_8";}SOFTWARES\nSOFTWARES/664<<=>>a:3:{s:8:"COMMENTS";s:23:"Print extension headers";s:4:"NAME";s:10:"printproto";s:7:"VERSION";s:5:"1.0.5";}SOFTWARES\nSOFTWARES/665<<=>>a:3:{s:8:"COMMENTS";s:20:"GNU Portable Threads";s:4:"NAME";s:3:"pth";s:7:"VERSION";s:5:"2.0.7";}SOFTWARES\nSOFTWARES/666<<=>>a:3:{s:8:"COMMENTS";s:21:"Sound server for UNIX";s:4:"NAME";s:10:"pulseaudio";s:7:"VERSION";s:8:"0.9.23_2";}SOFTWARES\nSOFTWARES/667<<=>>a:3:{s:8:"COMMENTS";s:25:"Python bindings for Cairo";s:4:"NAME";s:10:"py27-cairo";s:7:"VERSION";s:8:"1.8.10_1";}SOFTWARES\nSOFTWARES/668<<=>>a:3:{s:8:"COMMENTS";s:46:"Python bindings for the D-BUS messaging system";s:4:"NAME";s:9:"py27-dbus";s:7:"VERSION";s:6:"0.84.0";}SOFTWARES\nSOFTWARES/669<<=>>a:3:{s:8:"COMMENTS";s:30:"Python Documentation Utilities";s:4:"NAME";s:13:"py27-docutils";s:7:"VERSION";s:4:"0.10";}SOFTWARES\nSOFTWARES/670<<=>>a:3:{s:8:"COMMENTS";s:32:"A GNU Image Manipulation Program";s:4:"NAME";s:13:"py27-gimp-app";s:7:"VERSION";s:8:"2.6.12_1";}SOFTWARES\nSOFTWARES/671<<=>>a:3:{s:8:"COMMENTS";s:27:"Python bindings for GObject";s:4:"NAME";s:12:"py27-gobject";s:7:"VERSION";s:8:"2.28.6_1";}SOFTWARES\nSOFTWARES/672<<=>>a:3:{s:8:"COMMENTS";s:38:"A set of Python bindings for gstreamer";s:4:"NAME";s:14:"py27-gstreamer";s:7:"VERSION";s:9:"0.10.22_1";}SOFTWARES\nSOFTWARES/673<<=>>a:3:{s:8:"COMMENTS";s:33:"A set of Python bindings for GTK+";s:4:"NAME";s:8:"py27-gtk";s:7:"VERSION";s:8:"2.24.0_1";}SOFTWARES\nSOFTWARES/674<<=>>a:3:{s:8:"COMMENTS";s:26:"The Python Imaging Library";s:4:"NAME";s:12:"py27-imaging";s:7:"VERSION";s:7:"1.1.7_1";}SOFTWARES\nSOFTWARES/675<<=>>a:3:{s:8:"COMMENTS";s:39:"Python module for I/O completion events";s:4:"NAME";s:11:"py27-iowait";s:7:"VERSION";s:3:"0.1";}SOFTWARES\nSOFTWARES/676<<=>>a:3:{s:8:"COMMENTS";s:50:"An ISO 8601 date/time/duration parser and formater";s:4:"NAME";s:12:"py27-isodate";s:7:"VERSION";s:5:"0.4.9";}SOFTWARES\nSOFTWARES/677<<=>>a:3:{s:8:"COMMENTS";s:49:"Python interface for XML parser library for GNOME";s:4:"NAME";s:12:"py27-libxml2";s:7:"VERSION";s:7:"2.7.8_2";}SOFTWARES\nSOFTWARES/678<<=>>a:3:{s:8:"COMMENTS";s:49:"Distributed Object Middleware for Python(IPC/RPC)";s:4:"NAME";s:9:"py27-pyro";s:7:"VERSION";s:4:"4.17";}SOFTWARES\nSOFTWARES/679<<=>>a:3:{s:8:"COMMENTS";s:37:"A Python library for RDF manipulation";s:4:"NAME";s:11:"py27-rdflib";s:7:"VERSION";s:5:"3.2.3";}SOFTWARES\nSOFTWARES/680<<=>>a:3:{s:8:"COMMENTS";s:59:"Download, build, install, upgrade, and uninstall Python pac";s:4:"NAME";s:15:"py27-setuptools";s:7:"VERSION";s:8:"0.6c11_3";}SOFTWARES\nSOFTWARES/681<<=>>a:3:{s:8:"COMMENTS";s:46:"Standard Python binding to the SQLite3 library";s:4:"NAME";s:12:"py27-sqlite3";s:7:"VERSION";s:7:"2.7.3_2";}SOFTWARES\nSOFTWARES/682<<=>>a:3:{s:8:"COMMENTS";s:36:"Python bindings to the Tk widget set";s:4:"NAME";s:12:"py27-tkinter";s:7:"VERSION";s:7:"2.7.3_3";}SOFTWARES\nSOFTWARES/683<<=>>a:3:{s:8:"COMMENTS";s:51:"An interpreted object-oriented programming language";s:4:"NAME";s:8:"python27";s:7:"VERSION";s:7:"2.7.3_6";}SOFTWARES\nSOFTWARES/684<<=>>a:3:{s:8:"COMMENTS";s:24:"Qt documentation browser";s:4:"NAME";s:13:"qt4-assistant";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/685<<=>>a:3:{s:8:"COMMENTS";s:42:"QtCLucene full text search library wrapper";s:4:"NAME";s:11:"qt4-clucene";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/686<<=>>a:3:{s:8:"COMMENTS";s:15:"Qt core library";s:4:"NAME";s:11:"qt4-corelib";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/687<<=>>a:3:{s:8:"COMMENTS";s:43:"Qt4 bindings for the D-BUS messaging system";s:4:"NAME";s:8:"qt4-dbus";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/688<<=>>a:3:{s:8:"COMMENTS";s:57:"Qt4 framework for building highly dynamic user interfaces";s:4:"NAME";s:15:"qt4-declarative";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/689<<=>>a:3:{s:8:"COMMENTS";s:12:"Qt ui editor";s:4:"NAME";s:12:"qt4-designer";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/690<<=>>a:3:{s:8:"COMMENTS";s:39:"Multiplatform C++ application framework";s:4:"NAME";s:7:"qt4-doc";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/691<<=>>a:3:{s:8:"COMMENTS";s:35:"Qt graphical user interface library";s:4:"NAME";s:7:"qt4-gui";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/692<<=>>a:3:{s:8:"COMMENTS";s:59:"QtHelp module provides QHelpEngine API and is used by Assis";s:4:"NAME";s:8:"qt4-help";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/693<<=>>a:3:{s:8:"COMMENTS";s:20:"Qt localisation tool";s:4:"NAME";s:12:"qt4-linguist";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/694<<=>>a:3:{s:8:"COMMENTS";s:23:"Qt meta object compiler";s:4:"NAME";s:7:"qt4-moc";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/695<<=>>a:3:{s:8:"COMMENTS";s:18:"Qt network library";s:4:"NAME";s:11:"qt4-network";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/696<<=>>a:3:{s:8:"COMMENTS";s:17:"Qt OpenGL library";s:4:"NAME";s:10:"qt4-opengl";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/697<<=>>a:3:{s:8:"COMMENTS";s:35:"The build utility of the Qt project";s:4:"NAME";s:9:"qt4-qmake";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/698<<=>>a:3:{s:8:"COMMENTS";s:25:"Qt3 compatibility library";s:4:"NAME";s:14:"qt4-qt3support";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/699<<=>>a:3:{s:8:"COMMENTS";s:23:"Qt unit testing library";s:4:"NAME";s:12:"qt4-qtestlib";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/700<<=>>a:3:{s:8:"COMMENTS";s:20:"Qt resource compiler";s:4:"NAME";s:7:"qt4-rcc";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/701<<=>>a:3:{s:8:"COMMENTS";s:9:"Qt script";s:4:"NAME";s:10:"qt4-script";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/702<<=>>a:3:{s:8:"COMMENTS";s:14:"Qt SQL library";s:4:"NAME";s:7:"qt4-sql";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/703<<=>>a:3:{s:8:"COMMENTS";s:29:"Qt SQLite 3.x database plugin";s:4:"NAME";s:17:"qt4-sqlite-plugin";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/704<<=>>a:3:{s:8:"COMMENTS";s:14:"Qt SVG library";s:4:"NAME";s:7:"qt4-svg";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/705<<=>>a:3:{s:8:"COMMENTS";s:26:"Qt user interface compiler";s:4:"NAME";s:7:"qt4-uic";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/706<<=>>a:3:{s:8:"COMMENTS";s:17:"Qt4 WebKit engine";s:4:"NAME";s:10:"qt4-webkit";s:7:"VERSION";s:7:"4.8.4_1";}SOFTWARES\nSOFTWARES/707<<=>>a:3:{s:8:"COMMENTS";s:14:"Qt XML library";s:4:"NAME";s:7:"qt4-xml";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/708<<=>>a:3:{s:8:"COMMENTS";s:40:"XQuery 1.0 and XPath 2.0 support for Qt4";s:4:"NAME";s:15:"qt4-xmlpatterns";s:7:"VERSION";s:5:"4.8.4";}SOFTWARES\nSOFTWARES/709<<=>>a:3:{s:8:"COMMENTS";s:53:"A graphical interface for easily configuring Synergy2";s:4:"NAME";s:12:"quicksynergy";s:7:"VERSION";s:7:"0.9.0_5";}SOFTWARES\nSOFTWARES/710<<=>>a:3:{s:8:"COMMENTS";s:51:"Qt 4 wrapper library around the Zeitgeist D-Bus API";s:4:"NAME";s:10:"qzeitgeist";s:7:"VERSION";s:5:"0.8.0";}SOFTWARES\nSOFTWARES/711<<=>>a:3:{s:8:"COMMENTS";s:23:"Randr extension headers";s:4:"NAME";s:10:"randrproto";s:7:"VERSION";s:5:"1.3.2";}SOFTWARES\nSOFTWARES/712<<=>>a:3:{s:8:"COMMENTS";s:30:"RDF Parser Toolkit for Redland";s:4:"NAME";s:7:"raptor2";s:7:"VERSION";s:7:"2.0.8_2";}SOFTWARES\nSOFTWARES/713<<=>>a:3:{s:8:"COMMENTS";s:57:"An OMF help system based on the Freedesktop specification";s:4:"NAME";s:6:"rarian";s:7:"VERSION";s:5:"0.8.1";}SOFTWARES\nSOFTWARES/714<<=>>a:3:{s:8:"COMMENTS";s:30:"A high-level interface for RDF";s:4:"NAME";s:6:"rasqal";s:7:"VERSION";s:8:"0.9.29_1";}SOFTWARES\nSOFTWARES/715<<=>>a:3:{s:8:"COMMENTS";s:51:"RDP client for Windows NT/2000/2003 Terminal Server";s:4:"NAME";s:8:"rdesktop";s:7:"VERSION";s:7:"1.7.1_1";}SOFTWARES\nSOFTWARES/716<<=>>a:3:{s:8:"COMMENTS";s:24:"RECORD extension headers";s:4:"NAME";s:11:"recordproto";s:7:"VERSION";s:6:"1.14.1";}SOFTWARES\nSOFTWARES/717<<=>>a:3:{s:8:"COMMENTS";s:28:"High-level interface for RDF";s:4:"NAME";s:7:"redland";s:7:"VERSION";s:6:"1.0.16";}SOFTWARES\nSOFTWARES/718<<=>>a:3:{s:8:"COMMENTS";s:28:"RenderProto protocol headers";s:4:"NAME";s:11:"renderproto";s:7:"VERSION";s:6:"0.11.1";}SOFTWARES\nSOFTWARES/719<<=>>a:3:{s:8:"COMMENTS";s:26:"Resource extension headers";s:4:"NAME";s:13:"resourceproto";s:7:"VERSION";s:5:"1.2.0";}SOFTWARES\nSOFTWARES/720<<=>>a:3:{s:8:"COMMENTS";s:35:"Uncompile an rgb corl-name database";s:4:"NAME";s:3:"rgb";s:7:"VERSION";s:5:"1.0.5";}SOFTWARES\nSOFTWARES/721<<=>>a:3:{s:8:"COMMENTS";s:47:"A simple and easy to use graphical file manager";s:4:"NAME";s:9:"rox-filer";s:7:"VERSION";s:6:"2.11_1";}SOFTWARES\nSOFTWARES/722<<=>>a:3:{s:8:"COMMENTS";s:27:"The Red Hat Package Manager";s:4:"NAME";s:3:"rpm";s:7:"VERSION";s:8:"3.0.6_15";}SOFTWARES\nSOFTWARES/723<<=>>a:3:{s:8:"COMMENTS";s:51:"A network file distribution/synchronization utility";s:4:"NAME";s:5:"rsync";s:7:"VERSION";s:7:"3.0.9_3";}SOFTWARES\nSOFTWARES/724<<=>>a:3:{s:8:"COMMENTS";s:31:"A tool to download RTMP streams";s:4:"NAME";s:8:"rtmpdump";s:7:"VERSION";s:5:"2.4_1";}SOFTWARES\nSOFTWARES/725<<=>>a:3:{s:8:"COMMENTS";s:49:"An object-oriented interpreted scripting language";s:4:"NAME";s:4:"ruby";s:7:"VERSION";s:11:"1.8.7.371,1";}SOFTWARES\nSOFTWARES/726<<=>>a:3:{s:8:"COMMENTS";s:50:"Package management framework for the Ruby language";s:4:"NAME";s:11:"ruby18-gems";s:7:"VERSION";s:6:"1.8.25";}SOFTWARES\nSOFTWARES/727<<=>>a:3:{s:8:"COMMENTS";s:31:"An iconv wrapper class for Ruby";s:4:"NAME";s:12:"ruby18-iconv";s:7:"VERSION";s:11:"1.8.7.371,1";}SOFTWARES\nSOFTWARES/728<<=>>a:3:{s:8:"COMMENTS";s:58:"A tool that manages gem dependencies for ruby applications";s:4:"NAME";s:15:"rubygem-bundler";s:7:"VERSION";s:5:"1.2.3";}SOFTWARES\nSOFTWARES/729<<=>>a:3:{s:8:"COMMENTS";s:57:"A toolkit to convert your script to a controllable daemon";s:4:"NAME";s:15:"rubygem-daemons";s:7:"VERSION";s:5:"1.1.9";}SOFTWARES\nSOFTWARES/730<<=>>a:3:{s:8:"COMMENTS";s:31:"LCS-based diff library for ruby";s:4:"NAME";s:16:"rubygem-diff-lcs";s:7:"VERSION";s:5:"1.1.3";}SOFTWARES\nSOFTWARES/731<<=>>a:3:{s:8:"COMMENTS";s:57:"A fast, simple event-processing library for Ruby programs";s:4:"NAME";s:20:"rubygem-eventmachine";s:7:"VERSION";s:5:"1.0.0";}SOFTWARES\nSOFTWARES/732<<=>>a:3:{s:8:"COMMENTS";s:50:"A complete replacement to the CSV standard library";s:4:"NAME";s:17:"rubygem-fastercsv";s:7:"VERSION";s:5:"1.5.5";}SOFTWARES\nSOFTWARES/733<<=>>a:3:{s:8:"COMMENTS";s:59:"Parse JSON texts and generate them from ruby data structure";s:4:"NAME";s:12:"rubygem-json";s:7:"VERSION";s:5:"1.7.7";}SOFTWARES\nSOFTWARES/734<<=>>a:3:{s:8:"COMMENTS";s:32:"Rack, a Ruby Webserver Interface";s:4:"NAME";s:12:"rubygem-rack";s:7:"VERSION";s:7:"1.4.5,3";}SOFTWARES\nSOFTWARES/735<<=>>a:3:{s:8:"COMMENTS";s:59:"Collection of Rack middleware to protect against opportunis";s:4:"NAME";s:23:"rubygem-rack-protection";s:7:"VERSION";s:5:"1.2.0";}SOFTWARES\nSOFTWARES/736<<=>>a:3:{s:8:"COMMENTS";s:9:"Ruby Make";s:4:"NAME";s:12:"rubygem-rake";s:7:"VERSION";s:6:"10.0.3";}SOFTWARES\nSOFTWARES/737<<=>>a:3:{s:8:"COMMENTS";s:59:"RSpec Core provides the structure for writing executable ex";s:4:"NAME";s:18:"rubygem-rspec-core";s:7:"VERSION";s:6:"2.11.1";}SOFTWARES\nSOFTWARES/738<<=>>a:3:{s:8:"COMMENTS";s:59:"Rspec-expectations adds should and should_not to every obje";s:4:"NAME";s:26:"rubygem-rspec-expectations";s:7:"VERSION";s:6:"2.11.2";}SOFTWARES\nSOFTWARES/739<<=>>a:3:{s:8:"COMMENTS";s:54:"Rspec-mocks provides a test-double framework for rspec";s:4:"NAME";s:19:"rubygem-rspec-mocks";s:7:"VERSION";s:6:"2.11.2";}SOFTWARES\nSOFTWARES/740<<=>>a:3:{s:8:"COMMENTS";s:42:"A classy web development framework in ruby";s:4:"NAME";s:15:"rubygem-sinatra";s:7:"VERSION";s:5:"1.3.2";}SOFTWARES\nSOFTWARES/741<<=>>a:3:{s:8:"COMMENTS";s:38:"A fast and very simple Ruby web server";s:4:"NAME";s:12:"rubygem-thin";s:7:"VERSION";s:6:"1.2.11";}SOFTWARES\nSOFTWARES/742<<=>>a:3:{s:8:"COMMENTS";s:51:"Generic interface to multiple Ruby template engines";s:4:"NAME";s:12:"rubygem-tilt";s:7:"VERSION";s:5:"1.3.3";}SOFTWARES\nSOFTWARES/743<<=>>a:3:{s:8:"COMMENTS";s:48:"Daylight-savings aware timezone support for Ruby";s:4:"NAME";s:14:"rubygem-tzinfo";s:7:"VERSION";s:6:"0.3.35";}SOFTWARES\nSOFTWARES/744<<=>>a:3:{s:8:"COMMENTS";s:34:"Shared libs from the samba package";s:4:"NAME";s:20:"samba34-libsmbclient";s:7:"VERSION";s:6:"3.4.17";}SOFTWARES\nSOFTWARES/745<<=>>a:3:{s:8:"COMMENTS";s:59:"Library for reading, writing, manipulating, and applying IC";s:4:"NAME";s:9:"sampleicc";s:7:"VERSION";s:5:"1.6.6";}SOFTWARES\nSOFTWARES/746<<=>>a:3:{s:8:"COMMENTS";s:22:"High-speed Dirac codec";s:4:"NAME";s:12:"schroedinger";s:7:"VERSION";s:8:"1.0.11_1";}SOFTWARES\nSOFTWARES/747<<=>>a:3:{s:8:"COMMENTS";s:42:"A comprehensive desktop publishing program";s:4:"NAME";s:7:"scribus";s:7:"VERSION";s:7:"1.4.1_1";}SOFTWARES\nSOFTWARES/748<<=>>a:3:{s:8:"COMMENTS";s:27:"ScrnSaver extension headers";s:4:"NAME";s:14:"scrnsaverproto";s:7:"VERSION";s:5:"1.2.1";}SOFTWARES\nSOFTWARES/749<<=>>a:3:{s:8:"COMMENTS";s:41:"Cross-platform multimedia development API";s:4:"NAME";s:3:"sdl";s:7:"VERSION";s:10:"1.2.15_2,2";}SOFTWARES\nSOFTWARES/750<<=>>a:3:{s:8:"COMMENTS";s:42:"A sample multi-channel audio mixer library";s:4:"NAME";s:9:"sdl_mixer";s:7:"VERSION";s:8:"1.2.12_2";}SOFTWARES\nSOFTWARES/751<<=>>a:3:{s:8:"COMMENTS";s:47:"Manage utmp/wtmp entries for non-init X clients";s:4:"NAME";s:7:"sessreg";s:7:"VERSION";s:5:"1.0.7";}SOFTWARES\nSOFTWARES/752<<=>>a:3:{s:8:"COMMENTS";s:47:"Set the keyboard using the X Keyboard Extension";s:4:"NAME";s:9:"setxkbmap";s:7:"VERSION";s:5:"1.2.0";}SOFTWARES\nSOFTWARES/753<<=>>a:3:{s:8:"COMMENTS";s:52:"MIME types database from the freedesktop.org project";s:4:"NAME";s:16:"shared-mime-info";s:7:"VERSION";s:5:"1.0_2";}SOFTWARES\nSOFTWARES/754<<=>>a:3:{s:8:"COMMENTS";s:22:"Simple X screen locker";s:4:"NAME";s:5:"slock";s:7:"VERSION";s:3:"1.1";}SOFTWARES\nSOFTWARES/755<<=>>a:3:{s:8:"COMMENTS";s:32:"S.M.A.R.T. disk monitoring tools";s:4:"NAME";s:13:"smartmontools";s:7:"VERSION";s:3:"6.0";}SOFTWARES\nSOFTWARES/756<<=>>a:3:{s:8:"COMMENTS";s:52:"A free MPEG1 video player library with sound support";s:4:"NAME";s:5:"smpeg";s:7:"VERSION";s:7:"0.4.4_9";}SOFTWARES\nSOFTWARES/757<<=>>a:3:{s:8:"COMMENTS";s:21:"Session Manager Proxy";s:4:"NAME";s:7:"smproxy";s:7:"VERSION";s:5:"1.0.5";}SOFTWARES\nSOFTWARES/758<<=>>a:3:{s:8:"COMMENTS";s:38:"An open-source patent-free voice codec";s:4:"NAME";s:5:"speex";s:7:"VERSION";s:10:"1.2.r1_4,1";}SOFTWARES\nSOFTWARES/759<<=>>a:3:{s:8:"COMMENTS";s:41:"CMU Sphinx Speech recognition system base";s:4:"NAME";s:10:"sphinxbase";s:7:"VERSION";s:3:"0.8";}SOFTWARES\nSOFTWARES/760<<=>>a:3:{s:8:"COMMENTS";s:37:"An SQL database engine in a C library";s:4:"NAME";s:7:"sqlite3";s:7:"VERSION";s:8:"3.7.14.1";}SOFTWARES\nSOFTWARES/761<<=>>a:3:{s:8:"COMMENTS";s:59:"Library that supports startup notification spec from freede";s:4:"NAME";s:20:"startup-notification";s:7:"VERSION";s:6:"0.12_1";}SOFTWARES\nSOFTWARES/762<<=>>a:3:{s:8:"COMMENTS";s:22:"Version control system";s:4:"NAME";s:10:"subversion";s:7:"VERSION";s:5:"1.7.8";}SOFTWARES\nSOFTWARES/763<<=>>a:3:{s:8:"COMMENTS";s:36:"A low level console graphics library";s:4:"NAME";s:7:"svgalib";s:7:"VERSION";s:7:"1.4.3_6";}SOFTWARES\nSOFTWARES/764<<=>>a:3:{s:8:"COMMENTS";s:34:"Mouse and keyboard sharing utility";s:4:"NAME";s:7:"synergy";s:7:"VERSION";s:5:"1.3.8";}SOFTWARES\nSOFTWARES/765<<=>>a:3:{s:8:"COMMENTS";s:30:"A powerful syslogd replacement";s:4:"NAME";s:9:"syslog-ng";s:7:"VERSION";s:5:"3.3.8";}SOFTWARES\nSOFTWARES/766<<=>>a:3:{s:8:"COMMENTS";s:46:"Type 1 font rasterization library for Unix/X11";s:4:"NAME";s:5:"t1lib";s:7:"VERSION";s:9:"5.1.2_2,1";}SOFTWARES\nSOFTWARES/767<<=>>a:3:{s:8:"COMMENTS";s:50:"Library for manipulating ID3 tags and Ogg comments";s:4:"NAME";s:6:"taglib";s:7:"VERSION";s:3:"1.8";}SOFTWARES\nSOFTWARES/768<<=>>a:3:{s:8:"COMMENTS";s:40:"Hierarchical pool based memory allocator";s:4:"NAME";s:6:"talloc";s:7:"VERSION";s:5:"2.0.7";}SOFTWARES\nSOFTWARES/769<<=>>a:3:{s:8:"COMMENTS";s:21:"Tool Command Language";s:4:"NAME";s:3:"tcl";s:7:"VERSION";s:6:"8.5.13";}SOFTWARES\nSOFTWARES/770<<=>>a:3:{s:8:"COMMENTS";s:18:"Tcl common modules";s:4:"NAME";s:11:"tcl-modules";s:7:"VERSION";s:6:"8.5.13";}SOFTWARES\nSOFTWARES/771<<=>>a:3:{s:8:"COMMENTS";s:27:"A meta port for teTeX suite";s:4:"NAME";s:5:"teTeX";s:7:"VERSION";s:5:"3.0_6";}SOFTWARES\nSOFTWARES/772<<=>>a:3:{s:8:"COMMENTS";s:56:"Thomas Esser''s distribution of TeX & friends (binaries)";s:4:"NAME";s:10:"teTeX-base";s:7:"VERSION";s:6:"3.0_23";}SOFTWARES\nSOFTWARES/773<<=>>a:3:{s:8:"COMMENTS";s:58:"Thomas Esser''s distribution of TeX & friends (texmf tree)";s:4:"NAME";s:11:"teTeX-texmf";s:7:"VERSION";s:5:"3.0_8";}SOFTWARES\nSOFTWARES/774<<=>>a:3:{s:8:"COMMENTS";s:52:"Meta-port that creates a site-local $TEXMF directory";s:4:"NAME";s:14:"tex-texmflocal";s:7:"VERSION";s:3:"1.9";}SOFTWARES\nSOFTWARES/775<<=>>a:3:{s:8:"COMMENTS";s:25:"Texinfo to HTML converter";s:4:"NAME";s:9:"texi2html";s:7:"VERSION";s:7:"5.0_1,1";}SOFTWARES\nSOFTWARES/776<<=>>a:3:{s:8:"COMMENTS";s:55:"Tools and library routines for working with TIFF images";s:4:"NAME";s:4:"tiff";s:7:"VERSION";s:5:"4.0.3";}SOFTWARES\nSOFTWARES/777<<=>>a:3:{s:8:"COMMENTS";s:31:"MIDI to WAV renderer and player";s:4:"NAME";s:8:"timidity";s:7:"VERSION";s:6:"0.2i_1";}SOFTWARES\nSOFTWARES/778<<=>>a:3:{s:8:"COMMENTS";s:25:"Graphical toolkit for Tcl";s:4:"NAME";s:2:"tk";s:7:"VERSION";s:6:"8.5.13";}SOFTWARES\nSOFTWARES/779<<=>>a:3:{s:8:"COMMENTS";s:42:"Extremely portable perl-based make utility";s:4:"NAME";s:5:"tmake";s:7:"VERSION";s:4:"1.13";}SOFTWARES\nSOFTWARES/780<<=>>a:3:{s:8:"COMMENTS";s:27:"DEC-XTRAP extension headers";s:4:"NAME";s:9:"trapproto";s:7:"VERSION";s:5:"3.4.3";}SOFTWARES\nSOFTWARES/781<<=>>a:3:{s:8:"COMMENTS";s:42:"Tab Window Manager for the X Window System";s:4:"NAME";s:3:"twm";s:7:"VERSION";s:5:"1.0.7";}SOFTWARES\nSOFTWARES/782<<=>>a:3:{s:8:"COMMENTS";s:26:"MPEG Audio Layer 2 encoder";s:4:"NAME";s:7:"twolame";s:7:"VERSION";s:6:"0.3.13";}SOFTWARES\nSOFTWARES/783<<=>>a:3:{s:8:"COMMENTS";s:40:"Library for single instance applications";s:4:"NAME";s:6:"unique";s:7:"VERSION";s:7:"1.1.6_3";}SOFTWARES\nSOFTWARES/784<<=>>a:3:{s:8:"COMMENTS";s:33:"Extract, view & test RAR archives";s:4:"NAME";s:5:"unrar";s:7:"VERSION";s:8:"4.20_1,5";}SOFTWARES\nSOFTWARES/785<<=>>a:3:{s:8:"COMMENTS";s:57:"List, test, and extract compressed files in a ZIP archive";s:4:"NAME";s:5:"unzip";s:7:"VERSION";s:5:"6.0_1";}SOFTWARES\nSOFTWARES/786<<=>>a:3:{s:8:"COMMENTS";s:30:"Video4Linux IOCTL header files";s:4:"NAME";s:10:"v4l_compat";s:7:"VERSION";s:14:"1.0.20120501_1";}SOFTWARES\nSOFTWARES/787<<=>>a:3:{s:8:"COMMENTS";s:23:"Video extension headers";s:4:"NAME";s:10:"videoproto";s:7:"VERSION";s:5:"2.3.1";}SOFTWARES\nSOFTWARES/788<<=>>a:3:{s:8:"COMMENTS";s:51:"A general-purpose full virtualizer for x86 hardware";s:4:"NAME";s:14:"virtualbox-ose";s:7:"VERSION";s:5:"4.2.6";}SOFTWARES\nSOFTWARES/789<<=>>a:3:{s:8:"COMMENTS";s:36:"VirtualBox kernel module for FreeBSD";s:4:"NAME";s:19:"virtualbox-ose-kmod";s:7:"VERSION";s:7:"4.2.6_1";}SOFTWARES\nSOFTWARES/790<<=>>a:3:{s:8:"COMMENTS";s:59:"Display X and Win32 desktops on remote X/Win32/Java display";s:4:"NAME";s:3:"vnc";s:7:"VERSION";s:7:"4.1.3_5";}SOFTWARES\nSOFTWARES/791<<=>>a:3:{s:8:"COMMENTS";s:30:"A pager/text-based WWW browser";s:4:"NAME";s:3:"w3m";s:7:"VERSION";s:7:"0.5.3_1";}SOFTWARES\nSOFTWARES/792<<=>>a:3:{s:8:"COMMENTS";s:28:"An opensource browser engine";s:4:"NAME";s:11:"webkit-gtk2";s:7:"VERSION";s:7:"1.4.3_2";}SOFTWARES\nSOFTWARES/793<<=>>a:3:{s:8:"COMMENTS";s:33:"HTML validator and sanity checker";s:4:"NAME";s:7:"weblint";s:7:"VERSION";s:5:"1.020";}SOFTWARES\nSOFTWARES/794<<=>>a:3:{s:8:"COMMENTS";s:40:"Google WebP image format conversion tool";s:4:"NAME";s:4:"webp";s:7:"VERSION";s:7:"0.1.3_1";}SOFTWARES\nSOFTWARES/795<<=>>a:3:{s:8:"COMMENTS";s:47:"Retrieve files from the Net via HTTP(S) and FTP";s:4:"NAME";s:4:"wget";s:7:"VERSION";s:8:"1.13.4_1";}SOFTWARES\nSOFTWARES/796<<=>>a:3:{s:8:"COMMENTS";s:21:"WiFi Networks Manager";s:4:"NAME";s:7:"wifimgr";s:7:"VERSION";s:6:"1.10_1";}SOFTWARES\nSOFTWARES/797<<=>>a:3:{s:8:"COMMENTS";s:47:"GNUstep-compliant NeXTstep window manager clone";s:4:"NAME";s:11:"windowmaker";s:7:"VERSION";s:6:"0.95.3";}SOFTWARES\nSOFTWARES/798<<=>>a:3:{s:8:"COMMENTS";s:57:"Dockapp for battery & temperature monitoring through ACPI";s:4:"NAME";s:9:"wmbsdbatt";s:7:"VERSION";s:5:"0.1_4";}SOFTWARES\nSOFTWARES/799<<=>>a:3:{s:8:"COMMENTS";s:56:"A digital clock dockapp with a similar look to wmcpuload";s:4:"NAME";s:10:"wmclockmon";s:7:"VERSION";s:7:"0.8.1_5";}SOFTWARES\nSOFTWARES/800<<=>>a:3:{s:8:"COMMENTS";s:61:"An "lcd" dockapp for windowmaker, which displays the curren";s:4:"NAME";s:9:"wmcpuload";s:7:"VERSION";s:7:"1.0.1_4";}SOFTWARES\nSOFTWARES/801<<=>>a:3:{s:8:"COMMENTS";s:36:"Icons mainly for use in Window Maker";s:4:"NAME";s:7:"wmicons";s:7:"VERSION";s:5:"1.0_2";}SOFTWARES\nSOFTWARES/802<<=>>a:3:{s:8:"COMMENTS";s:28:"Network load monitor dockapp";s:4:"NAME";s:9:"wmnetload";s:7:"VERSION";s:5:"1.3_4";}SOFTWARES\nSOFTWARES/803<<=>>a:3:{s:8:"COMMENTS";s:39:"An audio mixer for the WindowMaker dock";s:4:"NAME";s:8:"wmsmixer";s:7:"VERSION";s:7:"0.5.1_1";}SOFTWARES\nSOFTWARES/804<<=>>a:3:{s:8:"COMMENTS";s:40:"The wxWidgets GUI toolkit (common files)";s:4:"NAME";s:13:"wxgtk2-common";s:7:"VERSION";s:8:"2.8.12_1";}SOFTWARES\nSOFTWARES/805<<=>>a:3:{s:8:"COMMENTS";s:35:"The wxWidgets GUI toolkit (Unicode)";s:4:"NAME";s:14:"wxgtk2-unicode";s:7:"VERSION";s:8:"2.8.12_1";}SOFTWARES\nSOFTWARES/806<<=>>a:3:{s:8:"COMMENTS";s:35:"X11 server performance test program";s:4:"NAME";s:7:"x11perf";s:7:"VERSION";s:5:"1.5.4";}SOFTWARES\nSOFTWARES/807<<=>>a:3:{s:8:"COMMENTS";s:53:"Library and tool for encoding H.264/AVC video streams";s:4:"NAME";s:4:"x264";s:7:"VERSION";s:10:"0.125.2201";}SOFTWARES\nSOFTWARES/808<<=>>a:3:{s:8:"COMMENTS";s:24:"X authority file utility";s:4:"NAME";s:5:"xauth";s:7:"VERSION";s:5:"1.0.6";}SOFTWARES\nSOFTWARES/809<<=>>a:3:{s:8:"COMMENTS";s:38:"Program to adjust backlight brightness";s:4:"NAME";s:10:"xbacklight";s:7:"VERSION";s:5:"1.1.2";}SOFTWARES\nSOFTWARES/810<<=>>a:3:{s:8:"COMMENTS";s:18:"X.Org bitmaps data";s:4:"NAME";s:8:"xbitmaps";s:7:"VERSION";s:5:"1.1.1";}SOFTWARES\nSOFTWARES/811<<=>>a:3:{s:8:"COMMENTS";s:52:"Brightness and gamma correction through the X server";s:4:"NAME";s:11:"xbrightness";s:7:"VERSION";s:3:"0.3";}SOFTWARES\nSOFTWARES/812<<=>>a:3:{s:8:"COMMENTS";s:27:"Scientific calculator for X";s:4:"NAME";s:5:"xcalc";s:7:"VERSION";s:9:"1.0.4.1_1";}SOFTWARES\nSOFTWARES/813<<=>>a:3:{s:8:"COMMENTS";s:59:"A module with libxcb/libX11 extension/replacement libraries";s:4:"NAME";s:8:"xcb-util";s:7:"VERSION";s:9:"0.3.9_1,1";}SOFTWARES\nSOFTWARES/814<<=>>a:3:{s:8:"COMMENTS";s:46:"Convenience functions for the Render extension";s:4:"NAME";s:19:"xcb-util-renderutil";s:7:"VERSION";s:5:"0.3.8";}SOFTWARES\nSOFTWARES/815<<=>>a:3:{s:8:"COMMENTS";s:40:"Another X11 frontend to mkisofs/cdrecord";s:4:"NAME";s:8:"xcdroast";s:7:"VERSION";s:11:"0.98.a.16_5";}SOFTWARES\nSOFTWARES/816<<=>>a:3:{s:8:"COMMENTS";s:30:"Analog and digital clock for X";s:4:"NAME";s:6:"xclock";s:7:"VERSION";s:5:"1.0.6";}SOFTWARES\nSOFTWARES/817<<=>>a:3:{s:8:"COMMENTS";s:24:"XCMisc extension headers";s:4:"NAME";s:11:"xcmiscproto";s:7:"VERSION";s:5:"1.2.1";}SOFTWARES\nSOFTWARES/818<<=>>a:3:{s:8:"COMMENTS";s:43:"Device Color Characterization utility for X";s:4:"NAME";s:6:"xcmsdb";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/819<<=>>a:3:{s:8:"COMMENTS";s:20:"X.org cursors themes";s:4:"NAME";s:14:"xcursor-themes";s:7:"VERSION";s:7:"1.0.3_1";}SOFTWARES\nSOFTWARES/820<<=>>a:3:{s:8:"COMMENTS";s:55:"Create an X cursor file from a collection of PNG images";s:4:"NAME";s:10:"xcursorgen";s:7:"VERSION";s:7:"1.0.4_1";}SOFTWARES\nSOFTWARES/821<<=>>a:3:{s:8:"COMMENTS";s:59:"Tools to allow all applications to integrate with the free ";s:4:"NAME";s:9:"xdg-utils";s:7:"VERSION";s:7:"1.0.2_8";}SOFTWARES\nSOFTWARES/822<<=>>a:3:{s:8:"COMMENTS";s:33:"Display information utility for X";s:4:"NAME";s:8:"xdpyinfo";s:7:"VERSION";s:5:"1.3.0";}SOFTWARES\nSOFTWARES/823<<=>>a:3:{s:8:"COMMENTS";s:46:"Query configuration information of DRI drivers";s:4:"NAME";s:8:"xdriinfo";s:7:"VERSION";s:5:"1.0.4";}SOFTWARES\nSOFTWARES/824<<=>>a:3:{s:8:"COMMENTS";s:32:"DVI Previewer(kpathsearch) for X";s:4:"NAME";s:11:"xdvik-tetex";s:7:"VERSION";s:10:"22.84.16_4";}SOFTWARES\nSOFTWARES/825<<=>>a:3:{s:8:"COMMENTS";s:26:"Print contents of X events";s:4:"NAME";s:3:"xev";s:7:"VERSION";s:5:"1.1.0";}SOFTWARES\nSOFTWARES/826<<=>>a:3:{s:8:"COMMENTS";s:22:"XExt extension headers";s:4:"NAME";s:9:"xextproto";s:7:"VERSION";s:5:"7.2.0";}SOFTWARES\nSOFTWARES/827<<=>>a:3:{s:8:"COMMENTS";s:27:"X.Org keyboard input driver";s:4:"NAME";s:19:"xf86-input-keyboard";s:7:"VERSION";s:5:"1.6.1";}SOFTWARES\nSOFTWARES/828<<=>>a:3:{s:8:"COMMENTS";s:24:"X.Org mouse input driver";s:4:"NAME";s:16:"xf86-input-mouse";s:7:"VERSION";s:7:"1.7.1_1";}SOFTWARES\nSOFTWARES/829<<=>>a:3:{s:8:"COMMENTS";s:24:"X.Org ati display driver";s:4:"NAME";s:14:"xf86-video-ati";s:7:"VERSION";s:8:"6.14.3_1";}SOFTWARES\nSOFTWARES/830<<=>>a:3:{s:8:"COMMENTS";s:45:"Driver for Intel integrated graphics chipsets";s:4:"NAME";s:16:"xf86-video-intel";s:7:"VERSION";s:8:"2.17.0_1";}SOFTWARES\nSOFTWARES/831<<=>>a:3:{s:8:"COMMENTS";s:27:"X.Org mach64 display driver";s:4:"NAME";s:17:"xf86-video-mach64";s:7:"VERSION";s:5:"6.9.0";}SOFTWARES\nSOFTWARES/832<<=>>a:3:{s:8:"COMMENTS";s:23:"X.Org nv display driver";s:4:"NAME";s:13:"xf86-video-nv";s:7:"VERSION";s:8:"2.1.18_1";}SOFTWARES\nSOFTWARES/833<<=>>a:3:{s:8:"COMMENTS";s:31:"X.Org openChrome display driver";s:4:"NAME";s:21:"xf86-video-openchrome";s:7:"VERSION";s:9:"0.2.904_3";}SOFTWARES\nSOFTWARES/834<<=>>a:3:{s:8:"COMMENTS";s:25:"X.Org r128 display driver";s:4:"NAME";s:15:"xf86-video-r128";s:7:"VERSION";s:7:"6.8.1_3";}SOFTWARES\nSOFTWARES/835<<=>>a:3:{s:8:"COMMENTS";s:33:"X.Org ati RadeonHD display driver";s:4:"NAME";s:19:"xf86-video-radeonhd";s:7:"VERSION";s:7:"1.3.0_5";}SOFTWARES\nSOFTWARES/836<<=>>a:3:{s:8:"COMMENTS";s:25:"X.Org vesa display driver";s:4:"NAME";s:15:"xf86-video-vesa";s:7:"VERSION";s:7:"2.3.0_2";}SOFTWARES\nSOFTWARES/837<<=>>a:3:{s:8:"COMMENTS";s:33:"XFree86-Bigfont extension headers";s:4:"NAME";s:16:"xf86bigfontproto";s:7:"VERSION";s:5:"1.2.0";}SOFTWARES\nSOFTWARES/838<<=>>a:3:{s:8:"COMMENTS";s:42:"Test program for the XFree86-DGA extension";s:4:"NAME";s:7:"xf86dga";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/839<<=>>a:3:{s:8:"COMMENTS";s:29:"XFree86-DGA extension headers";s:4:"NAME";s:12:"xf86dgaproto";s:7:"VERSION";s:3:"2.1";}SOFTWARES\nSOFTWARES/840<<=>>a:3:{s:8:"COMMENTS";s:29:"XFree86-DRI extension headers";s:4:"NAME";s:12:"xf86driproto";s:7:"VERSION";s:5:"2.1.1";}SOFTWARES\nSOFTWARES/841<<=>>a:3:{s:8:"COMMENTS";s:30:"XFree86-Misc extension headers";s:4:"NAME";s:13:"xf86miscproto";s:7:"VERSION";s:5:"0.9.3";}SOFTWARES\nSOFTWARES/842<<=>>a:3:{s:8:"COMMENTS";s:42:"XFree86-VidModeExtension extension headers";s:4:"NAME";s:16:"xf86vidmodeproto";s:7:"VERSION";s:5:"2.3.1";}SOFTWARES\nSOFTWARES/843<<=>>a:3:{s:8:"COMMENTS";s:38:"Gamma correction through the X server.";s:4:"NAME";s:6:"xgamma";s:7:"VERSION";s:5:"1.0.4";}SOFTWARES\nSOFTWARES/844<<=>>a:3:{s:8:"COMMENTS";s:15:"X graphics demo";s:4:"NAME";s:3:"xgc";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/845<<=>>a:3:{s:8:"COMMENTS";s:35:"Server access control program for X";s:4:"NAME";s:5:"xhost";s:7:"VERSION";s:5:"1.0.4";}SOFTWARES\nSOFTWARES/846<<=>>a:3:{s:8:"COMMENTS";s:26:"Xinerama extension headers";s:4:"NAME";s:13:"xineramaproto";s:7:"VERSION";s:5:"1.2.1";}SOFTWARES\nSOFTWARES/847<<=>>a:3:{s:8:"COMMENTS";s:27:"X Window System initializer";s:4:"NAME";s:5:"xinit";s:7:"VERSION";s:7:"1.3.2,1";}SOFTWARES\nSOFTWARES/848<<=>>a:3:{s:8:"COMMENTS";s:59:"Very useful utility for configuring and testing XInput devi";s:4:"NAME";s:6:"xinput";s:7:"VERSION";s:5:"1.5.4";}SOFTWARES\nSOFTWARES/849<<=>>a:3:{s:8:"COMMENTS";s:32:"Compile XKB keyboard description";s:4:"NAME";s:7:"xkbcomp";s:7:"VERSION";s:5:"1.2.3";}SOFTWARES\nSOFTWARES/850<<=>>a:3:{s:8:"COMMENTS";s:16:"XKB event daemon";s:4:"NAME";s:6:"xkbevd";s:7:"VERSION";s:5:"1.1.2";}SOFTWARES\nSOFTWARES/851<<=>>a:3:{s:8:"COMMENTS";s:17:"XKB utility demos";s:4:"NAME";s:8:"xkbutils";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/852<<=>>a:3:{s:8:"COMMENTS";s:33:"X Keyboard Configuration Database";s:4:"NAME";s:16:"xkeyboard-config";s:7:"VERSION";s:5:"2.5.1";}SOFTWARES\nSOFTWARES/853<<=>>a:3:{s:8:"COMMENTS";s:46:"Utility for killing a client by its X resource";s:4:"NAME";s:5:"xkill";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/854<<=>>a:3:{s:8:"COMMENTS";s:39:"List interned atoms defined on a server";s:4:"NAME";s:8:"xlsatoms";s:7:"VERSION";s:5:"1.1.0";}SOFTWARES\nSOFTWARES/855<<=>>a:3:{s:8:"COMMENTS";s:45:"List client applications running on a display";s:4:"NAME";s:10:"xlsclients";s:7:"VERSION";s:5:"1.1.2";}SOFTWARES\nSOFTWARES/856<<=>>a:3:{s:8:"COMMENTS";s:38:"Display message or query in a X window";s:4:"NAME";s:8:"xmessage";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/857<<=>>a:3:{s:8:"COMMENTS";s:28:"SGML and XML catalog manager";s:4:"NAME";s:9:"xmlcatmgr";s:7:"VERSION";s:3:"2.2";}SOFTWARES\nSOFTWARES/858<<=>>a:3:{s:8:"COMMENTS";s:22:"XML character entities";s:4:"NAME";s:10:"xmlcharent";s:7:"VERSION";s:5:"0.3_2";}SOFTWARES\nSOFTWARES/859<<=>>a:3:{s:8:"COMMENTS";s:29:"Front-end to an XSL toolchain";s:4:"NAME";s:5:"xmlto";s:7:"VERSION";s:6:"0.0.25";}SOFTWARES\nSOFTWARES/860<<=>>a:3:{s:8:"COMMENTS";s:59:"Utility for modifying keymaps and pointer button mappings i";s:4:"NAME";s:7:"xmodmap";s:7:"VERSION";s:5:"1.0.5";}SOFTWARES\nSOFTWARES/861<<=>>a:3:{s:8:"COMMENTS";s:36:"X.Org complete distribution metaport";s:4:"NAME";s:4:"xorg";s:7:"VERSION";s:5:"7.5.2";}SOFTWARES\nSOFTWARES/862<<=>>a:3:{s:8:"COMMENTS";s:20:"X.org apps meta-port";s:4:"NAME";s:9:"xorg-apps";s:7:"VERSION";s:5:"7.5.2";}SOFTWARES\nSOFTWARES/863<<=>>a:3:{s:8:"COMMENTS";s:25:"X.org documentation files";s:4:"NAME";s:9:"xorg-docs";s:7:"VERSION";s:5:"1.6,1";}SOFTWARES\nSOFTWARES/864<<=>>a:3:{s:8:"COMMENTS";s:23:"X.org drivers meta-port";s:4:"NAME";s:12:"xorg-drivers";s:7:"VERSION";s:5:"7.5.2";}SOFTWARES\nSOFTWARES/865<<=>>a:3:{s:8:"COMMENTS";s:25:"X.Org 100dpi bitmap fonts";s:4:"NAME";s:17:"xorg-fonts-100dpi";s:7:"VERSION";s:5:"7.5.1";}SOFTWARES\nSOFTWARES/866<<=>>a:3:{s:8:"COMMENTS";s:21:"X.org fonts meta-port";s:4:"NAME";s:10:"xorg-fonts";s:7:"VERSION";s:5:"7.5.1";}SOFTWARES\nSOFTWARES/867<<=>>a:3:{s:8:"COMMENTS";s:24:"X.Org 75dpi bitmap fonts";s:4:"NAME";s:16:"xorg-fonts-75dpi";s:7:"VERSION";s:5:"7.5.1";}SOFTWARES\nSOFTWARES/868<<=>>a:3:{s:8:"COMMENTS";s:27:"X.Org Cyrillic bitmap fonts";s:4:"NAME";s:19:"xorg-fonts-cyrillic";s:7:"VERSION";s:5:"7.5.1";}SOFTWARES\nSOFTWARES/869<<=>>a:3:{s:8:"COMMENTS";s:32:"X.Org miscellaneous bitmap fonts";s:4:"NAME";s:22:"xorg-fonts-miscbitmaps";s:7:"VERSION";s:5:"7.5.1";}SOFTWARES\nSOFTWARES/870<<=>>a:3:{s:8:"COMMENTS";s:20:"X.Org TrueType fonts";s:4:"NAME";s:19:"xorg-fonts-truetype";s:7:"VERSION";s:5:"7.5.1";}SOFTWARES\nSOFTWARES/871<<=>>a:3:{s:8:"COMMENTS";s:17:"X.Org Type1 fonts";s:4:"NAME";s:16:"xorg-fonts-type1";s:7:"VERSION";s:5:"7.5.1";}SOFTWARES\nSOFTWARES/872<<=>>a:3:{s:8:"COMMENTS";s:25:"X.org libraries meta-port";s:4:"NAME";s:14:"xorg-libraries";s:7:"VERSION";s:5:"7.5.1";}SOFTWARES\nSOFTWARES/873<<=>>a:3:{s:8:"COMMENTS";s:32:"X.Org development aclocal macros";s:4:"NAME";s:11:"xorg-macros";s:7:"VERSION";s:6:"1.16.1";}SOFTWARES\nSOFTWARES/874<<=>>a:3:{s:8:"COMMENTS";s:35:"X.Org X server and related programs";s:4:"NAME";s:11:"xorg-server";s:7:"VERSION";s:10:"1.10.6_2,1";}SOFTWARES\nSOFTWARES/875<<=>>a:3:{s:8:"COMMENTS";s:37:"Utility for printing an X window dump";s:4:"NAME";s:3:"xpr";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/876<<=>>a:3:{s:8:"COMMENTS";s:24:"Property displayer for X";s:4:"NAME";s:5:"xprop";s:7:"VERSION";s:5:"1.2.1";}SOFTWARES\nSOFTWARES/877<<=>>a:3:{s:8:"COMMENTS";s:20:"X11 protocol headers";s:4:"NAME";s:6:"xproto";s:7:"VERSION";s:6:"7.0.22";}SOFTWARES\nSOFTWARES/878<<=>>a:3:{s:8:"COMMENTS";s:55:"Primitive command line interface to the RandR extension";s:4:"NAME";s:6:"xrandr";s:7:"VERSION";s:5:"1.3.5";}SOFTWARES\nSOFTWARES/879<<=>>a:3:{s:8:"COMMENTS";s:34:"X server resource database utility";s:4:"NAME";s:4:"xrdb";s:7:"VERSION";s:5:"1.0.9";}SOFTWARES\nSOFTWARES/880<<=>>a:3:{s:8:"COMMENTS";s:29:"A p5-Gtk frontend to rdesktop";s:4:"NAME";s:9:"xrdesktop";s:7:"VERSION";s:5:"1.2_2";}SOFTWARES\nSOFTWARES/881<<=>>a:3:{s:8:"COMMENTS";s:34:"Refresh all or part of an X screen";s:4:"NAME";s:8:"xrefresh";s:7:"VERSION";s:5:"1.0.4";}SOFTWARES\nSOFTWARES/882<<=>>a:3:{s:8:"COMMENTS";s:29:"User preference utility for X";s:4:"NAME";s:4:"xset";s:7:"VERSION";s:7:"1.2.2_1";}SOFTWARES\nSOFTWARES/883<<=>>a:3:{s:8:"COMMENTS";s:34:"Set the mode for an X Input Device";s:4:"NAME";s:8:"xsetmode";s:7:"VERSION";s:5:"1.0.0";}SOFTWARES\nSOFTWARES/884<<=>>a:3:{s:8:"COMMENTS";s:43:"root window parameter setting utility for X";s:4:"NAME";s:8:"xsetroot";s:7:"VERSION";s:5:"1.1.0";}SOFTWARES\nSOFTWARES/885<<=>>a:3:{s:8:"COMMENTS";s:41:"Terminal emulator for the X Window System";s:4:"NAME";s:5:"xterm";s:7:"VERSION";s:3:"288";}SOFTWARES\nSOFTWARES/886<<=>>a:3:{s:8:"COMMENTS";s:27:"Abstract network code for X";s:4:"NAME";s:6:"xtrans";s:7:"VERSION";s:5:"1.2.6";}SOFTWARES\nSOFTWARES/887<<=>>a:3:{s:8:"COMMENTS";s:45:"An opensource MPEG-4 codec, based on OpenDivx";s:4:"NAME";s:4:"xvid";s:7:"VERSION";s:7:"1.3.2,1";}SOFTWARES\nSOFTWARES/888<<=>>a:3:{s:8:"COMMENTS";s:47:"Print out X-Video extension adaptor information";s:4:"NAME";s:6:"xvinfo";s:7:"VERSION";s:5:"1.1.1";}SOFTWARES\nSOFTWARES/889<<=>>a:3:{s:8:"COMMENTS";s:28:"Dump an image of an X window";s:4:"NAME";s:3:"xwd";s:7:"VERSION";s:5:"1.0.4";}SOFTWARES\nSOFTWARES/890<<=>>a:3:{s:8:"COMMENTS";s:32:"Window information utility for X";s:4:"NAME";s:8:"xwininfo";s:7:"VERSION";s:5:"1.1.2";}SOFTWARES\nSOFTWARES/891<<=>>a:3:{s:8:"COMMENTS";s:21:"Image displayer for X";s:4:"NAME";s:4:"xwud";s:7:"VERSION";s:5:"1.0.3";}SOFTWARES\nSOFTWARES/892<<=>>a:3:{s:8:"COMMENTS";s:59:"A Portable JSON parsing and serialization library in ANSI C";s:4:"NAME";s:4:"yajl";s:7:"VERSION";s:7:"2.0.4_1";}SOFTWARES\nSOFTWARES/893<<=>>a:3:{s:8:"COMMENTS";s:40:"A complete rewrite of the NASM assembler";s:4:"NAME";s:4:"yasm";s:7:"VERSION";s:5:"1.2.0";}SOFTWARES\nSOFTWARES/894<<=>>a:3:{s:8:"COMMENTS";s:38:"A help browser for the GNOME 2 desktop";s:4:"NAME";s:4:"yelp";s:7:"VERSION";s:8:"2.30.2_6";}SOFTWARES\nSOFTWARES/895<<=>>a:3:{s:8:"COMMENTS";s:59:"Enterprise-class open source distributed monitoring (agent)";s:4:"NAME";s:13:"zabbix2-agent";s:7:"VERSION";s:5:"2.0.5";}SOFTWARES\nSOFTWARES/896<<=>>a:3:{s:8:"COMMENTS";s:59:"Enterprise-class open source distributed monitoring (fronte";s:4:"NAME";s:16:"zabbix2-frontend";s:7:"VERSION";s:7:"2.0.5_2";}SOFTWARES\nSOFTWARES/897<<=>>a:3:{s:8:"COMMENTS";s:59:"Enterprise-class open source distributed monitoring (server";s:4:"NAME";s:14:"zabbix2-server";s:7:"VERSION";s:5:"2.0.5";}SOFTWARES\nSOFTWARES/898<<=>>a:3:{s:8:"COMMENTS";s:45:"Create/update ZIP files compatible with PKZIP";s:4:"NAME";s:3:"zip";s:7:"VERSION";s:3:"3.0";}SOFTWARES\nSTORAGES/-158<<=>>a:2:{s:11:"DESCRIPTION";s:6:"ada0p2";s:12:"SERIALNUMBER";s:0:"";}STORAGES\nUSERS/-ddurieux<<=>>a:1:{s:5:"LOGIN";s:8:"ddurieux";}USERS\nVERSIONCLIENT/-159<<=>>a:0:{}VERSIONCLIENT\nSOFTWARES/899<<=>>a:3:{s:8:"COMMENTS";s:38:"GENERIC ()root@farrell.cse.buffalo.edu";s:4:"NAME";s:7:"freebsd";s:7:"VERSION";s:11:"9.1-RELEASE";}SOFTWARES\n', '', '', NULL, '2013-03-28 08:35:05');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvinventory_licenseinfos`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_licenseinfos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -658,11 +515,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_licenseinfos` (
   KEY `fullname` (`fullname`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvinventory_pcidevices`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_pcidevices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -674,9 +526,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_pcidevices` (
   KEY `plugin_fusinvinventory_pcivendor_id` (`plugin_fusinvinventory_pcivendor_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10234 ;
 
---
--- Dumping data for table `glpi_plugin_fusinvinventory_pcidevices`
---
 
 INSERT INTO `glpi_plugin_fusinvinventory_pcidevices` (`id`, `deviceid`, `name`, `plugin_fusinvinventory_pcivendor_id`) VALUES
 (1, '8139', 'AT-2500TX V3 Ethernet', 2),
@@ -10923,11 +10772,6 @@ INSERT INTO `glpi_plugin_fusinvinventory_pcidevices` (`id`, `deviceid`, `name`, 
 (10232, '20', 'Signal processing management', 2069),
 (10233, '80', 'Signal processing controller', 2069);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvinventory_pcivendors`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_pcivendors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -10937,9 +10781,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_pcivendors` (
   KEY `vendorid` (`vendorid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2071 ;
 
---
--- Dumping data for table `glpi_plugin_fusinvinventory_pcivendors`
---
 
 INSERT INTO `glpi_plugin_fusinvinventory_pcivendors` (`id`, `vendorid`, `name`) VALUES
 (1, '0000', 'Gammagraphx, Inc. (or missing ID)'),
@@ -13014,11 +12855,6 @@ INSERT INTO `glpi_plugin_fusinvinventory_pcivendors` (`id`, `vendorid`, `name`) 
 (2069, 'C', '11  Signal processing controller'),
 (2070, 'C', 'ff  Unassigned class');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvinventory_usbdevices`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_usbdevices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -13030,9 +12866,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_usbdevices` (
   KEY `plugin_fusinvinventory_usbvendor_id` (`plugin_fusinvinventory_usbvendor_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13986 ;
 
---
--- Dumping data for table `glpi_plugin_fusinvinventory_usbdevices`
---
 
 INSERT INTO `glpi_plugin_fusinvinventory_usbdevices` (`id`, `deviceid`, `name`, `plugin_fusinvinventory_usbvendor_id`) VALUES
 (1, '142b', 'Arbiter Systems, Inc.', 1),
@@ -27033,11 +26866,6 @@ INSERT INTO `glpi_plugin_fusinvinventory_usbdevices` (`id`, `deviceid`, `name`, 
 (13984, '02', 'India', 3016),
 (13985, '02', 'India', 3017);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvinventory_usbvendors`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_usbvendors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -27047,9 +26875,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvinventory_usbvendors` (
   KEY `vendorid` (`vendorid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3066 ;
 
---
--- Dumping data for table `glpi_plugin_fusinvinventory_usbvendors`
---
 
 INSERT INTO `glpi_plugin_fusinvinventory_usbvendors` (`id`, `vendorid`, `name`) VALUES
 (1, '0001', 'Fry''s Electronics'),
@@ -30120,11 +29945,6 @@ INSERT INTO `glpi_plugin_fusinvinventory_usbvendors` (`id`, `vendorid`, `name`) 
 (3064, 'VT', '0402  S-Video'),
 (3065, 'VT', '0403  Component Video');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_agentconfigs`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_agentconfigs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -30138,11 +29958,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_agentconfigs` (
   KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_configlogfields`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_configlogfields` (
   `id` int(8) NOT NULL AUTO_INCREMENT,
@@ -30152,9 +29967,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_configlogfields` (
   KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17 ;
 
---
--- Dumping data for table `glpi_plugin_fusinvsnmp_configlogfields`
---
 
 INSERT INTO `glpi_plugin_fusinvsnmp_configlogfields` (`id`, `plugin_fusioninventory_mappings_id`, `days`) VALUES
 (1, 51, 4),
@@ -30174,11 +29986,6 @@ INSERT INTO `glpi_plugin_fusinvsnmp_configlogfields` (`id`, `plugin_fusioninvent
 (15, 132, -1),
 (16, 129, -1);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_configsecurities`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_configsecurities` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -30196,19 +30003,11 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_configsecurities` (
   KEY `is_deleted` (`is_deleted`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
---
--- Dumping data for table `glpi_plugin_fusinvsnmp_configsecurities`
---
 
 INSERT INTO `glpi_plugin_fusinvsnmp_configsecurities` (`id`, `name`, `snmpversion`, `community`, `username`, `authentication`, `auth_passphrase`, `encryption`, `priv_passphrase`, `is_deleted`) VALUES
 (1, 'Public community v1', '1', 'public', '', '0', '', '0', '', 0),
 (2, 'Public community v2c', '2', 'public', '', '0', '', '0', '', 0);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_constructdevices`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_constructdevices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -30231,11 +30030,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_constructdevices` (
   KEY `itemtype` (`itemtype`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_constructdevices_users`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_constructdevices_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -30247,11 +30041,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_constructdevices_users` (
   KEY `users_id` (`users_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_constructdevicewalks`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_constructdevicewalks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -30261,11 +30050,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_constructdevicewalks` (
   KEY `plugin_fusinvsnmp_constructdevices_id` (`plugin_fusinvsnmp_constructdevices_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_constructdevice_miboids`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_constructdevice_miboids` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -30281,11 +30065,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_constructdevice_miboids` (
   KEY `itemtype` (`itemtype`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_miblabels`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_miblabels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -30294,11 +30073,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_miblabels` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_mibobjects`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_mibobjects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -30307,11 +30081,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_mibobjects` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_miboids`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_miboids` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -30320,9 +30089,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_miboids` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=190 ;
 
---
--- Dumping data for table `glpi_plugin_fusinvsnmp_miboids`
---
 
 INSERT INTO `glpi_plugin_fusinvsnmp_miboids` (`id`, `name`, `comment`) VALUES
 (1, '.1.3.6.1.2.1.1.1.0', ''),
@@ -30515,11 +30281,6 @@ INSERT INTO `glpi_plugin_fusinvsnmp_miboids` (`id`, `name`, `comment`) VALUES
 (188, '.1.3.6.1.4.1.1347.43.5.1.1.11.1', ''),
 (189, '.1.3.6.1.4.1.2385.1.1.19.2.1.3.1.4.75', '');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_modeldevices`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_modeldevices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -30529,9 +30290,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_modeldevices` (
   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1760 ;
 
---
--- Dumping data for table `glpi_plugin_fusinvsnmp_modeldevices`
---
 
 INSERT INTO `glpi_plugin_fusinvsnmp_modeldevices` (`id`, `plugin_fusinvsnmp_models_id`, `sysdescr`) VALUES
 (1, 1, 'SHARP MX-2300N'),
@@ -32297,11 +32055,6 @@ INSERT INTO `glpi_plugin_fusinvsnmp_modeldevices` (`id`, `plugin_fusinvsnmp_mode
 (1758, 726, 'OmniStack LS 6200'),
 (1759, 727, 'SHARP MX-M363U');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_modelmibs`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_modelmibs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -32324,9 +32077,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_modelmibs` (
   KEY `plugin_fusioninventory_mappings_id` (`plugin_fusioninventory_mappings_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17671 ;
 
---
--- Dumping data for table `glpi_plugin_fusinvsnmp_modelmibs`
---
 
 INSERT INTO `glpi_plugin_fusinvsnmp_modelmibs` (`id`, `plugin_fusinvsnmp_models_id`, `plugin_fusinvsnmp_miblabels_id`, `plugin_fusinvsnmp_miboids_id`, `plugin_fusinvsnmp_mibobjects_id`, `oid_port_counter`, `oid_port_dyn`, `plugin_fusioninventory_mappings_id`, `is_active`, `vlan`) VALUES
 (1, 1, 0, 1, 0, 0, 0, 57, 1, 0),
@@ -50013,11 +49763,6 @@ INSERT INTO `glpi_plugin_fusinvsnmp_modelmibs` (`id`, `plugin_fusinvsnmp_models_
 (17669, 727, 0, 138, 0, 0, 0, 56, 1, 0),
 (17670, 727, 0, 189, 0, 0, 1, 118, 1, 0);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_models`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_models` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -50030,9 +49775,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_models` (
   KEY `itemtype` (`itemtype`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=728 ;
 
---
--- Dumping data for table `glpi_plugin_fusinvsnmp_models`
---
 
 INSERT INTO `glpi_plugin_fusinvsnmp_models` (`id`, `name`, `itemtype`, `discovery_key`, `comment`) VALUES
 (1, '100911', 'Printer', 'Printer0243', 'SHARP MX-2300N\n\nXerox WorkCentre C226\n\nSHARP MX-4100N\n\n'),
@@ -50767,11 +50509,6 @@ INSERT INTO `glpi_plugin_fusinvsnmp_models` (`id`, `name`, `itemtype`, `discover
 (726, '997008', 'NetworkEquipment', 'Networking1', 'OmniStack LS 6200\n\n'),
 (727, '997009', 'Printer', 'Printer1', 'SHARP MX-M363U\n\n');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_networkequipmentips`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_networkequipmentips` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -50782,11 +50519,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_networkequipmentips` (
   KEY `networkequipments_id` (`networkequipments_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_networkequipments`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_networkequipments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -50804,11 +50536,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_networkequipments` (
   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`,`plugin_fusinvsnmp_configsecurities_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_networkportconnectionlogs`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_networkportconnectionlogs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -50822,11 +50549,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_networkportconnectionlogs` (
   KEY `date_mod` (`date_mod`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_networkportlogs`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_networkportlogs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -50843,11 +50565,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_networkportlogs` (
   KEY `date_mod` (`date_mod`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_networkports`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_networkports` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -50871,11 +50588,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_networkports` (
   KEY `networkports_id` (`networkports_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_networkporttypes`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_networkporttypes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -50886,9 +50598,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_networkporttypes` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=235 ;
 
---
--- Dumping data for table `glpi_plugin_fusinvsnmp_networkporttypes`
---
 
 INSERT INTO `glpi_plugin_fusinvsnmp_networkporttypes` (`id`, `name`, `number`, `othername`, `import`) VALUES
 (1, 'other', 1, 'other(1)', 0),
@@ -51126,11 +50835,6 @@ INSERT INTO `glpi_plugin_fusinvsnmp_networkporttypes` (`id`, `name`, `number`, `
 (233, 'aviciOpticalEther', 233, 'aviciOpticalEther(233)', 0),
 (234, 'atmbond', 234, 'atmbond(234)', 0);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_printercartridges`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_printercartridges` (
   `id` bigint(100) NOT NULL AUTO_INCREMENT,
@@ -51144,11 +50848,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_printercartridges` (
   KEY `cartridges_id` (`cartridges_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_printerlogs`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_printerlogs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51170,11 +50869,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_printerlogs` (
   KEY `printers_id` (`printers_id`,`date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_printers`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_printers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51191,11 +50885,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_printers` (
   KEY `plugin_fusinvsnmp_models_id` (`plugin_fusinvsnmp_models_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_statediscoveries`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_statediscoveries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51213,11 +50902,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_statediscoveries` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusinvsnmp_unknowndevices`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_unknowndevices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51229,11 +50913,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusinvsnmp_unknowndevices` (
   KEY `plugin_fusioninventory_unknowndevices_id` (`plugin_fusioninventory_unknowndevices_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_agentmodules`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_agentmodules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51248,9 +50927,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_agentmodules` (
   KEY `entities_id` (`entities_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
---
--- Dumping data for table `glpi_plugin_fusioninventory_agentmodules`
---
 
 INSERT INTO `glpi_plugin_fusioninventory_agentmodules` (`id`, `plugins_id`, `modulename`, `is_active`, `exceptions`, `entities_id`) VALUES
 (1, 5, 'WAKEONLAN', 0, '[]', -1),
@@ -51260,11 +50936,6 @@ INSERT INTO `glpi_plugin_fusioninventory_agentmodules` (`id`, `plugins_id`, `mod
 (5, 21, 'NETDISCOVERY', 0, '[]', -1),
 (6, 9, 'DEPLOY', 1, '[]', -1);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_agents`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_agents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51285,18 +50956,10 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_agents` (
   KEY `items_id` (`items_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
---
--- Dumping data for table `glpi_plugin_fusioninventory_agents`
---
 
 INSERT INTO `glpi_plugin_fusioninventory_agents` (`id`, `entities_id`, `is_recursive`, `name`, `last_contact`, `version`, `lock`, `device_id`, `items_id`, `token`, `useragent`, `tag`) VALUES
 (1, 0, 1, 'port004.bureau.siprossii.com-2012-12-20-16-27-27', '2013-03-28 08:34:48', '{"INVENTORY":"v2.2.7-2"}', 0, 'port004.bureau.siprossii.com-2012-12-20-16-27-27', 1, 'PTRBDGED', 'FusionInventory-Agent_v2.2.7-2', NULL);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_configs`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_configs` (
   `id` int(1) NOT NULL AUTO_INCREMENT,
@@ -51307,9 +50970,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_configs` (
   UNIQUE KEY `unicity` (`type`,`plugins_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=39 ;
 
---
--- Dumping data for table `glpi_plugin_fusioninventory_configs`
---
 
 INSERT INTO `glpi_plugin_fusioninventory_configs` (`id`, `type`, `value`, `plugins_id`) VALUES
 (1, 'version', '0.83+2.1', 5),
@@ -51351,11 +51011,6 @@ INSERT INTO `glpi_plugin_fusioninventory_configs` (`id`, `type`, `value`, `plugi
 (37, 'server_upload_path', '/Donnees/www/data-dist/glpi083/files/_plugins/fusinvdeploy/upload', 9),
 (38, 'alert_winpath', '1', 9);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_construct_walks`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_construct_walks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51364,11 +51019,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_construct_walks` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_credentialips`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_credentialips` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51381,11 +51031,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_credentialips` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_credentials`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_credentials` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51400,11 +51045,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_credentials` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_ignoredimportdevices`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_ignoredimportdevices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51419,11 +51059,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_ignoredimportdevices` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_ipranges`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_ipranges` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51435,11 +51070,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_ipranges` (
   KEY `entities_id` (`entities_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_locks`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_locks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51451,11 +51081,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_locks` (
   KEY `items_id` (`items_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_mappings`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_mappings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51472,9 +51097,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_mappings` (
   KEY `tablefield` (`tablefield`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=136 ;
 
---
--- Dumping data for table `glpi_plugin_fusioninventory_mappings`
---
 
 INSERT INTO `glpi_plugin_fusioninventory_mappings` (`id`, `itemtype`, `name`, `table`, `tablefield`, `locale`, `shortlocale`) VALUES
 (1, 'NetworkEquipment', 'location', 'glpi_networkequipments', 'locations_id', 1, NULL),
@@ -51613,11 +51235,6 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings` (`id`, `itemtype`, `name`, `t
 (134, 'Computer', 'ifPhysAddress', '', 'mac', 15, NULL),
 (135, 'Computer', 'ifaddr', '', 'ip', 407, NULL);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_profiles`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51629,9 +51246,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_profiles` (
   UNIQUE KEY `unicity` (`type`,`plugins_id`,`profiles_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=23 ;
 
---
--- Dumping data for table `glpi_plugin_fusioninventory_profiles`
---
 
 INSERT INTO `glpi_plugin_fusioninventory_profiles` (`id`, `type`, `right`, `plugins_id`, `profiles_id`) VALUES
 (1, 'agent', 'w', 5, 4),
@@ -51657,11 +51271,6 @@ INSERT INTO `glpi_plugin_fusioninventory_profiles` (`id`, `type`, `right`, `plug
 (21, 'packages', 'w', 9, 4),
 (22, 'status', 'w', 9, 4);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_rulematchedlogs`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_rulematchedlogs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51675,18 +51284,10 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_rulematchedlogs` (
   KEY `item` (`itemtype`,`items_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
---
--- Dumping data for table `glpi_plugin_fusioninventory_rulematchedlogs`
---
 
 INSERT INTO `glpi_plugin_fusioninventory_rulematchedlogs` (`id`, `date`, `items_id`, `itemtype`, `rules_id`, `plugin_fusioninventory_agents_id`, `method`) VALUES
 (1, '2013-03-28 08:34:49', 1, 'Computer', 10, 1, 'inventory');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_taskjoblogs`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_taskjoblogs` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -51700,11 +51301,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_taskjoblogs` (
   KEY `plugin_fusioninventory_taskjobstates_id` (`plugin_fusioninventory_taskjobstates_id`,`state`,`date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_taskjobs`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_taskjobs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51735,11 +51331,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_taskjobs` (
   KEY `method` (`method`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_taskjobstates`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_taskjobstates` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -51756,11 +51347,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_taskjobstates` (
   KEY `plugin_fusioninventory_taskjob_2` (`plugin_fusioninventory_taskjobs_id`,`state`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_tasks`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_tasks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51781,11 +51367,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_tasks` (
   KEY `is_active` (`is_active`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `glpi_plugin_fusioninventory_unknowndevices`
---
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51813,11 +51394,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
   KEY `date_mod` (`date_mod`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Dumping data for table `glpi_ruleactions`
---
 
 INSERT INTO `glpi_ruleactions` (`id`, `rules_id`, `action_type`, `field`, `value`) VALUES
 (106, 106, 'assign', '_fusion', '0'),
@@ -51838,11 +51414,6 @@ INSERT INTO `glpi_ruleactions` (`id`, `rules_id`, `action_type`, `field`, `value
 (1021, 1021, 'assign', '_fusion', '0'),
 (1022, 1022, 'assign', 'entities_id', '0');
 
--- --------------------------------------------------------
-
---
--- Dumping data for table `glpi_rulecriterias`
---
 
 INSERT INTO `glpi_rulecriterias` (`id`, `rules_id`, `criteria`, `condition`, `pattern`) VALUES
 (109, 106, 'serial', 10, '1'),
@@ -51888,11 +51459,6 @@ INSERT INTO `glpi_rulecriterias` (`id`, `rules_id`, `criteria`, `condition`, `pa
 (1049, 1021, 'name', 0, '*'),
 (1050, 1022, 'tag', 0, '*');
 
--- --------------------------------------------------------
-
---
--- Dumping data for table `glpi_rules`
---
 
 INSERT INTO `glpi_rules` (`id`, `entities_id`, `sub_type`, `ranking`, `name`, `description`, `match`, `is_active`, `comment`, `date_mod`, `is_recursive`) VALUES
 (106, 0, 'PluginFusioninventoryRuleImportEquipment', 0, 'Computer serial + uuid', NULL, 'AND', 1, NULL, '2013-03-28 08:29:46', 0),
@@ -51913,20 +51479,12 @@ INSERT INTO `glpi_rules` (`id`, `entities_id`, `sub_type`, `ranking`, `name`, `d
 (1021, 0, 'PluginFusioninventoryRuleImportEquipment', 16, 'Unknown device import', NULL, 'AND', 1, NULL, '2013-03-28 08:29:46', 0),
 (1022, 0, 'PluginFusinvinventoryRuleEntity', 1, 'Root', '', 'AND', 1, '', '2013-03-28 08:30:36', 0);
 
--- --------------------------------------------------------
 
---
--- Structure for view `glpi_plugin_fusinvdeploy_taskjobs`
---
 DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_taskjobs`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `glpi_plugin_fusinvdeploy_taskjobs` AS select `glpi_plugin_fusioninventory_taskjobs`.`id` AS `id`,`glpi_plugin_fusioninventory_taskjobs`.`plugin_fusioninventory_tasks_id` AS `plugin_fusinvdeploy_tasks_id`,`glpi_plugin_fusioninventory_taskjobs`.`entities_id` AS `entities_id`,`glpi_plugin_fusioninventory_taskjobs`.`name` AS `name`,`glpi_plugin_fusioninventory_taskjobs`.`date_creation` AS `date_creation`,`glpi_plugin_fusioninventory_taskjobs`.`retry_nb` AS `retry_nb`,`glpi_plugin_fusioninventory_taskjobs`.`retry_time` AS `retry_time`,`glpi_plugin_fusioninventory_taskjobs`.`plugins_id` AS `plugins_id`,`glpi_plugin_fusioninventory_taskjobs`.`method` AS `method`,`glpi_plugin_fusioninventory_taskjobs`.`definition` AS `definition`,`glpi_plugin_fusioninventory_taskjobs`.`action` AS `action`,`glpi_plugin_fusioninventory_taskjobs`.`comment` AS `comment`,`glpi_plugin_fusioninventory_taskjobs`.`users_id` AS `users_id`,`glpi_plugin_fusioninventory_taskjobs`.`status` AS `status`,`glpi_plugin_fusioninventory_taskjobs`.`rescheduled_taskjob_id` AS `rescheduled_taskjob_id`,`glpi_plugin_fusioninventory_taskjobs`.`statuscomments` AS `statuscomments`,`glpi_plugin_fusioninventory_taskjobs`.`periodicity_count` AS `periodicity_count`,`glpi_plugin_fusioninventory_taskjobs`.`periodicity_type` AS `periodicity_type`,`glpi_plugin_fusioninventory_taskjobs`.`execution_id` AS `execution_id` from `glpi_plugin_fusioninventory_taskjobs`;
 
--- --------------------------------------------------------
 
---
--- Structure for view `glpi_plugin_fusinvdeploy_tasks`
---
 DROP TABLE IF EXISTS `glpi_plugin_fusinvdeploy_tasks`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `glpi_plugin_fusinvdeploy_tasks` AS select `glpi_plugin_fusioninventory_tasks`.`id` AS `id`,`glpi_plugin_fusioninventory_tasks`.`entities_id` AS `entities_id`,`glpi_plugin_fusioninventory_tasks`.`name` AS `name`,`glpi_plugin_fusioninventory_tasks`.`date_creation` AS `date_creation`,`glpi_plugin_fusioninventory_tasks`.`comment` AS `comment`,`glpi_plugin_fusioninventory_tasks`.`is_active` AS `is_active`,`glpi_plugin_fusioninventory_tasks`.`communication` AS `communication`,`glpi_plugin_fusioninventory_tasks`.`permanent` AS `permanent`,`glpi_plugin_fusioninventory_tasks`.`date_scheduled` AS `date_scheduled`,`glpi_plugin_fusioninventory_tasks`.`periodicity_count` AS `periodicity_count`,`glpi_plugin_fusioninventory_tasks`.`periodicity_type` AS `periodicity_type`,`glpi_plugin_fusioninventory_tasks`.`execution_id` AS `execution_id`,`glpi_plugin_fusioninventory_tasks`.`is_advancedmode` AS `is_advancedmode` from `glpi_plugin_fusioninventory_tasks`;
