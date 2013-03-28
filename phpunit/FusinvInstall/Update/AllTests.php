@@ -106,6 +106,7 @@ class Update extends PHPUnit_Framework_TestCase {
    }
    
    
+   
    public function testEntityRule($nbrules=0) {
       global $DB;
       
@@ -125,6 +126,7 @@ class Update extends PHPUnit_Framework_TestCase {
 
    }
    
+
    
    public function testInstallCleanVersion() {
       global $DB;
