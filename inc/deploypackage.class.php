@@ -489,12 +489,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<form action='".$CFG_GLPI["root_doc"].
          "/plugins/fusioninventory/front/deploypackage.form.php' method='POST'>";
          echo "<textarea cols='132' rows='25' style='border:0' name='json'>";
-         echo json_encode(
-            json_decode(
-               $order->fields['json'], TRUE
-            ),
-            JSON_PRETTY_PRINT
-         );
+         echo PluginFusioninventoryToolbox::displayJson($order->fields['json']);
          echo "</textarea>";
          echo "<input type='hidden' name='id' value='{$order->fields['id']}' />";
          echo "<input type='submit' name='update_json' value=\"".

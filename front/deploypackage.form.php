@@ -46,11 +46,43 @@ Session::checkLoginUser();
 
 if (isset($_REQUEST['update_json'])) {
    $order = new PluginFusioninventoryDeployOrder();
-   $order->update(array(
-      'id' => $_REQUEST['id'],
-      'json' => $DB->escape(preg_replace('/\s+/', '', $_REQUEST['json']))
-   ));
-   Html::back();
+
+   //flatten json to update
+   $json = json_decode($_REQUEST['json'],TRUE);
+
+   $json_error_consts = array(
+      JSON_ERROR_NONE => "JSON_ERROR_NONE",
+      JSON_ERROR_DEPTH => "JSON_ERROR_DEPTH",
+      JSON_ERROR_STATE_MISMATCH => "JSON_ERROR_STATE_MISMATCH",
+      JSON_ERROR_CTRL_CHAR => "JSON_ERROR_CTRL_CHAR",
+      JSON_ERROR_SYNTAX => "JSON_ERROR_SYNTAX",
+   );
+
+   if( version_compare(phpversion(), "5.3.3", "ge") ) {
+      $json_error_consts[JSON_ERROR_UTF8] = "JSON_ERROR_UTF8";
+   }
+
+   $error_json = json_last_error();
+
+   if ( $error_json != JSON_ERROR_NONE ) {
+      $error_msg = "";
+
+      $error_msg = $json_error_consts[$error_json];
+
+      Session::addMessageAfterRedirect(
+         __("The modified JSON contained a syntax error : <br/>","fusioninventory") .
+         $error_msg, FALSE,ERROR,FALSE
+      );
+      Html::back();
+   } else {
+      $order->update(
+         array(
+            'id' => $_REQUEST['id'],
+            'json' => addslashes(json_encode($json))
+         )
+      );
+      Html::back();
+   }
    exit;
 } elseif (isset($_REQUEST['add_item'])) {
    PluginFusioninventoryDeployPackage::alter_json('add_item', $_REQUEST);

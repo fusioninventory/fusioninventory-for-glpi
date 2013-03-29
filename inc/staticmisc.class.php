@@ -582,7 +582,7 @@ class PluginFusioninventoryStaticmisc {
       $options['entity_sons'] = 1;
       $options['name']        = 'actionselectiontoadd';
       $options['condition']   =
-         implode( "\n",
+         implode( " ",
             array(
                '`id` IN ( ',
                '  SELECT agents.`computers_id`',
@@ -608,7 +608,7 @@ class PluginFusioninventoryStaticmisc {
       $options['entity_sons'] = 1;
       $options['name']        = 'actionselectiontoadd';
       $options['condition']   =
-         implode( "\n",
+         implode( " ",
             array(
                '`id` IN ( ',
                '  SELECT agents.`computers_id`',

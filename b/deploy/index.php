@@ -40,11 +40,6 @@
    ------------------------------------------------------------------------
  */
 
-
-if (isset($_GET['status'])) {
-   return 'ok';
-}
-
 include ("../../../../inc/includes.php");
 
 $response = FALSE;
@@ -58,6 +53,7 @@ if (isset($_GET['action'])) {
             $pfTaskjob = new PluginFusioninventoryTaskjob();
 
             $a_agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
+
             if(isset($a_agent['id'])) {
                $moduleRun = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
 
@@ -79,10 +75,39 @@ if (isset($_GET['action'])) {
          PluginFusioninventoryDeployFilepart::httpSendFile($_GET);
          exit;
          break;
+
       case 'setStatus':
          //Generic method to update logs
-         PluginFusioninventoryCommunicationRest::updateLog($_GET);
+         $params = array(
+            'machineid' => $_GET['machineid'],
+            'uuid' => $_GET['uuid']
+         );
+         if ( array_key_exists("status", $_GET) ) {
+            $params['code'] = $_GET['status'];
+            switch($params['code']) {
+               case 'ok':
+                  if ( !array_key_exists("currentStep", $_GET) ) {
+                     $params['msg'] = $_GET['msg'];
+                  } else {
+                     $params['msg'] = $_GET['currentStep'] . ":" . $_GET['msg'];
+                  }
+                  break;
+               case 'ko':
+                  $params['code'] = 'ko';
+                  $params['msg'] = $_GET['msg'];
+                  break;
+            }
+         } else {
+            $params['code'] = 'ok';
+            if ( !array_key_exists("currentStep", $_GET) ) {
+               $params['msg'] = $_GET['msg'];
+            } else {
+               $params['msg'] = $_GET['currentStep'] . ":" . $_GET['msg'];
+            }
+         }
+         PluginFusioninventoryCommunicationRest::updateLog($params);
          break;
+
    }
 
    if ($response !== FALSE) {

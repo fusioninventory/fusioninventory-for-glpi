@@ -173,9 +173,10 @@ class PluginFusioninventoryCommunicationRest {
 
       //Get the agent ID by his deviceid
       //Get task job status : identifier is the uuid given by the agent
-      if (PluginFusioninventoryAgent::getByDeviceID($p['machineid'])
-         && $taskjobstates->getFromDB($p['uuid'])) {
+      $agent = PluginFusioninventoryAgent::getByDeviceID($p['machineid']);
+      $taskjobstate_found = $taskjobstates->getFromDBByQuery("WHERE `uniqid`='" . $p['uuid'] . "'");
 
+      if ($agent && $taskjobstate_found) {
          //Get taskjoblog associated
          $taskjob = new PluginFusioninventoryTaskjob();
          $taskjob->getFromDB($taskjobstates->fields['plugin_fusioninventory_taskjobs_id']);

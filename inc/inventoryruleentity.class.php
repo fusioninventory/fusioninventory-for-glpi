@@ -103,7 +103,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
                                                            $this->regex_results[0]);
                      if (!is_null($res)) {
                         //Get the entity associated with the TAG
-                        $target_entity = EntityData::getEntityIDByTag($res);
+                        $target_entity = Entity::getEntityIDByTag($res);
                         if ($target_entity != '') {
                            $output["entities_id"]=$target_entity;
                         }
@@ -123,7 +123,7 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $criterias = array ();
 
       $criterias['tag']['field']     = 'name';
-      $criterias['tag']['name']      = __('Tag');
+      $criterias['tag']['name']      = __('FusionInventory tag', 'fusioninventory');
 
 
       $criterias['domain']['field']     = 'name';

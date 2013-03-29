@@ -55,6 +55,14 @@ class Update extends PHPUnit_Framework_TestCase {
       $Update->update("2.1.3");
    }
    
+   
+   public function testUpdate083_21() {
+
+      $Update = new Update();
+      $Update->update("0.83+2.1");
+      $Update->testEntityRule(1);
+   }
+   
 
 
    function update($version = '') {
@@ -95,6 +103,39 @@ class Update extends PHPUnit_Framework_TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
 
+   }
+   
+   
+   
+   public function testEntityRule($nbrules=0) {
+      global $DB;
+      
+      $DB->connect();
+      
+      if ($nbrules == 0) {
+         return;
+      }
+      
+      $cnt_old = countElementsInTable("glpi_rules", "`sub_type`='PluginFusinvinventoryRuleEntity'");
+      
+      $this->assertEquals(0, $cnt_old, "May not have entity rules with old itemtype name");
+      
+      $cnt_new = countElementsInTable("glpi_rules", "`sub_type`='PluginFusioninventoryInventoryRuleEntity'");
+      
+      $this->assertEquals($nbrules, $cnt_new, "May have ".$nbrules." entity rules");
+
+   }
+   
+
+   
+   public function testInstallCleanVersion() {
+      global $DB;
+      
+      $DB->connect();
+      
+      $Install = new Install();
+      $Install->testInstall(0);
+      
    }
 }
 

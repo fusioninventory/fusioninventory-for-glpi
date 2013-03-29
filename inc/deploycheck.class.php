@@ -61,7 +61,28 @@ class PluginFusioninventoryDeployCheck {
       );
    }
 
+   static function getUnitSize($unit) {
+      $units = array(
+         "B"  => 1,
+         "KB" => 1024,
+         "MB" => 1024 * 1024,
+         "GB" => 1024 * 1024 * 1024
+      );
+      if ( array_key_exists( $unit, $units ) ) {
+         return $units[$unit];
+      } else {
+         return 1;
+      }
+   }
 
+   static function getUnitLabel() {
+      return array(
+         "B"  => __("B", 'fusioninventory'),
+         "KB" => __("KiB", 'fusioninventory'),
+         "MB" => __("MiB", 'fusioninventory'),
+         "GB" => __("GiB", 'fusioninventory')
+      );
+   }
 
    static function displayForm($order, $datas, $rand) {
       global $CFG_GLPI;
@@ -119,7 +140,6 @@ class PluginFusioninventoryDeployCheck {
       foreach ($datas['jobs']['checks'] as $check) {
          //specific case for filesystem size
          if (!empty($check['value']) && is_numeric($check['value'])) {
-            //$check['value'] = round($check['value'] / (1024 * 1024))." MB";
             $check['value'] = PluginFusioninventoryDeployFile::processFilesize($check['value']);
          }
 
@@ -280,31 +300,50 @@ class PluginFusioninventoryDeployCheck {
             case "input+unit":
                $options['value'] = 'KB';
                if (isset($datas['edit'])) {
-                  if ($value2 >= (1024 * 1024 * 1024)) {
-                     $value2 = round($value2/ (1024 * 1024 * 1024), 1);
+                  if ($value2 >= self::getUnitSize('GB')) {
+                     $value2 = round($value2/ (self::getUnitSize('GB')), 1);
                      $options['value'] = 'GB';
-                  } elseif ($value2 >= (1024 * 1024)) {
-                     $value2 = round($value2/ (1024 * 1024), 1);
+                  } elseif ($value2 >= (self::getUnitSize('MB'))) {
+                     $value2 = round($value2/ (self::getUnitSize('MB')), 1);
                      $options['value'] = 'MB';
-                  }  elseif ($value2 >= (1024)) {
-                     $value2 = round($value2/ (1024), 1);
-                     $options['value'] = 'kB';
+                  }  elseif ($value2 >= (self::getUnitSize('KB'))) {
+                     $value2 = round($value2/ (self::getUnitSize('KB')), 1);
+                     $options['value'] = 'KB';
                   } else {
                      $options['value'] = 'B';
                   }
                }
-               echo "<td><input type='text' name='value' id='check_value$rand' value='".
-                  $value2."' /></td>";
-               echo "</tr><tr>";
-               echo "<th>".__("Unit", 'fusioninventory')."</th>";
-               echo "<td>";
+               echo     "<td>";
+               echo
+                           "<input ".
+                              "type='text' ".
+                              "name='value' ".
+                              "id='check_value$rand' ".
+                              "value='".$value2."' ".
+                           "/>";
+               echo     "</td>";
+               echo  "</tr><tr>";
+               echo  "<th>".__("Unit", 'fusioninventory')."</th>";
+               echo  "<td>";
+               $unit_labels = self::getUnitLabel();
 
-               Dropdown::showFromArray('unit', array(
-                  "B"  => __("B", 'fusioninventory'),
-                  "KB" => __("KiB", 'fusioninventory'),
-                  "MB" => __("MiB", 'fusioninventory'),
-                  "GB" => __("GiB", 'fusioninventory')
-               ), $options);
+               /*
+                * The freespaceGreater check does not need to propose KiB or B
+                * because its value is based on MiB according to REST API.
+                * If those choices are given, the final value needs to be divide
+                * and the result would be stored as a float, which will add
+                * unnecessary code complexity.
+                *                               -- Kevin 'kiniou' Roy
+                */
+
+               if ($value == 'freespaceGreater') {
+                  unset($unit_labels['KB']);
+                  unset($unit_labels['B']);
+               }
+
+               Dropdown::showFromArray(
+                  'unit', $unit_labels, $options
+               );
                echo "</td>";
                break;
 
@@ -338,12 +377,29 @@ class PluginFusioninventoryDeployCheck {
 
 
    static function add_item($params) {
+
+      if ( isset( $params['unit'] ) ) {
+         $unit_size = self::getUnitSize($params['unit']);
+      } else {
+         //if unit is not set, we use Bytes by default
+         $unit_size = self::getUnitSize('B');
+      }
+      Toolbox::logDebug(
+         print_r(
+            array(
+               "add_item params",
+               $params,
+               $unit_size
+            ),TRUE
+         )
+      );
+
       if (!isset($params['value'])) {
          $params['value'] = "";
       }
 
       if (!empty($params['value']) && is_numeric($params['value'])) {
-         $params['value'] = $params['value']  * 1024 * 1024;
+         $params['value'] = $params['value'] * self::getUnitSize($params['unit']);
       }
 
       //prepare new check entry to insert in json
@@ -355,24 +411,38 @@ class PluginFusioninventoryDeployCheck {
       );
 
       //get current order json
-      $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
+      $datas = json_decode(
+         PluginFusioninventoryDeployOrder::getJson( $params['orders_id']),
+         TRUE
+      );
 
       //add new entry
       $datas['jobs']['checks'][] = $new_entry;
 
       //update order
-      PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
+      PluginFusioninventoryDeployOrder::updateOrderJson(
+         $params['orders_id'], $datas
+      );
    }
 
 
 
    static function save_item($params) {
+      Toolbox::logDebug(
+         print_r(
+            array(
+               "save_item params",
+               $params,
+            ),TRUE
+         )
+      );
+
       if (!isset($params['value'])) {
          $params['value'] = "";
       }
 
       if (!empty($params['value']) && is_numeric($params['value'])) {
-         $params['value'] = $params['value']  * 1024 * 1024;
+         $params['value'] = $params['value'] * self::getUnitSize($params['unit']);
       }
 
       //prepare updated check entry to insert in json

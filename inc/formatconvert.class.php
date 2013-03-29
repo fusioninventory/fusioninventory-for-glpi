@@ -252,6 +252,9 @@ class PluginFusioninventoryFormatconvert {
       // * BIOS
       if (isset($array['BIOS'])) {
          $a_inventory['BIOS'] = array();
+         if (isset($array['BIOS']['ASSETTAG'])) {
+            $a_inventory['fusioninventorycomputer']['bios_assettag']= $array['BIOS']['ASSETTAG']; 
+         }         
          if ((isset($array['BIOS']['SMANUFACTURER']))
                AND (!empty($array['BIOS']['SMANUFACTURER']))) {
             $a_inventory['computer']['manufacturers_id'] = $array['BIOS']['SMANUFACTURER'];
