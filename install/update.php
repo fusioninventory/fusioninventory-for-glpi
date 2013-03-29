@@ -4665,6 +4665,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                       " NOT NULL DEFAULT ''",
             'value' => NULL
          ),
+         'locations_id' => array(
+            'type' => 'int(11) NOT NULL',
+            'value' => 0
+         ),
          'comment' =>  array(
             'type' => "text",
             'value' => NULL
