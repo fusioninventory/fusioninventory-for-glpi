@@ -77,7 +77,6 @@ if (isset($_GET['action'])) {
          break;
 
       case 'setStatus':
-         //Generic method to update logs
          $params = array(
             'machineid' => $_GET['machineid'],
             'uuid' => $_GET['uuid']
@@ -105,6 +104,7 @@ if (isset($_GET['action'])) {
                $params['msg'] = $_GET['currentStep'] . ":" . $_GET['msg'];
             }
          }
+         //Generic method to update logs
          PluginFusioninventoryCommunicationRest::updateLog($params);
          break;
 
