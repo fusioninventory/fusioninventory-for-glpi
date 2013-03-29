@@ -369,7 +369,9 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
          }
       }
-      
+      if ($_SESSION["plugin_fusinvinventory_entity"] < 0) {
+         $_SESSION["plugin_fusinvinventory_entity"] = $entities_id;
+      }
       $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation(
                                              $a_computerinventory, 
                                              $entities_id);

@@ -153,7 +153,15 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'manufacturers_id'  => 'Lenovo'
                 )
       );
-
+      
+      $a_inventory['printer'] = Array(
+            Array(
+                    'name'      => 'HP Deskjet 5700 Series',
+                    'serial'    => 'MY47L1W1JHEB6',
+                    'have_usb'  => 1
+                )
+      );   
+      
       $a_inventory['networkport'] = Array(
             'em0-00:23:18:cf:0d:93' => Array(
                     'name'                 => 'em0',
@@ -686,6 +694,65 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
       );
       
       $this->assertEquals($a_reference, $a_dataLink);      
+   }
+   
+   
+   
+   public function testComputerMonitor() {
+      global $DB;
+
+      $DB->connect();
+
+      $a_dataLink = getAllDatasFromTable("glpi_computers_items", 
+                                         "`itemtype`='Monitor'
+                                            AND `computers_id`='1'");
+      
+      $this->assertEquals(1, count($a_dataLink), "Numbre of monitors not right");
+      
+      $a_dataLink = current($a_dataLink);
+      
+      $monitor = new Monitor();
+      $monitor->getFromDB($a_dataLink['items_id']);
+      
+      unset($monitor->fields['date_mod']);
+      
+      $a_reference = array(
+          'id'                => '1',
+          'entities_id'       => '0',
+          'name'              => 'ThinkPad Display 1280x800',
+          'contact'           => 'ddurieux',
+          'contact_num'       => NULL,
+          'users_id_tech'     => '0',
+          'groups_id_tech'    => '0',
+          'comment'           => '',
+          'serial'            => 'UBYVUTFYEIUI',
+          'otherserial'       => NULL,
+          'size'              => '0',
+          'have_micro'        => '0',
+          'have_speaker'      => '0',
+          'have_subd'         => '0',
+          'have_bnc'          => '0',
+          'have_dvi'          => '0',
+          'have_pivot'        => '0',
+          'have_hdmi'         => '0',
+          'have_displayport'  => '0',
+          'locations_id'      => '0',
+          'monitortypes_id'   => '0',
+          'monitormodels_id'  => '0',
+          'manufacturers_id'  => '2',
+          'is_global'         => '0',
+          'is_deleted'        => '0',
+          'is_template'       => '0',
+          'template_name'     => NULL,
+          'notepad'           => NULL,
+          'users_id'          => '0',
+          'groups_id'         => '0',
+          'states_id'         => '0',
+          'ticket_tco'        => '0.0000',
+          'is_dynamic'        => '0'
+      );
+      
+      $this->assertEquals($a_reference, $monitor->fields);      
    }
    
    

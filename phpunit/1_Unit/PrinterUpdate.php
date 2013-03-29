@@ -51,6 +51,9 @@ class PrinterUpdate extends PHPUnit_Framework_TestCase {
 
       $DB->connect();
       
+      $Install = new Install();
+      $Install->testInstall(0);
+      
       $this->datelatupdate = date('Y-m-d H:i:s');
       
       $a_inventory = array(

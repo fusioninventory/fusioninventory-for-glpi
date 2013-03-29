@@ -153,7 +153,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons($options);
-      $this->addDivForTabs();
+//      $this->addDivForTabs();
+      if ($this->fields['type'] == 'DYNAMIC') {
+         $this->showDynamicForm();
+      }
 
       return TRUE;
    }
