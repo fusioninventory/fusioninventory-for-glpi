@@ -656,7 +656,7 @@ class PluginFusioninventoryDeployFile {
          if (!file_exists ($dir)) {
             mkdir($dir, 0700, TRUE);
          }
-         copy ($filePath, $dir.'/'.$sha512.'.gz');
+         copy ($filePath, $dir.'/'.$sha512);
       }
 
       return $sha512;
@@ -765,7 +765,7 @@ class PluginFusioninventoryDeployFile {
          $dir = $repoPath.self::getDirBySha512($part_sha512).'/';
 
          //delete file parts
-         unlink($dir.$part_sha512.'.gz');
+         unlink($dir.$part_sha512);
       }
 
       return TRUE;

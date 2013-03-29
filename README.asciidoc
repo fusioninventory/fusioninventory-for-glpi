@@ -12,11 +12,16 @@ For further information and documentation, please check http://www.fusioninvento
 
 If you want to report bugs or check for development status, you can check http://forge.fusioninventory.org .
 
-== Third-party
+== Third-party code
+
+* PluginFusioninventoryFindFiles() is copyright http://rosettacode.org/wiki/Walk_a_directory/Recursively#PHP[rosettacode.org] and
+ made available under GNU Free Documentation License.
+
+== Third-party icons and images
 
 Some icons used comes from :
 
-* Dortmund is copyright by http://http://pc.de/icons/[PC.DE] and made available under a
+* Dortmund is copyright by http://pc.de/icons/[PC.DE] and made available under a
  http://creativecommons.org/licenses/by/3.0/deed[Creative Commons Attribution 3.0 License].
 
 * Fugue Icons is copyright by http://p.yusukekamiyamane.com/[Yusuke Kamiyamame] and made

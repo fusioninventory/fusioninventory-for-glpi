@@ -153,6 +153,40 @@ function pluginFusioninventoryGetCurrentVersion() {
 }
 
 
+/*
+ * find files recursively filtered with pattern
+ * (grabbed from http://rosettacode.org/wiki/Walk_a_directory/Recursively#PHP)
+ */
+function pluginFusioninventoryFindFiles($dir = '.', $pattern = '/./') {
+   $files = array();
+   $prefix = $dir . '/';
+   $dir = dir($dir);
+   while (false !== ($file = $dir->read())){
+      if ($file === '.' || $file === '..') continue;
+      $file = $prefix . $file;
+      if (is_dir($file)) {
+         $files[] = pluginFusioninventoryFindFiles($file, $pattern);
+         continue;
+      }
+      if (preg_match($pattern, $file)){
+          $files[] = $file;
+      }
+   }
+
+   return pluginFusioninventoryFlatArray($files);
+}
+
+function pluginFusioninventoryFlatArray($array) {
+   $tmp = array();
+   foreach($array as $a) {
+      if ( is_array($a) ) {
+         $tmp = array_merge($tmp, pluginFusioninventoryFlatArray($a));
+      } else {
+         $tmp[] = $a;
+      }
+   }
+   return $tmp;
+}
 
 function pluginFusioninventoryUpdate($current_version, $migrationname='Migration') {
    global $DB;
@@ -186,6 +220,21 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload');
    }
 
+
+   /*
+    * Rename fileparts without .gz extension (cf #1999)
+    */
+   if ( is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files') ) {
+      $gzfiles = pluginFusioninventoryFindFiles(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files', '/\.gz$/');
+      foreach($gzfiles as $file) {
+         $fileWithoutExt =
+            pathinfo($file, PATHINFO_DIRNAME) .
+            '/' . pathinfo($file, PATHINFO_FILENAME);
+
+         rename($file, $fileWithoutExt);
+      }
+   }
+   unset($gzfiles);
 
    /*
     *  Rename tables from old version of FuionInventory (2.2.1 for example)
