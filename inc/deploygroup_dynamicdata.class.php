@@ -67,7 +67,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBTM{
 
    
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      $item->showDynamicForm();
+//      $item->showDynamicForm();
    }
    
 }
