@@ -463,10 +463,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          }
 
          // Clean up the agent list
-         $oldAgents = $this->find(
+         $oldAgent_deviceids = $this->find(
             // computer linked to the wrong agent
             "(`computers_id`='".$computers_id."' AND `device_id` <> '".$device_id."')");
-         foreach ($oldAgents as $oldAgent) {
+         foreach ($oldAgent_deviceids as $oldAgent) {
             $this->delete($oldAgent);
          }
          $oldAgents = $this->find(

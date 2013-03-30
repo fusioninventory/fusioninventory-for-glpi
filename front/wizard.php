@@ -42,7 +42,11 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "wizard-start");
+Html::header(__('FusionInventory', 'fusioninventory'), 
+             $_SERVER["PHP_SELF"], 
+             "plugins", 
+             "fusioninventory", 
+             "wizard-start");
 
 if (!isset($_SERVER['HTTP_REFERER'])
         OR (isset($_SERVER['HTTP_REFERER']) AND

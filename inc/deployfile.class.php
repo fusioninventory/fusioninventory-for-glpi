@@ -75,7 +75,8 @@ class PluginFusioninventoryDeployFile {
 
          //get current order json
          Toolbox::logDebug($_SERVER['SCRIPT_FILENAME'] . "\n" . print_r($order, 1));
-         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order->fields['id']), TRUE);
+         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order->fields['id']), 
+                                TRUE);
 
          //get data on index
          $sha512 = $datas_o['jobs']['associatedFiles'][$datas['index']];

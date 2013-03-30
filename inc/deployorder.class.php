@@ -58,8 +58,10 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
             (!is_null($order_type) && is_numeric($order_type) )
          && (!is_null($packages_id) && is_numeric($packages_id) )
       ) {
-         $found = $this->getFromDBByQuery(" WHERE plugin_fusioninventory_deploypackages_id = $packages_id
-                                  AND type = $order_type");
+         $found = $this->getFromDBByQuery(
+                     " WHERE plugin_fusioninventory_deploypackages_id = $packages_id 
+                        AND type = $order_type"
+                  );
       }
 
    }

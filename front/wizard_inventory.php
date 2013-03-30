@@ -42,21 +42,28 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "wizard-start");
+Html::header(__('FusionInventory', 'fusioninventory'), 
+             $_SERVER["PHP_SELF"], 
+             "plugins", 
+             "fusioninventory", 
+             "wizard-start");
 
 Session::checkLoginUser();
 
 $pfWizard = new PluginFusioninventoryWizard();
 
 $a_buttons = array(array('Des ordinateurs et leur périphériques',
-                         $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php',
+                         $CFG_GLPI['root_doc'].
+                             '/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php',
                          'computer_peripheral.png'),
                    array('Des imprimantes réseaux ou des matériels réseaux',
                           '',
                           ''));
 
-$a_ariane = array("choix de l'action"=>$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/wizard_start.php",
-                  "Type de matériel à inventorier"=>$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/wizard_inventory.php");
+$a_ariane = array(
+    "choix de l'action"=>$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/wizard_start.php",
+    "Type de matériel à inventorier"=>$CFG_GLPI['root_doc'].
+       "/plugins/fusioninventory/front/wizard_inventory.php");
 
 
 echo "<center>Quels types matériel voulez-vous inventorier  ?</center><br/>";

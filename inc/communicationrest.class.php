@@ -117,13 +117,13 @@ class PluginFusioninventoryCommunicationRest {
     * TODO: Deploy module needs this :) -- kiniou
     */
    static function getJobsByAgent($params = array()) {
-      $jobs = array();
-      $methods = PluginFusioninventoryStaticmisc::getmethods();
-      if( isset($params['task']) ) {
-         foreach(array_keys($params['task']) as $task) {
-
-         }
-      }
+//      $jobs = array();
+//      $methods = PluginFusioninventoryStaticmisc::getmethods();
+//      if( isset($params['task']) ) {
+//         foreach(array_keys($params['task']) as $task) {
+//
+//         }
+//      }
       return FALSE;
    }
 

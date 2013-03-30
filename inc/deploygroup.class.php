@@ -477,8 +477,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</tr><tr>";
 
       echo "<td class='left'>".__('Inventory number')." : </td>";
-      echo "<td class='left'><input type='text' name='otherserial' id='group_search_otherserial' value='"
-         .$fields['otherserial']."' size='15' /></td>";
+      echo "<td class='left'><input type='text' name='otherserial' id='group_search_otherserial' ".
+              "value='".$fields['otherserial']."' size='15' /></td>";
 
       echo "<td class='left'>".__('Operating system')." : </td>";
       echo "<td>";

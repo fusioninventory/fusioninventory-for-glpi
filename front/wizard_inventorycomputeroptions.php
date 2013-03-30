@@ -42,20 +42,25 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "wizard-start");
+Html::header(__('FusionInventory', 'fusioninventory'), 
+             $_SERVER["PHP_SELF"], 
+             "plugins", 
+             "fusioninventory", 
+             "wizard-start");
 
 Session::checkLoginUser();
 
 $pfWizard = new PluginFusioninventoryWizard();
 
-$a_button = array('name' => __('Next'),
+$a_button = array(
+    'name' => __('Next'),
+    'link' => $CFG_GLPI['root_doc'].
+                 '/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php');
 
-                  'link' => $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/wizard_inventorycomputeroptions.php');
 
-
-$pfWizard->displayShowForm($a_button,
-                                             $pfWizard->filInventoryComputer(),
-                                             "PluginFusinvinventoryConfig");
+$pfWizard->displayShowForm($a_button, 
+                           $pfWizard->filInventoryComputer(), 
+                           "PluginFusinvinventoryConfig");
 
 Html::footer();
 

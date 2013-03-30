@@ -78,9 +78,15 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryAgentmodule');
       Plugin::registerClass('PluginFusioninventoryConfig');
       Plugin::registerClass('PluginFusioninventoryTask',
-              array('addtabon' => array('Computer','Printer','NetworkEquipment','PluginFusioninventoryCredentialIp')));
+              array('addtabon' => array('Computer',
+                                        'Printer',
+                                        'NetworkEquipment',
+                                        'PluginFusioninventoryCredentialIp')));
       Plugin::registerClass('PluginFusioninventoryTaskjob',
-              array('addtabon' => array('Computer','Printer','NetworkEquipment','PluginFusioninventoryUnknowndevice')));
+              array('addtabon' => array('Computer',   
+                                        'Printer',
+                                        'NetworkEquipment',
+                                        'PluginFusioninventoryUnknowndevice')));
       Plugin::registerClass('PluginFusioninventoryTaskjob');
       Plugin::registerClass('PluginFusioninventoryTaskjobstate');
       Plugin::registerClass('PluginFusioninventoryUnknownDevice');
@@ -91,7 +97,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryIPRange');
       Plugin::registerClass('PluginFusioninventoryCredential');
       Plugin::registerClass('PluginFusioninventoryLock',
-              array('addtabon' => array('Computer','Monitor','Printer','NetworkEquipment')));
+              array('addtabon' => array('Computer', 'Monitor', 'Printer', 'NetworkEquipment')));
 
       Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
               array('addtabon' => array('Computer')));
@@ -135,7 +141,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryPrinterLogReport');
 
       
-      $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] = "glpi_plugin_fusioninventory_printers";
+      $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] = 
+                                                      "glpi_plugin_fusioninventory_printers";
 
 
       // ##### 3. get informations of the plugin #####
@@ -174,15 +181,18 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
       //load drag and drop javascript library on Package Interface
       if (script_endswith("deploypackage.form.php")) {
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/REDIPS_drag/redips-drag-source.js";
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/REDIPS_drag/drag_table_rows.js";
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/plusbutton.js";
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/deploy_editsubtype.js";
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = "lib/jquery/jquery-1.9.1.min.js";
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array(
+             "lib/REDIPS_drag/redips-drag-source.js",
+             "lib/REDIPS_drag/drag_table_rows.js",
+             "lib/plusbutton.js",
+             "lib/deploy_editsubtype.js",
+             "lib/jquery/jquery-1.9.1.min.js"
+         );
       }
 
       if (Session::haveRight("configuration", "r") || Session::haveRight("profile", "w")) {// Config page
-         $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/config.form.php?itemtype=pluginfusioninventoryconfig&glpi_tab=1';
+         $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/config.form.php'.
+                 '?itemtype=pluginfusioninventoryconfig&glpi_tab=1';
       }
 
       $PLUGIN_HOOKS['autoinventory_information']['fusioninventory'] = array(
@@ -199,7 +209,9 @@ function plugin_init_fusioninventory() {
           );
 
 
-      $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = array('Plugin' => 'plugin_pre_item_update_fusioninventory');
+      $PLUGIN_HOOKS['pre_item_update']['fusioninventory'] = array(
+            'Plugin' => 'plugin_pre_item_update_fusioninventory'
+          );
       $PLUGIN_HOOKS['item_update']['fusioninventory'] =
                               array('Computer'         => 'plugin_item_update_fusioninventory',
                                     'NetworkEquipment' => 'plugin_item_update_fusioninventory',
@@ -208,7 +220,9 @@ function plugin_init_fusioninventory() {
                                     'Peripheral'       => 'plugin_item_update_fusioninventory',
                                     'Phone'            => 'plugin_item_update_fusioninventory',
                                     'NetworkPort'      => 'plugin_item_update_fusioninventory',
-                                    'PluginFusioninventoryInventoryComputerAntivirus' => array('PluginFusioninventoryInventoryComputerAntivirus', 'addhistory'));
+                                    'PluginFusioninventoryInventoryComputerAntivirus' => array(
+                                          'PluginFusioninventoryInventoryComputerAntivirus', 
+                                          'addhistory'));
 
 
       $PLUGIN_HOOKS['pre_item_purge']['fusioninventory'] = array(
@@ -216,9 +230,12 @@ function plugin_init_fusioninventory() {
             'NetworkPort_NetworkPort'  =>'plugin_pre_item_purge_fusioninventory'
           );
       $p = array('NetworkPort_NetworkPort'            => 'plugin_item_purge_fusioninventory',
-                 'PluginFusioninventoryTask'          => array('PluginFusioninventoryTask', 'purgeTask'),
-                 'PluginFusioninventoryTaskjob'       => array('PluginFusioninventoryTaskjob', 'purgeTaskjob'),
-                 'PluginFusioninventoryUnknownDevice' => array('PluginFusioninventoryUnknownDevice', 'purgeUnknownDevice'),
+                 'PluginFusioninventoryTask'          => array('PluginFusioninventoryTask', 
+                                                               'purgeTask'),
+                 'PluginFusioninventoryTaskjob'       => array('PluginFusioninventoryTaskjob', 
+                                                               'purgeTaskjob'),
+                 'PluginFusioninventoryUnknownDevice' => array('PluginFusioninventoryUnknownDevice',
+                                                               'purgeUnknownDevice'),
                  'NetworkEquipment'                   => 'plugin_item_purge_fusinvsnmp',
                  'Printer'                            => 'plugin_item_purge_fusinvsnmp',
                  'PluginFusioninventoryUnknownDevice' => 'plugin_item_purge_fusinvsnmp');
@@ -433,18 +450,30 @@ function plugin_init_fusioninventory() {
          }
          // Load nvd3 for printerpage counter graph
          if (strstr($_SERVER['PHP_SELF'], '/front/printer.form.php')) {
-            echo '<link href="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3/src/nv.d3.css" rel="stylesheet" type="text/css" />
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3/lib/d3.v2.min.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3/nv.d3.min.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3/src/tooltip.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3/src/utils.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3/src/models/legend.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3/src/models/axis.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3/src/models/scatter.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3/src/models/line.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3/src/models/multiBar.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3/src/models/multiBarChart.js"></script>
-               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3/src/models/lineChart.js"></script>';
+            echo '<link href="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
+                    '/src/nv.d3.css" rel="stylesheet" type="text/css" />
+               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
+                    '/lib/d3.v2.min.js"></script>
+               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
+                    '/nv.d3.min.js"></script>
+               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
+                    '/src/tooltip.js"></script>
+               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
+                    '/src/utils.js"></script>
+               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
+                    '/src/models/legend.js"></script>
+               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
+                    '/src/models/axis.js"></script>
+               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
+                    '/src/models/scatter.js"></script>
+               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
+                    '/src/models/line.js"></script>
+               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
+                    '/src/models/multiBar.js"></script>
+               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
+                    '/src/models/multiBarChart.js"></script>
+               <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
+                    '/src/models/lineChart.js"></script>';
          }
       }
 

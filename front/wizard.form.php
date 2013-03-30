@@ -54,25 +54,31 @@ if (!isset($_GET['wizz'])) {
             case 'finishdelete':
                if (isset($_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])) {
                   $nb = countElementsInTable("glpi_plugin_fusioninventory_taskjobs",
-                          "`definition` LIKE '%\"PluginFusioninventoryIPRange\":\"".$_SESSION['plugin_fusioninventory_wizard']['ipranges_id']."\"%'");
+                          "`definition` LIKE '%\"PluginFusioninventoryIPRange\":\"".
+                             $_SESSION['plugin_fusioninventory_wizard']['ipranges_id']."\"%'");
                   if ($nb == 1) {
                      // Delete iprange
                      $pfIPRange = new PluginFusioninventoryIPRange();
-                     $pfIPRange->delete(array('id' => $_SESSION['plugin_fusioninventory_wizard']['ipranges_id']));
+                     $pfIPRange->delete(array(
+                              'id' => $_SESSION['plugin_fusioninventory_wizard']['ipranges_id']));
                   }
                   $pfTask = new PluginFusioninventoryTask();
-                  $pfTask->delete(array('id'=>$_SESSION['plugin_fusioninventory_wizard']['tasks_id']));
+                  $pfTask->delete(array(
+                              'id'=>$_SESSION['plugin_fusioninventory_wizard']['tasks_id']));
               }
               if (isset($_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])) {
                   $nb = countElementsInTable("glpi_plugin_fusioninventory_taskjobs",
-                          "`definition` LIKE '%\"PluginFusioninventoryCredentialIp\":\"".$_SESSION['plugin_fusioninventory_wizard']['credentialips_id']."\"%'");
+                          "`definition` LIKE '%\"PluginFusioninventoryCredentialIp\":\"".
+                          $_SESSION['plugin_fusioninventory_wizard']['credentialips_id']."\"%'");
                   if ($nb == 1) {
                      // Delete iprange
                      $pfCredentialIp = new PluginFusioninventoryCredentialIp();
-                     $pfCredentialIp->delete(array('id' => $_SESSION['plugin_fusioninventory_wizard']['credentialips_id']));
+                     $pfCredentialIp->delete(array(
+                         'id' => $_SESSION['plugin_fusioninventory_wizard']['credentialips_id']));
                   }
                   $pfTask = new PluginFusioninventoryTask();
-                  $pfTask->delete(array('id'=>$_SESSION['plugin_fusioninventory_wizard']['tasks_id']));
+                  $pfTask->delete(array(
+                      'id'=>$_SESSION['plugin_fusioninventory_wizard']['tasks_id']));
               }
               $url = $_SERVER['PHP_SELF'];
               $url = str_replace("wizard.form.php", "wizard.php", $url);
@@ -150,8 +156,9 @@ if (!isset($_GET['wizz'])) {
             $credentialips_id = $pfCredentialIp->add($input);
          }
          if (!(isset($_SESSION['plugin_fusioninventory_wizard'])
-                 AND isset($_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])
-                 AND $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'] == $credentialips_id)) {
+                 && isset($_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])
+                 && $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'] == 
+                        $credentialips_id)) {
             if (isset($_SESSION['plugin_fusioninventory_wizard']['tasks_id'])) {
                unset($_SESSION['plugin_fusioninventory_wizard']['tasks_id']);
             }

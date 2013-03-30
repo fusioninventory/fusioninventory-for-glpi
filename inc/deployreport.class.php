@@ -181,23 +181,26 @@ class PluginFusioninventoryDeployReport extends CommonDBTM {
                      $a_message[] = $comment;
                      $date = $datafail['date'];
                   }
-                  $a_faildetail = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
-                     AND `comment` LIKE '%--------------------------------%'");
+                  $a_faildetail = $pfTaskjoblog->find(
+                          "`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
+                           AND `comment` LIKE '%--------------------------------%'");
                   foreach ($a_faildetail as $datadetail) {
                      $a_message[] = $datadetail['comment'];
                   }
                   $message = implode("<br/>", $a_message);
                }
-               $a_failed = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
-                  AND `comment`='Action cancelled by user'");
+               $a_failed = $pfTaskjoblog->find(
+                       "`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
+                        AND `comment`='Action cancelled by user'");
                if (count($a_failed) > 0) {
                   $state = 'failed';
                   foreach ($a_failed as $datafail) {
                      $message = 'Action cancelled by user';
                      $date = $datafail['date'];
                   }
-                  $a_faildetail = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
-                     AND `comment` LIKE '%--------------------------------%'");
+                  $a_faildetail = $pfTaskjoblog->find(
+                          "`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
+                           AND `comment` LIKE '%--------------------------------%'");
                   foreach ($a_faildetail as $datadetail) {
                      $message .= "<br/>".$datadetail['comment'];
                   }
@@ -205,19 +208,20 @@ class PluginFusioninventoryDeployReport extends CommonDBTM {
 
 
                if ($state != 'failed') {
-                  $a_successful = $pfTaskjoblog->find("`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
-                  AND `comment` LIKE '%---------------------------%'");
+                  $a_successful = $pfTaskjoblog->find(
+                          "`plugin_fusioninventory_taskjobstates_id`='".$datastateuniqid['id']."'
+                           AND `comment` LIKE '%---------------------------%'");
                   if (count($a_successful) > 0) {
                      foreach ($a_successful as $datasuccessful) {
                         $date = $datasuccessful['date'];
                         if (strstr($datasuccessful['comment'], 'exit status is ok')
-                                OR strstr($datasuccessful['comment'], 'ok pattern found in log')) {
+                              || strstr($datasuccessful['comment'], 'ok pattern found in log')) {
 
                         } else if (strstr($datasuccessful['comment'], 'ok, no check to evaluate.')) {
                            $state = 'unknown';
                            $message .= $datasuccessful['comment'];
                         } else if (strstr($datasuccessful['comment'], 'exit status is not ok')
-                                OR strstr($datasuccessful['comment'], 'error pattern found in log')) {
+                              || strstr($datasuccessful['comment'], 'error pattern found in log')) {
                            $state = 'failed';
                            $message .= $datasuccessful['comment'];
                         }

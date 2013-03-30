@@ -160,7 +160,8 @@ class PluginFusioninventoryDeployAction {
          $keys = array_keys($action);
          $action_type = array_shift($keys);
          echo "<td>";
-         echo "<a class='edit' onclick=\"edit_subtype('action', {$order->fields['id']}, $rand, this)\">";
+         echo "<a class='edit' ".
+                 "onclick=\"edit_subtype('action', {$order->fields['id']}, $rand, this)\">";
          echo __($action_type, 'fusioninventory');
          echo "</a><br />";
 
@@ -175,7 +176,8 @@ class PluginFusioninventoryDeployAction {
             } else {
                echo "<b>".__(ucfirst($key), 'fusioninventory')."</b>";
                if ($key ==="exec") {
-                  echo "<pre style='border-left:solid lightgrey 3px;margin-left: 5px;padding-left:2px'>$value</pre>";
+                  echo "<pre style='border-left:solid lightgrey 3px;margin-left: 5px;".
+                          "padding-left:2px'>$value</pre>";
                } else {
                   echo " $value ";
                }

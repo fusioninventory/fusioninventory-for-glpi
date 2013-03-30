@@ -42,7 +42,11 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "taskjob");
+Html::header(__('FusionInventory', 'fusioninventory'), 
+             $_SERVER["PHP_SELF"], 
+             "plugins", 
+             "fusioninventory", 
+             "taskjob");
 
 PluginFusioninventoryProfile::checkRight("task", "r");
 

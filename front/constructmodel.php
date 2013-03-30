@@ -47,7 +47,11 @@ include ("../../../inc/includes.php");
 
 // END DEV
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "constructdevice");
+Html::header(__('FusionInventory', 'fusioninventory'), 
+             $_SERVER["PHP_SELF"], 
+             "plugins", 
+             "fusioninventory", 
+             "constructdevice");
 Session::checkLoginUser();
 
 PluginFusioninventoryMenu::displayMenu("mini");
@@ -110,10 +114,12 @@ if ($pfConstructmodel->connect()) {
             (`id`, `construct_device_id`, `log`)
             VALUES (NULL , '".$jsonret->device->id."', '".$md5."')";
          $id_ins = $DB->query($query_ins);
-         move_uploaded_file($_FILES['snmpwalkfile']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$md5);
+         move_uploaded_file($_FILES['snmpwalkfile']['tmp_name'], 
+                            GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$md5);
 
          $_SESSION['plugin_fusioninventory_snmpwalks_id'] = $jsonret->device->id;
-         Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?editoid=".$jsonret->device->id);
+         Html::redirect($CFG_GLPI['root_doc'].
+                 "/plugins/fusinvsnmp/front/constructmodel.php?editoid=".$jsonret->device->id);
       } else if (isset($_POST['deletesnmpwalkfile'])) {
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
                    WHERE `construct_device_id`='".$_POST['devices_id']."'";
@@ -138,7 +144,7 @@ if ($pfConstructmodel->connect()) {
 //              AND isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])
 //              AND $_SESSION['plugin_fusioninventory_snmpwalks_id'] > 0) {
 //         $pfConstructDevice = new PluginFusioninventorySNMPConstructDevice();
-//         $dataret = $pfConstructmodel->sendGetDevice($_SESSION['plugin_fusioninventory_snmpwalks_id']);
+//    $dataret = $pfConstructmodel->sendGetDevice($_SESSION['plugin_fusioninventory_snmpwalks_id']);
 //         $pfConstructDevice->showForm($_SESSION['plugin_fusioninventory_snmpwalks_id'], $dataret);
       } else if (isset($_GET['editoid'])) {
          $pfConstructDevice = new PluginFusioninventorySNMPConstructDevice();
