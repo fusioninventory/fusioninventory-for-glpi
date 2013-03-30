@@ -420,7 +420,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          $a_computerinventory['fusioninventorycomputer']['serialized_inventory'] = 
                   Toolbox::addslashes_deep($serialized);
          
-         $pfAgent->setAgentWithComputerid($items_id, $this->device_id);
+         $pfAgent->setAgentWithComputerid($items_id, $this->device_id, $entities_id);
 
          $ret = $DB->query("SELECT IS_USED_LOCK('inventory".$items_id."')");
          if (!is_null($DB->result($ret, 0, 0))) {

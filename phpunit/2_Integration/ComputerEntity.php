@@ -79,6 +79,8 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
       $Install = new Install();
       $Install->testInstall(0);
       
+      plugin_init_fusioninventory();
+      
       $GLPIlog = new GLPIlogs();
       $transfer = new Transfer();
       
@@ -124,6 +126,13 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
          $ruleAction->add($input);  
 
       $pfConfig->updateValue('transfers_id_auto', 1);
+      
+      // ** Add agent
+      $pfAgent = new PluginFusioninventoryAgent();
+      $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
+                                         'device_id' => 'pc-2013-02-13'));
+      $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
+      
 
       // ** Add
          $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
@@ -132,7 +141,9 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
          $GLPIlog->testPHPlogs();
 
          $computer->getFromDB(1);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'Add computer');     
+         $this->assertEquals(1, $computer->fields['entities_id'], 'Add computer'); 
+         
+         $this->testAgentEntity(1, 1, 'Add computer on entity 1');
 
       // ** Update
          $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
@@ -145,6 +156,8 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
 
          $computer->getFromDB(1);
          $this->assertEquals(1, $computer->fields['entities_id'], 'Update computer');
+         
+         $this->testAgentEntity(1, 1, 'Update computer on entity 1 (not changed)');
 
 
       // ** Transfer to entity 0
@@ -157,6 +170,8 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
 
          $computer->getFromDB(1);
          $this->assertEquals(0, $computer->fields['entities_id'], 'manual transfer computer');
+         
+         $this->testAgentEntity(1, 0, 'Manually transfer computer from entity 1 to 0');
 
       // ** Update
          $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
@@ -170,6 +185,8 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
          $computer->getFromDB(1);
          $this->assertEquals(1, $computer->fields['entities_id'], 'Update computer after '.
                   'manual transfer');
+         
+         $this->testAgentEntity(1, 1, 'Auto transfer ()fusion inventory) computer from entity 0 to 1');
 
    }   
    
@@ -359,6 +376,24 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
          $this->assertEquals(1, $computer->fields['entities_id'], 'Update computer 1 after '.
                   'manual transfer');
 
+   }
+   
+   
+   
+   public function testAgentEntity($computers_id=0, $entities_id=0, $text='') {
+      global $DB;
+
+      $DB->connect();
+      
+      if ($computers_id == 0) {
+         return;
+      }
+      
+      $pfAgent = new PluginFusioninventoryAgent();
+      $a_agents_id = $pfAgent->getAgentWithComputerid($computers_id);
+      $pfAgent->getFromDB($a_agents_id);
+      
+      $this->assertEquals($entities_id, $pfAgent->fields['entities_id'], $text);
    }
  }
 

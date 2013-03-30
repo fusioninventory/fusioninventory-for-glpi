@@ -441,11 +441,12 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    *
    * @param $computers_id integer ID of the computer
    * @param $device_id value of device_id from XML to identify agent
+   * @param $entities_id integer ID of the computer entity
    *
    * @return Nothing
    *
    **/
-   function setAgentWithComputerid($computers_id, $device_id) {
+   function setAgentWithComputerid($computers_id, $device_id, $entities_id) {
 
       $a_agent = $this->find("`computers_id`='".$computers_id."'", "", 1);
       // Is this computer already linked to an agent?
@@ -457,6 +458,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $input = array();
             $input['id'] = $agent['id'];
             $input['device_id'] = $device_id;
+            $input['entities_id'] = $entities_id;
             $this->update($input);
          }
 
@@ -472,12 +474,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             "(`device_id`='".$device_id."' AND `computers_id`<>'".$computers_id."')");
          foreach ($oldAgents as $oldAgent) {
             $input = array();
-            $input['id'] = $agent['id'];
-            $input['last_contact'] = $oldAgent['last_contact'];
-            $input['version'] = $oldAgent['version'];
-            $input['name'] = $oldAgent['name'];
-            $input['useragent'] = $oldAgent['useragent'];
-            $input['token'] = $oldAgent['token'];
+            $input['id']            = $agent['id'];
+            $input['last_contact']  = $oldAgent['last_contact'];
+            $input['version']       = $oldAgent['version'];
+            $input['name']          = $oldAgent['name'];
+            $input['useragent']     = $oldAgent['useragent'];
+            $input['token']         = $oldAgent['token'];
+            $input['entities_id']   = $entities_id;
             $this->update($input);
             $this->delete($oldAgent);
          }
@@ -486,6 +489,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $agent = $this->InfosByKey($device_id);
          if (isset($agent['id'])) {
              $agent['computers_id'] = $computers_id;
+             $agent['entities_id']  = $entities_id;
              $this->update($agent);
          }
       }
