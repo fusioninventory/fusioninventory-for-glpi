@@ -678,7 +678,7 @@ class PluginFusioninventoryDeployFile {
       $tmpFilepart = tempnam(GLPI_PLUGIN_DOC_DIR."/fusioninventory/", "filestore");
 
       $sha512 = hash_file('sha512', $file_tmp_name);
-      $short_sha512 = substr($sha512, 0, 6);
+//      $short_sha512 = substr($sha512, 0, 6);
 
       $file_present_in_repo = FALSE;
       if($deployFile->checkPresenceFile($sha512)) {
@@ -743,7 +743,6 @@ class PluginFusioninventoryDeployFile {
 
 
    static function removeFileInRepo($sha512, $orders_id) {
-      global $DB;
 
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
 

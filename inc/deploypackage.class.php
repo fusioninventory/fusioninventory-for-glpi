@@ -104,7 +104,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    *  If it's not possible display an error message
    **/
    function getEditErrorMessage($order_type=NULL) {
-      global $CFG_GLPI;
+
       $error_message = "";
       $tasklist = array();
       if (isset($order_type)) {
@@ -132,12 +132,12 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                ).
             "</h4>\n";
 
-         $taskurl_list_ids = implode( ', ',
-            array_map(
-               create_function('$task', 'return $task["task"]["id"];'),
-               $this->running_tasks
-            )
-         );
+//         $taskurl_list_ids = implode( ', ',
+//            array_map(
+//               create_function('$task', 'return $task["task"]["id"];'),
+//               $this->running_tasks
+//            )
+//         );
 
          $taskurl_list_names = implode(', ',
             array_map(
@@ -326,7 +326,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
    function showForm($ID, $options=array()) {
-      global $CFG_GLPI;
+
       if ($ID > 0) {
          $this->check($ID, 'r');
       } else {
@@ -654,7 +654,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          }
       }
 
-      if (($name=$new_package->getName()) == NOT_AVAILABLE) {
+      if ($new_package->getName() == NOT_AVAILABLE) {
          $new_package->fields['name'] = $new_package->getTypeName()." : ".__('ID')
 
                                  ." ".$new_package->fields['id'];
@@ -669,43 +669,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       unset($_SESSION['tmp_clone_package']);
 
       //exit;
-
-   }
-
-
-
-   function showEditDeniedMessage($message) {
-      global $CFG_GLPI;
-
-      //
-
-      $task = new PluginFusioninventoryDeployTask;
-      $tasks_url = "";
-
-      $jobs_seen = array();
-      foreach($taskjobs as $job) {
-         if (isset($jobs_seen[$job['plugin_fusioninventory_tasks_id']])) {
-            continue;
-         }
-         $task->getFromDB($job['plugin_fusioninventory_tasks_id']);
-         $tasks_url .= "<a href='".$CFG_GLPI["root_doc"].
-                     "/plugins/fusioninventory/front/task.form.php?id="
-                     .$job['plugin_fusioninventory_tasks_id']."'>".
-                     $job['name']."</a>, ";
-         $jobs_seen[$job['plugin_fusioninventory_tasks_id']]=1;
-      }
-      $tasks_url = substr($tasks_url, 0, -2);
-
-      //show edition denied message
-      echo "<div class='box' style='margin-bottom:20px;'>";
-      echo "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>";
-      echo "</div></div></div>";
-      echo "<div class='box-mleft'><div class='box-mright'><div class='box-mcenter'>";
-      echo str_replace('#task#', $tasks_url, $message);
-      echo "</div></div></div>";
-      echo "<div class='box-bleft'><div class='box-bright'><div class='box-bcenter'>";
-      echo "</div></div></div>";
-      echo "</div>";
 
    }
 }

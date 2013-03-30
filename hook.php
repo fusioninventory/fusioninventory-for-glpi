@@ -461,7 +461,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                   $NetworkPort->getDeviceData($vartmp, 'PluginFusioninventoryUnknownDevice');
 
                   $out .= "<a href=\"".$CFG_GLPI["root_doc"]."/";
-                  $out .= $INFOFORM_PAGES['PluginFusioninventoryUnknownDevice']."?id=".$vartmp.
+                  $out .= "plugins/fusioninventory/front/unknowndevice.form.php?id=".$vartmp.
                              "\">";
                   $out .=  $NetworkPort->device_name;
                   if ($CFG_GLPI["view_ID"]) {

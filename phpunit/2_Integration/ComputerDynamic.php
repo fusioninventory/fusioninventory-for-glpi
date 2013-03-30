@@ -100,7 +100,7 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
           "mountpoint"   => "D:",
           "entities_id"  => 0
       );
-      $computerdisks_id = $computerDisk->add($a_cdisk);
+      $computerDisk->add($a_cdisk);
       
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
       $this->assertEquals(1, count($a_computerdisk), 'Right no dynamic added');
@@ -185,7 +185,7 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
           "mountpoint"   => "D:",
           "entities_id"  => 0
       );
-      $computerdisks_id = $computerDisk->add($a_cdisk);
+      $computerDisk->add($a_cdisk);
 
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
       $this->assertEquals(2, count($a_computerdisk), 'May have dynamic + no dynamic computerdisk');

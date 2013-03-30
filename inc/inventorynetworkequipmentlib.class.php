@@ -566,7 +566,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          } else {
             if (count($db_vlans) != 0) {
                // Delete vlan in DB
-               foreach ($db_vlans as $idtmp => $id) {
+               foreach ($db_vlans as $id) {
                   $networkPort_Vlan->delete(array('id'=>$id));
                }
             }

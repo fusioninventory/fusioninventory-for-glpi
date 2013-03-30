@@ -622,6 +622,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
       return $DB->query($query);
    }
 
+   
 
    function getTasksPlanned($tasks_id=0) {
       global $DB;
@@ -645,6 +646,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
             AND `periodicity_type` != '0' ".$where;
       return $DB->query($query);
    }
+   
+   
 
    /**
    *  Get tasks filtered by relevant criterias
@@ -654,7 +657,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       global $DB;
       $select = array("tasks"=>"task.*");
-      $from = '`glpi_plugin_fusioninventory_tasks` as task';
       $where = array();
       $leftjoin = array();
 
@@ -751,6 +753,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
       return($results);
    }
 
+   
+   
    function getTasksInerror() {
       global $DB;
 

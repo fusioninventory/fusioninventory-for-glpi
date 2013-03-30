@@ -401,7 +401,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
 
                   //no status for this job
                   if ($DB->numrows($res_status) <= 0) {
-                     unset ($res[$i]['children'][$j]);
+//                     unset ($res[$i]['children'][$j]);
                      //$res[$i]['children'][$j]['leaf'] = TRUE;
                      continue;
                   }
