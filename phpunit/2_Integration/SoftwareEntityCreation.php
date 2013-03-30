@@ -81,6 +81,7 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
       $_SESSION['glpiname'] = 'glpi';
       $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
       $computer = new Computer();
+      $software = new Software();
       
       $a_inventory = array();
       $a_inventory['CONTENT']['HARDWARE'] = array(
