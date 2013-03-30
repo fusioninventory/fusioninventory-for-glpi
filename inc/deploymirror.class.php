@@ -60,8 +60,8 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       return TRUE;
    }
 
-   
-   
+
+
    function defineTabs($options=array()) {
 
       $ong=array();
@@ -86,9 +86,17 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
    static function getList($agent = NULL) {
       $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deploymirrors');
 
+      if (!isset($agent) || !isset($agent['computers_id'])) {
+         return array();
+      }
+      $computer = new Computer();
+      $computer->getFromDB($agent['computers_id']);
+
       $mirrors = array();
       foreach ($results as $result) {
-          $mirrors[] = $result['url'];
+         if ($computer->fields['locations_id'] == $result['locations_id']) {
+            $mirrors[] = $result['url'];
+         }
       }
 
       //always add default mirror (this server)
@@ -106,7 +114,6 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       } else {
          $this->getEmpty();
       }
-
       $this->showTabs($options);
       $this->showFormHeader($options);
 
@@ -126,17 +133,27 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<input type='text' name='url' size='40' value='".$this->fields["url"]."'/>";
       echo "</td></tr>";
 
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Mirror location', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td align='center'>";
+
+      // Location option
+      Location::dropdown(array('value'  => $this->fields["locations_id"],
+                               'entity' => $this->fields["entities_id"]));
+      echo "</td></tr>";
+
       $this->showFormButtons($options);
 
       echo "<div id='tabcontent'></div>";
+
       echo "<script type='text/javascript'>loadDefaultTab();
       </script>";
 
       return TRUE;
    }
 
-   
-   
+
+
    function getSearchOptions() {
 
       $tab = array();
@@ -169,6 +186,12 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       $tab[80]['field']     = 'completename';
       $tab[80]['linkfield'] = 'entities_id';
       $tab[80]['name']      = __('Entity');
+
+      $tab[80]['table']     = getTableNameForForeignKeyField('locations_id');
+      $tab[80]['field']     = 'completename';
+      $tab[80]['linkfield'] = 'locations_id';
+      $tab[80]['name']      = Location::getTypeName();
+      $tab[80]['datatype']  = 'itemlink';
 
       $tab[86]['table']     = $this->getTable();
       $tab[86]['field']     = 'is_recursive';

@@ -888,6 +888,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
   `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `locations_id` int(11) NOT NULL,
   `comment` text DEFAULT NULL,
   `date_mod` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
