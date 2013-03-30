@@ -2710,7 +2710,6 @@ function plugin_item_purge_fusioninventory($parm) {
 
 
 function plugin_item_transfer_fusioninventory($parm) {
-   Toolbox::logInFile("KOIN", print_r($parm, true));
    
    switch ($parm['type']) {
 

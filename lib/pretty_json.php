@@ -15,7 +15,7 @@ function pretty_json($json) {
     $indentStr   = '  ';
     $newLine     = "\n";
     $prevChar    = '';
-    $outOfQuotes = true;
+    $outOfQuotes = TRUE;
 
     for ($i=0; $i<=$strLen; $i++) {
 

@@ -614,7 +614,7 @@ class PluginFusioninventoryToolbox {
    static function displayJson($json) {
       $version = phpversion();
 
-      if ( version_compare($version, '5.4' , 'lt') ) {
+      if ( version_compare($version, '5.4', 'lt') ) {
          echo pretty_json($json);
       } else if ( version_compare($version, '5.4', 'ge') ) {
          echo json_encode(

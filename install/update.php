@@ -161,7 +161,7 @@ function pluginFusioninventoryFindFiles($dir = '.', $pattern = '/./') {
    $files = array();
    $prefix = $dir . '/';
    $dir = dir($dir);
-   while (false !== ($file = $dir->read())){
+   while (FALSE !== ($file = $dir->read())){
       if ($file === '.' || $file === '..') continue;
       $file = $prefix . $file;
       if (is_dir($file)) {

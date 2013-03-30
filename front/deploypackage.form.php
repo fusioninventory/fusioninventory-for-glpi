@@ -48,7 +48,7 @@ if (isset($_REQUEST['update_json'])) {
    $order = new PluginFusioninventoryDeployOrder();
 
    //flatten json to update
-   $json = json_decode($_REQUEST['json'],TRUE);
+   $json = json_decode($_REQUEST['json'], TRUE);
 
    $json_error_consts = array(
       JSON_ERROR_NONE => "JSON_ERROR_NONE",
@@ -70,8 +70,8 @@ if (isset($_REQUEST['update_json'])) {
       $error_msg = $json_error_consts[$error_json];
 
       Session::addMessageAfterRedirect(
-         __("The modified JSON contained a syntax error : <br/>","fusioninventory") .
-         $error_msg, FALSE,ERROR,FALSE
+         __("The modified JSON contained a syntax error : <br/>", "fusioninventory") .
+         $error_msg, FALSE, ERROR, FALSE
       );
       Html::back();
    } else {

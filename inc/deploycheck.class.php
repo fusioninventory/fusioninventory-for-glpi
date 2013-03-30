@@ -390,7 +390,7 @@ class PluginFusioninventoryDeployCheck {
                "add_item params",
                $params,
                $unit_size
-            ),TRUE
+            ), TRUE
          )
       );
 
@@ -433,7 +433,7 @@ class PluginFusioninventoryDeployCheck {
             array(
                "save_item params",
                $params,
-            ),TRUE
+            ), TRUE
          )
       );
 
