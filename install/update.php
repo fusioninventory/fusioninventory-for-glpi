@@ -2334,110 +2334,60 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Table glpi_plugin_fusioninventory_snmpmodelmiblabels
     */
-      $newTable = "glpi_plugin_fusioninventory_snmpmodelmiblabels";
-      $migration->renameTable("glpi_dropdown_plugin_tracker_mib_label",
-                              $newTable);
-      $migration->renameTable("glpi_plugin_fusinvsnmp_miblabels",
-                              $newTable);
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "name",
-                                 "name",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "comment",
-                                 "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "comments",
-                                 "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                                 "name",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, FALSE);
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_snmpmodelmiblabels';
+      $a_table['oldname'] = array('glpi_dropdown_plugin_tracker_mib_label',
+                                  'glpi_plugin_fusinvsnmp_miblabels');
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement', 
+                                               'value'   => '');
+      $a_table['fields']['name']       = array('type'    => 'string',  
+                                               'value'   => NULL);
+      $a_table['fields']['comment']    = array('type'    => 'text',  
+                                               'value'   => NULL);
+      
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+      $a_table['renamefields']['ID'] = 'id';
+      $a_table['renamefields']['comments'] = 'comment';
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
 
 
 
    /*
     * Table glpi_plugin_fusioninventory_snmpmodelmibobjects
     */
-      $newTable = "glpi_plugin_fusioninventory_snmpmodelmibobjects";
-      $migration->renameTable("glpi_dropdown_plugin_tracker_mib_object",
-                              $newTable);
-      $migration->renameTable("glpi_plugin_fusinvsnmp_mibobjects",
-                              $newTable);
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "name",
-                                 "name",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "comment",
-                                 "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "comments",
-                                 "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                                 "name",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, FALSE);
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_snmpmodelmibobjects';
+      $a_table['oldname'] = array('glpi_dropdown_plugin_tracker_mib_object',
+                                  'glpi_plugin_fusinvsnmp_mibobjects');
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement', 
+                                               'value'   => '');
+      $a_table['fields']['name']       = array('type'    => 'string',  
+                                               'value'   => NULL);
+      $a_table['fields']['comment']    = array('type'    => 'text',  
+                                               'value'   => NULL);
+      
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+      $a_table['renamefields']['ID'] = 'id';
+      $a_table['renamefields']['comments'] = 'comment';
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
 
 
 
