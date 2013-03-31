@@ -288,7 +288,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
       Crontask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
-      Crontask::Register('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs', (3600 * 24), 
+      Crontask::Register('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs', (3600 * 24),
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
 
 
@@ -311,7 +311,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $pfLock->importFromOcs();
 
 
-   CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60', 
+   CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60',
                       array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
    Crontask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
                       array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));

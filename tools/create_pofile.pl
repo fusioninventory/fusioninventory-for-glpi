@@ -22,7 +22,7 @@ $po = new Locale::PO(-msgid=>'', -msgstr=>
          "Project-Id-Version: FusionInventory\\n" .
          "Report-Msgid-Bugs-To: http://forge.fusioninventory.org\\n" .
          "POT-Creation-Date: 2011-08-21 22:45+0200\\n" .
-         "PO-Revision-Date: 2011-08-21 22:45+0200\\n" . 
+         "PO-Revision-Date: 2011-08-21 22:45+0200\\n" .
          "Last-Translator: promotux <d.durieux@siprossii.com>\\n" .
          "Language-Team: FusionInventory mailling list i18n <fusioninventory-i18n@lists.alioth.debian.org>\\n" .
          "MIME-Version: 1.0\\n" .

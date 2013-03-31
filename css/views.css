@@ -28,7 +28,7 @@
     background-image: -o-linear-gradient(top,#FEE,#FDD);
     background-image: linear-gradient(top,#FEE,#FDD);
  }
- 
+
   .msgboxmonit-orange {
     border: 1px orange solid;
     background-color: #FFD;
@@ -69,22 +69,22 @@
 	opacity: 0;
 }
 
-td > label { 
+td > label {
    width: 60px;
    text-align: center;
    line-height: 18px;
    display: inline-block;
-   border: 1px solid transparent;   
+   border: 1px solid transparent;
 }*/
 
 td:not(#foo) > input:hover + label, td:not(#foo) > input:focus + label,
-td:not(#foo) > input + label:hover, td:not(#foo) > input:focus + label { 
+td:not(#foo) > input + label:hover, td:not(#foo) > input:focus + label {
    background-color: #e1d39e;
-   border: 1px solid #a99f78; 
+   border: 1px solid #a99f78;
 }
 
 /* Checked styles */
-td:not(#foo) > input[type=radio]:checked + label { 
+td:not(#foo) > input[type=radio]:checked + label {
    background-color: #e1d39e;
    border: 1px solid #a99f78;
 }

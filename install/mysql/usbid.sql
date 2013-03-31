@@ -23,7 +23,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
 
 
 INSERT INTO `glpi_plugin_fusioninventory_usbvendors`
-      (`id`, `vendorid`, `name`) VALUES 
+      (`id`, `vendorid`, `name`) VALUES
 (1, '0001', 'Fry\'s Electronics'),
 (2, '0002', 'Ingram'),
 (3, '0003', 'Club Mac'),
@@ -3092,7 +3092,7 @@ INSERT INTO `glpi_plugin_fusioninventory_usbvendors`
 
 
 INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
-      (`id`, `deviceid`, `name`, `plugin_fusioninventory_usbvendor_id`) VALUES 
+      (`id`, `deviceid`, `name`, `plugin_fusioninventory_usbvendor_id`) VALUES
 (1, '142b', 'Arbiter Systems, Inc.', '1'),
 (2, '5301', 'GW-US54ZGL 802.11bg', '5'),
 (3, '0006', 'Generic USB Joystick', '6'),

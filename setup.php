@@ -73,7 +73,7 @@ function plugin_init_fusioninventory() {
       // ##### 1. (Not required here) #####
 
       // ##### 2. register class #####
-      
+
       Plugin::registerClass('PluginFusioninventoryAgent');
       Plugin::registerClass('PluginFusioninventoryAgentmodule');
       Plugin::registerClass('PluginFusioninventoryConfig');
@@ -83,7 +83,7 @@ function plugin_init_fusioninventory() {
                                         'NetworkEquipment',
                                         'PluginFusioninventoryCredentialIp')));
       Plugin::registerClass('PluginFusioninventoryTaskjob',
-              array('addtabon' => array('Computer',   
+              array('addtabon' => array('Computer',
                                         'Printer',
                                         'NetworkEquipment',
                                         'PluginFusioninventoryUnknowndevice')));
@@ -123,7 +123,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryInventoryRuleImportCollection',
               array('rulecollections_types'=>TRUE));
       Plugin::registerClass('PluginFusioninventoryConstructDevice');
-      
+
       // Networkinventory and networkdiscovery
       Plugin::registerClass('PluginFusioninventorySnmpmodel');
       Plugin::registerClass('PluginFusioninventoryNetworkEquipment',
@@ -140,8 +140,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryStateDiscovery');
       Plugin::registerClass('PluginFusioninventoryPrinterLogReport');
 
-      
-      $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] = 
+
+      $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] =
                                                       "glpi_plugin_fusioninventory_printers";
 
 
@@ -149,7 +149,7 @@ function plugin_init_fusioninventory() {
 
       $Plugin->getFromDBbyDir('fusioninventory');
       $moduleId = $Plugin->fields['id'];
-      
+
       // Load config
       PluginFusioninventoryConfig::loadCache();
 
@@ -162,14 +162,14 @@ function plugin_init_fusioninventory() {
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['WAKEONLAN'] = '';
       $_SESSION['glpi_plugin_fusioninventory']['xmltags']['INVENTORY']
                                              = 'PluginFusioninventoryInventoryComputerInventory';
-      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETWORKDISCOVERY'] 
+      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETWORKDISCOVERY']
                                              = 'PluginFusioninventoryCommunicationNetworkDiscovery';
-      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETWORKINVENTORY'] 
+      $_SESSION['glpi_plugin_fusioninventory']['xmltags']['NETWORKINVENTORY']
                                              = 'PluginFusioninventoryCommunicationNetworkInventory';
 
       $PLUGIN_HOOKS['change_profile']['fusioninventory'] =
          PluginFusioninventoryProfile::changeprofile($moduleId);
-      
+
       $PLUGIN_HOOKS['import_item']['fusioninventory'] = array(
           'Computer' => array('Plugin'));
 
@@ -221,7 +221,7 @@ function plugin_init_fusioninventory() {
                                     'Phone'            => 'plugin_item_update_fusioninventory',
                                     'NetworkPort'      => 'plugin_item_update_fusioninventory',
                                     'PluginFusioninventoryInventoryComputerAntivirus' => array(
-                                          'PluginFusioninventoryInventoryComputerAntivirus', 
+                                          'PluginFusioninventoryInventoryComputerAntivirus',
                                           'addhistory'));
 
 
@@ -230,9 +230,9 @@ function plugin_init_fusioninventory() {
             'NetworkPort_NetworkPort'  =>'plugin_pre_item_purge_fusioninventory'
           );
       $p = array('NetworkPort_NetworkPort'            => 'plugin_item_purge_fusioninventory',
-                 'PluginFusioninventoryTask'          => array('PluginFusioninventoryTask', 
+                 'PluginFusioninventoryTask'          => array('PluginFusioninventoryTask',
                                                                'purgeTask'),
-                 'PluginFusioninventoryTaskjob'       => array('PluginFusioninventoryTaskjob', 
+                 'PluginFusioninventoryTaskjob'       => array('PluginFusioninventoryTaskjob',
                                                                'purgeTaskjob'),
                  'PluginFusioninventoryUnknownDevice' => array('PluginFusioninventoryUnknownDevice',
                                                                'purgeUnknownDevice'),
@@ -255,7 +255,7 @@ function plugin_init_fusioninventory() {
 
          $PLUGIN_HOOKS['menu_entry']['fusioninventory'] = TRUE;
       }
-      
+
       // * Tabs for each type
       $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
       $PLUGIN_HOOKS['headings_action']['fusioninventory'] = 'plugin_headings_actions_fusioninventory';
@@ -295,7 +295,7 @@ function plugin_init_fusioninventory() {
 
          $hook_search['agents'] = 'front/agent.php';
 
-         $hook_add['fusinvinventory-ruleentity'] 
+         $hook_add['fusinvinventory-ruleentity']
                         = '../fusioninventory/front/inventoryruleentity.form.php';
          $hook_search['fusinvinventory-ruleentity']
                         = '../fusioninventory/front/inventoryruleentity.php';
@@ -318,7 +318,7 @@ function plugin_init_fusioninventory() {
          }
 
          if (PluginFusioninventoryProfile::haveRight("credential", "w")) {
-            $hook_add['PluginFusioninventoryCredential'] = 
+            $hook_add['PluginFusioninventoryCredential'] =
                '../fusioninventory/front/credential.form.php?add=1';
             $hook_search['PluginFusioninventoryCredential'] =
                '../fusioninventory/front/credential.php';
@@ -359,7 +359,7 @@ function plugin_init_fusioninventory() {
          }
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']    = $hook_add;
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search'] = $hook_search;         
+         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search'] = $hook_search;
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']
             ["<img  src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/books.png'
@@ -524,11 +524,11 @@ function plugin_version_fusioninventory() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_fusioninventory_check_prerequisites() {
    global $DB;
-   
+
    if (!isset($_SESSION['glpi_plugins'])) {
       $_SESSION['glpi_plugins'] = array();
    }
-   
+
    if (version_compare(GLPI_VERSION, '0.84', 'lt') || version_compare(GLPI_VERSION, '0.85', 'ge')) {
       echo __('Your GLPI version not compatible, require 0.84', 'fusioninventory');
       return FALSE;
@@ -538,15 +538,15 @@ function plugin_fusioninventory_check_prerequisites() {
            && !TableExists("glpi_plugin_fusioninventory_configs")) {
       return FALSE;
    }
-   
+
    $a_plugins = array('fusinvinventory', 'fusinvsnmp', 'fusinvdeploy');
    foreach ($a_plugins as $pluginname) {
       if (file_exists(GLPI_ROOT.'/plugins/'.$pluginname)) {
          printf(__('Please remove folder %s in glpi/plugins/', 'fusioninventory'), $pluginname);
          return FALSE;
-      }      
+      }
    }
-   
+
    $crontask = new CronTask();
    if ($plugin->isActivated("fusioninventory")) {
       if ((TableExists("glpi_plugin_fusioninventory_agents")
@@ -554,9 +554,9 @@ function plugin_fusioninventory_check_prerequisites() {
            OR ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstatus', 'cleantaskjob'))
            OR (TableExists("glpi_plugin_fusioninventory_agentmodules")
               AND FieldExists("glpi_plugin_fusioninventory_agentmodules", "url"))) {
-         $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` SET `value`='0.80+1.4' 
+         $DB->query("UPDATE `glpi_plugin_fusioninventory_configs` SET `value`='0.80+1.4'
                         WHERE `type`='version'");
-         $DB->query("UPDATE `glpi_plugins` SET `version`='0.80+1.4' 
+         $DB->query("UPDATE `glpi_plugins` SET `version`='0.80+1.4'
                         WHERE `directory` LIKE 'fusi%'");
       }
    }

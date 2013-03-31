@@ -100,7 +100,7 @@ if ($DB->numrows($result)) {
       if ($data['id'] == $_POST['value']) {
          $selected = "selected='selected'";
       }
-      
+
       echo "<option value='".$data['id']."' $selected title=\"".Html::cleanInputText($output)."\">".
             Toolbox::substr($output, 0, $_SESSION["glpidropdown_chars_limit"])."</option>";
    }

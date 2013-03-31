@@ -73,7 +73,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
    $sql_insert_device .= ";";
    $sql_insert_device = str_replace(",;", ";\n", $sql_insert_device);
 
-   file_put_contents("../../install/mysql/pciid.sql", 
+   file_put_contents("../../install/mysql/pciid.sql",
                      utf8_encode($sql_creation.$sql_insert_vendor."\n\n".$sql_insert_device));
 }
 
@@ -146,7 +146,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
    $sql_insert_device .= ";";
    $sql_insert_device = str_replace(",;", ";\n", $sql_insert_device);
 
-   file_put_contents("../../install/mysql/usbid.sql", 
+   file_put_contents("../../install/mysql/usbid.sql",
                      utf8_encode($sql_creation.$sql_insert_vendor."\n\n".$sql_insert_device));
 }
 
@@ -168,8 +168,8 @@ function fileOUItoTreeFolder() {
 
             if (!is_dir(LIBSERVERFUSIONINVENTORY_STORAGELOCATION.
                     "/DataFilter/oui/$OUI/$organization")) {
-              mkdir(LIBSERVERFUSIONINVENTORY_STORAGELOCATION."/DataFilter/oui/$OUI/$organization", 
-                    0777, 
+              mkdir(LIBSERVERFUSIONINVENTORY_STORAGELOCATION."/DataFilter/oui/$OUI/$organization",
+                    0777,
                     TRUE);
             }
          }

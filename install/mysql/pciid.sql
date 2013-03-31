@@ -23,7 +23,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
 
 
 INSERT INTO `glpi_plugin_fusioninventory_pcivendors`
-      (`id`, `vendorid`, `name`) VALUES 
+      (`id`, `vendorid`, `name`) VALUES
 (1, '0000', 'Gammagraphx, Inc. (or missing ID)'),
 (2, '0010', 'Allied Telesis, Inc'),
 (3, '001a', 'Ascend Communications, Inc.'),
@@ -2097,7 +2097,7 @@ INSERT INTO `glpi_plugin_fusioninventory_pcivendors`
 
 
 INSERT INTO `glpi_plugin_fusioninventory_pcidevices`
-      (`id`, `deviceid`, `name`, `plugin_fusioninventory_pcivendor_id`) VALUES 
+      (`id`, `deviceid`, `name`, `plugin_fusioninventory_pcivendor_id`) VALUES
 (1, '8139', 'AT-2500TX V3 Ethernet', '2'),
 (2, '0001', 'PCAN-PCI CAN-Bus controller', '4'),
 (3, '0003', 'WinTV PVR-250', '8'),

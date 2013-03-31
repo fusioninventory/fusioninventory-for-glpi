@@ -41,7 +41,7 @@ table.package_item_list td {
    word-wrap: break-word;
    white-space: normal;
 }
-table.package_item_list td.control { 
+table.package_item_list td.control {
    width: 14px;
 }
 table.package_item_list .more {

@@ -945,7 +945,7 @@ INSERT INTO `glpi_plugin_fusioninventory_configsecurities`
 
 
 -- glpi_displaypreferences
-INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`) 
+INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_id`)
    VALUES (NULL,'PluginFusioninventoryAgent', '2', '1', '0'),
           (NULL,'PluginFusioninventoryAgent', '4', '2', '0'),
           (NULL,'PluginFusioninventoryAgent', '5', '3', '0'),
@@ -1050,7 +1050,7 @@ INSERT INTO `glpi_displaypreferences` (`id`, `itemtype`, `num`, `rank`, `users_i
 
 
 
-INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercriterias` 
+INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercriterias`
 (`id`, `name`, `comment`) VALUES
 (1, 'Serial number', 'ssn'),
 (2, 'uuid', 'uuid'),
@@ -1063,7 +1063,7 @@ INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercriterias`
 (9, 'Computer name', 'name'),
 (10, 'Manufacturer', 'manufacturer');
 
-INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerblacklists` 
+INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerblacklists`
 (`id`, `plugin_fusioninventory_criterium_id`, `value`) VALUES
 (1, 3, '50:50:54:50:30:30'),
 (2, 1, 'N/A'),
@@ -1306,7 +1306,7 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
           ('Computer','ifaddr','','ip',407,NULL);
 
 
-INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerstoragetypes` 
+INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`
 (`id`, `name`, `level`) VALUES
 (1, 'partition', 5),
 (2, 'volume groups', 10),
