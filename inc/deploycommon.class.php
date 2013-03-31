@@ -259,7 +259,6 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
 
       //Add mirrors to associatedFiles
-      //TODO: Filter mirrors with computer location
       $mirrors = PluginFusioninventoryDeployMirror::getList($agent);
       foreach($order_files as $hash => $params) {
          $order_files[$hash]['mirrors'] = $mirrors;
@@ -271,15 +270,6 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
          ),
          "associatedFiles" => $order_files
       );
-/*
-      Toolbox::logDebug(print_r(
-         array(
-            "taskjob" => $taskjob,
-            "agent" => $agent,
-            "final_order"=> $final_order,
-         )
-      ,1));
-*/
       //return data response as json
       return json_encode($final_order);
    }
