@@ -100,7 +100,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       foreach ($input as $key => $value) {
          $this->addValues(array($key => $value));
       }
-      
+
       $input = array();
       $input['threads_networkdiscovery'] = 20;
       $input['threads_networkinventory'] = 10;
@@ -111,14 +111,22 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       //deploy config variables
       $input = array();
-      $input['server_upload_path'] = GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload';
+      $input['server_upload_path'] =
+            implode(
+               DIRECTORY_SEPARATOR,
+               array(
+                  GLPI_PLUGIN_DOC_DIR,
+                  'fusioninventory',
+                  'upload'
+               )
+            );
       $input['alert_winpath'] = 1;
-
+      $input['server_as_mirror'] = 1;
       foreach ($input as $key => $value) {
          $this->addValues(array($key => $value));
       }
-      
-      
+
+
    }
 
 
@@ -565,7 +573,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showYesNo("component_networkdrive", $pfConfig->getValue('component_networkdrive'));
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'>";
       echo "</td>";
@@ -602,7 +610,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    }
 
 
-   
+
    /**
    * Display form for config tab in network inventory config form
    *
@@ -640,7 +648,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                             $pfConfig->getValue('threads_networkinventory'), 1, 400);
       echo "</td>";
       echo "</tr>";
-      
+
       $options['candel'] = FALSE;
       $pfsnmpConfig->showFormButtons($options);
 
@@ -651,7 +659,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
       $pfNetworkporttype->showNetworkporttype();
-      
+
       return TRUE;
    }
 
@@ -664,7 +672,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    *
    **/
    static function showFormDeploy($options=array()) {
-      
+
       $pfConfig = new PluginFusioninventoryConfig();
       $pfConfig->fields['id'] = 1;
       $options['colspan'] = 1;
@@ -678,12 +686,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
+      echo "<tr>";
+      echo "<td>".__('Use this GLPI server as a mirror server', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td>";
+      Dropdown::showYesNo("server_as_mirror", $pfConfig->getValue('server_as_mirror'));
+      echo "</td>";
+      echo "</tr>";
+
       $options['candel'] = FALSE;
       $pfConfig->showFormButtons($options);
 
       return TRUE;
    }
-   
+
 
 
    /**

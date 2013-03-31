@@ -84,6 +84,8 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
     */
 
    static function getList($agent = NULL) {
+      global $PF_CONFIG;
+
       $results = getAllDatasFromTable('glpi_plugin_fusioninventory_deploymirrors');
 
       if (!isset($agent) || !isset($agent['computers_id'])) {
@@ -99,9 +101,11 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
          }
       }
 
-      //always add default mirror (this server)
-      $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY')
+      //add default mirror (this server) if enabled in config
+      if ( (bool) $PF_CONFIG['server_as_mirror'] == TRUE) {
+         $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY')
             ."?action=getFilePart&file=";
+      }
 
       return $mirrors;
    }

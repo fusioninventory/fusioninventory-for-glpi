@@ -5476,6 +5476,25 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       if (is_null($config->getValue("users_id"))) {
          $a_input['users_id'] = 0;
       }
+
+      //Deploy configuration options
+      if (is_null($config->getValue("server_upload_path"))) {
+         $a_input['server_upload_path'] =
+            implode(
+               DIRECTORY_SEPARATOR,
+               array(
+                  GLPI_PLUGIN_DOC_DIR,
+                  'fusioninventory',
+                  'upload'
+               )
+            );
+      }
+      if (is_null($config->getValue("alert_winpath"))) {
+         $a_input['alert_winpath'] = 1;
+      }
+      if (is_null($config->getValue("server_as_mirror"))) {
+         $a_input['server_as_mirror'] = 1;
+      }
       $config->addValues($a_input);
 
       $pfSetup = new PluginFusioninventorySetup();
