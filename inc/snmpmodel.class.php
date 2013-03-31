@@ -397,11 +397,10 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
 
 
-   static function importAllModels($folder='') {
+   static function importAllModels($folder='',$mode_cli=FALSE) {
       /*
        * Manage models migration
        */
-      
       $NewModelList = array();
       foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) {
          $file = str_replace("../plugins/fusioninventory/snmpmodels/", "", $file);
@@ -426,25 +425,37 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
          $nb++;
       }
       $i = 0;
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<th align='center'>";
-      echo "Importing SNMP models, please wait...";
-      echo "</th>";
-      echo "</tr>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      Html::createProgressBar("Importing SNMP models, please wait...");
+      if ($mode_cli) {
+         print("Importing SNMP models, please wait...\n");
+      } else {
+         echo "<table class='tab_cadre_fixe'>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<th align='center'>";
+         echo "Importing SNMP models, please wait...";
+         echo "</th>";
+         echo "</tr>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'>";
+         Html::createProgressBar("Importing SNMP models, please wait...");
+      }
       foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) {
          $importexport->import($file, 0, 1);
          $i++;
          if (substr($i, -1) == '0') {
-            Html::changeProgressBarPosition($i, $nb, "$i / $nb");
+            if ($mode_cli) {
+               print("$i/$nb\n");
+            } else {
+               Html::changeProgressBarPosition($i, $nb, "$i / $nb");
+            }
          }
       }
-      Html::changeProgressBarPosition($nb, $nb, "$nb / $nb");
-      echo "</td>";
-      echo "</table>";
+      if ($mode_cli) {
+         print("$i/$nb\n");
+      } else {
+         Html::changeProgressBarPosition($nb, $nb, "$nb / $nb");
+         echo "</td>";
+         echo "</table>";
+      }
 
       PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
       

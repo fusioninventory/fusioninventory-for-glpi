@@ -765,11 +765,10 @@ function cron_plugin_fusioninventory() {
 
 
 function plugin_fusioninventory_install() {
-
-   if ($_SERVER['PHP_SELF'] != "cli_install.php") {
+   if (basename($_SERVER['SCRIPT_NAME']) != "cli_install.php") {
       Html::header(__('Setup'), $_SERVER['PHP_SELF'], "config", "plugins");
    }
-      
+
    require_once (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
    $version_detected = pluginFusioninventoryGetCurrentVersion();
 
@@ -777,7 +776,7 @@ function plugin_fusioninventory_install() {
       AND ($version_detected != PLUGIN_FUSIONINVENTORY_VERSION)
         AND $version_detected!='0') {
       pluginFusioninventoryUpdate($version_detected);
-   } else if ((isset($version_detected)) 
+   } else if ((isset($version_detected))
            && ($version_detected == PLUGIN_FUSIONINVENTORY_VERSION)) {
 
    } else {

@@ -133,7 +133,7 @@ $migration = new CliMigration($current_version);
    $mess = '';
    if (($current_version != PLUGIN_FUSIONINVENTORY_VERSION)
         AND $current_version!='0') {
-      $mess = "Update done.";
+      $mess = "Update needed.";
    } else if ($current_version == PLUGIN_FUSIONINVENTORY_VERSION) {
       $mess = "No migration needed.";
    } else {
@@ -143,9 +143,15 @@ $migration = new CliMigration($current_version);
    $migration->displayWarning($mess);
 
    $plugin->getFromDBbyDir("fusioninventory");
+   print("Installing Plugin...\n");
    $plugin->install($plugin->fields['id']);
+   print("Install Done\n");
+   print("Activating Plugin...\n");
    $plugin->activate($plugin->fields['id']);
+   print("Activation Done\n");
+   print("Loading Plugin...\n");
    $plugin->load("fusioninventory");
+   print("Load Done...\n");
 
 
 if (in_array('--optimize', $_SERVER['argv'])) {

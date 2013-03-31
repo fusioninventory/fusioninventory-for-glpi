@@ -568,13 +568,14 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       
       if (!strstr($_SERVER['PHP_SELF'], "front/plugin.php")
               && !strstr($_SERVER['PHP_SELF'], "front/plugin.form.php")
-              &&  $_SERVER['PHP_SELF'] != "cli_install.php") {
+              &&  basename($_SERVER['PHP_SELF']) != "cli_install.php") {
          PluginFusioninventoryProfile::checkRight("model", "r");
       }
 
-      $xmlstr = "<?xml version='1.0' encoding='UTF-8'?>
-<SNMPDISCOVERY>
-</SNMPDISCOVERY>";
+      $xmlstr =   "<?xml version='1.0' encoding='UTF-8'?>".
+                  "<SNMPDISCOVERY>".
+                  "</SNMPDISCOVERY>";
+
       $xml = new SimpleXMLElement($xmlstr);
 
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodeldevices`

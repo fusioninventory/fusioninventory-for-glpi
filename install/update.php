@@ -5613,8 +5613,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       Crontask::Register('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs', (3600 * 24), 
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
    }
-   
-   
+
+
 //   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
 //   $pfIgnoredimportdevice->install();
 
@@ -5641,7 +5641,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Import / update SNMP models
     */
-   PluginFusioninventorySnmpmodel::importAllModels();
+   $mode_cli = (basename($_SERVER['SCRIPT_NAME']) == "cli_install.php");
+
+   PluginFusioninventorySnmpmodel::importAllModels('',$mode_cli);
 
    /*
     * Manage devices with is_dynamic
