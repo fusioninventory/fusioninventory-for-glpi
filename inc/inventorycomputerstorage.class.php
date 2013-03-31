@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-      
+
       return __('Storage', 'fusioninventory');
 
    }
@@ -60,15 +60,15 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
    static function canView() {
       return Session::haveRight('computer', 'r');
    }
-   
-   
-   
+
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getType() == 'Computer') {
          if (Session::haveRight('computer', "r")) {
             $a_nb = countElementsInTable(
-                        getTableForItemType("PluginFusioninventoryInventoryComputerStorage"), 
+                        getTableForItemType("PluginFusioninventoryInventoryComputerStorage"),
                         "`computers_id`='".$item->getID()."'");
             if (count($a_nb) > 0) {
 //               return self::createTabEntry(__('Storage', 'fusioninventory'));
@@ -91,15 +91,15 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
       return TRUE;
    }
 
-   
-   
+
+
    function showStorage($computers_id) {
       global $DB;
-      
+
       $pficStorage_Storage = new PluginFusioninventoryInventoryComputerStorage_Storage();
-      
+
       $totalwidthdiv = 830;
-      
+
       $a_levels = array();
       $a_levelname = array();
       $a_children = array();
@@ -122,7 +122,7 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
             }
             $width += $datas['totalsize'];
             $a_levels[$data['level']][$datas['id']] = $datas;
-            $a_children[$datas['id']] = $pficStorage_Storage->getChildren($data['id'], 
+            $a_children[$datas['id']] = $pficStorage_Storage->getChildren($data['id'],
                                                                           $data['level']);
          }
          if ($higherwidth < $width) {
@@ -138,7 +138,7 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
          }
          $a_row[$lev] = count($data);
       }
-      
+
       echo "<div style='height: ".(count($a_levels) * 80)."px;'>";
       $levelnumber = 0;
       $a_pos = array();
@@ -166,9 +166,9 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
                if (count($a_parents) == 0) {
                   // No parents
                   $wid = (($totalwidthdivtmp * $a_storage['totalsize']) / $higherwidth);
-                  
+
                   $a_size[$id][$id] = $wid;
-                  
+
                   if (!isset($a_pos[$id])) {
                      $a_pos[$id] = $a_posline;
                      $a_postmp[$id] = $a_posline;
@@ -186,7 +186,7 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
                        "left: ".$a_pos[$id]."px'>";
                   echo $a_storage['name'];
                   echo "</div>";
-                  $a_position[$id][] = array('pos'       => $a_pos[$id], 
+                  $a_position[$id][] = array('pos'       => $a_pos[$id],
                                              'width'     => $wid,
                                              'totalsize' => $a_storage['totalsize']);
                   $a_posline += $wid + 5;
@@ -197,7 +197,7 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
                   foreach ($a_parents as $parents_id=>$level) {
                      $a_parent_children = $pficStorage_Storage->getChildren($parents_id, $level);
                      $remaining_size = $a_storage['totalsize'];
-                     
+
                      foreach ($a_position[$parents_id] as $dataposition) {
                         if ($remaining_size > 0) {
                            if (isset($a_postmp[$parents_id])) {
@@ -217,16 +217,16 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
 
                               if ($remaining_size == 0
                                       && count($a_parent_children) > 1) {
-                                 $wid = (($dataposition['width'] - 
-                                             (5 * (count($a_parent_children) - 1))) 
+                                 $wid = (($dataposition['width'] -
+                                             (5 * (count($a_parent_children) - 1)))
                                          * $cursize) / $dataposition['totalsize'];
                                  $a_postmp[$parents_id] += $wid;
                               } else {
-                                 $wid = ($dataposition['width'] * $cursize) / 
+                                 $wid = ($dataposition['width'] * $cursize) /
                                              $dataposition['totalsize'];
                               }
                               $wid = round($wid);
-                              
+
                               // parents_link
                               $a_link = array();
                               for ($j = 0; $j < count($a_position[$parents_id]); $j++) {
@@ -235,9 +235,9 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
                               for ($j = 0; $j < count($a_parents); $j++) {
                                  $a_link[] = $id."-".$j;
                               }
-                              
+
                               $a_link = $this->getStorageLinks($a_link, $id, $lev, $a_position);
-                              
+
                               echo "<div class='storage' id='storage".$id."-".$i."'
                                   onmouseover='chbgHover([\"".implode('", "', $a_link)."\"])'
                                   onmouseout='chbgOut([\"".implode('", "', $a_link)."\"])'
@@ -246,7 +246,7 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
                               echo $a_storage['name'];
                               echo "</div>";
                               $id_used[$id] = $id;
-                              $a_position[$id][] = array('pos'       => $position_temp, 
+                              $a_position[$id][] = array('pos'       => $position_temp,
                                                          'width'     => $wid,
                                                          'totalsize' => $cursize);
                               $i++;
@@ -255,34 +255,34 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
                      }
                   }
                }
-            }  
+            }
             echo "</div>";
             $levelnumber++;
             $a_pos = $a_postmp;
          }
-      }      
+      }
       echo "</div>";
-      
+
       echo '<script>
          function chbgHover(params) {
             for(i=0;i<params.length;i++){
                if(document.getElementById(\'storage\' + params[i])) {
                  document.getElementById(\'storage\' + params[i]).style.backgroundColor = "#fb8080";
                }
-            }    
+            }
          }
          function chbgOut(params) {
             for(i=0;i<params.length;i++){
                if(document.getElementById(\'storage\' + params[i])) {
                   document.getElementById(\'storage\' + params[i]).style.backgroundColor = "white";
                }
-            }    
+            }
          }
       </script>';
    }
 
-   
-   
+
+
    function getStorageLinks($a_link, $id, $lev, $a_position) {
       $pficStorage_Storage = new PluginFusioninventoryInventoryComputerStorage_Storage();
       $a_par = $pficStorage_Storage->getParent($id, $lev);

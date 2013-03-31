@@ -54,22 +54,22 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBTM{
    static function canView() {
       return TRUE;
    }
-   
-   
- 
+
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      
+
       if ($item->fields['type'] == 'DYNAMIC') {
          return __('Dynamic group', 'fusioninventory');
       }
    }
 
 
-   
+
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 //      $item->showDynamicForm();
    }
-   
+
 }
 
 ?>

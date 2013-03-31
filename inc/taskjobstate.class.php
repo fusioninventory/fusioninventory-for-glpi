@@ -286,7 +286,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    * @return nothing
    *
    **/
-   function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error=0, $message='', 
+   function changeStatusFinish($taskjobstates_id, $items_id, $itemtype, $error=0, $message='',
                                $unknown=0, $reinitialize=1) {
       global $DB;
 
@@ -321,7 +321,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
             $start_taskjob = $data_task['date_scheduled_timestamp'] + $period;
             // 2. See how errors in taskjobstate
             $query = "SELECT * FROM `".$this->getTable()."`
-               LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` 
+               LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs`
                   ON `plugin_fusioninventory_taskjobstates_id` = `".$this->getTable()."`.`id`
                WHERE `plugin_fusioninventory_taskjobs_id`='".
                         $this->fields['plugin_fusioninventory_taskjobs_id']."'
@@ -350,7 +350,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $pfTaskjoblog->add($a_input);
 
       $pfTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
-      
+
       $a_taskjobstates = $this->find("`plugin_fusioninventory_taskjobs_id`='".
                               $this->fields['plugin_fusioninventory_taskjobs_id']."'
                            AND `state` != '3'

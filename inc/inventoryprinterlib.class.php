@@ -49,18 +49,18 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
 
    /**
     * Function to update Printer
-    * 
+    *
     * @param array $a_inventory data fron agent inventory
     * @param id $items_id id of the printer
-    * 
+    *
     * @return nothing
     */
    function updatePrinter($a_inventory, $items_id) {
       global $DB;
-      
+
       $printer = new Printer();
       $pfPrinter = new PluginFusioninventoryPrinter();
-      
+
       $printer->getFromDB($items_id);
 
       if (!isset($_SESSION['glpiactiveentities_string'])) {
@@ -72,34 +72,34 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
       if (!isset($_SESSION['glpiactive_entity'])) {
          $_SESSION['glpiactive_entity'] = $printer->fields['entities_id'];
       }
-         
+
       // * Printer
       $db_printer =  $printer->fields;
 
       $a_lockable = PluginFusioninventoryLock::getLockFields('glpi_printers', $items_id);
-      
-      $a_ret = PluginFusioninventoryToolbox::checkLock($a_inventory['Printer'], 
+
+      $a_ret = PluginFusioninventoryToolbox::checkLock($a_inventory['Printer'],
                                                        $db_printer, $a_lockable);
       $a_inventory['Printer'] = $a_ret[0];
-         
+
       $input = $a_inventory['Printer'];
-      
-      $input['id'] = $items_id;         
+
+      $input['id'] = $items_id;
       $printer->update($input);
 
       // * Printer fusion (ext)
          $db_printer = array();
-         $query = "SELECT * 
+         $query = "SELECT *
             FROM `".  getTableForItemType("PluginFusioninventoryPrinter")."`
             WHERE `printers_id` = '$items_id'";
-         $result = $DB->query($query);         
-         while ($data = $DB->fetch_assoc($result)) {            
+         $result = $DB->query($query);
+         while ($data = $DB->fetch_assoc($result)) {
             foreach($data as $key=>$value) {
                $db_printer[$key] = Toolbox::addslashes_deep($value);
             }
          }
          if (count($db_printer) == '0') { // Add
-            $a_inventory['PluginFusioninventoryPrinter']['printers_id'] = 
+            $a_inventory['PluginFusioninventoryPrinter']['printers_id'] =
                $items_id;
             $pfPrinter->add($a_inventory['PluginFusioninventoryPrinter']);
          } else { // Update
@@ -108,38 +108,38 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
             unset($db_printer['printers_id']);
             unset($db_printer['plugin_fusioninventory_snmpmodels_id']);
             unset($db_printer['plugin_fusioninventory_configsecurities_id']);
-            
+
             $a_ret = PluginFusioninventoryToolbox::checkLock(
-                        $a_inventory['PluginFusioninventoryPrinter'], 
+                        $a_inventory['PluginFusioninventoryPrinter'],
                         $db_printer);
             $a_inventory['PluginFusioninventoryPrinter'] = $a_ret[0];
             $input = $a_inventory['PluginFusioninventoryPrinter'];
             $input['id'] = $idtmp;
             $pfPrinter->update($input);
          }
-        
+
       // * Ports
          $this->importPorts($a_inventory, $items_id);
-         
+
       // Page counters
          $this->importPageCounters($a_inventory['pagecounters'], $items_id);
-         
+
       // Cartridges
          $this->importCartridges($a_inventory['cartridge'], $items_id);
 
    }
-   
-   
-   
+
+
+
    function importPorts($a_inventory, $items_id) {
-      
+
       $networkPort = new NetworkPort();
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
 
       $networkports_id = 0;
       foreach ($a_inventory['networkport'] as $a_port) {
          $a_ports_DB = current($networkPort->find(
-                    "`itemtype`='Printer' 
+                    "`itemtype`='Printer'
                        AND `items_id`='".$items_id."'
                        AND `instantiation_type`='NetworkPortEthernet'
                        AND `logical_number` = '".$a_port['logical_number']."'", '', 1));
@@ -175,12 +175,12 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
          }
       }
    }
-   
-   
-   
+
+
+
    /**
     * Import page counters
-    * 
+    *
     * @return string
     */
    function importPageCounters($a_pagecounters, $items_id) {
@@ -192,7 +192,7 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
       if (count($a_entires) > 0) {
          return;
       }
-      
+
       $a_pagecounters['printers_id'] = $items_id;
       $a_pagecounters['date'] = date("Y-m-d H:i:s");
 
@@ -208,13 +208,13 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
    function importCartridges($a_cartridges, $items_id) {
 
       $pfPrinterCartridge = new PluginFusioninventoryPrinterCartridge();
-      
+
       $a_db = $pfPrinterCartridge->find("`printers_id`='".$items_id."'");
       $a_dbcartridges = array();
       foreach ($a_db as $data) {
          $a_dbcartridges[$data['plugin_fusioninventory_mappings_id']] = $data;
       }
-      
+
       foreach ($a_cartridges as $mappings_id=>$value) {
          if (isset($a_dbcartridges[$mappings_id])) {
             $a_dbcartridges[$mappings_id]['state'] = $value;

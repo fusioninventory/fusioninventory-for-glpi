@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryCommunicationNetworkInventory {
-   
+
    private $ptd, $logFile, $agent, $arrayinventory;
    private $a_ports = array();
 
@@ -58,18 +58,18 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    }
 
 
-   
+
    static function canCreate() {
       return PluginFusioninventoryProfile::haveRight("networkequipment", "w");
    }
 
-   
+
 
    static function canView() {
       return PluginFusioninventoryProfile::haveRight("networkequipment", "r");
    }
-   
-   
+
+
 
    /**
     * Import data
@@ -106,7 +106,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                   }
                }
 
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] =
                                                                      $a_CONTENT['PROCESSNUMBER'];
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
@@ -116,16 +116,16 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                $this->addtaskjoblog();
 
             }
-            
+
             $this->importContent($a_CONTENT);
-            
+
             if (isset($a_CONTENT['AGENT']['END'])) {
                $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
                                                          $this->agent['id'],
                                                          'PluginFusioninventoryAgent');
             }
             if (isset($a_CONTENT['AGENT']['START'])) {
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 
+               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] =
                                                                      $a_CONTENT['PROCESSNUMBER'];
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
                $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
@@ -189,8 +189,8 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                   } else if ($a_inventory['PluginFusioninventory'.$a_inventory['itemtype']]['sysdescr'] == ''
                               && $a_inventory[$a_inventory['itemtype']]['name'] == ''
                               && $a_inventory[$a_inventory['itemtype']]['serial'] == '') {
-                         
-                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = 
+
+                     $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] =
                               '[==detail==] No informations [['.$itemtype.'::'.$dchild['ID'].']]';
                      $this->addtaskjoblog();
                   } else {
@@ -205,7 +205,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             case 'AGENT' :
                if (isset($this->arrayinventory['CONTENT']['AGENT']['AGENTVERSION'])) {
                   $agent = $pfAgent->InfosByKey($this->arrayinventory['DEVICEID']);
-                  $agent['fusioninventory_agent_version'] = 
+                  $agent['fusioninventory_agent_version'] =
                                        $this->arrayinventory['CONTENT']['AGENT']['AGENTVERSION'];
                   $agent['last_agent_update'] = date("Y-m-d H:i:s");
                   $pfAgent->update($agent);
@@ -238,13 +238,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     * @return errors string to be alimented if import ko / '' if ok
     */
    function importDevice($itemtype, $items_id, $a_inventory) {
-      
+
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkInventory->importDevice().');
 
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $a_inventory = $pfFormatconvert->replaceids($a_inventory);
-      
+
       // Write XML file
       if (count($a_inventory) > 0) {
          $folder = substr($items_id, 0, -1);
@@ -262,22 +262,22 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
       $errors='';
       $this->deviceId=$items_id;
-      
-                  
+
+
       $serialized = gzcompress(serialize($a_inventory));
-      
+
       switch ($itemtype) {
 
          case 'Printer':
-            $pfiPrinterLib = new PluginFusioninventoryInventoryPrinterLib();  
-            $a_inventory['PluginFusioninventoryPrinter']['serialized_inventory'] = 
+            $pfiPrinterLib = new PluginFusioninventoryInventoryPrinterLib();
+            $a_inventory['PluginFusioninventoryPrinter']['serialized_inventory'] =
                         Toolbox::addslashes_deep($serialized);
             $pfiPrinterLib->updatePrinter($a_inventory, $items_id);
             break;
 
          case 'NetworkEquipment':
-            $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib(); 
-            $a_inventory['PluginFusioninventoryNetworkEquipment']['serialized_inventory'] = 
+            $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+            $a_inventory['PluginFusioninventoryNetworkEquipment']['serialized_inventory'] =
                         Toolbox::addslashes_deep($serialized);
             $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $items_id);
             break;
@@ -350,7 +350,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          }
 
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = 
+      $_SESSION['plugin_fusioninventory_classrulepassed'] =
                                  "PluginFusioninventoryCommunicationNetworkInventory";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
@@ -358,7 +358,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $data = $rule->processAllRules($input, array());
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    $data);
-      if (isset($data['action']) 
+      if (isset($data['action'])
              && ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
 
          $a_text = '';
@@ -426,7 +426,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     * @return type
     */
    function rulepassed($items_id, $itemtype) {
-      
+
       PluginFusioninventoryLogger::logIfExtradebug(
          "pluginFusioninventory-rules",
          "Rule passed : ".$items_id.", ".$itemtype."\n"
@@ -442,7 +442,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
               'Function PluginFusioninventoryCommunicationNetworkInventory->rulepassed().');
 
       $a_inventory = $_SESSION['SOURCE_XMLDEVICE'];
-      
+
       $errors = '';
       $class = new $itemtype;
       if ($items_id == "0") {
@@ -463,7 +463,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             $inputrulelog['date'] = date('Y-m-d H:i:s');
             $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
             if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-               $inputrulelog['plugin_fusioninventory_agents_id'] = 
+               $inputrulelog['plugin_fusioninventory_agents_id'] =
                                                    $_SESSION['plugin_fusioninventory_agents_id'];
             }
             $inputrulelog['items_id'] = $items_id;
@@ -491,7 +491,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
             $input['itemtype'] = $a_inventory['itemtype'];
          }
          // TODO : add import ports
-         PluginFusioninventoryToolbox::writeXML($items_id, 
+         PluginFusioninventoryToolbox::writeXML($items_id,
                                                 serialize($_SESSION['SOURCE_XMLDEVICE']),
                                                 'PluginFusioninventoryUnknownDevice');
          $class->update($input);

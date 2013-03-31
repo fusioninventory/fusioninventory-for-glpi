@@ -94,7 +94,7 @@ class PluginFusioninventoryDeployCheck {
          //== edit selected data ==
 
          //get current order json
-         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order->fields['id']), 
+         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order->fields['id']),
                                 TRUE);
 
          //get data on index

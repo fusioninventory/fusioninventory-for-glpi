@@ -317,7 +317,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $a_versions = importArrayFromDB($pfAgent->fields["version"]);
       if (((isset($a_versions["NETWORKDISCOVERY"])) AND ($a_versions["NETWORKDISCOVERY"] >= 1.3))
               OR !isset($a_versions["NETWORKDISCOVERY"])) {
-         $sxml_option->addChild('DICOHASH', 
+         $sxml_option->addChild('DICOHASH',
                                 md5_file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml"));
       }
       if (($pfAgent->fields["senddico"] == "1")) {
@@ -325,7 +325,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
          if (((isset($a_versions["NETWORKDISCOVERY"]))
                  AND ($a_versions["NETWORKDISCOVERY"] >= 1.3))) {
 
-            $sxml_option->addChild('DICO', 
+            $sxml_option->addChild('DICO',
                                    file_get_contents(
                                            GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml"));
          }
@@ -337,7 +337,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
 
       $sxml_param = $sxml_option->addChild('PARAM');
          $sxml_param->addAttribute('CORE_DISCOVERY', "1");
-         $sxml_param->addAttribute('THREADS_DISCOVERY', 
+         $sxml_param->addAttribute('THREADS_DISCOVERY',
                                    $pfAgent->fields["threads_networkdiscovery"]);
          $sxml_param->addAttribute('PID', $current['id']);
 
@@ -386,7 +386,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       }
       $a_versions = array(3, 2, 1);
       foreach ($a_versions as $version) {
-         $snmpauthlist=$pfConfigSecurity->find("`is_deleted`='0' 
+         $snmpauthlist=$pfConfigSecurity->find("`is_deleted`='0'
                                                    AND `snmpversion`='".$version."'");
          if (count($snmpauthlist)){
             foreach ($snmpauthlist as $snmpauth){

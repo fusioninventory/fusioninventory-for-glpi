@@ -136,14 +136,14 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
       $a_antivirus = $this->find("`computers_id`='".$items_id."'");
       $antivirusData = array();
-      
+
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
       echo "<th colspan='4'>".__('Antivirus', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";
-      
+
       foreach ($a_antivirus as $antivirusData) {
          echo "<tr class='tab_bg_1'>";
          echo "<th width='15%'>";
@@ -184,7 +184,7 @@ class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
          echo "</td>";
          echo "<td colspan='2'>";
          echo "</td>";
-         echo "</tr>";     
+         echo "</tr>";
       }
       echo "</table>";
       return TRUE;

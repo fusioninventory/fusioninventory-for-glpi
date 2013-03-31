@@ -627,7 +627,7 @@ class PluginFusioninventoryStaticmisc {
    }
 
 
-   
+
    static function task_actionselection_Group_deployinstall() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
@@ -636,7 +636,7 @@ class PluginFusioninventoryStaticmisc {
       return Dropdown::show("Group", $options);
    }
 
-   
+
 
    static function task_actionselection_Group_deployuninstall() {
       $options = array();
@@ -646,7 +646,7 @@ class PluginFusioninventoryStaticmisc {
       return Dropdown::show("Group", $options);
    }
 
-   
+
 
    static function task_actionselection_PluginFusioninventoryDeployGroup_deployinstall() {
       $options = array();
@@ -656,8 +656,8 @@ class PluginFusioninventoryStaticmisc {
       return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
    }
 
-   
-   
+
+
    static function task_actionselection_PluginFusioninventoryDeployGroup_deployuninstall() {
       $options = array();
       $options['entity']      = $_SESSION['glpiactive_entity'];
@@ -666,8 +666,8 @@ class PluginFusioninventoryStaticmisc {
       return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
    }
 
-   
-   
+
+
    static function task_deploy_getParameters() {
       $config = new PluginFusioninventoryConfig();
       return array(

@@ -121,7 +121,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
 
    function showForm($options=array()) {
       global $DB;
-      
+
       $mapping = new PluginFusioninventoryMapping();
 
       echo "<form name='form' method='post' action='".$options['target']."'>";

@@ -74,11 +74,11 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             if ((!in_array('.1', $a_action))
                AND (!in_array('.2', $a_action))) {
 
-               $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, 
+               $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet,
                      token FROM `glpi_plugin_fusioninventory_agents`
-                  LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = 
+                  LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` =
                      `glpi_plugin_fusioninventory_agents`.`items_id`
-                  LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = 
+                  LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` =
                      `glpi_plugin_fusioninventory_agents`.`items_id`
                   WHERE `glpi_networkports`.`itemtype`='Computer'
                      AND  `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'";
@@ -282,8 +282,8 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
          if ($pass == "1") {
             // It's not linux
-            $osfind = str_replace('AND operatingsystems_id IN ', 
-                                  'AND operatingsystems_id NOT IN ', 
+            $osfind = str_replace('AND operatingsystems_id IN ',
+                                  'AND operatingsystems_id NOT IN ',
                                   $osfind);
          }
 
@@ -304,11 +304,11 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          $where .= ")
             AND `ip` != '127.0.0.1' ";
 
-         $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token 
+         $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token
             FROM `glpi_plugin_fusioninventory_agents`
-            LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` = 
+            LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` =
                `glpi_plugin_fusioninventory_agents`.`items_id`
-            LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` = 
+            LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` =
                `glpi_plugin_fusioninventory_agents`.`items_id`
             WHERE `glpi_networkports`.`itemtype`='Computer'
                ".$subnet."

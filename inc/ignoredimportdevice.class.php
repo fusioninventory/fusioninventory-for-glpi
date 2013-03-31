@@ -63,7 +63,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
    function showDevices() {
       global $DB;
-      
+
       $rule = new PluginFusioninventoryInventoryRuleImport();
       $entity = new Entity();
 
@@ -74,26 +74,26 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
       $nb_elements = countElementsInTableForMyEntities($this->getTable());
       Html::printAjaxPager('', $start, $nb_elements);
-      
+
       echo "<br/><table class='tab_cadrehov' >";
 
       echo "<tr class='tab_bg_1'>";
       echo "<th>";
       echo __('Name');
       echo "</th>";
-      
+
       echo "<th>";
       echo __('Rule name');
       echo "</th>";
-      
+
       echo "<th>";
       echo __('Date');
       echo "</th>";
-      
+
       echo "<th>";
       echo __('Type');
       echo "</th>";
-      
+
       echo "<th>";
       echo __('Entity');
       echo "</th>";
@@ -109,21 +109,21 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       echo "<th>";
       echo __('IP');
       echo "</th>";
-      
+
       echo "<th>";
       echo __('MAC');
       echo "</th>";
-      
+
       echo "<th>";
       echo __('Module', 'fusioninventory');
       echo "</th>";
       echo "</tr>";
 
       $query = "SELECT * FROM `".$this->getTable()."`
-         WHERE ".getEntitiesRestrictRequest("", 
-                                            $this->getTable(), 
-                                            '', 
-                                            '', 
+         WHERE ".getEntitiesRestrictRequest("",
+                                            $this->getTable(),
+                                            '',
+                                            '',
                                             $this->maybeRecursive())."
          ORDER BY `date`DESC
          LIMIT ".intval($start).", ".intval($_SESSION['glpilist_limit']);
@@ -165,7 +165,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
          echo "<td align='center'>";
          echo $data['uuid'];
          echo "</td>";
-         
+
          echo "<td align='center'>";
          $a_ip = importArrayFromDB($data['ip']);
          echo implode("<br/>", $a_ip);
@@ -188,7 +188,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       }
 
       echo "</table><br/>";
-      
+
       Html::printAjaxPager('', $start, $nb_elements);
    }
 }

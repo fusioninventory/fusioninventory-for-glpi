@@ -58,7 +58,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $pfAgent = new PluginFusioninventoryAgent();
       $a_specificity = array();
       $a_specificity['DEVICE'] = array();
-      
+
       $uniqid = uniqid();
 
       $pfTaskjob->getFromDB($taskjobs_id);
@@ -95,7 +95,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             case 'NetworkEquipment':
                $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                          `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                         `plugin_fusioninventory_configsecurities_id`, 
+                         `plugin_fusioninventory_configsecurities_id`,
                          `plugin_fusioninventory_snmpmodels_id`
                   FROM `glpi_networkequipments`
                   LEFT JOIN `glpi_plugin_fusioninventory_networkequipments`
@@ -135,7 +135,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             case 'Printer':
                $query = "SELECT `glpi_printers`.`id` AS `gID`,
                          `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                         `plugin_fusioninventory_configsecurities_id`, 
+                         `plugin_fusioninventory_configsecurities_id`,
                          `plugin_fusioninventory_snmpmodels_id`
                   FROM `glpi_printers`
                   LEFT JOIN `glpi_plugin_fusioninventory_printers`
@@ -184,7 +184,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       // Search NetworkEquipment
          $query = "SELECT `glpi_networkequipments`.`id` AS `gID`,
                             `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                            `plugin_fusioninventory_configsecurities_id`, 
+                            `plugin_fusioninventory_configsecurities_id`,
                             `plugin_fusioninventory_snmpmodels_id`
                      FROM `glpi_networkequipments`
                      LEFT JOIN `glpi_plugin_fusioninventory_networkequipments`
@@ -227,7 +227,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
      // Search Printer
         $query = "SELECT `glpi_printers`.`id` AS `gID`,
                          `glpi_ipaddresses`.`name` AS `gnifaddr`,
-                         `plugin_fusioninventory_configsecurities_id`, 
+                         `plugin_fusioninventory_configsecurities_id`,
                          `plugin_fusioninventory_snmpmodels_id`
                   FROM `glpi_printers`
                   LEFT JOIN `glpi_plugin_fusioninventory_printers`
@@ -321,11 +321,11 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $taskvalid = 0;
          foreach($a_agentsubnet as $subnet=>$a_agentList) {
             if (!isset($a_agentList)
-                    OR (isset($a_agentList) 
-                       && is_array($a_agentList) 
+                    OR (isset($a_agentList)
+                       && is_array($a_agentList)
                        && count($a_agentList) == '0')
-                    OR (isset($a_agentList) 
-                       && !is_array($a_agentList) 
+                    OR (isset($a_agentList)
+                       && !is_array($a_agentList)
                        && $a_agentList == '')) {
 
                // No agent available for this subnet
@@ -419,7 +419,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             foreach($a_actions as $a_action) {
                if ((!in_array('.1', $a_action))
                   AND (!in_array('.2', $a_action))) {
-                  
+
                   $agent_id = current($a_action);
                   if ($pfAgent->getFromDB($agent_id)) {
                      if ($communication == 'pull') {
@@ -585,7 +585,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             $sxml_device->addAttribute($key, $value);
          }
          $modelslistused[$a_specificity['MODELSNMP_ID']] = 1;
-         
+
 
          if ($changestate == '0') {
             $pfTaskjobstate->changeStatus($taskjobstatedatas['id'], 1);
@@ -657,11 +657,11 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $where .= ")
          AND `ip` != '127.0.0.1' ";
 
-      $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token 
+      $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token
          FROM `glpi_plugin_fusioninventory_agents`
-         LEFT JOIN `glpi_networkports` 
+         LEFT JOIN `glpi_networkports`
             ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
-         LEFT JOIN `glpi_computers` 
+         LEFT JOIN `glpi_computers`
             ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
          WHERE `glpi_networkports`.`itemtype`='Computer'
             ".$subnet."

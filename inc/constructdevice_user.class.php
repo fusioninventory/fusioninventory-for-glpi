@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2012
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -55,7 +55,7 @@ class PluginFusioninventoryConstructdevice_User extends CommonDBTM {
       return PluginFusioninventoryProfile::haveRight("model", "r");
    }
 
-   
+
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       if ($this->canView()) {
@@ -64,8 +64,8 @@ class PluginFusioninventoryConstructdevice_User extends CommonDBTM {
       return '';
    }
 
-   
-   
+
+
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getID() > 0) {
@@ -74,18 +74,18 @@ class PluginFusioninventoryConstructdevice_User extends CommonDBTM {
       }
       return TRUE;
    }
-   
 
-   
+
+
    function showForm($users_id, $options=array()) {
-      
+
       $a_constructdeviceusers = current($this->find("`users_id`='".$users_id."'", '', 1));
       if (isset($a_constructdeviceusers['id'])) {
          $this->getFromDB($a_constructdeviceusers['id']);
       } else {
          $this->getEmpty();
       }
-      
+
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
@@ -99,7 +99,7 @@ class PluginFusioninventoryConstructdevice_User extends CommonDBTM {
       echo "<input type='password' name='password' value='".$this->fields['password']."' />";
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td>Key&nbsp;:</td>";
       echo "<td align='center'>";
@@ -107,14 +107,14 @@ class PluginFusioninventoryConstructdevice_User extends CommonDBTM {
       echo "</td>";
       echo "<td colspan='2'></td>";
       echo "</tr>";
-      
+
       $this->showFormButtons($options);
 
       return TRUE;
    }
-   
-   
-   
+
+
+
    static function getUserAccount($users_id) {
       $pfConstructdevice_User = new self();
       return current($pfConstructdevice_User->find("`users_id`='".$users_id."'", '', 1));

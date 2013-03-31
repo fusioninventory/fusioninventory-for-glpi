@@ -54,7 +54,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    private $portVlans=array(); // number and name for each vlan
 
 
-   
+
    function getSearchOptions() {
 
       $tab                     = array();
@@ -115,12 +115,12 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $tab[14]['table']         = $this->getTable();
       $tab[14]['field']         = 'ifconnectionstatus';
       $tab[14]['name']          = __('Connection');
-     
+
       return $tab;
    }
-   
 
-   
+
+
    /**
     * Load an optionnaly existing port
     *
@@ -163,9 +163,9 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
       $queryVerif = "SELECT *
                      FROM `glpi_networkports_networkports`
-                     WHERE (`networkports_id_1` = '".$this->getValue('id')."' 
+                     WHERE (`networkports_id_1` = '".$this->getValue('id')."'
                               OR `networkports_id_1` = '".$destination_port."')
-                           AND (`networkports_id_2` = '".$this->getValue('id')."' 
+                           AND (`networkports_id_2` = '".$this->getValue('id')."'
                               OR `networkports_id_2` = '".$destination_port."');";
 
       if (($resultVerif = $DB->query($queryVerif))) {
@@ -355,8 +355,8 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       return FALSE;
    }
 
-   
-   
+
+
    function getPortIDfromDeviceIP($IP, $ifDescr, $sysdescr, $sysname, $model) {
       global $DB;
 
@@ -535,10 +535,10 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       }
       return($PortID);
    }
-   
-   
 
-   
+
+
+
    function getPortIDfromSysmacandPortnumber($sysmac, $ifnumber, $params = array()) {
       global $DB;
 
@@ -684,13 +684,13 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       return($PortID);
    }
 
-   
-   
+
+
    function isPorthasPhone() {
       $isPhone = FALSE;
-      
+
       $networkPort = new NetworkPort();
-      
+
       foreach ($this->portMacs as $ifmac) {
          $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);
          if (count($a_ports) > 0) {
@@ -702,7 +702,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          }
       }
       return $isPhone;
-   }   
+   }
 }
 
 ?>

@@ -57,14 +57,14 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       return PluginFusioninventoryProfile::haveRight("configsecurity", "r");
    }
 
-   
-   
+
+
    function defineTabs($options=array()){
       $ong = array();
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
    }
-   
+
 
 
    function showForm($id, $options=array()) {
@@ -158,10 +158,10 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
    // for file stored snmp authentication
    function add_xml() {
       global $CFG_GLPI;
-      
+
       // Get new id
-      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml", 
-                                 'SimpleXMLElement', 
+      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",
+                                 'SimpleXMLElement',
                                  LIBXML_NOCDATA);
 
       $id = $xml->incrementID[0] + 1;
@@ -367,13 +367,13 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
 
    function selectbox($selected=0) {
-      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml", 
-                                 'SimpleXMLElement', 
+      $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",
+                                 'SimpleXMLElement',
                                  LIBXML_NOCDATA);
       $selectbox = "<select name='plugin_fusinvsnmp_configsecurities_id' size='1'>\n
                        <option value='0'>-----</option>\n";
       for ($i=-1; $i < (count($xml->auth[0]) - 1); $i++) {
-         
+
          $j = 0;
          foreach($xml->auth->conf[$i] as $item) {
             $j++;
@@ -396,8 +396,8 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
       return $selectbox;
    }
-   
-   
+
+
 
    static function auth_dropdown($selected="") {
 

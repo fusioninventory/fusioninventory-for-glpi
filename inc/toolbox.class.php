@@ -611,8 +611,8 @@ class PluginFusioninventoryToolbox {
       return $results;
    }
 
-   
-   
+
+
    static function displayJson($json) {
       $version = phpversion();
 

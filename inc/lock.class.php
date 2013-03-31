@@ -85,7 +85,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       if (Session::haveRight(strtolower($itemtype), "w")) {
          if ($_SESSION['glpishow_count_on_tabs']) {
-            return self::createTabEntry(PluginFusioninventoryLock::getTypeName(2), 
+            return self::createTabEntry(PluginFusioninventoryLock::getTypeName(2),
                                         self::countForLock($item));
          }
          return PluginFusioninventoryLock::getTypeName(2);
@@ -340,7 +340,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                       AND `tablefields` LIKE '%".$p_fieldToDel."%';";
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
-         // TODO improve the lock deletion by transmiting the old locked fields to the 
+         // TODO improve the lock deletion by transmiting the old locked fields to the
          // deletion function
          PluginFusioninventoryLock::deleteInLockArray($p_table, $data['items_id'], $p_fieldToDel);
       }
@@ -566,7 +566,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                   AND ($a_fieldList[$i] == $datas['glpiField'])) {
 
                // Get serialization
-               $query = "SELECT * FROM 
+               $query = "SELECT * FROM
                      `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
                   WHERE `computers_id`='".$item->fields['items_id']."'
                      LIMIT 1";
@@ -609,7 +609,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                                               WHERE `name` = '".$users_name."';";
                                     $result_user = $DB->query($query_user);
                                     if ($DB->numrows($result_user) == 1) {
-                                       $input[$datas['glpiField']] = $DB->result($result_user, 
+                                       $input[$datas['glpiField']] = $DB->result($result_user,
                                                                                  0, 0);
                                     }
                                  }
@@ -642,11 +642,11 @@ class PluginFusioninventoryLock extends CommonDBTM{
                            if ($datas['xmlSectionChild'] == "TYPE") {
                               if ($libunserialized[$datas['xmlSectionChild']] != "") {
                                  $vallib = Dropdown::importExternal(
-                                             $itemtypeLink, 
+                                             $itemtypeLink,
                                              $libunserialized[$datas['xmlSectionChild']]);
                               } else {
                                  $vallib = Dropdown::importExternal(
-                                             $itemtypeLink, 
+                                             $itemtypeLink,
                                              $libunserialized["MMODEL"]);
                               }
                            } else {
@@ -654,7 +654,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                               $computer = new Computer();
                               $computer->getFromDB($item->fields['items_id']);
                               $vallib = $itemdr->importExternal(
-                                             $libunserialized[$datas['xmlSectionChild']], 
+                                             $libunserialized[$datas['xmlSectionChild']],
                                              $computer->fields['entities_id']);
                            }
                            $input[$datas['glpiField']] = $vallib;

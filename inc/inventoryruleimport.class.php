@@ -99,7 +99,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
       $criterias['states_id']['table']           = 'glpi_states';
       $criterias['states_id']['field']           = 'name';
-      $criterias['states_id']['name']            = 
+      $criterias['states_id']['name']            =
                      __('Search GLPI equipment with the status', 'fusioninventory');
 
       $criterias['states_id']['linkfield']       = 'state';
@@ -177,10 +177,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
    static function getRuleActionValues() {
 
-      return array(self::RULE_ACTION_LINK_OR_CREATE    => 
+      return array(self::RULE_ACTION_LINK_OR_CREATE    =>
                            __('Link if possible, else create device', 'fusioninventory'),
 
-                   self::RULE_ACTION_LINK_OR_NO_CREATE => 
+                   self::RULE_ACTION_LINK_OR_NO_CREATE =>
                            __('Link if possible, else import denied', 'fusioninventory'),
 
                    self::RULE_ACTION_DENIED            => __('Import denied', 'fusioninventory'));
@@ -344,7 +344,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             foreach ($criteria as $crit) {
                if (!isset($input[$criterion]) || $input[$criterion] == '') {
                   $definition_criteria = $this->getCriteria($crit->fields['criteria']);
-                  if (isset($definition_criteria['is_global']) 
+                  if (isset($definition_criteria['is_global'])
                           && $definition_criteria['is_global']) {
                      $continue = FALSE;
                   }
@@ -420,7 +420,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $sql_from = "`[typetable]`";
       $sql_from .= " LEFT JOIN `glpi_networkports`
                         ON (`[typetable]`.`id` = `glpi_networkports`.`items_id`
-                            AND `glpi_networkports`.`itemtype` = '[typename]') 
+                            AND `glpi_networkports`.`itemtype` = '[typename]')
                      LEFT JOIN `glpi_networknames`
                           ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
                              AND `glpi_networknames`.`itemtype`='NetworkPort'
@@ -606,7 +606,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          $inputrulelog['method'] = $class->getMethod();
       }
       if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-         $inputrulelog['plugin_fusioninventory_agents_id'] = 
+         $inputrulelog['plugin_fusioninventory_agents_id'] =
                         $_SESSION['plugin_fusioninventory_agents_id'];
       }
 
@@ -652,7 +652,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                               if ($criteria->fields['criteria'] == 'itemtype') {
                                  $itemtype = $criteria->fields['pattern'];
                                  if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
-                                    $_SESSION['plugin_fusioninventory_rules_id'] = 
+                                    $_SESSION['plugin_fusioninventory_rules_id'] =
                                                    $this->fields['id'];
                                     $class->rulepassed("0", $itemtype);
                                     $output['found_equipment'] = array(0, $itemtype);
@@ -831,7 +831,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             $types[$itemtype] = $item->getTypeName();
          }
       }
-      $types["PluginFusioninventoryUnknownDevice"] = 
+      $types["PluginFusioninventoryUnknownDevice"] =
                      PluginFusioninventoryUnknownDevice::getTypeName();
       return $types;
    }

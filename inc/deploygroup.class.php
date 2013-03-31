@@ -69,8 +69,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return TRUE;
    }
 
-   
-   
+
+
    function defineTabs($options=array()) {
 
       $ong = array();
@@ -82,8 +82,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return $ong;
    }
 
-   
-   
+
+
    function showMenu($options=array())  {
 
       $this->displaylist = FALSE;
@@ -96,7 +96,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    function title() {
       global $CFG_GLPI;
-      
+
       $buttons = array();
       $title = __('Groups of computers', 'fusioninventory');
 
@@ -105,18 +105,18 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          $title = "";
       }
 
-      Html::displayTitle($CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/menu_group.png", 
+      Html::displayTitle($CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/menu_group.png",
                          $title, $title, $buttons);
    }
 
 
-   
+
    function showForm($ID, $options = array()) {
-      
+
       if (isset($_SESSION['groupSearchResults'])) {
          unset($_SESSION['groupSearchResults']);
       }
-      
+
       if ($ID > 0) {
          $this->check($ID, 'r');
          $this->getFromDB($ID);
@@ -161,8 +161,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return TRUE;
    }
 
-   
-   
+
+
    function showStaticForm() {
       global $DB, $CFG_GLPI;
 
@@ -225,7 +225,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
                $itemtable = getTableForItemType($itemtype);
                $query = "SELECT `$itemtable`.*,
                                 `staticdatas`.`id` AS IDD
-                         FROM `glpi_plugin_fusioninventory_deploygroups_staticdatas` 
+                         FROM `glpi_plugin_fusioninventory_deploygroups_staticdatas`
                                  AS `staticdatas`, `$itemtable`";
                $query .= " WHERE `$itemtable`.`id` = `staticdatas`.`items_id`
                                  AND `staticdatas`.`itemtype` = '$itemtype'
@@ -313,22 +313,22 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       Html::closeForm();
    }
 
-   
-   
+
+
    /**
     * Display dynamic search form
-    * 
+    *
     * @global type $DB
     * @global type $CFG_GLPI
-    * 
+    *
     * @return boolean
     */
-   
+
    function showDynamicForm() {
       global $DB;
 
       $ID = $this->fields['id'];
-      
+
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
          WHERE `groups_id`='".$ID."'
          LIMIT 1";
@@ -342,15 +342,15 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          $input = array();
          $input['groups_id'] = $ID;
          $input['fields_array'] = exportArrayToDB(array());
-         $plugin_fusiosninventory_deploygroup_dynamicdatas_id = 
+         $plugin_fusiosninventory_deploygroup_dynamicdatas_id =
             $pfDeployGroup_Dynamicdata->add($input);
       }
-      
+
       if (isset($_SESSION['plugin_fusioninventory_dynamicgroup'])) {
          $_GET = $_SESSION['plugin_fusioninventory_dynamicgroup'];
       } else {
         $pfDeployGroup_Dynamicdata->getFromDB($plugin_fusiosninventory_deploygroup_dynamicdatas_id);
-         $_GET = importArrayFromDB($pfDeployGroup_Dynamicdata->fields['fields_array']);         
+         $_GET = importArrayFromDB($pfDeployGroup_Dynamicdata->fields['fields_array']);
       }
 
       $_GET['name'] = '';
@@ -360,7 +360,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $pfSearch->formurl            = 'fusioninventory/front/deploygroup_dynamicdata.form.php';
       $pfSearch->customIdVar        = 'plugin_fusioninventory_deploygroup_dynamicdatas_id';
       $pfSearch->displaydeletebuton = FALSE;
-      
+
 
       $_GET[$pfSearch->customIdVar] = $plugin_fusiosninventory_deploygroup_dynamicdatas_id;
       $_GET['id'] = $plugin_fusiosninventory_deploygroup_dynamicdatas_id;
@@ -396,8 +396,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</table>";
    }
 
-   
-   
+
+
    function showSearchFields($type = 'static', $fields = array())  {
       global $CFG_GLPI;
 
@@ -490,16 +490,16 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       ));
       echo "<hr />";*/
 
-      self::ajaxDisplaySearchTextForDropdown("operatingsystems_id", 
+      self::ajaxDisplaySearchTextForDropdown("operatingsystems_id",
                                              $fields['operatingsystem_name'],
                                              8);
-      
+
       $params_os = array('searchText'     => '__VALUE__',
                              'myname'     => 'operatingsystems_id',
                              'table'      => 'glpi_operatingsystems',
                              'value'      => $fields['operatingsystems_id']);
 
-      Ajax::updateItemOnInputTextEvent("search_operatingsystems_id", 
+      Ajax::updateItemOnInputTextEvent("search_operatingsystems_id",
                                        "operatingsystems_dropdown",
                                        $CFG_GLPI["root_doc"].
                                           "/plugins/fusioninventory/ajax/".
@@ -532,8 +532,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
    }
-   
-   
+
+
 
    static function groupAjaxLoad($type) {
       global $CFG_GLPI;
@@ -556,14 +556,14 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    }
 
-   
-   
+
+
    static function ajaxLoad($to_observe, $toupdate, $url, $params_id, $type) {
       $start = 0;
       if (isset($_REQUEST['start'])) {
          $start = $_REQUEST['start'];
       }
-      
+
       echo "<script type='text/javascript'>
       Ext.onReady(function() {
          function loadResults() {
@@ -592,8 +592,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "})
       </script>";
    }
-   
-   
+
+
 
    /**
     * Print pager for group list
@@ -677,12 +677,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       // End pager
       echo "</tr></table>";
    }
-   
-   
+
+
 
    static function showSearchResults($params) {
       global $DB;
-      
+
       if (isset($params['type'])) {
          $type  = $params['type'];
       } else {
@@ -769,7 +769,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          $where++;
       }
       $result = $DB->query($query);
-      
+
 //      if ($options['operatingsystems_id'] != 0) unset($options['operatingsystem_name']);
 //      if ($options['operatingsystems_id'] == 0) unset($options['operatingsystems_id']);
 //      if ($options['locations_id'] == 0) unset($options['locations_id']);
@@ -783,9 +783,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $datas = array();
       while ($data=$DB->fetch_array($result)) {
          $datas[$data['id']] = $data;
-         
+
       }
-      
+
       echo "<div class='center'><br />";
       $nb_col = 5;
 
@@ -835,8 +835,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</div>";
    }
 
-   
-   
+
+
    static function getAllDatas($root = 'groups')  {
       global $DB;
 
@@ -860,7 +860,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return json_encode($json);
    }
 
-   
+
 
    static function ajaxDisplaySearchTextForDropdown($id, $value, $size=4) {
       global $CFG_GLPI;

@@ -201,7 +201,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
    **/
    function showFormAgentException($items_id) {
       global $CFG_GLPI;
-      
+
       $canedit = 1;
       echo "<br/>";
       if ($canedit) {
@@ -308,7 +308,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          $module_name = 'SNMPQUERY';
       }
       $agentModule = $this->getActivationExceptions($module_name);
-      
+
       $where = "";
       if ($agentModule['is_active'] == 0) {
          $a_agentList = importArrayFromDB($agentModule['exceptions']);

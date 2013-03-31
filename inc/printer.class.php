@@ -65,7 +65,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       return PluginFusioninventoryProfile::haveRight("printer", "r");
    }
 
-   
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
    }
@@ -74,7 +74,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       global $CFG_GLPI;
-      
+
       if ($item->getID() > 0) {
          $pfPrinter = new PluginFusioninventoryPrinter();
          $pfPrinter->showForm($item,
@@ -95,7 +95,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
       return TRUE;
    }
-   
+
 
 
    /**
@@ -212,25 +212,25 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       Html::closeForm();
       echo "</div>";
    }
-   
-   
-   
+
+
+
    function displaySerializedInventory($items_id) {
       global $CFG_GLPI;
-      
+
       $a_printerextend = current($this->find("`printers_id`='".$items_id."'",
                                                "", 1));
-      
+
       $this->getFromDB($a_printerextend['id']);
-      
+
       if (empty($this->fields['serialized_inventory'])) {
          return;
       }
-      
+
       $data = unserialize(gzuncompress($this->fields['serialized_inventory']));
-      
+
       echo "<br/>";
-      
+
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr class='tab_bg_1'>";
@@ -239,7 +239,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       echo " (".Html::convDateTime($this->fields['last_fusioninventory_update']).")";
       echo "</th>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<th>";
       echo __('Download', 'fusioninventory');
@@ -253,9 +253,9 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
               "target='_blank'>PHP Array</a> / <a href=''>XML</a>";
       echo "</td>";
       echo "</tr>";
-      
+
       PluginFusioninventoryToolbox::displaySerializedValues($data);
-      
+
       echo "</table>";
    }
 }

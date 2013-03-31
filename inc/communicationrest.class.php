@@ -192,8 +192,8 @@ class PluginFusioninventoryCommunicationRest {
       }
       self::sendOk();
    }
- 
-   
+
+
    /**
     * Test a given url
     *
@@ -215,7 +215,7 @@ class PluginFusioninventoryCommunicationRest {
          fclose($handle);
          return TRUE;
       }
-   }   
+   }
 
    static function managecommunication() {
       $response = PluginFusioninventoryFusionCommunication::communicate($_GET);

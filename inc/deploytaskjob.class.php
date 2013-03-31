@@ -53,8 +53,8 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       return TRUE;
    }
 
-   
-   
+
+
    function getAllDatas($params) {
       global $DB;
 
@@ -74,7 +74,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
 
          $temp_tasks[] = $row;
       }
-      
+
       $i = 0;
       foreach ($temp_tasks as $task) {
          foreach ($task['actions'] as $action) {
@@ -104,8 +104,8 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       return json_encode($json);
    }
 
-   
-   
+
+
    function saveDatas($params) {
       global $DB;
 
@@ -153,8 +153,8 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    static function getActionTypes() {
 
       return array(
@@ -172,8 +172,8 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
          )
       );
    }
-   
-   
+
+
 
    static function getActions($params) {
       global $DB;

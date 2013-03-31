@@ -64,8 +64,8 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       return TRUE;
    }
 
-   
-   
+
+
    function defineTabs($options=array()) {
 
       $ong = array();
@@ -77,8 +77,8 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       return $ong;
    }
 
-   
-   
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       switch(get_class($item)) {
@@ -86,8 +86,8 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
 
       }
    }
-   
-   
+
+
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch(get_class($item)) {
@@ -97,15 +97,15 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
             break;
       }
    }
-   
-   
+
+
 
    function showList() {
       self::title();
       Search::show('PluginFusioninventoryDeployTask');
    }
-   
-   
+
+
 
    function title() {
       global  $CFG_GLPI;
@@ -120,11 +120,11 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
          $title = "";
       }
 
-      Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/pics/task.png", 
+      Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/fusinvdeploy/pics/task.png",
                          $title, $title, $buttons);
    }
 
-   
+
 
    function showActions($id) {
 
@@ -164,11 +164,11 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       require GLPI_ROOT."/plugins/fusinvdeploy/js/task_job.front.php";
    }
 
-   
-   
+
+
    function pre_deleteItem() {
       global $CFG_GLPI;
-      
+
       //if task active, delete denied
       if ($this->getField('is_active') == 1) {
          Session::addMessageAfterRedirect(
@@ -205,8 +205,8 @@ class PluginFusioninventoryDeployTask extends PluginFusioninventoryTask {
       return TRUE;
    }
 
-   
-   
+
+
    function post_addItem() {
       $options = array(
          'id'              => $this->getField('id'),

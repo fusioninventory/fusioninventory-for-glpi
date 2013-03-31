@@ -250,7 +250,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     * Get all modules that can declare credentials
     */
    static function getCredentialsItemTypes() {
-     return array ('PluginFusioninventoryInventoryComputerESX' => 
+     return array ('PluginFusioninventoryInventoryComputerESX' =>
                            __('VMware host', 'fusioninventory'));
    }
 
@@ -280,7 +280,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
     */
    static function dropdownCredentials($params = array()) {
       global $CFG_GLPI;
-      
+
       $p = array();
       if ($params['id'] == -1) {
          $p['value']    = '';
@@ -365,7 +365,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
       $buttons = array();
       if (PluginFusioninventoryProfile::haveRight('credential', 'r')) {
-         $buttons["credentialip.php"] = 
+         $buttons["credentialip.php"] =
                   __('Remote devices to inventory (VMware)', 'fusioninventory');
 
       }

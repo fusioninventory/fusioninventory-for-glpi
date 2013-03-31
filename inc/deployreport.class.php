@@ -173,8 +173,8 @@ class PluginFusioninventoryDeployReport extends CommonDBTM {
                      if ($matches[1]) {
                         foreach($matches[0] as $num=>$commentvalue) {
                            // TODO : change $LANG to gettext
-                           $comment = str_replace($commentvalue, 
-                              $LANG['plugin_'.$matches[1][$num]]["codetasklog"][$matches[2][$num]], 
+                           $comment = str_replace($commentvalue,
+                              $LANG['plugin_'.$matches[1][$num]]["codetasklog"][$matches[2][$num]],
                                                   $comment);
                         }
                      }

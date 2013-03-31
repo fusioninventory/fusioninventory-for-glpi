@@ -52,7 +52,7 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
 
       // ** Get link OID fields
       $mapping_name=array();
-      
+
       $id = $item->getID();
       $a_cartridges = $this->find("`printers_id`='".$id."'");
 

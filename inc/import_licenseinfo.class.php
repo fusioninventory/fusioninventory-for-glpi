@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2010
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -54,7 +54,7 @@ class PluginFusinvinventoryImport_LicenseInfo extends CommonDBTM {
    * @param $items_id integer
    *     - if add    : id of the computer
    *     - if update : id of the license
-   * @param $dataSection array all values of the section 
+   * @param $dataSection array all values of the section
    *
    * @return id of the license or FALSE
    *
@@ -126,8 +126,8 @@ class PluginFusinvinventoryImport_LicenseInfo extends CommonDBTM {
       $pfLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
       $pfLicenseInfo->getFromDB($items_id);
       if ($pfLicenseInfo->fields['computers_id'] == $idmachine) {
-         $pfLicenseInfo->delete(array("id" => $items_id), 
-                                0, 
+         $pfLicenseInfo->delete(array("id" => $items_id),
+                                0,
                                 $_SESSION["plugin_fusinvinventory_history_add"]);
       }
    }

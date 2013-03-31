@@ -112,7 +112,7 @@ class PluginFusioninventoryMenu {
       $a_menu[2]['name'] = __('Groups of computers');
       $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_group.png";
       $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploygroup.php";
-      
+
       if (Session::haveRight("config", "w")) {
          $a_menu[3]['name'] = __('General configuration', 'fusioninventory');
          $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
@@ -121,8 +121,8 @@ class PluginFusioninventoryMenu {
       }
 
       if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu(__('General', 'fusioninventory'), 
-                                                             $a_menu, 
+         $width_status = PluginFusioninventoryMenu::htmlMenu(__('General', 'fusioninventory'),
+                                                             $a_menu,
                                                              $type,
                                                              $width_status);
       }
@@ -158,10 +158,10 @@ class PluginFusioninventoryMenu {
          $a_menu[0]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventorycomputerimportxml.php";
       }
- 
+
       if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Tasks', 'fusioninventory'), 
-                                                             $a_menu, 
+         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Tasks', 'fusioninventory'),
+                                                             $a_menu,
                                                              $type,
                                                              $width_status);
       }
@@ -170,7 +170,7 @@ class PluginFusioninventoryMenu {
        * Rules
        */
       $a_menu = array();
-     
+
       if (Session::haveRight("rule_import", "r")) {
          $a_menu[1]['name'] = __('Equipment import and link rules', 'fusioninventory');
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
@@ -186,7 +186,7 @@ class PluginFusioninventoryMenu {
                     'PluginFusioninventoryIgnoredimportdevice'
                  );
       }
-      
+
       if (PluginFusioninventoryProfile::haveRight("existantrule", "r")) {
          $a_menu[3]['name'] = __('Computer entity rules', 'fusioninventory');
          $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
@@ -201,10 +201,10 @@ class PluginFusioninventoryMenu {
          $a_menu[4]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventorycomputerblacklist.php";
       }
-      
+
       if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Rules', 'fusioninventory'), 
-                                                             $a_menu,  
+         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Rules', 'fusioninventory'),
+                                                             $a_menu,
                                                              $type,
                                                              $width_status);
       }
@@ -213,7 +213,7 @@ class PluginFusioninventoryMenu {
        * Network
        */
       $a_menu = array();
-      
+
       if (PluginFusioninventoryProfile::haveRight("iprange", "r")) {
          $a_menu[1]['name'] = __('IP Ranges', 'fusioninventory');
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc'].
@@ -227,7 +227,7 @@ class PluginFusioninventoryMenu {
                                  "/plugins/fusioninventory/pics/menu_credentialips.png";
          $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredentialip');
       }
-      
+
       if (PluginFusioninventoryProfile::haveRight("configsecurity", "r")) {
          $a_menu[4]['name'] = __('SNMP authentication', 'fusioninventory');
          $a_menu[4]['pic']  = $CFG_GLPI['root_doc'].
@@ -249,14 +249,14 @@ class PluginFusioninventoryMenu {
                                  "/plugins/fusioninventory/pics/menu_discovery_status.png";
          $a_menu[6]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/statediscovery.php";
-         
+
          $a_menu[7]['name'] = __('Network inventory status', 'fusioninventory');
          $a_menu[7]['pic']  = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_inventory_status.png";
          $a_menu[7]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/stateinventory.php";
       }
-      
+
       if (PluginFusioninventoryProfile::haveRight("model", "r")) {
          $a_menu[4]['name'] = __('SNMP models', 'fusioninventory');
          $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_models.png";
@@ -270,8 +270,8 @@ class PluginFusioninventoryMenu {
       }
 
       if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Networking', 'fusioninventory'), 
-                                                             $a_menu, 
+         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Networking', 'fusioninventory'),
+                                                             $a_menu,
                                                              $type,
                                                              $width_status);
       }
@@ -294,8 +294,8 @@ class PluginFusioninventoryMenu {
       $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploymirror.php";
 
       if (!empty($a_menu)) {
-         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Deploy', 'fusioninventory'), 
-                                                             $a_menu, 
+         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Deploy', 'fusioninventory'),
+                                                             $a_menu,
                                                              $type,
                                                              $width_status);
       }

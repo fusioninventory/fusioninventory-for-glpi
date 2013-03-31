@@ -61,7 +61,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
    }
 
 
-   
+
    /**
     * @param CommonDBTM $item
    **/
@@ -71,7 +71,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
                                   "`itemtype` = '".$item->getType()."'
                                    AND `items_id` ='".$item->getField('id')."'");
    }
-   
+
 
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
@@ -102,29 +102,29 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
       } else if ($tabnum == '1') {
          if ($item->getID() > 0) {
             $pfRulematchedlog->showForm($item->getID(), $item->getType());
-            
+
             $itemtype = '';
             switch (get_class($item)) {
-               
+
                case 'Computer':
                   $itemtype = new PluginFusioninventoryInventoryComputerComputer();
                   break;
-               
+
                case 'Printer':
                   $itemtype = new PluginFusioninventoryPrinter();
                   break;
-               
+
                case 'NetworkEquipment':
                   $itemtype = new PluginFusioninventoryNetworkEquipment();
                   break;
-               
+
             }
-            
+
             if (is_object($itemtype)
                     && $itemtype->canView()) {
                $itemtype->displaySerializedInventory($item->getID());
             }
-            
+
 
          }
       }

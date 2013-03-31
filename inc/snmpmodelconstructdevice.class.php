@@ -59,10 +59,10 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          </td>
          </tr>
          </table>";
-      
+
       echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
       echo "<input type='hidden' name='devices_id' value='".$id."' />";
-      
+
       $ret = $this->manageWalks($data, $id);
 
       if ($ret) {
@@ -74,9 +74,9 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          echo "</tr>";
          echo "</table>";
       }
-      
+
       Html::closeForm();
-      
+
       echo '<script language="JavaScript">
       function popUpClosed() {
           window.location.reload();
@@ -86,7 +86,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
    }
 
 
-   
+
    function manageWalks($json, $devices_id=0) {
       global $DB, $CFG_GLPI;
 
@@ -128,8 +128,8 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
             }
          }
       }
-      
-      
+
+
       foreach ($json->mappings as $data) {
          $a_mapping[$data->order] = $data->id;
       }
@@ -152,7 +152,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          }
          echo "</td>";
          echo "</tr>";
-         
+
          echo "</table>";
          $a_oidfound = array();
          foreach ($json->oids as $a_oids) {
@@ -165,12 +165,12 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                        " = (.*\n)/", $snmpwalk, $found);
                if (isset($found[0][0])) {
                   $a_oidfound[$a_oids->id] = $found[0];
-               } else {     
+               } else {
                   preg_match_all("/".$a_oids->mib_oid."(?:\.\d+){".$a_oids->nboids_after."}".
                           " = (?:.*)\n/", $snmpwalk, $found);
                   if (isset($found[0][0])) {
                      $a_oidfound[$a_oids->id] = $found[0];
-                  } else { 
+                  } else {
                      preg_match_all("/".$iso."(\.\d+){".$a_oids->nboids_after."}".
                              " = (.*\n)/", $snmpwalk, $found);
                      if (isset($found[0][0])) {
@@ -178,9 +178,9 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                      }
                   }
                }
-            } 
+            }
             if (isset($a_mibs2[$data->id])) { // This mapping has yet a value on server
-               if (isset($a_mibs[$a_oids->id."-".$data->id])) { 
+               if (isset($a_mibs[$a_oids->id."-".$data->id])) {
                   // if this value is related with this oid
                   if (!isset($a_oidfound[$a_oids->id])) {
                      $a_oidfound[$a_oids->id] = array('?=?');
@@ -189,40 +189,40 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
             }
          }
          if (count($a_oidfound) == '1') {
-            foreach ($a_oidfound as $oid_id => $a_found) {               
+            foreach ($a_oidfound as $oid_id => $a_found) {
                if (isset($a_mibs[$oid_id."-".$data->id])) {
-                  $this->displayOid($json->oids->$oid_id, 
-                                    $data->id, 
-                                    $a_found, 
-                                    $json->device->sysdescr, 
-                                    "green", 
+                  $this->displayOid($json->oids->$oid_id,
+                                    $data->id,
+                                    $a_found,
+                                    $json->device->sysdescr,
+                                    "green",
                                     $json->mibs->$id);
                } else if ($json->oids->$oid_id->percentage->$id > 49) {
-                  $this->displayOid($json->oids->$oid_id, 
-                                    $data->id, 
-                                    $a_found, 
-                                    $json->device->sysdescr, 
+                  $this->displayOid($json->oids->$oid_id,
+                                    $data->id,
+                                    $a_found,
+                                    $json->device->sysdescr,
                                     "blue");
                }else {
-                  $this->displayOid($json->oids->$oid_id, 
-                                    $data->id, 
-                                    $a_found, 
+                  $this->displayOid($json->oids->$oid_id,
+                                    $data->id,
+                                    $a_found,
                                     $json->device->sysdescr);
                }
             }
          } else if (count($a_oidfound) > 1) {
             foreach ($a_oidfound as $oid_id => $a_found) {
                if (isset($a_mibs[$oid_id."-".$data->id])) {
-                  $this->displayOid($json->oids->$oid_id, 
-                                    $data->id, 
-                                    $a_found, 
-                                    $json->device->sysdescr, 
-                                    "green", 
+                  $this->displayOid($json->oids->$oid_id,
+                                    $data->id,
+                                    $a_found,
+                                    $json->device->sysdescr,
+                                    "green",
                                     $json->mibs->$id);
                } else {
-                  $this->displayOid($json->oids->$oid_id, 
-                                    $data->id, 
-                                    $a_found, 
+                  $this->displayOid($json->oids->$oid_id,
+                                    $data->id,
+                                    $a_found,
                                     $json->device->sysdescr);
                }
             }
@@ -231,7 +231,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                     OR $data->name == "dot1dTpFdbPort"
                     OR $data->name == "dot1dBasePortIfIndex")
                  AND strstr($json->device->sysdescr, "Cisco")) {
-               
+
                $oids_id_temp = 0;
                if ($data->name == "dot1dTpFdbAddress") {
                   $oids_id_temp = $dot1dTpFdbAddress;
@@ -241,17 +241,17 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                   $oids_id_temp = $dot1dBasePortIfIndex;
                }
                if (isset($a_mibs2[$data->id])) {
-                  $this->displayOid($json->oids->$oids_id_temp, 
-                                    $data->id, 
-                                    array(), 
-                                    $json->device->sysdescr, 
-                                    "green", 
+                  $this->displayOid($json->oids->$oids_id_temp,
+                                    $data->id,
+                                    array(),
+                                    $json->device->sysdescr,
+                                    "green",
                                     $json->mibs->$id);
                } else {
-                  $this->displayOid($json->oids->$oids_id_temp, 
-                                    $data->id, 
-                                    array(), 
-                                    $json->device->sysdescr, 
+                  $this->displayOid($json->oids->$oids_id_temp,
+                                    $data->id,
+                                    array(),
+                                    $json->device->sysdescr,
                                     "blue");
                }
             }
@@ -278,17 +278,17 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo "</table>";
       if ($portcounter != '') {
                   $id = "0";
-         $this->displayOid($json->oids->$portcounteroid, 
-                           0, 
-                           array(), 
-                           $json->device->sysdescr, 
-                           "green", 
+         $this->displayOid($json->oids->$portcounteroid,
+                           0,
+                           array(),
+                           $json->device->sysdescr,
+                           "green",
                            $json->mibs->$id);
       } else {
-         $this->displayOid($json->oids->$portcounteroid, 
-                           0, 
-                           array(), 
-                           $json->device->sysdescr, 
+         $this->displayOid($json->oids->$portcounteroid,
+                           0,
+                           array(),
+                           $json->device->sysdescr,
                            "blue");
       }
       if ($snmpwalk == '') {
@@ -296,9 +296,9 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       }
       return TRUE;
    }
-   
-   
-   
+
+
+
    function displayOid($a_oid, $mappings_id, $a_match, $sysdescr, $color='red', $a_mibs=array()) {
 
       $style = " style='border-color: #ff0000; border-width: 1px' ";
@@ -329,9 +329,9 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 //      } else {
 //         echo "&nbsp;&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
 //         echo "&nbsp;<font>";
-//         
+//
 //      }
-      
+
       echo $a_oid->numeric_oid." (".$a_oid->mib_oid.")";
       echo "</font>";
       echo "</th>";
@@ -354,8 +354,8 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          echo "</tr>";
          $i++;
       }
-      
-      
+
+
       echo "<tr class='tab_bg_1'>";
       echo "<th>";
       if ($a_oid->numeric_oid == ".1.3.6.1.2.1.2.1.0") {
@@ -369,7 +369,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
             $vlan = $a_mibs->vlan;
          }
          $mapping_pre_vlan = $this->mibVlan();
-         if (isset($mapping_pre_vlan[$a_oid->numeric_oid])) {   
+         if (isset($mapping_pre_vlan[$a_oid->numeric_oid])) {
             if (strstr($sysdescr, "Cisco")) {
                $vlan = 1;
             }
@@ -412,7 +412,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
       echo "</table>";
 
-      
+
    }
 
 
@@ -445,13 +445,13 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                WHERE plugin_fusinvsnmp_constructdevices_id='".$data["id"]."' ";
             if ($result_mibs = $DB->query($query_mibs)) {
                while ($data_mibs = $DB->fetch_array($result_mibs)) {
-                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['itemtype'] = 
+                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['itemtype'] =
                                  $data_mibs['itemtype'];
-                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['mapping_name'] = 
+                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['mapping_name'] =
                                  $data_mibs['mapping_name'];
-                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['oid_port_counter'] = 
+                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['oid_port_counter'] =
                                  $data_mibs['oid_port_counter'];
-                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['oid_port_dyn'] = 
+                  $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['oid_port_dyn'] =
                                  $data_mibs['oid_port_dyn'];
                   $a_mib[$data_mibs['plugin_fusinvsnmp_miboids_id']]['vlan'] = $data_mibs['vlan'];
                   $count_mib++;
@@ -529,12 +529,12 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                   while ($data_mibs = $DB->fetch_array($result_mibs)) {
                      $a_input = array();
                      $a_input['plugin_fusioninventory_snmpmodels_id'] = $id;
-                     $a_input['plugin_fusinvsnmp_miboids_id'] = 
+                     $a_input['plugin_fusinvsnmp_miboids_id'] =
                                     $data_mibs['plugin_fusinvsnmp_miboids_id'];
                      $a_input['oid_port_counter'] = $data_mibs['oid_port_counter'];
                      $a_input['oid_port_dyn'] = $data_mibs['oid_port_dyn'];
                      $a_input['vlan'] = $data_mibs['vlan'];
-                     $a_input['links_oid_fields'] = 
+                     $a_input['links_oid_fields'] =
                                     $data_mibs['itemtype']."||".$data_mibs['mapping_name'];
                      $a_input['is_active'] = 1;
                      $ptmn->add($a_input);
@@ -615,7 +615,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
    }
 
 
-   
+
    function cleanmodels() {
       global $DB;
 
@@ -679,8 +679,8 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          $DB->query($query_update);
       }
    }
-   
-   
+
+
    private function mibVlan() {
 
       $mapping_pre_vlan = array();
@@ -689,7 +689,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       $mapping_pre_vlan['.1.3.6.1.2.1.4.22.1.2'] = '1';
       $mapping_pre_vlan['.1.3.6.1.2.1.17.4.3.1.2'] = '1';
       $mapping_pre_vlan['.1.3.6.1.2.1.17.1.4.1.2'] = '1';
-      
+
       return $mapping_pre_vlan;
    }
 }

@@ -81,14 +81,14 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       echo $pfNetworkPortLog->showHistory($item->getID());
       return TRUE;
    }
-   
-   
-   
+
+
+
    /**
     * Insert port history with connection and disconnection
     *
     * @param $status status of port ('make' or 'remove')
-    * @param $array with values : $array["networkports_id"], $array["value"], $array["itemtype"] 
+    * @param $array with values : $array["networkports_id"], $array["value"], $array["itemtype"]
     *                and $array["device_ID"]
     *
     * @return id of inserted line
@@ -106,7 +106,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
          $query = "INSERT INTO `glpi_plugin_fusioninventory_networkportlogs` (
                                `networkports_id`, `plugin_fusioninventory_mappings_id`, `value_old`,
                                `value_new`, `date_mod`)
-                   VALUES('".$array["networkports_id"]."', 
+                   VALUES('".$array["networkports_id"]."',
                           '".$array["plugin_fusioninventory_mappings_id"]."',
                           '".$array["value_old"]."', '".$array["value_new"]."',
                           '".date("Y-m-d H:i:s")."');";

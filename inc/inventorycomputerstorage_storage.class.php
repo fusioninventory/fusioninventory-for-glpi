@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryComputerStorage_Storage extends CommonDBTM {
 
    static function getTypeName($nb=0) {
-      
+
       return __('Storage', 'fusioninventory');
 
    }
@@ -61,11 +61,11 @@ class PluginFusioninventoryInventoryComputerStorage_Storage extends CommonDBTM {
       return Session::haveRight('computer', 'r');
    }
 
-   
-   
+
+
    function getOpposites($id) {
       global $DB;
-      
+
       $a_id = array();
       $query = "SELECT * FROM `".$this->getTable()."`
          WHERE `plugin_fusioninventory_inventorycomputerstorages_id_1`='".$id."'
@@ -83,19 +83,19 @@ class PluginFusioninventoryInventoryComputerStorage_Storage extends CommonDBTM {
       }
       return 0;
    }
-   
-   
+
+
    function getChildren($id, $level) {
       global $DB;
-      
+
       $a_id = array();
-      $query = "SELECT `glpi_plugin_fusioninventory_inventorycomputerstorages`.`id`, 
+      $query = "SELECT `glpi_plugin_fusioninventory_inventorycomputerstorages`.`id`,
          `level` FROM `".$this->getTable()."`
          LEFT JOIN `glpi_plugin_fusioninventory_inventorycomputerstorages`
             ON `plugin_fusioninventory_inventorycomputerstorages_id_1` =
                `glpi_plugin_fusioninventory_inventorycomputerstorages`.`id`
          LEFT JOIN `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`
-            ON `plugin_fusioninventory_inventorycomputerstoragetypes_id` = 
+            ON `plugin_fusioninventory_inventorycomputerstoragetypes_id` =
                `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`.`id`
          WHERE `plugin_fusioninventory_inventorycomputerstorages_id_2`='".$id."'
             AND `level` > '".$level."'";
@@ -103,13 +103,13 @@ class PluginFusioninventoryInventoryComputerStorage_Storage extends CommonDBTM {
       while ($data=$DB->fetch_array($result)) {
          $a_id[$data['id']] = $data['level'];
       }
-      $query = "SELECT `glpi_plugin_fusioninventory_inventorycomputerstorages`.`id`, 
+      $query = "SELECT `glpi_plugin_fusioninventory_inventorycomputerstorages`.`id`,
          `level` FROM `".$this->getTable()."`
          LEFT JOIN `glpi_plugin_fusioninventory_inventorycomputerstorages`
             ON `plugin_fusioninventory_inventorycomputerstorages_id_2` =
                `glpi_plugin_fusioninventory_inventorycomputerstorages`.`id`
          LEFT JOIN `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`
-            ON `plugin_fusioninventory_inventorycomputerstoragetypes_id` = 
+            ON `plugin_fusioninventory_inventorycomputerstoragetypes_id` =
                `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`.`id`
          WHERE `plugin_fusioninventory_inventorycomputerstorages_id_1`='".$id."'
             AND `level` > '".$level."'";
@@ -119,19 +119,19 @@ class PluginFusioninventoryInventoryComputerStorage_Storage extends CommonDBTM {
       }
       return $a_id;
    }
-   
-   
+
+
    function getParent($id, $level) {
       global $DB;
-      
+
       $a_id = array();
-      $query = "SELECT `glpi_plugin_fusioninventory_inventorycomputerstorages`.`id`, 
+      $query = "SELECT `glpi_plugin_fusioninventory_inventorycomputerstorages`.`id`,
          `level` FROM `".$this->getTable()."`
          LEFT JOIN `glpi_plugin_fusioninventory_inventorycomputerstorages`
             ON `plugin_fusioninventory_inventorycomputerstorages_id_1` =
                `glpi_plugin_fusioninventory_inventorycomputerstorages`.`id`
          LEFT JOIN `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`
-            ON `plugin_fusioninventory_inventorycomputerstoragetypes_id` = 
+            ON `plugin_fusioninventory_inventorycomputerstoragetypes_id` =
                `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`.`id`
          WHERE `plugin_fusioninventory_inventorycomputerstorages_id_2`='".$id."'
             AND `level` < '".$level."'";
@@ -139,13 +139,13 @@ class PluginFusioninventoryInventoryComputerStorage_Storage extends CommonDBTM {
       while ($data=$DB->fetch_array($result)) {
          $a_id[$data['id']] = $data['level'];
       }
-      $query = "SELECT `glpi_plugin_fusioninventory_inventorycomputerstorages`.`id`, 
+      $query = "SELECT `glpi_plugin_fusioninventory_inventorycomputerstorages`.`id`,
          `level` FROM `".$this->getTable()."`
          LEFT JOIN `glpi_plugin_fusioninventory_inventorycomputerstorages`
             ON `plugin_fusioninventory_inventorycomputerstorages_id_2` =
                `glpi_plugin_fusioninventory_inventorycomputerstorages`.`id`
          LEFT JOIN `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`
-            ON `plugin_fusioninventory_inventorycomputerstoragetypes_id` = 
+            ON `plugin_fusioninventory_inventorycomputerstoragetypes_id` =
                `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`.`id`
          WHERE `plugin_fusioninventory_inventorycomputerstorages_id_1`='".$id."'
             AND `level` < '".$level."'";

@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2012
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -49,7 +49,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
 
    function connect() {
       global $CFG_GLPI;
-      
+
       //$this->fp = curl_init('http://93.93.45.69:9000/');
       $this->fp = curl_init('http://snmp.fusioninventory.org/');
       curl_setopt($this->fp, CURLOPT_RETURNTRANSFER, 1);
@@ -58,8 +58,8 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          curl_setopt($this->fp, CURLOPT_PROXYTYPE, 'HTTP');
          curl_setopt($this->fp, CURLOPT_PROXY, $CFG_GLPI['proxy_name']);
          if ($CFG_GLPI['proxy_user'] != '') {
-            curl_setopt($this->fp, 
-                        CURLOPT_PROXYUSERPWD, 
+            curl_setopt($this->fp,
+                        CURLOPT_PROXYUSERPWD,
                         $CFG_GLPI['proxy_user'].":".$CFG_GLPI['proxy_passwd']);
          }
       }
@@ -67,17 +67,17 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       curl_setopt($this->fp, CURLOPT_HTTPHEADER, array('Expect:'));
       return TRUE;
    }
-   
-   
-   
+
+
+
    function closeConnection() {
       curl_close($this->fp);
    }
-   
-   
-   
+
+
+
    function showAuth() {
-      
+
       $auth = array();
       $a_userinfos = PluginFusioninventoryConstructdevice_User::getUserAccount($_SESSION['glpiID']);
       if (!isset($a_userinfos['login'])) {
@@ -107,12 +107,12 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          $buffer = json_encode($auth);
 
          $this->auth = 'login='.$a_userinfos['login'].'&auth='.$this->mcryptText($buffer);
-      }         
+      }
       return TRUE;
    }
-   
-   
-   
+
+
+
    function menu() {
       echo "<table class='tab_cadre_fixe'>";
 
@@ -133,7 +133,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "<a href='".$this->getSearchURL()."?action=seemodels'>See All SNMP models</a>";
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
       echo "<a href='http://www.fusioninventory.org/documentation/fi4g/snmpmodels'>".
@@ -143,10 +143,10 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
 
       echo "</table>";
    }
-   
-   
+
+
    function showFormDefineSysdescr($message = array()) {
-      
+
       echo "<form name='form' method='post' action='".$this->getSearchURL()."'>";
       echo "<table class='tab_cadre_fixe'>";
 
@@ -155,7 +155,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "Sysdescr";
       echo "</th>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
       echo "Command to get the sysdescr";
@@ -179,7 +179,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       }
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
       echo "Tags";
@@ -190,7 +190,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          [IP] = IP of the device to query";
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
       echo "Itemtype";
@@ -203,7 +203,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       }
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
       echo "Sysdescr";
@@ -217,23 +217,23 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "<textarea name='sysdescr' cols='100' rows='4' />".$sysdescr."</textarea>";
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_2'>";
       echo "<td align='center' colspan='2'>";
       echo "<input class='submit' type='submit' name='sendsnmpwalk'
                       value='".__('Send')."'>";
       echo "</td>";
       echo "</tr>";
-      
+
       echo "</table>";
-      Html::closeForm();      
+      Html::closeForm();
    }
-   
-   
-   
+
+
+
    function sendGetsysdescr($sysdescr, $itemtype, $devices_id = 0) {
       global $CFG_GLPI, $DB;
-      
+
       $getsysdescr = array();
       if ($devices_id > 0) {
          $getsysdescr['getdeviceid'] = array(
@@ -250,7 +250,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       $retserv = curl_exec($this->fp);
 
       $data = json_decode($retserv);
-      
+
       $_SESSION['plugin_fusioninventory_sysdescr'] = $data->device->sysdescr;
       echo  "<table width='950' align='center'>
          <tr>
@@ -270,16 +270,16 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          echo "This device is not yet added";
          echo "</th>";
          echo "</tr>";
-         
+
          echo "</table>";
-         
+
          $this->showUploadSnmpwalk($sysdescr, $itemtype);
          // Upload snmpwalk
          // send to server (it add sysdescr and lock for this user)
-         // server return oids, mapping, oids most used for this kind of device 
+         // server return oids, mapping, oids most used for this kind of device
          // (check with sysdescr)
       } else {
-      
+
          $edit = 1;
          $id = 0;
          if ($data->device->lock != '0'
@@ -293,7 +293,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
             echo "</table>";
             $edit = 0;
          }
-      
+
          // Device exist, update it? get snmpmodels?
          echo "<table class='tab_cadre_fixe'>";
 
@@ -325,7 +325,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
                $DB->query($querydel);
             }
          }
-            
+
          echo "<a href='".$CFG_GLPI['root_doc'].
                  "/plugins/fusinvsnmp/front/constructmodel.php?editoid=".$data->device->id."'>";
          if ($edit == '1') {
@@ -346,7 +346,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          }
          echo "</th>";
          echo "</tr>";
-         
+
          echo "<tr class='tab_bg_1 center'>";
          echo "<td>";
          echo "Sysdescr :";
@@ -354,7 +354,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          echo "<td>";
          echo $data->device->sysdescr;
          echo "</td>";
-         
+
          echo "<td>";
          echo "<strong>Released :</strong>";
          echo "</td>";
@@ -362,7 +362,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          echo Dropdown::getYesNo($data->device->released);
          echo "</strong></td>";
          echo "</tr>";
-         
+
          echo "<tr class='tab_bg_1 center'>";
          echo "<td>";
          echo "Itemtype :";
@@ -370,7 +370,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          echo "<td>";
          echo $data->device->itemtype;
          echo "</td>";
-         
+
          echo "<td>";
          echo "Have serial number :";
          echo "</td>";
@@ -378,7 +378,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          echo Dropdown::getYesNo($data->device->have_serialnumber);
          echo "</td>";
          echo "</tr>";
-         
+
          echo "<tr class='tab_bg_1 center'>";
          echo "<td>";
          echo "Manufacturer :";
@@ -394,7 +394,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          echo Dropdown::getYesNo($data->device->have_ports);
          echo "</td>";
          echo "</tr>";
-         
+
          echo "<tr class='tab_bg_1 center'>";
          echo "<td>";
          echo "Firmware :";
@@ -402,7 +402,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          echo "<td>";
          echo $data->device->firmwares_id;
          echo "</td>";
-         
+
          echo "<td>";
          echo "Have network ports connections :";
          echo "</td>";
@@ -411,7 +411,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          echo "</td>";
          echo "</td>";
          echo "</tr>";
-         
+
          echo "<tr class='tab_bg_1 center'>";
          echo "<td>";
          echo "Model :";
@@ -423,7 +423,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
             echo $data->device->printermodels_id;
          }
          echo "</td>";
-         
+
          echo "<td>";
          echo "Have Vlan :";
          echo "</td>";
@@ -431,27 +431,27 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          echo Dropdown::getYesNo($data->device->have_vlan);
          echo "</td>";
          echo "</tr>";
-         
+
          echo "<tr class='tab_bg_1 center'>";
          echo "<td>";
          echo "</td>";
          echo "<td>";
          echo "</td>";
-         
+
          echo "<td>";
          echo "Have network ports trunk/tagged :";
          echo "</td>";
          echo "<td>";
          echo Dropdown::getYesNo($data->device->have_trunk);
          echo "</td>";
-         echo "</tr>";       
-         
+         echo "</tr>";
+
          echo "</table><br/>";
 
          // * Manage SNMPWALK file
          if ($edit == '0') {
             $this->showUploadSnmpwalk($data->device->sysdescr, $data->device->itemtype);
-         } else {        
+         } else {
             echo "<table class='tab_cadre' width='900'>";
 
             echo "<tr class='tab_bg_1 center'>";
@@ -473,7 +473,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
 
             echo "</table><br/>";
          }
-         
+
          // * Manage Logs
          echo "<table class='tab_cadre' width='900'>";
 
@@ -524,12 +524,12 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          }
 
          echo "</table>";
-         
+
       }
    }
-   
-   
-   
+
+
+
    function sendGetDevice($id) {
       $getDevice = array();
       $getDevice['getDevice'] = array(
@@ -539,17 +539,17 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       $retserv = curl_exec($this->fp);
       return json_decode($retserv);
    }
-   
-   
+
+
    function sendMib($a_mib) {
       $buffer = json_encode($a_mib);
       curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
       $retserv = curl_exec($this->fp);
       return json_decode($retserv);
    }
-   
-   
-   
+
+
+
    function setLock($sysdescr, $itemtype) {
       $getsysdescr = array();
       $getsysdescr['setLock'] = array(
@@ -558,11 +558,11 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       $buffer = json_encode($getsysdescr);
       curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
       $retserv = curl_exec($this->fp);
-      return json_decode($retserv);      
+      return json_decode($retserv);
    }
-   
-   
-   
+
+
+
    function setUnLock() {
       $unlock = array();
       $unlock['setUnLock'] = array(
@@ -571,11 +571,11 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
       curl_exec($this->fp);
    }
-   
-   
-   
+
+
+
    function showUploadSnmpwalk($sysdescr, $itemtype) {
-      
+
       echo "<form method='post' name='' id=''  action='' enctype=\"multipart/form-data\">";
       echo "<table class='tab_cadre_fixe'>";
 
@@ -584,14 +584,14 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "Upload your SNMPWALK";
       echo "</th>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_3 center'>";
       echo "<td colspan='2'>";
       echo "<i>IMPORTANT: This file keep in your GLPI server, and no data of this will be ".
               "uploaded in central server</i>";
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_3'>";
       echo "<td>";
       echo "Command to create the snmpwalk";
@@ -600,7 +600,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "snmpwalk -v [version] -c [community] -Cc -On [IP] .1 > file.log";
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_3'>";
       echo "<td>";
       echo "Tags";
@@ -610,7 +610,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          [community] = community name<br/>
          [IP] = IP of the device to query";
       echo "</td>";
-      echo "</tr>";      
+      echo "</tr>";
 
       echo "<tr class='tab_bg_3 center'>";
       echo "<td>";
@@ -620,7 +620,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "<input type='file' name='snmpwalkfile'/>";
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_3 center'>";
       echo "<td colspan='2'>";
       echo "<input type='hidden' name='sysdescr' value='".$sysdescr."' />";
@@ -629,13 +629,13 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
                  "\" class='submit' >";
       echo "</td>";
       echo "</tr>";
-      
+
       echo "</table>";
       Html::closeForm();
    }
-   
-   
-   
+
+
+
    function getSendModel($write=0, $models_id=0) {
       $singleModel = array();
       if (is_array($models_id)) {
@@ -647,12 +647,12 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       } else if (isset($_GET['id'])) {
          $singleModel['createSingleModel']['id'] = $_GET['id'];
       }
-      
+
       $buffer = json_encode($singleModel);
       curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
       $retserv = curl_exec($this->fp);
       $data = json_decode($retserv);
-      
+
       if ($write == '0') {
 
          header("Expires: Mon, 26 Nov 1962 00:00:00 GMT");
@@ -665,26 +665,26 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       } else {
          if (is_array($models_id)) {
             foreach ($data->snmpmodel as $model) {
-               file_put_contents(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/'.$model->name.'.xml', 
+               file_put_contents(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/'.$model->name.'.xml',
                                  trim($model->model));
-            }            
+            }
          } else {
             file_put_contents(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/'.$data->snmpmodel->name.
-                                 '.xml', 
+                                 '.xml',
                               trim($data->snmpmodel->model));
          }
       }
    }
-   
-   
-   
+
+
+
    function showAllModels() {
       global $DB;
-      
+
       $getsysdescr = array();
       $getsysdescr['getallmodels'] = array(
          'type' => 'all'); // all, stable, devel
-      
+
       $buffer = json_encode($getsysdescr);
       curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
       $retserv = curl_exec($this->fp);
@@ -701,8 +701,8 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       $array_sort['itemtype'] = 'Itemtype';
       $array_sort['stabledevel'] = 'Stable/devel';
       $array_sort['snmpfile'] = 'Snmpfile';
-      Dropdown::showFromArray('sort', 
-                              $array_sort, 
+      Dropdown::showFromArray('sort',
+                              $array_sort,
                      array(
                        'value' => $_SESSION['glpi_plugin_fusioninventory_constructmodelsort']
                      ));
@@ -710,7 +710,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
               "value=\"".__('Update')."\" >";
       Html::closeForm();
       echo "</center>";
-      
+
       $a_sort = array();
       $a_sort['name'] = array();
       $a_sort['itemtype'] = array();
@@ -745,7 +745,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
                $local = 0;
                $nbnotinglpi++;
             }
-            
+
             $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
                       WHERE `construct_device_id` = '".$a_devices['id']."'
                       LIMIT 1";
@@ -759,7 +759,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
                } else {
                   $snmpfile = 0;
                }
-            }            
+            }
          }
          if (count($a_models['devices']) == $nbnotinglpi) {
             $a_sort['stabledevel'][$key] = 'not';
@@ -767,8 +767,8 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
             $a_sort['stabledevel'][$key] = 'ok';
          } else {
             $a_sort['stabledevel'][$key] = 'part';
-         }         
-         $a_sort['localglpi'][$key] = $local; 
+         }
+         $a_sort['localglpi'][$key] = $local;
          $a_sort['snmpfile'][$key] = $snmpfile;
       }
       echo "<form name='form_model' id='form_model' method='post'>";
@@ -782,34 +782,34 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "</th>";
       echo "</tr>";
       echo "</table>";
-      
+
       $menu = "<br/><center>| <a href='#'>Top</a>
          | <a href='#not'>Models not imported</a>
          | <a href='#part'>Models to be updated</a>
          | <a href='#ok'>Models up to date</a>
          | <a href='#import'>Import button</a> |</center><br/>";
-      
+
       echo "<a id='not'>".$menu."</a>";
       $this->displayModelsList($data, $a_sort, 'not');
-      
+
       echo "<a id='part'>".$menu."</a>";
       $this->displayModelsList($data, $a_sort, 'part');
 
       echo "<a id='ok'>".$menu."</a>";
       $this->displayModelsList($data, $a_sort, 'ok');
-      
+
       echo "<a id='import'>".$menu."</a>";
       Html::openArrowMassives("form_model", TRUE);
       Html::closeArrowMassives(array('import' => __('Import')),
                                array('import' => 'Import will update existing models'));
       Html::closeForm();
    }
-   
-   
-   
+
+
+
    function displayModelsList($data, $a_sort, $modelimport) {
       global $CFG_GLPI, $DB;
-      
+
       echo  "<table class='tab_cadre'>";
 
       echo "<tr class='tab_bg_1'>";
@@ -830,10 +830,10 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          echo "<th colspan='5'>";
          echo "Models up to date";
       }
-            
+
       echo "</th>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<th rowspan='2'>";
       echo "</th>";
@@ -871,13 +871,13 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "snmpwalk file";
       echo "</th>";
       echo "</tr>";
-      
-      array_multisort($a_sort[$_SESSION['glpi_plugin_fusioninventory_constructmodelsort']], 
-                      SORT_ASC, 
-                      $a_sort['itemtype'], 
-                      SORT_ASC, 
-                      $a_sort['name'], 
-                      SORT_ASC, 
+
+      array_multisort($a_sort[$_SESSION['glpi_plugin_fusioninventory_constructmodelsort']],
+                      SORT_ASC,
+                      $a_sort['itemtype'],
+                      SORT_ASC,
+                      $a_sort['name'],
+                      SORT_ASC,
                       $data);
       foreach ($data as $key => $a_models) {
          if ($a_sort['stabledevel'][$key] == $modelimport) {
@@ -960,9 +960,9 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       }
       echo "</table>";
    }
-   
-   
-   
+
+
+
    function importModels() {
 
       echo "<table class='tab_cadre_fixe'>";
@@ -971,7 +971,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "<th>";
       echo "Download SNMP models, please wait...";
       echo "</th>";
-      echo "</tr>";      
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
@@ -983,20 +983,20 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          $this->showAuth();
          $this->getSendModel(1, $models_id);
          $this->closeConnection();
-         
+
          $i++;
          Html::changeProgressBarPosition($i, $nb, "$i / $nb");
       }
       Html::changeProgressBarPosition($nb, $nb, "$nb / $nb");
       echo "</td>";
-      echo "</tr>";  
+      echo "</tr>";
       echo "</table>";
-      
+
       if (count($_POST['models']) == $_POST['nbmodels']) {
          // Import all models
          $pfModel = new PluginFusioninventorySNMPModel();
          $pfModel->importAllModels(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels');
-         
+
       } else {
          // Import each model
          $pfImportExport = new PluginFusioninventorySnmpmodelImportExport();
@@ -1016,13 +1016,13 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          $i = 0;
          foreach (glob(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/*.xml') as $file) {
             $pfImportExport->import($file, 0);
-            
+
             $i++;
             Html::changeProgressBarPosition($i, $nb, "$i / $nb");
          }
          Html::changeProgressBarPosition($nb, $nb, "$nb / $nb");
          echo "</td>";
-         echo "</tr>";  
+         echo "</tr>";
          echo "</table>";
          PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
       }
@@ -1034,11 +1034,11 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          }
       }
    }
-   
-   
-   
+
+
+
    function showFormAddOid($mapping_name) {
-      
+
       echo "<form name='form' method='post' action=''>";
       echo "<table class='tab_cadre_fixe'>";
 
@@ -1047,7 +1047,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "Add a new oid";
       echo "</th>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_3'>";
       echo "<td>";
       echo "Mapping&nbsp;:";
@@ -1059,7 +1059,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "<td>";
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_3'>";
       echo "<td>";
       echo "Numeric oid&nbsp;:";
@@ -1072,7 +1072,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
               "<strong>.1.3.6.1.2.1.1.5.0</strong>";
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_3'>";
       echo "<td>";
       echo "Mib oid&nbsp;:";
@@ -1085,7 +1085,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
               "<strong>SNMPv2-MIB::sysName.0</strong>";
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_3'>";
       echo "<td>";
       echo "Number numeric groups after&nbsp;:";
@@ -1097,11 +1097,11 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "* For the oid for <i>name</i> there is no other thing after ".
               ".1.3.6.1.2.1.1.5.0, so it's <strong>0</strong><br/>
             * For the oid for <i>ifName</i>, we get the port id like ".
-              ".1.3.6.1.2.1.31.1.1.1.1<strong>.10001</strong>, 
+              ".1.3.6.1.2.1.31.1.1.1.1<strong>.10001</strong>,
             .1.3.6.1.2.1.31.1.1.1.1<strong>.10002</strong>... so it's <strong>1</strong>";
       echo "</td>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='3' align='center'>";
       echo "<input type='submit' name='add' value=\"".__('Add')."\" class='submit'>";
@@ -1109,21 +1109,21 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "</table>";
       Html::closeForm();
    }
-   
-   
-   
+
+
+
    function sendNewOid($data) {
       $addOid = array();
       $addOid['addOid']['mapping'] = $_POST['mapping'];
       $addOid['addOid']['numeric_oid'] = $_POST['numeric_oid'];
       $addOid['addOid']['mib_oid'] = $_POST['mib_oid'];
       $addOid['addOid']['nboids_after'] = $_POST['nboids_after'];
-      
+
       $buffer = json_encode($addOid);
       curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
       $retserv = curl_exec($this->fp);
       $data = json_decode($retserv, TRUE);
-      
+
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th align='center'>";
@@ -1143,21 +1143,21 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "</tr>";
       echo "</table>";
    }
-   
-   
+
+
    function mcryptText($text) {
       return $text;
-      
-      
+
+
       $td = mcrypt_module_open(MCRYPT_RIJNDAEL_256, "", MCRYPT_MODE_ECB, "");
       mcrypt_generic_init($td, $this->key, 0);
       $temp = mcrypt_generic($td, $text);
       mcrypt_generic_deinit($td);
       return $temp;
    }
-   
-   
-   
+
+
+
    function detectWrongSysdescr($sysdescr) {
       $message = array();
       if (strstr($sysdescr, 'AXIS OfficeBasic Network Print Server')) {
@@ -1189,7 +1189,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          $message[] = array('oid' => '.1.3.6.1.4.1.674.10895.3000.1.2.100.1.0');
       } else if ($sysdescr == "SB-110"
               OR $sysdescr == "KYOCERA MITA Printing System"
-              OR $sysdescr == "KYOCERA Print I/F") {         
+              OR $sysdescr == "KYOCERA Print I/F") {
          $message[] = array('oid' => '.1.3.6.1.4.1.1347.42.5.1.1.2.1',
                             'message' => 'If this OID exist');
          $message[] = array('oid' => '.1.3.6.1.4.1.1347.43.5.1.1.1.1',
@@ -1205,10 +1205,10 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          $message[] = array('oid' => '.1.3.6.1.4.1.236.11.5.1.1.1.1.0');
       }  else if (preg_match("/^\S+ Service Release/", $sysdescr)) {
          $message[] = array('oid' => '.1.3.6.1.2.1.47.1.1.1.1.13.1');
-      } 
+      }
       return $message;
    }
-   
+
 }
 
 ?>

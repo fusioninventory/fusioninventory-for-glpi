@@ -520,7 +520,7 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_iprange($ariane='') {
-      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryWizard", 
+      PluginFusioninventoryWizard::displayShowForm($ariane, "PluginFusioninventoryWizard",
                                                    array('f'=>'setIprange'));
    }
 
@@ -550,7 +550,7 @@ class PluginFusioninventoryWizard {
     **/
    static function w_entityrules($ariane='') {
       PluginFusioninventoryWizard::displayShowForm(
-                                             $ariane, 
+                                             $ariane,
                                              "PluginFusioninventoryInventoryRuleEntityCollection");
    }
 
@@ -577,8 +577,8 @@ class PluginFusioninventoryWizard {
     * @return Nothing (display)
     **/
    static function w_remotedevices($ariane='') {
-      PluginFusioninventoryWizard::displayShowForm($ariane, 
-                                                   "PluginFusioninventoryWizard", 
+      PluginFusioninventoryWizard::displayShowForm($ariane,
+                                                   "PluginFusioninventoryWizard",
                                                    array('f'=>'setESX'));
    }
 
@@ -641,7 +641,7 @@ class PluginFusioninventoryWizard {
                  $pfIPRange->fields['name']."'
                AND `is_active`='1'
                AND `definition`='".exportArrayToDB(array(
-                   array('PluginFusioninventoryIPRange' => 
+                   array('PluginFusioninventoryIPRange' =>
                        $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])))."'
             LIMIT 1";
          $result = $DB->query($query);
@@ -669,7 +669,7 @@ class PluginFusioninventoryWizard {
             $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusioninventory");
             $input['method'] = 'networkdiscovery';
             $input['definition'] = exportArrayToDB(array(
-                array('PluginFusioninventoryIPRange' => 
+                array('PluginFusioninventoryIPRange' =>
                     $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])));
             $a_agentscan = $pfAgentmodule->getAgentsCanDo('NETWORKDISCOVERY');
             $a_agents = array();
@@ -701,7 +701,7 @@ class PluginFusioninventoryWizard {
                  $pfIPRange->fields['name']."'
                AND `is_active`='1'
                AND `definition`='".exportArrayToDB(array(
-                   array('PluginFusioninventoryIPRange' => 
+                   array('PluginFusioninventoryIPRange' =>
                        $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])))."'
             LIMIT 1";
          $result = $DB->query($query);
@@ -729,7 +729,7 @@ class PluginFusioninventoryWizard {
             $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusioninventory");
             $input['method'] = 'snmpinventory';
             $input['definition'] = exportArrayToDB(array(
-                array('PluginFusioninventoryIPRange' => 
+                array('PluginFusioninventoryIPRange' =>
                     $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])));
             $a_agentscan = $pfAgentmodule->getAgentsCanDo('SNMPINVENTORY');
             $a_agents = array();
@@ -761,7 +761,7 @@ class PluginFusioninventoryWizard {
                  $pfCredentialIp->fields['name']."'
                AND `is_active`='1'
                AND `definition`='".exportArrayToDB(array(
-                   array('PluginFusioninventoryCredentialIp' => 
+                   array('PluginFusioninventoryCredentialIp' =>
                        $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])))."'
             LIMIT 1";
          $result = $DB->query($query);
@@ -789,7 +789,7 @@ class PluginFusioninventoryWizard {
             $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusioninventory");
             $input['method'] = 'ESX';
             $input['definition'] = exportArrayToDB(array(
-                array('PluginFusioninventoryCredentialIp' => 
+                array('PluginFusioninventoryCredentialIp' =>
                     $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])));
             $a_agentscan = $pfAgentmodule->getAgentsCanDo('ESX');
             $a_agents = array();

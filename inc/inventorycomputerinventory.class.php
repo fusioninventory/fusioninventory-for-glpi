@@ -63,7 +63,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       $_SESSION["plugin_fusinvinventory_entity"] = -1;
 
       $this->sendCriteria($p_DEVICEID, $arrayinventory);
-      
+
       return $errors;
    }
 
@@ -80,13 +80,13 @@ class PluginFusioninventoryInventoryComputerInventory {
    *
    **/
    function sendCriteria($p_DEVICEID, $arrayinventory) {
-      
+
       if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
          unset($_SESSION['plugin_fusioninventory_entityrestrict']);
       }
       $_SESSION['plugin_fusioninventory_noruleentity'] = FALSE;
 
-      
+
       $this->device_id = $p_DEVICEID;
       // * Hacks
 
@@ -107,25 +107,25 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
             $arrayinventory['CONTENT']['SOFTWARES'][] = $inputos;
          }
-         
+
          // Hack for USB Printer serial
          if (isset($arrayinventory['CONTENT']['PRINTERS'])) {
             foreach($arrayinventory['CONTENT']['PRINTERS'] as $key=>$printer) {
                if ((isset($printer['SERIAL']))
                        AND (preg_match('/\/$/', $printer['SERIAL']))) {
-                  $arrayinventory['CONTENT']['PRINTERS'][$key]['SERIAL'] = 
+                  $arrayinventory['CONTENT']['PRINTERS'][$key]['SERIAL'] =
                         preg_replace('/\/$/', '', $printer['SERIAL']);
                }
             }
          }
 
-         // Hack to remove Memories with Flash types see ticket 
+         // Hack to remove Memories with Flash types see ticket
          // http://forge.fusioninventory.org/issues/1337
          if (isset($arrayinventory['CONTENT']['MEMORIES'])) {
             foreach($arrayinventory['CONTENT']['MEMORIES'] as $key=>$memory) {
                if ((isset($memory['TYPE']))
                        AND (preg_match('/Flash/', $memory['TYPE']))) {
-                  
+
                   unset($arrayinventory['CONTENT']['MEMORIES'][$key]);
                }
             }
@@ -161,16 +161,16 @@ class PluginFusioninventoryInventoryComputerInventory {
 
       // Global criterias
 
-         if ((isset($a_computerinventory['computer']['serial'])) 
+         if ((isset($a_computerinventory['computer']['serial']))
                  AND (!empty($a_computerinventory['computer']['serial']))) {
             $input['serial'] = $a_computerinventory['computer']['serial'];
          }
-         if ((isset($a_computerinventory['computer']['uuid'])) 
+         if ((isset($a_computerinventory['computer']['uuid']))
                  AND (!empty($a_computerinventory['computer']['uuid']))) {
             $input['uuid'] = $a_computerinventory['computer']['uuid'];
          }
          foreach($a_computerinventory['networkport'] as $network) {
-            if (((isset($network['virtualdev'])) 
+            if (((isset($network['virtualdev']))
                     && ($network['virtualdev'] != 1))
                     OR (!isset($network['virtualdev']))){
                if ((isset($network['mac'])) AND (!empty($network['mac']))) {
@@ -186,7 +186,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                }
             }
          }
-         
+
          if ((isset($a_computerinventory['computer']['os_license_number']))
                AND (!empty($a_computerinventory['computer']['os_license_number']))) {
             $input['mskey'] = $a_computerinventory['computer']['os_license_number'];
@@ -196,7 +196,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $input['osname'] = $a_computerinventory['computer']['operatingsystems_id'];
 
          }
-         if ((isset($a_computerinventory['computer']['models_id'])) 
+         if ((isset($a_computerinventory['computer']['models_id']))
                  AND (!empty($a_computerinventory['computer']['models_id']))) {
             $input['model'] = $a_computerinventory['computer']['models_id'];
          }
@@ -215,7 +215,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 //               }
 //            }
 //         }
-         if ((isset($a_computerinventory['ACCOUNTINFO']['KEYNAME'])) 
+         if ((isset($a_computerinventory['ACCOUNTINFO']['KEYNAME']))
                  AND ($a_computerinventory['ACCOUNTINFO']['KEYNAME'] == 'TAG')) {
             if (isset($a_computerinventory['ACCOUNTINFO']['KEYVALUE'])) {
                $input['tag'] = $a_computerinventory['ACCOUNTINFO']['KEYVALUE'];
@@ -229,13 +229,13 @@ class PluginFusioninventoryInventoryComputerInventory {
          }
          $input['itemtype'] = "Computer";
 
-         // If transfer is disable, get entity and search only on this entity 
+         // If transfer is disable, get entity and search only on this entity
          // (see http://forge.fusioninventory.org/issues/1503)
          $pfConfig = new PluginFusioninventoryConfig();
 
          // entity rules
             $inputent = $input;
-            if ((isset($a_computerinventory['computer']['domains_id'])) 
+            if ((isset($a_computerinventory['computer']['domains_id']))
                     AND (!empty($a_computerinventory['computer']['domains_id']))) {
                $inputent['domain'] = $a_computerinventory['computer']['domains_id'];
             }
@@ -269,7 +269,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                }
             }
          // End entity rules
-      $_SESSION['plugin_fusioninventory_classrulepassed'] = 
+      $_SESSION['plugin_fusioninventory_classrulepassed'] =
                      "PluginFusioninventoryInventoryComputerInventory";
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = $rule->processAllRules($input, array(), array('class'=>$this));
@@ -285,7 +285,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          $inputdb['date'] = date("Y-m-d H:i:s");
          $inputdb['itemtype'] = "Computer";
 
-         if ((isset($a_computerinventory['computer']['domains_id'])) 
+         if ((isset($a_computerinventory['computer']['domains_id']))
                     AND (!empty($a_computerinventory['computer']['domains_id']))) {
                $inputdb['domain'] = $a_computerinventory['computer']['domains_id'];
             }
@@ -334,13 +334,13 @@ class PluginFusioninventoryInventoryComputerInventory {
    **/
    function rulepassed($items_id, $itemtype) {
       global $DB, $PLUGIN_FUSIONINVENTORY_XML;
-      
+
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
          "Rule passed : ".$items_id.", ".$itemtype."\n"
       );
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_computerinventory = $pfFormatconvert->replaceids($this->arrayinventory);
       $entities_id = 0;
       if ($_SESSION['plugin_fusioninventory_noruleentity']) {
@@ -373,13 +373,13 @@ class PluginFusioninventoryInventoryComputerInventory {
          $_SESSION["plugin_fusinvinventory_entity"] = $entities_id;
       }
       $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation(
-                                             $a_computerinventory, 
+                                             $a_computerinventory,
                                              $entities_id);
 
       if ($itemtype == 'Computer') {
          $pfInventoryComputerLib = new PluginFusioninventoryInventoryComputerLib();
          $pfAgent                = new PluginFusioninventoryAgent();
-         
+
          $computer   = new Computer();
          if ($items_id == '0') {
             $_SESSION['glpiactiveentities'] = array($entities_id);
@@ -390,7 +390,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $_SESSION['glpiactiveentities'] = array($entities_id);
             $_SESSION['glpiactiveentities_string'] = $entities_id;
             $_SESSION['glpiactive_entity'] = $entities_id;
-            
+
             if ($computer->fields['entities_id'] != $entities_id) {
                $transfer = new Transfer();
                $pfConfig = new PluginFusioninventoryConfig();
@@ -399,15 +399,15 @@ class PluginFusioninventoryInventoryComputerInventory {
                $transfer->moveItems($item_to_transfer, $entities_id, $transfer->fields);
             }
          }
-         
+
          $no_history = FALSE;
          // * New
          $setdynamic = 1;
          if ($items_id == '0') {
             $input = array();
-            $input['entities_id'] = $entities_id;                     
+            $input['entities_id'] = $entities_id;
             if (isset($_SESSION['plugin_fusioninventory_locations_id'])) {
-               $a_computerinventory['computer']['locations_id'] = 
+               $a_computerinventory['computer']['locations_id'] =
                                  $_SESSION['plugin_fusioninventory_locations_id'];
                unset($_SESSION['plugin_fusioninventory_locations_id']);
             }
@@ -415,11 +415,11 @@ class PluginFusioninventoryInventoryComputerInventory {
             $no_history = TRUE;
             $setdynamic = 0;
          }
-               
+
          $serialized = gzcompress(serialize($a_computerinventory));
-         $a_computerinventory['fusioninventorycomputer']['serialized_inventory'] = 
+         $a_computerinventory['fusioninventorycomputer']['serialized_inventory'] =
                   Toolbox::addslashes_deep($serialized);
-         
+
          $pfAgent->setAgentWithComputerid($items_id, $this->device_id, $entities_id);
 
          $ret = $DB->query("SELECT IS_USED_LOCK('inventory".$items_id."')");
@@ -430,19 +430,19 @@ class PluginFusioninventoryInventoryComputerInventory {
       <ERROR>ERROR: SAME COMPUTER IS CURRENTLY UPDATED</ERROR>
       </REPLY>");
             $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
-            exit;            
+            exit;
          }
-         
+
 $start = microtime(TRUE);
          $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 300)");
          if ($DB->result($ret, 0, 0) == 1) {
 
             $pfInventoryComputerLib->updateComputer(
-                    $a_computerinventory, 
-                    $items_id, 
+                    $a_computerinventory,
+                    $items_id,
                     $no_history,
                     $setdynamic);
-            
+
             $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
 Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
         memory_get_usage()."\n".
@@ -458,7 +458,7 @@ Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
                $inputrulelog['date'] = date('Y-m-d H:i:s');
                $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
                if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-                  $inputrulelog['plugin_fusioninventory_agents_id'] = 
+                  $inputrulelog['plugin_fusioninventory_agents_id'] =
                                  $_SESSION['plugin_fusioninventory_agents_id'];
                }
                $inputrulelog['items_id'] = $items_id;
@@ -467,11 +467,11 @@ Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
                $pfRulematchedlog->add($inputrulelog, array(), FALSE);
                $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
                unset($_SESSION['plugin_fusioninventory_rules_id']);
-            } 
+            }
             // Write XML file
             if (!empty($PLUGIN_FUSIONINVENTORY_XML)) {
                PluginFusioninventoryToolbox::writeXML(
-                       $items_id, 
+                       $items_id,
                        $PLUGIN_FUSIONINVENTORY_XML->asXML(),
                        'computer');
             }
@@ -489,7 +489,7 @@ Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
                $inputrulelog['date'] = date('Y-m-d H:i:s');
                $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
                if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-                  $inputrulelog['plugin_fusioninventory_agents_id'] = 
+                  $inputrulelog['plugin_fusioninventory_agents_id'] =
                                  $_SESSION['plugin_fusioninventory_agents_id'];
                }
                $inputrulelog['items_id'] = $items_id;
@@ -508,7 +508,7 @@ Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
          // Write XML file
          if (!empty($PLUGIN_FUSIONINVENTORY_XML)) {
             PluginFusioninventoryToolbox::writeXML(
-                    $items_id, 
+                    $items_id,
                     $PLUGIN_FUSIONINVENTORY_XML->asXML(),
                     'PluginFusioninventoryUnknownDevice');
          }
@@ -537,7 +537,7 @@ Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
     * @param type $management_value
     *
     */
-   static function addDefaultStateIfNeeded(&$input, $check_management = FALSE, 
+   static function addDefaultStateIfNeeded(&$input, $check_management = FALSE,
                                            $management_value = 0) {
       $config = new PluginFusioninventoryConfig();
       $state = $config->getValue("states_id_default");
@@ -549,8 +549,8 @@ Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
       return $input;
    }
 
-   
-   
+
+
    /**
     * Return method name of this class/plugin
     *

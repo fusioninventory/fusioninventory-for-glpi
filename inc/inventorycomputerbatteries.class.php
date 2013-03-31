@@ -117,14 +117,14 @@ class PluginFusioninventoryInventoryComputerBatteries extends CommonDBTM {
    function showForm($items_id, $options=array()) {
 
       $a_batteries = $this->find("`computers_id`='".$items_id."'");
-      
+
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
       echo "<th colspan='4'>".__('Antivirus', 'fusioninventory');
 
       echo "</th>";
       echo "</tr>";
-      
+
       foreach ($a_batteries as $batteryData) {
          echo "<tr class='tab_bg_1'>";
          echo "<th width='15%'>";
@@ -165,7 +165,7 @@ class PluginFusioninventoryInventoryComputerBatteries extends CommonDBTM {
          echo "</td>";
          echo "<td colspan='2'>";
          echo "</td>";
-         echo "</tr>";     
+         echo "</tr>";
       }
       echo "</table>";
       return TRUE;

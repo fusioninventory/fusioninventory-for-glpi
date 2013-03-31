@@ -512,7 +512,7 @@ class PluginFusioninventorySetup {
          $input['pattern']= 'Printer';
          $input['condition']=0;
          $rulecriteria->add($input);
-         
+
          $input = array();
          $input['rules_id'] = $rule_id;
          $input['criteria'] = "serial";
@@ -528,7 +528,7 @@ class PluginFusioninventorySetup {
          $input['field'] = '_fusion';
          $input['value'] = '0';
          $ruleaction->add($input);
-         
+
       $ranking++;
       // Create rule for : NetworkEquipment + serial
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();

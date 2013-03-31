@@ -29,14 +29,14 @@
 
    @package   Plugin Monitoring for GLPI
    @author    David Durieux
-   @co-author 
-   @comment   
+   @co-author
+   @comment
    @copyright Copyright (c) 2011-2013 Plugin Monitoring for GLPI team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      https://forge.indepnet.net/projects/monitoring/
    @since     2011
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -46,19 +46,19 @@ if (!defined('GLPI_ROOT')) {
 
 //class PluginMonitoringSearch extends CommonDBTM {
 class PluginFusioninventorySearch extends CommonDBTM {
-   
+
    public $formurl = 'monitoring/front/componentscatalog_rule.form.php';
    public $customIdVar = 'plugin_monitoring_componentscalalog_id';
    public $displaydeletebuton = TRUE;
-   
+
    /*
     * ************************************************************************ *
     * ************** Functions derived from Search of GLPI core ************** *
     * ************************************************************************ *
     */
-   
-   
-   
+
+
+
    /*
     * Cloned Core function to display with our require.
     */
@@ -93,7 +93,7 @@ $p = array();
       }
 
       $linked =  Search::getMetaItemtypeAvailable($itemtype);
-      
+
 echo "<form name='searchform$itemtype' method='get' action=\"".
               $CFG_GLPI['root_doc']."/plugins/".$this->formurl."\">";
 
@@ -118,7 +118,7 @@ echo "<form name='searchform$itemtype' method='get' action=\"".
       echo "</td>";
       echo "</tr>";
       if (isset($_GET['itemtype'])) {
-      
+
       echo "<tr class='tab_bg_1'>";
 
       if (($_SESSION["glpisearchcount"][$itemtype] + $_SESSION["glpisearchcount2"][$itemtype]) > 1) {
@@ -242,7 +242,7 @@ echo "<td colspan='2'>";
 
          reset($options);
          $first_group = TRUE;
-         $str_limit   = 28; // Not $_SESSION['glpidropdown_chars_limit'] because must be 
+         $str_limit   = 28; // Not $_SESSION['glpidropdown_chars_limit'] because must be
                             //really to short (5 or 10) and search engine will be unusable
          $nb_in_group = 0;
          $group       = '';
@@ -470,7 +470,7 @@ echo "<td colspan='2'>";
 
       echo "</td></tr>";
 //      echo "</table>\n";
-      }     
+      }
 
 echo "<tr>";
       if (isset($_GET['id'])) {
@@ -505,8 +505,8 @@ echo "<tr>";
       Html::closeForm();
    }
 
-   
-   
+
+
    /*
     * Clone of Search::showList but only to have SQL query
     */
@@ -605,7 +605,7 @@ $p = array();
       /* =========== Add for plugin Monitoring ============ */
          $toview = array();
          array_push($toview, 1);
-         
+
 
       // Add searched items
       if (count($p['field'])>0) {
@@ -1003,7 +1003,7 @@ $p = array();
       // Use a ReadOnly connection if available and configured to be used
       $DBread = DBConnection::getReadConnection();
 
-      // If no research limit research to display item and compute number of 
+      // If no research limit research to display item and compute number of
       // item using simple request
       $nosearch = TRUE;
       for ($i=0 ; $i<$_SESSION["glpisearchcount"][$itemtype] ; $i++) {
@@ -1222,9 +1222,9 @@ $p = array();
          return $result;
       } else {
          return FALSE;
-      }      
+      }
    }
-   
+
 }
 
 ?>

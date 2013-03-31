@@ -58,8 +58,8 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
    }
 
-   
-   
+
+
    static function canCreate() {
       return PluginFusioninventoryProfile::haveRight("model", "w");
    }
@@ -108,7 +108,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       $tab[7]['forcegroupby']  = TRUE;
       $tab[7]['splititems']    = TRUE;
 
-      
+
       return $tab;
    }
 
@@ -198,7 +198,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "</table>";
       Html::closeForm();
       echo "</div>";
-      
+
       echo "<br/>";
       $pfSnmpmodeldevice = new PluginFusioninventorySnmpmodeldevice();
       $pfSnmpmodeldevice->showDevices($id);
@@ -258,7 +258,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
             $oids[$data['oid_port_counter']][$data['oid_port_dyn']][$data['mapping_name']] =
-               Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids', 
+               Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',
                                          $data['plugin_fusioninventory_snmpmodelmiboids_id']);
          }
          return $oids;
@@ -283,13 +283,13 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
                $NetworkEquipment = new NetworkEquipment();
                if($NetworkEquipment->getFromDB($device_id)) {
                   $NetworkEquipment->check($device_id, 'r');
-                  $a_data = $pfNetworkEquipment->find("`networkequipments_id`='".$device_id."'", 
+                  $a_data = $pfNetworkEquipment->find("`networkequipments_id`='".$device_id."'",
                                                       "", "1");
                   $data = current($a_data);
                   $sysdescr = $data["sysdescr"];
                } else {
                   // Delete, device deleted
-                  $a_data = $pfNetworkEquipment->find("`networkequipments_id`='".$device_id."'", 
+                  $a_data = $pfNetworkEquipment->find("`networkequipments_id`='".$device_id."'",
                                                       "", "1");
                   $data = current($a_data);
                   $pfNetworkEquipment->delete($data);
@@ -321,7 +321,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       $sysdescr = trim($sysdescr);
       $modelgetted = '';
       if (!empty($sysdescr)) {
-         $xml = @simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml", 
+         $xml = @simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml",
                                      'SimpleXMLElement', LIBXML_NOCDATA);
          foreach ($xml->DEVICE as $device) {
             $device->SYSDESCR = str_replace("\r", "", $device->SYSDESCR);
@@ -458,7 +458,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       }
 
       PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
-      
+
       // Reload model for networkequipment have sysdescr
       $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
       $a_networkequipments = $pfNetworkEquipment->find("`sysdescr`!=''");
@@ -470,7 +470,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       $a_printers = $pfPrinter->find("`sysdescr`!=''");
       foreach ($a_printers as $a_printer) {
          $pfModel->getrightmodel($a_printer['printers_id'], "Printer");
-      }      
+      }
    }
 }
 

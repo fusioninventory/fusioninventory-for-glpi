@@ -182,30 +182,30 @@ class PluginFusioninventoryCommunication {
          $xmltag = "NETWORKINVENTORY";
       }
 
-      
+
       $agent = $pfAgent->InfosByKey($this->message['DEVICEID']);
       if ($xmltag == "PROLOG") {
          return FALSE;
       }
 
       if (isset($this->message['CONTENT']['MODULEVERSION'])) {
-         $pfAgent->setAgentVersions($agent['id'], 
-                                    $xmltag, 
+         $pfAgent->setAgentVersions($agent['id'],
+                                    $xmltag,
                                     $this->message['CONTENT']['MODULEVERSION']);
       } else if (isset($this->message['CONTENT']['VERSIONCLIENT'])) {
-         $version = str_replace("FusionInventory-Agent_", 
-                                "", 
+         $version = str_replace("FusionInventory-Agent_",
+                                "",
                                 $this->message['CONTENT']['VERSIONCLIENT']);
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
 
       if (isset($this->message->CONTENT->MODULEVERSION)) {
-         $pfAgent->setAgentVersions($agent['id'], 
-                                    $xmltag, 
+         $pfAgent->setAgentVersions($agent['id'],
+                                    $xmltag,
                                     (string)$this->message->CONTENT->MODULEVERSION);
       } else if (isset($this->message->CONTENT->VERSIONCLIENT)) {
-         $version = str_replace("FusionInventory-Agent_", 
-                                "", 
+         $version = str_replace("FusionInventory-Agent_",
+                                "",
                                 (string)$this->message->CONTENT->VERSIONCLIENT);
          $pfAgent->setAgentVersions($agent['id'], $xmltag, $version);
       }
@@ -308,7 +308,7 @@ class PluginFusioninventoryCommunication {
 
 // old POST protocol
    function handleOCSCommunication($xml='') {
-      
+
       // ***** For debug only ***** //
       //$GLOBALS["HTTP_RAW_POST_DATA"] = gzcompress('');
       // ********** End ********** //
@@ -407,8 +407,8 @@ class PluginFusioninventoryCommunication {
       $pxml = '';
       if (($pxml = @simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA))) {
 
-      } else if (($pxml = @simplexml_load_string(utf8_encode($xml), 
-                                                'SimpleXMLElement', 
+      } else if (($pxml = @simplexml_load_string(utf8_encode($xml),
+                                                'SimpleXMLElement',
                                                 LIBXML_NOCDATA))) {
          $xml = utf8_encode($xml);
       } else {
@@ -424,9 +424,9 @@ class PluginFusioninventoryCommunication {
             return;
          }
       }
-      
+
       $_SESSION['plugin_fusioninventory_compressmode'] = $compressmode;
-      
+
       // Convert XML into PHP array
       $arrayinventory = PluginFusioninventoryFormatconvert::XMLtoArray($pxml);
       unset($pxml);
@@ -434,11 +434,11 @@ class PluginFusioninventoryCommunication {
       if (isset($arrayinventory['DEVICEID'])) {
          $deviceid = $arrayinventory['DEVICEID'];
       }
-      
+
       $agent = new PluginFusioninventoryAgent();
       $agents_id = $agent->importToken($arrayinventory);
       $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
-      
+
       if (!$communication->import($arrayinventory)) {
 
          if ($deviceid != '') {

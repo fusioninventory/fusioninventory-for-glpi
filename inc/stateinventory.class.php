@@ -49,7 +49,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
    function __construct() {
       global $CFG_GLPI;
 
-      $CFG_GLPI['glpitablesitemtype']['PluginFusioninventoryStateInventory'] = 
+      $CFG_GLPI['glpitablesitemtype']['PluginFusioninventoryStateInventory'] =
           'glpi_plugin_fusioninventory_taskjobstates';
    }
 
@@ -74,7 +74,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
 
       // Total Number of events
       $querycount = "SELECT count(*) AS cpt FROM `glpi_plugin_fusioninventory_taskjobstates`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` 
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
             ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
          WHERE `method` = 'networkinventory'
          GROUP BY `uniqid`
@@ -103,7 +103,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
 
       $sql = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.*
             FROM `glpi_plugin_fusioninventory_taskjobstates`
-         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` 
+         LEFT JOIN `glpi_plugin_fusioninventory_taskjobs`
             ON `plugin_fusioninventory_taskjobs_id` = `glpi_plugin_fusioninventory_taskjobs`.`id`
          WHERE `method` = 'networkinventory'
          GROUP BY `uniqid`
@@ -188,7 +188,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
             }
             echo "<td>".$display_date.$interval->s."s</td>";
 
-            echo "<td>".round(($nb_query - $nb_errors) / 
+            echo "<td>".round(($nb_query - $nb_errors) /
                     (strtotime($end_date) - strtotime($start_date)), 2)."</td>";
          }
          echo "<td>".$nb_threads."</td>";

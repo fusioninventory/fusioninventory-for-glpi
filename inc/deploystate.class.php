@@ -82,8 +82,8 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
       require GLPI_ROOT."/plugins/fusinvdeploy/js/deploystate.front.php";
    }
 
-   
-   
+
+
    static function getTaskjobsDatas() {
       global $DB;
 
@@ -109,28 +109,28 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
       return json_encode($res);
    }
 
-   
-   
+
+
    static function processComment($state, $comment) {
       if ($comment == "") {
          switch ($state) {
-            
+
             case PluginFusioninventoryTaskjoblog::TASK_OK:
                $comment = __('Ok', 'fusioninventory');
                break;
-            
+
             case PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED:
                $comment = __('Error / rescheduled', 'fusioninventory');
                break;
-            
+
             case PluginFusioninventoryTaskjoblog::TASK_ERROR:
                $comment = __('Error', 'fusioninventory');
                break;
-            
+
             case PluginFusioninventoryTaskjoblog::TASK_PREPARED:
                $comment = __('Prepared', 'fusioninventory');
                break;
-            
+
          }
       } elseif ($state == PluginFusioninventoryTaskjoblog::TASK_ERROR_OR_REPLANNED) {
          $comment = __('Error / rescheduled', 'fusioninventory');
@@ -138,8 +138,8 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
       return $comment;
    }
 
-   
-   
+
+
    static function getTaskJobLogsDatasTree($params) {
       global $DB;
 
@@ -152,7 +152,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
 
       $query = "SELECT DISTINCT plugin_fusioninventory_taskjobstates_id, id, date, state, comment
       FROM (
-         SELECT logs.plugin_fusioninventory_taskjobstates_id, logs.id, logs.date, logs.state, 
+         SELECT logs.plugin_fusioninventory_taskjobstates_id, logs.id, logs.date, logs.state,
             logs.comment
          FROM glpi_plugin_fusioninventory_taskjoblogs logs
          INNER JOIN glpi_plugin_fusioninventory_taskjobstates status
@@ -185,8 +185,8 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
       return json_encode($res);
    }
 
-   
-   
+
+
    static function getTaskJobLogsDatasTreeNode($params) {
       global $DB;
 
@@ -227,8 +227,8 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
 
       return json_encode($res);
    }
-   
-   
+
+
 
    static function getTaskjobsAllDatasTree() {
       global $DB, $CFG_GLPI;
@@ -303,7 +303,7 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
                   case 'PluginFusioninventoryDeployGroup':
                      $res[$i]['children'][$j]['icon'] = $CFG_GLPI['root_doc'].
                               "/plugins/fusioninventory/pics/ext/group.png";
-                     $res[$i]['children'][$j]['progress'] = self::getTaskPercent($row_jobs['id'], 
+                     $res[$i]['children'][$j]['progress'] = self::getTaskPercent($row_jobs['id'],
                                                                                  'group');
 
                      $k = 0;
@@ -311,14 +311,14 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
                         $computer = new Computer;
                         $computer->getFromDB($row_status['items_id']);
 
-                        $res[$i]['children'][$j]['children'][$k]['name'] = 
+                        $res[$i]['children'][$j]['children'][$k]['name'] =
                                        $computer->getField('name');
                         $res[$i]['children'][$j]['children'][$k]['leaf'] = TRUE;
                         $res[$i]['children'][$j]['children'][$k]['type'] = "Computer";
                         $res[$i]['children'][$j]['children'][$k]['progress'] = $row_status['state'];
                         $res[$i]['children'][$j]['children'][$k]['icon'] = $CFG_GLPI['root_doc'].
                                        "/plugins/fusioninventory/pics/ext/computer.png";
-                        $res[$i]['children'][$j]['children'][$k]['items_id'] = 
+                        $res[$i]['children'][$j]['children'][$k]['items_id'] =
                                        $row_status['items_id'];
                         $res[$i]['children'][$j]['children'][$k]['taskjobs_id'] = $row_jobs['id'];
 
@@ -336,8 +336,8 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
 
       return json_encode($res);
    }
-   
-   
+
+
 
    static function getTaskjobsDatasTreenode($params = array()) {
       global $DB, $CFG_GLPI;
@@ -480,8 +480,8 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
       return json_encode($res);
    }
 
-   
-   
+
+
    static function getTaskPercent($id, $type = 'task') {
       global $DB;
 

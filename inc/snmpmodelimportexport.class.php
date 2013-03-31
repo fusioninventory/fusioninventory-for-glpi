@@ -98,11 +98,11 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
          while ($data=$DB->fetch_array($result)) {
             $xml .= "      <oidobject>\n";
             $xml .= "         <object>".
-               Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmibobjects", 
+               Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmibobjects",
                                          $data["plugin_fusioninventory_snmpmodelmibobjects_id"]).
                "</object>\n";
             $xml .= "         <oid>".
-               Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids", 
+               Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids",
                                    $data["plugin_fusioninventory_snmpmodelmiboids_id"])."</oid>\n";
             $xml .= "         <portcounter>".$data["oid_port_counter"]."</portcounter>\n";
             $xml .= "         <dynamicport>".$data["oid_port_dyn"]."</dynamicport>\n";
@@ -228,7 +228,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       $input['comment'] = Toolbox::clean_cross_side_scripting_deep(
                               Toolbox::addslashes_deep((string)$xml->comments));
       $pfModel->update($input);
-      
+
       $a_devices = array();
       if (isset($xml->devices)) {
          foreach ($xml->devices->sysdescr as $child) {
@@ -241,7 +241,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       $a_oids = $pfModelMib->find(
               "`plugin_fusioninventory_snmpmodels_id`='".$models_data['id']."'");
       foreach ($a_oids as $data) {
-         $oid = Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids", 
+         $oid = Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids",
                                           $data['plugin_fusioninventory_snmpmodelmiboids_id']);
          $oid_name = '';
          if ($data['plugin_fusioninventory_mappings_id'] != 0) {
@@ -361,7 +361,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
             break;
 
       }
-      
+
       $input = array();
       $input['name']          = (string)$xml->name;
       $input['itemtype']      = $type;
@@ -369,7 +369,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       //$input['comment']       = Toolbox::clean_cross_side_scripting_deep(
       //                            Toolbox::addslashes_deep((string)$xml->comments));
       $plugin_fusioninventory_snmpmodels_id = $pfModel->add($input);
-      
+
       $a_devices = array();
       if (isset($xml->devices)
               && isset($xml->devices->sysdescr)) {
@@ -473,7 +473,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
 
    /**
-    * This function is used to import in one time all SNMP model in folder 
+    * This function is used to import in one time all SNMP model in folder
     * fusioninventory/snmpmodels/
     */
    function importMass() {
@@ -518,15 +518,15 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       $agent = $pta->InfosByKey($agentKey);
 
       if (isset($arrayinventory['AGENT']['START'])) {
-         $ptap->updateState($arrayinventory['PROCESSNUMBER'], 
+         $ptap->updateState($arrayinventory['PROCESSNUMBER'],
                             array('start_time' => date("Y-m-d H:i:s")), $agent['id']);
       } else if (isset($arrayinventory['AGENT']['END'])) {
-         $ptap->updateState($arrayinventory['PROCESSNUMBER'], 
+         $ptap->updateState($arrayinventory['PROCESSNUMBER'],
                             array('end_time' => date("Y-m-d H:i:s")), $agent['id']);
       } else if (isset($arrayinventory['AGENT']['EXIT'])) {
          $ptap->endState($arrayinventory['PROCESSNUMBER'], date("Y-m-d H:i:s"), $agent['id']);
       } else if (isset($arrayinventory['AGENT']['NBIP'])) {
-         $ptap->updateState($arrayinventory['PROCESSNUMBER'], 
+         $ptap->updateState($arrayinventory['PROCESSNUMBER'],
                             array('nb_ip' => $arrayinventory['AGENT']['NBIP']), $agent['id']);
       }
       if (isset($arrayinventory['AGENT']['AGENTVERSION'])) {
@@ -543,29 +543,29 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
          }
       }
       if ($count_discovery_devices != "0") {
-         $ptap->updateState($_SESSION['glpi_plugin_fusioninventory_processnumber'], 
+         $ptap->updateState($_SESSION['glpi_plugin_fusioninventory_processnumber'],
                             array('nb_found' => $count_discovery_devices), $agent['id']);
          if (is_int(key($arrayinventory['DEVICE']))) {
             foreach($arrayinventory['DEVICE'] as $discovery) {
                if (count($discovery) > 0) {
-                  $pfCommunicationNetworkDiscovery = 
+                  $pfCommunicationNetworkDiscovery =
                                     new PluginFusioninventoryCommunicationNetworkDiscovery();
                   $pfCommunicationNetworkDiscovery->sendCriteria($discovery);
                }
-            }            
+            }
          } else {
-            $pfCommunicationNetworkDiscovery = 
+            $pfCommunicationNetworkDiscovery =
                                     new PluginFusioninventoryCommunicationNetworkDiscovery();
             $pfCommunicationNetworkDiscovery->sendCriteria($arrayinventory['DEVICE']);
          }
       }
    }
-   
-   
-   
+
+
+
    static function exportDictionnaryFile() {
       global $DB;
-      
+
       if (!strstr($_SERVER['PHP_SELF'], "front/plugin.php")
               && !strstr($_SERVER['PHP_SELF'], "front/plugin.form.php")
               &&  basename($_SERVER['PHP_SELF']) != "cli_install.php") {

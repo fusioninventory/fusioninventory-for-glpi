@@ -59,7 +59,7 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
          && (!is_null($packages_id) && is_numeric($packages_id) )
       ) {
          $this->getFromDBByQuery(
-                     " WHERE plugin_fusioninventory_deploypackages_id = $packages_id 
+                     " WHERE plugin_fusioninventory_deploypackages_id = $packages_id
                         AND type = $order_type"
                   );
       }
@@ -110,8 +110,8 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    static function getJson($orders_id) {
       $order = new self;
       $order->getFromDB($orders_id);
@@ -122,8 +122,8 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    static function updateOrderJson($orders_id, $datas) {
       $order = new PluginFusioninventoryDeployOrder;
       return $order->update(array(
@@ -132,8 +132,8 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       ));
    }
 
-   
-   
+
+
    /**
     * TODO:
     * Create Orders from JSON format import/export
@@ -142,8 +142,8 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
 
    }
 
-   
-   
+
+
    /**
     * Get order ID associated with a package, by type
     * @param packages_id the package ID
@@ -164,8 +164,8 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    static function getOrderDetails($status = array(), $order_type = self::INSTALLATION_ORDER) {
 
       //get all jobstatus for this task

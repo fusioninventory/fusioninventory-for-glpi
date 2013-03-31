@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryProfile extends CommonDBTM {
 
-   
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       if ($item->getID() > 0
               && $item->fields['interface'] == 'central') {
@@ -58,7 +58,7 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       global $CFG_GLPI;
-      
+
       if ($item->getID() > 0) {
          $pfProfile = new self();
          $pfProfile->showProfileForm($item->getID(),
@@ -68,8 +68,8 @@ class PluginFusioninventoryProfile extends CommonDBTM {
       return TRUE;
    }
 
-   
-   
+
+
    /**
     * Add profile
     *

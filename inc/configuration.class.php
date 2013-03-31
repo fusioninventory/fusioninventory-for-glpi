@@ -57,7 +57,7 @@ class PluginFusioninventoryConfiguration extends CommonDBTM {
 
       if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
          $fusionTabs = $tabs;
-         $moduleTabForms = 
+         $moduleTabForms =
                $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
          if (count($moduleTabForms)) {
             foreach ($moduleTabForms as $module=>$form) {

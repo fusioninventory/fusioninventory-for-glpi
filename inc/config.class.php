@@ -71,7 +71,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       foreach ($input as $key => $value) {
          $this->addValues(array($key => $value));
       }
-      
+
       $input = array();
       $input['import_monitor']         = 2;
       $input['import_printer']         = 2;
@@ -185,7 +185,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
          $fusionTabs = $ong;
-         $moduleTabForms = 
+         $moduleTabForms =
                   $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
          if (count($moduleTabForms)) {
             foreach ($moduleTabForms as $module=>$form) {
@@ -217,7 +217,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          $array_ret[0] = __('General setup');
 
          $array_ret[1] = __('Computer Inventory', 'fusioninventory');
-         
+
          $array_ret[2] = __('Network Inventory', 'fusioninventory');
 
          $array_ret[3] = __('Package management', 'fusioninventory');
@@ -268,7 +268,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       if (isset($PF_CONFIG[$name])) {
          return $PF_CONFIG[$name];
       }
-      
+
       $config = current($this->find("`type`='".$name."'"));
       if (isset($config['value'])) {
          return $config['value'];
@@ -303,7 +303,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    **/
    function showForm($options=array()) {
       global $CFG_GLPI;
-      
+
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
@@ -348,7 +348,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
               'timeout' => 3
               )
           )
-      ); 
+      );
       PluginFusioninventoryDisplay::disableDebug();
       if (!file_exists($this->getValue('agent_base_url').'/plugins/fusioninventory/index.php')
             && !file_get_contents($this->getValue('agent_base_url').
@@ -638,13 +638,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_networkdiscovery", 
+      Dropdown::showInteger("threads_networkdiscovery",
                             $pfConfig->getValue('threads_networkdiscovery'), 1, 400);
       echo "</td>";
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_networkinventory", 
+      Dropdown::showInteger("threads_networkinventory",
                             $pfConfig->getValue('threads_networkinventory'), 1, 400);
       echo "</td>";
       echo "</tr>";
@@ -760,9 +760,9 @@ class PluginFusioninventoryConfig extends CommonDBTM {
          Toolbox::logInFile($file, $message);
       }
    }
-   
-   
-   
+
+
+
    static function loadCache() {
       global $DB, $PF_CONFIG;
 

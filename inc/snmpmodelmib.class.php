@@ -118,7 +118,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                echo "</td>";
 
                echo "<td align='center'>";
-               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiblabels", 
+               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiblabels",
                                              $data["plugin_fusioninventory_snmpmodelmiblabels_id"]);
                echo "</td>";
 
@@ -129,7 +129,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                echo "</td>";
 
                echo "<td align='center'>";
-               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids", 
+               echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodelmiboids",
                                               $data["plugin_fusioninventory_snmpmodelmiboids_id"]);
                echo "</td>";
 
@@ -371,7 +371,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
             case 0:
                $pfToolbox->addGet($p_sxml_node,
                   $data['mapping_name'],
-                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids', 
+                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',
                                             $data['plugin_fusioninventory_snmpmodelmiboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;
@@ -379,7 +379,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
             case 1:
                $pfToolbox->addWalk($p_sxml_node,
                   $data['mapping_name'],
-                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids', 
+                  Dropdown::getDropdownName('glpi_plugin_fusioninventory_snmpmodelmiboids',
                                             $data['plugin_fusioninventory_snmpmodelmiboids_id']),
                   $data['mapping_name'], $data['vlan']);
                break;

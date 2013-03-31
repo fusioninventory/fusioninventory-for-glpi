@@ -79,7 +79,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
     * @param type $computers_id
     */
    static function showInfo($item) {
-     
+
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
       $a_computerextend = current($pfInventoryComputerComputer->find(
                                               "`computers_id`='".$item->getID()."'",
@@ -87,7 +87,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       if (empty($a_computerextend)) {
          return;
       }
-      
+
       echo '<table class="tab_glpi" width="100%">';
       echo '<tr>';
       echo '<th colspan="2">'.__('FusionInventory', 'fusioninventory').'</th>';
@@ -108,10 +108,10 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '<td>'.$a_computerextend['remote_addr'].'</td>';
          echo '</tr>';
       }
-      
+
       $pfAgent = new PluginFusioninventoryAgent();
       $pfAgent->showInfoForComputer($item->getID());
-      
+
       if ($a_computerextend['bios_date'] != '') {
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('Date du BIOS', 'fusioninventory').'</td>';
@@ -130,7 +130,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('Manufacturer').'&nbsp;:</td>';
          echo '<td>';
-         echo Dropdown::getDropdownName("glpi_manufacturers", 
+         echo Dropdown::getDropdownName("glpi_manufacturers",
                                         $a_computerextend['bios_manufacturers_id']);
          echo '</td>';
          echo '</tr>';
@@ -143,14 +143,14 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '<td>'.Html::convDate($a_computerextend['operatingsystem_installationdate']).'</td>';
          echo '</tr>';
       }
-      
+
       if ($a_computerextend['winowner'] != '') {
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('Owner', 'fusioninventory').'</td>';
          echo '<td>'.$a_computerextend['winowner'].'</td>';
          echo '</tr>';
       }
-      
+
       if ($a_computerextend['wincompany'] != '') {
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('Company', 'fusioninventory').'</td>';
@@ -161,24 +161,24 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo '</table>';
    }
 
-   
-   
+
+
    function displaySerializedInventory($items_id) {
       global $CFG_GLPI;
-      
+
       $a_computerextend = current($this->find("`computers_id`='".$items_id."'",
                                                "", 1));
-      
+
       $this->getFromDB($a_computerextend['id']);
-      
+
       if (empty($this->fields['serialized_inventory'])) {
          return;
       }
-      
+
       $data = unserialize(gzuncompress($this->fields['serialized_inventory']));
-      
+
       echo "<br/>";
-      
+
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr class='tab_bg_1'>";
@@ -187,7 +187,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo " (".Html::convDateTime($this->fields['last_fusioninventory_update']).")";
       echo "</th>";
       echo "</tr>";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<th>";
       echo __('Download', 'fusioninventory');
@@ -199,7 +199,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
               "&function=sendSerializedInventory&items_id=".$a_computerextend['id'].
               "&filename=Computer-".$items_id.".json'".
               "target='_blank'>PHP Array</a> ";
-      
+
             $folder = substr($items_id, 0, -1);
             if (empty($folder)) {
                $folder = '0';
@@ -213,12 +213,12 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
               "target='_blank'>XML</a>";
             }
 
-      
+
       echo "</td>";
       echo "</tr>";
-      
+
       PluginFusioninventoryToolbox::displaySerializedValues($data);
-      
+
       echo "</table>";
    }
 }

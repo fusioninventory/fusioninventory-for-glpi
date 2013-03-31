@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    Gonéri Le Bouder
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2012
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -45,7 +45,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
-   
+
    static function getTypeName($nb=0) {
       return __('License');
    }
@@ -59,8 +59,8 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       return Session::haveRight('computer', 'r');
    }
 
-   
-   
+
+
    function showForm($computers_id) {
       global $CFG_GLPI;
 
@@ -118,10 +118,10 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                 if ($licenseInfo['is_oem']) {
                    array_push($options, 'OEM');
                 }
-                
+
                 echo implode(', ', $options);
             }
-            echo "</td>";            
+            echo "</td>";
             echo "</tr>";
 
             if (empty($licenseInfo['softwarelicenses_id'])) {
@@ -145,8 +145,8 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                 Ajax::updateItem(
                         "softwarelicenses_id_$rand",
                         $CFG_GLPI["root_doc"]."/plugins/fusinvinventory/ajax/".
-                           "dropdownsoftwarelicenses.php?key=".$licenseInfo['serial'], 
-                        $params, 
+                           "dropdownsoftwarelicenses.php?key=".$licenseInfo['serial'],
+                        $params,
                         FALSE);
                echo "<span id='softwarelicenses_id_$rand'></span>";
                Html::closeForm();
@@ -165,8 +165,8 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    function dropdownSoftwareLicenses($options) {
       global $DB;
 
@@ -174,31 +174,31 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                        `glpi_softwarelicenses`.`name` as lname,
                        `glpi_softwarelicenses`.`id` as lid,
                        `glpi_softwarelicenses`.`serial` FROM `glpi_softwarelicenses`
-         LEFT JOIN `glpi_softwares` 
+         LEFT JOIN `glpi_softwares`
             ON `glpi_softwarelicenses`.`softwares_id` = `glpi_softwares`.`id`
-         WHERE ((`glpi_softwarelicenses`.`name` LIKE '%".$options['name']."%' 
+         WHERE ((`glpi_softwarelicenses`.`name` LIKE '%".$options['name']."%'
                   OR `glpi_softwarelicenses`.`name` LIKE '%".$options['fullname']."%'
-                  OR `glpi_softwares`.`name` LIKE '%".$options['name']."%' 
+                  OR `glpi_softwares`.`name` LIKE '%".$options['name']."%'
                   OR `glpi_softwares`.`name` LIKE '%".$options['fullname']."%')
                AND `serial` = '".$options['serial']."')
          OR (`glpi_softwarelicenses`.`name` = '".$options['serial']."'
                AND `serial` = '".$options['serial']."')";
-      
+
       $licenses = array();
       $result=$DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $licenses[$data['lid']] = $data['sname']." (".$data['serial'].")";
       }
 
-      Dropdown::showFromArray('softwarelicenses_id', 
-                              $licenses, 
+      Dropdown::showFromArray('softwarelicenses_id',
+                              $licenses,
                               array('value' => $options['softwarelicenses_id']));
 
       echo "&nbsp;<input type='submit' class='button' name='associate' ".
               "value='".__('Associate')."'>";
    }
 
-   
+
 
    function associate($options) {
 
@@ -212,13 +212,13 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
 
       $pfLicenseInfo = new self;
       $pfLicenseInfo->update(array(
-         'id'                  => $options['fusinvinventory_licenseinfos_id'], 
+         'id'                  => $options['fusinvinventory_licenseinfos_id'],
          'softwarelicenses_id' => $options['softwarelicenses_id']
       ));
    }
 
-   
-   
+
+
    static function cleanComputer($computers_id) {
       $pfLicenseinfo = new PluginFusioninventoryComputerLicenseInfo();
       $a_licenses = $pfLicenseinfo->find("`computers_id`='".$computers_id."'");

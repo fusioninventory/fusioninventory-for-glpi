@@ -65,7 +65,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
 
-   
+
    static function canView() {
       return PluginFusioninventoryProfile::haveRight("agent", "r");
    }
@@ -271,9 +271,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_networkdiscovery", 
-                            $this->fields["threads_networkdiscovery"], 
-                            1, 
+      Dropdown::showInteger("threads_networkdiscovery",
+                            $this->fields["threads_networkdiscovery"],
+                            1,
                             400);
       echo "</td>";
       echo "<td>".__('Useragent', 'fusioninventory')."&nbsp:</td>";
@@ -286,9 +286,9 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_networkinventory", 
-                            $this->fields["threads_networkinventory"],  
-                            1,  
+      Dropdown::showInteger("threads_networkinventory",
+                            $this->fields["threads_networkinventory"],
+                            1,
                             400);
       echo "</td>";
       echo "<td>".__('Last contact', 'fusioninventory')."&nbsp:</td>";
@@ -304,7 +304,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo $this->fields["tag"];
       echo "</td>";
       echo "</tr>";
-      
+
       $this->showFormButtons($options);
       $this->addDivForTabs();
 
@@ -405,7 +405,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       } else {
          $computers_id = $items_id;
       }
-      
+
       if ($computers_id > 0) {
          $ip = PluginFusioninventoryToolbox::getIPforDevice('Computer', $computers_id);
       }
@@ -670,8 +670,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       # Guess the machine name from the DEVICEID,
       # useful when Windows domain != DNS domain
       $stack = array();
-      if(preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/', 
-                    $pfAgent->fields['name'], 
+      if(preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/',
+                    $pfAgent->fields['name'],
                     $stack)) {
          array_push($ret, "http://".$stack[1].":".$config->getValue('agent_port'));
       }
@@ -778,28 +778,28 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          unset($this->oldvalues['token']);
       }
    }
-   
-   
-   
+
+
+
    /**
     * Display agent infos for a computer
-    * 
+    *
     * @param type $computers_id id of the computer
     */
    function showInfoForComputer($computers_id) {
-      
+
       if ($this->getAgentWithComputerid($computers_id)) {
-         
+
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('Agent', 'fusioninventory').'</td>';
          echo '<td>'.$this->getLink(1).'</td>';
          echo '</tr>';
-         
+
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('Useragent', 'fusioninventory').'</td>';
          echo '<td>'.$this->fields['useragent'].'</td>';
          echo '</tr>';
-         
+
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('FusionInventory tag', 'fusioninventory').'</td>';
          echo '<td>'.$this->fields['tag'].'</td>';
