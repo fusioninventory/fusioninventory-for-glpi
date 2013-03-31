@@ -4511,12 +4511,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       /*
       * import old datas as json in order table before migrate this table
       */
-      
+
       migrateTablesFromFusinvDeploy($migration);
-
-
-      
-
 
       /*
        * glpi_plugin_fusioninventory_deploypackages
@@ -7631,9 +7627,17 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
 
    //add json field in deploy order table to store datas from old misc tables
-   $migration->addField("glpi_plugin_fusioninventory_deployorders",
+   $field_created = $migration->addField("glpi_plugin_fusioninventory_deployorders",
                                  "json",
                                  "TEXT DEFAULT NULL");
+
+   if (  !TableExists("glpi_plugin_fusinvdeploy_checks")
+         && !TableExists("glpi_plugin_fusinvdeploy_files")
+         && !TableExists("glpi_plugin_fusinvdeploy_actions")
+         && !$field_created
+   ) {
+      return;
+   }
    $migration->migrationOneTable("glpi_plugin_fusioninventory_deployorders");
 
    $final_datas = array();
