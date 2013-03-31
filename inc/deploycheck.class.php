@@ -385,15 +385,6 @@ class PluginFusioninventoryDeployCheck {
          //if unit is not set, we use Bytes by default
          $unit_size = self::getUnitSize('B');
       }
-      Toolbox::logDebug(
-         print_r(
-            array(
-               "add_item params",
-               $params,
-               $unit_size
-            ), TRUE
-         )
-      );
 
       if (!isset($params['value'])) {
          $params['value'] = "";
@@ -429,14 +420,6 @@ class PluginFusioninventoryDeployCheck {
 
 
    static function save_item($params) {
-      Toolbox::logDebug(
-         print_r(
-            array(
-               "save_item params",
-               $params,
-            ), TRUE
-         )
-      );
 
       if (!isset($params['value'])) {
          $params['value'] = "";

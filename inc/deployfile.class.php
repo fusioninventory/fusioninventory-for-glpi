@@ -74,7 +74,6 @@ class PluginFusioninventoryDeployFile {
          //== edit selected data ==
 
          //get current order json
-         Toolbox::logDebug($_SERVER['SCRIPT_FILENAME'] . "\n" . print_r($order, 1));
          $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order->fields['id']), 
                                 TRUE);
 
