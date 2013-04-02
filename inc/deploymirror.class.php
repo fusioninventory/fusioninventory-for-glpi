@@ -195,12 +195,14 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       $tab[80]['field']     = 'completename';
       $tab[80]['linkfield'] = 'entities_id';
       $tab[80]['name']      = __('Entity');
-
-      $tab[80]['table']     = getTableNameForForeignKeyField('locations_id');
-      $tab[80]['field']     = 'completename';
-      $tab[80]['linkfield'] = 'locations_id';
-      $tab[80]['name']      = Location::getTypeName();
       $tab[80]['datatype']  = 'itemlink';
+
+
+      $tab[81]['table']     = getTableNameForForeignKeyField('locations_id');
+      $tab[81]['field']     = 'completename';
+      $tab[81]['linkfield'] = 'locations_id';
+      $tab[81]['name']      = Location::getTypeName();
+      $tab[81]['datatype']  = 'itemlink';
 
       $tab[86]['table']     = $this->getTable();
       $tab[86]['field']     = 'is_recursive';
