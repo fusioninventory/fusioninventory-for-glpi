@@ -142,8 +142,13 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<td align='center'>";
 
       // Location option
-      Location::dropdown(array('value'  => $this->fields["locations_id"],
-                               'entity' => $this->fields["entities_id"]));
+      Location::dropdown(
+         array(
+            'value'  => $this->fields["locations_id"],
+            'entity' => $this->fields["entities_id"],
+            'entity_sons' => $this->isRecursive(),
+         )
+      );
       echo "</td></tr>";
 
       $this->showFormButtons($options);
