@@ -654,7 +654,7 @@ class PluginFusioninventoryDeployFile {
          $dir = $repoPath.'/'.self::getDirBySha512($sha512);
 
          if (!file_exists ($dir)) {
-            mkdir($dir, 0700, TRUE);
+            mkdir($dir, 0777, TRUE);
          }
          copy ($filePath, $dir.'/'.$sha512);
       }
