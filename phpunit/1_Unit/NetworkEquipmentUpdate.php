@@ -1,0 +1,268 @@
+<?php
+
+/*
+   ------------------------------------------------------------------------
+   FusionInventory
+   Copyright (C) 2010-2013 by the FusionInventory Development Team.
+
+   http://www.fusioninventory.org/   http://forge.fusioninventory.org/
+   ------------------------------------------------------------------------
+
+   LICENSE
+
+   This file is part of FusionInventory project.
+
+   FusionInventory is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   FusionInventory is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with FusionInventory. If not, see <http://www.gnu.org/licenses/>.
+
+   ------------------------------------------------------------------------
+
+   @package   FusionInventory
+   @author    David Durieux
+   @co-author
+   @copyright Copyright (c) 2010-2013 FusionInventory team
+   @license   AGPL License 3.0 or (at your option) any later version
+              http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   @link      http://www.fusioninventory.org/
+   @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
+   @since     2013
+
+   ------------------------------------------------------------------------
+ */
+
+class NetworkEquipmentUpdate extends PHPUnit_Framework_TestCase {
+   
+   public $items_id = 0;
+   public $datelatupdate = '';
+
+   
+   public function testAddNetworkEquipment() {
+      global $DB;
+
+      $DB->connect();
+      
+      $Install = new Install();
+      $Install->testInstall(0);
+      
+      $this->datelatupdate = date('Y-m-d H:i:s');
+      
+      $a_inventory = array(
+          'PluginFusioninventoryNetworkEquipment' => Array(
+                  'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
+                  'last_fusioninventory_update' => $this->datelatupdate,
+                  'cpu'                         => 5,
+                  'memory'                      => 18,
+                  'uptime'                      => '157 days, 02:14:44.00'
+                ),
+          'networkport'       => array(),
+          'connection-mac'    => array(),
+          'vlans'             => array(),
+          'connection-lldp'   => array(),
+          'internalport'      => array('192.168.30.67', '192.168.40.67', '192.168.50.67'),
+          'itemtype'          => 'NetworkEquipment'
+          );
+      $a_inventory['NetworkEquipment'] = array(
+               'name'               => 'switchr2d2',
+               'id'                 => 96,
+               'serial'             => 'FOC147UJEU4',
+               'otherserial'        => '',
+               'manufacturers_id'   => 29,
+               'locations_id'       => 3,
+               'networkequipmentmodels_id' => 3, 
+               'networkequipmentfirmwares_id' => 3,          
+               'memory'             => 18,          
+               'ram'                => 64,
+               'is_dynamic'         => 1,
+               'mac'                => '6c:50:4d:39:59:80'
+      );
+      
+      $a_inventory['networkport'] = array(
+          '10001' => array(
+              'ifdescr'          => 'FastEthernet0/1',
+              'ifinerrors'       => 869,
+              'ifinoctets'       => 1953319640,
+              'ifinternalstatus' => 1,
+              'iflastchange'     => '156 days, 08:37:22.84',
+              'ifmtu'            => 1500,
+              'name'             => 'Fa0/1',
+              'logical_number'   => 10001,
+              'ifouterrors'      => 0,
+              'ifoutoctets'      => 554008368,
+              'speed'            => 100000000,
+              'ifstatus'         => 1,
+              'iftype'           => 6,
+              'mac'              => '6c:50:4d:39:59:81',
+              'trunk'            => 0,
+              'ifspeed'          => 100000000
+          ),
+          '10002' => array(
+              'ifdescr'          => 'FastEthernet0/2',
+              'ifinerrors'       => 0,
+              'ifinoctets'       => 1953319640,
+              'ifinternalstatus' => 1,
+              'iflastchange'     => '53.53 seconds',
+              'ifmtu'            => 1500,
+              'name'             => 'Fa0/2',
+              'logical_number'   => 10002,
+              'ifouterrors'      => 0,
+              'ifoutoctets'      => 554008368,
+              'speed'            => 10000000,
+              'ifstatus'         => 1,
+              'iftype'           => 6,
+              'mac'              => '6c:50:4d:39:59:82',
+              'trunk'            => 1,
+              'ifspeed'          => 10000000
+          ) 
+      );
+      $a_inventory['connection-mac'] = array(
+          '10002' => array('cc:f9:54:a1:03:35')
+      );
+      $a_inventory['vlans'] = array(
+          '10001' => array(
+              '281' => array(
+                  'name' => 'printer',
+                  'tag'  => 281
+              )
+          ),
+          '10002' => array(
+              '281' => array(
+                  'name' => 'printer',
+                  'tag'  => 281
+              ),
+              '280' => array(
+                  'name' => 'admin',
+                  'tag'  => 280
+              )
+          )
+      );
+      $a_inventory['connection-lldp'] = array(
+          '10102' => array(
+              'ifdescr'          => 'GigabitEthernet1/0/2',
+              'ip'               => '192.168.100.100',
+              'model'            => 'cisco WS-C3750G-24PS',
+              'sysdescr'         => 'Cisco IOS Software, C3750 Software (C3750-ADVIPSERVICESK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)\nCopyright (c) 1986-2008 by Cisco Systems, Inc.\nCompiled Thu 21-Aug-08 15:43 by nachen',
+              'name'             => 'CENTRALSWITCH',
+              'logical_number'   => '',	
+              'mac'              => ''
+          )
+      );
+      
+
+      $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $networkEquipment = new NetworkEquipment();
+      
+      $this->items_id = $networkEquipment->add(array('serial'      => 'FOC147UJEU4',
+                                                     'entities_id' => 0));
+
+      $this->assertGreaterThan(0, $this->items_id);
+      
+      $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
+
+      // To be sure not have 2 sme informations
+      $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
+   
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+   }
+   
+   
+   public function testNetworkEquipmentGeneral() {
+      global $DB;
+
+      $DB->connect();
+      
+      $networkEquipment = new NetworkEquipment();
+      
+      $networkEquipment->getFromDB(1);
+      unset($networkEquipment->fields['date_mod']);
+      $a_reference = array(
+          'name'                 => 'switchr2d2',
+          'serial'               => 'FOC147UJEU4',
+          'id'                   => 1,
+          'entities_id'          => 0,
+          'is_recursive'         => 0,
+          'ram'                  => 64,
+          'otherserial'          => NULL,
+          'contact'              => NULL,
+          'contact_num'          => NULL,
+          'users_id_tech'        => 0,
+          'groups_id_tech'       => 0,
+          'comment'              => NULL,
+          'locations_id'         => 3,
+          'domains_id'           => 0,
+          'networks_id'          => 0,
+          'networkequipmenttypes_id' => 0,
+          'networkequipmentmodels_id' => 3,
+          'networkequipmentfirmwares_id' => 3,
+          'manufacturers_id'     => 29,
+          'is_deleted'           => 0,
+          'is_template'          => 0,
+          'template_name'        => NULL,
+          'notepad'              => NULL,
+          'users_id'             => 0,
+          'groups_id'            => 0,
+          'states_id'            => 0,
+          'ticket_tco'           => '0.0000',
+          'is_dynamic'           => 1
+      );
+      
+      $this->assertEquals($a_reference, $networkEquipment->fields);      
+   }   
+   
+
+   
+   public function testNetworkEquipmentSNMPExtension() {
+      global $DB;
+
+      $DB->connect();
+      
+      $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+      $a_networkequipment = current($pfNetworkEquipment->find("`networkequipments_id`='1'", "", 1));
+      unset($a_networkequipment['last_fusioninventory_update']);
+      $a_reference = array(
+          'id'                                          => '1',
+          'networkequipments_id'                        => '1',
+          'sysdescr'                                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2010 by Cisco Systems, Inc.
+Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
+          'plugin_fusioninventory_snmpmodels_id'        => '0',
+          'plugin_fusioninventory_configsecurities_id'  => '0',
+          'uptime'                                      => '157 days, 02:14:44.00',
+          'cpu'                                         => '5',
+          'memory'                                      => '18',
+          'last_PID_update'                             => '0',
+          'serialized_inventory'                        => NULL
+      );
+      
+      $this->assertEquals($a_reference, $a_networkequipment);      
+      
+   }
+ }
+
+
+
+class NetworkEquipmentUpdate_AllTests  {
+
+   public static function suite() {
+
+//      $Install = new Install();
+//      $Install->testInstall(0);
+      
+      $suite = new PHPUnit_Framework_TestSuite('NetworkEquipmentUpdate');
+      return $suite;
+   }
+}
+
+?>
