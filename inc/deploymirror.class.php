@@ -102,7 +102,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       }
 
       //add default mirror (this server) if enabled in config
-      if ( (bool) $PF_CONFIG['server_as_mirror'] == TRUE) {
+      if ( (bool)$PF_CONFIG['server_as_mirror'] == TRUE) {
          $mirrors[] = PluginFusioninventoryAgentmodule::getUrlForModule('DEPLOY')
             ."?action=getFilePart&file=";
       }

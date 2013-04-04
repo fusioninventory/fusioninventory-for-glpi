@@ -5665,7 +5665,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
    $mode_cli = (basename($_SERVER['SCRIPT_NAME']) == "cli_install.php");
 
-   PluginFusioninventorySnmpmodel::importAllModels('',$mode_cli);
+   PluginFusioninventorySnmpmodel::importAllModels('', $mode_cli);
 
    /*
     * Manage devices with is_dynamic
