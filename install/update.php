@@ -208,7 +208,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $migration->displayMessage("Update of plugin FusionInventory");
 
    /*
-    * CHeck if folders are right created
+    * Check if folders are correctly created
     */
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
@@ -218,6 +218,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    }
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload');
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml');
    }
 
 

@@ -308,6 +308,9 @@ class PluginFusioninventoryToolbox {
       if (empty($folder)) {
          $folder = '0';
       }
+      if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/")) {
+         mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/");
+      }
       if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype)) {
          mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/".$itemtype);
       }
