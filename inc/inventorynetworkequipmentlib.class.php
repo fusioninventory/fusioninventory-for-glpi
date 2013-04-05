@@ -183,7 +183,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          $input['name']     = $networkname_name;
          $networknames_id   = $networkName->add($input);
       }
-      $a_ips_fromDB = $iPAddress->find("`itemtype`='networkName'
+      $a_ips_fromDB = $iPAddress->find("`itemtype`='NetworkName'
                                     AND `items_id`='".$networknames_id."'");
       foreach ($a_ips_fromDB as $data) {
          $a_ips_DB[$data['id']] = $data['name'];

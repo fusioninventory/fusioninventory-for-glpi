@@ -175,6 +175,7 @@ class NetworkEquipmentUpdate extends PHPUnit_Framework_TestCase {
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
+
    
    
    public function testNetworkEquipmentGeneral() {
@@ -249,7 +250,40 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $this->assertEquals($a_reference, $a_networkequipment);      
       
    }
- }
+   
+   
+   
+   public function testNetworkEquipmentInternalPorts() {
+      global $DB;
+
+      $DB->connect();
+      
+      $networkPort = new NetworkPort();
+      $networkName = new NetworkName();
+      $iPAddress   = new IPAddress();
+      
+      $a_networkports = $networkPort->find("`instantiation_type`='NetworkPortAggregate'
+         AND `itemtype`='NetworkEquipment'
+         AND `items_id`='1'");
+      
+      $this->assertEquals(1, count($a_networkports), 'Number internal ports');      
+      
+      $a_networkport = current($a_networkports);
+      $this->assertEquals('6c:50:4d:39:59:80', $a_networkport['mac']);
+      
+      // May have 3 IP
+      $a_networkname = current($networkName->find("`items_id`='".$a_networkport['id']."'
+                                                         AND `itemtype`='NetworkPort'", "", 1));
+      $a_ips_fromDB = $iPAddress->find("`itemtype`='NetworkName'
+                                     AND `items_id`='".$a_networkname['id']."'", "`name`");
+      $a_ips = array();
+      foreach ($a_ips_fromDB as $data) {
+         $a_ips[] = $data['name'];
+      }
+      $this->assertEquals(array('192.168.30.67', '192.168.40.67', '192.168.50.67'), $a_ips);
+      
+   }     
+}
 
 
 
