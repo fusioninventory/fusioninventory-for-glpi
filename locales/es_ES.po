@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Julio <jmartelo@asic.udl.cat>, 2013.
 # Tomás Abad <tabadgp@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2013-03-25 14:44+0100\n"
-"PO-Revision-Date: 2013-03-25 13:45+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2013-04-05 08:24+0000\n"
+"Last-Translator: jmartelo <jmartelo@asic.udl.cat>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -79,7 +80,7 @@ msgstr "Vincular con una tarea"
 
 #: hook.php:822 hook.php:833
 msgid "Load the correct SNMP model"
-msgstr "Cargar el modelo SNMP correcto"
+msgstr "Cargar el modelo correcto"
 
 #: hook.php:823 hook.php:834 hook.php:871
 msgid "Assign SNMP model"
@@ -136,7 +137,7 @@ msgstr "Número de dispositivos importados"
 
 #: hook.php:1247 front/unknowndevice.form.php:100
 msgid "Number of devices not imported because type not defined"
-msgstr "Número de dispositivos no importados por no tener un tipo definido"
+msgstr "Número de dispositivos no importados por no tener tipo definido"
 
 #: index.php:54 front/agent.form.php:47 front/agent.php:45
 #: front/agentmodule.form.php:45 front/configsecurity.form.php:50
