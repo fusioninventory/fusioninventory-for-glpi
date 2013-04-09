@@ -263,7 +263,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       foreach($order_files as $hash => $params) {
          $order_files[$hash]['mirrors'] = $mirrors;
       }
-
+      
       $final_order = array(
          "jobs" => array(
             $order_job
@@ -271,7 +271,9 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
          "associatedFiles" => $order_files
       );
       //return data response as json
-      return json_encode($final_order);
+      $json = json_encode($final_order);
+      $json = str_replace('"associatedFiles":[]}', '"associatedFiles":{}}', $json);
+      return $json;
    }
 }
 
