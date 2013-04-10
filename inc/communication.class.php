@@ -345,6 +345,7 @@ class PluginFusioninventoryCommunication {
 //      ob_end_clean();
 
       $communication  = new PluginFusioninventoryCommunication();
+      $pfToolbox = new PluginFusioninventoryToolbox();
 
       // identify message compression algorithm
       $taskjob = new PluginFusioninventoryTaskjob();
@@ -356,16 +357,17 @@ class PluginFusioninventoryCommunication {
             $xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]);
             $compressmode = "zlib";
       } else if ($_SERVER['CONTENT_TYPE'] == "application/x-compress-gzip") {
-            $xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"]);
+            $xml = $pfToolbox->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"]);
             $compressmode = "gzip";
       } else if ($_SERVER['CONTENT_TYPE'] == "application/xml") {
             $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
             $compressmode = 'none';
       } else {
+               
          # try each algorithm successively
          if (($xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
             $compressmode = "zlib";
-         } else if (($xml = $communication->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"]))) {
+         } else if (($xml = $pfToolbox->gzdecode($GLOBALS["HTTP_RAW_POST_DATA"]))) {
             $compressmode = "gzip";
          } else if (($xml = gzinflate (substr($GLOBALS["HTTP_RAW_POST_DATA"], 2)))) {
             // accept deflate for OCS agent 2.0 compatibility,
