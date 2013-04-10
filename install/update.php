@@ -7925,7 +7925,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                      //construct command status array entry
                      $o_line['actions'][$a_i][$type]['retChecks'][] = array(
                         'type'  => $cmdStatus[$res_cmd_datas['type']],
-                        'value' => array($res_cmd_datas['value'])
+                        'values' => array($res_cmd_datas['value'])
                      );
                   }
                }
@@ -7935,6 +7935,8 @@ function migrateTablesFromFusinvDeploy ($migration) {
       }
       $final_datas[$order_id]['jobs'] = $o_line;
       $final_datas[$order_id]['associatedFiles'] = $of_line;
+      unset($o_line);
+      unset($of_line);
    }
 
    $options = 0;
