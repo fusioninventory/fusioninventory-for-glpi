@@ -40,184 +40,102 @@
    ------------------------------------------------------------------------
  */
 
-class ComputerDynamic extends PHPUnit_Framework_TestCase {
+class UnknownDeviceKnowDevice extends PHPUnit_Framework_TestCase {
    
+   /*
+    * When switch get unknown mac address, it create unknown device (in reality a computer)
+    * When have computer inventory, it must delete unknown device with same mac and get 
+    * the connections to the switch
+    */
    
-   public function testUpdateComputerManuallyAdded() {
-      global $DB;
 
-      $DB->connect();
-    
-      $_SESSION['glpiactive_entity'] = 0;
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
-      
-      $pfiComputerLib  = new PluginFusioninventoryInventoryComputerLib();
-      $computer = new Computer();
-      $computerDisk = new ComputerDisk();
-      
-      $a_computerinventory = array(
-          "computer" => array(
-              "name"   => "pc002",
-              "serial" => "ggheb7ne7"
-          ), 
-          "fusioninventorycomputer" => Array(
-              'last_fusioninventory_update' => date('Y-m-d H:i:s'),
-              'serialized_inventory'        => 'something'
-          ),
-          'soundcard'      => Array(),
-          'graphiccard'    => Array(),
-          'controller'     => Array(),
-          'processor'      => Array(),
-          "computerdisk" => array(
-              array(
-                 "freesize"   => 259327,
-                 "totalsize"  => 290143,
-                 "device"     => '',
-                 "name"       => "C:",
-                 "mountpoint" => "C:"
-              )
-          ),
-          'memory'         => Array(),
-          'monitor'        => Array(),
-          'printer'        => Array(),
-          'peripheral'     => Array(),
-          'networkport'    => Array(),
-          'software'       => Array(),
-          'harddrive'      => Array(),
-          'virtualmachine' => Array(),
-          'antivirus'      => Array(),
-          'storage'        => Array(),
-          'itemtype'       => 'Computer'
-      );
-      
-      $a_computer = $a_computerinventory['computer'];
-      $a_computer["entities_id"] = 0;
-      
-      $computers_id = $computer->add($a_computer);
-      $a_cdisk = array(
-          "computers_id" => $computers_id,
-          "name"         => "D:",
-          "mountpoint"   => "D:",
-          "entities_id"  => 0
-      );
-      $computerDisk->add($a_cdisk);
-      
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
-      $this->assertEquals(1, count($a_computerdisk), 'Right no dynamic added');
-      
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
-                                      1);
-      
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
-      $this->assertEquals(1, count($a_computerdisk), 'May have only 1 computerdisk');
-      
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
-         AND `is_dynamic`='1'");
-      $this->assertEquals(1, count($a_computerdisk), 'May have only 1 computerdisk and is dynamic');
-   }   
-   
-   
-   
-   public function testUpdateComputerFusioninventoryAdded() {
+   public function testAddNetworkEquipment() {
       global $DB;
 
       $DB->connect();
       
-      // Add manually a computerdisk
+      $Install = new Install();
+      $Install->testInstall(0);
       
-      $_SESSION['glpiactive_entity'] = 0;
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+      $this->datelatupdate = date('Y-m-d H:i:s');
       
-      $pfiComputerLib  = new PluginFusioninventoryInventoryComputerLib();
-      $computer = new Computer();
-      $computerDisk = new ComputerDisk();
-      
-      $a_computerinventory = array(
-          "computer" => array(
-              "name"   => "pc002",
-              "serial" => "ggheb7ne72"
-          ), 
-          "fusioninventorycomputer" => Array(
-              'last_fusioninventory_update' => date('Y-m-d H:i:s'),
-              'serialized_inventory'        => 'something'
-          ),
-          'soundcard'      => Array(),
-          'graphiccard'    => Array(),
-          'controller'     => Array(),
-          'processor'      => Array(),
-          "computerdisk" => array(
-              array(
-                 "freesize"   => 259327,
-                 "totalsize"  => 290143,
-                 "device"     => '',
-                 "name"       => "C:",
-                 "mountpoint" => "C:"
-              )
-          ),
-          'memory'         => Array(),
-          'monitor'        => Array(),
-          'printer'        => Array(),
-          'peripheral'     => Array(),
-          'networkport'    => Array(),
-          'software'       => Array(),
-          'harddrive'      => Array(),
-          'virtualmachine' => Array(),
-          'antivirus'      => Array(),
-          'storage'        => Array(),
-          'itemtype'       => 'Computer'
+      $a_inventory = array(
+          'PluginFusioninventoryNetworkEquipment' => Array(
+                  'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
+                  'last_fusioninventory_update' => $this->datelatupdate,
+                  'cpu'                         => 5,
+                  'memory'                      => 18,
+                  'uptime'                      => '157 days, 02:14:44.00'
+                ),
+          'networkport'       => array(),
+          'connection-mac'    => array(),
+          'vlans'             => array(),
+          'connection-lldp'   => array(),
+          'internalport'      => array('192.168.30.2'),
+          'itemtype'          => 'NetworkEquipment'
+          );
+      $a_inventory['NetworkEquipment'] = array(
+               'name'               => 'switchr2d2',
+               'id'                 => 96,
+               'serial'             => 'FOC147UJXXX',
+               'otherserial'        => '',
+               'manufacturers_id'   => 29,
+               'locations_id'       => 3,
+               'networkequipmentmodels_id' => 3, 
+               'networkequipmentfirmwares_id' => 3,          
+               'memory'             => 18,          
+               'ram'                => 64,
+               'is_dynamic'         => 1,
+               'mac'                => '6c:50:4d:39:59:90'
       );
-
-      $a_computer = $a_computerinventory['computer'];
-      $a_computer["entities_id"] = 0;
       
-      $computers_id = $computer->add($a_computer);
-      
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
-                                      0);
-      
-      $a_cdisk = array(
-          "computers_id" => $computers_id,
-          "name"         => "D:",
-          "mountpoint"   => "D:",
-          "entities_id"  => 0
+      $a_inventory['networkport'] = array(
+          '10001' => array(
+              'ifdescr'          => 'FastEthernet0/1',
+              'ifinerrors'       => 869,
+              'ifinoctets'       => 1953319640,
+              'ifinternalstatus' => 1,
+              'iflastchange'     => '156 days, 08:37:22.84',
+              'ifmtu'            => 1500,
+              'name'             => 'Fa0/1',
+              'logical_number'   => 10001,
+              'ifouterrors'      => 0,
+              'ifoutoctets'      => 554008368,
+              'speed'            => 100000000,
+              'ifstatus'         => 1,
+              'iftype'           => 6,
+              'mac'              => '6c:50:4d:39:59:81',
+              'trunk'            => 0,
+              'ifspeed'          => 100000000
+          )
       );
-      $computerDisk->add($a_cdisk);
+      $a_inventory['connection-mac'] = array(
+          '10001' => array('cc:f9:54:a1:03:45')
+      );
+      $a_inventory['vlans'] = array();
+      $a_inventory['connection-lldp'] = array();
+      
 
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
-      $this->assertEquals(2, count($a_computerdisk), 'May have dynamic + no dynamic computerdisk');
+      $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $networkEquipment = new NetworkEquipment();
       
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
-         AND `is_dynamic`='0'");
-      $this->assertEquals(1, count($a_computerdisk), '(1)Not dynamic');
+      $this->items_id = $networkEquipment->add(array('serial'      => 'FOC147UJXXX',
+                                                     'entities_id' => 0));
+
+      $this->assertGreaterThan(0, $this->items_id);
       
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
-         AND `is_dynamic`='1'");
-      $this->assertEquals(1, count($a_computerdisk), '(2)Dynamic');
-      
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
-                                      1);
-      
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
-      $this->assertEquals(2, count($a_computerdisk), 'May ALWAYS have dynamic '.
-                                                     '+ no dynamic computerdisk');
-            
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
-         AND `is_dynamic`='0'");
-      $this->assertEquals(1, count($a_computerdisk), '(3)Not dynamic');
-      
-      $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
-         AND `is_dynamic`='1'");
-      $this->assertEquals(1, count($a_computerdisk), '(4)Dynamic');
+      $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
+
+      // To be sure not have 2 sme informations
+      $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
+   
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
    }
-   
-   
-   public function testUpdateComputerRemoveProcessor() {
+
+
+   public function testNewComputer() {
       global $DB;
 
       $DB->connect();
@@ -225,46 +143,13 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
       $_SESSION["plugin_fusinvinventory_entity"] = 0;
       
       $a_inventory = array(
-          'computer' => array(
-             'name'                             => 'pcxxx1',
-             'comment'                          => 'amd64/-1-11-30 22:04:44',
-             'users_id'                         => 0,
-             'operatingsystems_id'              => 0,
-             'operatingsystemversions_id'       => 0,
-             'uuid'                             => '68405E00-E5BE-11DF-801C-B05981261220',
-             'domains_id'                       => 0,
-             'manufacturers_id'                 => 0,
-             'computermodels_id'                => 0,
-             'serial'                           => 'XB63J7DH',
-             'computertypes_id'                 => 0,
-             'is_dynamic'                       => 1,
-             'contact'                          => 'ddurieux'
-          ),
           'fusioninventorycomputer' => Array(
-              'winowner'                        => 'test',
-              'wincompany'                      => 'siprossii',
-              'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
-              'last_fusioninventory_update'     => date('Y-m-d H:i:s')
+              'last_fusioninventory_update' => date('Y-m-d H:i:s')
           ), 
           'soundcard'      => Array(),
           'graphiccard'    => Array(),
           'controller'     => Array(),
-          'processor'      => Array(
-            Array(
-                    'manufacturers_id'  => 0,
-                    'designation'       => 'Core i3',
-                    'frequence'         => 2400,
-                    'serial'            => '',
-                    'frequency'         => 2400
-                ),
-            Array(
-                    'manufacturers_id'  => 0,
-                    'designation'       => 'Core i3',
-                    'frequence'         => 2400,
-                    'serial'            => '',
-                    'frequency'         => 2400
-                )
-            ),
+          'processor'      => Array(),
           'computerdisk'   => Array(),
           'memory'         => Array(),
           'monitor'        => Array(),
@@ -278,39 +163,69 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
           'storage'        => Array(),
           'itemtype'       => 'Computer'
           );
-      
-      $computer         = new Computer();
+      $a_inventory['computer'] = array(
+          'name'                             => 'pc',
+          'comment'                          => 'amd64/-1-11-30 22:04:44',
+          'users_id'                         => 0,
+          'operatingsystems_id'              => 'freebsd',
+          'operatingsystemversions_id'       => '9.1-RELEASE',
+          'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
+          'domains_id'                       => 'mydomain.local',
+          'os_licenseid'                     => '',
+          'os_license_number'                => '',
+          'operatingsystemservicepacks_id'   => 'GENERIC ()root@farrell.cse.buffalo.edu',
+          'manufacturers_id'                 => '',
+          'computermodels_id'                => '',
+          'serial'                           => 'XB63J7D',
+          'computertypes_id'                 => 'Notebook',
+          'is_dynamic'                       => 1,
+          'contact'                          => 'ddurieux'
+      );
+      $a_inventory['networkport'] = Array(
+            'em0-cc:f9:54:a1:03:45' => Array(
+                    'name'                 => 'em0',
+                    'netmask'              => '255.255.255.0',
+                    'subnet'               => '192.168.30.0',
+                    'mac'                  => 'cc:f9:54:a1:03:45',
+                    'instantiation_type'   => 'NetworkPortEthernet',
+                    'virtualdev'           => 0,
+                    'ssid'                 => '',
+                    'gateway'              => '',
+                    'dhcpserver'           => '',
+                    'ipaddress'            => Array('192.168.30.198')
+                )
+          );
+
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
-      $item_DeviceProcessor = new Item_DeviceProcessor();
-      
-      $computers_id = $computer->add(array('serial'      => 'XB63J7DH',
+      $computer         = new Computer();
+
+      $computers_id = $computer->add(array('serial'      => 'XB63J7D',
                                            'entities_id' => 0));
-      
+
       $_SESSION['glpiactive_entity'] = 0;
       $pfiComputerLib->updateComputer($a_inventory, $computers_id, FALSE);
+
       
-      $a_processors = $item_DeviceProcessor->find("`items_id`='".$computers_id."'
-         AND `itemtype`='Computer'");
-      $this->assertEquals(2, count($a_processors), 'May have the 2 Processors');
-      
-      // Remove one processor from inventory
-      unset($a_inventory['processor'][1]);
-      $pfiComputerLib->updateComputer($a_inventory, $computers_id, FALSE);
-      
-      $a_processors = $item_DeviceProcessor->find("`items_id`='".$computers_id."'
-         AND `itemtype`='Computer'");
-      $this->assertEquals(1, count($a_processors), 'May have the only 1 processor after 
-                           deleted a processor from inventory');
+      $networkPort = new NetworkPort();
+      $a_networkports = $networkPort->find("`mac`='cc:f9:54:a1:03:45'");
+
+      $this->assertEquals(1, count($a_networkports), "May have only one port with this mac address");      
+
+      $a_networkport = current($a_networkports);
+
+      $this->assertEquals('Computer', $a_networkport['itemtype'], "Maybe Computer ");      
+
    }
+   
  }
 
 
 
-class ComputerDynamic_AllTests  {
+class UnknownDeviceKnowDevice_AllTests  {
 
    public static function suite() {
     
-      $suite = new PHPUnit_Framework_TestSuite('ComputerDynamic');
+      $suite = new PHPUnit_Framework_TestSuite('UnknownDeviceKnowDevice');
       return $suite;
    }
 }

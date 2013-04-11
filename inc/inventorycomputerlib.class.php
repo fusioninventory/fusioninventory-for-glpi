@@ -841,6 +841,26 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       // * Networkports
          if ($pfConfig->getValue("component_networkcard") != 0) {
+            // Get port from unknown device if exist
+            foreach ($a_computerinventory['networkport'] as $a_networkport) {
+               if ($a_networkport['mac'] != '') {
+                  Toolbox::logInFile("TOTO", "`mac`='".$a_networkport['mac']."'\n");
+                  $a_networkports = $networkPort->find("`mac`='".$a_networkport['mac']."'");
+                  Toolbox::logInFile("TOTO", print_r($a_networkports, true));
+                  if (count($a_networkports) > 0) {
+                     $input = current($a_networkports);
+                     $unknowndevices_id = $input['items_id'];
+                     $input['itmtype'] = 'Computer';
+                     $input['items_id'] = $computers_id;
+                     $input['is_dynamic'] = 1;
+                     $networkPort->update($input);
+                     $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+                     $pfUnknownDevice->delete(array('id'=>$unknowndevices_id), 1);
+                  }
+               }
+            }            
+            // end get port from unknwon device
+            
             $db_networkport = array();
             if ($no_history === FALSE) {
                $query = "SELECT `id`, `name`, `mac`, `instantiation_type`
