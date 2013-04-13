@@ -56,13 +56,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
    static function canCreate() {
-      return true;
       return PluginFusioninventoryProfile::haveRight("unknowndevice", "w");
    }
 
    
    static function canView() {
-      return true;
       return PluginFusioninventoryProfile::haveRight("unknowndevice", "r");
    }
 
