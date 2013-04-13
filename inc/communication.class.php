@@ -324,12 +324,13 @@ class PluginFusioninventoryCommunication {
          Session::changeActiveEntities();
          $_SESSION["glpiname"] = $user->getField('name');
          $_SESSION['glpiactiveprofile'] = array();
-         $_SESSION['glpiactiveprofile']['interface'] = '';
-         $_SESSION['glpiactiveprofile']['internet'] = 'w';
-         $_SESSION['glpiactiveprofile']['computer'] = 'w';
-         $_SESSION['glpiactiveprofile']['monitor'] = 'w';
-         $_SESSION['glpiactiveprofile']['printer'] = 'w';
-         $_SESSION['glpiactiveprofile']['peripheral'] = 'w';
+         $_SESSION['glpiactiveprofile']['interface']  = 'central';
+         $_SESSION['glpiactiveprofile']['internet']   = 'w';
+         $_SESSION['glpiactiveprofile']['computer']   = 'w';
+         $_SESSION['glpiactiveprofile']['monitor']    = 'w';
+         $_SESSION['glpiactiveprofile']['printer']    = 'w';
+         $_SESSION['glpiactiveprofile']['peripheral'] = 'w';           
+         $_SESSION['glpiactiveprofile']['networking'] = 'w';
 //         $plugin->init();
       }
 //      if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {

@@ -74,7 +74,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
     */
    function updateComputer($a_computerinventory, $computers_id, $no_history, $setdynamic=0) {
       global $DB;
-      Toolbox::logInFile("COMP", "1");
+      
       $computer                     = new Computer();
       $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();
       $item_DeviceProcessor         = new Item_DeviceProcessor();
@@ -844,15 +844,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             // Get port from unknown device if exist
             foreach ($a_computerinventory['networkport'] as $a_networkport) {
                if ($a_networkport['mac'] != '') {
-                  Toolbox::logInFile("TOTO", "`mac`='".$a_networkport['mac']."'\n");
-                  $a_networkports = $networkPort->find("`mac`='".$a_networkport['mac']."'");
-                  Toolbox::logInFile("TOTO", print_r($a_networkports, true));
+                  $a_networkports = $networkPort->find("`mac`='".$a_networkport['mac']."'
+                     AND `itemtype`='PluginFusioninventoryUnknownDevice'", "", 1);
                   if (count($a_networkports) > 0) {
                      $input = current($a_networkports);
                      $unknowndevices_id = $input['items_id'];
-                     $input['itmtype'] = 'Computer';
+                     $input['itemtype'] = 'Computer';
                      $input['items_id'] = $computers_id;
                      $input['is_dynamic'] = 1;
+                     $input['name'] = $a_networkport['name'];
                      $networkPort->update($input);
                      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
                      $pfUnknownDevice->delete(array('id'=>$unknowndevices_id), 1);

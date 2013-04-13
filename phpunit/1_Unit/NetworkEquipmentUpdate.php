@@ -283,6 +283,27 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $this->assertEquals(array('192.168.30.67', '192.168.40.67', '192.168.50.67'), $a_ips);
       
    }     
+   
+   
+   
+   public function testUnknowndeviceNetworkPort() {
+      global $DB;
+
+      $DB->connect();
+      
+      $networkPort = new NetworkPort();
+         
+      $a_networkports = $networkPort->find("`mac`='cc:f9:54:a1:03:35'
+         AND `itemtype`='PluginFusioninventoryUnknownDevice'");
+      
+      $this->assertEquals(1, count($a_networkports), 'Number of networkport may be 1');
+      
+      $a_networkport = current($a_networkports);
+      $this->assertEquals('NetworkPortEthernet', $a_networkport['instantiation_type'], 'instantiation type may be "NetworkPortEthernet"');
+      
+      $this->assertGreaterThan(0, $a_networkport['items_id'], 'items_id may be more than 0');
+      
+   }
 }
 
 

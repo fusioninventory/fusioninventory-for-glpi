@@ -126,7 +126,7 @@ class UnknownDeviceKnowDevice extends PHPUnit_Framework_TestCase {
       
       $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
 
-      // To be sure not have 2 sme informations
+      // To be sure not have 2 same informations
       $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
    
       $GLPIlog = new GLPIlogs();
@@ -195,7 +195,16 @@ class UnknownDeviceKnowDevice extends PHPUnit_Framework_TestCase {
                     'ipaddress'            => Array('192.168.30.198')
                 )
           );
+      
+      $networkPort = new NetworkPort();
+      
+      echo "Can update ! ".$networkPort->canUpdate()."\n";
+      
+      $a_networkports = $networkPort->find("`mac`='cc:f9:54:a1:03:45'");
 
+      $a_networkport = current($a_networkports);
+      $networkports_id = $a_networkport['id'];
+      
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
 
@@ -205,14 +214,15 @@ class UnknownDeviceKnowDevice extends PHPUnit_Framework_TestCase {
       $_SESSION['glpiactive_entity'] = 0;
       $pfiComputerLib->updateComputer($a_inventory, $computers_id, FALSE);
 
-      
-      $networkPort = new NetworkPort();
       $a_networkports = $networkPort->find("`mac`='cc:f9:54:a1:03:45'");
 
       $this->assertEquals(1, count($a_networkports), "May have only one port with this mac address");      
 
       $a_networkport = current($a_networkports);
 
+      $this->assertEquals($networkports_id, $a_networkport['id'], 'id of networkport not same '.
+              'for unknown device and after for computer');
+      
       $this->assertEquals('Computer', $a_networkport['itemtype'], "Maybe Computer ");      
 
    }

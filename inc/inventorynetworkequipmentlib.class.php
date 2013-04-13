@@ -416,6 +416,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   $port_add["items_id"] = $newID;
                   $port_add["itemtype"] = 'PluginFusioninventoryUnknownDevice';
                   $port_add['mac'] = $macNotPhone;
+                  $port_add['instantiation_type'] = "NetworkPortEthernet";
                   $macNotPhone_id = $networkPort->add($port_add);
                }
                $wire->add(array('networkports_id_1'=> $portLink_id,
@@ -518,6 +519,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   $input['itemtype'] = "PluginFusioninventoryUnknownDevice";
                   $input['items_id'] = $newID;
                   $input['mac'] = $ifmac;
+                  $input['instantiation_type'] = "NetworkPortEthernet";
                   $newPortID = $networkPort->add($input);
                   $pfNetworkPort->disconnectDB($networkports_id); // disconnect this port
                   $wire->add(array('networkports_id_1'=> $networkports_id,
