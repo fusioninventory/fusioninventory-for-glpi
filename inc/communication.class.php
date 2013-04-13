@@ -331,19 +331,9 @@ class PluginFusioninventoryCommunication {
          $_SESSION['glpiactiveprofile']['printer']    = 'w';
          $_SESSION['glpiactiveprofile']['peripheral'] = 'w';           
          $_SESSION['glpiactiveprofile']['networking'] = 'w';
-//         $plugin->init();
+         
+         $_SESSION["glpi_plugin_fusioninventory_profile"]['unknowndevice'] = 'w';
       }
-//      if (isset($_SESSION["glpi_plugins"]) && is_array($_SESSION["glpi_plugins"])) {
-//         //Plugin::doHook("config");
-//         if (count($_SESSION["glpi_plugins"])) {
-//            foreach ($_SESSION["glpi_plugins"] as $name) {
-//               Plugin::load($name);
-//            }
-//         }
-//         // For plugins which require action after all plugin init
-//         Plugin::doHook("post_init");
-//      }
-//      ob_end_clean();
 
       $communication  = new PluginFusioninventoryCommunication();
       $pfToolbox = new PluginFusioninventoryToolbox();

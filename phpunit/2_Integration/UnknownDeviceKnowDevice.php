@@ -198,8 +198,6 @@ class UnknownDeviceKnowDevice extends PHPUnit_Framework_TestCase {
       
       $networkPort = new NetworkPort();
       
-      echo "Can update ! ".$networkPort->canUpdate()."\n";
-      
       $a_networkports = $networkPort->find("`mac`='cc:f9:54:a1:03:45'");
 
       $a_networkport = current($a_networkports);
