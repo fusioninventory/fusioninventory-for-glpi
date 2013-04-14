@@ -44,16 +44,22 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryDeployFile {
+class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    static function canCreate() {
-      return TRUE;
+      return PluginFusioninventoryProfile::haveRight('packages', 'w');
    }
 
    static function canView() {
-      return TRUE;
+      return PluginFusioninventoryProfile::haveRight('packages', 'r');
    }
 
+   static function canDelete() {
+      return self::canEdit();
+   }
+   static function canEdit() {
+      return PluginFusioninventoryProfile::haveRight('packages', 'w');
+   }
 
 
    static function getTypes() {
@@ -118,55 +124,141 @@ class PluginFusioninventoryDeployFile {
 
    static function displayList($order, $datas, $rand) {
       global $CFG_GLPI;
+      $o_file = new self;
 
+      // compute short shas to find the corresponding entries in database
+      $short_shas = array();
+      foreach ($datas['jobs']['associatedFiles'] as $sha512) {
+         $short_shas[] = "'".substr($sha512,0,6)."'";
+      }
+      // find corresponding file entries
+      $files = $o_file->find(
+         "shortsha512 IN (".implode(",",$short_shas).")"
+      );
+      // do a quick mapping between database id and short shas
+      $files_mapping = array();
+      foreach($files as $f) {
+         $files_mapping[$f['shortsha512']] = $f['id'];
+      }
+
+      Toolbox::logDebug(print_r($files,TRUE));
+      Toolbox::logDebug(print_r($files_mapping,TRUE));
       echo "<table class='tab_cadrehov package_item_list' id='table_file_$rand'>";
       $i = 0;
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
-         echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
-         echo "<td class='control'><input type='checkbox' name='file_entries[]' value='$i' /></td>";
-         $filename = $datas['associatedFiles'][$sha512]['name'];
-         $filesize = $datas['associatedFiles'][$sha512]['filesize'];
+         $short_sha = substr($sha512, 0, 6);
+         $no_db_entry = FALSE;
+         // check if the files is registered in database
+         if (!array_key_exists($short_sha,$files_mapping)) {
+            $no_db_entry = TRUE;
+         }
+         // get database entries
+         if ( !$no_db_entry ) {
+            $file_id = $files_mapping[$short_sha];
+            // get file's name
+            $file_name = $files[$file_id]['name'];
+            // get file's size
+            $file_size = $files[$file_id]['filesize'];
 
-         //mimetype icon
-         $mimetype = isset($datas['associatedFiles'][$sha512]['mimetype'])?
-            str_replace('/', '__', $datas['associatedFiles'][$sha512]['mimetype']):NULL;
+            //mimetype icon
+            if (isset($files[$file_id]['mimetype']) ) {
+               $file_mimetype =
+                  str_replace(
+                     '/', '__',
+                     $files[$file_id]['mimetype']);
+            } else {
+               $file_mimetype = NULL;
+            }
+         } else {
+            // get file's name from what has been saved in json
+            $file_name = $datas['associatedFiles'][$sha512]['name'];
+            $file_size = NULL;
+            $file_mimetype = NULL;
+
+         }
+         $file_uncompress = $datas['associatedFiles'][$sha512]['uncompress'];
+         $file_p2p = $datas['associatedFiles'][$sha512]['p2p'];
+         $file_p2p_retention_duration =
+            $datas['associatedFiles'][$sha512]['p2p-retention-duration'];
+
+         // start new line
+         $pics_path = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/";
+         echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
+         echo "<td class='control'>";
+         echo "<input type='checkbox' name='file_entries[]' value='$i' />";
+         echo "</td>";
          echo "<td class='filename'>";
-         if (!empty($mimetype)
-           && file_exists(GLPI_ROOT."/plugins/fusioninventory/pics/ext/extensions/$mimetype.png")) {
-               echo "<img src='".$CFG_GLPI['root_doc'].
-                  "/plugins/fusioninventory/pics/ext/extensions/$mimetype.png' />";
-         } else echo "<img src='".$CFG_GLPI['root_doc'].
-               "/plugins/fusioninventory/pics/ext/extensions/documents.png' />";
+         if (
+               !empty($file_mimetype)
+            && file_exists(
+               GLPI_ROOT."/plugins/fusioninventory/pics/ext/extensions/$file_mimetype.png"
+            )
+         ) {
+            echo
+               "<img src='".$pics_path.
+               "ext/extensions/$file_mimetype.png' />";
+         } else {
+            echo
+               "<img src='".$pics_path.
+               "ext/extensions/documents.png' />";
+         }
 
          //filename
          echo  "&nbsp;".
                "<a class='edit' ".
-               "  onclick=\"edit_subtype('file', {$order->fields['id']}, $rand, this )\"".
-               ">$filename</a>";
+               "  onclick=\"edit_subtype(".
+               "   'file', {$order->fields['id']}, $rand, this ".
+               "  )\"".
+               ">$file_name</a>";
 
          //p2p icon
-         if (isset($datas['associatedFiles'][$sha512]['p2p'])
-            && $datas['associatedFiles'][$sha512]['p2p'] != 0) {
+         if (isset($file_p2p)
+            && $file_p2p != 0) {
             echo "<a title='".__('p2p', 'fusioninventory').", "
             .__("retention", 'fusioninventory')." : ".
-               $datas['associatedFiles'][$sha512]['p2p-retention-duration']." ".
+               $file_p2p_retention_duration." ".
                __("days", 'fusioninventory')."' class='more'>";
-               echo "<img src='".$CFG_GLPI['root_doc'].
-               "/plugins/fusioninventory/pics/p2p.png' />";
-               echo "<sup>".$datas['associatedFiles'][$sha512]['p2p-retention-duration']."</sup>";
+               echo  "<img src='".$pics_path.
+                     "p2p.png' />";
+               echo "<sup>".$file_p2p_retention_duration."</sup>";
                echo "</a>";
          }
 
          //uncompress icon
-         if (isset($datas['associatedFiles'][$sha512]['uncompress'])
-            && $datas['associatedFiles'][$sha512]['uncompress'] != 0) {
-               echo "<a title='".__('uncompress', 'fusioninventory')."' class='more'><img src='".
-                  $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/uncompress.png' /></a>";
+         if (
+            isset($file_uncompress)
+            && $file_uncompress != 0
+         ) {
+               echo  "<a title='".
+                     __('uncompress', 'fusioninventory').
+                     "' class='more'><img src='".
+                     $pics_path.
+                     "uncompress.png' /></a>";
          }
+         //sha fingerprint
+         $sha_status = "good";
+         if($no_db_entry) {
+               $sha_status = "bad";
+         }
+         echo  "<div class='fingerprint'>";
+         echo     "<div class='fingerprint_".$sha_status."'>".
+                     $sha512;
+         if ($no_db_entry) {
+            echo  "<div class='fingerprint_badmsg'>".
+                  __("This file is not correctly registered in database.")."<br/>".
+                  __("You can fix it by uploading or selecting the good one.");
+            echo  "</div>";
+         }
+         echo     "</div>";
+         echo  "</div>";
+
 
          //filesize
-         echo "<br />";
-         echo self::processFilesize($filesize);
+         if(!$no_db_entry) {
+            echo "<div class='size'>";
+            echo "size:".self::processFilesize($file_size);
+            echo "</div>";
+         }
          echo "</td>";
          echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
             "'><div class='drag row'></div></td>";
@@ -669,6 +761,7 @@ class PluginFusioninventoryDeployFile {
 
       $deployFile = new self;
 
+
       $filename = addslashes($params['filename']);
       $file_tmp_name = $params['file_tmp_name'];
 
@@ -677,18 +770,27 @@ class PluginFusioninventoryDeployFile {
       $tmpFilepart = tempnam(GLPI_PLUGIN_DOC_DIR."/fusioninventory/", "filestore");
 
       $sha512 = hash_file('sha512', $file_tmp_name);
-//      $short_sha512 = substr($sha512, 0, 6);
+      $short_sha512 = substr($sha512, 0, 6);
 
       $file_present_in_repo = FALSE;
       if($deployFile->checkPresenceFile($sha512)) {
          $file_present_in_repo = TRUE;
       }
 
+      $file_present_in_db =
+         $deployFile->getFromDBByQuery(
+            "WHERE shortsha512 = '". $short_sha512 ."'"
+         );
+
+      //Manifest files contains the multiparts list attached to the file
+      $manifest_path = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
+      $manifest_filename = $manifest_path . $sha512;
+
       $new_entry = array(
          'name' => $filename,
          'p2p' => $params['p2p'],
-         'mimetype' => $params['mime_type'],
-         'filesize' => $params['filesize'],
+//         'mimetype' => $params['mime_type'],
+//         'filesize' => $params['filesize'],
          'p2p-retention-duration' => $params['p2p-retention-duration'],
          'uncompress' => $params['uncompress'],
       );
@@ -727,7 +829,7 @@ class PluginFusioninventoryDeployFile {
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
       //add new entry
-      $datas['associatedFiles'][$sha512] = $new_entry;
+      //$datas['associatedFiles'][$sha512] = $new_entry;
       if (!in_array($sha512, $datas['jobs']['associatedFiles'])) {
          $datas['jobs']['associatedFiles'][] = $sha512;
       }
@@ -773,15 +875,47 @@ class PluginFusioninventoryDeployFile {
 
 
    function checkPresenceFile($sha512) {
-      $order = new PluginFusioninventoryDeployOrder;
+      $manifests_path =
+         GLPI_ROOT."files/_plugins/fusioninventory/files/manifests/";
+      $parts_path =
+         GLPI_ROOT."files/_plugins/fusioninventory/files/repository/";
 
-      $rows = $order->find("json LIKE '%$sha512%'");
-      if (count($rows) > 0) {
-         return TRUE;
+      //Does the file needs to be created ?
+      // Even if fileparts exists, we need to be sure
+      // the manifest file is created
+      if (!file_exists($manifests.$sha512)) {
+         return FALSE;
       }
-      return FALSE;
+      $fileparts_ok = TRUE;
+      $handle = fopen($manifests.$sha512, "r");
+      if ($handle) {
+         while( ($buffer = fgets($handle) !== FALSE) {
+            $path =
+               substr($buffer,0,1).
+               "/".
+               substr($buffer,0,2).
+               "/".
+               $buffer;
+            //Check if the filepart exists
+            if( !file_exists($path) ) {
+               $fileparts_ok = FALSE;
+               break;
+            }
+         }
+      }
+      //Does the file needs to be replaced
+      if (!$fileparts_ok) {
+         return FALSE;
+      }
+      //Nothing to do because the manifest and associated fileparts seems to be fine.
+      return TRUE;
    }
 
+   function checkRegisteredFile($sha512) {
+      $short_sha512 = substr($sha512,0,6);
+      if() {
+      }
+   }
 
 
    static function getMaxUploadSize() {
