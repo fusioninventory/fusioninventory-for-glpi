@@ -797,6 +797,7 @@ class PluginFusioninventoryDeployFile {
    }
 
    static function processFilesize($filesize) {
+      if(!is_null($filesize)) {
       if ($filesize >= (1024 * 1024 * 1024)) {
          $filesize = round($filesize / (1024 * 1024 * 1024), 1)."GiB";
       } elseif ($filesize >= 1024 * 1024) {
@@ -809,6 +810,9 @@ class PluginFusioninventoryDeployFile {
          $filesize = $filesize."B";
       }
       return $filesize;
+      } else {
+         return "N/A";
+      }
    }
 
 }
