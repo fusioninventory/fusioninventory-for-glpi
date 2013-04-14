@@ -59,7 +59,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       return PluginFusioninventoryProfile::haveRight("unknowndevice", "w");
    }
 
-
+   
    static function canView() {
       return PluginFusioninventoryProfile::haveRight("unknowndevice", "r");
    }
@@ -592,6 +592,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             $input["items_id"] = $unknown_id;
             $input["itemtype"] = $this->getType();
             $input["mac"] = $ifmac;
+            $input['instantiation_type'] = "NetworkPortEthernet";
             $id_port = $Netport->add($input);
             $Netport->getFromDB($id_port);
             $this->connectPortToHub(array($id_port => $Netport->fields), $hub_id);
@@ -664,6 +665,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          $input = array();
          $input["items_id"] = $hub_id;
          $input["itemtype"] = $this->getType();
+         $input['instantiation_type'] = "NetworkPortEthernet";
          $freeport_id = $Netport->add($input);
       }
       $this->disconnectDB($freeport_id);
@@ -772,6 +774,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $input["items_id"] = $hub_id;
       $input["itemtype"] = $this->getType();
       $input["name"] = "Link";
+      $input['instantiation_type'] = "NetworkPortEthernet";
       $port_id = $Netport->add($input);
       $this->disconnectDB($pfNetworkport->fields['networkports_id']);
       $this->disconnectDB($port_id);

@@ -143,6 +143,19 @@ if (!defined('GLPI_ROOT')) {
 ini_set("memory_limit", "-1");
 ini_set("max_execution_time", "0");
 
+$_SESSION['glpiactiveprofile'] = array();
+$_SESSION['glpiactiveprofile']['interface'] = 'central';
+$_SESSION['glpiactiveprofile']['internet'] = 'w';
+$_SESSION['glpiactiveprofile']['computer'] = 'w';
+$_SESSION['glpiactiveprofile']['monitor'] = 'w';
+$_SESSION['glpiactiveprofile']['printer'] = 'w';
+$_SESSION['glpiactiveprofile']['peripheral'] = 'w';
+$_SESSION['glpiactiveprofile']['networking'] = 'w';
+
+$_SESSION["glpi_plugin_fusioninventory_profile"]['unknowndevice'] = 'w';
+
+$_SESSION['glpiactiveentities'] = array(0, 1);
+
 require_once 'GLPIInstall/AllTests.php';
 require_once 'FusinvInstall/AllTests.php';
 require_once 'InventoryComputer/AllTests.php';
@@ -164,6 +177,7 @@ require_once '1_Unit/ComputerLog.php';
 require_once '2_Integration/ComputerEntity.php';
 require_once '2_Integration/SoftwareEntityCreation.php';
 require_once '2_Integration/ComputerDynamic.php';
+require_once '2_Integration/UnknownDeviceKnowDevice.php';
 
 require_once 'emulatoragent.php';
 
@@ -189,6 +203,7 @@ class AllTests {
       $suite->addTest(ComputerEntity_AllTests::suite());
       $suite->addTest(SoftwareEntityCreation_AllTests::suite());
       $suite->addTest(ComputerDynamic_AllTests::suite());
+      $suite->addTest(UnknownDeviceKnowDevice_AllTests::suite());
       
       return $suite;
    }

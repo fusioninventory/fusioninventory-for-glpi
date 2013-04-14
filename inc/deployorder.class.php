@@ -135,7 +135,7 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
       return $order->update(array(
          'id'   => $orders_id,
-         'json' => addcslashes(json_encode($datas,$options), "\\")
+         'json' => addcslashes(json_encode($datas, $options), "\\")
       ));
    }
 
