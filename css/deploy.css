@@ -66,7 +66,38 @@ a.edit {
    cursor: pointer;
 }
 
+.filename .size {
+   font-size: 8px;
+}
 
+.fingerprint {
+   font-size: 8px;
+   margin-top: 2px;
+   margin-bottom:2px;
+}
+
+.fingerprint_good {
+   min-height: 16px;
+   color:#003000;
+   background-image: url("../pics/fingerprint-good.png");
+   background-repeat: no-repeat;
+   padding-left : 18px;
+   vertical-align:middle;
+}
+
+.fingerprint_bad {
+   min-height: 16px;
+   background-image: url("../pics/fingerprint-bad.png");
+   background-repeat: no-repeat;
+   color:#FF0000;
+   padding-left : 18px;
+   vertical-align:middle;
+}
+
+.fingerprint_badmsg {
+   background-color: #FFEEEE;
+   color:#550000;
+}
 /* drag and drop element */
 .drag {
    background-image: url("../pics/drag.png");
