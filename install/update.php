@@ -4484,6 +4484,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   'type'   => 'char(255) NOT NULL',
                   'value'  => NULL
          ),
+         'filesize' => array(
+                  'type' => 'bigint(20) NOT NULL',
+                  'value' => NULL
+         ),
          'comment' => array(
                   'type'   => 'text DEFAULT NULL',
                   'value'  => NULL
@@ -4607,12 +4611,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       );
 
       migrateTablesFusionInventory($migration, $a_table);
-
-      /*
-      * import old datas as json in order table before migrate this table
-      */
-
-      migrateTablesFromFusinvDeploy($migration);
 
       /*
        * glpi_plugin_fusioninventory_deploypackages
@@ -4895,6 +4893,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       );
 
       migrateTablesFusionInventory($migration, $a_table);
+
+      /*
+      * import old datas as json in order table before migrate this table
+      */
+
+      migrateTablesFromFusinvDeploy($migration);
+
 
   /*
     * Deploy Update End
@@ -7750,7 +7755,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
    //add json field in deploy order table to store datas from old misc tables
    $field_created = $migration->addField("glpi_plugin_fusioninventory_deployorders",
                                  "json",
-                                 "TEXT DEFAULT NULL");
+                                 "LONGTEXT DEFAULT NULL");
 
    if (  !TableExists("glpi_plugin_fusinvdeploy_checks")
          && !TableExists("glpi_plugin_fusinvdeploy_files")
@@ -7759,6 +7764,46 @@ function migrateTablesFromFusinvDeploy ($migration) {
    ) {
       return;
    }
+
+   //migrate fusinvdeploy_files to fusioninventory_deployfiles
+   if (TableExists("glpi_plugin_fusinvdeploy_files")) {
+      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_deployfiles`");
+      $f_query =
+         implode(array(
+            "SELECT  files.`id`, files.`name`,",
+            "        files.`filesize`, files.`mimetype`,",
+            "        files.`sha512`, files.`shortsha512`,",
+            "        files.`create_date`,",
+            "        pkgs.`entities_id`, pkgs.`is_recursive`",
+            "FROM glpi_plugin_fusinvdeploy_files as files",
+            "LEFT JOIN glpi_plugin_fusioninventory_deployorders as orders",
+            "  ON orders.`id` = files.`plugin_fusinvdeploy_orders_id`",
+            "LEFT JOIN glpi_plugin_fusioninventory_deploypackages as pkgs",
+            "  ON orders.`plugin_fusioninventory_deploypackages_id` = pkgs.`id`",
+            "WHERE",
+            "  files.`shortsha512` != \"\"",
+         )," \n");
+      $f_res = $DB->query($f_query);
+      while($f_datas = $DB->fetch_assoc($f_res)) {
+         $entry = array(
+            "id"        => $f_datas["id"],
+            "name"      => $f_datas["name"],
+            "filesize"  => $f_datas["filesize"],
+            "mimetype"  => $f_datas["mimetype"],
+            "shortsha512"  => $f_datas["shortsha512"],
+            "sha512"  => $f_datas["sha512"],
+            "comments"  => "",
+            "date_mod"  => $f_datas["create_date"],
+            "entities_id"  => $f_datas["entities_id"],
+            "is_recursive"  => $f_datas["is_recursive"],
+         );
+         $migration->insertInTable(
+            "glpi_plugin_fusioninventory_deployfiles",$entry
+         );
+      }
+
+   }
+
    $migration->migrationOneTable("glpi_plugin_fusioninventory_deployorders");
 
    $final_datas = array();
@@ -7798,12 +7843,14 @@ function migrateTablesFromFusinvDeploy ($migration) {
       $files_list = array();
       //=== Files ===
       if (TableExists("glpi_plugin_fusinvdeploy_files")) {
-         $f_query = "SELECT id, name, is_p2p as p2p, filesize,
-            p2p_retention_days as `p2p-retention-duration`, uncompress, sha512
-            FROM glpi_plugin_fusinvdeploy_files
-            WHERE plugin_fusinvdeploy_orders_id = $order_id";
+         $f_query =
+            "SELECT id, name, is_p2p as p2p, filesize, mimetype, ".
+            "p2p_retention_days as `p2p-retention-duration`, uncompress, sha512 ".
+            "FROM glpi_plugin_fusinvdeploy_files ".
+            "WHERE plugin_fusinvdeploy_orders_id = $order_id";
          $f_res = $DB->query($f_query);
          while ($f_datas = $DB->fetch_assoc($f_res)) {
+
             //jump to next entry if sha512 is empty
             // This kind of entries could happen sometimes on upload errors
             if (empty($f_datas['sha512'])) continue;
@@ -7814,7 +7861,10 @@ function migrateTablesFromFusinvDeploy ($migration) {
             foreach ($f_datas as $f_key => $f_value) {
 
                //we don't store the sha512 field in json
-               if ($f_key == "sha512" || $f_key == "id" ) {
+               if (  $f_key == "sha512"
+                  || $f_key == "id"
+                  || $f_key == "filesize"
+                  || $f_key == "mimetype") {
                   continue;
                }
 
@@ -7852,11 +7902,6 @@ function migrateTablesFromFusinvDeploy ($migration) {
                $fhandle = fopen(
                   GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}",
                   'w+'
-               );
-               Toolbox::logDebug(
-                  print_r(array(
-                     'sha'=>$sha,
-                  ),TRUE)
                );
                while ($fp_datas = $DB->fetch_assoc($fp_res)) {
                   if ($fp_datas['file_hash'] === $sha) {
@@ -7960,6 +8005,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
    //drop unused tables
    $old_deploy_tables = array(
+/*
       'glpi_plugin_fusinvdeploy_actions',
       'glpi_plugin_fusinvdeploy_actions_commandenvvariables',
       'glpi_plugin_fusinvdeploy_actions_commands',
@@ -7973,6 +8019,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
       'glpi_plugin_fusinvdeploy_fileparts',
       'glpi_plugin_fusinvdeploy_files',
       'glpi_plugin_fusinvdeploy_files_mirrors'
+*/
    );
    foreach ($old_deploy_tables as $table) {
       $migration->dropTable($table);

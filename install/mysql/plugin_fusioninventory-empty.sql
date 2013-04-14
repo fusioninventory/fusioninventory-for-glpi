@@ -872,6 +872,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployfiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `mimetype` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `filesize` bigint(20) NOT NULL,
   `comment` text DEFAULT NULL,
   `sha512` char(128) NOT NULL,
   `shortsha512` char(6) NOT NULL,
@@ -882,17 +883,6 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployfiles` (
   KEY `shortsha512` (`shortsha512`),
   KEY `entities_id` (`entities_id`),
   KEY `date_mod` (`date_mod`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployfileparts`;
-
-CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployfileparts` (
-  `hash` binary(64) NOT NULL,
-  `plugin_fusioninventory_deployfiles_hash` binary(64) NOT NULL,
-  PRIMARY KEY (`part_hash`),
-  KEY `file_hash` (`part_hash`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
