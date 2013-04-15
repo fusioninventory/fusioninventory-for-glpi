@@ -304,6 +304,28 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $this->assertGreaterThan(0, $a_networkport['items_id'], 'items_id may be more than 0');
       
    }
+   
+   
+   
+   public function testVlansPort10002() {
+      global $DB;
+
+      $DB->connect();
+      
+      $networkPort = new NetworkPort();
+      
+      $a_networkports = $networkPort->find("`instantiation_type`='NetworkPortEthernet'
+         AND `itemtype`='NetworkEquipment'
+         AND `items_id`='1'
+         AND `name`='FastEthernet0/2'");
+      
+      $this->assertEquals(1, count($a_networkports), 'Networkport 10002 of switch may be 1');
+
+      $a_networkport = current($a_networkports);
+      
+      $a_vlans = NetworkPort_Vlan::getVlansForNetworkPort($a_networkport['id']);
+      $this->assertEquals(2, count($a_vlans), 'Networkport 10002 of switch may have 2 Vlans');
+   }
 }
 
 
