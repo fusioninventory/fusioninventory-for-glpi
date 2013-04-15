@@ -233,6 +233,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          // (see http://forge.fusioninventory.org/issues/1503)
          $pfConfig = new PluginFusioninventoryConfig();
 
+
          // entity rules
             $inputent = $input;
             if ((isset($a_computerinventory['computer']['domains_id']))
@@ -271,6 +272,14 @@ class PluginFusioninventoryInventoryComputerInventory {
          // End entity rules
       $_SESSION['plugin_fusioninventory_classrulepassed'] =
                      "PluginFusioninventoryInventoryComputerInventory";
+
+      $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+      $dataLocation = $ruleLocation->processAllRules($input,array());
+      if (isset($dataLocation['locations_id'])) {
+         $_SESSION['plugin_fusioninventory_locations_id'] =
+               $dataLocation['locations_id'];
+      }
+
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
       $data = $rule->processAllRules($input, array(), array('class'=>$this));
       PluginFusioninventoryToolbox::logIfExtradebug("pluginFusioninventory-rules",
@@ -406,15 +415,15 @@ class PluginFusioninventoryInventoryComputerInventory {
          if ($items_id == '0') {
             $input = array();
             $input['entities_id'] = $entities_id;
-            if (isset($_SESSION['plugin_fusioninventory_locations_id'])) {
-               $a_computerinventory['computer']['locations_id'] =
-                                 $_SESSION['plugin_fusioninventory_locations_id'];
-               unset($_SESSION['plugin_fusioninventory_locations_id']);
-            }
             $items_id = $computer->add($input);
             $no_history = TRUE;
             $setdynamic = 0;
          }
+         if (isset($_SESSION['plugin_fusioninventory_locations_id'])) {
+               $a_computerinventory['computer']['locations_id'] =
+                                 $_SESSION['plugin_fusioninventory_locations_id'];
+               unset($_SESSION['plugin_fusioninventory_locations_id']);
+            }
 
          $serialized = gzcompress(serialize($a_computerinventory));
          $a_computerinventory['fusioninventorycomputer']['serialized_inventory'] =
