@@ -418,7 +418,7 @@ class PluginFusioninventoryFormatconvert {
                                                     'type'          => 'interfacetypes_id'));
                   if (isset($a_controllers['PCIID'])) {
                      $a_PCIData = 
-                           PluginFusioninventoryInventoryComputerLibfilter::getDataFromPCIID(
+                           PluginFusioninventoryInventoryExternalDB::getDataFromPCIID(
                              $a_controllers['PCIID']
                            );
                      if (isset($a_PCIData['manufacturer'])) {
@@ -635,7 +635,7 @@ class PluginFusioninventoryFormatconvert {
                         AND $a_peripherals['VENDORID'] != ''
                         AND isset($a_peripherals['PRODUCTID'])) {
 
-                  $dataArray = PluginFusioninventoryInventoryComputerLibfilter::getDataFromUSBID(
+                  $dataArray = PluginFusioninventoryInventoryExternalDB::getDataFromUSBID(
                              $a_peripherals['VENDORID'],
                              $a_peripherals['PRODUCTID']
                           );

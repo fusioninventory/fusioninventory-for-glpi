@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
+class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
 
 
     /**
@@ -128,6 +128,25 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
          }
       }
       return array($vendors_name, $devices_name);
+   }
+   
+   
+   
+   static function getManufacturerWithMAC($mac) {
+      global $DB;
+      
+      $a_mac = explode(":", $mac);
+      $searchMac = $a_mac[0].":".$a_mac[1].":".$a_mac[2];
+      
+      $query_select = "SELECT name FROM `glpi_plugin_fusioninventory_ouis`
+        WHERE `mac`='".$searchMac."'
+        LIMIT 1";
+      $resultSelect = $DB->query($query_select);
+      if ($DB->numrows($resultSelect) == 1) {
+         $data = $DB->fetch_assoc($resultSelectd);
+         return $data['name'];
+      }
+      return "";
    }
 }
 
