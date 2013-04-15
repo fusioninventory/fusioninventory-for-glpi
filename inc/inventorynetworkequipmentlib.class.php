@@ -511,7 +511,9 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   // Create unknown device
                   $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
                   $input = array();
-                  $input['name'] = '';
+                  $manufacturer = 
+                     PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($ifmac);
+                  $input['name'] = $manufacturer;
                   if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
                      $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
                   }
