@@ -86,6 +86,7 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
                 OR strstr($data[0], $pluginname))
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_pcidevices"))
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_pcivendors"))
+            AND(!strstr($data[0], "glpi_plugin_fusioninventory_ouis"))
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_usbdevices"))
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_usbvendors"))){
            
