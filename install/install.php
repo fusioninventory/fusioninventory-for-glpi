@@ -200,7 +200,18 @@ function pluginFusioninventoryInstall($version, $migration='') {
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload')) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload');
       }
-
+   /*
+    * Deploy folders
+    */
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files');
+      }
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/repository')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/repository');
+      }
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests');
+      }
 
    /*
     * Manage profiles

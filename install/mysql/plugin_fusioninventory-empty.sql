@@ -465,21 +465,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstorages_storages` (
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_snmpmodelmiblabels`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_snmpmodelmiblabels` (
@@ -846,9 +831,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_computerlicenseinfos` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
+--
 -- BEGIN DEPLOY
-
-
+--
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployorders`;
 
 CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployorders` (
@@ -880,6 +865,28 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deploypackages` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deployfiles`;
+
+CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployfiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mimetype` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `filesize` bigint(20) NOT NULL,
+  `comment` text DEFAULT NULL,
+  `sha512` char(128) NOT NULL,
+  `shortsha512` char(6) NOT NULL,
+  `entities_id` int(11) NOT NULL,
+  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `date_mod` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `shortsha512` (`shortsha512`),
+  KEY `entities_id` (`entities_id`),
+  KEY `date_mod` (`date_mod`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploymirrors`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
@@ -895,6 +902,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploymirrors` (
   KEY `entities_id` (`entities_id`),
   KEY `date_mod` (`date_mod`)
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
+
 
 
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploygroups`;
@@ -932,8 +940,11 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
   PRIMARY KEY (`id`),
   KEY `groups_id` (`groups_id`)
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
-
+--
 -- END DEPLOY
+--
+
+
 
 -- INSERT
 -- glpi_plugin_fusioninventory_configsecurities

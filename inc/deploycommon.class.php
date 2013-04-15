@@ -262,8 +262,19 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       $mirrors = PluginFusioninventoryDeployMirror::getList($agent);
       foreach($order_files as $hash => $params) {
          $order_files[$hash]['mirrors'] = $mirrors;
+         $manifest = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/".$hash;
+         if ( file_exists($manifest) ) {
+            $handle = fopen($manifest,"r");
+            if ($handle) {
+               $order_files[$hash]['multiparts'] = array();
+               while ( ($buffer = fgets($handle) ) !== FALSE) {
+                  $order_files[$hash]['multiparts'][] = trim($buffer);
+               }
+               fclose($handle);
+            }
+         }
       }
-      
+
       $final_order = array(
          "jobs" => array(
             $order_job

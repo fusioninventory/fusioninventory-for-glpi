@@ -222,6 +222,19 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml');
    }
+   /*
+    * Deploy folders
+    */
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files');
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/repository')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/repository');
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests');
+   }
+
 
 
    /*
@@ -4448,6 +4461,94 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Deploy Update Begin
     */
+      /*
+       * glpi_plugin_fusioninventory_deployfiles
+       */
+      $a_table = array();
+
+      $a_table['name'] = 'glpi_plugin_fusioninventory_deployfiles';
+
+      $a_table['oldname'] = array(
+      );
+
+      $a_table['fields'] = array(
+         'id' =>  array(
+                  'type'   => 'autoincrement',
+                  'value'  => NULL
+         ),
+         'name' => array(
+                  'type'   => 'varchar(255) NOT NULL',
+                  'value'  => NULL
+         ),
+         'mimetype' => array(
+                  'type'   => 'char(255) NOT NULL',
+                  'value'  => NULL
+         ),
+         'filesize' => array(
+                  'type' => 'bigint(20) NOT NULL',
+                  'value' => NULL
+         ),
+         'comment' => array(
+                  'type'   => 'text DEFAULT NULL',
+                  'value'  => NULL
+         ),
+         'sha512' => array(
+                  'type'   => 'char(128) NOT NULL',
+                  'value'  => NULL
+         ),
+         'shortsha512' => array(
+                  'type'   => 'char(6) NOT NULL',
+                  'value'  => NULL
+         ),
+         'entities_id' => array(
+                  'type'   => 'int(11) NOT NULL',
+                  'value'  => NULL
+         ),
+         'is_recursive' => array(
+                  'type'   => 'tinyint(1) NOT NULL',
+                  'value'  => 0
+         ),
+         'date_mod' => array(
+                  'type'   => 'datetime NOT NULL',
+                  'value'  => NULL
+         ),
+
+      );
+
+      $a_table['oldfields'] = array(
+      );
+
+      $a_table['renamefields'] = array(
+      );
+
+      $a_table['keys'] = array(
+         array(
+            'field' => 'id',
+            'name' => '',
+            'type' => 'KEY'
+         ),
+         array(
+            'field' => 'shortsha512',
+            'name' => '',
+            'type' => 'KEY'
+         ),
+         array(
+            'field' => 'entities_id',
+            'name' => '',
+            'type' => 'KEY'
+         ),
+         array(
+            'field' => 'date_mod',
+            'name' => '',
+            'type' => 'KEY'
+         ),
+      );
+
+      $a_table['oldkeys'] = array(
+      );
+
+      migrateTablesFusionInventory($migration, $a_table);
+
 
       /*
        * glpi_plugin_fusioninventory_deployorders
@@ -4510,12 +4611,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       );
 
       migrateTablesFusionInventory($migration, $a_table);
-
-      /*
-      * import old datas as json in order table before migrate this table
-      */
-
-      migrateTablesFromFusinvDeploy($migration);
 
       /*
        * glpi_plugin_fusioninventory_deploypackages
@@ -4798,6 +4893,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       );
 
       migrateTablesFusionInventory($migration, $a_table);
+
+      /*
+      * import old datas as json in order table before migrate this table
+      */
+
+      migrateTablesFromFusinvDeploy($migration);
+
 
   /*
     * Deploy Update End
@@ -7653,7 +7755,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
    //add json field in deploy order table to store datas from old misc tables
    $field_created = $migration->addField("glpi_plugin_fusioninventory_deployorders",
                                  "json",
-                                 "TEXT DEFAULT NULL");
+                                 "LONGTEXT DEFAULT NULL");
 
    if (  !TableExists("glpi_plugin_fusinvdeploy_checks")
          && !TableExists("glpi_plugin_fusinvdeploy_files")
@@ -7662,6 +7764,46 @@ function migrateTablesFromFusinvDeploy ($migration) {
    ) {
       return;
    }
+
+   //migrate fusinvdeploy_files to fusioninventory_deployfiles
+   if (TableExists("glpi_plugin_fusinvdeploy_files")) {
+      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_deployfiles`");
+      $f_query =
+         implode(array(
+            "SELECT  files.`id`, files.`name`,",
+            "        files.`filesize`, files.`mimetype`,",
+            "        files.`sha512`, files.`shortsha512`,",
+            "        files.`create_date`,",
+            "        pkgs.`entities_id`, pkgs.`is_recursive`",
+            "FROM glpi_plugin_fusinvdeploy_files as files",
+            "LEFT JOIN glpi_plugin_fusioninventory_deployorders as orders",
+            "  ON orders.`id` = files.`plugin_fusinvdeploy_orders_id`",
+            "LEFT JOIN glpi_plugin_fusioninventory_deploypackages as pkgs",
+            "  ON orders.`plugin_fusioninventory_deploypackages_id` = pkgs.`id`",
+            "WHERE",
+            "  files.`shortsha512` != \"\"",
+         )," \n");
+      $f_res = $DB->query($f_query);
+      while($f_datas = $DB->fetch_assoc($f_res)) {
+         $entry = array(
+            "id"        => $f_datas["id"],
+            "name"      => $f_datas["name"],
+            "filesize"  => $f_datas["filesize"],
+            "mimetype"  => $f_datas["mimetype"],
+            "shortsha512"  => $f_datas["shortsha512"],
+            "sha512"  => $f_datas["sha512"],
+            "comments"  => "",
+            "date_mod"  => $f_datas["create_date"],
+            "entities_id"  => $f_datas["entities_id"],
+            "is_recursive"  => $f_datas["is_recursive"],
+         );
+         $migration->insertInTable(
+            "glpi_plugin_fusioninventory_deployfiles",$entry
+         );
+      }
+
+   }
+
    $migration->migrationOneTable("glpi_plugin_fusioninventory_deployorders");
 
    $final_datas = array();
@@ -7698,21 +7840,31 @@ function migrateTablesFromFusinvDeploy ($migration) {
              $c_i++;
          }
       }
-
+      $files_list = array();
       //=== Files ===
       if (TableExists("glpi_plugin_fusinvdeploy_files")) {
-         $f_query = "SELECT id, name, is_p2p as p2p, filesize,
-            p2p_retention_days as `p2p-retention-duration`, uncompress, sha512
-            FROM glpi_plugin_fusinvdeploy_files
-            WHERE plugin_fusinvdeploy_orders_id = $order_id";
+         $f_query =
+            "SELECT id, name, is_p2p as p2p, filesize, mimetype, ".
+            "p2p_retention_days as `p2p-retention-duration`, uncompress, sha512 ".
+            "FROM glpi_plugin_fusinvdeploy_files ".
+            "WHERE plugin_fusinvdeploy_orders_id = $order_id";
          $f_res = $DB->query($f_query);
          while ($f_datas = $DB->fetch_assoc($f_res)) {
+
+            //jump to next entry if sha512 is empty
+            // This kind of entries could happen sometimes on upload errors
+            if (empty($f_datas['sha512'])) continue;
+
             //construct job file entry
             $o_line['associatedFiles'][] = $f_datas['sha512'];
 
             foreach ($f_datas as $f_key => $f_value) {
+
                //we don't store the sha512 field in json
-               if ($f_key == "sha512" || $f_key == "id" ) {
+               if (  $f_key == "sha512"
+                  || $f_key == "id"
+                  || $f_key == "filesize"
+                  || $f_key == "mimetype") {
                   continue;
                }
 
@@ -7720,25 +7872,45 @@ function migrateTablesFromFusinvDeploy ($migration) {
                $of_line[$f_datas['sha512']][$f_key] = $f_value;
             }
 
-            //add mirror(s) to file
-            $fm_query = "SELECT mirrors.url as url
-               FROM glpi_plugin_fusinvdeploy_files_mirrors as files_mirrors
-               INNER JOIN glpi_plugin_fusinvdeploy_mirrors as mirrors
-                  ON files_mirrors.plugin_fusinvdeploy_mirrors_id = mirrors.id
-               WHERE files_mirrors.plugin_fusinvdeploy_files_id = ".$f_datas['id'];
-            $fm_res = $DB->query($fm_query);
-            while ($fm_datas = $DB->fetch_assoc($fm_res)) {
-               $of_line[$f_datas['sha512']]['mirrors'][]  = $fm_datas['url'];
+            if (!in_array($f_datas['sha512'], $files_list)) {
+               $files_list[] = $f_datas['sha512'];
             }
 
-            //add multipart file datas
-            $fmp_query = "SELECT sha512
-               FROM glpi_plugin_fusinvdeploy_fileparts
-               WHERE plugin_fusinvdeploy_files_id =".$f_datas['id'];
-            $fmp_res = $DB->query($fmp_query);
-            while ($fmp_datas = $DB->fetch_assoc($fmp_res)) {
-               $of_line[$f_datas['sha512']]['multiparts'][] = $fmp_datas['sha512'];
+         }
+      }
+
+      //=== Fileparts ===
+      if (TableExists('glpi_plugin_fusinvdeploy_fileparts')) {
+         // multipart file datas
+         /*
+         $fp_query = "SELECT sha512
+            FROM glpi_plugin_fusinvdeploy_fileparts
+            WHERE plugin_fusinvdeploy_files_id =".$f_datas['id'];
+         */
+         foreach ($files_list as $sha) {
+            $shortsha = substr($sha,0,6);
+            $fp_query = "SELECT  fp.`sha512` as filepart_hash, ".
+                        "        f.`sha512`  as file_hash      ".
+                        "FROM `glpi_plugin_fusinvdeploy_files` as f ".
+                        "INNER JOIN `glpi_plugin_fusinvdeploy_fileparts` as fp ".
+                        "ON   f.`id` = fp.`plugin_fusinvdeploy_files_id` ".
+                        "     AND f.`shortsha512` = '{$shortsha}' ";
+
+
+            $fp_res = $DB->query($fp_query);
+            if ($DB->numrows($fp_res) > 0) {
+               $fhandle = fopen(
+                  GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}",
+                  'w+'
+               );
+               while ($fp_datas = $DB->fetch_assoc($fp_res)) {
+                  if ($fp_datas['file_hash'] === $sha) {
+                     fwrite($fhandle, $fp_datas['filepart_hash']."\n");
+                  }
+               }
+               fclose($fhandle);
             }
+
          }
       }
 
@@ -7798,7 +7970,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                      //construct command status array entry
                      $o_line['actions'][$a_i][$type]['retChecks'][] = array(
                         'type'  => $cmdStatus[$res_cmd_datas['type']],
-                        'value' => array($res_cmd_datas['value'])
+                        'values' => array($res_cmd_datas['value'])
                      );
                   }
                }
@@ -7808,6 +7980,8 @@ function migrateTablesFromFusinvDeploy ($migration) {
       }
       $final_datas[$order_id]['jobs'] = $o_line;
       $final_datas[$order_id]['associatedFiles'] = $of_line;
+      unset($o_line);
+      unset($of_line);
    }
 
    $options = 0;
