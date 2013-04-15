@@ -274,6 +274,10 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
             }
          }
       }
+      //Send an empty json dict instead of empty json list
+      if (count($order_files) == 0) {
+         $order_files = (object)array();
+      }
 
       $final_order = array(
          "jobs" => array(
@@ -283,7 +287,6 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       );
       //return data response as json
       $json = json_encode($final_order);
-      $json = str_replace('"associatedFiles":[]}', '"associatedFiles":{}}', $json);
       return $json;
    }
 }

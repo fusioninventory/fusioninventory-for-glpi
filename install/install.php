@@ -158,6 +158,10 @@ function pluginFusioninventoryInstall($version, $migration='') {
          $Rule->delete($data);
       }
 
+      $a_rules = $Rule->find("`sub_type`='PluginFusinvinventoryRuleLocation'");
+      foreach ($a_rules as $data) {
+         $Rule->delete($data);
+      }
 
 
    /*

@@ -108,6 +108,9 @@ function plugin_init_fusioninventory() {
               array('addtabon' => array('Computer')));
 
          //Classes for rulesengine
+      Plugin::registerClass('PluginFusioninventoryInventoryRuleLocation');
+      Plugin::registerClass('PluginFusioninventoryInventoryRuleLocationCollection',
+              array('rulecollections_types'=>TRUE));
       Plugin::registerClass('PluginFusioninventoryInventoryRuleEntity');
       Plugin::registerClass('PluginFusioninventoryInventoryRuleEntityCollection',
               array('rulecollections_types'=>TRUE));
@@ -299,6 +302,10 @@ function plugin_init_fusioninventory() {
                         = '../fusioninventory/front/inventoryruleentity.form.php';
          $hook_search['fusinvinventory-ruleentity']
                         = '../fusioninventory/front/inventoryruleentity.php';
+         $hook_add['fusinvinventory-rulelocation']
+                        = '../fusioninventory/front/inventoryrulelocation.form.php';
+         $hook_search['fusinvinventory-rulelocation']
+                        = '../fusioninventory/front/inventoryrulelocation.php';
 
          $hook_add['fusinvinventory-blacklist']
                         = '../fusioninventory/front/inventorycomputerblacklist.form.php';
@@ -415,6 +422,9 @@ function plugin_init_fusioninventory() {
 
          $filariane['fusinvinventory-ruleentity']['title'] = __('Entity rules', 'fusioninventory');
          $filariane['fusinvinventory-ruleentity']['page']  = '/plugins/fusioninventory/front/inventoryruleentity.php';
+
+         $filariane['fusinvinventory-rulelocation']['title'] = __('Location rules', 'fusioninventory');
+         $filariane['fusinvinventory-rulelocation']['page']  = '/plugins/fusioninventory/front/inventoryrulelocation.php';
 
          $filariane['fusinvinventory-importxmlfile']['title'] = __('Import agent XML file', 'fusioninventory');
          $filariane['fusinvinventory-importxmlfile']['page']  = '/plugins/fusinvinventory/front/inventorycomputerimportxml.php';
