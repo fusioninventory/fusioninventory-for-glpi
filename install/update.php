@@ -8005,7 +8005,6 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
    //drop unused tables
    $old_deploy_tables = array(
-/*
       'glpi_plugin_fusinvdeploy_actions',
       'glpi_plugin_fusinvdeploy_actions_commandenvvariables',
       'glpi_plugin_fusinvdeploy_actions_commands',
@@ -8019,7 +8018,6 @@ function migrateTablesFromFusinvDeploy ($migration) {
       'glpi_plugin_fusinvdeploy_fileparts',
       'glpi_plugin_fusinvdeploy_files',
       'glpi_plugin_fusinvdeploy_files_mirrors'
-*/
    );
    foreach ($old_deploy_tables as $table) {
       $migration->dropTable($table);
