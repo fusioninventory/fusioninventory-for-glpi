@@ -317,7 +317,7 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $a_networkports = $networkPort->find("`instantiation_type`='NetworkPortEthernet'
          AND `itemtype`='NetworkEquipment'
          AND `items_id`='1'
-         AND `name`='FastEthernet0/2'");
+         AND `name`='Fa0/2'");
       
       $this->assertEquals(1, count($a_networkports), 'Networkport 10002 of switch may be 1');
 
