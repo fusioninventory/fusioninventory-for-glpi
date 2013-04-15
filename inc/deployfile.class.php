@@ -889,7 +889,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $fileparts_ok = TRUE;
       $handle = fopen($manifests.$sha512, "r");
       if ($handle) {
-         while( ($buffer = fgets($handle) !== FALSE) {
+         while( ($buffer = fgets($handle) !== FALSE) ) {
             $path =
                substr($buffer,0,1).
                "/".
@@ -909,12 +909,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       }
       //Nothing to do because the manifest and associated fileparts seems to be fine.
       return TRUE;
-   }
-
-   function checkRegisteredFile($sha512) {
-      $short_sha512 = substr($sha512,0,6);
-      if() {
-      }
    }
 
 
