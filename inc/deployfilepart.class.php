@@ -82,7 +82,7 @@ class PluginFusioninventoryDeployFilepart {
       header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
       header('Pragma: public');
       header('Content-Length: ' . filesize($filePath));
-      ob_clean();
+      if (ob_get_level() > 0) ob_clean();
       flush();
       readfile($filePath);
       exit;
