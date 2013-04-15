@@ -568,7 +568,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          unset($datas['associatedFiles'][$sha512]);
 
          //remove file in repo
-         self::removeFileInRepo($sha512, $params['orders_id']);
+         //self::removeFileInRepo($sha512, $params['orders_id']);
       }
 
       //update order
