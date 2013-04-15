@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_usbvendors`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_usbvendors`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_usbvendors` (
+CREATE TABLE `glpi_plugin_fusinvinventory_usbvendors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `vendorid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -9,21 +9,21 @@ CREATE TABLE `glpi_plugin_fusioninventory_usbvendors` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_usbdevices`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_usbdevices`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
+CREATE TABLE `glpi_plugin_fusinvinventory_usbdevices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deviceid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `plugin_fusioninventory_usbvendor_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusinvinventory_usbvendor_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `deviceid` (`deviceid`),
-  KEY `plugin_fusioninventory_usbvendor_id` (`plugin_fusioninventory_usbvendor_id`)
+  KEY `plugin_fusinvinventory_usbvendor_id` (`plugin_fusinvinventory_usbvendor_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-INSERT INTO `glpi_plugin_fusioninventory_usbvendors`
-      (`id`, `vendorid`, `name`) VALUES
+INSERT INTO `glpi_plugin_fusinvinventory_usbvendors`
+      (`id`, `vendorid`, `name`) VALUES 
 (1, '0001', 'Fry\'s Electronics'),
 (2, '0002', 'Ingram'),
 (3, '0003', 'Club Mac'),
@@ -3091,8 +3091,8 @@ INSERT INTO `glpi_plugin_fusioninventory_usbvendors`
 (3065, 'VT', '0403  Component Video');
 
 
-INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
-      (`id`, `deviceid`, `name`, `plugin_fusioninventory_usbvendor_id`) VALUES
+INSERT INTO `glpi_plugin_fusinvinventory_usbdevices`
+      (`id`, `deviceid`, `name`, `plugin_fusinvinventory_usbvendor_id`) VALUES 
 (1, '142b', 'Arbiter Systems, Inc.', '1'),
 (2, '5301', 'GW-US54ZGL 802.11bg', '5'),
 (3, '0006', 'Generic USB Joystick', '6'),
@@ -4786,7 +4786,7 @@ INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
 (1691, '0008', 'SideWinder Precision Pro', '120'),
 (1692, '0009', 'IntelliMouse', '120'),
 (1693, '000b', 'Natural Keyboard Elite', '120'),
-(1694, '000e', 'SideWinder&Acirc;&reg; Freestyle Pro', '120'),
+(1694, '000e', 'SideWinder&reg; Freestyle Pro', '120'),
 (1695, '0014', 'Digital Sound System 80', '120'),
 (1696, '001a', 'SideWinder Precision Racing Wheel', '120'),
 (1697, '001b', 'SideWinder Force Feedback 2 Joystick', '120'),
@@ -5696,7 +5696,7 @@ INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
 (2601, '0138', 'Unicorn II (ST70138B + MTC-20174TQ chipset)', '151'),
 (2602, '1307', 'Cytronix 6in1 Card Reader', '151'),
 (2603, '163d', 'Cool Icam Digi-MP3', '151'),
-(2604, '2015', 'TouchChip&reg; Fingerprint Reader', '151'),
+(2604, '2015', '', '151'),
 (2605, '2016', 'Fingerprint Reader', '151'),
 (2606, '2017', 'Biometric Smart Card Reader', '151'),
 (2607, '2018', 'BioSimKey', '151'),
@@ -6981,18 +6981,18 @@ INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
 (3886, 'e003', 'SPR532 PinPad SmartCard Reader', '240'),
 (3887, '0001', 'TouchScreen', '241'),
 (3888, '0002', 'Touchmonitor Interface 2600 Rev 2', '241'),
-(3889, '0004', '4000U CarrollTouch&Acirc;&reg; Touchmonitor Interface', '241'),
-(3890, '0007', '2500U IntelliTouch&Acirc;&reg; Touchmonitor Interface', '241'),
-(3891, '0008', '3000U AccuTouch&Acirc;&reg; Touchmonitor Interface', '241'),
-(3892, '0009', '4000U CarrollTouch&Acirc;&reg; Touchmonitor Interface', '241'),
+(3889, '0004', '4000U CarrollTouch&reg; Touchmonitor Interface', '241'),
+(3890, '0007', '2500U IntelliTouch&reg; Touchmonitor Interface', '241'),
+(3891, '0008', '3000U AccuTouch&reg; Touchmonitor Interface', '241'),
+(3892, '0009', '4000U CarrollTouch&reg; Touchmonitor Interface', '241'),
 (3893, '0020', 'Touchscreen Interface (2700)', '241'),
 (3894, '0021', 'Touchmonitor Interface', '241'),
-(3895, '0030', '4500U CarrollTouch&Acirc;&reg; Touchmonitor Interface', '241'),
+(3895, '0030', '4500U CarrollTouch&reg; Touchmonitor Interface', '241'),
 (3896, '0032', 'Touchmonitor Interface', '241'),
 (3897, '0033', 'Touchmonitor Interface', '241'),
 (3898, '0041', '5010 Surface Capacitive Touchmonitor Interface', '241'),
 (3899, '0042', 'Touchmonitor Interface', '241'),
-(3900, '0050', '2216 AccuTouch&Acirc;&reg; Touchmonitor Interface', '241'),
+(3900, '0050', '2216 AccuTouch&reg; Touchmonitor Interface', '241'),
 (3901, '0071', 'Touchmonitor Interface', '241'),
 (3902, '0072', 'Touchmonitor Interface', '241'),
 (3903, '0081', 'Touchmonitor Interface', '241'),
@@ -11227,7 +11227,7 @@ INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
 (8132, '2271', 'Edge 605/705', '1008'),
 (8133, '2295', 'Colorado 300', '1008'),
 (8134, '22b6', 'eTrex Vista HCx (Mass Storage mode)', '1008'),
-(8135, '2353', 'N&Atilde;&frac14;vi 205T', '1008'),
+(8135, '2353', 'N&uuml;vi 205T', '1008'),
 (8136, '2519', 'eTrex 30', '1008'),
 (8137, '2535', 'Edge 800', '1008'),
 (8138, '7500', 'Network Interface', '1009'),
@@ -11272,7 +11272,7 @@ INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
 (8177, '0509', 'BT EDR Dongle', '1021'),
 (8178, '0706', 'PocketPC e740', '1021'),
 (8179, '0707', 'Pocket PC e330 Series', '1021'),
-(8180, '0708', 'Pocket PC e350&Acirc;&nbsp;Series', '1021'),
+(8180, '0708', 'Pocket PC e350&nbsp;Series', '1021'),
 (8181, '0709', 'Pocket PC e750 Series', '1021'),
 (8182, '070a', 'Pocket PC e400 Series', '1021'),
 (8183, '070b', 'Pocket PC e800 Series', '1021'),
@@ -12575,7 +12575,7 @@ INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
 (9480, '107e', 'Reader Controller', '1470'),
 (9481, '2010', 'myPad110 PC/SC Smart Card Reader', '1470'),
 (9482, '3050', 'EZ710 Smart Card Reader', '1470'),
-(9483, '9001', 'PowerPad Pocket PC&Acirc;&nbsp;Device', '1472'),
+(9483, '9001', 'PowerPad Pocket PC&nbsp;Device', '1472'),
 (9484, '2507', 'Hi-Speed USB-to-IDE Bridge Controller', '1474'),
 (9485, '2515', 'Flash Disk Embedded Hub', '1474'),
 (9486, '2516', 'Flash Disk Security Device', '1474'),
@@ -12599,7 +12599,7 @@ INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
 (9504, '0035', 'Miditech Play\'n Roll', '1499'),
 (9505, '0036', 'Cinergy 250 Audio', '1499'),
 (9506, '0037', 'Cinergy 250 Audio', '1499'),
-(9507, '0038', 'Cinergy T&Acirc;&sup2; DVB-T Receiver', '1499'),
+(9507, '0038', 'Cinergy T&sup2; DVB-T Receiver', '1499'),
 (9508, '0039', 'Grabster AV 400', '1499'),
 (9509, '003b', 'Cinergy 400', '1499'),
 (9510, '003c', 'Grabster AV 250', '1499'),
@@ -12608,7 +12608,7 @@ INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
 (9513, '004e', 'Cinergy T XS', '1499'),
 (9514, '004f', 'Cinergy Analog XS', '1499'),
 (9515, '0055', 'Cinergy T XE (Version 1, AF9005)', '1499'),
-(9516, '005c', 'Cinergy T&Acirc;&sup2;', '1499'),
+(9516, '005c', 'Cinergy T&sup2;', '1499'),
 (9517, '0069', 'Cinergy T XE (Version 2, AF9015)', '1499'),
 (9518, '006b', 'Cinergy HT PVR (EU)', '1499'),
 (9519, '0072', 'Cinergy Hybrid T', '1499'),
@@ -14991,7 +14991,7 @@ INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
 (11896, '0402', 'FTDI232 [EasyPort]', '2614'),
 (11897, '0403', 'FTDI232 [EasyPort Mini]', '2614'),
 (11898, '0404', 'FTDI232 [Netzteil-GL]', '2614'),
-(11899, '0405', 'FTDI232 [MotorPr&Atilde;&frac14;fstand]', '2614'),
+(11899, '0405', 'FTDI232 [MotorPr&uuml;fstand]', '2614'),
 (11900, '0406', 'STM32F103 [EasyKit]', '2614'),
 (11901, '0407', 'LPC2378 [Robotino]', '2614'),
 (11902, '0408', 'LPC2378 [Robotino-Arm]', '2614'),
@@ -15717,8 +15717,8 @@ INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
 (12622, '2448', '82801 PCI Bridge', '2742'),
 (12623, '3100', 'PRO/DSL 3220 Modem - WAN', '2742'),
 (12624, '3101', 'PRO/DSL 3220 Modem', '2742'),
-(12625, '3240', 'AnyPoint&Acirc;&reg; 3240 Modem - WAN', '2742'),
-(12626, '3241', 'AnyPoint&Acirc;&reg; 3240 Modem', '2742'),
+(12625, '3240', 'AnyPoint&reg; 3240 Modem - WAN', '2742'),
+(12626, '3241', 'AnyPoint&reg; 3240 Modem', '2742'),
 (12627, '8602', 'Miniature Card Slot', '2742'),
 (12628, '9303', 'Intel 8x930Hx Hub', '2742'),
 (12629, '9500', 'CE 9500 DVB-T', '2742'),
@@ -16078,7 +16078,7 @@ INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
 (12983, '031', '\\ and | (Backslash and Bar)', '2923'),
 (12984, '032', '# and ~ (Hash and Tilde, Non-US Keyboard near right shift)', '2923'),
 (12985, '033', '; and : (Semicolon and Colon)', '2923'),
-(12986, '034', '&acute; and &quot; (Accent Acute and Double Quotes)', '2923'),
+(12986, '034', '', '2923'),
 (12987, '035', '` and ~ (Accent Grace and Tilde)', '2923'),
 (12988, '036', ', and &lt; (Comma and Less)', '2923'),
 (12989, '037', '. and &gt; (Period and Greater)', '2923'),

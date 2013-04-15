@@ -174,6 +174,9 @@ function pluginFusioninventoryInstall($version, $migration='') {
       if (!$DB->runFile(GLPI_ROOT ."/plugins/fusioninventory/install/mysql/pciid.sql")) {
          $migration->displayMessage("Error on creation table pciid in database");
       }
+      if (!$DB->runFile(GLPI_ROOT ."/plugins/fusioninventory/install/mysql/oui.sql")) {
+         $migration->displayMessage("Error on creation table oui in database");
+      }
 
    /*
     * Creation of folders

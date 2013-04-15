@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_pcivendors`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_pcivendors`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_pcivendors` (
+CREATE TABLE `glpi_plugin_fusinvinventory_pcivendors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `vendorid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -9,21 +9,21 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcivendors` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_pcidevices`;
+DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_pcidevices`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
+CREATE TABLE `glpi_plugin_fusinvinventory_pcidevices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deviceid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `plugin_fusioninventory_pcivendor_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusinvinventory_pcivendor_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `deviceid` (`deviceid`),
-  KEY `plugin_fusioninventory_pcivendor_id` (`plugin_fusioninventory_pcivendor_id`)
+  KEY `plugin_fusinvinventory_pcivendor_id` (`plugin_fusinvinventory_pcivendor_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-INSERT INTO `glpi_plugin_fusioninventory_pcivendors`
-      (`id`, `vendorid`, `name`) VALUES
+INSERT INTO `glpi_plugin_fusinvinventory_pcivendors`
+      (`id`, `vendorid`, `name`) VALUES 
 (1, '0000', 'Gammagraphx, Inc. (or missing ID)'),
 (2, '0010', 'Allied Telesis, Inc'),
 (3, '001a', 'Ascend Communications, Inc.'),
@@ -2096,8 +2096,8 @@ INSERT INTO `glpi_plugin_fusioninventory_pcivendors`
 (2070, 'C', 'ff  Unassigned class');
 
 
-INSERT INTO `glpi_plugin_fusioninventory_pcidevices`
-      (`id`, `deviceid`, `name`, `plugin_fusioninventory_pcivendor_id`) VALUES
+INSERT INTO `glpi_plugin_fusinvinventory_pcidevices`
+      (`id`, `deviceid`, `name`, `plugin_fusinvinventory_pcivendor_id`) VALUES 
 (1, '8139', 'AT-2500TX V3 Ethernet', '2'),
 (2, '0001', 'PCAN-PCI CAN-Bus controller', '4'),
 (3, '0003', 'WinTV PVR-250', '8'),
@@ -12085,7 +12085,7 @@ INSERT INTO `glpi_plugin_fusioninventory_pcidevices`
 (9985, '9901', 'PCIe 9901 Multi-I/O Controller', '1980'),
 (9986, '9904', '4-Port PCIe Serial Adapter', '1980'),
 (9987, '9922', 'PCIe 9922 Multi-I/O Controller', '1980'),
-(9988, '9990', 'MCS9990 PCIe to 4&acirc;Port USB 2.0 Host Controller', '1980'),
+(9988, '9990', 'MCS9990 PCIe to 4âPort USB 2.0 Host Controller', '1980'),
 (9989, '0001', 'SG2010 PCI over Starfabric Bridge', '1981'),
 (9990, '0002', 'SG2010 PCI to Starfabric Gateway', '1981'),
 (9991, '0003', 'SG1010 Starfabric Switch and PCI Bridge', '1981'),

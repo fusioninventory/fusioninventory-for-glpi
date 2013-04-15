@@ -4929,9 +4929,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
       /*
-       * Update pci and usb ids
+       * Update pci and usb ids and oui
        */
-      foreach (array('usbid.sql', 'pciid.sql') as $sql) {
+      foreach (array('usbid.sql', 'pciid.sql', 'oui.sql') as $sql) {
          $DB_file = GLPI_ROOT ."/plugins/fusioninventory/install/mysql/$sql";
          $DBf_handle = fopen($DB_file, "rt");
          $sql_query = fread($DBf_handle, filesize($DB_file));
