@@ -4481,7 +4481,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   'value'  => NULL
          ),
          'mimetype' => array(
-                  'type'   => 'char(255) NOT NULL',
+                  'type'   => 'varchar(255) NOT NULL',
                   'value'  => NULL
          ),
          'filesize' => array(
@@ -4505,11 +4505,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   'value'  => NULL
          ),
          'is_recursive' => array(
-                  'type'   => 'tinyint(1) NOT NULL',
+                  'type'   => 'tinyint(1) NOT NULL DEFAULT 0',
                   'value'  => 0
          ),
          'date_mod' => array(
-                  'type'   => 'datetime NOT NULL',
+                  'type'   => 'datetime DEFAULT NULL',
                   'value'  => NULL
          ),
 
