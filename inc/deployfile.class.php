@@ -129,11 +129,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       // compute short shas to find the corresponding entries in database
       $short_shas = array();
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
-         $short_shas[] = "'".substr($sha512,0,6)."'";
+         $short_shas[] = "'".substr($sha512, 0, 6)."'";
       }
       // find corresponding file entries
       $files = $o_file->find(
-         "shortsha512 IN (".implode(",",$short_shas).")"
+         "shortsha512 IN (".implode(",", $short_shas).")"
       );
       // do a quick mapping between database id and short shas
       $files_mapping = array();
@@ -141,15 +141,15 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          $files_mapping[$f['shortsha512']] = $f['id'];
       }
 
-      Toolbox::logDebug(print_r($files,TRUE));
-      Toolbox::logDebug(print_r($files_mapping,TRUE));
+      Toolbox::logDebug(print_r($files, TRUE));
+      Toolbox::logDebug(print_r($files_mapping, TRUE));
       echo "<table class='tab_cadrehov package_item_list' id='table_file_$rand'>";
       $i = 0;
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
          $short_sha = substr($sha512, 0, 6);
          $no_db_entry = FALSE;
          // check if the files is registered in database
-         if (!array_key_exists($short_sha,$files_mapping)) {
+         if (!array_key_exists($short_sha, $files_mapping)) {
             $no_db_entry = TRUE;
          }
          // get database entries
@@ -827,11 +827,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       //create manifest file
       if (!$file_present_in_repo) {
          $handle = fopen(
-           $manifest_filename,"w+"
+           $manifest_filename, "w+"
          );
          if ($handle) {
             foreach($multiparts as $sha) {
-               fwrite($handle,$sha."\n");
+               fwrite($handle, $sha."\n");
             }
             fclose($handle);
          }
@@ -922,9 +922,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          while( ($buffer = fgets($handle) !== FALSE) ) {
             $fileparts_cnt++;
             $path =
-               substr($buffer,0,1).
+               substr($buffer, 0, 1).
                "/".
-               substr($buffer,0,2).
+               substr($buffer, 0, 2).
                "/".
                $buffer;
             //Check if the filepart exists

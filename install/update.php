@@ -7781,8 +7781,8 @@ function migrateTablesFromFusinvDeploy ($migration) {
             "LEFT JOIN glpi_plugin_fusioninventory_deploypackages as pkgs",
             "  ON orders.`plugin_fusioninventory_deploypackages_id` = pkgs.`id`",
             "WHERE",
-            "  files.`shortsha512` != \"\"",
-         )," \n");
+            "  files.`shortsha512` != \"\""
+         ), " \n");
       $f_res = $DB->query($f_query);
       while($f_datas = $DB->fetch_assoc($f_res)) {
          $entry = array(
@@ -7798,7 +7798,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
             "is_recursive"  => $f_datas["is_recursive"],
          );
          $migration->insertInTable(
-            "glpi_plugin_fusioninventory_deployfiles",$entry
+            "glpi_plugin_fusioninventory_deployfiles", $entry
          );
       }
 
@@ -7888,7 +7888,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
             WHERE plugin_fusinvdeploy_files_id =".$f_datas['id'];
          */
          foreach ($files_list as $sha) {
-            $shortsha = substr($sha,0,6);
+            $shortsha = substr($sha, 0, 6);
             $fp_query = "SELECT  fp.`sha512` as filepart_hash, ".
                         "        f.`sha512`  as file_hash      ".
                         "FROM `glpi_plugin_fusinvdeploy_files` as f ".
