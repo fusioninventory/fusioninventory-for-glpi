@@ -9,9 +9,9 @@ fileOUItoDB();
 function filePCItoDB() {
    $pciFile = fopen("pci.ids","r");
 
-   $sql_creation = "DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_pcivendors`;
+   $sql_creation = "DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_pcivendors`;
 
-CREATE TABLE `glpi_plugin_fusinvinventory_pcivendors` (
+CREATE TABLE `glpi_plugin_fusioninventory_pcivendors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `vendorid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -20,26 +20,26 @@ CREATE TABLE `glpi_plugin_fusinvinventory_pcivendors` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_pcidevices`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_pcidevices`;
 
-CREATE TABLE `glpi_plugin_fusinvinventory_pcidevices` (
+CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deviceid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `plugin_fusinvinventory_pcivendor_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_pcivendor_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `deviceid` (`deviceid`),
-  KEY `plugin_fusinvinventory_pcivendor_id` (`plugin_fusinvinventory_pcivendor_id`)
+  KEY `plugin_fusioninventory_pcivendor_id` (`plugin_fusioninventory_pcivendor_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 ";
 
 
-   $sql_insert_vendor = "INSERT INTO `glpi_plugin_fusinvinventory_pcivendors`
+   $sql_insert_vendor = "INSERT INTO `glpi_plugin_fusioninventory_pcivendors`
       (`id`, `vendorid`, `name`) VALUES ";
-   $sql_insert_device = "INSERT INTO `glpi_plugin_fusinvinventory_pcidevices`
-      (`id`, `deviceid`, `name`, `plugin_fusinvinventory_pcivendor_id`) VALUES ";
+   $sql_insert_device = "INSERT INTO `glpi_plugin_fusioninventory_pcidevices`
+      (`id`, `deviceid`, `name`, `plugin_fusioninventory_pcivendor_id`) VALUES ";
 
    $v = 0;
    $d = 0;
@@ -80,9 +80,9 @@ CREATE TABLE `glpi_plugin_fusinvinventory_pcidevices` (
 function fileUSBtoDB() {
     $usbFile = fopen("usb.ids","r");
 
-   $sql_creation = "DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_usbvendors`;
+   $sql_creation = "DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_usbvendors`;
 
-CREATE TABLE `glpi_plugin_fusinvinventory_usbvendors` (
+CREATE TABLE `glpi_plugin_fusioninventory_usbvendors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `vendorid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -91,25 +91,25 @@ CREATE TABLE `glpi_plugin_fusinvinventory_usbvendors` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_usbdevices`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_usbdevices`;
 
-CREATE TABLE `glpi_plugin_fusinvinventory_usbdevices` (
+CREATE TABLE `glpi_plugin_fusioninventory_usbdevices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deviceid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `plugin_fusinvinventory_usbvendor_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_usbvendor_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `deviceid` (`deviceid`),
-  KEY `plugin_fusinvinventory_usbvendor_id` (`plugin_fusinvinventory_usbvendor_id`)
+  KEY `plugin_fusioninventory_usbvendor_id` (`plugin_fusioninventory_usbvendor_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 ";
 
-   $sql_insert_vendor = "INSERT INTO `glpi_plugin_fusinvinventory_usbvendors`
+   $sql_insert_vendor = "INSERT INTO `glpi_plugin_fusioninventory_usbvendors`
       (`id`, `vendorid`, `name`) VALUES ";
-   $sql_insert_device = "INSERT INTO `glpi_plugin_fusinvinventory_usbdevices`
-      (`id`, `deviceid`, `name`, `plugin_fusinvinventory_usbvendor_id`) VALUES ";
+   $sql_insert_device = "INSERT INTO `glpi_plugin_fusioninventory_usbdevices`
+      (`id`, `deviceid`, `name`, `plugin_fusioninventory_usbvendor_id`) VALUES ";
 
 
    $v = 0;
@@ -150,9 +150,9 @@ CREATE TABLE `glpi_plugin_fusinvinventory_usbdevices` (
 
 function fileOUItoDB() {
 
-   $sql_creation = "DROP TABLE IF EXISTS `glpi_plugin_fusinvinventory_ouis`;
+   $sql_creation = "DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_ouis`;
 
-CREATE TABLE `glpi_plugin_fusinvinventory_ouis` (
+CREATE TABLE `glpi_plugin_fusioninventory_ouis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `mac` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -161,7 +161,7 @@ CREATE TABLE `glpi_plugin_fusinvinventory_ouis` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 ";
-   $sql_insert_oui = "INSERT INTO `glpi_plugin_fusinvinventory_ouis`
+   $sql_insert_oui = "INSERT INTO `glpi_plugin_fusioninventory_ouis`
       (`id`, `mac`, `name`) VALUES ";
    
    $ouiFile = fopen("oui.txt","r");

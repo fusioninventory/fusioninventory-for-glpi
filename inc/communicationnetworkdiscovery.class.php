@@ -515,6 +515,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                   $arrayinventory['MAC'] = strtolower($arrayinventory['MAC']);
                   if ($a_unknownPort['mac'] == $arrayinventory['MAC']) {
                      $a_unknownPort['mac'] = $arrayinventory['MAC'];
+                     $a_unknownPort['name'] = 
+                        PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($a_unknownPort['mac']);
                      if (isset($arrayinventory['IP'])) {
                         $a_unknownPort['ip'] = $arrayinventory['IP'];
                      }
@@ -537,7 +539,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             if ($update == '0') {
                $input = array();
                if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
-                  $input['mac'] = $arrayinventory['MAC'];
+                  $input['mac'] = $arrayinventory['MAC'];                  
+                  $input['name'] = 
+                    PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($input['mac']);
                }
                if (isset($arrayinventory['IP'])) {
                   $input['ip'] = $arrayinventory['IP'];
