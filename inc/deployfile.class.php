@@ -823,13 +823,41 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          gzclose($fdPart);
       } while (1);
 
-      $new_entry['multiparts'] = $multiparts;
+//      $new_entry['multiparts'] = $multiparts;
+      //create manifest file
+      if (!$file_present_in_repo) {
+         $handle = fopen(
+           $manifest_filename,"w+"
+         );
+         if ($handle) {
+            foreach($multiparts as $sha) {
+               fwrite($handle,$sha."\n");
+            }
+            fclose($handle);
+         }
+      }
 
+      //TODO: Add a new files interface to list, create, manage entities and visibility
+      // entity on a file is just anticipated and will be fully used later
+      if (!$file_present_in_db) {
+         $entry = array(
+            "name" => $filename,
+            "filesize" => $params['filesize'],
+            "mimetype" => $params['mime_type'],
+            "sha512" => $sha512,
+            "shortsha512" => $short_sha512,
+            "comments" => "",
+            "date_mod" => date('Y-m-d H:i:s'),
+            "entities_id" => 0,
+            "is_recursive" => 1
+         );
+         $deployFile->add($entry);
+      }
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
       //add new entry
-      //$datas['associatedFiles'][$sha512] = $new_entry;
+      $datas['associatedFiles'][$sha512] = $new_entry;
       if (!in_array($sha512, $datas['jobs']['associatedFiles'])) {
          $datas['jobs']['associatedFiles'][] = $sha512;
       }
@@ -846,6 +874,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    static function removeFileInRepo($sha512, $orders_id) {
 
       $repoPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
+      $manifestsPath = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
 
       $order = new PluginFusioninventoryDeployOrder;
       $rows = $order->find("id != '$orders_id'
@@ -883,13 +912,15 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       //Does the file needs to be created ?
       // Even if fileparts exists, we need to be sure
       // the manifest file is created
-      if (!file_exists($manifests.$sha512)) {
+      if (!file_exists($manifests_path.$sha512)) {
          return FALSE;
       }
       $fileparts_ok = TRUE;
-      $handle = fopen($manifests.$sha512, "r");
+      $fileparts_cnt = 0;
+      $handle = fopen($manifests_path.$sha512, "r");
       if ($handle) {
          while( ($buffer = fgets($handle) !== FALSE) ) {
+            $fileparts_cnt++;
             $path =
                substr($buffer,0,1).
                "/".
@@ -897,13 +928,19 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                "/".
                $buffer;
             //Check if the filepart exists
-            if( !file_exists($path) ) {
+            if( !file_exists($parts_path . $path) ) {
                $fileparts_ok = FALSE;
                break;
             }
          }
+         fclose($handle);
       }
-      //Does the file needs to be replaced
+      // Does the file is empty ?
+      if ($fileparts_cnt == 0) {
+         return FALSE;
+      }
+
+      //Does the file needs to be replaced ?
       if (!$fileparts_ok) {
          return FALSE;
       }
