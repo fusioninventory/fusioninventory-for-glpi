@@ -329,6 +329,32 @@ class PluginFusinvsnmpSNMP extends CommonDBTM {
          }
       }
       
+      if ($PortID == '') {
+         // case where mac is of switch and not of the port (like Procurve)
+         $queryPort = "SELECT *
+            FROM `glpi_plugin_networkports`
+            WHERE `mac`='".$sysmac."'
+               AND `logical_number`='".$ifnumber."'
+            LIMIT 1";
+         $resultPort = $DB->query($queryPort);
+         $dataPort = $DB->fetch_assoc($resultPort);
+         if ($DB->numrows($resultPort) == "1") {
+            $PortID = $dataPort['networkports_id'];
+         }
+         if ($PortID == '') {
+            // case where mac is of IPphone for example
+            $queryPort = "SELECT *
+               FROM `glpi_networkports`
+               WHERE `mac`='".$sysmac."'
+               LIMIT 1";
+            $resultPort = $DB->query($queryPort);
+            $dataPort = $DB->fetch_assoc($resultPort);
+            if ($DB->numrows($resultPort) == "1") {
+               $PortID = $dataPort['id'];
+            }
+         }
+      }
+      
       if ($PortID == "") {
          $NetworkPort = new NetworkPort();
          $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
