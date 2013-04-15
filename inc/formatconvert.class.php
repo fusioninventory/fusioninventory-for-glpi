@@ -416,12 +416,17 @@ class PluginFusioninventoryFormatconvert {
                                                     'NAME'          => 'designation',
                                                     'MANUFACTURER'  => 'manufacturers_id',
                                                     'type'          => 'interfacetypes_id'));
-                  if (empty($array_tmp['manufacturers_id'])
-                          && isset($a_controllers['PCIID'])) {
-                     $array_tmp['manufacturers_id'] =
+                  if (isset($a_controllers['PCIID'])) {
+                     $a_PCIData = 
                            PluginFusioninventoryInventoryComputerLibfilter::getDataFromPCIID(
                              $a_controllers['PCIID']
                            );
+                     if (isset($a_PCIData['manufacturer'])) {
+                        $array_tmp['manufacturers_id'] = $a_PCIData['manufacturer'];
+                     }
+                     if (isset($a_PCIData['name'])) {
+                        $array_tmp['designation'] = $a_PCIData['name'];                        
+                     }
                   }
                   $a_inventory['controller'][] = $array_tmp;
                }

@@ -60,18 +60,32 @@ class PluginFusioninventoryInventoryComputerLibfilter extends CommonDBTM {
 
       $pciidArray = explode(":", $pciid);
       $vendorId = $pciidArray[0];
-
-      $query_select = "SELECT id, name FROM `glpi_plugin_fusioninventory_pcivendors`
-        WHERE `vendorid`='".$vendorId."'
-           LIMIT 1";
+      
+      $a_return = array();
+      
+//      $query_select = "SELECT id, name FROM `glpi_plugin_fusioninventory_pcivendors`
+//        WHERE `vendorid`='".$vendorId."'
+//           LIMIT 1";
+//      $resultSelect = $DB->query($query_select);
+//      if ($DB->numrows($resultSelect) > 0) {
+//         $data = $DB->fetch_assoc($resultSelect);
+//         $a_return['manufacturer'] = html_entity_decode($data['name']);
+//      }
+      $query_select = "SELECT `glpi_plugin_fusioninventory_pcivendors`.`name` as `manufacturer`,
+         `glpi_plugin_fusioninventory_pcidevices`.`name` as `name`
+         FROM `glpi_plugin_fusioninventory_pcivendors`
+         LEFT JOIN `glpi_plugin_fusioninventory_pcidevices`
+            ON `plugin_fusioninventory_pcivendor_id` = `glpi_plugin_fusioninventory_pcivendors`.`id`
+         WHERE `vendorid`='".$vendorId."'
+            AND `deviceid`='".$pciidArray[1]."'
+            LIMIT 1";
       $resultSelect = $DB->query($query_select);
       if ($DB->numrows($resultSelect) > 0) {
          $data = $DB->fetch_assoc($resultSelect);
-         $vendors_name = html_entity_decode($data['name']);
-         return $vendors_name;
-      } else {
-         return "";
+         $a_return['name'] = html_entity_decode($data['name']);
+         $a_return['manufacturer'] = html_entity_decode($data['manufacturer']);
       }
+      return $a_return;
     }
 
 
