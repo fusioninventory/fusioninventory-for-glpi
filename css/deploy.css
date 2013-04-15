@@ -78,15 +78,17 @@ a.edit {
 
 .fingerprint_good {
    min-height: 16px;
-   color:#003000;
+   line-height: 16px;
    background-image: url("../pics/fingerprint-good.png");
    background-repeat: no-repeat;
+   color:#003000;
    padding-left : 18px;
    vertical-align:middle;
 }
 
 .fingerprint_bad {
    min-height: 16px;
+   line-height: 16px;
    background-image: url("../pics/fingerprint-bad.png");
    background-repeat: no-repeat;
    color:#FF0000;
@@ -97,6 +99,7 @@ a.edit {
 .fingerprint_badmsg {
    background-color: #FFEEEE;
    color:#550000;
+   line-height: 1.5em;
 }
 /* drag and drop element */
 .drag {
