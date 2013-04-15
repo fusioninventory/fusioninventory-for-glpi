@@ -125,7 +125,7 @@ class NetworkEquipmentUpdate extends PHPUnit_Framework_TestCase {
           ) 
       );
       $a_inventory['connection-mac'] = array(
-          '10002' => array('cc:f9:54:a1:03:35')
+          '10001' => array('cc:f9:54:a1:03:35')
       );
       $a_inventory['vlans'] = array(
           '10001' => array(
@@ -146,7 +146,7 @@ class NetworkEquipmentUpdate extends PHPUnit_Framework_TestCase {
           )
       );
       $a_inventory['connection-lldp'] = array(
-          '10102' => array(
+          '10002' => array(
               'ifdescr'          => 'GigabitEthernet1/0/2',
               'ip'               => '192.168.100.100',
               'model'            => 'cisco WS-C3750G-24PS',

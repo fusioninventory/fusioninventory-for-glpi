@@ -167,17 +167,17 @@ class UnknownDeviceKnowDevice extends PHPUnit_Framework_TestCase {
           'name'                             => 'pc',
           'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
-          'operatingsystems_id'              => 'freebsd',
-          'operatingsystemversions_id'       => '9.1-RELEASE',
-          'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
-          'domains_id'                       => 'mydomain.local',
+          'operatingsystems_id'              => 1,
+          'operatingsystemversions_id'       => 1,
+          'uuid'                             => 1,
+          'domains_id'                       => 1,
           'os_licenseid'                     => '',
           'os_license_number'                => '',
-          'operatingsystemservicepacks_id'   => 'GENERIC ()root@farrell.cse.buffalo.edu',
-          'manufacturers_id'                 => '',
-          'computermodels_id'                => '',
+          'operatingsystemservicepacks_id'   => 1,
+          'manufacturers_id'                 => 0,
+          'computermodels_id'                => 0,
           'serial'                           => 'XB63J7D',
-          'computertypes_id'                 => 'Notebook',
+          'computertypes_id'                 => 1,
           'is_dynamic'                       => 1,
           'contact'                          => 'ddurieux'
       );
@@ -223,6 +223,10 @@ class UnknownDeviceKnowDevice extends PHPUnit_Framework_TestCase {
       
       $this->assertEquals('Computer', $a_networkport['itemtype'], "Maybe Computer ");      
 
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+      
    }
    
  }
