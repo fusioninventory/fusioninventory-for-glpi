@@ -365,50 +365,61 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $NetworkPort = new NetworkPort();
 
       $PortID = "";
-      $query = "SELECT *
-                FROM `glpi_plugin_fusioninventory_networkequipmentips`
-                WHERE `ip`='".$IP."';";
-      $result = $DB->query($query);
-      if ($DB->numrows($result) == "1") {
-         $data = $DB->fetch_assoc($result);
 
-         $queryPort = "SELECT *
-                       FROM `glpi_plugin_fusioninventory_networkports`
-                       LEFT JOIN `glpi_networkports`
-                          ON `glpi_plugin_fusioninventory_networkports`.`networkports_id`=
-                             `glpi_networkports`.`id`
-                       WHERE (`ifdescr`='".$ifDescr."'
-                                OR `glpi_networkports`.`name`='".$ifDescr."')
-                             AND `glpi_networkports`.`items_id`='".$data["networkequipments_id"]."'
-                             AND `glpi_networkports`.`itemtype`='NetworkEquipment'";
+      $queryPort = "SELECT `glpi_networkports`.`id`
+                    FROM `glpi_plugin_fusioninventory_networkports`
+                    LEFT JOIN `glpi_networkports`
+                       ON `glpi_plugin_fusioninventory_networkports`.`networkports_id`=
+                          `glpi_networkports`.`id`
+                    LEFT JOIN `glpi_networknames`
+                       ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
+                          AND `glpi_networknames`.`itemtype`='NetworkPort'
+                    LEFT JOIN `glpi_ipaddresses`
+                       ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
+                          AND `glpi_ipaddresses`.`itemtype`='NetworkName'
+
+                    WHERE (`ifdescr`='".$ifDescr."'
+                             OR `glpi_networkports`.`name`='".$ifDescr."')
+                          AND `glpi_networkports`.`itemtype`='NetworkEquipment'
+                          AND `glpi_ipaddresses`.`name`='".$IP."'";
+      $resultPort = $DB->query($queryPort);
+      if ($DB->numrows($resultPort) == 0) {
+         // Search in other devices
+         $queryPort = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
+                       LEFT JOIN `glpi_networknames`
+                          ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
+                             AND `glpi_networknames`.`itemtype`='NetworkPort'
+                       LEFT JOIN `glpi_ipaddresses`
+                          ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
+                             AND `glpi_ipaddresses`.`itemtype`='NetworkName'
+
+                       WHERE `glpi_ipaddresses`.`name`='".$IP."'
+                       LIMIT 1";
          $resultPort = $DB->query($queryPort);
-         $dataPort = $DB->fetch_assoc($resultPort);
-         if ($DB->numrows($resultPort) == "0") {
-            // Search in other devices
-            $queryPort = "SELECT *
-                          FROM `glpi_networkports`
-                          WHERE `ip`='".$IP."'
-                          ORDER BY `itemtype`
-                          LIMIT 0, 1";
-            $resultPort = $DB->query($queryPort);
+         if ($DB->numrows($resultPort) == 1) {
             $dataPort = $DB->fetch_assoc($resultPort);
-            if (isset($dataPort['id'])) {
-               $PortID = $dataPort["id"];
-            }
-         } else {
-            $PortID = $dataPort['networkports_id'];
+            $PortID = $dataPort["id"];
          }
+      } else {
+         $dataPort = $DB->fetch_assoc($resultPort);
+         $PortID = $dataPort['id'];
       }
 
       // Detect IP Phone
       if ($PortID == "") {
          if (strstr($model, "Phone")
                || $model == '') {
-            $queryPort = "SELECT glpi_networkports.*
-                           FROM `glpi_phones`
-                              LEFT JOIN `glpi_networkports`
-                                 ON `glpi_phones`.`id`=`glpi_networkports`.`items_id`
-                          WHERE `ip`='".$IP."'
+            $queryPort = "SELECT glpi_networkports.* FROM `glpi_phones`
+                          LEFT JOIN `glpi_networkports`
+                             ON `glpi_phones`.`id`=`glpi_networkports`.`items_id`
+                          LEFT JOIN `glpi_networknames`
+                             ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
+                                AND `glpi_networknames`.`itemtype`='NetworkPort'
+                          LEFT JOIN `glpi_ipaddresses`
+                             ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
+                                AND `glpi_ipaddresses`.`itemtype`='NetworkName'
+                             
+                          WHERE `glpi_ipaddresses`.`name`='".$IP."'
                                 AND `glpi_networkports`.`itemtype`='Phone'
                                 AND `glpi_phones`.`name`='".$sysname."'
                           LIMIT 1";
@@ -447,6 +458,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
                $input['ip'] = $IP;
                $input['name'] = $ifDescr;
+               $input['instantiation_type'] = 'NetworkPortEthernet';
                $PortID = $NetworkPort->add($input);
             }
             // Update unknown device
@@ -487,6 +499,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
                $input['ip'] = $IP;
                $input['name'] = $ifDescr;
+               $input['instantiation_type'] = 'NetworkPortEthernet';
                $PortID = $NetworkPort->add($input);
                // Update unknown device
                $input = array();
@@ -530,6 +543,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
          $input['ip'] = $IP;
          $input['name'] = $ifDescr;
+         $input['instantiation_type'] = 'NetworkPortEthernet';
          $PortID = $NetworkPort->add($input);
          return($PortID);
       }
@@ -610,6 +624,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                if (isset($params['ifdescr'])) {
                   $input['name'] = $params['ifdescr'];
                }
+               $input['instantiation_type'] = 'NetworkPortEthernet';
                $PortID = $NetworkPort->add($input);
             }
             // Update unknown device
@@ -642,6 +657,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                if (isset($params['ifdescr'])) {
                   $input['name'] = $params['ifdescr'];
                }
+               $input['instantiation_type'] = 'NetworkPortEthernet';
                $PortID = $NetworkPort->add($input);
                // Update unknown device
                $input = array();
@@ -678,6 +694,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          if (isset($params['ifdescr'])) {
             $input['name'] = $params['ifdescr'];
          }
+         $input['instantiation_type'] = 'NetworkPortEthernet';
          $PortID = $NetworkPort->add($input);
          return($PortID);
       }
