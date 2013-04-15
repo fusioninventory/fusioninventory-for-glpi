@@ -94,6 +94,18 @@ class PluginFusinvinventoryInventory {
          $sxml_soft->addChild('COMMENTS', (string)$p_xml->CONTENT->HARDWARE->OSCOMMENTS);
          $sxml_soft->addChild('NAME', (string)$p_xml->CONTENT->HARDWARE->OSNAME);
          $sxml_soft->addChild('VERSION', (string)$p_xml->CONTENT->HARDWARE->OSVERSION);
+         
+         // hack for add Fonts into Softwares
+         if (isset($p_xml->CONTENT->FONTS)) {
+            foreach($p_xml->CONTENT->FONTS as $fonts) {
+               $sxml_soft = $p_xml->CONTENT->addChild('SOFTWARES');
+               $sxml_soft->addChild('PUBLISHER', (string)$fonts->MANUFACTURER);
+               $sxml_soft->addChild('NAME', '[font] '.(string)$fonts->NAME);
+               $sxml_soft->addChild('VERSION', (string)$fonts->VERSION);
+            }
+         }
+
+         
       
          // Hack for USB Printer serial
          if (isset($p_xml->CONTENT->PRINTERS)) {
@@ -371,6 +383,9 @@ class PluginFusinvinventoryInventory {
                "pluginFusinvinventory-entityrules",
                print_r($dataEntity, true)
             );
+         if (!isset($_SESSION["plugin_fusinvinventory_entity"])) {
+            $_SESSION["plugin_fusinvinventory_entity"] = 0;
+         }
          if (!isset($_SESSION['glpiactiveentities_string'])) {
             $_SESSION['glpiactiveentities_string'] = "'".$_SESSION["plugin_fusinvinventory_entity"]."'";
          }
@@ -807,6 +822,9 @@ class PluginFusinvinventoryInventory {
             $xml_peripheral->addChild("SERIAL", $Peripheral->fields['serial']);
          }
       }
+      
+      $pfOCSCommunication = new PluginFusioninventoryOCSCommunication();
+      $xml = $pfOCSCommunication->cleanXML($xml);
       
       $pfLib = new PluginFusinvinventoryLib();
       $pfLib->addLibMachineFromGLPI($items_id, $internal_id, $xml, $a_sectionsinfos);
