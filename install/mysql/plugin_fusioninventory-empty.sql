@@ -841,7 +841,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_deployorders` (
   `type` int(11) NOT NULL,
   `create_date` datetime NOT NULL,
   `plugin_fusioninventory_deploypackages_id` int(11) NOT NULL,
-  `json` text DEFAULT NULL,
+  `json` longtext DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `create_date` (`create_date`),
