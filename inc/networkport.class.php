@@ -145,42 +145,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       }
    }
 
-
-
-    /**
-    * Connect this port to another one in DB
-    *
-    *@param $destination_port id of destination port
-    *@return nothing
-    **/
-   function connectDB($destination_port='') {
-      global $DB;
-
-      // Clean ports connected on themself
-      $queryd = "DELETE FROM `glpi_networkports_networkports`
-         WHERE `networkports_id_1` = `networkports_id_2`";
-      $DB->query($queryd);
-
-      $queryVerif = "SELECT *
-                     FROM `glpi_networkports_networkports`
-                     WHERE (`networkports_id_1` = '".$this->getValue('id')."'
-                              OR `networkports_id_1` = '".$destination_port."')
-                           AND (`networkports_id_2` = '".$this->getValue('id')."'
-                              OR `networkports_id_2` = '".$destination_port."');";
-
-      if (($resultVerif = $DB->query($queryVerif))) {
-         if ($DB->numrows($resultVerif) == "0") { // no existing connection between those 2 ports
-            $this->disconnectDB($this->getValue('id')); // disconnect this port
-            $this->disconnectDB($destination_port);     // disconnect destination port
-            $nn = new NetworkPort_NetworkPort();
-            $nn->add(array('networkports_id_1'=> $this->getValue('id'),
-                               'networkports_id_2' => $destination_port)); //connect those 2 ports
-
-         }
-      }
-   }
-
-
+   
 
    /**
     * Disconnect a port in DB
@@ -218,62 +183,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
 
 
-   /**
-    * Add MAC address
-    *
-    *@param $p_mac MAC address
-    *@return nothing
-    **/
-   function addMac($p_mac) {
-      if (is_array($p_mac)) {
-         if (isset($p_mac['sysmac'])) {
-            $this->portMacs[$p_mac['sysmac']] = $p_mac;
-         } else {
-            $this->portMacs[$p_mac['mac']] = $p_mac;
-         }
-      } else {
-         $this->portMacs[$p_mac] = $p_mac;
-      }
-   }
-
-
-
-   /**
-    * Add IP address
-    *
-    *@param $p_ip array with IP address...
-    *@return nothing
-    **/
-   function addIp($p_ip) {
-      $this->portIps[]=$p_ip;
-   }
-
-
-
-   /**
-    *
-    */
-   function deleteMacToConnect($mac) {
-      foreach ($this->portMacs as $num=>$macaddress) {
-         if ($mac == $macaddress) {
-            unset($this->portMacs[$num]);
-         }
-      }
-    }
-
-
-
-   /**
-    * Set CDP
-    *
-    *@return nothing
-    **/
-   function setCDP() {
-      $this->cdp=TRUE;
-   }
-
-
-
    static function getUniqueObjectfieldsByportID($id) {
       global $DB;
 
@@ -303,15 +212,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
 
 
-   function setValue($name, $value) {
-      if (!(isset($this->portDB[$name])
-              AND $this->portDB[$name] == $value)) {
-         $this->portModif[$name] = $value;
-      }
-   }
-
-
-
    function getValue($name) {
       if (isset($this->portModif[$name])) {
          return $this->portModif[$name];
@@ -330,29 +230,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          return $this->portModif['id'];
       }
       return 0;
-   }
-
-
-
-   /**
-    * Get index of port object
-    *
-    *@param $p_mac MAC address
-    *@param $p_ip='' IP address
-    *@return Index of port object in ports array or '' if not found
-    **/
-   function getPortIdWithLogicialNumber($p_ifnumber, $items_id) {
-
-      $networkPort= new NetworkPort();
-      $a_ports = $networkPort->find("`logical_number`='".$p_ifnumber."'
-         AND `itemtype`='NetworkEquipment'
-         AND`items_id`='".$items_id."'", "", 1);
-
-      if (count($a_ports) > 0) {
-         $a_port = current($a_ports);
-         return $a_port['id'];
-      }
-      return FALSE;
    }
 
 
@@ -699,26 +576,6 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          return($PortID);
       }
       return($PortID);
-   }
-
-
-
-   function isPorthasPhone() {
-      $isPhone = FALSE;
-
-      $networkPort = new NetworkPort();
-
-      foreach ($this->portMacs as $ifmac) {
-         $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);
-         if (count($a_ports) > 0) {
-            $a_port = current($a_ports);
-            if ($a_port['itemtype'] == 'Phone') {
-               $isPhone = TRUE;
-               return $isPhone;
-            }
-         }
-      }
-      return $isPhone;
    }
 }
 
