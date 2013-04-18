@@ -124,8 +124,6 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
                     && $itemtype->canView()) {
                $itemtype->displaySerializedInventory($item->getID());
             }
-
-
          }
       }
       return TRUE;

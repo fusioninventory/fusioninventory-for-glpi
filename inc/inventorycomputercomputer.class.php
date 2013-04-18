@@ -171,12 +171,20 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
       $this->getFromDB($a_computerextend['id']);
 
-      if (empty($this->fields['serialized_inventory'])) {
+      $folder = substr($items_id, 0, -1);
+      if (empty($folder)) {
+         $folder = '0';
+      }
+
+      if (empty($this->fields['serialized_inventory'])
+              && !file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$items_id)) {
          return;
       }
 
-      $data = unserialize(gzuncompress($this->fields['serialized_inventory']));
-
+      $data = array();
+      if (!empty($this->fields['serialized_inventory'])) {
+         $data = unserialize(gzuncompress($this->fields['serialized_inventory']));
+      }
       echo "<br/>";
 
       echo "<table class='tab_cadre_fixe'>";
@@ -193,26 +201,25 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       echo __('Download', 'fusioninventory');
       echo "</th>";
       echo "<td>";
-      echo "<a href='".$CFG_GLPI['root_doc'].
+      if (!empty($this->fields['serialized_inventory'])) {
+         echo "<a href='".$CFG_GLPI['root_doc'].
               "/plugins/fusioninventory/front/send_inventory.php".
               "?itemtype=PluginFusioninventoryInventoryComputerComputer".
               "&function=sendSerializedInventory&items_id=".$a_computerextend['id'].
               "&filename=Computer-".$items_id.".json'".
-              "target='_blank'>PHP Array</a> ";
-
-            $folder = substr($items_id, 0, -1);
-            if (empty($folder)) {
-               $folder = '0';
-            }
-            if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$items_id)) {
-               echo "/ <a href='".$CFG_GLPI['root_doc'].
-              "/plugins/fusioninventory/front/send_inventory.php".
-              "?itemtype=PluginFusioninventoryInventoryComputerComputer".
-              "&function=sendXML&items_id=computer/".$folder."/".$items_id.
-              "&filename=Computer-".$items_id.".xml'".
-              "target='_blank'>XML</a>";
-            }
-
+              "target='_blank'>".__('PHP Array', 'fusioninventory')."</a> ";
+      }
+      if (file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/xml/computer/".$folder."/".$items_id)) {
+         if (!empty($this->fields['serialized_inventory'])) {
+            echo "/ ";
+         }
+         echo "<a href='".$CFG_GLPI['root_doc'].
+        "/plugins/fusioninventory/front/send_inventory.php".
+        "?itemtype=PluginFusioninventoryInventoryComputerComputer".
+        "&function=sendXML&items_id=computer/".$folder."/".$items_id.
+        "&filename=Computer-".$items_id.".xml'".
+        "target='_blank'>XML</a>";
+      }
 
       echo "</td>";
       echo "</tr>";
