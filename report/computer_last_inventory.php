@@ -44,15 +44,13 @@
 $USEDBREPLICATE=1;
 $DBCONNECTION_REQUIRED=0;
 
-$NEEDED_ITEMS=array("search", "computer", "infocom", "setup", "networking", "printer");
-
 include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
 Session::checkRight("computer", "r");
 
-$nbdays = 1;
+$nbdays = 365;
 if (isset($_GET["nbdays"])) {
    $nbdays = $_GET["nbdays"];
 }
@@ -113,7 +111,14 @@ WHERE ((NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY)
 
 ORDER BY last_fusioninventory_update DESC";
 
+$result = $DB->query($query);
+
 echo "<table class='tab_cadre_fixe' cellpadding='5' width='950'>";
+
+echo "<tr class='tab_bg_1'>";
+echo "<th colspan='4'>".__('Number of items')." : ".$DB->numrows($result)."</th>";
+echo "</tr>";
+
 echo "<tr class='tab_bg_1'>";
 echo "<th>".__('Name')."</th>";
 echo "<th>".__('Last inventory')."</th>";
@@ -121,19 +126,18 @@ echo "<th>".__('Serial Number')."</th>";
 echo "<th>".__('Inventory number')."</th>";
 echo "</tr>";
 
-if ($result=$DB->query($query)) {
-   while ($data=$DB->fetch_array($result)) {
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      $computer->getFromDB($data['computers_id']);
-      echo $computer->getLink(1);
-      echo "</td>";
-      echo "<td>".Html::convDateTime($data['last_fusioninventory_update'])."</td>";
-      echo "<td>".$computer->fields['serial']."</td>";
-      echo "<td>".$computer->fields['otherserial']."</td>";
-      echo "</tr>";
-   }
+while ($data=$DB->fetch_array($result)) {
+   echo "<tr class='tab_bg_1'>";
+   echo "<td>";
+   $computer->getFromDB($data['computers_id']);
+   echo $computer->getLink(1);
+   echo "</td>";
+   echo "<td>".Html::convDateTime($data['last_fusioninventory_update'])."</td>";
+   echo "<td>".$computer->fields['serial']."</td>";
+   echo "<td>".$computer->fields['otherserial']."</td>";
+   echo "</tr>";
 }
+
 echo "</table>";
 
 Html::footer();
