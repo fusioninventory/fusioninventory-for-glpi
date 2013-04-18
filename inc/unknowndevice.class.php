@@ -824,44 +824,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
 
 
-   /**
-   * Clean hubs (unknown device) yet in inventory (clean connections, networkport, and hub)
-   *
-   * @return nothing
-   *
-   **/
-   function cleanUnknownSwitch() {
-      global $DB;
-
-      $query = "SELECT `glpi_plugin_fusioninventory_unknowndevices`.*
-                  FROM `glpi_plugin_fusioninventory_unknowndevices`
-               INNER JOIN `glpi_plugin_fusioninventory_networkequipmentips`
-                  ON `glpi_plugin_fusioninventory_unknowndevices`.`ip` =
-                        `glpi_plugin_fusioninventory_networkequipmentips`.`ip`
-               WHERE `glpi_plugin_fusioninventory_unknowndevices`.`ip` IS NOT NULL
-                  AND `glpi_plugin_fusioninventory_unknowndevices`.`ip` != '' ";
-      $result=$DB->query($query);
-      if ($result) {
-         while ($data=$DB->fetch_array($result)) {
-            $query_port = "SELECT * FROM `glpi_networkports`
-               WHERE items_id='".$data['id']."'
-                  AND itemtype='".$this->getType()."' ";
-            $result_port=$DB->query($query_port);
-            if ($result_port) {
-               while ($data_port=$DB->fetch_array($result_port)) {
-                  //plugin_fusioninventory_addLogConnection("remove", $data_port['ID']);
-                  $this->disconnectDB($data_port['id']);
-                  $np = new NetworkPort();
-                  $np->deleteFromDB($data_port['id']);
-               }
-            }
-            $this->deleteFromDB($data['id']);
-         }
-      }
-   }
-
-
-
 // *************************** end hub management ****************************** //
 
    /**

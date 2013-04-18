@@ -529,22 +529,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']);
    }
 
-
-
-   /**
-    * Convert hexa format into string
-    *
-    * @param $hex
-    * @return string
-    */
-   function hexToStr($hex) {
-       $string='';
-       for ($i=0; $i < strlen($hex)-1; $i+=2) {
-           $string .= chr(hexdec($hex[$i].$hex[$i+1]));
-       }
-       return $string;
-   }
-
+   
 
    static function getMethod() {
       return 'snmpinventory';

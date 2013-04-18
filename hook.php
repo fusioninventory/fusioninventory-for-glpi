@@ -2687,11 +2687,6 @@ function plugin_item_purge_fusioninventory($parm) {
                            WHERE `networkports_id`='".$data['nid']."'";
             $DB->query($query_delete);
          }
-
-         $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkequipmentips`
-                          WHERE `networkequipments_id`='".$parm->fields["id"]."';";
-         $DB->query($query_delete);
-
          break;
 
       case "Printer":

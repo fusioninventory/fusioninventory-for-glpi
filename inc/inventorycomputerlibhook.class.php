@@ -189,32 +189,6 @@ class PluginFusioninventoryInventoryComputerLibhook {
             }
          }
       }
-    }
-
-
-
-   static function importGroup($value, $entities_id) {
-      global $DB;
-
-      if (empty ($value)) {
-         return 0;
-      }
-
-      $query2 = "SELECT `id`
-                 FROM `glpi_groups`
-                 WHERE `name` = '$value'
-                       AND `entities_id` = '$entities_id'";
-      $result2 = $DB->query($query2);
-
-      if ($DB->numrows($result2) == 0) {
-         $group                = new Group();
-         $input = array();
-         $input["name"]        = $value;
-         $input["entities_id"] = $entities_id;
-         return $group->add($input);
-      }
-      $line2 = $DB->fetch_array($result2);
-      return $line2["id"];
    }
 }
 
