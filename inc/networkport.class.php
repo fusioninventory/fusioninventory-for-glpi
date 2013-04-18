@@ -577,6 +577,32 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       }
       return($PortID);
    }
+   
+   
+   
+   /**
+    * Function used to detect if port has multiple mac connected
+    */
+   static function isPortHasMultipleMac($networkports_id) {
+      $nw = new NetworkPort_NetworkPort();   
+      $networkPort = new NetworkPort();
+      
+      $is_multiple = FALSE;
+      $opposite_port = $nw->getOppositeContact($networkports_id);
+      if ($opposite_port != "" 
+              && $opposite_port!= 0) {
+         $networkPort->getFromDB($opposite_port);
+         if ($networkPort->fields["itemtype"] == 'PluginFusioninventoryUnknownDevice') {
+            $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+            if ($pfUnknownDevice->getFromDB($networkPort->fields['items_id'])) {
+               if ($pfUnknownDevice->fields['hub'] == 1) {
+                  $is_multiple = TRUE;
+               }
+            }                  
+         }
+      }
+      return $is_multiple;
+   }
 }
 
 ?>

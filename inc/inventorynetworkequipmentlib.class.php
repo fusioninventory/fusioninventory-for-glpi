@@ -241,12 +241,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
       $networkports_id = 0;
       foreach ($a_inventory['networkport'] as $a_port) {
-         if (isset($a_inventory['connection-mac'][$a_port['logical_number']])
-                 && count($a_inventory['connection-mac'][$a_port['logical_number']]) > 1
-                 && $a_port['trunk'] != 1) {
-            $a_port['trunk'] = -1;
-         }
-
          $ifType = $a_port['iftype'];
          if ($pfNetworkporttype->isImportType($ifType)) {
             $a_ports_DB = current($networkPort->find(

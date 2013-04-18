@@ -200,9 +200,8 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                      "('".implode("', '", $a_aggregated_ports)."')";
       }
 
-      $query = "
-      SELECT *, glpi_plugin_fusioninventory_networkports.mac as ifmacinternal
-
+      $query = "SELECT `glpi_networkports`.`id`, `instantiation_type`,
+         `glpi_plugin_fusioninventory_networkports`.`id` as `fusionid`
       FROM glpi_plugin_fusioninventory_networkports
 
       LEFT JOIN glpi_networkports
@@ -371,8 +370,9 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 //                  $link2 = str_replace($item->getName(0), $NetworkPort->fields["ip"],
 //                                       $item->getLink());
                   echo "<tr>";
+                  $icon = $this->getItemtypeIcon($classname);
                   echo "<td align='center'  ".$background_img."
-                                           class='tab_bg_1_2'>".$item->getLink(1);
+                                           class='tab_bg_1_2'>".$icon.$item->getLink(1);
                   if (!empty($link)) {
                      echo "<br/>".$link;
                   }
@@ -720,19 +720,27 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    function showNetworkPortDetail($data, $monitoring, $aggrega=0) {
       global $CFG_GLPI, $DB;
 
-      $nw = new NetworkPort_NetworkPort();
-      $networkName = new NetworkName();
+      $nw            = new NetworkPort_NetworkPort();
+      $networkName   = new NetworkName();
+      $networkPort   = new NetworkPort();
+      $pfNetworkPort = new PluginFusioninventoryNetworkPort();
+      
+      $networkPort->getFromDB($data['id']);
+      $pfNetworkPort->getFromDB($data['fusionid']);
 
       $background_img = "";
-      if (($data["trunk"] == "1") AND (strstr($data["ifstatus"], "up")
-            OR $data["ifstatus"] == 1)) {
+      if (($pfNetworkPort->fields["trunk"] == "1") 
+                 && (strstr($pfNetworkPort->fields["ifstatus"], "up")
+              || $pfNetworkPort->fields["ifstatus"] == 1)) {
          $background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
                               "/plugins/fusioninventory/pics/port_trunk.png\"); '";
-      } else if (($data["trunk"] == "-1") AND (strstr($data["ifstatus"], "up")
-                  OR $data["ifstatus"] == 1)) {
+      } else if (PluginFusioninventoryNetworkPort::isPortHasMultipleMac($data['id'])
+              && (strstr($pfNetworkPort->fields["ifstatus"], "up")
+              || $pfNetworkPort->fields["ifstatus"] == 1)) {
          $background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
                               "/plugins/fusioninventory/pics/multiple_mac_addresses.png\"); '";
-      } else if (strstr($data["ifstatus"], "up") OR $data["ifstatus"] == 1) {
+      } else if (strstr($pfNetworkPort->fields["ifstatus"], "up") 
+              || $pfNetworkPort->fields["ifstatus"] == 1) {
          $background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
                               "/plugins/fusioninventory/pics/connected_trunk.png\"); '";
       }
@@ -742,17 +750,17 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          echo "<td style='background-color: #f2f2f2;'></td><td>";
       }
       if (!$aggrega) {
-         if ($data['instantiation_type'] == 'NetworkPortAggregate') {
+         if ($networkPort->fields['instantiation_type'] == 'NetworkPortAggregate') {
             echo "<td>";
          } else {
             echo "<td colspan='2'>";
          }
       }
-      echo "<a href='networkport.form.php?id=".$data["id"]."'>".
-               $data["name"]."</a>";
-      Html::showToolTip($data['ifdescr']);
+      echo "<a href='networkport.form.php?id=".$networkPort->fields["id"]."'>".
+               $networkPort->fields["name"]."</a>";
+      Html::showToolTip($pfNetworkPort->fields['ifdescr']);
       if (!$aggrega) {
-         if ($data['instantiation_type'] == 'NetworkPortAggregate') {
+         if ($networkPort->fields['instantiation_type'] == 'NetworkPortAggregate') {
             echo "<td><i><font style='color: grey'>".__('Aggregation port')."</font></i></td>";
          }
       }
@@ -779,22 +787,23 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
          switch ($data_array) {
             case 3:
-               echo "<td>".$data["ifmtu"]."</td>";
+               echo "<td>".$pfNetworkPort->fields["ifmtu"]."</td>";
                break;
 
             case 5:
-               echo "<td>".$this->byteSize($data["ifspeed"], 1000)."bps</td>";
+               echo "<td>".$this->byteSize($pfNetworkPort->fields["ifspeed"], 1000)."bps</td>";
                break;
 
             case 6:
                echo "<td>";
-               if (strstr($data["ifstatus"], "up") OR strstr($data["ifinternalstatus"], "1")) {
+               if (strstr($pfNetworkPort->fields["ifstatus"], "up") 
+                       || strstr($pfNetworkPort->fields["ifinternalstatus"], "1")) {
                   echo "<img src='".$CFG_GLPI['root_doc']."/pics/greenbutton.png'/>";
-               } else if (strstr($data["ifstatus"], "down")
-                           OR strstr($data["ifinternalstatus"], "2")) {
+               } else if (strstr($pfNetworkPort->fields["ifstatus"], "down") 
+                       || strstr($pfNetworkPort->fields["ifinternalstatus"], "2")) {
                   echo "<img src='".$CFG_GLPI['root_doc']."/pics/redbutton.png'/>";
-               } else if (strstr($data["ifstatus"], "testing")
-                           OR strstr($data["ifinternalstatus"], "3")) {
+               } else if (strstr($pfNetworkPort->fields["ifstatus"], "testing")
+                       || strstr($pfNetworkPort->fields["ifinternalstatus"], "3")) {
                   echo "<img src='".$CFG_GLPI['root_doc'].
                            "/plugins/fusioninventory/pics/yellowbutton.png'/>";
                }
@@ -802,21 +811,21 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                break;
 
             case 7:
-               echo "<td>".$data["iflastchange"]."</td>";
+               echo "<td>".$pfNetworkPort->fields["iflastchange"]."</td>";
                break;
 
             case 8:
                echo "<td>";
-               if ($data["ifinoctets"] == "0") {
+               if ($pfNetworkPort->fields["ifinoctets"] == "0") {
                   echo "-";
                } else {
-                  echo $this->byteSize($data["ifinoctets"], 1000)."o";
+                  echo $this->byteSize($pfNetworkPort->fields["ifinoctets"], 1000)."o";
                }
                echo " / ";
-               if ($data["ifinoctets"] == "0") {
+               if ($pfNetworkPort->fields["ifinoctets"] == "0") {
                   echo "-";
                } else {
-                  echo $this->byteSize($data["ifoutoctets"], 1000)."o";
+                  echo $this->byteSize($pfNetworkPort->fields["ifoutoctets"], 1000)."o";
                }
 
                echo "</td>";
@@ -824,46 +833,42 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
             case 9:
                $color = '';
-               if ($data["ifinerrors"] != "0"
-                       OR $data["ifouterrors"] != "0") {
+               if ($pfNetworkPort->fields["ifinerrors"] != "0"
+                       || $pfNetworkPort->fields["ifouterrors"] != "0") {
                   $color = "background='#cf9b9b' class='tab_bg_1_2'";
                }
-               if ($data["ifinerrors"] == "0") {
+               if ($pfNetworkPort->fields["ifinerrors"] == "0") {
                   echo "<td ".$color.">-";
                } else {
                   echo "<td ".$color.">";
-                  echo $data["ifinerrors"];
+                  echo $pfNetworkPort->fields["ifinerrors"];
                }
                echo " / ";
-               if ($data["ifouterrors"] == "0") {
+               if ($pfNetworkPort->fields["ifouterrors"] == "0") {
                   echo "-";
                } else {
-                  echo $data["ifouterrors"];
+                  echo $pfNetworkPort->fields["ifouterrors"];
                }
                echo "</td>";
                break;
 
             case 10:
-               echo "<td>".$data["portduplex"]."</td>";
+               echo "<td>".$pfNetworkPort->fields["portduplex"]."</td>";
                break;
 
             case 11:
                // ** internal mac
-               echo "<td>".$data["mac"]."</td>";
+               echo "<td>".$networkPort->fields["mac"]."</td>";
                break;
 
             case 13:
                // ** Mac address and link to device which are connected to this port
-               $opposite_port = $nw->getOppositeContact($data["networkports_id"]);
-               if ($opposite_port != "") {
-                  $query_device = "SELECT *
-                                   FROM `glpi_networkports`
-                                   WHERE `id`='".$opposite_port."';";
-
-                  $result_device = $DB->query($query_device);
-                  if ($DB->numrows($result_device) > 0) {
-                     $data_device = $DB->fetch_assoc($result_device);
-
+               $opposite_port = $nw->getOppositeContact($data["id"]);
+               if ($opposite_port != "" 
+                       && $opposite_port!= 0) {
+                  $networkPortOpposite = new NetworkPort();
+                  if ($networkPortOpposite->getFromDB($opposite_port)) {
+                     $data_device = $networkPortOpposite->fields;
                      $item = new $data_device["itemtype"];
                      $item->getFromDB($data_device["items_id"]);
                      $link1 = $item->getLink(1);
@@ -897,24 +902,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                         }
                         echo "</td>";
                      } else {
-                        $icon = '';
-                        if ($data_device["itemtype"] == 'Computer') {
-                           $icon = "<img src='".$CFG_GLPI['root_doc'].
-                                   "/plugins/fusioninventory/pics/computer_icon.png' ".
-                                   "style='float:left'/> ";
-                        } else if ($data_device["itemtype"] == 'Printer') {
-                           $icon = "<img src='".$CFG_GLPI['root_doc'].
-                                   "/plugins/fusioninventory/pics/printer_icon.png' ".
-                                   "style='float:left'/> ";
-                        } else if ($data_device["itemtype"] == 'Phone') {
-                           $icon = "<img src='".$CFG_GLPI['root_doc'].
-                                   "/plugins/fusioninventory/pics/phone_icon.png' ".
-                                   "style='float:left'/> ";
-                        } else if ($data_device["itemtype"] == 'NetworkEquipment') {
-                           $icon = "<img src='".$CFG_GLPI['root_doc'].
-                                   "/plugins/fusioninventory/pics/network_icon.png' ".
-                                   "style='float:left'/> ";
-                        }
+                        $icon = $this->getItemtypeIcon($data_device["itemtype"]);
 
                         echo "<td>".$icon.$link1;
                         if (!empty($link)) {
@@ -951,7 +939,8 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                                     $link2 = str_replace($computer->getName(0),
                                                          $networkport->fields["ip"],
                                                          $computer->getLink());
-                                    echo $link1;
+                                    
+                                    echo $icon.$link1;
                                     if (!empty($link)) {
                                        echo "<br/>".$link;
                                     }
@@ -975,19 +964,20 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
             case 14:
                // ** Connection status
                echo "<td>";
-               if (strstr($data["ifstatus"], "up") OR strstr($data["ifstatus"], "1")) {
+               if (strstr($pfNetworkPort->fields["ifstatus"], "up") 
+                       || strstr($pfNetworkPort->fields["ifstatus"], "1")) {
                   echo "<img src='".$CFG_GLPI['root_doc'].
                           "/plugins/fusioninventory/pics/wired_on.png'/>";
-               } else if (strstr($data["ifstatus"], "down")
-                          OR strstr($data["ifstatus"], "2")) {
+               } else if (strstr($pfNetworkPort->fields["ifstatus"], "down")
+                       || strstr($pfNetworkPort->fields["ifstatus"], "2")) {
                   echo "<img src='".$CFG_GLPI['root_doc'].
                           "/plugins/fusioninventory/pics/wired_off.png'/>";
-               } else if (strstr($data["ifstatus"], "testing")
-                          OR strstr($data["ifstatus"], "3")) {
+               } else if (strstr($pfNetworkPort->fields["ifstatus"], "testing")
+                       || strstr($pfNetworkPort->fields["ifstatus"], "3")) {
                   echo "<img src='".$CFG_GLPI['root_doc'].
                           "/plugins/fusioninventory/pics/yellowbutton.png'/>";
-               } else if (strstr($data["ifstatus"], "dormant")
-                          OR strstr($data["ifstatus"], "5")) {
+               } else if (strstr($pfNetworkPort->fields["ifstatus"], "dormant")
+                       || strstr($pfNetworkPort->fields["ifstatus"], "5")) {
                   echo "<img src='".$CFG_GLPI['root_doc'].
                           "/plugins/fusioninventory/pics/orangebutton.png'/>";
                }
@@ -1098,6 +1088,32 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       PluginFusioninventoryToolbox::displaySerializedValues($data);
 
       echo "</table>";
+   }
+   
+   
+   
+   function getItemtypeIcon($itemtype) {
+      global $CFG_GLPI;
+      
+      $icon = '';
+      if ($itemtype == 'Computer') {
+         $icon = "<img src='".$CFG_GLPI['root_doc'].
+                 "/plugins/fusioninventory/pics/computer_icon.png' ".
+                 "style='float:left'/> ";
+      } else if ($itemtype == 'Printer') {
+         $icon = "<img src='".$CFG_GLPI['root_doc'].
+                 "/plugins/fusioninventory/pics/printer_icon.png' ".
+                 "style='float:left'/> ";
+      } else if ($itemtype == 'Phone') {
+         $icon = "<img src='".$CFG_GLPI['root_doc'].
+                 "/plugins/fusioninventory/pics/phone_icon.png' ".
+                 "style='float:left'/> ";
+      } else if ($itemtype == 'NetworkEquipment') {
+         $icon = "<img src='".$CFG_GLPI['root_doc'].
+                 "/plugins/fusioninventory/pics/network_icon.png' ".
+                 "style='float:left'/> ";
+      }
+      return $icon;
    }
 }
 
