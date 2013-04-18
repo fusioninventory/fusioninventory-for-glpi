@@ -717,6 +717,16 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    }
 
 
+   /**
+    * Display detail networkport based on glpi core networkport and fusioninventory
+    * networkport
+    * 
+    * @param array $data with id ant fusionid
+    * @param boolean $monitoring true if monitoring installed && actived
+    * @param boolean $aggrega true if this port is aggregate port
+    * 
+    * @return nothing
+    */
    function showNetworkPortDetail($data, $monitoring, $aggrega=0) {
       global $CFG_GLPI, $DB;
 
