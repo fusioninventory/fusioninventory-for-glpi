@@ -342,15 +342,16 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                           );
                   $link2 = str_replace($item->getName(0), implode(", ", $a_ips),
                                        $item->getLink());
+                  $icon = $this->getItemtypeIcon($item->fields["item_type"]);
                   if ($item->fields['accepted'] == 1) {
                      echo "<tr>";
                      echo "<td align='center'  style='background:#bfec75'
-                                              class='tab_bg_1_2'>".$item->getLink(1);
+                                              class='tab_bg_1_2'>".$icon.$item->getLink(1);
 
                   } else {
                      echo "<tr>";
                      echo "<td align='center' style='background:#cf9b9b'
-                                              class='tab_bg_1_2'>".$item->getLink(1);
+                                              class='tab_bg_1_2'>".$icon.$item->getLink(1);
                   }
                   if (!empty($link)) {
                      echo "<br/>".$link;
@@ -898,12 +899,13 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                                              $item->getLink());
 
                      if ($data_device["itemtype"] == 'PluginFusioninventoryUnknownDevice') {
+                        $icon = $this->getItemtypeIcon($item->fields["item_type"]);
                         if ($item->getField("accepted") == "1") {
                            echo "<td style='background:#bfec75'
-                                     class='tab_bg_1_2'>".$link1;
+                                     class='tab_bg_1_2'>".$icon.$link1;
                         } else {
                            echo "<td background='#cf9b9b'
-                                     class='tab_bg_1_2'>".$link1;
+                                     class='tab_bg_1_2'>".$icon.$link1;
                         }
                         if (!empty($link)) {
                            echo "<br/>".$link;
