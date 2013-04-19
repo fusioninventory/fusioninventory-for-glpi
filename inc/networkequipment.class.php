@@ -709,6 +709,10 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                echo __('Connection');
                break;
 
+            case 15:
+               echo __('Port not connected since', 'fusioninventory');
+               break;
+
          }
          echo "</th>";
       }
@@ -1029,11 +1033,22 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                } else {
                   echo "&nbsp;";
                }
-
-
                echo "</td>";
                break;
 
+            case 15:
+               echo "<td align='center'>";
+               if ($pfNetworkPort->fields['ifstatus'] == 1) {
+                  echo __('Connected');
+               } else if ($pfNetworkPort->fields['lastup'] == "0000-00-00 00:00:00") {
+                  echo '-';
+               } else {
+                  $time = strtotime(date('Y-m-d H:i:s'))
+                              - strtotime($pfNetworkPort->fields['lastup']);
+                  echo Html::timestampToString($time, FALSE);
+               }
+               echo "</td>";
+               break;
          }
       }
       echo "</tr>";

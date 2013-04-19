@@ -258,6 +258,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                $a_pfnetworkport_DB = current($pfNetworkPort->find(
                        "`networkports_id`='".$networkports_id."'", '', 1));
                $a_port['id'] = $a_pfnetworkport_DB['id'];
+               $a_port['lastup'] = date('Y-m-d H:i:s');
                $pfNetworkPort->update($a_port);
             } else {
                // Update port
@@ -272,9 +273,14 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                $a_port['networkports_id'] = $networkports_id;
                if (isset($a_pfnetworkport_DB['id'])) {
                   $a_port['id'] = $a_pfnetworkport_DB['id'];
+                  if ($a_port['ifstatus'] == 0
+                          && $a_pfnetworkport_DB['ifstatus'] == 1) {
+                     $a_port['lastup'] = date('Y-m-d H:i:s');
+                  }
                   $pfNetworkPort->update($a_port);
                } else {
                   $a_port['networkports_id'] = $networkports_id;
+                  $a_port['lastup'] = date('Y-m-d H:i:s');
                   $pfNetworkPort->add($a_port);
                }
             }

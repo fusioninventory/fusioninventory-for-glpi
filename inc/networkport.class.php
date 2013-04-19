@@ -116,6 +116,11 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $tab[14]['field']         = 'ifconnectionstatus';
       $tab[14]['name']          = __('Connection');
 
+      $tab[15]['table']         = $this->getTable();
+      $tab[15]['field']         = 'lastup';
+      $tab[15]['name']          = __('Port not connected since', 'fusioninventory');
+
+      
       return $tab;
    }
 

@@ -5803,6 +5803,29 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
    $pfNetworkporttype->init();
 
+   
+   // Define lastup field of fusion networkports
+   $query = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`
+      WHERE `name`='ifstatus'
+      LIMIT 1";
+   $result=$DB->query($query);
+   while ($data=$DB->fetch_array($result)) {
+      $query_np = "SELECT * FROM `glpi_plugin_fusioninventory_networkports`";
+      $result_np = $DB->query($query_np);
+      while ($data_np = $DB->fetch_array($result_np)) {
+         $query_nplog = "SELECT * FROM `glpi_plugin_fusioninventory_networkportlogs`
+            WHERE `networkports_id`='".$data_np['networkports_id']."'
+               AND `plugin_fusioninventory_mappings_id`='".$data['id']."'
+            ORDER BY `date_mod` DESC
+            LIMIT 1";
+         $result_nplog = $DB->query($query_nplog);
+         while ($data_nplog = $DB->fetch_array($result_nplog)) {
+            $DB->query("UPDATE `glpi_plugin_fusioninventory_networkports`
+               SET `lastup`='".$data_nplog['date_mod']."'
+               WHERE `id`='".$data_np['id']."'");
+         }      
+      }
+   }   
 }
 
 
