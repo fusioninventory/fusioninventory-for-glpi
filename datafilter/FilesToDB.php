@@ -7,7 +7,7 @@ fileOUItoDB();
 
 
 function filePCItoDB() {
-   $pciFile = fopen("pci.ids","r");
+   $pciFile = fopen("pci.ids", "r");
 
    $sql_creation = "DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_pcivendors`;
 
@@ -78,7 +78,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_pcidevices` (
 
 
 function fileUSBtoDB() {
-    $usbFile = fopen("usb.ids","r");
+    $usbFile = fopen("usb.ids", "r");
 
    $sql_creation = "DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_usbvendors`;
 
@@ -164,7 +164,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_ouis` (
    $sql_insert_oui = "INSERT INTO `glpi_plugin_fusioninventory_ouis`
       (`id`, `mac`, `name`) VALUES ";
    
-   $ouiFile = fopen("oui.txt","r");
+   $ouiFile = fopen("oui.txt", "r");
    $d = 0;
    while(!feof($ouiFile)) {
       $buffer = fgets($ouiFile, 4096);

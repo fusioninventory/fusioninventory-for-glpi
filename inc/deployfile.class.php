@@ -565,10 +565,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          $sha512 = $datas['jobs']['associatedFiles'][$index];
 
          //remove file
-         // I've commented the following piece of code because if you remove the first line in the files list,
+         // I've commented the following piece of code because 
+         // if you remove the first line in the files list,
          // PHP will transform these table as a json dictionnary instead of json list.
          //unset($datas['jobs']['associatedFiles'][$index]);
-         array_splice($datas['jobs']['associatedFiles'],$index,1);
+         array_splice($datas['jobs']['associatedFiles'], $index, 1);
          unset($datas['associatedFiles'][$sha512]);
 
          //remove file in repo

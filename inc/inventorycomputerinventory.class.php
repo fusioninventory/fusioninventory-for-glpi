@@ -274,7 +274,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                      "PluginFusioninventoryInventoryComputerInventory";
 
       $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
-      $dataLocation = $ruleLocation->processAllRules($input,array());
+      $dataLocation = $ruleLocation->processAllRules($input, array());
       if (isset($dataLocation['locations_id'])) {
          $_SESSION['plugin_fusioninventory_locations_id'] =
                $dataLocation['locations_id'];
