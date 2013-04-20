@@ -543,6 +543,12 @@ function plugin_fusioninventory_check_prerequisites() {
       echo __('Your GLPI version not compatible, require 0.84', 'fusioninventory');
       return FALSE;
    }
+   
+   if (!function_exists('mime_content_typet')) {
+      echo __('fileinfo extension (PHP) is required...', 'fusioninventory');
+      return FALSE;
+   }   
+   
    $plugin = new Plugin();
    if ($plugin->isActivated("fusioninventory")
            && !TableExists("glpi_plugin_fusioninventory_configs")) {
