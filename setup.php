@@ -544,7 +544,7 @@ function plugin_fusioninventory_check_prerequisites() {
       return FALSE;
    }
    
-   if (!function_exists('mime_content_typet')) {
+   if (!function_exists('mime_content_type')) {
       echo __('fileinfo extension (PHP) is required...', 'fusioninventory');
       return FALSE;
    }   
