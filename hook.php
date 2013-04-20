@@ -775,6 +775,9 @@ function cron_plugin_fusioninventory() {
 
 
 function plugin_fusioninventory_install() {
+
+   ini_set("max_execution_time", "0");
+
    if (basename($_SERVER['SCRIPT_NAME']) != "cli_install.php") {
       Html::header(__('Setup'), $_SERVER['PHP_SELF'], "config", "plugins");
    }
