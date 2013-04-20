@@ -5585,14 +5585,16 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       //Deploy configuration options
       if (is_null($config->getValue("server_upload_path"))) {
          $a_input['server_upload_path'] =
-            implode(
-               DIRECTORY_SEPARATOR,
-               array(
-                  GLPI_PLUGIN_DOC_DIR,
-                  'fusioninventory',
-                  'upload'
-               )
-            );
+              Toolbox::addslashes_deep(
+                  implode(
+                     DIRECTORY_SEPARATOR,
+                     array(
+                        GLPI_PLUGIN_DOC_DIR,
+                        'fusioninventory',
+                        'upload'
+                     )
+                  )
+              );
       }
       if (is_null($config->getValue("alert_winpath"))) {
          $a_input['alert_winpath'] = 1;
