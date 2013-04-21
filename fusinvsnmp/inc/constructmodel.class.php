@@ -63,6 +63,12 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       }
       curl_setopt($this->fp, CURLOPT_POST, true);
       curl_setopt($this->fp,CURLOPT_HTTPHEADER,array('Expect:'));
+      
+      if (!empty(curl_error($this->fp))) {
+         echo "Be sure the glpi server can access http://snmp.fusioninventory.org/, if works, try".
+                 " stop apache and start (not restart)!";
+      }
+      
       return true;
    }
    
