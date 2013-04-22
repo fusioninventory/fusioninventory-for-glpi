@@ -1423,14 +1423,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  'ip',
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->changeField($newTable,
-                                 'ifmac',
-                                 'mac',
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 'mac',
-                                 'mac',
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
                                  'hub',
                                  'hub',
                                  "tinyint(1) NOT NULL DEFAULT '0'");
@@ -1481,6 +1473,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->dropField($newTable, "FK_model_infos");
          $migration->dropField($newTable, "FK_snmp_connection");
          $migration->dropField($newTable, "FK_agent");
+         $migration->dropField($newTable, "mac");
+         $migration->dropField($newTable, "ifmac");
       $migration->migrationOneTable($newTable);
          $migration->addField($newTable,
                               'id',
@@ -5364,6 +5358,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    changeDisplayPreference("PluginFusinvsnmpPrinterLogReport",
                            "PluginFusioninventoryPrinterLogReport");
 
+   /*
+    * Delete IP and MAC of PluginFusioninventoryUnknownDevice in displaypreference
+    */
+      $queryd = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
+            AND (`num`='11' OR `num`='12')";
+      $DB->query($queryd);
+   
 
    /*
     * Modify displaypreference for PluginFusioninventoryPrinterLog
