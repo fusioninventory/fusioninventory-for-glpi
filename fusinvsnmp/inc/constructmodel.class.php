@@ -50,8 +50,8 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    function connect() {
       global $CFG_GLPI;
       
-      //$this->fp = curl_init('http://127.0.0.1:9000/');
-      $this->fp = curl_init('http://snmp.fusioninventory.org/');
+      $this->fp = curl_init('http://127.0.0.1:9000/');
+      //$this->fp = curl_init('http://snmp.fusioninventory.org/');
       curl_setopt($this->fp, CURLOPT_RETURNTRANSFER, 1);
       if ($CFG_GLPI['proxy_name'] != '') {
          curl_setopt($this->fp, CURLOPT_PROXYPORT, $CFG_GLPI['proxy_port']);
@@ -65,8 +65,10 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       curl_setopt($this->fp,CURLOPT_HTTPHEADER,array('Expect:'));
       
       if (curl_exec($this->fp) === false) {
-         echo curl_error($this->fp)."<br/>Be sure the glpi server can access http://snmp.fusioninventory.org/, if works, try".
-                 " stop apache and start (not restart)!";
+         if (curl_error($this->fp) != "Empty reply from server") {
+            echo curl_error($this->fp)."<br/>Be sure the glpi server can access http://snmp.fusioninventory.org/, if works, try".
+                    " stop apache and start (not restart)!";
+         }
       }
       
       return true;
