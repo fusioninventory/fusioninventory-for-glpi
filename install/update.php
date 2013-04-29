@@ -1522,9 +1522,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               'ip',
                               "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->addField($newTable,
-                              'mac',
-                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
                               'hub',
                               "tinyint(1) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
