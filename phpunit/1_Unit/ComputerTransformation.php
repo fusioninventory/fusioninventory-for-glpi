@@ -422,7 +422,9 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'frequence'         => 2400,
+                    'frequency_default' => 2400
           );
       
       $this->assertEquals($a_reference, $a_return['processor']); 

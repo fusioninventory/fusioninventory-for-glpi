@@ -255,14 +255,18 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'frequence'         => 2400,
+                    'frequency_default' => 2400
                 ),
             Array(
                     'manufacturers_id'  => 0,
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'frequence'         => 2400,
+                    'frequency_default' => 2400
                 )
             ),
           'computerdisk'   => Array(),

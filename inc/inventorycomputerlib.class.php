@@ -78,6 +78,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $computer                     = new Computer();
       $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();
       $item_DeviceProcessor         = new Item_DeviceProcessor();
+      $deviceProcessor              = new DeviceProcessor();
       $item_DeviceMemory            = new Item_DeviceMemory();
       $deviceMemory                 = new DeviceMemory();
       $computerVirtualmachine       = new ComputerVirtualMachine();
@@ -172,7 +173,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $db_processors = array();
             if ($no_history === FALSE) {
                $query = "SELECT `glpi_items_deviceprocessors`.`id`, `designation`,
-                     `frequency`, `serial`, `manufacturers_id`
+                     `frequency`, `frequence`, `frequency_default`,
+                     `serial`, `manufacturers_id`
                   FROM `glpi_items_deviceprocessors`
                   LEFT JOIN `glpi_deviceprocessors`
                      ON `deviceprocessors_id`=`glpi_deviceprocessors`.`id`
@@ -183,9 +185,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                while (($data = $DB->fetch_assoc($result))) {
                   $idtmp = $data['id'];
                   unset($data['id']);
-                  $data1 = Toolbox::addslashes_deep($data);
-                  $data2 = array_map('strtolower', $data1);
-                  $db_processors[$idtmp] = $data2;
+                  $db_processors[$idtmp] = Toolbox::addslashes_deep($data);
                }
             }
             if (count($db_processors) == 0) {
@@ -197,12 +197,25 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                // Check all fields from source: 'designation', 'serial', 'manufacturers_id',
                // 'frequence'
                foreach ($a_computerinventory['processor'] as $key => $arrays) {
-                  $arrayslower = array_map('strtolower', $arrays);
+                  $frequence = $arrays['frequence'];
+                  unset($arrays['frequence']);
+                  unset($arrays['frequency']);
+                  unset($arrays['frequency_default']);
                   foreach ($db_processors as $keydb => $arraydb) {
-                     if ($arrayslower == $arraydb) {
-                        unset($a_computerinventory['processor'][$key]);
-                        unset($db_processors[$keydb]);
-                        break;
+                     $frequencedb = $arraydb['frequence'];
+                     unset($arraydb['frequence']);
+                     unset($arraydb['frequency']);
+                     unset($arraydb['frequency_default']);                     
+                     if ($arrays == $arraydb) {
+                        $a_criteria = $deviceProcessor->getImportCriteria();
+                        $criteriafrequence = $a_criteria['frequence'];
+                        $compare = explode(':', $criteriafrequence);
+                        if ($frequence > ($frequencedb - $compare[1])
+                                && $frequence < ($frequencedb + $compare[1])) {
+                           unset($a_computerinventory['processor'][$key]);
+                           unset($db_processors[$keydb]);
+                           break;
+                        }
                      }
                   }
                }
@@ -253,10 +266,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                // Check all fields from source: 'designation', 'serial', 'size',
                // 'devicememorytypes_id', 'frequence'
                foreach ($a_computerinventory['memory'] as $key => $arrays) {
+                  $frequence = $arrays['frequence'];
+                  unset($arrays['frequence']);
                   foreach ($db_memories as $keydb => $arraydb) {
-                     $frequence = $arrays['frequence'];
                      $frequencedb = $arraydb['frequence'];
-                     unset($arrays['frequence']);
                      unset($arraydb['frequence']);
                      if ($arrays == $arraydb) {
                         $a_criteria = $deviceMemory->getImportCriteria();

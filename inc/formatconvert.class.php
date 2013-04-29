@@ -452,7 +452,8 @@ class PluginFusioninventoryFormatconvert {
                           && isset($a_cpus['TYPE'])) {
                      $array_tmp['designation'] = $a_cpus['TYPE'];
                   }
-//                  $array_tmp['frequency'] = $array_tmp['frequence'];
+                  $array_tmp['frequence'] = $array_tmp['frequency'];
+                  $array_tmp['frequency_default'] = $array_tmp['frequency'];
                   $a_inventory['processor'][] = $array_tmp;
                }
             }

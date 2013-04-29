@@ -106,25 +106,33 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'frequence'         => 2400,
+                    'frequency_default' => 2400
                 ),
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'frequence'         => 2400,
+                    'frequency_default' => 2400
                 ),
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2405,
+                    'frequence'         => 2405,
+                    'frequency_default' => 2405
                 ),
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2600,
+                    'frequence'         => 2600,
+                    'frequency_default' => 2600
                 )
         );
 
@@ -609,6 +617,35 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
    
    
    
+   public function testComputerProcessor() {
+      global $DB;
+
+      $DB->connect();
+      
+      $a_data = getAllDatasFromTable("glpi_deviceprocessors");
+      $a_reference = array(
+          '1' => array(
+                     'id'                 => '1',
+                     'designation'        => 'Core i3',
+                     'frequence'          => '2400',
+                     'comment'            => NULL,
+                     'manufacturers_id'   => '1',
+                     'frequency_default'  => '2400',
+                 ),
+          '2' => array(
+                     'id'                    => '2',
+                     'designation'        => 'Core i3',
+                     'frequence'          => '2600',
+                     'comment'            => NULL,
+                     'manufacturers_id'   => '1',
+                     'frequency_default'  => '2600',
+                 )
+      );
+      $this->assertEquals($a_reference, $a_data);  
+   }
+   
+   
+   
    public function testComputerProcessorLink() {
       global $DB;
 
@@ -644,7 +681,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'items_id'              => '1',
                      'itemtype'              => 'Computer',
                      'deviceprocessors_id'   => '1',
-                     'frequency'             => '2400',
+                     'frequency'             => '2405',
                      'serial'                => '',
                      'is_deleted'            => '0',
                      'is_dynamic'            => '1'
@@ -653,8 +690,8 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'id' => '4',
                      'items_id'              => '1',
                      'itemtype'              => 'Computer',
-                     'deviceprocessors_id'   => '1',
-                     'frequency'             => '2400',
+                     'deviceprocessors_id'   => '2',
+                     'frequency'             => '2600',
                      'serial'                => '',
                      'is_deleted'            => '0',
                      'is_dynamic'            => '1'
