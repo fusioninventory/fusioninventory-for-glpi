@@ -79,6 +79,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();
       $item_DeviceProcessor         = new Item_DeviceProcessor();
       $item_DeviceMemory            = new Item_DeviceMemory();
+      $deviceMemory                 = new DeviceMemory();
       $computerVirtualmachine       = new ComputerVirtualMachine();
       $computerDisk                 = new ComputerDisk();
       $item_DeviceControl           = new Item_DeviceControl();
@@ -253,10 +254,20 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                // 'devicememorytypes_id', 'frequence'
                foreach ($a_computerinventory['memory'] as $key => $arrays) {
                   foreach ($db_memories as $keydb => $arraydb) {
+                     $frequence = $arrays['frequence'];
+                     $frequencedb = $arraydb['frequence'];
+                     unset($arrays['frequence']);
+                     unset($arraydb['frequence']);
                      if ($arrays == $arraydb) {
-                        unset($a_computerinventory['memory'][$key]);
-                        unset($db_memories[$keydb]);
-                        break;
+                        $a_criteria = $deviceMemory->getImportCriteria();
+                        $criteriafrequence = $a_criteria['frequence'];
+                        $compare = explode(':', $criteriafrequence);
+                        if ($frequence > ($frequencedb - $compare[1])
+                                && $frequence < ($frequencedb + $compare[1])) {
+                           unset($a_computerinventory['memory'][$key]);
+                           unset($db_memories[$keydb]);
+                           break;
+                        }
                      }
                   }
                }

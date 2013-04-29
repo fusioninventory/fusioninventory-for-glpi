@@ -142,6 +142,20 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'frequence'            => '1067 MHz',
                     'devicememorytypes_id' => 'DDR3',
                     'designation'          => 'DDR3 - SODIMM (None)'
+                ),
+            Array(
+                    'size'                 => 2048,
+                    'serial'               => '95F1833G',
+                    'frequence'            => '1066 MHz',
+                    'devicememorytypes_id' => 'DDR3',
+                    'designation'          => 'DDR3 - SODIMM (None)'
+                ),
+            Array(
+                    'size'                 => 2048,
+                    'serial'               => '95F1833H',
+                    'frequence'            => '1333 MHz',
+                    'devicememorytypes_id' => 'DDR3',
+                    'designation'          => 'DDR3 - SODIMM (None)'
                 )
         );
 
@@ -644,6 +658,94 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'serial'                => '',
                      'is_deleted'            => '0',
                      'is_dynamic'            => '1'
+                 )
+      );
+      
+      $this->assertEquals($a_reference, $a_dataLink);      
+   }
+   
+   
+   
+   public function testComputerMemory() {
+      global $DB;
+
+      $DB->connect();
+      
+      $a_data = getAllDatasFromTable("glpi_devicememories");
+      $a_reference = array(
+          '1' => array(
+                     'id'                    => '1',
+                     'designation'           => 'DDR3 - SODIMM (None)',
+                     'frequence'             => '1067 MHz',
+                     'comment'               => null,
+                     'manufacturers_id'      => '0',
+                     'size_default'          => '0',
+                     'devicememorytypes_id'  => '5'
+                 ),
+          '2' => array(
+                     'id'                    => '2',
+                     'designation'           => 'DDR3 - SODIMM (None)',
+                     'frequence'             => '1333 MHz',
+                     'comment'               => null,
+                     'manufacturers_id'      => '0',
+                     'size_default'          => '0',
+                     'devicememorytypes_id'  => '5'
+                 )
+      );
+      $this->assertEquals($a_reference, $a_data);      
+   }
+   
+   
+   
+   public function testComputerMemoryLink() {
+      global $DB;
+
+      $DB->connect();
+
+      $a_dataLink = getAllDatasFromTable("glpi_items_devicememories", 
+                                         "`itemtype`='Computer'
+                                            AND `items_id`='1'");
+      
+      $a_reference = array(
+          '1' => array(
+                     'id'                    => '1',
+                     'items_id'              => '1',
+                     'itemtype'              => 'Computer',
+                     'serial'                => '98F6FF18',
+                     'is_deleted'            => '0',
+                     'is_dynamic'            => '1',
+                     'devicememories_id'     => '1',
+                     'size'                  => '2048'
+                 ),
+          '2' => array(
+                     'id' => '2',
+                     'items_id'              => '1',
+                     'itemtype'              => 'Computer',
+                     'serial'                => '95F1833E',
+                     'is_deleted'            => '0',
+                     'is_dynamic'            => '1',
+                     'devicememories_id'     => '1',
+                     'size'                  => '2048'
+                 ),
+          '3' => array(
+                     'id' => '3',
+                     'items_id'              => '1',
+                     'itemtype'              => 'Computer',
+                     'serial'                => '95F1833G',
+                     'is_deleted'            => '0',
+                     'is_dynamic'            => '1',
+                     'devicememories_id'     => '1',
+                     'size'                  => '2048'
+                 ),
+          '4' => array(
+                     'id' => '4',
+                     'items_id'              => '1',
+                     'itemtype'              => 'Computer',
+                     'serial'                => '95F1833H',
+                     'is_deleted'            => '0',
+                     'is_dynamic'            => '1',
+                     'devicememories_id'     => '2',
+                     'size'                  => '2048'
                  )
       );
       
