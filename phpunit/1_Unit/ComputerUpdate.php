@@ -714,7 +714,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'id'                    => '1',
                      'designation'           => 'DDR3 - SODIMM (None)',
                      'frequence'             => '1067 MHz',
-                     'comment'               => null,
+                     'comment'               => NULL,
                      'manufacturers_id'      => '0',
                      'size_default'          => '0',
                      'devicememorytypes_id'  => '5'
@@ -723,7 +723,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'id'                    => '2',
                      'designation'           => 'DDR3 - SODIMM (None)',
                      'frequence'             => '1333 MHz',
-                     'comment'               => null,
+                     'comment'               => NULL,
                      'manufacturers_id'      => '0',
                      'size_default'          => '0',
                      'devicememorytypes_id'  => '5'
