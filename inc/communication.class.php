@@ -294,19 +294,10 @@ class PluginFusioninventoryCommunication {
 
 
 
-   // new REST protocol
-   function handleFusionCommunication() {
-      $response = PluginFusioninventoryCommunicationRest::communicate($_GET);
-      if ($response) {
-         echo json_encode($response);
-      } else {
-         PluginFusioninventoryCommunicationRest::sendError();
-      }
-   }
-
-
-
-// old POST protocol
+   /**
+    * Manage communication with old protocol (XML over POST)
+    * 
+    **/
    function handleOCSCommunication($xml='') {
 
       // ***** For debug only ***** //

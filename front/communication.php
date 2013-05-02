@@ -79,7 +79,7 @@ if (!class_exists("PluginFusioninventoryConfig")) {
 $pfCommunication  = new PluginFusioninventoryCommunication();
 
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
-   $pfCommunication->handleFusionCommunication();
+   PluginFusioninventoryCommunicationRest::handleFusionCommunication();
 } else if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
    $pfCommunication->handleOCSCommunication();
 }

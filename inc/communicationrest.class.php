@@ -217,6 +217,22 @@ class PluginFusioninventoryCommunicationRest {
       }
    }
 
+   
+   
+   /**
+    * Manage REST parameters
+    **/
+   static function handleFusionCommunication() {
+      $response = PluginFusioninventoryCommunicationRest::communicate($_GET);
+      if ($response) {
+         echo json_encode($response);
+      } else {
+         PluginFusioninventoryCommunicationRest::sendError();
+      }
+   }
+
+
+
    static function managecommunication() {
       $response = PluginFusioninventoryFusionCommunication::communicate($_GET);
       if ($response) {
