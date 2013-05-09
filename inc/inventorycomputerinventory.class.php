@@ -135,22 +135,23 @@ class PluginFusioninventoryInventoryComputerInventory {
                                              $arrayinventory['CONTENT']);
 
       // Get tag is defined and put it in fusioninventory_agent table
+         $tagAgent = "";
          if (isset($a_computerinventory['ACCOUNTINFO'])) {
             foreach($a_computerinventory['ACCOUNTINFO'] as $tag) {
                if (isset($tag['KEYNAME'])
                        AND $tag['KEYNAME'] == 'TAG') {
                   if (isset($tag['KEYVALUE'])
                           AND $tag['KEYVALUE'] != '') {
-                     $pfAgent = new PluginFusioninventoryAgent();
-                     $input = array();
-                     $input['id'] = $_SESSION['plugin_fusioninventory_agents_id'];
-                     $input['tag'] = $tag['KEYVALUE'];
-                     $pfAgent->update($input);
+                     $tagAgent = $tag['KEYVALUE'];
                   }
                }
             }
          }
-
+         $pfAgent = new PluginFusioninventoryAgent();
+         $input = array();
+         $input['id'] = $_SESSION['plugin_fusioninventory_agents_id'];
+         $input['tag'] = $tagAgent;
+         $pfAgent->update($input);
 
       $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
       $a_computerinventory = $pfBlacklist->cleanBlacklist($a_computerinventory);

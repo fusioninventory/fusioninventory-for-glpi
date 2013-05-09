@@ -454,7 +454,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       if (is_array($agent)) {
 
          // relation
-         if ($agent['device_id'] != $device_id) {
+         if ($agent['device_id'] != $device_id
+                 || $agent['entities_id'] != $entities_id) {
             $input = array();
             $input['id'] = $agent['id'];
             $input['device_id'] = $device_id;
@@ -462,13 +463,13 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $this->update($input);
          }
 
-         // Clean up the agent list
-         $oldAgent_deviceids = $this->find(
-            // computer linked to the wrong agent
-            "(`computers_id`='".$computers_id."' AND `device_id` <> '".$device_id."')");
-         foreach ($oldAgent_deviceids as $oldAgent) {
-            $this->delete($oldAgent);
-         }
+//         // Clean up the agent list
+//         $oldAgent_deviceids = $this->find(
+//            // computer linked to the wrong agent
+//            "(`computers_id`='".$computers_id."' AND `device_id` <> '".$device_id."')");
+//         foreach ($oldAgent_deviceids as $oldAgent) {
+//            $this->delete($oldAgent);
+//         }
          $oldAgents = $this->find(
             // the same device_id but linked on the wrong computer
             "(`device_id`='".$device_id."' AND `computers_id`<>'".$computers_id."')");

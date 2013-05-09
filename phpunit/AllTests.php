@@ -173,6 +173,7 @@ require_once '1_Unit/PrinterUpdate.php';
 require_once '1_Unit/NetworkEquipmentTransformation.php';
 require_once '1_Unit/NetworkEquipmentUpdate.php';
 require_once '1_Unit/ComputerLog.php';
+require_once '1_Unit/AgentChangeDeviceid.php';
 
 require_once '2_Integration/ComputerEntity.php';
 require_once '2_Integration/SoftwareEntityCreation.php';
@@ -192,6 +193,7 @@ class AllTests {
       
       $suite->addTest(FormatConvertData_AllTests::suite());
       $suite->addTest(SoftwareUpdate_AllTests::suite());
+      $suite->addTest(AgentChangeDeviceid_AllTests::suite());
       $suite->addTest(ComputerTransformation_AllTests::suite());
       $suite->addTest(ComputerUpdate_AllTests::suite());
       $suite->addTest(PrinterTransformation_AllTests::suite());

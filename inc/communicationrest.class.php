@@ -230,17 +230,6 @@ class PluginFusioninventoryCommunicationRest {
          PluginFusioninventoryCommunicationRest::sendError();
       }
    }
-
-
-
-   static function managecommunication() {
-      $response = PluginFusioninventoryFusionCommunication::communicate($_GET);
-      if ($response) {
-         echo json_encode($response);
-      } else {
-         PluginFusioninventoryFusionCommunication::sendError();
-      }
-   }
 }
 
 ?>

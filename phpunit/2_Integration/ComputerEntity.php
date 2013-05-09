@@ -132,7 +132,6 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
       $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
                                          'device_id' => 'pc-2013-02-13'));
       $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
-      
 
       // ** Add
          $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
@@ -247,6 +246,12 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
          $input['value']         = 1;
          $ruleAction->add($input);  
 
+      // ** Add agent
+      $pfAgent = new PluginFusioninventoryAgent();
+      $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
+                                         'device_id' => 'pc-2013-02-13'));
+      $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
+      
       // ** Add
          $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
 
@@ -330,6 +335,12 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
           'NAME' => 'pc2'
       );
 
+      // ** Add agent
+         $pfAgent = new PluginFusioninventoryAgent();
+         $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
+                                            'device_id' => 'pc-2013-02-13'));
+         $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
+      
       // ** Add
          $pfiComputerInv->import("pc2-2013-02-13", "", $a_inventory); // creation
 
