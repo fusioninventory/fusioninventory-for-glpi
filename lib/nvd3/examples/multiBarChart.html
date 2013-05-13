@@ -66,7 +66,11 @@ var negative_test_data = new d3.range(0,3).map(function(d,i) { return {
 
 var chart;
 nv.addGraph(function() {
-    chart = nv.models.multiBarChart();
+    chart = nv.models.multiBarChart()
+      .barColor(d3.scale.category20().range());
+
+    chart.multibar
+      .hideable(true);
 
     chart.xAxis
         .showMaxMin(true)
