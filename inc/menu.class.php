@@ -222,58 +222,74 @@ class PluginFusioninventoryMenu {
       $a_menu = array();
 
       if (PluginFusioninventoryProfile::haveRight("iprange", "r")) {
-         $a_menu[1]['name'] = __('IP Ranges', 'fusioninventory');
-         $a_menu[1]['pic']  = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/pics/menu_rangeip.png";
-         $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryIPRange');
+         $a_menu[] = array(
+            'name' => __('IP Ranges', 'fusioninventory'),
+            'pic'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/pics/menu_rangeip.png",
+            'link' => Toolbox::getItemTypeSearchURL('PluginFusioninventoryIPRange')
+         );
       }
 
       if (PluginFusioninventoryProfile::haveRight("credentialip", "r")) {
-         $a_menu[2]['name'] = __('Remote devices to inventory (VMware)', 'fusioninventory');
-         $a_menu[2]['pic']  = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/pics/menu_credentialips.png";
-         $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredentialip');
+         $a_menu[] = array(
+            'name' => __('Remote devices to inventory (VMware)', 'fusioninventory'),
+            'pic'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/pics/menu_credentialips.png",
+            'link' => Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredentialip')
+         );
       }
 
       if (PluginFusioninventoryProfile::haveRight("configsecurity", "r")) {
-         $a_menu[4]['name'] = __('SNMP authentication', 'fusioninventory');
-         $a_menu[4]['pic']  = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/pics/menu_authentification.png";
-         $a_menu[4]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/configsecurity.php";
+         $a_menu[] = array(
+            'name' => __('SNMP authentication', 'fusioninventory'),
+            'pic'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/pics/menu_authentification.png",
+            'link' => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/configsecurity.php"
+         );
       }
 
       if (PluginFusioninventoryProfile::haveRight("credential", "r")) {
-         $a_menu[5]['name'] = __('Authentication for remote devices (VMware)', 'fusioninventory');
-         $a_menu[5]['pic']  = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/pics/menu_authentification.png";
-         $a_menu[5]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredential');
+         $a_menu[] = array(
+            'name' => __('Authentication for remote devices (VMware)', 'fusioninventory'),
+            'pic'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/pics/menu_authentification.png",
+            'link' => Toolbox::getItemTypeSearchURL('PluginFusioninventoryCredential')
+         );
       }
 
       if (PluginFusioninventoryProfile::haveRight("task", "r")) {
-         $a_menu[6]['name'] = __('Discovery status', 'fusioninventory');
-         $a_menu[6]['pic']  = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/pics/menu_discovery_status.png";
-         $a_menu[6]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/statediscovery.php";
+         $a_menu[] = array(
+            'name' => __('Discovery status', 'fusioninventory'),
+            'pic'  =>   $CFG_GLPI['root_doc'].
+                           "/plugins/fusioninventory/pics/menu_discovery_status.png",
+            'link' =>   $CFG_GLPI['root_doc'].
+                           "/plugins/fusioninventory/front/statediscovery.php"
+         );
 
-         $a_menu[7]['name'] = __('Network inventory status', 'fusioninventory');
-         $a_menu[7]['pic']  = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/pics/menu_inventory_status.png";
-         $a_menu[7]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/stateinventory.php";
+         $a_menu[] = array(
+               'name' => __('Network inventory status', 'fusioninventory'),
+               'pic' =>    $CFG_GLPI['root_doc'].
+                              "/plugins/fusioninventory/pics/menu_inventory_status.png",
+               'link' =>   $CFG_GLPI['root_doc'].
+                              "/plugins/fusioninventory/front/stateinventory.php",
+         );
       }
 
       if (PluginFusioninventoryProfile::haveRight("model", "r")) {
-         $a_menu[4]['name'] = __('SNMP models', 'fusioninventory');
-         $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_models.png";
-         $a_menu[4]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/snmpmodel.php";
+         $a_menu[] = array(
+            'name' => __('SNMP models', 'fusioninventory'),
+            'pic'  => $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_models.png",
+            'link' => $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/snmpmodel.php"
+         );
       }
 
       if (PluginFusioninventoryProfile::haveRight("model", "r")) {
-         $a_menu[8]['name'] = "SNMP models creation";
-         $a_menu[8]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_constructmodel.png";
-         $a_menu[8]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/constructmodel.php";
+         $a_menu[] = array(
+            'name' => "SNMP models creation",
+            'pic'  => $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_constructmodel.png",
+            'link' => $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/constructmodel.php"
+         );
       }
 
       if (!empty($a_menu)) {
@@ -289,11 +305,13 @@ class PluginFusioninventoryMenu {
       $a_menu = array();
 
       if (PluginFusioninventoryProfile::haveRight("packages", "r")) {
-         $a_menu[0]['name'] = __('Package management', 'fusioninventory');
-         $a_menu[0]['pic']  = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/pics/menu_package.png";
-         $a_menu[0]['link'] = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/front/deploypackage.php";
+         $a_menu[] =array(
+            'name' => __('Package management', 'fusioninventory'),
+            'pic'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/pics/menu_package.png",
+            'link' => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/deploypackage.php"
+         );
       }
 
       $a_menu[1]['name'] = __('Mirror servers', 'fusioninventory');
