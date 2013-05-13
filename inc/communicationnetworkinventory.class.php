@@ -93,50 +93,43 @@ class PluginFusioninventoryCommunicationNetworkInventory {
       $this->arrayinventory = $arrayinventory;
 
       $_SESSION['glpi_plugin_fusioninventory_processnumber'] = $a_CONTENT['PROCESSNUMBER'];
-//      if ($pfTaskjobstate->getFromDB($a_CONTENT['PROCESSNUMBER'])) {
-//         if ($pfTaskjobstate->fields['state'] != "3") {
-//            $pfTaskjobstate->changeStatus($a_CONTENT['PROCESSNUMBER'], 2);
-            if ((!isset($a_CONTENT['AGENT']['START'])) AND (!isset($a_CONTENT['AGENT']['END']))) {
-               $nb_devices = 0;
-               if (isset($a_CONTENT['DEVICE'])) {
-                  if (is_int(key($a_CONTENT['DEVICE']))) {
-                     $nb_devices = count($a_CONTENT['DEVICE']);
-                  } else {
-                     $nb_devices = 1;
-                  }
-               }
+      if ((!isset($a_CONTENT['AGENT']['START'])) AND (!isset($a_CONTENT['AGENT']['END']))) {
+          $nb_devices = 0;
+          if (isset($a_CONTENT['DEVICE'])) {
+              if (is_int(key($a_CONTENT['DEVICE']))) {
+                  $nb_devices = count($a_CONTENT['DEVICE']);
+              } else {
+                  $nb_devices = 1;
+              }
+          }
 
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] =
-                                                                     $a_CONTENT['PROCESSNUMBER'];
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.
-                                                                      ' ==devicesqueried==';
-               $this->addtaskjoblog();
+          $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] =
+              $a_CONTENT['PROCESSNUMBER'];
+          $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
+          $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
+          $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
+          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = $nb_devices.
+              ' ==devicesqueried==';
+          $this->addtaskjoblog();
 
-            }
+      }
 
-            $this->importContent($a_CONTENT);
+      $this->importContent($a_CONTENT);
 
-            if (isset($a_CONTENT['AGENT']['END'])) {
-               $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
-                                                         $this->agent['id'],
-                                                         'PluginFusioninventoryAgent');
-            }
-            if (isset($a_CONTENT['AGENT']['START'])) {
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] =
-                                                                     $a_CONTENT['PROCESSNUMBER'];
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
-               $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==inventorystarted==';
-               $this->addtaskjoblog();
-            }
-//         }
-//      } else {
-//         $errors.=$this->importContent($p_CONTENT);
-//      }
+      if (isset($a_CONTENT['AGENT']['END'])) {
+          $pfTaskjobstate->changeStatusFinish($a_CONTENT['PROCESSNUMBER'],
+              $this->agent['id'],
+              'PluginFusioninventoryAgent');
+      }
+      if (isset($a_CONTENT['AGENT']['START'])) {
+          $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] =
+              $a_CONTENT['PROCESSNUMBER'];
+          $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id'] = $this->agent['id'];
+          $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype'] = 'PluginFusioninventoryAgent';
+          $_SESSION['plugin_fusinvsnmp_taskjoblog']['state'] = '6';
+          $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment'] = '==inventorystarted==';
+          $this->addtaskjoblog();
+      }
    }
 
 
