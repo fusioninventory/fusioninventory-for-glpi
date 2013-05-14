@@ -2091,7 +2091,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                            'value'   => NULL);
       $a_table['fields']['plugin_fusioninventory_computerarchs_id'] = array('type'    => 'integer',
                                                                             'value'   => NULL);
-      $a_table['fields']['serialized_inventory']   = array('type'    => 'longblob');
+      $a_table['fields']['serialized_inventory']   = array('type'    => 'longblob',
+                                                           'value'   => "");
 
       $a_table['oldfields']  = array();
 
