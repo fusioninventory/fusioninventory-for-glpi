@@ -333,17 +333,24 @@ class PluginFusioninventoryFormatconvert {
 
       // * OPERATINGSYSTEM
       if (isset($array['OPERATINGSYSTEM'])) {
-         $array_tmp = $thisc->addValues($array['OPERATINGSYSTEM'],
-                                        array(
-                                           'FULL_NAME'      => 'operatingsystems_id',
-                                           'KERNEL_VERSION' => 'operatingsystemversions_id',
-                                           'SERVICE_PACK'   => 'operatingsystemservicepacks_id'));
+         $array_tmp = $thisc->addValues(
+                 $array['OPERATINGSYSTEM'],
+                 array(
+                    'FULL_NAME'      => 'operatingsystems_id',
+                    'KERNEL_VERSION' => 'operatingsystemversions_id',
+                    'SERVICE_PACK'   => 'operatingsystemservicepacks_id',
+                    'ARCH'           => 'plugin_fusioninventory_computerarchs_id'));
 
          foreach ($array_tmp as $key=>$value) {
             if (isset($a_inventory['computer'][$key])
                     && $a_inventory['computer'][$key] != '') {
                $a_inventory['computer'][$key] = $value;
             }
+         }
+         if (isset($array_tmp['plugin_fusioninventory_computerarchs_id'])
+                 && $array_tmp['plugin_fusioninventory_computerarchs_id'] != '') {
+            $a_inventory['fusioninventorycomputer']['plugin_fusioninventory_computerarchs_id'] = 
+                 $array_tmp['plugin_fusioninventory_computerarchs_id'];
          }
       }
 

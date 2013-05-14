@@ -121,7 +121,15 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5161]['field']     = 'tag';
          $sopt[5161]['linkfield'] = '';
          $sopt[5161]['name']      = __('FusionInventory tag', 'fusioninventory');
-         
+
+         $sopt[5162]['table']     = 'glpi_plugin_fusioninventory_computerarchs';
+         $sopt[5162]['field']     = 'name';
+         $sopt[5162]['name']      = __('Architecture', 'fusioninventory');
+         $sopt[5162]['datatype']  = 'dropdown';
+         $sopt[5162]['massiveaction'] = FALSE;
+         $sopt[5162]['joinparams']      = array('beforejoin'
+                                            => array('table'      => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
+                                                     'joinparams' => array('jointype'          => 'child')));
    }
 
    if ($itemtype == 'Computer') {
@@ -1843,8 +1851,8 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                  break;
               
           }
-
-          break;
+       
+         break;
 
       case 'NetworkEquipment':
          $already_link_tables_tmp = $already_link_tables;

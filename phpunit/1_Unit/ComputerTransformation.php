@@ -236,7 +236,8 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'KERNEL_NAME'    => 'MSWin32',
           'KERNEL_VERSION' => '5.1.2600',
           'NAME'           => 'Windows',
-          'SERVICE_PACK'   => 'Service Pack 3');
+          'SERVICE_PACK'   => 'Service Pack 3',
+          'ARCH'           => '32 bits');
 
       
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
@@ -249,10 +250,11 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
       }
       $a_reference = array(
           'fusioninventorycomputer' => Array(
-              'winowner'                        => 'test',
-              'wincompany'                      => 'siprossii',
-              'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
-              'last_fusioninventory_update'     => $date
+              'winowner'                                 => 'test',
+              'wincompany'                               => 'siprossii',
+              'operatingsystem_installationdate'         => '2012-10-16 08:12:56',
+              'last_fusioninventory_update'              => $date,
+              'plugin_fusioninventory_computerarchs_id'  => '32 bits'
           ), 
           'soundcard'               => Array(),
           'graphiccard'             => Array(),

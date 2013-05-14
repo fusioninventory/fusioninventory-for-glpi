@@ -41,8 +41,10 @@
  */
 
 class ComputerLog extends PHPUnit_Framework_TestCase {
+
+   private $a_inventory = array();
    
-   public function testLogAddComputer() {
+   protected function setUp() {
       global $DB;
 
       $DB->connect();
@@ -50,25 +52,13 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
       $Install = new Install();
       $Install->testInstall(0);
 
-      // Get last glpi_logs id
-      $query = "SELECT * FROM `glpi_logs`
-         ORDER BY `id` DESC
-         LIMIT 1";
-      
-      $result = $DB->query($query);
-      $a_log = $DB->fetch_assoc($result);
-      $logs_id = $a_log['id'];
-      
-      
-      
-      
-      
-      
+      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
+
       $date = date('Y-m-d H:i:s');
       
       $_SESSION["plugin_fusinvinventory_entity"] = 0;
       
-      $a_inventory = array(
+      $this->a_inventory = array(
           'fusioninventorycomputer' => Array(
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
@@ -92,7 +82,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
           'storage'        => Array(),
           'itemtype'       => 'Computer'
           );
-      $a_inventory['computer'] = array(
+      $this->a_inventory['computer'] = array(
           'name'                             => 'pc',
           'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
@@ -111,7 +101,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
           'contact'                          => 'ddurieux'
       );
       
-      $a_inventory['processor'] = Array(
+      $this->a_inventory['processor'] = Array(
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
@@ -142,7 +132,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
                 )
         );
 
-      $a_inventory['memory'] = Array(
+      $this->a_inventory['memory'] = Array(
             Array(
                     'size'                 => 2048,
                     'serial'               => '98F6FF18',
@@ -159,7 +149,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
                 )
         );
 
-      $a_inventory['monitor'] = Array(
+      $this->a_inventory['monitor'] = Array(
             Array(
                     'name'              => '',
                     'comment'           => '',
@@ -168,7 +158,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
                 )
       );
 
-      $a_inventory['networkport'] = Array(
+      $this->a_inventory['networkport'] = Array(
             'em0-00:23:18:cf:0d:93' => Array(
                     'name'                 => 'em0',
                     'netmask'              => '255.255.255.0',
@@ -195,7 +185,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
                 )
         );
       
-      $a_inventory['software'] = Array(
+      $this->a_inventory['software'] = Array(
             'GentiumBasic$$$$110$$$$1$$$$0' => Array(
                     'name'                   => 'GentiumBasic',
                     'version'                => 110,
@@ -224,41 +214,201 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
                     'is_dynamic'             => 1
                 )
           );
-
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
-      $computer         = new Computer();
-      $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
+      $this->a_inventory = $pfFormatconvert->replaceids($this->a_inventory);
       
-      $a_inventory = $pfFormatconvert->replaceids($a_inventory);
-  
-      $serialized = gzcompress(serialize($a_inventory));
-      $a_inventory['fusioninventorycomputer']['serialized_inventory'] = 
+      $serialized = gzcompress(serialize($this->a_inventory));
+      $this->a_inventory['fusioninventorycomputer']['serialized_inventory'] = 
                Toolbox::addslashes_deep($serialized);
       
-      $computers_id = $computer->add(array('serial'      => 'XB63J7D',
-                                             'entities_id' => 0));
+   }
+   
 
-      $this->assertGreaterThan(0, $computers_id, FALSE);
+   
+   public function testLogAddComputer() {
+      global $DB;
+
+      $DB->connect();
+      
+      $computer = new Computer();
+      
+      $computer->add(array('serial' => 'XB63J7D',
+                           'entities_id' => 0));
+      
+      $this->assertGreaterThan(0, 1, FALSE);
+   }
+   
+      
+      
+   public function testLogUpdateNewComputer() {
+      global $DB;
+
+      $DB->connect();
+
+      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      
       $_SESSION['glpiactive_entity'] = 0;
-      $pfiComputerLib->updateComputer($a_inventory, $computers_id, TRUE);
+      $pfiComputerLib->updateComputer($this->a_inventory, 1, TRUE);
 
       $query = "SELECT * FROM `glpi_logs`
-         WHERE `id` > '".$logs_id."'";
+         WHERE `id` > '114'";
+      $result = $DB->query($query);
+      $a_logs = array();
+
+      while ($data=$DB->fetch_assoc($result)) {
+         unset($data['date_mod']);
+         $a_logs[$data['id']] = $data;
+      }
+      $a_reference = array(
+          115 => array(
+              'id'               => '115',
+              'itemtype'         => 'Computer',
+              'items_id'         => '1',
+              'itemtype_link'    => '0',
+              'linked_action'    => '20',
+              'user_name'        => '',
+              'id_search_option' => '0',
+              'old_value'        => '',
+              'new_value'        => ''
+          ),
+          116 => array(
+              'id'               => '116',
+              'itemtype'         => 'Monitor',
+              'items_id'         => '1',
+              'itemtype_link'    => '0',
+              'linked_action'    => '20',
+              'user_name'        => '',
+              'id_search_option' => '0',
+              'old_value'        => '',
+              'new_value'        => ''
+          ),
+          117 => array(
+              'id'               => '117',
+              'itemtype'         => 'Monitor',
+              'items_id'         => '1',
+              'itemtype_link'    => '',
+              'linked_action'    => '0',
+              'user_name'        => '',
+              'id_search_option' => '7',
+              'old_value'        => '',
+              'new_value'        => 'ddurieux'
+          )
+      );
+
+      $this->assertEquals($a_reference, $a_logs, "Log may be empty");
+   }
+   
+      
+      
+   public function testLogUpdateSameComputer() {
+      global $DB;
+
+      $DB->connect();
+
+      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+
+      // To be sure not have 2 same informations
+      $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
+      
+      $query = "SELECT * FROM `glpi_logs`
+      WHERE `id` > '117'";
       $result = $DB->query($query);
       $a_logs = array();
       $a_reference = array();
 
-      while ($data=$DB->fetch_array($result)) {
+      while ($data=$DB->fetch_assoc($result)) {
          $a_logs[$data['id']] = $data;
          $a_reference[$data['id']] = array();
       }
       $this->assertEquals($a_reference, $a_logs, "Log may be empty");
-      
-return;
-      
-      // To be sure not have 2 same informations
-      $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
+   }
    
+      
+      
+   public function testLogUpdateComputerModified() {
+      global $DB;
+
+      $DB->connect();
+
+      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
+      
+      // * Modify: contact 
+      // * remove a processor 
+      // * Remove a software
+      $this->a_inventory['computer']['contact'] = 'root';
+      unset($this->a_inventory['processor'][3]);
+      unset($this->a_inventory['software']['ORBit2$$$$2.14.19$$$$3$$$$0']);
+      
+      $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
+      
+      $query = "SELECT * FROM `glpi_logs`
+      WHERE `id` > '117'";
+      $result = $DB->query($query);
+      $a_logs = array();
+      $a_reference = array(
+          118 => array(
+              'id'               => '118',
+              'itemtype'         => 'Computer',
+              'items_id'         => '1',
+              'itemtype_link'    => '',
+              'linked_action'    => '0',
+              'user_name'        => '',
+              'id_search_option' => '17',
+              'old_value'        => 'ddurieux',
+              'new_value'        => 'root'
+          ),
+          119 => array(
+              'id'               => '119',
+              'itemtype'         => 'Monitor',
+              'items_id'         => '1',
+              'itemtype_link'    => '',
+              'linked_action'    => '0',
+              'user_name'        => '',
+              'id_search_option' => '7',
+              'old_value'        => 'ddurieux',
+              'new_value'        => 'root'
+          ),
+          120 => array(
+              'id'               => '120',
+              'itemtype'         => 'Computer',
+              'items_id'         => '1',
+              'itemtype_link'    => 'DeviceProcessor',
+              'linked_action'    => '3',
+              'user_name'        => '',
+              'id_search_option' => '0',
+              'old_value'        => 'Core i3 (1)',
+              'new_value'        => ''
+          ),
+          121 => array(
+              'id'               => '121',
+              'itemtype'         => 'Computer',
+              'items_id'         => '1',
+              'itemtype_link'    => 'SoftwareVersion',
+              'linked_action'    => '5',
+              'user_name'        => '',
+              'id_search_option' => '0',
+              'old_value'        => 'ORBit2 - 2.14.19 (3)',
+              'new_value'        => ''
+          ),
+          122 => array(
+              'id'               => '122',
+              'itemtype'         => 'SoftwareVersion',
+              'items_id'         => '3',
+              'itemtype_link'    => 'Computer',
+              'linked_action'    => '5',
+              'user_name'        => '',
+              'id_search_option' => '0',
+              'old_value'        => 'pc (1)',
+              'new_value'        => ''
+          )
+      );
+
+      while ($data=$DB->fetch_assoc($result)) {
+         unset($data['date_mod']);
+         $a_logs[$data['id']] = $data;
+      }
+      $this->assertEquals($a_reference, $a_logs, "May have 3 logs (update contact, remove processor
+         and remove a software)");
+      
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
