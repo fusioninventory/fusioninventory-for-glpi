@@ -2074,25 +2074,24 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['fields']['bios_date']              = array('type'    => 'datetime',
                                                            'value'   => NULL);
       $a_table['fields']['bios_version']           = array('type'    => 'string',
-                                                           'value'   => "");
+                                                           'value'   => NULL);
       $a_table['fields']['bios_assettag']          = array('type'    => 'string',
-                                                           'value'   => "");
+                                                           'value'   => NULL);
       $a_table['fields']['bios_manufacturers_id']  = array('type'    => 'integer',
                                                            'value'   => NULL);
       $a_table['fields']['operatingsystem_installationdate'] = array('type'    => 'datetime',
                                                                      'value'   => NULL);
       $a_table['fields']['winowner']               = array('type'    => 'string',
-                                                           'value'   => "");
+                                                           'value'   => NULL);
       $a_table['fields']['wincompany']             = array('type'    => 'string',
-                                                           'value'   => "");
+                                                           'value'   => NULL);
       $a_table['fields']['last_fusioninventory_update']     = array('type'    => 'datetime',
                                                                     'value'   => NULL);
       $a_table['fields']['remote_addr']            = array('type'    => 'string',
-                                                           'value'   => "");
+                                                           'value'   => NULL);
       $a_table['fields']['plugin_fusioninventory_computerarchs_id'] = array('type'    => 'integer',
                                                                             'value'   => NULL);
-      $a_table['fields']['serialized_inventory']   = array('type'    => 'longblob',
-                                                           'value'   => "");
+      $a_table['fields']['serialized_inventory']   = array('type'    => 'longblob');
 
       $a_table['oldfields']  = array();
 
