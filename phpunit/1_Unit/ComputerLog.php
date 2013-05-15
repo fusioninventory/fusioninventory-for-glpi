@@ -44,7 +44,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
 
    private $a_inventory = array();
    
-   protected function setUp() {
+   public function testLog() {
       global $DB;
 
       $DB->connect();
@@ -53,6 +53,8 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
       $Install->testInstall(0);
 
       $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
+      $computer         = new Computer();
+      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
 
       $date = date('Y-m-d H:i:s');
       
@@ -220,31 +222,12 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
       $this->a_inventory['fusioninventorycomputer']['serialized_inventory'] = 
                Toolbox::addslashes_deep($serialized);
       
-   }
-   
-
-   
-   public function testLogAddComputer() {
-      global $DB;
-
-      $DB->connect();
-      
-      $computer = new Computer();
       
       $computer->add(array('serial' => 'XB63J7D',
                            'entities_id' => 0));
       
       $this->assertGreaterThan(0, 1, FALSE);
-   }
-   
-      
-      
-   public function testLogUpdateNewComputer() {
-      global $DB;
 
-      $DB->connect();
-
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       
       $_SESSION['glpiactive_entity'] = 0;
       $pfiComputerLib->updateComputer($this->a_inventory, 1, TRUE);
@@ -295,17 +278,8 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
       );
 
       $this->assertEquals($a_reference, $a_logs, "Log may be empty");
-   }
-   
+
       
-      
-   public function testLogUpdateSameComputer() {
-      global $DB;
-
-      $DB->connect();
-
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
-
       // To be sure not have 2 same informations
       $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
       
@@ -320,16 +294,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
          $a_reference[$data['id']] = array();
       }
       $this->assertEquals($a_reference, $a_logs, "Log may be empty");
-   }
-   
-      
-      
-   public function testLogUpdateComputerModified() {
-      global $DB;
 
-      $DB->connect();
-
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       
       // * Modify: contact 
       // * remove a processor 
