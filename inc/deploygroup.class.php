@@ -71,16 +71,16 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
-   function defineTabs($options=array()) {
-
-      $ong = array();
-      if ($this->fields['id'] > 0){
-         $this->addStandardTab("PluginFusioninventoryDeployGroup_Staticdata", $ong, $options);
-         $this->addStandardTab("PluginFusioninventoryDeployGroup_Dynamicdata", $ong, $options);
-      }
-      $this->addStandardTab('Log', $ong, $options);
-      return $ong;
-   }
+//   function defineTabs($options=array()) {
+//
+//      $ong = array();
+//      if ($this->fields['id'] > 0){
+//         $this->addStandardTab("PluginFusioninventoryDeployGroup_Staticdata", $ong, $options);
+//         $this->addStandardTab("PluginFusioninventoryDeployGroup_Dynamicdata", $ong, $options);
+//      }
+//      $this->addStandardTab('Log', $ong, $options);
+//      return $ong;
+//   }
 
 
 
@@ -348,6 +348,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       if (isset($_SESSION['plugin_fusioninventory_dynamicgroup'])) {
          $_GET = $_SESSION['plugin_fusioninventory_dynamicgroup'];
+         $array_delete = array('add_search_count', 'delete_search_count', 
+                               'add_search_count2', 'delete_search_count2');
+         foreach ($array_delete as $value_delete) {
+            if (isset($_SESSION['plugin_fusioninventory_dynamicgroup'][$value_delete])) {
+               unset($_SESSION['plugin_fusioninventory_dynamicgroup'][$value_delete]);
+            }
+         }
       } else {
         $pfDeployGroup_Dynamicdata->getFromDB($plugin_fusiosninventory_deploygroup_dynamicdatas_id);
          $_GET = importArrayFromDB($pfDeployGroup_Dynamicdata->fields['fields_array']);
