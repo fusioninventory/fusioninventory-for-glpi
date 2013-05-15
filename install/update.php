@@ -162,7 +162,9 @@ function pluginFusioninventoryFindFiles($dir = '.', $pattern = '/./') {
    $prefix = $dir . '/';
    $dir = dir($dir);
    while (FALSE !== ($file = $dir->read())){
-      if ($file === '.' || $file === '..') continue;
+      if ($file === '.' || $file === '..') {
+         continue;
+      }
       $file = $prefix . $file;
       if (is_dir($file)) {
          $files[] = pluginFusioninventoryFindFiles($file, $pattern);
@@ -7897,7 +7899,9 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
             //jump to next entry if sha512 is empty
             // This kind of entries could happen sometimes on upload errors
-            if (empty($f_datas['sha512'])) continue;
+            if (empty($f_datas['sha512'])) {
+               continue;
+            }
 
             //construct job file entry
             $o_line['associatedFiles'][] = $f_datas['sha512'];

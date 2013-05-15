@@ -158,11 +158,11 @@ class PluginFusioninventoryDeployCheck {
             echo "&nbsp;&nbsp;&nbsp;<b>";
             if (strpos($check['type'], "Greater") !== FALSE) {
                echo "&gt;";
-            }
-            elseif (strpos($check['type'], "Lower") !== FALSE) {
+            } else if (strpos($check['type'], "Lower") !== FALSE) {
                echo "&lt;";
+            } else {
+               echo "=";
             }
-            else echo "=";
             echo "</b>&nbsp;&nbsp;&nbsp;";
             echo $check['value'];
          }
