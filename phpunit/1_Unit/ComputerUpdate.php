@@ -324,16 +324,17 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
       $serialized_inventory = $a_computer['serialized_inventory'];
       unset($a_computer['serialized_inventory']);
       $a_reference = array(
-          'id'                               => '1',
-          'computers_id'                     => '1',
-          'bios_date'                        => NULL,
-          'bios_version'                     => NULL,
-          'bios_assettag'                    => NULL,
-          'bios_manufacturers_id'            => '0',
-          'operatingsystem_installationdate' => '2012-10-16 08:12:56',
-          'winowner'                         => 'test',
-          'wincompany'                       => 'siprossii',
-          'remote_addr'                      => NULL
+          'id'                                        => '1',
+          'computers_id'                              => '1',
+          'bios_date'                                 => NULL,
+          'bios_version'                              => NULL,
+          'bios_assettag'                             => NULL,
+          'bios_manufacturers_id'                     => '0',
+          'operatingsystem_installationdate'          => '2012-10-16 08:12:56',
+          'winowner'                                  => 'test',
+          'wincompany'                                => 'siprossii',
+          'remote_addr'                               => NULL,
+          'plugin_fusioninventory_computerarchs_id'   => 0
       );
       
       $this->assertEquals($a_reference, $a_computer);      

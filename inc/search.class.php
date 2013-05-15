@@ -141,7 +141,7 @@ echo "<td colspan='2'>";
          if ($i == 0) {
             echo "<input type='hidden' disabled id='add_search_count' name='add_search_count'
                    value='1'>";
-            echo "<a href='#' onClick=\"document.getElementById('add_search_count').disabled=FALSE;
+            echo "<a href='#' onClick=\"document.getElementById('add_search_count').disabled=".strtolower('FALSE').";
                    document.forms['searchform$itemtype'].submit();\">";
             echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/plus.png\" alt='+' title=\"".
                    __s('Add a search criterion')."\"></a>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -149,7 +149,7 @@ echo "<td colspan='2'>";
                echo "<input type='hidden' disabled id='delete_search_count'
                       name='delete_search_count' value='1'>";
                echo "<a href='#' onClick=\"document.getElementById('delete_search_count').".
-                        "disabled=FALSE;
+                        "disabled=".strtolower('FALSE').";
                       document.forms['searchform$itemtype'].submit();\">";
                echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/moins.png\" alt='-' title=\"".
                       __s('Delete a search criterion')."\"></a>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -158,7 +158,7 @@ echo "<td colspan='2'>";
                echo "<input type='hidden' disabled id='add_search_count2' name='add_search_count2'
                       value='1'>";
                echo "<a href='#' onClick=\"document.getElementById('add_search_count2').".
-                       "disabled=FALSE;
+                       "disabled=".strtolower('FALSE').";
                       document.forms['searchform$itemtype'].submit();\">";
                echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/meta_plus.png\" alt='+' title=\"".
                       __s('Add a global search criterion')."\"></a>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -167,7 +167,7 @@ echo "<td colspan='2'>";
                   echo "<input type='hidden' disabled id='delete_search_count2'
                          name='delete_search_count2' value='1'>";
                   echo "<a href='#' onClick=\"document.getElementById('delete_search_count2').".
-                          "disabled=FALSE;
+                          "disabled=".strtolower('FALSE').";
                          document.forms['searchform$itemtype'].submit();\">";
                   echo "<img src=\"".$CFG_GLPI["root_doc"]."/pics/meta_moins.png\" ".
                           "alt='-' title=\"".

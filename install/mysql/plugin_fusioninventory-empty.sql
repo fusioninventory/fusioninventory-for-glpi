@@ -414,6 +414,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
   `wincompany` varchar(255) DEFAULT NULL,
   `last_fusioninventory_update` datetime DEFAULT NULL,
   `remote_addr` varchar(255) DEFAULT NULL,
+  `plugin_fusioninventory_computerarchs_id` int(11) NOT NULL DEFAULT '0',
   `serialized_inventory` longblob,
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`),
@@ -828,6 +829,19 @@ CREATE TABLE `glpi_plugin_fusioninventory_computerlicenseinfos` (
   KEY `name` (`name`),
   KEY `fullname` (`fullname`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computerarchs`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_computerarchs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `comment` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
 
 
 --
