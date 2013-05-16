@@ -519,8 +519,8 @@ class PluginFusioninventoryToolbox {
     * Display data from serialized inventory field
     */
    static function displaySerializedValues($array) {
-
-      if ($_POST['glpi_tab'] != -1) { // tab all
+      
+      if ($_POST['glpi_tab'] == -1) { // tab all
          return;
       }
       
