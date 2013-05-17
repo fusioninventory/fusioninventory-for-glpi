@@ -185,7 +185,10 @@ class PluginFusioninventoryInventoryComputerLibhook {
          if ($Plugin->isActivated('manufacturersimports')) {
             if (class_exists("PluginManufacturersimportsModel")) {
                $PluginManufacturersimportsModel = new PluginManufacturersimportsModel();
-               $PluginManufacturersimportsModel->addModel($items_id, 'Computer', $a_partnumber[0]);
+               $PluginManufacturersimportsModel->addModel(
+                       array('items_id'   => $items_id, 
+                             'itemtype'   => 'Computer', 
+                             'model_name' => $a_partnumber[0]));
             }
          }
       }
