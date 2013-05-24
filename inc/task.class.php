@@ -697,9 +697,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
                $cond = "taskjob.`definition` LIKE '%\"".$itemclass."\"";
 
                //adding itemid if not empty
-               if ( !empty($itemid) )
+               if (!empty($itemid)) {
                      $cond .= ":\"".$itemid."\"";
-
+               }
                //closing LIKE statement
                $cond .= "%'";
                $where_tmp[] = $cond;

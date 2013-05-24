@@ -847,7 +847,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                                          "`itemtype`='Monitor'
                                             AND `computers_id`='1'");
       
-      $this->assertEquals(1, count($a_dataLink), "Numbre of monitors not right");
+      $this->assertEquals(1, count($a_dataLink), "Number of monitors not right");
       
       $a_dataLink = current($a_dataLink);
       
@@ -893,6 +893,67 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
       );
       
       $this->assertEquals($a_reference, $monitor->fields);      
+   }
+   
+   
+   
+   public function testComputerPrinter() {
+      global $DB;
+
+      $DB->connect();
+
+      $a_dataLink = getAllDatasFromTable("glpi_computers_items", 
+                                         "`itemtype`='Printer'
+                                            AND `computers_id`='1'");
+      
+      $this->assertEquals(1, count($a_dataLink), "Number of printers not right");
+      
+      $a_dataLink = current($a_dataLink);
+      
+      $printer = new Printer();
+      $printer->getFromDB($a_dataLink['items_id']);
+      
+      unset($printer->fields['date_mod']);
+      
+      $a_reference = array(
+          'id'                   => '1',
+          'entities_id'          => '0',
+          'is_recursive'         => '0',
+          'name'                 => 'HP Deskjet 5700 Series',
+          'contact'              => 'ddurieux',
+          'contact_num'          => NULL,
+          'users_id_tech'        => '0',
+          'groups_id_tech'       => '0',
+          'serial'               => 'MY47L1W1JHEB6',
+          'otherserial'          => NULL,
+          'have_serial'          => '0',
+          'have_parallel'        => '0',
+          'have_usb'             => '1',
+          'have_wifi'            => '0',
+          'have_ethernet'        => '0',
+          'comment'              => NULL,
+          'memory_size'          => NULL,
+          'locations_id'         => '0',
+          'domains_id'           => '0',
+          'networks_id'          => '0',
+          'printertypes_id'      => '0',
+          'printermodels_id'     => '0',
+          'manufacturers_id'     => '0',
+          'is_global'            => '0',
+          'is_deleted'           => '0',
+          'is_template'          => '0',
+          'template_name'        => NULL,
+          'init_pages_counter'   => '0',
+          'last_pages_counter'   => '0',
+          'notepad'              => NULL,
+          'users_id'             => '0',
+          'groups_id'            => '0',
+          'states_id'            => '0',
+          'ticket_tco'           => '0.0000',
+          'is_dynamic'           => '0'          
+      );
+      
+      $this->assertEquals($a_reference, $printer->fields);      
    }
    
    

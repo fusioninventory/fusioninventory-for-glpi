@@ -519,7 +519,11 @@ class PluginFusioninventoryToolbox {
     * Display data from serialized inventory field
     */
    static function displaySerializedValues($array) {
-
+      
+      if ($_POST['glpi_tab'] == -1) { // tab all
+         return;
+      }
+      
       foreach ($array as $key=>$value) {
          echo "<tr class='tab_bg_1'>";
          echo "<th>";
@@ -603,8 +607,9 @@ class PluginFusioninventoryToolbox {
          for( $i=0; $i < count( $row ); $i++ ) {
             $tname = $fields[$i]->table;
             $fname = $fields[$i]->name;
-            if ( !isset( $result[$tname] ) )
+            if (!isset($result[$tname])) {
                $result[$tname] = array();
+            }
             $result[$tname][$fname] = $row[$i];
          }
          if (count($result) > 0) {

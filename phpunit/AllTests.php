@@ -200,7 +200,7 @@ class AllTests {
       $suite->addTest(PrinterUpdate_AllTests::suite());
       $suite->addTest(NetworkEquipmentTransformation_AllTests::suite());
       $suite->addTest(NetworkEquipmentUpdate_AllTests::suite());
-//      $suite->addTest(ComputerLog_AllTests::suite());
+$suite->addTest(ComputerLog_AllTests::suite());
             
       $suite->addTest(ComputerEntity_AllTests::suite());
       $suite->addTest(SoftwareEntityCreation_AllTests::suite());
