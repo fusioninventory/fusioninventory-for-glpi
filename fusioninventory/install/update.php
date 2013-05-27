@@ -945,6 +945,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query($query);
       }
          $migration->changeField($newTable,
+                                 "ID",
+                                 "id",
+                                 "int(11) NOT NULL AUTO_INCREMENT");
+         $migration->changeField($newTable,
                                  "id",
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
