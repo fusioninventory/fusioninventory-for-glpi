@@ -163,7 +163,7 @@ class UnknownDeviceKnowDevice extends PHPUnit_Framework_TestCase {
           'storage'        => Array(),
           'itemtype'       => 'Computer'
           );
-      $a_inventory['computer'] = array(
+      $a_inventory['Computer'] = array(
           'name'                             => 'pc',
           'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,

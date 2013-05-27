@@ -56,7 +56,7 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
       $computerDisk = new ComputerDisk();
       
       $a_computerinventory = array(
-          "computer" => array(
+          "Computer" => array(
               "name"   => "pc002",
               "serial" => "ggheb7ne7"
           ), 
@@ -90,7 +90,7 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
           'itemtype'       => 'Computer'
       );
       
-      $a_computer = $a_computerinventory['computer'];
+      $a_computer = $a_computerinventory['Computer'];
       $a_computer["entities_id"] = 0;
       
       $computers_id = $computer->add($a_computer);
@@ -135,7 +135,7 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
       $computerDisk = new ComputerDisk();
       
       $a_computerinventory = array(
-          "computer" => array(
+          "Computer" => array(
               "name"   => "pc002",
               "serial" => "ggheb7ne72"
           ), 
@@ -169,7 +169,7 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
           'itemtype'       => 'Computer'
       );
 
-      $a_computer = $a_computerinventory['computer'];
+      $a_computer = $a_computerinventory['Computer'];
       $a_computer["entities_id"] = 0;
       
       $computers_id = $computer->add($a_computer);
@@ -225,7 +225,7 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
       $_SESSION["plugin_fusinvinventory_entity"] = 0;
       
       $a_inventory = array(
-          'computer' => array(
+          'Computer' => array(
              'name'                             => 'pcxxx1',
              'comment'                          => 'amd64/-1-11-30 22:04:44',
              'users_id'                         => 0,

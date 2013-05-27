@@ -122,11 +122,11 @@ if (!defined('GLPI_ROOT')) {
                $DEBUG_AUTOLOAD[]=$classname;
             }
 
-         } else if (!isset($notfound["x$classname"])) {
+         } else if (!isset($notfound["$classname"])) {
             // trigger an error to get a backtrace, but only once (use prefix 'x' to handle empty case)
             //Toolbox::logInFile('debug', "file $dir$item.class.php not founded trying to load class $classname\n");
             trigger_error("GLPI autoload : file $dir$item.class.php not founded trying to load class '$classname'");
-            $notfound["x$classname"] = TRUE;
+            $notfound["$classname"] = TRUE;
          }
       }
    }
