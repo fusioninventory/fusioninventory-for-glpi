@@ -97,7 +97,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryIPRange');
       Plugin::registerClass('PluginFusioninventoryCredential');
       Plugin::registerClass('PluginFusioninventoryLock',
-              array('addtabon' => array('Computer', 'Monitor', 'Printer', 'NetworkEquipment')));
+              array('addtabon' => array('Computer', 'Printer', 'NetworkEquipment')));
 
       Plugin::registerClass('PluginFusioninventoryInventoryComputerAntivirus',
               array('addtabon' => array('Computer')));
@@ -225,12 +225,14 @@ function plugin_init_fusioninventory() {
                                     'NetworkPort'      => 'plugin_item_update_fusioninventory',
                                     'PluginFusioninventoryInventoryComputerAntivirus' => array(
                                           'PluginFusioninventoryInventoryComputerAntivirus',
-                                          'addhistory'));
+                                          'addhistory'),
+                                    'PluginFusioninventoryLock' => array('PluginFusioninventoryLock', 'deleteLock'));
 
 
       $PLUGIN_HOOKS['pre_item_purge']['fusioninventory'] = array(
             'Computer'                 =>'plugin_pre_item_purge_fusinvinventory',
-            'NetworkPort_NetworkPort'  =>'plugin_pre_item_purge_fusioninventory'
+            'NetworkPort_NetworkPort'  =>'plugin_pre_item_purge_fusioninventory',
+            'PluginFusioninventoryLock'=> array('PluginFusioninventoryLock', 'deleteLock')
           );
       $p = array('NetworkPort_NetworkPort'            => 'plugin_item_purge_fusioninventory',
                  'PluginFusioninventoryTask'          => array('PluginFusioninventoryTask',

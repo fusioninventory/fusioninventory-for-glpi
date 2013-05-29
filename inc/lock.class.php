@@ -161,89 +161,59 @@ class PluginFusioninventoryLock extends CommonDBTM{
       echo "<table class='tab_cadre'>";
       echo "<tr><th>&nbsp;".__('Fields')."&nbsp;</th>";
       if ($p_items_id != '0') {
-         echo "<th>&nbsp;".__('Values', 'fusioninventory')."&nbsp;</th>";
+         echo "<th>&nbsp;".__('Values GLPI', 'fusioninventory')."&nbsp;</th>";
+         echo "<th>&nbsp;".__('Values of last inventory', 'fusioninventory')."&nbsp;</th>";
       }
-      echo "<th>&nbsp;"._n('Lock', 'Locks', 2, 'fusioninventory')."&nbsp;</th></tr>";
+      echo "<th>&nbsp;"._n('Lock', 'Locks', 2, 'fusioninventory')."&nbsp;</th>";
+      echo "</tr>";
 
       $checked = '';
       $a_exclude = $this->excludeFields();
+      $serialized = $this->getSerialized_InventoryArray($p_itemtype, $p_items_id);
+      $array = search::getOptions($p_itemtype);
       foreach ($item->fields as $key=>$val) {
-         $key_source = $key;
-         if (!in_array($key, $a_exclude)) {
-            if (in_array($key, $locked)) {
-               $checked = 'checked';
-            } else {
-               $checked = '';
-            }
-            if ((strstr($key, "_id")
-                    OR ($key == 'is_ocs_import'))
-               AND $val == '0'){
-
-               $val = "";
-            }
-
-            // Get name of field
-            $array = search::getOptions($p_itemtype);
-            $num = search::getOptionNumber($p_itemtype, $key);
-            // Specific keys
-            $key1 = $key;
-            switch($key) {
-
-               case 'users_id_tech':
-                  $key1 = __('Technician in charge of the hardware');
-
-                  break;
-
-               case 'computermodels_id':
-                  $key1 = __('Model');
-
-                  break;
-
-               case 'computertypes_id':
-                  $key1 = __('Type');
-
-                  break;
-
-               case 'states_id':
-                  $key1 = __('Status');
-
-                  break;
-
-               case 'ticket_tco':
-                  $key1 = __('TCO');
-
-                  break;
-
-            }
-            // standards keys
-            if ($key1 != $key) {
-               $key = $key1;
-            } else {
-               if (isset($array[$num]['name'])) {
-                  $key = $array[$num]['name'];
-               }
-            }
-
-            // Get value of field
-            $table = getTableNameForForeignKeyField($key);
-            if ($table != "") {
-               $linkItemtype = getItemTypeForTable($table);
-               $class = new $linkItemtype();
-               $key = $class->getTypeName();
-               if (($val == "0") OR ($val == "")) {
-                  $val = "";
+         if (isset($serialized[$key])) {
+            $key_source = $key;
+            if (!in_array($key, $a_exclude)) {
+               if (in_array($key, $locked)) {
+                  $checked = 'checked';
                } else {
-                  $class->getFromDB($val);
-                  $val = $class->getName();
+                  $checked = '';
                }
-            }
 
-         echo "<tr class='tab_bg_1'><td>" . $key."</td>";
-         if ($p_items_id != '0') {
-            echo "<td>".$val."</td>";
-         }
-            echo "<td align='center'><input type='checkbox' name='lockfield_fusioninventory[".
-                    $key_source . "]' $checked></td></tr>";
+               // Get name of field
+               $num = search::getOptionNumber($p_itemtype, $key);
+               if (isset($array[$num]['name'])) {
+                  $name = $array[$num]['name'];
+               }
+               $css_glpi_value = '';
+               if ($val != $serialized[$key]) {
+                  $css_glpi_value = "class='tab_bg_1_2'";
+               }
+               // Get value of field
+               $val = $this->getValueForKey($val, $key);
+               echo "<tr class='tab_bg_1'>";
+               $table = getTableNameForForeignKeyField($key);
+               if ($table != "") {
+                  $linkItemtype = getItemTypeForTable($table);
+                  $class = new $linkItemtype();
+                  $name = $class->getTypeName();
+               }
+               echo "<td>".$name."</td>";
+               // Current value of GLPI
+               if ($p_items_id != '0') {
+                  echo "<td ".$css_glpi_value.">".$val."</td>";
+               }
+               // Value of last inventory
+               echo "<td>";
+               if (isset($serialized[$key_source])) {
+                  echo  $this->getValueForKey($serialized[$key_source], $key);
+               }
+               echo "</td>";
+               echo "<td align='center'><input type='checkbox' name='lockfield_fusioninventory[".
+                       $key_source."]' $checked></td>";
+               echo "</tr>";
+            }
          }
       }
       if ($p_items_id == '0') {
@@ -523,8 +493,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $exclude[] = "is_recursive";
       $exclude[] = "date_mod";
       $exclude[] = "is_deleted";
+      $exclude[] = "is_dynamic";
       $exclude[] = "is_template";
       $exclude[] = "template_name";
+      $exclude[] = "comment";
       return $exclude;
    }
 
@@ -539,12 +511,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
    *
    **/
    static function deleteLock($item) {
-      global $DB;
+      
+      $pfLock = new PluginFusioninventoryLock();
 
-      $pfInventoryComputerLib = new PluginFusioninventoryInventoryComputerLib();
+      $itemtype = getItemTypeForTable($item->fields['tablename']);
+      $items_id = $item->fields['items_id'];
 
-      // Get mapping
-      $a_mapping = PluginFusioninventoryInventoryComputerLibhook::getMapping();
       $a_fieldList = array();
       if ($item->fields['tablefields'] == $item->input['tablefields']) {
          $a_fieldList = importArrayFromDB($item->fields['tablefields']);
@@ -559,135 +531,17 @@ class PluginFusioninventoryLock extends CommonDBTM{
             }
          }
       }
-      for ($i=0; $i < count($a_fieldList); $i++) {
-         foreach ($a_mapping as $datas) {
-            if (isset($item->fields['tablename'])
-                  AND ($item->fields['tablename'] == getTableForItemType($datas['glpiItemtype']))
-                  AND ($a_fieldList[$i] == $datas['glpiField'])) {
-
-               // Get serialization
-               $query = "SELECT * FROM
-                     `glpi_plugin_fusioninventory_inventorycomputerlibserialization`
-                  WHERE `computers_id`='".$item->fields['items_id']."'
-                     LIMIT 1";
-               $result = $DB->query($query);
-               if ($result) {
-                  if ($DB->numrows($result) == '1') {
-                     $a_serialized = $DB->fetch_assoc($result);
-                     $infoSections = $pfInventoryComputerLib->_getInfoSections(
-                                          $a_serialized['internal_id']);
-
-                     // Modify fields
-                     $table = getTableNameForForeignKeyField($datas['glpiField']);
-                     $itemtypeLink = "";
-                     if ($table != "") {
-                        $itemtypeLink = getItemTypeForTable($table);
-                     }
-                     $itemtype = $datas['glpiItemtype'];
-                     $class = new $itemtype();
-                     $class->getFromDB($item->fields['items_id']);
-                     $input = array();
-                     $input['id'] = $class->fields['id'];
-                     if ($itemtypeLink == "User") {
-                        $update_user = 0;
-                        foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
-                           if (strstr($sectionname, "USERS/")) {
-                              if (!strstr($sectionname, "USERS/-")) {
-                                 $users_id = str_replace("USERS/", "", $sectionname);
-                                 $input[$datas['glpiField']] = Toolbox::addslashes_deep($users_id);
-                                 $update_user = 1;
-                              }
-                           }
-                        }
-                        if ($update_user == '0') {
-                           foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
-                              if (strstr($sectionname, "USERS/")) {
-                                 if (strstr($sectionname, "USERS/-")) {
-                                    $users_name = str_replace("USERS/-", "", $sectionname);
-                                    $query_user = "SELECT `id`
-                                              FROM `glpi_users`
-                                              WHERE `name` = '".$users_name."';";
-                                    $result_user = $DB->query($query_user);
-                                    if ($DB->numrows($result_user) == 1) {
-                                       $input[$datas['glpiField']] = $DB->result($result_user,
-                                                                                 0, 0);
-                                    }
-                                 }
-                              }
-                           }
-                        }
-                     } else if ($table != "") {
-                        $vallib = '';
-                        if ($table == 'glpi_computermodels') {
-                           $smodel = '';
-                           $mmodel = '';
-                           foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
-                              if (strstr($sectionname, "BIOS/")) {
-                                 $un = unserialize($serializeddatas);
-                                 $smodel = $un['SMODEL'];
-                                 $mmodel = $un['MMODEL'];
-                              }
-                           }
-                           if (isset($smodel) AND $smodel != '') {
-                              $ComputerModel = new ComputerModel();
-                              $input[$datas['glpiField']] = $ComputerModel->importExternal($smodel);
-                           } else if (isset($mmodel) AND $mmodel != '') {
-                              $ComputerModel = new ComputerModel();
-                              $input[$datas['glpiField']] = $ComputerModel->importExternal($mmodel);
-                           }
-                        } else {
-                           $libunserialized = unserialize(
-                                   $infoSections["sections"][$datas['xmlSection']."/".
-                                       $item->fields['items_id']]);
-                           if ($datas['xmlSectionChild'] == "TYPE") {
-                              if ($libunserialized[$datas['xmlSectionChild']] != "") {
-                                 $vallib = Dropdown::importExternal(
-                                             $itemtypeLink,
-                                             $libunserialized[$datas['xmlSectionChild']]);
-                              } else {
-                                 $vallib = Dropdown::importExternal(
-                                             $itemtypeLink,
-                                             $libunserialized["MMODEL"]);
-                              }
-                           } else {
-                              $itemdr = new $itemtypeLink();
-                              $computer = new Computer();
-                              $computer->getFromDB($item->fields['items_id']);
-                              $vallib = $itemdr->importExternal(
-                                             $libunserialized[$datas['xmlSectionChild']],
-                                             $computer->fields['entities_id']);
-                           }
-                           $input[$datas['glpiField']] = $vallib;
-                        }
-                    } else {
-                        $libunserialized = unserialize(
-                                             $infoSections["sections"][$datas['xmlSection']."/".
-                                                 $item->fields['items_id']]);
-
-                        if ($datas['glpiField'] == 'contact') {
-                           $contact = '';
-                           foreach($infoSections["sections"] as $sectionname=>$serializeddatas) {
-                              if (strstr($sectionname, "USERS/")) {
-                                 $unserialiseUser = unserialize($serializeddatas);
-                                 if ($contact == '') {
-                                    $contact .= $unserialiseUser['LOGIN'];
-                                 } else {
-                                    $contact .= "/".$unserialiseUser['LOGIN'];
-                                 }
-                              }
-                           }
-                           $input[$datas['glpiField']] = Toolbox::addslashes_deep($contact);
-                        } else {
-                           $input[$datas['glpiField']] = Toolbox::addslashes_deep(
-                                                $libunserialized[$datas['xmlSectionChild']]);
-                        }
-                     }
-                     $class->update($input);
-                  }
-               }
-            }
+      $item_device = new $itemtype();
+      $item_device->getFromDB($items_id);
+      $a_serialized = $pfLock->getSerialized_InventoryArray($itemtype, $items_id);
+      foreach ($a_serialized as $key=>$value) {
+         if (!in_array($key, $a_fieldList)) {
+            $item_device->fields[$key] = $value;
          }
       }
+      $_SESSION['glpi_fusionionventory_nolock'] = TRUE;
+      $item_device->update($item_device->fields);
+      unset($_SESSION['glpi_fusionionventory_nolock']);
    }
 
 
@@ -720,6 +574,57 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
    }
 
+   
+   
+   function getSerialized_InventoryArray($itemtype, $items_id) {
+      
+      $item_extend = new PluginFusioninventoryLock();
+      if ($itemtype == 'Computer') {
+         $item_extend = new PluginFusioninventoryInventoryComputerComputer();
+      } else if ($itemtype == 'NetworkEquipment') {
+         $item_extend = new PluginFusioninventoryNetworkEquipment;
+      } else if ($itemtype == 'Printer') {
+         $item_extend = new PluginFusioninventoryPrinter();
+      }
+      
+      if ($item_extend->getType() != 'PluginFusioninventoryLock') {
+         // Get device info + field 'serialized_inventory'
+         $a_lists = $item_extend->find("`".getForeignKeyFieldForItemType($itemtype)."`='".$items_id."'", "", 1);
+         if (count($a_lists) == 1) {
+            $a_list = current($a_lists);
+            if (!empty($a_list['serialized_inventory'])) {
+               $serialized = unserialize(gzuncompress($a_list['serialized_inventory']));
+               return $serialized[$itemtype];
+            }
+         }
+      }
+      return array();
+   }
+   
+   
+   
+   function getValueForKey($val, $key) {
+      if ((strstr($key, "_id")
+              || ($key == 'is_ocs_import'))
+         AND $val == '0'){
+
+         $val = "";
+      }
+      
+      $table = getTableNameForForeignKeyField($key);
+      if ($table != "") {
+         $linkItemtype = getItemTypeForTable($table);
+         $class = new $linkItemtype();
+         $name = $class->getTypeName();
+         if (($val == "0") OR ($val == "")) {
+            $val = "";
+         } else {
+            $class->getFromDB($val);
+            $val = $class->getName();
+         }
+      }
+      return $val;
+   }
 }
 
 ?>
