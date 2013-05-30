@@ -213,8 +213,9 @@ function plugin_init_fusinvdeploy() {
    $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options']['deploy']['page'] =
       '/plugins/fusinvdeploy/front/deploystate.php';
 
-   $PLUGIN_HOOKS['add_css']['fusinvdeploy'] = "css/style.css";
-
+   if (strstr($_SERVER['PHP_SELF'], 'fusinvdeploy')) {
+      $PLUGIN_HOOKS['add_css']['fusinvdeploy'] = "css/style.css";
+   }
    // Massive Action definition (for duplicate packages)
    $PLUGIN_HOOKS['use_massive_action']['fusinvdeploy'] = 1;
 }
