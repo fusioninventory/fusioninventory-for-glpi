@@ -844,7 +844,7 @@ class PluginFusioninventoryFormatconvert {
       if ($pfConfig->getValue('import_vm') == 1) {
          if (isset($array['VIRTUALMACHINES'])) {
             foreach ($array['VIRTUALMACHINES'] as $a_virtualmachines) {
-               $a_inventory['virtualmachine'][] = $thisc->addValues($a_virtualmachines,
+               $array_tmp = $thisc->addValues($a_virtualmachines,
                                               array(
                                                  'NAME'        => 'name',
                                                  'VCPU'        => 'vcpu',
@@ -852,6 +852,21 @@ class PluginFusioninventoryFormatconvert {
                                                  'VMTYPE'      => 'virtualmachinetypes_id',
                                                  'SUBSYSTEM'   => 'virtualmachinesystems_id',
                                                  'STATUS'      => 'virtualmachinestates_id',
+                                                 'UUID'        => 'uuid'));
+               $array_tmp['is_dynamic'] = 1;
+               $a_inventory['virtualmachine'][] = $array_tmp;
+            }
+         }
+      }
+      if ($pfConfig->getValue('create_vm') == 1) {
+         if (isset($array['VIRTUALMACHINES'])) {
+            foreach ($array['VIRTUALMACHINES'] as $a_virtualmachines) {
+               $a_inventory['virtualmachine_creation'][] = $thisc->addValues($a_virtualmachines,
+                                              array(
+                                                 'NAME'        => 'name',
+                                                 'VCPU'        => 'vcpu',
+                                                 'MEMORY'      => 'ram',
+                                                 'VMTYPE'      => 'computertypes_id',
                                                  'UUID'        => 'uuid'));
             }
          }

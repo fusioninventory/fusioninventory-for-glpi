@@ -95,6 +95,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['states_id_default']      = 0;
       $input['location']               = 0;
       $input['group']                  = 0;
+      $input['create_vm']              = 0;
       $input['component_networkcardvirtual'] = 1;
 
       foreach ($input as $key => $value) {
@@ -577,7 +578,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'>";
+      echo "<td>";
+      echo __('Create computer based on virtual machine information (be sure not have agent FusionInventory installed on these virtual machines !)', 'fusioninventory')."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("create_vm", $pfConfig->getValue('create_vm'));
       echo "</td>";
       echo "<td>";
       echo _n('Controller', 'Controllers', 2)."&nbsp;:";
