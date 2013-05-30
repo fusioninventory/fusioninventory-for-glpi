@@ -650,6 +650,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "</tr></table>";
    }
 
+   
+   
    static function showSearchResults($params) {
       global $CFG_GLPI, $LANG;
 
@@ -670,13 +672,19 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       if ($options['operatingsystems_id'] != 0) unset($options['operatingsystem_name']);
       if ($options['operatingsystems_id'] == 0) unset($options['operatingsystems_id']);
       if ($options['locations_id'] == 0) unset($options['locations_id']);
-      $nb_items = count(PluginWebservicesMethodInventaire::methodListInventoryObjects($options, ''));
-
+      $config_profile = $_SESSION['glpiactiveprofile']['config'];
+      $_SESSION['glpiactiveprofile']['config'] = 'w';
+      $a_items = PluginWebservicesMethodInventaire::methodListInventoryObjects($options, '');
+      if (isset($a_items['faultString'])) {
+         echo "<br/><i>error! (".$a_items['faultString'].")</i>";
+         return;
+      }
+      $nb_items = count($a_items);      
       $options['limit'] = 50;
       $options['start'] = $params['start'];
 
       $datas = PluginWebservicesMethodInventaire::methodListInventoryObjects($options, '');
-
+      $_SESSION['glpiactiveprofile']['config'] = $config_profile;
       echo "<div class='center'><br />";
       $nb_col = 5;
 
@@ -687,7 +695,7 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "</tr></thead>";
 
       $stripe = true;
-      $computer = new Computer;
+      $computer = new Computer();
       $i=1;
       echo "<tr class='tab_bg_".(((int)$stripe)+1)."'>";
       foreach ($datas as $row) {
@@ -722,6 +730,8 @@ class PluginFusinvdeployGroup extends CommonDBTM {
       echo "</div>";
    }
 
+   
+   
    static function getAllDatas($root = 'groups')  {
       global $DB;
 
