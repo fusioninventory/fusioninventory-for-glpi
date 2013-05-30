@@ -1727,9 +1727,6 @@ function plugin_fusioninventory_addSelect($type, $id, $num) {
                   )  AS ITEM_$num, ";
             }
          }
-         if ($table.".".$field == "glpi_networkports.ip") {
-            return " `glpi_networkports`.`ip`  AS ITEM_$num, ";
-         }
          break;
 
    }
@@ -2040,7 +2037,10 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                return " LEFT JOIN `glpi_plugin_fusioninventory_printerlogs`
                   ON (`glpi_plugin_fusioninventory_printerlogs`.`printers_id` = `glpi_printers`.`id`) ";
                break;
-
+            
+            case 'glpi_networkports.networkports_id':
+               return " LEFT JOIN `glpi_networkports` ON (`glpi_printers`.`id` = `glpi_networkports`.`items_id` AND `glpi_networkports`.`itemtype` = 'Printer' ) ";
+               break;
          }
          break;
 
@@ -2466,6 +2466,8 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
    }
    return "";
 }
+
+
 
 function plugin_pre_item_update_fusioninventory($parm) {
    if ($parm->fields['directory'] == 'fusioninventory') {

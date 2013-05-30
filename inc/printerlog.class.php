@@ -110,10 +110,29 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       $tab[3]['linkfield'] = 'manufacturers_id';
       $tab[3]['name'] = __('Manufacturer');
 
-      $tab[5]['table'] = 'glpi_networkports';
-      $tab[5]['field'] = 'ip';
-      $tab[5]['linkfield'] = 'printers_id';
-      $tab[5]['name'] = __('IP');
+//      $tab[5]['table'] = 'glpi_ipaddresses';
+//      $tab[5]['field'] = 'name';
+//      $tab[5]['linkfield'] = 'printers_id';
+//      $tab[5]['name'] = __('IP');
+      $joinparams                = array('jointype' => 'itemtype_item',
+                                         'specific_itemtype'  => 'Printer');
+      $networkNameJoin = array('jointype'          => 'itemtype_item',
+                               'specific_itemtype' => 'NetworkPort',
+                               'beforejoin'        => array('table'      => 'glpi_networkports',
+                                                            'joinparams' => $joinparams));
+      $tab[5]['table']         = 'glpi_ipaddresses';
+      $tab[5]['field']         = 'name';
+      $tab[5]['name']          = __('IP');
+      $tab[5]['forcegroupby']  = true;
+      $tab[5]['massiveaction'] = false;
+      $tab[5]['joinparams']    = array('jointype'          => 'itemtype_item',
+                                        'specific_itemtype' => 'NetworkName',
+                                        'beforejoin'        => array('table' => 'glpi_networknames',
+                                                                     'joinparams'
+                                                                             => $networkNameJoin));
+      
+      
+      
 
 //      $tab[4]['table'] = 'glpi_infocoms';
 //      $tab[4]['field'] = 'budget';
