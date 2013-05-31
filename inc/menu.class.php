@@ -109,7 +109,7 @@ class PluginFusioninventoryMenu {
          $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryUnknownDevice');
       }
 
-      $a_menu[2]['name'] = __('Groups of computers');
+      $a_menu[2]['name'] = __('Groups of computers', 'fusioninventory');
       $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_group.png";
       $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploygroup.php";
 
