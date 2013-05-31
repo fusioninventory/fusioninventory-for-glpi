@@ -443,7 +443,9 @@ class PluginFusioninventoryInventoryComputerInventory {
             exit;
          }
 
-$start = microtime(TRUE);
+         // * For benchs
+         //$start = microtime(TRUE);
+         
          $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 300)");
          if ($DB->result($ret, 0, 0) == 1) {
 
@@ -454,13 +456,14 @@ $start = microtime(TRUE);
                     $setdynamic);
 
             $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
-Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
-        memory_get_usage()."\n".
-        memory_get_usage(TRUE)."\n".
-        memory_get_peak_usage()."\n".
-        memory_get_peak_usage()."\n");
-
             $pfInventoryComputerLib->addLog();
+            
+            // * For benchs
+            //Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
+            //  memory_get_usage()."\n".
+            //  memory_get_usage(TRUE)."\n".
+            //  memory_get_peak_usage()."\n".
+            //  memory_get_peak_usage()."\n");
 
             if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
                $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
