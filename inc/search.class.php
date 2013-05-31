@@ -575,7 +575,7 @@ $p = array();
       $LIST_LIMIT = $_SESSION['glpilist_limit'];
 
       // Set display type for export if define
-      $output_type = HTML_OUTPUT;
+      $output_type = Search::HTML_OUTPUT;
       if (isset($_GET['display_type'])) {
          $output_type = $_GET['display_type'];
          // Limit to 10 element

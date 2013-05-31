@@ -127,7 +127,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                         unset($_SESSION["glpisearchcount2"]['Computer']);
                      }
 
-                     $_GET = unserialize($row['fields_array']);
+                     $_GET = importArrayFromDB($row['fields_array']);
 
                      $_GET["glpisearchcount"] = count($_GET['field']);
                      if (isset($_GET['field2'])) {
