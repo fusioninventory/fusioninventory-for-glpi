@@ -379,8 +379,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<td><input type='checkbox' name='p2p' $p2p_checked /></td>";
       echo "</tr><tr>";
       echo "<th>".__("retention days", 'fusioninventory')."</th>";
-      echo "<td><input type='text' name='p2p-retention-duration' style='width:30px'
-         value='$p2p_ret_value' /></td>";
+      echo "<td>";
+      Dropdown::showInteger('p2p-retention-duration', $p2p_ret_value, 0, 400);
+      echo "</td>";
       echo "</tr><tr>";
       echo "<td>";
       if ($source === "Computer") {
