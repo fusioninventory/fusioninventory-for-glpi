@@ -209,7 +209,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    /**
     * Get an itemtype label by his credential itemtype
     *
-    * @param $credential_itemtype for example PluginFusinvinventoryVmwareESX
+    * @param $credential_itemtype for example PluginFusioninventoryInventoryComputerESX
     *
     * @return the label associated with the itemtype, or FALSE if no credential found
     */
@@ -226,7 +226,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    /**
     * Find a credential by his itemtype
     *
-    * @param $credential_itemtype for example PluginFusinvinventoryVmwareESX
+    * @param $credential_itemtype for example PluginFusioninventoryInventoryComputerESX
     */
    static function findItemtypeType($credential_itemtype) {
       foreach (PluginFusioninventoryModule::getAll() as $data) {

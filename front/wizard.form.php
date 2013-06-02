@@ -145,7 +145,7 @@ if (!isset($_GET['wizz'])) {
                $input['name'] = $_POST['name'];
                $input['username'] = $_POST['username'];
                $input['password'] = $_POST['password'];
-               $input['itemtype'] = 'PluginFusinvinventoryVmwareESX';
+               $input['itemtype'] = 'PluginFusioninventoryInventoryComputerESX';
                $credentials_id = $pfCredential->add($input);
             }
             $input = array();

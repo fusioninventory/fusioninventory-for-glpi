@@ -49,7 +49,7 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
       $DB->connect();
     
       $_SESSION['glpiactive_entity'] = 0;
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
       
       $pfiComputerLib  = new PluginFusioninventoryInventoryComputerLib();
       $computer = new Computer();
@@ -128,7 +128,7 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
       // Add manually a computerdisk
       
       $_SESSION['glpiactive_entity'] = 0;
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
       
       $pfiComputerLib  = new PluginFusioninventoryInventoryComputerLib();
       $computer = new Computer();
@@ -222,7 +222,7 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
 
       $DB->connect();
       
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
       
       $a_inventory = array(
           'Computer' => array(

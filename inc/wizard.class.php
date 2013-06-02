@@ -868,10 +868,10 @@ class PluginFusioninventoryWizard {
       global $CFG_GLPI;
 
       PluginFusioninventoryWizard::displayShowForm($ariane,
-              "PluginFusinvinventoryConfig",
+              "PluginFusioninventoryConfig",
               array('f'=>'showForm',
                     'arg1'=>array('target'=> $CFG_GLPI['root_doc'].
-                        "/plugins/fusioninventory/front/configuration.form.php"
+                        "/plugins/fusioninventory/front/config.form.php"
               ),
               'noadditem'=>1));
 

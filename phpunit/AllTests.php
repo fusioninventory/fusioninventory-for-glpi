@@ -158,11 +158,7 @@ $_SESSION['glpiactiveentities'] = array(0, 1);
 
 require_once 'GLPIInstall/AllTests.php';
 require_once 'FusinvInstall/AllTests.php';
-require_once 'InventoryComputer/AllTests.php';
-require_once 'Rules/AllTests.php';
-require_once 'Netinventory/AllTests.php';
 require_once 'GLPIlogs/AllTests.php';
-require_once 'Netdiscovery/AllTests.php';
 
 require_once '1_Unit/FormatConvertData.php';
 require_once '1_Unit/SoftwareUpdate.php';

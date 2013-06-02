@@ -48,13 +48,13 @@ class PluginFusioninventoryInventoryComputerLibhook {
 
 
     function __construct() {
-       if (!isset($_SESSION["plugin_fusinvinventory_history_add"])) {
-         $_SESSION["plugin_fusinvinventory_history_add"] = TRUE;
+       if (!isset($_SESSION["plugin_fusioninventory_history_add"])) {
+         $_SESSION["plugin_fusioninventory_history_add"] = TRUE;
        }
-       if (!isset($_SESSION["plugin_fusinvinventory_no_history_add"])) {
-         $_SESSION["plugin_fusinvinventory_no_history_add"] = FALSE;
+       if (!isset($_SESSION["plugin_fusioninventory_no_history_add"])) {
+         $_SESSION["plugin_fusioninventory_no_history_add"] = FALSE;
        }
-       $_SESSION["plugin_fusinvinventory_userdefined"] = 0;
+       $_SESSION["plugin_fusioninventory_userdefined"] = 0;
     }
 
 

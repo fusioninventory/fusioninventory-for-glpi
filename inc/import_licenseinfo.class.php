@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusinvinventoryImport_LicenseInfo extends CommonDBTM {
+class PluginFusioninventoryImport_LicenseInfo extends CommonDBTM {
 
 
    /**
@@ -102,8 +102,8 @@ class PluginFusinvinventoryImport_LicenseInfo extends CommonDBTM {
          if ($type == "update") {
             $id_licenseInfo = $pfLicenseInfo->update($licenseInfo);
          } else if ($type == "add") {
-            if ($_SESSION["plugin_fusinvinventory_no_history_add"]) {
-               $licenseInfo['_no_history'] = $_SESSION["plugin_fusinvinventory_no_history_add"];
+            if ($_SESSION["plugin_fusioninventory_no_history_add"]) {
+               $licenseInfo['_no_history'] = $_SESSION["plugin_fusioninventory_no_history_add"];
             }
             $id_licenseInfo = $pfLicenseInfo->add($licenseInfo);
          }
@@ -128,7 +128,7 @@ class PluginFusinvinventoryImport_LicenseInfo extends CommonDBTM {
       if ($pfLicenseInfo->fields['computers_id'] == $idmachine) {
          $pfLicenseInfo->delete(array("id" => $items_id),
                                 0,
-                                $_SESSION["plugin_fusinvinventory_history_add"]);
+                                $_SESSION["plugin_fusioninventory_history_add"]);
       }
    }
 }

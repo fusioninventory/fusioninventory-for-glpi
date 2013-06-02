@@ -63,7 +63,7 @@ class Install extends PHPUnit_Framework_TestCase {
          $res = $DB->runFile("save.sql");
          $this->assertTrue($res, "Fail: SQL Error during import saved GLPI DB");
 
-         echo "======= Import save.sql file =======\n";
+         echo "\n======= Import save.sql file =======\n";
 
          $FusinvInstall = new FusinvInstall();
          $FusinvInstall->testDB("fusioninventory", "install new version");

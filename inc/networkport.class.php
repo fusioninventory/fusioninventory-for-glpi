@@ -412,8 +412,8 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          if ($model != '') {
             $input['comment'] = $model;
          }
-         if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
-            $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+         if (isset($_SESSION["plugin_fusioninventory_entity"])) {
+            $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
          }
          if ($sysdescr != '') {
             $input['sysdescr'] = $sysdescr;
@@ -561,8 +561,8 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          if (isset($params['sysname'])) {
             $input['name'] = $params['sysname'];
          }
-         if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
-            $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+         if (isset($_SESSION["plugin_fusioninventory_entity"])) {
+            $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
          }
          if (isset($params['sysdescr'])) {
             $input['sysdescr'] = $params['sysdescr'];

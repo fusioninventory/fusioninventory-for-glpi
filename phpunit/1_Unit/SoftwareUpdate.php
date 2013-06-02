@@ -148,7 +148,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
 
       $DB->connect();
       
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_software = array();
       $a_software['SOFTWARES'][] = array(
@@ -182,7 +182,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
 
       $DB->connect();
 
-      $_SESSION["plugin_fusinvinventory_entity"] = 1;
+      $_SESSION["plugin_fusioninventory_entity"] = 1;
 
       $a_software = array();
       $a_software['SOFTWARES'][] = array(
@@ -209,7 +209,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
 
       $DB->connect();
       
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_software = array();
       $a_software['SOFTWARES'][] = array(
@@ -243,7 +243,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
 
       $DB->connect();
       
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_software = array();
       $a_software['SOFTWARES'][] = array(
@@ -277,7 +277,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
 
       $DB->connect();
       
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_software = array();
       $a_software['SOFTWARES'][] = array(
