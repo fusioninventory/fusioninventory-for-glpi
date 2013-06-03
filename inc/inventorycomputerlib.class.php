@@ -793,6 +793,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
          if ($pfConfig->getValue("create_vm") == 1) {
             // Create VM based on information of section VIRTUALMACHINE
+            $pfAgent = new PluginFusioninventoryAgent();
             
             // Use ComputerVirtualMachine::getUUIDRestrictRequest to get existant
             // vm in computer list
@@ -813,9 +814,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $a_vm['entities_id'] = $computer->fields['entities_id'];
                      $computervm->add($a_vm);                     
                   } else {
-                     // Update computer
-                     $a_vm['id'] = $computers_vm_id;
-                     $computervm->update($a_vm);
+                     if ($pfAgent->getAgentWithComputerid($computers_vm_id) !== FALSE) {
+                        // Update computer
+                        $a_vm['id'] = $computers_vm_id;
+                        $computervm->update($a_vm);
+                     }
                   }
                }
             }
