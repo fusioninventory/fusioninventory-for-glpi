@@ -236,10 +236,10 @@ class PluginFusioninventoryMenu {
       }
 
       if (PluginFusioninventoryProfile::haveRight("configsecurity", "r")) {
-         $a_menu[4]['name'] = __('SNMP authentication', 'fusioninventory');
-         $a_menu[4]['pic']  = $CFG_GLPI['root_doc'].
+         $a_menu[3]['name'] = __('SNMP authentication', 'fusioninventory');
+         $a_menu[3]['pic']  = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_authentification.png";
-         $a_menu[4]['link'] = $CFG_GLPI['root_doc'].
+         $a_menu[3]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/configsecurity.php";
       }
 
