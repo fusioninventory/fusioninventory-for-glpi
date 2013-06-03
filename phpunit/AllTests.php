@@ -122,11 +122,11 @@ if (!defined('GLPI_ROOT')) {
                $DEBUG_AUTOLOAD[]=$classname;
             }
 
-         } else if (!isset($notfound["x$classname"])) {
+         } else if (!isset($notfound["$classname"])) {
             // trigger an error to get a backtrace, but only once (use prefix 'x' to handle empty case)
             //Toolbox::logInFile('debug', "file $dir$item.class.php not founded trying to load class $classname\n");
             trigger_error("GLPI autoload : file $dir$item.class.php not founded trying to load class '$classname'");
-            $notfound["x$classname"] = TRUE;
+            $notfound["$classname"] = TRUE;
          }
       }
    }
@@ -179,6 +179,7 @@ require_once '2_Integration/ComputerEntity.php';
 require_once '2_Integration/SoftwareEntityCreation.php';
 require_once '2_Integration/ComputerDynamic.php';
 require_once '2_Integration/UnknownDeviceKnowDevice.php';
+require_once '2_Integration/TaskDeployDynamicGroup.php';
 
 require_once 'emulatoragent.php';
 
@@ -200,12 +201,13 @@ class AllTests {
       $suite->addTest(PrinterUpdate_AllTests::suite());
       $suite->addTest(NetworkEquipmentTransformation_AllTests::suite());
       $suite->addTest(NetworkEquipmentUpdate_AllTests::suite());
-$suite->addTest(ComputerLog_AllTests::suite());
+      $suite->addTest(ComputerLog_AllTests::suite());
             
       $suite->addTest(ComputerEntity_AllTests::suite());
       $suite->addTest(SoftwareEntityCreation_AllTests::suite());
       $suite->addTest(ComputerDynamic_AllTests::suite());
       $suite->addTest(UnknownDeviceKnowDevice_AllTests::suite());
+      $suite->addTest(TaskDeployDynamicGroup_AllTests::suite());
       
       return $suite;
    }

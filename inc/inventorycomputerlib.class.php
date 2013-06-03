@@ -103,11 +103,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Computer
          $db_computer = array();
          $db_computer = $computer->fields;
-         $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['computer'],
+         $a_ret = PluginFusioninventoryToolbox::checkLock($a_computerinventory['Computer'],
                                                           $db_computer, $a_lockable);
-         $a_computerinventory['computer'] = $a_ret[0];
+         $a_computerinventory['Computer'] = $a_ret[0];
 
-         $input = $a_computerinventory['computer'];
+         $input = $a_computerinventory['Computer'];
 
          $input['id'] = $computers_id;
          if (isset($input['comment'])) {
@@ -718,7 +718,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
 
       // * Virtualmachines
-         if ($pfConfig->getValue("import_vm") != 0) {
+         if ($pfConfig->getValue("import_vm") == 1) {
             $db_computervirtualmachine = array();
             if ($no_history === FALSE) {
                $query = "SELECT `id`, `name`, `uuid`, `virtualmachinesystems_id`
@@ -730,8 +730,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $idtmp = $data['id'];
                   unset($data['id']);
                   $data1 = Toolbox::addslashes_deep($data);
-                  $data2 = array_map('strtolower', $data1);
-                  $db_computervirtualmachine[$idtmp] = $data2;
+                  $db_computervirtualmachine[$idtmp] = $data1;
                }
             }
 
@@ -748,9 +747,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
             foreach ($simplecomputervirtualmachine as $key => $arrays) {
-               $arrayslower = array_map('strtolower', $arrays);
                foreach ($db_computervirtualmachine as $keydb => $arraydb) {
-                  if ($arrayslower == $arraydb) {
+                  if ($arrays == $arraydb) {
                      $input = array();
                      $input['id'] = $keydb;
                      if (isset($a_computerinventory['virtualmachine'][$key]['vcpu'])) {
@@ -776,7 +774,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
             if (count($a_computerinventory['virtualmachine']) == 0
-               AND count($db_computervirtualmachine) == 0) {
+               && count($db_computervirtualmachine) == 0) {
                // Nothing to do
             } else {
                if (count($db_computervirtualmachine) != 0) {
@@ -789,6 +787,35 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   foreach($a_computerinventory['virtualmachine'] as $a_virtualmachine) {
                      $a_virtualmachine['computers_id'] = $computers_id;
                      $computerVirtualmachine->add($a_virtualmachine, array(), FALSE);
+                  }
+               }
+            }
+         }
+         if ($pfConfig->getValue("create_vm") == 1) {
+            // Create VM based on information of section VIRTUALMACHINE
+            
+            // Use ComputerVirtualMachine::getUUIDRestrictRequest to get existant
+            // vm in computer list
+            $computervm = new Computer();
+            foreach ($a_computerinventory['virtualmachine_creation'] as $a_vm) {
+               if (isset($a_vm['uuid'])
+                       && $a_vm['uuid'] != '') {
+                  $query = "SELECT * FROM `glpi_computers`
+                     WHERE `uuid` ".ComputerVirtualMachine::getUUIDRestrictRequest($a_vm['uuid'])."
+                     LIMIT 1"; // TODO: Add entity search
+                  $result = $DB->query($query);
+                  $computers_vm_id = 0;
+                  while ($data = $DB->fetch_assoc($result)) {
+                     $computers_vm_id = $data['id'];
+                  }
+                  if ($computers_vm_id == 0) {
+                     // Add computer
+                     $a_vm['entities_id'] = $computer->fields['entities_id'];
+                     $computervm->add($a_vm);                     
+                  } else {
+                     // Update computer
+                     $a_vm['id'] = $computers_vm_id;
+                     $computervm->update($a_vm);
                   }
                }
             }

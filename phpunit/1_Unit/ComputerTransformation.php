@@ -109,7 +109,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'antivirus'               => Array(),
           'storage'                 => Array()
           );
-      $a_reference['computer'] = array(
+      $a_reference['Computer'] = array(
           'name'                             => 'pc',
           'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
@@ -181,7 +181,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'antivirus'               => Array(),
           'storage'                 => Array()
           );
-      $a_reference['computer'] = array(
+      $a_reference['Computer'] = array(
           'name'                             => 'pc',
           'comment'                          => '',
           'users_id'                         => 0,
@@ -272,7 +272,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'antivirus'               => Array(),
           'storage'                 => Array()
           );
-      $a_reference['computer'] = array(
+      $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
           'comment'                          => '',
           'users_id'                         => 0,
@@ -353,7 +353,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'antivirus'               => Array(),
           'storage'                 => Array()
           );
-      $a_reference['computer'] = array(
+      $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
           'comment'                          => '',
           'users_id'                         => 0,

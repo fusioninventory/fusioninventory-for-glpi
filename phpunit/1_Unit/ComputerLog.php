@@ -84,7 +84,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
           'storage'        => Array(),
           'itemtype'       => 'Computer'
           );
-      $this->a_inventory['computer'] = array(
+      $this->a_inventory['Computer'] = array(
           'name'                             => 'pc',
           'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
@@ -299,7 +299,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
       // * Modify: contact 
       // * remove a processor 
       // * Remove a software
-      $this->a_inventory['computer']['contact'] = 'root';
+      $this->a_inventory['Computer']['contact'] = 'root';
       unset($this->a_inventory['processor'][3]);
       unset($this->a_inventory['software']['ORBit2$$$$2.14.19$$$$3$$$$0']);
       

@@ -226,7 +226,7 @@ class PluginFusioninventoryFormatconvert {
       }
       $array_tmp['is_dynamic'] = 1;
 
-      $a_inventory['computer'] = $array_tmp;
+      $a_inventory['Computer'] = $array_tmp;
 
       $array_tmp = $thisc->addValues($array['HARDWARE'],
                                      array(
@@ -257,37 +257,37 @@ class PluginFusioninventoryFormatconvert {
          }
          if ((isset($array['BIOS']['SMANUFACTURER']))
                AND (!empty($array['BIOS']['SMANUFACTURER']))) {
-            $a_inventory['computer']['manufacturers_id'] = $array['BIOS']['SMANUFACTURER'];
+            $a_inventory['Computer']['manufacturers_id'] = $array['BIOS']['SMANUFACTURER'];
          } else if ((isset($array['BIOS']['MMANUFACTURER']))
                       AND (!empty($array['BIOS']['MMANUFACTURER']))) {
-            $a_inventory['computer']['manufacturers_id'] = $array['BIOS']['MMANUFACTURER'];
+            $a_inventory['Computer']['manufacturers_id'] = $array['BIOS']['MMANUFACTURER'];
          } else if ((isset($array['BIOS']['BMANUFACTURER']))
                       AND (!empty($array['BIOS']['BMANUFACTURER']))) {
-            $a_inventory['computer']['manufacturers_id'] = $array['BIOS']['BMANUFACTURER'];
+            $a_inventory['Computer']['manufacturers_id'] = $array['BIOS']['BMANUFACTURER'];
          }
          if ((isset($array['BIOS']['MMANUFACTURER']))
                       AND (!empty($array['BIOS']['MMANUFACTURER']))) {
-            $a_inventory['computer']['mmanufacturer'] = $array['BIOS']['MMANUFACTURER'];
+            $a_inventory['Computer']['mmanufacturer'] = $array['BIOS']['MMANUFACTURER'];
          }
          if ((isset($array['BIOS']['BMANUFACTURER']))
                       AND (!empty($array['BIOS']['BMANUFACTURER']))) {
-            $a_inventory['computer']['bmanufacturer'] = $array['BIOS']['BMANUFACTURER'];
+            $a_inventory['Computer']['bmanufacturer'] = $array['BIOS']['BMANUFACTURER'];
          }
 
          if (isset($array['BIOS']['SMODEL']) AND $array['BIOS']['SMODEL'] != '') {
-            $a_inventory['computer']['computermodels_id'] = $array['BIOS']['SMODEL'];
+            $a_inventory['Computer']['computermodels_id'] = $array['BIOS']['SMODEL'];
          } else if (isset($array['BIOS']['MMODEL']) AND $array['BIOS']['MMODEL'] != '') {
-            $a_inventory['computer']['computermodels_id'] = $array['BIOS']['MMODEL'];
+            $a_inventory['Computer']['computermodels_id'] = $array['BIOS']['MMODEL'];
          }
          if (isset($array['BIOS']['SSN'])) {
-            $a_inventory['computer']['serial'] = trim($array['BIOS']['SSN']);
+            $a_inventory['Computer']['serial'] = trim($array['BIOS']['SSN']);
             // HP patch for serial begin with 'S'
-            if ((isset($a_inventory['computer']['manufacturers_id']))
-                  AND (strstr($a_inventory['computer']['manufacturers_id'], "ewlett"))) {
+            if ((isset($a_inventory['Computer']['manufacturers_id']))
+                  AND (strstr($a_inventory['Computer']['manufacturers_id'], "ewlett"))) {
 
                if (isset($a_inventory['BIOS']['SERIAL'])
                        && preg_match("/^[sS]/", $a_inventory['BIOS']['SERIAL'])) {
-                  $a_inventory['computer']['serial'] = trim(
+                  $a_inventory['Computer']['serial'] = trim(
                                                    preg_replace("/^[sS]/",
                                                                 "",
                                                                 $a_inventory['BIOS']['SERIAL']));
@@ -299,16 +299,16 @@ class PluginFusioninventoryFormatconvert {
       // * Type of computer
       if (isset($array['HARDWARE']['CHASSIS_TYPE'])
               && !empty($array['HARDWARE']['CHASSIS_TYPE'])) {
-         $a_inventory['computer']['computertypes_id'] = $array['HARDWARE']['CHASSIS_TYPE'];
+         $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['CHASSIS_TYPE'];
       } else  if (isset($array['BIOS']['TYPE'])
               && !empty($array['BIOS']['TYPE'])) {
-         $a_inventory['computer']['computertypes_id'] = $array['BIOS']['TYPE'];
+         $a_inventory['Computer']['computertypes_id'] = $array['BIOS']['TYPE'];
       } else if (isset($array['BIOS']['MMODEL'])
               && !empty($array['BIOS']['MMODEL'])) {
-         $a_inventory['computer']['computertypes_id'] = $array['BIOS']['MMODEL'];
+         $a_inventory['Computer']['computertypes_id'] = $array['BIOS']['MMODEL'];
       } else if (isset($array['HARDWARE']['VMSYSTEM'])
               && !empty($array['HARDWARE']['VMSYSTEM'])) {
-         $a_inventory['computer']['computertypes_id'] = $array['HARDWARE']['VMSYSTEM'];
+         $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['VMSYSTEM'];
       }
 
       if (isset($array['BIOS']['SKUNUMBER'])) {
@@ -342,9 +342,9 @@ class PluginFusioninventoryFormatconvert {
                     'ARCH'           => 'plugin_fusioninventory_computerarchs_id'));
 
          foreach ($array_tmp as $key=>$value) {
-            if (isset($a_inventory['computer'][$key])
-                    && $a_inventory['computer'][$key] != '') {
-               $a_inventory['computer'][$key] = $value;
+            if (isset($a_inventory['Computer'][$key])
+                    && $a_inventory['Computer'][$key] != '') {
+               $a_inventory['Computer'][$key] = $value;
             }
          }
          if (isset($array_tmp['plugin_fusioninventory_computerarchs_id'])
@@ -806,8 +806,8 @@ class PluginFusioninventoryFormatconvert {
       // * USERS
       if (isset($array['USERS'])) {
          if (count($array['USERS']) > 0) {
-            $user_temp = $a_inventory['computer']['contact'];
-            $a_inventory['computer']['contact'] = '';
+            $user_temp = $a_inventory['Computer']['contact'];
+            $a_inventory['Computer']['contact'] = '';
          }
          foreach ($array['USERS'] as $a_users) {
             $array_tmp = $thisc->addValues($a_users,
@@ -823,19 +823,19 @@ class PluginFusioninventoryFormatconvert {
                }
             }
             if ($user != '') {
-               if (isset($a_inventory['computer']['contact'])) {
-                  if ($a_inventory['computer']['contact'] == '') {
-                     $a_inventory['computer']['contact'] = $user;
+               if (isset($a_inventory['Computer']['contact'])) {
+                  if ($a_inventory['Computer']['contact'] == '') {
+                     $a_inventory['Computer']['contact'] = $user;
                   } else {
-                     $a_inventory['computer']['contact'] .= "/".$user;
+                     $a_inventory['Computer']['contact'] .= "/".$user;
                   }
                } else {
-                  $a_inventory['computer']['contact'] = $user;
+                  $a_inventory['Computer']['contact'] = $user;
                }
             }
          }
-         if (empty($a_inventory['computer']['contact'])) {
-            $a_inventory['computer']['contact'] = $user_temp;
+         if (empty($a_inventory['Computer']['contact'])) {
+            $a_inventory['Computer']['contact'] = $user_temp;
          }
       }
 
@@ -844,7 +844,7 @@ class PluginFusioninventoryFormatconvert {
       if ($pfConfig->getValue('import_vm') == 1) {
          if (isset($array['VIRTUALMACHINES'])) {
             foreach ($array['VIRTUALMACHINES'] as $a_virtualmachines) {
-               $a_inventory['virtualmachine'][] = $thisc->addValues($a_virtualmachines,
+               $array_tmp = $thisc->addValues($a_virtualmachines,
                                               array(
                                                  'NAME'        => 'name',
                                                  'VCPU'        => 'vcpu',
@@ -852,6 +852,21 @@ class PluginFusioninventoryFormatconvert {
                                                  'VMTYPE'      => 'virtualmachinetypes_id',
                                                  'SUBSYSTEM'   => 'virtualmachinesystems_id',
                                                  'STATUS'      => 'virtualmachinestates_id',
+                                                 'UUID'        => 'uuid'));
+               $array_tmp['is_dynamic'] = 1;
+               $a_inventory['virtualmachine'][] = $array_tmp;
+            }
+         }
+      }
+      if ($pfConfig->getValue('create_vm') == 1) {
+         if (isset($array['VIRTUALMACHINES'])) {
+            foreach ($array['VIRTUALMACHINES'] as $a_virtualmachines) {
+               $a_inventory['virtualmachine_creation'][] = $thisc->addValues($a_virtualmachines,
+                                              array(
+                                                 'NAME'        => 'name',
+                                                 'VCPU'        => 'vcpu',
+                                                 'MEMORY'      => 'ram',
+                                                 'VMTYPE'      => 'computertypes_id',
                                                  'UUID'        => 'uuid'));
             }
          }

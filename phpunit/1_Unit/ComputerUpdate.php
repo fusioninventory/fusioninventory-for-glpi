@@ -82,7 +82,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'storage'        => Array(),
           'itemtype'       => 'Computer'
           );
-      $a_inventory['computer'] = array(
+      $a_inventory['Computer'] = array(
           'name'                             => 'pc',
           'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
@@ -991,7 +991,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'storage'        => Array(),
           'itemtype'       => 'Computer'
           );
-      $a_inventory['computer'] = array(
+      $a_inventory['Computer'] = array(
           'name'                             => 'pcJ1',
           'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
@@ -1040,8 +1040,8 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
       $a_software = $software->find("`name`='acrobat_Reader_9.2'");
       $this->assertEquals(1, count($a_software), "First computer added");
       
-      $a_inventory['computer']['name'] = "pcJ2";
-      $a_inventory['computer']['serial'] = "XB63J7J2";
+      $a_inventory['Computer']['name'] = "pcJ2";
+      $a_inventory['Computer']['serial'] = "XB63J7J2";
       $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
       
       $a_software = $software->find("`name`='acrobat_Reader_9.2'");

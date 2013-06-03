@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2013-04-30 08:09+0200\n"
-"PO-Revision-Date: 2013-04-30 06:11+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2013-05-01 13:47+0000\n"
+"Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/FusionInventory/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -261,7 +261,7 @@ msgstr "Regras de entidade"
 #: setup.php:426 inc/inventoryrulelocation.class.php:57
 #: inc/inventoryrulelocationcollection.class.php:56
 msgid "Location rules"
-msgstr ""
+msgstr "Regras de localização"
 
 #: setup.php:429 inc/menu.class.php:155
 msgid "Import agent XML file"
@@ -285,7 +285,7 @@ msgstr "A versão do seu GLPI não é compatível, pois é necessário 0.84"
 
 #: setup.php:548
 msgid "fileinfo extension (PHP) is required..."
-msgstr ""
+msgstr "fileinfo de extensão (PHP) é necessária..."
 
 #: setup.php:561
 #, php-format
@@ -306,7 +306,7 @@ msgstr "Funcionalidades"
 
 #: front/deploypackage.form.php:73
 msgid "The modified JSON contained a syntax error : <br/>"
-msgstr ""
+msgstr "O JSON modificado tinha um erro de sintaxe : <br/>"
 
 #: front/inventorycomputerimportxml.php:64
 msgid "Can't read zip file!"
@@ -502,7 +502,7 @@ msgstr "Esta opção não vai importar este item"
 msgid ""
 "This option will merge items with same name to reduce number of items if "
 "this management isn't important"
-msgstr ""
+msgstr "Esta opção irá mesclar os itens com o mesmo nome para reduzir o número de itens, se essa gestão não é importante"
 
 #: inc/config.class.php:445
 msgid "This option will create one item for each item found"
@@ -549,7 +549,7 @@ msgstr "Pasta raiz para envio de arquivos do servidor"
 
 #: inc/config.class.php:692
 msgid "Use this GLPI server as a mirror server"
-msgstr ""
+msgstr "Use este servidor GLPI como um servidor mirror"
 
 #: inc/configlogfield.class.php:133
 msgid "History configuration"
@@ -605,19 +605,19 @@ msgstr "Inventário de dispositivos remotos"
 
 #: inc/deployaction.class.php:52
 msgid "Code is equal to"
-msgstr ""
+msgstr "Código é igual a"
 
 #: inc/deployaction.class.php:53
 msgid "Code is not equal to"
-msgstr ""
+msgstr "Código não é igual a"
 
 #: inc/deployaction.class.php:54
 msgid "Command output contains"
-msgstr ""
+msgstr "Saída do comando contém"
 
 #: inc/deployaction.class.php:55
 msgid "Command output does not contains"
-msgstr ""
+msgstr "Saída de comando não contém"
 
 #: inc/deployaction.class.php:71
 msgid "cmd"
@@ -641,7 +641,7 @@ msgstr "mkdir"
 
 #: inc/deployaction.class.php:187
 msgid "return codes saved for this command"
-msgstr ""
+msgstr "códigos de retorno salvos para este comando"
 
 #: inc/deployaction.class.php:199 inc/deploycheck.class.php:170
 #: inc/deployfile.class.php:263
@@ -680,47 +680,47 @@ msgstr "caminho"
 
 #: inc/deployaction.class.php:331
 msgid "Command checks"
-msgstr ""
+msgstr "Verificações de comando"
 
 #: inc/deploycheck.class.php:51
 msgid "Registry key exists"
-msgstr ""
+msgstr "Chave de registro existe"
 
 #: inc/deploycheck.class.php:52
 msgid "Registry key missing"
-msgstr ""
+msgstr "Chave de registro faltando"
 
 #: inc/deploycheck.class.php:53
 msgid "Registry key value equals to"
-msgstr ""
+msgstr "Valor da chave de registro igual a"
 
 #: inc/deploycheck.class.php:54
 msgid "File exists"
-msgstr ""
+msgstr "Arquivo existe"
 
 #: inc/deploycheck.class.php:55
 msgid "File is missing"
-msgstr ""
+msgstr "Arquivo faltando"
 
 #: inc/deploycheck.class.php:56
 msgid "File size is greater than"
-msgstr ""
+msgstr "Tamanho do arquivo é maior que"
 
 #: inc/deploycheck.class.php:57
 msgid "File size is equal to"
-msgstr ""
+msgstr "Tamanho do arquivo igual a"
 
 #: inc/deploycheck.class.php:58
 msgid "File size is lower than"
-msgstr ""
+msgstr "Tamanho do arquivo menor que"
 
 #: inc/deploycheck.class.php:59
 msgid "SHA-512 hash value is"
-msgstr ""
+msgstr "Hash SHA-512 do arquivo é"
 
 #: inc/deploycheck.class.php:60
 msgid "Free space is greater than"
-msgstr ""
+msgstr "Espaço disponível é maior que"
 
 #: inc/deploycheck.class.php:80
 msgid "B"
@@ -829,7 +829,7 @@ msgstr "Erro de transferência: o tamanho do arquivo é muito grande"
 
 #: inc/deployfile.class.php:649
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "O arquivo enviado foi apenas parcialmente enviado"
 
 #: inc/deployfile.class.php:652
 msgid "No file was uploaded"
@@ -849,11 +849,11 @@ msgstr "Extensão PHP parou o envio do arquivo"
 
 #: inc/deployfile.class.php:688 inc/deployfile.class.php:725
 msgid "File saved!"
-msgstr ""
+msgstr "Arquivo salvo!"
 
 #: inc/deployfile.class.php:691 inc/deployfile.class.php:728
 msgid "Failed to copy file"
-msgstr ""
+msgstr "Falha ao copiar arquivo"
 
 #: inc/deployfile.class.php:695 inc/deployfile.class.php:732
 msgid "File missing"
@@ -889,17 +889,17 @@ msgstr "Endereços de servidores mirrors"
 
 #: inc/deploymirror.class.php:142
 msgid "Mirror location"
-msgstr ""
+msgstr "Localização do mirror"
 
 #: inc/deploypackage.class.php:124
 msgid "Modification Denied"
-msgstr ""
+msgstr "Modificação negada"
 
 #: inc/deploypackage.class.php:129
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "A seguinte tarefa está em execução com este pacote"
+msgstr[1] "As seguintes tarefas estão em execução com este pacote"
 
 #: inc/deploypackage.class.php:294
 msgid "Add a package"
@@ -1025,11 +1025,11 @@ msgstr "Versão da BIOS"
 #: inc/inventorycomputercomputer.class.php:201
 #: inc/networkequipment.class.php:1088 inc/printer.class.php:245
 msgid "Download"
-msgstr ""
+msgstr "Download"
 
 #: inc/inventorycomputercomputer.class.php:210
 msgid "PHP Array"
-msgstr ""
+msgstr "Vetor PHP"
 
 #: inc/inventorycomputerimportxml.class.php:68
 msgid "Import XML file from an Agent"
@@ -1041,7 +1041,7 @@ msgid ""
 "have .xml or .ocs extension. It's also possible to upload <b>ZIP</b> archive"
 " directly with a collection of XML files. Read you agent documentation to "
 "see how to generate such XML file"
-msgstr ""
+msgstr "Você pode usar este menu para enviar XML gerado por um agente. O arquivo deve ter extensão .xml ou .ocs. Também é possível enviar pacote <b>ZIP</b> diretamente com uma coleção de arquivos XML. Leia a documentação do agente para ver como gerar tal arquivo XML"
 
 #: inc/inventorycomputerstorage.class.php:51
 #: inc/inventorycomputerstorage_storage.class.php:51
@@ -2058,7 +2058,7 @@ msgstr "Regras de entidades de computador"
 
 #: inc/menu.class.php:198
 msgid "Computer location rules"
-msgstr ""
+msgstr "Regras de localização de computador"
 
 #: inc/menu.class.php:213
 msgid "Rules"
@@ -2164,7 +2164,7 @@ msgstr "Duplex"
 
 #: inc/networkequipment.class.php:714 inc/networkport.class.php:121
 msgid "Port not connected since"
-msgstr ""
+msgstr "Porta não conectada desde"
 
 #: inc/networkport.class.php:89
 msgid "Last change"
@@ -2397,7 +2397,7 @@ msgstr "Inventário remoto de máquina VMware"
 
 #: inc/staticmisc.class.php:93
 msgid "Package install"
-msgstr ""
+msgstr "Instalação de pacote"
 
 #: inc/staticmisc.class.php:183 inc/staticmisc.class.php:315
 msgid "Agents"
