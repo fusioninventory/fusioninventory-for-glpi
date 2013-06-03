@@ -949,7 +949,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $a_networknames_find = current($networkName->find("`items_id`='".$keydb."'
                                                           AND `itemtype`='NetworkPort'", "", 1));
                      if (!isset($a_networknames_find['id'])) {
-                        $a_networkport['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                        $a_networkport['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
                         $a_networkport['items_id'] = $computers_id;
                         $a_networkport['itemtype'] = "Computer";
                         $a_networkport['is_dynamic'] = 1;
@@ -1026,7 +1026,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
                if (count($a_computerinventory['networkport']) != 0) {
                   foreach ($a_computerinventory['networkport'] as $a_networkport) {
-                     $a_networkport['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                     $a_networkport['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
                      $a_networkport['items_id'] = $computers_id;
                      $a_networkport['itemtype'] = "Computer";
                      $a_networkport['is_dynamic'] = 1;
@@ -1169,7 +1169,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 */
 
 
-      $entities_id = $_SESSION["plugin_fusinvinventory_entity"];
+      $entities_id = $_SESSION["plugin_fusioninventory_entity"];
       // * Monitors
          if ($pfConfig->getValue("import_monitor") != 0) {
             $db_monitors = array();

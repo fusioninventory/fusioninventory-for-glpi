@@ -407,8 +407,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   // Create unknown ports
                   $unknown_infos = array();
                   $unknown_infos["name"] = '';
-                  if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
-                     $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                  if (isset($_SESSION["plugin_fusioninventory_entity"])) {
+                     $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
                   }
                   $newID = $pfUnknownDevice->add($unknown_infos);
                   // Add networking_port
@@ -514,8 +514,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   $manufacturer = 
                      PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($ifmac);
                   $input['name'] = $manufacturer;
-                  if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
-                     $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+                  if (isset($_SESSION["plugin_fusioninventory_entity"])) {
+                     $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
                   }
                   $newID = $pfUnknownDevice->add($input);
                   $input['itemtype'] = "PluginFusioninventoryUnknownDevice";

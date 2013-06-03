@@ -228,6 +228,26 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
       echo "</table>";
    }
+
+
+
+   /**
+   * Delete extended information of computer
+   *
+   * @param $items_id integer id of the computer
+   *
+   * @return nothing
+   *
+   **/
+   static function cleanComputer($items_id) {
+      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $a_computerextend = current($pfInventoryComputerComputer->find(
+                                              "`computers_id`='".$items_id."'",
+                                              "", 1));
+      if (!empty($a_computerextend)) {
+         $pfInventoryComputerComputer->delete($a_computerextend);
+      }
+   }
 }
 
 ?>

@@ -574,8 +574,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             $manufacturer = 
                      PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($ifmac);
             $input['name'] = $manufacturer;
-            if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
-               $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+            if (isset($_SESSION["plugin_fusioninventory_entity"])) {
+               $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
             }
             $unknown_id = $this->add($input);
             $input = array();
@@ -755,8 +755,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $input = array();
       $input['hub'] = "1";
       $input['name'] = "hub";
-      if (isset($_SESSION["plugin_fusinvinventory_entity"])) {
-         $input['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
+      if (isset($_SESSION["plugin_fusioninventory_entity"])) {
+         $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
       }
       $hub_id = $this->add($input);
 

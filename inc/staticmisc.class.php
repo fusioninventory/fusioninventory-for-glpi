@@ -291,7 +291,7 @@ class PluginFusioninventoryStaticmisc {
                 FROM `glpi_plugin_fusioninventory_credentialips` as `a`
                 LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c`
                    ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id`
-                WHERE `c`.`itemtype`='PluginFusinvinventoryVmwareESX'";
+                WHERE `c`.`itemtype`='PluginFusioninventoryInventoryComputerESX'";
       $query.= getEntitiesRestrictRequest(' AND', 'a');
       $results = $DB->query($query);
 

@@ -56,7 +56,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
       
       $date = date('Y-m-d H:i:s');
       
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
       
       $a_inventory = array(
           'fusioninventorycomputer' => Array(
@@ -965,7 +965,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
 
       $date = date('Y-m-d H:i:s');
       
-      $_SESSION["plugin_fusinvinventory_entity"] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
       
       $a_inventory = array(
           'fusioninventorycomputer' => Array(

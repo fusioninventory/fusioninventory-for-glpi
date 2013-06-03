@@ -60,7 +60,7 @@ class PluginFusioninventoryInventoryComputerInventory {
    function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
 
       $errors = '';
-      $_SESSION["plugin_fusinvinventory_entity"] = -1;
+      $_SESSION["plugin_fusioninventory_entity"] = -1;
 
       $this->sendCriteria($p_DEVICEID, $arrayinventory);
 
@@ -251,7 +251,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
             if ($pfConfig->getValue('transfers_id_auto') > 0) {
                if (isset($dataEntity['entities_id'])) {
-                  $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
+                  $_SESSION["plugin_fusioninventory_entity"] = $dataEntity['entities_id'];
                   $input['entities_id'] = $dataEntity['entities_id'];
                } else {
                   $_SESSION['plugin_fusioninventory_noruleentity'] = TRUE;
@@ -263,7 +263,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             } else {
                if (isset($dataEntity['entities_id'])) {
                   $_SESSION['plugin_fusioninventory_entityrestrict'] = $dataEntity['entities_id'];
-                  $_SESSION["plugin_fusinvinventory_entity"] = $dataEntity['entities_id'];
+                  $_SESSION["plugin_fusioninventory_entity"] = $dataEntity['entities_id'];
                   $input['entities_id'] = $dataEntity['entities_id'];
                } else {
                   $input['entities_id'] = 0;
@@ -362,9 +362,9 @@ class PluginFusioninventoryInventoryComputerInventory {
             $entities_id = $item->fields['entities_id'];
          }
       } else {
-         if ($_SESSION["plugin_fusinvinventory_entity"] >= 0
+         if ($_SESSION["plugin_fusioninventory_entity"] >= 0
                  && !isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
-            $entities_id = $_SESSION["plugin_fusinvinventory_entity"];
+            $entities_id = $_SESSION["plugin_fusioninventory_entity"];
          } else {
             if ($items_id == 0) {
                if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
@@ -379,8 +379,8 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
          }
       }
-      if ($_SESSION["plugin_fusinvinventory_entity"] < 0) {
-         $_SESSION["plugin_fusinvinventory_entity"] = $entities_id;
+      if ($_SESSION["plugin_fusioninventory_entity"] < 0) {
+         $_SESSION["plugin_fusioninventory_entity"] = $entities_id;
       }
       $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation(
                                              $a_computerinventory,
@@ -514,7 +514,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             }
          }
          $class->getFromDB($items_id);
-         $_SESSION["plugin_fusinvinventory_entity"] = $class->fields['entities_id'];
+         $_SESSION["plugin_fusioninventory_entity"] = $class->fields['entities_id'];
          $input = array();
          $input['id'] = $class->fields['id'];
 

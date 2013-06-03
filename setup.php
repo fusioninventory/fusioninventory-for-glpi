@@ -230,7 +230,7 @@ function plugin_init_fusioninventory() {
 
 
       $PLUGIN_HOOKS['pre_item_purge']['fusioninventory'] = array(
-            'Computer'                 =>'plugin_pre_item_purge_fusinvinventory',
+            'Computer'                 =>'plugin_pre_item_purge_fusioninventory',
             'NetworkPort_NetworkPort'  =>'plugin_pre_item_purge_fusioninventory',
             'PluginFusioninventoryLock'=> array('PluginFusioninventoryLock', 'deleteLock')
           );
@@ -300,18 +300,18 @@ function plugin_init_fusioninventory() {
 
          $hook_search['agents'] = 'front/agent.php';
 
-         $hook_add['fusinvinventory-ruleentity']
+         $hook_add['ruleentity']
                         = '../fusioninventory/front/inventoryruleentity.form.php';
-         $hook_search['fusinvinventory-ruleentity']
+         $hook_search['ruleentity']
                         = '../fusioninventory/front/inventoryruleentity.php';
-         $hook_add['fusinvinventory-rulelocation']
+         $hook_add['rulelocation']
                         = '../fusioninventory/front/inventoryrulelocation.form.php';
-         $hook_search['fusinvinventory-rulelocation']
+         $hook_search['rulelocation']
                         = '../fusioninventory/front/inventoryrulelocation.php';
 
-         $hook_add['fusinvinventory-blacklist']
+         $hook_add['blacklist']
                         = '../fusioninventory/front/inventorycomputerblacklist.form.php';
-         $hook_search['fusinvinventory-blacklist']
+         $hook_search['blacklist']
                         = '../fusioninventory/front/inventorycomputerblacklist.php';
 
          $hook_add['models'] = '../fusioninventory/front/snmpmodel.form.php?add=1';
@@ -416,20 +416,17 @@ function plugin_init_fusioninventory() {
          $filariane['ignoredimportrules']['title'] = __('Equipment ignored on import', 'fusioninventory');
          $filariane['ignoredimportrules']['page']  = '/plugins/fusioninventory/front/ignoredimportdevice.php';
 
-         $filariane['fusinvinventory-blacklist']['title'] = __('BlackList');
-         $filariane['fusinvinventory-blacklist']['page']  = '/plugins/fusioninventory/front/inventorycomputerblacklist.php';
+         $filariane['blacklist']['title'] = __('BlackList');
+         $filariane['blacklist']['page']  = '/plugins/fusioninventory/front/inventorycomputerblacklist.php';
 
-         $filariane['fusinvinventory-ruleinventory']['title'] = __('Criteria rules', 'fusioninventory');
-         $filariane['fusinvinventory-ruleinventory']['page']  = '/plugins/fusinvinventory/front/ruleinventory.php';
+         $filariane['ruleentity']['title'] = __('Entity rules', 'fusioninventory');
+         $filariane['ruleentity']['page']  = '/plugins/fusioninventory/front/inventoryruleentity.php';
 
-         $filariane['fusinvinventory-ruleentity']['title'] = __('Entity rules', 'fusioninventory');
-         $filariane['fusinvinventory-ruleentity']['page']  = '/plugins/fusioninventory/front/inventoryruleentity.php';
+         $filariane['rulelocation']['title'] = __('Location rules', 'fusioninventory');
+         $filariane['rulelocation']['page']  = '/plugins/fusioninventory/front/inventoryrulelocation.php';
 
-         $filariane['fusinvinventory-rulelocation']['title'] = __('Location rules', 'fusioninventory');
-         $filariane['fusinvinventory-rulelocation']['page']  = '/plugins/fusioninventory/front/inventoryrulelocation.php';
-
-         $filariane['fusinvinventory-importxmlfile']['title'] = __('Import agent XML file', 'fusioninventory');
-         $filariane['fusinvinventory-importxmlfile']['page']  = '/plugins/fusinvinventory/front/inventorycomputerimportxml.php';
+         $filariane['importxmlfile']['title'] = __('Import agent XML file', 'fusioninventory');
+         $filariane['importxmlfile']['page']  = '/plugins/fusioninventory/front/inventorycomputerimportxml.php';
 
          $filariane['models']['title'] = __('SNMP models');
          $filariane['models']['page']  = '/plugins/fusioninventory/front/snmpmodel.php';

@@ -82,9 +82,9 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                   $licenseInfo['softwarelicenses_id']."'>";
                $licence_endlink = "</a>";
                $licence_endlink .= "<form method='post' action='".GLPI_ROOT.
-                        "/plugins/fusinvinventory/front/licenseinfo.form.php'>";
+                        "/plugins/fusioninventory/front/licenseinfo.form.php'>";
 
-               $licence_endlink .= "<input type='hidden' name='fusinvinventory_licenseinfos_id' ".
+               $licence_endlink .= "<input type='hidden' name='fusioninventory_licenseinfos_id' ".
                                       "value='".$licenseInfo['id']."' />";
                $licence_endlink .= "<input type='hidden' name='softwarelicenses_id' value='0' />";
                $licence_endlink .= "<input type='submit' class='button' name='associate' ".
@@ -130,9 +130,9 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                         "&nbsp;:</td>";
                echo "<td colspan='3'>";
                echo "<form method='post' action='".GLPI_ROOT.
-                        "/plugins/fusinvinventory/front/licenseinfo.form.php'>";
+                        "/plugins/fusioninventory/front/licenseinfo.form.php'>";
                echo "<input type='hidden' name='computers_id' value='$computers_id'>";
-               echo "<input type='hidden' name='fusinvinventory_licenseinfos_id' value='".
+               echo "<input type='hidden' name='fusioninventory_licenseinfos_id' value='".
                   $licenseInfo['id']."'>";
                echo "<input type='hidden' name='key' value='".$licenseInfo['serial']."'>";
                $rand = mt_rand();
@@ -144,7 +144,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                   );
                 Ajax::updateItem(
                         "softwarelicenses_id_$rand",
-                        $CFG_GLPI["root_doc"]."/plugins/fusinvinventory/ajax/".
+                        $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/".
                            "dropdownsoftwarelicenses.php?key=".$licenseInfo['serial'],
                         $params,
                         FALSE);
@@ -212,7 +212,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
 
       $pfLicenseInfo = new self;
       $pfLicenseInfo->update(array(
-         'id'                  => $options['fusinvinventory_licenseinfos_id'],
+         'id'                  => $options['fusioninventory_licenseinfos_id'],
          'softwarelicenses_id' => $options['softwarelicenses_id']
       ));
    }

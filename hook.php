@@ -2488,14 +2488,11 @@ function plugin_pre_item_purge_fusioninventory($parm) {
       case 'Computer':
          // Delete link between computer and agent fusion
          $query = "UPDATE `glpi_plugin_fusioninventory_agents`
-                     SET `items_id` = '0'
-                        AND `itemtype` = '0'
-                     WHERE `items_id` = '".$parm["id"]."'
-                        AND `itemtype` = '1' ";
+                     SET `computers_id` = '0'
+                     WHERE `computers_id` = '".$parm["id"]."'";
          $DB->query($query);
 
-         $pfInventoryComputerLib = new PluginFusioninventoryInventoryComputerLib();
-         $pfInventoryComputerLib->removeExternalid($parm->getField('id'));
+         PluginFusioninventoryInventoryComputerComputer::cleanComputer($parm->getField('id'));
          // Remove antivirus if set
          PluginFusioninventoryInventoryComputerAntivirus::cleanComputer($parm->getField('id'));
          break;

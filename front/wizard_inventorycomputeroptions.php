@@ -60,7 +60,7 @@ $a_button = array(
 
 $pfWizard->displayShowForm($a_button, 
                            $pfWizard->filInventoryComputer(), 
-                           "PluginFusinvinventoryConfig");
+                           "PluginFusioninventoryConfig");
 
 Html::footer();
 
