@@ -799,6 +799,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             // vm in computer list
             $computervm = new Computer();
             foreach ($a_computerinventory['virtualmachine_creation'] as $a_vm) {
+               // Define location of physical computer (host)
+               $a_vm['locations_id'] = $computer->fields['locations_id'];
+               
                if (isset($a_vm['uuid'])
                        && $a_vm['uuid'] != '') {
                   $query = "SELECT * FROM `glpi_computers`
