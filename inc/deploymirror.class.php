@@ -113,6 +113,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
 
    function showForm($id, $options=array()) {
+      global $CFG_GLPI;
 
       if ($id!='') {
          $this->getFromDB($id);
@@ -142,6 +143,16 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<td>".__('Mirror location', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
 
+      echo "<script type='text/javascript'>\n";
+      echo "document.getElementsByName('is_recursive')[0].id = 'is_recursive';\n";
+      echo "</script>";
+      
+      $params = array('is_recursive' => '__VALUE__',
+                      'id'           => $id);
+      Ajax::updateItemOnEvent('is_recursive', "displaydropdownlocation", 
+              $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlocation.php", $params);
+      
+      echo "<div id='displaydropdownlocation'>";
       // Location option
       Location::dropdown(
          array(
@@ -150,6 +161,7 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
             'entity_sons' => $this->isRecursive(),
          )
       );
+      echo "</div>";
       echo "</td></tr>";
 
       $this->showFormButtons($options);

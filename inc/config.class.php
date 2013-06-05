@@ -579,7 +579,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo __('Create computer based on virtual machine information (be sure not have agent FusionInventory installed on these virtual machines !)', 'fusioninventory')."&nbsp;:";
+      echo __('Create computer based on virtual machine information ( only when the virtual machine has no inventory agent ! )', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("create_vm", $pfConfig->getValue('create_vm'));

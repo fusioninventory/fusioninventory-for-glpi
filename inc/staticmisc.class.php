@@ -268,7 +268,7 @@ class PluginFusioninventoryStaticmisc {
    *   itemtype itemtype of object
    *   value name of the itemtype
    **/
-   static function task_definitiontype_ESX($a_itemtype) {
+   static function task_definitiontype_InventoryComputerESX($a_itemtype) {
       return array ('' => Dropdown::EMPTY_VALUE ,
                     'PluginFusioninventoryCredentialIp' =>
                            PluginFusioninventoryCredentialIp::getTypeName());
@@ -284,7 +284,7 @@ class PluginFusioninventoryStaticmisc {
    * @return dropdown list of computers
    *
    **/
-   static function task_definitionselection_PluginFusioninventoryCredentialIp_ESX($title) {
+   static function task_definitionselection_PluginFusioninventoryCredentialIp_InventoryComputerESX($title) {
       global $DB;
 
       $query = "SELECT `a`.`id`, `a`.`name`
@@ -310,7 +310,7 @@ class PluginFusioninventoryStaticmisc {
 
    //------------------------------------------ Actions-------------------------------------//
 
-   static function task_actiontype_ESX($a_itemtype) {
+   static function task_actiontype_InventoryComputerESX($a_itemtype) {
       return array ('' => Dropdown::EMPTY_VALUE ,
                     'PluginFusioninventoryAgent' => __('Agents', 'fusioninventory'));
 
@@ -356,7 +356,7 @@ class PluginFusioninventoryStaticmisc {
 
 
 
-   static function task_actionselection_PluginFusioninventoryAgent_ESX() {
+   static function task_actionselection_PluginFusioninventoryAgent_InventoryComputerESX() {
 
       $array = array();
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();

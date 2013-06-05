@@ -5066,9 +5066,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             // Update
             foreach ($oldtableip as $ip) {
                $input = array();
-               $input['itemtype'] = "NetworkName";
-               $input['items_id']  = $networknames_id;
-               $input['name']     = $ip;
+               $input['itemtype']   = "NetworkName";
+               $input['items_id']   = $networknames_id;
+               $input['name']       = $ip;
+               $input['is_dynamic'] = 1;
                $ipAddress->add($input);
             }
          }

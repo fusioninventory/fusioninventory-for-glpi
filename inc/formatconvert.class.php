@@ -863,11 +863,12 @@ class PluginFusioninventoryFormatconvert {
             foreach ($array['VIRTUALMACHINES'] as $a_virtualmachines) {
                $a_inventory['virtualmachine_creation'][] = $thisc->addValues($a_virtualmachines,
                                               array(
-                                                 'NAME'        => 'name',
-                                                 'VCPU'        => 'vcpu',
-                                                 'MEMORY'      => 'ram',
-                                                 'VMTYPE'      => 'computertypes_id',
-                                                 'UUID'        => 'uuid'));
+                                                 'NAME'            => 'name',
+                                                 'VCPU'            => 'vcpu',
+                                                 'MEMORY'          => 'ram',
+                                                 'VMTYPE'          => 'computertypes_id',
+                                                 'UUID'            => 'uuid',
+                                                 'OPERATINGSYSTEM' => 'operatingsystems_id'));
             }
          }
       }
