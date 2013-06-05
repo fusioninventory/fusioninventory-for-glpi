@@ -2647,6 +2647,39 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $migration->migrationOneTable($newTable);
    $DB->list_fields($newTable, FALSE);
 
+   
+   
+
+   /*
+    * Table glpi_plugin_fusioninventory_snmpmodelconstructdevices_users
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_snmpmodelconstructdevices_users';
+      $a_table['oldname'] = array('glpi_plugin_fusinvsnmp_constructdevices_users');
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']       = array('type'    => 'autoincrement',
+                                             'value'   => '');
+      $a_table['fields']['users_id'] = array('type'    => 'integer',
+                                             'value'   => NULL);
+      $a_table['fields']['login']    = array('type'    => 'string',
+                                             'value'   => NULL);
+      $a_table['fields']['password'] = array('type'    => 'string',
+                                             'value'   => NULL);
+      $a_table['fields']['key']      = array('type'    => 'string',
+                                             'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+      $a_table['keys'][] = array('field' => 'users_id', 'name' => '', 'type' => 'INDEX');
+      
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+      
 
 
    /*
