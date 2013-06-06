@@ -207,6 +207,12 @@ function pluginFusioninventoryInstall($version, $migration='') {
       if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload')) {
          mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload');
       }
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/walks')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/walks');
+      }
+      if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmpmodels')) {
+         mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmpmodels');
+      }
    /*
     * Deploy folders
     */

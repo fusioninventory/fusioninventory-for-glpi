@@ -337,12 +337,13 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          echo "&nbsp; &nbsp; | &nbsp; &nbsp;";
          echo "<a href='".$CFG_GLPI['root_doc'].
                  "/plugins/fusioninventory/front/constructsendmodel.php?id=".$data->device->id."' ".
-                 "target='_blank'>Get SNMP model</a>";
+                 "target='_blank'>".__('Get SNMP model', 'fusioninventory')."</a>";
          if ($data->device->snmpmodels_id > 0) {
             echo "&nbsp; &nbsp; | &nbsp; &nbsp;";
             echo "<a href='".$CFG_GLPI['root_doc'].
                     "/plugins/fusioninventory/front/constructsendmodel.php?models_id=".
-                    $data->device->snmpmodels_id."' target='_blank'>Import SNMP model</a>";
+                    $data->device->snmpmodels_id."' target='_blank'>".
+                    __('Import SNMP model', 'fusioninventory')."</a>";
          }
          echo "</th>";
          echo "</tr>";
@@ -969,13 +970,13 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th>";
-      echo "Download SNMP models, please wait...";
+      echo __('Download SNMP models, please wait...', 'fusioninventory');
       echo "</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      Html::createProgressBar("Download SNMP models, please wait...");
+      Html::createProgressBar(__('Download SNMP models, please wait...', 'fusioninventory'));
       $i = 0;
       $nb = count($_POST['models']);
       foreach ($_POST['models'] as $models_id) {

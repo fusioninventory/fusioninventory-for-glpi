@@ -102,7 +102,7 @@ if ($pfConstructmodel->connect()) {
          $md5 = '';
          while ($i == '1') {
             $md5 = md5(rand(1, 1000000));
-            $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks`
                WHERE log='".$md5."' ";
             $result = $DB->query($query);
             if ($DB->numrows($result) == "0") {
@@ -110,8 +110,8 @@ if ($pfConstructmodel->connect()) {
             }   
          }
 
-         $query_ins = "INSERT INTO `glpi_plugin_fusioninventory_construct_walks` 
-            (`id`, `construct_device_id`, `log`)
+         $query_ins = "INSERT INTO `glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks` 
+            (`id`, `plugin_fusioninventory_snmpmodelconstructdevices_id`, `log`)
             VALUES (NULL , '".$jsonret->device->id."', '".$md5."')";
          $id_ins = $DB->query($query_ins);
          move_uploaded_file($_FILES['snmpwalkfile']['tmp_name'], 
@@ -121,12 +121,12 @@ if ($pfConstructmodel->connect()) {
          Html::redirect($CFG_GLPI['root_doc'].
                  "/plugins/fusioninventory/front/constructmodel.php?editoid=".$jsonret->device->id);
       } else if (isset($_POST['deletesnmpwalkfile'])) {
-         $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
-                   WHERE `construct_device_id`='".$_POST['devices_id']."'";
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks`
+                   WHERE `plugin_fusioninventory_snmpmodelconstructdevices_id`='".$_POST['devices_id']."'";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
             unlink(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$data['log']);
-            $query_delete = "DELETE FROM glpi_plugin_fusioninventory_construct_walks
+            $query_delete = "DELETE FROM glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks
                WHERE id='".$data['id']."'";
             $DB->query($query_delete);
          }
@@ -147,7 +147,7 @@ if ($pfConstructmodel->connect()) {
 //    $dataret = $pfConstructmodel->sendGetDevice($_SESSION['plugin_fusioninventory_snmpwalks_id']);
 //         $pfConstructDevice->showForm($_SESSION['plugin_fusioninventory_snmpwalks_id'], $dataret);
       } else if (isset($_GET['editoid'])) {
-         $pfConstructDevice = new PluginFusioninventorySNMPConstructDevice();
+         $pfConstructDevice = new PluginFusioninventorySnmpmodelConstructDevice();
          $dataret = $pfConstructmodel->sendGetDevice($_GET['editoid']);
          $pfConstructDevice->showForm($_GET['editoid'], $dataret);
       

@@ -29,34 +29,42 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2012
- 
+   @since     2013
+
    ------------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
-
-Session::checkLoginUser();
-
-$pfConstructmodel = new PluginFusioninventoryConstructmodel();
-if (isset($_GET['models_id'])) {
-   $_POST['models'] = array($_GET['models_id']);
-   $_POST['nbmodels'] = 0;
-   $pfConstructmodel->importModels();
-   echo __('Importing SNMP models finished.', 'fusioninventory');
-} else {
-   if ($pfConstructmodel->connect()) {
-      if ($pfConstructmodel->showAuth()) {
-         $pfConstructmodel->getSendModel();
-      }
-      $pfConstructmodel->closeConnection();
-   }
+if (strpos($_SERVER['PHP_SELF'], "dropdownsnmpmodelconstruct_progressbar.php")) {
+   include ("../../../inc/includes.php");
+   header("Content-Type: text/html; charset=UTF-8");
+   Html::header_nocache();
 }
 
+Session::checkCentralAccess();
+
+echo "<table class='tab_cadre'>
+         <tr class='tab_bg_3'>
+            <th>".__('Printer cartridges', 'fusioninventory')."</th>
+         </tr>";
+foreach ($_POST as $cartridge_name => $percentage) {
+   echo "<tr class='tab_bg_3'>
+            <td>";
+      if ($percentage > 100) {
+         echo sprintf(__('Problem, have percentage > 100 (%s) for %s'),
+                         "<strong>".ceil($percentage)."%</strong>", 
+                         "<strong>".$cartridge_name."</strong>");
+         echo __('');
+      } else {
+         PluginFusioninventoryDisplay::bar(ceil($percentage), $cartridge_name, '', 300, 10);
+      }
+   echo " </td>
+         </tr>";
+}
+echo "</table>";
 ?>

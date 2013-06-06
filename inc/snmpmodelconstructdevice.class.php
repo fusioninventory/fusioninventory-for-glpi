@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
-class PluginFusinvsnmpConstructDevice extends CommonDBTM {
+class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
    private $suggest = 1;
 
    function showForm($id, $data) {
@@ -54,17 +54,105 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          <tr>
          <td>
          <a href='".$CFG_GLPI['root_doc'].
-            "/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$id."'>".
-            "Back to device form information</a>
+            "/plugins/fusioninventory/front/constructmodel.php?devices_id=".$id."'>".
+            __('Back to device form information', 'fusioninventory')."</a>
          </td>
          </tr>
          </table>";
+      
+      $a_mapping_name = array();
+      foreach ($data->mappings as $datamib) {
+         if (!empty($datamib->name)
+           && (strstr($datamib->name, "toner")
+              || strstr($datamib->name, "drum")
+              || strstr($datamib->name, "maintenancekit")
+              || strstr($datamib->name, "maintenancekit"))
+           && (!strstr($datamib->name, "max")
+              && !strstr($datamib->name, "remaining")
+              && !strstr($datamib->name, "used"))) {
+            $a_mapping_name[] = $datamib->name;
+         }
+      }
+      if ($data->device->itemtype == 'Printer') {
+         echo "<script type='text/javascript'>
+            function updatecartridge() {
+            cartridgevalues = '';\n";
+            foreach ($a_mapping_name as $mapping_name) {
+               echo "   progressbar = 0;
+                  if (document.getElementById('number_".$mapping_name."max').textContent > 0
+                     && document.getElementById('number_".$mapping_name."used').textContent > 0) {
 
+                     max = 0;
+                     used = 0;
+                     for (i=1; i <= document.getElementById('number_".$mapping_name."max').textContent; i++) {
+                        if (document.getElementById('check_".$mapping_name."max[' + i + ']').checked == true) {
+                           if (document.getElementById('value_".$mapping_name."max[' + i + ']').textContent > 0) {
+                              max = document.getElementById('value_".$mapping_name."max[' + i + ']').textContent;
+                           }
+                        }
+                     }
+                     for (i=1; i <= document.getElementById('number_".$mapping_name."used').textContent; i++) {
+                        if (document.getElementById('check_".$mapping_name."used[' + i + ']').checked == true) {
+                           if (document.getElementById('value_".$mapping_name."used[' + i + ']').textContent > 0) {
+                              used = document.getElementById('value_".$mapping_name."used[' + i + ']').textContent;
+                           }
+                        }
+                     }
+                     if (max > 0 && used > 0) {
+                        cartridgevalues = cartridgevalues + '".$mapping_name."=' + (100 -((used * 100) / max)) + '&';
+                        console.log('".$mapping_name." : ' + (100 -((used * 100) / max)));
+                        progressbar = 1;
+                     }
+                  } 
+                  if (progressbar == 0
+                     && document.getElementById('number_".$mapping_name."max').textContent > 0
+                     && document.getElementById('number_".$mapping_name."remaining').textContent > 0) {
+
+
+                     max = 0;
+                     remaining = 0;
+                     for (i=1; i <= document.getElementById('number_".$mapping_name."max').textContent; i++) {
+                        if (document.getElementById('check_".$mapping_name."max[' + i + ']').checked == true) {
+                           if (document.getElementById('value_".$mapping_name."max[' + i + ']').textContent > 0) {
+                              max = document.getElementById('value_".$mapping_name."max[' + i + ']').textContent;
+                           }
+                        }
+                     }
+                     for (i=1; i <= document.getElementById('number_".$mapping_name."remaining').textContent; i++) {
+                        if (document.getElementById('check_".$mapping_name."remaining[' + i + ']').checked == true) {
+                           if (document.getElementById('value_".$mapping_name."remaining[' + i + ']').textContent > 0) {
+                              remaining = document.getElementById('value_".$mapping_name."remaining[' + i + ']').textContent;
+                           }
+                        }
+                     }
+                     if (max > 0 && remaining > 0) {
+                        cartridgevalues = cartridgevalues + '".$mapping_name."=' + ((remaining * 100) / max) + '&';
+                        console.log('".$mapping_name." : ' + ((remaining * 100) / max));
+                     }
+                  }
+               ";
+            }
+               echo "
+                  Ext.get('displaycartridgebar').load({
+                     url: '".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownsnmpmodelconstruct_progressbar.php',
+                     scripts: true,
+                     params: cartridgevalues
+                  });   
+               };   
+         </script>";
+      }
+         
       echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
       echo "<input type='hidden' name='devices_id' value='".$id."' />";
 
       $ret = $this->manageWalks($data, $id);
 
+      if ($data->device->itemtype == 'Printer') {
+         echo "<script type='text/javascript'>
+            updatecartridge();
+         </script>";
+      }
+      
       if ($ret) {
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr class='tab_bg_1'>";
@@ -90,13 +178,21 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
    function manageWalks($json, $devices_id=0) {
       global $DB, $CFG_GLPI;
 
+      if ($json->device->itemtype == 'Printer') {
+         // Display gauge for printer cartridge
+         echo '<div style="position:fixed;top:90px;left:0px;width:300px; 
+            background-color:#e1dddd; z-index:10;border: 1px solid #828282;">
+            <div id="displaycartridgebar"></div>';
+         echo "</div>";
+      }
+      
       $snmpwalk = '';
-         $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
-                   WHERE `construct_device_id`='".$devices_id."'
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks`
+                   WHERE `plugin_fusioninventory_snmpmodelconstructdevices_id`='".$devices_id."'
                    LIMIT 1";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
-            $snmpwalk = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$data['log']);
+            $snmpwalk = file_get_contents(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$data['log']);
          }
 
       $a_mapping = array();
@@ -135,6 +231,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       }
       ksort($a_mapping);
       foreach ($a_mapping as $id) {
+         $num = 0;
          $data = $json->mappings->$id;
          echo "<table class='tab_cadre_fixe'>";
 
@@ -145,7 +242,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          echo "<td width='130' align='center'>";
          if ($snmpwalk != '') {
             echo "<a onclick=\"var w = window.open('".$CFG_GLPI["root_doc"].
-                    "/plugins/fusinvsnmp/front/constructmodel.form.php?mapping=".$data->name.
+                    "/plugins/fusioninventory/front/constructmodel.form.php?mapping=".$data->name.
                     "' , 'glpipopup', 'height=400, width=1000, top=100, left=100, scrollbars=yes')".
                     ";w.focus();\"><img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />".
                     "&nbsp;add a new oid</a>";
@@ -190,40 +287,52 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          }
          if (count($a_oidfound) == '1') {
             foreach ($a_oidfound as $oid_id => $a_found) {
+               $num++;
                if (isset($a_mibs[$oid_id."-".$data->id])) {
                   $this->displayOid($json->oids->$oid_id,
                                     $data->id,
+                                    $data->name,
                                     $a_found,
                                     $json->device->sysdescr,
+                                    $num,
                                     "green",
                                     $json->mibs->$id);
                } else if ($json->oids->$oid_id->percentage->$id > 49) {
                   $this->displayOid($json->oids->$oid_id,
                                     $data->id,
+                                    $data->name,
                                     $a_found,
                                     $json->device->sysdescr,
+                                    $num,
                                     "blue");
                }else {
                   $this->displayOid($json->oids->$oid_id,
                                     $data->id,
+                                    $data->name,
                                     $a_found,
-                                    $json->device->sysdescr);
+                                    $json->device->sysdescr,
+                                    $num);
                }
             }
          } else if (count($a_oidfound) > 1) {
             foreach ($a_oidfound as $oid_id => $a_found) {
+               $num++;
                if (isset($a_mibs[$oid_id."-".$data->id])) {
                   $this->displayOid($json->oids->$oid_id,
                                     $data->id,
+                                    $data->name,
                                     $a_found,
                                     $json->device->sysdescr,
+                                    $num,
                                     "green",
                                     $json->mibs->$id);
                } else {
                   $this->displayOid($json->oids->$oid_id,
                                     $data->id,
+                                    $data->name,
                                     $a_found,
-                                    $json->device->sysdescr);
+                                    $json->device->sysdescr,
+                                    $num);
                }
             }
          } else {
@@ -243,19 +352,24 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                if (isset($a_mibs2[$data->id])) {
                   $this->displayOid($json->oids->$oids_id_temp,
                                     $data->id,
+                                    $data->name,
                                     array(),
                                     $json->device->sysdescr,
+                                    0,
                                     "green",
                                     $json->mibs->$id);
                } else {
                   $this->displayOid($json->oids->$oids_id_temp,
                                     $data->id,
+                                    $data->name,
                                     array(),
                                     $json->device->sysdescr,
+                                    0,
                                     "blue");
                }
             }
          }
+         echo "<div style='visibility:hidden' id='number_".$data->name."'>".$num."</div>";
          echo "<br/>";
       }
       $portcounteroid = "";
@@ -280,15 +394,19 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
                   $id = "0";
          $this->displayOid($json->oids->$portcounteroid,
                            0,
+                           '',
                            array(),
                            $json->device->sysdescr,
+                           0,
                            "green",
                            $json->mibs->$id);
       } else {
          $this->displayOid($json->oids->$portcounteroid,
                            0,
+                           '',
                            array(),
                            $json->device->sysdescr,
+                           '0',
                            "blue");
       }
       if ($snmpwalk == '') {
@@ -299,7 +417,7 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
 
 
 
-   function displayOid($a_oid, $mappings_id, $a_match, $sysdescr, $color='red', $a_mibs=array()) {
+   function displayOid($a_oid, $mappings_id, $mapping_name, $a_match, $sysdescr, $num=0, $color='red', $a_mibs=array()) {
 
       $style = " style='border-color: #ff0000; border-width: 1px' ";
       $checked = '';
@@ -323,8 +441,15 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
       echo "</th>";
       echo "<th colspan='2' style='text-align: left;'>";
 
+      $onchange = '';
+      if (strstr($mapping_name, "toner")
+              || strstr($mapping_name, "drum")
+              || strstr($mapping_name, "maintenancekit")
+              || strstr($mapping_name, "maintenancekit")) {
+         $onchange = "onChange='updatecartridge()' id='check_".$mapping_name."[".$num."]'";
+      }
       echo "&nbsp;&nbsp;&nbsp;<input type='checkbox' name='oidsselected[]' value='".$a_oid->id."-".
-              $mappings_id."' ".$checked."/>&nbsp;";
+              $mappings_id."' ".$checked." ".$onchange." />&nbsp;";
       echo "&nbsp;<font color='#ff0000'>";
 //      } else {
 //         echo "&nbsp;&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
@@ -349,7 +474,29 @@ class PluginFusinvsnmpConstructDevice extends CommonDBTM {
          }
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='3'>";
-         echo trim($data);
+         if ($onchange != '' 
+                 && strstr($data, "Hex-STRING")) {
+            $split = explode(': ', trim($data));
+            $split[1] = str_replace(' ', '', $split[1]);
+            $str = '';
+            for ($i=0;$i< strlen($split[1]);$i+=2) {
+               $str .= chr(hexdec(substr($split[1],$i,2)));
+            }
+            echo $split[0].": ".$str;
+            
+         } else {
+            echo trim($data);
+         }
+         if (count($a_match) == 1 
+                 && $onchange != '') {
+            $split = explode(':', trim($data));
+            if (!isset($split[1])) {
+               $split[1] = 0;
+            }
+            echo "<div style='visibility:hidden' id='value_".$mapping_name."[".$num."]'>".trim($split[1], '" ')."</div>";
+         } else if ($onchange != '') {
+            echo "<div style='visibility:hidden' id='value_".$mapping_name."[".$num."]'>0</div>";
+         }
          echo "</td>";
          echo "</tr>";
          $i++;

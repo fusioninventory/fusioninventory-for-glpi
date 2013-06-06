@@ -67,13 +67,13 @@ if (isset($_POST['update'])) {
    
    $a_json['devices_id'] = $_POST['devices_id'];
    
-   $pfConstructmodel = new PluginFusioninventorySNMPConstructmodel();
+   $pfConstructmodel = new PluginFusioninventoryConstructmodel();
    if ($pfConstructmodel->connect()) {
       if ($pfConstructmodel->showAuth()) {
          if (isset($_POST['devices_id'])
             AND $_POST['devices_id'] > 0) {
             
-            $pfConstructDevice = new PluginFusioninventorySNMPConstructDevice();
+            $pfConstructDevice = new PluginFusioninventorySnmpmodelConstructDevice();
             $dataret = $pfConstructmodel->sendMib($a_json);
          }
       }

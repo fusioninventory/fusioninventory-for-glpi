@@ -55,19 +55,19 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
    *
    *@return nothing
    **/
-   static function bar($pourcentage, $message='', $order='') {
+   static function bar($pourcentage, $message='', $order='', $width='400', $height='20') {
       if ((!empty($pourcentage)) AND ($pourcentage < 0)) {
          $pourcentage = "";
       } else if ((!empty($pourcentage)) AND ($pourcentage > 100)) {
          $pourcentage = "";
       }
       echo "<div>
-               <table class='tab_cadre' width='400'>
-                  <tbody>
+               <table class='tab_cadre' width='".$width."'>
                      <tr>
-                        <td align='center' width='400'>";
+                        <td align='center' width='".$width."'>";
 
-      if ((!empty($pourcentage)) OR ($pourcentage == "0")) {
+      if ((!empty($pourcentage)) 
+              || ($pourcentage == "0")) {
          echo $pourcentage."% ".$message;
       }
 
@@ -75,11 +75,9 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
                      </tr>
                      <tr>
                         <td>
-                           <div>
                            <table cellpadding='0' cellspacing='0'>
-                              <tbody>
                                  <tr>
-                                    <td width='400' height='0' colspan='2'></td>
+                                    <td width='".$width."' height='0' colspan='2'></td>
                                  </tr>
                                  <tr>";
       if (empty($pourcentage)) {
@@ -104,23 +102,21 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
             }
          }
          if ($pourcentage == 0) {
-            echo "' height='20' width='1'>&nbsp;</td>";
+            echo "' height='".$height."' width='1'>&nbsp;</td>";
          } else {
-            echo "' height='20' width='".(4 * $pourcentage)."'>&nbsp;</td>";
+            echo "' height='".$height."' width='".(($width * $pourcentage) / 100)."'>&nbsp;</td>";
          }
       }
       if ($pourcentage == 0) {
-         echo "                           <td height='20' width='1'></td>";
+         echo "                           <td height='".$height."' width='1'></td>";
       } else {
-         echo "                           <td height='20' width='".
-                 (400 - (4 * $pourcentage))."'></td>";
+         echo "                           <td height='".$height."' width='".
+                 ($width - (($width * $pourcentage) / 100))."'></td>";
       }
       echo "                        </tr>
-                              </tbody>
                            </table>
                         </td>
                      </tr>
-                  </tbody>
                </table>
             </div>";
    }

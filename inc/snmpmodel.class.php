@@ -431,12 +431,12 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr class='tab_bg_1'>";
          echo "<th align='center'>";
-         echo "Importing SNMP models, please wait...";
+         echo __('Importing SNMP models, please wait...', 'fusioninventory');
          echo "</th>";
          echo "</tr>";
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
-         Html::createProgressBar("Importing SNMP models, please wait...");
+         Html::createProgressBar(__('Importing SNMP models, please wait...', 'fusioninventory'));
       }
       foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/snmpmodels/*.xml') as $file) {
          $importexport->import($file, 0, 1);
