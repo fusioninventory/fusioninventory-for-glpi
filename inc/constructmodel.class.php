@@ -50,8 +50,8 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
    function connect() {
       global $CFG_GLPI;
 
-      $this->fp = curl_init('http://127.0.0.1:9000/');
-      //$this->fp = curl_init('http://snmp.fusioninventory.org/');
+      //$this->fp = curl_init('http://127.0.0.1:9000/');
+      $this->fp = curl_init('http://snmp.fusioninventory.org/');
       curl_setopt($this->fp, CURLOPT_RETURNTRANSFER, 1);
       if ($CFG_GLPI['proxy_name'] != '') {
          curl_setopt($this->fp, CURLOPT_PROXYPORT, $CFG_GLPI['proxy_port']);
