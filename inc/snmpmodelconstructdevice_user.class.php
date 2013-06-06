@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryConstructdevice_User extends CommonDBTM {
+class PluginFusioninventorySnmpmodelConstructdevice_User extends CommonDBTM {
 
    static function canCreate() {
       return PluginFusioninventoryProfile::haveRight("model", "w");
@@ -78,14 +78,14 @@ class PluginFusioninventoryConstructdevice_User extends CommonDBTM {
 
 
    function showForm($users_id, $options=array()) {
-
+      
       $a_constructdeviceusers = current($this->find("`users_id`='".$users_id."'", '', 1));
       if (isset($a_constructdeviceusers['id'])) {
          $this->getFromDB($a_constructdeviceusers['id']);
       } else {
          $this->getEmpty();
       }
-
+      
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";

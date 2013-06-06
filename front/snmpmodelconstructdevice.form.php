@@ -79,7 +79,7 @@ if (isset($_POST['update'])) {
       }
    }
    $pfConstructmodel->closeConnection();
-   Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$a_json['devices_id']);
+   Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/constructmodel.php?devices_id=".$a_json['devices_id']);
 }
 
 Html::footer();

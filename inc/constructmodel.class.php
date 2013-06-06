@@ -50,8 +50,8 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
    function connect() {
       global $CFG_GLPI;
 
-      //$this->fp = curl_init('http://93.93.45.69:9000/');
-      $this->fp = curl_init('http://snmp.fusioninventory.org/');
+      $this->fp = curl_init('http://127.0.0.1:9000/');
+      //$this->fp = curl_init('http://snmp.fusioninventory.org/');
       curl_setopt($this->fp, CURLOPT_RETURNTRANSFER, 1);
       if ($CFG_GLPI['proxy_name'] != '') {
          curl_setopt($this->fp, CURLOPT_PROXYPORT, $CFG_GLPI['proxy_port']);
@@ -79,7 +79,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
    function showAuth() {
 
       $auth = array();
-      $a_userinfos = PluginFusioninventoryConstructdevice_User::getUserAccount($_SESSION['glpiID']);
+      $a_userinfos = PluginFusioninventorySnmpmodelConstructdevice_User::getUserAccount($_SESSION['glpiID']);
       if (!isset($a_userinfos['login'])) {
          echo "<table class='tab_cadre_fixe'>";
 
@@ -256,12 +256,12 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          <tr>
          <td>
          <a href='".$CFG_GLPI['root_doc'].
-              "/plugins/fusinvsnmp/front/constructmodel.php?reset=reset'>Back to main menu</a>
+              "/plugins/fusioninventory/front/constructmodel.php?reset=reset'>Back to main menu</a>
          </td>
          </tr>
          </table>";
       $a_lock = explode("-", $data->device->lock);
-      $a_userinfos = PluginFusioninventoryConstructdevice_User::getUserAccount($_SESSION['glpiID']);
+      $a_userinfos = PluginFusioninventorySnmpmodelConstructdevice_User::getUserAccount($_SESSION['glpiID']);
       if ($data->device->id == '0') {
          echo "<table class='tab_cadre_fixe'>";
 
@@ -308,26 +308,26 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          } else {
             $id = $data->device->id;
             Html::redirect($CFG_GLPI['root_doc'].
-                              "/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$id);
+                              "/plugins/fusioninventory/front/constructmodel.php?devices_id=".$id);
          }
-         $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
-                   WHERE `construct_device_id`='".$id."'
+         $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks`
+                   WHERE `plugin_fusioninventory_snmpmodelconstructdevices_id`='".$id."'
                    LIMIT 1";
          $result=$DB->query($query);
          if ($DB->numrows($result) == '0') {
             $edit = 0;
          } else {
             $sqldata = $DB->fetch_assoc($result);
-            if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$sqldata['log'])) {
+            if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$sqldata['log'])) {
                $edit = 0;
-               $querydel = "DELETE FROM `glpi_plugin_fusioninventory_construct_walks`
-                   WHERE `construct_device_id`='".$id."'";
+               $querydel = "DELETE FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks`
+                   WHERE `plugin_fusioninventory_snmpmodelconstructdevices_id`='".$id."'";
                $DB->query($querydel);
             }
          }
 
          echo "<a href='".$CFG_GLPI['root_doc'].
-                 "/plugins/fusinvsnmp/front/constructmodel.php?editoid=".$data->device->id."'>";
+                 "/plugins/fusioninventory/front/constructmodel.php?editoid=".$data->device->id."'>";
          if ($edit == '1') {
             echo "Edit oids";
          } else {
@@ -336,12 +336,12 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          echo "</a>";
          echo "&nbsp; &nbsp; | &nbsp; &nbsp;";
          echo "<a href='".$CFG_GLPI['root_doc'].
-                 "/plugins/fusinvsnmp/front/constructsendmodel.php?id=".$data->device->id."' ".
+                 "/plugins/fusioninventory/front/constructsendmodel.php?id=".$data->device->id."' ".
                  "target='_blank'>Get SNMP model</a>";
          if ($data->device->snmpmodels_id > 0) {
             echo "&nbsp; &nbsp; | &nbsp; &nbsp;";
             echo "<a href='".$CFG_GLPI['root_doc'].
-                    "/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".
+                    "/plugins/fusioninventory/front/constructsendmodel.php?models_id=".
                     $data->device->snmpmodels_id."' target='_blank'>Import SNMP model</a>";
          }
          echo "</th>";
@@ -665,11 +665,11 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       } else {
          if (is_array($models_id)) {
             foreach ($data->snmpmodel as $model) {
-               file_put_contents(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/'.$model->name.'.xml',
+               file_put_contents(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmpmodels/'.$model->name.'.xml',
                                  trim($model->model));
             }
          } else {
-            file_put_contents(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/'.$data->snmpmodel->name.
+            file_put_contents(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmpmodels/'.$data->snmpmodel->name.
                                  '.xml',
                               trim($data->snmpmodel->model));
          }
@@ -729,9 +729,9 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
             if ($a_devices['stable'] == '0') {
                $stable = 'part';
             }
-            $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_modeldevices`
-                      LEFT JOIN `glpi_plugin_fusinvsnmp_models`
-                         ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodeldevices`
+                      LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
+                         ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
                       WHERE `sysdescr` = '".$a_devices['sysdescr']."'
                       LIMIT 1";
             $result = $DB->query($query);
@@ -746,15 +746,15 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
                $nbnotinglpi++;
             }
 
-            $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
-                      WHERE `construct_device_id` = '".$a_devices['id']."'
+            $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks`
+                      WHERE `plugin_fusioninventory_snmpmodelconstructdevices_id` = '".$a_devices['id']."'
                       LIMIT 1";
             $result = $DB->query($query);
             if ($DB->numrows($result) == "1") {
                $sqldata = $DB->fetch_assoc($result);
-               if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$sqldata['log'])) {
-                  $querydel = "DELETE FROM `glpi_plugin_fusioninventory_construct_walks`
-                      WHERE `construct_device_id`='".$a_devices['id']."'";
+               if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$sqldata['log'])) {
+                  $querydel = "DELETE FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks`
+                      WHERE `plugin_fusioninventory_snmpmodelconstructdevices_id`='".$a_devices['id']."'";
                   $DB->query($querydel);
                } else {
                   $snmpfile = 0;
@@ -815,17 +815,17 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='3'>";
       if ($modelimport == 'not') {
-         echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/pics/box_red.png'/>";
+         echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/box_red.png'/>";
          echo "</th>";
          echo "<th colspan='5'>";
          echo "Models not imported";
       } else if ($modelimport == 'part') {
-         echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/pics/box_orange.png'/>";
+         echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/box_orange.png'/>";
          echo "</th>";
          echo "<th colspan='5'>";
          echo "Models to be updated";
       } else if ($modelimport == 'ok') {
-         echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusinvsnmp/pics/box_green.png'/>";
+         echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/box_green.png'/>";
          echo "</th>";
          echo "<th colspan='5'>";
          echo "Models up to date";
@@ -888,7 +888,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
             echo "</td>";
             echo "<td align='center' rowspan='".$nbdevices."'>";
             echo "<a href='".$CFG_GLPI['root_doc'].
-                    "/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".
+                    "/plugins/fusioninventory/front/constructsendmodel.php?models_id=".
                     $a_models['id']."'>";
             echo "<font color='#000000'>".$a_models['name']."</font>";
             echo "</a>";
@@ -911,7 +911,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
                echo "</td>";
                echo "<td align='center'>";
                echo "<a href='".$CFG_GLPI['root_doc'].
-                       "/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".
+                       "/plugins/fusioninventory/front/constructmodel.php?devices_id=".
                        $a_devices['id']."'>";
                echo "<img src='".$CFG_GLPI["root_doc"].
                        "/pics/rapports.png' width='18' height='18' />";
@@ -927,9 +927,9 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
                echo "</td>";
                if ($modelimport == 'part') {
                   echo "<td align='center'>";
-                  $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_modeldevices`
-                            LEFT JOIN `glpi_plugin_fusinvsnmp_models`
-                               ON `plugin_fusinvsnmp_models_id`=`glpi_plugin_fusinvsnmp_models`.`id`
+                  $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodeldevices`
+                            LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
+                               ON `plugin_fusioninventory_snmpmodels_id`=`glpi_plugin_fusioninventory_snmpmodels`.`id`
                             WHERE `sysdescr` = '".$a_devices['sysdescr']."'
                             LIMIT 1";
                   $result = $DB->query($query);
@@ -946,8 +946,8 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
                }
 
                echo "<td align='center'>";
-               $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
-                         WHERE `construct_device_id` = '".$a_devices['id']."'
+               $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks`
+                         WHERE `plugin_fusioninventory_snmpmodelconstructdevices_id` = '".$a_devices['id']."'
                          LIMIT 1";
                $result = $DB->query($query);
                if ($DB->numrows($result) == "1") {
@@ -995,7 +995,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       if (count($_POST['models']) == $_POST['nbmodels']) {
          // Import all models
          $pfModel = new PluginFusioninventorySNMPModel();
-         $pfModel->importAllModels(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels');
+         $pfModel->importAllModels(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmpmodels');
 
       } else {
          // Import each model
@@ -1010,11 +1010,11 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          echo "<td align='center'>";
          Html::createProgressBar("Importing SNMP models, please wait...");
          $nb = 0;
-         foreach (glob(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/*.xml') as $file) {
+         foreach (glob(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmpmodels/*.xml') as $file) {
             $nb++;
          }
          $i = 0;
-         foreach (glob(GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/*.xml') as $file) {
+         foreach (glob(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmpmodels/*.xml') as $file) {
             $pfImportExport->import($file, 0);
 
             $i++;
@@ -1026,7 +1026,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          echo "</table>";
          PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
       }
-      $dir = GLPI_PLUGIN_DOC_DIR.'/fusinvsnmp/tmpmodels/';
+      $dir = GLPI_PLUGIN_DOC_DIR.'/fusioninventory/tmpmodels/';
       $objects = scandir($dir);
       foreach ($objects as $object) {
          if ($object != "." && $object != "..") {

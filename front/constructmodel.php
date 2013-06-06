@@ -88,7 +88,7 @@ if ($pfConstructmodel->connect()) {
          if (isset($_SESSION['plugin_fusioninventory_itemtype'])) {
             unset($_SESSION['plugin_fusioninventory_itemtype']);
          }
-         Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php");
+         Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/constructmodel.php");
       
       } else if (isset($_FILES['snmpwalkfile'])) {
          if (isset($_POST['sysdescr'])) {
@@ -115,17 +115,17 @@ if ($pfConstructmodel->connect()) {
             VALUES (NULL , '".$jsonret->device->id."', '".$md5."')";
          $id_ins = $DB->query($query_ins);
          move_uploaded_file($_FILES['snmpwalkfile']['tmp_name'], 
-                            GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$md5);
+                            GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$md5);
 
          $_SESSION['plugin_fusioninventory_snmpwalks_id'] = $jsonret->device->id;
          Html::redirect($CFG_GLPI['root_doc'].
-                 "/plugins/fusinvsnmp/front/constructmodel.php?editoid=".$jsonret->device->id);
+                 "/plugins/fusioninventory/front/constructmodel.php?editoid=".$jsonret->device->id);
       } else if (isset($_POST['deletesnmpwalkfile'])) {
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
                    WHERE `construct_device_id`='".$_POST['devices_id']."'";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
-            unlink(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$data['log']);
+            unlink(GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$data['log']);
             $query_delete = "DELETE FROM glpi_plugin_fusioninventory_construct_walks
                WHERE id='".$data['id']."'";
             $DB->query($query_delete);
