@@ -481,6 +481,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $input['name']          = $oldAgent['name'];
             $input['useragent']     = $oldAgent['useragent'];
             $input['token']         = $oldAgent['token'];
+            $input['tag']           = $oldAgent['tag'];
             $input['entities_id']   = $entities_id;
             $this->update($input);
             $this->delete($oldAgent);

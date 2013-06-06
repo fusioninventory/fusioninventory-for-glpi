@@ -137,13 +137,11 @@ class PluginFusioninventoryInventoryComputerInventory {
       // Get tag is defined and put it in fusioninventory_agent table
          $tagAgent = "";
          if (isset($a_computerinventory['ACCOUNTINFO'])) {
-            foreach($a_computerinventory['ACCOUNTINFO'] as $tag) {
-               if (isset($tag['KEYNAME'])
-                       AND $tag['KEYNAME'] == 'TAG') {
-                  if (isset($tag['KEYVALUE'])
-                          AND $tag['KEYVALUE'] != '') {
-                     $tagAgent = $tag['KEYVALUE'];
-                  }
+            if (isset($a_computerinventory['ACCOUNTINFO']['KEYNAME'])
+                    && $a_computerinventory['ACCOUNTINFO']['KEYNAME'] == 'TAG') {
+               if (isset($a_computerinventory['ACCOUNTINFO']['KEYVALUE'])
+                       && $a_computerinventory['ACCOUNTINFO']['KEYVALUE'] != '') {
+                  $tagAgent = $a_computerinventory['ACCOUNTINFO']['KEYVALUE'];
                }
             }
          }
@@ -216,12 +214,8 @@ class PluginFusioninventoryInventoryComputerInventory {
 //               }
 //            }
 //         }
-         if ((isset($a_computerinventory['ACCOUNTINFO']['KEYNAME']))
-                 AND ($a_computerinventory['ACCOUNTINFO']['KEYNAME'] == 'TAG')) {
-            if (isset($a_computerinventory['ACCOUNTINFO']['KEYVALUE'])) {
-               $input['tag'] = $a_computerinventory['ACCOUNTINFO']['KEYVALUE'];
-            }
-         }
+         $input['tag'] = $tagAgent;
+         
          if ((isset($a_computerinventory['Computer']['name']))
                  AND ($a_computerinventory['Computer']['name'] != '')) {
             $input['name'] = $a_computerinventory['Computer']['name'];
