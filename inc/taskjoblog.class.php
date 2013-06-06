@@ -706,7 +706,7 @@ function appear_array(id){
    /**
    * Add a new line of log for a taskjob status
    *
-   * @param $taskjobs_id integer id of the taskjob
+   * @param $taskjobstates_id integer id of the taskjobstate
    * @param $items_id integer id of the item associated with taskjob status
    * @param $itemtype value type name of the item associated with taskjob status
    * @param $state value state of this taskjobstate
@@ -715,11 +715,11 @@ function appear_array(id){
    * @return nothing
    *
    **/
-   function addTaskjoblog($taskjobs_id, $items_id, $itemtype, $state, $comment) {
+   function addTaskjoblog($taskjobstates_id, $items_id, $itemtype, $state, $comment) {
 
       $this->getEmpty();
       unset($this->fields['id']);
-      $this->fields['plugin_fusioninventory_taskjobstates_id'] = $taskjobs_id;
+      $this->fields['plugin_fusioninventory_taskjobstates_id'] = $taskjobstates_id;
       $this->fields['date']      = date("Y-m-d H:i:s");
       $this->fields['items_id']  = $items_id;
       $this->fields['itemtype']  = $itemtype;
