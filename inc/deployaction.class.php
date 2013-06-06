@@ -114,7 +114,7 @@ class PluginFusioninventoryDeployAction {
          }
          if (isset($action_values['list'])) {
             $tmp = array_values($action_values['list']);
-            $params['value_1'] = $tmp[0];
+            $params['value_1'] = urlencode(addslashes($tmp[0]));
          }
          if (isset($action_values['to'])) {
             $params['value_2'] = urlencode(addslashes($action_values['to']));
