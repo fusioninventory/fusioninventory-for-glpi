@@ -140,7 +140,10 @@ class PluginFusioninventoryDeployCheck {
       $i = 0;
       foreach ($datas['jobs']['checks'] as $check) {
          //specific case for filesystem size
-         if (!empty($check['value']) && is_numeric($check['value'])) {
+         if (is_numeric($check['value'])) {
+            if ( $check['type'] == "freespaceGreater" ) {
+               $check['value'] = $check['value'] * 1024 * 1024;
+            }
             $check['value'] = PluginFusioninventoryDeployFile::processFilesize($check['value']);
          }
 
@@ -299,6 +302,11 @@ class PluginFusioninventoryDeployCheck {
                   $value2."' /></td>";
                break;
             case "input+unit":
+
+               // freespaceGreater check is saved as MiB
+               if ($value == 'freespaceGreater') {
+                  $value2 = $value2 * 1024 * 1024;
+               }
                $options['value'] = 'KB';
                if (isset($datas['edit'])) {
                   if ($value2 >= self::getUnitSize('GB')) {
@@ -331,9 +339,6 @@ class PluginFusioninventoryDeployCheck {
                /*
                 * The freespaceGreater check does not need to propose KiB or B
                 * because its value is based on MiB according to REST API.
-                * If those choices are given, the final value needs to be divide
-                * and the result would be stored as a float, which will add
-                * unnecessary code complexity.
                 *                               -- Kevin 'kiniou' Roy
                 */
 
@@ -379,19 +384,17 @@ class PluginFusioninventoryDeployCheck {
 
    static function add_item($params) {
 
-      if ( isset( $params['unit'] ) ) {
-         $unit_size = self::getUnitSize($params['unit']);
-      } else {
-         //if unit is not set, we use Bytes by default
-         $unit_size = self::getUnitSize('B');
-      }
-
       if (!isset($params['value'])) {
          $params['value'] = "";
       }
 
       if (!empty($params['value']) && is_numeric($params['value'])) {
          $params['value'] = $params['value'] * self::getUnitSize($params['unit']);
+
+         //Make an exception for freespaceGreater check which is saved as MiB
+         if ($params['deploy_checktype'] == "freespaceGreater") {
+            $params['value'] = $params['value'] / (1024*1024);
+         }
       }
 
       //prepare new check entry to insert in json
@@ -427,6 +430,11 @@ class PluginFusioninventoryDeployCheck {
 
       if (!empty($params['value']) && is_numeric($params['value'])) {
          $params['value'] = $params['value'] * self::getUnitSize($params['unit']);
+
+         //Make an exception for freespaceGreater check which is saved as MiB
+         if ($params['deploy_checktype'] == "freespaceGreater") {
+            $params['value'] = $params['value'] / (1024 * 1024);
+         }
       }
 
       //prepare updated check entry to insert in json
