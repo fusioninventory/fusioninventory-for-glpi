@@ -968,19 +968,19 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    }
 
    static function processFilesize($filesize) {
-      if(!is_null($filesize)) {
-      if ($filesize >= (1024 * 1024 * 1024)) {
-         $filesize = round($filesize / (1024 * 1024 * 1024), 1)."GiB";
-      } elseif ($filesize >= 1024 * 1024) {
-         $filesize = round($filesize /  (1024 * 1024), 1)."MiB";
+      if(is_numeric($filesize)) {
+         if ($filesize >= (1024 * 1024 * 1024)) {
+            $filesize = round($filesize / (1024 * 1024 * 1024), 1)."GiB";
+         } else if ($filesize >= 1024 * 1024) {
+            $filesize = round($filesize /  (1024 * 1024), 1)."MiB";
 
-      } elseif ($filesize >= 1024) {
-         $filesize = round($filesize / 1024, 1)."KB";
+         } else if ($filesize >= 1024) {
+            $filesize = round($filesize / 1024, 1)."KB";
 
-      } else {
-         $filesize = $filesize."B";
-      }
-      return $filesize;
+         } else {
+            $filesize = $filesize."B";
+         }
+         return $filesize;
       } else {
          return "N/A";
       }
