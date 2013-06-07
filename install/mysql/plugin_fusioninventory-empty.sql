@@ -758,6 +758,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_networkports` (
    `ifstatus` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `mac` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `ifdescr` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `ifalias` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `portduplex` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
    `trunk` tinyint(1) NOT NULL DEFAULT '0',
    `lastup` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -1240,6 +1241,8 @@ INSERT INTO `glpi_plugin_fusioninventory_mappings`
              'ifdescr',23,NULL),
           ('NetworkEquipment','portDuplex','glpi_plugin_fusioninventory_networkports',
              'portduplex',33,NULL),
+          ('NetworkEquipment','ifalias','glpi_plugin_fusioninventory_networkports',
+             'ifalias',120,NULL),
 -- Printers
           ('Printer','model','glpi_printers','printermodels_id',25,NULL),
           ('Printer','enterprise','glpi_printers','manufacturers_id',420,NULL),

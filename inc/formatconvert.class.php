@@ -1305,6 +1305,7 @@ class PluginFusioninventoryFormatconvert {
                                               'MAC'               => 'mac',
                                               'IFSPEED'           => 'speed',
                                               'IFDESCR'           => 'ifdescr',
+                                              'IFALIAS'           => 'ifalias',
                                               'IFINERRORS'        => 'ifinerrors',
                                               'IFINOCTETS'        => 'ifinoctets',
                                               'IFINTERNALSTATUS'  => 'ifinternalstatus',

@@ -707,6 +707,10 @@ class PluginFusioninventoryMapping extends CommonDBTM {
          return __('VLAN');
          break;
 
+      case 120:
+         return __('Alias', 'fusioninventory');
+         break;
+
       case 128:
          return __('Total number of printed pages', 'fusioninventory');
          break;

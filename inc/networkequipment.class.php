@@ -714,6 +714,10 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                echo __('Port not connected since', 'fusioninventory');
                break;
 
+            case 16:
+               echo __('Alias', 'fusioninventory');
+               break;
+
          }
          echo "</th>";
       }
@@ -1050,6 +1054,10 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                   echo Html::timestampToString($time, FALSE);
                }
                echo "</td>";
+               break;
+
+            case 16:
+               echo "<td>".$pfNetworkPort->fields["ifalias"]."</td>";
                break;
          }
       }

@@ -3781,6 +3781,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "ifdescr",
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->addField($newTable,
+                                 "ifalias",
+                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
                                  "portduplex",
                                  "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->addField($newTable,
@@ -6342,6 +6345,14 @@ function pluginFusioninventoryUpdatemapping() {
    $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
    $a_input['tablefield']  = 'portduplex';
    $a_input['locale']      = 33;
+   $pfMapping->set($a_input);
+
+   $a_input = array();
+   $a_input['itemtype']    = 'NetworkEquipment';
+   $a_input['name']        = 'ifalias';
+   $a_input['table']       = 'glpi_plugin_fusioninventory_networkports';
+   $a_input['tablefield']  = 'ifalias';
+   $a_input['locale']      = 120;
    $pfMapping->set($a_input);
 
    // Printers

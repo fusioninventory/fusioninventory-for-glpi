@@ -77,7 +77,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $tab[3]['name']          = __('MTU', 'fusioninventory');
 
       $tab[5]['table']         = $this->getTable();
-      $tab[5]['field']         = 'ifspeed ';
+      $tab[5]['field']         = 'ifspeed';
       $tab[5]['name']          = __('Speed');
 
       $tab[6]['table']         = $this->getTable();
@@ -88,9 +88,9 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $tab[7]['field']         = 'iflastchange';
       $tab[7]['name']          = __('Last change', 'fusioninventory');
 
-      $tab[8]['table']  = $this->getTable();
-      $tab[8]['field']  = 'ifinoctets';
-      $tab[8]['name']   = __('Number of bytes received / Number of bytes sent', 'fusioninventory');
+      $tab[8]['table']         = $this->getTable();
+      $tab[8]['field']         = 'ifinoctets';
+      $tab[8]['name']          = __('Number of bytes received / Number of bytes sent', 'fusioninventory');
 
       $tab[9]['table']         = $this->getTable();
       $tab[9]['field']         = 'ifinerrors';
@@ -119,6 +119,10 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $tab[15]['table']         = $this->getTable();
       $tab[15]['field']         = 'lastup';
       $tab[15]['name']          = __('Port not connected since', 'fusioninventory');
+
+      $tab[16]['table']         = $this->getTable();
+      $tab[16]['field']         = 'ifalias';
+      $tab[16]['name']          = __('Alias', 'fusioninventory');
 
       
       return $tab;
