@@ -1178,6 +1178,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
          SET `method`='networkdiscovery'
          WHERE `method`='netdiscovery'");
+      // * Update plugins_id      
+      $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
+         SET `plugins_id`='".$plugins_id."'");
 
 
 
