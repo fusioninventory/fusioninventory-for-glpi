@@ -831,7 +831,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_computerlicenseinfos`;
 CREATE TABLE `glpi_plugin_fusioninventory_computerlicenseinfos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
-  `softwarelicenses_id` int(11) DEFAULT NULL,
+  `softwarelicenses_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
   `fullname` varchar(255) DEFAULT NULL,
   `serial` varchar(255) DEFAULT NULL,

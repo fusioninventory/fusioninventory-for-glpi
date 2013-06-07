@@ -83,7 +83,10 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
      $result = $DB->query($query);
      while ($data=$DB->fetch_array($result)) {
         if ((strstr($data[0], "tracker")
-                OR strstr($data[0], $pluginname))
+                OR strstr($data[0], 'fusioninventory')
+                OR strstr($data[0], 'fusinvinventory')
+                OR strstr($data[0], 'fusinvsnmp')
+                OR strstr($data[0], 'fusinvdeploy'))
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_pcidevices"))
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_pcivendors"))
             AND(!strstr($data[0], "glpi_plugin_fusioninventory_ouis"))
