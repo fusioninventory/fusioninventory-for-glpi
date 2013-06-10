@@ -78,6 +78,8 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
       
     
       $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION['glpiactiveentities_string'] = 0;
+      $_SESSION['glpishowallentities'] = 1;
       $_SESSION['glpiname'] = 'glpi';
       $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
       $computer = new Computer();
@@ -157,6 +159,8 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
       
     
       $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION['glpiactiveentities_string'] = 0;
+      $_SESSION['glpishowallentities'] = 1;
       $_SESSION['glpiname'] = 'glpi';
       $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
       $computer = new Computer();
@@ -228,6 +232,8 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
          WHERE `id`='1'");
       
       $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION['glpiactiveentities_string'] = 0;
+      $_SESSION['glpishowallentities'] = 1;
       $_SESSION['glpiname'] = 'glpi';
       $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
       $computer = new Computer();

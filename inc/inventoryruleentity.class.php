@@ -55,7 +55,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
 
    function getTitle() {
       return __('Entity rules', 'fusioninventory');
-
    }
 
 
@@ -125,26 +124,20 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $criterias['tag']['field']     = 'name';
       $criterias['tag']['name']      = __('FusionInventory tag', 'fusioninventory');
 
-
       $criterias['domain']['field']     = 'name';
       $criterias['domain']['name']      = __('Domain');
-
 
       $criterias['subnet']['field']     = 'name';
       $criterias['subnet']['name']      = __('Subnet');
 
-
       $criterias['ip']['field']     = 'name';
       $criterias['ip']['name']      = __('Address')." ".__('IP');
-
 
       $criterias['name']['field']     = 'name';
       $criterias['name']['name']      = __('Computer\'s name');
 
-
       $criterias['serial']['field']     = 'name';
       $criterias['serial']['name']      = __('Serial Number');
-
 
       return $criterias;
    }

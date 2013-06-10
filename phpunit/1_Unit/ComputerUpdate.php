@@ -57,6 +57,9 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
       $date = date('Y-m-d H:i:s');
       
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION['glpiactiveentities_string'] = 0;
+      $_SESSION['glpishowallentities'] = 1;
       
       $a_inventory = array(
           'fusioninventorycomputer' => Array(
@@ -252,7 +255,6 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                                              'entities_id' => 0));
 
       $this->assertGreaterThan(0, $this->items_id, FALSE);
-      $_SESSION['glpiactive_entity'] = 0;
       $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
 
       // To be sure not have 2 same informations
@@ -966,6 +968,9 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
       $date = date('Y-m-d H:i:s');
       
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION['glpiactiveentities_string'] = 0;
+      $_SESSION['glpishowallentities'] = 1;
+
       
       $a_inventory = array(
           'fusioninventorycomputer' => Array(

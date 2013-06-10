@@ -229,7 +229,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          $pfConfig = new PluginFusioninventoryConfig();
 
 
-         // entity rules
+         // * entity rules
             $inputent = $input;
             if ((isset($a_computerinventory['Computer']['domains_id']))
                     AND (!empty($a_computerinventory['Computer']['domains_id']))) {
@@ -239,6 +239,10 @@ class PluginFusioninventoryInventoryComputerInventory {
                $inputent['serialnumber'] = $inputent['serial'];
             }
             $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
+            
+            // * Reload rules (required for unit tests)
+            $ruleEntity->getCollectionPart();
+            
             $dataEntity = $ruleEntity->processAllRules($inputent, array());
             if (isset($dataEntity['_ignore_import'])) {
                return;
@@ -269,6 +273,10 @@ class PluginFusioninventoryInventoryComputerInventory {
                      "PluginFusioninventoryInventoryComputerInventory";
 
       $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
+      
+      // * Reload rules (required for unit tests)
+      $ruleLocation->getCollectionPart();
+
       $dataLocation = $ruleLocation->processAllRules($input, array());
       if (isset($dataLocation['locations_id'])) {
          $_SESSION['plugin_fusioninventory_locations_id'] =
@@ -276,6 +284,10 @@ class PluginFusioninventoryInventoryComputerInventory {
       }
 
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
+      
+      // * Reload rules (required for unit tests)
+      $rule->getCollectionPart();
+
       $data = $rule->processAllRules($input, array(), array('class'=>$this));
       PluginFusioninventoryToolbox::logIfExtradebug("pluginFusioninventory-rules",
                                                    $data);

@@ -245,7 +245,7 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
          $input['field']         = 'entities_id';
          $input['value']         = 1;
          $ruleAction->add($input);  
-
+         
       // ** Add agent
       $pfAgent = new PluginFusioninventoryAgent();
       $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
@@ -405,6 +405,90 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
       $pfAgent->getFromDB($a_agents_id);
       
       $this->assertEquals($entities_id, $pfAgent->fields['entities_id'], $text);
+   }
+   
+   
+   public function testUpdateComputerThroughEntities() {
+      global $DB, $PF_CONFIG;
+
+      $DB->connect();
+
+      $Install = new Install();
+      $Install->testInstall(0);
+      
+      $PF_CONFIG['extradebug']        = 1;
+      $PF_CONFIG['transfers_id_auto'] = 1;
+      $GLPIlog = new GLPIlogs();
+      
+      $DB->query("INSERT INTO `glpi_entities` 
+         (`id`, `name`, `entities_id`, `completename`, `level`) 
+         VALUES (1, 'entity1', 0, 'Entité racine > entity1', 2)");
+      $DB->query("INSERT INTO `glpi_entities` 
+         (`id`, `name`, `entities_id`, `completename`, `level`) 
+         VALUES (2, 'entity2', 0, 'Entité racine > entity2', 2)");
+      
+      $_SESSION['glpiactive_entity']   = 0;
+      $_SESSION['glpishowallentities'] = 1;
+
+      $computer = new Computer();
+      
+      $input = array(
+          'name'        => 'pc01',
+          'entities_id' => 1 
+      );
+      $computer->add($input);
+      
+      // * Add rule computer to entity 2
+         $rule = new Rule();
+         $ruleCriteria = new RuleCriteria('PluginFusioninventoryInventoryRuleEntity');
+         $ruleAction = new RuleAction('PluginFusioninventoryInventoryRuleEntity');
+
+         $input = array();
+         $input['sub_type']   = 'PluginFusioninventoryInventoryRuleEntity';
+         $input['name']       = 'pc01';
+         $input['match']      = 'AND';
+         $input['is_active']  = 1;
+         $rules_id = $rule->add($input); 
+
+         $input = array();
+         $input['rules_id']   = $rules_id;
+         $input['criteria']   = 'name';
+         $input['condition']  = 0;
+         $input['pattern']    = 'pc01';
+         $ruleCriteria->add($input);
+
+         $input = array();
+         $input['rules_id']      = $rules_id;
+         $input['action_type']   = 'assign';
+         $input['field']         = 'entities_id';
+         $input['value']         = 2;
+         $ruleAction->add($input);  
+
+      $a_inventory = array();
+      $a_inventory['CONTENT']['HARDWARE'] = array(
+          'NAME' => 'pc01'
+      );
+      
+      // ** Add agent
+      $pfAgent = new PluginFusioninventoryAgent();
+      $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
+                                         'device_id' => 'pc-2013-02-13'));
+      $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
+
+      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
+      $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
+      
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+      
+      $a_computers = getAllDatasFromTable("glpi_computers");
+
+      $this->assertEquals(1, count($a_computers));
+      
+      $a_computer = current($a_computers);
+
+      $this->assertEquals(2, $a_computer['entities_id'], 'Entity of computer may be changed from 1 to 2');
+
    }
  }
 

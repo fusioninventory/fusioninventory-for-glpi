@@ -52,15 +52,12 @@ class PluginFusioninventoryInventoryRuleEntityCollection extends RuleCollection 
    public $menu_option='test';
 
    function getTitle() {
-
       return __('Entity rules', 'fusioninventory');
-
    }
 
 
 
    function prepareInputDataForProcess($input, $params) {
-
       return $input;
    }
 }

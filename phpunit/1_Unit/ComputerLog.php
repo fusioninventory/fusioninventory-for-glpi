@@ -59,6 +59,8 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
       $date = date('Y-m-d H:i:s');
       
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION['glpiactiveentities_string'] = 0;
+      $_SESSION['glpishowallentities'] = 1;
       
       $this->a_inventory = array(
           'fusioninventorycomputer' => Array(
