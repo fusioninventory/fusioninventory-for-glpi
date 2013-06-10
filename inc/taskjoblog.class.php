@@ -693,7 +693,7 @@ function appear_array(id){
 
       $text .= "</td>";
       if ($comment == '1') {
-         $text .= "<td align='center'>";
+         $text .= "<td class='fusinv_task_comment'>";
          $datas['comment'] = PluginFusioninventoryTaskjoblog::convertComment($datas['comment']);
          $text .= $datas['comment'];
          $text .= "</td>";

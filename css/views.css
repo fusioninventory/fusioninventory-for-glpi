@@ -108,3 +108,11 @@ td:not(#foo) > input[type=radio]:checked + label {
     position: absolute;
  }
 
+/* set task's comments to monospace and left align */
+.fusinv_task_comment {
+   width: 500px;
+   max-width: 500px;
+   text-align: left;
+   font-family: monospace;
+}
+
