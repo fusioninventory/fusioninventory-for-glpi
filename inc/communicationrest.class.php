@@ -114,7 +114,9 @@ class PluginFusioninventoryCommunicationRest {
 
    /**
     * Get jobs for an agent
-    * TODO: Deploy module needs this :) -- kiniou
+    * TODO: This methods must be used inplace of other methods in order to mutualize code and
+    * to fully support FusionInventory REST API for every task's types
+    *       -- kiniou
     */
    static function getJobsByAgent($params = array()) {
 //      $jobs = array();
@@ -171,24 +173,46 @@ class PluginFusioninventoryCommunicationRest {
 
       $taskjobstates = new PluginFusioninventoryTaskjobstate();
 
-      //Get the agent ID by his deviceid
-      //Get task job status : identifier is the uuid given by the agent
+      //Get the agent ID by its deviceid
       $agent = PluginFusioninventoryAgent::getByDeviceID($p['machineid']);
+      //Get task job status : identifier is the uuid given by the agent
       $taskjobstate_found = $taskjobstates->getFromDBByQuery("WHERE `uniqid`='" . $p['uuid'] . "'");
 
       if ($agent && $taskjobstate_found) {
+         $params["agent"] = $agent;
+         $params["taskjobstate_found"] = $taskjobstates;
          //Get taskjoblog associated
-         $taskjob = new PluginFusioninventoryTaskjob();
-         $taskjob->getFromDB($taskjobstates->fields['plugin_fusioninventory_taskjobs_id']);
-
-         $state = 1;
-         if ($p['code'] == 'ok') {
-            $state = 0;
+         $taskjoblog = new PluginFusioninventoryTaskjobLog();
+         $taskjoblog->getFromDBByQuery("WHERE `plugin_fusioninventory_taskjobstates_id`=". $taskjobstates->fields['id']);
+         switch($p['code']) {
+            case 'running':
+               $taskjoblog->addTaskjoblog(
+                  $taskjobstates->fields['id'],
+                  $taskjobstates->fields['items_id'],
+                  $taskjobstates->fields['itemtype'],
+                  PluginFusioninventoryTaskjoblog::TASK_RUNNING,
+                  $p['msg']
+               );
+               break;
+            case 'ok':
+               $taskjobstates->changeStatusFinish(
+                  $taskjobstates->fields['id'],
+                  $taskjobstates->fields['items_id'],
+                  $taskjobstates->fields['itemtype'],
+                  0, // everything goes well
+                  $p['msg']
+               );
+               break;
+            case 'ko':
+               $taskjobstates->changeStatusFinish(
+                  $taskjobstates->fields['id'],
+                  $taskjobstates->fields['items_id'],
+                  $taskjobstates->fields['itemtype'],
+                  1, // there was an error
+                  $p['msg']
+               );
+               break;
          }
-
-         $taskjobstates->changeStatusFinish($taskjobstates->fields['id'],
-                                            $taskjobstates->fields['items_id'],
-                                            $taskjobstates->fields['itemtype'], $state, $p['msg']);
       }
       self::sendOk();
    }

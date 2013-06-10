@@ -77,33 +77,61 @@ if (isset($_GET['action'])) {
          break;
 
       case 'setStatus':
+
+         $partjob_mapping = array(
+            "checking" => __("Checks"),
+            "downloading" => __("Files download"),
+            "prepare"   => __("Files preparation"),
+            "processing" => __("Actions"),
+         );
+
+         $error = FALSE;
+
          $params = array(
             'machineid' => $_GET['machineid'],
             'uuid' => $_GET['uuid']
          );
-         if ( array_key_exists("status", $_GET) ) {
-            $params['code'] = $_GET['status'];
-            switch($params['code']) {
-               case 'ok':
-                  if ( !array_key_exists("currentStep", $_GET) ) {
-                     $params['msg'] = $_GET['msg'];
-                  } else {
-                     $params['msg'] = $_GET['currentStep'] . ":" . $_GET['msg'];
-                  }
-                  break;
-               case 'ko':
-                  $params['code'] = 'ko';
-                  $params['msg'] = $_GET['msg'];
-                  break;
+
+         if ( array_key_exists("status", $_GET) && $_GET['status'] == 'ko') {
+            $params['code'] = 'ko';
+            if (array_key_exists("currentStep", $_GET)) {
+               $params['msg'] = $partjob_mapping[$_GET['currentStep']] . ":" . $_GET['msg'];
+            } else {
+               $params['msg'] = $_GET['msg'];
             }
-         } else {
-            $params['code'] = 'ok';
-            if ( !array_key_exists("currentStep", $_GET) ) {
+            $error = TRUE;
+         }
+
+
+         if ( $error != TRUE) {
+            if ( array_key_exists("msg", $_GET) && $_GET['msg'] === 'job successfully completed') {
+               //Job is ended and status should be ok
+               $params['code'] = 'ok';
                $params['msg'] = $_GET['msg'];
             } else {
-               $params['msg'] = $_GET['currentStep'] . ":" . $_GET['msg'];
+               $params['code'] = 'running';
+               if (array_key_exists("currentStep", $_GET)) {
+                  $params['msg'] = $partjob_mapping[$_GET['currentStep']] . ":" . $_GET['msg'];
+               } else {
+                  $params['msg'] = $_GET['msg'];
+               }
             }
          }
+         if (is_array($params['msg']) ) {
+
+            $tmp_msg = implode("\n",$params['msg']);
+            $tmp_msg =
+               stripcslashes(
+                  htmlspecialchars(
+                     $tmp_msg,
+                     ENT_SUBSTITUTE | ENT_DISALLOWED,
+                     'UTF-8',
+                     FALSE
+                  )
+               );
+            $params['msg'] = nl2br($tmp_msg);
+         }
+
          //Generic method to update logs
          PluginFusioninventoryCommunicationRest::updateLog($params);
          break;
