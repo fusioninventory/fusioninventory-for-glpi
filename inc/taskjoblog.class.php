@@ -716,7 +716,7 @@ function appear_array(id){
    *
    **/
    function addTaskjoblog($taskjobstates_id, $items_id, $itemtype, $state, $comment) {
-
+      global $DB;
       $this->getEmpty();
       unset($this->fields['id']);
       $this->fields['plugin_fusioninventory_taskjobstates_id'] = $taskjobstates_id;
@@ -724,7 +724,7 @@ function appear_array(id){
       $this->fields['items_id']  = $items_id;
       $this->fields['itemtype']  = $itemtype;
       $this->fields['state']     = $state;
-      $this->fields['comment']   = $comment;
+      $this->fields['comment']   = $DB->escape($comment);
 
       $this->addToDB();
    }
