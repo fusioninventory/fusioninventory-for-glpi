@@ -156,6 +156,23 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[14]['name']      = __('Last update');
       $tab[14]['datatype']  = 'datetime';
 
+
+      $tab[15]['table']     = $this->getTable();
+      $tab[15]['field']     = 'sysdescr';
+      $tab[15]['linkfield'] = '';
+      $tab[15]['name']      = __('Sysdescr', 'fusioninventory');
+      $tab[15]['datatype']  = 'text';
+
+      $tab[16]['table']     = 'glpi_plugin_fusioninventory_snmpmodels';
+      $tab[16]['field']     = 'name';
+      $tab[16]['linkfield'] = 'plugin_fusioninventory_snmpmodels_id';
+      $tab[16]['name']      = __('SNMP models', 'fusioninventory');
+      
+      $tab[17]['table']     = 'glpi_plugin_fusioninventory_configsecurities';
+      $tab[17]['field']     = 'name';
+      $tab[17]['linkfield'] = 'plugin_fusioninventory_configsecurities_id';
+      $tab[17]['name']      = __('SNMP authentication', 'fusioninventory');
+      
       $tab += NetworkPort::getSearchOptionsToAdd("PluginFusioninventoryUnknownDevice");
 
       return $tab;
@@ -571,9 +588,11 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             // Port don't exist
             // Create unknown device
             $input = array();
-            $manufacturer = 
-                     PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($ifmac);
-            $input['name'] = $manufacturer;
+            $a_manufacturer = array(
+                0 => PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($ifmac)
+            );
+            $a_manufacturer = PluginFusioninventoryFormatconvert::cleanArray($a_manufacturer);
+            $input['name'] = $a_manufacturer[0];
             if (isset($_SESSION["plugin_fusioninventory_entity"])) {
                $input['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
             }
