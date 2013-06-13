@@ -815,12 +815,16 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if ($computers_vm_id == 0) {
                      // Add computer
                      $a_vm['entities_id'] = $computer->fields['entities_id'];
-                     $computervm->add($a_vm);                     
+                     $computers_vm_id = $computervm->add($a_vm); 
+                     // Manage networks
+                     $this->manageNetworkPort($a_vm['networkport'], $computers_vm_id, FALSE);
                   } else {
-                     if ($pfAgent->getAgentWithComputerid($computers_vm_id) !== FALSE) {
+                     if ($pfAgent->getAgentWithComputerid($computers_vm_id) === FALSE) {
                         // Update computer
                         $a_vm['id'] = $computers_vm_id;
                         $computervm->update($a_vm);
+                        // Manage networks
+                        $this->manageNetworkPort($a_vm['networkport'], $computers_vm_id, FALSE);
                      }
                   }
                }
@@ -899,163 +903,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       // * Networkports
          if ($pfConfig->getValue("component_networkcard") != 0) {
             // Get port from unknown device if exist
-            foreach ($a_computerinventory['networkport'] as $a_networkport) {
-               if ($a_networkport['mac'] != '') {
-                  $a_networkports = $networkPort->find("`mac`='".$a_networkport['mac']."'
-                     AND `itemtype`='PluginFusioninventoryUnknownDevice'", "", 1);
-                  if (count($a_networkports) > 0) {
-                     $input = current($a_networkports);
-                     $unknowndevices_id = $input['items_id'];
-                     $input['itemtype'] = 'Computer';
-                     $input['items_id'] = $computers_id;
-                     $input['is_dynamic'] = 1;
-                     $input['name'] = $a_networkport['name'];
-                     $networkPort->update($input);
-                     $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-                     $pfUnknownDevice->delete(array('id'=>$unknowndevices_id), 1);
-                  }
-               }
-            }            
-            // end get port from unknwon device
-            
-            $db_networkport = array();
-            if ($no_history === FALSE) {
-               $query = "SELECT `id`, `name`, `mac`, `instantiation_type`
-                   FROM `glpi_networkports`
-                   WHERE `items_id` = '$computers_id'
-                     AND `itemtype`='Computer'
-                     AND `is_dynamic`='1'";
-               $result = $DB->query($query);
-               while (($data = $DB->fetch_assoc($result))) {
-                  $idtmp = $data['id'];
-                  unset($data['id']);
-                  if (is_null($data['mac'])) {
-                     $data['mac'] = '';
-                  }
-                  if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['name'])) {
-                     $data['name'] = Toolbox::addslashes_deep($data['name']);
-                  }
-                  $db_networkport[$idtmp] = array_map('strtolower', $data);
-               }
-            }
-            $simplenetworkport = array();
-            foreach ($a_computerinventory['networkport'] as $key=>$a_networkport) {
-               $a_field = array('name', 'mac', 'instantiation_type');
-               foreach ($a_field as $field) {
-                  if (isset($a_networkport[$field])) {
-                     $simplenetworkport[$key][$field] = $a_networkport[$field];
-                  }
-               }
-            }
-            foreach ($simplenetworkport as $key => $arrays) {
-               $arrayslower = array_map('strtolower', $arrays);
-               foreach ($db_networkport as $keydb => $arraydb) {
-                  if ($arrayslower == $arraydb) {
-                     // Get networkname
-                     $a_networknames_find = current($networkName->find("`items_id`='".$keydb."'
-                                                          AND `itemtype`='NetworkPort'", "", 1));
-                     if (!isset($a_networknames_find['id'])) {
-                        $a_networkport['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
-                        $a_networkport['items_id'] = $computers_id;
-                        $a_networkport['itemtype'] = "Computer";
-                        $a_networkport['is_dynamic'] = 1;
-                        $a_networkport['_no_history'] = $no_history;
-                        $a_networkport['items_id'] = $keydb;
-                        unset($a_networkport['_no_history']);
-                        $a_networkport['is_recursive'] = 0;
-                        $a_networkport['itemtype'] = 'NetworkPort';
-                        unset($a_networkport['name']);
-                        $a_networkport['_no_history'] = $no_history;
-                        $a_networknames_id = $networkName->add($a_networkport, array(), FALSE);
-                        $a_networknames_find['id'] = $a_networknames_id;
-                     }
-
-                     // Same networkport, verify ipaddresses
-                     $db_addresses = array();
-                     $query = "SELECT `id`, `name` FROM `glpi_ipaddresses`
-                         WHERE `items_id` = '".$a_networknames_find['id']."'
-                           AND `itemtype`='NetworkName'";
-                     $result = $DB->query($query);
-                     while ($data = $DB->fetch_assoc($result)) {
-                        $db_addresses[$data['id']] = $data['name'];
-                     }
-                     $a_computerinventory_ipaddress =
-                                 $a_computerinventory['networkport'][$key]['ipaddress'];
-                     foreach ($a_computerinventory_ipaddress as $key2 => $arrays2) {
-                        foreach ($db_addresses as $keydb2 => $arraydb2) {
-                           if ($arrays2 == $arraydb2) {
-                              unset($a_computerinventory_ipaddress[$key2]);
-                              unset($db_addresses[$keydb2]);
-                              break;
-                           }
-                        }
-                     }
-                     if (count($a_computerinventory_ipaddress) == 0
-                        AND count($db_addresses) == 0) {
-                        // Nothing to do
-                     } else {
-                        if (count($db_addresses) != 0) {
-                           // Delete ip address in DB
-                           foreach (array_keys($db_addresses) as $idtmp) {
-                              $iPAddress->delete(array('id'=>$idtmp), 1);
-                           }
-                        }
-                        if (count($a_computerinventory_ipaddress) != 0) {
-                           foreach ($a_computerinventory_ipaddress as $ip) {
-                              $input = array();
-                              $input['items_id']   = $a_networknames_find['id'];
-                              $input['itemtype']   = 'NetworkName';
-                              $input['name']       = $ip;
-                              $input['is_dynamic'] = 1;
-                              $iPAddress->add($input, array(), FALSE);
-                           }
-                        }
-                     }
-
-                     unset($db_networkport[$keydb]);
-                     unset($simplenetworkport[$key]);
-                     unset($a_computerinventory['networkport'][$key]);
-                     break;
-                  }
-               }
-            }
-
-            if (count($a_computerinventory['networkport']) == 0
-               AND count($db_networkport) == 0) {
-               // Nothing to do
-            } else {
-               if (count($db_networkport) != 0) {
-                  // Delete networkport in DB
-                  foreach ($db_networkport as $idtmp => $data) {
-                     $networkPort->delete(array('id'=>$idtmp), 1);
-                  }
-               }
-               if (count($a_computerinventory['networkport']) != 0) {
-                  foreach ($a_computerinventory['networkport'] as $a_networkport) {
-                     $a_networkport['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
-                     $a_networkport['items_id'] = $computers_id;
-                     $a_networkport['itemtype'] = "Computer";
-                     $a_networkport['is_dynamic'] = 1;
-                     $a_networkport['_no_history'] = $no_history;
-                     $a_networkport['items_id'] = $networkPort->add($a_networkport, array(), FALSE);
-                     unset($a_networkport['_no_history']);
-                     $a_networkport['is_recursive'] = 0;
-                     $a_networkport['itemtype'] = 'NetworkPort';
-                     unset($a_networkport['name']);
-                     $a_networkport['_no_history'] = $no_history;
-                     $a_networknames_id = $networkName->add($a_networkport, array(), FALSE);
-                     foreach ($a_networkport['ipaddress'] as $ip) {
-                        $input = array();
-                        $input['items_id']   = $a_networknames_id;
-                        $input['itemtype']   = 'NetworkName';
-                        $input['name']       = $ip;
-                        $input['is_dynamic'] = 1;
-                        $input['_no_history'] = $no_history;
-                        $iPAddress->add($input, array(), FALSE);
-                     }
-                  }
-               }
-            }
+            $this->manageNetworkPort($a_computerinventory['networkport'], $computers_id, $no_history);
          }
 
 
@@ -1584,6 +1432,173 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 //         }
 
 
+   }
+   
+   
+   
+   function manageNetworkPort($inventory_networkports, $computers_id, $no_history) {
+      global $DB;
+      
+      $networkPort = new NetworkPort();
+      $networkName = new NetworkName();
+      $iPAddress   = new IPAddress();      
+      foreach ($inventory_networkports as $a_networkport) {
+         if ($a_networkport['mac'] != '') {
+            $a_networkports = $networkPort->find("`mac`='".$a_networkport['mac']."'
+               AND `itemtype`='PluginFusioninventoryUnknownDevice'", "", 1);
+            if (count($a_networkports) > 0) {
+               $input = current($a_networkports);
+               $unknowndevices_id = $input['items_id'];
+               $input['itemtype'] = 'Computer';
+               $input['items_id'] = $computers_id;
+               $input['is_dynamic'] = 1;
+               $input['name'] = $a_networkport['name'];
+               $networkPort->update($input);
+               $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
+               $pfUnknownDevice->delete(array('id'=>$unknowndevices_id), 1);
+            }
+         }
+      }            
+      // end get port from unknwon device
+
+      $db_networkport = array();
+      if ($no_history === FALSE) {
+         $query = "SELECT `id`, `name`, `mac`, `instantiation_type`
+             FROM `glpi_networkports`
+             WHERE `items_id` = '$computers_id'
+               AND `itemtype`='Computer'
+               AND `is_dynamic`='1'";
+         $result = $DB->query($query);
+         while (($data = $DB->fetch_assoc($result))) {
+            $idtmp = $data['id'];
+            unset($data['id']);
+            if (is_null($data['mac'])) {
+               $data['mac'] = '';
+            }
+            if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['name'])) {
+               $data['name'] = Toolbox::addslashes_deep($data['name']);
+            }
+            $db_networkport[$idtmp] = array_map('strtolower', $data);
+         }
+      }
+      $simplenetworkport = array();
+      foreach ($inventory_networkports as $key=>$a_networkport) {
+         $a_field = array('name', 'mac', 'instantiation_type');
+         foreach ($a_field as $field) {
+            if (isset($a_networkport[$field])) {
+               $simplenetworkport[$key][$field] = $a_networkport[$field];
+            }
+         }
+      }
+      foreach ($simplenetworkport as $key => $arrays) {
+         $arrayslower = array_map('strtolower', $arrays);
+         foreach ($db_networkport as $keydb => $arraydb) {
+            if ($arrayslower == $arraydb) {
+               // Get networkname
+               $a_networknames_find = current($networkName->find("`items_id`='".$keydb."'
+                                                    AND `itemtype`='NetworkPort'", "", 1));
+               if (!isset($a_networknames_find['id'])) {
+                  $a_networkport['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
+                  $a_networkport['items_id'] = $computers_id;
+                  $a_networkport['itemtype'] = "Computer";
+                  $a_networkport['is_dynamic'] = 1;
+                  $a_networkport['_no_history'] = $no_history;
+                  $a_networkport['items_id'] = $keydb;
+                  unset($a_networkport['_no_history']);
+                  $a_networkport['is_recursive'] = 0;
+                  $a_networkport['itemtype'] = 'NetworkPort';
+                  unset($a_networkport['name']);
+                  $a_networkport['_no_history'] = $no_history;
+                  $a_networknames_id = $networkName->add($a_networkport, array(), FALSE);
+                  $a_networknames_find['id'] = $a_networknames_id;
+               }
+
+               // Same networkport, verify ipaddresses
+               $db_addresses = array();
+               $query = "SELECT `id`, `name` FROM `glpi_ipaddresses`
+                   WHERE `items_id` = '".$a_networknames_find['id']."'
+                     AND `itemtype`='NetworkName'";
+               $result = $DB->query($query);
+               while ($data = $DB->fetch_assoc($result)) {
+                  $db_addresses[$data['id']] = $data['name'];
+               }
+               $a_computerinventory_ipaddress =
+                           $inventory_networkports[$key]['ipaddress'];
+               foreach ($a_computerinventory_ipaddress as $key2 => $arrays2) {
+                  foreach ($db_addresses as $keydb2 => $arraydb2) {
+                     if ($arrays2 == $arraydb2) {
+                        unset($a_computerinventory_ipaddress[$key2]);
+                        unset($db_addresses[$keydb2]);
+                        break;
+                     }
+                  }
+               }
+               if (count($a_computerinventory_ipaddress) == 0
+                  AND count($db_addresses) == 0) {
+                  // Nothing to do
+               } else {
+                  if (count($db_addresses) != 0) {
+                     // Delete ip address in DB
+                     foreach (array_keys($db_addresses) as $idtmp) {
+                        $iPAddress->delete(array('id'=>$idtmp), 1);
+                     }
+                  }
+                  if (count($a_computerinventory_ipaddress) != 0) {
+                     foreach ($a_computerinventory_ipaddress as $ip) {
+                        $input = array();
+                        $input['items_id']   = $a_networknames_find['id'];
+                        $input['itemtype']   = 'NetworkName';
+                        $input['name']       = $ip;
+                        $input['is_dynamic'] = 1;
+                        $iPAddress->add($input, array(), FALSE);
+                     }
+                  }
+               }
+
+               unset($db_networkport[$keydb]);
+               unset($simplenetworkport[$key]);
+               unset($inventory_networkports[$key]);
+               break;
+            }
+         }
+      }
+
+      if (count($inventory_networkports) == 0
+         AND count($db_networkport) == 0) {
+         // Nothing to do
+      } else {
+         if (count($db_networkport) != 0) {
+            // Delete networkport in DB
+            foreach ($db_networkport as $idtmp => $data) {
+               $networkPort->delete(array('id'=>$idtmp), 1);
+            }
+         }
+         if (count($inventory_networkports) != 0) {
+            foreach ($inventory_networkports as $a_networkport) {
+               $a_networkport['entities_id'] = $_SESSION["plugin_fusioninventory_entity"];
+               $a_networkport['items_id'] = $computers_id;
+               $a_networkport['itemtype'] = "Computer";
+               $a_networkport['is_dynamic'] = 1;
+               $a_networkport['_no_history'] = $no_history;
+               $a_networkport['items_id'] = $networkPort->add($a_networkport, array(), FALSE);
+               unset($a_networkport['_no_history']);
+               $a_networkport['is_recursive'] = 0;
+               $a_networkport['itemtype'] = 'NetworkPort';
+               unset($a_networkport['name']);
+               $a_networkport['_no_history'] = $no_history;
+               $a_networknames_id = $networkName->add($a_networkport, array(), FALSE);
+               foreach ($a_networkport['ipaddress'] as $ip) {
+                  $input = array();
+                  $input['items_id']   = $a_networknames_id;
+                  $input['itemtype']   = 'NetworkName';
+                  $input['name']       = $ip;
+                  $input['is_dynamic'] = 1;
+                  $input['_no_history'] = $no_history;
+                  $iPAddress->add($input, array(), FALSE);
+               }
+            }
+         }
+      }
    }
 
 

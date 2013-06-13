@@ -82,6 +82,16 @@ class PluginFusioninventoryFormatconvert {
               && isset($datainventory['CONTENT']['BIOS'])
               && !is_array($datainventory['CONTENT']['BIOS'])) {
          unset($datainventory['CONTENT']['BIOS']);
+      }            
+      if (isset($datainventory['CONTENT']['VIRTUALMACHINES'])){
+         foreach ($datainventory['CONTENT']['VIRTUALMACHINES'] as $key=>$data){
+            if (isset($data['NETWORKS'])
+                    && !is_int(key($data['NETWORKS']))) {
+               $datainventory['CONTENT']['VIRTUALMACHINES'][$key]['NETWORKS'] =
+                  array($datainventory['CONTENT']['VIRTUALMACHINES'][$key]['NETWORKS']);
+               
+            }
+         }
       }
 
       // Hack for Network discovery and inventory
@@ -861,14 +871,54 @@ class PluginFusioninventoryFormatconvert {
       if ($pfConfig->getValue('create_vm') == 1) {
          if (isset($array['VIRTUALMACHINES'])) {
             foreach ($array['VIRTUALMACHINES'] as $a_virtualmachines) {
-               $a_inventory['virtualmachine_creation'][] = $thisc->addValues($a_virtualmachines,
+               $array_tmp = $thisc->addValues($a_virtualmachines,
                                               array(
                                                  'NAME'            => 'name',
                                                  'VCPU'            => 'vcpu',
                                                  'MEMORY'          => 'ram',
                                                  'VMTYPE'          => 'computertypes_id',
                                                  'UUID'            => 'uuid',
-                                                 'OPERATINGSYSTEM' => 'operatingsystems_id'));
+                                                 'OPERATINGSYSTEM' => 'operatingsystems_id',
+                                                 'CUSTOMFIELDS'    => 'comment'));
+               $array_tmp['is_dynamic'] = 1;
+               if (isset($array_tmp['comment'])
+                       && is_array($array_tmp['comment'])) {
+                  $a_com_temp = $array_tmp['comment'];
+                  $array_tmp['comment'] = '';
+                  foreach ($a_com_temp as $data) {
+                     $array_tmp['comment'] .= $data['NAME'].' : '.$data['VALUE'].'\n';
+                  }
+               }
+               $array_tmp['networkport'] = array();
+               if (isset($a_virtualmachines['NETWORKS'])
+                       && is_array($a_virtualmachines['NETWORKS'])) {
+                  foreach ($a_virtualmachines['NETWORKS'] as $data) {
+               
+                     $array_tmp_np = $thisc->addValues($data,
+                                  array(
+                                     'DESCRIPTION' => 'name',
+                                     'MACADDR'     => 'mac',
+                                     'IPADDRESS'   => 'ip'));
+                     $array_tmp_np['instantiation_type'] = 'NetworkPortEthernet';
+                     $array_tmp_np['mac'] = strtolower($array_tmp_np['mac']);
+                     if (isset($array_tmp['networkport'][$array_tmp_np['name'].'-'.$array_tmp_np['mac']])) {
+                        if (isset($array_tmp_np['ip'])) {
+                           $array_tmp['networkport'][$array_tmp_np['name'].'-'.$array_tmp_np['mac']]['ipaddress'][]
+                                   = $array_tmp_np['ip'];
+                        }
+                     } else {    
+                        if (isset($array_tmp_np['ip'])
+                                && $array_tmp_np['ip'] != '') {
+                           $array_tmp_np['ipaddress'] = array($array_tmp_np['ip']);
+                           unset($array_tmp_np['ip']);
+                        } else {
+                           $array_tmp_np['ipaddress'] = array();
+                        }                        
+                        $array_tmp['networkport'][$array_tmp_np['name'].'-'.$array_tmp_np['mac']] = $array_tmp_np;
+                     }
+                  }                  
+               }
+               $a_inventory['virtualmachine_creation'][] = $array_tmp;
             }
          }
       }
