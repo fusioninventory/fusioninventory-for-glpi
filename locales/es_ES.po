@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2013-04-30 08:09+0200\n"
-"PO-Revision-Date: 2013-04-30 06:11+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2013-06-13 18:54+0000\n"
+"Last-Translator: Tomás Abad <tabadgp@gmail.com>\n"
 "Language-Team: Spanish (Spain) (http://www.transifex.com/projects/p/FusionInventory/language/es_ES/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -248,7 +248,7 @@ msgstr "Grupos de ordenadores"
 
 #: setup.php:414 inc/ignoredimportdevice.class.php:51
 msgid "Equipment ignored on import"
-msgstr ""
+msgstr "Equipo ignorado al importar"
 
 #: setup.php:420
 msgid "Criteria rules"
@@ -262,7 +262,7 @@ msgstr "Reglas de entidad"
 #: setup.php:426 inc/inventoryrulelocation.class.php:57
 #: inc/inventoryrulelocationcollection.class.php:56
 msgid "Location rules"
-msgstr ""
+msgstr "Reglas de localización"
 
 #: setup.php:429 inc/menu.class.php:155
 msgid "Import agent XML file"
@@ -445,11 +445,11 @@ msgstr "Unión entre computador y licencia"
 
 #: inc/config.class.php:221 inc/staticmisc.class.php:69
 msgid "Computer Inventory"
-msgstr "Inventario de Ordenador"
+msgstr "Inventario de ordenador"
 
 #: inc/config.class.php:223
 msgid "Network Inventory"
-msgstr "Inventario de Red"
+msgstr "Inventario de red"
 
 #: inc/config.class.php:225 inc/menu.class.php:292
 msgid "Package management"
@@ -550,7 +550,7 @@ msgstr "Carpeta raíz para el envío de ficheros desde el servidor"
 
 #: inc/config.class.php:692
 msgid "Use this GLPI server as a mirror server"
-msgstr ""
+msgstr "Usar este servidor GLPI como servidor espejo"
 
 #: inc/configlogfield.class.php:133
 msgid "History configuration"
@@ -890,17 +890,17 @@ msgstr "Direcciones de servidores en espejo"
 
 #: inc/deploymirror.class.php:142
 msgid "Mirror location"
-msgstr ""
+msgstr "Localización de servidor espejo"
 
 #: inc/deploypackage.class.php:124
 msgid "Modification Denied"
-msgstr ""
+msgstr "Modificación Denegada"
 
 #: inc/deploypackage.class.php:129
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "La siguiente tarea está ejecutándose con este paquete"
+msgstr[1] "Las siguientes tareas están ejecutándose con este paquete"
 
 #: inc/deploypackage.class.php:294
 msgid "Add a package"
@@ -1000,7 +1000,7 @@ msgstr "Actualizado"
 #: inc/inventorycomputerbatteries.class.php:50
 #: inc/inventorycomputerbatteries.class.php:86
 msgid "Batterie"
-msgstr ""
+msgstr "Batería"
 
 #: inc/inventorycomputerblacklist.class.php:77
 #: inc/inventorycomputerblacklist.class.php:127
@@ -1013,7 +1013,7 @@ msgstr "Química"
 
 #: inc/inventorycomputercomputer.class.php:107
 msgid "Public contact address"
-msgstr ""
+msgstr "Dirección pública de contacto"
 
 #: inc/inventorycomputercomputer.class.php:117
 msgid "Date du BIOS"
@@ -2059,7 +2059,7 @@ msgstr "Reglas para criterios de existencia del ordenador"
 
 #: inc/menu.class.php:198
 msgid "Computer location rules"
-msgstr ""
+msgstr "Reglas de localización de ordenadores"
 
 #: inc/menu.class.php:213
 msgid "Rules"
@@ -2071,7 +2071,7 @@ msgstr "Estado del inventario de red"
 
 #: inc/menu.class.php:280
 msgid "Networking"
-msgstr ""
+msgstr "Red"
 
 #: inc/menu.class.php:304
 msgid "Deploy"
@@ -2165,7 +2165,7 @@ msgstr "Duplex"
 
 #: inc/networkequipment.class.php:714 inc/networkport.class.php:121
 msgid "Port not connected since"
-msgstr ""
+msgstr "Puerto no conectado desde"
 
 #: inc/networkport.class.php:89
 msgid "Last change"
@@ -2398,7 +2398,7 @@ msgstr "Inventario de servidores VMware ESX"
 
 #: inc/staticmisc.class.php:93
 msgid "Package install"
-msgstr ""
+msgstr "Instalar paquete"
 
 #: inc/staticmisc.class.php:183 inc/staticmisc.class.php:315
 msgid "Agents"
