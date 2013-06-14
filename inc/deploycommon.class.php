@@ -77,18 +77,32 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                $computers[] = $items_id;
                break;
             case 'Group':
-               $computer = new Computer;
+               $computer_object = new Computer();
 
                //find computers by user associated with this group
-               $group_users = new Group_User;
-               $users_id_a = array_keys($group_users->find("groups_id = '$items_id'"));
+               $group_users   = new Group_User();
+               $group         = new Group();
+               $group->getFromDB($items_id);
+
+               $members = array();
                $computers_a_1 = array();
-               foreach ($users_id_a as $users_id) {
-                  $computers_a_1 = array_keys($computer->find("users_id = '$users_id'"));
+               $computers_a_2 = array();
+
+               //array_keys($group_users->find("groups_id = '$items_id'"));
+               $members = $group_users->getGroupUsers($items_id);
+
+               foreach ($members as $member) {
+                  $computers = $computer_object->find("users_id = '${member['id']}'");
+                  foreach($computers as $computer) {
+                     $computers_a_1[] = $computer['id'];
+                  }
                }
 
                //find computers directly associated with this group
-               $computers_a_2 = array_keys($computer->find("groups_id = '$items_id'"));
+               $computers = $computer_object->find("groups_id = '$items_id'");
+               foreach($computers as $computer) {
+                  $computers_a_2[] = $computer['id'];
+               }
 
                //merge two previous array and deduplicate entries
                $computers = array_unique(array_merge($computers_a_1, $computers_a_2));
