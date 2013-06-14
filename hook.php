@@ -2489,7 +2489,7 @@ function plugin_pre_item_purge_fusioninventory($parm) {
          // Delete link between computer and agent fusion
          $query = "UPDATE `glpi_plugin_fusioninventory_agents`
                      SET `computers_id` = '0'
-                     WHERE `computers_id` = '".$parm["id"]."'";
+                     WHERE `computers_id` = '".$parm->getField('id')."'";
          $DB->query($query);
 
          PluginFusioninventoryInventoryComputerComputer::cleanComputer($parm->getField('id'));
@@ -2527,7 +2527,7 @@ function plugin_pre_item_delete_fusioninventory($parm) {
 
          case 'NetworkPort':
                $query_delete = "DELETE FROM `glpi_plugin_fusioninventory_networkports`
-                  WHERE `networkports_id`='".$parm["id"]."';";
+                  WHERE `networkports_id`='".$parm->getField('id')."';";
                $DB->query($query_delete);
             break;
 
