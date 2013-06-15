@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
-"POT-Creation-Date: 2013-06-15 21:52+0200\n"
-"PO-Revision-Date: 2013-06-15 19:55+0000\n"
+"POT-Creation-Date: 2013-06-15 22:20+0200\n"
+"PO-Revision-Date: 2013-06-15 20:22+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: Polish (Poland) (http://www.transifex.com/projects/p/FusionInventory/language/pl_PL/)\n"
 "MIME-Version: 1.0\n"
@@ -2106,6 +2106,10 @@ msgstr "Reguły"
 #: inc/menu.class.php:271
 msgid "Network inventory status"
 msgstr "Status inwentaryzacji sieci"
+
+#: inc/menu.class.php:289
+msgid "SNMP models creation"
+msgstr ""
 
 #: inc/menu.class.php:296
 msgid "Networking"
