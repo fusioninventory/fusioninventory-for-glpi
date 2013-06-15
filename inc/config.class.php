@@ -519,7 +519,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                           $pfConfig->getValue('import_antivirus'));
       echo "</td>";
       echo "<td>";
-      echo _n('Graphic card', 'Graphic cards', 2)."&nbsp;:";
+      echo _n('Graphics card', 'Graphics cards', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_graphiccard", $pfConfig->getValue('component_graphiccard'));
@@ -537,7 +537,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                               array('value'=>$pfConfig->getValue('location')));
       echo "</td>";
       echo "<td>";
-      echo _n('Sound card', 'Sound cards', 2)."&nbsp;:";
+      echo _n('Soundcard', 'Soundcards', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_soundcard", $pfConfig->getValue('component_soundcard'));
