@@ -46,10 +46,6 @@ Html::header(__('Features'), $_SERVER["PHP_SELF"],
              "plugins", "fusioninventory", "deploygroup");
 
 
-if (isset($_POST['itemtypen'])) {
-   $_POST['itemtype'] = $_POST['itemtypen'];
-}
-
 $pfDeployGroup = new PluginFusioninventoryDeployGroup();
 $pfDeployGroup_Dynamicdata = new PluginFusioninventoryDeployGroup_Dynamicdata();
 
