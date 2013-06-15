@@ -403,7 +403,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showYesNo("import_volume", $pfConfig->getValue('import_volume'));
       echo "</td>";
       echo "<th colspan='2'>";
-      echo __('Components');
+      echo _n('Component', 'Components', 2);
       echo "</th>";
       echo "</tr>";
 
