@@ -10,11 +10,11 @@ msgstr ""
 "POT-Creation-Date: 2013-06-15 21:52+0200\n"
 "PO-Revision-Date: 2013-06-15 19:55+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
-"Language-Team: Turkish (Turkey) (http://www.transifex.com/projects/p/FusionInventory/language/tr_TR/)\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/FusionInventory/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: tr_TR\n"
+"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: hook.php:51 hook.php:140 hook.php:147 hook.php:156 hook.php:163
@@ -109,7 +109,7 @@ msgstr ""
 #: inc/ignoredimportdevice.class.php:118 inc/rulematchedlog.class.php:179
 #: inc/rulematchedlog.class.php:249 inc/taskjob.class.php:237
 msgid "Module"
-msgstr "Modül"
+msgstr ""
 
 #: hook.php:870 hook.php:874 inc/agent.class.php:271 inc/agent.class.php:286
 #: inc/config.class.php:645 inc/config.class.php:651
@@ -205,7 +205,7 @@ msgstr ""
 
 #: setup.php:384
 msgid "Menu"
-msgstr "Menü"
+msgstr ""
 
 #: setup.php:387 inc/menu.class.php:135 inc/menu.class.php:142
 #: inc/task.class.php:53 inc/task.class.php:806 inc/task.class.php:815
@@ -949,7 +949,7 @@ msgstr ""
 #: inc/taskjoblog.class.php:654 inc/taskjoblog.class.php:771
 #: inc/taskjoblog.class.php:992
 msgid "Ok"
-msgstr "Tamam"
+msgstr ""
 
 #: inc/deploystate.class.php:123 inc/deploystate.class.php:136
 #: inc/taskjoblog.class.php:75 inc/taskjoblog.class.php:662
@@ -1751,7 +1751,7 @@ msgstr ""
 
 #: inc/mapping.class.php:683
 msgid "CPU usage"
-msgstr "CPU kullanımı"
+msgstr ""
 
 #: inc/mapping.class.php:691 inc/networkequipment.class.php:698
 #: inc/networkport.class.php:105
@@ -2255,7 +2255,7 @@ msgstr ""
 
 #: inc/printerlog.class.php:328
 msgid "Meter"
-msgstr "Metre"
+msgstr ""
 
 #: inc/printerlog.class.php:350 inc/snmpmodelmib.class.php:202
 msgid "Check All"
@@ -2271,7 +2271,7 @@ msgstr ""
 
 #: inc/printerlog.class.php:491
 msgid "year"
-msgstr "yıl"
+msgstr ""
 
 #: inc/printerlog.class.php:503
 msgid "Display"
@@ -2363,7 +2363,7 @@ msgstr ""
 
 #: inc/snmpmodelmib.class.php:94
 msgid "OID list"
-msgstr "OID listesi"
+msgstr ""
 
 #: inc/snmpmodelmib.class.php:98 inc/snmpmodelmib.class.php:245
 msgid "MIB Label"
@@ -2452,7 +2452,7 @@ msgstr ""
 
 #: inc/staticmisc.class.php:189
 msgid "Configuration"
-msgstr "Yapılandırma"
+msgstr ""
 
 #: inc/staticmisc.class.php:195
 msgid "Unknown devices"
@@ -2532,7 +2532,7 @@ msgstr ""
 
 #: inc/taskjob.class.php:217 inc/taskjob.class.php:220
 msgid "New action"
-msgstr "Yeni eylem"
+msgstr ""
 
 #: inc/taskjob.class.php:271 inc/taskjob.class.php:405
 #: inc/taskjob.class.php:1841 inc/taskjoblog.class.php:536
@@ -2595,7 +2595,7 @@ msgstr ""
 #: inc/taskjoblog.class.php:79 inc/taskjoblog.class.php:678
 #: inc/taskjoblog.class.php:1014
 msgid "unknown"
-msgstr "bilinmeyen"
+msgstr ""
 
 #: inc/taskjoblog.class.php:238 inc/taskjoblog.class.php:498
 msgid "Process number"
