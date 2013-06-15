@@ -202,7 +202,7 @@ class PluginFusioninventoryMenu {
       }
 
       if (PluginFusioninventoryProfile::haveRight("blacklist", "r")) {
-         $a_menu[5]['name'] = __('BlackList');
+         $a_menu[5]['name'] = _n('Blacklist', 'Blacklists', 1);
          $a_menu[5]['pic']  = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_blacklist.png";
          $a_menu[5]['link'] = $CFG_GLPI['root_doc'].
