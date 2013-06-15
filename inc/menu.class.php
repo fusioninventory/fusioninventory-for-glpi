@@ -286,7 +286,7 @@ class PluginFusioninventoryMenu {
 
       if (PluginFusioninventoryProfile::haveRight("model", "r")) {
          $a_menu[] = array(
-            'name' => "SNMP models creation",
+            'name' => __('SNMP models creation', 'fusioninventory'),
             'pic'  => $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_constructmodel.png",
             'link' => $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/constructmodel.php"
          );
