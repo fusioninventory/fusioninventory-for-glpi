@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
-"POT-Creation-Date: 2013-06-18 21:00+0200\n"
+"POT-Creation-Date: 2013-06-18 21:55+0200\n"
 "PO-Revision-Date: 2012-12-04 10:15+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -630,11 +630,11 @@ msgid "Remote device inventory"
 msgstr ""
 
 #: inc/deployaction.class.php:52
-msgid "Code is equal to"
+msgid "Return code is equal to"
 msgstr ""
 
 #: inc/deployaction.class.php:53
-msgid "Code is not equal to"
+msgid "Return code is not equal to"
 msgstr ""
 
 #: inc/deployaction.class.php:54
@@ -646,66 +646,67 @@ msgid "Command output does not contains"
 msgstr ""
 
 #: inc/deployaction.class.php:71
-msgid "cmd"
+msgid "Command"
 msgstr ""
 
 #: inc/deployaction.class.php:72
-msgid "move"
+msgid "Move"
 msgstr ""
 
 #: inc/deployaction.class.php:73
-msgid "copy"
+msgid "Copy"
 msgstr ""
 
-#: inc/deployaction.class.php:74
-msgid "delete"
+#: inc/deployaction.class.php:74 inc/deployaction.class.php:227
+#: inc/deploycheck.class.php:184 inc/deployfile.class.php:273
+#: inc/networkequipment.class.php:1030 inc/networkequipment.class.php:1031
+#: inc/networkportlog.class.php:193 inc/networkporttype.class.php:389
+#: inc/printerlog.class.php:354 inc/printerlog.class.php:551
+#: inc/snmpmodel.class.php:193 inc/snmpmodelmib.class.php:209
+#: inc/taskjob.class.php:430 inc/taskjob.class.php:673
+#: inc/taskjob.class.php:685
+msgid "Delete"
 msgstr ""
 
 #: inc/deployaction.class.php:75
-msgid "mkdir"
+msgid "Make directory"
 msgstr ""
 
-#: inc/deployaction.class.php:187
+#: inc/deployaction.class.php:190
+msgid "Command to execute"
+msgstr ""
+
+#: inc/deployaction.class.php:204
 msgid "return codes saved for this command"
 msgstr ""
 
-#: inc/deployaction.class.php:199 inc/deploycheck.class.php:173
+#: inc/deployaction.class.php:216 inc/deploycheck.class.php:173
 #: inc/deployfile.class.php:263
 msgid "drag"
 msgstr ""
 
-#: inc/deployaction.class.php:210 inc/deploycheck.class.php:184
-#: inc/deployfile.class.php:273 inc/networkequipment.class.php:1030
-#: inc/networkequipment.class.php:1031 inc/networkportlog.class.php:193
-#: inc/networkporttype.class.php:389 inc/printerlog.class.php:354
-#: inc/printerlog.class.php:551 inc/snmpmodel.class.php:193
-#: inc/snmpmodelmib.class.php:209 inc/taskjob.class.php:430
-#: inc/taskjob.class.php:673 inc/taskjob.class.php:685
-msgid "Delete"
-msgstr ""
-
-#: inc/deployaction.class.php:222 inc/deploycheck.class.php:198
+#: inc/deployaction.class.php:241 inc/deploycheck.class.php:198
 msgid "Type"
 msgstr ""
 
-#: inc/deployaction.class.php:282
+#: inc/deployaction.class.php:301
 msgid "From"
 msgstr ""
 
-#: inc/deployaction.class.php:284
+#: inc/deployaction.class.php:303
 msgid "To"
 msgstr ""
 
-#: inc/deployaction.class.php:290
+#: inc/deployaction.class.php:309
 msgid "exec"
 msgstr ""
 
-#: inc/deployaction.class.php:298
+#: inc/deployaction.class.php:317
 msgid "path"
 msgstr ""
 
-#: inc/deployaction.class.php:331
-msgid "Command checks"
+#: inc/deployaction.class.php:350
+msgid "Execution checks"
 msgstr ""
 
 #: inc/deploycheck.class.php:51
@@ -764,33 +765,42 @@ msgstr ""
 msgid "GiB"
 msgstr ""
 
-#: inc/deploycheck.class.php:254 inc/deploycheck.class.php:258
+#: inc/deploycheck.class.php:252 inc/deploycheck.class.php:256
 msgid "Key"
 msgstr ""
 
-#: inc/deploycheck.class.php:263 inc/deploycheck.class.php:269
-#: inc/deploycheck.class.php:274 inc/deployfile.class.php:348
+#: inc/deploycheck.class.php:257
+msgid "Key value"
+msgstr ""
+
+#: inc/deploycheck.class.php:261 inc/deploycheck.class.php:267
+#: inc/deploycheck.class.php:272 inc/deployfile.class.php:348
 msgid "File"
 msgstr ""
 
-#: inc/deploycheck.class.php:279
+#: inc/deploycheck.class.php:268 inc/deploycheck.class.php:273
+#: inc/deploycheck.class.php:278
+msgid "Value"
+msgstr ""
+
+#: inc/deploycheck.class.php:277
 msgid "Disk or directory"
 msgstr ""
 
-#: inc/deploycheck.class.php:335
+#: inc/deploycheck.class.php:333
 msgid "Unit"
 msgstr ""
 
-#: inc/deploycheck.class.php:361
-msgid "return error"
+#: inc/deploycheck.class.php:359
+msgid "In case of error"
 msgstr ""
 
-#: inc/deploycheck.class.php:364
-msgid "error"
+#: inc/deploycheck.class.php:362 inc/deploystate.class.php:127
+msgid "Error"
 msgstr ""
 
-#: inc/deploycheck.class.php:365
-msgid "ignore"
+#: inc/deploycheck.class.php:363
+msgid "Ignore"
 msgstr ""
 
 #: inc/deploycommand.class.php:50
@@ -957,10 +967,6 @@ msgstr ""
 #: inc/taskjoblog.class.php:75 inc/taskjoblog.class.php:662
 #: inc/taskjoblog.class.php:772 inc/taskjoblog.class.php:999
 msgid "Error / rescheduled"
-msgstr ""
-
-#: inc/deploystate.class.php:127
-msgid "Error"
 msgstr ""
 
 #: inc/deploystate.class.php:131 inc/statediscovery.class.php:209
