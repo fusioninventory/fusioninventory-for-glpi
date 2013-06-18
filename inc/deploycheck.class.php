@@ -242,8 +242,6 @@ class PluginFusioninventoryDeployCheck {
       $value = $datas['value'];
       $rand  = $datas['rand'];
 
-
-
       $path_value = isset($datas['path'])?$datas['path']:"";
       $value2 = isset($datas['value2'])?$datas['value2']:"";
       $return = isset($datas['return'])?$datas['return']:"";
@@ -267,17 +265,17 @@ class PluginFusioninventoryDeployCheck {
          case "fileSizeEquals":
          case "fileSizeLower":
             $path_label = __("File", 'fusioninventory');
-            $value_label = "Value";
+            $value_label = __('Value', 'fusioninventory');
             $value_type = "input+unit";
             break;
          case "fileSHA512":
             $path_label = __("File", 'fusioninventory');
-            $value_label = "Value";
+            $value_label = __('Value', 'fusioninventory');
             $value_type = "textarea";
             break;
          case "freespaceGreater":
             $path_label = __("Disk or directory", 'fusioninventory');
-            $value_label = "Value";
+            $value_label = __('Value', 'fusioninventory');
             $value_type = "input+unit";
             break;
          default:
