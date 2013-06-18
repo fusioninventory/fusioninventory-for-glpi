@@ -360,7 +360,7 @@ class PluginFusioninventoryDeployCheck {
       echo "<td>";
       Dropdown::showFromArray('return', array(
                   "error"  => __("error", 'fusioninventory'),
-                  "ignore" => __("ignore", 'fusioninventory')
+                  "ignore" => __("Ignore", 'fusioninventory')
                ), array('value' => $return));
       echo "</td>";
       echo "</tr>";
