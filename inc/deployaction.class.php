@@ -49,8 +49,8 @@ class PluginFusioninventoryDeployAction {
    static function retchecks_entries() {
       return array(
          '--',
-         'okCode'       => __("Code is equal to", 'fusioninventory'),
-         'errorCode'    => __("Code is not equal to", 'fusioninventory'),
+         'okCode'       => __("Return code is equal to", 'fusioninventory'),
+         'errorCode'    => __("Return code is not equal to", 'fusioninventory'),
          'okPattern'    => __("Command output contains", 'fusioninventory'),
          'errorPattern' => __("Command output does not contains", 'fusioninventory')
       );
@@ -185,7 +185,13 @@ class PluginFusioninventoryDeployAction {
                   }
                }
             } else {
-               echo "<b>".$key."</b>";
+               echo "<b>";
+               if ($key == 'exec') {
+                  echo __('Command to execute', 'fusioninventory');
+               } else {
+                  echo $key;
+               }
+               echo "</b>";
                if ($key ==="exec") {
                   echo "<pre style='border-left:solid lightgrey 3px;margin-left: 5px;".
                           "padding-left:2px'>$value</pre>";
@@ -341,7 +347,7 @@ class PluginFusioninventoryDeployAction {
       //specific case for cmd : add retcheck form
       if ($type == "cmd") {
          echo "<tr>";
-         echo "<th>".__("Command checks", 'fusioninventory');
+         echo "<th>".__("Execution checks", 'fusioninventory');
          PluginFusioninventoryDeployPackage::plusButton("retchecks$rand", "table");
          echo "</th>";
          echo "<td>";
