@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
-"POT-Creation-Date: 2013-06-15 22:20+0200\n"
-"PO-Revision-Date: 2013-06-15 20:22+0000\n"
+"POT-Creation-Date: 2013-06-18 21:00+0200\n"
+"PO-Revision-Date: 2013-06-18 19:03+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: Italian (Italy) (http://www.transifex.com/projects/p/FusionInventory/language/it_IT/)\n"
 "MIME-Version: 1.0\n"
@@ -679,8 +679,8 @@ msgstr ""
 #: inc/networkequipment.class.php:1031 inc/networkportlog.class.php:193
 #: inc/networkporttype.class.php:389 inc/printerlog.class.php:354
 #: inc/printerlog.class.php:551 inc/snmpmodel.class.php:193
-#: inc/snmpmodelmib.class.php:209 inc/taskjob.class.php:426
-#: inc/taskjob.class.php:669 inc/taskjob.class.php:681
+#: inc/snmpmodelmib.class.php:209 inc/taskjob.class.php:430
+#: inc/taskjob.class.php:673 inc/taskjob.class.php:685
 msgid "Delete"
 msgstr ""
 
@@ -1027,8 +1027,8 @@ msgstr "Aggiornato"
 msgid "Batterie"
 msgstr ""
 
-#: inc/inventorycomputerblacklist.class.php:77
-#: inc/inventorycomputerblacklist.class.php:127
+#: inc/inventorycomputerblacklist.class.php:75
+#: inc/inventorycomputerblacklist.class.php:125
 msgid "blacklisted value"
 msgstr "Valori in blacklist"
 
@@ -1171,7 +1171,7 @@ msgstr ""
 msgid "Values of last inventory"
 msgstr ""
 
-#: inc/lock.class.php:222 inc/taskjob.class.php:52 inc/taskjob.class.php:1454
+#: inc/lock.class.php:222 inc/taskjob.class.php:52 inc/taskjob.class.php:1458
 #: inc/taskjoblog.class.php:141 inc/taskjobstate.class.php:193
 #: inc/unknowndevice.class.php:199
 msgid "Job"
@@ -2148,20 +2148,20 @@ msgid "Uptime"
 msgstr ""
 
 #: inc/networkequipment.class.php:585 inc/task.class.php:278
-#: inc/taskjob.class.php:301 inc/taskjob.class.php:1872
-#: inc/taskjob.class.php:2003
+#: inc/taskjob.class.php:305 inc/taskjob.class.php:1876
+#: inc/taskjob.class.php:2007
 msgid "day(s)"
 msgstr ""
 
 #: inc/networkequipment.class.php:586 inc/task.class.php:276
-#: inc/taskjob.class.php:299 inc/taskjob.class.php:1866
-#: inc/taskjob.class.php:2001
+#: inc/taskjob.class.php:303 inc/taskjob.class.php:1870
+#: inc/taskjob.class.php:2005
 msgid "hour(s)"
 msgstr ""
 
 #: inc/networkequipment.class.php:587 inc/task.class.php:274
-#: inc/taskjob.class.php:297 inc/taskjob.class.php:1860
-#: inc/taskjob.class.php:1999
+#: inc/taskjob.class.php:301 inc/taskjob.class.php:1864
+#: inc/taskjob.class.php:2003
 msgid "Minute(s)"
 msgstr ""
 
@@ -2493,22 +2493,22 @@ msgid "Printers report"
 msgstr "Resoconto stampanti"
 
 #: inc/staticmisc.class.php:459 inc/staticmisc.class.php:465
-#: inc/taskjob.class.php:440 inc/taskjob.class.php:641
-#: inc/taskjob.class.php:893 inc/taskjob.class.php:1903
+#: inc/taskjob.class.php:444 inc/taskjob.class.php:645
+#: inc/taskjob.class.php:897 inc/taskjob.class.php:1907
 msgid "Auto managenement dynamic of agents"
 msgstr "Auto gestione dinamica degli agenti"
 
-#: inc/task.class.php:86 inc/task.class.php:240 inc/taskjob.class.php:1475
-#: inc/taskjob.class.php:1839
+#: inc/task.class.php:86 inc/task.class.php:240 inc/taskjob.class.php:1479
+#: inc/taskjob.class.php:1843
 msgid "Scheduled date"
 msgstr "Data d'esecuzione"
 
-#: inc/task.class.php:112 inc/task.class.php:255 inc/taskjob.class.php:1983
+#: inc/task.class.php:112 inc/task.class.php:255 inc/taskjob.class.php:1987
 msgid "Communication type"
 msgstr "Comunicazione"
 
-#: inc/task.class.php:210 inc/taskjob.class.php:2060
-#: inc/taskjob.class.php:2093
+#: inc/task.class.php:210 inc/taskjob.class.php:2064
+#: inc/taskjob.class.php:2097
 msgid "Force start"
 msgstr ""
 
@@ -2516,15 +2516,15 @@ msgstr ""
 msgid "Reinitialization"
 msgstr ""
 
-#: inc/task.class.php:258 inc/task.class.php:561 inc/taskjob.class.php:1986
+#: inc/task.class.php:258 inc/task.class.php:561 inc/taskjob.class.php:1990
 msgid "Server contacts the agent (push)"
 msgstr "Il server inizia un contatto con l'agente (push)"
 
-#: inc/task.class.php:260 inc/task.class.php:564 inc/taskjob.class.php:1988
+#: inc/task.class.php:260 inc/task.class.php:564 inc/taskjob.class.php:1992
 msgid "Agent contacts the server (pull)"
 msgstr "L'agente inizia un contatto con il server (pull)"
 
-#: inc/task.class.php:280 inc/taskjob.class.php:2005
+#: inc/task.class.php:280 inc/taskjob.class.php:2009
 msgid "month(s)"
 msgstr ""
 
@@ -2540,61 +2540,69 @@ msgstr ""
 msgid "New action"
 msgstr "Nuova azione"
 
-#: inc/taskjob.class.php:271 inc/taskjob.class.php:405
-#: inc/taskjob.class.php:1841 inc/taskjoblog.class.php:536
+#: inc/taskjob.class.php:271 inc/taskjob.class.php:409
+#: inc/taskjob.class.php:1845 inc/taskjoblog.class.php:536
 msgid "Definition"
 msgstr "Definizione"
 
-#: inc/taskjob.class.php:291
+#: inc/taskjob.class.php:275
+msgid "Action targets: what the action aims"
+msgstr ""
+
+#: inc/taskjob.class.php:285
+msgid "Action actor: what do the action"
+msgstr ""
+
+#: inc/taskjob.class.php:295
 msgid "Time between task start and start this action"
 msgstr "Tempo tra l'inizio del compito e l'inizio di questa azione"
 
-#: inc/taskjob.class.php:330
+#: inc/taskjob.class.php:334
 msgid "Number of trials"
 msgstr "Numero di tentativi"
 
-#: inc/taskjob.class.php:337
+#: inc/taskjob.class.php:341
 msgid "Time between 2 trials (in minutes)"
 msgstr "Tempo tra due tentativi (in minuti)"
 
-#: inc/taskjob.class.php:358
+#: inc/taskjob.class.php:362
 msgid "Purge"
 msgstr ""
 
-#: inc/taskjob.class.php:360
+#: inc/taskjob.class.php:364
 msgid "Confirm the final deletion ?"
 msgstr ""
 
-#: inc/taskjob.class.php:443 inc/taskjob.class.php:646
-#: inc/taskjob.class.php:895 inc/taskjob.class.php:1907
+#: inc/taskjob.class.php:447 inc/taskjob.class.php:650
+#: inc/taskjob.class.php:899 inc/taskjob.class.php:1911
 msgid "Auto managenement dynamic of agents (same subnet)"
 msgstr "Auto gestione dinamica degli agenti (stessa sottorete)"
 
-#: inc/taskjob.class.php:460
+#: inc/taskjob.class.php:464
 msgid "Selection"
 msgstr "Selezione"
 
-#: inc/taskjob.class.php:1217
+#: inc/taskjob.class.php:1221
 msgid "Unable to run task because some jobs is running yet!"
 msgstr "Impossibile avviare il compito, perché sono rimaste azioni in corso!"
 
-#: inc/taskjob.class.php:1447
+#: inc/taskjob.class.php:1451
 msgid "Action on this device"
 msgstr "Azione su questo dispositivo"
 
-#: inc/taskjob.class.php:2305
+#: inc/taskjob.class.php:2309
 msgid "Action after finish running task"
 msgstr ""
 
-#: inc/taskjob.class.php:2310
+#: inc/taskjob.class.php:2314
 msgid "Delete this task and finish"
 msgstr ""
 
-#: inc/taskjob.class.php:2315 inc/wizard.class.php:248
+#: inc/taskjob.class.php:2319 inc/wizard.class.php:248
 msgid "Finish"
 msgstr "Fine"
 
-#: inc/taskjob.class.php:2320
+#: inc/taskjob.class.php:2324
 msgid "Run again this task"
 msgstr ""
 
