@@ -154,9 +154,10 @@ class PluginFusioninventoryDeployAction {
       } else {
          return TRUE;
       }
-
    }
 
+   
+   
    static function displayList($order, $datas, $rand) {
       global $CFG_GLPI;
 
@@ -219,6 +220,8 @@ class PluginFusioninventoryDeployAction {
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
    }
+   
+   
 
    static function dropdownType($datas) {
       global $CFG_GLPI;
