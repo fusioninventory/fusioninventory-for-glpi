@@ -68,12 +68,22 @@ class PluginFusioninventoryDeployAction {
 
    static function getTypes() {
        return array(
-         'cmd'     => __('cmd', 'fusioninventory'),
-         'move'    => __('move', 'fusioninventory'),
-         'copy'    => __('copy', 'fusioninventory'),
-         'delete'  => __('delete', 'fusioninventory'),
-         'mkdir'   => __('mkdir', 'fusioninventory')
+         'cmd'     => __('Command', 'fusioninventory'),
+         'move'    => __('Move', 'fusioninventory'),
+         'copy'    => __('Copy', 'fusioninventory'),
+         'delete'  => __('Delete', 'fusioninventory'),
+         'mkdir'   => __('Make directory', 'fusioninventory')
       );
+   }
+   
+   
+   
+   static function getType($type) {
+      $a_types = PluginFusioninventoryDeployAction::getTypes();
+      if (isset($a_types[$type])) {
+         return $a_types[$type];
+      }
+      return $type;
    }
 
 
@@ -162,7 +172,7 @@ class PluginFusioninventoryDeployAction {
          echo "<td>";
          echo "<a class='edit' ".
                  "onclick=\"edit_subtype('action', {$order->fields['id']}, $rand, this)\">";
-         echo __($action_type, 'fusioninventory');
+         echo PluginFusioninventoryDeployAction::getType($action_type);
          echo "</a><br />";
 
          foreach ($action[$action_type] as $key => $value) {
@@ -174,7 +184,7 @@ class PluginFusioninventoryDeployAction {
                   }
                }
             } else {
-               echo "<b>".__(ucfirst($key), 'fusioninventory')."</b>";
+               echo "<b>".$key."</b>";
                if ($key ==="exec") {
                   echo "<pre style='border-left:solid lightgrey 3px;margin-left: 5px;".
                           "padding-left:2px'>$value</pre>";
