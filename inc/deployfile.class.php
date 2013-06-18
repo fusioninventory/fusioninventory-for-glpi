@@ -256,7 +256,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          //filesize
          if(!$no_db_entry) {
             echo "<div class='size'>";
-            echo "size:".self::processFilesize($file_size);
+            echo __('Size').": ".self::processFilesize($file_size);
             echo "</div>";
          }
          echo "</td>";
