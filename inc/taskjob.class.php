@@ -271,7 +271,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo __('Definition', 'fusioninventory');
 
          $this->plusButton('definition'.$id);
-         echo "<br/><i>Liste des objets sur lesquelles l'action doit porter</i>";
+         echo "<br/><i>".
+             __('Action targets: what the action aims', 'fusioninventory').
+             "</i>";
       }
       echo "</th>";
       echo "<th width='25%'>";
@@ -279,7 +281,9 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo __('Action');
 
          $this->plusButton('action'.$id);
-         echo "<br/><i>Liste des objets qui vont effectuer l'action</i>";
+         echo "<br/><i>".
+             __('Action actor: what do the action').
+             "</i>";
       }
       echo "</th>";
       echo "</tr>";
