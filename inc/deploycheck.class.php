@@ -359,7 +359,7 @@ class PluginFusioninventoryDeployCheck {
       echo "<th>".__("In case of error", 'fusioninventory')."</th>";
       echo "<td>";
       Dropdown::showFromArray('return', array(
-                  "error"  => __("error", 'fusioninventory'),
+                  "error"  => __('Error', 'fusioninventory'),
                   "ignore" => __("Ignore", 'fusioninventory')
                ), array('value' => $return));
       echo "</td>";
