@@ -254,7 +254,7 @@ class PluginFusioninventoryDeployCheck {
             break;
          case "winkeyEquals":
             $path_label = __("Key", 'fusioninventory');
-            $value_label = "Key value";
+            $value_label = __('Key value', 'fusioninventory');
             break;
          case "fileExists":
          case "fileMissing":
