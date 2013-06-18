@@ -282,7 +282,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
          $this->plusButton('action'.$id);
          echo "<br/><i>".
-             __('Action actor: what do the action').
+             __('Action actor: what do the action', 'fusioninventory').
              "</i>";
       }
       echo "</th>";
