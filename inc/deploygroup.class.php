@@ -333,28 +333,22 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          WHERE `groups_id`='".$ID."'
          LIMIT 1";
       $result=$DB->query($query);
-      $plugin_fusioninventory_deploygroup_dynamicdatas_id = 0;
+      $plugin_fusiosninventory_deploygroup_dynamicdatas_id = 0;
       $pfDeployGroup_Dynamicdata = new PluginFusioninventoryDeployGroup_Dynamicdata();
       if ($DB->numrows($result) == 1) {
          $data = $DB->fetch_assoc($result);
-         $plugin_fusioninventory_deploygroup_dynamicdatas_id = $data['id'];
+         $plugin_fusiosninventory_deploygroup_dynamicdatas_id = $data['id'];
       } else {
          $input = array();
          $input['groups_id'] = $ID;
          $input['fields_array'] = exportArrayToDB(array());
-         $plugin_fusioninventory_deploygroup_dynamicdatas_id =
+         $plugin_fusiosninventory_deploygroup_dynamicdatas_id =
             $pfDeployGroup_Dynamicdata->add($input);
       }
 
-      $search_params = $_GET;
       if (isset($_SESSION['plugin_fusioninventory_dynamicgroup'])) {
-      }
-      if (
-            isset($_SESSION['plugin_fusioninventory_dynamicgroup']) &&
-            $_SESSION['plugin_fusioninventory_dynamicgroup']['plugin_fusioninventory_deploygroup_dynamicdatas_id'] == $ID
-      ) {
-         $search_params = $_SESSION['plugin_fusioninventory_dynamicgroup'];
-         $array_delete = array('add_search_count', 'delete_search_count',
+         $_GET = $_SESSION['plugin_fusioninventory_dynamicgroup'];
+         $array_delete = array('add_search_count', 'delete_search_count', 
                                'add_search_count2', 'delete_search_count2');
          foreach ($array_delete as $value_delete) {
             if (isset($_SESSION['plugin_fusioninventory_dynamicgroup'][$value_delete])) {
@@ -362,12 +356,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             }
          }
       } else {
-         $pfDeployGroup_Dynamicdata->getFromDB($plugin_fusioninventory_deploygroup_dynamicdatas_id);
-         $search_params = importArrayFromDB($pfDeployGroup_Dynamicdata->fields['fields_array']);
+        $pfDeployGroup_Dynamicdata->getFromDB($plugin_fusiosninventory_deploygroup_dynamicdatas_id);
+         $_GET = importArrayFromDB($pfDeployGroup_Dynamicdata->fields['fields_array']);
       }
 
-      $search_params['name'] = '';
-      $search_params['itemtype'] = 'Computer';
+      $_GET['name'] = '';
+      $_GET['itemtype'] = 'Computer';
       Search::manageGetValues('Computer');
       $pfSearch = new PluginFusioninventorySearch();
       $pfSearch->formurl            = 'fusioninventory/front/deploygroup_dynamicdata.form.php';
@@ -375,10 +369,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $pfSearch->displaydeletebuton = FALSE;
 
 
-      $search_params[$pfSearch->customIdVar] = $plugin_fusioninventory_deploygroup_dynamicdatas_id;
-      $search_params['id'] = $plugin_fusioninventory_deploygroup_dynamicdatas_id;
-      Toolbox::logDebug("Search Params : " . print_r($search_params,True));
-      $pfSearch->showGenericSearch('Computer', $search_params);
+      $_GET[$pfSearch->customIdVar] = $plugin_fusiosninventory_deploygroup_dynamicdatas_id;
+      $_GET['id'] = $plugin_fusiosninventory_deploygroup_dynamicdatas_id;
+      $pfSearch->showGenericSearch('Computer', $_GET);
 
       echo "<br/><br/>";
       echo "<table class='tab_cadre_fixe'>";
@@ -403,7 +396,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          $entities_isrecursive = 1;
       }
 
-      Search::showList('Computer', $search_params);
+      Search::showList('Computer', $_GET);
 
       echo "</td>";
       echo "</tr>";

@@ -108,16 +108,16 @@ echo "<form name='searchform$itemtype' method='get' action=\"".
       echo __('Name')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      echo "<input type='text' name='name' value='".$params['name']."'/>";
+      echo "<input type='text' name='name' value='".$_GET['name']."'/>";
       echo "</td>";
       echo "<td>";
       echo __('Type')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      echo $params['itemtype'];
+      echo $_GET['itemtype'];
       echo "</td>";
       echo "</tr>";
-      if (isset($params['itemtype'])) {
+      if (isset($_GET['itemtype'])) {
 
       echo "<tr class='tab_bg_1'>";
 
@@ -320,13 +320,13 @@ echo "<td colspan='2'>";
          include (GLPI_ROOT."/ajax/searchoption.php");
          echo "</div>\n";
 
-         $ajax_params = array('field'      => '__VALUE__',
+         $params = array('field'      => '__VALUE__',
                          'itemtype'   => $itemtype,
                          'num'        => $i,
                          'value'      => $_POST["value"],
                          'searchtype' => $_POST["searchtype"]);
          Ajax::updateItemOnSelectEvent("Search$itemtype$i", "SearchSpan$itemtype$i",
-                                       $CFG_GLPI["root_doc"]."/ajax/searchoption.php", $ajax_params);
+                                       $CFG_GLPI["root_doc"]."/ajax/searchoption.php", $params);
 
          echo "</td></tr>\n";
       }
@@ -388,7 +388,7 @@ echo "<td colspan='2'>";
             // Ajax script for display search met& item
             echo "<span id='show_".$itemtype."_".$i."_$rand'>&nbsp;</span>\n";
 
-            $ajax_params = array('itemtype'    => '__VALUE__',
+            $params = array('itemtype'    => '__VALUE__',
                             'num'         => $i,
                             'field'       => (is_array($p['field2'])
                                               && isset($p['field2'][$i])?$p['field2'][$i]:""),
@@ -406,9 +406,9 @@ echo "<td colspan='2'>";
                 && isset($p['itemtype2'][$i])
                 && !empty($p['itemtype2'][$i])) {
 
-               $ajax_params['itemtype'] = $p['itemtype2'][$i];
+               $params['itemtype'] = $p['itemtype2'][$i];
                Ajax::updateItem("show_".$itemtype."_".$i."_$rand",
-                                $CFG_GLPI["root_doc"]."/ajax/updateMetaSearch.php", $ajax_params);
+                                $CFG_GLPI["root_doc"]."/ajax/updateMetaSearch.php", $params);
                echo "<script type='text/javascript' >";
                echo "window.document.getElementById('itemtype2_".$itemtype."_".$i."_$rand').".
                                                     "value='".$p['itemtype2'][$i]."';";
@@ -461,8 +461,8 @@ echo "<td colspan='2'>";
       echo "</td><td>";
 //      Bookmark::showSaveButton(Bookmark::SEARCH,$itemtype);
       echo "<a href='".$CFG_GLPI['root_doc']."/plugins/".$this->formurl."?reset=reset&".
-         "name=".$params['name']."&".$this->customIdVar."=".$params[$this->customIdVar].
-              "&itemtype=".$params['itemtype']."' >";
+         "name=".$_GET['name']."&".$this->customIdVar."=".$_GET[$this->customIdVar].
+              "&itemtype=".$_GET['itemtype']."' >";
       echo "&nbsp;&nbsp;<img title=\"".__s('Blank')."\" alt=\"".__s('Blank')."\" src='".
             $CFG_GLPI["root_doc"]."/pics/reset.png' class='calendrier'></a>";
 
@@ -473,11 +473,11 @@ echo "<td colspan='2'>";
       }
 
 echo "<tr>";
-      if (isset($params['id'])) {
+      if (isset($_GET['id'])) {
          echo "<td colspan='2' class='center'>";
          echo "<input type='hidden' name='".$this->customIdVar."' value='".
-                 $params[$this->customIdVar]."' >";
-         echo "<input type='hidden' name='id' value='".$params['id']."' >";
+                 $_GET[$this->customIdVar]."' >";
+         echo "<input type='hidden' name='id' value='".$_GET['id']."' >";
          echo "<input type='submit' name='updaterule' value=\"Update this rule\" class='submit' >";
          echo "</td>";
          echo "<td colspan='2' class='center'>";
@@ -489,7 +489,7 @@ echo "<tr>";
       } else {
          echo "<td colspan='4' class='center'>";
          echo "<input type='hidden' name='".$this->customIdVar."' value='".
-                 $params[$this->customIdVar]."' >";
+                 $_GET[$this->customIdVar]."' >";
          echo "<input type='submit' name='addrule' value=\"Add this rule\" class='submit' >";
       }
       echo "</td>";
