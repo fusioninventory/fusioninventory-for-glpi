@@ -346,7 +346,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             $pfDeployGroup_Dynamicdata->add($input);
       }
 
-      if (isset($_SESSION['plugin_fusioninventory_dynamicgroup'])) {
+      if (isset($_SESSION['plugin_fusioninventory_dynamicgroup']) && 
+         $_SESSION['plugin_fusioninventory_dynamicgroup']['plugin_fusioninventory_deploygroup_dynamicdatas_id'] == $ID
+      ) {
          $_GET = $_SESSION['plugin_fusioninventory_dynamicgroup'];
          $array_delete = array('add_search_count', 'delete_search_count', 
                                'add_search_count2', 'delete_search_count2');
