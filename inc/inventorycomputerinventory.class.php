@@ -464,6 +464,8 @@ class PluginFusioninventoryInventoryComputerInventory {
             $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
             $pfInventoryComputerLib->addLog();
             
+            Plugin::doOneHook("monitoring", "ReplayRulesForItem", array('Computer', $items_id));
+            
             // * For benchs
             //Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
             //  memory_get_usage()."\n".
