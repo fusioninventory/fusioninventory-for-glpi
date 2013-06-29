@@ -448,7 +448,8 @@ function plugin_init_fusioninventory() {
 
          // Hack for NetworkEquipment display ports
          if (strstr($_SERVER['PHP_SELF'], '/ajax/common.tabs.php')) {
-            if (strstr($_POST['target'], '/front/networkequipment.form.php')
+            if (isset($_POST['target'])
+                    && strstr($_POST['target'], '/front/networkequipment.form.php')
                     && $_POST['itemtype'] == 'NetworkEquipment') {
 
                if ($_POST['glpi_tab'] == 'NetworkPort$1') {
