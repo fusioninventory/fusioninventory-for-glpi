@@ -900,6 +900,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             $data["contact"] = $this->fields["contact"];
             $data["domain"] = $this->fields["domain"];
             $data["comment"] = $this->fields["comment"];
+            $data["is_dynamic"] = 1;
             $printer_id = $Printer->add($data);
 
             foreach ($a_NetworkPorts as $data_Port) {
@@ -948,9 +949,10 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             $data["contact"] = $this->fields["contact"];
             $data["domain"] = $this->fields["domain"];
             $data["comment"] = $this->fields["comment"];
-            $data_Port = current($a_NetworkPorts);
-            $data["ip"] = $data_Port["ip"];
-            $data["mac"] = $data_Port["mac"];
+            $data["is_dynamic"] = 1;
+//            $data_Port = current($a_NetworkPorts);
+//            $data["ip"] = $data_Port["ip"];
+//            $data["mac"] = $data_Port["mac"];
             $NetworkEquipment_id = $NetworkEquipment->add($data);
 
             foreach ($a_NetworkPorts as $data_Port) {
@@ -999,6 +1001,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             $data["otherserial"] = $this->fields["otherserial"];
             $data["contact"] = $this->fields["contact"];
             $data["comment"] = $this->fields["comment"];
+            $data["is_dynamic"] = 1;
             $Peripheral_id = $Peripheral->add($data);
 
             foreach ($a_NetworkPorts as $data_Port) {
@@ -1024,6 +1027,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             $data["contact"] = $this->fields["contact"];
             $data["domain"] = $this->fields["domain"];
             $data["comment"] = $this->fields["comment"];
+            $data["is_dynamic"] = 1;
             $Computer_id = $Computer->add($data);
 
             foreach ($a_NetworkPorts as $data_Port) {
@@ -1046,6 +1050,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             $data["otherserial"] = $this->fields["otherserial"];
             $data["contact"] = $this->fields["contact"];
             $data["comment"] = $this->fields["comment"];
+            $data["is_dynamic"] = 1;
             $phone_id = $Phone->add($data);
 
             foreach ($a_NetworkPorts as $data_Port) {

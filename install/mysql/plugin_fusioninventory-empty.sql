@@ -223,6 +223,7 @@ CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_unknowndevices` (
    `sysdescr` text DEFAULT NULL,
    `plugin_fusioninventory_snmpmodels_id` int(11) NOT NULL DEFAULT '0',
    `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+   `is_dynamic` tinyint(1) NOT NULL DEFAULT '0',
    `serialized_inventory` longblob,
    PRIMARY KEY (`id`),
    KEY `entities_id` (`entities_id`),

@@ -40,204 +40,167 @@
    ------------------------------------------------------------------------
  */
 
-class UnknownDeviceKnowDevice extends PHPUnit_Framework_TestCase {
+class UnknownDeviceImport extends PHPUnit_Framework_TestCase {
    
-   /*
-    * When switch get unknown mac address, it create unknown device (in reality a computer)
-    * When have computer inventory, it must delete unknown device with same mac and get 
-    * the connections to the switch
-    */
    
-
-   public function testAddNetworkEquipment() {
+   protected function setUp() {
       global $DB;
 
       $DB->connect();
-      
+
       $Install = new Install();
       $Install->testInstall(0);
-      
-      $this->datelatupdate = date('Y-m-d H:i:s');
-      
-      $a_inventory = array(
-          'PluginFusioninventoryNetworkEquipment' => Array(
-                  'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
-                  'last_fusioninventory_update' => $this->datelatupdate,
-                  'cpu'                         => 5,
-                  'memory'                      => 18,
-                  'uptime'                      => '157 days, 02:14:44.00'
-                ),
-          'networkport'       => array(),
-          'connection-mac'    => array(),
-          'vlans'             => array(),
-          'connection-lldp'   => array(),
-          'internalport'      => array('192.168.30.2'),
-          'itemtype'          => 'NetworkEquipment'
-          );
-      $a_inventory['NetworkEquipment'] = array(
-               'name'               => 'switchr2d2',
-               'id'                 => 96,
-               'serial'             => 'FOC147UJXXX',
-               'otherserial'        => '',
-               'manufacturers_id'   => 29,
-               'locations_id'       => 3,
-               'networkequipmentmodels_id' => 3, 
-               'networkequipmentfirmwares_id' => 3,          
-               'memory'             => 18,          
-               'ram'                => 64,
-               'is_dynamic'         => 1,
-               'mac'                => '6c:50:4d:39:59:90'
-      );
-      
-      $a_inventory['networkport'] = array(
-          '10001' => array(
-              'ifdescr'          => 'FastEthernet0/1',
-              'ifinerrors'       => 869,
-              'ifinoctets'       => 1953319640,
-              'ifinternalstatus' => 1,
-              'iflastchange'     => '156 days, 08:37:22.84',
-              'ifmtu'            => 1500,
-              'name'             => 'Fa0/1',
-              'logical_number'   => 10001,
-              'ifouterrors'      => 0,
-              'ifoutoctets'      => 554008368,
-              'speed'            => 100000000,
-              'ifstatus'         => 1,
-              'iftype'           => 6,
-              'mac'              => '6c:50:4d:39:59:81',
-              'trunk'            => 0,
-              'ifspeed'          => 100000000
-          )
-      );
-      $a_inventory['connection-mac'] = array(
-          '10001' => array('cc:f9:54:a1:03:45')
-      );
-      $a_inventory['vlans'] = array();
-      $a_inventory['connection-lldp'] = array();
-      
-
-      $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
-      $networkEquipment = new NetworkEquipment();
-      
-      $this->items_id = $networkEquipment->add(array('serial'      => 'FOC147UJXXX',
-                                                     'entities_id' => 0));
-
-      $this->assertGreaterThan(0, $this->items_id);
-      
-      $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
-
-      // To be sure not have 2 same informations
-      $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
-   
-      $GLPIlog = new GLPIlogs();
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
    }
-
-
-   public function testNewComputer() {
+   
+   
+   
+   public function testImportNetworkEquipment() {
       global $DB;
 
       $DB->connect();
       
-      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $pfUnknownDevice  = new PluginFusioninventoryUnknownDevice();
+      $networkEquipment = new NetworkEquipment();
+      $networkPort      = new NetworkPort();
+      $networkName      = new NetworkName();
+      $iPAddress        = new IPAddress();
       
-      $a_inventory = array(
-          'fusioninventorycomputer' => Array(
-              'last_fusioninventory_update' => date('Y-m-d H:i:s')
-          ), 
-          'soundcard'      => Array(),
-          'graphiccard'    => Array(),
-          'controller'     => Array(),
-          'processor'      => Array(),
-          'computerdisk'   => Array(),
-          'memory'         => Array(),
-          'monitor'        => Array(),
-          'printer'        => Array(),
-          'peripheral'     => Array(),
-          'networkport'    => Array(),
-          'software'       => Array(),
-          'harddrive'      => Array(),
-          'virtualmachine' => Array(),
-          'antivirus'      => Array(),
-          'storage'        => Array(),
-          'itemtype'       => 'Computer'
-          );
-      $a_inventory['Computer'] = array(
-          'name'                             => 'pc',
-          'comment'                          => 'amd64/-1-11-30 22:04:44',
-          'users_id'                         => 0,
-          'operatingsystems_id'              => 1,
-          'operatingsystemversions_id'       => 1,
-          'uuid'                             => 1,
-          'domains_id'                       => 1,
-          'os_licenseid'                     => '',
-          'os_license_number'                => '',
-          'operatingsystemservicepacks_id'   => 1,
-          'manufacturers_id'                 => 0,
-          'computermodels_id'                => 0,
-          'serial'                           => 'XB63J7D',
-          'computertypes_id'                 => 1,
-          'is_dynamic'                       => 1,
-          'contact'                          => 'ddurieux'
+      $input= array(
+          'name'        => 'switch',
+          'entities_id' => 0,
+          'item_type'   => 'NetworkEquipment',
+          'sysdescr'    => 'Cisco machin chose',
+          'locations_id'=> 1,
+          'is_dynamic'  => 1,
+          'serial'      => 'XXS6BEF3',
+          'comment'     => 'this is a comment',
+          'plugin_fusioninventory_snmpmodels_id'       => 1,
+          'plugin_fusioninventory_configsecurities_id' => 1
       );
-      $a_inventory['networkport'] = Array(
-            'em0-cc:f9:54:a1:03:45' => Array(
-                    'name'                 => 'em0',
-                    'netmask'              => '255.255.255.0',
-                    'subnet'               => '192.168.30.0',
-                    'mac'                  => 'cc:f9:54:a1:03:45',
-                    'instantiation_type'   => 'NetworkPortEthernet',
-                    'virtualdev'           => 0,
-                    'ssid'                 => '',
-                    'gateway'              => '',
-                    'dhcpserver'           => '',
-                    'ipaddress'            => Array('192.168.30.198')
-                )
-          );
+      $unknowndevices_id = $pfUnknownDevice->add($input);
       
-      $networkPort = new NetworkPort();
+      // * Add networkport
+      $input = array();
+      $input['itemtype']            = 'PluginFusioninventoryUnknownDevice';
+      $input['items_id']            = $unknowndevices_id;
+      $input['instantiation_type']  = 'NetworkPortEthernet';
+      $input['name']                = 'general';
+      $input['mac']                 = '00:00:00:43:ae:0f';
+      $input['is_dynamic']          = 1;
+      $networkports_id = $networkPort->add($input);
       
-      $a_networkports = $networkPort->find("`mac`='cc:f9:54:a1:03:45'");
-
-      $a_networkport = current($a_networkports);
-      $networkports_id = $a_networkport['id'];
+      $input = array();
+      $input['items_id']   = $networkports_id;
+      $input['itemtype']   = 'NetworkPort';
+      $input['name']       = '';
+      $input['is_dynamic'] = 1;
+      $networknames_id     = $networkName->add($input);
       
-      $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
-      $computer         = new Computer();
-
-      $computers_id = $computer->add(array('serial'      => 'XB63J7D',
-                                           'entities_id' => 0));
-
-      $_SESSION['glpiactive_entity'] = 0;
-      $pfiComputerLib->updateComputer($a_inventory, $computers_id, FALSE);
-
-      $a_networkports = $networkPort->find("`mac`='cc:f9:54:a1:03:45'");
-
-      $this->assertEquals(1, count($a_networkports), "May have only one port with this mac address");      
-
-      $a_networkport = current($a_networkports);
-
-      $this->assertEquals($networkports_id, $a_networkport['id'], 'id of networkport not same '.
-              'for unknown device and after for computer');
+      $input = array();
+      $input['entities_id']   = 0;
+      $input['itemtype']      = 'NetworkName';
+      $input['items_id']      = $networknames_id;
+      $input['name']          = '192.168.20.1';
+      $input['is_dynamic']    = 1;
+      $iPAddress->add($input);
       
-      $this->assertEquals('Computer', $a_networkport['itemtype'], "Maybe Computer ");      
-
-      $GLPIlog = new GLPIlogs();
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
+      
+      $pfUnknownDevice->import($unknowndevices_id);
+      
+      $cnt = countElementsInTable("glpi_networkequipments");
+      
+      $this->assertEquals(1, $cnt, "May have network equipment added");      
+      
+      $cnt = countElementsInTable("glpi_plugin_fusioninventory_unknowndevices");
+      
+      $this->assertEquals(0, $cnt, "Unknown device may be deleted");
+      
+      $networkEquipment->getFromDB(1);
+      
+      $this->assertEquals('XXS6BEF3', $networkEquipment->fields['serial'], "Serial");
+      $this->assertEquals('switch', $networkEquipment->fields['name'], "Name");
+      $this->assertEquals(1, $networkEquipment->fields['is_dynamic'], "is_dynamic");
+      $this->assertEquals(1, $networkEquipment->fields['locations_id'], "locations_id");
+      $this->assertEquals('this is a comment', $networkEquipment->fields['comment'], "comment");
+      
+      $networkPort->getFromDB(1);
+      $a_reference = array(
+          'name'                 => 'general',
+          'id'                   => '1',
+          'items_id'             => '1',
+          'itemtype'             => 'NetworkEquipment',
+          'entities_id'          => '0',
+          'is_recursive'         => '0',
+          'logical_number'       => '0',
+          'instantiation_type'   => 'NetworkPortEthernet',
+          'mac'                  => '00:00:00:43:ae:0f',
+          'comment'              => '',
+          'is_deleted'           => '0',
+          'is_dynamic'           => '1'
+      );
+      $this->assertEquals($a_reference, $networkPort->fields, "Networkport");
+      $networkName->getFromDB(1);
+      $a_reference = array(
+          'id'          => '1',
+          'entities_id' => '0',
+          'items_id'    => '1',
+          'itemtype'    => 'NetworkPort',
+          'comment'     => NULL,
+          'fqdns_id'    => '0',
+          'is_deleted'  => '0',
+          'is_dynamic'  => '1',
+          'name'        => ''
+      );
+      $this->assertEquals($a_reference, $networkName->fields, "Networkname");
+      $iPAddress->getFromDB(1);
+      $a_reference = array(
+          'name'        => '192.168.20.1',
+          'id'          => '1',
+          'entities_id' => '0',
+          'items_id'    => '1',
+          'itemtype'    => 'NetworkName',
+          'version'     => '4',
+          'binary_0'    => '0',
+          'binary_1'    => '0',
+          'binary_2'    => '65535',
+          'binary_3'    => '3232240641',
+          'is_deleted'  => '0',
+          'is_dynamic'  => '1'
+      );
+      $this->assertEquals($a_reference, $iPAddress->fields, "IPAddress");
       
    }
+   
+   
+   
+   public function testImportComputer() {
+      global $DB;
+
+      $DB->connect();
+      
+
+   }
+   
+   
+   
+   public function testImportPrinter() {
+      global $DB;
+
+      $DB->connect();
+      
+
+   }
+   
    
  }
 
 
 
-class UnknownDeviceKnowDevice_AllTests  {
+class UnknownDeviceImport_AllTests  {
 
    public static function suite() {
     
-      $suite = new PHPUnit_Framework_TestSuite('UnknownDeviceKnowDevice');
+      $suite = new PHPUnit_Framework_TestSuite('UnknownDeviceImport');
       return $suite;
    }
 }

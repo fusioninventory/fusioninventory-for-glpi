@@ -125,7 +125,8 @@ class NetworkEquipmentUpdate extends PHPUnit_Framework_TestCase {
           ) 
       );
       $a_inventory['connection-mac'] = array(
-          '10001' => array('cc:f9:54:a1:03:35')
+          '10001' => array('cc:f9:54:a1:03:35'),
+          '10002' => array('cc:f9:54:a1:03:36')
       );
       $a_inventory['vlans'] = array(
           '10001' => array(
@@ -302,7 +303,36 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $this->assertEquals('NetworkPortEthernet', $a_networkport['instantiation_type'], 'instantiation type may be "NetworkPortEthernet"');
       
       $this->assertGreaterThan(0, $a_networkport['items_id'], 'items_id may be more than 0');
+   }
+
+   
+   
+   public function testNetworkPortConnection() {
+      global $DB;
+
+      $DB->connect();
+
+      $networkPort = new NetworkPort();
+      $networkPort_NetworkPort = new NetworkPort_NetworkPort();
+      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       
+      $a_networkports = $networkPort->find("`logical_number`='10001'");
+
+      $this->assertEquals(1, count($a_networkports), 'Number of networkport 10001 may be 1');
+
+      $a_networkport= current($a_networkports);
+      $opposites_id = $networkPort_NetworkPort->getOppositeContact($a_networkport['id']);
+      
+      $networkPort->getFromDB($opposites_id);
+      $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
+
+      $this->assertEquals(0, $pfUnknownDevice->fields['hub'], 'May not be a hub');
+      
+      $a_networkports = $networkPort->find("`items_id`='".$pfUnknownDevice->fields['id']."'
+         AND `itemtype`='PluginFusioninventoryUnknownDevice'");
+      
+      $this->assertEquals(1, count($a_networkports), 'Number of networkport of unknown ports may be 1');
+
    }
    
    

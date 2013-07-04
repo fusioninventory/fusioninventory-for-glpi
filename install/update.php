@@ -1560,6 +1560,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
+                              'is_dynamic',
+                              "tinyint(1) NOT NULL DEFAULT '0'");
+         $migration->addField($newTable,
                               "serialized_inventory",
                               "longblob");
          $migration->addKey($newTable,
