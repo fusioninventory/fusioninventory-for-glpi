@@ -244,20 +244,20 @@ class PluginFusinvinventoryInventory {
          // If transfer is disable, get entity and search only on this entity (see http://forge.fusioninventory.org/issues/1503)
          $pfConfig = new PluginFusioninventoryConfig();
          $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
-
-         if ($pfConfig->getValue($plugins_id, 'transfers_id_auto') > 0) {
-            $inputent = $input;
-            if ((isset($xml->CONTENT->HARDWARE->WORKGROUP)) AND (!empty($xml->CONTENT->HARDWARE->WORKGROUP))) {
-               $inputent['domain'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->WORKGROUP);
-            }
-            if (isset($inputent['serial'])) {
-               $inputent['serialnumber'] = $inputent['serial'];
-            }
-            $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
-            $dataEntity = array ();
-            $dataEntity = $ruleEntity->processAllRules($inputent, array());
-            if (isset($dataEntity['entities_id'])) {
-               $_SESSION['plugin_fusioninventory_entityrestrict'] = $dataEntity['entities_id'];
+         
+         $inputent = $input;
+         if ((isset($xml->CONTENT->HARDWARE->WORKGROUP)) AND (!empty($xml->CONTENT->HARDWARE->WORKGROUP))) {
+            $inputent['domain'] = Toolbox::addslashes_deep((string)$xml->CONTENT->HARDWARE->WORKGROUP);
+         }
+         if (isset($inputent['serial'])) {
+            $inputent['serialnumber'] = $inputent['serial'];
+         }
+         $ruleEntity = new PluginFusinvinventoryRuleEntityCollection();
+         $dataEntity = array ();
+         $dataEntity = $ruleEntity->processAllRules($inputent, array());
+         if (isset($dataEntity['entities_id'])) {
+            $_SESSION['plugin_fusioninventory_entityrestrict'] = $dataEntity['entities_id'];
+            if ($pfConfig->getValue($plugins_id, 'transfers_id_auto') == 0) {
                $input['entities_id'] = $dataEntity['entities_id'];
             }
          }
@@ -367,7 +367,7 @@ class PluginFusinvinventoryInventory {
             }
             $pfConfig = new PluginFusioninventoryConfig();
             $plugins_id = PluginFusioninventoryModule::getModuleId('fusinvinventory');
-            if ($pfConfig->getValue($plugins_id, 'transfers_id_auto') > 0) {
+//            if ($pfConfig->getValue($plugins_id, 'transfers_id_auto') > 0) {
                if (isset($dataEntity['entities_id'])) {
                   if ($dataEntity['entities_id'] == "-1") {
                      $_SESSION["plugin_fusinvinventory_entity"] = 0;
@@ -377,7 +377,7 @@ class PluginFusinvinventoryInventory {
                } else {
                   $_SESSION["plugin_fusinvinventory_entity"] = "N/A";
                }
-            }
+//            }
 
             PluginFusioninventoryLogger::logIfExtradebug(
                "pluginFusinvinventory-entityrules",

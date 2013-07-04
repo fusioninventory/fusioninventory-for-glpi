@@ -357,16 +357,6 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
          return true;
       }
 
-      //Build the request to check if the machine exists in GLPI
-      $where_entity = "";
-      if (isset($input['entities_id'])) {
-         if (is_array($input['entities_id'])) {
-            $where_entity .= implode($input['entities_id'],',');
-         } else {
-            $where_entity .= $input['entities_id'];
-         }
-      }
-
       // Get all equipment type
       $itemtype_global = 0;
       foreach ($complex_criterias as $criteria) {
@@ -531,9 +521,14 @@ class PluginFusioninventoryRuleImportEquipment extends Rule {
             }
          }
 
-         if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
-            $sql_where_temp .= " AND `[typetable]`.`entities_id`='".$_SESSION['plugin_fusioninventory_entityrestrict']."'";
+
+         if (isset($input['entities_id'])) {
+            $sql_where_temp .= " AND `[typetable]`.`entities_id`='".$input['entities_id']."'";
          }
+         
+//         if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
+//            $sql_where_temp .= " AND `[typetable]`.`entities_id`='".$_SESSION['plugin_fusioninventory_entityrestrict']."'";
+//         }
          
          $item = new $itemtype();
          $sql_glpi = "SELECT `[typetable]`.`id`
