@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2013-06-18 21:55+0200\n"
-"PO-Revision-Date: 2013-06-18 19:58+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2013-06-30 06:23+0000\n"
+"Last-Translator: mel_rince <sopp.ladios@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/FusionInventory/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: hook.php:169 hook.php:182 hook.php:190 hook.php:201 hook.php:217
 #: hook.php:228 hook.php:235 hook.php:243 inc/taskjob.class.php:125
 msgid "FusInv"
-msgstr ""
+msgstr "Fusinv"
 
 #: hook.php:52 hook.php:202 hook.php:236
 #: inc/inventorycomputercomputer.class.php:98
@@ -30,15 +30,15 @@ msgstr ""
 #: inc/networkequipment.class.php:549 inc/networkequipment.class.php:1089
 #: inc/printer.class.php:160 inc/printer.class.php:238
 msgid "Last inventory"
-msgstr ""
+msgstr "上一次盤點"
 
 #: hook.php:88 hook.php:95
 msgid "BIOS"
-msgstr ""
+msgstr "BIOS"
 
 #: hook.php:108 inc/inventorycomputercomputer.class.php:149
 msgid "Owner"
-msgstr ""
+msgstr "管有者"
 
 #: hook.php:113 inc/inventorycomputercomputer.class.php:156
 msgid "Company"
@@ -65,24 +65,24 @@ msgstr ""
 #: inc/snmpmodel.class.php:57 inc/snmpmodel.class.php:77
 #: inc/unknowndevice.class.php:169 inc/unknowndevice.class.php:382
 msgid "SNMP models"
-msgstr ""
+msgstr "SNMP模型"
 
 #: hook.php:183 hook.php:191 hook.php:229 inc/menu.class.php:244
 #: inc/networkequipment.class.php:473 inc/printer.class.php:187
 #: inc/staticmisc.class.php:222 inc/unknowndevice.class.php:174
 #: inc/unknowndevice.class.php:395
 msgid "SNMP authentication"
-msgstr ""
+msgstr "SNMP認證"
 
 #: hook.php:209 hook.php:251 inc/networkequipment.class.php:440
 #: inc/printer.class.php:151 inc/snmpmodel.class.php:107
 #: inc/unknowndevice.class.php:163 inc/unknowndevice.class.php:376
 msgid "Sysdescr"
-msgstr ""
+msgstr "Sysdescr"
 
 #: hook.php:244 inc/networkequipment.class.php:484
 msgid "CPU usage (in %)"
-msgstr ""
+msgstr "CPU使用率(%)"
 
 #: hook.php:827 hook.php:840 hook.php:851 inc/lock.class.php:167
 msgid "Lock"
@@ -95,22 +95,22 @@ msgstr ""
 
 #: hook.php:842 hook.php:853
 msgid "Load the correct SNMP model"
-msgstr ""
+msgstr "載入正確的SNMP模型"
 
 #: hook.php:843 hook.php:854 hook.php:891
 msgid "Assign SNMP model"
-msgstr ""
+msgstr "指定SNMP模型"
 
 #: hook.php:845 hook.php:856 hook.php:887
 msgid "Assign SNMP authentication"
-msgstr ""
+msgstr "指定SNMP認證"
 
 #: hook.php:866 inc/agent.class.php:157 inc/agentmodule.class.php:109
 #: inc/agentmodule.class.php:213 inc/agentmodule.class.php:215
 #: inc/ignoredimportdevice.class.php:118 inc/rulematchedlog.class.php:179
 #: inc/rulematchedlog.class.php:249 inc/taskjob.class.php:237
 msgid "Module"
-msgstr ""
+msgstr "模組"
 
 #: hook.php:870 hook.php:874 inc/agent.class.php:271 inc/agent.class.php:286
 #: inc/config.class.php:645 inc/config.class.php:651
@@ -121,17 +121,17 @@ msgstr ""
 #: hook.php:871 inc/agent.class.php:272 inc/config.class.php:646
 #: inc/staticmisc.class.php:83
 msgid "Network discovery"
-msgstr ""
+msgstr "網絡發現"
 
 #: hook.php:876 inc/agent.class.php:287 inc/agentmodule.class.php:135
 #: inc/config.class.php:652 inc/staticmisc.class.php:88
 msgid "Network inventory (SNMP)"
-msgstr ""
+msgstr "網絡盤點(SNMP)"
 
 #: hook.php:907 inc/taskjoblog.class.php:445 inc/taskjoblog.class.php:886
 #: inc/taskjoblog.class.php:941
 msgid "Force the end"
-msgstr ""
+msgstr "強制停止"
 
 #: hook.php:1025 inc/deployreport.class.php:125
 #: inc/deploystaticmisc.class.php:87
@@ -148,11 +148,11 @@ msgstr ""
 
 #: hook.php:1264 front/unknowndevice.form.php:105
 msgid "Number of imported devices"
-msgstr ""
+msgstr "匯入裝置數"
 
 #: hook.php:1267 front/unknowndevice.form.php:107
 msgid "Number of devices not imported because type not defined"
-msgstr ""
+msgstr "未能判斷裝置類別而取消匯入的裝置數"
 
 #: index.php:54 front/agent.form.php:47 front/agent.php:45
 #: front/agentmodule.form.php:45 front/configsecurity.form.php:50
@@ -178,23 +178,23 @@ msgstr ""
 #: inc/networkequipment.class.php:544 inc/profile.class.php:293
 #: report/computer_last_inventory.php:49
 msgid "FusionInventory"
-msgstr ""
+msgstr "FusionInventory"
 
 #: setup.php:272 inc/printerlog.class.php:474
 msgid "Printed page counter"
-msgstr ""
+msgstr "列印頁數計數器"
 
 #: setup.php:276
 msgid "Switchs ports history"
-msgstr ""
+msgstr "交換機連接埠紀錄"
 
 #: setup.php:278
 msgid "Unused switchs ports"
-msgstr ""
+msgstr "未使用的交接機連接埠"
 
 #: setup.php:280
 msgid "Number of days since last inventory"
-msgstr ""
+msgstr "距離上次盤點的日數"
 
 #: setup.php:284 report/computer_last_inventory.php:67
 msgid "Computers not inventoried since xx days"
@@ -202,42 +202,42 @@ msgstr ""
 
 #: setup.php:376 setup.php:377
 msgid "Documentation"
-msgstr ""
+msgstr "使用說明"
 
 #: setup.php:384
 msgid "Menu"
-msgstr ""
+msgstr "選單"
 
 #: setup.php:387 inc/menu.class.php:135 inc/menu.class.php:142
 #: inc/task.class.php:53 inc/task.class.php:806 inc/task.class.php:815
 msgid "Task management"
-msgstr ""
+msgstr "工作管理"
 
 #: setup.php:390 inc/menu.class.php:148
 msgid "Running jobs"
-msgstr ""
+msgstr "正在執行的工作"
 
 #: setup.php:393 inc/menu.class.php:100
 msgid "Agents management"
-msgstr ""
+msgstr "Agents管理"
 
 #: setup.php:399 inc/menu.class.php:106 inc/unknowndevice.class.php:54
 #: inc/unknowndevice.class.php:72
 msgid "Unknown device"
-msgstr ""
+msgstr "不明裝置"
 
 #: setup.php:402 inc/inventoryruleimportcollection.class.php:57
 #: inc/menu.class.php:175
 msgid "Equipment import and link rules"
-msgstr ""
+msgstr "裝置匯入及連結規則"
 
 #: setup.php:405
 msgid "Wizard"
-msgstr ""
+msgstr "軟件嚮導"
 
 #: setup.php:408 inc/iprange.class.php:95 inc/staticmisc.class.php:201
 msgid "IP range configuration"
-msgstr ""
+msgstr "IP範圍設定"
 
 #: setup.php:411 inc/deploypackage.class.php:54
 #: inc/deploypackage.class.php:290
@@ -256,7 +256,7 @@ msgstr ""
 #: setup.php:423 inc/inventoryruleentity.class.php:57
 #: inc/inventoryruleentitycollection.class.php:55
 msgid "Entity rules"
-msgstr ""
+msgstr "個體規則"
 
 #: setup.php:426 inc/inventoryrulelocation.class.php:57
 #: inc/inventoryrulelocationcollection.class.php:56
@@ -265,11 +265,11 @@ msgstr ""
 
 #: setup.php:429 inc/menu.class.php:155
 msgid "Import agent XML file"
-msgstr ""
+msgstr "匯入agent XML檔案"
 
 #: setup.php:438 inc/menu.class.php:263
 msgid "Discovery status"
-msgstr ""
+msgstr "裝置發現狀態"
 
 #: setup.php:441
 msgid "Inventory status"
@@ -281,7 +281,7 @@ msgstr ""
 
 #: setup.php:543
 msgid "Your GLPI version not compatible, require 0.84"
-msgstr ""
+msgstr "您的GLPI版本不兼容, 需要0.84或以上版本"
 
 #: setup.php:548
 msgid "fileinfo extension (PHP) is required..."
@@ -298,11 +298,11 @@ msgstr ""
 
 #: front/agent.form.php:58
 msgid "The agent is running"
-msgstr ""
+msgstr "Agent運作中"
 
 #: front/agent.form.php:61 inc/agent.class.php:562
 msgid "Impossible to communicate with agent!"
-msgstr ""
+msgstr "無法與agent連線!"
 
 #: front/config.form.php:47 front/configlogfield.form.php:47
 msgid "Features"
@@ -310,7 +310,7 @@ msgstr ""
 
 #: front/constructsendmodel.php:52
 msgid "Importing SNMP models finished."
-msgstr ""
+msgstr "已成功匯入所有SNMP模型."
 
 #: front/deploypackage.form.php:73
 msgid "The modified JSON contained a syntax error : <br/>"
@@ -322,45 +322,45 @@ msgstr ""
 
 #: front/inventorycomputerimportxml.php:93
 msgid "No file to import!"
-msgstr ""
+msgstr "無可供匯入的檔案!"
 
 #: front/popup.php:64
 msgid "Cache informations"
-msgstr ""
+msgstr "緩存資訊"
 
 #: front/popup.php:69
 msgid "Network ports display options"
-msgstr ""
+msgstr "網絡連接埠顯示選項"
 
 #: front/printerlogreport.php:92 inc/statediscovery.class.php:144
 #: inc/stateinventory.class.php:95
 msgid "Starting date"
-msgstr ""
+msgstr "開始日期"
 
 #: front/printerlogreport.php:100 inc/statediscovery.class.php:145
 #: inc/stateinventory.class.php:96
 msgid "Ending date"
-msgstr ""
+msgstr "完結日期"
 
 #: front/rule.common.php:176
 msgid "Rules applied"
-msgstr ""
+msgstr "已應用的規則"
 
 #: front/rule.common.php:187
 msgid "Local rules"
-msgstr ""
+msgstr "本機規則"
 
 #: front/snmpmodelconstructdevice.php:72
 msgid "Automatic creation of models"
-msgstr ""
+msgstr "自動產生模型"
 
 #: front/snmpmodelconstructdevice.php:74
 msgid "Delete models non used"
-msgstr ""
+msgstr "刪除未使用的模型"
 
 #: front/snmpmodelconstructdevice.php:76
 msgid "Re-create models comments"
-msgstr ""
+msgstr "重新建立模型的評語"
 
 #: front/snmpmodelconstructdevice.php:82
 msgid "Generate discovery file"
@@ -368,7 +368,7 @@ msgstr ""
 
 #: front/snmpmodelconstructdevice.php:84
 msgid "Export all models"
-msgstr ""
+msgstr "匯出所有模型"
 
 #: front/unknowndevice.form.php:84
 msgid "restoration of the item"
@@ -381,11 +381,11 @@ msgstr ""
 #: inc/taskjoblog.class.php:306 inc/taskjoblog.class.php:514
 #: inc/taskjobstate.class.php:194
 msgid "Agent"
-msgstr ""
+msgstr "Agent"
 
 #: inc/agent.class.php:100 inc/agent.class.php:187 inc/agent.class.php:294
 msgid "Last contact"
-msgstr ""
+msgstr "上一次連線"
 
 #: inc/agent.class.php:106 inc/agent.class.php:257
 msgid "locked"
@@ -551,7 +551,7 @@ msgstr ""
 
 #: inc/config.class.php:602
 msgid "Model for automatic computers transfer in an other entity"
-msgstr ""
+msgstr "電腦自動轉移的模型"
 
 #: inc/config.class.php:640
 msgid "Network options"
@@ -595,11 +595,11 @@ msgstr ""
 
 #: inc/constructmodel.class.php:340
 msgid "Get SNMP model"
-msgstr ""
+msgstr "取得SNMP模型"
 
 #: inc/constructmodel.class.php:346
 msgid "Import SNMP model"
-msgstr ""
+msgstr "匯入SNMP模型"
 
 #: inc/constructmodel.class.php:699
 msgid "Sorted by"
@@ -607,7 +607,7 @@ msgstr ""
 
 #: inc/constructmodel.class.php:973 inc/constructmodel.class.php:979
 msgid "Download SNMP models, please wait..."
-msgstr ""
+msgstr "正在下載SNMP模型, 請稍候..."
 
 #: inc/credential.class.php:53 inc/credential.class.php:148
 #: inc/credentialip.class.php:107 inc/credentialip.class.php:120
@@ -1085,7 +1085,7 @@ msgstr ""
 
 #: inc/inventorycomputerwebservice.class.php:74
 msgid "Computer injected into GLPI"
-msgstr ""
+msgstr "已匯入GLPI的電腦"
 
 #: inc/inventoryruleentity.class.php:166
 #: inc/inventoryrulelocation.class.php:168
@@ -1256,7 +1256,7 @@ msgstr ""
 
 #: inc/mapping.class.php:174
 msgid "networking > model"
-msgstr ""
+msgstr "網絡>型號"
 
 #: inc/mapping.class.php:178
 msgid "networking > port > type"
@@ -1288,7 +1288,7 @@ msgstr ""
 
 #: inc/mapping.class.php:206
 msgid "printer > model"
-msgstr ""
+msgstr "印表機>型號"
 
 #: inc/mapping.class.php:210
 msgid "printer > total memory"
@@ -1596,7 +1596,7 @@ msgstr ""
 
 #: inc/mapping.class.php:514
 msgid "networking > contact"
-msgstr ""
+msgstr "網絡>聯絡人"
 
 #: inc/mapping.class.php:518
 msgid "networking > comments"
@@ -1604,7 +1604,7 @@ msgstr ""
 
 #: inc/mapping.class.php:522
 msgid "printer > contact"
-msgstr ""
+msgstr "印表機>聯絡人"
 
 #: inc/mapping.class.php:526
 msgid "printer > comments"
@@ -2110,7 +2110,7 @@ msgstr ""
 
 #: inc/menu.class.php:289
 msgid "SNMP models creation"
-msgstr ""
+msgstr "建立SNMP模型"
 
 #: inc/menu.class.php:296
 msgid "Networking"
@@ -2138,7 +2138,7 @@ msgstr ""
 
 #: inc/networkequipment.class.php:468 inc/printer.class.php:197
 msgid "Load the correct model"
-msgstr ""
+msgstr "載入正確型號"
 
 #: inc/networkequipment.class.php:492
 msgid "Memory usage (in %)"
@@ -2326,21 +2326,21 @@ msgstr ""
 
 #: inc/snmpmodel.class.php:96
 msgid "Key of model discovery"
-msgstr ""
+msgstr "模型發現之主鍵"
 
 #: inc/snmpmodel.class.php:133
 msgid "Create SNMP model"
-msgstr ""
+msgstr "建立SNMP模型"
 
 #: inc/snmpmodel.class.php:134
 msgid "Edit SNMP model"
-msgstr ""
+msgstr "修訂SNMP模型"
 
 #: inc/snmpmodel.class.php:434 inc/snmpmodel.class.php:439
 #: inc/snmpmodelimportexport.class.php:488
 #: inc/snmpmodelimportexport.class.php:493
 msgid "Importing SNMP models, please wait..."
-msgstr ""
+msgstr "正在匯入SNMP模型, 請稍候..."
 
 #: inc/snmpmodelconstructdevice.class.php:58
 msgid "Back to device form information"
@@ -2358,19 +2358,19 @@ msgstr ""
 
 #: inc/snmpmodelimportexport.class.php:134
 msgid "SNMP model import"
-msgstr ""
+msgstr "匯入SNMP模型"
 
 #: inc/snmpmodelimportexport.class.php:161
 msgid "Mass import of models"
-msgstr ""
+msgstr "批量匯入模型"
 
 #: inc/snmpmodelimportexport.class.php:165
 msgid "Mass import of models in folder plugins/fusioninventory/snmpmodels/"
-msgstr ""
+msgstr "於資料夾plugins/fusioninventory/snmpmodels/批量匯入模型"
 
 #: inc/snmpmodelimportexport.class.php:215
 msgid "Model already exists"
-msgstr ""
+msgstr "模型已存在"
 
 #: inc/snmpmodelmib.class.php:94
 msgid "OID list"
@@ -2491,7 +2491,7 @@ msgstr ""
 
 #: inc/staticmisc.class.php:231
 msgid "SNMP model"
-msgstr ""
+msgstr "SNMP模型"
 
 #: inc/staticmisc.class.php:234
 msgid "Printers report"

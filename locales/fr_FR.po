@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2013-06-18 21:55+0200\n"
-"PO-Revision-Date: 2013-06-18 19:58+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2013-06-19 11:50+0000\n"
+"Last-Translator: kiniou <kiniou@gmail.com>\n"
 "Language-Team: French (France) (http://www.transifex.com/projects/p/FusionInventory/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -64,7 +64,7 @@ msgstr "Étiquette FusionInventory"
 
 #: hook.php:127 inc/computerarch.class.php:51
 msgid "Architecture"
-msgstr ""
+msgstr "Architecture"
 
 #: hook.php:170 hook.php:218 inc/menu.class.php:281
 #: inc/networkequipment.class.php:446 inc/printer.class.php:169
@@ -249,7 +249,7 @@ msgstr "Plages IP"
 #: setup.php:411 inc/deploypackage.class.php:54
 #: inc/deploypackage.class.php:290
 msgid "Packages"
-msgstr "Paquetages"
+msgstr "Paquets"
 
 #: setup.php:414 inc/deploygroup.class.php:57 inc/deploygroup.class.php:101
 #: inc/deploytaskjob.class.php:170 inc/menu.class.php:112
@@ -570,7 +570,7 @@ msgstr "Chemin du dossier téléversant des fichiers du serveur"
 
 #: inc/config.class.php:697
 msgid "Use this GLPI server as a mirror server"
-msgstr ""
+msgstr "Utiliser ce serveur GLPI comme un serveur mirroir"
 
 #: inc/configlogfield.class.php:133
 msgid "History configuration"
@@ -602,11 +602,11 @@ msgstr "Protocole de cryptage pour les données"
 
 #: inc/constructmodel.class.php:340
 msgid "Get SNMP model"
-msgstr ""
+msgstr "Récupérer le modèle SNMP"
 
 #: inc/constructmodel.class.php:346
 msgid "Import SNMP model"
-msgstr ""
+msgstr "Importer le modèle SNMP"
 
 #: inc/constructmodel.class.php:699
 msgid "Sorted by"
@@ -681,7 +681,7 @@ msgstr ""
 
 #: inc/deployaction.class.php:190
 msgid "Command to execute"
-msgstr ""
+msgstr " Commande à exécuter"
 
 #: inc/deployaction.class.php:204
 msgid "return codes saved for this command"
@@ -718,15 +718,15 @@ msgstr ""
 
 #: inc/deploycheck.class.php:51
 msgid "Registry key exists"
-msgstr ""
+msgstr "La clef de registre existe"
 
 #: inc/deploycheck.class.php:52
 msgid "Registry key missing"
-msgstr ""
+msgstr "La clef de registre n'existe pas"
 
 #: inc/deploycheck.class.php:53
 msgid "Registry key value equals to"
-msgstr ""
+msgstr "La clef de registre est égale"
 
 #: inc/deploycheck.class.php:54
 msgid "File exists"
@@ -734,43 +734,43 @@ msgstr "Le fichier existe"
 
 #: inc/deploycheck.class.php:55
 msgid "File is missing"
-msgstr ""
+msgstr "Le fichier n'existe pas"
 
 #: inc/deploycheck.class.php:56
 msgid "File size is greater than"
-msgstr ""
+msgstr "Taille du fichier supérieure à"
 
 #: inc/deploycheck.class.php:57
 msgid "File size is equal to"
-msgstr ""
+msgstr "Taille du fichier égale à"
 
 #: inc/deploycheck.class.php:58
 msgid "File size is lower than"
-msgstr ""
+msgstr "Taille du fichier inférieure à"
 
 #: inc/deploycheck.class.php:59
 msgid "SHA-512 hash value is"
-msgstr ""
+msgstr "Hash SHA-512 du fichier est"
 
 #: inc/deploycheck.class.php:60
 msgid "Free space is greater than"
-msgstr ""
+msgstr "Taille de l'espace libre est supérieure à"
 
 #: inc/deploycheck.class.php:80
 msgid "B"
-msgstr "B"
+msgstr "O"
 
 #: inc/deploycheck.class.php:81
 msgid "KiB"
-msgstr "KiB"
+msgstr "KiO"
 
 #: inc/deploycheck.class.php:82
 msgid "MiB"
-msgstr "MiB"
+msgstr "MiO"
 
 #: inc/deploycheck.class.php:83
 msgid "GiB"
-msgstr "GiB"
+msgstr "GiO"
 
 #: inc/deploycheck.class.php:252 inc/deploycheck.class.php:256
 msgid "Key"
@@ -778,7 +778,7 @@ msgstr "Clé"
 
 #: inc/deploycheck.class.php:257
 msgid "Key value"
-msgstr ""
+msgstr "Valeur de la clé"
 
 #: inc/deploycheck.class.php:261 inc/deploycheck.class.php:267
 #: inc/deploycheck.class.php:272 inc/deployfile.class.php:348
@@ -788,7 +788,7 @@ msgstr "Fichier"
 #: inc/deploycheck.class.php:268 inc/deploycheck.class.php:273
 #: inc/deploycheck.class.php:278
 msgid "Value"
-msgstr ""
+msgstr "Valeur"
 
 #: inc/deploycheck.class.php:277
 msgid "Disk or directory"
@@ -800,7 +800,7 @@ msgstr "Unité"
 
 #: inc/deploycheck.class.php:359
 msgid "In case of error"
-msgstr ""
+msgstr "En cas d'erreur"
 
 #: inc/deploycheck.class.php:362 inc/deploystate.class.php:127
 msgid "Error"
@@ -808,7 +808,7 @@ msgstr "Erreur"
 
 #: inc/deploycheck.class.php:363
 msgid "Ignore"
-msgstr ""
+msgstr "Ignorer"
 
 #: inc/deploycommand.class.php:50
 msgid "Execute a command"
@@ -816,7 +816,7 @@ msgstr "Exécuter une commande"
 
 #: inc/deployfile.class.php:67
 msgid "Upload from computer"
-msgstr "Télécharger depuis votre Ordinateur"
+msgstr "Télécharger depuis votre ordinateur"
 
 #: inc/deployfile.class.php:68
 msgid "Upload from server"
@@ -836,7 +836,7 @@ msgstr "jours"
 
 #: inc/deployfile.class.php:233
 msgid "uncompress"
-msgstr "Décompresser"
+msgstr "décompresser"
 
 #: inc/deployfile.class.php:292
 msgid "Source"
@@ -876,7 +876,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:653
 msgid "No file was uploaded"
-msgstr "Pas de fichiers télécharger"
+msgstr "Aucun fichier n'a été téléchargé"
 
 #: inc/deployfile.class.php:656
 msgid "Missing a temporary folder"
@@ -892,11 +892,11 @@ msgstr "L'extension PHP à stoppé le fichier uploadé"
 
 #: inc/deployfile.class.php:689 inc/deployfile.class.php:726
 msgid "File saved!"
-msgstr ""
+msgstr "Fichier bien enregistré!"
 
 #: inc/deployfile.class.php:692 inc/deployfile.class.php:729
 msgid "Failed to copy file"
-msgstr ""
+msgstr "Erreur lors de la copie du fichier"
 
 #: inc/deployfile.class.php:696 inc/deployfile.class.php:733
 msgid "File missing"
@@ -932,7 +932,7 @@ msgstr "Adresse du serveur mirroir"
 
 #: inc/deploymirror.class.php:143
 msgid "Mirror location"
-msgstr ""
+msgstr "Emplacement miroir"
 
 #: inc/deploypackage.class.php:124
 msgid "Modification Denied"
@@ -1178,7 +1178,7 @@ msgstr "IP incorrecte"
 
 #: inc/lock.class.php:164
 msgid "Values GLPI"
-msgstr ""
+msgstr "Valeurs GLPI"
 
 #: inc/lock.class.php:165
 msgid "Values of last inventory"
@@ -1776,7 +1776,7 @@ msgstr "MAC interne"
 #: inc/mapping.class.php:711 inc/networkequipment.class.php:718
 #: inc/networkport.class.php:125
 msgid "Alias"
-msgstr ""
+msgstr "Alias"
 
 #: inc/mapping.class.php:715 inc/printerlog.class.php:145
 msgid "Total number of printed pages"
@@ -2118,7 +2118,7 @@ msgstr "Statut de l'inventaire réseau"
 
 #: inc/menu.class.php:289
 msgid "SNMP models creation"
-msgstr ""
+msgstr "Création de modèles SNMP"
 
 #: inc/menu.class.php:296
 msgid "Networking"
@@ -2348,11 +2348,11 @@ msgstr "Edition de modèle SNMP"
 #: inc/snmpmodelimportexport.class.php:488
 #: inc/snmpmodelimportexport.class.php:493
 msgid "Importing SNMP models, please wait..."
-msgstr ""
+msgstr "Importation des modèles SNMP, veuillez patienter ..."
 
 #: inc/snmpmodelconstructdevice.class.php:58
 msgid "Back to device form information"
-msgstr ""
+msgstr "Retour au formulaire d'information du matériel"
 
 #: inc/snmpmodelconstructdevice.class.php:530 inc/snmpmodelmib.class.php:101
 #: inc/snmpmodelmib.class.php:248

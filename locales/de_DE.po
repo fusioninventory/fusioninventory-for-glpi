@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2013-06-18 21:55+0200\n"
-"PO-Revision-Date: 2013-06-18 19:58+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2013-06-21 09:20+0000\n"
+"Last-Translator: Mathieu Simon <mathieu.sim@gmail.com>\n"
 "Language-Team: German (Germany) (http://www.transifex.com/projects/p/FusionInventory/language/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -252,7 +252,7 @@ msgstr "Gruppen von Computern"
 
 #: setup.php:417 inc/ignoredimportdevice.class.php:51
 msgid "Equipment ignored on import"
-msgstr ""
+msgstr "Geräte die beim Import ignoriert wurden"
 
 #: setup.php:423 inc/inventoryruleentity.class.php:57
 #: inc/inventoryruleentitycollection.class.php:55
@@ -712,7 +712,7 @@ msgstr ""
 
 #: inc/deploycheck.class.php:51
 msgid "Registry key exists"
-msgstr ""
+msgstr "Registry-Key ist vorhanden"
 
 #: inc/deploycheck.class.php:52
 msgid "Registry key missing"
@@ -890,7 +890,7 @@ msgstr "Datei gespeichert!"
 
 #: inc/deployfile.class.php:692 inc/deployfile.class.php:729
 msgid "Failed to copy file"
-msgstr ""
+msgstr "Datei konnte nicht kopiert werden"
 
 #: inc/deployfile.class.php:696 inc/deployfile.class.php:733
 msgid "File missing"
@@ -2096,7 +2096,7 @@ msgstr ""
 
 #: inc/menu.class.php:191
 msgid "Computer entity rules"
-msgstr ""
+msgstr "Entitätstregeln für Computer"
 
 #: inc/menu.class.php:198
 msgid "Computer location rules"
@@ -2642,7 +2642,7 @@ msgstr "gefundene Geräte"
 msgid ""
 "SNMP equipment definition isn't up to date on agent. For the next run, it "
 "will get new version from server."
-msgstr ""
+msgstr "Die SNMP Gerätedefinition am Agenten ist nicht aktuell. Für den nächsten Lauf, wird er eine neue Version vom Server erhalten."
 
 #: inc/taskjoblog.class.php:1088
 msgid "Add the item"
