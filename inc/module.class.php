@@ -75,7 +75,7 @@ class PluginFusioninventoryModule extends CommonDBTM {
       if (!isset($_SESSION['glpi_plugins'])) {
          return $index;
       }
-      if ((substr($p_name, 0, 6) == 'fusinv') OR ($p_name == 'fusioninventory')) {
+      if ($p_name == 'fusioninventory') {
          $index = array_search($p_name, $_SESSION['glpi_plugins']);
          if (!$index) {
             $plugin = new Plugin();
