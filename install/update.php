@@ -4426,6 +4426,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Table glpi_plugin_fusioninventory_computerlicenseinfos
     */
+      if (TableExists("glpi_plugin_fusinvinventory_licenseinfos")) {
+         $DB->query("UPDATE `glpi_plugin_fusinvinventory_licenseinfos`"
+                 ." SET `softwarelicenses_id`='0'"
+                 ." WHERE `softwarelicenses_id` IS NULL");
+      }
       $a_table = array();
       $a_table['name'] = 'glpi_plugin_fusioninventory_computerlicenseinfos';
       $a_table['oldname'] = array('glpi_plugin_fusinvinventory_licenseinfos');
