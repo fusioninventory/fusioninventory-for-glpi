@@ -914,6 +914,11 @@ function plugin_fusioninventory_MassiveActions($type) {
          return $array;
          break;
 
+      case 'PluginFusioninventoryDeployMirror';
+         $array['plugin_fusioninventory_transfert'] = __('Transfer');
+         return $array;
+         break;
+
    }
    return array ();
 }
@@ -1301,6 +1306,19 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                      $pfDeployPackage->update($input);
                   }
                }
+            } 
+         } else if ($data['itemtype'] == 'PluginFusioninventoryDeployMirror') {
+            foreach ($data["item"] as $key => $val) {
+               if ($val == 1) {
+
+                  $pfDeployMirror = new PluginFusioninventoryDeployMirror();
+                  if ($pfDeployMirror->getFromDB($key)) {
+                     $input = array();
+                     $input['id'] = $key;
+                     $input['entities_id'] = $data['entities_id'];
+                     $pfDeployMirror->update($input);
+                  }
+               }
             }
          } else if ($data['itemtype'] == 'PluginFusioninventoryTask') {
             $pfTask = new PluginFusioninventoryTask();
@@ -1322,7 +1340,6 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                   }
                }
             }
-
          }
          break;
 
