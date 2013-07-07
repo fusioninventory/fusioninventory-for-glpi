@@ -231,7 +231,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $tab[80]['table']     = 'glpi_entities';
       $tab[80]['field']     = 'completename';
-      $tab[80]['linkfield'] = 'entities_id';
       $tab[80]['name']      = __('Entity');
 
       $tab[86]['table']     = $this->getTable();
@@ -249,6 +248,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return $tab;
    }
 
+   
+   
    function getAllDatas() {
       global $DB;
 
@@ -333,7 +334,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          $this->check(-1, 'w');
          $this->getEmpty();
       }
-
+      
       $options['colspan'] = 2;
       $this->showTabs($options);
       $this->showFormHeader($options);

@@ -909,6 +909,11 @@ function plugin_fusioninventory_MassiveActions($type) {
          );
          break;
 
+      case 'PluginFusioninventoryDeployPackage';
+         $array['plugin_fusioninventory_transfert'] = __('Transfer');
+         return $array;
+         break;
+
    }
    return array ();
 }
@@ -1281,6 +1286,19 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                      $input['id'] = $key;
                      $input['entities_id'] = $data['entities_id'];
                      $pfAgent->update($input);
+                  }
+               }
+            }
+         } else if ($data['itemtype'] == 'PluginFusioninventoryDeployPackage') {
+            foreach ($data["item"] as $key => $val) {
+               if ($val == 1) {
+
+                  $pfDeployPackage = new PluginFusioninventoryDeployPackage();
+                  if ($pfDeployPackage->getFromDB($key)) {
+                     $input = array();
+                     $input['id'] = $key;
+                     $input['entities_id'] = $data['entities_id'];
+                     $pfDeployPackage->update($input);
                   }
                }
             }
