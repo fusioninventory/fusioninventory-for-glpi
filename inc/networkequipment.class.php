@@ -241,9 +241,9 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                   $data_ag = $DB->fetch_assoc($result_ag);
                   $a_ports = importArrayFromDB($data_ag['networkports_id_list']);
                   foreach ($a_ports as $port_id) {
-
                      $query_agp = "
-                     SELECT *, glpi_plugin_fusioninventory_networkports.mac as ifmacinternal
+                     SELECT `glpi_networkports`.`id`, `instantiation_type`,
+                        `glpi_plugin_fusioninventory_networkports`.`id` as `fusionid`
 
                      FROM glpi_plugin_fusioninventory_networkports
 

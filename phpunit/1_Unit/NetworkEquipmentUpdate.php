@@ -53,6 +53,10 @@ class NetworkEquipmentUpdate extends PHPUnit_Framework_TestCase {
       
       $Install = new Install();
       $Install->testInstall(0);
+
+      $DB->query("UPDATE `glpi_plugin_fusioninventory_networkporttypes`"
+              ." SET `import`='1'"
+              ." WHERE `number`='53'");
       
       $this->datelatupdate = date('Y-m-d H:i:s');
       
@@ -122,7 +126,25 @@ class NetworkEquipmentUpdate extends PHPUnit_Framework_TestCase {
               'mac'              => '6c:50:4d:39:59:82',
               'trunk'            => 1,
               'ifspeed'          => 10000000
-          ) 
+          ),
+          '5005' => array(
+              'ifdescr'          => 'Port-channel10',
+              'ifinerrors'       => 0,
+              'ifinoctets'       => 1076823325,
+              'ifinternalstatus' => 1,
+              'iflastchange'     => '53.53 seconds',
+              'ifmtu'            => 1500,
+              'name'             => 'Po10',
+              'logical_number'   => 5005,
+              'ifouterrors'      => 0,
+              'ifoutoctets'      => 2179528910,
+              'speed'            => 4294967295,
+              'ifstatus'         => 1,
+              'iftype'           => 53,
+              'mac'              => '6c:50:4d:39:59:88',
+              'trunk'            => 1,
+              'ifspeed'          => 4294967295
+          )
       );
       $a_inventory['connection-mac'] = array(
           '10001' => array('cc:f9:54:a1:03:35'),
@@ -156,6 +178,9 @@ class NetworkEquipmentUpdate extends PHPUnit_Framework_TestCase {
               'logical_number'   => '',	
               'mac'              => ''
           )
+      );
+      $a_inventory['aggregate'] = array(
+          '5005' => array('10001', '10002')
       );
       
 
@@ -265,7 +290,8 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       
       $a_networkports = $networkPort->find("`instantiation_type`='NetworkPortAggregate'
          AND `itemtype`='NetworkEquipment'
-         AND `items_id`='1'");
+         AND `items_id`='1'
+         AND `logical_number`='0'");
       
       $this->assertEquals(1, count($a_networkports), 'Number internal ports');      
       
@@ -332,7 +358,29 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
          AND `itemtype`='PluginFusioninventoryUnknownDevice'");
       
       $this->assertEquals(1, count($a_networkports), 'Number of networkport of unknown ports may be 1');
+   }
 
+   
+   
+   public function testNetworkPortAggregation() {
+      global $DB;
+
+      $DB->connect();
+
+      $networkPort = new NetworkPort();
+      $networkPortAggregate = new NetworkPortAggregate();
+      
+      $a_networkports = $networkPort->find("`logical_number`='5005'");
+
+      $this->assertEquals(1, count($a_networkports), 'Number of networkport 5005 may be 1');
+
+      $a_networkport= current($a_networkports);
+
+      $a_aggregate = current($networkPortAggregate->find("`networkports_id`='".$a_networkport['id']."'", '', 1));
+
+      $a_ports = importArrayFromDB($a_aggregate['networkports_id_list']);
+      
+      $this->assertEquals(array('2', '4'), $a_ports, 'aggregate ports');
    }
    
    

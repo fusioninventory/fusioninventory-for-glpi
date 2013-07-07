@@ -149,6 +149,115 @@ class NetworkEquipmentTransformation extends PHPUnit_Framework_TestCase {
       
       $this->assertEquals($a_reference, $a_return);
    }
+
+   
+   
+   public function testConvertXMLtoArrayAggregatePort() {
+      global $DB;
+
+      $DB->connect();
+      
+      $xml_source = '<?xml version="1.0"?>
+<REQUEST>
+<CONTENT>
+   <DEVICE>
+      <INFO>
+        <COMMENTS>ProCurve J9085A</COMMENTS>
+        <FIRMWARE>R.10.06 R.11.60</FIRMWARE>
+        <ID>123</ID>
+        <IPS>
+          <IP>192.168.1.56</IP>
+          <IP>192.168.10.56</IP>
+        </IPS>
+        <LOCATION>BAT A - Niv 3</LOCATION>
+        <MAC>b4:39:d6:3a:7f:00</MAC>
+        <MODEL>J9085A</MODEL>
+        <NAME>FR-SW01</NAME>
+        <SERIAL>CN536H7J</SERIAL>
+        <TYPE>NETWORKING</TYPE>
+        <UPTIME>8 days, 01:48:57.95</UPTIME>
+      </INFO>
+      <PORTS>
+         <PORT>
+           <AGGREGATE>
+             <PORT>10001</PORT>
+             <PORT>10002</PORT>
+           </AGGREGATE>
+           <IFDESCR>Port-channel10</IFDESCR>
+           <IFINERRORS>0</IFINERRORS>
+           <IFINOCTETS>1076823325</IFINOCTETS>
+           <IFINTERNALSTATUS>1</IFINTERNALSTATUS>
+           <IFLASTCHANGE>15 days, 23:20:53.24</IFLASTCHANGE>
+           <IFMTU>1500</IFMTU>
+           <IFNAME>Po10</IFNAME>
+           <IFNUMBER>5010</IFNUMBER>
+           <IFOUTERRORS>0</IFOUTERRORS>
+           <IFOUTOCTETS>2179528910</IFOUTOCTETS>
+           <IFSPEED>4294967295</IFSPEED>
+           <IFSTATUS>1</IFSTATUS>
+           <IFTYPE>53</IFTYPE>
+           <MAC>c4:64:13:8c:7e:b5</MAC>
+         </PORT>
+      </PORTS>
+   </DEVICE>
+</CONTENT>
+</REQUEST>';
+      
+      $xml = simplexml_load_string($xml_source, 'SimpleXMLElement', LIBXML_NOCDATA);
+      
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      $a_return = $pfFormatconvert->XMLtoArray($xml);
+      
+      $a_reference = array(
+          'CONTENT' => array(
+          'DEVICE' => array(
+              array(
+               'INFO' => array(
+                        'COMMENTS' => 'ProCurve J9085A',
+                        'FIRMWARE' => 'R.10.06 R.11.60',
+                        'ID'       => '123',
+                        'IPS'      => array(
+                                 'IP' => array('192.168.1.56', '192.168.10.56')
+                            ),
+                        'LOCATION' => 'BAT A - Niv 3',
+                        'MAC'      => 'b4:39:d6:3a:7f:00',
+                        'MODEL'    => 'J9085A',
+                        'NAME'     => 'FR-SW01',
+                        'SERIAL'   => 'CN536H7J',
+                        'TYPE'     => 'NETWORKING',
+                        'UPTIME'   => '8 days, 01:48:57.95'
+                   ),
+               'PORTS' => array(
+                       'PORT' => array(
+                           array(
+                                'AGGREGATE' => array(
+                                    'PORT' => array('10001', '10002')
+                                ),
+                               'IFDESCR' => 'Port-channel10',
+                               'IFNAME' => 'Po10',
+                               'IFNUMBER' => '5010',
+                               'IFSTATUS' => '1',
+                               'IFTYPE' => '53',
+                               'MAC' => 'c4:64:13:8c:7e:b5',
+                               'IFINERRORS' => '0',
+                               'IFINOCTETS' => '1076823325',
+                               'IFINTERNALSTATUS' => '1',
+                               'IFLASTCHANGE' => '15 days, 23:20:53.24',
+                               'IFMTU' => '1500',
+                               'IFOUTERRORS' => '0',
+                               'IFOUTOCTETS' => '2179528910',
+                               'IFSPEED' => '4294967295'
+                           )
+                       )
+                   )
+                )
+              )
+              )
+      );
+      
+      $this->assertEquals($a_reference, $a_return);
+   }
+
    
    
    

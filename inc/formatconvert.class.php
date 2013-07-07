@@ -1427,6 +1427,13 @@ class PluginFusioninventoryFormatconvert {
                   }
                }
             }
+            // AGGREGATE PORT
+            if (isset($a_port['AGGREGATE'])) {
+               if (!is_int(key($a_port['AGGREGATE']['PORT']))) {
+                  $a_port['AGGREGATE']['PORT'] = array($a_port['AGGREGATE']['PORT']);
+               }
+               $a_inventory['aggregate'][$a_port['IFNUMBER']] = $a_port['AGGREGATE']['PORT'];
+            }
          }
       }
       return $a_inventory;

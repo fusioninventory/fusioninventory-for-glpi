@@ -246,11 +246,15 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             $a_ports_DB = current($networkPort->find(
                        "`itemtype`='NetworkEquipment'
                           AND `items_id`='".$items_id."'
-                          AND `instantiation_type`='NetworkPortEthernet'
                           AND `logical_number` = '".$a_port['logical_number']."'", '', 1));
             if (!isset($a_ports_DB['id'])) {
                // Add port
-               $a_port['instantiation_type'] = 'NetworkPortEthernet';
+               if (isset($a_inventory['aggregate'])
+                       && isset($a_inventory['aggregate'][$a_port['logical_number']])) {
+                  $a_port['instantiation_type'] = 'NetworkPortAggregate';
+               } else {
+                  $a_port['instantiation_type'] = 'NetworkPortEthernet';
+               }
                $a_port['items_id'] = $items_id;
                $a_port['itemtype'] = 'NetworkEquipment';
                $networkports_id = $networkPort->add($a_port);
@@ -301,6 +305,14 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                $this->importPortVlan($a_inventory['vlans'][$a_port['logical_number']],
                                      $networkports_id);
             }
+            
+            // Aggegation
+            if (isset($a_inventory['aggregate'])
+                    && isset($a_inventory['aggregate'][$a_port['logical_number']])) {
+               $this->importPortAggregate($a_inventory['aggregate'][$a_port['logical_number']],
+                                          $networkports_id, $items_id);
+            }
+            
          }
       }
 
@@ -607,6 +619,47 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $input['networkports_id'] = $networkports_id;
       $input['vlans_id'] = $vlans_id;
       $networkPort_Vlan->add($input);
+   }
+   
+   
+   
+   function importPortAggregate($a_ports, $networkports_id, $networkequipments_id) {
+      global $DB;
+
+      $networkPort = new NetworkPort();
+      $networkPortAggregate = new NetworkPortAggregate();
+      
+      $a_aggregates = $networkPortAggregate->find("`networkports_id`='".$networkports_id."'", "", 1);
+      
+      $input = array();
+      if (count($a_aggregates) == 1) {
+         $input = current($a_aggregates);
+      } else {
+         $input['networkports_id'] = $networkports_id;
+         $input['networkports_id_list'] = exportArrayToDB(array());
+         $input['id'] = $networkPortAggregate->add($input);
+      }
+      $a_ports_db_tmp = array();
+      foreach ($a_ports as $logical_number) {
+         $a_networkports_DB = current($networkPort->find(
+                    "`itemtype`='NetworkEquipment'
+                       AND `items_id`='".$networkequipments_id."'
+                       AND `instantiation_type`='NetworkPortEthernet'
+                       AND `logical_number` = '".$logical_number."'", '', 1));
+         if (!isset($a_networkports_DB['id'])) {
+            // Add port
+            $a_port['instantiation_type'] = 'NetworkPortEthernet';
+            $a_port['items_id'] = $networkequipments_id;
+            $a_port['itemtype'] = 'NetworkEquipment';
+            $a_port['logical_number'] = $logical_number;
+            $networkports_id = $networkPort->add($a_port);
+         } else {
+            $networkports_id = $a_networkports_DB['id'];
+         }
+         $a_ports_db_tmp[] = $networkports_id;
+      }
+      $input['networkports_id_list'] = $a_ports_db_tmp;
+      $networkPortAggregate->update($input);
    }
 }
 
