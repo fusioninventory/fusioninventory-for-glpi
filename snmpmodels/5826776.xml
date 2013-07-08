@@ -6,8 +6,6 @@
    <key>Networking0001</key>
    <comments>Digi Connect ME Version 82000856_F6 07/21/2006
 
-GbE2c Ethernet Blade Switch for HP c-Class BladeSystem
-
 ZebraNet Wireless PS
 
 GSM7212 L2 Managed Gigabit Switch
@@ -21,7 +19,6 @@ BNT Layer 2/3 Copper Gigabit Ethernet Switch Module for IBM BladeCenter
 </comments>
    <devices>
       <sysdescr>Digi Connect ME Version 82000856_F6 07/21/2006</sysdescr>
-      <sysdescr>GbE2c Ethernet Blade Switch for HP c-Class BladeSystem</sysdescr>
       <sysdescr>ZebraNet Wireless PS</sysdescr>
       <sysdescr>GSM7212 L2 Managed Gigabit Switch</sysdescr>
       <sysdescr>Blue Coat SG200 Series, ProxySG Version: SGOS 5.1.4.9, Release id: 29032</sysdescr>

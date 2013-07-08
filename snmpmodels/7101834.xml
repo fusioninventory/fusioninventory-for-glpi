@@ -8,13 +8,10 @@
 
 Officejet 6500 E709n
 
-Officejet 7000 E809a
-
 </comments>
    <devices>
       <sysdescr>Officejet 6000 E609a</sysdescr>
       <sysdescr>Officejet 6500 E709n</sysdescr>
-      <sysdescr>Officejet 7000 E809a</sysdescr>
    </devices>
    <oidlist>
       <oidobject>
@@ -107,7 +104,7 @@ Officejet 7000 E809a
       </oidobject>
       <oidobject>
          <object></object>
-         <oid>.1.3.6.1.2.1.43.10.2.1.4.1.1</oid>
+         <oid></oid>
          <portcounter>0</portcounter>
          <dynamicport>0</dynamicport>
          <mapping_type>Printer</mapping_type>

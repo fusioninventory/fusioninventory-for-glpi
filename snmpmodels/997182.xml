@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model>
+   <name>997182</name>
+   <type>1</type>
+   <key>Computer0004</key>
+   <comments>Hardware: amd64 Intel(R) Xeon(R) CPU           E5405  @ 2.00GHz running at 2000 Software: FreeBSD 8.3-RELEASE-p5 (revision 199506)
+
+</comments>
+   <devices>
+      <sysdescr>Hardware: amd64 Intel(R) Xeon(R) CPU           E5405  @ 2.00GHz running at 2000 Software: FreeBSD 8.3-RELEASE-p5 (revision 199506)</sysdescr>
+   </devices>
+   <oidlist>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.2.1.6</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>Computer</mapping_type>
+         <mapping_name>ifPhysAddress</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.1.0</oid>
+         <portcounter>1</portcounter>
+         <dynamicport>0</dynamicport>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.5.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Computer</mapping_type>
+         <mapping_name>serial</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.4.20.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>Computer</mapping_type>
+         <mapping_name>ifaddr</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+   </oidlist>
+</model>

@@ -58,8 +58,6 @@ Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(53)SE1, RELEA
 
 Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 06-Apr-09 03:26 by amvarma
 
-Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE5, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Tue 28-Sep-10 13:44 by prod_rel_team
-
 Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M), Version 12.2(50)SE2, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Fri 15-May-09 21:49 by nachen
 
 Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 15.0(1)SE, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2011 by Cisco Systems, Inc.Compiled Wed 20-Jul-11 06:02 by prod_rel_team
@@ -93,7 +91,6 @@ Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 15.0(1)SE, RELEAS
       <sysdescr>Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(53)SE2, RELEASE SOFTWARE (fc3)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Wed 21-Apr-10 05:52 by prod_rel_team</sysdescr>
       <sysdescr>Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(53)SE1, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Fri 12-Mar-10 17:38 by prod_rel_team</sysdescr>
       <sysdescr>Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 06-Apr-09 03:26 by amvarma</sysdescr>
-      <sysdescr>Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE5, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Tue 28-Sep-10 13:44 by prod_rel_team</sysdescr>
       <sysdescr>Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M), Version 12.2(50)SE2, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Fri 15-May-09 21:49 by nachen</sysdescr>
       <sysdescr>Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 15.0(1)SE, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2011 by Cisco Systems, Inc.Compiled Wed 20-Jul-11 06:02 by prod_rel_team</sysdescr>
    </devices>

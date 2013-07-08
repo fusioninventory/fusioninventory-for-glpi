@@ -14,12 +14,61 @@ Switch Fibra
 
 Lantronix UDS1100 V6.6.0.1 (080808)
 
+APC Web/SNMP Management Card (MB:v3.8.6 PF:v5.0.1 PN:apc_hw05_aos_501.bin AF1:v5.0.0 AN1:apc_hw05_sumx_500.bin MN:AP9630 HR:05 SN: JA0915004438 MD:04/08/2009) (Embedded PowerNet SNMP Agent SW v2.2 compatible)
+
+RouterOS RB411U
+
+ALCATEL VoIP terminal
+
+HP StorageWorks MSA2312fc
+
+APC Web/SNMP Management Card (MB:v3.8.3 PF:v3.2.1 PN:apc_hw02_aos_321.bin AF1:v3.2.1 AN1:apc_hw02_sumx_321.bin MN:AP9617 HR:A10 SN: NA0710020392 MD:03/09/2007) (Embedded PowerNet SNMP Agent SW v2.2 compatible)
+
+; AXIS P3344; Network Camera; 5.20.3; Jun 01 2011 10:22; 16B.4; 1; 
+
+TELEMECANIQUE BMX P34 2030 REV0200 Modicon M340 CPU 340-30,Ethernet TCPIP, CANopen master
+
+SCOPIA XT5000
+
+APC Web/SNMP Management Card (MB:v3.9.2 PF:v3.7.3 PN:apc_hw03_aos_373.bin AF1:v3.7.1 AN1:apc_hw03_px2_371.bin MN:0G-9354 HR:0C SN: PD1139140511 MD:09/23/2011) (Embedded PowerNet SNMP Agent SW v2.2 compatible)
+
+IMAGE SCANNER IS200e 1R04 / IPSiOSCAN BOX TYPE X1
+
+HP MSL G3 Series   
+
+IPPHONE
+
+Yealink IPPHONE
+
+backup
+
+Evolution S 1250
+
+CS121 v 4.50.70
+
 </comments>
    <devices>
       <sysdescr>SonicWALL TZ 180 Wireless Enhanced (SonicOS Enhanced 4.0.1.2-45e)</sysdescr>
+      <sysdescr></sysdescr>
       <sysdescr>Fibre Switch SAN</sysdescr>
       <sysdescr>Switch Fibra</sysdescr>
       <sysdescr>Lantronix UDS1100 V6.6.0.1 (080808)</sysdescr>
+      <sysdescr>APC Web/SNMP Management Card (MB:v3.8.6 PF:v5.0.1 PN:apc_hw05_aos_501.bin AF1:v5.0.0 AN1:apc_hw05_sumx_500.bin MN:AP9630 HR:05 SN: JA0915004438 MD:04/08/2009) (Embedded PowerNet SNMP Agent SW v2.2 compatible)</sysdescr>
+      <sysdescr>RouterOS RB411U</sysdescr>
+      <sysdescr>ALCATEL VoIP terminal</sysdescr>
+      <sysdescr>HP StorageWorks MSA2312fc</sysdescr>
+      <sysdescr>APC Web/SNMP Management Card (MB:v3.8.3 PF:v3.2.1 PN:apc_hw02_aos_321.bin AF1:v3.2.1 AN1:apc_hw02_sumx_321.bin MN:AP9617 HR:A10 SN: NA0710020392 MD:03/09/2007) (Embedded PowerNet SNMP Agent SW v2.2 compatible)</sysdescr>
+      <sysdescr>; AXIS P3344; Network Camera; 5.20.3; Jun 01 2011 10:22; 16B.4; 1; </sysdescr>
+      <sysdescr>TELEMECANIQUE BMX P34 2030 REV0200 Modicon M340 CPU 340-30,Ethernet TCPIP, CANopen master</sysdescr>
+      <sysdescr>SCOPIA XT5000</sysdescr>
+      <sysdescr>APC Web/SNMP Management Card (MB:v3.9.2 PF:v3.7.3 PN:apc_hw03_aos_373.bin AF1:v3.7.1 AN1:apc_hw03_px2_371.bin MN:0G-9354 HR:0C SN: PD1139140511 MD:09/23/2011) (Embedded PowerNet SNMP Agent SW v2.2 compatible)</sysdescr>
+      <sysdescr>IMAGE SCANNER IS200e 1R04 / IPSiOSCAN BOX TYPE X1</sysdescr>
+      <sysdescr>HP MSL G3 Series   </sysdescr>
+      <sysdescr>IPPHONE</sysdescr>
+      <sysdescr>Yealink IPPHONE</sysdescr>
+      <sysdescr>backup</sysdescr>
+      <sysdescr>Evolution S 1250</sysdescr>
+      <sysdescr>CS121 v 4.50.70</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

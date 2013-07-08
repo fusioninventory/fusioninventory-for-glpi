@@ -172,7 +172,7 @@ Lexmark T652 version NR.APS.N368 kernel 2.6.18.5 All-N-1
       </oidobject>
       <oidobject>
          <object></object>
-         <oid>.1.3.6.1.2.1.43.10.2.1.4.1.1</oid>
+         <oid></oid>
          <portcounter>0</portcounter>
          <dynamicport>0</dynamicport>
          <mapping_type>Printer</mapping_type>

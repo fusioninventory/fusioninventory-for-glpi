@@ -4,13 +4,10 @@
    <name>996914</name>
    <type>2</type>
    <key>Networking2055</key>
-   <comments>Cisco IOS Software, C3560 Software (C3560-ADVIPSERVICESK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 21-Aug-08 15:26 by nachen
-
-Cisco IOS Software, C3560 Software (C3560-ADVIPSERVICESK9-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Fri 20-Jul-07 01:44 by nachen
+   <comments>Cisco IOS Software, C3560 Software (C3560-ADVIPSERVICESK9-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Fri 20-Jul-07 01:44 by nachen
 
 </comments>
    <devices>
-      <sysdescr>Cisco IOS Software, C3560 Software (C3560-ADVIPSERVICESK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 21-Aug-08 15:26 by nachen</sysdescr>
       <sysdescr>Cisco IOS Software, C3560 Software (C3560-ADVIPSERVICESK9-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Fri 20-Jul-07 01:44 by nachen</sysdescr>
    </devices>
    <oidlist>

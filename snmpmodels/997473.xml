@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model>
+   <name>997473</name>
+   <type>1</type>
+   <key>Computer0008</key>
+   <comments>BladeCenter Advanced Management Module
+
+</comments>
+   <devices>
+      <sysdescr>BladeCenter Advanced Management Module</sysdescr>
+   </devices>
+   <oidlist>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.1.0</oid>
+         <portcounter>1</portcounter>
+         <dynamicport>0</dynamicport>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.5.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Computer</mapping_type>
+         <mapping_name>serial</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+   </oidlist>
+</model>

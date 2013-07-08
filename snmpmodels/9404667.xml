@@ -28,8 +28,6 @@ ProCurve J4900B Switch 2626, revision H.10.31, ROM H.08.02 (/sw/code/build/fish(
 
 ProCurve J9088A Switch 2610-48, revision R.11.07, ROM R.10.06 (/sw/code/build/nemo(ndx))
 
-HP J4819A ProCurve Switch 5308xl, revision E.10.74, ROM E.05.05 (/sw/code/build/alpmo(m35))
-
 ProCurve J8697A Switch 5406zl, revision K.12.57, ROM K.12.12 (/sw/code/build/btm(t2g))
 
 ProCurve J4899B Switch 2650, revision H.10.35, ROM H.08.02 (/sw/code/build/fish(mkfs))
@@ -49,8 +47,6 @@ ProCurve J8773A Switch 4208vl, revision L.11.09, ROM L.10.03 (/sw/code/build/rmm
 ProCurve J9279A Switch 2510G-24, revision Y.11.08, ROM N.10.02 (/sw/code/build/cod(cod11))
 
 HP J4865A ProCurve Switch 4108GL, revision G.07.107, ROM G.05.02 (/sw/code/build/gamo(m03))
-
-ProCurve J4899B Switch 2650, revision H.10.83, ROM H.08.02 (/sw/code/build/fish(mkfs))
 
 ProCurve J9050A Switch 2900-48G, revision T.13.68, ROM K.12.12 (/sw/code/build/mbm(t3a))
 
@@ -148,8 +144,6 @@ ProCurve J9085A Switch 2610-24, revision R.11.16, ROM R.10.06 (/sw/code/build/ne
 
 ProCurve J9088A Switch 2610-48, revision R.11.16, ROM R.10.06 (/sw/code/build/nemo(ndx))
 
-ProCurve J9085A Switch 2610-24, revision R.11.30, ROM R.10.06 (/sw/code/build/nemo(ndx))
-
 ProCurve J9021A Switch 2810-24G, revision N.11.25, ROM N.10.01 (/sw/code/build/bass(bh2))
 
 ProCurve J9087A Switch 2610-24-PWR, revision R.11.30, ROM R.10.06 (/sw/code/build/nemo(ndx))
@@ -212,7 +206,6 @@ ProCurve J4850A Switch 5304XL, revision E.11.10, ROM E.05.05 (/sw/code/build/alp
       <sysdescr>ProCurve J4900B Switch 2626, revision H.08.98, ROM H.08.02 (/sw/code/build/fish(ts_08_5))</sysdescr>
       <sysdescr>ProCurve J4900B Switch 2626, revision H.10.31, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
       <sysdescr>ProCurve J9088A Switch 2610-48, revision R.11.07, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
-      <sysdescr>HP J4819A ProCurve Switch 5308xl, revision E.10.74, ROM E.05.05 (/sw/code/build/alpmo(m35))</sysdescr>
       <sysdescr>ProCurve J8697A Switch 5406zl, revision K.12.57, ROM K.12.12 (/sw/code/build/btm(t2g))</sysdescr>
       <sysdescr>ProCurve J4899B Switch 2650, revision H.10.35, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
       <sysdescr>HP J4850A ProCurve Switch 5304XL, revision E.10.61, ROM E.05.04 (/sw/code/build/alpmo(m35))</sysdescr>
@@ -223,7 +216,6 @@ ProCurve J4850A Switch 5304XL, revision E.11.10, ROM E.05.05 (/sw/code/build/alp
       <sysdescr>ProCurve J8773A Switch 4208vl, revision L.11.09, ROM L.10.03 (/sw/code/build/rmm(rm11))</sysdescr>
       <sysdescr>ProCurve J9279A Switch 2510G-24, revision Y.11.08, ROM N.10.02 (/sw/code/build/cod(cod11))</sysdescr>
       <sysdescr>HP J4865A ProCurve Switch 4108GL, revision G.07.107, ROM G.05.02 (/sw/code/build/gamo(m03))</sysdescr>
-      <sysdescr>ProCurve J4899B Switch 2650, revision H.10.83, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
       <sysdescr>ProCurve J9050A Switch 2900-48G, revision T.13.68, ROM K.12.12 (/sw/code/build/mbm(t3a))</sysdescr>
       <sysdescr>ProCurve J9050A Switch 2900-48G, revision T.13.57, ROM K.12.12 (/sw/code/build/mbm(t3a))</sysdescr>
       <sysdescr>ProCurve J4899C Switch 2650, revision H.10.83, ROM H.08.05 (/sw/code/build/fish(mkfs))</sysdescr>
@@ -272,7 +264,6 @@ ProCurve J4850A Switch 5304XL, revision E.11.10, ROM E.05.05 (/sw/code/build/alp
       <sysdescr>ProCurve J9088A Switch 2610-48, revision R.11.54, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
       <sysdescr>ProCurve J9085A Switch 2610-24, revision R.11.16, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
       <sysdescr>ProCurve J9088A Switch 2610-48, revision R.11.16, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
-      <sysdescr>ProCurve J9085A Switch 2610-24, revision R.11.30, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
       <sysdescr>ProCurve J9021A Switch 2810-24G, revision N.11.25, ROM N.10.01 (/sw/code/build/bass(bh2))</sysdescr>
       <sysdescr>ProCurve J9087A Switch 2610-24-PWR, revision R.11.30, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
       <sysdescr>ProCurve J8773A Switch 4208vl, revision L.10.23, ROM L.10.03 (/sw/code/build/rmm(nabs))</sysdescr>

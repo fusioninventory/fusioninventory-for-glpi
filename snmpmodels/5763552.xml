@@ -12,8 +12,6 @@ ES-2108PWR
 
 TigerSwitch 10/100 6724AL2
 
-Alteon Application Switch 2208
-
 Foundry Networks, Inc. Router, IronWare Version 11.0.00gTI4 Compiled on Feb 18 2011 at 17:21:34 labeled as WJR11000g
 
 </comments>
@@ -22,7 +20,6 @@ Foundry Networks, Inc. Router, IronWare Version 11.0.00gTI4 Compiled on Feb 18 2
       <sysdescr>DES-3550 Fast-Ethernet Switch</sysdescr>
       <sysdescr>ES-2108PWR</sysdescr>
       <sysdescr>TigerSwitch 10/100 6724AL2</sysdescr>
-      <sysdescr>Alteon Application Switch 2208</sysdescr>
       <sysdescr>Foundry Networks, Inc. Router, IronWare Version 11.0.00gTI4 Compiled on Feb 18 2011 at 17:21:34 labeled as WJR11000g</sysdescr>
    </devices>
    <oidlist>

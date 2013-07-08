@@ -12,8 +12,6 @@ ProCurve J4899C Switch 2650, revision H.10.74, ROM H.08.05 (/sw/code/build/fish(
 
 ProCurve J4900A Switch 2626, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))
 
-ProCurve J4900B Switch 2626, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))
-
 ProCurve J4900C Switch 2626, revision H.10.74, ROM H.08.05 (/sw/code/build/fish(mkfs))
 
 ProCurve J9085A Switch 2610-24, revision R.11.07, ROM R.10.06 (/sw/code/build/nemo(ndx))
@@ -70,7 +68,6 @@ ProCurve J8698A Switch 5412zl, revision K.12.57, ROM K.12.12 (/sw/code/build/btm
       <sysdescr>ProCurve J8697A Switch 5406zl, revision K.15.04.0003, ROM K.15.12 (/sw/code/build/btm(K_15_04))</sysdescr>
       <sysdescr>ProCurve J4899C Switch 2650, revision H.10.74, ROM H.08.05 (/sw/code/build/fish(mkfs))</sysdescr>
       <sysdescr>ProCurve J4900A Switch 2626, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
-      <sysdescr>ProCurve J4900B Switch 2626, revision H.10.74, ROM H.08.02 (/sw/code/build/fish(mkfs))</sysdescr>
       <sysdescr>ProCurve J4900C Switch 2626, revision H.10.74, ROM H.08.05 (/sw/code/build/fish(mkfs))</sysdescr>
       <sysdescr>ProCurve J9085A Switch 2610-24, revision R.11.07, ROM R.10.06 (/sw/code/build/nemo(ndx))</sysdescr>
       <sysdescr>HP J4813A ProCurve Switch 2524, revision F.05.65, ROM F.01.01  (/sw/code/build/info(s02))</sysdescr>

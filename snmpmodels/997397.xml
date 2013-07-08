@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model>
+   <name>997397</name>
+   <type>2</type>
+   <key>Networking2312</key>
+   <comments>ProCurve J9562A Switch 2915-8G-PoE
+
+</comments>
+   <devices>
+      <sysdescr>ProCurve J9562A Switch 2915-8G-PoE</sysdescr>
+   </devices>
+   <oidlist>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.1.0</oid>
+         <portcounter>1</portcounter>
+         <dynamicport>0</dynamicport>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.5</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemChassisId</mapping_name>
+         <vlan>1</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.7</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemPortId</mapping_name>
+         <vlan>1</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.3.2.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpLocChassisId</mapping_name>
+         <vlan>1</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.10</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemSysDesc</mapping_name>
+         <vlan>1</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.9</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemSysName</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.0.8802.1.1.2.1.4.1.1.8</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>1</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>lldpRemPortDesc</mapping_name>
+         <vlan>1</vlan>
+         <activation>1</activation>
+      </oidobject>
+   </oidlist>
+</model>
