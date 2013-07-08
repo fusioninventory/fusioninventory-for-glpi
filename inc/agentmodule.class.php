@@ -117,7 +117,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          $use_rest = FALSE;
 
          foreach ($a_methods as $datamod) {
-
             if ((strtolower($data["modulename"]) == strtolower($datamod['method'])) ||
                 isset($datamod['task'])
                   && (strtolower($data["modulename"]) == strtolower($datamod['task']))) {
@@ -131,10 +130,16 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             }
          }
          // Hack for snmpquery
-            if ($modulename == 'SNMPQUERY') {
+            if ($data["modulename"] == 'SNMPQUERY') {
                $modulename = __('Network inventory (SNMP)', 'fusioninventory');
 
             }
+         // Hack for deploy
+            if ($data["modulename"] == 'DEPLOY') {
+               $modulename = __('Package deployment', 'fusioninventory');
+
+            }
+
          echo "<td align='center'><strong>".$modulename."</strong></td>";
          echo "<td align='center'>";
          $checked = $data['is_active'];
@@ -225,11 +230,26 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          }
          $modulename = $data["modulename"];
          foreach ($a_methods as $datamod) {
-            if (isset($datamod['name'])
-                    AND (strtolower($data["modulename"]) == strtolower($datamod['method']))) {
-               $modulename = $datamod['name'];
+            if ((strtolower($data["modulename"]) == strtolower($datamod['method'])) ||
+                isset($datamod['task'])
+                  && (strtolower($data["modulename"]) == strtolower($datamod['task']))) {
+               if (isset($datamod['name'])) {
+                  $modulename = $datamod['name'];
+               }
+               break;
             }
          }
+         // Hack for snmpquery
+            if ($data["modulename"] == 'SNMPQUERY') {
+               $modulename = __('Network inventory (SNMP)', 'fusioninventory');
+
+            }
+         // Hack for deploy
+            if ($data["modulename"] == 'DEPLOY') {
+               $modulename = __('Package deployment', 'fusioninventory');
+
+            }
+
          echo "<td width='50%'>".$modulename." :</td>";
          echo "<td align='center'>";
 
