@@ -727,7 +727,7 @@ class PluginFusioninventoryWizard {
             $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
             $input['name'] = 'wizard - netinventory - '.$pfIPRange->fields['name'];
             $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusioninventory");
-            $input['method'] = 'snmpinventory';
+            $input['method'] = 'networkinventory';
             $input['definition'] = exportArrayToDB(array(
                 array('PluginFusioninventoryIPRange' =>
                     $_SESSION['plugin_fusioninventory_wizard']['ipranges_id'])));
@@ -787,7 +787,7 @@ class PluginFusioninventoryWizard {
             $input['plugin_fusioninventory_tasks_id'] = $tasks_id;
             $input['name'] = 'wizard - esx - '.$pfCredentialIp->fields['name'];
             $input['plugins_id'] = PluginFusioninventoryModule::getModuleId("fusioninventory");
-            $input['method'] = 'ESX';
+            $input['method'] = 'InventoryComputerESX';
             $input['definition'] = exportArrayToDB(array(
                 array('PluginFusioninventoryCredentialIp' =>
                     $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])));
