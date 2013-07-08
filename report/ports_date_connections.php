@@ -46,7 +46,7 @@ $DBCONNECTION_REQUIRED=0;
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory'), $_SERVER['PHP_SELF'], "utils", "report");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
 PluginFusioninventoryProfile::checkRight("reportnetworkequipment", "r");
 
