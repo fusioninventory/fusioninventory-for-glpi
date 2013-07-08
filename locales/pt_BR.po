@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
-"POT-Creation-Date: 2013-06-18 21:55+0200\n"
-"PO-Revision-Date: 2013-06-19 10:08+0000\n"
-"Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
+"POT-Creation-Date: 2013-07-09 00:00+0200\n"
+"PO-Revision-Date: 2013-07-08 22:03+0000\n"
+"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/FusionInventory/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -107,7 +107,7 @@ msgid "Assign SNMP authentication"
 msgstr "Atribuir autenticação SNMP"
 
 #: hook.php:866 inc/agent.class.php:157 inc/agentmodule.class.php:109
-#: inc/agentmodule.class.php:213 inc/agentmodule.class.php:215
+#: inc/agentmodule.class.php:218 inc/agentmodule.class.php:220
 #: inc/ignoredimportdevice.class.php:118 inc/rulematchedlog.class.php:179
 #: inc/rulematchedlog.class.php:249 inc/taskjob.class.php:237
 msgid "Module"
@@ -124,8 +124,9 @@ msgstr "Número de threads"
 msgid "Network discovery"
 msgstr "Descoberta de rede"
 
-#: hook.php:876 inc/agent.class.php:287 inc/agentmodule.class.php:135
-#: inc/config.class.php:652 inc/staticmisc.class.php:88
+#: hook.php:876 inc/agent.class.php:287 inc/agentmodule.class.php:134
+#: inc/agentmodule.class.php:244 inc/config.class.php:652
+#: inc/staticmisc.class.php:88
 msgid "Network inventory (SNMP)"
 msgstr "Descoberta de rede (SNMP)"
 
@@ -134,24 +135,24 @@ msgstr "Descoberta de rede (SNMP)"
 msgid "Force the end"
 msgstr "Forçar ao final"
 
-#: hook.php:1025 inc/deployreport.class.php:125
+#: hook.php:1035 inc/deployreport.class.php:125
 #: inc/deploystaticmisc.class.php:87
 msgid "Package"
 msgstr "Pacote"
 
-#: hook.php:1037
+#: hook.php:1047
 msgid "Create a job for each computer"
 msgstr "Criar um trabalho para cada computador"
 
-#: hook.php:1039
+#: hook.php:1049
 msgid "Create a job for each group"
 msgstr "Criar um trabalho para cada grupo"
 
-#: hook.php:1264 front/unknowndevice.form.php:105
+#: hook.php:1274 front/unknowndevice.form.php:105
 msgid "Number of imported devices"
 msgstr "Número de dispositivos importados"
 
-#: hook.php:1267 front/unknowndevice.form.php:107
+#: hook.php:1277 front/unknowndevice.form.php:107
 msgid "Number of devices not imported because type not defined"
 msgstr "Número de dispositivos não importados devido ao tipo não definido"
 
@@ -177,7 +178,8 @@ msgstr "Número de dispositivos não importados devido ao tipo não definido"
 #: front/wizard_inventory.php:45 front/wizard_inventorycomputeroptions.php:45
 #: inc/inventorycomputercomputer.class.php:93
 #: inc/networkequipment.class.php:544 inc/profile.class.php:293
-#: report/computer_last_inventory.php:49
+#: report/computer_last_inventory.php:49 report/not_queried_recently.php:51
+#: report/ports_date_connections.php:49 report/switch_ports.history.php:50
 msgid "FusionInventory"
 msgstr "FusionInventory"
 
@@ -241,7 +243,7 @@ msgid "IP range configuration"
 msgstr "Configuração da faixa de IPs"
 
 #: setup.php:411 inc/deploypackage.class.php:54
-#: inc/deploypackage.class.php:290
+#: inc/deploypackage.class.php:291
 msgid "Packages"
 msgstr "Pacotes"
 
@@ -280,15 +282,15 @@ msgstr "Estado do inventário"
 msgid "Mirror servers"
 msgstr "Servidores mirrors"
 
-#: setup.php:543
+#: setup.php:544
 msgid "Your GLPI version not compatible, require 0.84"
 msgstr "A versão do seu GLPI não é compatível, pois é necessário 0.84"
 
-#: setup.php:548
+#: setup.php:549
 msgid "fileinfo extension (PHP) is required..."
 msgstr "fileinfo de extensão (PHP) é necessária..."
 
-#: setup.php:561
+#: setup.php:562
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Por favor, remova a pasta %s em glpi/plugins/"
@@ -428,6 +430,11 @@ msgstr "Ativação (por padrão)"
 #: inc/agentmodule.class.php:111
 msgid "Exceptions"
 msgstr "Exceções"
+
+#: inc/agentmodule.class.php:139 inc/agentmodule.class.php:249
+#: inc/deploystaticmisc.class.php:56
+msgid "Package deployment"
+msgstr "Implantação de pacote"
 
 #: inc/communication.class.php:221
 #: inc/communicationnetworkinventory.class.php:216
@@ -938,23 +945,23 @@ msgid_plural "The following tasks are running with this package"
 msgstr[0] "A seguinte tarefa está em execução com este pacote"
 msgstr[1] "As seguintes tarefas estão em execução com este pacote"
 
-#: inc/deploypackage.class.php:294
+#: inc/deploypackage.class.php:295
 msgid "Add a package"
 msgstr "Adicionar um pacote"
 
-#: inc/deploypackage.class.php:373
+#: inc/deploypackage.class.php:374
 msgid "Audits"
 msgstr "Auditorias"
 
-#: inc/deploypackage.class.php:374
+#: inc/deploypackage.class.php:375
 msgid "Files"
 msgstr "Arquivos"
 
-#: inc/deploypackage.class.php:375
+#: inc/deploypackage.class.php:376
 msgid "Actions"
 msgstr "Ações"
 
-#: inc/deploypackage.class.php:666
+#: inc/deploypackage.class.php:667
 msgid "Item successfully added"
 msgstr "Item adicionado com sucesso"
 
@@ -975,10 +982,6 @@ msgstr "Erro / replanejado"
 #: inc/taskjoblog.class.php:640 inc/taskjoblog.class.php:980
 msgid "Prepared"
 msgstr "Preparado"
-
-#: inc/deploystaticmisc.class.php:56
-msgid "Package deployment"
-msgstr "Implantação de pacote"
 
 #: inc/deploystaticmisc.class.php:61 inc/staticmisc.class.php:100
 msgid "Package uninstall"
@@ -2319,8 +2322,8 @@ msgid "Rights management"
 msgstr "Gerenciamento de permissões"
 
 #: inc/rulematchedlog.class.php:82 inc/rulematchedlog.class.php:87
-msgid "Import informations"
-msgstr "Informações de importação"
+msgid "Import information"
+msgstr ""
 
 #: inc/rulematchedlog.class.php:160 inc/rulematchedlog.class.php:226
 msgid "Rule import logs"

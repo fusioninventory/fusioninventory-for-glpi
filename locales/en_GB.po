@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
-"POT-Creation-Date: 2013-06-18 21:55+0200\n"
+"POT-Creation-Date: 2013-07-09 00:00+0200\n"
 "PO-Revision-Date: 2012-12-04 10:15+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -106,7 +106,7 @@ msgid "Assign SNMP authentication"
 msgstr ""
 
 #: hook.php:866 inc/agent.class.php:157 inc/agentmodule.class.php:109
-#: inc/agentmodule.class.php:213 inc/agentmodule.class.php:215
+#: inc/agentmodule.class.php:218 inc/agentmodule.class.php:220
 #: inc/ignoredimportdevice.class.php:118 inc/rulematchedlog.class.php:179
 #: inc/rulematchedlog.class.php:249 inc/taskjob.class.php:237
 msgid "Module"
@@ -123,8 +123,9 @@ msgstr ""
 msgid "Network discovery"
 msgstr ""
 
-#: hook.php:876 inc/agent.class.php:287 inc/agentmodule.class.php:135
-#: inc/config.class.php:652 inc/staticmisc.class.php:88
+#: hook.php:876 inc/agent.class.php:287 inc/agentmodule.class.php:134
+#: inc/agentmodule.class.php:244 inc/config.class.php:652
+#: inc/staticmisc.class.php:88
 msgid "Network inventory (SNMP)"
 msgstr ""
 
@@ -133,24 +134,24 @@ msgstr ""
 msgid "Force the end"
 msgstr ""
 
-#: hook.php:1025 inc/deployreport.class.php:125
+#: hook.php:1035 inc/deployreport.class.php:125
 #: inc/deploystaticmisc.class.php:87
 msgid "Package"
 msgstr ""
 
-#: hook.php:1037
+#: hook.php:1047
 msgid "Create a job for each computer"
 msgstr ""
 
-#: hook.php:1039
+#: hook.php:1049
 msgid "Create a job for each group"
 msgstr ""
 
-#: hook.php:1264 front/unknowndevice.form.php:105
+#: hook.php:1274 front/unknowndevice.form.php:105
 msgid "Number of imported devices"
 msgstr ""
 
-#: hook.php:1267 front/unknowndevice.form.php:107
+#: hook.php:1277 front/unknowndevice.form.php:107
 msgid "Number of devices not imported because type not defined"
 msgstr ""
 
@@ -176,7 +177,8 @@ msgstr ""
 #: front/wizard_inventory.php:45 front/wizard_inventorycomputeroptions.php:45
 #: inc/inventorycomputercomputer.class.php:93
 #: inc/networkequipment.class.php:544 inc/profile.class.php:293
-#: report/computer_last_inventory.php:49
+#: report/computer_last_inventory.php:49 report/not_queried_recently.php:51
+#: report/ports_date_connections.php:49 report/switch_ports.history.php:50
 msgid "FusionInventory"
 msgstr ""
 
@@ -240,7 +242,7 @@ msgid "IP range configuration"
 msgstr ""
 
 #: setup.php:411 inc/deploypackage.class.php:54
-#: inc/deploypackage.class.php:290
+#: inc/deploypackage.class.php:291
 msgid "Packages"
 msgstr ""
 
@@ -279,15 +281,15 @@ msgstr ""
 msgid "Mirror servers"
 msgstr ""
 
-#: setup.php:543
+#: setup.php:544
 msgid "Your GLPI version not compatible, require 0.84"
 msgstr ""
 
-#: setup.php:548
+#: setup.php:549
 msgid "fileinfo extension (PHP) is required..."
 msgstr ""
 
-#: setup.php:561
+#: setup.php:562
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr ""
@@ -426,6 +428,11 @@ msgstr ""
 
 #: inc/agentmodule.class.php:111
 msgid "Exceptions"
+msgstr ""
+
+#: inc/agentmodule.class.php:139 inc/agentmodule.class.php:249
+#: inc/deploystaticmisc.class.php:56
+msgid "Package deployment"
 msgstr ""
 
 #: inc/communication.class.php:221
@@ -937,23 +944,23 @@ msgid_plural "The following tasks are running with this package"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/deploypackage.class.php:294
+#: inc/deploypackage.class.php:295
 msgid "Add a package"
 msgstr ""
 
-#: inc/deploypackage.class.php:373
+#: inc/deploypackage.class.php:374
 msgid "Audits"
 msgstr ""
 
-#: inc/deploypackage.class.php:374
+#: inc/deploypackage.class.php:375
 msgid "Files"
 msgstr ""
 
-#: inc/deploypackage.class.php:375
+#: inc/deploypackage.class.php:376
 msgid "Actions"
 msgstr ""
 
-#: inc/deploypackage.class.php:666
+#: inc/deploypackage.class.php:667
 msgid "Item successfully added"
 msgstr ""
 
@@ -973,10 +980,6 @@ msgstr ""
 #: inc/stateinventory.class.php:153 inc/taskjoblog.class.php:67
 #: inc/taskjoblog.class.php:640 inc/taskjoblog.class.php:980
 msgid "Prepared"
-msgstr ""
-
-#: inc/deploystaticmisc.class.php:56
-msgid "Package deployment"
 msgstr ""
 
 #: inc/deploystaticmisc.class.php:61 inc/staticmisc.class.php:100
@@ -2318,7 +2321,7 @@ msgid "Rights management"
 msgstr ""
 
 #: inc/rulematchedlog.class.php:82 inc/rulematchedlog.class.php:87
-msgid "Import informations"
+msgid "Import information"
 msgstr ""
 
 #: inc/rulematchedlog.class.php:160 inc/rulematchedlog.class.php:226
