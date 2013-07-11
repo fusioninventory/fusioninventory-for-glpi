@@ -1463,7 +1463,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       $db_networkport = array();
       if ($no_history === FALSE) {
-         $query = "SELECT `id`, `name`, `mac`, `instantiation_type`
+         $query = "SELECT `id`, `name`, `mac`, `instantiation_type`, `logical_number`
              FROM `glpi_networkports`
              WHERE `items_id` = '$computers_id'
                AND `itemtype`='Computer'
@@ -1493,7 +1493,16 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       foreach ($simplenetworkport as $key => $arrays) {
          $arrayslower = array_map('strtolower', $arrays);
          foreach ($db_networkport as $keydb => $arraydb) {
+            $logical_number = $arraydb['logical_number'];
+            unset($arraydb['logical_number']);
             if ($arrayslower == $arraydb) {
+               if ($inventory_networkports[$key]['logical_number'] != $logical_number) {
+                  $input = array();
+                  $input['id'] = $keydb;
+                  $input['logical_number'] = $inventory_networkports[$key]['logical_number'];
+                  $networkPort->update($input);
+               }
+               
                // Get networkname
                $a_networknames_find = current($networkName->find("`items_id`='".$keydb."'
                                                     AND `itemtype`='NetworkPort'", "", 1));

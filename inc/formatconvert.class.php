@@ -721,6 +721,10 @@ class PluginFusioninventoryFormatconvert {
                              || $array_tmp['virtualdev'] != 1) {
                         $array_tmp['virtualdev'] = 0;
                      }
+                     $array_tmp['logical_number'] = 1;
+                     if ($array_tmp['virtualdev'] == 1) {
+                        $array_tmp['logical_number'] = 0;
+                     } 
 
                      $array_tmp['mac'] = strtolower($array_tmp['mac']);
                      if (isset($a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']])) {

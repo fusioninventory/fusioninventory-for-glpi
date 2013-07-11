@@ -440,7 +440,10 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             $pfUnknownDevice->hubNetwork($pfNetworkPort, $a_portconnection);
          } else { // One mac on port
             foreach ($a_portconnection as $ifmac) { //Only 1 time
-               $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);
+               $a_ports = $networkPort->find("`mac`='".$ifmac."' AND `logical_number`='1'", "", 1);
+               if (count($a_ports) == 0) {
+                  $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);
+               }               
                if (count($a_ports) > 0) {
                   $a_port = current($a_ports);
                   $hub = 0;
