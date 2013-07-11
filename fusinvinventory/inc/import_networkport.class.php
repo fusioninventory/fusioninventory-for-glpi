@@ -116,6 +116,11 @@ class PluginFusinvinventoryImport_Networkport extends CommonDBTM {
 
       $a_NetworkPort['entities_id'] = $_SESSION["plugin_fusinvinventory_entity"];
 
+      $a_NetworkPort['logical_number'] = 1;
+      if ($dataSection['VIRTUALDEV'] == 1) {
+         $a_NetworkPort['logical_number'] = 0;
+      }
+      
       $devID = 0;
       if ($type == 'update') {
          $NetworkPort->update($a_NetworkPort, $_SESSION["plugin_fusinvinventory_history_add"]);
