@@ -232,7 +232,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
          $this->fields["name"] = $pfTask->fields["name"];
       }
-      echo "<input type='text' name='name' size='41' value='".$this->fields["name"]."'/>";
+      Html::autocompletionTextField ($this, "name", $this->fields["name"]);
       echo "</td>";
       echo "<td height='18'>".__('Module', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -1206,11 +1206,11 @@ return namelist;
             ORDER BY `id`";
          $result = $DB->query($query);
          while ($data=$DB->fetch_array($result)) {
-            $plugin = new Plugin();
-            $plugin->getFromDB($data['plugins_id']);
-            if ($plugin->fields['state'] == Plugin::ACTIVATED) {
+//            $plugin = new Plugin();
+//            $plugin->getFromDB($data['plugins_id']);
+//            if ($plugin->fields['state'] == Plugin::ACTIVATED) {
                $uniqid = $pfTaskjob->prepareRunTaskjob($data);
-            }
+//            }
          }
          foreach (array_keys($_SESSION['glpi_plugin_fusioninventory']['agents']) as $agents_id) {
             $pfTaskjob->startAgentRemotly($agents_id);
