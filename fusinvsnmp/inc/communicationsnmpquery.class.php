@@ -760,6 +760,10 @@ class PluginFusinvsnmpCommunicationSNMPQuery {
                   $pfNetworkPort->setValue(strtolower($name), (string)$p_port->$name);
                   break;
                
+               case 'IFPORTDUPLEX ':
+                  //not yet managed
+                  break;
+               
                default:
                   $errors.=$LANG['plugin_fusioninventory']['errors'][22].' PORT : '.$name."\n";
             }
