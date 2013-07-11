@@ -87,9 +87,10 @@ switch($_POST['glpi_tab']) {
       if ($pfTask->fields['is_advancedmode'] == '0') {
          $taskjob = current($a_taskjob);
          if (!isset($taskjob["id"])) {
-            $taskjobs_id = $pfTaskjob->add(array('name'=>$pfTask->fields['name'],
-                             'entities_id'=>$pfTask->fields['entities_id'],
-                             'plugin_fusioninventory_tasks_id'=>$_POST["id"]));
+            $taskjobs_id = $pfTaskjob->add(array(
+                'name' => Toolbox::addslashes_deep($pfTask->fields['name']),
+                'entities_id'=>$pfTask->fields['entities_id'],
+                'plugin_fusioninventory_tasks_id'=>$_POST["id"]));
             $pfTaskjob->showForm($taskjobs_id);
          } else {
             $pfTaskjob->showForm($taskjob["id"]);

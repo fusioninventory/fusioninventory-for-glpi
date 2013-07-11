@@ -205,7 +205,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       
          $this->fields["name"] = $pfTask->fields["name"];
       }
-      echo "<input type='text' name='name' size='41' value='".$this->fields["name"]."'/>";
+      Html::autocompletionTextField ($this, "name", $this->fields["name"]);
       echo "</td>";
       echo "<td height='18'>".$LANG['plugin_fusioninventory']['task'][26]."&nbsp;:</td>";
       echo "<td align='center'>";
