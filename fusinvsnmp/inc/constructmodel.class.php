@@ -45,13 +45,20 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusinvsnmpConstructmodel extends CommonDBTM {
-   private $fp, $auth=array(),$key='';
+   private $fp, $auth=array(), $key='';
 
+   
+   
+   /**
+    * Initiate connection with central server
+    * 
+    * @return boolean
+    */
    function connect() {
       global $CFG_GLPI;
       
-      $this->fp = curl_init('http://127.0.0.1:9000/');
-      //$this->fp = curl_init('http://snmp.fusioninventory.org/');
+      //$this->fp = curl_init('http://127.0.0.1:9000/');
+      $this->fp = curl_init('http://snmp.fusioninventory.org/');
       curl_setopt($this->fp, CURLOPT_RETURNTRANSFER, 1);
       if ($CFG_GLPI['proxy_name'] != '') {
          curl_setopt($this->fp, CURLOPT_PROXYPORT, $CFG_GLPI['proxy_port']);
@@ -61,23 +68,44 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             curl_setopt($this->fp, CURLOPT_PROXYUSERPWD, $CFG_GLPI['proxy_user'].":".$CFG_GLPI['proxy_passwd']);
          }
       }
-      curl_setopt($this->fp, CURLOPT_POST, true);
+      curl_setopt($this->fp, CURLOPT_POST, TRUE);
       curl_setopt($this->fp,CURLOPT_HTTPHEADER,array('Expect:'));
       
-      if (curl_exec($this->fp) === false) {
+      if (curl_exec($this->fp) === FALSE) {
          if (curl_error($this->fp) != "Empty reply from server") {
             echo curl_error($this->fp)."<br/>Be sure the glpi server can access http://snmp.fusioninventory.org/, if works, try".
                     " stop apache and start (not restart)!";
+            return FALSE;
          }
-      }
-      
-      return true;
+      }      
+      return TRUE;
    }
    
    
    
+   /**
+    * Close the connection
+    */
    function closeConnection() {
       curl_close($this->fp);
+   }
+   
+   
+   
+   /**
+    * Check if PHP Curl extension is installed
+    */
+   static function checkCurlExtension() {
+      if (!function_exists('curl_init')) {
+         echo '<table  class="tab_cadre_fixe">';
+         echo '<tr class="tab_bg_1">';
+         echo "<th>";
+         echo "<br/>!! cURL extension (PHP) is required... !!<br/><br/>";
+         echo "</th>";
+         echo "</tr>";
+         echo "</table>";
+         exit;
+      }
    }
    
    
@@ -118,7 +146,12 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    
+   /**
+    * Display menu for SNMP tool creation
+    */
    function menu() {
+      global $CFG_GLPI;
+      
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr class='tab_bg_1'>";
@@ -129,13 +162,13 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo "<a href='".$this->getSearchURL()."?action=checksysdescr'>Check a sysdescr</a>";
+      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodelchecksysdescr.form.php'>Check a sysdescr</a>";
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo "<a href='".$this->getSearchURL()."?action=seemodels'>See All SNMP models</a>";
+      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodelseeall.form.php'>See All SNMP models</a>";
       echo "</td>";
       echo "</tr>";
       
@@ -149,10 +182,19 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    }
    
    
+   
+   /**
+    * Form to check if a sysdescr is already managed/supported or not
+    * 
+    * @param array $message display different messages in case sysdescr not representative
+    *        to identify the device
+    * 
+    * @return nothing
+    */
    function showFormDefineSysdescr($message = array()) {
-      global $LANG;
+      global $LANG, $CFG_GLPI;
       
-      echo "<form name='form' method='post' action='".$this->getSearchURL()."'>";
+      echo "<form name='form' method='post' action='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodelchecksysdescr.form.php'>";
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr class='tab_bg_1'>";
@@ -236,8 +278,14 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    
+   /**
+    * Send the sysdescr to central server and get sysdescr cleaned
+    * 
+    * @param varchar $sysdescr sysdescr name
+    * @param varchar $itemtype itemtype of device (Computer, NetworkEquipment, Printer...)
+    * @param type $devices_id
+    */
    function sendGetsysdescr($sysdescr, $itemtype, $devices_id = 0) {
-      global $CFG_GLPI,$DB, $LANG;
       
       $getsysdescr = array();
       if ($devices_id > 0) {
@@ -248,7 +296,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             "sysdescr" => $sysdescr,
             "itemtype" => $itemtype);
 
-         $_SESSION['plugin_fusioninventory_itemtype'] = $itemtype;
+         $_SESSION['plugin_fusioninventory_snmptool_itemtype'] = $itemtype;
       }
       $buffer = json_encode($getsysdescr);
       curl_setopt($this->fp, CURLOPT_POSTFIELDS, $this->auth."&json=".$buffer);
@@ -256,28 +304,50 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
 
       $data = json_decode($retserv);
       
-      $_SESSION['plugin_fusioninventory_sysdescr'] = $data->device->sysdescr;
+      $_SESSION['plugin_fusioninventory_snmptool_device'] = $data->device;
+      $_SESSION['plugin_fusioninventory_snmptool_device_json'] = $retserv;
+   }
+      
+    
+   
+   /**
+    * Show device form
+    */
+   function showDeviceForm() {
+      global $CFG_GLPI, $DB, $LANG;
+      
+      $devices_id = 0;
+      if (isset($_GET['devices_id'])) {
+         $devices_id = $_GET['devices_id'];
+      }
+      
+      $s_lock = $_SESSION['plugin_fusioninventory_snmptool_device']->lock;
+      $s_deviceid = $_SESSION['plugin_fusioninventory_snmptool_device']->id;
+      $s_sysdescr = $_SESSION['plugin_fusioninventory_snmptool_device']->sysdescr;
+      
       echo  "<table width='950' align='center'>
          <tr>
          <td>
-         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?reset=reset'>Back to main menu</a>
+         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php'>Back to main menu</a>
          </td>
          </tr>
          </table>";
-      $a_lock = explode("-", $data->device->lock);
+      $a_lock = explode("-", $s_lock);
       $a_userinfos = PluginFusinvsnmpConstructdevice_User::getUserAccount($_SESSION['glpiID']);
-      if ($data->device->id == '0') {
+      if ($s_deviceid == 0
+              && $devices_id == 0) {
          echo "<table class='tab_cadre_fixe'>";
 
          echo "<tr class='tab_bg_1 center'>";
          echo "<th colspan='2'>";
-         echo "This device is not yet added";
+         echo "This device is not yet supported on central server";
          echo "</th>";
          echo "</tr>";
          
          echo "</table>";
          
-         $this->showUploadSnmpwalk($sysdescr, $itemtype);
+         $this->showUploadSnmpwalk($s_sysdescr, 
+                                   $_SESSION['plugin_fusioninventory_snmptool_itemtype']);
          // Upload snmpwalk
          // send to server (it add sysdescr and lock for this user)
          // server return oids, mapping, oids most used for this kind of device (check with sysdescr)
@@ -285,7 +355,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       
          $edit = 1;
          $id = 0;
-         if ($data->device->lock != '0'
+         if ($s_lock != '0'
               AND $a_lock[0] != $a_userinfos['login']) {
             echo "<table class='tab_cadre_fixe'>";
             echo "<tr class='tab_bg_1 center'>";
@@ -308,8 +378,10 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
 
          if ($devices_id > 0) {
             $id = $devices_id;
+            $this->sendGetsysdescr('', '', $devices_id);
+            $s_data = $_SESSION['plugin_fusioninventory_snmptool_device'];
          } else {
-            $id = $data->device->id;
+            $id = $s_deviceid;
             Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$id);
          }
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
@@ -328,7 +400,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             }
          }
             
-         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?editoid=".$data->device->id."'>";
+         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodeleditoid.form.php?id=".$devices_id."'>";
          if ($edit == '1') {
             echo "Edit oids";
          } else {
@@ -336,10 +408,10 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          }
          echo "</a>";
          echo "&nbsp; &nbsp; | &nbsp; &nbsp;";
-         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?id=".$data->device->id."' target='_blank'>Get SNMP model</a>";
-         if ($data->device->snmpmodels_id > 0) {
+         echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?id=".$devices_id."' target='_blank'>Get SNMP model</a>";
+         if ($s_data->snmpmodels_id > 0) {
             echo "&nbsp; &nbsp; | &nbsp; &nbsp;";
-            echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".$data->device->snmpmodels_id."' target='_blank'>Import SNMP model</a>";
+            echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".$devices_id."' target='_blank'>Import SNMP model</a>";
          }
          echo "</th>";
          echo "</tr>";
@@ -349,14 +421,14 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "Sysdescr :";
          echo "</td>";
          echo "<td>";
-         echo $data->device->sysdescr;
+         echo $s_data->sysdescr;
          echo "</td>";
          
          echo "<td>";
          echo "<strong>Released :</strong>";
          echo "</td>";
          echo "<td><strong>";
-         echo Dropdown::getYesNo($data->device->released);
+         echo Dropdown::getYesNo($s_data->released);
          echo "</strong></td>";
          echo "</tr>";
          
@@ -365,14 +437,14 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "Itemtype :";
          echo "</td>";
          echo "<td>";
-         echo $data->device->itemtype;
+         echo $s_data->itemtype;
          echo "</td>";
          
          echo "<td>";
          echo "Have serial number :";
          echo "</td>";
          echo "<td>";
-         echo Dropdown::getYesNo($data->device->have_serialnumber);
+         echo Dropdown::getYesNo($s_data->have_serialnumber);
          echo "</td>";
          echo "</tr>";
          
@@ -381,14 +453,14 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "Manufacturer :";
          echo "</td>";
          echo "<td>";
-         echo $data->device->manufacturers_id;
+         echo $s_data->manufacturers_id;
          echo "</td>";
 
          echo "<td>";
          echo "Have network ports :";
          echo "</td>";
          echo "<td>";
-         echo Dropdown::getYesNo($data->device->have_ports);
+         echo Dropdown::getYesNo($s_data->have_ports);
          echo "</td>";
          echo "</tr>";
          
@@ -397,14 +469,14 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "Firmware :";
          echo "</td>";
          echo "<td>";
-         echo $data->device->firmwares_id;
+         echo $s_data->firmwares_id;
          echo "</td>";
          
          echo "<td>";
          echo "Have network ports connections :";
          echo "</td>";
          echo "<td>";
-         echo Dropdown::getYesNo($data->device->have_portsconnections);
+         echo Dropdown::getYesNo($s_data->have_portsconnections);
          echo "</td>";
          echo "</td>";
          echo "</tr>";
@@ -414,10 +486,10 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "Model :";
          echo "</td>";
          echo "<td>";
-         if ($data->device->itemtype == "NetworkEquipment") {
-            echo $data->device->networkmodels_id;
-         } else if ($data->device->itemtype == "Printer") {
-            echo $data->device->printermodels_id;
+         if ($s_data->itemtype == "NetworkEquipment") {
+            echo $s_data->networkmodels_id;
+         } else if ($s_data->itemtype == "Printer") {
+            echo $s_data->printermodels_id;
          }
          echo "</td>";
          
@@ -425,7 +497,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "Have Vlan :";
          echo "</td>";
          echo "<td>";
-         echo Dropdown::getYesNo($data->device->have_vlan);
+         echo Dropdown::getYesNo($s_data->have_vlan);
          echo "</td>";
          echo "</tr>";
          
@@ -439,7 +511,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "Have network ports trunk/tagged :";
          echo "</td>";
          echo "<td>";
-         echo Dropdown::getYesNo($data->device->have_trunk);
+         echo Dropdown::getYesNo($s_data->have_trunk);
          echo "</td>";
          echo "</tr>";       
          
@@ -447,7 +519,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
 
          // * Manage SNMPWALK file
          if ($edit == '0') {
-            $this->showUploadSnmpwalk($data->device->sysdescr, $data->device->itemtype);
+            $this->showUploadSnmpwalk($s_data->sysdescr, $s_data->itemtype);
          } else {        
             echo "<table class='tab_cadre' width='900'>";
 
@@ -498,7 +570,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
          echo "</th>";
          echo "</tr>";
 
-         $datalog = json_decode($retserv, true);
+         $datalog = json_decode($_SESSION['plugin_fusioninventory_snmptool_device_json'], true);
          arsort($datalog['logs']);
          foreach ($datalog['logs'] as $ldata) {
             echo "<tr class='tab_bg_1'>";
@@ -527,6 +599,12 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    
+   /**
+    * 
+    * @param integer $id id of the device on central server
+    * 
+    * @return array from central server
+    */
    function sendGetDevice($id) {
       $getDevice = array();
       $getDevice['getDevice'] = array(
@@ -536,6 +614,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       $retserv = curl_exec($this->fp);
       return json_decode($retserv);
    }
+
    
    
    function sendMib($a_mib) {
@@ -571,6 +650,12 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
    
    
    
+   /**
+    * Form for upload snmpwalk file
+    * 
+    * @param varchar $sysdescr sysdescr of the device
+    * @param varchar $itemtype itemtype of the device
+    */
    function showUploadSnmpwalk($sysdescr, $itemtype) {
       global $LANG;
       
@@ -586,6 +671,15 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
       echo "<tr class='tab_bg_3 center'>";
       echo "<td colspan='2'>";
       echo "<i>IMPORTANT: This file keep in your GLPI server, and no data of this will be uploaded in central server</i>";
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_3'>";
+      echo "<td>";
+      echo "Sysdescr (cleaned)";
+      echo "</td>";
+      echo "<td>";
+      echo "<i>".$sysdescr."</i>";
       echo "</td>";
       echo "</tr>";
       
@@ -876,7 +970,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
             echo "<input type='checkbox' name='models[]' value='".$a_models['id']."'/>";
             echo "</td>";
             echo "<td align='center' rowspan='".$nbdevices."'>";
-            echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodel.php?models_id=".$a_models['id']."'>";
+            echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructsendmodeldevice.form.php?models_id=".$a_models['id']."'>";
             echo "<font color='#000000'>".$a_models['name']."</font>";
             echo "</a>";
             echo "</td>";
@@ -897,7 +991,7 @@ class PluginFusinvsnmpConstructmodel extends CommonDBTM {
                echo $a_devices['sysdescr'];
                echo "</td>";
                echo "<td align='center'>";
-               echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$a_devices['id']."'>";
+               echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodeldevice.form.php?devices_id=".$a_devices['id']."'>";
                echo "<img src='".$CFG_GLPI["root_doc"]."/pics/rapports.png' width='18' height='18' />";
 
                echo "</a>";

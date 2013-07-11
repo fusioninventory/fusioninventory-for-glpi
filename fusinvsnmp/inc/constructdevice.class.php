@@ -47,13 +47,22 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusinvsnmpConstructDevice extends CommonDBTM {
    private $suggest = 1;
 
+   
+   /**
+    * Show oids
+    * 
+    * @param integer $id id of th device on central server
+    * @param array from central server $data
+    * 
+    * @return type
+    */
    function showForm($id, $data) {
       global $LANG,$CFG_GLPI;
 
       echo  "<table width='950' align='center'>
          <tr>
          <td>
-         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?devices_id=".$id."'>Back to device form information</a>
+         <a href='".$CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodeldevice.form.php?devices_id=".$id."'>Back to device form information</a>
          </td>
          </tr>
          </table>";

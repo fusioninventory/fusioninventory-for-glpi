@@ -35,7 +35,7 @@
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2012
+   @since     2013
  
    ------------------------------------------------------------------------
  */
@@ -46,136 +46,22 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-// DEV
-//$_SESSION['plugin_fusioninventory_snmpwalks_id'] = 214;
-
-// END DEV
-
-Html::header($LANG['plugin_fusioninventory']['title'][0],$_SERVER["PHP_SELF"],"plugins","fusioninventory","constructdevice");
+Html::header($LANG['plugin_fusioninventory']['title'][0],
+             $_SERVER["PHP_SELF"],
+             "plugins",
+             "fusioninventory",
+             "constructdevice");
 Session::checkLoginUser();
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-if (isset($_POST['updatesort'])) {
-   $_SESSION['glpi_plugin_fusioninventory_constructmodelsort'] = $_POST['sort'];
-   Html::back();
-}
-
-if (!function_exists('curl_init')) {
-   echo '<table  class="tab_cadre_fixe">';
-   echo '<tr class="tab_bg_1">';
-   echo "<th>";
-   echo "<br/>!! cURL extension (PHP) is required... !!<br/><br/>";
-   echo "</th>";
-   echo "</tr>";
-   echo "</table>";
-   exit;
-}
-
-
 $pfConstructmodel = new PluginFusinvsnmpConstructmodel();
+
 if ($pfConstructmodel->connect()) {
    if ($pfConstructmodel->showAuth()) {
-      if (isset($_GET['reset'])) {
-         // Unlock the device
-         if (isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])) {
-            $pfConstructmodel->setUnLock();
-         }
-         unset($_SESSION['plugin_fusioninventory_snmpwalks_id']);
-         if (isset($_SESSION['plugin_fusioninventory_sysdescr'])) {
-            unset($_SESSION['plugin_fusioninventory_sysdescr']);
-         }
-         if (isset($_SESSION['plugin_fusioninventory_itemtype'])) {
-            unset($_SESSION['plugin_fusioninventory_itemtype']);
-         }
-         Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php");
-      
-      } else if (isset($_FILES['snmpwalkfile'])) {
-         if (isset($_POST['sysdescr'])) {
-            $jsonret = $pfConstructmodel->setLock($_POST['sysdescr'], 
-                                                  $_POST['itemtype']);
-         } else {
-            $jsonret = $pfConstructmodel->setLock($_SESSION['plugin_fusioninventory_sysdescr'], 
-                                                  $_SESSION['plugin_fusioninventory_itemtype']);
-         }
-         $i = 1;
-         $md5 = '';
-         while ($i == '1') {
-            $md5 = md5(rand(1, 1000000));
-            $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
-               WHERE log='".$md5."' ";
-            $result = $DB->query($query);
-            if ($DB->numrows($result) == "0") {
-               $i = 0;
-            }   
-         }
-
-         $query_ins = "INSERT INTO `glpi_plugin_fusioninventory_construct_walks` 
-            (`id`, `construct_device_id`, `log`)
-            VALUES (NULL , '".$jsonret->device->id."', '".$md5."')";
-         $id_ins = $DB->query($query_ins);
-         move_uploaded_file($_FILES['snmpwalkfile']['tmp_name'], GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$md5);
-
-         $_SESSION['plugin_fusioninventory_snmpwalks_id'] = $jsonret->device->id;
-         Html::redirect($CFG_GLPI['root_doc']."/plugins/fusinvsnmp/front/constructmodel.php?editoid=".$jsonret->device->id);
-      } else if (isset($_POST['deletesnmpwalkfile'])) {
-         $query = "SELECT * FROM `glpi_plugin_fusioninventory_construct_walks`
-                   WHERE `construct_device_id`='".$_POST['devices_id']."'";
-         $result=$DB->query($query);
-         while ($data=$DB->fetch_array($result)) {
-            unlink(GLPI_PLUGIN_DOC_DIR."/fusinvsnmp/walks/".$data['log']);
-            $query_delete = "DELETE FROM glpi_plugin_fusioninventory_construct_walks
-               WHERE id='".$data['id']."'";
-            $DB->query($query_delete);
-         }
-         Html::back();
-      } else if (isset($_GET['action'])
-              AND $_GET['action'] == 'displaydevice'
-              AND isset($_SESSION['plugin_fusioninventory_sysdescr'])
-              AND $_SESSION['plugin_fusioninventory_sysdescr'] != ''
-              AND $_SESSION['plugin_fusioninventory_itemtype'] != '0') {
-         $pfConstructmodel->sendGetsysdescr($_SESSION['plugin_fusioninventory_sysdescr'], 
-                                            $_SESSION['plugin_fusioninventory_itemtype']);
-      
-//      } else if ((isset($_GET['editoid'])
-//              OR isset($_GET['id']))
-//              AND isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])
-//              AND $_SESSION['plugin_fusioninventory_snmpwalks_id'] > 0) {
-//         $pfConstructDevice = new PluginFusinvsnmpConstructDevice();
-//         $dataret = $pfConstructmodel->sendGetDevice($_SESSION['plugin_fusioninventory_snmpwalks_id']);
-//         $pfConstructDevice->showForm($_SESSION['plugin_fusioninventory_snmpwalks_id'], $dataret);
-      } else if (isset($_GET['editoid'])) {
-         $pfConstructDevice = new PluginFusinvsnmpConstructDevice();
-         $dataret = $pfConstructmodel->sendGetDevice($_GET['editoid']);
-         $pfConstructDevice->showForm($_GET['editoid'], $dataret);
-      
-      } else if (isset($_POST['sendsnmpwalk'])
-              AND $_POST['sysdescr'] != '') {
-         $message = array();
-         $message = $pfConstructmodel->detectWrongSysdescr($_POST['sysdescr']);
-         if (!empty($message)){
-            $pfConstructmodel->showFormDefineSysdescr($message);
-         } else if ($_POST['itemtype'] == '0') {
-            $pfConstructmodel->showFormDefineSysdescr();
-         } else {
-            $pfConstructmodel->sendGetsysdescr($_POST['sysdescr'], $_POST['itemtype']);
-         }
-      } else if (isset($_GET['devices_id'])) {
-         $pfConstructmodel->sendGetsysdescr('', '', $_GET['devices_id']);
-      } else if (isset($_GET['action'])) {
-         if ($_GET['action'] == "checksysdescr") {
-            $pfConstructmodel->showFormDefineSysdescr();
-         } else if ($_GET['action'] == "seemodels") {
-            if (isset($_POST['models'])) {
-               $pfConstructmodel->importModels();
-               Html::back();
-            } else {
-               $pfConstructmodel->showAllModels();
-            }
-         }
-      } else {
-         $pfConstructmodel->menu();
-      }
+      $pfConstructDevice = new PluginFusinvsnmpConstructDevice();
+      $dataret = $pfConstructmodel->sendGetDevice($_GET['id']);
+      $pfConstructDevice->showForm($_GET['id'], $dataret); 
    }
    $pfConstructmodel->closeConnection();
 }
