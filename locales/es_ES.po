@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: FusionInventory (for GLPI)\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2013-07-09 00:00+0200\n"
-"PO-Revision-Date: 2013-07-08 22:03+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2013-07-08 23:31+0000\n"
+"Last-Translator: Tomás Abad <tabadgp@gmail.com>\n"
 "Language-Team: Spanish (Spain) (http://www.transifex.com/projects/p/FusionInventory/language/es_ES/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -298,7 +298,7 @@ msgstr "Por favor, elimine la carpeta %s del directorio 'glpi/plugins'"
 
 #: ajax/dropdownsnmpmodelconstruct_progressbar.php:53
 msgid "Printer cartridges"
-msgstr ""
+msgstr "Cartuchos de impresora"
 
 #: front/agent.form.php:58
 msgid "The agent is running"
@@ -2256,7 +2256,7 @@ msgstr "Tipo de puertos a importar (para equipos de red)"
 
 #: inc/printercartridge.class.php:64
 msgid "Cartridge(s)"
-msgstr ""
+msgstr "Cartucho/s"
 
 #: inc/printerlog.class.php:53 inc/printerlog.class.php:323
 msgid "History meter printer"
@@ -2324,7 +2324,7 @@ msgstr "Gestión de derechos"
 
 #: inc/rulematchedlog.class.php:82 inc/rulematchedlog.class.php:87
 msgid "Import information"
-msgstr ""
+msgstr "Información de importación"
 
 #: inc/rulematchedlog.class.php:160 inc/rulematchedlog.class.php:226
 msgid "Rule import logs"
