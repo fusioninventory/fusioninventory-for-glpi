@@ -5549,7 +5549,27 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          WHERE `id`='".$data['id']."'";
       $DB->query($queryu);
    }
-   
+
+   /*
+    * Convert taskjoblogs itemtype from PluginFusinvdeployPackage to
+    * PluginFusioninventoryDeployPackage
+    */
+
+   $query = "UPDATE `glpi_plugin_fusioninventory_taskjoblogs` ".
+            "SET `itemtype`='PluginFusioninventoryDeployPackage'".
+            "WHERE `itemtype`='PluginFusinvdeployPackage'";
+   $result = $DB->query($query);
+
+   /*
+    * Convert taskjobstates itemtype from PluginFusinvdeployPackage to
+    * PluginFusioninventoryDeployPackage
+    */
+
+   $query = "UPDATE `glpi_plugin_fusioninventory_taskjobstates` ".
+            "SET `itemtype`='PluginFusioninventoryDeployPackage'".
+            "WHERE `itemtype` = 'PluginFusinvdeployPackage'";
+   $result = $DB->query($query);
+
    /*
     * Convert taskjob action from PluginFusinvdeployGroup to PluginFusioninventoryDeployGroup
     */
