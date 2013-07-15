@@ -54,7 +54,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
     *@return nothing
     **/
    function initConfig() {
-
+      global $DB;
       $NOLOG = '-1';
       $logs = array();
       $logs['NetworkEquipment']['ifdescr'] = $NOLOG;
