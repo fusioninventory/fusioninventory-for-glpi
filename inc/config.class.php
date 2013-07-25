@@ -316,19 +316,23 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>".__('Inventory frequency (in hours)', 'fusioninventory')."&nbsp;:</td>";
       echo "<td width='20%'>";
-      Dropdown::showInteger("inventory_frequence",
-                            $this->getValue('inventory_frequence'), 1, 240);
+      Dropdown::showNumber("inventory_frequence", array(
+             'value' => $this->getValue('inventory_frequence'), 
+             'min' => 1, 
+             'max' => 240)
+         );
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Delete tasks after', 'fusioninventory')." :</td>";
       echo "<td>";
-      Dropdown::showInteger("delete_task",
-                            $this->getValue('delete_task'), 1, 240, 1,
-                            array(),
-                            array('unit'=>'day'));
-
+      Dropdown::showNumber("delete_task", array(
+             'value' => $this->getValue('delete_task'), 
+             'min'   => 1, 
+             'max'   => 240,
+             'unit'  => 'day')
+      );
       echo "</td>";
 
       echo "<td>".__('Agent port', 'fusioninventory')." :</td>";
@@ -645,14 +649,20 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_networkdiscovery",
-                            $pfConfig->getValue('threads_networkdiscovery'), 1, 400);
+      Dropdown::showNumber("threads_networkdiscovery", array(
+             'value' => $pfConfig->getValue('threads_networkdiscovery'), 
+             'min'   => 1, 
+             'max'   => 400)
+      );
       echo "</td>";
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_networkinventory",
-                            $pfConfig->getValue('threads_networkinventory'), 1, 400);
+      Dropdown::showNumber("threads_networkinventory", array(
+             'value' => $pfConfig->getValue('threads_networkinventory'), 
+             'min'   => 1, 
+             'max'   => 400)
+      );
       echo "</td>";
       echo "</tr>";
 

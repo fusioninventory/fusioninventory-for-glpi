@@ -271,10 +271,12 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_networkdiscovery",
-                            $this->fields["threads_networkdiscovery"],
-                            1,
-                            400);
+      Dropdown::showNumber("threads_networkdiscovery",array(
+             'value' => $this->fields["threads_networkdiscovery"], 
+             'min' => 1, 
+             'max' => 400)
+         );
+
       echo "</td>";
       echo "<td>".__('Useragent', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
@@ -286,10 +288,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showInteger("threads_networkinventory",
-                            $this->fields["threads_networkinventory"],
-                            1,
-                            400);
+      Dropdown::showNumber("threads_networkinventory", array(
+             'value' => $this->fields["threads_networkinventory"], 
+             'min' => 1, 
+             'max' => 400)
+      );
       echo "</td>";
       echo "<td>".__('Last contact', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";

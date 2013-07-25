@@ -69,7 +69,11 @@ echo "<td>";
 echo __('Number of days since last inventory')." :&nbsp;";
 echo "</td>";
 echo "<td>";
-Dropdown::showInteger("nbdays", $nbdays, 1, 365);
+Dropdown::showNumber("nbdays", array(
+                'value' => $nbdays, 
+                'min'   => 1, 
+                'max'   => 365)
+);
 echo "</td>";
 echo "</tr>";
 

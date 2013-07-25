@@ -380,7 +380,11 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "</tr><tr>";
       echo "<th>".__("retention days", 'fusioninventory')."</th>";
       echo "<td>";
-      Dropdown::showInteger('p2p-retention-duration', $p2p_ret_value, 0, 400);
+      Dropdown::showNumber('p2p-retention-duration', array(
+             'value' => $p2p_ret_value, 
+             'min'   => 0, 
+             'max'   => 400)
+      );
       echo "</td>";
       echo "</tr><tr>";
       echo "<td>";

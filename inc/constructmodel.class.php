@@ -1092,7 +1092,11 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "Number numeric groups after&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showInteger("nboids_after", 0, 0, 20);
+      Dropdown::showNumber("nboids_after", array(
+             'value' => 0, 
+             'min'   => 0, 
+             'max'   => 20)
+      );
       echo "</td>";
       echo "<td>";
       echo "* For the oid for <i>name</i> there is no other thing after ".

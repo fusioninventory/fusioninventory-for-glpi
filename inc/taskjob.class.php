@@ -295,7 +295,11 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo __('Time between task start and start this action', 'fusioninventory')."&nbsp;:";
          echo "</td>";
          echo "<td align='center'>";
-         Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
+         Dropdown::showNumber("periodicity_count", array(
+                'value' => $this->fields['periodicity_count'], 
+                'min'   => 0, 
+                'max'   => 300)
+         );
          $a_time = array();
          $a_time[] = "------";
          $a_time['minutes'] = strtolower(__('Minute(s)', 'fusioninventory'));
@@ -333,14 +337,22 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td>".__('Number of trials', 'fusioninventory')."&nbsp;:</td>";
          echo "<td align='center'>";
-         Dropdown::showInteger("retry_nb", $this->fields["retry_nb"], 0, 30);
+         Dropdown::showNumber("retry_nb", array(
+                'value' => $this->fields['retry_nb'], 
+                'min'   => 0, 
+                'max'   => 30)
+         );
          echo "</td>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
          echo "<td>".__('Time between 2 trials (in minutes)', 'fusioninventory')."&nbsp;:</td>";
          echo "<td align='center'>";
-         Dropdown::showInteger("retry_time", $this->fields["retry_time"], 0, 360);
+         Dropdown::showNumber("retry_time", array(
+                'value' => $this->fields['retry_time'], 
+                'min'   => 0, 
+                'max'   => 360)
+       );
          echo "</td>";
          echo "</tr>";
 
@@ -1997,7 +2009,11 @@ return namelist;
       echo "</td>";
       echo "<td>".__('Periodicity')."&nbsp;:</td>";
       echo "<td>";
-      Dropdown::showInteger("periodicity_count", $pfTask->fields['periodicity_count'], 0, 300);
+      Dropdown::showNumber("periodicity_count", array(
+                'value' => $this->fields['periodicity_count'], 
+                'min'   => 0, 
+                'max'   => 300)
+      );
       $a_time = array();
       $a_time[] = "------";
       $a_time['minutes'] = __('Minute(s)', 'fusioninventory');

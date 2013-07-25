@@ -965,12 +965,20 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
          break;
 
       case 'glpi_plugin_fusioninventory_agents.threads_discovery' :
-         Dropdown::showInteger("threads_discovery", $linkfield, 1, 400);
+         Dropdown::showNumber("threads_discovery", array(
+             'value' => $linkfield, 
+             'min' => 1, 
+             'max' => 400)
+         );
          return TRUE;
          break;
 
       case 'glpi_plugin_fusioninventory_agents.threads_query' :
-         Dropdown::showInteger("threads_query", $linkfield, 1, 400);
+         Dropdown::showNumber("threads_query", array(
+             'value' => $linkfield, 
+             'min' => 1, 
+             'max' => 400)
+         );
          return TRUE;
          break;
 
@@ -1117,13 +1125,17 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          break;
 
       case 'plugin_fusinvsnmp_set_discovery_threads':
-         echo Dropdown::showInteger('threads_networkdiscovery', '10');
+         echo Dropdown::showNumber('threads_networkdiscovery', array(
+             'value' => '10')
+         );
          echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
                __('Post') . "\" >";
          break;
 
       case 'plugin_fusinvsnmp_set_snmpinventory_threads':
-         echo Dropdown::showInteger('threads_networkinventory', '5');
+         echo Dropdown::showNumber('threads_networkinventory', array(
+             'value' => '5')
+         );
          echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
                __('Post') . "\" >";
          break;
@@ -1579,74 +1591,6 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
    }
 
 }
-
-// How to display specific update fields ?
-// Massive Action functions
-//function plugin_fusioninventory_MassiveActionsFieldsDisplay($type, $table, $field, $linkfield) {
-//   // Table fields
-//   //echo $table.".".$field."<br/>";
-//   switch ($table.".".$field) {
-//      case 'glpi_plugin_fusioninventory_agents.id' :
-//         Dropdown::show("PluginFusioninventoryAgent",
-//                        array('name' => $linkfield,
-//                              'comment' => FALSE));
-//         return TRUE;
-//         break;
-//
-//      case 'glpi_plugin_fusioninventory_agents.nb_process_query' :
-//         Dropdown::showInteger("nb_process_query", $linkfield, 1, 200);
-//         return TRUE;
-//         break;
-//
-//      case 'glpi_plugin_fusioninventory_agents.nb_process_discovery' :
-//         Dropdown::showInteger("nb_process_discovery", $linkfield, 1, 400);
-//         return TRUE;
-//         break;
-//
-//      case 'glpi_plugin_fusioninventory_agents.logs' :
-//         $ArrayValues = array();
-//         $ArrayValues[]= __('No');
-
-//         $ArrayValues[]= __('Yes');
-
-//         $ArrayValues[]= __('Debug');
-
-//         Dropdown::showFromArray('logs', $ArrayValues,
-//                                 array('value'=>$linkfield));
-//         return TRUE;
-//         break;
-//
-//      case 'glpi_plugin_fusioninventory_agents.core_discovery' :
-//         Dropdown::showInteger("core_discovery", $linkfield, 1, 32);
-//         return TRUE;
-//         break;
-//
-//      case 'glpi_plugin_fusioninventory_agents.core_query' :
-//         Dropdown::showInteger("core_query", $linkfield, 1, 32);
-//         return TRUE;
-//         break;
-//
-//      case 'glpi_plugin_fusioninventory_agents.threads_discovery' :
-//         Dropdown::showInteger("threads_discovery", $linkfield, 1, 400);
-//         return TRUE;
-//         break;
-//
-//      case 'glpi_plugin_fusioninventory_agents.threads_query' :
-//         Dropdown::showInteger("threads_query", $linkfield, 1, 400);
-//         return TRUE;
-//         break;
-//
-//      case 'glpi_entities.name' :
-//         if (Session::isMultiEntitiesMode()) {
-//            Dropdown::show("Entities",
-//                           array('name' => "entities_id",
-//                           'value' => $_SESSION["glpiactive_entity"]));
-//         }
-//         return TRUE;
-//         break;
-//   }
-//   return FALSE;
-//}
 
 
 

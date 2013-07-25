@@ -268,7 +268,11 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Periodicity')."&nbsp;:</td>";
       echo "<td>";
-      Dropdown::showInteger("periodicity_count", $this->fields['periodicity_count'], 0, 300);
+      Dropdown::showNumber("periodicity_count", array(
+             'value' => $this->fields['periodicity_count'], 
+             'min'   => 0, 
+             'max'   => 300)
+      );
       $a_time = array();
       $a_time[] = "------";
       $a_time['minutes'] = __('Minute(s)', 'fusioninventory');
