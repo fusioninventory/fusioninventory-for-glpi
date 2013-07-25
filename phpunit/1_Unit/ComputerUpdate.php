@@ -198,6 +198,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'ssid'                 => '',
                     'gateway'              => '',
                     'dhcpserver'           => '',
+                    'logical_number'       => 0,
                     'ipaddress'            => Array('192.168.30.198')
                 ),
             'lo0-' => Array(
@@ -210,6 +211,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'gateway'              => '',
                     'netmask'              => '',
                     'dhcpserver'           => '',
+                    'logical_number'       => 1,
                     'ipaddress'            => Array('::1', 'fe80::1', '127.0.0.1')
                 )
         );

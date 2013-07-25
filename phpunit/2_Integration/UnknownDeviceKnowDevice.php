@@ -192,6 +192,7 @@ class UnknownDeviceKnowDevice extends PHPUnit_Framework_TestCase {
                     'ssid'                 => '',
                     'gateway'              => '',
                     'dhcpserver'           => '',
+                    'logical_number'       => 1,
                     'ipaddress'            => Array('192.168.30.198')
                 )
           );
