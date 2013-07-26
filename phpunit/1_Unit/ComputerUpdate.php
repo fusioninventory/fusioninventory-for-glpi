@@ -814,7 +814,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'is_dynamic'            => '1',
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
-                     'logical_number'        => '0',
+                     'logical_number'        => '1',
                      'name'                  => 'em0',
                      'instantiation_type'    => 'NetworkPortEthernet',
                      'mac'                   => '00:23:18:cf:0d:93',
