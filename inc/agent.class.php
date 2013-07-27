@@ -206,6 +206,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    **/
    function showForm($computers_id, $options=array()) {
 
+      
       if ($computers_id!='') {
          $this->getFromDB($computers_id);
       } else {
@@ -218,7 +219,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
                  $pfConfig->getValue('threads_networkinventory');
          $this->fields['senddico'] = 0;
       }
-
+      $this->initForm($computers_id, $options);
       $this->showTabs($options);
       $this->showFormHeader($options);
 
