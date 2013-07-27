@@ -877,10 +877,13 @@ function appear_array(id){
                   "searchtype[0]=contains&contains[0]=".$uniqid."&".
                   "itemtype=PluginFusioninventoryTaskjoblog&start=0'>".
             __('View logs of this execution', 'fusioninventory')."</a>";
+         echo "<form name='form' method='post' action='".
+                 $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjob.form.php'>";
          echo "<input type='hidden' name='taskjobstates_id' value='".$taskstates_id."' />";
          echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
          echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.
                  __('Force the end', 'fusioninventory').'" class="submit" type="submit">';
+         Html::closeForm();
          echo "</td>";
          if ($veryshort == '0') {
             echo "</tr>";
@@ -932,10 +935,13 @@ function appear_array(id){
             }
          }
          if ($a_taskjobstates != '0') {
+            echo "<form name='form' method='post' action='".
+                 $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjob.form.php'>";
             echo "<input type='hidden' name='taskjobstates_id' value='".$taskstates_id."' />";
             echo "<input type='hidden' name='taskjobs_id' value='".$taskjobs_id."' />";
             echo '&nbsp;&nbsp;&nbsp;<input name="forceend" value="'.
                      __('Force the end', 'fusioninventory').'" class="submit" type="submit">';
+            Html::closeForm();
          }
          echo "</td>";
          echo "</tr>";
