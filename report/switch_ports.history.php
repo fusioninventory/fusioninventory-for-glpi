@@ -47,7 +47,7 @@ $DBCONNECTION_REQUIRED=0;
 define('GLPI_ROOT', '../../..'); 
 include (GLPI_ROOT . "/inc/includes.php"); 
 
-Html::header(__('FusionInventory', 'fusioninventory'),$_SERVER['PHP_SELF'],"utils","report");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
 PluginFusioninventoryProfile::checkRight("reportnetworkequipment", "r");
 
@@ -79,7 +79,7 @@ while ($data=$DB->fetch_array($result)) {
    $ports[$data['id']] = $data['name']." - ".$data['pname'];
 }
 
-Dropdown::showFromArray("networkports_id",$ports,
+Dropdown::showFromArray("networkports_id", $ports,
                         Array('value'=>$selected));
 echo "</td>";
 echo "</tr>";

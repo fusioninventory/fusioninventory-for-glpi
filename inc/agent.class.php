@@ -272,7 +272,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showNumber("threads_networkdiscovery",array(
+      Dropdown::showNumber("threads_networkdiscovery", array(
              'value' => $this->fields["threads_networkdiscovery"], 
              'min' => 1, 
              'max' => 400)

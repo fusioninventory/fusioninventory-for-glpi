@@ -119,7 +119,7 @@ if (isset($_GET['action'])) {
          }
          if (is_array($params['msg']) ) {
 
-            $tmp_msg = implode("\n",$params['msg']);
+            $tmp_msg = implode("\n", $params['msg']);
             $tmp_msg =
                stripcslashes(
                   htmlspecialchars(

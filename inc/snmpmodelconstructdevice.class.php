@@ -480,7 +480,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
             $split[1] = str_replace(' ', '', $split[1]);
             $str = '';
             for ($i=0;$i< strlen($split[1]);$i+=2) {
-               $str .= chr(hexdec(substr($split[1],$i,2)));
+               $str .= chr(hexdec(substr($split[1], $i, 2)));
             }
             echo $split[0].": ".$str;
             

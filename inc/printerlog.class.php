@@ -123,8 +123,8 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       $tab[5]['table']         = 'glpi_ipaddresses';
       $tab[5]['field']         = 'name';
       $tab[5]['name']          = __('IP');
-      $tab[5]['forcegroupby']  = true;
-      $tab[5]['massiveaction'] = false;
+      $tab[5]['forcegroupby']  = TRUE;
+      $tab[5]['massiveaction'] = FALSE;
       $tab[5]['joinparams']    = array('jointype'          => 'itemtype_item',
                                         'specific_itemtype' => 'NetworkName',
                                         'beforejoin'        => array('table' => 'glpi_networknames',

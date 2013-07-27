@@ -164,7 +164,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $sopt[8]['field']          = 'name';
       $sopt[8]['name']           = __('Agent', 'fusioninventory');      
       $sopt[8]['datatype']       = 'itemlink';
-      $sopt[8]['forcegroupby']   = true;
+      $sopt[8]['forcegroupby']   = TRUE;
       $sopt[8]['joinparams']     = array('beforejoin'
                                           => array('table'      => 'glpi_plugin_fusioninventory_taskjobstates',
                                                    'joinparams' => array('jointype' => 'child')));
