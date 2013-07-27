@@ -229,7 +229,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $inputdb = array();
          $inputdb['name'] = $input['name'];
          $inputdb['date'] = date("Y-m-d H:i:s");
-         $inputdb['itemtype'] = $input['itemtype'];
+         if (isset($input['itemtype'])) {
+            $inputdb['itemtype'] = $input['itemtype'];
+         }
          if (isset($input['serial'])) {
             $input['serial'] = $input['serial'];
          }

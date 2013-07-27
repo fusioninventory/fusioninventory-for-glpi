@@ -99,7 +99,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       echo "</th>";
 
       echo "<th>";
-      echo __('Serial');
+      echo __('Serial number');
       echo "</th>";
 
       echo "<th>";

@@ -637,12 +637,14 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                            $class->rulepassed($items_id, $itemtype);
                            return $output;
                         } else {
+                           $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                            $output['action'] = self::LINK_RESULT_LINK;
                            return $output;
                         }
                      }
                   } else {
                      if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_NO_CREATE) {
+                       $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                         $output['action'] = self::LINK_RESULT_DENIED;
                      } else {
                         // Import into new equipment
@@ -658,6 +660,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                     $output['found_equipment'] = array(0, $itemtype);
                                     return $output;
                                  } else {
+                                    $_SESSION['plugin_fusioninventory_rules_id'] = 
+                                            $this->fields['id'];
                                     $output['action'] = self::LINK_RESULT_CREATE;
                                     return $output;
                                  }
@@ -672,6 +676,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                               $output['found_equipment'] = array(0, $itemtype);
                               return $output;
                            } else {
+                              $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                               $output['action'] = self::LINK_RESULT_CREATE;
                               return $output;
                            }
@@ -679,6 +684,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                      }
                   }
                } else if ($action->fields["value"] == self::RULE_ACTION_DENIED) {
+                  $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                   $output['action'] = self::LINK_RESULT_DENIED;
                   return $output;
                }
@@ -687,6 +693,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                   "pluginFusioninventory-rules",
                   "value".$action->fields["value"]."\n"
                );
+               $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                $output['action'] = self::LINK_RESULT_DENIED;
                return $output;
             } else {
@@ -702,6 +709,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                            $output['found_equipment'] = array(0, $itemtype);
                            return $output;
                         } else {
+                           $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                            $output['action'] = self::LINK_RESULT_CREATE;
                            return $output;
                         }
@@ -716,6 +724,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                      $output['found_equipment'] = array(0, 'PluginFusioninventoryUnknownDevice');
                      return $output;
                   } else {
+                     $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
                      $output['action'] = self::LINK_RESULT_CREATE;
                      return $output;
                   }
