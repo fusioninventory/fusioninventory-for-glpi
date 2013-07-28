@@ -6,12 +6,9 @@
    <key>Networking1954</key>
    <comments>3Com Baseline Switch 2952-SFP Plus Software Version 5.20 Release 1101P10 Copyright (c) 2004-2010 3Com Corporation. All rights reserved.
 
-3Com Baseline Switch 2928-SFP Plus Software Version 5.20 Release 1101P02Copyright (c) 2004-2009 3Com Corporation. All rights reserved.
-
 </comments>
    <devices>
       <sysdescr>3Com Baseline Switch 2952-SFP Plus Software Version 5.20 Release 1101P10 Copyright (c) 2004-2010 3Com Corporation. All rights reserved.</sysdescr>
-      <sysdescr>3Com Baseline Switch 2928-SFP Plus Software Version 5.20 Release 1101P02Copyright (c) 2004-2009 3Com Corporation. All rights reserved.</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

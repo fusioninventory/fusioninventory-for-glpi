@@ -10,14 +10,11 @@ HP Color LaserJet CP3525
 
 HP Color LaserJet 3800
 
-HP Color LaserJet 4700
-
 </comments>
    <devices>
       <sysdescr>HP Color LaserJet CP3505</sysdescr>
       <sysdescr>HP Color LaserJet CP3525</sysdescr>
       <sysdescr>HP Color LaserJet 3800</sysdescr>
-      <sysdescr>HP Color LaserJet 4700</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

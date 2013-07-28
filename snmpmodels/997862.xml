@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model>
+   <name>997862</name>
+   <type>3</type>
+   <key>Printer0801</key>
+   <comments>Xerox WorkCentre 3325
+
+Xerox WorkCentre 3325;Sys SW Version WC3325_V51.002.06.000 AUG-22-2012,MCB V2.50.01.06 AUG-22-2012,NIC 4.01.03,IOT 1.00.31,PCL5e 6.50.02 11-09-2011,PCL6 6.23.00.02   07-16-2012,PS 3.99.01.00.00.93 04-02-2012,IBM/EPSON 5.29.01 05-09-2011, IP Core 6.8.P
+
+Xerox WorkCentre 5222;ESS1.207.8,IOT 11.31.0,IIT 3.8.0,ADF 20.0.0,SJFI3.0.9,SSMI1.8.2
+
+</comments>
+   <devices>
+      <sysdescr>Xerox WorkCentre 3325</sysdescr>
+      <sysdescr>Xerox WorkCentre 3325;Sys SW Version WC3325_V51.002.06.000 AUG-22-2012,MCB V2.50.01.06 AUG-22-2012,NIC 4.01.03,IOT 1.00.31,PCL5e 6.50.02 11-09-2011,PCL6 6.23.00.02   07-16-2012,PS 3.99.01.00.00.93 04-02-2012,IBM/EPSON 5.29.01 05-09-2011, IP Core 6.8.P</sysdescr>
+      <sysdescr>Xerox WorkCentre 5222;ESS1.207.8,IOT 11.31.0,IIT 3.8.0,ADF 20.0.0,SJFI3.0.9,SSMI1.8.2</sysdescr>
+   </devices>
+   <oidlist>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.6.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>location</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.1.0</oid>
+         <portcounter>1</portcounter>
+         <dynamicport>0</dynamicport>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.5.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>name</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.43.11.1.1.8.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>tonerblackmax</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.43.11.1.1.9.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>tonerblack2remaining</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+   </oidlist>
+</model>

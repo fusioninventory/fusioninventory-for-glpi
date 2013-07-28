@@ -4,10 +4,25 @@
    <name>5408284</name>
    <type>2</type>
    <key>Networking2052</key>
-   <comments>ERS-8610 (5.1.0.0)
+   <comments>Summit200-24 - Version 7.1e.1 (Build 5) by Release_Master Thu 04/22/2004 15:31:23
+
+Summit200-24 - Version 7.1e.2 (Build 1) by Release_Master Tue 07/13/2004 15:15:31
+
+Summit200-48 - Version 7.1e.2 (Build 1) by Release_Master Tue 07/13/2004 15:15:31
+
+Summit24e3 - Version 6.2e.1 (Build 20) by Release_Master_ABU Tue 05/27/2003 16:46:08
+
+HP 1/10Gb VC-Enet Module Virtual Connect 2.10
+
+ERS-8610 (5.1.0.0)
 
 </comments>
    <devices>
+      <sysdescr>Summit200-24 - Version 7.1e.1 (Build 5) by Release_Master Thu 04/22/2004 15:31:23</sysdescr>
+      <sysdescr>Summit200-24 - Version 7.1e.2 (Build 1) by Release_Master Tue 07/13/2004 15:15:31</sysdescr>
+      <sysdescr>Summit200-48 - Version 7.1e.2 (Build 1) by Release_Master Tue 07/13/2004 15:15:31</sysdescr>
+      <sysdescr>Summit24e3 - Version 6.2e.1 (Build 20) by Release_Master_ABU Tue 05/27/2003 16:46:08</sysdescr>
+      <sysdescr>HP 1/10Gb VC-Enet Module Virtual Connect 2.10</sysdescr>
       <sysdescr>ERS-8610 (5.1.0.0)</sysdescr>
    </devices>
    <oidlist>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model>
+   <name>997901</name>
+   <type>5</type>
+   <key>Peripheral0001</key>
+   <comments>hp LaserJet 1320 series
+
+mdffiler01
+
+</comments>
+   <devices>
+      <sysdescr>hp LaserJet 1320 series</sysdescr>
+      <sysdescr>mdffiler01</sysdescr>
+   </devices>
+   <oidlist>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.1.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+   </oidlist>
+</model>

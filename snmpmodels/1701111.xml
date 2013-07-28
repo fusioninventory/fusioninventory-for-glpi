@@ -6,14 +6,11 @@
    <key>Printer0394</key>
    <comments>HP LaserJet P2015 Series
 
-HP LaserJet P2055dn
-
 HP LaserJet P2055x
 
 </comments>
    <devices>
       <sysdescr>HP LaserJet P2015 Series</sysdescr>
-      <sysdescr>HP LaserJet P2055dn</sysdescr>
       <sysdescr>HP LaserJet P2055x</sysdescr>
    </devices>
    <oidlist>

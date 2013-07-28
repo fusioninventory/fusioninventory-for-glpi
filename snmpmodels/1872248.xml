@@ -6,24 +6,9 @@
    <key>Printer0412</key>
    <comments>hp LaserJet 1300
 
-RICOH Aficio MP 3350 1.01.3 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model
-
-RICOH Aficio MP 3350 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model
-
-RICOH Aficio MP 2550 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model
-
-HP LaserJet M1522n MFP
-
-TOSHIBA e-STUDIO182
-
 </comments>
    <devices>
       <sysdescr>hp LaserJet 1300</sysdescr>
-      <sysdescr>RICOH Aficio MP 3350 1.01.3 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model</sysdescr>
-      <sysdescr>RICOH Aficio MP 3350 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model</sysdescr>
-      <sysdescr>RICOH Aficio MP 2550 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model</sysdescr>
-      <sysdescr>HP LaserJet M1522n MFP</sysdescr>
-      <sysdescr>TOSHIBA e-STUDIO182</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

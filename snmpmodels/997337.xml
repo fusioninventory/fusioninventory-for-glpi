@@ -6,9 +6,12 @@
    <key>Networking2284</key>
    <comments>R1200
 
+eagle-fw-tx-tx
+
 </comments>
    <devices>
       <sysdescr>R1200</sysdescr>
+      <sysdescr>eagle-fw-tx-tx</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

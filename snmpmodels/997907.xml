@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model>
+   <name>997907</name>
+   <type>2</type>
+   <key>Networking2500</key>
+   <comments>ProSafe 802.11b/g Wireless Access Point -WG102 V5.0.3
+
+</comments>
+   <devices>
+      <sysdescr>ProSafe 802.11b/g Wireless Access Point -WG102 V5.0.3</sysdescr>
+   </devices>
+   <oidlist>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.1.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>comments</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.3.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>uptime</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.2.1.0</oid>
+         <portcounter>1</portcounter>
+         <dynamicport>0</dynamicport>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.5.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>name</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.1.4.0</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>NetworkEquipment</mapping_type>
+         <mapping_name>contact</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+   </oidlist>
+</model>

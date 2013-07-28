@@ -4,11 +4,53 @@
    <name>996957</name>
    <type>2</type>
    <key>Networking2085</key>
-   <comments>3Com Switch 5500-EI 28-Port Software Version 3Com OS V3.03.02s56ep05
+   <comments>3Com Switch 4500 50-Port Software Version 3Com OS V3.03.00s56
+
+3Com Switch 4200G 12-Port Software Version 3Com OS V3.02.00s56
+
+3Com Switch 4210 18-Port Software Version 3Com OS V3.01.04s168
+
+3Com Switch 4210 26-Port Software Version 3Com OS V3.01.04s168
+
+3Com Switch 4210 PWR 18-Port Software Version 3Com OS V3.01.05s56
+
+3Com Switch 5500-EI 28-Port Software Version 3Com OS V3.03.01s168e
+
+3Com Switch 5500G-EI PWR 24-Port Software Version 3Com OS V3.03.01s168
+
+3Com Switch 4210 18-Port Software Version 3Com OS V3.01.12s168
+
+3Com Switch 4500 26-Port Software Version 3Com OS V3.03.02s168p02
+
+3Com Switch 4500 26-Port Software Version 3Com OS V3.03.00s168
+
+3Com Switch 5500-EI 28-Port Software Version 3Com OS V3.03.02s56ep05
+
+3Com 3Com SuperStack 4 Switch 5500G-EI 24-Port Software Version 3Com OS V3.02.04s56
+
+3Com SuperStack 4 Switch 5500-EI 52-Port Software Version 3Com OS V3.02.03s56
+
+3Com Switch 4500 26-Port Software Version 3Com OS V3.03.00s56
+
+3Com Switch 4500 26-Port Software Version 3Com OS V3.03.02s168p09
 
 </comments>
    <devices>
+      <sysdescr>3Com Switch 4500 50-Port Software Version 3Com OS V3.03.00s56</sysdescr>
+      <sysdescr>3Com Switch 4200G 12-Port Software Version 3Com OS V3.02.00s56</sysdescr>
+      <sysdescr>3Com Switch 4210 18-Port Software Version 3Com OS V3.01.04s168</sysdescr>
+      <sysdescr>3Com Switch 4210 26-Port Software Version 3Com OS V3.01.04s168</sysdescr>
+      <sysdescr>3Com Switch 4210 PWR 18-Port Software Version 3Com OS V3.01.05s56</sysdescr>
+      <sysdescr>3Com Switch 5500-EI 28-Port Software Version 3Com OS V3.03.01s168e</sysdescr>
+      <sysdescr>3Com Switch 5500G-EI PWR 24-Port Software Version 3Com OS V3.03.01s168</sysdescr>
+      <sysdescr>3Com Switch 4210 18-Port Software Version 3Com OS V3.01.12s168</sysdescr>
+      <sysdescr>3Com Switch 4500 26-Port Software Version 3Com OS V3.03.02s168p02</sysdescr>
+      <sysdescr>3Com Switch 4500 26-Port Software Version 3Com OS V3.03.00s168</sysdescr>
       <sysdescr>3Com Switch 5500-EI 28-Port Software Version 3Com OS V3.03.02s56ep05</sysdescr>
+      <sysdescr>3Com 3Com SuperStack 4 Switch 5500G-EI 24-Port Software Version 3Com OS V3.02.04s56</sysdescr>
+      <sysdescr>3Com SuperStack 4 Switch 5500-EI 52-Port Software Version 3Com OS V3.02.03s56</sysdescr>
+      <sysdescr>3Com Switch 4500 26-Port Software Version 3Com OS V3.03.00s56</sysdescr>
+      <sysdescr>3Com Switch 4500 26-Port Software Version 3Com OS V3.03.02s168p09</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

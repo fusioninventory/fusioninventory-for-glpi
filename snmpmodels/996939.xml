@@ -40,11 +40,23 @@ IPPHONE
 
 Yealink IPPHONE
 
+HP V1910-48G Switch Software Version 5.20 Release 1108 Copyright (c) 2004-2011 Hewlett-Packard Development Company, L.P.
+
 backup
 
 Evolution S 1250
 
+HP LaserJet P2055dn
+
 CS121 v 4.50.70
+
+OpenStage phone
+
+OpenStage 40
+
+Avaya Phone
+
+
 
 </comments>
    <devices>
@@ -66,9 +78,15 @@ CS121 v 4.50.70
       <sysdescr>HP MSL G3 Series   </sysdescr>
       <sysdescr>IPPHONE</sysdescr>
       <sysdescr>Yealink IPPHONE</sysdescr>
+      <sysdescr>HP V1910-48G Switch Software Version 5.20 Release 1108 Copyright (c) 2004-2011 Hewlett-Packard Development Company, L.P.</sysdescr>
       <sysdescr>backup</sysdescr>
       <sysdescr>Evolution S 1250</sysdescr>
+      <sysdescr>HP LaserJet P2055dn</sysdescr>
       <sysdescr>CS121 v 4.50.70</sysdescr>
+      <sysdescr>OpenStage phone</sysdescr>
+      <sysdescr>OpenStage 40</sysdescr>
+      <sysdescr>Avaya Phone</sysdescr>
+      <sysdescr></sysdescr>
    </devices>
    <oidlist>
       <oidobject>

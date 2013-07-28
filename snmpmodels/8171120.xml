@@ -6,12 +6,9 @@
    <key>Networking0057</key>
    <comments>DS-300B
 
-Brocade 4Gb SAN Switch Module for IBM eServer BladeCenter
-
 </comments>
    <devices>
       <sysdescr>DS-300B</sysdescr>
-      <sysdescr>Brocade 4Gb SAN Switch Module for IBM eServer BladeCenter</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

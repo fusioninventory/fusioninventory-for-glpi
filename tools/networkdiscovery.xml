@@ -7,6 +7,11 @@
       <MODELSNMP>Networking2075</MODELSNMP>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[]]></SYSDESCR>
+      <TYPE></TYPE>
+      <MODELSNMP>Networking2075</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[	Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(35)SE, RELEASE SOFTWARE (fc2)\\Copyright (c) 1986-2006 by Cisco Systems, Inc.\\Compiled Sun 03-Dec-06 14:28 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2104</MODELSNMP>
@@ -25,7 +30,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[ Brother DCP9010]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0800</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[ Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(44)SE2, RELEASE SOFTWARE (fc2)\\Copyright (c) 1986-2008 by Cisco Systems, Inc.\\Compiled Thu 01-May-08 12:45 by antonino]]></SYSDESCR>
@@ -58,13 +63,13 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[; AXIS P3344; Network Camera; 5.20.3; Jun 01 2011 10:22; 16B.4; 1; ]]></SYSDESCR>
-      <TYPE></TYPE>
+      <TYPE>5</TYPE>
       <MODELSNMP>Networking2075</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[.1.3.6.1.4.1.236.11.5.1.1.1.1.0]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0741</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -82,7 +87,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[\\\"ML-3470 Series\\\"]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0821</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -96,7 +101,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[1.3.6.1.4.1.236.11.5.1.1.1.1.0]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0740</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[10.36.1.11]]></SYSDESCR>
@@ -129,7 +134,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[24-Port Managed 10/100 Switch w/WebView]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2486</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -147,7 +152,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[3Com 3Com SuperStack 4 Switch 5500G-EI 24-Port Software Version 3Com OS V3.02.04s56]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1678</MODELSNMP>
+      <MODELSNMP>Networking2085</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -156,7 +161,7 @@
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2444</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.67108992</SERIAL>
-      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Baseline Switch 2920-SFP Plus Software Version 5.20 Release 1101P07 ]]></SYSDESCR>
@@ -189,7 +194,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Baseline Switch 2928-SFP Plus Software Version 5.20 Release 1101P02Copyright (c) 2004-2009 3Com Corporation. All rights reserved.]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1954</MODELSNMP>
+      <MODELSNMP>Networking2487</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -257,7 +262,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[3Com SuperStack 4 Switch 5500-EI 52-Port Software Version 3Com OS V3.02.03s56]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1678</MODELSNMP>
+      <MODELSNMP>Networking2085</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -270,7 +275,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Switch 4200G 12-Port Software Version 3Com OS V3.02.00s56]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1678</MODELSNMP>
+      <MODELSNMP>Networking2085</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -284,6 +289,13 @@
       <SYSDESCR><![CDATA[3Com Switch 4200G 24-Port Software Version 3Com OS V3.02.04s56]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking0372</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[3Com Switch 4200G 24-Port Software Version 3Com OS V3.02.07s168]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2483</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -307,14 +319,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Switch 4210 18-Port Software Version 3Com OS V3.01.04s168]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1678</MODELSNMP>
+      <MODELSNMP>Networking2085</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Switch 4210 18-Port Software Version 3Com OS V3.01.12s168]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1678</MODELSNMP>
+      <MODELSNMP>Networking2085</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -328,7 +340,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Switch 4210 26-Port Software Version 3Com OS V3.01.04s168]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1678</MODELSNMP>
+      <MODELSNMP>Networking2085</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -358,7 +370,7 @@
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2354</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
-      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Switch 4210 52-Port Software Version 3.10 Release 2212\\]]></SYSDESCR>
@@ -384,42 +396,42 @@
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Switch 4210 PWR 18-Port Software Version 3Com OS V3.01.05s56]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1678</MODELSNMP>
+      <MODELSNMP>Networking2085</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Switch 4500 26-Port Software Version 3Com OS V3.03.00s168]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1678</MODELSNMP>
+      <MODELSNMP>Networking2085</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Switch 4500 26-Port Software Version 3Com OS V3.03.00s56]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1678</MODELSNMP>
+      <MODELSNMP>Networking2085</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Switch 4500 26-Port Software Version 3Com OS V3.03.02s168p02]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1678</MODELSNMP>
+      <MODELSNMP>Networking2085</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Switch 4500 26-Port Software Version 3Com OS V3.03.02s168p09]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1678</MODELSNMP>
+      <MODELSNMP>Networking2085</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Switch 4500 50-Port Software Version 3Com OS V3.03.00s56]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1678</MODELSNMP>
+      <MODELSNMP>Networking2085</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -439,7 +451,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Switch 5500-EI 28-Port Software Version 3Com OS V3.03.01s168e]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1678</MODELSNMP>
+      <MODELSNMP>Networking2085</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -480,7 +492,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Switch 5500G-EI PWR 24-Port Software Version 3Com OS V3.03.01s168]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1678</MODELSNMP>
+      <MODELSNMP>Networking2085</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -495,7 +507,7 @@
       <SYSDESCR><![CDATA[3Com Switch 8807]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2320</MODELSNMP>
-      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[3Com Switch 8814]]></SYSDESCR>
@@ -513,13 +525,8 @@
    <DEVICE>
       <SYSDESCR><![CDATA[52-port Gigabit Managed Switch]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[52-Port Gigabit Stackable Managed Switch]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[6.1.3.693.R01 GA, October 17, 2006.]]></SYSDESCR>
@@ -565,7 +572,7 @@
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2351</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.89.53.14.1.5.1</SERIAL>
-      <MAC>.1.3.6.1.2.1.2.2.1.6.54</MAC>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[AcceleratorOS, Accelerator 6900 SeriesVersion v6.1.4 (Build1.11)Compiled on June 11 21:25:58 2009Kernel version: 2.4.33 Compiled on Jun 11 20:46:33 2009System is up for 420 days and 4:10 hour(s).]]></SYSDESCR>
@@ -580,7 +587,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Aficio CL7200]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0761</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
    </DEVICE>
    <DEVICE>
@@ -588,11 +595,6 @@
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0330</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[AL-C1100]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[AL-C2600]]></SYSDESCR>
@@ -619,6 +621,12 @@
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0332</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[AL-C9200]]></SYSDESCR>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0831</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.1248.1.2.2.1.1.1.5.1</SERIAL>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[AL-CX11]]></SYSDESCR>
@@ -733,43 +741,43 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Allied Telesis AT-9424Ts - ATS63 v3.0.0]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Allied Telesis AT-9448T/SP - ATS63 v3.0.0]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Allied Telesyn Ethernet Switch AT-8012M]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Allied Telesyn Ethernet Switch AT-8024]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Allied Telesyn Ethernet Switch AT-8524M - ATS62 v1.4.0]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Allied Telesyn Ethernet Switch AT-8524POE - ATS62 v1.3.0 NE]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Allied Telesyn Ethernet Switch AT-8524POE - ATS62 v1.4.0]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -804,6 +812,13 @@
       <MODELSNMP>Networking2094</MODELSNMP>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[AP-700 v3.6.3(1175)  SN-05UT19560067 v3.1.1]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2473</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.2.2.1.6.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[APC Web/SNMP Management Card (MB:v3.0.2 PF:v1.5.0 PN:aos150.bin AF1:v1.0.0 AN1:dp3e100.bin MN: AP9606 HR: G9 SN: 3A0039S01156 MD: 09/24/2000) (Embedded PowerNet SNMP Agent SW v2.2 compatible)]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2078</MODELSNMP>
@@ -816,7 +831,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[APC Web/SNMP Management Card (MB:v3.8.3 PF:v3.2.1 PN:apc_hw02_aos_321.bin AF1:v3.2.1 AN1:apc_hw02_sumx_321.bin MN:AP9617 HR:A10 SN: NA0710020392 MD:03/09/2007) (Embedded PowerNet SNMP Agent SW v2.2 compatible)]]></SYSDESCR>
-      <TYPE></TYPE>
+      <TYPE>5</TYPE>
       <MODELSNMP>Networking2075</MODELSNMP>
    </DEVICE>
    <DEVICE>
@@ -833,7 +848,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[APC Web/SNMP Management Card (MB:v3.8.6 PF:v5.0.1 PN:apc_hw05_aos_501.bin AF1:v5.0.0 AN1:apc_hw05_sumx_500.bin MN:AP9630 HR:05 SN: JA0915004438 MD:04/08/2009) (Embedded PowerNet SNMP Agent SW v2.2 compatible)]]></SYSDESCR>
-      <TYPE></TYPE>
+      <TYPE>5</TYPE>
       <MODELSNMP>Networking2075</MODELSNMP>
    </DEVICE>
    <DEVICE>
@@ -851,7 +866,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[APC Web/SNMP Management Card (MB:v3.9.2 PF:v3.7.3 PN:apc_hw03_aos_373.bin AF1:v3.7.1 AN1:apc_hw03_px2_371.bin MN:0G-9354 HR:0C SN: PD1139140511 MD:09/23/2011) (Embedded PowerNet SNMP Agent SW v2.2 compatible)]]></SYSDESCR>
-      <TYPE></TYPE>
+      <TYPE>5</TYPE>
       <MODELSNMP>Networking2075</MODELSNMP>
    </DEVICE>
    <DEVICE>
@@ -887,9 +902,11 @@
       <MODELSNMP>Networking2152</MODELSNMP>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Apple Base Station V3.84 Compatible]]></SYSDESCR>
+      <SYSDESCR><![CDATA[Apple AirPort - Apple Inc., 2006-2012.  All rights Reserved.]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
+      <MODELSNMP>Networking2506</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.2.2.1.6.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.2.2.1.6.1</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[AR-M150]]></SYSDESCR>
@@ -934,9 +951,14 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[Avaya Phone]]></SYSDESCR>
+      <TYPE></TYPE>
+      <MODELSNMP>Networking2075</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[AXIS 5550 Network Print Server V7.10.2 Jan 30 2007]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0822</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.2.2.1.6.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -976,7 +998,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[B6500 059795]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0758</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -1029,6 +1051,12 @@
       <SYSDESCR><![CDATA[BayStack 450-12T HW:RevD  FW:V1.48 SW:v4.3.0.4 ISVN:2]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking0211</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[BayStack 450-12T HW:RevL  FW:V1.48 SW:v4.4.0.6 ISVN:2]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2466</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -1123,18 +1151,13 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Brocade 4Gb SAN Switch Module for IBM eServer BladeCenter]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0057</MODELSNMP>
+      <MODELSNMP>Networking2485</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Brocade Communications Systems, Inc. Stacking System ICX6450-24, IronWare Version 07.4.00aT313 Compiled on Jul 16 2012 at 18:54:45 labeled as ICX64R07400a]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Brother HL-5270DN series]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0742</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Brother NC-130h, Firmware Ver.E  ,MID 8CA-E35-001]]></SYSDESCR>
@@ -1160,14 +1183,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Brother NC-190h, Firmware Ver.0.09  ,MID 8CA-J36-001]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0773</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Brother NC-190h, Firmware Ver.0.09 ,MID 8CA-J36-001\\]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0778</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -1187,7 +1210,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Brother NC-3100h, Firmware Ver.1.08  (00.03.07),MID 54S311]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0812</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -1412,7 +1435,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Brother NC-6500h, Firmware Ver.0.39  (08.06.05),MID 8CE-147,FID 2]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0793</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Brother NC-6500h, Firmware Ver.1.10  (09.03.17),MID 84E-102]]></SYSDESCR>
@@ -1521,7 +1544,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Brother NC-8200h, Firmware Ver.1.00  (10.10.22),MID 8C5-E45,FID 2]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0717</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -1545,6 +1568,13 @@
       <MODELSNMP>Networking0316</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[C10  7.1_122]]></SYSDESCR>
+      <TYPE>1</TYPE>
+      <MODELSNMP>Computer0013</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Canon CLC-iR C2620-C1 /P]]></SYSDESCR>
@@ -1585,7 +1615,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Canon Inkjet PIXMA iP5000]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0797</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Canon iPF755 /P]]></SYSDESCR>
@@ -1628,7 +1658,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Canon iR C1028 /P]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0659</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -1714,7 +1744,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Canon iR-ADV C2030L /P]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0783</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.1602.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -1748,7 +1778,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Canon iR-ADV C5051 /P]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0627</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -1818,7 +1848,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Canon iR2320 /P]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0702</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -1826,6 +1856,13 @@
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0289</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.1602.1.2.1.4.0</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Canon iR2525 /P]]></SYSDESCR>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0825</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.2.2.1.6.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -1932,7 +1969,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Canon iR5075-S2 /P]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0754</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -1971,18 +2008,18 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Canon LBP6750 /P]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0666</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Canon LBP7660C /P]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0790</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Canon LBP7680C /P]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0790</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -2007,7 +2044,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Canon MF8000Cw]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0797</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Canon MF8400 Series /P]]></SYSDESCR>
@@ -2089,7 +2126,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software   IOS (tm) C2970 Software (C2970-I6L2-M), Version 12.1(19)EA1c, RELEASE SOFTWARE (fc2)  Copyright (c) 1986-2004 by cisco Systems, Inc.  Compiled Tue 03-Feb-04 02:14 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -2109,7 +2146,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software   IOS (tm) C3750 Software (C3750-I9-M), Version 12.2(20)SE4, RELEASE SOFTWARE (fc1)  Copyright (c) 1986-2005 by cisco Systems, Inc.  Compiled Sun 09-Jan-05 00:09 by antonino]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -2569,6 +2606,13 @@
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C2970 Software (C2970-I6L2-M), Version 12.1(19)EA1d, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2004 by cisco Systems, Inc.Compiled Mon 05-Apr-04 20:42 by antonino]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2060</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C3500XL Software (C3500XL-C3H2S-M), Version 12.0(5.2)XU, MAINTENANCE INTERIM SOFTWARECopyright (c) 1986-2000 by cisco Systems, Inc.Compiled Mon 17-Jul-00 18:29 by ayounes]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2385</MODELSNMP>
@@ -2660,7 +2704,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C3560 Software (C3560-I9-M), Version 12.2(20)SE4, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by cisco Systems, Inc.Compiled Sat 08-Jan-05 23:06 by antonino]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -2674,14 +2718,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C3750 Software (C3750-I5K91-M), Version 12.2(20)SE, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2004 by cisco Systems, Inc.Compiled Wed 19-May-04 12:48 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco Internetwork Operating System Software IOS (tm) C3750 Software (C3750-I9-M), Version 12.1(19)EA1d, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2004 by cisco Systems, Inc.Compiled Mon 05-Apr-04 22:40 by antonino]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -2898,11 +2942,6 @@
       <MAC>.1.3.6.1.4.1.9.9.269.1.1.1.1.1.1</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-ADVIPSERVICESK9-M), Version 12.4(23), RELEASE SOFTWARE (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2008 by Cisco Systems, Inc.\\Compiled Sat 08-Nov-08 21:58 by prod_rel_team]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-ADVIPSERVICESK9-M), Version 12.4(3c), RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Sat 07-Jan-06 04:34 by alnguyen]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking1882</MODELSNMP>
@@ -2933,7 +2972,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-IPVOICEK9-M), Version 12.4(25c), RELEASE SOFTWARE (fc2)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2010 by Cisco Systems, Inc.\\Compiled Thu 11-Feb-10 23:55 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1</MODELSNMP>
+      <MODELSNMP>Networking2492</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -2954,7 +2993,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-SPSERVICESK9-M), Version 12.4(25c), RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Thu 11-Feb-10 23:55 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1</MODELSNMP>
+      <MODELSNMP>Networking2489</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, 2800 Software (C2800NM-SPSERVICESK9-M), Version 15.1(4)M, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2011 by Cisco Systems, Inc.Compiled Thu 24-Mar-11 14:26 by prod_rel_team]]></SYSDESCR>
@@ -3179,11 +3218,6 @@
       <MAC>.1.3.6.1.4.1.9.9.269.1.1.1.1.1.1</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Cisco IOS Software, C1240 Software (C1240-K9W7-M), Version 12.4(10b)JDA3, RELEASE SOFTWARE (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2009 by Cisco Systems, Inc.\\Compiled Sun 07-Jun-09 04:13 by prod_rel_team]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C1240 Software (C1240-K9W7-M), Version 12.4(21a)JA1, RELEASE SOFTWARE (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2009 by Cisco Systems, Inc.\\Compiled Wed 16-Sep-09 19:06 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2268</MODELSNMP>
@@ -3342,11 +3376,6 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Cisco IOS Software, C1900 Software (C1900-UNIVERSALK9-M), Version 15.1(4)M4, RELEASE SOFTWARE (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2012 by Cisco Systems, Inc.\\Compiled Tue 20-Mar-12 17:58 by prod_rel_team]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2600 Software (C2600-ADVENTERPRISEK9-M), Version 12.4(18), RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Fri 30-Nov-07 15:38 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking1882</MODELSNMP>
@@ -3368,11 +3397,6 @@
       <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Cisco IOS Software, C2900 Software (C2900-UNIVERSALK9-M), Version 15.2(3)T, RELEASE SOFTWARE (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2012 by Cisco Systems, Inc.\\Compiled Fri 23-Mar-12 16:57 by prod_rel_team]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)FX, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Wed 12-Oct-05 22:05 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2150</MODELSNMP>
@@ -3389,7 +3413,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Fri 28-Jul-06 04:33 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3411,13 +3435,13 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(35)SE5,]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2137</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <SERIAL>.1.3.6.1.4.1.9.3.6.3.0</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 19-Jul-07 20:06 by nachen]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3443,7 +3467,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 09-Mar-09 13:49 by gereddy]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3476,21 +3500,21 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 06-Apr-09 03:26 by amvarma]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(53)SE1, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Fri 12-Mar-10 17:38 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASE-M), Version 12.2(53)SE2, RELEASE SOFTWARE (fc3)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Wed 21-Apr-10 05:52 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3518,21 +3542,21 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE2, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 01-May-08 15:55 by antonino]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE3, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Mon 29-Sep-08 00:59 by nachen]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 09-Mar-09 18:10 by gereddy]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3546,14 +3570,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Sat 28-Feb-09 03:51 by weiliu]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 06-Apr-09 08:36 by amvarma]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3588,7 +3612,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(52)SE, RELEASE SOFTWARE (fc3)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Fri 25-Sep-09 08:49 by sasyamal]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3616,7 +3640,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(55)SE1, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Thu 02-Dec-10 08:16 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3624,13 +3648,8 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(55)SE5]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2248</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
-      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(55)SE5, RELEASE SOFTWARE (fc1)\\\\Technical Support: http://www.cisco.com/techsupport\\\\Copyright (c) 1986-2012 by Cisco Systems, Inc.\\\\Compiled Thu 09-Feb-12 19:11 by prod_rel_team]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.9.3.6.3.0</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(55)SE5, RELEASE SOFTWARE (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2012 by Cisco Systems, Inc.\\Compiled Thu 09-Feb-12 19:11 by prod_rel_team]]></SYSDESCR>
@@ -3668,7 +3687,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960 Software (C2960-LANLITE-M), Version 12.2(37)EY, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 28-Jun-07 18:07 by antonino]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3708,28 +3727,28 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 12.2(53)SE1, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Fri 12-Mar-10 17:54 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 12.2(53)SE2, RELEASE SOFTWARE (fc3)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Wed 21-Apr-10 06:08 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Sat 07-Aug-10 23:21 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 12.2(55)SE2, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2011 by Cisco Systems, Inc.Compiled Tue 11-Jan-11 02:23 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3748,21 +3767,30 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 15.0(2)SE2, RELEASE SOFTWARE (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2013 by Cisco Systems, Inc.\\Compiled Tue 05-Feb-13 12:48 by prod_rel_team]]></SYSDESCR>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 15.0(2)SE, RELEASE SOFTWARE\\ (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2012 by Cisco Systems, Inc.\\Compiled Sat 28-Jul-12 00:42 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
+      <MODELSNMP>Networking2504</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.9.3.6.3.0</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 15.0(2)SE3, RELEASE SOFTWARE (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2013 by Cisco Systems, Inc.\\Compiled Fri 24-May-13 05:52 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2426</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
-      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2970 Software (C2970-LANBASE-M), Version 12.2(25)SEB1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Fri 29-Apr-05 20:25 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C2970 Software (C2970-LANBASE-M), Version 12.2(25)SEB2, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Tue 07-Jun-05 21:19 by yenanh]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2060</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3776,7 +3804,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2970 Software (C2970-LANBASE-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 09-Mar-09 14:11 by gereddy]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3790,7 +3818,7 @@
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2425</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
-      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(25)SEE1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Mon 22-May-06 07:54 by yenanh]]></SYSDESCR>
@@ -3802,35 +3830,35 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Fri 28-Jul-06 12:08 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(40)SE, RELEASE SOFTWARE (fc3)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Fri 24-Aug-07 02:04 by myl]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(44)SE2, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 01-May-08 16:04 by antonino]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 09-Mar-09 18:27 by gereddy]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C2970 Software (C2970-LANBASEK9-M), Version 12.2(44)SE6, RELECopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 09-Mar-09 18:27 by gereddy]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3893,21 +3921,21 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-I9K91-M), Version 12.2(25)SEA, RELEASE SOFTWARE (fc)Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Wed 26-Jan-05 00:47 by antonino]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASE-M), Version 12.2(25)SEB4, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Tue 30-Aug-05 14:19 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2484</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASE-M), Version 12.2(25)SEE1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Mon 22-May-06 01:45 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3928,7 +3956,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASE-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 19-Jul-07 18:15 by nachen]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3942,21 +3970,21 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASE-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 06-Apr-09 02:25 by amvarma]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(25)SEE1, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Mon 22-May-06 08:25 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Fri 28-Jul-06 12:34 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -3982,28 +4010,28 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(44)SE2, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 01-May-08 15:28 by antonino]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(44)SE6, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 09-Mar-09 17:42 by gereddy]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 21-Aug-08 15:26 by nachen]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 06-Apr-09 08:00 by amvarma]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4024,7 +4052,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(53)SE2, RELEASE SOFTWARE (fc3)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Wed 21-Apr-10 05:33 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4038,7 +4066,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(55)SE1, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Thu 02-Dec-10 07:16 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4050,14 +4078,9 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 12.2(55)SE5, RELEASE SOFTWARE (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2012 by Cisco Systems, Inc.\\Compiled Thu 09-Feb-12 18:46 by prod_rel_team]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 15.0(1)SE, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2011 by Cisco Systems, Inc.Compiled Wed 20-Jul-11 06:02 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4072,8 +4095,8 @@
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 15.0(2)SE, RELEASE SOFTWARE (fc1) Technical Support: http://www.cisco.com/techsupport Copyright (c) 1986-2012 by Cisco Systems, Inc. Compiled Sat 28-Jul-12 00:01 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2404</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
-      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
+      <SERIAL>.1.3.6.1.4.1.9.3.6.3.0</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPBASEK9-M), Version 15.0(2)SE, RELEASE SOFTWARE (fc1)\\\\\\Technical Support: http://www.cisco.com/techsupport\\\\\\Copyright (c) 1986-2012 by Cisco Systems, Inc.\\\\\\Compiled Sat 28-Jul-12 00:01 by prod_rel_team\\\\\\]]></SYSDESCR>
@@ -4093,28 +4116,28 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(25)SEB4, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Tue 30-Aug-05 17:56 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(37)SE, RELEASE SOFTWARE (fc2) Copyright (c) 1986-2007 by Cisco Systems, Inc. Compiled Thu 10-May-07 16:19 by antonino]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(44)SE5, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Thu 22-Jan-09 05:47 by gereddy]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 06-Apr-09 08:00 by amvarma]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4127,14 +4150,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(53)SE, RELEASE SOFTWARE (fc2)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2009 by Cisco Systems, Inc.\\Compiled Sun 13-Dec-09 15:45 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1</MODELSNMP>
+      <MODELSNMP>Networking2490</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(53)SE2, RELEASE SOFTWARE (fc3)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Wed 21-Apr-10 05:33 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4148,7 +4171,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560E Software (C3560E-UNIVERSAL-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 19-Jul-07 17:18 by nachen]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4169,7 +4192,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3560E Software (C3560E-UNIVERSALK9-M), Version 12.2(55)SE1, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Thu 02-Dec-10 06:44 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4183,7 +4206,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-ADVIPSERVICESK9-M), Version 12.2(25)SEE4, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Mon 16-Jul-07 03:24 by myl]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4197,35 +4220,35 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-I5-M), Version 12.2(25)SEA, RELEASE SOFTWARE (fc)^Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Tue 25-Jan-05 20:26 by antonino]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASE-M), Version 12.2(25)SEB2, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Wed 08-Jun-05 01:19 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASE-M), Version 12.2(25)SEB4, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Tue 30-Aug-05 15:47 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASE-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Fri 28-Jul-06 08:46 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASE-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 19-Jul-07 19:15 by nachen]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1983</MODELSNMP>
+      <MODELSNMP>Networking2476</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4239,7 +4262,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASE-M), Version 12.2(53)SE2, RELEASE SOFTWARE (fc3)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Wed 21-Apr-10 04:49 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4253,7 +4276,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(25)SEE2, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2006 by Cisco Systems, Inc.Compiled Fri 28-Jul-06 12:55 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4274,7 +4297,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(25)SEE4, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Mon 16-Jul-07 03:24 by myl]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking2364</MODELSNMP>
+      <MODELSNMP>Networking2494</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.9.3.6.3.0</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4295,28 +4318,28 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(40)SE, RELEASE SOFTWARE (fc3)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Fri 24-Aug-07 00:53 by myl]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(44)SE2, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 01-May-08 15:42 by antonino]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 21-Aug-08 15:43 by nachen]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 06-Apr-09 08:19 by amvarma]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4330,7 +4353,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(50)SE3, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Wed 22-Jul-09 06:19 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4339,7 +4362,7 @@
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2259</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
-      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(53)SE, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Sun 13-Dec-09 16:25 by prod_rel_team]]></SYSDESCR>
@@ -4364,14 +4387,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(53)SE2, RELEASE SOFTWARE (fc3)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Wed 21-Apr-10 04:49 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(55)SE, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Sat 07-Aug-10 22:45 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4392,7 +4415,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPSERVICES-M), Version 12.2(25)SEB4, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2005 by Cisco Systems, Inc.Compiled Tue 30-Aug-05 15:47 by yenanh]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4411,9 +4434,16 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(55)SE6, RELEASE SOFTWARE (fc1)]]></SYSDESCR>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(55)SE7, RELEASE SOFTWARE (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2013 by Cisco Systems, Inc.\\Compiled Mon 28-Jan-13 10:16 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
+      <MODELSNMP>Networking2477</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.9.3.6.3.0</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(55)SE7, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2013 by Cisco Systems, Inc.Compiled Mon 28-Jan-13 10:16 by prod_rel_team]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2501</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750 Software (C3750-IPSERVICESK9-M), Version 12.2(58)SE2, RELEASE SOFTWARE (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2011 by Cisco Systems, Inc.\\Compiled Thu 21-Jul-11 01:53 by prod_rel_team]]></SYSDESCR>
@@ -4432,21 +4462,21 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750E Software (C3750E-UNIVERSAL-M), Version 12.2(35)SE5, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Thu 19-Jul-07 16:17 by nachen]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Thu 21-Aug-08 14:49 by nachen]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M), Version 12.2(50)SE2, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Fri 15-May-09 21:49 by nachen]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4456,14 +4486,9 @@
       <MODELSNMP>Networking2337</MODELSNMP>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M), Version 12.2(58)SE2, RELEASE SOFTWARE (fc1)\\\\Technical Support: http://www.cisco.com/techsupport\\\\Copyright (c) 1986-2011 by Cisco Systems, Inc.\\\\Compiled Thu 21-Jul-11 01:23 by prod_rel_team]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M), Version 15.0(1)SE2, RELEASE SOFTWARE (fc3)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2011 by Cisco Systems, Inc.\\Compiled Thu 22-Dec-11 00:05 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1</MODELSNMP>
+      <MODELSNMP>Networking2493</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.9.3.6.3.0</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4677,30 +4702,35 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSAL-M), Version 12.2(40)EX2, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Wed 16-Apr-08 20:32 by myl]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1956</MODELSNMP>
+      <MODELSNMP>Networking2055</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSAL-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 06-Apr-09 05:05 by amvarma]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSAL-M), Version 12.2(50)SE3, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Wed 22-Jul-09 09:10 by prod_rel_tea]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSAL-M), Version 12.2(52)SE, RELEASE SOFTWARE (fc3)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Fri 25-Sep-09 04:40 by sasyamal]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSALK9-M), Version 12.2(40)EX2, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Wed 16-Apr-08 20:49 by myl]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2502</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSALK9-M), Version 12.2(50)SE1, RELEASE SOFTWARE (fc2)Copyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Mon 06-Apr-09 09:28 by amvarma]]></SYSDESCR>
@@ -4712,7 +4742,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, CBS31X0 Software (CBS31X0-UNIVERSALK9-M), Version 12.2(53)SE, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2009 by Cisco Systems, Inc.Compiled Sun 13-Dec-09 17:24 by prod_rel_team]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1955</MODELSNMP>
+      <MODELSNMP>Networking1956</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1001</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -4743,6 +4773,11 @@
       <MODELSNMP>Networking1876</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Cisco IOS Software, s72033_rp Software (s72033_rp-ADVENTERPRISEK9_WAN-M), Version 12.2(33)SXI5, RELEASE SOFTWARE (fc2)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2010 by Cisco Systems, Inc.Compiled Sat 23-Oct-10 01:29 by pr]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2503</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco IOS Software, s72033_rp Software (s72033_rp-ADVIPSERVICESK9_WAN-M), Version 12.2(33)SXH4, RELEASE SOFTWARE (fc1)Technical Support: http://www.cisco.com/techsupportCopyright (c) 1986-2008 by Cisco Systems, Inc.Compiled Mon 10-Nov-08 07:00 by pr]]></SYSDESCR>
@@ -4836,11 +4871,6 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Cisco IOS Software, vg224 Software (vg224-I6S-M), Version 15.1(4)M4, RELEASE SOFTWARE (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2012 by Cisco Systems, Inc.\\Compiled Tue 20-Mar-12 23:30 by prod_rel_team]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Cisco NX-OS(tm) m9100, Software (m9100-s2ek9-mz), Version 4.2(3), RELEASE SOFTWARE Copyright (c) 2002-2009 by Cisco Systems, Inc. Compiled 10/26/2009 0:00:00]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking1963</MODELSNMP>
@@ -4876,17 +4906,7 @@
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2442</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
-      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Cisco NX-OS(tm) n5000, Software (n5000-uk9), Version 5.1(3)N1(1a), RELEASE SOFTWARE Copyright (c) 2002-2011 by Cisco Systems, Inc. Device Manager Version 5.2(2),  Compiled 2/7/2012 23:00:00]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Cisco NX-OS(tm) n5000, Software (n5000-uk9), Version 5.1(3)N2(1), RELEASE SOFTWARE Copyright (c) 2002-2011 by Cisco Systems, Inc. Device Manager Version 5.2(1),  Compiled 3/20/2012 0:00:00]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco NX-OS(tm) n7000, Software (n7000-s1-dk9), Version 5.2(7), RELEASE SOFTWARE Copyright (c) 2002-2012 by Cisco Systems, Inc. Compiled 8/17/2012 17:00:00]]></SYSDESCR>
@@ -4914,7 +4934,7 @@
       <SYSDESCR><![CDATA[Cisco Small Business WAP321]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2298</MODELSNMP>
-      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Cisco SQP]]></SYSDESCR>
@@ -4993,20 +5013,27 @@
    <DEVICE>
       <SYSDESCR><![CDATA[CLC4040-iR C4580-H1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0806</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[CLP-660]]></SYSDESCR>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0830</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[CLP-775 Series]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0729</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Color MF30-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0802</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -5025,13 +5052,13 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Copieur Sharp MX-M453N]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0684</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[CS121 v 4.50.70]]></SYSDESCR>
-      <TYPE></TYPE>
+      <TYPE>5</TYPE>
       <MODELSNMP>Networking2075</MODELSNMP>
    </DEVICE>
    <DEVICE>
@@ -5068,6 +5095,16 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[D-Link DGS-3224TG Ethernet Switch]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2498</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[D-Link DMC-1002 v1.17]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2482</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[D-Link DWL-3200AP ]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2438</MODELSNMP>
@@ -5086,16 +5123,17 @@
       <MODELSNMP>Networking0251</MODELSNMP>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[DDWRT2MDF]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2496</MODELSNMP>
+      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[Dell  1815dn Series]]></SYSDESCR>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0220</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Dell 1350cnw Color Printer; Net 17.11, Controller 201012271032, Engine 02.15.00]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Dell 2130cn Color Laser; Net 13.11, Controller 200805191811, Engine 01.01.04]]></SYSDESCR>
@@ -5110,11 +5148,6 @@
       <MODELSNMP>Printer0311</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Dell 2135cn MFP; Net 12.14, Controller 200908241013, Engine 03.00.10]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Dell 2330dn Laser Printer version NL.APS.N213e kernel 2.6.18.5 All-N-1]]></SYSDESCR>
@@ -5166,19 +5199,26 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[Dell 5330dn Mono Laser Printer; 2.70.00.45 08-05-2009;Engine 1.01.82;NIC V4.01.15(5330dn) 06-01-2009;S/N 1DK2FG1]]></SYSDESCR>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0629</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[Dell 5330dn Mono Laser Printer; 2.70.00.51 09-22-2011;Engine 1.01.83;NIC V4.01.19(5330dn) 09-17-2010;S/N H6N2FG1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0722</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Dell B2360dn Laser Printer]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0811</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Dell C1765nf Color MFP]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0696</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
@@ -5206,7 +5246,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Dell Color Laser 3110cn]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0798</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -5297,7 +5337,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Dell Laser Printer 3100cn; Net 7.32, Controller 200601161049, Engine 01.07.10]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0799</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -5375,15 +5415,10 @@
       <MODELSNMP>Networking2233</MODELSNMP>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Dell UPS Rack 1920W HV]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[DES-1210-52          2.02.A005]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2234</MODELSNMP>
-      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[DES-1228                                 1.10.12]]></SYSDESCR>
@@ -5530,11 +5565,6 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[DGS-3324SR Stackable Ethernet Switch]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[DGS-3612G Gigabit Ethernet Switch]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking0146</MODELSNMP>
@@ -5547,8 +5577,15 @@
    <DEVICE>
       <SYSDESCR><![CDATA[dlk-0823C2-U1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0699</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[DrayTek Corporation]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2505</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
+      <MAC>.1.3.6.1.2.1.2.2.1.6.1</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[DS-300B]]></SYSDESCR>
@@ -5595,6 +5632,11 @@
       <MODELSNMP>Networking2280</MODELSNMP>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[eagle-fw-tx-tx]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2284</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[EMC DS-24M2 Model 001 Fibre Channel Switch, firmware 09.09.09 2]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking0152</MODELSNMP>
@@ -5603,11 +5645,6 @@
       <SYSDESCR><![CDATA[EMC DS-4400M Model 001 Fibre Channel Switch, firmware 08.01.01 4]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking0033</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[EMC DS-4700M Model 001 Fibre Channel Switch, firmware 09.09.09 2]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Enterasys Networks, Inc. A2H124-24 Rev 01.04.12]]></SYSDESCR>
@@ -5712,14 +5749,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[EPSON Stylus Pro 4800]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0613</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.1248.1.2.2.1.1.1.5.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[ERS-1648T (2.1.4.0)]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -5762,15 +5799,15 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[ES4528V-FLF 28x1G Ethernet Switch]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2474</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[EthAirNet Wireless LAN]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking0211</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Ethernet Probe EP2 SP2411j 110510]]></SYSDESCR>
-      <TYPE></TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Ethernet Probe EP2 SP2459 260612]]></SYSDESCR>
@@ -5871,11 +5908,6 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Ethernet Routing Switch 4548GT-PWR    HW:01       FW:5.3.0.3   SW:v5.6.0.009 BN:09 (c) Avaya Networks]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Ethernet Routing Switch 4548GT-PWR    HW:09       FW:5.1.0.8   SW:v5.3.1.000 BN:00 (c) Nortel Networks]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking1912</MODELSNMP>
@@ -5932,6 +5964,11 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[Ethernet Routing Switch 5520-24T-PWR  HW:33       FW:5.0.0.4   SW:v5.1.0.014 BN:14 (c) Nortel Networks]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2468</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[Ethernet Routing Switch 5520-24T-PWR  HW:36       FW:6.0.0.6   SW:v6.1.0.006 BN:06 (c) Nortel Networks]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking1316</MODELSNMP>
@@ -5964,11 +6001,6 @@
       <MODELSNMP>Networking0316</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Ethernet Switch 425-24T  HW:04       FW:3.6.0.1   SW:v3.6.2.14 BN:14 (c) Nortel Networks]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Ethernet Switch 425-24T  HW:06       FW:3.5.0.2   SW:v3.5.0.06  BN:6 (c) Nortel Networks]]></SYSDESCR>
@@ -6007,7 +6039,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Evolution S 1250]]></SYSDESCR>
-      <TYPE></TYPE>
+      <TYPE>5</TYPE>
       <MODELSNMP>Networking2075</MODELSNMP>
    </DEVICE>
    <DEVICE>
@@ -6097,7 +6129,7 @@
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2363</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
-      <MAC>.1.3.6.1.2.1.2.2.1.6.2</MAC>
+      <MAC>.1.3.6.1.2.1.2.2.1.6.1</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Foundry Networks, Inc. FastIron SX 800-PREM, IronWare Version 03.2.00fT3e3 Compiled on Sep 10 2007 at 13:27:27 labeled as SXR03200f]]></SYSDESCR>
@@ -6259,7 +6291,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[FS-C2026MFP ]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0805</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -6312,7 +6344,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[FS728TP]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -6400,11 +6432,6 @@
       <MODELSNMP>Networking2255</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.232.22.2.6.1.1.1.7.1.1.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[GbE2c L2/L3 Ethernet Blade Switch for HP c-Class BladeSystem]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Generic 28C-1]]></SYSDESCR>
@@ -6512,11 +6539,6 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[H3C Comware Platform Software, Software Version 5.20 Release 2202P06\\H3C S5120-52C-PWR-EI\\Copyright (c) 2004-2010 Hangzhou H3C Tech. Co., Ltd. All rights reserved.]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[H3C Comware Platform Software, Software Version 5.20 Release 2202P06H3C S5120-52C-PWR-EICopyright (c) 2004-2009 Hangzhou H3C Tech. Co., Ltd. All rights reserved.]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking0381</MODELSNMP>
@@ -6604,26 +6626,6 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Hardware: Intel64 Family 6 Model 44 Stepping 2 AT/AT COMPATIBLE - Software: Windows Version 6.1 (Build 7601 Multiprocessor Free)]]></SYSDESCR>
-      <TYPE>1</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Hardware: x86 Family 15 Model 6 Stepping 4 AT/AT COMPATIBLE - Software: Windows 2000 Version 5.1 (Build 2600 Multiprocessor Free)]]></SYSDESCR>
-      <TYPE>1</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Hardware: x86 Family 6 Model 10 Stepping 4 AT/AT COMPATIBLE - Software: Windows Version 5.2 (Build 3790 Multiprocessor Free)]]></SYSDESCR>
-      <TYPE>1</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Hardware: x86 Family 6 Model 15 Stepping 6 AT/AT COMPATIBLE - Software: Windows Version 5.2 (Build 3790 Multiprocessor Free)]]></SYSDESCR>
-      <TYPE>1</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Hardware: x86 Family 6 Model 23 Stepping 10 AT/AT COMPATIBLE - Software: Windows 2000 Version 5.1 (Build 2600 Multiprocessor Free)]]></SYSDESCR>
       <TYPE>1</TYPE>
       <MODELSNMP>Computer0009</MODELSNMP>
@@ -6636,16 +6638,6 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Hardware: x86 Family 6 Model 26 Stepping 5 AT/AT COMPATIBLE - Software: Windows Version 5.2 (Build 3790 Multiprocessor Free)]]></SYSDESCR>
-      <TYPE>1</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Hardware: x86 Family 6 Model 26 Stepping 5 AT/AT COMPATIBLE - Software: Windows Version 5.2 (Build 3790 Uniprocessor Free)]]></SYSDESCR>
-      <TYPE>1</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Hirschmann Railswitch]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2415</MODELSNMP>
@@ -6654,7 +6646,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HL-1430 series]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0819</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -6685,7 +6677,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP 1/10Gb VC-Enet Module Virtual Connect 2.10]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1126</MODELSNMP>
+      <MODELSNMP>Networking2052</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -6693,6 +6685,13 @@
       <TYPE>2</TYPE>
       <MODELSNMP>Networking1121</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP 1/10Gb-F VC-Enet Module Virtual Connect 3.60]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2499</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.232.2.2.2.1.0</SERIAL>
+      <MAC>.1.3.6.1.2.1.2.2.1.6.2</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP 1810-24G, PL.1.2, eCos-3.0, 1_12_8-customized-h]]></SYSDESCR>
@@ -6704,12 +6703,12 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP 5200 LASER JET NEW]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0681</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP 800]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0647</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -6721,8 +6720,8 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP Business Inkjet 1200]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0679</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -6802,7 +6801,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP Color LaserJet 3000]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0755</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -6851,7 +6850,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP Color LaserJet 4700]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0388</MODELSNMP>
+      <MODELSNMP>Printer0622</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -6865,8 +6864,8 @@
    <DEVICE>
       <SYSDESCR><![CDATA[hp color LaserJet 5550 ]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.4.1.11.2.4.3.1.25.0</SERIAL>
+      <MODELSNMP>Printer0614</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -6970,14 +6969,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP Color LaserJet CP4520 Series]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0639</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP Color LaserJet CP5225dn]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0661</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
@@ -6985,6 +6984,13 @@
       <SYSDESCR><![CDATA[HP Color LaserJet CP5225n]]></SYSDESCR>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0396</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP Color LaserJet CP6015]]></SYSDESCR>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0832</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -7026,6 +7032,13 @@
       <SYSDESCR><![CDATA[HP Comware Platform Software, Software Version 5.20 Release 2208HP A5500-48G EI Switch with 2 Interface SlotsCopyright (c) 2010-2011 Hewlett-Packard Development Company, L.P.]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2340</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP Comware Platform Software, Software Version 5.20, Release 1211P01\\HP A5800-24G Switch\\Copyright (c) 2010-2011 Hewlett-Packard Development Company, L.P.]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2472</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
@@ -7110,7 +7123,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP Designjet T770 (44\\]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0667</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -7130,6 +7143,12 @@
       <SYSDESCR><![CDATA[HP ETHERNET MULTI-ENVIRONMENT,ROM none,JETDIRECT,JD146,EEPROM V.38.68,CIDATE 09/18/2008]]></SYSDESCR>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0599</MODELSNMP>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP ETHERNET MULTI-ENVIRONMENT,ROM V.31.03,JETDIRECT,JD108,EEPROM V.41.12,CIDATE 12/09/201]]></SYSDESCR>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0630</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -7198,7 +7217,7 @@
       <SYSDESCR><![CDATA[HP J4812A ProCurve Switch 2512, revision F.05.17, ROM F.01.01 (/sw/code/build/info(s02))]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2164</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -7244,7 +7263,7 @@
       <SYSDESCR><![CDATA[HP J4813A ProCurve Switch 2524, revision F.05.17, ROM F.01.01 (/sw/code/build/info(s02))]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2134</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -7395,7 +7414,7 @@
       <SYSDESCR><![CDATA[HP J4887A ProCurve Switch 4104GL, revision G.07.104, ROM G.05.02 (/sw/code/build/gamo(m03))]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2161</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -7560,19 +7579,9 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP J8697A Switch E5406zl, revision K.15.08.0013, ROM K.15.28 (/ws/swbuildm/K_rel_galt_qaoff/code/build/btm(K_rel_galt_qaoff)) (Formerly ProCurve)]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1</MODELSNMP>
+      <MODELSNMP>Networking2491</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[HP J8698A Switch 5412zl, revision K.15.10.0003, ROM K.15.28 (/ws/swbuildm/rel_irvine_qaoff/code/build/btm(swbuildm_rel_irvine_qaoff_rel_irvine)) (Formerly ProCurve)]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[HP J8698A Switch 5412zl, revision K.15.10.0003, ROM K.15.28 (/ws/swbuildm/rel_irvine_qaoff/code/build/btm(swbuildm_rel_irvine_qaoff_rel_irvine)) (Formerly ProCurve)\\\\]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP J8992A Switch E6200yl-24G, revision K.15.06.0008, ROM K.15.19 (/sw/code/build/btm(K_15_06)) (Formerly ProCurve)]]></SYSDESCR>
@@ -7621,11 +7630,6 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[HP J9623A E2620-24 Switch, revision RA.15.05.0006, ROM RA.15.10 (/sw/code/build/xform(RA_15_05)) (Formerly ProCurve)]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[HP J9625A E2620-24-PoEP Switch, revision RA.15.08.0009, ROM RA.15.10 (/ws/swbuildm/rel_galt_qaoff/code/build/xform(rel_galt_qaoff)) (Formerly ProCurve)]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2276</MODELSNMP>
@@ -7648,21 +7652,21 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP Laser Jet 5200]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0682</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet 100 colorMFP M175nw]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
+      <MODELSNMP>Printer0718</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet 1022n]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0625</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -7685,6 +7689,11 @@
       <MODELSNMP>Printer0606</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[hp LaserJet 1320 series]]></SYSDESCR>
+      <TYPE>5</TYPE>
+      <MODELSNMP>Peripheral0001</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet 2200]]></SYSDESCR>
@@ -7751,29 +7760,36 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet 400 color M451dn]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0730</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet 400 color M451nw]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0813</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet 400 M401dn]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0683</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP LAserJet 400 MFP M245dn]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0651</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP LaserJet 400 MFP M425dn]]></SYSDESCR>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0828</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet 4000 Series]]></SYSDESCR>
@@ -7785,7 +7801,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet 4050 Series ]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0615</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -7799,7 +7815,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet 4100 Series ]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0391</MODELSNMP>
+      <MODELSNMP>Printer0616</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -7847,9 +7863,15 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet 500 color M551]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0628</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP LaserJet 500 color MFP M575]]></SYSDESCR>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0827</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet 5000 Series]]></SYSDESCR>
@@ -7881,7 +7903,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet 600 M602]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0657</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
@@ -7907,7 +7929,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet 9000 Series]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0697</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet 9000L MFP ]]></SYSDESCR>
@@ -7946,7 +7968,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet CP1525N]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0675</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
    </DEVICE>
    <DEVICE>
@@ -7958,7 +7980,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet M1522n MFP]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0412</MODELSNMP>
+      <MODELSNMP>Printer0617</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -8000,7 +8022,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet M4345 MFP]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0610</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -8040,9 +8062,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet P2055dn]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0394</MODELSNMP>
+      <MODELSNMP>Printer0611</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[HP LaserJet P2055dn]]></SYSDESCR>
+      <TYPE></TYPE>
+      <MODELSNMP>Networking2075</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet P2055x]]></SYSDESCR>
@@ -8054,7 +8081,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet P3005]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0612</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -8082,14 +8109,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet P4515]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0386</MODELSNMP>
+      <MODELSNMP>Printer0619</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet Professional M1212nf MFP]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0704</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP LaserJet Professional P1606dn]]></SYSDESCR>
@@ -8099,7 +8126,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP MSL G3 Series   ]]></SYSDESCR>
-      <TYPE></TYPE>
+      <TYPE>5</TYPE>
       <MODELSNMP>Networking2075</MODELSNMP>
    </DEVICE>
    <DEVICE>
@@ -8159,11 +8186,6 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[HP ProCurve Access Point 420: v2.2.4.0B05 v3.0.6]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[HP ProLiant BL p-Class C-GbE2 Interconnect Switch B]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2335</MODELSNMP>
@@ -8182,14 +8204,14 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP StorageWorks MSA2312fc]]></SYSDESCR>
-      <TYPE></TYPE>
+      <TYPE>5</TYPE>
       <MODELSNMP>Networking2075</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP StorageWorks MSL Series]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2160</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -8240,15 +8262,20 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[HP V1910-48G Switch Software Version 5.20 Release 1108 Copyright (c) 2004-2011 Hewlett-Packard Development Company, L.P.]]></SYSDESCR>
+      <TYPE></TYPE>
+      <MODELSNMP>Networking2075</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[HP VC Flex-10 Enet Module Virtual Connect 3.15]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[HP VC Flex-10 Enet Module Virtual Connect 3.18]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -8261,7 +8288,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[HP VC FlexFabric 10Gb/24-Port Module Virtual Connect 3.15]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -8310,7 +8337,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[IBM Infoprint 1585 version NS.NP.N228 kernel 2.6.6 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0644</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -8321,16 +8348,6 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[IBM OS/400 V5R2M0]]></SYSDESCR>
-      <TYPE>1</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[IBM OS/400 V5R3M0]]></SYSDESCR>
-      <TYPE>1</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[IBM PowerPC CHRP Computer]]></SYSDESCR>
       <TYPE>1</TYPE>
       <MODELSNMP>Computer0002</MODELSNMP>
@@ -8338,7 +8355,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[IMAGE SCANNER IS200e 1R04 / IPSiOSCAN BOX TYPE X1]]></SYSDESCR>
-      <TYPE></TYPE>
+      <TYPE>5</TYPE>
       <MODELSNMP>Networking2075</MODELSNMP>
    </DEVICE>
    <DEVICE>
@@ -8367,20 +8384,15 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Integrated PrintNet Enterprise ]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Integrated PrintNet Enterprise Version ]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0786</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Integrated PrintNet Enterprise Version 1.3.8.6 3-3-3]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0788</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -8487,7 +8499,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex2200-48t-4g internet router, kernel JUNOS 11.4R5.5 #0: 2012-08-25 05:21:13 UTC     builder@evenath.juniper.net:/volume/build/junos/11.4/release/11.4R5.5/obj-arm/bsd/kernels/JUNIPER-EX-2200/kernel Build date: 2012-08-25 04:48:47 U]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking2453</MODELSNMP>
+      <MODELSNMP>Networking2495</MODELSNMP>
       <MAC>.1.0.8802.1.1.2.1.3.2.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -8622,11 +8634,6 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Juniper Networks, Inc. ex4200-48t internet router, kernel JUNOS 10.4R9.2 #0: 2012-02-02 07:48:00 UTC     builder@warth.juniper.net:/volume/build/junos/10.4/release/10.4R9.2/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2012-02-02 07:19:12 UTC Copyri]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Juniper Networks, Inc. ex8208 internet router, kernel JUNOS 10.0S10.1 #0: 2010-11-08 21:23:50 UTC     builder@ormonth.juniper.net:/volume/build/junos/10.0/service/10.0S10.1/obj-powerpc/bsd/sys/compile/JUNIPER-EX Build date: 2010-11-08 20:47:22 UTC Copyri]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2043</MODELSNMP>
@@ -8686,7 +8693,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[KM-2560]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0631</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -8706,7 +8713,9 @@
    <DEVICE>
       <SYSDESCR><![CDATA[KM-4050]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
+      <MODELSNMP>Printer0636</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[KM-5035]]></SYSDESCR>
@@ -8738,7 +8747,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA 163\\]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0735</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.2.2.1.6.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -8782,7 +8791,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub 223]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0672</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -8872,7 +8881,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C224]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0794</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -8898,7 +8907,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C280]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0620</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -8925,12 +8934,12 @@
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C360]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0640</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C360\\]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0640</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C450]]></SYSDESCR>
@@ -8955,19 +8964,19 @@
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C454]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0640</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C454\\]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0693</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA bizhub C550]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0685</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -9002,7 +9011,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[KONICA MINOLTA magicolor 5450]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0655</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -9028,7 +9037,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[KYOCERA MITA Printing System\\]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0669</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -9052,8 +9061,15 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[LANCOM 1781A-3G 8.60.0189 / 02.04.2012 4002089418100138]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2479</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
+      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[Lantronix UDS1100 V6.6.0.1 (080808)]]></SYSDESCR>
-      <TYPE></TYPE>
+      <TYPE>5</TYPE>
       <MODELSNMP>Networking2075</MODELSNMP>
    </DEVICE>
    <DEVICE>
@@ -9080,7 +9096,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark C546 version NR.APS.N449 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0706</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -9093,8 +9109,8 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark C734 version NR.APS.N368cWS kernel 2.6.18.5 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
+      <MODELSNMP>Printer0712</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -9116,11 +9132,6 @@
       <MODELSNMP>Printer0558</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Lexmark E120n version LE.ULN.P108 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark E240n version BR.Q.P203 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
@@ -9146,7 +9157,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark E260dn version NR.APS.N449 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0715</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -9202,21 +9213,21 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark E460dn version NR.APS.N504 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0694</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark E462dtn version NR.APS.N528 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer6</MODELSNMP>
+      <MODELSNMP>Printer0637</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark MX611dhe version NW2.SB.N231 kernel 3.0.0 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0795</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
@@ -9248,21 +9259,11 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Lexmark Optra W810  Version 3.14.16  Ethernet 10/100.]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Lexmark T430 version JX.JU.P101 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0041</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.641.2.1.2.1.6.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Lexmark T520 version 54.10.33 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark T520 version 54.30.51 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
@@ -9287,7 +9288,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark T622 version 54.30.06 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0643</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -9342,7 +9343,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark T640 version NS0.NP.N014 kernel 2.6.6 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0775</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -9373,11 +9374,6 @@
       <MODELSNMP>Printer0063</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Lexmark T650 version NR.APS.N368 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark T650 version NR.APS.N447b2 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
@@ -9422,11 +9418,6 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Lexmark W812 version 62.00.22 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Lexmark W820 version 61.30.03 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0105</MODELSNMP>
@@ -9457,7 +9448,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark X264dn]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0723</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -9478,21 +9469,21 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark X422 version NGN1.NM.N110 kernel 2.4.0-test6 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0756</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark X463de version NR.APS.N528 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0695</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark X464de version NR.APS.N447b2 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0707</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -9520,14 +9511,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark X548 version NH.HS1.N184 kernel 2.6.28.10.1 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0701</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark X548 version NH.HS23.N278 kernel 2.6.28.10.1 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0791</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
@@ -9569,7 +9560,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark X644e version NC2.NPS.N233a kernel 2.6.10 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0769</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -9625,14 +9616,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark X734de version NR.APS.N447b2 kernel 2.6.18.5 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0708</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Lexmark X792 version NH.HS2.N211Lade kernel 2.6.28.10.1 All-N-1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0807</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -9658,6 +9649,13 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[LF series printer]]></SYSDESCR>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0829</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[Linksys SLM2008 - 8 Port Gigabit Switch - 2.0.0.10]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2283</MODELSNMP>
@@ -9674,6 +9672,11 @@
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2068</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[MACH 3000 Modular Gigabit ETHERNET Switch]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2471</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[magicolor 3300; Release 3.0.2; Processor MIPS; CROWN, 0;]]></SYSDESCR>
@@ -9719,6 +9722,11 @@
       <MODELSNMP>Networking0289</MODELSNMP>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[mdffiler01]]></SYSDESCR>
+      <TYPE>5</TYPE>
+      <MODELSNMP>Peripheral0001</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[MF series printer]]></SYSDESCR>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0223</MODELSNMP>
@@ -9728,13 +9736,13 @@
    <DEVICE>
       <SYSDESCR><![CDATA[MFG:Hewlett-Packard;MDL:HP LaserJet 1022nw;CMD:ACL;CLS:PRINTER;DES:HP LaserJet 1022nw;FWVER:20061215;]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0724</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[MFG:Hewlett-Packard;MDL:HP LaserJet Professional P 1102w;CMD:ZJS,URF,PCLm,PJL,ACL,HTTP;CLS:PRINTER;DES:HP LaserJet Professional P 1102w;FWVER:20120814;CID:HPLJPCLMSMV1;]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0792</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[MFP 25ppm]]></SYSDESCR>
@@ -9747,16 +9755,6 @@
       <TYPE>1</TYPE>
       <MODELSNMP>Computer0001</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Microsoft Windows CE Version 5.0 (Build 1400)]]></SYSDESCR>
-      <TYPE>1</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Microsoft Windows CE Version 6.0 (Build 0)]]></SYSDESCR>
-      <TYPE>1</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Microsoft Windows CE Version 6.0 (Build 0)]]></SYSDESCR>
@@ -9779,14 +9777,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[ML-3050 Series]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0544</MODELSNMP>
+      <MODELSNMP>Printer0621</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[ML-3470 Series]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0824</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -9804,15 +9802,15 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[MSM760 - Hardware revision B - Serial number SG1113N021 - Firmware version 5.7.2.0-12736]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2467</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[ND27500]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2408</MODELSNMP>
       <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Neoware Station]]></SYSDESCR>
-      <TYPE>1</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[NetApp Release 8.0.2P6 7-Mode: Fri Jan 27 14:48:08 PST 2012]]></SYSDESCR>
@@ -9868,25 +9866,25 @@
       <SYSDESCR><![CDATA[Network Storage Router E1200 SNMPv1/v2c Agent]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2159</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Nortel Application Switch 2208]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Nortel Application Switch 3408 E]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Nortel Networks Layer2-7 GbE Switch Module]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -9926,7 +9924,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[NRG DSm415 0.29.04 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model\\]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0680</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -10021,7 +10019,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[NRG MP 2852 1.04 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0746</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -10088,7 +10086,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[NRG MP 5000 1.10 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0732</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
    </DEVICE>
    <DEVICE>
@@ -10166,11 +10164,6 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[NRG MP C2550 1.17 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[NRG MP C2800 1.21 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model]]></SYSDESCR>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0282</MODELSNMP>
@@ -10217,11 +10210,6 @@
       <MODELSNMP>Printer0586</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[NRG MP C4500 1.69 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[NRG MP C5000 1.23 / NRG Network Printer C model / NRG Network Scanner C model / NRG Network Facsimile C model]]></SYSDESCR>
@@ -10343,7 +10331,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Officejet 7000 E809a]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0626</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -10374,7 +10362,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Officejet Pro 8500 A910]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer8</MODELSNMP>
+      <MODELSNMP>Printer0641</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -10404,7 +10392,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[OKI C5100 (v2)]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0692</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[OKI OkiLAN 3100e Rev.n252v144 10/100BASE Ethernet Print Server: Attached to OKIPAGE 14i Rev.01.07: (C)2000 Oki UK Limited]]></SYSDESCR>
@@ -10415,14 +10403,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[OKI OkiLAN 6400e Rev. 10/100BASE Ethernet PrintServer: Attached to B6500 Rev.6.7a: (C)2005 OKI DATA CORP]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0767</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[OKI OkiLAN 6400e Rev. 10/100BASE Ethernet PrintServer: Attached to B6500 Rev.8.0: (C)2005 OKI DATA CORP]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0748</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -10491,21 +10479,21 @@
    <DEVICE>
       <SYSDESCR><![CDATA[OKI OkiLAN 8450e Rev.01.01 10/100BASE Ethernet PrintServer: Attached to C610 Rev.C3.09 : Copyright (c) 2009 Oki Data Corporation. All rights reserved.]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0780</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.2001.1.1.1.1.11.1.10.45.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[OKI OkiLAN 8450e Rev.01.01 10/100BASE Ethernet PrintServer: Attached to C610 Rev.C3.11 : Copyright (c) 2009 Oki Data Corporation. All rights reserved.]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0770</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[OKI OkiLAN 8450e Rev.01.01 10/100BASE Ethernet PrintServer: Attached to C610 Rev.C3.12 : Copyright (c) 2009 Oki Data Corporation. All rights reserved.]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0776</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -10519,7 +10507,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[OKI OkiLAN 8450e Rev.01.08 10/100BASE Ethernet PrintServer: Attached to B430 Rev.C2.01 : Copyright (c) 2008 Oki Data Corporation. All rights reserved.]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0766</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -10540,7 +10528,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[OKI OkiLAN 8450e Rev.08.A1 10/100BASE Ethernet PrintServer: Attached to C710 Rev.A1.02 : Copyright (c) 2007 Oki Data Corporation. All rights reserved.]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0768</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -10567,28 +10555,28 @@
    <DEVICE>
       <SYSDESCR><![CDATA[OKI-B430-9210F0]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
+      <MODELSNMP>Printer0757</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.2001.1.1.1.1.11.1.10.45.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[OKI-C610-929CA8]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0759</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[OKI-C710-FBADB8]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0760</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[OLIVETTI Printing System]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0736</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -10611,6 +10599,16 @@
       <MODELSNMP>Networking2382</MODELSNMP>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[OpenStage 40]]></SYSDESCR>
+      <TYPE></TYPE>
+      <MODELSNMP>Networking2075</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[OpenStage phone]]></SYSDESCR>
+      <TYPE></TYPE>
+      <MODELSNMP>Networking2075</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[Optical Access OptiSwitch-200. classifier version 3.68]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking0152</MODELSNMP>
@@ -10623,25 +10621,32 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Panasonic KX-MB2020]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0716</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Panasonic KX-MB2060]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer9</MODELSNMP>
+      <MODELSNMP>Printer0642</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Passport-8606 (3.7.8.0)]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[pfsense-main.haslbeck 587752373 FreeBSD 8.1-RELEASE-p13]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2497</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.2.2.1.6.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Photosmart 8400 series]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0648</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.11.2.3.9.1.1.7.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -10683,26 +10688,11 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[PowerConnect 5424]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[PowerConnect 6224, 3.3.3.3, VxWorks 6.5]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2057</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.2</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[PowerConnect 6224, 3.3.5.5, VxWorks 6.5]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[PowerConnect 6224P, 3.3.5.5, VxWorks 6.5]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[PowerConnect 6248, 3.3.1.10, VxWorks 6.5]]></SYSDESCR>
@@ -10740,7 +10730,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[PrintNet Enterprise Version 1.0.6]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0787</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -10752,7 +10742,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[ProCurve Access Point 530 WW J8987A, revision WA.01.19, boot version WAB.01.00]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0007</MODELSNMP>
+      <MODELSNMP>Networking2051</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -10801,7 +10791,7 @@
       <SYSDESCR><![CDATA[ProCurve J4899A Switch 2650, revision H.08.98, ROM H.08.02 (/sw/code/build/fish(ts_08_5))]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2158</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -10865,11 +10855,6 @@
       <MODELSNMP>Networking1858</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[ProCurve J4899B Switch 2650, revision H.10.38, ROM H.08.02 (/sw/code/build/fish(mf_v10_fishp))]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[ProCurve J4899B Switch 2650, revision H.10.50, ROM H.08.02 (/sw/code/build/fish(mkfs))]]></SYSDESCR>
@@ -11195,7 +11180,7 @@
       <SYSDESCR><![CDATA[ProCurve J8165A Switch 2650-PWR, revision H.10.83, ROM H.08.02 (/sw/code/build/fish(mkfs))]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2157</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -11843,11 +11828,6 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[ProCurve J9087A Switch 2610-24-PWR, revision R.11.70, ROM R.10.06 (/sw/code/build/nemo(R_ndx))]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[ProCurve J9087A Switch 2610-24-PWR, revision R.11.72, ROM R.10.06 (/sw/code/build/nemo(R_ndx))]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2136</MODELSNMP>
@@ -11998,8 +11978,8 @@
       <SYSDESCR><![CDATA[ProCurve J9146A 2910al-24G-PoE Switch, revision W.14.03, ROM W.14.04 (/sw/code/build/sbm(t4a_RC3))]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2125</MODELSNMP>
-      <SERIAL>.1.3.6.1.4.1.89.53.14.1.5.1</SERIAL>
-      <MAC>.1.3.6.1.4.1.171.12.15.2.1.0</MAC>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[ProCurve J9147A 2910al-48G Switch, revision W.14.03, ROM W.14.04 (/sw/code/build/sbm(t4a_RC3))]]></SYSDESCR>
@@ -12167,9 +12147,21 @@
       <MODELSNMP>Networking0005</MODELSNMP>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[ProSafe 802.11b/g Wireless Access Point -WG102 V5.0.3]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2500</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[QLogic(R) 4Gb Intelligent Pass-thru Module for IBM BladeCenter(R)]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking0251</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Quidway S9303Huawei Versatile Routing Platform SoftwareVRP (R) Software, Version 5.50 (S9300 V100R002C00SPC200)Copyright (c) 2003-2010 Huawei Technologies Co., Ltd]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2478</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.11</SERIAL>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[R1200]]></SYSDESCR>
@@ -12179,13 +12171,13 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RFS4000 Wireless Switch, Version 4.3.3.0-004R MIB=01a]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
+      <MODELSNMP>Networking2488</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio 1015 / RICOH Network Printer D model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0678</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -12232,8 +12224,8 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio 2020D 0.40.12 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0623</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -12246,8 +12238,8 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio 2032 1.04 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0677</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -12260,14 +12252,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio 2060 1.04.1 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0771</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio 2060 1.22.1 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0753</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -12348,7 +12340,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio 3235C 1.35 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0804</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
    </DEVICE>
    <DEVICE>
@@ -12401,7 +12393,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio CL7200 1.13 / RICOH Network Printer C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0762</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -12415,7 +12407,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 1600 1.12 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0646</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -12449,15 +12441,15 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 171 1.02 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0671</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 2000 1.00.1 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0676</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -12483,7 +12475,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 201 1.04 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0665</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -12497,7 +12489,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 2500 1.02 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0747</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -12525,8 +12517,8 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 2550 1.11 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0663</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -12546,15 +12538,15 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 2550 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0412</MODELSNMP>
+      <MODELSNMP>Printer0617</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 2550 1.16 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0663</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -12581,7 +12573,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 3350 1.01.3 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0412</MODELSNMP>
+      <MODELSNMP>Printer0617</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -12602,21 +12594,21 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 3350 1.11 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0711</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 3350 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0814</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 3350 1.14 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0412</MODELSNMP>
+      <MODELSNMP>Printer0617</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -12693,7 +12685,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 4000B 1.13 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0733</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -12705,14 +12697,9 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[RICOH Aficio MP 4002 2.02 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 4002 2.05 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0658</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -12733,7 +12720,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 5000B 1.05 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0751</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -12767,7 +12754,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP 6000 3.01 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0749</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -12851,7 +12838,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP C2500 1.60 / RICOH Network Printer C model / RICOH Network Scanner C model / RICOH Network Facsimile C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0645</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -12949,14 +12936,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP C2800 2.00 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0815</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP C2800 2.00 / RICOH Network Printer C model / RICOH Network Scanner C model\\]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0809</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -12990,7 +12977,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP C3001 2.01 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0720</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -13004,14 +12991,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP C3002 2.02 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0664</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP C3002 2.06 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0673</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -13046,8 +13033,8 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP C3502 2.01 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0664</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -13067,8 +13054,8 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP C4000 1.22 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0662</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -13136,7 +13123,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP C5000 1.20 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0816</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -13170,7 +13157,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP C5501 3.01 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0817</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio MP C6000 1.05 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
@@ -13203,15 +13190,15 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio SP 4100N 1.02 / RICOH Network Printer C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0654</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio SP 4100N 1.05 / RICOH Network Printer C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0653</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -13245,21 +13232,21 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio SP 4210N 1.00 / RICOH Network Printer C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0660</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio SP 4210N 1.02 / RICOH Network Printer C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0660</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Aficio SP 4210N 1.05 / RICOH Network Printer C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0649</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -13313,63 +13300,63 @@
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Pro 1106EX 6.00 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0750</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Pro 1356EX 6.01 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0752</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Pro 1356EX 6.05 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0763</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Pro 906EX 6.00 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0764</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Pro 906EX 6.02 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0779</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Pro 907EX 2.10 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0727</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Pro C651EX 1.10 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0674</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Pro C751EX]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0810</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RICOH Pro C751EX 1.09 / RICOH Network Printer C model / RICOH Network Scanner C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0818</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -13380,7 +13367,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[RouterOS RB411U]]></SYSDESCR>
-      <TYPE></TYPE>
+      <TYPE>5</TYPE>
       <MODELSNMP>Networking2075</MODELSNMP>
    </DEVICE>
    <DEVICE>
@@ -13424,40 +13411,63 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Samsung CLP-775 Series; V2.20.01.17 Apr-07-2012;Engine 1.00.04;NIC V4.01.08(CLP-775ND) 06-04-2012]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0739</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Samsung CLX-6220 Series]]></SYSDESCR>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0834</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Samsung ML-451x 501x Series; V2.20.02.19 04-11-2012;Engine V1.01.01V4.01.09 04-16-2012;NIC V4.01.09 04-16-2012;]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0731</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Samsung ML-451x 501x Series; V2.20.02.19 04-11-2012;Engine V1.01.01V4.01.09 04-16-2012;NIC V4.01.09 04-16-2012\\]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0725</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Samsung ML-4550 Series; OS 1.01.30.132 07-29-2010;Engine 1.00.49;NIC V3.03.15(ML-4550) 11-05-2009;]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
+      <MODELSNMP>Printer0728</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Samsung Samsung SCX-472x Series]]></SYSDESCR>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0835</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Samsung SCX-483x 5x3x Series]]></SYSDESCR>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0833</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Samsung SCX-4x24 Series]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0703</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[SAVIN 8035/8035g 1.24.1 / SAVIN Network Printer C model / SAVIN Network Scanner C model / SAVIN Network Facsimile C model]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0719</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.367.3.2.1.2.1.4.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[SCALANCE W788-1PRO]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2470</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[scalar-i40-1]]></SYSDESCR>
@@ -13466,7 +13476,7 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[SCOPIA XT5000]]></SYSDESCR>
-      <TYPE></TYPE>
+      <TYPE>5</TYPE>
       <MODELSNMP>Networking2075</MODELSNMP>
    </DEVICE>
    <DEVICE>
@@ -13479,7 +13489,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[SCX-5835_5935 Series]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0765</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -13493,15 +13503,15 @@
    <DEVICE>
       <SYSDESCR><![CDATA[SCX-5x30 Series]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0544</MODELSNMP>
+      <MODELSNMP>Printer0621</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[SCX-6545 Series]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0713</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -13554,14 +13564,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[SHARP MX-2310U]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer4</MODELSNMP>
+      <MODELSNMP>Printer0635</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[SHARP MX-2600N]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0700</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -13575,7 +13585,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[SHARP MX-3111U]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer4</MODELSNMP>
+      <MODELSNMP>Printer0635</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -13610,15 +13620,15 @@
    <DEVICE>
       <SYSDESCR><![CDATA[SHARP MX-M260]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
+      <MODELSNMP>Printer0650</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[SHARP MX-M264N]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-      <SERIAL>.1.3.6.1.2.1.43.15.1.1.4.1.1</SERIAL>
+      <MODELSNMP>Printer0686</MODELSNMP>
+      <SERIAL>.1.3.6.1.2.1.47.1.1.1.1.11.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -13659,21 +13669,21 @@
    <DEVICE>
       <SYSDESCR><![CDATA[SHARP MX-M363U]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer1</MODELSNMP>
+      <MODELSNMP>Printer0624</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[SHARP MX-M452N]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0803</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[SHARP MX-M453N\\]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0691</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -13712,6 +13722,11 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
+      <SYSDESCR><![CDATA[SMC Enterprise AP: Software v3.0.0.11, Bootrom v1.1.6, Hardware R01]]></SYSDESCR>
+      <TYPE>2</TYPE>
+      <MODELSNMP>Networking2481</MODELSNMP>
+   </DEVICE>
+   <DEVICE>
       <SYSDESCR><![CDATA[SMC Networks SMC8612XL3]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2417</MODELSNMP>
@@ -13725,14 +13740,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[SMCGS10P-Smart 10x1G Ethernet Switch]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
+      <MODELSNMP>Networking2480</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[SMCGS8P-Smart - SMCGS8P-Smart v4.10]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2424</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
-      <MAC>.1.0.8802.1.1.2.1.3.7.1.3.4</MAC>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[smtp.polylogis.fr]]></SYSDESCR>
@@ -13747,7 +13762,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[snmpwalk -v 2c -c public -On 192.168.5.55 sysdescr]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0738</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[snmpwalk -v 2c -c public -On 192.168.5.55 sysdescr]]></SYSDESCR>
@@ -13757,12 +13772,12 @@
    <DEVICE>
       <SYSDESCR><![CDATA[snmpwalk -v1 -c public -On 192.168.2.3 Brother NC-190h, Firmware Ver.0.09  ,MID 8CA-J36-001]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0774</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[snmpwalk -v1 -c public -On 192.168.2.3 sysdescr]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0743</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[SonicWALL NSA 2400 (SonicOS Enhanced 5.5.2.1-5o)]]></SYSDESCR>
@@ -13836,20 +13851,20 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Stylus Pro 7900]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer3</MODELSNMP>
+      <MODELSNMP>Printer0634</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.1248.1.2.2.1.1.1.5.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Summit200-24 - Version 7.1e.1 (Build 5) by Release_Master Thu 04/22/2004 15:31:23]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1126</MODELSNMP>
+      <MODELSNMP>Networking2052</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Summit200-24 - Version 7.1e.2 (Build 1) by Release_Master Tue 07/13/2004 15:15:31]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1126</MODELSNMP>
+      <MODELSNMP>Networking2052</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -13876,7 +13891,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Summit200-48 - Version 7.1e.2 (Build 1) by Release_Master Tue 07/13/2004 15:15:31]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1126</MODELSNMP>
+      <MODELSNMP>Networking2052</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -13903,7 +13918,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Summit24e3 - Version 6.2e.1 (Build 20) by Release_Master_ABU Tue 05/27/2003 16:46:08]]></SYSDESCR>
       <TYPE>2</TYPE>
-      <MODELSNMP>Networking1126</MODELSNMP>
+      <MODELSNMP>Networking2052</MODELSNMP>
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
@@ -13960,11 +13975,6 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[Sun SNMP Agent, Sun-Fire-V240]]></SYSDESCR>
-      <TYPE>1</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Switch 4800G 48-Port]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking0381</MODELSNMP>
@@ -14010,11 +14020,6 @@
       <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[TallyGenicom Ultima 65;TGNet  Version: 1.0]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[TASKalfa 221]]></SYSDESCR>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0596</MODELSNMP>
@@ -14024,21 +14029,21 @@
    <DEVICE>
       <SYSDESCR><![CDATA[TASKalfa 2550ci]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0796</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.1347.43.5.1.1.28.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TASKalfa 300i]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0721</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TASKalfa 3050ci]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0698</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -14049,18 +14054,8 @@
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TELEMECANIQUE BMX P34 2030 REV0200 Modicon M340 CPU 340-30,Ethernet TCPIP, CANopen master]]></SYSDESCR>
-      <TYPE></TYPE>
+      <TYPE>5</TYPE>
       <MODELSNMP>Networking2075</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Teradici SNMP Agent]]></SYSDESCR>
-      <TYPE>2</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[test]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[test]]></SYSDESCR>
@@ -14084,7 +14079,7 @@
       <SYSDESCR><![CDATA[TigerSwitch 10/100/1000 26/50 PORT MANAGED SWITCH]]></SYSDESCR>
       <TYPE>2</TYPE>
       <MODELSNMP>Networking2423</MODELSNMP>
-      <MAC>.1.3.6.1.2.1.2.2.1.6</MAC>
+      <MAC>.1.3.6.1.2.1.17.1.1.0</MAC>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TL-WA801N]]></SYSDESCR>
@@ -14108,7 +14103,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO182]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer0412</MODELSNMP>
+      <MODELSNMP>Printer0617</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -14122,14 +14117,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO232]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0618</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO2540C]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0734</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO255]]></SYSDESCR>
@@ -14141,7 +14136,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA e-STUDIO2550C]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0789</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -14218,7 +14213,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[TOSHIBA FastEther8500e Rev.01.06 10/100BASE Ethernet PrintServer: Attached to e-STUDIO263CS Rev.01.40 ]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0656</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -14283,11 +14278,6 @@
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
-      <SYSDESCR><![CDATA[x86 Family 16 Model 5 Stepping 3 AT/AT COMPATIBLE - Software: Windows 2000 Version 5.1 (Build 2600 Multiprocessor Free)]]></SYSDESCR>
-      <TYPE>1</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
       <SYSDESCR><![CDATA[Xerox 4110;ESS PS1.223.105,IOT 17.36.0,HCF 2.16.0,FIN D13.5.0,IIT 12.4.0,IIT D12.3.2,ADF 11.8.0]]></SYSDESCR>
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0262</MODELSNMP>
@@ -14303,41 +14293,26 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox 4127;System 0.0.0,ESS PS1.211.12,IOT 46.21.0,HCF 4.6.0,FIN D5.7.0,IIT 15.6.1,IIT D14.0.4,ADF 12.3.0,SJFI3.0.12,SSMI1.11.2]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0632</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox 7545]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0652</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox Color 560 with Xerox Fiery Integrated Controller; SW1.1_SP5,IOT 64.15.0, HCF 3.20.0, IIT 6.16.0, ADF 12.6.1, , , , , , ]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0709</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Xerox ColorQube 8570]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Xerox ColorQube 8570DN]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox ColorQube 8570DN; System 1.3.8.P, OS 10.62, PS 4.10.0, Eng 23.P1.4.10.0, Net 42.40.09.02.2011, Adobe PostScript 3016.101 (16), PCL 5c Version 5.0]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Xerox ColorQube 8570DN;OS10.62,Eng23.P1.4.10.0,Net42.40.09.02]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
+      <MODELSNMP>Printer0670</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[XEROX DocuColor 1632 v  2.  0.  6]]></SYSDESCR>
@@ -14355,14 +14330,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[XEROX DocuColor 242;XEROX DocuColor 242;ESS1.210.18,IOT 8.28.0,IIT 1.6.1,ADF 12.2.0]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer7</MODELSNMP>
+      <MODELSNMP>Printer0638</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[XEROX DocuColor 242;XEROX DocuColor 242;ESS1.210.25,IOT 8.35.0,IIT 1.6.1,IIT D12.3.1,ADF 12.2.0]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer2</MODELSNMP>
+      <MODELSNMP>Printer0633</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -14375,7 +14350,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox DocuPrint N2125 Network Laser Printer - 2.12-02 ]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0687</MODELSNMP>
       <SERIAL>.1.3.6.1.4.1.253.8.53.3.2.1.3.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -14391,6 +14366,13 @@
       <TYPE>3</TYPE>
       <MODELSNMP>Printer0435</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
+      <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
+   </DEVICE>
+   <DEVICE>
+      <SYSDESCR><![CDATA[Xerox Phaser 3600; OS 1.70.02.40 05-28-2009, NIC V4.01.19(P3600) 05-19-2009, Engine 1.10.75, Duplex 1.00.03 , PCL5e 5.93 03-19-2009, PCL6 5.93  03-21-2009, PS3 1.94.06 12-22-2008, IBM/EPSON 5.20 02-03-2009]]></SYSDESCR>
+      <TYPE>3</TYPE>
+      <MODELSNMP>Printer0826</MODELSNMP>
+      <SERIAL>.1.3.6.1.4.1.253.8.53.3.2.1.3.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -14444,14 +14426,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox Phaser 5550DT; System 1.3.7.P, OS 8.2, PS 5.1.0, Eng 11.58.00, Net 40.46.04.03.2009, Adobe PostScript 3016.101 (14), PCL 5e/6 Version 7.0.1, Finisher 5.01.00]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0689</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox Phaser 5550DT; System 1.3.7.P, OS 8.2, PS 5.1.0, Eng 11.58.00, Net 40.46.04.03.2009, Adobe PostScript 3016.101 (14), PCL 5e/6 Version 7.0.1, Finisher 5.03.00]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0688</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6.2</MACDYN>
    </DEVICE>
@@ -14507,7 +14489,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox Phaser 6600DN; Network 18.01, Controller 201207031042, Engine 02.00.01, Boot 201206050608, PCL5 201205211634, PCL6 201205211634, PostScript 201205231342, PDF 201112201657]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0744</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -14604,12 +14586,12 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 3325]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0801</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 3325;Sys SW Version WC3325_V51.002.06.000 AUG-22-2012,MCB V2.50.01.06 AUG-22-2012,NIC 4.01.03,IOT 1.00.31,PCL5e 6.50.02 11-09-2011,PCL6 6.23.00.02   07-16-2012,PS 3.99.01.00.00.93 04-02-2012,IBM/EPSON 5.29.01 05-09-2011, IP Core 6.8.P]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0801</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 3550; System Software Version 25.001.02.000, Main Controller 1.01.02.00, Network Controller V4.00.98, Image Output Terminal 0.60.91, Tray2 3.00.02, IP Core Software Version 6.6.3.P]]></SYSDESCR>
@@ -14635,28 +14617,28 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 4260; System Software Version 30.103.33.000, Main Controller 2.50.03.33, Network Controller 4.01.67, Image Output Terminal 0.41.69, User Interface 0.040.15.176, DADF \\1.01]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0782</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 4260; System Software Version 30.103.51.000, Main Controller 2.50.03.51, Network Controller 4.01.71.06, Image Output Terminal 0.41.69, User Interface 0.040.15.186]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0781</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 4260; System Software Version 30.103.51.000, Main Controller 2.50.03.51, Network Controller 4.01.71.06, Image Output Terminal 0.41.69, User Interface 0.040.15.186, DADF 1.01]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0745</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 5020/DN;ESS1.201.4,IOT 11.27.0,IIT 5.5.0]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0714</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -14670,7 +14652,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 5222;ESS1.207.8,IOT 11.31.0,IIT 3.8.0,ADF 20.0.0,SJFI3.0.9,SSMI1.8.2]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0801</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 5225;ESS PS1.207.8,IOT 11.31.0,FIN B13.3.0,IIT 3.8.0,ADF 20.0.0,SJFI3.0.9,SSMI1.8.2]]></SYSDESCR>
@@ -14689,7 +14671,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 5632 v1 Multifunction System; System Software 025.054.055.00060, ESS 061.060.03400]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0705</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -14710,28 +14692,23 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 7120;System 71.3.1,ESS1.201.5,IOT 4.21.0,ADF 7.6.50,SJFI3.0.14,SSMI1.13.0]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0726</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 7125;System 71.21.21,ESS1.210.4,IOT 5.12.0,ADF 11.0.1,SJFI3.0.16,SSMI1.14.1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0777</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 7125;System 71.21.21,ESS1.210.4,IOT 5.12.0,FIN A15.2.0,ADF 11.0.1,SJFI3.0.16,SSMI1.14.1]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0690</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
-   </DEVICE>
-   <DEVICE>
-      <SYSDESCR><![CDATA[Xerox WorkCentre 7232;ESS PS1.205.0,IOT 10.3.0,FIN A5.3.0,IIT 20.5.1,ADF 20.0.0,FAX 1.30.58,SJFI3.0.8,SSMI1.7.1]]></SYSDESCR>
-      <TYPE>3</TYPE>
-      <MODELSNMP>Networking0124</MODELSNMP>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 7232;ESS PS1.205.0,IOT 10.3.0,FIN B13.3.0,IIT 20.5.1,ADF 20.0.0,FAX 1.30.58,SJFI3.0.8,SSMI1.7.1]]></SYSDESCR>
@@ -14791,7 +14768,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 7328;ESS PS1.227.4,IOT 3.0.5,FIN B3.1.7,IIT 22.13.1,ADF 20.0.0,FAX 1.30.61,SJFI3.0.8,SSMI1.7.2]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0820</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -14903,7 +14880,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 7535 v1 Multifunction System; System Software 061.121.221.27200, ESS 061.121.25022]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0710</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -14917,14 +14894,14 @@
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 7755 v1 Multifunction System; System Software 061.090.220.19700, ESS 061.090.18320]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0772</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
       <SYSDESCR><![CDATA[Xerox WorkCentre 7845 v1 Multifunction System; System Software 071.040.103.04401, ESS 071.043.04411]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0808</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.43.5.1.1.17.1</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -15121,7 +15098,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[ZebraNet]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0668</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -15133,7 +15110,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[ZTC 170XiIIIPlus-300dpi]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0785</MODELSNMP>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
    <DEVICE>
@@ -15145,7 +15122,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[ZTC HC100-300dpi ZPL]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0737</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -15158,7 +15135,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[ZTC HC100-300dpi ZPL\\\"]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0823</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
@@ -15183,7 +15160,7 @@
    <DEVICE>
       <SYSDESCR><![CDATA[ZTC Z6MPlus-300 dpi]]></SYSDESCR>
       <TYPE>3</TYPE>
-      <MODELSNMP>Printer10</MODELSNMP>
+      <MODELSNMP>Printer0784</MODELSNMP>
       <SERIAL>.1.3.6.1.2.1.1.5.0</SERIAL>
       <MACDYN>.1.3.6.1.2.1.2.2.1.6</MACDYN>
    </DEVICE>
