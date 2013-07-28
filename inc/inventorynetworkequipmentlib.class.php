@@ -627,7 +627,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
    
    
    function importPortAggregate($a_ports, $networkports_id, $networkequipments_id) {
-      global $DB;
 
       $networkPort = new NetworkPort();
       $networkPortAggregate = new NetworkPortAggregate();
