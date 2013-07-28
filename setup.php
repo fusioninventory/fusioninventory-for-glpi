@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.84+1.0");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.85+1.0");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
@@ -48,7 +48,7 @@ $PF_CONFIG = array();
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
 define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
-define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.84+1.0 SNAPSHOT");
+define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.85+1.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
 /*
@@ -526,7 +526,7 @@ function plugin_version_fusioninventory() {
                 'author'         =>'<a href="mailto:d.durieux@siprossii.com">David DURIEUX</a>
                                     & FusionInventory team',
                 'homepage'       =>'http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/',
-                'minGlpiVersion' => '0.84'// For compatibility / no install in version < 0.78
+                'minGlpiVersion' => '0.85'
    );
 }
 
@@ -540,8 +540,8 @@ function plugin_fusioninventory_check_prerequisites() {
       $_SESSION['glpi_plugins'] = array();
    }
 
-   if (version_compare(GLPI_VERSION, '0.84', 'lt') || version_compare(GLPI_VERSION, '0.85', 'ge')) {
-      echo __('Your GLPI version not compatible, require 0.84', 'fusioninventory');
+   if (version_compare(GLPI_VERSION, '0.85', 'lt') || version_compare(GLPI_VERSION, '0.86', 'ge')) {
+      echo __('Your GLPI version not compatible, require 0.85', 'fusioninventory');
       return FALSE;
    }
    
