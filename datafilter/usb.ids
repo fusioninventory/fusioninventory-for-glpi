@@ -9,8 +9,8 @@
 #	The latest version can be obtained from
 #		http://www.linux-usb.org/usb.ids
 #
-# Version: 2013.03.25
-# Date:    2013-03-25 20:34:03
+# Version: 2013.05.24
+# Date:    2013-05-24 20:34:03
 #
 
 # Vendors, devices and interfaces. Please keep sorted.
@@ -9812,6 +9812,8 @@
 0955  NVidia Corp.
 	7030  Tegra 3 (recovery mode)
 	7100  Notion Ink Adam
+	b400  SHIELD (debug)
+	b401  SHIELD
 0956  BSquare Corp.
 0957  Agilent Technologies, Inc.
 	0200  E-Video DC-350 Camera
