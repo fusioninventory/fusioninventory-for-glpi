@@ -637,8 +637,12 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                      if (!isset($pages[$data['printers_id']])) {
                         $pages[$data['printers_id']] = $data[$graphField];
                      } else {
+                        $y = $data[$graphField] - $pages[$data['printers_id']];
+                        if ($y < 0) {
+                           $y = 0;
+                        }
                         $input[] = array('x' => $date,
-                                         'y' => $data[$graphField] - $pages[$data['printers_id']]);
+                                         'y' => $y);
                         $pages[$data['printers_id']] = $data[$graphField];
                      }
                   } else {
@@ -678,6 +682,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
             }
          }
       }
+
       // Display graph
       echo '<div id="chartPrinter">'.
              '<svg style="height: 400px; width: 950px;"></svg>'.
