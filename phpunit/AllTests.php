@@ -178,6 +178,7 @@ require_once '2_Integration/ComputerDynamic.php';
 require_once '2_Integration/UnknownDeviceKnowDevice.php';
 require_once '2_Integration/UnknownDeviceImport.php';
 require_once '2_Integration/TaskDeployDynamicGroup.php';
+require_once '2_Integration/ComputerPrinter.php';
 
 require_once 'emulatoragent.php';
 
@@ -208,6 +209,7 @@ class AllTests {
       $suite->addTest(UnknownDeviceKnowDevice_AllTests::suite());
       $suite->addTest(UnknownDeviceImport_AllTests::suite());
       $suite->addTest(TaskDeployDynamicGroup_AllTests::suite());
+      $suite->addTest(ComputerPrinter_AllTests::suite());
       
       return $suite;
    }
