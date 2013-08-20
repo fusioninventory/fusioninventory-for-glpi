@@ -349,7 +349,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       }
 
       if (isset($_SESSION['plugin_fusioninventory_dynamicgroup']) && 
-         $_SESSION['plugin_fusioninventory_dynamicgroup']['plugin_fusioninventory_deploygroup_dynamicdatas_id'] == $ID
+         $_SESSION['plugin_fusioninventory_dynamicgroup']['plugin_fusioninventory_deploygroup_dynamicdatas_id'] 
+              == $plugin_fusioninventory_deploygroup_dynamicdatas_id
       ) {
          $_GET = $_SESSION['plugin_fusioninventory_dynamicgroup'];
          $array_delete = array('add_search_count', 'delete_search_count', 
@@ -363,8 +364,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
         $pfDeployGroup_Dynamicdata->getFromDB($plugin_fusioninventory_deploygroup_dynamicdatas_id);
          $_GET = importArrayFromDB($pfDeployGroup_Dynamicdata->fields['fields_array']);
       }
-      
-      $_GET["glpisearchcount"] = count($_GET['field']);
+
+      $_GET["glpisearchcount"] = 1;
+      if (isset($_GET['field'])
+              && count($_GET['field'])) {
+         $_GET["glpisearchcount"] = count($_GET['field']);
+      }   
       $_GET['name'] = 'rule';
       $_GET['itemtype'] = 'Computer';
       
