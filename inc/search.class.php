@@ -95,7 +95,7 @@ $p = array();
       $linked =  Search::getMetaItemtypeAvailable($itemtype);
 
 echo "<form name='searchform$itemtype' method='get' action=\"".
-              $CFG_GLPI['root_doc']."/plugins/".$this->formurl."\">";
+              $this->formurl."\">";
 
       $item->getEmpty();
       $item->showFormHeader();
