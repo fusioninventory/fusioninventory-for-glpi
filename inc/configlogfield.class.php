@@ -188,7 +188,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
          }
       }
 
-      if (PluginFusioninventoryProfile::haveRight("configuration", "w")) {
+      if (Session::haveRight("plugin_fusioninventory_configuration", UPDATE)) {
          echo "<tr class='tab_bg_2'><td align='center' colspan='4'>
                <input type='hidden' name='tabs' value='history'/>
                <input class='submit' type='submit' name='update'
@@ -200,7 +200,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
       echo "<table class='tab_cadre_fixe' cellpadding='2'>";
       echo "<tr class='tab_bg_2'>";
       echo "<td colspan='1' class='center' height='30'>";
-      if (PluginFusioninventoryProfile::haveRight("configuration", "w")) {
+      if (Session::haveRight("plugin_fusioninventory_configuration", UPDATE)) {
          echo "<input type='submit' class=\"submit\" name='Clean_history' ".
                  "value='".__('Clean')."' >";
       }

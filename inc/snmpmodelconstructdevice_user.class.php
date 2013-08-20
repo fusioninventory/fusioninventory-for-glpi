@@ -46,16 +46,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventorySnmpmodelConstructdevice_User extends CommonDBTM {
 
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("model", "w");
-   }
-
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("model", "r");
-   }
-
-
+   static $rightname = 'plugin_fusioninventory_model';
+   
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       if ($this->canView()) {

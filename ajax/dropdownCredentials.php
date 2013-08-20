@@ -46,7 +46,7 @@ if (strpos($_SERVER['PHP_SELF'], "dropdownCredentials.php")) {
    Html::header_nocache();
 }
 
-PluginFusioninventoryProfile::checkRight('credential', 'r');
+Session::checkRight('plugin_fusioninventory_credential', READ);
 PluginFusioninventoryCredential::dropdownCredentialsForItemtype($_POST);
 
 ?>

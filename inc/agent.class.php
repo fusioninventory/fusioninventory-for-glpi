@@ -47,7 +47,10 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryAgent extends CommonDBTM {
 
    public $dohistory = TRUE;
+   
+   static $rightname = 'plugin_fusioninventory_agent';
 
+   
    /**
    * Get name of this type
    *
@@ -56,18 +59,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    **/
    static function getTypeName($nb=0) {
       return __('Agent', 'fusioninventory');
-   }
-
-
-
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("agent", "w");
-   }
-
-
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("agent", "r");
    }
 
 

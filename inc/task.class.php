@@ -43,6 +43,8 @@
 
 class PluginFusioninventoryTask extends CommonDBTM {
 
+   static $rightname = 'plugin_fusioninventory_task';
+   
    /**
    * Get name of this type
    *
@@ -51,17 +53,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
    **/
    static function getTypeName($nb=0) {
       return __('Task management', 'fusioninventory');
-   }
-
-
-
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("task", "w");
-   }
-
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("task", "r");
    }
 
 

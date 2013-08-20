@@ -58,7 +58,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
    function export($ID_model) {
       global $DB;
 
-      PluginFusioninventoryProfile::checkRight("model", "r");
+      Session::checkRight('plugin_fusioninventory_model', READ);
       $query = "SELECT *
          FROM `glpi_plugin_fusioninventory_snmpmodels`
          WHERE `id`='".$ID_model."'";
@@ -124,7 +124,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
    function showForm($id, $options=array()) {
       global $CFG_GLPI;
 
-      PluginFusioninventoryProfile::checkRight("model", "r");
+      Session::checkRight('plugin_fusioninventory_model', READ);
 
       $target = $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/snmpmodel.form.php';
       echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
@@ -139,7 +139,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       echo "<td align='center'>";
       echo "<input type='file' name='importfile' value=''/>";
 
-      if(PluginFusioninventoryProfile::haveRight("model", "w")) {
+      if(Session::haveRight("plugin_fusioninventory_model", UPDATE)) {
     echo "&nbsp;<input type='submit' value='".__('Import')."' class='submit'/>";
       }
       echo "</td>";
@@ -153,7 +153,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
 
    function showFormMassImport($target) {
 
-      PluginFusioninventoryProfile::checkRight("model", "r");
+      Session::checkRight('plugin_fusioninventory_model', READ);
 
       echo "<form action='".$target."?add=1' method='post' enctype='multipart/form-data'>";
 
@@ -164,7 +164,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       echo "<td align='center'>";
       echo __('Mass import of models in folder plugins/fusioninventory/snmpmodels/', 'fusioninventory')."<br/>";
       echo "<input type='hidden' name='massimport' value='1'/>";
-      if(PluginFusioninventoryProfile::haveRight("model", "w")) {
+      if(Session::haveRight("plugin_fusioninventory_model", UPDATE)) {
     echo "&nbsp;<input type='submit' value='".__('Import')."' class='submit'/>";
       }
       echo "</td>";
@@ -180,7 +180,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       global $DB;
 
       if ($installation != 1) {
-         PluginFusioninventoryProfile::checkRight("model", "w");
+         Session::checkRight('plugin_fusioninventory_model', UPDATE);
       }
 
       $xml = simplexml_load_file($file, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -569,7 +569,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       if (!strstr($_SERVER['PHP_SELF'], "front/plugin.php")
               && !strstr($_SERVER['PHP_SELF'], "front/plugin.form.php")
               &&  basename($_SERVER['PHP_SELF']) != "cli_install.php") {
-         PluginFusioninventoryProfile::checkRight("model", "r");
+         Session::checkRight('plugin_fusioninventory_model', READ);
       }
 
       $xmlstr =   "<?xml version='1.0' encoding='UTF-8'?>".

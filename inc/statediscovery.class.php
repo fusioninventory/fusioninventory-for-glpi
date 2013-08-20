@@ -46,12 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryStateDiscovery extends CommonDBTM {
 
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("task", "r");
-   }
-
-
+   static $rightname = 'plugin_fusioninventory_task';
 
    function updateState($p_number, $a_input, $agent_id) {
       $data = $this->find("`plugin_fusioninventory_taskjob_id`='".$p_number."'

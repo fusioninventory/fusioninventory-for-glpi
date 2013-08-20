@@ -47,17 +47,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
    public $dohistory = TRUE;
+   
+   static $rightname = 'plugin_fusioninventory_deploymirror';
 
    static function getTypeName($nb=0) {
       return __('Mirror servers', 'fusioninventory');
-   }
-
-   static function canCreate() {
-      return TRUE;
-   }
-
-   static function canView() {
-      return TRUE;
    }
 
 

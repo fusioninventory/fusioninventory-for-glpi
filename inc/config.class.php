@@ -47,6 +47,8 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryConfig extends CommonDBTM {
    public $displaylist = FALSE;
 
+   
+   static $rightname = 'plugin_fusioninventory_configuration';
 
    /**
    * Initialize config values of fusioninventory plugin
@@ -143,16 +145,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       return __('General setup');
 
-   }
-
-
-
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight('configuration', 'w');
-   }
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight('configuration', 'r');
    }
 
 

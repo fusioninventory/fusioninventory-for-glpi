@@ -44,6 +44,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
    public $dohistory = TRUE;
 
+   static $rightname = 'plugin_fusioninventory_unknowndevice';
+   
    /**
    * Get name of this type
    *
@@ -54,15 +56,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       return __('Unknown device', 'fusioninventory');
    }
 
-
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("unknowndevice", "w");
-   }
-
-   
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("unknowndevice", "r");
-   }
 
 
    function getSearchOptions() {
@@ -195,7 +188,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
          $pfConfig = new PluginFusioninventoryConfig();
          if (($pfConfig->isActive('remotehttpagent'))
-                 && (PluginFusioninventoryProfile::haveRight("remotecontrol", "w"))) {
+                 && (Session::haveRight("plugin_fusioninventory_remotecontrol", UPDATE))) {
             $ong[2]=__('Job', 'fusioninventory');
          }
       }

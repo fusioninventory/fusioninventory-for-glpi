@@ -46,6 +46,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryPrinter extends CommonDBTM {
 
+   static $rightname = 'plugin_fusioninventory_printer';
+   
    static function getTypeName($nb=0) {
 
    }
@@ -56,14 +58,6 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       return "Printer";
    }
 
-
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("printer", "w");
-   }
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("printer", "r");
-   }
 
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
@@ -116,7 +110,7 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
    function showForm(Printer $item, $options=array()) {
       global $DB;
 
-      PluginFusioninventoryProfile::checkRight("printer", "r");
+      Session::checkRight('plugin_fusioninventory_printer', READ);
 
       $id = $item->getID();
       if (!$data = $this->find("`printers_id`='".$id."'", '', 1)) {

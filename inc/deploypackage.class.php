@@ -48,28 +48,16 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
    // Tasks running with this package (updated with getRunningTasks method)
    public $running_tasks = array();
+   
+   static $rightname = 'plugin_fusioninventory_package';
+   
 
    static function getTypeName($nb=0) {
-
       return __('Packages', 'fusioninventory');
-
    }
+   
 
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight('packages', 'w');
-   }
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight('packages', 'r');
-   }
-
-   static function canDelete() {
-      return self::canEdit();
-   }
-   static function canEdit() {
-      return PluginFusioninventoryProfile::haveRight('packages', 'w');
-   }
-
+   
    function canEditPackage() {
       if (count($this->running_tasks) > 0) {
             return FALSE;

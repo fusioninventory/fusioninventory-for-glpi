@@ -44,7 +44,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginFusioninventoryProfile extends CommonDBTM {
+class PluginFusioninventoryProfile extends Profile {
 
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
@@ -61,201 +61,13 @@ class PluginFusioninventoryProfile extends CommonDBTM {
 
       if ($item->getID() > 0) {
          $pfProfile = new self();
-         $pfProfile->showProfileForm($item->getID(),
-              $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/profile.php');
+         $pfProfile->getFromDB($item->getID());
+         $pfProfile->showForm();
       }
-
       return TRUE;
    }
 
-
-
-   /**
-    * Add profile
-    *
-    * @param $p_type Right type ('wol', 'agents'...)
-    * @param $p_right Right (NULL, r, w)
-    * @param $p_profiles_id Profile id
-    *
-    * @return integer the new id of the added item (or FALSE if fail)
-    **/
-    static function addProfile($p_type, $p_right, $p_profiles_id=NULL) {
-      if (is_null($p_profiles_id)) {
-         if (!isset($_SESSION['glpiactiveprofile']['id'])) {
-            return;
-         }
-         $p_profiles_id = $_SESSION['glpiactiveprofile']['id'];
-      }
-      if (!self::profileExists($p_profiles_id, $p_type)) {
-         $pfp = new PluginFusioninventoryProfile();
-         return $pfp->add(array('type'       => $p_type,
-                                'right'      => $p_right,
-                                'profiles_id'=> $p_profiles_id));
-      }
-   }
-
-
-
-   /**
-    * Update profile
-    *
-    * @param $p_id Profile id
-    * @param $p_plugins_id Module plugin id
-    * @param $p_type Right type ('wol', 'agents'...)
-    * @param $p_right Right (NULL, r, w)
-    * @param $p_profiles_id Profile id
-    *
-    * @return boolean : TRUE on success
-    **/
-   function updateProfile($p_id, $p_type, $p_right, $p_profiles_id=NULL) {
-      if (is_null($p_profiles_id)) {
-         $p_profiles_id = $_SESSION['glpiactiveprofile']['id'];
-      }
-      if (self::profileExists($p_profiles_id, $p_type)) {
-         return $this->update(array('id'         => $p_id,
-                                    'type'       => $p_type,
-                                    'right'      => $p_right,
-                                    'profiles_id'=> $p_profiles_id));
-      }
-   }
-
-
-
-   /**
-    * Create full profile (used on install plugin)
-    *
-    * @param $a_profile array with Right type ('wol', 'agents'...) and Right (NULL, r, w)
-    **/
-   static function initProfile($pluginname) {
-
-      if (isset($pluginname)) {
-         $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($pluginname);
-         if (method_exists($class, "profiles")) {
-            $a_profile = call_user_func(array($class, "profiles"));
-            foreach ($a_profile as $data) {
-               PluginFusioninventoryProfile::addProfile($data['profil'], 'w');
-            }
-         }
-      }
-   }
-
-
-
-   /**
-    * Get info if profile exist
-    *
-    * @param type $profiles_id id of the profile
-    * @param type $type value type of right (example : agent, remotecontrol, configuration...)
-    *
-    * @return TRUE or FALSE
-    */
-   static function profileExists($profiles_id, $type) {
-      global $DB;
-      $query = "SELECT `id` AS cpt FROM ".getTableForItemType('PluginFusioninventoryProfile');
-      $query.= " WHERE `type`='$type'";
-      $query.= " AND `profiles_id`='$profiles_id'";
-      $results = $DB->query($query);
-      if ($DB->numrows($results) > 0) {
-         return TRUE;
-      } else {
-         return FALSE;
-      }
-   }
-
-
-
-   /**
-    * Change profile (for used connected)
-    *
-    **/
-   static function changeprofile() {
-      if (isset($_SESSION['glpiactiveprofile']['id'])) {
-         $pfp = new PluginFusioninventoryProfile();
-         $a_rights = $pfp->find("`profiles_id` = '".$_SESSION['glpiactiveprofile']['id']."'");
-         $i = 0;
-         foreach ($a_rights as $datas) {
-            $i++;
-            $_SESSION["glpi_plugin_fusioninventory_profile"][$datas['type']] = $datas['right'];
-         }
-         if ($i == '0') {
-            unset($_SESSION["glpi_plugin_fusioninventory_profile"]);
-         }
-      }
-   }
-
-
-
-   /**
-    * test if user have right
-    *
-    * @param $p_type Right type ('wol', 'agents'...)
-    * @param $p_right Right (NULL, r, w)
-    *
-    * @return boolean : TRUE if right is ok
-    **/
-   static function haveRight($p_type, $p_right) {
-      $matches=array(
-            ""  => array("", "r", "w"), // ne doit pas arriver normalement
-            "r" => array("r", "w"),
-            "w" => array("w"),
-               );
-      if (isset($_SESSION["glpi_plugin_fusioninventory_profile"][$p_type])
-                && in_array($_SESSION["glpi_plugin_fusioninventory_profile"][$p_type],
-                            $matches[$p_right])) {
-         return TRUE;
-      } else {
-         return FALSE;
-      }
-   }
-
-
-
-   /**
-    * Check right and display error if right not ok
-    *
-    * @param $p_type Right type ('wol', 'agents'...)
-    * @param $p_right Right (NULL, r, w)
-    **/
-   static function checkRight($p_type, $p_right) {
-      global $CFG_GLPI;
-
-      $pfp = new PluginFusioninventoryProfile();
-      if (!$pfp->haveRight($p_type, $p_right)) {
-         // Gestion timeout session
-         if (!isset ($_SESSION["glpiID"])) {
-            Html::redirect($CFG_GLPI["root_doc"] . "/index.php");
-            exit ();
-         }
-         Html::displayRightError();
-      }
-   }
-
-
-
-   /**
-    * Get right
-    *
-    * @param $p_type Right type ('wol', 'agents'...)
-    * @param $p_profiles_id Profile id
-    *
-    * @return value right "NULL", "r" or "w"
-    **/
-   static function getRightDB($p_type, $profiles_id='') {
-
-      if ($profiles_id == '') {
-         $profiles_id = $_SESSION['glpiactiveprofile']['id'];
-      }
-      $pfp = new PluginFusioninventoryProfile();
-      $a_rights = $pfp->find("`profiles_id` = '".$profiles_id."'
-                                   AND `type`='".$p_type."' ");
-      $right = "NULL";
-      foreach ($a_rights as $data) {
-         $right = $data['right'];
-      }
-      return $right;
-   }
-
-
+   
 
     /**
     * Show profile form
@@ -265,99 +77,215 @@ class PluginFusioninventoryProfile extends CommonDBTM {
     *
     * @return nothing
     **/
-   function showProfileForm($items_id, $target) {
+   function showForm($openform=true, $closeform=true) {
 
-      if (!Session::haveRight("profile", "r")) {
-         return FALSE;
+      echo "<div class='firstbloc'>";
+      if (($canedit = Session::haveRightsOr(self::$rightname, array(CREATE, UPDATE, PURGE)))
+          && $openform) {
+         $profile = new Profile();
+         echo "<form method='post' action='".$profile->getFormURL()."'>";
       }
+      
+      $rights = $this->getRightsGeneral();
+      $this->displayRightsChoiceMatrix($rights, array('canedit'       => true,
+                                                      'default_class' => 'tab_bg_2',
+                                                      'title'         => __('General', 'fusioninventory')));
+      
+      $rights = $this->getRightsRules();
+      $this->displayRightsChoiceMatrix($rights, array('canedit'       => true,
+                                                      'default_class' => 'tab_bg_2',
+                                                      'title'         => _n('Rule', 'Rules', 2))); 
+      
+      $rights = $this->getRightsInventory();
+      $this->displayRightsChoiceMatrix($rights, array('canedit'       => true,
+                                                      'default_class' => 'tab_bg_2',
+                                                      'title'         => __('Inventory', 'fusioninventory'))); 
+      
+      $rights = $this->getRightsDeploy();
+      $this->displayRightsChoiceMatrix($rights, array('canedit'       => true,
+                                                      'default_class' => 'tab_bg_2',
+                                                      'title'         => __('Software deployment', 'fusioninventory'))); 
+      
+      /*
+       * Old profile names:
+       * 
+       *    agent
+       *    remotecontrol
+       *    configuration
+       *    wol
+       *    unknowndevice
+       *    task
+       *    iprange
+       *    credential
+       *    credentialip
+       *    existantrule
+       *    importxml
+       *    blacklist
+       *    ESX
+       *    configsecurity
+       *    networkequipment
+       *    printer
+       *    model
+       *    reportprinter
+       *    reportnetworkequipment
+       *    packages
+       *    status
+       */
 
-      echo "<form name='form' method='post' action=\"$target\">";
-      echo "<div align='center'>";
-      echo "<table class='tab_cadre_fixe'>";
-
-      $a_modules_temp = PluginFusioninventoryModule::getAll();
-      $a_module = array();
-      $a_module[] = 'fusioninventory';
-      foreach($a_modules_temp as $num => $data) {
-         $a_module[] = $data['directory'];
+      
+      if ($canedit
+          && $closeform) {
+         echo "<div class='center'>";
+         echo "<input type='hidden' name='id' value='".$this->fields['id']."'>";
+         echo "<input type='submit' name='update' value=\""._sx('button','Save')."\" class='submit'>";
+         echo "</div>\n";
+         Html::closeForm();
       }
-
-      foreach ($a_module as $pluginname) {
-         $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($pluginname);
-
-         if (is_callable(array($class, "profiles"))) {
-            $a_profil = call_user_func(array($class, "profiles"));
-
-            echo "<tr>";
-            echo "<th colspan='4'>".__('Rights management', 'fusioninventory')." ";
-            echo __('FusionInventory', 'fusioninventory')." :</th>";
-            echo "</tr>";
-
-            $i = 0;
-            foreach ($a_profil as $num => $data) {
-               if ($i == '0') {
-                  echo "<tr class='tab_bg_1'>";
-               }
-               echo "<td>";
-               echo $data['name']."&nbsp;:";
-               echo "</td>";
-               echo "<td>";
-               Profile::dropdownNoneReadWrite($pluginname."-".$data['profil'],
-                                              $this->getRightDB($data['profil'], $items_id),
-                                              1, 1, 1);
-               echo "</td>";
-               $i++;
-               if ($i == '2') {
-                  echo "</tr>";
-                  $i = 0;
-               }
-            }
-            if ($i == '1') {
-               echo "<td colspan='2'></td>";
-               echo "</tr>";
-            }
-         }
-      }
-
-      echo "<tr>";
-      echo "<th colspan='4'>";
-      echo "<input type='hidden' name='profile_id' value='".$items_id."'/>";
-      echo "<input type='submit' value='".__('Post')."' class='submit' >";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "</table>";
       echo "</div>";
 
-      Html::closeForm();
+      $this->showLegend();
    }
-
-
+   
+   
 
    /**
-    * Udpate profiles from Profil management
-    */
-   function updateProfiles($profiles) {
-      foreach($profiles as $key => $value) {
-         if (strstr($key, "-")) {
-            $profilName = explode("-", $key);
-            $a_profile = $this->find("`profiles_id`='".$profiles['profile_id']."'
-                                      AND `type`='".$profilName[1]."' ");
-            if (count($a_profile) > 0) {
-               foreach ($a_profile as $data) {
-                  $this->updateProfile($data['id'],
-                                       $data['type'],
-                                       $value,
-                                       $data['profiles_id']);
-               }
-            } else {
-               $this->addProfile($profilName[1],
-                                 $value,
-                                 $profiles['profile_id']);
-            }
+    * Init profiles
+    *
+    **/
+   static function initProfile() {
+      $pfProfile = new self();
+      $a_rights = $pfProfile->getAllRights();
+      foreach ($a_rights as $data) {
+         if (countElementsInTable("glpi_profilerights", "`name` = '".$data['field']."'") == 0) {
+            ProfileRight::addProfileRights(array($data['field']));
          }
-      }
+      }      
    }
+   
+   
+   
+   function getAllRights() {
+      $a_rights = array();
+      $a_rights = array_merge($a_rights, $this->getRightsGeneral());
+      $a_rights = array_merge($a_rights, $this->getRightsInventory());
+      $a_rights = array_merge($a_rights, $this->getRightsRules());
+      $a_rights = array_merge($a_rights, $this->getRightsDeploy());
+      return $a_rights;
+   }
+   
+   
+   
+   function getRightsRules() {
+      $rights = array(
+          array('itemtype'  => 'PluginFusioninventoryInventoryRuleImport',
+                'label'     => __('Rules for import and link computers'),
+                'field'     => 'plugin_fusioninventory_ruleimport'
+          ),
+          array('itemtype'  => 'PluginFusioninventoryInventoryRuleEntity',
+                'label'     => __('Entity rules', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_ruleentity'
+          ),
+          array('itemtype'  => 'PluginFusioninventoryInventoryRuleImport',
+                'label'     => __('Rules for import and link computers'),
+                'field'     => 'plugin_fusioninventory_rulelocation'
+          ),
+          array('itemtype'  => 'PluginFusioninventoryInventoryComputerBlacklist',
+                'label'     => __('Fields blacklist', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_blacklist'
+          )
+      );
+      return $rights;
+   }
+   
+   
+   
+   function getRightsDeploy() {
+      $rights = array(
+//          array('itemtype'  => 'PluginFusioninventoryDeployPackage',
+//                'label'     => __('Manage packages'),
+//                'field'     => 'plugin_fusioninventory_package'),
+          array('itemtype'  => 'PluginFusioninventoryDeployMirror',
+                'label'     => __('Mirror servers', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_deploymirror'),
+          array('itemtype'  => 'PluginFusioninventoryDeployState',
+                'label'     => __('Deployment status'),
+                'field'     => 'plugin_fusioninventory_status')
+      );
+      return $rights;      
+   }
+   
+   
+   
+   function getRightsInventory() {
+      $rights = array(
+          array('itemtype'  => 'PluginFusioninventoryIprange',
+                'label'     => __('IP range configuration', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_iprange'),
+          array('itemtype'  => 'PluginFusioninventoryCredential',
+                'label'     => __('Authentication for remote devices (VMware)', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_credential'),
+          array('itemtype'  => 'PluginFusioninventoryCredentialip',
+                'label'     => __('Remote devices to inventory (VMware)', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_credentialip'),
+          array('rights'    => CommonDBTM::getRights(),
+                'label'     => __('VMware host', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_esx'),
+          array('itemtype'  => 'PluginFusioninventoryConfigSecurity',
+                'label'     => __('SNMP authentication', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_configsecurity'),
+          array('itemtype'  => 'PluginFusioninventoryNetworkEquipment',
+                'label'     => __('Network equipment SNMP', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_networkequipment'),
+          array('itemtype'  => 'PluginFusioninventoryPrinter',
+                'label'     => __('Printer SNMP', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_printer'),
+          array('itemtype'  => 'PluginFusioninventoryUnknowndevice',
+                'label'     => __('Unknown devices', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_unknowndevice'),
+          array('itemtype'  => 'PluginFusioninventoryInventoryComputerImportXML',
+                'label'     => __('computer XML manual import', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_importxml'),
+          array('rights'    => CommonDBTM::getRights(),
+                'label'     => __('Printers report', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_reportprinter'),
+          array('rights'    => CommonDBTM::getRights(),
+                'label'     => __('Network report'),
+                'field'     => 'plugin_fusioninventory_reportnetworkequipment'),
+          array('itemtype'  => 'PluginFusioninventorySnmpmodel',
+                'label'     => __('SNMP model', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_model'),
+          array('itemtype'  => 'PluginFusioninventoryLock',
+                'label'     => __('Lock', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_lock')
+      );
+      return $rights;      
+   }
+   
+   
+   
+   function getRightsGeneral() {
+      $rights = array(
+         array('itemtype'  => 'PluginFusioninventoryAgent',
+                'label'     => __('Agents', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_agent'),
+          array('rights'    => CommonDBTM::getRights(),
+                'label'     => __('Agent remote control', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_remotecontrol'),
+          array('itemtype'  => 'PluginFusioninventoryConfiguration',
+                'label'     => __('Configuration', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_configuration'),
+          array('rights'    => CommonDBTM::getRights(),
+                'label'     => __('Wake On LAN', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_wol'),
+          array('itemtype'  => 'PluginFusioninventoryTask',
+                'label'     => _n('Task', 'Tasks', 2),
+                'field'     => 'plugin_fusioninventory_task'),
+          array('rights'    => CommonDBTM::getRights(),
+                'label'     => __('Menu', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_menu')
+      );
+      return $rights; 
+   }   
 }
 
 ?>

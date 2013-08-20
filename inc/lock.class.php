@@ -47,19 +47,11 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryLock extends CommonDBTM{
 
+   
+   static $rightname = 'plugin_fusioninventory_lock';
 
    static function getTypeName($nb=0) {
       return _n('Lock', 'Locks', $nb)." (".strtolower(_n('Field', 'Fields', 2)).")";
-   }
-
-
-   static function canCreate() {
-      return TRUE;
-   }
-
-
-   static function canView() {
-      return TRUE;
    }
 
 

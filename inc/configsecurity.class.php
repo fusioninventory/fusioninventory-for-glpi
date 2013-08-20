@@ -47,16 +47,8 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
    public $dohistory = TRUE;
-
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("configsecurity", "w");
-   }
-
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("configsecurity", "r");
-   }
-
+   
+   static $rightname = 'plugin_fusioninventory_configsecurity';
 
 
    function defineTabs($options=array()){
@@ -69,7 +61,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
    function showForm($id, $options=array()) {
 
-      PluginFusioninventoryProfile::checkRight("configsecurity", "r");
+      Session::checkRight('plugin_fusioninventory_configsecurity', READ);
 
       if ($id!='') {
          $this->getFromDB($id);

@@ -43,14 +43,14 @@
 include ("../../../inc/includes.php");
 
 Session::checkRight("printer", "r");
-PluginFusioninventoryProfile::checkRight("printer", "r");
+Session::checkRight('plugin_fusioninventory_printer', READ);
 
 $pfPrinterLog = new PluginFusioninventoryPrinterLog();
 print_r($_POST);
 exit;
 if ((isset($_POST['delete']))) {
 
-   PluginFusioninventoryProfile::checkRight("printer", "w");
+   Session::checkRight('plugin_fusioninventory_printer', PURGE);
 
    if (isset($_POST['limit'])) {
       for ($i=0 ; $i<$_POST['limit'] ; $i++) {

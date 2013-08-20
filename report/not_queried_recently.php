@@ -50,7 +50,7 @@ include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
-PluginFusioninventoryProfile::checkRight("reportnetworkequipment", "r");
+Session::checkRight('plugin_fusioninventory_reportnetworkequipment', READ);
 
 $nbdays = 1;
 if (isset($_GET["nbdays"])) {

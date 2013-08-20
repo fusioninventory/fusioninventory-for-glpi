@@ -47,6 +47,8 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryIPRange extends CommonDBTM {
 
    public $dohistory = TRUE;
+   
+   static $rightname = 'plugin_fusioninventory_iprange';
 
    static function getTypeName($nb=0) {
 
@@ -74,16 +76,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    function getComments() {
       $comment = $this->fields['ip_start']." -> ".$this->fields['ip_end'];
       return Html::showToolTip($comment, array('display' => FALSE));
-   }
-
-
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("iprange", "w");
-   }
-
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("iprange", "r");
    }
 
 

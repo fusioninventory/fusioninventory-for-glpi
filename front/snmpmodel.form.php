@@ -42,7 +42,7 @@
 
 include ("../../../inc/includes.php");
 
-PluginFusioninventoryProfile::checkRight("model", "r");
+Session::checkRight('plugin_fusioninventory_model', READ);
 
 $pfModel = new PluginFusioninventorySnmpmodel();
 $pfModelMib = new PluginFusioninventorySnmpmodelMib();
@@ -54,51 +54,51 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 //if (isset ($_POST["add"]) && isset($_POST["id"])) {
 if (isset ($_POST["add"])) {
-   PluginFusioninventoryProfile::checkRight("model", "w");
+   Session::checkRight('plugin_fusioninventory_model', CREATE);
    $pfModel->add($_POST);
    Html::back();
 } else if (isset ($_POST["update"])) {
-   PluginFusioninventoryProfile::checkRight("model", "w");
+   Session::checkRight('plugin_fusioninventory_model', UPDATE);
    $pfModel->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-   PluginFusioninventoryProfile::checkRight("model", "w");
+   Session::checkRight('plugin_fusioninventory_model', PURGE);
    $pfModel->delete($_POST);
    PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
    Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/model.php");
 } else if (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
-   PluginFusioninventoryProfile::checkRight("model", "w");
+   Session::checkRight('plugin_fusioninventory_model', UPDATE);
    $pfImportExport->import($_FILES['importfile']['tmp_name']);
    PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
    Html::back();
 } else if (isset($_GET["is_active"])) {
-   PluginFusioninventoryProfile::checkRight("model", "w");
+   Session::checkRight('plugin_fusioninventory_model', UPDATE);
    $pfModelMib->activation($_GET["is_active"]);
    Html::back();
 } else if (isset($_POST['massimport'])) {
-   PluginFusioninventoryProfile::checkRight("model", "w");
+   Session::checkRight('plugin_fusioninventory_model', UPDATE);
    $pfImportExport->importMass();
    Html::back();
 }
 if (isset ($_POST["add_oid"])) {
-   PluginFusioninventoryProfile::checkRight("model", "w");
+   Session::checkRight('plugin_fusioninventory_model', UPDATE);
    $pfModelMib->add($_POST);
    Html::back();
 }
-if(!empty($_POST["item_coche"])) {
-   PluginFusioninventoryProfile::checkRight("model", "w");
+if (!empty($_POST["item_coche"])) {
+   Session::checkRight('plugin_fusioninventory_model', UPDATE);
    $pfModelMib->deleteMib($_POST["item_coche"]);
    Html::back();
 }
 
-if(PluginFusioninventoryProfile::haveRight("model", "r")) {
+if (Session::haveRight('plugin_fusioninventory_model', READ)) {
    if (!isset($_GET["id"])) {
       $pfImportExport->showForm($_SERVER["PHP_SELF"]);
       $pfImportExport->showFormMassImport($_SERVER["PHP_SELF"]);
    }
 }
 
-if(PluginFusioninventoryProfile::haveRight("model", "r")) {
+if (Session::haveRight('plugin_fusioninventory_model', READ)) {
    $id = "";
    if (isset($_GET["id"])) {
       $id = $_GET["id"];

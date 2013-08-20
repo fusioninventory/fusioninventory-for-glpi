@@ -42,6 +42,8 @@
 
 class PluginFusioninventoryTaskjob extends CommonDBTM {
 
+   static $rightname = 'plugin_fusioninventory_task';
+   
    /**
    * Get name of this type
    *
@@ -51,17 +53,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    static function getTypeName($nb=0) {
       return __('Job', 'fusioninventory');
    }
-
-
-
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("task", "w");
-   }
-
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("task", "r");
-   }
+   
+   
 
    static function getJoinQuery() {
 
@@ -121,7 +114,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-      if (PluginFusioninventoryProfile::haveRight("task", "r")) {
+      if (Session::haveRight("plugin_fusioninventory_task", READ)) {
          return __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
       }
       return '';

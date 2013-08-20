@@ -52,7 +52,7 @@ if (isset($_REQUEST['move_item'])) { //ajax request
       "reason" => ''
    );
 
-   if (PluginFusioninventoryProfile::haveRight("packages", "w")) {
+   if (Session::haveRight('plugin_fusioninventory_packages', UPDATE)) {
       PluginFusioninventoryDeployPackage::alter_json('move_item', $_REQUEST);
    } else {
       $json_response['success'] = FALSE;

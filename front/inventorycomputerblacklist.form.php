@@ -48,14 +48,14 @@ Html::header(__('FusionInventory', 'fusioninventory'),
              "fusioninventory", 
              "blacklist");
 
-PluginFusioninventoryProfile::checkRight("blacklist", "r");
+Session::checkRight('plugin_fusioninventory_blacklist', READ);
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 $pfInventoryComputerBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
 
 if (isset ($_POST["add"])) {
-   PluginFusioninventoryProfile::checkRight("blacklist", "w");
+   Session::checkRight('plugin_fusioninventory_blacklist', CREATE);
    if (!empty($_POST['value'])) {
       $pfInventoryComputerBlacklist->add($_POST);
    } else {
@@ -63,11 +63,11 @@ if (isset ($_POST["add"])) {
    }
    Html::back();
 } else if (isset ($_POST["update"])) {
-   PluginFusioninventoryProfile::checkRight("blacklist", "w");
+   Session::checkRight('plugin_fusioninventory_blacklist', UPDATE);
    $pfInventoryComputerBlacklist->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-   PluginFusioninventoryProfile::checkRight("blacklist", "w");
+   Session::checkRight('plugin_fusioninventory_blacklist', PURGE);
    $pfInventoryComputerBlacklist->delete($_POST);
    Html::redirect("blacklist.php");
 }

@@ -5032,15 +5032,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
             foreach ($newprofile as $old=>$new) {
                if (isset($profiledata[$old])) {
-                  $pfProfile->addProfile($new,
-                                                       $profiledata[$old],
-                                                       $profiledata['id']);
+//                  $pfProfile->addProfile($new,
+//                                         $profiledata[$old],
+//                                         $profiledata['id']);
                }
             }
             if (isset($profiledata["snmp_report"])) {
-               $pfProfile->addProfile("reportnetworkequipment",
-                                                    $profiledata["snmp_report"],
-                                                    $profiledata['id']);
+//               $pfProfile->addProfile("reportnetworkequipment",
+//                                      $profiledata["snmp_report"],
+//                                      $profiledata['id']);
             }
          }
       }

@@ -46,12 +46,12 @@ $pft = new PluginFusioninventoryTask();
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "tasks");
 
-PluginFusioninventoryProfile::checkRight("task", "r");
+Session::checkRight('plugin_fusioninventory_task', READ);
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset($_POST['forcestart'])) {
-   PluginFusioninventoryProfile::checkRight("task", "w");
+   Session::checkRight('plugin_fusioninventory_task', UPDATE);
    $pfTaskjob = new PluginFusioninventoryTaskjob();
    $pfTaskjob->forceRunningTask($_POST['id']);
    Html::back();
@@ -67,12 +67,12 @@ if (isset($_POST['forcestart'])) {
    Html::back();
 
 } else if (isset ($_POST["add"])) {
-   PluginFusioninventoryProfile::checkRight("task", "w");
+   Session::checkRight('plugin_fusioninventory_task', CREATE);
 
    $itens_id = $pft->add($_POST);
    Html::redirect(str_replace("add=1", "", $_SERVER['HTTP_REFERER'])."id=".$itens_id);
 } else if (isset($_POST["delete"])) {
-   PluginFusioninventoryProfile::checkRight("task", "w");
+   Session::checkRight('plugin_fusioninventory_task', PURGE);
 
    $pftj = new PluginFusioninventoryTaskjob();
 
@@ -83,7 +83,7 @@ if (isset($_POST['forcestart'])) {
    $pft->delete($_POST);
    Html::redirect(Toolbox::getItemTypeSearchURL('PluginFusioninventoryTask'));
 } else if (isset($_POST["update"])) {
-   PluginFusioninventoryProfile::checkRight("task", "w");
+   Session::checkRight('plugin_fusioninventory_task', UPDATE);
 
   $pft->getFromDB($_POST['id']);
 

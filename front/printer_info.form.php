@@ -42,10 +42,10 @@
 
 include ("../../../inc/includes.php");
 
-PluginFusioninventoryProfile::checkRight("printer", "r");
+Session::checkRight('plugin_fusioninventory_printer', READ);
 
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
-      PluginFusioninventoryProfile::checkRight("printer", "w");
+      Session::checkRight('plugin_fusioninventory_printer', UPDATE);
 
    $plugin_fusioninventory_printer = new PluginFusioninventoryPrinter();
 

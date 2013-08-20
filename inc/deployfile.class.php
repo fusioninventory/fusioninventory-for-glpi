@@ -46,21 +46,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployFile extends CommonDBTM {
 
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight('packages', 'w');
-   }
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight('packages', 'r');
-   }
-
-   static function canDelete() {
-      return self::canEdit();
-   }
-   static function canEdit() {
-      return PluginFusioninventoryProfile::haveRight('packages', 'w');
-   }
-
+   static $rightname = 'plugin_fusioninventory_package';
+   
 
    static function getTypes() {
       return array(

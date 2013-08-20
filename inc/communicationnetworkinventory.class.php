@@ -49,6 +49,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    private $ptd, $logFile, $agent, $arrayinventory;
    private $a_ports = array();
 
+   static $rightname = 'plugin_fusioninventory_networkequipment';
 
 
    function __construct() {
@@ -58,19 +59,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    }
 
 
-
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("networkequipment", "w");
-   }
-
-
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("networkequipment", "r");
-   }
-
-
-
+   
    /**
     * Import data
     *

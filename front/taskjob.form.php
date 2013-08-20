@@ -47,7 +47,7 @@ $mytaskjob = new PluginFusioninventoryTaskjob();
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
              "fusioninventory", "tasks");
 
-PluginFusioninventoryProfile::checkRight("task", "r");
+Session::checkRight('plugin_fusioninventory_task', READ);
 
 if (isset($_POST['definition_add'])) {
    // * Add a definition
@@ -192,7 +192,7 @@ if (isset($_POST['definition_add'])) {
    }
 } else if (isset($_POST['taskjobstoforcerun'])) {
    // * Force running many tasks (wizard)
-   PluginFusioninventoryProfile::checkRight("task", "w");
+   Session::checkRight('plugin_fusioninventory_task', UPDATE);
    $pfTaskjob = new PluginFusioninventoryTaskjob();
    $_SESSION["plugin_fusioninventory_forcerun"] = array();
    foreach ($_POST['taskjobstoforcerun'] as $taskjobs_id) {
@@ -204,7 +204,7 @@ if (isset($_POST['definition_add'])) {
    Html::back();
 } else if (isset($_POST['add']) || isset($_POST['update'])) {
    // * Add and update taskjob
-   PluginFusioninventoryProfile::checkRight("task", "w");
+   Session::checkRight('plugin_fusioninventory_task', CREATE);
 
    if (isset($_POST['method_id'])) {
       $_POST['method']  = $_POST['method_id'];
@@ -231,7 +231,7 @@ if (isset($_POST['definition_add'])) {
 
 } else if (isset($_POST["delete"])) {
    // * delete taskjob
-   PluginFusioninventoryProfile::checkRight("task", "w");
+   Session::checkRight('plugin_fusioninventory_task', PURGE);
 
    $mytaskjob->delete($_POST);
    Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryTask')."?id=".

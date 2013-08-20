@@ -46,19 +46,14 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
+   
+   static $rightname = 'plugin_fusioninventory_ruleimport';
+   
 
    static function getTypeName($nb=0) {
       echo __('Equipment ignored on import', 'fusioninventory');
    }
 
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("iprange", "w");
-   }
-
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("iprange", "r");
-   }
 
 
    function showDevices() {

@@ -98,15 +98,15 @@ if (isset($_REQUEST['update_json'])) {
 $package = new PluginFusioninventoryDeployPackage();
 //general form
 if (isset ($_POST["add"])) {
-   PluginFusioninventoryProfile::checkRight("packages", "w");
+   Session::checkRight('plugin_fusioninventory_packages', CREATE);
    $newID = $package->add($_POST);
    html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployPackage')."?id=".$newID);
 } else if (isset ($_POST["update"])) {
-   PluginFusioninventoryProfile::checkRight("packages", "w");
+   Session::checkRight('plugin_fusioninventory_packages', UPDATE);
    $package->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-   PluginFusioninventoryProfile::checkRight("packages", "w");
+   Session::checkRight('plugin_fusioninventory_packages', PURGE);
    $package->delete($_POST);
    $package->redirectToList();
 }
@@ -119,7 +119,7 @@ $id = "";
 if (isset($_GET["id"])) {
    $id = $_GET["id"];
 }
-PluginFusioninventoryProfile::checkRight( "packages", "r");
+Session::checkRight('plugin_fusioninventory_packages', READ);
 $package->showForm($id);
 Html::footer();
 

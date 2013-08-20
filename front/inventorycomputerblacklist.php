@@ -48,7 +48,7 @@ Html::header(__('FusionInventory', 'fusioninventory'),
              "fusioninventory", 
              "blacklist");
 
-PluginFusioninventoryProfile::checkRight("blacklist", "r");
+Session::checkRight('plugin_fusioninventory_blacklist', READ);
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

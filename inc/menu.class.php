@@ -45,8 +45,33 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-class PluginFusioninventoryMenu {
+class PluginFusioninventoryMenu extends CommonGLPI {
 
+   
+   static $rightname = 'plugin_fusioninventory_menu';
+   
+   
+   
+   /**
+    * Name of the type
+    *
+    * @param $nb  integer  number of item in the type (default 0)
+   **/
+   static function getTypeName($nb=0) {
+      return 'FusionInventory';
+   }
+   
+   
+   
+   static function canView() {
+      if ((static::$rightname) && (Session::haveRight(static::$rightname, READ))) {
+         return true;
+      }
+      return false;
+   }
+   
+   
+   
    /**
    * Display the menu of FusionInventory
    *
@@ -96,18 +121,18 @@ class PluginFusioninventoryMenu {
        * General
        */
       $a_menu = array();
-      if (PluginFusioninventoryProfile::haveRight("agent", "r")) {
+      if (Session::haveRight("plugin_fusioninventory_agent", READ)) {
          $a_menu[0]['name'] = __('Agents management', 'fusioninventory');
          $a_menu[0]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
          $a_menu[0]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryAgent');
       }
 
-      if (PluginFusioninventoryProfile::haveRight("unknowndevice", "r")) {
-         $a_menu[1]['name'] = __('Unknown device', 'fusioninventory');
-         $a_menu[1]['pic']  = $CFG_GLPI['root_doc'].
-                                 "/plugins/fusioninventory/pics/menu_unknown_device.png";
-         $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryUnknownDevice');
-      }
+//      if (Session::haveRight("plugin_fusioninventory_unknowndevice", READ)) {
+//         $a_menu[1]['name'] = __('Unknown device', 'fusioninventory');
+//         $a_menu[1]['pic']  = $CFG_GLPI['root_doc'].
+//                                 "/plugins/fusioninventory/pics/menu_unknown_device.png";
+//         $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryUnknownDevice');
+//      }
 
       $a_menu[2]['name'] = __('Groups of computers', 'fusioninventory');
       $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_group.png";
@@ -131,27 +156,23 @@ class PluginFusioninventoryMenu {
        * Tasks
        */
       $a_menu = array();
-      if(PluginFusioninventoryProfile::haveRight("task", "r")) {
+      if(Session::haveRight("plugin_fusioninventory_task", READ)) {
          $a_menu[1]['name'] = __('Task management', 'fusioninventory')." (".__s('Summary').")";
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[1]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/tasksummary.php";
-      }
 
-      if(PluginFusioninventoryProfile::haveRight("task", "r")) {
          $a_menu[2]['name'] = __('Task management', 'fusioninventory')." (".__s('Normal').")";
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTask');
-      }
 
-      if (PluginFusioninventoryProfile::haveRight("task", "r")) {
          $a_menu[3]['name'] = __('Running jobs', 'fusioninventory');
          $a_menu[3]['pic']  = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_runningjob.png";
          $a_menu[3]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTaskJob');
       }
 
-      if (PluginFusioninventoryProfile::haveRight("importxml", "r")) {
+      if (Session::haveRight("plugin_fusioninventory_importxml", READ)) {
          $a_menu[0]['name'] = __('Import agent XML file', 'fusioninventory');
          $a_menu[0]['pic']  = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_importxml.png";
@@ -187,21 +208,19 @@ class PluginFusioninventoryMenu {
                  );
       }
 
-      if (PluginFusioninventoryProfile::haveRight("existantrule", "r")) {
+      if (Session::haveRight("plugin_fusioninventory_existantrule", READ)) {
          $a_menu[3]['name'] = __('Computer entity rules', 'fusioninventory');
          $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[3]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventoryruleentity.php";
-      }
 
-      if (PluginFusioninventoryProfile::haveRight("existantrule", "r")) {
          $a_menu[4]['name'] = __('Computer location rules', 'fusioninventory');
          $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[4]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventoryrulelocation.php";
       }
 
-      if (PluginFusioninventoryProfile::haveRight("blacklist", "r")) {
+      if (Session::haveRight("plugin_fusioninventory_blacklist", READ)) {
          $a_menu[5]['name'] = _n('Blacklist', 'Blacklists', 1);
          $a_menu[5]['pic']  = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_blacklist.png";
@@ -221,7 +240,7 @@ class PluginFusioninventoryMenu {
        */
       $a_menu = array();
 
-      if (PluginFusioninventoryProfile::haveRight("iprange", "r")) {
+      if (Session::haveRight("plugin_fusioninventory_iprange", READ)) {
          $a_menu[] = array(
             'name' => __('IP Ranges', 'fusioninventory'),
             'pic'  => $CFG_GLPI['root_doc'].
@@ -230,7 +249,7 @@ class PluginFusioninventoryMenu {
          );
       }
 
-      if (PluginFusioninventoryProfile::haveRight("credentialip", "r")) {
+      if (Session::haveRight("plugin_fusioninventory_credentialip", READ)) {
          $a_menu[] = array(
             'name' => __('Remote devices to inventory (VMware)', 'fusioninventory'),
             'pic'  => $CFG_GLPI['root_doc'].
@@ -239,7 +258,7 @@ class PluginFusioninventoryMenu {
          );
       }
 
-      if (PluginFusioninventoryProfile::haveRight("configsecurity", "r")) {
+      if (Session::haveRight("plugin_fusioninventory_configsecurity", READ)) {
          $a_menu[] = array(
             'name' => __('SNMP authentication', 'fusioninventory'),
             'pic'  => $CFG_GLPI['root_doc'].
@@ -249,7 +268,7 @@ class PluginFusioninventoryMenu {
          );
       }
 
-      if (PluginFusioninventoryProfile::haveRight("credential", "r")) {
+      if (Session::haveRight("plugin_fusioninventory_credential", READ)) {
          $a_menu[] = array(
             'name' => __('Authentication for remote devices (VMware)', 'fusioninventory'),
             'pic'  => $CFG_GLPI['root_doc'].
@@ -258,7 +277,7 @@ class PluginFusioninventoryMenu {
          );
       }
 
-      if (PluginFusioninventoryProfile::haveRight("task", "r")) {
+      if (Session::haveRight("plugin_fusioninventory_task", READ)) {
          $a_menu[] = array(
             'name' => __('Discovery status', 'fusioninventory'),
             'pic'  =>   $CFG_GLPI['root_doc'].
@@ -276,7 +295,7 @@ class PluginFusioninventoryMenu {
          );
       }
 
-      if (PluginFusioninventoryProfile::haveRight("model", "r")) {
+      if (Session::haveRight("plugin_fusioninventory_model", READ)) {
          $a_menu[] = array(
             'name' => __('SNMP models', 'fusioninventory'),
             'pic'  => $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_models.png",
@@ -284,7 +303,7 @@ class PluginFusioninventoryMenu {
          );
       }
 
-      if (PluginFusioninventoryProfile::haveRight("model", "r")) {
+      if (Session::haveRight("plugin_fusioninventory_model", READ)) {
          $a_menu[] = array(
             'name' => __('SNMP models creation', 'fusioninventory'),
             'pic'  => $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_constructmodel.png",
@@ -304,7 +323,7 @@ class PluginFusioninventoryMenu {
        */
       $a_menu = array();
 
-      if (PluginFusioninventoryProfile::haveRight("packages", "r")) {
+      if (Session::haveRight("plugin_fusioninventory_packages", READ)) {
          $a_menu[] =array(
             'name' => __('Package management', 'fusioninventory'),
             'pic'  => $CFG_GLPI['root_doc'].

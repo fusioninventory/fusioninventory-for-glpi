@@ -46,18 +46,11 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
 
+   static $rightname = 'plugin_fusioninventory_blacklist';
+   
+   
    static function getTypeName($nb=0) {
       return _n('Blacklist', 'Blacklists', $nb);
-   }
-
-
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("blacklist", "w");
-   }
-
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("blacklist", "r");
    }
 
 

@@ -46,6 +46,9 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
+   
+   static $rightname = 'plugin_fusioninventory_model';
+   
    /**
    * Get name of this type
    *
@@ -53,21 +56,9 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
    *
    **/
    static function getTypeName($nb=0) {
-
       return __('SNMP models', 'fusioninventory');
-
    }
-
-
-
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("model", "w");
-   }
-
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("model", "r");
-   }
+   
 
 
    function getSearchOptions() {
@@ -117,7 +108,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
    function showForm($id, $options=array()) {
       global $CFG_GLPI;
 
-      PluginFusioninventoryProfile::checkRight("model", "r");
+      Session::checkRight('plugin_fusioninventory_model', READ);
 
       if ($id!='') {
          $this->getFromDB($id);
@@ -179,7 +170,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_2'><td colspan='2'>";
-      if(PluginFusioninventoryProfile::haveRight("model", "w")) {
+      if(Session::haveRight("plugin_fusioninventory_model", UPDATE)) {
          if ($id=='') {
             echo "<div align='center'><input type='submit' name='add' value=\"" . __('Add') .
 

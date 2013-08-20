@@ -46,16 +46,13 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryStateInventory extends CommonDBTM {
 
+   static $rightname = 'plugin_fusioninventory_task';
+   
    function __construct() {
       global $CFG_GLPI;
 
       $CFG_GLPI['glpitablesitemtype']['PluginFusioninventoryStateInventory'] =
           'glpi_plugin_fusioninventory_taskjobstates';
-   }
-
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("task", "r");
    }
 
 

@@ -45,7 +45,7 @@ include ("../../../inc/includes.php");
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
              "fusioninventory", "agents");
 
-PluginFusioninventoryProfile::checkRight("agent", "r");
+Session::checkRight('plugin_fusioninventory_agent', READ);
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

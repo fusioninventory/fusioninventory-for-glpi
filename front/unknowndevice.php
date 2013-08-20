@@ -44,9 +44,9 @@ include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "unknown");
 
-PluginFusioninventoryProfile::checkRight("unknowndevice", "r");
+Session::checkRight('plugin_fusioninventory_unknowndevice', READ);
 
-PluginFusioninventoryMenu::displayMenu("mini");
+//PluginFusioninventoryMenu::displayMenu("mini");
 
 $_GET['target']="unknowndevice.php";
 

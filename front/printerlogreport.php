@@ -51,7 +51,7 @@ Html::header(__('FusionInventory', 'fusioninventory'),
              "fusioninventory", 
              "printerlog");
 
-PluginFusioninventoryProfile::checkRight("reportprinter", "r");
+Session::checkRight('plugin_fusioninventory_reportprinter', READ);
 
 if (isset($_POST['glpi_plugin_fusioninventory_date_start'])) {
    $_SESSION['glpi_plugin_fusioninventory_date_start'] = 

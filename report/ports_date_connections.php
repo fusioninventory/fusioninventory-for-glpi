@@ -48,7 +48,7 @@ include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
-PluginFusioninventoryProfile::checkRight("reportnetworkequipment", "r");
+Session::checkRight('plugin_fusioninventory_reportnetworkequipment', READ);
 
 if (isset($_GET["reset_search"])) {
    resetSearch();

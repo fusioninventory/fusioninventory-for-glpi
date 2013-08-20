@@ -42,7 +42,7 @@
 
 include ("../../../inc/includes.php");
 
-PluginFusioninventoryProfile::checkRight("configsecurity", "r");
+Session::checkRight('plugin_fusioninventory_configsecurity', READ);
 
 $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
 $config = new PluginFusioninventoryConfig();
@@ -54,16 +54,16 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 
 if (isset ($_POST["add"])) {
-   PluginFusioninventoryProfile::checkRight("configsecurity", "w");
+   Session::checkRight('plugin_fusioninventory_configsecurity', CREATE);
    $new_ID = 0;
    $new_ID = $pfConfigSecurity->add($_POST);
    Html::back();
 } else if (isset ($_POST["update"])) {
-   PluginFusioninventoryProfile::checkRight("configsecurity", "w");
+   Session::checkRight('plugin_fusioninventory_configsecurity', UPDATE);
    $pfConfigSecurity->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-   PluginFusioninventoryProfile::checkRight("configsecurity", "w");
+   Session::checkRight('plugin_fusioninventory_configsecurity', PURGE);
    $pfConfigSecurity->delete($_POST);
    Html::redirect("configsecurity.php");
 }

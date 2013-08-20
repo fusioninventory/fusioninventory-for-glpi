@@ -47,7 +47,7 @@ $agent = new PluginFusioninventoryAgent();
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
              "fusioninventory", "agents");
 
-PluginFusioninventoryProfile::checkRight("agent", "r");
+Session::checkRight('plugin_fusioninventory_agent', READ);
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
@@ -63,7 +63,7 @@ if (isset($_POST['startagent'])) {
    }
    Html::back();
 } else if (isset ($_POST["update"])) {
-   PluginFusioninventoryProfile::checkRight("agent", "w");
+   Session::checkRight('plugin_fusioninventory_agent', UPDATE);
    if (isset($_POST['items_id'])) {
       if (($_POST['items_id'] != "0") AND ($_POST['items_id'] != "")) {
          $_POST['itemtype'] = '1';
@@ -72,7 +72,7 @@ if (isset($_POST['startagent'])) {
    $agent->update($_POST);
    Html::back();
 } else if (isset ($_POST["delete"])) {
-   PluginFusioninventoryProfile::checkRight("agent", "w");
+   Session::checkRight('plugin_fusioninventory_agent', PURGE);
    $agent->delete($_POST);
    $agent->redirectToList();
 } else if (isset ($_POST["startagent"])) {

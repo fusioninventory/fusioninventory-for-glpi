@@ -43,7 +43,7 @@
 include ("../../../inc/includes.php");
 
 Session::checkRight("networking", "r");
-PluginFusioninventoryProfile::checkRight("networkequipment", "w");
+Session::checkRight('plugin_fusioninventory_networkequipment', UPDATE);
 
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {
    $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();

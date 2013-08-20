@@ -48,7 +48,7 @@ Html::header(__('FusionInventory', 'fusioninventory'),
              "fusioninventory", 
              "taskjob");
 
-PluginFusioninventoryProfile::checkRight("task", "r");
+Session::checkRight('plugin_fusioninventory_task', READ);
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

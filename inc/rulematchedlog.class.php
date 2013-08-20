@@ -46,18 +46,10 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
-
+   static $rightname = 'plugin_fusioninventory_ruleimport';
+   
    static function getTypeName($nb=0) {
 
-   }
-
-   static function canCreate() {
-      return TRUE;
-   }
-
-
-   static function canView() {
-      return TRUE;
    }
 
 
@@ -78,7 +70,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
       $array_ret = array();
       if ($item->getType() == 'PluginFusioninventoryAgent') {
-         if (PluginFusioninventoryProfile::haveRight("agent", "r")) {
+         if (Session::haveRight("plugin_fusioninventory_agent", READ)) {
              $array_ret[0] = self::createTabEntry(__('Import information', 'fusioninventory'));
 
          }

@@ -48,7 +48,7 @@ Html::header(__('FusionInventory', 'fusioninventory'),
              "fusioninventory", 
              "importxmlfile");
 
-PluginFusioninventoryProfile::checkRight("importxml", "w");
+Session::checkRight('plugin_fusioninventory_importxml', UPDATE);
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

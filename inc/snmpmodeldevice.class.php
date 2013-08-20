@@ -46,15 +46,9 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventorySnmpmodeldevice extends CommonDBTM {
 
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("model", "w");
-   }
-
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("model", "r");
-   }
-
+   
+   static $rightname = 'plugin_fusioninventory_model';
+   
 
    function updateDevicesForModel($models_id, $a_devices) {
       $a_devicesDBtmp = $this->find("`plugin_fusioninventory_snmpmodels_id`='".$models_id."'");

@@ -48,17 +48,12 @@ class PluginFusioninventoryCredential extends CommonDropdown {
 
    public $first_level_menu  = "plugins";
    public $second_level_menu = "fusioninventory";
+   
+   static $rightname = 'plugin_fusioninventory_credential';
+   
 
    static function getTypeName($nb=0) {
       return __('Authentication for remote devices (VMware)', 'fusioninventory');
-   }
-
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight('credential', 'w');
-   }
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight('credential', 'r');
    }
 
 
@@ -336,7 +331,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
          $rand = Dropdown::showFromArray('plugin_fusioninventory_credentials_id', $types,
                                          array('value' => $value));
 
-         if (PluginFusioninventoryProfile::haveRight('credential', 'w')) {
+         if (Session::haveRight("plugin_fusioninventory_credential", UPDATE)) {
             echo "<img alt='' title=\"".__('Add')."\" src='".$CFG_GLPI["root_doc"].
                "/pics/add_dropdown.png' style='cursor:pointer; margin-left:2px;'
                onClick=\"var w = window.open('".
@@ -364,7 +359,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
    function title() {
 
       $buttons = array();
-      if (PluginFusioninventoryProfile::haveRight('credential', 'r')) {
+      if (Session::haveRight("plugin_fusioninventory_credential", READ)) {
          $buttons["credentialip.php"] =
                   __('Remote devices to inventory (VMware)', 'fusioninventory');
 

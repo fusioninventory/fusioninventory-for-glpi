@@ -55,7 +55,7 @@ if (!isset($_SERVER['HTTP_REFERER'])
    PluginFusioninventoryMenu::displayMenu("mini");
 }
 
-if (PluginFusioninventoryProfile::haveRight("task", "w")) {
+if (Session::haveRight('plugin_fusioninventory_task', UPDATE)) {
    if (isset($_GET["wizz"])) {
       if (method_exists('PluginFusioninventoryWizard', $_GET["wizz"])) {
          $ariane = '';

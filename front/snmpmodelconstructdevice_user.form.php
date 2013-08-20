@@ -42,7 +42,7 @@
 
 include ("../../../inc/includes.php");
 
-PluginFusioninventoryProfile::checkRight("model", "r");
+Session::checkRight('plugin_fusioninventory_model', READ);
 
 $pfConstructdevice_User = new PluginFusioninventorySnmpmodelConstructdevice_User();
 
@@ -53,15 +53,15 @@ Html::header(__('FusionInventory', 'fusioninventory'),
              "models");
 
 if (isset ($_POST["add"])) {
-   PluginFusioninventoryProfile::checkRight("model", "w");
+   Session::checkRight('plugin_fusioninventory_model', CREATE);
    $pfConstructdevice_User->add($_POST);
    Html::back();
 } else if (isset ($_POST["update"])) {
-   PluginFusioninventoryProfile::checkRight("model", "w");
+   Session::checkRight('plugin_fusioninventory_model', UPDATE);
    $pfConstructdevice_User->update($_POST);
    Html::back();
 } else if (isset ($_POST["purge"])) {
-   PluginFusioninventoryProfile::checkRight("model", "w");
+   Session::checkRight('plugin_fusioninventory_model', PURGE);
    $pfConstructdevice_User->delete($_POST);
    Html::back();
 }

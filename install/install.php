@@ -230,7 +230,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
     * Manage profiles
     */
       $migration->displayMessage("Initialize profiles");
-      PluginFusioninventoryProfile::initProfile('fusioninventory');
+      PluginFusioninventoryProfile::initProfile();
 
 
 

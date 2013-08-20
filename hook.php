@@ -879,14 +879,14 @@ function plugin_fusioninventory_MassiveActions($type) {
 
       case "PluginFusioninventoryUnknownDevice";
          $array = array();
-         if (PluginFusioninventoryProfile::haveRight("unknowndevice", "w")) {
+         if (Session::haveRight("plugin_fusioninventory_unknowndevice", UPDATE)) {
             $array["plugin_fusioninventory_unknown_import"]    = __('Import');
          }
-         if(PluginFusioninventoryProfile::haveRight("configsecurity", "r")) {
+         if(Session::haveRight("plugin_fusioninventory_configsecurity", READ)) {
             $array["plugin_fusioninventory_assign_auth"]       =
                                           __('Assign SNMP authentication', 'fusioninventory');
          }
-         if(PluginFusioninventoryProfile::haveRight("model", "w")) {
+         if(Session::haveRight("plugin_fusioninventory_model", UPDATE)) {
             $array["plugin_fusioninventory_assign_model"]      =
                                           __('Assign SNMP model', 'fusioninventory');
          }
@@ -1068,14 +1068,14 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          break;
 
       case "plugin_fusioninventory_get_model" :
-         if(PluginFusioninventoryProfile::haveRight("model", "w")) {
+         if(Session::haveRight("plugin_fusioninventory_model", UPDATE)) {
              echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
                __('Post') . "\" >";
          }
          break;
 
       case "plugin_fusioninventory_assign_model" :
-         if(PluginFusioninventoryProfile::haveRight("model", "w")) {
+         if(Session::haveRight("plugin_fusioninventory_model", UPDATE)) {
             $query_models = "SELECT *
                              FROM `glpi_plugin_fusioninventory_snmpmodels`
                              WHERE `itemtype`!='".$options['itemtype']."'";
@@ -1100,7 +1100,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          break;
 
       case "plugin_fusioninventory_assign_auth" :
-         if(PluginFusioninventoryProfile::haveRight("configsecurity", "w")) {
+         if(Session::haveRight("plugin_fusioninventory_configsecurity", UPDATE)) {
             PluginFusioninventoryConfigSecurity::auth_dropdown();
             echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
                __('Post') . "\" >";
@@ -1108,12 +1108,10 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          break;
 
       case "plugin_fusioninventory_unknown_import" :
-         if (PluginFusioninventoryProfile::haveRight("unknowndevice", "w")) {
+         if (Session::haveRight("plugin_fusioninventory_unknowndevice", UPDATE)) {
             if ($options['itemtype'] == 'PluginFusioninventoryUnknownDevice') {
-               if (PluginFusioninventoryProfile::haveRight("unknowndevice", "w")) {
-                  echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"".
-                          __('Post') . "\" >";
-               }
+               echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"".
+                       __('Post') . "\" >";
             }
          }
          break;
@@ -1273,7 +1271,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          break;
 
       case "plugin_fusioninventory_unknown_import" :
-         if (PluginFusioninventoryProfile::haveRight("unknowndevice", "w")) {
+         if (Session::haveRight("plugin_fusioninventory_unknowndevice", UPDATE)) {
             $Import = 0;
             $NoImport = 0;
             $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
