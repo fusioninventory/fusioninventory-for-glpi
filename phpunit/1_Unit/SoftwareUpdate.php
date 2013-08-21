@@ -77,7 +77,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       // * Add rule rename software
          $input = array();
          $input['sub_type']   = 'RuleDictionnarySoftware';
-         $input['name']       = 'glpi0.84';
+         $input['name']       = 'glpi0.85';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
          $rules_id = $rule->add($input); 
@@ -86,7 +86,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
          $input['rules_id']   = $rules_id;
          $input['criteria']   = 'name';
          $input['condition']  = 0;
-         $input['pattern']    = 'glpi0.84';
+         $input['pattern']    = 'glpi0.85';
          $ruleCriteria->add($input);
          
          $input = array();
@@ -121,7 +121,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       // * Add rule Modify version
          $input = array();
          $input['sub_type']   = 'RuleDictionnarySoftware';
-         $input['name']       = 'glpi0.83';
+         $input['name']       = 'glpi0.85';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
          $rules_id = $rule->add($input); 
@@ -130,14 +130,14 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
          $input['rules_id']   = $rules_id;
          $input['criteria']   = 'name';
          $input['condition']  = 0;
-         $input['pattern']    = 'glpi0.83';
+         $input['pattern']    = 'glpi0.85';
          $ruleCriteria->add($input);
          
          $input = array();
          $input['rules_id']      = $rules_id;
          $input['action_type']   = 'assign';
          $input['field']         = 'version';
-         $input['value']         = '0.83';
+         $input['value']         = '0.85';
          $ruleAction->add($input); 
    }
    
@@ -154,7 +154,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       $a_software['SOFTWARES'][] = array(
                 'PUBLISHER' => 'fusioninventory team',
                 'NAME'      => 'fusioninventory',
-                'VERSION'   => '0.84+1.0'
+                'VERSION'   => '0.85+1.0'
             );
       
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
@@ -162,10 +162,10 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["fusioninventory$$$$0.84+1.0$$$$1$$$$0"] = array(
+      $a_reference['software']["fusioninventory$$$$0.85+1.0$$$$1$$$$0"] = array(
                'name'                  => 'fusioninventory',
                'manufacturers_id'      => 1,
-               'version'               => '0.84+1.0',
+               'version'               => '0.85+1.0',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
                'entities_id'           => 0
@@ -188,7 +188,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       $a_software['SOFTWARES'][] = array(
                 'PUBLISHER' => 'indepnet',
                 'NAME'      => 'glpi',
-                'VERSION'   => '0.84'
+                'VERSION'   => '0.85'
             );
       
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
@@ -214,8 +214,8 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       $a_software = array();
       $a_software['SOFTWARES'][] = array(
                 'PUBLISHER' => 'indepnet',
-                'NAME'      => 'glpi0.84',
-                'VERSION'   => '0.84'
+                'NAME'      => 'glpi0.85',
+                'VERSION'   => '0.85'
             );
       
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
@@ -223,10 +223,10 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["glpi$$$$0.84$$$$2$$$$0"] = array(
+      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0"] = array(
                'name'                  => 'glpi',
                'manufacturers_id'      => 2,
-               'version'               => '0.84',
+               'version'               => '0.85',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
                'entities_id'           => 0
@@ -248,8 +248,8 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       $a_software = array();
       $a_software['SOFTWARES'][] = array(
                 'PUBLISHER' => 'indepnet assoce',
-                'NAME'      => 'glpi0.84',
-                'VERSION'   => '0.84'
+                'NAME'      => 'glpi0.85',
+                'VERSION'   => '0.85'
             );
       
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
@@ -257,10 +257,10 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["glpi$$$$0.84$$$$2$$$$0"] = array(
+      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0"] = array(
                'name'                  => 'glpi',
                'manufacturers_id'      => 2,
-               'version'               => '0.84',
+               'version'               => '0.85',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
                'entities_id'           => 0
@@ -282,8 +282,8 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       $a_software = array();
       $a_software['SOFTWARES'][] = array(
                 'PUBLISHER' => 'indepnet',
-                'NAME'      => 'glpi0.83',
-                'VERSION'   => '0.84'
+                'NAME'      => 'glpi0.85',
+                'VERSION'   => '0.85'
             );
       
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
@@ -291,10 +291,10 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["glpi0.83$$$$0.83$$$$2$$$$0"] = array(
-               'name'                  => 'glpi0.83',
+      $a_reference['software']["glpi0.85$$$$0.85$$$$2$$$$0"] = array(
+               'name'                  => 'glpi0.85',
                'manufacturers_id'      => 2,
-               'version'               => '0.83',
+               'version'               => '0.85',
                'is_template_computer'  => 0,
                'is_deleted_computer'   => 0,
                'entities_id'           => 0
