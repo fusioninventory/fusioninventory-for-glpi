@@ -54,6 +54,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+      $pfAgent = new PluginFusioninventoryAgent();
 
       $uniqid = uniqid();
 
@@ -72,28 +73,18 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
 
          foreach($a_actions as $a_action) {
             if ((!in_array('.1', $a_action))
-               AND (!in_array('.2', $a_action))) {
+               && (!in_array('.2', $a_action))) {
 
-               $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet,
-                     token FROM `glpi_plugin_fusioninventory_agents`
-                  LEFT JOIN `glpi_networkports` ON `glpi_networkports`.`items_id` =
-                     `glpi_plugin_fusioninventory_agents`.`items_id`
-                  LEFT JOIN `glpi_computers` ON `glpi_computers`.`id` =
-                     `glpi_plugin_fusioninventory_agents`.`items_id`
-                  WHERE `glpi_networkports`.`itemtype`='Computer'
-                     AND  `glpi_plugin_fusioninventory_agents`.`id`='".current($a_action)."'";
-               $result = $DB->query($query);
-               if ($result) {
-                  while ($data=$DB->fetch_array($result)) {
-                     if ($communication == 'push') {
-                        if ($pfTaskjob->isAgentAlive(1, $data['a_id'])) {
-                           $a_agentList[] = $data['a_id'];
-                        }
-                     } else if ($communication == 'pull') {
-                        $a_agentList[] = $data['a_id'];
+               $agent_id = current($a_action);
+               if ($pfAgent->getFromDB($agent_id)) {
+                  if ($communication == 'pull') {
+                     $a_agentList[] = $agent_id;
+                  } else {
+                     if ($pfTaskjob->isAgentAlive('1', $agent_id)) {
+                        $a_agentList[] = $agent_id;
                      }
                   }
-               }
+               }               
             }
          }
       }
