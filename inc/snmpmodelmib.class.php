@@ -138,7 +138,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                echo "<td align='center'>";
                if ($data["oid_port_counter"] == "1") {
                   if ($data["is_active"] == "1") {
-                     echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+                     echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark.png'/>";
                   } else if ($data["is_active"] == "0") {
                      echo "<img src='".$CFG_GLPI["root_doc"].
                               "/plugins/fusioninventory/pics/bookmark_off.png'/>";
@@ -149,7 +149,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                echo "<td align='center'>";
                if ($data["oid_port_dyn"] == "1") {
                   if ($data["is_active"] == "1") {
-                     echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+                     echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark.png'/>";
                   } else if ($data["is_active"] == "0") {
                      echo "<img src='".$CFG_GLPI["root_doc"].
                               "/plugins/fusioninventory/pics/bookmark_off.png'/>";
@@ -173,7 +173,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                   echo "<td align='center'>";
                   if ($data["vlan"] == "1") {
                      if ($data["is_active"] == "1") {
-                        echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+                        echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark.png'/>";
                      } else if ($data["is_active"] == "0") {
                         echo "<img src='".$CFG_GLPI["root_doc"].
                                  "/plugins/fusioninventory/pics/bookmark_off.png'/>";
@@ -185,7 +185,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                echo "<td align='center'>";
                echo "<a href='".$target."?id=".$id."&is_active=".$data["id"]."'>";
                if ($data["is_active"] == "1") {
-                  echo "<img src='".$CFG_GLPI["root_doc"]."/pics/bookmark.png'/>";
+                  echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/bookmark.png'/>";
                } else if ($data["is_active"] == "0") {
                   echo "<img src='".$CFG_GLPI["root_doc"].
                            "/plugins/fusioninventory/pics/bookmark_off.png'/>";
