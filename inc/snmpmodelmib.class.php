@@ -60,19 +60,21 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
          $data = $DB->fetch_assoc($result);
          $type_model = $data['itemtype'];
 
-         $query = "SELECT `plugin_fusioninventory_snmpmodels`.`itemtype`,
+         $query = "SELECT `glpi_plugin_fusioninventory_snmpmodels`.`itemtype`,
                           `glpi_plugin_fusioninventory_snmpmodelmibs`.*,
                           `glpi_plugin_fusioninventory_mappings`.`name`,
                           `glpi_plugin_fusioninventory_mappings`.`locale`
                    FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
-                        LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
-                        ON `glpi_plugin_fusioninventory_snmpmodelmibs`.".
-                              "`plugin_fusioninventory_snmpmodels_id`=
-                           `glpi_plugin_fusioninventory_snmpmodels`.`id`
-                        LEFT JOIN `glpi_plugin_fusioninventory_mappings`
-                        ON `glpi_plugin_fusioninventory_snmpmodelmibs`.".
-                              "`plugin_fusioninventory_mappings_id`=
-                           `glpi_plugin_fusioninventory_mappings`.`id`
+                   
+                  LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
+                     ON `glpi_plugin_fusioninventory_snmpmodelmibs`.".
+                        "`plugin_fusioninventory_snmpmodels_id`=
+                     `glpi_plugin_fusioninventory_snmpmodels`.`id`
+                     
+                  LEFT JOIN `glpi_plugin_fusioninventory_mappings`
+                     ON `glpi_plugin_fusioninventory_snmpmodelmibs`.".
+                        "`plugin_fusioninventory_mappings_id`=
+                     `glpi_plugin_fusioninventory_mappings`.`id`
                    WHERE `glpi_plugin_fusioninventory_snmpmodels`.`id`='".$id."';";
          $result = $DB->query($query);
          if ($result) {
@@ -155,11 +157,13 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                }
                echo "</td>";
 
-               echo "<td align='center'>";
+               echo "<td align='left'>";
                $mapping = new PluginFusioninventoryMapping();
                $mapping->getFromDB($data['plugin_fusioninventory_mappings_id']);
-               echo $mapping->getTranslation($mapping->fields['locale'])." (".
-                       $mapping->fields['name'].")";
+               if (isset($mapping->fields['name'])) {
+                  echo $mapping->getTranslation($mapping->fields)." (".
+                          $mapping->fields['name'].")";
+               }
                if (isset($mapping->fields['id'])) {
                   $mappings_used[$mapping->fields['id']] = 1;
                }
@@ -285,7 +289,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
       $oMapping = new PluginFusioninventoryMapping();
       $mappings = $oMapping->find("`itemtype`='".$type_model."'");
       foreach ($mappings as $mapping) {
-         $types[$mapping['id']]=$mapping->getTranslation($mapping);
+         $types[$mapping['id']] = $oMapping->getTranslation($mapping);
       }
 
       Dropdown::showFromArray("plugin_fusioninventory_mappings_id", $types,
