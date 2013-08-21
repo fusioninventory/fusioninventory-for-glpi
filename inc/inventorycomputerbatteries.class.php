@@ -74,7 +74,7 @@ class PluginFusioninventoryInventoryComputerBatteries extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getType() == 'Computer') {
-         if (Session::haveRight('computer', "r")) {
+         if (Session::haveRight('computer', READ)) {
             $a_antivirus = $this->find("`computers_id`='".$item->getID()."'", '', 1);
             if (count($a_antivirus) > 0) {
                return self::createTabEntry(__('Batterie', 'fusioninventory'));

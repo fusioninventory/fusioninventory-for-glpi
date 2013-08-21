@@ -188,7 +188,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
 
          $pfConfig = new PluginFusioninventoryConfig();
          if (($pfConfig->isActive('remotehttpagent'))
-                 && (Session::haveRight("plugin_fusioninventory_remotecontrol", UPDATE))) {
+                 && (Session::haveRight('plugin_fusioninventory_remotecontrol', UPDATE))) {
             $ong[2]=__('Job', 'fusioninventory');
          }
       }

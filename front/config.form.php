@@ -42,7 +42,7 @@
 
 include ("../../../inc/includes.php");
 
-Session::checkRight("plugin_fusioninventory_configuration", READ);
+Session::checkRight('plugin_fusioninventory_configuration', READ);
 
 Html::header(__('Features', 'fusioninventory'), $_SERVER["PHP_SELF"],
              "plugins", "fusioninventory", "configuration");

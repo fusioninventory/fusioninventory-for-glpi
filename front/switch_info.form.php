@@ -42,7 +42,7 @@
 
 include ("../../../inc/includes.php");
 
-Session::checkRight("networking", "r");
+Session::checkRight('networking', READ);
 Session::checkRight('plugin_fusioninventory_networkequipment', UPDATE);
 
 if ((isset($_POST['update'])) && (isset($_POST['id']))) {

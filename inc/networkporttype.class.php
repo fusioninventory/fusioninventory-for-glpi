@@ -359,7 +359,7 @@ class PluginFusioninventoryNetworkporttype extends CommonDBTM {
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
 
-      if (Session::haveRight("plugin_fusioninventory_configuration", UPDATE)) {
+      if (Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
 
 
          echo "<td class='right'>";

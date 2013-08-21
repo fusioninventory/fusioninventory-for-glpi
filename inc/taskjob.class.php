@@ -114,7 +114,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-      if (Session::haveRight("plugin_fusioninventory_task", READ)) {
+      if (Session::haveRight('plugin_fusioninventory_task', READ)) {
          return __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
       }
       return '';

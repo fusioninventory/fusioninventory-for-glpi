@@ -80,12 +80,12 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    function showForm(CommonDBTM $item, $options=array()) {
       global $DB, $CFG_GLPI;
 
-      if (!Session::haveRight("plugin_fusioninventory_networkequipment", READ)) {
+      if (!Session::haveRight('plugin_fusioninventory_networkequipment', READ)) {
          NetworkPort::showForItem($item);
          return;
       }
       $canedit = FALSE;
-      if (Session::haveRight("plugin_fusioninventory_networkequipment", UPDATE)) {
+      if (Session::haveRight('plugin_fusioninventory_networkequipment', UPDATE)) {
          $canedit = TRUE;
       }
 
@@ -202,7 +202,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       $nbcol = 5;
       if ($monitoring == '1') {
-         if (PluginMonitoringSession::haveRight("componentscatalog", 'r')) {
+         if (PluginMonitoringSession::haveRight('componentscatalog', 'r')) {
             echo "<form name='form' method='post' action='".$CFG_GLPI['root_doc'].
                     "/plugins/monitoring/front/networkport.form.php'>";
             echo "<input type='hidden' name='items_id' value='".$id."' />";
@@ -253,7 +253,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          }
       }
       if ($monitoring == '1') {
-         if (PluginMonitoringSession::haveRight("componentscatalog", 'w')) {
+         if (PluginMonitoringSession::haveRight('componentscatalog', 'w')) {
             echo "<tr class='tab_bg_1 center'>";
             echo "<td colspan='2'></td>";
             echo "<td class='center'>";
@@ -265,7 +265,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       }
       echo "</table>";
       if ($monitoring == '1') {
-         if (PluginMonitoringSession::haveRight("componentscatalog", 'w')) {
+         if (PluginMonitoringSession::haveRight('componentscatalog', 'w')) {
             Html::closeForm();
          }
       }
@@ -777,14 +777,14 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       if ($monitoring == '1') {
          echo "<td>";
          $state = PluginMonitoringNetworkport::isMonitoredNetworkport($data['id']);
-         if (PluginMonitoringSession::haveRight("componentscatalog", 'w')) {
+         if (PluginMonitoringSession::haveRight('componentscatalog', 'w')) {
             $checked = '';
             if ($state) {
                $checked = 'checked';
             }
             echo "<input type='checkbox' name='networkports_id[]' value='".$data['id']."' ".
                     $checked."/>";
-         } else if (PluginMonitoringSession::haveRight("componentscatalog", 'r')) {
+         } else if (PluginMonitoringSession::haveRight('componentscatalog', 'r')) {
             echo Dropdown::getYesNo($state);
          }
          echo "</td>";
@@ -997,7 +997,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
             case 12:
                echo "<td>";
 
-               $canedit = Session::haveRight("networking", "w");
+               $canedit = Session::haveRight('networking', UPDATE);
 
                $used = array();
 

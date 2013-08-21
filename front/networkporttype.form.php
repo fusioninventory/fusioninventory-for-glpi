@@ -42,7 +42,7 @@
 
 include ("../../../inc/includes.php");
 
-Session::checkRight("config", "w");
+Session::checkRight('config', UPDATE);
 
 $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
 

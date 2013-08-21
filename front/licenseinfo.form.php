@@ -42,7 +42,7 @@
 
 include ("../../../inc/includes.php");
 
-Session::checkRight("config", "w");
+Session::checkRight('config', UPDATE);
 
 if (isset($_POST['associate'])) {
    $pflicenseinfo = new PluginFusioninventoryComputerLicenseInfo();

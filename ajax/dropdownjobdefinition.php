@@ -57,7 +57,7 @@ if (isset($_POST["type"]) && isset($_POST["actortype"])) {
          // Only steal or own ticket whit empty assign
          if ($_POST["actortype"]=='assign') {
             $right = "own_ticket";
-            if (!Session::haveRight("assign_ticket", "1")) {
+            if (!$item->canAssign()) {
                $right = 'id';
             }
          }

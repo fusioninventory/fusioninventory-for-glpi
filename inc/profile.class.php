@@ -201,9 +201,9 @@ class PluginFusioninventoryProfile extends Profile {
    
    function getRightsDeploy() {
       $rights = array(
-//          array('itemtype'  => 'PluginFusioninventoryDeployPackage',
-//                'label'     => __('Manage packages'),
-//                'field'     => 'plugin_fusioninventory_package'),
+          array('itemtype'  => 'PluginFusioninventoryDeployPackage',
+                'label'     => __('Manage packages'),
+                'field'     => 'plugin_fusioninventory_package'),
           array('itemtype'  => 'PluginFusioninventoryDeployMirror',
                 'label'     => __('Mirror servers', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_deploymirror'),
@@ -265,7 +265,10 @@ class PluginFusioninventoryProfile extends Profile {
    
    function getRightsGeneral() {
       $rights = array(
-         array('itemtype'  => 'PluginFusioninventoryAgent',
+          array('rights'    => CommonDBTM::getRights(),
+                'label'     => __('Menu', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_menu'),
+          array('itemtype'  => 'PluginFusioninventoryAgent',
                 'label'     => __('Agents', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_agent'),
           array('rights'    => CommonDBTM::getRights(),
@@ -274,15 +277,12 @@ class PluginFusioninventoryProfile extends Profile {
           array('itemtype'  => 'PluginFusioninventoryConfiguration',
                 'label'     => __('Configuration', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_configuration'),
-          array('rights'    => CommonDBTM::getRights(),
-                'label'     => __('Wake On LAN', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_wol'),
           array('itemtype'  => 'PluginFusioninventoryTask',
                 'label'     => _n('Task', 'Tasks', 2),
                 'field'     => 'plugin_fusioninventory_task'),
           array('rights'    => CommonDBTM::getRights(),
-                'label'     => __('Menu', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_menu')
+                'label'     => __('Wake On LAN', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_wol')
       );
       return $rights; 
    }   

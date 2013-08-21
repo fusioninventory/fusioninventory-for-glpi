@@ -42,7 +42,7 @@
 
 include ("../../../inc/includes.php");
 
-//Session::checkRight("config", "w");
+//Session::checkRight('config', "w");
 
 $itemtype = $_GET['itemtype'];
 $function = $_GET['function'];

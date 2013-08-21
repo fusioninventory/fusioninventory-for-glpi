@@ -42,7 +42,7 @@
 
 include ("../../../inc/includes.php");
 
-Session::checkRight("printer", "r");
+Session::checkRight('printer', READ);
 Session::checkRight('plugin_fusioninventory_printer', READ);
 
 $pfPrinterLog = new PluginFusioninventoryPrinterLog();

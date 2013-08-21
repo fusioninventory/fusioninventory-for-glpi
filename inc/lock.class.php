@@ -75,7 +75,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if ($itemtype == 'NetworkEquipment') {
          $itemtype = "networking";
       }
-      if (Session::haveRight(strtolower($itemtype), "w")) {
+      if (Session::haveRight(strtolower($itemtype), UPDATE)) {
          if ($_SESSION['glpishow_count_on_tabs']) {
             return self::createTabEntry(PluginFusioninventoryLock::getTypeName(2),
                                         self::countForLock($item));
@@ -122,7 +122,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       if ($typeright == "networkequipment") {
          $typeright = "networking";
       }
-      if (Session::haveRight($typeright, "w")) {
+      if (Session::haveRight($typeright, UPDATE)) {
         $can = 1;
       }
 

@@ -139,7 +139,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       echo "<td align='center'>";
       echo "<input type='file' name='importfile' value=''/>";
 
-      if(Session::haveRight("plugin_fusioninventory_model", UPDATE)) {
+      if(Session::haveRight('plugin_fusioninventory_model', UPDATE)) {
     echo "&nbsp;<input type='submit' value='".__('Import')."' class='submit'/>";
       }
       echo "</td>";
@@ -164,7 +164,7 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       echo "<td align='center'>";
       echo __('Mass import of models in folder plugins/fusioninventory/snmpmodels/', 'fusioninventory')."<br/>";
       echo "<input type='hidden' name='massimport' value='1'/>";
-      if(Session::haveRight("plugin_fusioninventory_model", UPDATE)) {
+      if(Session::haveRight('plugin_fusioninventory_model', UPDATE)) {
     echo "&nbsp;<input type='submit' value='".__('Import')."' class='submit'/>";
       }
       echo "</td>";

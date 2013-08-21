@@ -58,7 +58,7 @@ class PluginFusioninventoryInventoryComputerStorage extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getType() == 'Computer') {
-         if (Session::haveRight('computer', "r")) {
+         if (Session::haveRight('computer', READ)) {
             $a_nb = countElementsInTable(
                         getTableForItemType("PluginFusioninventoryInventoryComputerStorage"),
                         "`computers_id`='".$item->getID()."'");

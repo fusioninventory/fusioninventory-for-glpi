@@ -273,7 +273,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
 
    function showForm($id, $options=array()) {
 
-      if (!Session::haveRight("plugin_fusioninventory_printer", READ)) {
+      if (!Session::haveRight('plugin_fusioninventory_printer', READ)) {
          return FALSE;
       }
 
@@ -338,7 +338,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
          echo "<input type='hidden' name='ID_$i' value='".$data["$i"]['id']."'>";
       }
 
-      if (!Session::haveRight("plugin_fusioninventory_printer", UPDATE)) {
+      if (!Session::haveRight('plugin_fusioninventory_printer', UPDATE)) {
          return FALSE;
       }
 

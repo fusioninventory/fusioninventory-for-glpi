@@ -191,8 +191,8 @@ function plugin_init_fusioninventory() {
          );
       }
 
-      if (Session::haveRight("plugin_fusioninventory_configuration", READ) 
-              || Session::haveRight("profile", UPDATE)) {// Config page
+      if (Session::haveRight('plugin_fusioninventory_configuration', READ) 
+              || Session::haveRight('profile', UPDATE)) {// Config page
          $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/config.form.php'.
                  '?itemtype=pluginfusioninventoryconfig&glpi_tab=1';
       }
@@ -260,11 +260,11 @@ function plugin_init_fusioninventory() {
 
       if (isset($_SESSION["glpiname"])) {
          $report_list = array();
-         if (Session::haveRight("plugin_fusioninventory_reportprinter", READ)) {
+         if (Session::haveRight('plugin_fusioninventory_reportprinter', READ)) {
             $report_list["front/printerlogreport.php"] = __('Printed page counter', 'fusioninventory');
 
          }
-         if (Session::haveRight("plugin_fusioninventory_reportnetworkequipment", READ)) {
+         if (Session::haveRight('plugin_fusioninventory_reportnetworkequipment', READ)) {
             $report_list["report/switch_ports.history.php"] = __('Switchs ports history', 'fusioninventory');
 
             $report_list["report/ports_date_connections.php"] = __('Unused switchs ports', 'fusioninventory');
@@ -272,7 +272,7 @@ function plugin_init_fusioninventory() {
             $report_list["report/not_queried_recently.php"] = __('Number of days since last inventory', 'fusioninventory');
 
          }
-         if (Session::haveRight("computer", READ)) {
+         if (Session::haveRight('computer', READ)) {
             $report_list["report/computer_last_inventory.php"] = __('Computers not inventoried since xx days', 'fusioninventory');
          }
          $PLUGIN_HOOKS['reports']['fusioninventory'] = $report_list;
@@ -314,19 +314,19 @@ function plugin_init_fusioninventory() {
          $hook_search['configsecurity'] = '../fusioninventory/front/configsecurity.php';
 
 
-         if (Session::haveRight("plugin_fusioninventory_iprange", UPDATE)) {
+         if (Session::haveRight('plugin_fusioninventory_iprange', UPDATE)) {
             $hook_add['iprange'] = '../fusioninventory/front/iprange.form.php?add=1';
             $hook_search['iprange'] = '../fusioninventory/front/iprange.php';
          }
 
-         if (Session::haveRight("plugin_fusioninventory_credential", UPDATE)) {
+         if (Session::haveRight('plugin_fusioninventory_credential', UPDATE)) {
             $hook_add['PluginFusioninventoryCredential'] =
                '../fusioninventory/front/credential.form.php?add=1';
             $hook_search['PluginFusioninventoryCredential'] =
                '../fusioninventory/front/credential.php';
           }
 
-         if (Session::haveRight("plugin_fusioninventory_credential", UPDATE)) {
+         if (Session::haveRight('plugin_fusioninventory_credential', UPDATE)) {
             $hook_add['PluginFusioninventoryCredentialIp'] =
                '../fusioninventory/front/credentialip.form.php?add=1';
             $hook_search['PluginFusioninventoryCredentialIp'] =
@@ -350,12 +350,12 @@ function plugin_init_fusioninventory() {
          $hook_add['group'] = '../fusioninventory/front/deploygroup.form.php?add=1';
          $hook_search['group'] = '../fusioninventory/front/deploygroup.php';
 
-         if (Session::haveRight("plugin_fusioninventory_agent", READ)) {
-            if (Session::haveRight("plugin_fusioninventory_agents", UPDATE)) {
+         if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
+            if (Session::haveRight('plugin_fusioninventory_agents', UPDATE)) {
                $hook_search['agents'] = 'front/agent.php';
             }
 
-            if (Session::haveRight("plugin_fusioninventory_configuration", READ)) {// Config page
+            if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {// Config page
                $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/config.form.php';
             }
          }

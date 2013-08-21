@@ -48,7 +48,7 @@ include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER['PHP_SELF'], "utils", "report");
 
-Session::checkRight("computer", "r");
+Session::checkRight('computer', READ);
 
 $nbdays = 365;
 if (isset($_GET["nbdays"])) {

@@ -50,8 +50,8 @@ if (isset($_POST["itemtype"])) {
    $itemtype = 0;
 }
 
-Session::checkRight("networking", "r");
-Session::checkRight("internet", "r");
+Session::checkRight('networking', READ);
+Session::checkRight('internet', READ);
 PluginFusioninventoryNetworkPort::showDislayOptions($itemtype);
 Html::ajaxFooter();
 ?>

@@ -127,7 +127,7 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
       //Leave empty !
       $buttons = array();
-      if (Session::haveRight("plugin_fusioninventory_credential", READ)) {
+      if (Session::haveRight('plugin_fusioninventory_credential', READ)) {
          $buttons["credential.php"] =
                   __('Authentication for remote devices (VMware)', 'fusioninventory');
 

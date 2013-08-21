@@ -170,7 +170,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_2'><td colspan='2'>";
-      if(Session::haveRight("plugin_fusioninventory_model", UPDATE)) {
+      if(Session::haveRight('plugin_fusioninventory_model', UPDATE)) {
          if ($id=='') {
             echo "<div align='center'><input type='submit' name='add' value=\"" . __('Add') .
 

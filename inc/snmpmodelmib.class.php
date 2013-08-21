@@ -50,7 +50,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
    function showFormList($id, $options=array()) {
       global $DB, $CFG_GLPI;
 
-      if (!Session::haveRight("plugin_fusioninventory_model", READ)) {
+      if (!Session::haveRight('plugin_fusioninventory_model', READ)) {
          return FALSE;
       } else if ((isset($id)) AND (!empty($id))) {
          $query = "SELECT `itemtype`
@@ -204,7 +204,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                      return FALSE;\" href='".$_SERVER['PHP_SELF']."?select=none'>".
                      __('Uncheck All', 'fusioninventory')."</a>";
             echo "</td><td align='left' colspan='6' width='80%'>";
-            if(Session::haveRight("plugin_fusioninventory_model", UPDATE)) {
+            if(Session::haveRight('plugin_fusioninventory_model', UPDATE)) {
                echo "<input class='submit' type='submit' name='delete_oid' value='" .
                      __('Delete', 'fusioninventory') . "'>";
             }
@@ -302,7 +302,7 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'><td colspan='7' align='center'>";
-      if(Session::haveRight("plugin_fusioninventory_model", UPDATE)) {
+      if(Session::haveRight('plugin_fusioninventory_model', UPDATE)) {
          echo "<input type='hidden' name='plugin_fusioninventory_snmpmodels_id' value='".$id."'/>";
          echo "<input type='submit' name='add_oid' value=\"".__('Post').
 
