@@ -163,6 +163,13 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>" . __('Discovery key', 'fusioninventory') . "</td>";
+      echo "<td align='center'>";
+      echo $this->fields["discovery_key"];
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>" . __('Comments') . "</td>";
       echo "<td align='center'>";
       echo nl2br($this->fields["comment"]);
