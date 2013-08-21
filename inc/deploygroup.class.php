@@ -361,20 +361,37 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             }
          }
       } else {
-        $pfDeployGroup_Dynamicdata->getFromDB($plugin_fusioninventory_deploygroup_dynamicdatas_id);
+         $pfDeployGroup_Dynamicdata->getFromDB($plugin_fusioninventory_deploygroup_dynamicdatas_id);
          $_GET = importArrayFromDB($pfDeployGroup_Dynamicdata->fields['fields_array']);
+         unset($_SESSION["glpisearchcount"]['Computer']);
+         unset($_SESSION["glpisearchcount2"]['Computer']);
+         unset($_SESSION["glpisearch"]);
+         unset($_SESSION['plugin_fusioninventory_dynamicgroup']);
+         if (isset($_GET['field'])) {
+            $_GET["glpisearchcount"] = count($_GET['field']);
+         }
+         if (isset($_GET['field2'])) {
+            $_GET["glpisearchcount2"] = count($_GET['field2']);
+         }
+         if (!isset($_GET["glpisearchcount"])
+                 || $_GET["glpisearchcount"] == 0) {
+            $_GET["glpisearchcount"] = 1;
+         }
       }
 
-      $_GET["glpisearchcount"] = 1;
-      if (isset($_GET['field'])
-              && count($_GET['field'])) {
-         $_GET["glpisearchcount"] = count($_GET['field']);
-      }   
+      if (!isset($_GET['field'])) {
+         $_GET['field'] = array('');
+      }
+//              && count($_GET['field'])) {
+//         $_GET["glpisearchcount"] = count($_GET['field']);
+//      }
+//      if (!isset($_GET["glpisearchcount"])) {
+//         $_GET["glpisearchcount"] = 1;
+//      }
       $_GET['name'] = 'rule';
       $_GET['itemtype'] = 'Computer';
-      
-      unset($_SESSION["glpisearchcount"]['Computer']);
-      unset($_SESSION["glpisearch"]);
+//      unset($_SESSION["glpisearchcount"]['Computer']);
+//      unset($_SESSION["glpisearch"]);
       
       Search::manageGetValues('Computer');
       $pfSearch = new PluginFusioninventorySearch();
