@@ -460,7 +460,7 @@ echo "<td colspan='2'>";
       echo "<input type='submit' value=\""._sx('button', 'Search')."\" class='submit' >";
       echo "</td><td>";
 //      Bookmark::showSaveButton(Bookmark::SEARCH,$itemtype);
-      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/".$this->formurl."?reset=reset&".
+      echo "<a href='".$this->formurl."?reset=reset&".
          "name=".$_GET['name']."&".$this->customIdVar."=".$_GET[$this->customIdVar].
               "&itemtype=".$_GET['itemtype']."' >";
       echo "&nbsp;&nbsp;<img title=\"".__s('Blank')."\" alt=\"".__s('Blank')."\" src='".
