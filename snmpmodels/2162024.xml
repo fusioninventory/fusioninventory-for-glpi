@@ -124,16 +124,6 @@ OKI OkiLAN 8450e Rev.06.51 10/100BASE Ethernet PrintServer: Attached to C8800 Re
       </oidobject>
       <oidobject>
          <object></object>
-         <oid></oid>
-         <portcounter>0</portcounter>
-         <dynamicport>0</dynamicport>
-         <mapping_type>Printer</mapping_type>
-         <mapping_name>pagecountertotalpages</mapping_name>
-         <vlan>0</vlan>
-         <activation>1</activation>
-      </oidobject>
-      <oidobject>
-         <object></object>
          <oid>.1.3.6.1.2.1.25.3.2.1.3.1</oid>
          <portcounter>0</portcounter>
          <dynamicport>0</dynamicport>
@@ -369,6 +359,16 @@ OKI OkiLAN 8450e Rev.06.51 10/100BASE Ethernet PrintServer: Attached to C8800 Re
          <dynamicport>0</dynamicport>
          <mapping_type>Printer</mapping_type>
          <mapping_name>drumcyanmax</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.43.10.2.1.4.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>pagecountertotalpages</mapping_name>
          <vlan>0</vlan>
          <activation>1</activation>
       </oidobject>

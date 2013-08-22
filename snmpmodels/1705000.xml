@@ -120,16 +120,6 @@ RICOH Aficio MP C2500 1.68 / RICOH Network Printer C model / RICOH Network Scann
       </oidobject>
       <oidobject>
          <object></object>
-         <oid></oid>
-         <portcounter>0</portcounter>
-         <dynamicport>0</dynamicport>
-         <mapping_type>Printer</mapping_type>
-         <mapping_name>pagecountertotalpages</mapping_name>
-         <vlan>0</vlan>
-         <activation>1</activation>
-      </oidobject>
-      <oidobject>
-         <object></object>
          <oid>.1.3.6.1.2.1.25.3.2.1.3.1</oid>
          <portcounter>0</portcounter>
          <dynamicport>0</dynamicport>
@@ -405,6 +395,16 @@ RICOH Aficio MP C2500 1.68 / RICOH Network Printer C model / RICOH Network Scann
          <dynamicport>0</dynamicport>
          <mapping_type>Printer</mapping_type>
          <mapping_name>toneryellowmax</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.43.10.2.1.4.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>pagecountertotalpages</mapping_name>
          <vlan>0</vlan>
          <activation>1</activation>
       </oidobject>
