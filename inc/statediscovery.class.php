@@ -101,7 +101,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
 
 
 
-   function display() {
+   function display($options=array()) {
       global $DB, $CFG_GLPI;
 
       $pfAgent = new PluginFusioninventoryAgent();
