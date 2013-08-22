@@ -5654,8 +5654,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    }
 
 
-   PluginFusioninventoryProfile::changeProfile();
-
    /*
     *  Manage configuration of plugin
     */

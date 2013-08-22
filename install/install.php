@@ -265,7 +265,6 @@ function pluginFusioninventoryInstall($version, $migration='') {
     * Register Agent TASKS
     */
       $migration->displayMessage("Initialize agent TASKS");
-      PluginFusioninventoryProfile::changeProfile();
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
       $input = array();
       $input['modulename'] = "WAKEONLAN";
