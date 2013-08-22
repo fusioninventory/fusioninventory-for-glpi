@@ -58,6 +58,12 @@ Avaya Phone
 
 
 
+Hardware: Intel64 Family 6 Model 58 Stepping 9 AT/AT COMPATIBLE - Software: Windows Version 6.1 (Build 7601 Multiprocessor Free)
+
+ConnectUPS Web/SNMP Card V3.11
+
+Dell MFP Laser 3115cn; Net 9.15, Controller 200611280947, Engine 05.06.00
+
 </comments>
    <devices>
       <sysdescr>SonicWALL TZ 180 Wireless Enhanced (SonicOS Enhanced 4.0.1.2-45e)</sysdescr>
@@ -87,6 +93,9 @@ Avaya Phone
       <sysdescr>OpenStage 40</sysdescr>
       <sysdescr>Avaya Phone</sysdescr>
       <sysdescr></sysdescr>
+      <sysdescr>Hardware: Intel64 Family 6 Model 58 Stepping 9 AT/AT COMPATIBLE - Software: Windows Version 6.1 (Build 7601 Multiprocessor Free)</sysdescr>
+      <sysdescr>ConnectUPS Web/SNMP Card V3.11</sysdescr>
+      <sysdescr>Dell MFP Laser 3115cn; Net 9.15, Controller 200611280947, Engine 05.06.00</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

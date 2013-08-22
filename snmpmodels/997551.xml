@@ -4,10 +4,13 @@
    <name>997551</name>
    <type>1</type>
    <key>Computer0010</key>
-   <comments>fwintra1
+   <comments>DS-5100B
+
+fwintra1
 
 </comments>
    <devices>
+      <sysdescr>DS-5100B</sysdescr>
       <sysdescr>fwintra1</sysdescr>
    </devices>
    <oidlist>
@@ -46,16 +49,6 @@
          <dynamicport>0</dynamicport>
          <mapping_type>Computer</mapping_type>
          <mapping_name>serial</mapping_name>
-         <vlan>0</vlan>
-         <activation>1</activation>
-      </oidobject>
-      <oidobject>
-         <object></object>
-         <oid>.1.3.6.1.2.1.4.20.1.1</oid>
-         <portcounter>0</portcounter>
-         <dynamicport>1</dynamicport>
-         <mapping_type>Computer</mapping_type>
-         <mapping_name>ifaddr</mapping_name>
          <vlan>0</vlan>
          <activation>1</activation>
       </oidobject>

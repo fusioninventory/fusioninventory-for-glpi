@@ -6,9 +6,12 @@
    <key>Networking2364</key>
    <comments>Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(25)SEE4, RELEASE SOFTWARE (fc1)
 
+Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(25)SEE4, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Mon 16-Jul-07 03:24 by myl
+
 </comments>
    <devices>
       <sysdescr>Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(25)SEE4, RELEASE SOFTWARE (fc1)</sysdescr>
+      <sysdescr>Cisco IOS Software, C3750 Software (C3750-IPBASEK9-M), Version 12.2(25)SEE4, RELEASE SOFTWARE (fc1)Copyright (c) 1986-2007 by Cisco Systems, Inc.Compiled Mon 16-Jul-07 03:24 by myl</sysdescr>
    </devices>
    <oidlist>
       <oidobject>

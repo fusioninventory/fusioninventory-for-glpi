@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model>
+   <name>997915</name>
+   <type>2</type>
+   <key>Networking2507</key>
+   <comments>Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 12.2(55)SE3, RELEASE SOFTWARE (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2011 by Cisco Systems, Inc.\\Compiled Thu 05-May-11 16:56 by prod_rel_team
+
+Hirschmann Ethernet Railswitch 2
+
+24-port 10/100/1000 Ethernet Switch with PoE
+
+snmpwalk -v 2c -c public -On 192.168.0.253 sysdescr
+
+H3C S5120-28C-PWR-EI
+
+</comments>
+   <devices>
+      <sysdescr>Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 12.2(55)SE3, RELEASE SOFTWARE (fc1)\\Technical Support: http://www.cisco.com/techsupport\\Copyright (c) 1986-2011 by Cisco Systems, Inc.\\Compiled Thu 05-May-11 16:56 by prod_rel_team</sysdescr>
+      <sysdescr>Hirschmann Ethernet Railswitch 2</sysdescr>
+      <sysdescr>24-port 10/100/1000 Ethernet Switch with PoE</sysdescr>
+      <sysdescr>snmpwalk -v 2c -c public -On 192.168.0.253 sysdescr</sysdescr>
+      <sysdescr>H3C S5120-28C-PWR-EI</sysdescr>
+   </devices>
+   <oidlist></oidlist>
+</model>

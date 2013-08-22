@@ -104,16 +104,6 @@ Lexmark E360dn version NR.APS.N434 kernel 2.6.18.5 All-N-1
       </oidobject>
       <oidobject>
          <object></object>
-         <oid></oid>
-         <portcounter>0</portcounter>
-         <dynamicport>0</dynamicport>
-         <mapping_type>Printer</mapping_type>
-         <mapping_name>pagecountertotalpages</mapping_name>
-         <vlan>0</vlan>
-         <activation>1</activation>
-      </oidobject>
-      <oidobject>
-         <object></object>
          <oid>.1.3.6.1.2.1.25.2.3.1.5.1</oid>
          <portcounter>0</portcounter>
          <dynamicport>0</dynamicport>
@@ -159,6 +149,16 @@ Lexmark E360dn version NR.APS.N434 kernel 2.6.18.5 All-N-1
          <dynamicport>0</dynamicport>
          <mapping_type>Printer</mapping_type>
          <mapping_name>tonerblack</mapping_name>
+         <vlan>0</vlan>
+         <activation>1</activation>
+      </oidobject>
+      <oidobject>
+         <object></object>
+         <oid>.1.3.6.1.2.1.43.10.2.1.4.1.1</oid>
+         <portcounter>0</portcounter>
+         <dynamicport>0</dynamicport>
+         <mapping_type>Printer</mapping_type>
+         <mapping_name>pagecountertotalpages</mapping_name>
          <vlan>0</vlan>
          <activation>1</activation>
       </oidobject>
