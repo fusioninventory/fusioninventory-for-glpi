@@ -14,7 +14,7 @@
 
    FusionInventory is free software: you can redistribute it and/or modify
    it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
+   the Free Software Foundation, eitprinterher version 3 of the License, or
    (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
@@ -1240,6 +1240,21 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                }
+               if ($pfConfig->getValue('import_printer') == 1) {
+                  foreach ($a_computerinventory['printer'] as $key => $arrays) {
+                     unset($arrays['have_usb']);
+                     unset($arrays['serial']);
+                     $arrayslower = array_map('strtolower', $arrays);
+                     foreach ($db_printers as $keydb => $arraydb) {
+                     unset($arraydb['serial']);
+                        if ($arrayslower == $arraydb) {
+                           unset($a_computerinventory['printer'][$key]);
+                           unset($db_printers[$keydb]);
+                           break;
+                        }
+                     }
+                  }
+               }
 
                if (count($a_computerinventory['printer']) == 0
                   AND count($db_printers) == 0) {
@@ -2023,7 +2038,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          // Global import
          $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
             WHERE `name`='".$data['name']."'
-               AND `serial`='".$data['serial']."'
+               AND (`serial`='".$data['serial']."'
+                  OR `serial`=''
+                  OR `serial` IS NULL)
                AND `is_global`='1'
                AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
