@@ -169,7 +169,7 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
    
    
    public function testPrinterGlobalimport() {
-      global $DB;
+      global $DB, $PF_CONFIG;
 
       $DB->connect();
       
@@ -178,6 +178,8 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
 
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      
+      $PF_CONFIG = array();
       
       $pfConfig         = new PluginFusioninventoryConfig();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
