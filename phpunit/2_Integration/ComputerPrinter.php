@@ -182,6 +182,7 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
       $pfConfig         = new PluginFusioninventoryConfig();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
+      $GLPIlog          = new GLPIlogs();
       
       $pfConfig->updateValue('import_printer', 1);
       PluginFusioninventoryConfig::loadCache();
@@ -195,6 +196,9 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
                                       $computers_id, 
                                       FALSE, 
                                       1);
+      
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
 
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
@@ -214,6 +218,9 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
                                       FALSE, 
                                       1);
       
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+      
       $this->assertEquals(2, countElementsInTable('glpi_printers'), 'Second computer');
       $this->assertEquals(4, 
                           countElementsInTable('glpi_computers_items', 'itemtype="Printer"'), 
@@ -229,6 +236,9 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
                                       FALSE, 
                                       1);
       
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+      
       $this->assertEquals(2, countElementsInTable('glpi_printers'), 'Third computer');
       $this->assertEquals(6, 
                           countElementsInTable('glpi_computers_items', 'itemtype="Printer"'), 
@@ -240,6 +250,9 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
                                       $computers_id, 
                                       FALSE, 
                                       1);
+      
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
 
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
