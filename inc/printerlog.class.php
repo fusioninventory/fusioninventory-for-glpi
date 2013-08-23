@@ -643,7 +643,9 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                         }
                         $input[] = array('x' => $date,
                                          'y' => $y);
-                        $pages[$data['printers_id']] = $data[$graphField];
+                        if ($data[$graphField] > 0) {
+                           $pages[$data['printers_id']] = $data[$graphField];
+                        }
                      }
                   } else {
                      $input[] = array('x' => $date,
