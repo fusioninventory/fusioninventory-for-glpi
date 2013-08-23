@@ -291,7 +291,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
-      $a_reference['software']["glpi0.85$$$$0.85$$$$2$$$$0"] = array(
+      $a_reference['software']["glpi$$$$0.85$$$$2$$$$0"] = array(
                'name'                  => 'glpi0.85',
                'manufacturers_id'      => 2,
                'version'               => '0.85',
