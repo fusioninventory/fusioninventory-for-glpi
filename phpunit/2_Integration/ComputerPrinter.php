@@ -169,7 +169,7 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
    
    
    public function testPrinterGlobalimport() {
-      global $DB, $PF_CONFIG;
+      global $DB;
 
       $DB->connect();
       
@@ -179,13 +179,12 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       
-      $PF_CONFIG = array();
-      
       $pfConfig         = new PluginFusioninventoryConfig();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
       
       $pfConfig->updateValue('import_printer', 1);
+      PluginFusioninventoryConfig::loadCache();
       
       $a_computerinventory = $this->a_computer1;
       $a_computer = $a_computerinventory['Computer'];
@@ -254,7 +253,9 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
                           countElementsInTable('glpi_computers_items', 'itemtype="Printer" AND `id` > 6'), 
                           'First computer (number id of links recreated)');
       
-      $PF_CONFIG = array();
+
+      $pfConfig->updateValue('import_printer', 2);
+      PluginFusioninventoryConfig::loadCache();
    }   
    
  }

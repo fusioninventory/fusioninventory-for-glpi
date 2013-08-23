@@ -107,6 +107,8 @@ class Install extends PHPUnit_Framework_TestCase {
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
+      
+      PluginFusioninventoryConfig::loadCache();
    }
 }
 
