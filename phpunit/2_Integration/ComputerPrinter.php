@@ -254,6 +254,7 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
                           countElementsInTable('glpi_computers_items', 'itemtype="Printer" AND `id` > 6'), 
                           'First computer (number id of links recreated)');
       
+      $PF_CONFIG = array();
    }   
    
  }
