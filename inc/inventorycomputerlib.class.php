@@ -1148,7 +1148,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("import_printer") != 0) {
             $db_printers = array();
             $computer_Item = new Computer_Item();
-            if ($no_history === FALSE) {
+//            if ($no_history === FALSE) {
                if ($pfConfig->getValue('import_printer') == 1) {
                   // Global import
                   $query = "SELECT `glpi_printers`.`name`, `glpi_printers`.`serial`,
@@ -1220,7 +1220,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                }
-            }
+//            }
 
             if (count($db_printers) == 0) {
                foreach ($a_computerinventory['printer'] as $a_printer) {
