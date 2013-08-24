@@ -2036,11 +2036,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $printers_id = 0;
       if ($pfConfig->getValue('import_printer') == 1) {
          // Global import
+         $where_serial = "AND (`serial`='".$data['serial']."'
+                  OR `serial`=''
+                  OR `serial` IS NULL)";
+         if ($data['serial'] == '') {
+            $where_serial = '';
+         }
          $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
             WHERE `name`='".$data['name']."'
-               AND (`serial`='".$data['serial']."'
-                  OR `serial`=''
-                  OR `serial` IS NULL)
+               ".$where_serial."
                AND `is_global`='1'
                AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
