@@ -1161,7 +1161,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         AND `glpi_computers_items`.`is_dynamic`='1'";
                   $result = $DB->query($query);
                   while ($data = $DB->fetch_assoc($result)) {
-                     if ($data['is_global'] == 0) {
+                     if ($data['is_global'] == '0') {
                         $computer_Item->delete(array('id' => $data['link_id']), 1);
                      } else {
                         $idtmp = $data['link_id'];
@@ -1246,7 +1246,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      unset($arrays['serial']);
                      $arrayslower = array_map('strtolower', $arrays);
                      foreach ($db_printers as $keydb => $arraydb) {
-                     unset($arraydb['serial']);
+                        unset($arraydb['serial']);
                         if ($arrayslower == $arraydb) {
                            unset($a_computerinventory['printer'][$key]);
                            unset($db_printers[$keydb]);

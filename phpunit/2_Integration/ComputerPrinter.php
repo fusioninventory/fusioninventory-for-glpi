@@ -207,7 +207,7 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
       $this->assertEquals(2, 
                           countElementsInTable('glpi_computers_items', 'itemtype="Printer"'), 
                           'First computer (links)');
-      
+
       $a_computerinventory = $this->a_computer2;
       $a_computer = $a_computerinventory['Computer'];
       $a_computer["entities_id"] = 0;
