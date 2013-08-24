@@ -65,12 +65,12 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
           'printer'        => Array(
               array(
                   'name'    => 'p1',
-                  'port'    => '',
+                  'have_usb'=> 0,
                   'serial'  => ''
               ),
               array(
                   'name'    => 'p2',
-                  'port'    => '',
+                  'have_usb'=> 0,
                   'serial'  => 's1537'
               )
           ),
@@ -103,12 +103,12 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
           'printer'        => Array(
               array(
                   'name'    => 'p1',
-                  'port'    => '',
+                  'have_usb'=> 0,
                   'serial'  => 'f275'
               ),
               array(
                   'name'    => 'p2',
-                  'port'    => '',
+                  'have_usb'=> 0,
                   'serial'  => 's1537'
               )
           ),
@@ -141,12 +141,12 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
           'printer'        => Array(
               array(
                   'name'    => 'p1',
-                  'port'    => '',
+                  'have_usb'=> 0,
                   'serial'  => ''
               ),
               array(
                   'name'    => 'p2',
-                  'port'    => '',
+                  'have_usb'=> 0,
                   'serial'  => ''
               )
           ),

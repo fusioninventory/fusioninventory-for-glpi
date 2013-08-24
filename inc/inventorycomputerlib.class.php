@@ -14,7 +14,7 @@
 
    FusionInventory is free software: you can redistribute it and/or modify
    it under the terms of the GNU Affero General Public License as published by
-   the Free Software Foundation, eitprinterher version 3 of the License, or
+   the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
    FusionInventory is distributed in the hope that it will be useful,
@@ -1148,7 +1148,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("import_printer") != 0) {
             $db_printers = array();
             $computer_Item = new Computer_Item();
-//            if ($no_history === FALSE) {
+            if ($no_history === FALSE) {
                if ($pfConfig->getValue('import_printer') == 1) {
                   // Global import
                   $query = "SELECT `glpi_printers`.`name`, `glpi_printers`.`serial`,
@@ -1220,7 +1220,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                }
-//            }
+            }
 
             if (count($db_printers) == 0) {
                foreach ($a_computerinventory['printer'] as $a_printer) {
