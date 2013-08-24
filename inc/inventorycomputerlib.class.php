@@ -1122,6 +1122,22 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                   }
                }
+               if ($pfConfig->getValue('import_monitor') == 1) {
+                  foreach ($a_computerinventory['monitor'] as $key => $arrays) {
+                     unset($arrays['serial']);
+                     unset($arrays['comment']);
+                     $arrayslower = array_map('strtolower', $arrays);
+                     foreach ($db_monitors as $keydb => $arraydb) {
+                        unset($arraydb['serial']);
+                        unset($arraydb['comment']);
+                        if ($arrayslower == $arraydb) {
+                           unset($a_computerinventory['monitor'][$key]);
+                           unset($db_monitors[$keydb]);
+                           break;
+                        }
+                     }
+                  }
+               }
 
                if (count($a_computerinventory['monitor']) == 0
                   AND count($db_monitors) == 0) {
@@ -1371,6 +1387,20 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         unset($a_computerinventory['peripheral'][$key]);
                         unset($db_peripherals[$keydb]);
                         break;
+                     }
+                  }
+               }
+               if ($pfConfig->getValue('import_peripheral') == 1) {
+                  foreach ($a_computerinventory['peripheral'] as $key => $arrays) {
+                     unset($arrays['serial']);
+                     $arrayslower = array_map('strtolower', $arrays);
+                     foreach ($db_peripherals as $keydb => $arraydb) {
+                        unset($arraydb['serial']);
+                        if ($arrayslower == $arraydb) {
+                           unset($a_computerinventory['peripheral'][$key]);
+                           unset($db_peripherals[$keydb]);
+                           break;
+                        }
                      }
                   }
                }
@@ -1933,12 +1963,22 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       $monitors_id = 0;
       if ($pfConfig->getValue('import_monitor') == 1) {
+         $where_serial = "AND (`serial`='".$data['serial']."'
+                  OR `serial`=''
+                  OR `serial` IS NULL)";
+         if ($data['serial'] == '') {
+            $where_serial = '';
+         }
+         $where_manufacturer = "AND (`manufacturers_id`='".$data['manufacturers_id']."'
+                  OR `manufacturers_id`='0')";
+         if ($data['manufacturers_id'] == 0) {
+            $where_manufacturer = '';
+         }
          // Global import
          $query = "SELECT `glpi_monitors`.`id` FROM `glpi_monitors`
             WHERE `name`='".$data['name']."'
-               AND `manufacturers_id`='".$data['manufacturers_id']."'
-               AND `serial`='".$data['serial']."'
-               AND `comment`='".$data['comment']."'
+               ".$where_manufacturer."
+               ".$where_serial."
                AND `is_global`='1'
                AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
@@ -2138,10 +2178,21 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $peripherals_id = 0;
       if ($pfConfig->getValue('import_peripheral') == 1) {
          // Global import
+         $where_serial = "AND (`serial`='".$data['serial']."'
+                  OR `serial`=''
+                  OR `serial` IS NULL)";
+         if ($data['serial'] == '') {
+            $where_serial = '';
+         }
+         $where_manufacturer = "AND (`manufacturers_id`='".$data['manufacturers_id']."'
+                  OR `manufacturers_id`='0')";
+         if ($data['manufacturers_id'] == 0) {
+            $where_manufacturer = '';
+         }
          $query = "SELECT `glpi_peripherals`.`id` FROM `glpi_peripherals`
             WHERE `name`='".$data['name']."'
-               AND `manufacturers_id`='".$data['manufacturers_id']."'
-               AND `serial`='".$data['serial']."'
+               ".$where_manufacturer."
+               ".$where_serial."
                AND `is_global`='1'
                AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
