@@ -292,7 +292,7 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
 
       $a_reference = array();
       $a_reference['software']["glpi$$$$0.85$$$$2$$$$0"] = array(
-               'name'                  => 'glpi0.85',
+               'name'                  => 'glpi',
                'manufacturers_id'      => 2,
                'version'               => '0.85',
                'is_template_computer'  => 0,
