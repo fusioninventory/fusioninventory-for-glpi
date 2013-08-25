@@ -490,10 +490,11 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
          if (count($a_match) == 1 
                  && $onchange != '') {
             $split = explode(':', trim($data));
-            if (!isset($split[1])) {
-               $split[1] = 0;
+            $valuefromoid = $split[(count($split) - 1)];
+            if (count($split) == 1) {
+               $valuefromoid = 0;
             }
-            echo "<div style='visibility:hidden' id='value_".$mapping_name."[".$num."]'>".trim($split[1], '" ')."</div>";
+            echo "<div style='visibility:hidden' id='value_".$mapping_name."[".$num."]'>".trim($valuefromoid, '" ')."</div>";
          } else if ($onchange != '') {
             echo "<div style='visibility:hidden' id='value_".$mapping_name."[".$num."]'>0</div>";
          }
