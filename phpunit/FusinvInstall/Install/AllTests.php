@@ -90,7 +90,7 @@ class Install extends PHPUnit_Framework_TestCase {
          passthru("cd ../tools && php -f cli_install.php");
 
          Session::loadLanguage("en_GB");
-
+         PluginFusioninventoryProfile::initProfile();
          $FusinvInstall = new FusinvInstall();
          $FusinvInstall->testDB("fusioninventory", "install new version");
 

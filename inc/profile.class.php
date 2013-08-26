@@ -165,25 +165,27 @@ class PluginFusioninventoryProfile extends Profile {
          }
       }
       // Add all rights to current profile of the user
-      $dataprofile = array();
-      $dataprofile['id'] = $_SESSION['glpiactiveprofile']['id'];
-      $profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
-      foreach ($a_rights as $info) {
-         if (is_array($info) && ((!empty($info['itemtype'])) || (!empty($info['rights'])))
-             && (!empty($info['label'])) && (!empty($info['field']))) {
+      if (isset($_SESSION['glpiactiveprofile'])) {
+         $dataprofile = array();
+         $dataprofile['id'] = $_SESSION['glpiactiveprofile']['id'];
+         $profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
+         foreach ($a_rights as $info) {
+            if (is_array($info) && ((!empty($info['itemtype'])) || (!empty($info['rights'])))
+                && (!empty($info['label'])) && (!empty($info['field']))) {
 
-            if (isset($info['rights'])) {
-               $rights = $info['rights'];
-            } else {
-               $rights = $profile->getRightsFor($info['itemtype']);
-            }
+               if (isset($info['rights'])) {
+                  $rights = $info['rights'];
+               } else {
+                  $rights = $profile->getRightsFor($info['itemtype']);
+               }
 
-            foreach ($rights as $right => $label) {
-               $dataprofile['_'.$info['field']][$right] = 1;
+               foreach ($rights as $right => $label) {
+                  $dataprofile['_'.$info['field']][$right] = 1;
+               }
             }
          }
+         $profile->update($dataprofile);
       }
-      $profile->update($dataprofile);
    }
    
    
