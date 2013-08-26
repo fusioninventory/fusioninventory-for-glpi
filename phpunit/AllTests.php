@@ -151,6 +151,7 @@ $_SESSION['glpiactiveprofile']['monitor'] = 'w';
 $_SESSION['glpiactiveprofile']['printer'] = 'w';
 $_SESSION['glpiactiveprofile']['peripheral'] = 'w';
 $_SESSION['glpiactiveprofile']['networking'] = 'w';
+$_SESSION['glpiactiveprofile']['id'] = 4;
 
 $_SESSION["glpi_plugin_fusioninventory_profile"]['unknowndevice'] = 'w';
 
