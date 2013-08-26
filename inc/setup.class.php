@@ -51,6 +51,7 @@ class PluginFusioninventorySetup {
       global $DB;
 
       CronTask::Unregister('fusioninventory');
+      PluginFusioninventoryProfile::uninstallProfile();
 
       $pfSetup  = new PluginFusioninventorySetup();
       $user = new User();

@@ -813,6 +813,7 @@ function plugin_fusioninventory_install() {
 // Uninstall process for plugin : need to return TRUE if succeeded
 function plugin_fusioninventory_uninstall() {
    require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
    return PluginFusioninventorySetup::uninstall();
 }
 

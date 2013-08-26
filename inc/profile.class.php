@@ -46,66 +46,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryProfile extends Profile {
 
-
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      if ($item->getID() > 0
-              && $item->fields['interface'] == 'central') {
-         return self::createTabEntry('FusionInventory');
-      }
-   }
-
-
-
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      global $CFG_GLPI;
-
-      if ($item->getID() > 0) {
-         $pfProfile = new self();
-         $pfProfile->getFromDB($item->getID());
-         $pfProfile->showForm();
-      }
-      return TRUE;
-   }
-
    
 
-    /**
-    * Show profile form
-    *
-    * @param $items_id integer id of the profile
-    * @param $target value url of target
-    *
-    * @return nothing
-    **/
-   function showForm($openform=true, $closeform=true) {
-
-      echo "<div class='firstbloc'>";
-      if (($canedit = Session::haveRightsOr(self::$rightname, array(CREATE, UPDATE, PURGE)))
-          && $openform) {
-         $profile = new Profile();
-         echo "<form method='post' action='".$profile->getFormURL()."'>";
-      }
-      
-      $rights = $this->getRightsGeneral();
-      $this->displayRightsChoiceMatrix($rights, array('canedit'       => true,
-                                                      'default_class' => 'tab_bg_2',
-                                                      'title'         => __('General', 'fusioninventory')));
-      
-      $rights = $this->getRightsRules();
-      $this->displayRightsChoiceMatrix($rights, array('canedit'       => true,
-                                                      'default_class' => 'tab_bg_2',
-                                                      'title'         => _n('Rule', 'Rules', 2))); 
-      
-      $rights = $this->getRightsInventory();
-      $this->displayRightsChoiceMatrix($rights, array('canedit'       => true,
-                                                      'default_class' => 'tab_bg_2',
-                                                      'title'         => __('Inventory', 'fusioninventory'))); 
-      
-      $rights = $this->getRightsDeploy();
-      $this->displayRightsChoiceMatrix($rights, array('canedit'       => true,
-                                                      'default_class' => 'tab_bg_2',
-                                                      'title'         => __('Software deployment', 'fusioninventory'))); 
-      
       /*
        * Old profile names:
        * 
@@ -131,12 +73,72 @@ class PluginFusioninventoryProfile extends Profile {
        *    packages
        *    status
        */
+   
 
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      if ($item->getID() > 0
+              && $item->fields['interface'] == 'central') {
+         return self::createTabEntry('FusionInventory');
+      }
+   }
+
+
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      global $CFG_GLPI;
+
+      if ($item->getID() > 0) {
+         $pfProfile = new self();
+         $pfProfile->showForm($item->getID());
+      }
+      return TRUE;
+   }
+
+   
+
+    /**
+    * Show profile form
+    *
+    * @param $items_id integer id of the profile
+    * @param $target value url of target
+    *
+    * @return nothing
+    **/
+   function showForm($profiles_id=0, $openform=true, $closeform=true) {
+
+      echo "<div class='firstbloc'>";
+      if (($canedit = Session::haveRightsOr(self::$rightname, array(CREATE, UPDATE, PURGE)))
+          && $openform) {
+         $profile = new Profile();
+         echo "<form method='post' action='".$profile->getFormURL()."'>";
+      }
       
+      $profile = new Profile();
+      $profile->getFromDB($profiles_id);
+      
+      $rights = $this->getRightsGeneral();
+      $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
+                                                      'default_class' => 'tab_bg_2',
+                                                      'title'         => __('General', 'fusioninventory')));
+      
+      $rights = $this->getRightsRules();
+      $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
+                                                      'default_class' => 'tab_bg_2',
+                                                      'title'         => _n('Rule', 'Rules', 2))); 
+      
+      $rights = $this->getRightsInventory();
+      $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
+                                                      'default_class' => 'tab_bg_2',
+                                                      'title'         => __('Inventory', 'fusioninventory'))); 
+      
+      $rights = $this->getRightsDeploy();
+      $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
+                                                      'default_class' => 'tab_bg_2',
+                                                      'title'         => __('Software deployment', 'fusioninventory'))); 
       if ($canedit
           && $closeform) {
          echo "<div class='center'>";
-         echo "<input type='hidden' name='id' value='".$this->fields['id']."'>";
+         echo "<input type='hidden' name='id' value='".$profiles_id."'>";
          echo "<input type='submit' name='update' value=\""._sx('button','Save')."\" class='submit'>";
          echo "</div>\n";
          Html::closeForm();
@@ -154,12 +156,44 @@ class PluginFusioninventoryProfile extends Profile {
     **/
    static function initProfile() {
       $pfProfile = new self();
+      $profile = new Profile();
+      
       $a_rights = $pfProfile->getAllRights();
       foreach ($a_rights as $data) {
          if (countElementsInTable("glpi_profilerights", "`name` = '".$data['field']."'") == 0) {
             ProfileRight::addProfileRights(array($data['field']));
          }
-      }      
+      }
+      // Add all rights to current profile of the user
+      $dataprofile = array();
+      $dataprofile['id'] = $_SESSION['glpiactiveprofile']['id'];
+      $profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
+      foreach ($a_rights as $info) {
+         if (is_array($info) && ((!empty($info['itemtype'])) || (!empty($info['rights'])))
+             && (!empty($info['label'])) && (!empty($info['field']))) {
+
+            if (isset($info['rights'])) {
+               $rights = $info['rights'];
+            } else {
+               $rights = $profile->getRightsFor($info['itemtype']);
+            }
+
+            foreach ($rights as $right => $label) {
+               $dataprofile['_'.$info['field']][$right] = 1;
+            }
+         }
+      }
+      $profile->update($dataprofile);
+   }
+   
+   
+   
+   static function uninstallProfile() {
+      $pfProfile = new self();
+      $a_rights = $pfProfile->getAllRights();
+      foreach ($a_rights as $data) {
+         ProfileRight::deleteProfileRights(array($data['field']));
+      }
    }
    
    
@@ -274,7 +308,7 @@ class PluginFusioninventoryProfile extends Profile {
           array('rights'    => CommonDBTM::getRights(),
                 'label'     => __('Agent remote control', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_remotecontrol'),
-          array('itemtype'  => 'PluginFusioninventoryConfiguration',
+          array('itemtype'  => 'PluginFusioninventoryConfig',
                 'label'     => __('Configuration', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_configuration'),
           array('itemtype'  => 'PluginFusioninventoryTask',

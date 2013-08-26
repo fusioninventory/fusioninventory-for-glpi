@@ -48,6 +48,18 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
 
 
    /**
+    * @since version 0.85
+    *
+    * @see commonDBTM::getRights()
+   **/
+   function getRights($interface='central') {
+      return array(CREATE  => array('class' => 'create',
+                                    'label' => __('Create')));
+   }
+   
+   
+
+   /**
    * Display form for import XML
    *
    * @return bool TRUE if form is ok

@@ -51,6 +51,18 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
    const EXTRACTING     = 'extracting';
    const PROCESSING     = 'processing';
 
+   /**
+    * @since version 0.85
+    *
+    * @see commonDBTM::getRights()
+   **/
+   function getRights($interface='central') {
+      return array(READ    => array('class' => 'view',
+                                    'label' => __('Read')));
+   }
+   
+   
+   
    static function showTasks() {
        echo "<table class='deploy_extjs'>
          <tbody>

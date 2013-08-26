@@ -50,32 +50,9 @@ function pluginFusioninventoryInstall($version, $migration='') {
    /*
     * Load classes
     */
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/profile.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/agentmodule.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/staticmisc.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/setup.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/unknowndevice.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimportcollection.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventoryruleimport.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/module.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/mapping.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/config.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/communicationrest.class.php");
-   require_once GLPI_ROOT . "/plugins/fusioninventory/inc/lock.class.php";
-   require_once GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerlib.class.php";
-   require_once GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerlibhook.class.php";
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodel.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodeldevice.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmib.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmiblabel.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmibobject.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelmiboid.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/snmpmodelimportexport.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/networkequipment.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/printer.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/configlogfield.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/networkporttype.class.php");
-   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/toolbox.class.php");
+   foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc/*.php') as $file) {
+      require_once($file);
+   }
 
    $migration->displayMessage("Installation of plugin FusionInventory");
 
