@@ -143,15 +143,8 @@ if (!defined('GLPI_ROOT')) {
 ini_set("memory_limit", "-1");
 ini_set("max_execution_time", "0");
 
-$_SESSION['glpiactiveprofile'] = array();
-$_SESSION['glpiactiveprofile']['interface'] = 'central';
-$_SESSION['glpiactiveprofile']['internet'] = 'w';
-$_SESSION['glpiactiveprofile']['computer'] = 'w';
-$_SESSION['glpiactiveprofile']['monitor'] = 'w';
-$_SESSION['glpiactiveprofile']['printer'] = 'w';
-$_SESSION['glpiactiveprofile']['peripheral'] = 'w';
-$_SESSION['glpiactiveprofile']['networking'] = 'w';
-$_SESSION['glpiactiveprofile']['id'] = 4;
+$_SESSION['glpiprofiles'] = array('4' => array('entities' => 0));
+Session::changeProfile(4);
 
 $_SESSION["glpi_plugin_fusioninventory_profile"]['unknowndevice'] = 'w';
 
