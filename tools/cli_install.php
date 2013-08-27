@@ -52,6 +52,11 @@ include ("../../../inc/includes.php");
 $_SESSION['glpi_use_mode'] = Session::DEBUG_MODE;
 $_SESSION['glpilanguage']  = "en_GB";
 
+if (isset($_SERVER["argv"][0])
+        && is_int($_SERVER["argv"][0])) {
+   $_SESSION['glpiactiveprofile']['id'] = $_SERVER["argv"][0];
+}
+
 Session::LoadLanguage();
 
 // Only show errors
