@@ -162,6 +162,7 @@ class PluginFusioninventoryProfile extends Profile {
       foreach ($a_rights as $data) {
          if (countElementsInTable("glpi_profilerights", "`name` = '".$data['field']."'") == 0) {
             ProfileRight::addProfileRights(array($data['field']));
+            $_SESSION['glpiactiveprofile'][$data['field']] = 0;
          }
       }
       // Add all rights to current profile of the user
