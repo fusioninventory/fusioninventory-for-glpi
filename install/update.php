@@ -848,10 +848,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       );
 
       $a_table['renamefields'] = array(
-         'ID' => 'id',
+         'ID'           => 'id',
          'ifaddr_start' => 'ip_start',
-         'ifaddr_end' => 'ip_end',
-         'FK_entities' => 'entities_id'
+         'ifaddr_end'   => 'ip_end',
+         'FK_entities'  => 'entities_id'
       );
 
       $a_table['keys']   = array(
@@ -1163,11 +1163,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['keys'][] = array('field' => 'plugin_fusioninventory_tasks_id',
                                  'name' => '', 'type' => 'INDEX');
       $a_table['keys'][] = array('field' => 'entities_id', 'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'plugins_id', 'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'users_id', 'name' => '', 'type' => 'INDEX');
+      $a_table['keys'][] = array('field' => 'plugins_id' , 'name' => '', 'type' => 'INDEX');
+      $a_table['keys'][] = array('field' => 'users_id'   , 'name' => '', 'type' => 'INDEX');
       $a_table['keys'][] = array('field' => 'rescheduled_taskjob_id',
-                                 'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'method', 'name' => '', 'type' => 'INDEX');
+                                                            'name' => '', 'type' => 'INDEX');
+      $a_table['keys'][] = array('field' => 'method'      , 'name' => '', 'type' => 'INDEX');
 
       $a_table['oldkeys'] = array();
 
@@ -1192,72 +1192,42 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Table glpi_plugin_fusioninventory_taskjoblogs
     */
-      $newTable = "glpi_plugin_fusioninventory_taskjoblogs";
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "bigint(20) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_taskjobstatus_id",
-                                 "plugin_fusioninventory_taskjobstates_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "date",
-                                 "date",
-                                 "datetime DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "items_id",
-                                 "items_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "itemtype",
-                                 "itemtype",
-                                 "varchar(100) DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "state",
-                                 "state",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "comment",
-                                 "comment",
-                                 "text DEFAULT NULL");
-         $migration->dropKey($newTable,
-                             "plugin_fusioninventory_taskjobstatus_id");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                              "id",
-                              "bigint(20) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                              "plugin_fusioninventory_taskjobstates_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "date",
-                              "datetime DEFAULT NULL");
-         $migration->addField($newTable,
-                              "items_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "itemtype",
-                              "varchar(100) DEFAULT NULL");
-         $migration->addField($newTable,
-                              "state",
-                              "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "comment",
-                              "text DEFAULT NULL");
-         $migration->addKey($newTable,
-                            array("plugin_fusioninventory_taskjobstates_id", "state", "date"),
-                            "plugin_fusioninventory_taskjobstates_id");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, FALSE);
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_taskjoblogs';
+      $a_table['oldname'] = array();
 
+      $a_table['fields']  = array(
+         'id'         => array('type' => 'BIGINT(20) NOT NULL AUTO_INCREMENT', 'value' => ''),
+         'plugin_fusioninventory_taskjobstates_id' => 
+                         array('type' => 'integer',                            'value' => NULL),
+         'date'       => array('type' => 'datetime',                           'value' => NULL),
+         'items_id'   => array('type' => 'integer',                            'value' => NULL),
+         'itemtype'   => array('type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',           
+                                                                               'value' => NULL),
+         'state'      => array('type' => 'integer',                            'value' => NULL),
+         'comment'    => array('type' => 'text',                               'value' => NULL)
+      );      
+
+      $a_table['oldfields']  = array();
+      
+      $a_table['renamefields'] = array(
+         'plugin_fusioninventory_taskjobstatus_id'           => 'plugin_fusioninventory_taskjobstates_id',
+         'ifaddr_start' => 'ip_start',
+         'ifaddr_end'   => 'ip_end',
+         'FK_entities'  => 'entities_id'
+      );
+      
+      $a_table['keys']   = array(
+         array('field' => array('plugin_fusioninventory_taskjobstates_id', 'state', 'date'), 
+               'name' => 'plugin_fusioninventory_taskjobstates_id', 'type' => 'INDEX')
+      );
+
+      $a_table['oldkeys'] = array(
+         'plugin_fusioninventory_taskjobstatus_id'
+      );
+
+      migrateTablesFusionInventory($migration, $a_table);
+      
       // rename comments for new lang system (gettext in 0.84)
          $a_text = array(
                'fusinvsnmp::1' => 'devicesqueried',
