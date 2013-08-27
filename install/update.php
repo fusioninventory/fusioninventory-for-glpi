@@ -1211,10 +1211,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['oldfields']  = array();
       
       $a_table['renamefields'] = array(
-         'plugin_fusioninventory_taskjobstatus_id'           => 'plugin_fusioninventory_taskjobstates_id',
-         'ifaddr_start' => 'ip_start',
-         'ifaddr_end'   => 'ip_end',
-         'FK_entities'  => 'entities_id'
+         'plugin_fusioninventory_taskjobstatus_id' => 'plugin_fusioninventory_taskjobstates_id'
       );
       
       $a_table['keys']   = array(
