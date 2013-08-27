@@ -1238,7 +1238,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                'fusioninventory::2' => 'agentcrashed',
                'fusioninventory::3' => 'importdenied'
             );
-         $query = "SELECT * FROM `".$newTable."`
+         $query = "SELECT * FROM `".$a_table['name']."`
             WHERE `comment` LIKE '%==%'";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
@@ -1246,7 +1246,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             foreach ($a_text as $key=>$value) {
                $comment = str_replace("==".$key."==", "==".$value."==", $comment);
             }
-            $DB->query("UPDATE `".$newTable."`
+            $DB->query("UPDATE `".$a_table['name']."`
                SET `comment`='".$comment."'
                WHERE `id`='".$data['id']."'");
          }
