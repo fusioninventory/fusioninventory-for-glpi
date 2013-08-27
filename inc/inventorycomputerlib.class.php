@@ -1494,7 +1494,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if (count($a_networkports) > 0) {
                $input = current($a_networkports);
                $unknowndevices_id = $input['items_id'];
-               $input['logicial_number'] = $a_networkport['logicial_number'];
+               $input['logical_number'] = $a_networkport['logical_number'];
                $input['itemtype'] = 'Computer';
                $input['items_id'] = $computers_id;
                $input['is_dynamic'] = 1;
