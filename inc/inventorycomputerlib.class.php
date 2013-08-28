@@ -87,9 +87,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $item_DeviceHardDrive         = new Item_DeviceHardDrive();
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
-      $networkPort                  = new NetworkPort();
-      $networkName                  = new NetworkName();
-      $iPAddress                    = new IPAddress();
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
 //      $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();

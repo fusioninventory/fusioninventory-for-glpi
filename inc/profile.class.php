@@ -85,8 +85,6 @@ class PluginFusioninventoryProfile extends Profile {
 
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      global $CFG_GLPI;
-
       if ($item->getID() > 0) {
          $pfProfile = new self();
          $pfProfile->showForm($item->getID());
@@ -104,7 +102,7 @@ class PluginFusioninventoryProfile extends Profile {
     *
     * @return nothing
     **/
-   function showForm($profiles_id=0, $openform=true, $closeform=true) {
+   function showForm($profiles_id=0, $openform=TRUE, $closeform=TRUE) {
 
       echo "<div class='firstbloc'>";
       if (($canedit = Session::haveRightsOr(self::$rightname, array(CREATE, UPDATE, PURGE)))
@@ -139,7 +137,7 @@ class PluginFusioninventoryProfile extends Profile {
           && $closeform) {
          echo "<div class='center'>";
          echo "<input type='hidden' name='id' value='".$profiles_id."'>";
-         echo "<input type='submit' name='update' value=\""._sx('button','Save')."\" class='submit'>";
+         echo "<input type='submit' name='update' value=\""._sx('button', 'Save')."\" class='submit'>";
          echo "</div>\n";
          Html::closeForm();
       }

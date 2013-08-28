@@ -65,9 +65,9 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    
    static function canView() {
       if ((static::$rightname) && (Session::haveRight(static::$rightname, READ))) {
-         return true;
+         return TRUE;
       }
-      return false;
+      return FALSE;
    }
    
    
