@@ -318,7 +318,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
-         $input['input']
+         $input
       );
 
       $complex_criterias = array();
