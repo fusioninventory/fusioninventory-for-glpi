@@ -75,6 +75,9 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
        *
        * We will count total number of devices to query
        */
+      // get all snmpauth
+      $a_snmpauth = getAllDatasFromTable("glpi_plugin_fusioninventory_configsecurities");
+      
 
       // get items_id by type
       $a_iprange = array();
@@ -121,14 +124,16 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   LIMIT 1";
                $result=$DB->query($query);
                while ($data=$DB->fetch_array($result)) {
-                  $input = array();
-                  $input['TYPE'] = 'NETWORKING';
-                  $input['ID'] = $data['gID'];
-                  $input['IP'] = $data['gnifaddr'];
-                  $input['AUTHSNMP_ID'] = $data['plugin_fusioninventory_configsecurities_id'];
-                  $input['MODELSNMP_ID'] = $data['plugin_fusioninventory_snmpmodels_id'];
-                  $a_specificity['DEVICE']['NetworkEquipment'.$data['gID']] = $input;
-                  $a_NetworkEquipment[] = $items_id;
+                  if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
+                     $input = array();
+                     $input['TYPE'] = 'NETWORKING';
+                     $input['ID'] = $data['gID'];
+                     $input['IP'] = $data['gnifaddr'];
+                     $input['AUTHSNMP_ID'] = $data['plugin_fusioninventory_configsecurities_id'];
+                     $input['MODELSNMP_ID'] = $data['plugin_fusioninventory_snmpmodels_id'];
+                     $a_specificity['DEVICE']['NetworkEquipment'.$data['gID']] = $input;
+                     $a_NetworkEquipment[] = $items_id;
+                  }
                }
                break;
 
@@ -164,14 +169,16 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   LIMIT 1";
                $result=$DB->query($query);
                while ($data=$DB->fetch_array($result)) {
-                  $input = array();
-                  $input['TYPE'] = 'PRINTER';
-                  $input['ID'] = $data['gID'];
-                  $input['IP'] = $data['gnifaddr'];
-                  $input['AUTHSNMP_ID'] = $data['plugin_fusioninventory_configsecurities_id'];
-                  $input['MODELSNMP_ID'] = $data['plugin_fusioninventory_snmpmodels_id'];
-                  $a_specificity['DEVICE']['Printer'.$data['gID']] = $input;
-                  $a_Printer[] = $items_id;
+                  if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
+                     $input = array();
+                     $input['TYPE'] = 'PRINTER';
+                     $input['ID'] = $data['gID'];
+                     $input['IP'] = $data['gnifaddr'];
+                     $input['AUTHSNMP_ID'] = $data['plugin_fusioninventory_configsecurities_id'];
+                     $input['MODELSNMP_ID'] = $data['plugin_fusioninventory_snmpmodels_id'];
+                     $a_specificity['DEVICE']['Printer'.$data['gID']] = $input;
+                     $a_Printer[] = $items_id;
+                  }
                }
                break;
 
@@ -215,14 +222,16 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                          AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
         $result=$DB->query($query);
         while ($data=$DB->fetch_array($result)) {
-           $input = array();
-           $input['TYPE'] = 'NETWORKING';
-           $input['ID'] = $data['gID'];
-           $input['IP'] = $data['gnifaddr'];
-           $input['AUTHSNMP_ID'] = $data['plugin_fusioninventory_configsecurities_id'];
-           $input['MODELSNMP_ID'] = $data['plugin_fusioninventory_snmpmodels_id'];
-           $a_specificity['DEVICE']['NetworkEquipment'.$data['gID']] = $input;
-           $a_NetworkEquipment[] = $data['gID'];
+           if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
+              $input = array();
+              $input['TYPE'] = 'NETWORKING';
+              $input['ID'] = $data['gID'];
+              $input['IP'] = $data['gnifaddr'];
+              $input['AUTHSNMP_ID'] = $data['plugin_fusioninventory_configsecurities_id'];
+              $input['MODELSNMP_ID'] = $data['plugin_fusioninventory_snmpmodels_id'];
+              $a_specificity['DEVICE']['NetworkEquipment'.$data['gID']] = $input;
+              $a_NetworkEquipment[] = $data['gID'];
+           }
         }
      // Search Printer
         $query = "SELECT `glpi_printers`.`id` AS `gID`,
@@ -259,14 +268,16 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                       AND inet_aton('".$pfIPRange->fields['ip_end']."') ";
          $result=$DB->query($query);
          while ($data=$DB->fetch_array($result)) {
-            $input = array();
-            $input['TYPE'] = 'PRINTER';
-            $input['ID'] = $data['gID'];
-            $input['IP'] = $data['gnifaddr'];
-            $input['AUTHSNMP_ID'] = $data['plugin_fusioninventory_configsecurities_id'];
-            $input['MODELSNMP_ID'] = $data['plugin_fusioninventory_snmpmodels_id'];
-            $a_specificity['DEVICE']['Printer'.$data['gID']] = $input;
-            $a_Printer[] = $data['gID'];
+            if (isset($a_snmpauth[$data['plugin_fusioninventory_configsecurities_id']])) {
+               $input = array();
+               $input['TYPE'] = 'PRINTER';
+               $input['ID'] = $data['gID'];
+               $input['IP'] = $data['gnifaddr'];
+               $input['AUTHSNMP_ID'] = $data['plugin_fusioninventory_configsecurities_id'];
+               $input['MODELSNMP_ID'] = $data['plugin_fusioninventory_snmpmodels_id'];
+               $a_specificity['DEVICE']['Printer'.$data['gID']] = $input;
+               $a_Printer[] = $data['gID'];
+            }
          }
       }
       $count_device = count($a_NetworkEquipment) + count($a_Printer);
