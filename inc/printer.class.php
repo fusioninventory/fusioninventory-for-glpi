@@ -67,7 +67,9 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
 
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
+      if ($this->canView()) {
+         return self::createTabEntry(__('FusionInventory SNMP', 'fusioninventory'));
+      }
    }
 
 
