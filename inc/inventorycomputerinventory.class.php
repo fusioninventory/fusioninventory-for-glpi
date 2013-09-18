@@ -153,11 +153,6 @@ class PluginFusioninventoryInventoryComputerInventory {
 
       $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
       $a_computerinventory = $pfBlacklist->cleanBlacklist($a_computerinventory);
-//      if (isset($a_computerinventory['monitor'])) {
-//         print_r($pfBlacklist->cleanBlacklist($a_computerinventory['monitor']));exit;
-//         $a_computerinventory['monitor'] = $pfBlacklist->cleanBlacklist($a_computerinventory['monitor']);
-//      }
-      
       
       $this->arrayinventory = $a_computerinventory;
 
