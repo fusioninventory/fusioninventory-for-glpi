@@ -165,6 +165,14 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                       && ($a_computerinventory['Computer']['serial'] == $blacklist_data['value'])) {
                      $a_computerinventory['Computer']['serial'] = "";
                   }
+                  if (isset($a_computerinventory['monitor'])) {
+                     foreach($a_computerinventory['monitor'] as $num_m=>$data_m) {
+                        if ((isset($data_m['serial']))
+                            && ($data_m['serial'] == $blacklist_data['value'])) {
+                           $a_computerinventory['monitor'][$num_m]['serial'] = "";
+                        }
+                     }
+                  }
                }
                break;
 
