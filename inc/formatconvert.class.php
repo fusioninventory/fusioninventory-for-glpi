@@ -818,6 +818,7 @@ class PluginFusioninventoryFormatconvert {
 
 
       // * USERS
+      $cnt = 0;
       if (isset($array['USERS'])) {
          if (count($array['USERS']) > 0) {
             $user_temp = $a_inventory['Computer']['contact'];
@@ -836,6 +837,19 @@ class PluginFusioninventoryFormatconvert {
                   $user .= "@".$array_tmp['domain'];
                }
             }
+            if ($cnt == 0) { 
+               if (isset($array_tmp['login'])) {
+                  $query = "SELECT `id`
+                            FROM `glpi_users`
+                            WHERE `name` = '" . $array_tmp['login'] . "'
+                            LIMIT 1";
+                  $result = $DB->query($query);
+                  if ($DB->numrows($result) == 1) {
+                     $a_inventory['Computer']['users_id'] = $DB->result($result, 0, 0);
+                  }
+               }     
+            }
+            
             if ($user != '') {
                if (isset($a_inventory['Computer']['contact'])) {
                   if ($a_inventory['Computer']['contact'] == '') {
@@ -847,6 +861,7 @@ class PluginFusioninventoryFormatconvert {
                   $a_inventory['Computer']['contact'] = $user;
                }
             }
+            $cnt++;
          }
          if (empty($a_inventory['Computer']['contact'])) {
             $a_inventory['Computer']['contact'] = $user_temp;
