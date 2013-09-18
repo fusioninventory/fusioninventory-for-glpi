@@ -153,7 +153,12 @@ class PluginFusioninventoryInventoryComputerInventory {
 
       $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
       $a_computerinventory = $pfBlacklist->cleanBlacklist($a_computerinventory);
-
+      if (isset($a_computerinventory['monitors'])
+              && isset($a_computerinventory['monitors'][0])) {
+         $a_computerinventory['monitors'] = $pfBlacklist->cleanBlacklist($a_computerinventory['monitors']);
+      }
+      
+      
       $this->arrayinventory = $a_computerinventory;
 
       $input = array();
@@ -464,7 +469,10 @@ class PluginFusioninventoryInventoryComputerInventory {
             $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
             $pfInventoryComputerLib->addLog();
             
-            Plugin::doOneHook("monitoring", "ReplayRulesForItem", array('Computer', $items_id));
+            $plugin = new Plugin();
+            if ($plugin->isInstalled('monitoring')) {
+               Plugin::doOneHook("monitoring", "ReplayRulesForItem", array('Computer', $items_id));
+            }
             
             // * For benchs
             //Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
