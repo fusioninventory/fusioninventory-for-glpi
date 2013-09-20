@@ -627,6 +627,9 @@ class PluginFusioninventoryFormatconvert {
                   if (isset($res_rule['_ignore_ocs_import'])
                           && $res_rule['_ignore_ocs_import'] == "1") {
                      // Ignrore import printer
+                  } else if (isset($res_rule['_ignore_import'])
+                          && $res_rule['_ignore_import'] == "1") {
+                     // Ignrore import printer
                   } else {
                      $a_inventory['printer'][] = $array_tmp;
                   }
