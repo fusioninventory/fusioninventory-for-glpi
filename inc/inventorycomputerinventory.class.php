@@ -465,7 +465,7 @@ class PluginFusioninventoryInventoryComputerInventory {
             $pfInventoryComputerLib->addLog();
             
             $plugin = new Plugin();
-            if ($plugin->isInstalled('monitoring')) {
+            if ($plugin->isActivated('monitoring')) {
                Plugin::doOneHook("monitoring", "ReplayRulesForItem", array('Computer', $items_id));
             }
             
