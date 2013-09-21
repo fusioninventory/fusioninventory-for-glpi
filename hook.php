@@ -56,16 +56,16 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
          $sopt[5151]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5151]['field']     = 'name';
-         $sopt[5151]['linkfield'] = '';
          $sopt[5151]['name']      = 'Antivirus name';
          $sopt[5151]['datatype']  = 'text';
+         $sopt[5151]['joinparams']  = array('jointype' => 'child');
          $sopt[5151]['massiveaction'] = FALSE;
 
          $sopt[5152]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
          $sopt[5152]['field']     = 'version';
-         $sopt[5152]['linkfield'] = '';
          $sopt[5152]['name']      = 'Antivirus version';
          $sopt[5152]['datatype']  = 'text';
+         $sopt[5152]['joinparams']  = array('jointype' => 'child');
          $sopt[5152]['massiveaction'] = FALSE;
 
          $sopt[5153]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
@@ -73,6 +73,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5153]['linkfield'] = '';
          $sopt[5153]['name']      = 'Antivirus activé';
          $sopt[5153]['datatype']  = 'bool';
+         $sopt[5153]['joinparams']  = array('jointype' => 'child');
          $sopt[5153]['massiveaction'] = FALSE;
 
          $sopt[5154]['table']     = 'glpi_plugin_fusioninventory_inventorycomputerantiviruses';
@@ -80,42 +81,49 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5154]['linkfield'] = '';
          $sopt[5154]['name']      = 'Antivirus à jour';
          $sopt[5154]['datatype']  = 'bool';
+         $sopt[5154]['joinparams']  = array('jointype' => 'child');
          $sopt[5154]['massiveaction'] = FALSE;
 
          $sopt[5155]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5155]['field']     = 'bios_date';
-         $sopt[5155]['linkfield'] = '';
          $sopt[5155]['name']      = __('BIOS', 'fusioninventory')."-".__('Date');
+//         $sopt[5155]['forcegroupby'] = true;
+//         $sopt[5155]['usehaving'] = true;
          $sopt[5155]['datatype']  = 'date';
+         $sopt[5155]['joinparams']  = array('jointype' => 'child');
          $sopt[5155]['massiveaction'] = FALSE;
-
+         
          $sopt[5156]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5156]['field']     = 'bios_version';
-         $sopt[5156]['linkfield'] = '';
          $sopt[5156]['name']      = __('BIOS', 'fusioninventory')."-".__('Version');
+         $sopt[5156]['joinparams']  = array('jointype' => 'child');
          $sopt[5156]['massiveaction'] = FALSE;
 
          $sopt[5157]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5157]['field']     = 'operatingsystem_installationdate';
-         $sopt[5157]['linkfield'] = '';
          $sopt[5157]['name']      = __('Operating system')." - ".__('Installation')." (".
                                        strtolower(__('Date')).")";
+         $sopt[5157]['joinparams']  = array('jointype' => 'child');
          $sopt[5157]['datatype']  = 'date';
+         $sopt[5157]['massiveaction'] = FALSE;
 
          $sopt[5158]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5158]['field']     = 'winowner';
-         $sopt[5158]['linkfield'] = '';
+         $sopt[5158]['joinparams']  = array('jointype' => 'child');
          $sopt[5158]['name']      = __('Owner', 'fusioninventory');
+         $sopt[5158]['massiveaction'] = FALSE;
 
          $sopt[5159]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5159]['field']     = 'wincompany';
-         $sopt[5159]['linkfield'] = '';
          $sopt[5159]['name']      = __('Company', 'fusioninventory');
+         $sopt[5159]['joinparams']  = array('jointype' => 'child');
+         $sopt[5159]['massiveaction'] = FALSE;
          
          $sopt[5160]['table']     = 'glpi_plugin_fusioninventory_agents';
          $sopt[5160]['field']     = 'useragent';
-         $sopt[5160]['linkfield'] = '';
          $sopt[5160]['name']      = __('Useragent', 'fusioninventory');
+         $sopt[5160]['joinparams']  = array('jointype' => 'child');
+         $sopt[5160]['massiveaction'] = FALSE;
 
          $sopt[5161]['table']     = 'glpi_plugin_fusioninventory_agents';
          $sopt[5161]['field']     = 'tag';
