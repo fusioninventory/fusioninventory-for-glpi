@@ -63,7 +63,7 @@ while ($host=$DB->fetch_array($result)) {
          continue;
    }
 
-   $cmd = sprintf("%s -v %s -Cc -c %s %s .1", $snmpwalkCmd, $snmpversion, $host['community'], $host['ip']);
+   $cmd = sprintf("%s -v %s -t 30 -Cc -c %s %s .1", $snmpwalkCmd, $snmpversion, $host['community'], $host['ip']);
 #   print $cmd."\n";
    printf("---\nscanning %s\n", $host['ip']);
 

@@ -162,14 +162,14 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       if (empty($message)) {
-         echo "snmpwalk -v [version] -c [community] -On [IP] sysdescr";
+         echo "snmpwalk -v [version] -c [community] -t 30 -On [IP] sysdescr";
       } else {
          echo "<strong>This device need use another OID for 'sysdescr' (try in order and
             stop when OID exist and not empty):</strong><br/>";
          echo "<ul style='margin-left:0px; padding-left:20px; list-style-type:disc;'>";
          foreach ($message as $data) {
             echo "<li>";
-            echo "snmpwalk -v [version] -c [community] -On [IP] ".$data['oid'];
+            echo "snmpwalk -v [version] -c [community] -t 30 -On [IP] ".$data['oid'];
             if (isset($data['message'])) {
                echo " <i>( ".$data["message"]." )</i>";
             }
@@ -598,7 +598,7 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "Command to create the snmpwalk";
       echo "</td>";
       echo "<td>";
-      echo "snmpwalk -v [version] -c [community] -Cc -On [IP] .1 > file.log";
+      echo "snmpwalk -v [version] -c [community] -t 30 -Cc -On [IP] .1 > file.log";
       echo "</td>";
       echo "</tr>";
 
