@@ -321,7 +321,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
               'itemtype_link'    => '',
               'linked_action'    => '0',
               'user_name'        => '',
-              'id_search_option' => '17',
+              'id_search_option' => '7',
               'old_value'        => 'ddurieux',
               'new_value'        => 'root'
           ),
