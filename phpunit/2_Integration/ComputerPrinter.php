@@ -42,6 +42,7 @@
 
 class ComputerPrinter extends PHPUnit_Framework_TestCase {
    public $a_computer1 = array();
+   public $a_computer1_beforeformat = array();
    public $a_computer2 = array();
    public $a_computer3 = array();
    
@@ -82,6 +83,27 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
           'antivirus'      => Array(),
           'storage'        => Array(),
           'itemtype'       => 'Computer'
+      );
+
+      $this->a_computer1_beforeformat = array(
+          "CONTENT" => array(
+              "HARDWARE" => array(
+                  "NAME"   => "pc001"
+              ),
+              "BIOS" => array(
+                  "SSN" => "ggheb7ne7"
+              ), 
+              'PRINTERS'        => Array(
+                  array(
+                      'NAME'    => 'p1',
+                      'SERIAL'  => ''
+                  ),
+                  array(
+                      'NAME'    => 'p2',
+                      'SERIAL'  => 's1537'
+                  )
+              )
+          )
       );
       
       $this->a_computer2 = array(
@@ -271,6 +293,242 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
       PluginFusioninventoryConfig::loadCache();
    }   
    
+   
+   
+   public function testPrinterUniqueimport() {
+      
+   }
+   
+   
+   
+   public function testPrinterUniqueSerialimport() {
+      
+   }
+   
+   
+   
+   public function testPrinterDicoIgnoreImport() {
+      global $DB;
+
+      $DB->connect();
+      
+      $Install = new Install();
+      $Install->testInstall(0);
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      
+      $pfConfig         = new PluginFusioninventoryConfig();
+      $computer         = new Computer();
+      $GLPIlog          = new GLPIlogs();
+      
+      $pfConfig->updateValue('import_printer', 2);
+      PluginFusioninventoryConfig::loadCache();
+      
+      // Add dictionnary rule for ignore import for printer p2
+      $rulecollection = new RuleDictionnaryPrinterCollection();
+      $rule = $rulecollection->getRuleClass();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Ignore import';
+      $input['match']='AND';
+      $input['sub_type'] = 'RuleDictionnaryPrinter';
+      $input['ranking'] = 1;
+      $rule_id = $rule->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "name";
+         $input['pattern']= 'p2';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_ignore_import';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = 'is_global';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+         
+      // Add dictionnary rule for ignore import for printer p3
+      $rulecollection = new RuleDictionnaryPrinterCollection();
+      $rule = $rulecollection->getRuleClass();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='rename';
+      $input['match']='AND';
+      $input['sub_type'] = 'RuleDictionnaryPrinter';
+      $input['ranking'] = 2;
+      $rule_id = $rule->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "name";
+         $input['pattern']= 'p3';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = 'name';
+         $input['value'] = 'p3bis';
+         $ruleaction->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = 'manufacturer';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = 'is_global';
+         $input['value'] = '0';
+         $ruleaction->add($input);
+
+         
+      $a_computerinventory = $this->a_computer1;
+      
+      $pfici = new PluginFusioninventoryInventoryComputerInventory();
+      
+      $_SESSION['plugin_fusioninventory_agents_id'] = 1;
+      $pfici->sendCriteria("toto", $this->a_computer1_beforeformat);
+      
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      $computer->getFromDB(1);
+      $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
+
+      $a_printers = getAllDatasFromTable("glpi_printers");
+      
+      $this->assertEquals(1, countElementsInTable('glpi_printers'), 
+              'Printer p2 may be ignored ('.print_r($a_printers, TRUE).')');
+
+      $printer = new Printer();
+      $printer->delete(array('id' => 1), 1);
+      $DB->query("TRUNCATE TABLE `glpi_printers`");
+      
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+   }
+   
+   
+   
+   public function testPrinterDicoRename() {
+      global $DB;
+
+      $DB->connect();
+      
+//      $Install = new Install();
+//      $Install->testInstall(0);
+
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      
+      $pfConfig         = new PluginFusioninventoryConfig();
+      $computer         = new Computer();
+      $GLPIlog          = new GLPIlogs();
+      
+      $pfConfig->updateValue('import_printer', 2);
+      PluginFusioninventoryConfig::loadCache();
+
+      $pfici = new PluginFusioninventoryInventoryComputerInventory();
+      
+      $_SESSION['plugin_fusioninventory_agents_id'] = 1;
+      
+      $this->a_computer1_beforeformat["CONTENT"]['PRINTERS'][1]['NAME'] = 'p3';
+      
+      $pfici->sendCriteria("toto", $this->a_computer1_beforeformat);
+      
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      $computer->getFromDB(1);
+      $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
+
+      $this->assertEquals(2, countElementsInTable('glpi_printers'), 
+              'May have 2 printers in DB (1)');
+
+      // Test re-inventory to see if not have more than 2 printers
+      $pfici->sendCriteria("toto", $this->a_computer1_beforeformat);
+      
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      $this->assertEquals(2, countElementsInTable('glpi_printers'), 
+              'May have 2 printers in DB (2)');
+      
+      $printer = new Printer();
+      $printer->getFromDB(2);
+      $this->assertEquals('p3bis', $printer->fields['name'], 'Printer p3 may be renamed p3bis');
+      
+   }
+
+   
+   
+   public function testPrinterDicoManufacturer() {
+      global $DB;
+
+      $DB->connect();
+
+      $printer = new Printer();
+      $printer->getFromDB(2);
+      $this->assertEquals('1', $printer->fields['manufacturers_id'], 'Printer p3 may have manufacturer with id=1');
+   }
+   
+   
+   
+//   public function testPrinterDicoUnitManagement() {
+//      global $DB;
+//
+//      $DB->connect();
+//
+//      $printer = new Printer();
+//      $printer->getFromDB(2);
+//      $this->assertEquals('0', $printer->fields['is_global'], 'Printer p3 may be managed unit');
+//   }
+//   
+//   
+//   
+//   public function testPrinterDicoGlobalManagement() {
+//      global $DB;
+//
+//      $DB->connect();
+//
+//      $printer = new Printer();
+//      $printer->getFromDB(1);
+//      $this->assertEquals('1', $printer->fields['is_global'], 'Printer p3 may be managed global');
+//   }
+
  }
 
 

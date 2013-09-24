@@ -623,7 +623,6 @@ class PluginFusioninventoryFormatconvert {
                   }
                   unset($array_tmp['port']);
                   $res_rule = $rulecollection->processAllRules(array("name"=>$array_tmp['name']));
-
                   if (isset($res_rule['_ignore_ocs_import'])
                           && $res_rule['_ignore_ocs_import'] == "1") {
                      // Ignrore import printer
@@ -631,6 +630,16 @@ class PluginFusioninventoryFormatconvert {
                           && $res_rule['_ignore_import'] == "1") {
                      // Ignrore import printer
                   } else {
+                      if (isset($res_rule['name'])) {
+                         $array_tmp['name'] = $res_rule['name'];
+                      }
+                      if (isset($res_rule['manufacturer'])) {
+                         $array_tmp['manufacturers_id'] = $res_rule['manufacturer'];
+                      }
+                      // use config of plugin (unit, global unit, unit with serial)
+//                      if (isset($res_rule['is_global'])) {
+//                         $array_tmp['is_global'] = $res_rule['is_global'];
+//                      }
                      $a_inventory['printer'][] = $array_tmp;
                   }
                }
