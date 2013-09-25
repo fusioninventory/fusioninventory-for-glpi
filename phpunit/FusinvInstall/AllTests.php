@@ -178,7 +178,7 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       $this->assertEquals($DB->numrows($result), 1, 'INVENTORY module not registered');
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
-         WHERE `modulename`='ESX'";
+         WHERE `modulename`='InventoryComputerESX'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, 'ESX module not registered');
 
@@ -192,6 +192,12 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, 'NETWORKDISCOVERY module not registered');
 
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
+         WHERE `modulename`='ESX'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 0, 'ESX module may be renommed in InventoryComputerESX');
+
+      
 //      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
 //         WHERE `modulename`='DEPLOY'";
 //      $result = $DB->query($query);
