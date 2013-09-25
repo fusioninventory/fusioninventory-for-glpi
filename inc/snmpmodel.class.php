@@ -396,6 +396,8 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
 
    static function importAllModels($folder='',$mode_cli=FALSE) {
+      global $DB;
+      
       /*
        * Manage models migration
        */
@@ -470,6 +472,41 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
          $pfModel->getrightmodel($a_printer['printers_id'], "Printer");
       }
    }
+   
+   
+   
+   /**
+    * Actions done after the DELETE of the item in the database
+    *
+    *@return nothing
+   **/
+   function post_deleteFromDB() {
+      global $DB;      
+
+      $query = "SELECT `glpi_plugin_fusioninventory_printers`.`id`
+                FROM `glpi_plugin_fusioninventory_printers`
+                WHERE `plugin_fusioninventory_snmpmodels_id`='".$this->fields['id']."' ";
+      $result = $DB->query($query);
+      $pfPrinter = new PluginFusioninventoryPrinter();
+      while ($data=$DB->fetch_array($result)) {
+         $pfPrinter->update(array(
+             'id' => $data['id'],
+             'plugin_fusioninventory_snmpmodels_id' => 0
+         ));
+      }
+      $query = "SELECT `glpi_plugin_fusioninventory_networkequipments`.`id`
+                FROM `glpi_plugin_fusioninventory_networkequipments`
+                WHERE `plugin_fusioninventory_snmpmodels_id`='".$this->fields['id']."' ";
+      $result = $DB->query($query);
+      $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+      while ($data=$DB->fetch_array($result)) {
+         $pfNetworkEquipment->update(array(
+             'id' => $data['id'],
+             'plugin_fusioninventory_snmpmodels_id' => 0
+         ));
+      }
+   }
+
 }
 
 ?>

@@ -5916,7 +5916,43 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $mode_cli = (basename($_SERVER['SCRIPT_NAME']) == "cli_install.php");
 
    PluginFusioninventorySnmpmodel::importAllModels('', $mode_cli);
-
+   
+      // Delete snmpmodels_id on networkequipments and printers which has been
+      //  deleted and so now not exist
+      $query = "SELECT `glpi_plugin_fusioninventory_printers`.`id`
+                      FROM `glpi_plugin_fusioninventory_printers`
+                           LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
+                              ON `glpi_plugin_fusioninventory_printers`.".
+                                    "`plugin_fusioninventory_snmpmodels_id`=
+                                 `glpi_plugin_fusioninventory_snmpmodels`.".
+                                    "`id`
+                      WHERE `glpi_plugin_fusioninventory_snmpmodels`.`id` IS NULL ";
+      $result = $DB->query($query);
+      $pfPrinter = new PluginFusioninventoryPrinter();
+      while ($data=$DB->fetch_array($result)) {
+         $pfPrinter->update(array(
+             'id' => $data['id'],
+             'plugin_fusioninventory_snmpmodels_id' => 0
+         ));
+      }
+      $query = "SELECT `glpi_plugin_fusioninventory_networkequipments`.`id`
+                      FROM `glpi_plugin_fusioninventory_networkequipments`
+                           LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
+                              ON `glpi_plugin_fusioninventory_networkequipments`.".
+                                    "`plugin_fusioninventory_snmpmodels_id`=
+                                 `glpi_plugin_fusioninventory_snmpmodels`.".
+                                    "`id`
+                      WHERE `glpi_plugin_fusioninventory_snmpmodels`.`id` IS NULL ";
+      $result = $DB->query($query);
+      $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+      while ($data=$DB->fetch_array($result)) {
+         $pfNetworkEquipment->update(array(
+             'id' => $data['id'],
+             'plugin_fusioninventory_snmpmodels_id' => 0
+         ));
+      }
+   
+   
    /*
     * Manage devices with is_dynamic
     */
