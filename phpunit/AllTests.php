@@ -170,6 +170,7 @@ require_once '1_Unit/NetworkEquipmentTransformation.php';
 require_once '1_Unit/NetworkEquipmentUpdate.php';
 require_once '1_Unit/ComputerLog.php';
 require_once '1_Unit/AgentChangeDeviceid.php';
+require_once '1_Unit/SNMPModel.php';
 
 require_once '2_Integration/ComputerEntity.php';
 require_once '2_Integration/RuleIgnoredImport.php';
@@ -201,7 +202,8 @@ class AllTests {
       $suite->addTest(NetworkEquipmentTransformation_AllTests::suite());
       $suite->addTest(NetworkEquipmentUpdate_AllTests::suite());
       $suite->addTest(ComputerLog_AllTests::suite());
-            
+      $suite->addTest(SNMPModel_AllTests::suite());
+      
       $suite->addTest(ComputerEntity_AllTests::suite());
       $suite->addTest(RuleIgnoredImport_AllTests::suite());
       $suite->addTest(SoftwareEntityCreation_AllTests::suite());
