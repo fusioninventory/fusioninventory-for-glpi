@@ -549,7 +549,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             }
          }
       }
-
+      
       $rand = Dropdown::showFromArray(ucfirst($myname)."Type", $a_type);
 
       $params=array(ucfirst($myname).'Type'=>'__VALUE__',
@@ -1475,7 +1475,7 @@ return namelist;
       $a_parseMethods = array();
       $a_parseMethods[''] = "------";
       foreach($a_methods as $data) {
-         $class = $class= PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
+         $class = PluginFusioninventoryStaticmisc::getStaticmiscClass($data['directory']);
 
          if (is_callable(array($class, 'task_action_'.$data['method']))) {
             $a_itemtype = call_user_func(array($class, 'task_action_'.$data['method']));

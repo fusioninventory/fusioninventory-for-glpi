@@ -746,6 +746,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       migrateTablesFusionInventory($migration, $a_table);
 
+      // Fix itemtype changed in 0.84
+      $DB->query("UPDATE `glpi_plugin_fusioninventory_credentials`
+         SET `itemtype`='PluginFusioninventoryInventoryComputerESX'
+         WHERE `itemtype`='PluginFusinvinventoryVmwareESX'");
 
 
    /*
@@ -4954,14 +4958,18 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     * Add ESX module appear in version 2.4.0(0.80+1.0)
     */
 
+      $DB->query("UPDATE `glpi_plugin_fusioninventory_agentmodules`
+         SET `modulename`='InventoryComputerESX'
+         WHERE `modulename`='ESX'");
+
       $agentmodule = new PluginFusioninventoryAgentmodule();
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
-         WHERE `modulename`='ESX'
+         WHERE `modulename`='InventoryComputerESX'
          LIMIT 1";
       $result = $DB->query($query);
       if ($DB->numrows($result) == '0') {
          $input = array();
-         $input['modulename'] = "ESX";
+         $input['modulename'] = "InventoryComputerESX";
          $input['is_active']  = 0;
          $input['exceptions'] = exportArrayToDB(array());
          $url= '';

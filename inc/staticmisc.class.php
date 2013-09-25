@@ -74,7 +74,7 @@ class PluginFusioninventoryStaticmisc {
                      'method'         => 'InventoryComputerESX',
                      'selection_type' => 'devices',
                      'name'           => __('VMware host remote inventory', 'fusioninventory'),
-                     'task'           => 'ESX',
+                     'task'           => 'InventoryComputerESX',
                      'use_rest'       => TRUE
             ),
 
@@ -269,9 +269,9 @@ class PluginFusioninventoryStaticmisc {
    *   value name of the itemtype
    **/
    static function task_definitiontype_InventoryComputerESX($a_itemtype) {
-      return array ('' => Dropdown::EMPTY_VALUE ,
-                    'PluginFusioninventoryCredentialIp' =>
-                           PluginFusioninventoryCredentialIp::getTypeName());
+      $a_itemtype['PluginFusioninventoryCredentialIp'] = 
+                       PluginFusioninventoryCredentialIp::getTypeName();
+      return $a_itemtype;
    }
 
 

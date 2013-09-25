@@ -280,7 +280,7 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $pfAgentmodule->add($input);
 
       $input = array();
-      $input['modulename'] = "ESX";
+      $input['modulename'] = "InventoryComputerESX";
       $input['is_active']  = 0;
       $input['exceptions'] = exportArrayToDB(array());
       $pfAgentmodule->add($input);

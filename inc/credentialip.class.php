@@ -45,19 +45,23 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryCredentialIp extends CommonDropdown {
+   
    public $first_level_menu  = "plugins";
    public $second_level_menu = "fusioninventory";
 
+   
    static function getTypeName($nb=0) {
-
       return __('Remote device inventory', 'fusioninventory');
-
    }
 
+   
+   
    static function canCreate() {
       return PluginFusioninventoryProfile::haveRight('credentialip', 'w');
    }
 
+   
+   
    static function canView() {
       return PluginFusioninventoryProfile::haveRight('credentialip', 'r');
    }
@@ -68,11 +72,9 @@ class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
       return array(array('name'  => 'itemtype',
                          'label' => __('Type'),
-
                          'type'  => 'credentials'),
                    array('name'  => 'ip',
                          'label' => __('IP'),
-
                          'type'  => 'text'));
    }
 
