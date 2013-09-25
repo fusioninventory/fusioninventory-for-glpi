@@ -48,7 +48,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
 
    static function getTypeName($nb=0) {
-      echo __('Equipment ignored on import', 'fusioninventory');
+      return __('Equipment ignored on import', 'fusioninventory');
    }
 
    static function canCreate() {
@@ -73,7 +73,13 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       }
 
       $nb_elements = countElementsInTableForMyEntities($this->getTable());
-      Html::printAjaxPager('', $start, $nb_elements);
+      
+      Html::printPager($start, 
+                       $nb_elements, 
+                       Toolbox::getItemTypeSearchURL(
+                               'PluginFusioninventoryIgnoredimportdevice'
+                       ),
+                       "");
 
       echo "<br/><table class='tab_cadrehov' >";
 
@@ -189,7 +195,12 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
       echo "</table><br/>";
 
-      Html::printAjaxPager('', $start, $nb_elements);
+      Html::printPager($start, 
+                       $nb_elements, 
+                       Toolbox::getItemTypeSearchURL(
+                               'PluginFusioninventoryIgnoredimportdevice'
+                       ),
+                       "");
    }
 }
 
