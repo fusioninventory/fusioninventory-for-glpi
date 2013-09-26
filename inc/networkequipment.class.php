@@ -126,12 +126,12 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       } else {
          echo '<input type="submit" class="submit" name="selectview" value="fusioninventory" />';
       }
+      Html::closeForm();
 
       if ($_SESSION['plugin_fusioninventory_networkportview'] == 'glpi') {
          NetworkPort::showForItem($item);
          return;
       }
-      Html::closeForm();
 
       $canedit = $item->can($item->getID(), 'w');
       if ($canedit) {
