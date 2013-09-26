@@ -409,10 +409,11 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                        1));
                $networkports_id = 0;
                if (isset($a_nports['id'])) {
-                  if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
+                  if (isset($arrayinventory['MAC']) 
+                          && !empty($arrayinventory['MAC'])) {
                      $input = array();
                      $input['id'] = $a_nports['id'];
-                     $input['mac'] = $a_nports['MAC'];
+                     $input['mac'] = $arrayinventory['MAC'];
                      $NetworkPort->update($input);
                   }
                   $networkports_id = $a_nports['id'];
@@ -444,11 +445,23 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                }
                if (isset($arrayinventory['IP'])) {
                   $iPAddress = new IPAddress();
-                  $input = array();
-                  $input['itemtype'] = 'NetworkName';
-                  $input['items_id'] = $networknames_id;
-                  $input['name'] = $arrayinventory['IP'];
-                  $iPAddress->add($input);
+                  $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
+                                       AND `items_id`='".$networknames_id."'");
+                  if (count($a_ipaddresses) == 0) {
+                     $input = array();
+                     $input['itemtype'] = 'NetworkName';
+                     $input['items_id'] = $networknames_id;
+                     $input['name'] = $arrayinventory['IP'];
+                     $iPAddress->add($input);
+                  } else {
+                     $a_ipaddresse = current($a_ipaddresses);
+                     if ($a_ipaddresse['name'] != $arrayinventory['IP']) {
+                        $input = array();
+                        $input['id'] = $a_ipaddresse['id'];
+                        $input['name'] = $arrayinventory['IP'];
+                        $iPAddress->update($input);
+                     }
+                  }
                }
             }
             break;
@@ -526,10 +539,11 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                     1));
             $networkports_id = 0;
             if (isset($a_nports['id'])) {
-               if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
+               if (isset($arrayinventory['MAC']) 
+                       && !empty($arrayinventory['MAC'])) {
                   $input = array();
                   $input['id'] = $a_nports['id'];
-                  $input['mac'] = $a_nports['MAC'];
+                  $input['mac'] = $arrayinventory['MAC'];
                   $NetworkPort->update($input);
                }
                $networkports_id = $a_nports['id'];
@@ -561,11 +575,23 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             if (isset($arrayinventory['IP'])) {
                $iPAddress = new IPAddress();
-               $input = array();
-               $input['itemtype'] = 'NetworkName';
-               $input['items_id'] = $networknames_id;
-               $input['name'] = $arrayinventory['IP'];
-               $iPAddress->add($input);
+               $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
+                                    AND `items_id`='".$networknames_id."'");
+               if (count($a_ipaddresses) == 0) {
+                  $input = array();
+                  $input['itemtype'] = 'NetworkName';
+                  $input['items_id'] = $networknames_id;
+                  $input['name'] = $arrayinventory['IP'];
+                  $iPAddress->add($input);
+               } else {
+                  $a_ipaddresse = current($a_ipaddresses);
+                  if ($a_ipaddresse['name'] != $arrayinventory['IP']) {
+                     $input = array();
+                     $input['id'] = $a_ipaddresse['id'];
+                     $input['name'] = $arrayinventory['IP'];
+                     $iPAddress->update($input);
+                  }
+               }
             }
             break;
 
@@ -593,7 +619,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $input['items_id'] = $item->getID();
                $input['instantiation_type'] = 'NetworkPortAggregate';
                $input['name'] = "management";
-               if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
+               if (isset($arrayinventory['MAC']) 
+                       && !empty($arrayinventory['MAC'])) {
                   $input['mac'] = $arrayinventory['MAC'];
                }
                $networkports_id = $NetworkPort->add($input);
@@ -668,10 +695,11 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                     1));
             $networkports_id = 0;
             if (isset($a_nports['id'])) {
-               if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
+               if (isset($arrayinventory['MAC']) 
+                       && !empty($arrayinventory['MAC'])) {
                   $input = array();
                   $input['id'] = $a_nports['id'];
-                  $input['mac'] = $a_nports['MAC'];
+                  $input['mac'] = $arrayinventory['MAC'];
                   $NetworkPort->update($input);
                }
                $networkports_id = $a_nports['id'];
@@ -703,11 +731,23 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             if (isset($arrayinventory['IP'])) {
                $iPAddress = new IPAddress();
-               $input = array();
-               $input['itemtype'] = 'NetworkName';
-               $input['items_id'] = $networknames_id;
-               $input['name'] = $arrayinventory['IP'];
-               $iPAddress->add($input);
+               $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
+                                    AND `items_id`='".$networknames_id."'");
+               if (count($a_ipaddresses) == 0) {
+                  $input = array();
+                  $input['itemtype'] = 'NetworkName';
+                  $input['items_id'] = $networknames_id;
+                  $input['name'] = $arrayinventory['IP'];
+                  $iPAddress->add($input);
+               } else {
+                  $a_ipaddresse = current($a_ipaddresses);
+                  if ($a_ipaddresse['name'] != $arrayinventory['IP']) {
+                     $input = array();
+                     $input['id'] = $a_ipaddresse['id'];
+                     $input['name'] = $arrayinventory['IP'];
+                     $iPAddress->update($input);
+                  }
+               }
             }
 
             // Update SNMP informations
