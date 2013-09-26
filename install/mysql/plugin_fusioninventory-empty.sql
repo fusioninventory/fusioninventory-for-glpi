@@ -974,6 +974,55 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
 --
 
 
+-- Collect tables
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercollects`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercollects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `plugin_fusioninventory_inventorycomputercollecttypes_id` int(11) NOT NULL DEFAULT '0',
+  `is_active` tinyint(1) NOT NULL DEFAULT '0',
+  `comment` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercollecttypes`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercollecttypes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercollectcontents`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercollectcontents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_inventorycomputercollects_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_inventorycomputercollecttypes_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) DEFAULT NULL,
+  `details` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercollectregistrykeys`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercollectregistrykeys` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `computers_id` int(11) NOT NULL DEFAULT '0',
+  `types_id` int(11) NOT NULL DEFAULT '0',
+  `value` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 
 -- INSERT
 -- glpi_plugin_fusioninventory_configsecurities
@@ -1354,3 +1403,7 @@ INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`
 (3, 'logical volumes', 20),
 (4, 'hard disk', 1),
 (5, 'mount', 25);
+
+
+INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercollecttypes`(`id`,`name`)
+VALUES (1,'getFromRegistry'),(2,'getFromWMI'),(3,'findFile'),(4,'runCommand');
