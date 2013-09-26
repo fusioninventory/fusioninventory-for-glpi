@@ -283,6 +283,98 @@ class PrinterUpdate extends PHPUnit_Framework_TestCase {
 
       $this->assertEquals(4, count($a_cartridge));    
    }
+   
+   
+   
+   public function testPrinterNetdiscoveryNew() {
+      global $DB;
+
+      $DB->connect();
+
+      $pfCNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
+      $GLPIlog = new GLPIlogs();
+      $networkName = new NetworkName();
+      $iPAddress = new IPAddress();
+      
+      $_SESSION['SOURCE_XMLDEVICE'] = array(
+          'AUTHSNMP'     => '1',
+          'DESCRIPTION'  => 'Photosmart D7200 series',
+          'ENTITY'       => '0',
+          'FIRMWARE'     => '',
+          'IP'           => '192.168.20.100',
+          'MAC'          => '00:21:5a:0b:bb:c4',
+          'MANUFACTURER' => 'Hewlett-Packard',
+          'MODEL'        => '',
+          'MODELSNMP'    => 'Printer0093',
+          'NETBIOSNAME'  => 'HP00215A0BBBC4',
+          'SERIAL'       => 'MY89AQG0V9050N',
+          'SNMPHOSTNAME' => 'HP0BBBC4',
+          'TYPE'         => 'PRINTER'
+      );
+      
+      $printer = new Printer();
+      $printers_id = $printer->add(array('serial'      => 'MY89AQG0V9050N',
+                                         'entities_id' => 0));
+      $printer->getFromDB($printers_id);
+      $pfCNetworkDiscovery->importDevice($printer);
+
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+      
+      $printer->getFromDB($printers_id);
+      $this->assertEquals('HP0BBBC4', $printer->fields['name'], 'Name must be updated');      
+      
+      $a_printerextends = getAllDatasFromTable('glpi_plugin_fusioninventory_printers', 
+              "`printers_id`='".$printers_id."'");
+      
+      $this->assertEquals('1', count($a_printerextends), 
+                          'May have one printer extend line for this printer');      
+      
+      $a_printerextend = current($a_printerextends);
+      $this->assertEquals('1', $a_printerextend['plugin_fusioninventory_configsecurities_id'], 
+                          'SNMPauth may be with id 1');      
+      $this->assertGreaterThan(0, $a_printerextend['plugin_fusioninventory_snmpmodels_id'],
+                               'models_id not updated');
+      $this->assertEquals('Photosmart D7200 series', $a_printerextend['sysdescr'], 
+                          'Sysdescr not updated correctly');      
+      
+      // Check mac
+      $networkPort = new NetworkPort();
+      $a_ports = $networkPort->find("`itemtype`='Printer' AND `items_id`='".$printers_id."'");
+      $this->assertEquals('1', count($a_ports), 
+                          'May have one network port');      
+      $a_port = current($a_ports);
+      $this->assertEquals('00:21:5a:0b:bb:c4', $a_port['mac'], 
+                          'Mac address');      
+      
+      // check ip
+      $a_networknames = $networkName->find("`itemtype`='NetworkPort'
+                        AND `items_id`='".$a_port['id']."'", "", 1);
+      $this->assertEquals('1', count($a_networknames), 
+                          'May have one networkname');      
+      $a_networkname = current($a_networknames);
+      $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
+                        AND `items_id`='".$a_networkname['id']."'", "", 1);
+      $this->assertEquals('1', count($a_ipaddresses), 
+                          'May have one IP address');      
+      $a_ipaddress = current($a_ipaddresses);
+      $this->assertEquals('192.168.20.100', $a_ipaddress['name'], 
+                          'IP address');      
+      
+      
+   }   
+   
+   
+   
+   public function testPrinterNetdiscoveryUpdate() {
+      global $DB;
+
+      $DB->connect();
+
+      
+      
+   }   
+
  }
 
 

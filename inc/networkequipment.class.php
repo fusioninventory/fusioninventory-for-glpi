@@ -735,6 +735,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       $networkName   = new NetworkName();
       $networkPort   = new NetworkPort();
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
+      $iPAddress = new IPAddress();
       
       $networkPort->getFromDB($data['id']);
       $pfNetworkPort->getFromDB($data['fusionid']);
@@ -889,7 +890,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                      // * GetIP
                         $a_networknames = current($networkName->find("`itemtype`='NetworkPort'
                                           AND `items_id`='".$item->getID()."'", "", 1));
-                        $a_ipaddresses =  current($networkName->find("`itemtype`='NetworkName'
+                        $a_ipaddresses =  current($iPAddress->find("`itemtype`='NetworkName'
                                           AND `items_id`='".$a_networknames['id']."'", "", 1));
                         $link2 = str_replace($item->getName(0), $a_ipaddresses['name'],
                                              $item->getLink());
