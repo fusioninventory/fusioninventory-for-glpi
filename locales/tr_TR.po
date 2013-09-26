@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Kaya Zeren <kayazeren@gmail.com>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: FusionInventory (for GLPI)\n"
+"Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2013-07-09 00:00+0200\n"
-"PO-Revision-Date: 2013-07-08 22:03+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2013-09-25 03:28+0000\n"
+"Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/projects/p/FusionInventory/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +22,7 @@ msgstr ""
 #: hook.php:169 hook.php:182 hook.php:190 hook.php:201 hook.php:217
 #: hook.php:228 hook.php:235 hook.php:243 inc/taskjob.class.php:125
 msgid "FusInv"
-msgstr ""
+msgstr "FusInv"
 
 #: hook.php:52 hook.php:202 hook.php:236
 #: inc/inventorycomputercomputer.class.php:98
@@ -29,80 +30,80 @@ msgstr ""
 #: inc/networkequipment.class.php:549 inc/networkequipment.class.php:1089
 #: inc/printer.class.php:160 inc/printer.class.php:238
 msgid "Last inventory"
-msgstr ""
+msgstr "Son Envanter"
 
 #: hook.php:88 hook.php:95
 msgid "BIOS"
-msgstr ""
+msgstr "BIOS"
 
 #: hook.php:108 inc/inventorycomputercomputer.class.php:149
 msgid "Owner"
-msgstr ""
+msgstr "Sahibi"
 
 #: hook.php:113 inc/inventorycomputercomputer.class.php:156
 msgid "Company"
-msgstr ""
+msgstr "Kurum"
 
 #: hook.php:118 inc/agent.class.php:140 inc/agent.class.php:186
 #: inc/agent.class.php:279 inc/agent.class.php:801
 msgid "Useragent"
-msgstr ""
+msgstr "Kullanıcı ajanı"
 
 #: hook.php:123 inc/agent.class.php:146 inc/agent.class.php:302
 #: inc/agent.class.php:806 inc/inventoryruleentity.class.php:125
 #: inc/inventoryruleimport.class.php:143
 #: inc/inventoryrulelocation.class.php:126
 msgid "FusionInventory tag"
-msgstr ""
+msgstr "FusionInventory etiketi"
 
 #: hook.php:127 inc/computerarch.class.php:51
 msgid "Architecture"
-msgstr ""
+msgstr "Mimari"
 
 #: hook.php:170 hook.php:218 inc/menu.class.php:281
 #: inc/networkequipment.class.php:446 inc/printer.class.php:169
 #: inc/snmpmodel.class.php:57 inc/snmpmodel.class.php:77
 #: inc/unknowndevice.class.php:169 inc/unknowndevice.class.php:382
 msgid "SNMP models"
-msgstr ""
+msgstr "SNMP modelleri"
 
 #: hook.php:183 hook.php:191 hook.php:229 inc/menu.class.php:244
 #: inc/networkequipment.class.php:473 inc/printer.class.php:187
 #: inc/staticmisc.class.php:222 inc/unknowndevice.class.php:174
 #: inc/unknowndevice.class.php:395
 msgid "SNMP authentication"
-msgstr ""
+msgstr "SNMP kimlik doğrulaması"
 
 #: hook.php:209 hook.php:251 inc/networkequipment.class.php:440
 #: inc/printer.class.php:151 inc/snmpmodel.class.php:107
 #: inc/unknowndevice.class.php:163 inc/unknowndevice.class.php:376
 msgid "Sysdescr"
-msgstr ""
+msgstr "Sisaçıklm"
 
 #: hook.php:244 inc/networkequipment.class.php:484
 msgid "CPU usage (in %)"
-msgstr ""
+msgstr "CPU kullanımı (% olarak)"
 
 #: hook.php:827 hook.php:840 hook.php:851 inc/lock.class.php:167
 msgid "Lock"
 msgid_plural "Locks"
-msgstr[0] ""
+msgstr[0] "Kilit"
 
 #: hook.php:828 hook.php:834
 msgid "Target a task"
-msgstr ""
+msgstr "Bir görevi hedefleyin"
 
 #: hook.php:842 hook.php:853
 msgid "Load the correct SNMP model"
-msgstr ""
+msgstr "Doğru SNMP modelini yükleyin"
 
 #: hook.php:843 hook.php:854 hook.php:891
 msgid "Assign SNMP model"
-msgstr ""
+msgstr "SNMP modeli ekleyin"
 
 #: hook.php:845 hook.php:856 hook.php:887
 msgid "Assign SNMP authentication"
-msgstr ""
+msgstr "SNMP kimlik doğrulaması ekleyin"
 
 #: hook.php:866 inc/agent.class.php:157 inc/agentmodule.class.php:109
 #: inc/agentmodule.class.php:218 inc/agentmodule.class.php:220
@@ -115,44 +116,44 @@ msgstr "Modül"
 #: inc/config.class.php:645 inc/config.class.php:651
 #: inc/stateinventory.class.php:99
 msgid "Threads number"
-msgstr ""
+msgstr "İş parçacığı numarası"
 
 #: hook.php:871 inc/agent.class.php:272 inc/config.class.php:646
 #: inc/staticmisc.class.php:83
 msgid "Network discovery"
-msgstr ""
+msgstr "Ağ keşfi"
 
 #: hook.php:876 inc/agent.class.php:287 inc/agentmodule.class.php:134
 #: inc/agentmodule.class.php:244 inc/config.class.php:652
 #: inc/staticmisc.class.php:88
 msgid "Network inventory (SNMP)"
-msgstr ""
+msgstr "Ağ envanteri (SNMP)"
 
 #: hook.php:907 inc/taskjoblog.class.php:445 inc/taskjoblog.class.php:886
 #: inc/taskjoblog.class.php:941
 msgid "Force the end"
-msgstr ""
+msgstr "Durmaya zorlayın"
 
 #: hook.php:1035 inc/deployreport.class.php:125
 #: inc/deploystaticmisc.class.php:87
 msgid "Package"
-msgstr ""
+msgstr "Paket"
 
 #: hook.php:1047
 msgid "Create a job for each computer"
-msgstr ""
+msgstr "Her bir bilgisayar için bir iş oluşturun"
 
 #: hook.php:1049
 msgid "Create a job for each group"
-msgstr ""
+msgstr "Her bir grup için bir iş oluşturun"
 
 #: hook.php:1274 front/unknowndevice.form.php:105
 msgid "Number of imported devices"
-msgstr ""
+msgstr "Alınan aygıt sayısı"
 
 #: hook.php:1277 front/unknowndevice.form.php:107
 msgid "Number of devices not imported because type not defined"
-msgstr ""
+msgstr "Tip tanımı olmadığından alınamayan aygıt sayısı"
 
 #: index.php:54 front/agent.form.php:47 front/agent.php:45
 #: front/agentmodule.form.php:45 front/configsecurity.form.php:50
@@ -179,31 +180,31 @@ msgstr ""
 #: report/computer_last_inventory.php:49 report/not_queried_recently.php:51
 #: report/ports_date_connections.php:49 report/switch_ports.history.php:50
 msgid "FusionInventory"
-msgstr ""
+msgstr "FusionInventory"
 
 #: setup.php:272 inc/printerlog.class.php:474
 msgid "Printed page counter"
-msgstr ""
+msgstr "Basılmış sayfa sayacı"
 
 #: setup.php:276
 msgid "Switchs ports history"
-msgstr ""
+msgstr "Switch kapılarının geçmişi"
 
 #: setup.php:278
 msgid "Unused switchs ports"
-msgstr ""
+msgstr "Kullanılmayan switch kapıları"
 
 #: setup.php:280
 msgid "Number of days since last inventory"
-msgstr ""
+msgstr "Son envanterden sonra geçen gün"
 
 #: setup.php:284 report/computer_last_inventory.php:67
 msgid "Computers not inventoried since xx days"
-msgstr ""
+msgstr "Bilgisayarların xx gündür envanter sayımı yapılmadı"
 
 #: setup.php:376 setup.php:377
 msgid "Documentation"
-msgstr ""
+msgstr "Belgeler"
 
 #: setup.php:384
 msgid "Menu"
@@ -212,168 +213,168 @@ msgstr "Menü"
 #: setup.php:387 inc/menu.class.php:135 inc/menu.class.php:142
 #: inc/task.class.php:53 inc/task.class.php:806 inc/task.class.php:815
 msgid "Task management"
-msgstr ""
+msgstr "Görev yönetimi"
 
 #: setup.php:390 inc/menu.class.php:148
 msgid "Running jobs"
-msgstr ""
+msgstr "Çalışan işler"
 
 #: setup.php:393 inc/menu.class.php:100
 msgid "Agents management"
-msgstr ""
+msgstr "Ajan yönetimi"
 
 #: setup.php:399 inc/menu.class.php:106 inc/unknowndevice.class.php:54
 #: inc/unknowndevice.class.php:72
 msgid "Unknown device"
-msgstr ""
+msgstr "Bilinmeyen aygıt"
 
 #: setup.php:402 inc/inventoryruleimportcollection.class.php:57
 #: inc/menu.class.php:175
 msgid "Equipment import and link rules"
-msgstr ""
+msgstr "Aygıt alma ve bağlama kuralları"
 
 #: setup.php:405
 msgid "Wizard"
-msgstr ""
+msgstr "Yardımcı"
 
 #: setup.php:408 inc/iprange.class.php:95 inc/staticmisc.class.php:201
 msgid "IP range configuration"
-msgstr ""
+msgstr "IP aralığı ayarları"
 
 #: setup.php:411 inc/deploypackage.class.php:54
 #: inc/deploypackage.class.php:291
 msgid "Packages"
-msgstr ""
+msgstr "Paketler"
 
 #: setup.php:414 inc/deploygroup.class.php:57 inc/deploygroup.class.php:101
 #: inc/deploytaskjob.class.php:170 inc/menu.class.php:112
 msgid "Groups of computers"
-msgstr ""
+msgstr "Bilgisayar grupları"
 
 #: setup.php:417 inc/ignoredimportdevice.class.php:51
 msgid "Equipment ignored on import"
-msgstr ""
+msgstr "Alma sırasında aygıt yoksayıldı"
 
 #: setup.php:423 inc/inventoryruleentity.class.php:57
 #: inc/inventoryruleentitycollection.class.php:55
 msgid "Entity rules"
-msgstr ""
+msgstr "Birim kuralları"
 
 #: setup.php:426 inc/inventoryrulelocation.class.php:57
 #: inc/inventoryrulelocationcollection.class.php:56
 msgid "Location rules"
-msgstr ""
+msgstr "Konum kuralları"
 
 #: setup.php:429 inc/menu.class.php:155
 msgid "Import agent XML file"
-msgstr ""
+msgstr "Ajan XML dosyasını alın"
 
 #: setup.php:438 inc/menu.class.php:263
 msgid "Discovery status"
-msgstr ""
+msgstr "Keşif durumu"
 
 #: setup.php:441
 msgid "Inventory status"
-msgstr ""
+msgstr "Envanter durumu"
 
 #: setup.php:444 inc/deploymirror.class.php:52 inc/menu.class.php:317
 msgid "Mirror servers"
-msgstr ""
+msgstr "Yansı sunucular"
 
 #: setup.php:544
 msgid "Your GLPI version not compatible, require 0.84"
-msgstr ""
+msgstr "Bu uyumlu ek GLPI 0.84 ve üzerindeki sürümlerle çalışır"
 
 #: setup.php:549
 msgid "fileinfo extension (PHP) is required..."
-msgstr ""
+msgstr "fileinfo eklentisi (PHP) gerekli..."
 
 #: setup.php:562
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
-msgstr ""
+msgstr "Lütfen glpi/plugins/ içindeki %s klasörünü silin"
 
 #: ajax/dropdownsnmpmodelconstruct_progressbar.php:53
 msgid "Printer cartridges"
-msgstr ""
+msgstr "Yazıcı kartuşları"
 
 #: front/agent.form.php:58
 msgid "The agent is running"
-msgstr ""
+msgstr "Ajan çalışıyor"
 
 #: front/agent.form.php:61 inc/agent.class.php:562
 msgid "Impossible to communicate with agent!"
-msgstr ""
+msgstr "Ajan ile iletişim kurulamadı!"
 
 #: front/config.form.php:47 front/configlogfield.form.php:47
 msgid "Features"
-msgstr ""
+msgstr "Özellikler"
 
 #: front/constructsendmodel.php:52
 msgid "Importing SNMP models finished."
-msgstr ""
+msgstr "SNMP modellerinin alınması tamamlandı."
 
 #: front/deploypackage.form.php:73
 msgid "The modified JSON contained a syntax error : <br/>"
-msgstr ""
+msgstr "Değiştirilmiş JSON yazım hatası bulundu : <br/>"
 
 #: front/inventorycomputerimportxml.php:68
 msgid "Can't read zip file!"
-msgstr ""
+msgstr "Zip dosyası okunamadı!"
 
 #: front/inventorycomputerimportxml.php:93
 msgid "No file to import!"
-msgstr ""
+msgstr "Alınacak bir dosya bulunamadı!"
 
 #: front/popup.php:64
 msgid "Cache informations"
-msgstr ""
+msgstr "Önbellek bilgileri"
 
 #: front/popup.php:69
 msgid "Network ports display options"
-msgstr ""
+msgstr "Ağ kapılarının görüntülenme ayarları"
 
 #: front/printerlogreport.php:92 inc/statediscovery.class.php:144
 #: inc/stateinventory.class.php:95
 msgid "Starting date"
-msgstr ""
+msgstr "Başlangıç tarihi"
 
 #: front/printerlogreport.php:100 inc/statediscovery.class.php:145
 #: inc/stateinventory.class.php:96
 msgid "Ending date"
-msgstr ""
+msgstr "Bitiş tarihi"
 
 #: front/rule.common.php:176
 msgid "Rules applied"
-msgstr ""
+msgstr "Uygulanan kurallar"
 
 #: front/rule.common.php:187
 msgid "Local rules"
-msgstr ""
+msgstr "Yerel kurallar"
 
 #: front/snmpmodelconstructdevice.php:72
 msgid "Automatic creation of models"
-msgstr ""
+msgstr "Modellerin kendiliğinden oluşturulması"
 
 #: front/snmpmodelconstructdevice.php:74
 msgid "Delete models non used"
-msgstr ""
+msgstr "Kullanılmayan modeller silinsin"
 
 #: front/snmpmodelconstructdevice.php:76
 msgid "Re-create models comments"
-msgstr ""
+msgstr "Model yorumları yeniden oluşturulsun"
 
 #: front/snmpmodelconstructdevice.php:82
 msgid "Generate discovery file"
-msgstr ""
+msgstr "Keşif dosyası oluşturulsun"
 
 #: front/snmpmodelconstructdevice.php:84
 msgid "Export all models"
-msgstr ""
+msgstr "Tüm modelleri verin"
 
 #: front/unknowndevice.form.php:84
 msgid "restoration of the item"
-msgstr ""
+msgstr "ögenin geri yüklenmesi"
 
 #: inc/agent.class.php:58 inc/agent.class.php:79 inc/agent.class.php:531
 #: inc/agent.class.php:796 inc/rulematchedlog.class.php:175
@@ -382,286 +383,286 @@ msgstr ""
 #: inc/taskjoblog.class.php:306 inc/taskjoblog.class.php:514
 #: inc/taskjobstate.class.php:194
 msgid "Agent"
-msgstr ""
+msgstr "Ajan"
 
 #: inc/agent.class.php:100 inc/agent.class.php:187 inc/agent.class.php:294
 msgid "Last contact"
-msgstr ""
+msgstr "Son iletişim"
 
 #: inc/agent.class.php:106 inc/agent.class.php:257
 msgid "locked"
-msgstr ""
+msgstr "kilitli"
 
 #: inc/agent.class.php:112 inc/agent.class.php:230
 msgid "Device_id"
-msgstr ""
+msgstr "Aygıt_kodu"
 
 #: inc/agent.class.php:119 inc/agent.class.php:237
 msgid "Computer link"
-msgstr ""
+msgstr "Bilgisayar bağlantısı"
 
 #: inc/agent.class.php:525
 msgid "Agent state"
-msgstr ""
+msgstr "Ajan durumu"
 
 #: inc/agent.class.php:584
 msgid "Force inventory"
-msgstr ""
+msgstr "Envanter alınsın"
 
 #: inc/agent.class.php:740
 msgid "Informations for agent configuration"
-msgstr ""
+msgstr "Ajan ayarları ile ilgili bilgiler"
 
 #: inc/agent.class.php:750
 msgid "Communication url of the server"
-msgstr ""
+msgstr "Sunucunun iletişim İnternet adresi"
 
 #: inc/agentmodule.class.php:61 inc/agentmodule.class.php:63
 #: inc/configuration.class.php:56
 msgid "Agents modules"
-msgstr ""
+msgstr "Ajan modülleri"
 
 #: inc/agentmodule.class.php:110
 msgid "Activation (by default)"
-msgstr ""
+msgstr "Etkinleştirme (varsayılan)"
 
 #: inc/agentmodule.class.php:111
 msgid "Exceptions"
-msgstr ""
+msgstr "Katılmayacaklar"
 
 #: inc/agentmodule.class.php:139 inc/agentmodule.class.php:249
 #: inc/deploystaticmisc.class.php:56
 msgid "Package deployment"
-msgstr ""
+msgstr "Paket yayımı"
 
 #: inc/communication.class.php:221
 #: inc/communicationnetworkinventory.class.php:216
 #: inc/communicationnetworkinventory.class.php:279
 msgid "Unattended element in"
-msgstr ""
+msgstr "Şunun içinde kast edilmeyen bileşen"
 
 #: inc/computerlicenseinfo.class.php:98
 msgid "Serial number"
-msgstr ""
+msgstr "Seri numarası"
 
 #: inc/computerlicenseinfo.class.php:103
 msgid "Full name"
-msgstr ""
+msgstr "Tam adı"
 
 #: inc/computerlicenseinfo.class.php:105
 msgid "Option"
-msgstr ""
+msgstr "Seçenek"
 
 #: inc/computerlicenseinfo.class.php:129
 msgid "Union between computer and license"
-msgstr ""
+msgstr "Bilgisayar ve lisans arasındaki bağ"
 
 #: inc/config.class.php:222 inc/staticmisc.class.php:69
 msgid "Computer Inventory"
-msgstr ""
+msgstr "Bilgisayar Envanteri"
 
 #: inc/config.class.php:224
 msgid "Network Inventory"
-msgstr ""
+msgstr "Ağ Envanteri"
 
 #: inc/config.class.php:226 inc/menu.class.php:309
 msgid "Package management"
-msgstr ""
+msgstr "Paket yönetimi"
 
 #: inc/config.class.php:313
 msgid "SSL-only for agent"
-msgstr ""
+msgstr "Ajan yalnız SSL kullansın"
 
 #: inc/config.class.php:317
 msgid "Inventory frequency (in hours)"
-msgstr ""
+msgstr "Envanter sıklığı (saat)"
 
 #: inc/config.class.php:325
 msgid "Delete tasks after"
-msgstr ""
+msgstr "Şundan sonra görevler silinsin"
 
 #: inc/config.class.php:334
 msgid "Agent port"
-msgstr ""
+msgstr "Ajan kapısı"
 
 #: inc/config.class.php:341
 msgid "Extra-debug"
-msgstr ""
+msgstr "Ek hata ayıklama"
 
 #: inc/config.class.php:346
 msgid "Service URL"
-msgstr ""
+msgstr "Hizmet İnternet Adresi"
 
 #: inc/config.class.php:394 inc/wizard.class.php:340
 msgid "Import options"
-msgstr ""
+msgstr "Alma ayarları"
 
 #: inc/config.class.php:432 inc/config.class.php:442
 msgid "Global import"
-msgstr ""
+msgstr "Genel alma"
 
 #: inc/config.class.php:433 inc/config.class.php:445
 msgid "Unique import"
-msgstr ""
+msgstr "Tekil alma"
 
 #: inc/config.class.php:434 inc/config.class.php:447
 msgid "Unique import on serial number"
-msgstr ""
+msgstr "Seri numarasına göre tekil alma"
 
 #: inc/config.class.php:441
 msgid "This option will not import this item"
-msgstr ""
+msgstr "Bu seçenek bu ögeyi almaz"
 
 #: inc/config.class.php:443
 msgid ""
 "This option will merge items with same name to reduce number of items if "
 "this management isn't important"
-msgstr ""
+msgstr "Bu seçenek, bu yönetim önemli değilse, aynı adlı ögeleri birleştirerek, öge sayısını azaltır"
 
 #: inc/config.class.php:446
 msgid "This option will create one item for each item found"
-msgstr ""
+msgstr "Bu seçenek, bulunan her öge için bir öge oluşturur"
 
 #: inc/config.class.php:448
 msgid "This option will create one item for each item have serial number"
-msgstr ""
+msgstr "Bu seçenek, seri numarasına sahip her öge için bir öge oluşturur"
 
 #: inc/config.class.php:505
 msgid "Virtual network card"
-msgstr ""
+msgstr "Sanal ağ kartı"
 
 #: inc/config.class.php:515 inc/inventorycomputerantivirus.class.php:50
 #: inc/inventorycomputerantivirus.class.php:86
 #: inc/inventorycomputerantivirus.class.php:142
 #: inc/inventorycomputerbatteries.class.php:123
 msgid "Antivirus"
-msgstr ""
+msgstr "Antivirus"
 
 #: inc/config.class.php:566
 msgid "Default status"
-msgstr ""
+msgstr "Varsayılan durum"
 
 #: inc/config.class.php:573
 msgid "Network drives"
-msgstr ""
+msgstr "Ağ sürücüleri"
 
 #: inc/config.class.php:582
 msgid ""
 "Create computer based on virtual machine information ( only when the virtual"
 " machine has no inventory agent ! )"
-msgstr ""
+msgstr "Sanal makina bilgilerine göre bilgisayar oluşturulsun ( yalnız sanal makina envanter ajanı yüklü değilse ! )"
 
 #: inc/config.class.php:596
 msgid "Automatic computers transfer"
-msgstr ""
+msgstr "Kendiliğinden bilgisayar aktarımı"
 
 #: inc/config.class.php:602
 msgid "Model for automatic computers transfer in an other entity"
-msgstr ""
+msgstr "Başka birimden kendiliğinden bilgisayar aktarımı modeli"
 
 #: inc/config.class.php:640
 msgid "Network options"
-msgstr ""
+msgstr "Ağ seçenekleri"
 
 #: inc/config.class.php:689
 msgid "Root folder for sending files from server"
-msgstr ""
+msgstr "Sunucudan gönderilecek dosyaların kök klasörü"
 
 #: inc/config.class.php:697
 msgid "Use this GLPI server as a mirror server"
-msgstr ""
+msgstr "Bu GLPI sunucusu yansı olarak kullanılsın"
 
 #: inc/configlogfield.class.php:133
 msgid "History configuration"
-msgstr ""
+msgstr "Geçmiş ayarları"
 
 #: inc/configlogfield.class.php:140
 msgid "List of fields for which to keep history"
-msgstr ""
+msgstr "Geçmişi tutulacak alan listesi"
 
 #: inc/configlogfield.class.php:144
 msgid "Retention in days"
-msgstr ""
+msgstr "Gün olarak tutulma süresi"
 
 #: inc/configsecurity.class.php:90
 msgid "SNMP version"
-msgstr ""
+msgstr "SNMP sürümü"
 
 #: inc/configsecurity.class.php:102
 msgid "Community"
-msgstr ""
+msgstr "Topluluk"
 
 #: inc/configsecurity.class.php:115
 msgid "Encryption protocol for authentication "
-msgstr ""
+msgstr "Kimlik doğrulamasında kullanılacak şifreleme yöntemi"
 
 #: inc/configsecurity.class.php:133
 msgid "Encryption protocol for data"
-msgstr ""
+msgstr "Veri için kullanılacak şifreleme yöntemi"
 
 #: inc/constructmodel.class.php:340
 msgid "Get SNMP model"
-msgstr ""
+msgstr "SNMP modeli getirilsin"
 
 #: inc/constructmodel.class.php:346
 msgid "Import SNMP model"
-msgstr ""
+msgstr "SNMP modelini alın"
 
 #: inc/constructmodel.class.php:699
 msgid "Sorted by"
-msgstr ""
+msgstr "Sıralama"
 
 #: inc/constructmodel.class.php:973 inc/constructmodel.class.php:979
 msgid "Download SNMP models, please wait..."
-msgstr ""
+msgstr "SNMP modelleri indiriliyor, lütfen bekleyin..."
 
 #: inc/credential.class.php:53 inc/credential.class.php:148
 #: inc/credentialip.class.php:107 inc/credentialip.class.php:120
 #: inc/credentialip.class.php:140 inc/menu.class.php:254
 #: inc/staticmisc.class.php:204
 msgid "Authentication for remote devices (VMware)"
-msgstr ""
+msgstr "Uzak aygıtlar için kimlik doğrulaması (VMware)"
 
 #: inc/credential.class.php:254 inc/staticmisc.class.php:219
 msgid "VMware host"
-msgstr ""
+msgstr "VMware sunucusu"
 
 #: inc/credential.class.php:369 inc/menu.class.php:235
 #: inc/staticmisc.class.php:207 inc/wizard.class.php:1014
 msgid "Remote devices to inventory (VMware)"
-msgstr ""
+msgstr "Envantere eklenecek uzak aygıtlar (VMware)"
 
 #: inc/credentialip.class.php:53
 msgid "Remote device inventory"
-msgstr ""
+msgstr "Uzak aygıt envanteri"
 
 #: inc/deployaction.class.php:52
 msgid "Return code is equal to"
-msgstr ""
+msgstr "Dönüş kodu şuna eşit"
 
 #: inc/deployaction.class.php:53
 msgid "Return code is not equal to"
-msgstr ""
+msgstr "Dönüş kodu şundan farklı"
 
 #: inc/deployaction.class.php:54
 msgid "Command output contains"
-msgstr ""
+msgstr "Komut çıktısında bulunan"
 
 #: inc/deployaction.class.php:55
 msgid "Command output does not contains"
-msgstr ""
+msgstr "Komut çıktısında bulunmayan"
 
 #: inc/deployaction.class.php:71
 msgid "Command"
-msgstr ""
+msgstr "Komut"
 
 #: inc/deployaction.class.php:72
 msgid "Move"
-msgstr ""
+msgstr "Taşınsın"
 
 #: inc/deployaction.class.php:73
 msgid "Copy"
-msgstr ""
+msgstr "Kopyalansın"
 
 #: inc/deployaction.class.php:74 inc/deployaction.class.php:227
 #: inc/deploycheck.class.php:184 inc/deployfile.class.php:273
@@ -672,295 +673,295 @@ msgstr ""
 #: inc/taskjob.class.php:430 inc/taskjob.class.php:673
 #: inc/taskjob.class.php:685
 msgid "Delete"
-msgstr ""
+msgstr "Silin"
 
 #: inc/deployaction.class.php:75
 msgid "Make directory"
-msgstr ""
+msgstr "Klasör oluşturulsun"
 
 #: inc/deployaction.class.php:190
 msgid "Command to execute"
-msgstr ""
+msgstr "Yürütülecek komut"
 
 #: inc/deployaction.class.php:204
 msgid "return codes saved for this command"
-msgstr ""
+msgstr "bu komut için kaydedilmiş geri dönüş kodları"
 
 #: inc/deployaction.class.php:216 inc/deploycheck.class.php:173
 #: inc/deployfile.class.php:263
 msgid "drag"
-msgstr ""
+msgstr "sürükleyin"
 
 #: inc/deployaction.class.php:241 inc/deploycheck.class.php:198
 msgid "Type"
-msgstr ""
+msgstr "Tip"
 
 #: inc/deployaction.class.php:301
 msgid "From"
-msgstr ""
+msgstr "Kimden"
 
 #: inc/deployaction.class.php:303
 msgid "To"
-msgstr ""
+msgstr "Kime"
 
 #: inc/deployaction.class.php:309
 msgid "exec"
-msgstr ""
+msgstr "yürütme"
 
 #: inc/deployaction.class.php:317
 msgid "path"
-msgstr ""
+msgstr "yol"
 
 #: inc/deployaction.class.php:350
 msgid "Execution checks"
-msgstr ""
+msgstr "Yürütme denetimleri"
 
 #: inc/deploycheck.class.php:51
 msgid "Registry key exists"
-msgstr ""
+msgstr "Kayıt defteri anahtarı olan"
 
 #: inc/deploycheck.class.php:52
 msgid "Registry key missing"
-msgstr ""
+msgstr "Kayıt defteri anahtarı olmayan"
 
 #: inc/deploycheck.class.php:53
 msgid "Registry key value equals to"
-msgstr ""
+msgstr "Kayıt defteri anahtarı şuna eşit olan"
 
 #: inc/deploycheck.class.php:54
 msgid "File exists"
-msgstr ""
+msgstr "Dosya olan"
 
 #: inc/deploycheck.class.php:55
 msgid "File is missing"
-msgstr ""
+msgstr "Dosya olmayan"
 
 #: inc/deploycheck.class.php:56
 msgid "File size is greater than"
-msgstr ""
+msgstr "Dosya boyutu şundan büyük olan"
 
 #: inc/deploycheck.class.php:57
 msgid "File size is equal to"
-msgstr ""
+msgstr "Dosya boyutu şuna eşit olan"
 
 #: inc/deploycheck.class.php:58
 msgid "File size is lower than"
-msgstr ""
+msgstr "Dosya boyutu şundan küçük olan"
 
 #: inc/deploycheck.class.php:59
 msgid "SHA-512 hash value is"
-msgstr ""
+msgstr "SHA-512 karma değeri"
 
 #: inc/deploycheck.class.php:60
 msgid "Free space is greater than"
-msgstr ""
+msgstr "Boş alan şundan büyük olan"
 
 #: inc/deploycheck.class.php:80
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: inc/deploycheck.class.php:81
 msgid "KiB"
-msgstr ""
+msgstr "KB"
 
 #: inc/deploycheck.class.php:82
 msgid "MiB"
-msgstr ""
+msgstr "MB"
 
 #: inc/deploycheck.class.php:83
 msgid "GiB"
-msgstr ""
+msgstr "GB"
 
 #: inc/deploycheck.class.php:252 inc/deploycheck.class.php:256
 msgid "Key"
-msgstr ""
+msgstr "Anahtar"
 
 #: inc/deploycheck.class.php:257
 msgid "Key value"
-msgstr ""
+msgstr "Anahtar değeri"
 
 #: inc/deploycheck.class.php:261 inc/deploycheck.class.php:267
 #: inc/deploycheck.class.php:272 inc/deployfile.class.php:348
 msgid "File"
-msgstr ""
+msgstr "Dosya"
 
 #: inc/deploycheck.class.php:268 inc/deploycheck.class.php:273
 #: inc/deploycheck.class.php:278
 msgid "Value"
-msgstr ""
+msgstr "Değer"
 
 #: inc/deploycheck.class.php:277
 msgid "Disk or directory"
-msgstr ""
+msgstr "Disk ya da klasör"
 
 #: inc/deploycheck.class.php:333
 msgid "Unit"
-msgstr ""
+msgstr "Birim"
 
 #: inc/deploycheck.class.php:359
 msgid "In case of error"
-msgstr ""
+msgstr "Hata durumunda"
 
 #: inc/deploycheck.class.php:362 inc/deploystate.class.php:127
 msgid "Error"
-msgstr ""
+msgstr "Hata"
 
 #: inc/deploycheck.class.php:363
 msgid "Ignore"
-msgstr ""
+msgstr "Yoksayılsın"
 
 #: inc/deploycommand.class.php:50
 msgid "Execute a command"
-msgstr ""
+msgstr "Bir komut çalıştırın"
 
 #: inc/deployfile.class.php:67
 msgid "Upload from computer"
-msgstr ""
+msgstr "Bilgisayardan yükleyin"
 
 #: inc/deployfile.class.php:68
 msgid "Upload from server"
-msgstr ""
+msgstr "Sunucudan yükleyin"
 
 #: inc/deployfile.class.php:217
 msgid "p2p"
-msgstr ""
+msgstr "p2p"
 
 #: inc/deployfile.class.php:218
 msgid "retention"
-msgstr ""
+msgstr "tutulma"
 
 #: inc/deployfile.class.php:220
 msgid "days"
-msgstr ""
+msgstr "gün"
 
 #: inc/deployfile.class.php:233
 msgid "uncompress"
-msgstr ""
+msgstr "ayıklayın"
 
 #: inc/deployfile.class.php:292
 msgid "Source"
-msgstr ""
+msgstr "Kaynak"
 
 #: inc/deployfile.class.php:353
 msgid "filename"
-msgstr ""
+msgstr "dosyaadı"
 
 #: inc/deployfile.class.php:358
 msgid "Choose"
-msgstr ""
+msgstr "Seçin"
 
 #: inc/deployfile.class.php:362
 msgid "Select the file on server"
-msgstr ""
+msgstr "Sunucudan dosya seçin"
 
 #: inc/deployfile.class.php:372
 msgid "Uncompress"
-msgstr ""
+msgstr "Ayıklayın"
 
 #: inc/deployfile.class.php:376
 msgid "P2p"
-msgstr ""
+msgstr "p2p"
 
 #: inc/deployfile.class.php:381
 msgid "retention days"
-msgstr ""
+msgstr "gün olarak tutulma süresi"
 
 #: inc/deployfile.class.php:647
 msgid "Transfer error: the file size is too big"
-msgstr ""
+msgstr "Aktarım hatası: dosya boyutu çok büyük"
 
 #: inc/deployfile.class.php:650
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "Dosyanın yalnızca bir kısmı yüklenebildi"
 
 #: inc/deployfile.class.php:653
 msgid "No file was uploaded"
-msgstr ""
+msgstr "Henüz bir dosya yüklenmemiş"
 
 #: inc/deployfile.class.php:656
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "Geçici klasör bulunamadı"
 
 #: inc/deployfile.class.php:659
 msgid "Failed to write file to disk"
-msgstr ""
+msgstr "Dosya diske yazılamadı"
 
 #: inc/deployfile.class.php:662
 msgid "PHP extension stopped the file upload"
-msgstr ""
+msgstr "PHP eklentisi dosya yüklemeyi durdurdu"
 
 #: inc/deployfile.class.php:689 inc/deployfile.class.php:726
 msgid "File saved!"
-msgstr ""
+msgstr "Dosya kaydedildi!"
 
 #: inc/deployfile.class.php:692 inc/deployfile.class.php:729
 msgid "Failed to copy file"
-msgstr ""
+msgstr "Dosya kopyalanamadı"
 
 #: inc/deployfile.class.php:696 inc/deployfile.class.php:733
 msgid "File missing"
-msgstr ""
+msgstr "Dosya eksik"
 
 #: inc/deployfile.class.php:964
 msgid "Max file size"
-msgstr ""
+msgstr "En büyük dosya boyutu"
 
 #: inc/deployfile.class.php:966
 msgid "Mio"
-msgstr ""
+msgstr "MB"
 
 #: inc/deploygroup.class.php:104
 msgid "Add group"
-msgstr ""
+msgstr "Grup ekleyin"
 
 #: inc/deploygroup.class.php:148 inc/deploygroup_staticdata.class.php:74
 msgid "Static group"
-msgstr ""
+msgstr "Durağan grup"
 
 #: inc/deploygroup.class.php:149 inc/deploygroup_dynamicdata.class.php:63
 msgid "Dynamic group"
-msgstr ""
+msgstr "Devingen grup"
 
 #: inc/deployinstall.class.php:50 inc/deployinstall.class.php:58
 msgid "Installation"
-msgstr ""
+msgstr "Yükleme"
 
 #: inc/deploymirror.class.php:137 inc/deploymirror.class.php:198
 msgid "Mirror server address"
-msgstr ""
+msgstr "Yansı sunucu adresi"
 
 #: inc/deploymirror.class.php:143
 msgid "Mirror location"
-msgstr ""
+msgstr "Yansı konumu"
 
 #: inc/deploypackage.class.php:124
 msgid "Modification Denied"
-msgstr ""
+msgstr "Değişiklik Reddedildi"
 
 #: inc/deploypackage.class.php:129
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
-msgstr[0] ""
+msgstr[0] "Bu paketle birlikte şu işlemler yürütülüyor"
 
 #: inc/deploypackage.class.php:295
 msgid "Add a package"
-msgstr ""
+msgstr "Bir paket ekleyin"
 
 #: inc/deploypackage.class.php:374
 msgid "Audits"
-msgstr ""
+msgstr "Denetimler"
 
 #: inc/deploypackage.class.php:375
 msgid "Files"
-msgstr ""
+msgstr "Dosyalar"
 
 #: inc/deploypackage.class.php:376
 msgid "Actions"
-msgstr ""
+msgstr "İşlemler"
 
 #: inc/deploypackage.class.php:667
 msgid "Item successfully added"
-msgstr ""
+msgstr "Öge eklendi"
 
 #: inc/deploystate.class.php:119 inc/taskjoblog.class.php:73
 #: inc/taskjoblog.class.php:654 inc/taskjoblog.class.php:771
@@ -972,101 +973,101 @@ msgstr "Tamam"
 #: inc/taskjoblog.class.php:75 inc/taskjoblog.class.php:662
 #: inc/taskjoblog.class.php:772 inc/taskjoblog.class.php:999
 msgid "Error / rescheduled"
-msgstr ""
+msgstr "Hata / yeniden zamanlanmış"
 
 #: inc/deploystate.class.php:131 inc/statediscovery.class.php:209
 #: inc/stateinventory.class.php:153 inc/taskjoblog.class.php:67
 #: inc/taskjoblog.class.php:640 inc/taskjoblog.class.php:980
 msgid "Prepared"
-msgstr ""
+msgstr "Hazırlanmış"
 
 #: inc/deploystaticmisc.class.php:61 inc/staticmisc.class.php:100
 msgid "Package uninstall"
-msgstr ""
+msgstr "Paket kaldırma"
 
 #: inc/deploystaticmisc.class.php:94 inc/deploytask.class.php:54
 msgid "Group of computers"
-msgstr ""
+msgstr "Bilgisayar grubu"
 
 #: inc/deploystaticmisc.class.php:230
 msgid "Manage packages"
-msgstr ""
+msgstr "Paket yönetimi"
 
 #: inc/deploystaticmisc.class.php:233
 msgid "Deployment status"
-msgstr ""
+msgstr "Yayım durumu"
 
 #: inc/deploytask.class.php:56 inc/deploytask.class.php:114
 msgid "Task"
-msgstr ""
+msgstr "Görev"
 
 #: inc/deploytask.class.php:85
 msgid "Order list"
-msgstr ""
+msgstr "Listeyi sıralayın"
 
 #: inc/deploytask.class.php:118
 msgid "Add task"
-msgstr ""
+msgstr "Görev ekleyin"
 
 #: inc/deploytask.class.php:145
 msgid "Edit impossible, this task is active"
-msgstr ""
+msgstr "Bu görev etkin olduğundan düzenlenemez"
 
 #: inc/deploytask.class.php:175
 msgid "This task is active. delete denied"
-msgstr ""
+msgstr "Bu görev etkin olduğundan silinemez"
 
 #: inc/deployuninstall.class.php:50 inc/deployuninstall.class.php:58
 msgid "Uninstallation"
-msgstr ""
+msgstr "Kaldırma"
 
 #: inc/display.class.php:174
 msgid "Progress"
-msgstr ""
+msgstr "İşlem"
 
 #: inc/inventorycomputerantivirus.class.php:171
 #: inc/inventorycomputerbatteries.class.php:152
 msgid "Up to date"
-msgstr ""
+msgstr "Güncel"
 
 #: inc/inventorycomputerbatteries.class.php:50
 #: inc/inventorycomputerbatteries.class.php:86
 msgid "Batterie"
-msgstr ""
+msgstr "Pil"
 
 #: inc/inventorycomputerblacklist.class.php:75
 #: inc/inventorycomputerblacklist.class.php:125
 msgid "blacklisted value"
-msgstr ""
+msgstr "karaliste değeri"
 
 #: inc/inventorycomputerchemistry.class.php:53
 msgid "Chemistry"
-msgstr ""
+msgstr "Kimya"
 
 #: inc/inventorycomputercomputer.class.php:107
 msgid "Public contact address"
-msgstr ""
+msgstr "Herkese açık ilgili adresi"
 
 #: inc/inventorycomputercomputer.class.php:117
 msgid "Date du BIOS"
-msgstr ""
+msgstr "BIOS tarihi"
 
 #: inc/inventorycomputercomputer.class.php:124
 msgid "Version du BIOS"
-msgstr ""
+msgstr "BIOS sürümü"
 
 #: inc/inventorycomputercomputer.class.php:201
 #: inc/networkequipment.class.php:1096 inc/printer.class.php:245
 msgid "Download"
-msgstr ""
+msgstr "İndirin"
 
 #: inc/inventorycomputercomputer.class.php:210
 msgid "PHP Array"
-msgstr ""
+msgstr "PHP Dizisi"
 
 #: inc/inventorycomputerimportxml.class.php:68
 msgid "Import XML file from an Agent"
-msgstr ""
+msgstr "Bir ajandan XML dosyasını alın"
 
 #: inc/inventorycomputerimportxml.class.php:74
 msgid ""
@@ -1074,25 +1075,25 @@ msgid ""
 "have .xml or .ocs extension. It's also possible to upload <b>ZIP</b> archive"
 " directly with a collection of XML files. Read you agent documentation to "
 "see how to generate such XML file"
-msgstr ""
+msgstr "Bu menü kullanılarak ajan tarafından oluşturulan XML dosyası yüklenebilir. Dosya uzantısı .xml ya da .ocs olmalıdır. Ayrıca birden fazla XML dosyasını içeren <b>ZIP</b> arşivi de doğrudan yüklenebilir. XML dosyasının nasıl oluşturulacağını öğrenmek için ajan belgelerine bakın"
 
 #: inc/inventorycomputerstorage.class.php:51
 #: inc/inventorycomputerstorage_storage.class.php:51
 msgid "Storage"
-msgstr ""
+msgstr "Depolama"
 
 #: inc/inventorycomputerstoragetype.class.php:50
 msgid "Storage type"
-msgstr ""
+msgstr "Depolama tipi"
 
 #: inc/inventorycomputerwebservice.class.php:74
 msgid "Computer injected into GLPI"
-msgstr ""
+msgstr "Bilgisayar GLPI içine eklendi"
 
 #: inc/inventoryruleentity.class.php:166
 #: inc/inventoryrulelocation.class.php:168
 msgid "Ignore in FusionInventory import"
-msgstr ""
+msgstr "FusionInventory almasında yoksayılsın"
 
 #: inc/inventoryruleimport.class.php:86 inc/inventoryruleimport.class.php:111
 #: inc/inventoryruleimport.class.php:114 inc/inventoryruleimport.class.php:117
@@ -1101,1186 +1102,1186 @@ msgstr ""
 #: inc/inventoryruleimport.class.php:142 inc/inventoryruleimport.class.php:146
 #: inc/inventoryruleimport.class.php:150
 msgid "Assets to import"
-msgstr ""
+msgstr "Alınacak demirbaşlar"
 
 #: inc/inventoryruleimport.class.php:87
 msgid "Destination of equipment entity"
-msgstr ""
+msgstr "Aygıt biriminin hedefi"
 
 #: inc/inventoryruleimport.class.php:103
 msgid "Search GLPI equipment with the status"
-msgstr ""
+msgstr "Duruma göre GLPI aygıtı arama"
 
 #: inc/inventoryruleimport.class.php:165
 msgid "FusionInventory link"
-msgstr ""
+msgstr "FusionInventory bağlantısı"
 
 #: inc/inventoryruleimport.class.php:181
 msgid "Link if possible, else create device"
-msgstr ""
+msgstr "Olabiliyorsa bağlansın, yoksa aygıt oluşturulsun"
 
 #: inc/inventoryruleimport.class.php:184
 msgid "Link if possible, else import denied"
-msgstr ""
+msgstr "Olabiliyorsa bağlansın, yoksa alma reddedilsin"
 
 #: inc/inventoryruleimport.class.php:186 inc/inventoryruleimport.class.php:883
 #: inc/inventoryruleimportcollection.class.php:115
 #: inc/taskjoblog.class.php:1094
 msgid "Import denied"
-msgstr ""
+msgstr "Alma reddedilsin"
 
 #: inc/inventoryruleimport.class.php:216
 msgid "equal"
-msgstr ""
+msgstr "eşit"
 
 #: inc/inventoryruleimport.class.php:218
 msgid "empty"
-msgstr ""
+msgstr "boş"
 
 #: inc/inventoryruleimport.class.php:878
 #: inc/inventoryruleimportcollection.class.php:110
 msgid "Device created"
-msgstr ""
+msgstr "Aygıt oluşturuldu"
 
 #: inc/iprange.class.php:57
 msgid "Communication mode"
-msgstr ""
+msgstr "İletişim kipi"
 
 #: inc/iprange.class.php:61
 msgid "See all informations of task"
-msgstr ""
+msgstr "Görevin tüm bilgilerine bakın"
 
 #: inc/iprange.class.php:64 inc/iprange.class.php:68 inc/menu.class.php:226
 #: inc/staticmisc.class.php:394 inc/staticmisc.class.php:415
 #: inc/wizard.class.php:376 inc/wizard.class.php:425 inc/wizard.class.php:955
 msgid "IP Ranges"
-msgstr ""
+msgstr "IP Aralıkları"
 
 #: inc/iprange.class.php:114 inc/iprange.class.php:160
 #: inc/iprange.class.php:267 inc/wizard.class.php:961
 msgid "Start of IP range"
-msgstr ""
+msgstr "IP aralığının başlangıcı"
 
 #: inc/iprange.class.php:120 inc/iprange.class.php:185
 #: inc/iprange.class.php:270 inc/wizard.class.php:962
 msgid "End of IP range"
-msgstr ""
+msgstr "IP aralığının sonu"
 
 #: inc/iprange.class.php:265
 msgid "Bad IP"
-msgstr ""
+msgstr "Kötü IP"
 
 #: inc/lock.class.php:164
 msgid "Values GLPI"
-msgstr ""
+msgstr "GLPI değerleri"
 
 #: inc/lock.class.php:165
 msgid "Values of last inventory"
-msgstr ""
+msgstr "Son envanter değerleri"
 
 #: inc/lock.class.php:222 inc/taskjob.class.php:52 inc/taskjob.class.php:1458
 #: inc/taskjoblog.class.php:141 inc/taskjobstate.class.php:193
 #: inc/unknowndevice.class.php:199
 msgid "Job"
-msgstr ""
+msgstr "İş"
 
 #: inc/lock.class.php:226
 msgid "Add locks"
-msgstr ""
+msgstr "Kilit ekleyin"
 
 #: inc/lock.class.php:232
 msgid "Delete locks"
-msgstr ""
+msgstr "Kilitleri silin"
 
 #: inc/mapping.class.php:110
 msgid "networking > location"
-msgstr ""
+msgstr "ağ > konum"
 
 #: inc/mapping.class.php:114
 msgid "networking > firmware"
-msgstr ""
+msgstr "ağ > gömülü yazılım"
 
 #: inc/mapping.class.php:118
 msgid "networking > uptime"
-msgstr ""
+msgstr "ağ > çalışma süresi"
 
 #: inc/mapping.class.php:122
 msgid "networking > port > mtu"
-msgstr ""
+msgstr "ağ > kapı > mtu"
 
 #: inc/mapping.class.php:126
 msgid "networking > port > speed"
-msgstr ""
+msgstr "ağ > kapı > hız"
 
 #: inc/mapping.class.php:130
 msgid "networking > port > internal status"
-msgstr ""
+msgstr "ağ > kapı > iç durum"
 
 #: inc/mapping.class.php:134
 msgid "networking > ports > last change"
-msgstr ""
+msgstr "ağ > kapılar > son değişiklik"
 
 #: inc/mapping.class.php:138
 msgid "networking > port > number of bytes entered"
-msgstr ""
+msgstr "ağ > kapı > alınan bayt"
 
 #: inc/mapping.class.php:142
 msgid "networking > port > number of bytes out"
-msgstr ""
+msgstr "ağ > kapı > gönderilen bayt"
 
 #: inc/mapping.class.php:146
 msgid "networking > port > number of input errors"
-msgstr ""
+msgstr "ağ > kapı > alma hatası"
 
 #: inc/mapping.class.php:150
 msgid "networking > port > number of errors output"
-msgstr ""
+msgstr "ağ > kapı > gönderme hatası"
 
 #: inc/mapping.class.php:154
 msgid "networking > CPU usage"
-msgstr ""
+msgstr "ağ > işlemci kullanımı"
 
 #: inc/mapping.class.php:158
 msgid "networking > serial number"
-msgstr ""
+msgstr "ağ > seri numarası"
 
 #: inc/mapping.class.php:162
 msgid "networking > port > connection status"
-msgstr ""
+msgstr "ağ > kapı > bağlantı durumu"
 
 #: inc/mapping.class.php:166
 msgid "networking > port > MAC address"
-msgstr ""
+msgstr "ağ > kapı > MAC adresi"
 
 #: inc/mapping.class.php:170
 msgid "networking > port > name"
-msgstr ""
+msgstr "ağ > kapı > ad"
 
 #: inc/mapping.class.php:174
 msgid "networking > model"
-msgstr ""
+msgstr "ağ > model"
 
 #: inc/mapping.class.php:178
 msgid "networking > port > type"
-msgstr ""
+msgstr "ağ > kapı > tip"
 
 #: inc/mapping.class.php:182
 msgid "networking > VLAN"
-msgstr ""
+msgstr "ağ > VLAN"
 
 #: inc/mapping.class.php:186
 msgid "networking > name"
-msgstr ""
+msgstr "ağ > ad"
 
 #: inc/mapping.class.php:190
 msgid "networking > total memory"
-msgstr ""
+msgstr "ağ > toplam bellek"
 
 #: inc/mapping.class.php:194
 msgid "networking > free memory"
-msgstr ""
+msgstr "ağ > kullanılabilecek bellek"
 
 #: inc/mapping.class.php:198
 msgid "networking > port > port description"
-msgstr ""
+msgstr "ağ > kapı > kapı açıklaması"
 
 #: inc/mapping.class.php:202
 msgid "printer > name"
-msgstr ""
+msgstr "yazıcı > adı"
 
 #: inc/mapping.class.php:206
 msgid "printer > model"
-msgstr ""
+msgstr "yazıcı > model"
 
 #: inc/mapping.class.php:210
 msgid "printer > total memory"
-msgstr ""
+msgstr "yazıcı > toplam bellek"
 
 #: inc/mapping.class.php:214
 msgid "printer > serial number"
-msgstr ""
+msgstr "yazıcı > seri numarası"
 
 #: inc/mapping.class.php:218
 msgid "printer > meter > total number of printed pages"
-msgstr ""
+msgstr "yazıcı > ölçüm > toplam basılmış sayfa"
 
 #: inc/mapping.class.php:222
 msgid "printer > meter > number of printed black and white pages"
-msgstr ""
+msgstr "yazıcı > ölçüm > basılmış siyah beyaz sayfa sayısı"
 
 #: inc/mapping.class.php:226
 msgid "printer > meter > number of printed color pages"
-msgstr ""
+msgstr "yazıcı > ölçüm > basılmış renkli sayfa sayısı"
 
 #: inc/mapping.class.php:230
 msgid "printer > meter > number of printed monochrome pages"
-msgstr ""
+msgstr "yazıcı > ölçüm > basılmış tek renkli sayfa sayısı"
 
 #: inc/mapping.class.php:234
 msgid "networking > port > duplex type"
-msgstr ""
+msgstr "yazıcı > kapı > duplex tipi"
 
 #: inc/mapping.class.php:238
 msgid "printer > consumables > black cartridge (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > siyah kartuş (%)"
 
 #: inc/mapping.class.php:242
 msgid "printer > consumables > photo black cartridge (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > siyah fotoğraf kartuş (%)"
 
 #: inc/mapping.class.php:246
 msgid "printer > consumables > cyan cartridge (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mavi kartuş (%)"
 
 #: inc/mapping.class.php:250
 msgid "printer > consumables > yellow cartridge (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > sarı kartuş (%)"
 
 #: inc/mapping.class.php:254
 msgid "printer > consumables > magenta cartridge (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mor kartuş (%)"
 
 #: inc/mapping.class.php:258
 msgid "printer > consumables > light cyan cartridge (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > açık mavi kartuş (%)"
 
 #: inc/mapping.class.php:262
 msgid "printer > consumables > light magenta cartridge (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > açık mor kartuş (%)"
 
 #: inc/mapping.class.php:266
 msgid "printer > consumables > photoconductor (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > fotoiletken (%)"
 
 #: inc/mapping.class.php:270
 msgid "printer > consumables > black photoconductor (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > siyah fotoiletken (%)"
 
 #: inc/mapping.class.php:274
 msgid "printer > consumables > color photoconductor (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > renkli fotoiletken (%)"
 
 #: inc/mapping.class.php:278
 msgid "printer > consumables > cyan photoconductor (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mavi fotoiletken (%)"
 
 #: inc/mapping.class.php:282
 msgid "printer > consumables > yellow photoconductor (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > sarı fotoiletken (%)"
 
 #: inc/mapping.class.php:286
 msgid "printer > consumables > magenta photoconductor (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mor fotoiletken (%)"
 
 #: inc/mapping.class.php:290
 msgid "printer > consumables > black transfer unit (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > siyah aktarım birimi (%)"
 
 #: inc/mapping.class.php:294
 msgid "printer > consumables > cyan transfer unit (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mavi aktarım birimi (%)"
 
 #: inc/mapping.class.php:298
 msgid "printer > consumables > yellow transfer unit (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > sarı aktarım birimi (%)"
 
 #: inc/mapping.class.php:302
 msgid "printer > consumables > magenta transfer unit (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mor aktarım birimi (%)"
 
 #: inc/mapping.class.php:306
 msgid "printer > consumables > waste bin (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > atık kutusu (%)"
 
 #: inc/mapping.class.php:310
 msgid "printer > consumables > four (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > dört (%)"
 
 #: inc/mapping.class.php:314
 msgid "printer > consumables > cleaning module (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > temizleme modülü (%)"
 
 #: inc/mapping.class.php:318
 msgid "printer > meter > number of printed duplex pages"
-msgstr ""
+msgstr "yazıcı > ölçüm > basılmış çift yüzlü sayfa sayısı"
 
 #: inc/mapping.class.php:322
 msgid "printer > meter > nomber of scanned pages"
-msgstr ""
+msgstr "yazıcı > ölçüm > taranmış sayfa sayısı"
 
 #: inc/mapping.class.php:326
 msgid "printer > location"
-msgstr ""
+msgstr "yazıcı > konum"
 
 #: inc/mapping.class.php:330
 msgid "printer > port > name"
-msgstr ""
+msgstr "yazıcı > kapı > ad"
 
 #: inc/mapping.class.php:334
 msgid "printer > port > MAC address"
-msgstr ""
+msgstr "yazıcı > kapı > MAC adresi"
 
 #: inc/mapping.class.php:338
 msgid "printer > consumables > black cartridge (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > siyah kartuş (dolu mürekkep)"
 
 #: inc/mapping.class.php:342
 msgid "printer > consumables > black cartridge (remaining ink )"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > siyah kartuş (kalan mürekkep)"
 
 #: inc/mapping.class.php:346
 msgid "printer > consumables > cyan cartridge (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mavi kartuş (dolu mürekkep)"
 
 #: inc/mapping.class.php:350
 msgid "printer > consumables > cyan cartridge (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mavi kartuş (kalan mürekkep)"
 
 #: inc/mapping.class.php:354
 msgid "printer > consumables > yellow cartridge (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > sarı kartuş (dolu mürekkep)"
 
 #: inc/mapping.class.php:358
 msgid "printer > consumables > yellow cartridge (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > sarı kartuş (kalan mürekkep)"
 
 #: inc/mapping.class.php:362
 msgid "printer > consumables > magenta cartridge (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mor kartuş (dolu mürekkep)"
 
 #: inc/mapping.class.php:366
 msgid "printer > consumables > magenta cartridge (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mor kartuş (kalan mürekkep)"
 
 #: inc/mapping.class.php:370
 msgid "printer > consumables > light cyan cartridge (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > açık mavi kartuş (dolu mürekkep)"
 
 #: inc/mapping.class.php:374
 msgid "printer > consumables > light cyan cartridge (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > açık mavi kartuş (kalan mürekkep)"
 
 #: inc/mapping.class.php:378
 msgid "printer > consumables > light magenta cartridge (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > açık mor kartuş (dolu mürekkep)"
 
 #: inc/mapping.class.php:382
 msgid "printer > consumables > light magenta cartridge (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > açık mor kartuş (kalan mürekkep)"
 
 #: inc/mapping.class.php:386
 msgid "printer > consumables > photoconductor (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > fotoiletken (dolu mürekkep)"
 
 #: inc/mapping.class.php:390
 msgid "printer > consumables > photoconductor (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > fotoiletken (kalan mürekkep)"
 
 #: inc/mapping.class.php:394
 msgid "printer > consumables > black photoconductor (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > siyah fotoiletken (dolu mürekkep)"
 
 #: inc/mapping.class.php:398
 msgid "printer > consumables > black photoconductor (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > siyah fotoiletken (kalan mürekkep)"
 
 #: inc/mapping.class.php:402
 msgid "printer > consumables > color photoconductor (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > renkli fotoiletken (dolu mürekkep)"
 
 #: inc/mapping.class.php:406
 msgid "printer > consumables > color photoconductor (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > renkli fotoiletken (kalan mürekkep)"
 
 #: inc/mapping.class.php:410
 msgid "printer > consumables > cyan photoconductor (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mavi fotoiletken (dolu mürekkep)"
 
 #: inc/mapping.class.php:414
 msgid "printer > consumables > cyan photoconductor (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mavi fotoiletken (kalan mürekkep)"
 
 #: inc/mapping.class.php:418
 msgid "printer > consumables > yellow photoconductor (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > sarı fotoiletken (dolu mürekkep)"
 
 #: inc/mapping.class.php:422
 msgid "printer > consumables > yellow photoconductor (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > sarı fotoiletken (kalan mürekkep)"
 
 #: inc/mapping.class.php:426
 msgid "printer > consumables > magenta photoconductor (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mor fotoiletken (dolu mürekkep)"
 
 #: inc/mapping.class.php:430
 msgid "printer > consumables > magenta photoconductor (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mor fotoiletken (kalan mürekkep)"
 
 #: inc/mapping.class.php:434
 msgid "printer > consumables > black transfer unit (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > siyah aktarım birimi (dolu mürekkep)"
 
 #: inc/mapping.class.php:438
 msgid "printer > consumables > black transfer unit (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > siyah aktarım birimi (kalan mürekkep)"
 
 #: inc/mapping.class.php:442
 msgid "printer > consumables > cyan transfer unit (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mavi aktarım birimi (dolu mürekkep)"
 
 #: inc/mapping.class.php:446
 msgid "printer > consumables > cyan transfer unit (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mavi aktarım birimi (kalan mürekkep)"
 
 #: inc/mapping.class.php:450
 msgid "printer > consumables > yellow transfer unit (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > sarı aktarım birimi (dolu mürekkep)"
 
 #: inc/mapping.class.php:454
 msgid "printer > consumables > yellow transfer unit (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > sarı aktarım birimi (kalan mürekkep)"
 
 #: inc/mapping.class.php:458
 msgid "printer > consumables > magenta transfer unit (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mor aktarım birimi (dolu mürekkep)"
 
 #: inc/mapping.class.php:462
 msgid "printer > consumables > magenta transfer unit (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > mor aktarım birimi (kalan mürekkep)"
 
 #: inc/mapping.class.php:466
 msgid "printer > consumables > waste bin (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > atık kutusu (dolu mürekkep)"
 
 #: inc/mapping.class.php:470
 msgid "printer > consumables > waste bin (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > atık kutusu (kalan mürekkep)"
 
 #: inc/mapping.class.php:474
 msgid "printer > consumables > four (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > dört (dolu mürekkep)"
 
 #: inc/mapping.class.php:478
 msgid "printer > consumables > four (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > dört (kalan mürekkep)"
 
 #: inc/mapping.class.php:482
 msgid "printer > consumables > cleaning module (max ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > temizleme modülü (dolu mürekkep)"
 
 #: inc/mapping.class.php:486
 msgid "printer > consumables > cleaning module (remaining ink)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > temizleme modülü (kalan mürekkep)"
 
 #: inc/mapping.class.php:490
 msgid "printer > port > type"
-msgstr ""
+msgstr "yazıcı > kapı > tip"
 
 #: inc/mapping.class.php:494
 msgid "printer > consumables > maintenance kit (max)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > bakım kiti (tam)"
 
 #: inc/mapping.class.php:498
 msgid "printer > consumables > maintenance kit (remaining)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > bakım kiti (kalan)"
 
 #: inc/mapping.class.php:502
 msgid "printer > consumables > maintenance kit (%)"
-msgstr ""
+msgstr "yazıcı > sarf malzemesi > bakım kiti (%)"
 
 #: inc/mapping.class.php:506
 msgid "networking > CPU user"
-msgstr ""
+msgstr "ağ > kullanıcı işlemci yükü"
 
 #: inc/mapping.class.php:510
 msgid "networking > CPU system"
-msgstr ""
+msgstr "ağ > sistem işlemci yükü"
 
 #: inc/mapping.class.php:514
 msgid "networking > contact"
-msgstr ""
+msgstr "ağ > ilgili"
 
 #: inc/mapping.class.php:518
 msgid "networking > comments"
-msgstr ""
+msgstr "ağ > açıklama"
 
 #: inc/mapping.class.php:522
 msgid "printer > contact"
-msgstr ""
+msgstr "yazıcı > ilgili"
 
 #: inc/mapping.class.php:526
 msgid "printer > comments"
-msgstr ""
+msgstr "yazıcı > açıklama"
 
 #: inc/mapping.class.php:530
 msgid "printer > port > IP address"
-msgstr ""
+msgstr "yazıcı > kapı > IP adresi"
 
 #: inc/mapping.class.php:534
 msgid "networking > port > index number"
-msgstr ""
+msgstr "ağ > kapı > dizin numarası"
 
 #: inc/mapping.class.php:538
 msgid "networking > Address CDP"
-msgstr ""
+msgstr "ağ > Adres CDP"
 
 #: inc/mapping.class.php:542
 msgid "networking > Port CDP"
-msgstr ""
+msgstr "ağ > kapı CDP"
 
 #: inc/mapping.class.php:546
 msgid "networking > port > trunk/tagged"
-msgstr ""
+msgstr "ağ > kapı > grup/etiket"
 
 #: inc/mapping.class.php:550
 msgid "networking > MAC address filters (dot1dTpFdbAddress)"
-msgstr ""
+msgstr "ağ > MAC adresi süzgeçleri (dot1dTpFdbAddress)"
 
 #: inc/mapping.class.php:554
 msgid "networking > Physical addresses in memory (ipNetToMediaPhysAddress)"
-msgstr ""
+msgstr "ağ > fiziksel bellek adresi (ipNetToMediaPhysAddress)"
 
 #: inc/mapping.class.php:558
 msgid "networking > instances de ports (dot1dTpFdbPort)"
-msgstr ""
+msgstr "ağ > kapı işlemleri (dot1dTpFdbPort)"
 
 #: inc/mapping.class.php:566
 msgid "printer > port > index number"
-msgstr ""
+msgstr "yazıcı > kapı > dizin numarası"
 
 #: inc/mapping.class.php:570
 msgid "networking > MAC address"
-msgstr ""
+msgstr "ağ > MAC adresi"
 
 #: inc/mapping.class.php:574
 msgid "printer > Inventory number"
-msgstr ""
+msgstr "yazıcı > demirbaş numarası"
 
 #: inc/mapping.class.php:578
 msgid "networking > Inventory number"
-msgstr ""
+msgstr "ağ > demirbaş numarası"
 
 #: inc/mapping.class.php:582
 msgid "printer > manufacturer"
-msgstr ""
+msgstr "yazıcı > üretici"
 
 #: inc/mapping.class.php:586
 msgid "networking > IP addresses"
-msgstr ""
+msgstr "ağ > IP adresleri"
 
 #: inc/mapping.class.php:590
 msgid "networking > PVID (port VLAN ID)"
-msgstr ""
+msgstr "ağ > KSAK (Kapı Sanal Ağ Kodu)"
 
 #: inc/mapping.class.php:594
 msgid "printer > meter > total number of printed pages (print)"
-msgstr ""
+msgstr "yazıcı > ölçüm > toplam basılmış sayfa (baskı)"
 
 #: inc/mapping.class.php:598
 msgid "printer > meter > number of printed black and white pages (print)"
-msgstr ""
+msgstr "yazıcı > ölçüm > basılmış siyah beyaz sayfa sayısı (baskı)"
 
 #: inc/mapping.class.php:602
 msgid "printer > meter > number of printed color pages (print)"
-msgstr ""
+msgstr "yazıcı > ölçüm > basılmış renkli sayfa sayısı (baskı)"
 
 #: inc/mapping.class.php:606
 msgid "printer > meter > total number of printed pages (copy)"
-msgstr ""
+msgstr "yazıcı > ölçüm > toplam basılmış sayfa (kopya)"
 
 #: inc/mapping.class.php:610
 msgid "printer > meter > number of printed black and white pages (copy)"
-msgstr ""
+msgstr "yazıcı > ölçüm > basılmış siyah beyaz sayfa sayısı (kopya)"
 
 #: inc/mapping.class.php:614
 msgid "printer > meter > number of printed color pages (copy)"
-msgstr ""
+msgstr "yazıcı > ölçüm > basılmış renkli sayfa sayısı (kopya)"
 
 #: inc/mapping.class.php:618
 msgid "printer > meter > total number of printed pages (fax)"
-msgstr ""
+msgstr "yazıcı > ölçüm > toplam basılmış sayfa (faks)"
 
 #: inc/mapping.class.php:622
 msgid "networking > port > vlan"
-msgstr ""
+msgstr "ağ > kapı > sanal ağ"
 
 #: inc/mapping.class.php:626
 msgid "networking > CDP remote sysdescr"
-msgstr ""
+msgstr "ağ > CDP uzak sistem açıklaması"
 
 #: inc/mapping.class.php:630
 msgid "networking > CDP remote id"
-msgstr ""
+msgstr "ağ > CDP uzak kod"
 
 #: inc/mapping.class.php:634
 msgid "networking > CDP remote model device"
-msgstr ""
+msgstr "ağ > CDP uzak aygıt modeli"
 
 #: inc/mapping.class.php:638
 msgid "networking > LLDP remote sysdescr"
-msgstr ""
+msgstr "ağ > LLDP uzak sistem açıklaması"
 
 #: inc/mapping.class.php:642
 msgid "networking > LLDP remote id"
-msgstr ""
+msgstr "ağ > LLDP uzak kod"
 
 #: inc/mapping.class.php:646
 msgid "networking > LLDP remote port description"
-msgstr ""
+msgstr "ağ > LLDP uzak kapı açıklaması"
 
 #: inc/mapping.class.php:651 inc/networkequipment.class.php:670
 #: inc/networkport.class.php:77
 msgid "MTU"
-msgstr ""
+msgstr "MTU"
 
 #: inc/mapping.class.php:659 inc/networkequipment.class.php:678
 #: inc/networkport.class.php:85
 msgid "Internal status"
-msgstr ""
+msgstr "İçsel durum"
 
 #: inc/mapping.class.php:663 inc/networkequipment.class.php:682
 msgid "Last Change"
-msgstr ""
+msgstr "Son Değişiklik"
 
 #: inc/mapping.class.php:667
 msgid "Number of received bytes"
-msgstr ""
+msgstr "Alınan bayt"
 
 #: inc/mapping.class.php:671
 msgid "Number of outgoing bytes"
-msgstr ""
+msgstr "Gönderilen bayt"
 
 #: inc/mapping.class.php:675
 msgid "Number of input errors"
-msgstr ""
+msgstr "Alma hatası"
 
 #: inc/mapping.class.php:679
 msgid "Number of output errors"
-msgstr ""
+msgstr "Gönderme hatası"
 
 #: inc/mapping.class.php:683
 msgid "CPU usage"
-msgstr "CPU kullanımı"
+msgstr "İşlemci kullanımı"
 
 #: inc/mapping.class.php:691 inc/networkequipment.class.php:698
 #: inc/networkport.class.php:105
 msgid "Internal MAC address"
-msgstr ""
+msgstr "İçsel MAC adresi"
 
 #: inc/mapping.class.php:711 inc/networkequipment.class.php:718
 #: inc/networkport.class.php:125
 msgid "Alias"
-msgstr ""
+msgstr "Kısa ad"
 
 #: inc/mapping.class.php:715 inc/printerlog.class.php:145
 msgid "Total number of printed pages"
-msgstr ""
+msgstr "Toplam basılmış sayfa sayısı"
 
 #: inc/mapping.class.php:719 inc/printerlog.class.php:150
 msgid "Number of printed black and white pages"
-msgstr ""
+msgstr "Toplam basılmış siyah beyaz sayfa sayısı"
 
 #: inc/mapping.class.php:723 inc/printerlog.class.php:155
 msgid "Number of printed color pages"
-msgstr ""
+msgstr "Toplam basılmış renkli sayfa sayısı"
 
 #: inc/mapping.class.php:727
 msgid "Number of printed monochrome pages"
-msgstr ""
+msgstr "Toplam basılmış tek renkli sayfa sayısı"
 
 #: inc/mapping.class.php:731
 msgid "Black cartridge"
-msgstr ""
+msgstr "Siyah kartuş"
 
 #: inc/mapping.class.php:735
 msgid "Photo black cartridge"
-msgstr ""
+msgstr "Siyah fotoğraf kartuşu"
 
 #: inc/mapping.class.php:739
 msgid "Cyan cartridge"
-msgstr ""
+msgstr "Mavi kartuş"
 
 #: inc/mapping.class.php:743
 msgid "Yellow cartridge"
-msgstr ""
+msgstr "Sarı kartuş"
 
 #: inc/mapping.class.php:747
 msgid "Magenta cartridge"
-msgstr ""
+msgstr "Mor kartuş"
 
 #: inc/mapping.class.php:751
 msgid "Light cyan cartridge"
-msgstr ""
+msgstr "Açık mavi kartuş"
 
 #: inc/mapping.class.php:755
 msgid "Light magenta cartridge"
-msgstr ""
+msgstr "Açık mor kartuş"
 
 #: inc/mapping.class.php:759
 msgid "Photoconductor"
-msgstr ""
+msgstr "Fotoiletken"
 
 #: inc/mapping.class.php:763
 msgid "Black photoconductor"
-msgstr ""
+msgstr "Siyah fotoiletken"
 
 #: inc/mapping.class.php:767
 msgid "Color photoconductor"
-msgstr ""
+msgstr "Renkli fotoiletken"
 
 #: inc/mapping.class.php:771
 msgid "Cyan photoconductor"
-msgstr ""
+msgstr "Mavi fotoiletken"
 
 #: inc/mapping.class.php:775
 msgid "Yellow photoconductor"
-msgstr ""
+msgstr "Sarı fotoiletken"
 
 #: inc/mapping.class.php:779
 msgid "Magenta photoconductor"
-msgstr ""
+msgstr "Mor fotoiletken"
 
 #: inc/mapping.class.php:783
 msgid "Black transfer unit"
-msgstr ""
+msgstr "Siyah aktarım birimi"
 
 #: inc/mapping.class.php:787
 msgid "Cyan transfer unit"
-msgstr ""
+msgstr "Mavi aktarım birimi"
 
 #: inc/mapping.class.php:791
 msgid "Yellow transfer unit"
-msgstr ""
+msgstr "Sarı aktarım birimi"
 
 #: inc/mapping.class.php:795
 msgid "Magenta transfer unit"
-msgstr ""
+msgstr "Mor aktarım birimi"
 
 #: inc/mapping.class.php:799
 msgid "Waste bin"
-msgstr ""
+msgstr "Atık kutusu"
 
 #: inc/mapping.class.php:803
 msgid "Four"
-msgstr ""
+msgstr "Dört"
 
 #: inc/mapping.class.php:807
 msgid "Cleaning module"
-msgstr ""
+msgstr "Temizleme modülü"
 
 #: inc/mapping.class.php:811 inc/printerlog.class.php:160
 msgid "Number of pages printed duplex"
-msgstr ""
+msgstr "Çift yüzlü basılan sayfa sayısı"
 
 #: inc/mapping.class.php:815 inc/printerlog.class.php:165
 msgid "Number of scanned pages"
-msgstr ""
+msgstr "Taranan sayfa sayısı"
 
 #: inc/mapping.class.php:819
 msgid "Maintenance kit"
-msgstr ""
+msgstr "Bakım kiti"
 
 #: inc/mapping.class.php:823
 msgid "Black toner"
-msgstr ""
+msgstr "Siyah toner"
 
 #: inc/mapping.class.php:827
 msgid "Cyan toner"
-msgstr ""
+msgstr "Mavi toner"
 
 #: inc/mapping.class.php:831
 msgid "Magenta toner"
-msgstr ""
+msgstr "Mor toner"
 
 #: inc/mapping.class.php:835
 msgid "Yellow toner"
-msgstr ""
+msgstr "Sarı toner"
 
 #: inc/mapping.class.php:839
 msgid "Black drum"
-msgstr ""
+msgstr "Siyah drum"
 
 #: inc/mapping.class.php:843
 msgid "Cyan drum"
-msgstr ""
+msgstr "Mavi drum"
 
 #: inc/mapping.class.php:847
 msgid "Magenta drum"
-msgstr ""
+msgstr "Mor drum"
 
 #: inc/mapping.class.php:851
 msgid "Yellow drum"
-msgstr ""
+msgstr "Sarı drum"
 
 #: inc/mapping.class.php:855
 msgid "Many informations grouped"
-msgstr ""
+msgstr "Pek çok bilgi gruplandı"
 
 #: inc/mapping.class.php:859
 msgid "Black toner 2"
-msgstr ""
+msgstr "Siyah toner 2"
 
 #: inc/mapping.class.php:863
 msgid "Black toner Utilisé"
-msgstr ""
+msgstr "Siyah toner kullanılan"
 
 #: inc/mapping.class.php:867
 msgid "Black toner Restant"
-msgstr ""
+msgstr "Siyah toner kalan"
 
 #: inc/mapping.class.php:871
 msgid "Cyan toner Max"
-msgstr ""
+msgstr "Mavi toner kapasitesi"
 
 #: inc/mapping.class.php:875
 msgid "Cyan toner Utilisé"
-msgstr ""
+msgstr "Mavi toner kullanılan"
 
 #: inc/mapping.class.php:879
 msgid "Cyan toner Restant"
-msgstr ""
+msgstr "Mavi toner kalan"
 
 #: inc/mapping.class.php:883
 msgid "Magenta toner Max"
-msgstr ""
+msgstr "Mor toner kapasitesi"
 
 #: inc/mapping.class.php:887
 msgid "Magenta toner Utilisé"
-msgstr ""
+msgstr "Mor toner kullanılan"
 
 #: inc/mapping.class.php:891
 msgid "Magenta toner Restant"
-msgstr ""
+msgstr "Mor toner kalan"
 
 #: inc/mapping.class.php:895
 msgid "Yellow toner Max"
-msgstr ""
+msgstr "Sarı toner kapasitesi"
 
 #: inc/mapping.class.php:899
 msgid "Yellow toner Utilisé"
-msgstr ""
+msgstr "Sarı toner kullanılan"
 
 #: inc/mapping.class.php:903
 msgid "Yellow toner Restant"
-msgstr ""
+msgstr "Sarı toner kalan"
 
 #: inc/mapping.class.php:907
 msgid "Black drum Max"
-msgstr ""
+msgstr "Siyah drum kapasitesi"
 
 #: inc/mapping.class.php:911
 msgid "Black drum Utilisé"
-msgstr ""
+msgstr "Siyah drum kullanılan"
 
 #: inc/mapping.class.php:915
 msgid "Black drum Restant"
-msgstr ""
+msgstr "Siyah drum kalan"
 
 #: inc/mapping.class.php:919
 msgid "Cyan drum Max"
-msgstr ""
+msgstr "Mavi drum kapasitesi"
 
 #: inc/mapping.class.php:923
 msgid "Cyan drum Utilisé"
-msgstr ""
+msgstr "Mavi drum kullanılan"
 
 #: inc/mapping.class.php:927
 msgid "Cyan drumRestant"
-msgstr ""
+msgstr "Mavi drum kalan"
 
 #: inc/mapping.class.php:931
 msgid "Magenta drum Max"
-msgstr ""
+msgstr "Mor drum kapasitesi"
 
 #: inc/mapping.class.php:935
 msgid "Magenta drum Utilisé"
-msgstr ""
+msgstr "Mor drum kullanılan"
 
 #: inc/mapping.class.php:939
 msgid "Magenta drum Restant"
-msgstr ""
+msgstr "Mor drum kalan"
 
 #: inc/mapping.class.php:943
 msgid "Yellow drum Max"
-msgstr ""
+msgstr "Sarı drum kapasitesi"
 
 #: inc/mapping.class.php:947
 msgid "Yellow drum Utilisé"
-msgstr ""
+msgstr "Sarı drum kullanılan"
 
 #: inc/mapping.class.php:951
 msgid "Yellow drum Restant"
-msgstr ""
+msgstr "Sarı drum kalan"
 
 #: inc/mapping.class.php:955
 msgid "Waste bin Max"
-msgstr ""
+msgstr "Atık kutusu kapasitesi"
 
 #: inc/mapping.class.php:959
 msgid "Waste bin Utilisé"
-msgstr ""
+msgstr "Atık kutusu kullanılan"
 
 #: inc/mapping.class.php:963
 msgid "Waste bin Restant"
-msgstr ""
+msgstr "Atık kutusu kalan"
 
 #: inc/mapping.class.php:967
 msgid "Maintenance kit Max"
-msgstr ""
+msgstr "Bakım kiti kapasitesi"
 
 #: inc/mapping.class.php:971
 msgid "Maintenance kit Utilisé"
-msgstr ""
+msgstr "Bakım kiti kullanılan"
 
 #: inc/mapping.class.php:975
 msgid "Maintenance kit Restant"
-msgstr ""
+msgstr "Bakım kiti kalan"
 
 #: inc/mapping.class.php:979
 msgid "Grey ink cartridge"
-msgstr ""
+msgstr "Gri mürekkep kartuşu"
 
 #: inc/mapping.class.php:984 inc/printerlog.class.php:170
 msgid "Total number of printed pages (print)"
-msgstr ""
+msgstr "Toplam basılmış sayfa sayısı (baskı)"
 
 #: inc/mapping.class.php:988 inc/printerlog.class.php:175
 msgid "Number of printed black and white pages (print)"
-msgstr ""
+msgstr "Toplam basılmış siyah beyaz sayfa sayısı (baskı)"
 
 #: inc/mapping.class.php:992 inc/printerlog.class.php:180
 msgid "Number of printed color pages (print)"
-msgstr ""
+msgstr "Toplam basılmış renkli sayfa sayısı (baskı)"
 
 #: inc/mapping.class.php:996 inc/printerlog.class.php:185
 msgid "Total number of printed pages (copy)"
-msgstr ""
+msgstr "Toplam basılmış sayfa sayısı (kopya)"
 
 #: inc/mapping.class.php:1000 inc/printerlog.class.php:190
 msgid "Number of printed black and white pages (copy)"
-msgstr ""
+msgstr "Toplam basılmış siyah beyaz sayfa sayısı (kopya)"
 
 #: inc/mapping.class.php:1004 inc/printerlog.class.php:195
 msgid "Number of printed color pages (copy)"
-msgstr ""
+msgstr "Toplam basılmış renkli sayfa sayısı (kopya)"
 
 #: inc/mapping.class.php:1008 inc/printerlog.class.php:200
 msgid "Total number of printed pages (fax)"
-msgstr ""
+msgstr "Toplam basılmış sayfa sayısı (faks)"
 
 #: inc/mapping.class.php:1012
 msgid "Total number of large printed pages"
-msgstr ""
+msgstr "Toplam basılmış geniş sayfa sayısı"
 
 #: inc/menu.class.php:76
 msgid ""
 "The server needs to kown the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
-msgstr ""
+msgstr "Sunucu, ajanların kendisine erişmek için kullandığı İnternet adresini bilmelidir. Lütfen genel ayarlar sayfasından bu adresi ayarlayın."
 
 #: inc/menu.class.php:117
 msgid "General configuration"
-msgstr ""
+msgstr "Genel ayarlar"
 
 #: inc/menu.class.php:124
 msgid "General"
-msgstr ""
+msgstr "Genel"
 
 #: inc/menu.class.php:163
 msgid "Tasks"
-msgstr ""
+msgstr "Görevler"
 
 #: inc/menu.class.php:183
 msgid "Ignored import devices"
-msgstr ""
+msgstr "Alınırken yoksayılan aygıtlar"
 
 #: inc/menu.class.php:191
 msgid "Computer entity rules"
-msgstr ""
+msgstr "Bilgisayar birim kuralları"
 
 #: inc/menu.class.php:198
 msgid "Computer location rules"
-msgstr ""
+msgstr "Bilgisayar konum kuralları"
 
 #: inc/menu.class.php:213
 msgid "Rules"
-msgstr ""
+msgstr "Kurallar"
 
 #: inc/menu.class.php:271
 msgid "Network inventory status"
-msgstr ""
+msgstr "Ağ envanteri durumu"
 
 #: inc/menu.class.php:289
 msgid "SNMP models creation"
-msgstr ""
+msgstr "SNMP modeli oluşturma"
 
 #: inc/menu.class.php:296
 msgid "Networking"
-msgstr ""
+msgstr "Ağ"
 
 #: inc/menu.class.php:322
 msgid "Deploy"
-msgstr ""
+msgstr "Yayım"
 
 #: inc/networkequipment.class.php:63 inc/printer.class.php:70
 msgid "FusionInventory SNMP"
-msgstr ""
+msgstr "FusionInventory SNMP"
 
 #: inc/networkequipment.class.php:128
 msgid "Display the view"
-msgstr ""
+msgstr "Görünüm görüntülensin"
 
 #: inc/networkequipment.class.php:130
 msgid "If you prefer, you can display the view"
-msgstr ""
+msgstr "Bu seçenek etkinleştirildiğinde, görünüm görüntülenir"
 
 #: inc/networkequipment.class.php:433 inc/printer.class.php:144
 msgid "SNMP information"
-msgstr ""
+msgstr "SNMP bilgileri"
 
 #: inc/networkequipment.class.php:468 inc/printer.class.php:197
 msgid "Load the correct model"
-msgstr ""
+msgstr "Doğru modeli yükleyin"
 
 #: inc/networkequipment.class.php:492
 msgid "Memory usage (in %)"
-msgstr ""
+msgstr "Bellek kullanımı (%)"
 
 #: inc/networkequipment.class.php:506
 msgid "Datas not available"
-msgstr ""
+msgstr "Kullanılabilecek bir veri yok"
 
 #: inc/networkequipment.class.php:558
 msgid "Uptime"
-msgstr ""
+msgstr "Açık olduğu süre"
 
 #: inc/networkequipment.class.php:585 inc/task.class.php:278
 #: inc/taskjob.class.php:305 inc/taskjob.class.php:1876
 #: inc/taskjob.class.php:2007
 msgid "day(s)"
-msgstr ""
+msgstr "gün"
 
 #: inc/networkequipment.class.php:586 inc/task.class.php:276
 #: inc/taskjob.class.php:303 inc/taskjob.class.php:1870
 #: inc/taskjob.class.php:2005
 msgid "hour(s)"
-msgstr ""
+msgstr "saat"
 
 #: inc/networkequipment.class.php:587 inc/task.class.php:274
 #: inc/taskjob.class.php:301 inc/taskjob.class.php:1864
 #: inc/taskjob.class.php:2003
 msgid "Minute(s)"
-msgstr ""
+msgstr "dakika"
 
 #: inc/networkequipment.class.php:588
 msgid "sec(s)"
-msgstr ""
+msgstr "saniye"
 
 #: inc/networkequipment.class.php:608
 msgid "Ports array"
-msgstr ""
+msgstr "Kapı dizisi"
 
 #: inc/networkequipment.class.php:632
 msgid "Legend"
-msgstr ""
+msgstr "İşaret"
 
 #: inc/networkequipment.class.php:642
 msgid "Connection with a switch or a server in trunk or tagged mode"
-msgstr ""
+msgstr "Switch ya da sunucu grup ya da etiketleme bağlantı kipi"
 
 #: inc/networkequipment.class.php:648
 msgid "Other connections (with a computer, a printer...)"
-msgstr ""
+msgstr "Diğer bağlantılar (bilgisayar, yazıcı ...)"
 
 #: inc/networkequipment.class.php:662
 msgid "Monitoring"
-msgstr ""
+msgstr "İzleme"
 
 #: inc/networkequipment.class.php:686
 msgid "Traffic received/sent"
-msgstr ""
+msgstr "Alınan/gönderilen trafik"
 
 #: inc/networkequipment.class.php:690
 msgid "Errors received/sent"
-msgstr ""
+msgstr "Alma/gönderme hatası"
 
 #: inc/networkequipment.class.php:694 inc/networkport.class.php:101
 msgid "Duplex"
-msgstr ""
+msgstr "Çift yönlü"
 
 #: inc/networkequipment.class.php:714 inc/networkport.class.php:121
 msgid "Port not connected since"
-msgstr ""
+msgstr "Kapı şu zamandan beri bağlanmamış"
 
 #: inc/networkport.class.php:89
 msgid "Last change"
-msgstr ""
+msgstr "Son değişiklik"
 
 #: inc/networkport.class.php:93
 msgid "Number of bytes received / Number of bytes sent"
-msgstr ""
+msgstr "Alınan / Gönderilen bayt"
 
 #: inc/networkport.class.php:97
 msgid "Number of input errors / Number of errors in reception"
-msgstr ""
+msgstr "Alma / Gönderme hatası"
 
 #: inc/networkportconnectionlog.class.php:59
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: inc/networkportconnectionlog.class.php:134
 #: inc/networkportconnectionlog.class.php:160 inc/networkportlog.class.php:448
 #: inc/networkportlog.class.php:469
 msgid "on"
-msgstr ""
+msgstr "zamanı"
 
 #: inc/networkportlog.class.php:62
 msgid "FusionInventory historical"
-msgstr ""
+msgstr "FusionInventory geçmişi"
 
 #: inc/networkportlog.class.php:127
 msgid "List of fields to history"
-msgstr ""
+msgstr "Geçmişi tutulacak alan listesi"
 
 #: inc/networkportlog.class.php:212
 msgid "Clean history"
-msgstr ""
+msgstr "Geçmişi temizleyin"
 
 #: inc/networkporttype.class.php:358
 msgid "Ports types to import (for network equipments)"
-msgstr ""
+msgstr "Alınacak kapı tipleri (ağ aygıtları için)"
 
 #: inc/printercartridge.class.php:64
 msgid "Cartridge(s)"
-msgstr ""
+msgstr "Kartuş"
 
 #: inc/printerlog.class.php:53 inc/printerlog.class.php:323
 msgid "History meter printer"
-msgstr ""
+msgstr "Yazıcı ölçüm geçmişi"
 
 #: inc/printerlog.class.php:287
 msgid "Total printed pages"
-msgstr ""
+msgstr "Toplam basılan sayfa"
 
 #: inc/printerlog.class.php:291
 msgid "Pages / day"
-msgstr ""
+msgstr "Sayfa / gün"
 
 #: inc/printerlog.class.php:328
 msgid "Meter"
-msgstr "Metre"
+msgstr "Ölçüm"
 
 #: inc/printerlog.class.php:350 inc/snmpmodelmib.class.php:202
 msgid "Check All"
-msgstr ""
+msgstr "Tümünü Seçin"
 
 #: inc/printerlog.class.php:353 inc/snmpmodelmib.class.php:205
 msgid "Uncheck All"
-msgstr ""
+msgstr "Tümünü Bırakın"
 
 #: inc/printerlog.class.php:483
 msgid "Time unit"
-msgstr ""
+msgstr "Zaman birimi"
 
 #: inc/printerlog.class.php:491
 msgid "year"
@@ -2288,91 +2289,91 @@ msgstr "yıl"
 
 #: inc/printerlog.class.php:503
 msgid "Display"
-msgstr ""
+msgstr "Görünüm"
 
 #: inc/printerlog.class.php:505
 msgid "Total counter"
-msgstr ""
+msgstr "Sayaç toplamı"
 
 #: inc/printerlog.class.php:507
 msgid "pages per day"
-msgstr ""
+msgstr "günlük sayfa sayısı"
 
 #: inc/printerlog.class.php:522
 msgid "Printers to compare"
-msgstr ""
+msgstr "Karşılaştırılacak yazıcılar"
 
 #: inc/printerlog.class.php:530
 msgid "Add a printer"
-msgstr ""
+msgstr "Yazıcı ekleyin"
 
 #: inc/printerlog.class.php:545
 msgid "Remove a printer"
-msgstr ""
+msgstr "Yazıcıyı silin"
 
 #: inc/printerlog.class.php:665
 msgid "Too datas to display"
-msgstr ""
+msgstr "Görüntülenemeyecek kadar çok veri var"
 
 #: inc/profile.class.php:292
 msgid "Rights management"
-msgstr ""
+msgstr "İzin yönetimi"
 
 #: inc/rulematchedlog.class.php:82 inc/rulematchedlog.class.php:87
 msgid "Import information"
-msgstr ""
+msgstr "Bilgileri alın"
 
 #: inc/rulematchedlog.class.php:160 inc/rulematchedlog.class.php:226
 msgid "Rule import logs"
-msgstr ""
+msgstr "Alma günlükleri kuralı"
 
 #: inc/snmpmodel.class.php:96
 msgid "Key of model discovery"
-msgstr ""
+msgstr "Model keşif anahtarı"
 
 #: inc/snmpmodel.class.php:133
 msgid "Create SNMP model"
-msgstr ""
+msgstr "SNMP modeli oluşturun"
 
 #: inc/snmpmodel.class.php:134
 msgid "Edit SNMP model"
-msgstr ""
+msgstr "SNMP modelini düzenleyin"
 
 #: inc/snmpmodel.class.php:434 inc/snmpmodel.class.php:439
 #: inc/snmpmodelimportexport.class.php:488
 #: inc/snmpmodelimportexport.class.php:493
 msgid "Importing SNMP models, please wait..."
-msgstr ""
+msgstr "SNMP modelleri alınıyor, lütfen bekleyin..."
 
 #: inc/snmpmodelconstructdevice.class.php:58
 msgid "Back to device form information"
-msgstr ""
+msgstr "Aygıt form bilgilerine geri dönün"
 
 #: inc/snmpmodelconstructdevice.class.php:530 inc/snmpmodelmib.class.php:101
 #: inc/snmpmodelmib.class.php:248
 msgid "Port Counters"
-msgstr ""
+msgstr "Kapı Sayaçları"
 
 #: inc/snmpmodelconstructdevice.class.php:540 inc/snmpmodelmib.class.php:102
 #: inc/snmpmodelmib.class.php:249
 msgid "Dynamic port (.x)"
-msgstr ""
+msgstr "Dinamik kapı (.x)"
 
 #: inc/snmpmodelimportexport.class.php:134
 msgid "SNMP model import"
-msgstr ""
+msgstr "SNMP model alma"
 
 #: inc/snmpmodelimportexport.class.php:161
 msgid "Mass import of models"
-msgstr ""
+msgstr "Toplu model alma"
 
 #: inc/snmpmodelimportexport.class.php:165
 msgid "Mass import of models in folder plugins/fusioninventory/snmpmodels/"
-msgstr ""
+msgstr "plugins/fusioninventory/snmpmodels/ klasöründen toplu model alma"
 
 #: inc/snmpmodelimportexport.class.php:215
 msgid "Model already exists"
-msgstr ""
+msgstr "Model zaten var"
 
 #: inc/snmpmodelmib.class.php:94
 msgid "OID list"
@@ -2380,238 +2381,238 @@ msgstr "OID listesi"
 
 #: inc/snmpmodelmib.class.php:98 inc/snmpmodelmib.class.php:245
 msgid "MIB Label"
-msgstr ""
+msgstr "MIB Etiketi"
 
 #: inc/snmpmodelmib.class.php:99 inc/snmpmodelmib.class.php:246
 msgid "Object"
-msgstr ""
+msgstr "Nesne"
 
 #: inc/snmpmodelmib.class.php:100 inc/snmpmodelmib.class.php:247
 msgid "OID"
-msgstr ""
+msgstr "OID"
 
 #: inc/snmpmodelmib.class.php:103 inc/snmpmodelmib.class.php:250
 msgid "Linked fields"
-msgstr ""
+msgstr "Bağlantılı alanlar"
 
 #: inc/snmpmodelmib.class.php:240
 msgid "add an OID..."
-msgstr ""
+msgstr "OID ekleyin..."
 
 #: inc/statediscovery.class.php:141 inc/stateinventory.class.php:92
 #: inc/taskjoblog.class.php:161 inc/taskjoblog.class.php:237
 #: inc/taskjoblog.class.php:305 inc/taskjobstate.class.php:192
 msgid "Unique id"
-msgstr ""
+msgstr "Eşsiz kod"
 
 #: inc/statediscovery.class.php:147
 msgid "Total discovery devices"
-msgstr ""
+msgstr "Toplam keşfedilen aygıt"
 
 #: inc/statediscovery.class.php:148
 msgid "Devices not imported"
-msgstr ""
+msgstr "Alınmayan aygıt"
 
 #: inc/statediscovery.class.php:149
 msgid "Devices linked"
-msgstr ""
+msgstr "Bağlanan aygıt"
 
 #: inc/statediscovery.class.php:150
 msgid "Devices imported"
-msgstr ""
+msgstr "Alınan aygıt"
 
 #: inc/statediscovery.class.php:214 inc/stateinventory.class.php:158
 #: inc/taskjoblog.class.php:69 inc/taskjoblog.class.php:646
 #: inc/taskjoblog.class.php:770 inc/taskjoblog.class.php:985
 msgid "Started"
-msgstr ""
+msgstr "Başlatılmış"
 
 #: inc/statediscovery.class.php:218 inc/stateinventory.class.php:162
 #: inc/taskjobstate.class.php:150
 msgid "Finished tasks"
-msgstr ""
+msgstr "Bitirilmiş görevler"
 
 #: inc/stateinventory.class.php:98
 msgid "Number per second"
-msgstr ""
+msgstr "Saniyedeki numara"
 
 #: inc/stateinventory.class.php:100
 msgid "To inventory"
-msgstr ""
+msgstr "Envantere"
 
 #: inc/stateinventory.class.php:101
 msgid "Error(s)"
-msgstr ""
+msgstr "Hata"
 
 #: inc/staticmisc.class.php:61 inc/staticmisc.class.php:192
 msgid "Wake On LAN"
-msgstr ""
+msgstr "Ağdan başlatma"
 
 #: inc/staticmisc.class.php:76
 msgid "VMware host remote inventory"
-msgstr ""
+msgstr "VMware uzak sunucu envanteri"
 
 #: inc/staticmisc.class.php:93
 msgid "Package install"
-msgstr ""
+msgstr "Paket Yükleyin"
 
 #: inc/staticmisc.class.php:183 inc/staticmisc.class.php:315
 msgid "Agents"
-msgstr ""
+msgstr "Ajanlar"
 
 #: inc/staticmisc.class.php:186
 msgid "Agent remote control"
-msgstr ""
+msgstr "Ajan uzaktan kumandası"
 
 #: inc/staticmisc.class.php:189
 msgid "Configuration"
-msgstr "Yapılandırma"
+msgstr "Ayarlar"
 
 #: inc/staticmisc.class.php:195
 msgid "Unknown devices"
-msgstr ""
+msgstr "Bilinmeyen aygıtlar"
 
 #: inc/staticmisc.class.php:210
 msgid "Existance criteria"
-msgstr ""
+msgstr "Varolma ölçütü"
 
 #: inc/staticmisc.class.php:213
 msgid "computer XML manual import"
-msgstr ""
+msgstr "el ile XML bilgisayar alma"
 
 #: inc/staticmisc.class.php:216
 msgid "Fields blacklist"
-msgstr ""
+msgstr "Alan karalistesi"
 
 #: inc/staticmisc.class.php:225
 msgid "Network equipment SNMP"
-msgstr ""
+msgstr "Ağ aygıtı SNMP"
 
 #: inc/staticmisc.class.php:228
 msgid "Printer SNMP"
-msgstr ""
+msgstr "Yazıcı SNMP"
 
 #: inc/staticmisc.class.php:231
 msgid "SNMP model"
-msgstr ""
+msgstr "SNMP modeli"
 
 #: inc/staticmisc.class.php:234
 msgid "Printers report"
-msgstr ""
+msgstr "Yazıcı raporu"
 
 #: inc/staticmisc.class.php:459 inc/staticmisc.class.php:465
 #: inc/taskjob.class.php:444 inc/taskjob.class.php:645
 #: inc/taskjob.class.php:897 inc/taskjob.class.php:1907
 msgid "Auto managenement dynamic of agents"
-msgstr ""
+msgstr "Ajanların otomatik yönetim devinimi"
 
 #: inc/task.class.php:86 inc/task.class.php:240 inc/taskjob.class.php:1479
 #: inc/taskjob.class.php:1843
 msgid "Scheduled date"
-msgstr ""
+msgstr "Zamanlanan tarih"
 
 #: inc/task.class.php:112 inc/task.class.php:255 inc/taskjob.class.php:1987
 msgid "Communication type"
-msgstr ""
+msgstr "İletişim tipi"
 
 #: inc/task.class.php:210 inc/taskjob.class.php:2064
 #: inc/taskjob.class.php:2097
 msgid "Force start"
-msgstr ""
+msgstr "Başlatmaya zorlayın"
 
 #: inc/task.class.php:230
 msgid "Reinitialization"
-msgstr ""
+msgstr "Yeniden yükleniyor"
 
 #: inc/task.class.php:258 inc/task.class.php:561 inc/taskjob.class.php:1990
 msgid "Server contacts the agent (push)"
-msgstr ""
+msgstr "Sunucu ajanla iletişim kursun (push)"
 
 #: inc/task.class.php:260 inc/task.class.php:564 inc/taskjob.class.php:1992
 msgid "Agent contacts the server (pull)"
-msgstr ""
+msgstr "Ajan sunucu ile iletişim kursun (pull)"
 
 #: inc/task.class.php:280 inc/taskjob.class.php:2009
 msgid "month(s)"
-msgstr ""
+msgstr "ay"
 
 #: inc/task.class.php:426
 msgid "Planned for running"
-msgstr ""
+msgstr "Çalışmak üzere zamanlanmış"
 
 #: inc/task.class.php:444
 msgid "In error"
-msgstr ""
+msgstr "hata"
 
 #: inc/taskjob.class.php:217 inc/taskjob.class.php:220
 msgid "New action"
-msgstr "Yeni eylem"
+msgstr "Yeni işlem"
 
 #: inc/taskjob.class.php:271 inc/taskjob.class.php:409
 #: inc/taskjob.class.php:1845 inc/taskjoblog.class.php:536
 msgid "Definition"
-msgstr ""
+msgstr "Açıklama"
 
 #: inc/taskjob.class.php:275
 msgid "Action targets: what the action aims"
-msgstr ""
+msgstr "Eylem hedefleri: eylemin amacı"
 
 #: inc/taskjob.class.php:285
 msgid "Action actor: what do the action"
-msgstr ""
+msgstr "Eylem aktörü: eylemin ne yapacağı"
 
 #: inc/taskjob.class.php:295
 msgid "Time between task start and start this action"
-msgstr ""
+msgstr "Görev başlangıcı ile bu işlemin başlangıcı arasındaki süre"
 
 #: inc/taskjob.class.php:334
 msgid "Number of trials"
-msgstr ""
+msgstr "Deneme sayısı"
 
 #: inc/taskjob.class.php:341
 msgid "Time between 2 trials (in minutes)"
-msgstr ""
+msgstr "İki deneme arasındaki süre (dakika)"
 
 #: inc/taskjob.class.php:362
 msgid "Purge"
-msgstr ""
+msgstr "Silin"
 
 #: inc/taskjob.class.php:364
 msgid "Confirm the final deletion ?"
-msgstr ""
+msgstr "Silme işlemini onaylıyor musunuz?"
 
 #: inc/taskjob.class.php:447 inc/taskjob.class.php:650
 #: inc/taskjob.class.php:899 inc/taskjob.class.php:1911
 msgid "Auto managenement dynamic of agents (same subnet)"
-msgstr ""
+msgstr "Ajanların otomatik yönetim devinimi (aynı altağda)"
 
 #: inc/taskjob.class.php:464
 msgid "Selection"
-msgstr ""
+msgstr "Seçim"
 
 #: inc/taskjob.class.php:1221
 msgid "Unable to run task because some jobs is running yet!"
-msgstr ""
+msgstr "Henüz bazı işler yapılmakta olduğundan bu görev çalıştırılamıyor!"
 
 #: inc/taskjob.class.php:1451
 msgid "Action on this device"
-msgstr ""
+msgstr "Bu aygıta yapılacak işlem"
 
 #: inc/taskjob.class.php:2309
 msgid "Action after finish running task"
-msgstr ""
+msgstr "Görev tamamlandıktan sonra yapılacak işlem"
 
 #: inc/taskjob.class.php:2314
 msgid "Delete this task and finish"
-msgstr ""
+msgstr "Bu görevi silip tamamlayın"
 
 #: inc/taskjob.class.php:2319 inc/wizard.class.php:248
 msgid "Finish"
-msgstr ""
+msgstr "Tamamlayın"
 
 #: inc/taskjob.class.php:2324
 msgid "Run again this task"
-msgstr ""
+msgstr "Bu görevi yeniden çalıştırın"
 
 #: inc/taskjoblog.class.php:79 inc/taskjoblog.class.php:678
 #: inc/taskjoblog.class.php:1014
@@ -2620,132 +2621,132 @@ msgstr "bilinmeyen"
 
 #: inc/taskjoblog.class.php:238 inc/taskjoblog.class.php:498
 msgid "Process number"
-msgstr ""
+msgstr "İşlem numarası"
 
 #: inc/taskjoblog.class.php:882 inc/taskjoblog.class.php:930
 msgid "View logs of this execution"
-msgstr ""
+msgstr "Bu işlemin günlük kayıtlarına bakın"
 
 #: inc/taskjoblog.class.php:900 inc/taskjoblog.class.php:952
 msgid "See all executions"
-msgstr ""
+msgstr "Tüm işlemlere bakın"
 
 #: inc/taskjoblog.class.php:1085
 msgid "devices queried"
-msgstr ""
+msgstr "sorgulanan aygıt"
 
 #: inc/taskjoblog.class.php:1086
 msgid "devices found"
-msgstr ""
+msgstr "bulunan aygıt"
 
 #: inc/taskjoblog.class.php:1087
 msgid ""
 "SNMP equipment definition isn't up to date on agent. For the next run, it "
 "will get new version from server."
-msgstr ""
+msgstr "Ajan üzerindeki SNMP aygıt tanımları güncel değil. Sonraki çalışmada sunucudan yeni sürüm alınacak."
 
 #: inc/taskjoblog.class.php:1088
 msgid "Add the item"
-msgstr ""
+msgstr "Öge ekleyin"
 
 #: inc/taskjoblog.class.php:1089
 msgid "Update the item"
-msgstr ""
+msgstr "Ögeyi güncelleyin"
 
 #: inc/taskjoblog.class.php:1090
 msgid "Inventory started"
-msgstr ""
+msgstr "Envanter başlatıldı"
 
 #: inc/taskjoblog.class.php:1091
 msgid "Detail"
-msgstr ""
+msgstr "Ayrıntı"
 
 #: inc/taskjoblog.class.php:1092
 msgid "Bad token, impossible to start agent"
-msgstr ""
+msgstr "Pin kodu hatalı, ajan başlatılamadı"
 
 #: inc/taskjoblog.class.php:1093
 msgid "Agent stopped/crashed"
-msgstr ""
+msgstr "Ajan durdu/çöktü"
 
 #: inc/taskjobstate.class.php:143
 msgid "Running tasks"
-msgstr ""
+msgstr "Çalışan görevler"
 
 #: inc/unknowndevice.class.php:113 inc/unknowndevice.class.php:347
 msgid "Network hub"
-msgstr ""
+msgstr "Ağ dağıtıcı"
 
 #: inc/unknowndevice.class.php:335
 msgid "Approved devices"
-msgstr ""
+msgstr "Onaylanmış aygıtlar"
 
 #: inc/unknowndevice.class.php:436
 msgid "Import unknown device into asset"
-msgstr ""
+msgstr "Demirbaşa bilinmeyen aygıt alınsın"
 
 #: inc/wizard.class.php:74
 msgid "Breadcrumb"
-msgstr ""
+msgstr "Hiyerarşik menü"
 
 #: inc/wizard.class.php:338 inc/wizard.class.php:356 inc/wizard.class.php:374
 #: inc/wizard.class.php:394 inc/wizard.class.php:409
 msgid "Action choice"
-msgstr ""
+msgstr "İşlem seçimi"
 
 #: inc/wizard.class.php:339 inc/wizard.class.php:357 inc/wizard.class.php:375
 #: inc/wizard.class.php:410
 msgid "Type of device to inventory"
-msgstr ""
+msgstr "Demirbaşa eklenecek aygıt tipi"
 
 #: inc/wizard.class.php:343
 msgid "Agent configuration"
-msgstr ""
+msgstr "Ajan ayarları"
 
 #: inc/wizard.class.php:358
 msgid "ESX servers management"
-msgstr ""
+msgstr "ESX sunucuları yönetimi"
 
 #: inc/wizard.class.php:359 inc/wizard.class.php:380 inc/wizard.class.php:429
 msgid "Run tasks"
-msgstr ""
+msgstr "Görevleri çalıştırın"
 
 #: inc/wizard.class.php:360 inc/wizard.class.php:381 inc/wizard.class.php:430
 msgid "Tasks running result"
-msgstr ""
+msgstr "Çalıştırılan görevlerin sonucu"
 
 #: inc/wizard.class.php:361 inc/wizard.class.php:382 inc/wizard.class.php:431
 msgid "End Task"
-msgstr ""
+msgstr "Görevi Sonlandırın"
 
 #: inc/wizard.class.php:411
 msgid "Choice (netdiscovery or inventory)"
-msgstr ""
+msgstr "Seçim (ağ keşfi ya da envanter)"
 
 #: inc/wizard.class.php:452
 msgid "Discover the network"
-msgstr ""
+msgstr "Ağı keşfedilsin"
 
 #: inc/wizard.class.php:457
 msgid "Inventory devices"
-msgstr ""
+msgstr "Aygıt envanteri"
 
 #: inc/wizard.class.php:462
 msgid "Welcome in FusionInventory. Begin configuration?"
-msgstr ""
+msgstr "FusionInventory yazılımına hoşgeldiniz. Ayarları yapmak ister misiniz?"
 
 #: inc/wizard.class.php:488
 msgid "ESX servers"
-msgstr ""
+msgstr "ESX sunucular"
 
 #: inc/wizard.class.php:492
 msgid "Network devices and printers"
-msgstr ""
+msgstr "Ağ aygıtları ve yazıcılar"
 
 #: inc/wizard.class.php:1020
 msgid "Credential"
-msgstr ""
+msgstr "Kimlik bilgileri"
 
 #: report/computer_last_inventory.php:73
 msgid "Number of days (minimum) since last inventory"
-msgstr ""
+msgstr "Son envanterden sonra geçen (en az) gün"

@@ -12,10 +12,10 @@
 # oviri <tamaoviri@gmail.com>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: FusionInventory (for GLPI)\n"
+"Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: http://forge.fusioninventory.org/\n"
 "POT-Creation-Date: 2013-07-09 00:00+0200\n"
-"PO-Revision-Date: 2013-07-08 22:03+0000\n"
+"PO-Revision-Date: 2013-09-21 13:07+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: French (France) (http://www.transifex.com/projects/p/FusionInventory/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
@@ -303,7 +303,7 @@ msgstr "Merci de supprimer le dossier %s dans glpi/plugins/"
 
 #: ajax/dropdownsnmpmodelconstruct_progressbar.php:53
 msgid "Printer cartridges"
-msgstr ""
+msgstr "Cartouches d'encre d'imprimantes"
 
 #: front/agent.form.php:58
 msgid "The agent is running"
@@ -319,11 +319,11 @@ msgstr "Fonctionnalités"
 
 #: front/constructsendmodel.php:52
 msgid "Importing SNMP models finished."
-msgstr ""
+msgstr "L'import des modèles SNMP est terminé."
 
 #: front/deploypackage.form.php:73
 msgid "The modified JSON contained a syntax error : <br/>"
-msgstr ""
+msgstr "Le JSON modifié contient une erreur de syntaxe : <br/>"
 
 #: front/inventorycomputerimportxml.php:68
 msgid "Can't read zip file!"
@@ -524,7 +524,7 @@ msgstr "Cette option ne va pas importer l'élément"
 msgid ""
 "This option will merge items with same name to reduce number of items if "
 "this management isn't important"
-msgstr ""
+msgstr "Cette option va fusionner les objets qui ont le même nom, afin de réduire le nombre d'objets si cette gestion n'est pas importante"
 
 #: inc/config.class.php:446
 msgid "This option will create one item for each item found"
@@ -557,7 +557,7 @@ msgstr "Lecteurs réseau"
 msgid ""
 "Create computer based on virtual machine information ( only when the virtual"
 " machine has no inventory agent ! )"
-msgstr ""
+msgstr "Création d'ordinateur basé sur les informations de la machine virtuelle ( uniauement lorsque la machine virtuelle n'a pas d'agent ! )"
 
 #: inc/config.class.php:596
 msgid "Automatic computers transfer"
@@ -621,7 +621,7 @@ msgstr "Trié par"
 
 #: inc/constructmodel.class.php:973 inc/constructmodel.class.php:979
 msgid "Download SNMP models, please wait..."
-msgstr ""
+msgstr "Téléchargement des modèles SNMP, veuillez patienter..."
 
 #: inc/credential.class.php:53 inc/credential.class.php:148
 #: inc/credentialip.class.php:107 inc/credentialip.class.php:120
@@ -645,31 +645,31 @@ msgstr "Inventaire du matériel à distance "
 
 #: inc/deployaction.class.php:52
 msgid "Return code is equal to"
-msgstr ""
+msgstr "Le code de retour est "
 
 #: inc/deployaction.class.php:53
 msgid "Return code is not equal to"
-msgstr ""
+msgstr "Le code de retour n'est pas"
 
 #: inc/deployaction.class.php:54
 msgid "Command output contains"
-msgstr ""
+msgstr "La sortie de la commande contient"
 
 #: inc/deployaction.class.php:55
 msgid "Command output does not contains"
-msgstr ""
+msgstr "La sortie de la commande ne contient pas"
 
 #: inc/deployaction.class.php:71
 msgid "Command"
-msgstr ""
+msgstr "Commande"
 
 #: inc/deployaction.class.php:72
 msgid "Move"
-msgstr ""
+msgstr "Déplacer"
 
 #: inc/deployaction.class.php:73
 msgid "Copy"
-msgstr ""
+msgstr "Copier"
 
 #: inc/deployaction.class.php:74 inc/deployaction.class.php:227
 #: inc/deploycheck.class.php:184 inc/deployfile.class.php:273
@@ -684,7 +684,7 @@ msgstr "Suppression"
 
 #: inc/deployaction.class.php:75
 msgid "Make directory"
-msgstr ""
+msgstr "Créer un répertoire"
 
 #: inc/deployaction.class.php:190
 msgid "Command to execute"
@@ -692,7 +692,7 @@ msgstr " Commande à exécuter"
 
 #: inc/deployaction.class.php:204
 msgid "return codes saved for this command"
-msgstr ""
+msgstr "retourne le code sauvegardé de cette commande"
 
 #: inc/deployaction.class.php:216 inc/deploycheck.class.php:173
 #: inc/deployfile.class.php:263
@@ -879,7 +879,7 @@ msgstr "Erreur de Transfert : Le fichier est trop gros"
 
 #: inc/deployfile.class.php:650
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "Le fichier n'est qu'en partie uploadé"
 
 #: inc/deployfile.class.php:653
 msgid "No file was uploaded"
@@ -948,8 +948,8 @@ msgstr "Modification Refusée"
 #: inc/deploypackage.class.php:129
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "La tâche suivante est éxécutée avec ce paquet"
+msgstr[1] "Les tâches suivantes sont éxécutées avec ce paquet"
 
 #: inc/deploypackage.class.php:295
 msgid "Add a package"
@@ -1067,7 +1067,7 @@ msgstr "Version du BIOS"
 #: inc/inventorycomputercomputer.class.php:201
 #: inc/networkequipment.class.php:1096 inc/printer.class.php:245
 msgid "Download"
-msgstr ""
+msgstr "Téléchargement"
 
 #: inc/inventorycomputercomputer.class.php:210
 msgid "PHP Array"
@@ -1185,7 +1185,7 @@ msgstr "Valeurs GLPI"
 
 #: inc/lock.class.php:165
 msgid "Values of last inventory"
-msgstr ""
+msgstr "Valeurs du dernier inventaire"
 
 #: inc/lock.class.php:222 inc/taskjob.class.php:52 inc/taskjob.class.php:1458
 #: inc/taskjoblog.class.php:141 inc/taskjobstate.class.php:193
@@ -2329,7 +2329,7 @@ msgstr "Gestion des droits"
 
 #: inc/rulematchedlog.class.php:82 inc/rulematchedlog.class.php:87
 msgid "Import information"
-msgstr ""
+msgstr "Informations d'import"
 
 #: inc/rulematchedlog.class.php:160 inc/rulematchedlog.class.php:226
 msgid "Rule import logs"
