@@ -43,13 +43,19 @@
 class Update extends PHPUnit_Framework_TestCase {
 
    public function testUpdate2_3_3() {
-
+      global $PF_CONFIG;
+      
+      $PF_CONFIG = array();
+      
       $Update = new Update();
       $Update->update("2.3.3");
    }
    
    
    public function testUpdate2_1_3() {
+      global $PF_CONFIG;
+      
+      $PF_CONFIG = array();
 
       $Update = new Update();
       $Update->update("2.1.3");
@@ -57,10 +63,14 @@ class Update extends PHPUnit_Framework_TestCase {
    
    
    public function testUpdate083_21() {
+      global $PF_CONFIG;
+      
+      $PF_CONFIG = array();
 
       $Update = new Update();
       $Update->update("0.83+2.1");
       $Update->testEntityRule(1);
+      $Update->verifyConfig();
    }
    
 
@@ -136,6 +146,22 @@ class Update extends PHPUnit_Framework_TestCase {
       $Install = new Install();
       $Install->testInstall(0);
       
+   }
+   
+   
+   
+   function verifyConfig() {
+      global $DB;
+      
+      $DB->connect();
+
+      $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs', 
+                                        "`type`='states_id_default'");
+      
+      $this->assertEquals(1, count($a_configs), "May have conf states_id_default");
+      
+      $a_config = current($a_configs);
+      $this->assertEquals(1, $a_config['value'], "May keep states_id_default to 1");
    }
 }
 

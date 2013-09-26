@@ -70,9 +70,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['users_id']               = $users_id;
       $input['agent_base_url']         = '';
 
-      foreach ($input as $key => $value) {
-         $this->addValues(array($key => $value));
-      }
+      $this->addValues($input);
 
       $input = array();
       $input['import_monitor']         = 2;
@@ -100,17 +98,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['create_vm']              = 0;
       $input['component_networkcardvirtual'] = 1;
 
-      foreach ($input as $key => $value) {
-         $this->addValues(array($key => $value));
-      }
+      $this->addValues($input);
 
       $input = array();
       $input['threads_networkdiscovery'] = 20;
       $input['threads_networkinventory'] = 10;
 
-      foreach ($input as $key => $value) {
-         $this->addValues(array($key => $value));
-      }
+      $this->addValues($input);
 
       //deploy config variables
       $input = array();
@@ -127,11 +121,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                );
       $input['alert_winpath'] = 1;
       $input['server_as_mirror'] = 1;
-      foreach ($input as $key => $value) {
-         $this->addValues(array($key => $value));
-      }
-
-
+      $this->addValues($input);
    }
 
 
@@ -156,12 +146,12 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     *
     * @return nothing
     **/
-   function addValues($values) {
+   function addValues($values, $update=TRUE) {
 
       foreach ($values as $type=>$value) {
-         if (is_null($this->getValue($type))) {
+         if ($this->getValue($type) === NULL) {
             $this->addValue($type, $value);
-         } else {
+         } else if ($update == TRUE){
             $this->updateValue($type, $value);
          }
       }

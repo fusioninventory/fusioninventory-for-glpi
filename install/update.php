@@ -5688,11 +5688,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_input['agent_port'] = 62354;
       $a_input['extradebug'] = 0;
       $a_input['users_id'] = $users_id;
-      foreach ($a_input as $type=>$value) {
-         if (is_null($config->getValue($type))) {
-            $config->addValues(array($type=>$value));
-         }
-      }
+      $config->addValues($a_input, FALSE);
 //      $DB->query("DELETE FROM `glpi_plugin_fusioninventory_configs`
 //        WHERE `plugins_id`='0'");
 
@@ -5706,50 +5702,32 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       $a_input = array();
       $a_input['version'] = PLUGIN_FUSIONINVENTORY_VERSION;
-      if (is_null($config->getValue("ssl_only"))) {
-         $a_input['ssl_only'] = 0;
-      }
+      $a_input['ssl_only'] = 0;
       if (isset($prepare_Config['ssl_only'])) {
          $a_input['ssl_only'] = $prepare_Config['ssl_only'];
       }
-      if (is_null($config->getValue("delete_task"))) {
-         $a_input['delete_task'] = 20;
-      }
-      if (is_null($config->getValue("inventory_frequence"))) {
-         $a_input['inventory_frequence'] = 24;
-      }
-      if (is_null($config->getValue("agent_port"))) {
-         $a_input['agent_port'] = 62354;
-      }
-      if (is_null($config->getValue("extradebug"))) {
-         $a_input['extradebug'] = 0;
-      }
-      if (is_null($config->getValue("users_id"))) {
-         $a_input['users_id'] = 0;
-      }
+      $a_input['delete_task'] = 20;
+      $a_input['inventory_frequence'] = 24;
+      $a_input['agent_port'] = 62354;
+      $a_input['extradebug'] = 0;
+      $a_input['users_id'] = 0;
 
       //Deploy configuration options
-      if (is_null($config->getValue("server_upload_path"))) {
-         $a_input['server_upload_path'] =
-              Toolbox::addslashes_deep(
-                  implode(
-                     DIRECTORY_SEPARATOR,
-                     array(
-                        GLPI_PLUGIN_DOC_DIR,
-                        'fusioninventory',
-                        'upload'
-                     )
+      $a_input['server_upload_path'] =
+           Toolbox::addslashes_deep(
+               implode(
+                  DIRECTORY_SEPARATOR,
+                  array(
+                     GLPI_PLUGIN_DOC_DIR,
+                     'fusioninventory',
+                     'upload'
                   )
-              );
-      }
-      if (is_null($config->getValue("alert_winpath"))) {
-         $a_input['alert_winpath'] = 1;
-      }
-      if (is_null($config->getValue("server_as_mirror"))) {
-         $a_input['server_as_mirror'] = 1;
-      }
-      $config->addValues($a_input);
-
+               )
+           );
+      $a_input['alert_winpath'] = 1;
+      $a_input['server_as_mirror'] = 1;
+      $config->addValues($a_input, FALSE);
+      
       $pfSetup = new PluginFusioninventorySetup();
       $users_id = $pfSetup->createFusionInventoryUser();
       $query = "UPDATE `glpi_plugin_fusioninventory_configs`
@@ -5782,10 +5760,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $input['location']               = 0;
       $input['group']                  = 0;
       $input['component_networkcardvirtual'] = 1;
-      foreach ($input as $key => $value) {
-         $config->addValues(array($key => $value));
-      }
-
+      $config->addValues($input, FALSE);
 
 
    /*
