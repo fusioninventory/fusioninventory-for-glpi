@@ -39,8 +39,9 @@
 
    ------------------------------------------------------------------------
  */
-
+ob_start();
 include ("../../../../inc/includes.php");
+ob_end_clean();
 
 $response = FALSE;
 //Agent communication using REST protocol

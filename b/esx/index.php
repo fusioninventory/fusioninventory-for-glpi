@@ -44,8 +44,9 @@
 if (isset($_GET['status'])) {
    return 'ok';
 }
-
+ob_start();
 include ("../../../../inc/includes.php");
+ob_end_clean();
 
 $response = FALSE;
 //Agent communication using REST protocol
