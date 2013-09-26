@@ -370,7 +370,7 @@ class PluginFusioninventoryConfigSecurity extends CommonDBTM {
       $xml = simplexml_load_file(GLPI_ROOT."/plugins/fusioninventory/scripts/auth.xml",
                                  'SimpleXMLElement',
                                  LIBXML_NOCDATA);
-      $selectbox = "<select name='plugin_fusinvsnmp_configsecurities_id' size='1'>\n
+      $selectbox = "<select name='plugin_fusioninventory_configsecurities_id' size='1'>\n
                        <option value='0'>-----</option>\n";
       for ($i=-1; $i < (count($xml->auth[0]) - 1); $i++) {
 
