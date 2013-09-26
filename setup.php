@@ -106,6 +106,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
       Plugin::registerClass('PluginFusioninventoryInventoryComputerStorage',
               array('addtabon' => array('Computer')));
+      Plugin::registerClass('PluginFusioninventoryInventoryConfigurationManagement');
 
          //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocation');

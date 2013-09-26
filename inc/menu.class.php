@@ -144,7 +144,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[3]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/config.form.php";
       }
-
+      
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('General', 'fusioninventory'),
                                                              $a_menu,
@@ -344,6 +344,34 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                                                              $width_status);
       }
 
+      /*
+       * Configuration management
+       */
+      $a_menu = array();      
+
+      if (Session::haveRight('config', UPDATE)) {
+         $nb = countElementsInTable("glpi_plugin_fusioninventory_inventoryconfigurationmanagements", 
+                                    "`conform`='0'");
+         $a_menu[0]['name'] = __('Not conform', 'fusioninventory')." <sup>(".$nb.")</sup>";
+         $a_menu[0]['pic']  = "";
+         $a_menu[0]['link'] = $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/inventoryconfigurationmanagement_notconform.php";
+         
+         $nb = countElementsInTable("glpi_plugin_fusioninventory_inventoryconfigurationmanagements", 
+                                    "`sha_referential`='' OR `sha_referential` IS NULL");
+         $a_menu[1]['name'] = __('To be validated', 'fusioninventory')." <sup>(".$nb.")</sup>";
+         $a_menu[1]['pic']  = "";
+         $a_menu[1]['link'] = $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/inventoryconfigurationmanagement_tobevalidated.php";
+      }
+      
+      if (!empty($a_menu)) {
+         $width_status = PluginFusioninventoryMenu::htmlMenu(__('Configuration management', 'fusioninventory'),
+                                                             $a_menu,
+                                                             $type,
+                                                             $width_status);
+      }
+      
       echo "</td>";
       echo "</tr>";
       echo "</table>";
@@ -369,7 +397,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    static function htmlMenu($menu_name, $a_menu = array(), $type = "big", $width_status='300') {
       global $CFG_GLPI;
 
-      $width_max = 950;
+      $width_max = 1250;
 
       $width = 180;
 

@@ -2302,6 +2302,52 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $migration->migrationOneTable($newTable);
       $DB->list_fields($newTable, FALSE);
 
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_inventoryconfigurationmanagements
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_inventoryconfigurationmanagements';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement',
+                                               'value'   => '');
+      $a_table['fields']['name']       = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['items_id']   = array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['itemtype']   = array(
+                        'type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL",
+                        'value'   => NULL);
+      $a_table['fields']['serialized_referential']   = array('type'    => 'longblob',
+                                                             'value'   => "");
+      $a_table['fields']['sha_referential']          = array('type'    => 'string',
+                                                             'value'   => NULL);
+      $a_table['fields']['date']                     = array('type'    => 'datetime',
+                                                             'value'   => NULL);
+      $a_table['fields']['users_id']                 = array('type'    => 'integer',
+                                                             'value'   => NULL);
+      $a_table['fields']['serialized_last']          = array('type'    => 'longblob',
+                                                             'value'   => "");
+      $a_table['fields']['sha_last']                 = array('type'    => 'string',
+                                                             'value'   => NULL);
+      $a_table['fields']['sentnotification']         = array('type'    => 'bool',
+                                                             'value'   => '0');
+      $a_table['fields']['conform']                  = array('type'    => 'bool',
+                                                             'value'   => '1');
+      
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+      
+      $a_table['keys']   = array();
+      
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+      
 
 
    /*
