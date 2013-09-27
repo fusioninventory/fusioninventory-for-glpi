@@ -83,8 +83,8 @@ class PluginFusioninventoryInventoryComputerCollectRegistryKeys extends CommonDB
 
       if ($item->getType() == 'Computer') {
          if (Session::haveRight('computer', "r")) {
-            $a_registry = $this->find("`computers_id`='".$item->getID()."'", '', 1);
-            if (count($a_registry) > 0) {
+            if (countElementsInTable($this->getTable(), 
+                                 "`computers_id`='".$item->getID()."'") > 0) {
                return self::createTabEntry(__('Registry', 'fusioninventory'));
             }
          }
@@ -138,52 +138,61 @@ class PluginFusioninventoryInventoryComputerCollectRegistryKeys extends CommonDB
       
       echo "<table class='tab_cadre_fixe' cellpadding='1'>";
       echo "<tr>";
-      echo "<th colspan='4'>".__('Registry', 'fusioninventory');
-
+      echo "<th colspan='2'>".__('Registry', 'fusioninventory');
       echo "</th>";
       echo "</tr>";
-      
+
+      echo "<tr>";
+      echo "<th width='50%'>";
+      echo __('Name');
+      echo "</th>";
+      echo "<th>";
+      echo __('Value', 'fusioninventory');
+      echo "</th>";
+      echo "</tr>";
+
       foreach ($a_registry as $registryData) {
          echo "<tr class='tab_bg_1'>";
-         echo "<th width='15%'>";
-         echo __('Name')."&nbsp;:";
-         echo "</th>";
-         echo "<th width='35%'>";
+         echo "<td>";
          echo $registryData['name'];
-         echo "</th>";
-         echo "<td>";
-         echo __('Active')."&nbsp;:";
          echo "</td>";
          echo "<td>";
-         echo Dropdown::getYesNo($registryData['is_active']);
+         echo $registryData['value'];
          echo "</td>";
+         
+//         echo "<td>";
+//         echo __('Active')."&nbsp;:";
+//         echo "</td>";
+//         echo "<td>";
+//         echo Dropdown::getYesNo($registryData['is_active']);
+//         echo "</td>";
          echo "</tr>";
 
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Manufacturer')."&nbsp;:";
-         echo "</td>";
-         echo "<td>";
-         echo Dropdown::getDropdownName('glpi_manufacturers', $registryData["manufacturers_id"]);
-         echo "</td>";
-         echo "<td>";
-         echo __('Up to date', 'fusioninventory')."&nbsp;:";
-         echo "</td>";
-         echo "<td>";
-         echo Dropdown::getYesNo($registryData['uptodate']);
-         echo "</td>";
-         echo "</tr>";
+//         echo "<tr class='tab_bg_1'>";
+//         echo "<td>";
+//         echo __('Manufacturer')."&nbsp;:";
+//         echo "</td>";
+//         echo "<td>";
+//         echo Dropdown::getDropdownName('glpi_manufacturers', $registryData["manufacturers_id"]);
+//         echo "</td>";
+//         echo "<td>";
+//         echo __('Up to date', 'fusioninventory')."&nbsp;:";
+//         echo "</td>";
+//         echo "<td>";
+//         echo Dropdown::getYesNo($registryData['uptodate']);
+//         echo "</td>";
+//         echo "</tr>";
 
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Version')."&nbsp;:";
-         echo "</td>";
-         echo "<td>";
-         echo $registryData['version'];
-         echo "</td>";
-         echo "<td colspan='2'>";
-         echo "</td>";
-         echo "</tr>";     
+//         echo "<tr class='tab_bg_1'>";
+//         echo "<td>";
+//         echo __('Version')."&nbsp;:";
+//         echo "</td>";
+//         echo "<td>";
+//         echo $registryData['version'];
+//         echo "</td>";
+//         echo "<td colspan='2'>";
+//         echo "</td>";
+//         echo "</tr>";     
       }
       echo "</table>";
       return true;

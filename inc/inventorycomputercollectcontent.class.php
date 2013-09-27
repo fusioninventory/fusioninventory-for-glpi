@@ -70,10 +70,10 @@ class PluginFusioninventoryInventoryComputerCollectContent extends CommonDBTM {
    
    
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $LANG;
       
-      if ($item->getType() == 'PluginFusioninventoryInventoryComputerCollect') {
-            return $LANG['plugin_fusioninventory']['collect'][1];
+      if ($item->getType() == 'PluginFusioninventoryInventoryComputerCollect'
+              && $item->getID() > 0) {
+         return __('New Content item', 'fusioninventory');
       }
       return '';
    }
@@ -136,12 +136,12 @@ class PluginFusioninventoryInventoryComputerCollectContent extends CommonDBTM {
    private function showAssociatedWmiProperties($content){
    
       echo "<div class='spaced'><table class='tab_cadre_fixe'>";
-      echo "<tr><th colspan=4>{$LANG['plugin_fusioninventory']['collect'][2]}</th></tr>";
+      echo "<tr><th colspan=4>".__('Content', 'fusioninventory')."</th></tr>";
       echo "<tr>
-      <th>{$LANG['plugin_fusioninventory']['collect']['fields'][2]}</th>
-      <th>{$LANG['plugin_fusioninventory']['collect']['fields'][4]}</th>
-      <th>{$LANG['plugin_fusioninventory']['collect']['fields'][5]}</th>
-      <th>{$LANG['rulesengine'][30]}</th>
+      <th>".__('Name')."</th>
+      <th>".__('Class', 'fusioninventory')."</th>
+      <th>"._n('Property', 'Properties', 2, 'fusioninventory')."</th>
+      <th>".__('Action')."</th>
       </tr>";
       foreach($content as $data){
          $properties = unserialize($data['details']);
@@ -165,13 +165,13 @@ class PluginFusioninventoryInventoryComputerCollectContent extends CommonDBTM {
    private function showAssociatedFiles($content){
 
       echo "<div class='spaced'><table class='tab_cadre_fixe'>";
-      echo "<tr><th colspan=5>{$LANG['plugin_fusioninventory']['collect'][2]}</th></tr>";
+      echo "<tr><th colspan=5>".__('Content', 'fusioninventory')."</th></tr>";
       echo "<tr>
-      <th>{$LANG['plugin_fusioninventory']['collect']['fields'][2]}</th>
-      <th>{$LANG['plugin_fusioninventory']['collect']['fields'][1]}</th>
-      <th>{$LANG['plugin_fusioninventory']['collect']['fields'][6]}</th>
-      <th>{$LANG['plugin_fusioninventory']['collect']['fields'][7]}</th>
-      <th>{$LANG['rulesengine'][30]}</th>
+      <th>".__('Name')."</th>
+      <th>".__('Path', 'fusioninventory')."</th>
+      <th>".__('Filename', 'fusioninventory')."</th>
+      <th>".__('Get content?', 'fusioninventory')."</th>
+      <th>".__('Action')."</th>
       </tr>";
       foreach($content as $data){
         
@@ -180,7 +180,7 @@ class PluginFusioninventoryInventoryComputerCollectContent extends CommonDBTM {
          echo "<td align='center'>{$data['name']}</td>";
          echo "<td align='center'>{$properties['path']}</td>";
          echo "<td align='center'>{$properties['filename']}</td>";
-         echo "<td align='center'>{$LANG['choice'][$properties['getcontent']]}</td>";
+         echo "<td align='center'>".Dropdown::getYesNo($properties['getcontent'])."</td>";
          echo "<td align='center'>
          <form name='form_bundle_item' action='".Toolbox::getItemTypeFormURL(__CLASS__).
                 "' method='post'>
@@ -197,12 +197,12 @@ class PluginFusioninventoryInventoryComputerCollectContent extends CommonDBTM {
    private function showAssociatedCommands($content){
    
       echo "<div class='spaced'><table class='tab_cadre_fixe'>";
-      echo "<tr><th colspan=4>{$LANG['plugin_fusioninventory']['collect'][2]}</th></tr>";
+      echo "<tr><th colspan=4>".__('Content', 'fusioninventory')."</th></tr>";
       echo "<tr>
-      <th>{$LANG['plugin_fusioninventory']['collect']['fields'][2]}</th>
-      <th>{$LANG['plugin_fusioninventory']['collect']['fields'][1]}</th>
-      <th>{$LANG['plugin_fusioninventory']['collect']['fields'][8]}</th>
-      <th>{$LANG['rulesengine'][30]}</th>
+      <th>".__('Name')."</th>
+      <th>".__('Path', 'fusioninventory')."</th>
+      <th>".__('Command', 'fusioninventory')."</th>
+      <th>".__('Action')."</th>
       </tr>";
       foreach($content as $data){
         
@@ -294,10 +294,10 @@ class PluginFusioninventoryInventoryComputerCollectContent extends CommonDBTM {
             //Path
             echo "<tr class='tab_bg_1'>";
             echo "<td>".__("Path", "fusioninventory")."&nbsp;:</td>";
-            echo "<td><input type='text' name='path' value=''/></td>";
+            echo "<td><input type='text' name='path' size='80' value=''/></td>";
             //key name
             echo "<td>".__("Key", "fusioninventory")."&nbsp;:</td>";
-            echo "<td><input type='text' name='key' value=''/></td>";
+            echo "<td><input type='text' name='key' size='30' value=''/></td>";
             echo "</tr>";
             echo "<tr class='tab_bg_1'><td colspan=6 class='center'>";
             echo "<input type='submit' name='add' value=\"".__("Add")."\" 
@@ -308,14 +308,15 @@ class PluginFusioninventoryInventoryComputerCollectContent extends CommonDBTM {
          //getFromWMI
          case 2:
             //Class
-            echo "<td>{$LANG['plugin_fusioninventory']['collect']['fields'][4]}&nbsp;:</td>";
+            echo "<td>".__('Class', 'fusioninventory')."&nbsp;:</td>";
             echo "<td><input type='text' name='class' value=''/></td>";
             //key name
-            echo "<td>{$LANG['plugin_fusioninventory']['collect']['fields'][5]}&nbsp;:</td>";
+            echo "<td>"._n('Property', 'Properties', 2, 'fusioninventory').
+                    "&nbsp;:</td>";
             echo "<td><input type='text' name='property' value=''/></td>";
             echo "</tr>";
             echo "<tr class='tab_bg_1'><td colspan=6 class='center'>";
-            echo "<input type='submit' name='add' value=\"".$LANG['buttons'][8]."\" 
+            echo "<input type='submit' name='add' value=\"".__('Add')."\" 
             class='submit'/></td>"; 
             echo "</table>";
             break;
@@ -323,19 +324,19 @@ class PluginFusioninventoryInventoryComputerCollectContent extends CommonDBTM {
          //findFile
          case 3:
             //Class
-            echo "<td>{$LANG['plugin_fusioninventory']['collect']['fields'][1]}&nbsp;:</td>";
+            echo "<td>".__('Path', 'fusioninventory')."&nbsp;:</td>";
             echo "<td><input type='text' name='path' value=''/></td>";
             //key name
             echo "</tr>";
             echo "<tr class='tab_bg_1'>";
-            echo "<td>{$LANG['plugin_fusioninventory']['collect']['fields'][6]}&nbsp;:</td>";
+            echo "<td>".__('Filename', 'fusioninventory')."&nbsp;:</td>";
             echo "<td><input type='text' name='filename' value=''/></td>";
-            echo "<td>{$LANG['plugin_fusioninventory']['collect']['fields'][7]}&nbsp;:</td>";
+            echo "<td>".__('Get content?', 'fusioninventory')."&nbsp;:</td>";
             echo "<td>";
             Dropdown::showYesNo("getcontent");
             echo "</td></tr>";
             echo "<tr class='tab_bg_1'><td colspan=6 class='center'>";
-            echo "<input type='submit' name='add' value=\"".$LANG['buttons'][8]."\" 
+            echo "<input type='submit' name='add' value=\"".__('Add')."\" 
             class='submit'/></td>"; 
             echo "</table>";
             break;
@@ -343,14 +344,14 @@ class PluginFusioninventoryInventoryComputerCollectContent extends CommonDBTM {
          //runCommand
          case 4:
             //Class
-            echo "<td>{$LANG['plugin_fusioninventory']['collect']['fields'][1]}&nbsp;:</td>";
+            echo "<td>".__('Path', 'fusioninventory')."&nbsp;:</td>";
             echo "<td><input type='text' name='path' value=''/></td>";
             //key name
-            echo "<td>{$LANG['plugin_fusioninventory']['collect']['fields'][8]}&nbsp;:</td>";
+            echo "<td>".__('Command', 'fusioninventory')."&nbsp;:</td>";
             echo "<td><input type='text' name='command' value=''/></td>";
             echo "</tr>";
             echo "<tr class='tab_bg_1'><td colspan=6 class='center'>";
-            echo "<input type='submit' name='add' value=\"".$LANG['buttons'][8]."\" 
+            echo "<input type='submit' name='add' value=\"".__('Add')."\" 
             class='submit'/></td>"; 
             echo "</table>";
             break;

@@ -4990,6 +4990,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Table glpi_plugin_fusioninventory_inventorycomputercollecttypes
     */
+      $insert = FALSE;
+      if (!TableExists("glpi_plugin_fusioninventory_inventorycomputercollecttypes")) {
+         $insert = TRUE;
+      }
       $a_table = array();
       $a_table['name'] = 'glpi_plugin_fusioninventory_inventorycomputercollecttypes';
       $a_table['oldname'] = array();
@@ -5010,7 +5014,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       migrateTablesFusionInventory($migration, $a_table);
 
-      
+      if ($insert) {
+         $DB->qurery("INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercollecttypes`(`id`,`name`)
+         VALUES (1,'getFromRegistry'),(2,'getFromWMI'),(3,'findFile'),(4,'runCommand')");
+      }
       
    /*
     * Table glpi_plugin_fusioninventory_inventorycomputercollectcontents
