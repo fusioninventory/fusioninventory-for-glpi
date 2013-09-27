@@ -199,6 +199,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    global $DB;
 
    ini_set("max_execution_time", "0");
+   ini_set("memory_limit", "-1");
+
 
    foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc/*.php') as $file) {
       require_once($file);
