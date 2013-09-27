@@ -335,6 +335,8 @@ function plugin_init_fusioninventory() {
 
          }
 
+         $hook_add['collect'] = '../fusioninventory/front/inventorycomputercollect.form.php?add=1';
+         
          /*
           * Deploy submenu entries
           */
