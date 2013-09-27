@@ -158,6 +158,12 @@ class PluginFusioninventoryMenu {
          $a_menu[0]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventorycomputerimportxml.php";
       }
+      
+      if (PluginFusioninventoryProfile::haveRight("collect", "r")) {
+         $a_menu[11]['name'] = __('Additional computer information finder', 'fusioninventory');
+         $a_menu[11]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
+         $a_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryInventoryComputerCollect');
+      }
 
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('Tasks', 'fusioninventory'),

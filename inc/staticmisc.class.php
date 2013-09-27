@@ -240,7 +240,11 @@ class PluginFusioninventoryStaticmisc {
                 'name'    => __('Manage packages')),
 
          array('profil'  => 'status',
-                'name'    => __('Deployment status'))
+                'name'    => __('Deployment status')),
+          
+         array('profil'  => 'collect',
+                'name'    => __('Additional computer information finder', 'fusioninventory'))
+          
       );
 
    }
