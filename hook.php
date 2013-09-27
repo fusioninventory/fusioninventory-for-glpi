@@ -1031,7 +1031,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
           echo "<table class='tab_cadre'>";
           echo "<tr>";
           echo "<td>";
-          echo $LANG['plugin_fusinvdeploy']['task'][1]."&nbsp;:";
+          echo __('Task', 'fusioninventory')."&nbsp;:";
           echo "</td>";
           echo "<td>";
          $rand = mt_rand();
@@ -1070,7 +1070,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          echo "<tr>";
          echo "<td colspan='2' align='center'>";
          echo "<input type='submit' name='massiveaction' class='submit' value='".
-               $LANG['buttons'][2]."'/>";
+               __('Post')."'/>";
          echo "</td>";
          echo "</tr>";
          echo "</table>";

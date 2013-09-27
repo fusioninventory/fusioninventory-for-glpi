@@ -98,12 +98,21 @@ class PluginFusioninventoryInventoryComputerCollect extends CommonDBTM {
 
    
    
-   function showForm($ID, $options=array()) {
+   function defineTabs($options=array()){
 
-      // Show ConsumableItem or blank form
-      if (!Session::haveRight("consumable","r")) {
-         return false;
+      $ong = array();
+      if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)) {
+         $ong[1]=__('Main');
       }
+      $this->addStandardTab('PluginFusioninventoryInventoryComputerCollectContent', $ong, $options);
+
+      return $ong;
+   }
+
+   
+   
+   
+   function showForm($ID, $options=array()) {
 
       if ($ID > 0) {
          $this->check($ID,'r');
@@ -118,19 +127,20 @@ class PluginFusioninventoryInventoryComputerCollect extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
-      echo "<td><input type='hidden' name='id' value='{$this->fields['id']}'/>";
+      echo "<td>";
       Html::autocompletionTextField($this, "name");
       echo "</td>";
       echo "<td>";
       echo __('Collect type', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::show('PluginFusioninventoryInventoryComputerCollectType', 
-                     array(
-               'value'     => $this->fields['plugin_fusioninventory_inventorycomputercollecttypes_id'],
-               'name'      => "plugin_fusioninventory_inventorycomputercollecttypes_id"
-                     )
+      $elements = array(
+          'value'     => $this->fields['plugin_fusioninventory_inventorycomputercollecttypes_id'],
+          'name'      => "plugin_fusioninventory_inventorycomputercollecttypes_id"
       );
+      
+      Dropdown::show('PluginFusioninventoryInventoryComputerCollectType', 
+                     $elements);
       echo "</td>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
@@ -150,8 +160,8 @@ class PluginFusioninventoryInventoryComputerCollect extends CommonDBTM {
       $this->addDivForTabs();
 
       // TODO GLB: Why I need to add that here in 0.84.
-      $pfInventoryComputerCollectContent = new PluginFusioninventoryInventoryComputerCollectContent();
-      $pfInventoryComputerCollectContent->showAssociated($this);
+//      $pfInventoryComputerCollectContent = new PluginFusioninventoryInventoryComputerCollectContent();
+//      $pfInventoryComputerCollectContent->showAssociated($this);
 
       return true;
    }

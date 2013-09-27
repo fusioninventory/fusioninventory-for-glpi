@@ -50,15 +50,12 @@ class PluginFusioninventoryDeployReport extends CommonDBTM {
    /**
     * Display tab
     *
-    * @global array $LANG
-    *
     * @param CommonGLPI $item
     * @param integer $withtemplate
     *
     * @return varchar name of the tab(s) to display
     */
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $LANG;
 
       if ($item->getType()=='PluginFusioninventoryTask') {
          if ($item->getID() > 0) {
@@ -66,7 +63,7 @@ class PluginFusioninventoryDeployReport extends CommonDBTM {
             $a_jobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$item->getID()."'
                AND (`method`='deployinstall' OR `method`='deployuninstall')");
             if (count($a_jobs) > 0) {
-               return $LANG['reports'][15]." (deploy)";
+               return __('Display report')." (deploy)";
             }
          }
       }
@@ -98,7 +95,6 @@ class PluginFusioninventoryDeployReport extends CommonDBTM {
 
 
    function showReport($tasks_id) {
-      global $LANG;
 
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();

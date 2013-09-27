@@ -107,7 +107,9 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryInventoryComputerStorage',
               array('addtabon' => array('Computer')));
       Plugin::registerClass('PluginFusioninventoryInventoryConfigurationManagement');
-
+      Plugin::registerClass('PluginFusioninventoryInventoryComputerCollectRegistryKeys',
+              array('addtabon' => array('Computer')));
+      
          //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocation');
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocationCollection',
@@ -335,7 +337,12 @@ function plugin_init_fusioninventory() {
 
          }
 
-         $hook_add['collect'] = '../fusioninventory/front/inventorycomputercollect.form.php?add=1';
+         $hook_add['collect'] = 
+             '../fusioninventory/front/inventorycomputercollect.form.php?add=1';
+         $hook_search['collect'] = 
+             '../fusioninventory/front/inventorycomputercollect.php';
+         
+         
          
          /*
           * Deploy submenu entries

@@ -46,13 +46,13 @@ if (!isset($_GET["id"])) {
    $_GET["id"] = 0;
 }
 
-$collect = new PluginFusioninventoryInventoryComputerCollect();
+$collect        = new PluginFusioninventoryInventoryComputerCollect();
 $collectcontent = new PluginFusioninventoryInventoryComputerCollectcontent();
 
 //Add a new collect
 if (isset($_POST["add"])) {
    $newID = $collect->add($_POST);
-   Html::redirect($_SERVER['HTTP_REFERER']."?id=$newID");
+   Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryInventoryComputerCollect').'?id='.$newID);
 
 // delete a collect
 } else if (isset($_REQUEST["purge"])) {
