@@ -992,12 +992,14 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
 
 
 -- Collect tables
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercollects`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercollects` (
+CREATE TABLE `glpi_plugin_fusioninventory_collects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `plugin_fusioninventory_inventorycomputercollecttypes_id` int(11) NOT NULL DEFAULT '0',
+  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `type` varchar(255) DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
   `comment` text DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1005,37 +1007,89 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercollects` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercollecttypes`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_registries`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercollecttypes` (
+CREATE TABLE `glpi_plugin_fusioninventory_collects_registries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
+  `plugin_fusioninventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `hive` varchar(255) DEFAULT NULL,
+  `path` text DEFAULT NULL,
+  `key` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercollectcontents`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_registries_contents`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercollectcontents` (
+CREATE TABLE `glpi_plugin_fusioninventory_collects_registries_contents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_inventorycomputercollects_id` int(11) NOT NULL DEFAULT '0',
-  `plugin_fusioninventory_inventorycomputercollecttypes_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) DEFAULT NULL,
-  `details` text DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputercollectregistrykeys`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercollectregistrykeys` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
   `computers_id` int(11) NOT NULL DEFAULT '0',
-  `types_id` int(11) NOT NULL DEFAULT '0',
-  `value` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `plugin_fusioninventory_collects_registries_id` int(11) NOT NULL DEFAULT '0',
+  `key` varchar(255) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_wmis`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `plugin_fusioninventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_wmis_contents`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis_contents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `computers_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_collects_wmis_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_files`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_collects_files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `plugin_fusioninventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `path` text DEFAULT NULL,
+  `filename` varchar(255) DEFAULT NULL,
+  `limit` int(4) NOT NULL DEFAULT '50',
+  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `filter_regex` varchar(255) DEFAULT NULL,
+  `filter_sizeEquals` int(11) NOT NULL DEFAULT '0',
+  `filter_sizeGreater` int(11) NOT NULL DEFAULT '0',
+  `filter_sizeLower` int(11) NOT NULL DEFAULT '0',
+  `filter_checkSumSHA512` varchar(255) DEFAULT NULL,
+  `filter_checkSumSHA2` varchar(255) DEFAULT NULL,
+  `filter_name` varchar(255) DEFAULT NULL,
+  `filter_iname` varchar(255) DEFAULT NULL,
+  `filter_is_file` tinyint(1) NOT NULL DEFAULT '1',
+  `filter_is_dir` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_files_contents`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_collects_files_contents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `computers_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_collects_files_id` int(11) NOT NULL DEFAULT '0',
+  `pathfile` text DEFAULT NULL,
+  `size` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1420,7 +1474,3 @@ INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerstoragetypes`
 (3, 'logical volumes', 20),
 (4, 'hard disk', 1),
 (5, 'mount', 25);
-
-
-INSERT INTO `glpi_plugin_fusioninventory_inventorycomputercollecttypes`(`id`,`name`)
-VALUES (1,'getFromRegistry'),(2,'getFromWMI'),(3,'findFile'),(4,'runCommand');

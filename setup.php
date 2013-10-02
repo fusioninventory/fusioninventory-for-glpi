@@ -107,8 +107,12 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryInventoryComputerStorage',
               array('addtabon' => array('Computer')));
       Plugin::registerClass('PluginFusioninventoryInventoryConfigurationManagement');
-      Plugin::registerClass('PluginFusioninventoryInventoryComputerCollectRegistryKeys',
-              array('addtabon' => array('Computer')));
+      Plugin::registerClass('PluginFusioninventoryCollect');
+      Plugin::registerClass('PluginFusioninventoryCollect_Registry',
+              array('addtabon' => array('PluginFusioninventoryCollect')));
+      Plugin::registerClass('PluginFusioninventoryCollect_Registry_Content',
+              array('addtabon' => array('PluginFusioninventoryCollect',
+                                        'Computer')));
       
          //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocation');
@@ -338,9 +342,9 @@ function plugin_init_fusioninventory() {
          }
 
          $hook_add['collect'] = 
-             '../fusioninventory/front/inventorycomputercollect.form.php?add=1';
+             '../fusioninventory/front/collect.form.php?add=1';
          $hook_search['collect'] = 
-             '../fusioninventory/front/inventorycomputercollect.php';
+             '../fusioninventory/front/collect.php';
          
          
          

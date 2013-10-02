@@ -89,8 +89,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
-      $pfCollect = new PluginFusioninventoryInventoryComputerCollectRegistryKeys();
-      $pfCollectType = new PluginFusioninventoryInventoryComputerCollectType();
 //      $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();
 //      $pfInventoryComputerStorage_Storage =
 //             new PluginFusioninventoryInventoryComputerStorage_Storage();
@@ -958,65 +956,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                foreach($a_computerinventory['antivirus'] as $a_antivirus) {
                   $a_antivirus['computers_id'] = $computers_id;
                   $pfInventoryComputerAntivirus->add($a_antivirus, array(), FALSE);
-               }
-            }
-         }
-
-         
-      // * Registry
-         $a_collectType = current($pfCollectType->find("`name`='getFromRegistry'"));
-         $db_registry = array();
-         if ($no_history === FALSE) {
-            $query = "SELECT `id`, `name`
-                  FROM `glpi_plugin_fusioninventory_inventorycomputercollectregistrykeys`
-               WHERE `computers_id` = '$computers_id'";
-            $result = $DB->query($query);
-            while ($data = $DB->fetch_assoc($result)) {
-               $idtmp = $data['id'];
-               unset($data['id']);
-               $data1 = Toolbox::addslashes_deep($data);
-               $data2 = array_map('strtolower', $data1);
-               $db_registry[$idtmp] = $data2;
-            }
-         }
-         $simpleregistry = array();
-         foreach ($a_computerinventory['registry'] as $key=>$a_registry) {
-            $a_field = array('name');
-            foreach ($a_field as $field) {
-               if (isset($a_registry[$field])) {
-                  $simpleregistry[$key][$field] = $a_registry[$field];
-               }
-            }
-         }
-         foreach ($simpleregistry as $key => $arrays) {
-            $arrayslower = array_map('strtolower', $arrays);
-            foreach ($db_registry as $keydb => $arraydb) {
-               if ($arrayslower == $arraydb) {
-                  $input = array();
-                  $input = $a_computerinventory['registry'][$key];
-                  $input['id'] = $keydb;
-                  $pfCollect->update($input);
-                  unset($simpleregistry[$key]);
-                  unset($a_computerinventory['registry'][$key]);
-                  unset($db_registry[$keydb]);
-                  break;
-               }
-            }
-         }
-         if (count($a_computerinventory['registry']) == 0
-            AND count($db_registry) == 0) {
-            // Nothing to do
-         } else {
-            if (count($db_registry) != 0) {
-               foreach ($db_registry as $idtmp => $data) {
-                  $pfCollect->delete(array('id'=>$idtmp), 1);
-               }
-            }
-            if (count($a_computerinventory['registry']) != 0) {
-               foreach($a_computerinventory['registry'] as $a_registry) {
-                  $a_registry['computers_id'] = $computers_id;
-                  $a_registry['types_id'] = $a_collectType['id'];
-                  $pfCollect->add($a_registry, array(), FALSE);
                }
             }
          }

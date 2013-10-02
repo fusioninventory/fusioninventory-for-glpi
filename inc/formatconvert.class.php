@@ -68,7 +68,7 @@ class PluginFusioninventoryFormatconvert {
          $a_fields = array('SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES', 'MEMORIES',
                            'NETWORKS', 'SOFTWARE', 'USERS', 'VIRTUALMACHINES', 'ANTIVIRUS',
                            'MONITORS', 'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
-                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES', 'REGISTRY');
+                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -951,18 +951,6 @@ class PluginFusioninventoryFormatconvert {
                                               'ENABLED'  => 'is_active',
                                               'UPTODATE' => 'uptodate'));
             $a_inventory['antivirus'][] = $array_tmp;
-         }
-      }
-      
-      // * REGISTRY
-      $a_inventory['registry'] = array();
-      if (isset($array['REGISTRY'])) {
-         foreach ($array['REGISTRY'] as $a_registries) {
-            $array_tmp = $thisc->addValues($a_registries,
-                                           array(
-                                              'NAME'     => 'name',
-                                              'REGVALUE' => 'value'));
-            $a_inventory['registry'][] = $array_tmp;
          }
       }
       

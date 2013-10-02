@@ -283,6 +283,12 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $input['exceptions'] = exportArrayToDB(array());
       $pfAgentmodule->add($input);
 
+      $input = array();
+      $input['modulename'] = "Collect";
+      $input['is_active']  = 1;
+      $input['exceptions'] = exportArrayToDB(array());
+      $pfAgentmodule->add($input);
+
 
    /*
     * Add cron task
