@@ -1040,6 +1040,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `plugin_fusioninventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `moniker` varchar(255) DEFAULT NULL,
+  `class` varchar(255) DEFAULT NULL,
+  `properties` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1051,7 +1054,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis_contents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computers_id` int(11) NOT NULL DEFAULT '0',
   `plugin_fusioninventory_collects_wmis_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) DEFAULT NULL,
+  `property` varchar(255) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
