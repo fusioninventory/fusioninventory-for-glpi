@@ -80,7 +80,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    static function getTypes() {
       $elements = array();
       $elements['registry'] = __('Registry', 'fusioninventory');
-//      $elements['wmi'] = __('WMI', 'fusioninventory');
+      $elements['wmi'] = __('WMI', 'fusioninventory');
 //      $elements['file'] = __('Find file', 'fusioninventory');
       
       return $elements;
@@ -279,35 +279,70 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             foreach($definitions as $definition) {
                $pfCollect->getFromDB($definition['PluginFusioninventoryCollect']);
 
-               if ($pfCollect->fields['type'] == 'registry') {
-                  // get all registry
-                  $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
-                  $a_registries = $pfCollect_Registry->find(
-                          "`plugin_fusioninventory_collects_id`='".
-                          $pfCollect->fields['id']."'");
-                  foreach ($a_registries as $data_r) {
-                     $uniqid= uniqid();
-                     $c_input['state'] = 0;
-                     $c_input['itemtype'] = 'PluginFusioninventoryCollect_Registry';
-                     $c_input['items_id'] = $data_r['id'];
-                     $c_input['date'] = date("Y-m-d H:i:s");
-                     $c_input['uniqid'] = $uniqid;
-                     
-                     $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
+               switch ($pfCollect->fields['type']) {
+                  
+                  case 'registry':
+                     // get all registry
+                     $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
+                     $a_registries = $pfCollect_Registry->find(
+                             "`plugin_fusioninventory_collects_id`='".
+                             $pfCollect->fields['id']."'");
+                     foreach ($a_registries as $data_r) {
+                        $uniqid= uniqid();
+                        $c_input['state'] = 0;
+                        $c_input['itemtype'] = 'PluginFusioninventoryCollect_Registry';
+                        $c_input['items_id'] = $data_r['id'];
+                        $c_input['date'] = date("Y-m-d H:i:s");
+                        $c_input['uniqid'] = $uniqid;
 
-                     # Push the agent, in the stack of agent to awake
-                     if ($communication == "push") {
-                        $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
-                     }
+                        $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
 
-                     $jobstates_id= $jobstate->add($c_input);
+                        # Push the agent, in the stack of agent to awake
+                        if ($communication == "push") {
+                           $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
+                        }
 
-                     //Add log of taskjob
-                     $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
-                     $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
-                     $taskvalid++;
-                     $joblog->add($c_input);
-                  }            
+                        $jobstates_id= $jobstate->add($c_input);
+
+                        //Add log of taskjob
+                        $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
+                        $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+                        $taskvalid++;
+                        $joblog->add($c_input);
+                     }  
+                     break;
+
+                  case 'wmi':
+                     // get all wni
+                     $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+                     $a_wmies = $pfCollect_Wmi->find(
+                             "`plugin_fusioninventory_collects_id`='".
+                             $pfCollect->fields['id']."'");
+                     foreach ($a_wmies as $data_r) {
+                        $uniqid= uniqid();
+                        $c_input['state'] = 0;
+                        $c_input['itemtype'] = 'PluginFusioninventoryCollect_Wmi';
+                        $c_input['items_id'] = $data_r['id'];
+                        $c_input['date'] = date("Y-m-d H:i:s");
+                        $c_input['uniqid'] = $uniqid;
+
+                        $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
+
+                        # Push the agent, in the stack of agent to awake
+                        if ($communication == "push") {
+                           $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
+                        }
+
+                        $jobstates_id= $jobstate->add($c_input);
+
+                        //Add log of taskjob
+                        $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
+                        $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+                        $taskvalid++;
+                        $joblog->add($c_input);
+                     }  
+                     break;
+
                }
             }
          }
@@ -334,6 +369,16 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $output['path'] = $pfCollect_Registry->fields['hive'].
                     $pfCollect_Registry->fields['path'].
                     $pfCollect_Registry->fields['key'];
+            $output['uuid'] = $taskjob['uniqid'];
+            break;
+
+         case 'PluginFusioninventoryCollect_Wmi':
+            $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
+            $pfCollect_Wmi->getFromDB($taskjob['items_id']);
+            $output['function'] = 'getFromWMI';
+//            $output['moniker'] = $pfCollect_Wmi->fields['moniker'];
+            $output['class'] = $pfCollect_Wmi->fields['class'];
+            $output['properties'] = array($pfCollect_Wmi->fields['properties']);
             $output['uuid'] = $taskjob['uniqid'];
             break;
 

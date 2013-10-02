@@ -101,6 +101,14 @@ if (isset($_GET['action'])) {
                                       $jobstate['items_id']);
                break;
 
+            case 'PluginFusioninventoryCollect_Wmi':
+               // update registry content
+               $pfCWC = new PluginFusioninventoryCollect_Wmi_Content();
+               $pfCWC->updateComputer($computers_id, 
+                                      $a_values,
+                                      $jobstate['items_id']);
+               break;
+            
          }
          break;
 

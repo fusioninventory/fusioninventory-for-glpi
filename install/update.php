@@ -5070,6 +5070,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => NULL);
       $a_table['fields']['plugin_fusioninventory_collects_id']   = array('type'    => 'integer',
                                                   'value'   => NULL);
+      $a_table['fields']['moniker']    = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['class']      = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['properties'] = array('type'    => 'string',
+                                               'value'   => NULL);
 
       $a_table['oldfields']  = array();
 
@@ -5097,7 +5103,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => NULL);
       $a_table['fields']['plugin_fusioninventory_collects_wmis_id']   = array('type'    => 'integer',
                                                   'value'   => NULL);
-      $a_table['fields']['name']       = array('type'    => 'string',
+      $a_table['fields']['property']   = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['value']      = array('type'    => 'string',
                                                'value'   => NULL);
 
       $a_table['oldfields']  = array();
