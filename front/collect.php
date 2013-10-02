@@ -28,7 +28,7 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    
+   @author    David Durieux
    @co-author
    @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
@@ -52,7 +52,7 @@ PluginFusioninventoryProfile::checkRight("collect", "r");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-Search::show('PluginFusioninventoryInventoryComputerCollect');
+Search::show('PluginFusioninventoryCollect');
 
 Html::footer();
 

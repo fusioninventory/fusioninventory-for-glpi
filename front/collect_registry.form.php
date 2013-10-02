@@ -28,7 +28,7 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    
+   @author    David Durieux
    @co-author
    @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
@@ -42,52 +42,14 @@
 
 include ("../../../inc/includes.php");
 
-if (!isset($_GET["id"])) {
-   $_GET["id"] = 0;
-}
-
-$collect        = new PluginFusioninventoryInventoryComputerCollect();
-$collectcontent = new PluginFusioninventoryInventoryComputerCollectcontent();
-
-//Add a new collect
+$pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
+print_r($_POST);
 if (isset($_POST["add"])) {
-   $newID = $collect->add($_POST);
-   Html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryInventoryComputerCollect').'?id='.$newID);
-
-// delete a collect
-} else if (isset($_REQUEST["purge"])) {
-   $details = $collectcontent->find("plugin_fusioninventory_inventorycomputercollects_id = {$_POST['id']}");
-   
-   //delete the detail properties
-   foreach ($details as $detail) {
-      $collectcontent->delete($detail);
-   }
-   //delete the content
-   $collect->delete($_POST,1);
-   $collect->redirectToList();
-//update a collect
-} else if (isset($_POST["update"])) {
-
-   $collect->getFromDB($_POST['id']);
-   if ($collect->fields['plugin_fusioninventory_inventorycomputercollecttypes_id'] 
-         != $_POST['plugin_fusioninventory_inventorycomputercollecttypes_id']) {
-      
-      $details = $collectcontent->find("plugin_fusioninventory_inventorycomputercollects_id = {$_POST['id']}");
-      foreach ($details as $detail) {
-         $collectcontent->delete($detail,1);
-      }
-   }
-
-   $collect->update($_POST);
+   $pfCollect_Registry->add($_POST);
    Html::back();
-} else {
-   Html::header(__('Collect management', 'fusioninventory'),
-                $_SERVER["PHP_SELF"],
-                "plugins",
-                "fusioninventory",
-                "collect");
-   $collect->showForm($_GET['id']);
-   Html::footer();
+} else if (isset($_POST["delete_x"])) {
+   $pfCollect_Registry->delete($_POST);
+   Html::back();
 }
 
 ?>

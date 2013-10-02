@@ -100,6 +100,13 @@ class PluginFusioninventoryStaticmisc {
                      'name'           => __('Package uninstall', 'fusioninventory'),
                      'task'           => "DEPLOY",
                      'use_rest'       => TRUE
+            ),
+
+            array(   'module'         => 'fusioninventory',
+                     'method'         => 'collect',
+                     'name'           => __('Collect data', 'fusioninventory'),
+                     'task'           => "Collect",
+                     'use_rest'       => TRUE
             )
       );
       return $a_tasks;
@@ -539,8 +546,8 @@ class PluginFusioninventoryStaticmisc {
                    'PluginFusioninventoryDeployPackage' => __('Package'));
    }
 
-
-
+   
+   
    static function task_definitionselection_PluginFusioninventoryDeployPackage_deployinstall() {
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -679,6 +686,92 @@ class PluginFusioninventoryStaticmisc {
          "remote" => $config->getValue('agent_base_url') . "/plugins/fusioninventory/b/deploy/",
       );
    }
+   
+   
+
+   /*
+    * Collect 
+    */
+   static function task_definitiontype_collect($a_itemtype) {
+      return array('' => Dropdown::EMPTY_VALUE,
+                   'PluginFusioninventoryCollect' => __('Collect information', 'fusioninventory'));
+   }
+   
+   
+   
+   static function task_definitionselection_PluginFusioninventoryCollect_collect() {
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'definitionselectiontoadd';
+      return Dropdown::show("PluginFusioninventoryCollect", $options);
+   }
+
+
+   
+   static function task_actiontype_collect($a_itemtype) {
+      return array('' => Dropdown::EMPTY_VALUE,
+                   'Computer'                         => __('Computers'),
+                   'PluginFusioninventoryDeployGroup' => __('Dynamic Group'),
+                   'Group'                            => __('Group')
+                  );
+   }
+
+
+   
+   static function task_actionselection_Computer_collect() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      $options['condition']   =
+         implode( " ",
+            array(
+               '`id` IN ( ',
+               '  SELECT agents.`computers_id`',
+               '  FROM `glpi_plugin_fusioninventory_agents` as agents',
+               '  LEFT JOIN `glpi_plugin_fusioninventory_agentmodules` as module',
+               '  ON module.modulename = "Collect"',
+               '  WHERE',
+               '        (  module.is_active=1',
+               '           AND module.exceptions NOT LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+               '     OR (  module.is_active=0',
+               '           AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+               ')'
+            )
+         );
+      return Dropdown::show("Computer", $options);
+   }
+
+
+   
+   static function task_actionselection_Group_collect() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("Group", $options);
+   }
+   
+   
+   
+   static function task_actionselection_PluginFusioninventoryDeployGroup_collect() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
+   }
+
+   
+   
+   static function task_collect_getParameters() {
+      $config = new PluginFusioninventoryConfig();
+      return array(
+         "task" => "Collect",
+         "remote" => $config->getValue('agent_base_url') . "/plugins/fusioninventory/b/collect/",
+      );
+   }
+   
 }
 
 ?>

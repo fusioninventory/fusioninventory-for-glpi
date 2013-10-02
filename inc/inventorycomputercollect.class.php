@@ -110,6 +110,18 @@ class PluginFusioninventoryInventoryComputerCollect extends CommonDBTM {
    }
 
    
+
+   static function getTypes() {
+      $elements = array(
+          'getFromRegistry' => __('Get from registry', 'fusioninventory'),
+          'getFromWMI'      => __('Get from WMI', 'fusioninventory'),
+          'findFile'        => __('Fin a file', 'fusioninventory')
+      );
+      // disable in agent for the moment
+      //$elements['runCommand'] = ;
+      return $elements;
+   }
+   
    
    
    function showForm($ID, $options=array()) {
@@ -134,13 +146,10 @@ class PluginFusioninventoryInventoryComputerCollect extends CommonDBTM {
       echo __('Collect type', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      $elements = array(
-          'value'     => $this->fields['plugin_fusioninventory_inventorycomputercollecttypes_id'],
-          'name'      => "plugin_fusioninventory_inventorycomputercollecttypes_id"
-      );
-      
-      Dropdown::show('PluginFusioninventoryInventoryComputerCollectType', 
-                     $elements);
+      $elements = PluginFusioninventoryInventoryComputerCollect::getTypes();
+      Dropdown::showFromArray('type', 
+                              $elements, 
+                              array('value' => $this->fields['type']));
       echo "</td>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";

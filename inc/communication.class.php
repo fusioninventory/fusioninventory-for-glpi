@@ -255,6 +255,7 @@ class PluginFusioninventoryCommunication {
             if (  $className != "PluginFusioninventoryInventoryComputerESX"
                && $className != "PluginFusioninventoryDeployinstall"
                && $className != "PluginFusioninventoryDeployuninstall"
+               && $className != "PluginFusioninventoryCollect"
             ) {
                $class = new $className();
                $sxml_temp = $class->run($array);
@@ -292,101 +293,6 @@ class PluginFusioninventoryCommunication {
       }
    }
 
-   
-   
-   /**
-    * Add all asked registry keys in XML File.
-    *
-    * @param $xml SimpleXMLElement object
-    * @return nothing
-    */   
-   function addRegistry($items_id) {
-
-
-#      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-#      if (!$pfAgentmodule->getAgentCanDo('COLLECT', $items_id)) {
-#         return;
-#      }
-
-      // Get getFromRegistry ID
-      $collectTypeObject = new PluginFusioninventoryInventoryComputerCollectType();
-      $resultCollectType = $collectTypeObject->find("name = 'getFromRegistry'");
-
-      if(count($resultCollectType) === 0) {
-         return FALSE;
-      }
-
-      $collecttypeArray = reset($resultCollectType);
-      $collecttypeId = $collecttypeArray['id'];
-
-      // Look for active getFromRegistry campaign.
-      $collectObject = new PluginFusioninventoryInventoryComputerCollect();
-      $sqlCollectCampaign  = "plugin_fusioninventory_inventorycomputercollecttypes_id = {$collecttypeId}";
-      $sqlCollectCampaign .= " AND is_active = 1";
-      $resultCollectCampaign = $collectObject->find($sqlCollectCampaign);
-
-      if(count($resultCollectCampaign) === 0) {
-         return FALSE;
-      }
-      // Get all active campaign Id
-      $activeCampaignsId = array();
-      foreach($resultCollectCampaign as $campaign) {
-         $activeCampaignsId[] = $campaign['id'];
-      }
-
-      // Get all collect content datas
-      $collectContentObject = new PluginFusioninventoryInventoryComputerCollectcontent();
-      $sqlActiveRegistry  = "plugin_fusioninventory_inventorycomputercollects_id IN (";
-      $sqlActiveRegistry .= implode(',', $activeCampaignsId).")";
-      $resultCollectContent = $collectContentObject->find($sqlActiveRegistry);
-
-      if(count($resultCollectContent) === 0) {
-         return FALSE;
-      }
-
-      // Get all registry key wanted.
-      $registryKeys = array();
-      foreach($resultCollectContent as $row) {
-         
-         $row['details'] = preg_replace('!s:(\d+):"(.*?)";!se', 
-                                        "'s:'.strlen('$2').':\"$2\";'", 
-                                        $row['details'] );
-         $details = unserialize($row['details']);
-
-         if(!$details) {
-            return FALSE;
-         }
-
-         if(!empty($row['name'])
-            && !empty($details['hives_id'])
-            && !empty($details['path'])
-            && !empty($details['key'])) {
-
-            $registryKeys[] = array(
-               'GLPI_NAME'    => $row['name'],
-               'REGKEY'       => $details['path'],
-               'REGTREE'      => $details['hives_id'],
-               'REGISTRY_KEY' => $details['key']);
-         }
-      }
-
-      if(!count($registryKeys) === 0) {
-         return FALSE;
-      }
-
-      // Add to xml.
-      $xmlOption = $this->message->addChild('OPTION');
-      $xmlOption->addChild('NAME', 'REGISTRY');
-
-      foreach($registryKeys as $registryKey) {
-         $xmlParam = $xmlOption->addChild('PARAM',$registryKey['REGISTRY_KEY']);
-         $xmlParam->addAttribute('NAME', $registryKey['GLPI_NAME']);
-         $xmlParam->addAttribute('REGKEY', $registryKey['REGKEY']);
-         $xmlParam->addAttribute('REGTREE', $registryKey['REGTREE']);
-      }
-
-   }
-   
 
 
    /**
@@ -533,7 +439,6 @@ class PluginFusioninventoryCommunication {
             // ******** Send XML
 
             $communication->addInventory($a_agent['id']);
-            $communication->addRegistry($a_agent['id']);
             $communication->addProlog();
             $communication->sendMessage($compressmode);
          }

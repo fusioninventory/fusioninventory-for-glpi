@@ -160,9 +160,9 @@ class PluginFusioninventoryMenu {
       }
       
       if (PluginFusioninventoryProfile::haveRight("collect", "r")) {
-         $a_menu[11]['name'] = __('Additional computer information finder', 'fusioninventory');
+         $a_menu[11]['name'] = __('Additional computer information', 'fusioninventory');
          $a_menu[11]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
-         $a_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryInventoryComputerCollect');
+         $a_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCollect');
       }
 
       if (!empty($a_menu)) {
