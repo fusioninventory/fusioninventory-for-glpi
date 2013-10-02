@@ -194,7 +194,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                case 'Computer':
                   $query = "SELECT id, name FROM glpi_computers";
                   if (isset($params['query'])) {
-                     $like = mysql_real_escape_string($params['query']);
+                     $like = $DB->escape($params['query']);
                      $query .= " WHERE name LIKE '%$like'";
                   }
                   $query .= " ORDER BY name ASC";
@@ -211,7 +211,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                case 'Group':
                   $like = "1";
                   if (isset($params['query'])) {
-                     $like = "name LIKE '%".mysql_real_escape_string($params['query'])."'";
+                     $like = "name LIKE '%".$DB->escape($params['query'])."'";
                   }
                   $group = new Group;
                   $group_datas = $group->find($like);
