@@ -1218,8 +1218,8 @@ class PluginFusioninventoryFormatconvert {
                   $array_tmp['is_template_computer'] = 0;
                   $array_tmp['is_deleted_computer'] = 0;
 
-                  $comp_key = $array_tmp['name'].
-                               "$$$$".$array_tmp['version'].
+                  $comp_key = strtolower($array_tmp['name']).
+                               "$$$$".strtolower($array_tmp['version']).
                                "$$$$".$array_tmp['manufacturers_id'].
                                "$$$$".$array_tmp['entities_id'];
                   if (!isset($a_inventory['software'][$comp_key])) {
