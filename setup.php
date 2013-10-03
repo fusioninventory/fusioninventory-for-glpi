@@ -118,6 +118,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryCollect_Wmi_Content',
               array('addtabon' => array('PluginFusioninventoryCollect',
                                         'Computer')));
+      Plugin::registerClass('PluginFusioninventoryCollect_File',
+              array('addtabon' => array('PluginFusioninventoryCollect')));
       
          //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocation');

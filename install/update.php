@@ -5157,15 +5157,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => NULL);
       $a_table['fields']['filter_regex'] = array('type'    => 'string',
                                                'value'   => NULL);
-      $a_table['fields']['filter_sizeEquals'] = array('type'    => 'integer',
+      $a_table['fields']['filter_sizeequals'] = array('type'    => 'integer',
                                                'value'   => NULL);
-      $a_table['fields']['filter_sizeGreater'] = array('type'    => 'integer',
+      $a_table['fields']['filter_sizegreater'] = array('type'    => 'integer',
                                                'value'   => NULL);
-      $a_table['fields']['filter_sizeLower'] = array('type'    => 'integer',
+      $a_table['fields']['filter_sizelower'] = array('type'    => 'integer',
                                                'value'   => NULL);
-      $a_table['fields']['filter_checkSumSHA512'] = array('type'    => 'string',
+      $a_table['fields']['filter_checksumsha512'] = array('type'    => 'string',
                                                'value'   => NULL);
-      $a_table['fields']['filter_checkSumSHA2'] = array('type'    => 'string',
+      $a_table['fields']['filter_checksumsha2'] = array('type'    => 'string',
                                                'value'   => NULL);
       $a_table['fields']['filter_name'] = array('type'    => 'string',
                                                'value'   => NULL);
