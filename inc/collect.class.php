@@ -81,7 +81,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       $elements = array();
       $elements['registry'] = __('Registry', 'fusioninventory');
       $elements['wmi'] = __('WMI', 'fusioninventory');
-//      $elements['file'] = __('Find file', 'fusioninventory');
+      $elements['file'] = __('Find file', 'fusioninventory');
       
       return $elements;
    }
@@ -103,7 +103,9 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       echo "</td>";
       echo "<td>".__('Type')."</td>";
       echo "<td>";
-      Dropdown::showFromArray('type', PluginFusioninventoryCollect::getTypes());
+      Dropdown::showFromArray('type', 
+                              PluginFusioninventoryCollect::getTypes(),
+                              array('value' => $this->fields['type']));
       echo "</td>";
       echo "</tr>\n";
       
@@ -313,7 +315,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      break;
 
                   case 'wmi':
-                     // get all wni
+                     // get all wmi
                      $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
                      $a_wmies = $pfCollect_Wmi->find(
                              "`plugin_fusioninventory_collects_id`='".
@@ -343,6 +345,38 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      }  
                      break;
 
+                  case 'file':
+                     // find files
+                     $pfCollect_File = new PluginFusioninventoryCollect_File();
+                     $a_files = $pfCollect_File->find(
+                             "`plugin_fusioninventory_collects_id`='".
+                             $pfCollect->fields['id']."'");
+                     foreach ($a_files as $data_r) {
+                        $uniqid= uniqid();
+                        $c_input['state'] = 0;
+                        $c_input['itemtype'] = 'PluginFusioninventoryCollect_File';
+                        $c_input['items_id'] = $data_r['id'];
+                        $c_input['date'] = date("Y-m-d H:i:s");
+                        $c_input['uniqid'] = $uniqid;
+
+                        $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
+
+                        # Push the agent, in the stack of agent to awake
+                        if ($communication == "push") {
+                           $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
+                        }
+
+                        $jobstates_id= $jobstate->add($c_input);
+
+                        //Add log of taskjob
+                        $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
+                        $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+                        $taskvalid++;
+                        $joblog->add($c_input);
+                     }  
+                     break;
+
+                     
                }
             }
          }
@@ -382,6 +416,42 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $output['uuid'] = $taskjob['uniqid'];
             break;
 
+         case 'PluginFusioninventoryCollect_File':
+            $pfCollect_File = new PluginFusioninventoryCollect_File();
+            $pfCollect_File->getFromDB($taskjob['items_id']);
+            $output['function'] = 'findFile';
+            $output['limit'] = $pfCollect_File->fields['limit'];
+            $output['recursive'] = $pfCollect_File->fields['recursive'];
+            $output['filter'] = array();
+            if ($pfCollect_File->fields['filter_regex'] != '') {
+               $output['filter']['regex'] = $pfCollect_File->fields['filter_regex'];
+            }
+            if ($pfCollect_File->fields['filter_sizeequals'] > 0) {
+               $output['filter']['sizeEquals'] = $pfCollect_File->fields['filter_sizeequals'];
+            } else if ($pfCollect_File->fields['filter_sizegreater'] > 0) {
+               $output['filter']['sizeGreater'] = $pfCollect_File->fields['filter_sizegreater'];
+            } else if ($pfCollect_File->fields['filter_sizelower'] > 0) {
+               $output['filter']['sizeLower'] = $pfCollect_File->fields['filter_sizelower'];
+            }
+            if ($pfCollect_File->fields['filter_checksumsha512'] != '') {
+               $output['filter']['checkSumSHA512'] = $pfCollect_File->fields['filter_checksumsha512'];
+            }
+            if ($pfCollect_File->fields['filter_checksumsha2'] != '') {
+               $output['filter']['checkSumSHA2'] = $pfCollect_File->fields['filter_checksumsha2'];
+            }
+            if ($pfCollect_File->fields['filter_name'] != '') {
+               $output['filter']['name'] = $pfCollect_File->fields['filter_name'];
+            }
+            if ($pfCollect_File->fields['filter_iname'] != '') {
+               $output['filter']['iname'] = $pfCollect_File->fields['filter_iname'];
+            }
+            $output['filter']['is_file'] = $pfCollect_File->fields['filter_is_file'];
+            $output['filter']['is_dir'] = $pfCollect_File->fields['filter_is_dir'];
+            
+            $output['uuid'] = $taskjob['uniqid'];
+            break;
+
+         
       }
       return $output;
    }
