@@ -258,6 +258,92 @@ class SoftwareVersionAdd extends PHPUnit_Framework_TestCase {
          $this->assertEquals(2, countElementsInTable("glpi_softwareversions"), "Number of versions");
          
     }   
+    
+    
+    
+   public function testAddComputer6() {
+      global $DB;
+      
+      $DB->connect();
+      
+      $GLPIlog = new GLPIlogs();
+      
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION['glpiactiveentities_string'] = 0;
+      $_SESSION['glpishowallentities'] = 1;
+      $_SESSION['glpiname'] = 'glpi';
+      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
+      
+      $a_inventory = array();
+      $a_inventory['CONTENT']['HARDWARE'] = array(
+          'NAME' => 'pc6'
+      );
+      $a_inventory['CONTENT']['SOFTWARES'][] = array(
+          'COMMENTS' => "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
+          'NAME'     => "curl",
+          'VERSION'  => "2.3.2 (x86 edition)"
+          );
+
+      // ** Add agent
+         $pfAgent = new PluginFusioninventoryAgent();
+         $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-18',
+                                            'device_id' => 'pc-2013-02-18'));
+         $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
+
+      // ** Add
+         $pfiComputerInv->import("pc-2013-02-18", "", $a_inventory); // creation
+
+         $GLPIlog->testSQLlogs();
+         $GLPIlog->testPHPlogs();
+
+         $this->assertEquals(1, countElementsInTable("glpi_softwares"), "Number of softwares");
+         
+         $this->assertEquals(3, countElementsInTable("glpi_softwareversions"), "Number of versions");
+         
+    }   
+    
+
+    
+   public function testAddComputer7() {
+      global $DB;
+      
+      $DB->connect();
+      
+      $GLPIlog = new GLPIlogs();
+      
+      $_SESSION['glpiactive_entity'] = 0;
+      $_SESSION['glpiactiveentities_string'] = 0;
+      $_SESSION['glpishowallentities'] = 1;
+      $_SESSION['glpiname'] = 'glpi';
+      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
+      
+      $a_inventory = array();
+      $a_inventory['CONTENT']['HARDWARE'] = array(
+          'NAME' => 'pc7'
+      );
+      $a_inventory['CONTENT']['SOFTWARES'][] = array(
+          'COMMENTS' => "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
+          'NAME'     => "curl",
+          'VERSION'  => "2.3.2 (x86 edition)"
+          );
+
+      // ** Add agent
+         $pfAgent = new PluginFusioninventoryAgent();
+         $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-19',
+                                            'device_id' => 'pc-2013-02-19'));
+         $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
+
+      // ** Add
+         $pfiComputerInv->import("pc-2013-02-19", "", $a_inventory); // creation
+
+         $GLPIlog->testSQLlogs();
+         $GLPIlog->testPHPlogs();
+
+         $this->assertEquals(1, countElementsInTable("glpi_softwares"), "Number of softwares");
+         
+         $this->assertEquals(3, countElementsInTable("glpi_softwareversions"), "Number of versions");
+         
+    }   
  }
 
 
