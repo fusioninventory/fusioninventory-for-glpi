@@ -569,8 +569,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['version'])) {
                      $data['version'] = Toolbox::addslashes_deep($data['version']);
                   }
-                  $comp_key = $data['name'].
-                               "$$$$".$data['version'].
+                  $comp_key = strtolower($data['name']).
+                               "$$$$".strtolower($data['version']).
                                "$$$$".$data['manufacturers_id'].
                                "$$$$".$data['entities_id'];
                   $db_software[$comp_key] = $idtmp;
@@ -1870,7 +1870,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       WHERE `entities_id`='".$entities_id."'".$whereid;
       $result = $DB->query($sql);
       while ($data = $DB->fetch_assoc($result)) {
-         $this->softVersionList[$data['name']."$$$$".$data['softwares_id']] = $data['id'];
+         $this->softVersionList[strtolower($data['name'])."$$$$".$data['softwares_id']] = $data['id'];
       }
       return $lastid;
    }
@@ -1934,13 +1934,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
       } else {
          $softwareversions_id = 0;
-         if (isset($this->softVersionList[$a_software['version']."$$$$".
+         if (isset($this->softVersionList[strtolower($a_software['version'])."$$$$".
                   $a_software['softwares_id']])) {
             $softwareversions_id =
-               $this->softVersionList[$a_software['version']."$$$$".$a_software['softwares_id']];
+               $this->softVersionList[strtolower($a_software['version'])."$$$$".$a_software['softwares_id']];
          } else {
             $a_software['name'] = $a_software['version'];
-      $a_software['_no_history'] = $no_history;
+            $a_software['_no_history'] = $no_history;
             $softwareversions_id = $this->softwareVersion->add($a_software, $options, FALSE);
             $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
          }

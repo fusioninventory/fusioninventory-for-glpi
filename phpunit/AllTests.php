@@ -175,6 +175,7 @@ require_once '1_Unit/SNMPModel.php';
 require_once '2_Integration/ComputerEntity.php';
 require_once '2_Integration/RuleIgnoredImport.php';
 require_once '2_Integration/SoftwareEntityCreation.php';
+require_once '2_Integration/SoftwareVersionAdd.php';
 require_once '2_Integration/ComputerDynamic.php';
 require_once '2_Integration/UnknownDeviceKnowDevice.php';
 require_once '2_Integration/UnknownDeviceImport.php';
@@ -207,6 +208,7 @@ class AllTests {
       $suite->addTest(ComputerEntity_AllTests::suite());
       $suite->addTest(RuleIgnoredImport_AllTests::suite());
       $suite->addTest(SoftwareEntityCreation_AllTests::suite());
+      $suite->addTest(SoftwareVersionAdd_AllTests::suite());
       $suite->addTest(ComputerDynamic_AllTests::suite());
       $suite->addTest(UnknownDeviceKnowDevice_AllTests::suite());
       $suite->addTest(UnknownDeviceImport_AllTests::suite());
