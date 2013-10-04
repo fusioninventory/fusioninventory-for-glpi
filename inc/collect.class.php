@@ -420,8 +420,9 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $pfCollect_File = new PluginFusioninventoryCollect_File();
             $pfCollect_File->getFromDB($taskjob['items_id']);
             $output['function'] = 'findFile';
+            $output['dir'] = $pfCollect_File->fields['dir'];
             $output['limit'] = $pfCollect_File->fields['limit'];
-            $output['recursive'] = $pfCollect_File->fields['recursive'];
+            $output['recursive'] = $pfCollect_File->fields['is_recursive'];
             $output['filter'] = array();
             if ($pfCollect_File->fields['filter_regex'] != '') {
                $output['filter']['regex'] = $pfCollect_File->fields['filter_regex'];
@@ -447,7 +448,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             }
             $output['filter']['is_file'] = $pfCollect_File->fields['filter_is_file'];
             $output['filter']['is_dir'] = $pfCollect_File->fields['filter_is_dir'];
-            
             $output['uuid'] = $taskjob['uniqid'];
             break;
 

@@ -5147,7 +5147,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => NULL);
       $a_table['fields']['plugin_fusioninventory_collects_id']   = array('type'    => 'integer',
                                                   'value'   => NULL);
-      $a_table['fields']['path']       = array('type'    => 'text',
+      $a_table['fields']['dir']        = array('type'    => 'string',
                                                'value'   => NULL);
       $a_table['fields']['filename']   = array('type'    => 'string',
                                                'value'   => NULL);
