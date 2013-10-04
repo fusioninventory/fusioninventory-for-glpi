@@ -252,14 +252,14 @@ class PluginFusioninventoryStaticmisc {
    * @return dropdown list of computers
    *
    **/
-   static function task_actionselection_PluginFusioninventoryCredentialIp_ESX() {
+   static function task_actionselection_PluginFusioninventoryCredentialIp_InventoryComputerESX() {
       global $DB;
 
       $options = array();
       $options['name'] = 'definitionactiontoadd';
 
       $module = new PluginFusioninventoryAgentmodule();
-      $module_infos = $module->getActivationExceptions('esx');
+      $module_infos = $module->getActivationExceptions('InventoryComputerESX');
       $exceptions = json_decode($module_infos['exceptions'], TRUE);
 
       $in = "";
@@ -271,7 +271,7 @@ class PluginFusioninventoryStaticmisc {
                 FROM `glpi_plugin_fusioninventory_credentialips` as `a`
                 LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c`
                    ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id`
-                WHERE `c`.`itemtype`='PluginFusioninventoryVmwareESX'";
+                WHERE `c`.`itemtype`='PluginFusioninventoryInventoryComputerESX'";
       $query.= getEntitiesRestrictRequest(' AND', 'glpi_plugin_fusioninventory_credentialips');
 
       $results = $DB->query($query);
@@ -288,7 +288,7 @@ class PluginFusioninventoryStaticmisc {
 
       $array = array();
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      $array1 = $pfAgentmodule->getAgentsCanDo(strtoupper("ESX"));
+      $array1 = $pfAgentmodule->getAgentsCanDo(strtoupper("InventoryComputerESX"));
       foreach ($array1 as $id => $data) {
          $array[$id] = $data['name'];
       }
