@@ -95,11 +95,12 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo "<div class='spaced'>";
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
-      echo "<th colspan=11>".__('Find file associated', 'fusioninventory')."</th>";
+      echo "<th colspan=12>".__('Find file associated', 'fusioninventory')."</th>";
       echo "</tr>";
       echo "<tr>
       <th>".__("Name")."</th>
       <th>".__("Limit", "fusioninventory")."</th>
+      <th>".__("Folder", "fusioninventory")."</th>
       <th>".__("Recursive", "fusioninventory")."</th>
       <th>".__("Regex", "fusioninventory")."</th>
       <th>".__("Size", "fusioninventory")."</th>
@@ -114,6 +115,7 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
          echo "<tr>";
          echo "<td align='center'>".$data['name']."</td>";
          echo "<td align='center'>".$data['limit']."</td>";
+         echo "<td align='center'>".$data['dir']."</td>";
          echo "<td align='center'>".$data['is_recursive']."</td>";
          echo "<td align='center'>".$data['filter_regex']."</td>";
          echo "<td align='center'>";
@@ -181,6 +183,21 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo "<th colspan='4'>";
       echo _n('Filter', 'Filters', 2,'fusioninventory');
       echo "</th>";
+      echo "</tr>\n";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo __('Base folder', 'fusioninventory');
+      echo "</td>";
+      echo "<td>";
+      echo "<input type='text' name='dir' value='/' size='50' />";
+      echo "</td>";
+      echo "<td>";
+      echo __('Folder recursive', 'fusioninventory');
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo('is_recursive', 1);
+      echo "</td>";
       echo "</tr>\n";
       
       echo "<tr class='tab_bg_1'>";

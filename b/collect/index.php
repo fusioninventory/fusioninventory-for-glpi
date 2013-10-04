@@ -108,6 +108,15 @@ if (isset($_GET['action'])) {
                                       $a_values,
                                       $jobstate['items_id']);
                break;
+
+            case 'PluginFusioninventoryCollect_File':
+               // update registry content
+               $pfCFC = new PluginFusioninventoryCollect_File_Content();
+               $pfCFC->updateComputer($computers_id, 
+                                      $a_values,
+                                      $jobstate['items_id']);
+               break;
+
             
          }
          break;
