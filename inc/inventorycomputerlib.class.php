@@ -90,6 +90,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $networkPort                  = new NetworkPort();
       $networkName                  = new NetworkName();
       $iPAddress                    = new IPAddress();
+      $ipnetwork                    = new IPNetwork();
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
 //      $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();
@@ -1488,6 +1489,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $networkPort = new NetworkPort();
       $networkName = new NetworkName();
       $iPAddress   = new IPAddress();      
+      $iPNetwork   = new IPNetwork();
+
       foreach ($inventory_networkports as $a_networkport) {
          if ($a_networkport['mac'] != '') {
             $a_networkports = $networkPort->find("`mac`='".$a_networkport['mac']."'
@@ -1529,6 +1532,32 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       }
       $simplenetworkport = array();
       foreach ($inventory_networkports as $key=>$a_networkport) {
+         // Add ipnetwork if not exist
+         if (       $a_networkport['gateway'] != ''
+                 && $a_networkport['netmask'] != ''
+                 && $a_networkport['subnet']  != '') {
+            
+            if (countElementsInTable('glpi_ipnetworks', 
+                                     "`address`='".$a_networkport['subnet']."'
+                                     AND `netmask`='".$a_networkport['netmask']."'
+                                     AND `gateway`='".$a_networkport['gateway']."'
+                                     AND `entities_id`='".$_SESSION["plugin_fusioninventory_entity"]."'") == 0) {
+               
+               $input_ipanetwork = array(
+                   'name'    => $a_networkport['subnet'].'/'.
+                                $a_networkport['netmask'].' - '.
+                                $a_networkport['gateway'],
+                   'network' => $a_networkport['subnet'].' / '.
+                                $a_networkport['netmask'],
+                   'gateway' => $a_networkport['gateway'],
+                   'entities_id' => $_SESSION["plugin_fusioninventory_entity"]
+               );
+               $iPNetwork->add($input_ipanetwork);
+            }
+         }
+         
+         
+         // End add ipnetwork
          $a_field = array('name', 'mac', 'instantiation_type');
          foreach ($a_field as $field) {
             if (isset($a_networkport[$field])) {
