@@ -109,9 +109,24 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
    
 
 
-   function updateComputer($computers_id, $file_data, $collects_files_id) {
+   function updateComputer($computers_id, $collects_files_id, $taskjobstates_id) {
       global $DB;
       
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $pfTaskjobstate->getFromDB($taskjobstates_id);
+
+      if ($pfTaskjobstate->fields['specificity'] == '') {
+         $a_data = $this->find("`computers_id` = '".$computers_id."'
+                 AND `plugin_fusioninventory_collects_files_id`=
+                  '".$collects_files_id."'");
+         foreach ($a_data as $data) {
+            $this->delete($data);
+         }
+         return;
+      }
+      // Have files found
+      $file_data = importArrayFromDB($pfTaskjobstate->fields['specificity']);
+
       $db_files = array();
       $query = "SELECT `id`, `pathfile`, `size`
             FROM `glpi_plugin_fusioninventory_collects_files_contents`
@@ -126,13 +141,12 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
          $db_files[$idtmp] = $data1;
       }
       
-      foreach ($file_data as $key => $value) {
+      foreach ($file_data as $key => $array) {
          foreach ($db_files as $keydb => $arraydb) {
-            if ($arraydb['pathfile'] == $key) {
+            if ($arraydb['pathfile'] == $array['path']) {
                $input = array();
-               $input['pathfile'] = $arraydb['pathfile'];
                $input['id'] = $keydb;
-               $input['size'] = $value;
+               $input['size'] = $array['size'];
                $this->update($input);
                unset($file_data[$key]);
                unset($db_files[$keydb]);
@@ -155,8 +169,8 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
                $input = array(
                    'computers_id' => $computers_id,
                    'plugin_fusioninventory_collects_files_id' => $collects_files_id,
-                   'pathfile'     => $key,
-                   'size'         => $value
+                   'pathfile'     => $value['path'],
+                   'size'         => $value['size']
                );
                $this->add($input);
             }
@@ -179,8 +193,6 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
    
    function showForComputer($computers_id) {
       
-      $pfCollect_File = new PluginFusioninventoryCollect_File();
-      
       echo "<table class='tab_cadre_fixe'>";
       
       echo "<tr>";
@@ -194,11 +206,10 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
       foreach ($a_data as $data) {
          echo "<tr class='tab_bg_1'>";
          echo '<td>';
-         $pfCollect_File->getFromDB($data['plugin_fusioninventory_collects_files_id']);
-         echo $pfCollect_File->fields['pathfile'];
+         echo $data['pathfile'];
          echo '</td>';
          echo '<td>';
-         echo $data['size'];         
+         echo Toolbox::getSize($data['size']);         
          echo '</td>';
          echo "</tr>";
       }
@@ -239,11 +250,31 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
          echo $data['pathfile'];
          echo '</td>';
          echo '<td>';
-         echo $data['size'];         
+         echo Toolbox::getSize($data['size']);         
          echo '</td>';
          echo "</tr>";
       }
       echo '</table>';
+   }
+   
+   
+   
+   // all files information sent by agent will be stored in field specificity
+   // of table glpi_plugin_fusioninventory_taskjobstates
+   function storeTempFilesFound($taskjobstates_id, $a_values) {
+      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      
+      $pfTaskjobstate->getFromDB($taskjobstates_id);
+      $a_specificity = array();
+      if ($pfTaskjobstate->fields['specificity'] != '') {
+         $a_specificity = importArrayFromDB($pfTaskjobstate->fields['specificity']);
+      }
+      unset($a_values['cpt']);
+      $a_specificity[] = $a_values;
+      $input = array();
+      $input['id'] = $pfTaskjobstate->fields['id'];
+      $input['specificity'] = exportArrayToDB($a_specificity);
+      $pfTaskjobstate->update($input);
    }
 }
 

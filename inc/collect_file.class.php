@@ -173,7 +173,7 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo "<td>";
       Dropdown::showNumber('limit', array(
           'min'   => 1,
-          'max'   => 1000,
+          'max'   => 100,
           'value' => 50
       ));
       echo "</td>";

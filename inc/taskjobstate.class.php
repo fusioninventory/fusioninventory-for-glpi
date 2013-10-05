@@ -232,9 +232,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    *
    **/
    function changeStatus($id, $state) {
-      $this->getFromDB($id);
       $input = array();
-      $input['id'] = $this->fields['id'];
+      $input['id'] = $id;
       $input['state'] = $state;
       $this->update($input);
    }
