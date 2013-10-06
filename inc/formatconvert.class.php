@@ -1233,6 +1233,115 @@ class PluginFusioninventoryFormatconvert {
       return $a_inventory;
    }
 
+   
+   
+   function extraCollectInfo($a_inventory, $computers_id) {
+      global $DB;
+      
+      $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
+      
+      // Get data from rules / collect registry, wmi, find files
+      $data_collect = array();
+
+      $data_registries = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_registries_contents', 
+                                         "`computers_id`='".$computers_id."'");
+      
+      foreach ($data_registries as $data) {
+         $res_rule = $pfCollectRuleCollection->processAllRules(
+                       array(
+                           "regkey"   => $data['key'],
+                           "regvalue" => $data['value'],
+                        )
+                     );
+         if (!isset($res_rule['_no_rule_matches'])) {
+            $data_collect = array_merge($data_collect, $res_rule);
+         }
+      }
+
+      $data_wmis = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_wmis_contents', 
+                                         "`computers_id`='".$computers_id."'");
+      
+      foreach ($data_registries as $data) {
+         $res_rule = $pfCollectRuleCollection->processAllRules(
+                       array(
+                           "wmiproperty"  => $data['property'],
+                           "wmivalue"     => $data['value'],
+                        )
+                     );
+         if (!isset($res_rule['_no_rule_matches'])) {
+            $data_collect = array_merge($data_collect, $res_rule);
+         }
+      }
+      
+      $data_files = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_files_contents', 
+                                         "`computers_id`='".$computers_id."'");
+      
+      foreach ($data_files as $data) {
+         $a_split = explode("/", $data['pathfile']);
+         $filename = array_pop($a_split);
+         $path = implode("/", $a_split);
+         
+         $res_rule = $pfCollectRuleCollection->processAllRules(
+                       array(
+                           "filename"  => $filename,
+                           "filepath"  => $path,
+                           "size"      => $data['size']
+                        )
+                     );
+         if (!isset($res_rule['_no_rule_matches'])) {
+            $data_collect = array_merge($data_collect, $res_rule);
+         }
+      }
+      
+      // * Update $a_inventory with $data_collect;
+
+      // Update computer model
+      if (isset($data_collect['computermodels_id'])) {
+         $a_inventory['Computer']['computermodels_id'] = $data_collect['computermodels_id'];
+      }
+      // Update computer type
+      if (isset($data_collect['computertypes_id'])) {
+         $a_inventory['Computer']['computertypes_id'] = $data_collect['computertypes_id'];
+      }
+      // Update computer OS
+      if (isset($data_collect['operatingsystems_id'])) {
+         $a_inventory['Computer']['operatingsystems_id'] = $data_collect['operatingsystems_id'];
+      }
+      // Update computer OS version
+      if (isset($data_collect['operatingsystemversions_id'])) {
+         $a_inventory['Computer']['operatingsystemversions_id'] = $data_collect['operatingsystemversions_id'];
+      }
+      // Update computer user
+      if (isset($data_collect['user'])) {
+         $query = "SELECT `id`
+                   FROM `glpi_users`
+                   WHERE `name` = '" . $data_collect['user'] . "'
+                   LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == 1) {
+            $a_inventory['Computer']['users_id'] = $DB->result($result, 0, 0);
+         }
+      }
+      // Update computer location
+      if (isset($data_collect['locations_id'])) {
+         $a_inventory['Computer']['locations_id'] = $data_collect['locations_id'];
+      }
+      // Update computer status
+      if (isset($data_collect['states_id'])) {
+         $a_inventory['Computer']['states_id'] = $data_collect['states_id'];
+      }
+      // Add software
+      if (isset($data_collect['software'])
+              && isset($data_collect['softwareversion'])) {
+         $a_inventory['SOFTWARES'][] = array(
+             'NAME'     => $data_collect['software'],
+             'VERSION'  => $data_collect['softwareversion']
+         );
+      }
+      
+      return $a_inventory;
+   }
+   
 
 
    static function addValues($array, $a_key) {
