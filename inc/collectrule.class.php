@@ -165,7 +165,7 @@ class PluginFusioninventoryCollectRule extends Rule {
       $actions['operatingsystems_id']['type']  = 'dropdown';
       $actions['operatingsystems_id']['table'] = 'glpi_operatingsystems';
 
-      $actions['operatingsystemversions_id']['name']  = _n('Version of the operating system', 'Versions of the operating system',1);
+      $actions['operatingsystemversions_id']['name']  = _n('Version of the operating system', 'Versions of the operating system', 1);
       $actions['operatingsystemversions_id']['type']  = 'dropdown';
       $actions['operatingsystemversions_id']['table'] = 'glpi_operatingsystemversions';
 

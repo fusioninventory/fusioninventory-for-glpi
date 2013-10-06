@@ -181,7 +181,7 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='4'>";
-      echo _n('Filter', 'Filters', 2,'fusioninventory');
+      echo _n('Filter', 'Filters', 2, 'fusioninventory');
       echo "</th>";
       echo "</tr>\n";
 
