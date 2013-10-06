@@ -321,10 +321,16 @@ function plugin_init_fusioninventory() {
                         = '../fusioninventory/front/inventoryruleentity.form.php';
          $hook_search['ruleentity']
                         = '../fusioninventory/front/inventoryruleentity.php';
+         
          $hook_add['rulelocation']
                         = '../fusioninventory/front/inventoryrulelocation.form.php';
          $hook_search['rulelocation']
                         = '../fusioninventory/front/inventoryrulelocation.php';
+
+         $hook_add['collectrule']
+                        = '../fusioninventory/front/collectrule.form.php';
+         $hook_search['collectrule']
+                        = '../fusioninventory/front/collectrule.php';
 
          $hook_add['blacklist']
                         = '../fusioninventory/front/inventorycomputerblacklist.form.php';

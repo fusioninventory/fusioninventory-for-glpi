@@ -388,6 +388,13 @@ class PluginFusioninventoryInventoryComputerInventory {
       if ($_SESSION["plugin_fusioninventory_entity"] < 0) {
          $_SESSION["plugin_fusioninventory_entity"] = $entities_id;
       }
+      
+      if ($itemtype == 'Computer') {
+         $a_computerinventory = $pfFormatconvert->extraCollectInfo(
+                                                $a_computerinventory,
+                                                $items_id);
+      }
+
       $a_computerinventory = $pfFormatconvert->computerSoftwareTransformation(
                                              $a_computerinventory,
                                              $entities_id);
