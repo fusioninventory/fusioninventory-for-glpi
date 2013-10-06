@@ -126,7 +126,7 @@ class PluginFusioninventoryStaticmisc {
    static function task_definitiontype_wakeonlan($a_itemtype) {
 
       $a_itemtype['Computer'] = Computer::getTypeName();
-
+      $a_itemtype['PluginFusioninventoryDeployGroup'] = __('Dynamic Group');
       return $a_itemtype;
    }
 
@@ -148,6 +148,16 @@ class PluginFusioninventoryStaticmisc {
       $options['name'] = 'definitionselectiontoadd';
       $rand = Dropdown::show("Computer", $options);
       return $rand;
+   }
+
+   
+   
+   static function task_definitionselection_PluginFusioninventoryDeployGroup_wakeonlan($title) {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'definitionselectiontoadd';
+      return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
    }
 
 
