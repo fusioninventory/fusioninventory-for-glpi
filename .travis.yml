@@ -6,19 +6,18 @@ php:
 before_install:
  - sudo apt-get update -qq
  - sudo apt-get install -qq libapache2-mod-php5 php5-mysql
- - wget -O glpi.tar.gz https://forge.indepnet.net/attachments/download/1593/glpi-0.84.2.tar.gz
- - tar xf glpi.tar.gz
- - sudo mv glpi /var/www/fusion0.84
+ - git clone git://github.com/fusinv/glpi.git glpi
+ - sudo mv glpi /var/www/fusion0.85
  - mysql -e "CREATE DATABASE glpi;"
  - mysql -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis')";
- - sudo echo '<?php class DB extends DBmysql {var $dbhost = "localhost";var $dbuser = "travis";var $dbpassword= "travis";var $dbdefault = "glpi";}' > /var/www/fusion0.84/config/config_db.php
- - cat /var/www/fusion0.84/install/mysql/glpi-0.84.1-empty.sql | mysql -utravis -ptravis glpi
- - sudo mkdir /var/www/fusion0.84/plugins/fusioninventory
- - sudo cp -r . /var/www/fusion0.84/plugins/fusioninventory
- - sudo chown -R travis:www-data /var/www/fusion0.84
- - sudo chmod -R g+w /var/www/fusion0.84
- - cd /var/www/fusion0.84/plugins/fusioninventory/tools
+ - sudo echo '<?php class DB extends DBmysql {var $dbhost = "localhost";var $dbuser = "travis";var $dbpassword= "travis";var $dbdefault = "glpi";}' > /var/www/fusion0.85/config/config_db.php
+ - cat /var/www/fusion0.85/install/mysql/glpi-0.85.1-empty.sql | mysql -utravis -ptravis glpi
+ - sudo mkdir /var/www/fusion0.85/plugins/fusioninventory
+ - sudo cp -r . /var/www/fusion0.85/plugins/fusioninventory
+ - sudo chown -R travis:www-data /var/www/fusion0.85
+ - sudo chmod -R g+w /var/www/fusion0.85
+ - cd /var/www/fusion0.85/plugins/fusioninventory/tools
  - php cli_install.php
- - cd /var/www/fusion0.84/plugins/fusioninventory/phpunit/
+ - cd /var/www/fusion0.85/plugins/fusioninventory/phpunit/
 
 script: phpunit AllTests.php && test -f result.stamp
