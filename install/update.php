@@ -5149,8 +5149,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                   'value'   => NULL);
       $a_table['fields']['dir']        = array('type'    => 'string',
                                                'value'   => NULL);
-      $a_table['fields']['filename']   = array('type'    => 'string',
-                                               'value'   => NULL);
       $a_table['fields']['limit']      = array('type'    => "int(4) NOT NULL DEFAULT '50'",
                                                'value'   => NULL);
       $a_table['fields']['is_recursive'] = array('type'    => 'bool',
