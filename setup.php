@@ -123,6 +123,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryCollect_File_Content',
               array('addtabon' => array('PluginFusioninventoryCollect',
                                         'Computer')));
+      Plugin::registerClass('PluginFusioninventoryComputerLicenseInfo',
+              array('addtabon' => array('Computer')));
       
          //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocation');
