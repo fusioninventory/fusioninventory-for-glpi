@@ -21,4 +21,4 @@ before_install:
  - php cli_install.php
  - cd /var/www/fusion0.84/plugins/fusioninventory/phpunit/
 
-script: phpunit AllTests.php
+script: phpunit AllTests.php && test -f result.stamp

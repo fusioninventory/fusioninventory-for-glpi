@@ -208,7 +208,9 @@ class AllTests {
       $suite->addTest(UnknownDeviceImport_AllTests::suite());
       $suite->addTest(TaskDeployDynamicGroup_AllTests::suite());
       $suite->addTest(ComputerPrinter_AllTests::suite());
-      
+
+      # For travis-CI
+      file_put_contents ( "result.stamp", "test ok" );
       return $suite;
    }
 }
