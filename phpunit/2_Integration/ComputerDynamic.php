@@ -77,16 +77,17 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
                  "mountpoint" => "C:"
               )
           ),
-          'memory'         => Array(),
-          'monitor'        => Array(),
-          'printer'        => Array(),
-          'peripheral'     => Array(),
-          'networkport'    => Array(),
-          'software'       => Array(),
-          'harddrive'      => Array(),
-          'virtualmachine' => Array(),
-          'antivirus'      => Array(),
-          'storage'        => Array(),
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'software'       => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
           'itemtype'       => 'Computer'
       );
       
@@ -156,16 +157,17 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
                  "mountpoint" => "C:"
               )
           ),
-          'memory'         => Array(),
-          'monitor'        => Array(),
-          'printer'        => Array(),
-          'peripheral'     => Array(),
-          'networkport'    => Array(),
-          'software'       => Array(),
-          'harddrive'      => Array(),
-          'virtualmachine' => Array(),
-          'antivirus'      => Array(),
-          'storage'        => Array(),
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'software'       => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
           'itemtype'       => 'Computer'
       );
 
@@ -269,17 +271,18 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
                     'frequency_default' => 2400
                 )
             ),
-          'computerdisk'   => Array(),
-          'memory'         => Array(),
-          'monitor'        => Array(),
-          'printer'        => Array(),
-          'peripheral'     => Array(),
-          'networkport'    => Array(),
-          'software'       => Array(),
-          'harddrive'      => Array(),
-          'virtualmachine' => Array(),
-          'antivirus'      => Array(),
-          'storage'        => Array(),
+          'computerdisk'   => array(),
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'software'       => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
           'itemtype'       => 'Computer'
           );
       

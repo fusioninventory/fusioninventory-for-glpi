@@ -59,6 +59,33 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       return Session::haveRight('computer', 'r');
    }
 
+   
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      
+      if ($item->getID() > 0) {
+         if (get_class($item) == 'Computer') {
+            if (countElementsInTable('glpi_plugin_fusioninventory_computerlicenseinfos', 
+                             "`computers_id`='".$item->getID()."'") > 0) {
+               return array(__('Software licenses', 'fusioninventory'));
+            }
+         }
+      }
+      return array();
+   }
+
+
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      
+      $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
+      if (get_class($item) == 'Computer') {
+         $pfComputerLicenseInfo->showForm($item->getID());
+      }
+      return TRUE;
+   }
+
+   
 
 
    function showForm($computers_id) {
@@ -81,13 +108,13 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                $licence_link = "<a href='".GLPI_ROOT."/front/softwarelicense.form.php?id=".
                   $licenseInfo['softwarelicenses_id']."'>";
                $licence_endlink = "</a>";
-               $licence_endlink .= "<form method='post' action='".GLPI_ROOT.
+               $licence_endlink .= "<form method='post' action='".$CFG_GLPI['root_doc'].
                         "/plugins/fusioninventory/front/licenseinfo.form.php'>";
 
                $licence_endlink .= "<input type='hidden' name='fusioninventory_licenseinfos_id' ".
                                       "value='".$licenseInfo['id']."' />";
                $licence_endlink .= "<input type='hidden' name='softwarelicenses_id' value='0' />";
-               $licence_endlink .= "<input type='submit' class='button' name='associate' ".
+               $licence_endlink .= "<input type='submit' class='submit' name='associate' ".
                                       "value='".__('Dissociate')."'>";
                $licence_endlink .= Html::closeForm(FALSE);
             }
@@ -126,10 +153,10 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
 
             if (empty($licenseInfo['softwarelicenses_id'])) {
                echo '<tr class="tab_bg_1">';
-               echo "<td>".__('Union between computer and license', 'fuioninventory').
+               echo "<td>".__('Union between computer and license', 'fusioninventory').
                         "&nbsp;:</td>";
                echo "<td colspan='3'>";
-               echo "<form method='post' action='".GLPI_ROOT.
+               echo "<form method='post' action='".$CFG_GLPI['root_doc'].
                         "/plugins/fusioninventory/front/licenseinfo.form.php'>";
                echo "<input type='hidden' name='computers_id' value='$computers_id'>";
                echo "<input type='hidden' name='fusioninventory_licenseinfos_id' value='".
@@ -194,7 +221,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
                               $licenses,
                               array('value' => $options['softwarelicenses_id']));
 
-      echo "&nbsp;<input type='submit' class='button' name='associate' ".
+      echo "&nbsp;<input type='submit' class='submit' name='associate' ".
               "value='".__('Associate')."'>";
    }
 

@@ -65,10 +65,12 @@ class PluginFusioninventoryFormatconvert {
       }
       $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
       // Hack for some sections
-         $a_fields = array('SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES', 'MEMORIES',
-                           'NETWORKS', 'SOFTWARE', 'USERS', 'VIRTUALMACHINES', 'ANTIVIRUS',
-                           'MONITORS', 'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
-                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES');
+         $a_fields = array('SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES', 
+                           'MEMORIES', 'NETWORKS', 'SOFTWARE', 'USERS', 
+                           'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS', 
+                           'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
+                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES', 
+                           'LICENSEINFOS');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -1138,6 +1140,20 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 */
+      
+      // * LICENSEINFOS
+      $a_inventory['licenseinfo'] = array();
+      if (isset($array['LICENSEINFOS'])) {
+         foreach ($array['LICENSEINFOS'] as $a_licenseinfo) {
+            $array_tmp = $thisc->addValues($a_licenseinfo,
+                                           array(
+                                              'NAME'     => 'name',
+                                              'FULLNAME' => 'fullname',
+                                              'KEY'      => 'serial'));
+            $a_inventory['licenseinfo'][] = $array_tmp;
+         }
+      }
+      
       return $a_inventory;
    }
 

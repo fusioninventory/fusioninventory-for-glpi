@@ -93,6 +93,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $ipnetwork                    = new IPNetwork();
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
+      $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
+      
 //      $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();
 //      $pfInventoryComputerStorage_Storage =
 //             new PluginFusioninventoryInventoryComputerStorage_Storage();
@@ -960,6 +962,50 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                foreach($a_computerinventory['antivirus'] as $a_antivirus) {
                   $a_antivirus['computers_id'] = $computers_id;
                   $pfInventoryComputerAntivirus->add($a_antivirus, array(), FALSE);
+               }
+            }
+         }
+         
+         
+         
+      // * Licenseinfo
+         $db_licenseinfo = array();
+         if ($no_history === FALSE) {
+            $query = "SELECT `id`, `name`, `fullname`, `serial`
+                  FROM `glpi_plugin_fusioninventory_computerlicenseinfos`
+               WHERE `computers_id` = '$computers_id'";
+            $result = $DB->query($query);
+            while ($data = $DB->fetch_assoc($result)) {
+               $idtmp = $data['id'];
+               unset($data['id']);
+               $data1 = Toolbox::addslashes_deep($data);
+               $data2 = array_map('strtolower', $data1);
+               $db_licenseinfo[$idtmp] = $data2;
+            }
+         }
+         foreach ($a_computerinventory['licenseinfo'] as $key => $arrays) {
+            $arrayslower = array_map('strtolower', $arrays);
+            foreach ($db_licenseinfo as $keydb => $arraydb) {
+               if ($arrayslower == $arraydb) {
+                  unset($a_computerinventory['licenseinfo'][$key]);
+                  unset($db_licenseinfo[$keydb]);
+                  break;
+               }
+            }
+         }
+         if (count($a_computerinventory['licenseinfo']) == 0
+            AND count($db_licenseinfo) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_licenseinfo) != 0) {
+               foreach ($db_licenseinfo as $idtmp => $data) {
+                  $pfComputerLicenseInfo->delete(array('id'=>$idtmp), 1);
+               }
+            }
+            if (count($a_computerinventory['licenseinfo']) != 0) {
+               foreach($a_computerinventory['licenseinfo'] as $a_licenseinfo) {
+                  $a_licenseinfo['computers_id'] = $computers_id;
+                  $pfComputerLicenseInfo->add($a_licenseinfo, array(), FALSE);
                }
             }
          }
