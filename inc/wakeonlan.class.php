@@ -136,7 +136,6 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                }
          }
       }
-Toolbox::logInFile('Toto', print_r($a_computers_to_wake, true));
       $a_actions = importArrayFromDB($pfTaskjob->fields['action']);
 
       $a_agentList = array();
