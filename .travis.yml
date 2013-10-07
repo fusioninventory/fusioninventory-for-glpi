@@ -1,0 +1,16 @@
+language: php
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+before_install:
+ - sudo apt-get update -qq
+ - sudo apt-get install -qq [packages list]
+ - wget -O glpi.tar.gz https://forge.indepnet.net/attachments/download/1593/glpi-0.84.2.tar.gz
+ - tar cf glpi.tar.gz
+ - sudo mv glpi.tar.gz /var/www/fusion0.84
+ - sudo mkdir /var/www/fusion0.84/plugins/fusioninventory
+ - sudo cp -r . /var/www/fusion0.84/plugins/fusioninventory
+ - cd /var/www/fusion0.84/plugins/fusioninventory/phpunit/
+
+script: phpunit AllTests.php
