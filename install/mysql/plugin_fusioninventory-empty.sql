@@ -478,7 +478,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventoryconfigurationmanagements` (
   `users_id` int(11) NOT NULL DEFAULT '0',
   `serialized_last` longblob,
   `sha_last` longblob,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
