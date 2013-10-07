@@ -17,7 +17,7 @@ before_install:
  - sudo chown -R travis:www-data /var/www/fusion0.85
  - sudo chmod -R g+w /var/www/fusion0.85
  - cd /var/www/fusion0.85/tools
-   php cliupdate.php --upgrade
+ -  php cliupdate.php --upgrade
  - cd /var/www/fusion0.85/plugins/fusioninventory/tools
  - php cli_install.php
  - cd /var/www/fusion0.85/plugins/fusioninventory/phpunit/
