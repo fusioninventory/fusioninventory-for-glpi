@@ -175,6 +175,7 @@ require_once '2_Integration/UnknownDeviceKnowDevice.php';
 require_once '2_Integration/UnknownDeviceImport.php';
 require_once '2_Integration/TaskDeployDynamicGroup.php';
 require_once '2_Integration/ComputerPrinter.php';
+require_once '2_Integration/ComputerLicense.php';
 
 require_once 'emulatoragent.php';
 
@@ -208,9 +209,11 @@ class AllTests {
       $suite->addTest(UnknownDeviceImport_AllTests::suite());
       $suite->addTest(TaskDeployDynamicGroup_AllTests::suite());
       $suite->addTest(ComputerPrinter_AllTests::suite());
+      $suite->addTest(ComputerLicense_AllTests::suite());
 
       # For travis-CI
       file_put_contents ( "result.stamp", "test ok" );
+
       return $suite;
    }
 }
