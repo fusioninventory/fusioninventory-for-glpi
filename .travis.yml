@@ -16,7 +16,7 @@ before_install:
  - sudo mkdir /var/www/fusion0.84/plugins/fusioninventory
  - sudo cp -r . /var/www/fusion0.84/plugins/fusioninventory
  - sudo chown -R www-data:www-data /var/www/fusion0.84
- - cd /usr/share/glpi/plugins/fusioninventory/tools
+ - cd /usr/share/fusion0.84/plugins/fusioninventory/tools
  - php cli_install.php
  - cd /var/www/fusion0.84/plugins/fusioninventory/phpunit/
 
