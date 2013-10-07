@@ -21,6 +21,6 @@ before_install:
  - cd /var/www/fusion0.85/plugins/fusioninventory/tools
  - php cli_install.php
  - cd /var/www/fusion0.85/plugins/fusioninventory/phpunit/
- - > /var/www/fusion0.85/files/_log/php-errors.log
+ - echo > /var/www/fusion0.85/files/_log/php-errors.log
 
 script: phpunit AllTests.php && test -f result.stamp
