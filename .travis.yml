@@ -12,7 +12,7 @@ before_install:
  - mysql -e "CREATE DATABASE glpi;"
  - mysql -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis')";
  - sudo echo '<?php class DB extends DBmysql {var $dbhost = "localhost";var $dbuser = "travis";var $dbpassword= "travis";var $dbdefault = "glpi";}' > /var/www/fusion0.84/config/config_db.php
- - cat /var/www/fusion0.84/install/mysql/glpi-0.83.1-empty.sql | mysql -utravis -ptravis glpi
+ - cat /var/www/fusion0.84/install/mysql/glpi-0.84.1-empty.sql | mysql -utravis -ptravis glpi
  - sudo mkdir /var/www/fusion0.84/plugins/fusioninventory
  - sudo cp -r . /var/www/fusion0.84/plugins/fusioninventory
  - sudo chown -R travis:www-data /var/www/fusion0.84
