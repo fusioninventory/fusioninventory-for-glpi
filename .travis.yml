@@ -15,7 +15,8 @@ before_install:
  - cat /var/www/fusion0.84/install/mysql/glpi-0.83.1-empty.sql | mysql -utravis -ptravis glpi
  - sudo mkdir /var/www/fusion0.84/plugins/fusioninventory
  - sudo cp -r . /var/www/fusion0.84/plugins/fusioninventory
- - sudo chown -R www-data:www-data /var/www/fusion0.84
+ - sudo chown -R travis:www-data /var/www/fusion0.84
+ - sudo chmod -R g+w /var/www/fusion0.84
  - cd /var/www/fusion0.84/plugins/fusioninventory/tools
  - php cli_install.php
  - cd /var/www/fusion0.84/plugins/fusioninventory/phpunit/
