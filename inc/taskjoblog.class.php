@@ -1092,7 +1092,7 @@ function appear_array(id){
             'updatetheitem'   => __('Update the item', 'fusioninventory'),
             'inventorystarted' => __('Inventory started', 'fusioninventory'),
             'detail'          => __('Detail', 'fusioninventory'),
-            'badtoken'        => __('Bad token, impossible to start agent', 'fusioninventory'),
+            'badtoken'        => __('Agent communication error, impossible to start agent', 'fusioninventory'),
             'agentcrashed'    => __('Agent stopped/crashed', 'fusioninventory'),
             'importdenied'    => __('Import denied', 'fusioninventory')
          );
