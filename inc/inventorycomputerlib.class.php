@@ -543,7 +543,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $a_softfirst = current($a_computerinventory['software']);
                if (isset($a_softfirst['entities_id'])) {
                   $entities_id = $a_softfirst['entities_id'];
-         }
+               }
             }
             $db_software = array();
             if ($no_history === FALSE) {
@@ -619,7 +619,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                            unset($a_computerinventory['software'][$keysoft]);
                         }
                      }
-                     $ret = $DB->query("SELECT GET_LOCK('softwareversion', 3000)");
+                     $ret = $DB->query("SELECT RELEASE_LOCK('softwareversion')");
                   }
                }
                $ret = $DB->query("SELECT GET_LOCK('software', 3000)");
