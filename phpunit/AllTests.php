@@ -216,7 +216,9 @@ class AllTests {
       $suite->addTest(TaskDeployDynamicGroup_AllTests::suite());
       $suite->addTest(ComputerPrinter_AllTests::suite());
       $suite->addTest(ComputerLicense_AllTests::suite());
-      
+
+      # For travis-CI
+      file_put_contents ( "result.stamp", "test ok" );
       return $suite;
    }
 }
