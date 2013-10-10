@@ -22,3 +22,7 @@ before_install:
  - echo > /var/www/fusion0.84/files/_log/php-errors.log
 
 script: phpunit AllTests.php && test -f result.stamp
+branches:
+  only:
+    - master
+    - glpi0.84
