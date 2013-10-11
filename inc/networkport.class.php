@@ -243,6 +243,9 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
 
 
+   /*
+    * Search networkport with ip and ifdescr
+    */
    function getPortIDfromDeviceIP($IP, $ifDescr, $sysdescr, $sysname, $model) {
       global $DB;
 
@@ -252,6 +255,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
       $PortID = "";
 
+      // search port have ifdescr + ip (in most cases not find it)
       $queryPort = "SELECT `glpi_networkports`.`id`
                     FROM `glpi_plugin_fusioninventory_networkports`
                     LEFT JOIN `glpi_networkports`
@@ -270,8 +274,9 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                           AND `glpi_ipaddresses`.`name`='".$IP."'";
       $resultPort = $DB->query($queryPort);
       if ($DB->numrows($resultPort) == 0) {
-         // Search in other devices
-         $queryPort = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
+         // Search a management port of networkequipment have this IP
+         $queryManagement = "SELECT `glpi_networkports`.`itemtype`,
+                        `glpi_networkports`.`items_id` FROM `glpi_networkports`
                        LEFT JOIN `glpi_networknames`
                           ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
                              AND `glpi_networknames`.`itemtype`='NetworkPort'
@@ -280,11 +285,27 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                              AND `glpi_ipaddresses`.`itemtype`='NetworkName'
 
                        WHERE `glpi_ipaddresses`.`name`='".$IP."'
+                          AND `instantiation_type`='NetworkPortAggregate'
                        LIMIT 1";
-         $resultPort = $DB->query($queryPort);
-         if ($DB->numrows($resultPort) == 1) {
-            $dataPort = $DB->fetch_assoc($resultPort);
-            $PortID = $dataPort["id"];
+         $resultManagement = $DB->query($queryManagement);
+         if ($DB->numrows($resultManagement) == 1) {
+            $dataManagement = $DB->fetch_assoc($resultManagement);
+            // Seach a port have this ifdescr for this same networkequipment
+            $queryPort = "SELECT `glpi_networkports`.`id`
+                          FROM `glpi_plugin_fusioninventory_networkports`
+                          LEFT JOIN `glpi_networkports`
+                             ON `glpi_plugin_fusioninventory_networkports`.`networkports_id`=
+                                `glpi_networkports`.`id`
+                          WHERE `glpi_networkports`.`itemtype`='".$dataManagement['itemtype']."'
+                              AND `glpi_networkports`.`items_id`='".$dataManagement['items_id']."'
+                              AND (`ifdescr`='".$ifDescr."'
+                                   OR `glpi_networkports`.`name`='".$ifDescr."')
+                          LIMIT 1";
+            $resultPort = $DB->query($queryPort);
+            if ($DB->numrows($resultPort) == 1) {
+               $dataPort = $DB->fetch_assoc($resultPort);
+               $PortID = $dataPort["id"];
+            }
          }
       } else {
          $dataPort = $DB->fetch_assoc($resultPort);
@@ -378,31 +399,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          $result = $DB->query($query);
          if ($DB->numrows($result) == "1") {
             $data = $DB->fetch_assoc($result);
-            if ($pfUnknownDevice->convertUnknownToUnknownNetwork($data['items_id'])) {
-               // Add port
-               $input = array();
-               $input['items_id'] = $data['items_id'];
-               $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
-               $input['ip'] = $IP;
-               $input['name'] = $ifDescr;
-               $input['instantiation_type'] = 'NetworkPortEthernet';
-               $PortID = $NetworkPort->add($input);
-               // Update unknown device
-               $input = array();
-               $input['id'] = $data['id'];
-               $input['ip'] = $IP;
-               if (strstr($model, "Phone")) {
-                  $input['item_type'] = 'Phone';
-               }
-               if ($sysname != '') {
-                  $input['name'] = $sysname;
-               }
-               if ($sysdescr != '') {
-                  $input['sysdescr'] = $sysdescr;
-               }
-               $pfUnknownDevice->update($input);
-               return $PortID;
-            }
+            return $data['id'];
          }
          // Add unknown device
          $input = array();
@@ -490,33 +487,9 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          $result = $DB->query($query);
          if ($DB->numrows($result) == "1") {
             $data = $DB->fetch_assoc($result);
-            if ($PluginFusioninventoryUnknownDevice->convertUnknownToUnknownNetwork(
-                    $data['items_id'])) {
-               // Add port
-               $input = array();
-               $input['items_id'] = $data['items_id'];
-               $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
-               $input['mac'] = $sysmac;
-               if (isset($params['ifdescr'])) {
-                  $input['name'] = $params['ifdescr'];
-               }
-               $input['instantiation_type'] = 'NetworkPortEthernet';
-               $PortID = $NetworkPort->add($input);
-               // Update unknown device
-               $input = array();
-               $input['id'] = $data['id'];
-               $input['mac'] = $sysmac;
-               if (isset($params['sysname'])) {
-                  $input['name'] = $params['sysname'];
-               }
-               if (isset($params['sysdescr'])) {
-                  $input['sysdescr'] = $params['sysdescr'];
-               }
-               $PluginFusioninventoryUnknownDevice->update($input);
-               return $PortID;
-            }
+            return $data['id'];
          }
-         // Add unknown device
+         // Add unknown device because not find device
          $input = array();
          $input['mac'] = $sysmac;
          if (isset($params['sysname'])) {
