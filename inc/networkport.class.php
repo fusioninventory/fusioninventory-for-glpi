@@ -468,7 +468,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             LEFT JOIN `glpi_networkequipments`
                ON `glpi_networkports`.`items_id`=
                   `glpi_networkequipments`.`id`
-            WHERE `glpi_networkequipments`.`mac`='".$sysmac."'
+            WHERE `glpi_networkports`.`mac`='".$sysmac."'
                AND `glpi_networkports`.`itemtype`='NetworkEquipment'
                AND `logical_number`='".$ifnumber."'
             LIMIT 1";
