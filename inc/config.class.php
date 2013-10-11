@@ -527,7 +527,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showFromArray("location",
                               array("0"=>"------",
-                                    "1"=>__('Tag')),
+                                    "1"=>__('FusionInventory tag', 'fusioninventory')),
                               array('value'=>$pfConfig->getValue('location')));
       echo "</td>";
       echo "<td>";
@@ -545,7 +545,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showFromArray("group",
                               array("0"=>"------",
-                                    "1"=>__('Tag')),
+                                    "1"=>__('FusionInventory tag', 'fusioninventory')),
                               array('value'=>$pfConfig->getValue('group')));
       echo "</td>";
       echo "<td>";
