@@ -673,9 +673,10 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
             $pfModel = new PluginFusioninventorySnmpmodel();
-            if (isset($arrayinventory['MODELSNMP']) AND !empty($arrayinventory['MODELSNMP'])) {
+            if (isset($arrayinventory['MODELSNMP']) 
+                    && !empty($arrayinventory['MODELSNMP'])) {
                $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
-               if ($model_id != '0') {
+               if ($model_id > 0) {
                   $input['plugin_fusioninventory_snmpmodels_id'] = $model_id;
                }
             }
