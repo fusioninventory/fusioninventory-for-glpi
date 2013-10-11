@@ -97,7 +97,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['group']                  = 0;
       $input['create_vm']              = 0;
       $input['component_networkcardvirtual'] = 1;
-
+      $input['otherserial']            = 0;
+      
       $this->addValues($input);
 
       $input = array();
@@ -565,16 +566,30 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo __('Create computer based on virtual machine information ( only when the virtual machine has no inventory agent ! )', 'fusioninventory')."&nbsp;:";
+      echo __('Inventory number')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("create_vm", $pfConfig->getValue('create_vm'));
+      Dropdown::showFromArray("otherserial",
+                              array("0"=>"------",
+                                    "1"=>__('FusionInventory tag', 'fusioninventory')),
+                              array('value'=>$pfConfig->getValue('otherserial')));
       echo "</td>";
       echo "<td>";
       echo _n('Controller', 'Controllers', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_control", $pfConfig->getValue('component_control'));
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";      
+      echo "<td>";
+      echo __('Create computer based on virtual machine information ( only when the virtual machine has no inventory agent ! )', 'fusioninventory')."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("create_vm", $pfConfig->getValue('create_vm'));
+      echo "</td>";
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "</tr>";
 
