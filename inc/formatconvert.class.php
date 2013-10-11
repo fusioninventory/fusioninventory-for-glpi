@@ -188,7 +188,7 @@ class PluginFusioninventoryFormatconvert {
     * Modify Computer inventory
     */
    static function computerInventoryTransformation($array) {
-      global $DB;
+      global $DB, $PF_ESXINVENTORY;
 
       $a_inventory = array();
       $thisc = new self();
@@ -366,6 +366,12 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
+      // Hack for problems of ESX inventory with same deviceid than real computer inventory
+      if (isset($a_inventory['Computer']['operatingsystems_id'])
+              && strstr($a_inventory['Computer']['operatingsystems_id'], 'VMware ESX')) {
+         $PF_ESXINVENTORY = TRUE;
+      }
+      
       // * BATTERIES
 //      $a_inventory['batteries'] = array();
 //      if (isset($array['BATTERIES'])) {

@@ -349,7 +349,7 @@ class PluginFusioninventoryInventoryComputerInventory {
    *
    **/
    function rulepassed($items_id, $itemtype) {
-      global $DB, $PLUGIN_FUSIONINVENTORY_XML;
+      global $DB, $PLUGIN_FUSIONINVENTORY_XML, $PF_ESXINVENTORY;
 
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-rules",
@@ -443,8 +443,9 @@ class PluginFusioninventoryInventoryComputerInventory {
          $a_computerinventory['fusioninventorycomputer']['serialized_inventory'] =
                   Toolbox::addslashes_deep($serialized);
 
-         $pfAgent->setAgentWithComputerid($items_id, $this->device_id, $entities_id);
-
+         if (!$PF_ESXINVENTORY) {
+            $pfAgent->setAgentWithComputerid($items_id, $this->device_id, $entities_id);
+         }
          $ret = $DB->query("SELECT IS_USED_LOCK('inventory".$items_id."')");
          if (!is_null($DB->result($ret, 0, 0))) {
             $communication = new PluginFusioninventoryCommunication();
