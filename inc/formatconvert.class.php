@@ -446,6 +446,7 @@ class PluginFusioninventoryFormatconvert {
                      if (isset($a_PCIData['name'])) {
                         $array_tmp['designation'] = $a_PCIData['name'];                        
                      }
+                     $array_tmp['designation'] = Toolbox::addslashes_deep($array_tmp['designation']);
                   }
                   $a_inventory['controller'][] = $array_tmp;
                }
