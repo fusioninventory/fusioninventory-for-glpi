@@ -6031,6 +6031,17 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $input['component_networkcardvirtual'] = 1;
       $config->addValues($input, FALSE);
 
+      // Add new config values if not added
+      $input = $config->initConfigModule(TRUE);
+      foreach ($input as $name=>$value) {
+         $a_conf = $config->find("`type`='".$name."'");
+         if (count($a_conf) == 0) {
+            $config->add(array('type' => $name, 'value' => $value));
+         }
+      }
+      
+      
+      
 
    /*
     * Remove / at the end of printers (bugs in older versions of agents.

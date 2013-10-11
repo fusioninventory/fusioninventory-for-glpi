@@ -56,7 +56,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    * @return nothing
    *
    **/
-   function initConfigModule() {
+   function initConfigModule($getOnly=FALSE) {
 
       $input = array();
       $input['version']                = PLUGIN_FUSIONINVENTORY_VERSION;
@@ -70,9 +70,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['users_id']               = $users_id;
       $input['agent_base_url']         = '';
 
-      $this->addValues($input);
-
-      $input = array();
       $input['import_monitor']         = 2;
       $input['import_printer']         = 2;
       $input['import_peripheral']      = 2;
@@ -99,16 +96,11 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['component_networkcardvirtual'] = 1;
       $input['otherserial']            = 0;
       
-      $this->addValues($input);
-
-      $input = array();
       $input['threads_networkdiscovery'] = 20;
       $input['threads_networkinventory'] = 10;
 
-      $this->addValues($input);
 
       //deploy config variables
-      $input = array();
       $input['server_upload_path'] =
               Toolbox::addslashes_deep(
                   implode(
@@ -122,6 +114,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                );
       $input['alert_winpath'] = 1;
       $input['server_as_mirror'] = 1;
+      
+      if ($getOnly) {
+         return $input;
+      }
       $this->addValues($input);
    }
 
