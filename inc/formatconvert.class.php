@@ -365,6 +365,19 @@ class PluginFusioninventoryFormatconvert {
                  $array_tmp['plugin_fusioninventory_computerarchs_id'];
          }
       }
+      
+      // otherserial (on tag) if defined in config
+      if ($pfConfig->getValue('otherserial') == 1) {
+         if (isset($array['ACCOUNTINFO'])) {
+            if (isset($array['ACCOUNTINFO']['KEYNAME'])
+                    && $array['ACCOUNTINFO']['KEYNAME'] == 'TAG') {
+               if (isset($array['ACCOUNTINFO']['KEYVALUE'])
+                       && $array['ACCOUNTINFO']['KEYVALUE'] != '') {
+                  $a_inventory['Computer']['otherserial'] = $array['ACCOUNTINFO']['KEYVALUE'];
+               }
+            }
+         }
+      }
 
       // Hack for problems of ESX inventory with same deviceid than real computer inventory
       if (isset($a_inventory['Computer']['operatingsystems_id'])
