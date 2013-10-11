@@ -435,8 +435,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $text = "* ".__('No import')."&nbsp;:&nbsp;".
       __('This option will not import this item', 'fusioninventory')."<br/><br/>".
       "* ".__('Global import', 'fusioninventory')."&nbsp;:&nbsp;".
-      __('This option will merge items with same name to reduce number of items if this '.
-            'management isn\'t important', 'fuioninventory')."<br/><br/>".
+      __("This option will merge items with same name to reduce number of items if this ".
+            "management isn't important", 'fusioninventory')."<br/><br/>".
       "* ".__('Unique import', 'fusioninventory')."&nbsp;:&nbsp;".
       __('This option will create one item for each item found', 'fusioninventory')."<br/><br/>".
       "* ".__('Unique import on serial number', 'fusioninventory')."&nbsp;:&nbsp;".
