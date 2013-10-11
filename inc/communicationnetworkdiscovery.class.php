@@ -657,12 +657,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $input = array();
             if (count($a_snmpnetworkequipments) > 0) {
                $addItem = FALSE;
-               $input = current($a_snmpnetworkequipments);
+               $a_snmpnetworkequipment = current($a_snmpnetworkequipments);
+               $input = $a_snmpnetworkequipment['id'];
             } else {
                $input['networkequipments_id'] = $item->getID();
                $id = $pfNetworkEquipment->add($input);
                $pfNetworkEquipment->getFromDB($id);
-               $input = $pfNetworkEquipment->fields;
+               $input['id'] = $pfNetworkEquipment->fields['id'];
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
@@ -756,12 +757,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $input = array();
             if (count($a_snmpprinters) > 0) {
                $addItem = FALSE;
-               $input = current($a_snmpprinters);
+               $a_snmpprinter = current($a_snmpprinters);
+               $input['id'] = $a_snmpprinter['id'];
             } else {
                $input['printers_id'] = $item->getID();
                $id = $pfPrinter->add($input);
                $pfPrinter->getFromDB($id);
-               $input = $pfPrinter->fields;
+               $input['id'] = $pfPrinter->fields['id'];
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
