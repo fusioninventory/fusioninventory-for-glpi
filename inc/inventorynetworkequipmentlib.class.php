@@ -331,11 +331,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                                                          $a_lldp['name'],
                                                          $a_lldp['model']);
       } else {
-         if (isset($a_lldp['sysmac'])) {
-            $portID = $pfNetworkPort->getPortIDfromSysmacandPortnumber($a_lldp['sysmac'],
-                                                                       $a_lldp['logical_number'],
-                                                                       $a_lldp);
-         } else if ($a_lldp['mac'] != '') {
+         if ($a_lldp['mac'] != '') {
             $portID = $pfNetworkPort->getPortIDfromSysmacandPortnumber($a_lldp['mac'],
                                                                        $a_lldp['logical_number'],
                                                                        $a_lldp);
