@@ -44,6 +44,8 @@ define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.84+1.2");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
+// used to know if computer inventory is in reallity a ESX task
+$PF_ESXINVENTORY = FALSE;
 
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
