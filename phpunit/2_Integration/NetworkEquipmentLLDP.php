@@ -474,6 +474,116 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
       $Install->testInstall(0);
    }
 
+   
+   
+   public function testCisco2Switch() {
+      global $DB;
+
+      $DB->connect();
+      
+      $Install = new Install();
+      $Install->testInstall(0);
+
+      $a_lldp = array(
+          'ifdescr'        => 'ge-0/0/1.0',
+          'logical_number' => '504',
+          'sysdescr'       => 'Juniper Networks, Inc. ex2200-24t-4g , version 10.1R1.8 Build date: 2010-02-12 16:59:31 UTC ',
+          'model'          => '',
+          'ip'             => '',
+          'mac'            => '2c:6b:f5:98:f9:70',
+          'name'           => 'juniperswitch3'
+      );
+      
+      $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $networkEquipment       = new NetworkEquipment();
+      $networkport            = new NetworkPort();
+      $GLPIlog                = new GLPIlogs();
+      $pfNetworkPort          = new PluginFusioninventoryNetworkPort();
+      
+      // Cisco switch
+      $networkequipments_id = $networkEquipment->add(array(
+          'name'        => 'cisco2',
+          'entities_id' => 0
+      ));
+      
+      $networkports_id = $networkport->add(array(
+          'itemtype'    => 'NetworkEquipment',
+          'items_id'    => $networkequipments_id,
+          'entities_id' => 0
+      ));
+
+      // Another switch
+      $networkequipments_other_id = $networkEquipment->add(array(
+          'name'        => 'juniperswitch3',
+          'entities_id' => 0
+      ));
+      
+      // Port ge-0/0/1.0
+      $networkports_other_id = $networkport->add(array(
+          'itemtype'       => 'NetworkEquipment',
+          'items_id'       => $networkequipments_other_id,
+          'entities_id'    => 0,
+          'mac'            => '2c:6b:f5:98:f9:70',
+          'logical_number' => 504
+      ));
+      $pfNetworkPort->add(array(
+          'networkports_id' => $networkports_other_id,
+          'ifdescr' => 'ge-0/0/1.0'
+      ));
+
+      $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
+      
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+      
+      $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
+      
+      $this->assertEquals(1, 
+                          count($a_portslinks), 
+                          'May have 1 connection between 2 network ports');
+
+      $a_networkports = getAllDatasFromTable('glpi_networkports');
+
+      $this->assertEquals(2, 
+                          count($a_networkports), 
+                          'May have 2 network ports ('.print_r($a_networkports, true).')');
+
+      
+      $a_ref = array(
+          'id'                => 1,
+          'networkports_id_1' => $networkports_id,
+          'networkports_id_2' => $networkports_other_id
+      );
+      
+      $this->assertEquals($a_ref, 
+                          current($a_portslinks), 
+                          'Link port');
+      
+   }
+   
+   
+   
+   public function testCisco2Unknowndevice() {
+      global $DB;
+
+      $DB->connect();
+      
+      $Install = new Install();
+      $Install->testInstall(0);
+      
+   }
+
+   
+   
+   public function testCisco2Nodevice() {
+      global $DB;
+
+      $DB->connect();
+      
+      $Install = new Install();
+      $Install->testInstall(0);
+   }
+
 }
 
 
