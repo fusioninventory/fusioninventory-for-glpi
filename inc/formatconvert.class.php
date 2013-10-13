@@ -225,9 +225,11 @@ class PluginFusioninventoryFormatconvert {
       }
       if (isset($array_tmp['users_id'])) {
          $array_tmp['contact'] = $array_tmp['users_id'];
+         $tmp_users_id = $array_tmp['users_id'];
+         $split_user = explode("@", $tmp_users_id);
          $query = "SELECT `id`
                    FROM `glpi_users`
-                   WHERE `name` = '" . $array_tmp['users_id'] . "'
+                   WHERE `name` = '" . $split_user[0] . "'
                    LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
