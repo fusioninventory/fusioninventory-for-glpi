@@ -418,15 +418,30 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
       $sql_where = " `[typetable]`.`is_template` = '0' ";
       $sql_from = "`[typetable]`";
-      $sql_from .= " LEFT JOIN `glpi_networkports`
-                        ON (`[typetable]`.`id` = `glpi_networkports`.`items_id`
-                            AND `glpi_networkports`.`itemtype` = '[typename]')
-                     LEFT JOIN `glpi_networknames`
-                          ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
-                             AND `glpi_networknames`.`itemtype`='NetworkPort'
-                     LEFT JOIN `glpi_ipaddresses`
-                          ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
-                             AND `glpi_ipaddresses`.`itemtype`='NetworkName'";
+      $is_ip = FALSE;
+      $is_mac = FALSE;
+      foreach ($complex_criterias as $criteria) {
+         if ($criteria->fields['criteria'] == 'ip') {
+            $is_ip = TRUE;
+         } else if ($criteria->fields['criteria'] == 'mac') {
+            $is_mac = TRUE;
+         }
+      }
+      if ($is_ip) {
+         $sql_from .= " LEFT JOIN `glpi_networkports`
+                           ON (`[typetable]`.`id` = `glpi_networkports`.`items_id`
+                               AND `glpi_networkports`.`itemtype` = '[typename]')
+                        LEFT JOIN `glpi_networknames`
+                             ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
+                                AND `glpi_networknames`.`itemtype`='NetworkPort'
+                        LEFT JOIN `glpi_ipaddresses`
+                             ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
+                                AND `glpi_ipaddresses`.`itemtype`='NetworkName'";
+      } else if ($is_mac) {
+         $sql_from .= " LEFT JOIN `glpi_networkports`
+                           ON (`[typetable]`.`id` = `glpi_networkports`.`items_id`
+                               AND `glpi_networkports`.`itemtype` = '[typename]')";
+      }
 
       foreach ($complex_criterias as $criteria) {
          switch ($criteria->fields['criteria']) {
