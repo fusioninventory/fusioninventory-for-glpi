@@ -587,6 +587,61 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
       
       $Install = new Install();
       $Install->testInstall(0);
+      
+      $a_lldp = array(
+          'ifdescr'        => 'GigabitEthernet0/10',
+          'logical_number' => '',
+          'sysdescr'       => '',
+          'model'          => '',
+          'ip'             => '192.168.200.124',
+          'mac'            => '',
+          'name'           => ''
+      );
+      
+      $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $networkEquipment       = new NetworkEquipment();
+      $networkport            = new NetworkPort();
+      $GLPIlog                = new GLPIlogs();
+      
+      // Cisco switch
+      $networkequipments_id = $networkEquipment->add(array(
+          'name'        => 'cisco',
+          'entities_id' => 0
+      ));
+      
+      $networkports_id = $networkport->add(array(
+          'itemtype'    => 'NetworkEquipment',
+          'items_id'    => $networkequipments_id,
+          'entities_id' => 0
+      ));
+
+
+      $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
+      
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+      
+      $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
+      
+      $this->assertEquals(1, 
+                          count($a_portslinks), 
+                          'May have 1 connection between 2 network ports');
+
+      $a_networkports = getAllDatasFromTable('glpi_networkports');
+
+      $this->assertEquals(2, 
+                          count($a_networkports), 
+                          'May have 2 network ports ('.print_r($a_networkports, true).')');
+      
+      $a_ref = array(
+          'id'                => 1,
+          'networkports_id_1' => $networkports_id,
+          'networkports_id_2' => 2
+      );
+      
+      $this->assertEquals($a_ref, 
+                          current($a_portslinks), 
+                          'Link port');
    }
 
    

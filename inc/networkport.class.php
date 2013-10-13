@@ -249,9 +249,10 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
    function getPortIDfromDeviceIP($IP, $ifDescr, $sysdescr, $sysname, $model) {
       global $DB;
 
-      $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-
-      $NetworkPort = new NetworkPort();
+      $pfUnknownDevice  = new PluginFusioninventoryUnknownDevice();
+      $NetworkPort      = new NetworkPort();
+      $networkName      = new NetworkName();
+      $iPAddress        = new IPAddress();
 
       $PortID = "";
 
@@ -415,10 +416,20 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                $input = array();
                $input['items_id'] = $data0['items_id'];
                $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
-               $input['ip'] = $IP;
                $input['name'] = $ifDescr;
                $input['instantiation_type'] = 'NetworkPortEthernet';
                $PortID = $NetworkPort->add($input);
+               
+               $input = array();
+               $input['itemtype'] = 'NetworkPort';
+               $input['items_id'] = $PortID;
+               $networknames_id = $networkName->add($input);
+
+               $input = array();
+               $input['itemtype'] = 'NetworkName';
+               $input['items_id'] = $networknames_id;
+               $input['name'] = $IP;
+               $iPAddress->add($input);
             }
             return $PortID;
          }
@@ -445,10 +456,21 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          $input = array();
          $input['items_id'] = $unkonwn_id;
          $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
-         $input['ip'] = $IP;
          $input['name'] = $ifDescr;
          $input['instantiation_type'] = 'NetworkPortEthernet';
          $PortID = $NetworkPort->add($input);
+         
+         $input = array();
+         $input['itemtype'] = 'NetworkPort';
+         $input['items_id'] = $PortID;
+         $networknames_id = $networkName->add($input);
+         
+         $input = array();
+         $input['itemtype'] = 'NetworkName';
+         $input['items_id'] = $networknames_id;
+         $input['name'] = $IP;
+         $iPAddress->add($input);
+        
          return($PortID);
       }
       return($PortID);
