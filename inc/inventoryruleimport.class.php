@@ -566,7 +566,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                       WHERE $sql_where_temp
                       GROUP BY `[typetable]`.`id`
                       ORDER BY `[typetable]`.`is_deleted` ASC
-                      ";
+                      LIMIT 1";
          if (strstr($sql_glpi, "`[typetable]`.`is_template` = '0'  AND")) {
 
             if ($itemtype == "PluginFusioninventoryUnknownDevice") {
