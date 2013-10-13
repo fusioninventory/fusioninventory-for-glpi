@@ -385,7 +385,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             return $PortID;
          }
 
-         $query = "SELECT `glpi_networkports`.* FROM `glpi_networkports`
+         $query0 = "SELECT `glpi_networkports`.* FROM `glpi_networkports`
              LEFT JOIN `glpi_networknames`
                  ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
                     AND `glpi_networknames`.`itemtype`='NetworkPort'
@@ -396,10 +396,31 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
              WHERE `glpi_networkports`.`itemtype`='PluginFusioninventoryUnknownDevice'
                AND `glpi_ipaddresses`.`name`='".$IP."'
              LIMIT 1";
-         $result = $DB->query($query);
-         if ($DB->numrows($result) == "1") {
-            $data = $DB->fetch_assoc($result);
-            return $data['id'];
+         $result0 = $DB->query($query0);
+         if ($DB->numrows($result0) == 1) {            
+            $data0 = $DB->fetch_assoc($result0);
+            // Search port and add if required
+            $query1 = "SELECT *
+                FROM `glpi_networkports`
+                WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
+                   AND `items_id`='".$data0['items_id']."'
+                   AND `name`='".$ifDescr."'
+                LIMIT 1";
+            $result1 = $DB->query($query1);
+            if ($DB->numrows($result1) == "1") {
+               $data1 = $DB->fetch_assoc($result1);
+               $PortID = $data1['id'];
+            } else {
+               // Add port
+               $input = array();
+               $input['items_id'] = $data0['items_id'];
+               $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
+               $input['ip'] = $IP;
+               $input['name'] = $ifDescr;
+               $input['instantiation_type'] = 'NetworkPortEthernet';
+               $PortID = $NetworkPort->add($input);
+            }
+            return $PortID;
          }
          // Add unknown device
          $input = array();
