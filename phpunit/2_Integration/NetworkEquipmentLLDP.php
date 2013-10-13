@@ -452,7 +452,10 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
    }
    
    
-   
+
+   /*
+    * It find unknown device, but may add the port with this ifdescr
+    */
    public function testCisco1Unknowndevice() {
       global $DB;
 
@@ -460,7 +463,119 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
       
       $Install = new Install();
       $Install->testInstall(0);
+
+      $a_lldp = array(
+          'ifdescr'        => 'GigabitEthernet0/10',
+          'logical_number' => '',
+          'sysdescr'       => '',
+          'model'          => '',
+          'ip'             => '192.168.200.124',
+          'mac'            => '',
+          'name'           => ''
+      );
       
+      $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
+      $networkEquipment       = new NetworkEquipment();
+      $networkport            = new NetworkPort();
+      $GLPIlog                = new GLPIlogs();
+      $networkName            = new NetworkName();
+      $iPAddress              = new IPAddress();
+      $pfNetworkPort          = new PluginFusioninventoryNetworkPort();
+      $pfUnknownDevice        = new PluginFusioninventoryUnknownDevice();
+      
+      // Nortel switch
+      $networkequipments_id = $networkEquipment->add(array(
+          'name'        => 'cisco1',
+          'entities_id' => 0
+      ));
+      
+      $networkports_id = $networkport->add(array(
+          'itemtype'    => 'NetworkEquipment',
+          'items_id'    => $networkequipments_id,
+          'entities_id' => 0
+      ));
+
+      // Unknowndevice
+      $unknowndevices_id = $pfUnknownDevice->add(array(
+          'name'        => 'otherswitch',
+          'entities_id' => 0
+      ));
+      
+      $networkports_unknown_id = $networkport->add(array(
+          'itemtype'       => 'PluginFusioninventoryUnknownDevice',
+          'items_id'       => $unknowndevices_id,
+          'entities_id'    => 0
+      ));
+
+      $networknames_id = $networkName->add(array(
+          'entities_id' => 0,
+          'itemtype'    => 'NetworkPort',
+          'items_id'    => $networkports_unknown_id
+      ));
+      $iPAddress->add(array(
+          'entities_id' => 0,
+          'itemtype' => 'NetworkName',
+          'items_id' => $networknames_id,
+          'name' => '192.168.200.124'
+      ));
+
+
+      $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
+      
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+      
+      $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
+      
+      $this->assertEquals(1, 
+                          count($a_portslinks), 
+                          'May have 1 connection between 2 network ports');
+
+      $a_networkports = getAllDatasFromTable('glpi_networkports');
+
+      $this->assertEquals(3, 
+                          count($a_networkports), 
+                          'May have 3 network ports ('.print_r($a_networkports, true).')');
+
+      $a_unkowns = getAllDatasFromTable('glpi_plugin_fusioninventory_unknowndevices');
+
+      $this->assertEquals(1, 
+                          count($a_unkowns), 
+                          'May have only one unknown device ('.print_r($a_unkowns, true).')');
+
+
+      $a_networkport_ref = array(
+          'id'                 => '3',
+          'items_id'           => $unknowndevices_id,
+          'itemtype'           => 'PluginFusioninventoryUnknownDevice',
+          'entities_id'        => '0',
+          'is_recursive'       => '0',
+          'logical_number'     => '0',
+          'name'               => 'GigabitEthernet0/10',
+          'instantiation_type' => 'NetworkPortEthernet',
+          'mac'                => NULL,
+          'comment'            => NULL,
+          'is_deleted'         => '0',
+          'is_dynamic'         => '0'
+
+      );
+      $networkport->getFromDB(3);
+      $this->assertEquals($a_networkport_ref, 
+                          $networkport->fields, 
+                          'New unknown port created');
+
+      
+      $a_ref = array(
+          'id'                => 1,
+          'networkports_id_1' => $networkports_id,
+          'networkports_id_2' => 3
+      );
+      
+      $this->assertEquals($a_ref, 
+                          current($a_portslinks), 
+                          'Link port');
+      
+
    }
 
    
