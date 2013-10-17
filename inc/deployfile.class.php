@@ -761,8 +761,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
 
    static function addFileInRepo ($params) {
-      set_time_limit(600);
-
       $deployFile = new self;
 
 
