@@ -476,41 +476,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    }
 
 
-
-   /**
-   * Convert an unknown device to unknown "networkequipment"
-   *
-   * @param $id integer id of the unknown device
-   *
-   * @return bool
-   *
-   **/
-   function convertUnknownToUnknownNetwork($id) {
-
-      $np = new NetworkPort();
-
-      $this->getFromDB($id);
-
-      // Get port
-      $a_ports = $np->find('items_id='.$id." AND itemtype='PluginFusioninventoryUnknownDevice'");
-
-      if (count($a_ports) == '1') {
-         // Put mac and ip to unknown
-         $port = current($a_ports);
-         $input = array();
-         $input['id'] = $this->fields['id'];
-         $input['ip'] = $port['ip'];
-         $input['mac'] = $port['mac'];
-
-         $this->update($input);
-         $delete_port = $np->getFromDB($port['id']);
-         $np->delete($delete_port, 1);
-         return TRUE;
-      }
-      return FALSE;
-   }
-
-
+   
 // ************************* Hub Management ************************ //
 
    /**

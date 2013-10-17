@@ -657,12 +657,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $input = array();
             if (count($a_snmpnetworkequipments) > 0) {
                $addItem = FALSE;
-               $input = current($a_snmpnetworkequipments);
+               $a_snmpnetworkequipment = current($a_snmpnetworkequipments);
+               $input = $a_snmpnetworkequipment['id'];
             } else {
                $input['networkequipments_id'] = $item->getID();
                $id = $pfNetworkEquipment->add($input);
                $pfNetworkEquipment->getFromDB($id);
-               $input = $pfNetworkEquipment->fields;
+               $input['id'] = $pfNetworkEquipment->fields['id'];
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
@@ -672,9 +673,10 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
             $pfModel = new PluginFusioninventorySnmpmodel();
-            if (isset($arrayinventory['MODELSNMP']) AND !empty($arrayinventory['MODELSNMP'])) {
+            if (isset($arrayinventory['MODELSNMP']) 
+                    && !empty($arrayinventory['MODELSNMP'])) {
                $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
-               if ($model_id != '0') {
+               if ($model_id > 0) {
                   $input['plugin_fusioninventory_snmpmodels_id'] = $model_id;
                }
             }
@@ -756,12 +758,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $input = array();
             if (count($a_snmpprinters) > 0) {
                $addItem = FALSE;
-               $input = current($a_snmpprinters);
+               $a_snmpprinter = current($a_snmpprinters);
+               $input['id'] = $a_snmpprinter['id'];
             } else {
                $input['printers_id'] = $item->getID();
                $id = $pfPrinter->add($input);
                $pfPrinter->getFromDB($id);
-               $input = $pfPrinter->fields;
+               $input['id'] = $pfPrinter->fields['id'];
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
