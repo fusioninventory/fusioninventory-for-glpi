@@ -46,22 +46,11 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryCollect extends CommonDBTM {
 
+   static $rightname = 'plugin_fusioninventory_collect';
+
    static function getTypeName($nb=0) {
       return __('Collect information', 'fusioninventory');
    }
-
-   
-   
-   static function canCreate() {
-      return PluginFusioninventoryProfile::haveRight("collect", "w");
-   }
-
-
-
-   static function canView() {
-      return PluginFusioninventoryProfile::haveRight("collect", "r");
-   }
-
 
 
 
