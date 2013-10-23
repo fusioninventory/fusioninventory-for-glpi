@@ -387,28 +387,31 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       switch ($item->getType()) {
 
          case 'Computer':
-            // If computer is update with Agent, don't update it
+            // don't update this computer, if it is already handled by
+            // its own agent
             if (Dropdown::getDropdownName("glpi_autoupdatesystems",
                                           $item->fields['autoupdatesystems_id'])
-                    != 'FusionInventory') {
-               if (isset($arrayinventory['WORKGROUP'])) {
-                  $domain = new Domain();
-                  if (!in_array('domains_id', $a_lockable)) {
-                     $input['domains_id'] = $domain->import(
-                               array('name'=>$arrayinventory['WORKGROUP'])
-                             );
-                  }
-               }
-               $item->update($input);
-
-               _updateNetworkInfo(
-                  $arrayinventory,
-                  'Computer',
-                  $item->getID(),
-                  'NetworkPortEthernet',
-                  1
-               );
+                    == 'FusionInventory') {
+               return;
             }
+
+            if (isset($arrayinventory['WORKGROUP'])) {
+               $domain = new Domain();
+               if (!in_array('domains_id', $a_lockable)) {
+                  $input['domains_id'] = $domain->import(
+                            array('name'=>$arrayinventory['WORKGROUP'])
+                          );
+               }
+            }
+            $item->update($input);
+
+            _updateNetworkInfo(
+               $arrayinventory,
+               'Computer',
+               $item->getID(),
+               'NetworkPortEthernet',
+               1
+            );
             break;
 
          case 'PluginFusioninventoryUnknownDevice':
