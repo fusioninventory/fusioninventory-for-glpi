@@ -187,8 +187,8 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
       
       echo "<tr>";
       echo "<th>".__('Path', 'fusioninventory')."</th>";
-      echo "<th>".__('Key', 'fusioninventory')."</th>";
       echo "<th>".__('Value', 'fusioninventory')."</th>";
+      echo "<th>".__('Data', 'fusioninventory')."</th>";
       echo "</tr>";
 
       $a_data = $this->find("`computers_id`='".$computers_id."'",
@@ -231,8 +231,8 @@ class PluginFusioninventoryCollect_Registry_Content extends CommonDBTM {
 
       echo "<tr>";
       echo "<th>".__('Computer')."</th>";
-      echo "<th>".__('Key', 'fusioninventory')."</th>";
       echo "<th>".__('Value', 'fusioninventory')."</th>";
+      echo "<th>".__('Data', 'fusioninventory')."</th>";
       echo "</tr>";
 
       $a_data = $this->find("`plugin_fusioninventory_collects_registries_id`='".$collects_registries_id."'",
