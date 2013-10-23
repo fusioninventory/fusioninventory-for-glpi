@@ -509,26 +509,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             $input['plugin_fusioninventory_agents_id'] =
                            $_SESSION['glpi_plugin_fusioninventory_agentid'];
-            if (isset($arrayinventory['DESCRIPTION'])
-                    AND !empty($arrayinventory['DESCRIPTION'])) {
-               $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
-            }
-            if (isset($arrayinventory['MODELSNMP']) AND !empty($arrayinventory['MODELSNMP'])) {
-               $pfModel = new PluginFusioninventorySnmpmodel();
-               $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
-               if (($model_id == '0')
-                       && (isset($arrayinventory['DESCRIPTION']))
-                       && (!empty($arrayinventory['DESCRIPTION']))) {
-                  $model_id = $pfModel->getModelBySysdescr($arrayinventory['DESCRIPTION']);
-               }
-               if ($model_id != '0') {
-                  $input['plugin_fusioninventory_snmpmodels_id'] = $model_id;
-               }
-            }
-            if (isset($arrayinventory['AUTHSNMP']) AND !empty($$arrayinventory['AUTHSNMP'])) {
-               $input['plugin_fusioninventory_configsecurities_id'] = $arrayinventory['AUTHSNMP'];
-            }
-            $item->update($input);
+
+            _updateSNMPInfo($arrayinventory, $input, $item);
 
             //Manage IP and Mac address
             $NetworkPort = new NetworkPort();
@@ -671,16 +653,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $pfNetworkEquipment->getFromDB($id);
                $input = $pfNetworkEquipment->fields;
             }
-            $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
-            $pfModel = new PluginFusioninventorySnmpmodel();
-            if (isset($arrayinventory['MODELSNMP']) AND !empty($arrayinventory['MODELSNMP'])) {
-               $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
-               if ($model_id != '0') {
-                  $input['plugin_fusioninventory_snmpmodels_id'] = $model_id;
-               }
-            }
-            $input['plugin_fusioninventory_configsecurities_id'] = $arrayinventory['AUTHSNMP'];
-            $pfNetworkEquipment->update($input);
+
+            _updateSNMPInfo($arrayinventory, $input, $pfNetworkEquipment);
+
             break;
 
          case 'Printer':
@@ -771,22 +746,42 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $pfPrinter->getFromDB($id);
                $input = $pfPrinter->fields;
             }
-            $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
-            if (isset($arrayinventory['MODELSNMP'])
-                    && !empty($arrayinventory['MODELSNMP'])) {
-               $pfModel = new PluginFusioninventorySnmpmodel();
-               $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
-               if ($model_id != '0') {
-                  $input['plugin_fusioninventory_snmpmodels_id'] = $model_id;
-               }
-            }
-            $input['plugin_fusioninventory_configsecurities_id'] = $arrayinventory['AUTHSNMP'];
-            $pfPrinter->update($input);
+
+            _updateSNMPInfo($arrayinventory, $input, $pfPrinter);
+
             break;
 
       }
    }
 
+   function _updateSNMPInfo($arrayinventory, $input, $item) {
+      $input['sysdescr']                                   =
+         $arrayinventory['DESCRIPTION'];
+      $input['plugin_fusioninventory_configsecurities_id'] =
+         $arrayinventory['AUTHSNMP'];
+
+      $pfModel = new PluginFusioninventorySnmpmodel();
+      if (
+         isset($arrayinventory['MODELSNMP']) AND
+         !empty($arrayinventory['MODELSNMP'])
+      ) {
+         $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
+
+         if (
+            $model_id == '0' AND
+            isset($arrayinventory['DESCRIPTION']) AND
+            !empty($arrayinventory['DESCRIPTION'])
+         ) {
+            $model_id = $pfModel->getModelBySysdescr($arrayinventory['DESCRIPTION']);
+         }
+         if ($model_id != '0') {
+
+            $input['plugin_fusioninventory_snmpmodels_id'] = $model_id;
+         }
+      }
+
+      $item->update($input);
+   }
 
 
    /**
