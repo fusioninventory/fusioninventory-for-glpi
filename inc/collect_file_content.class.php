@@ -258,7 +258,7 @@ class PluginFusioninventoryCollect_File_Content extends CommonDBTM {
       if ($pfTaskjobstate->fields['specificity'] != '') {
          $a_specificity = importArrayFromDB($pfTaskjobstate->fields['specificity']);
       }
-      unset($a_values['cpt']);
+      unset($a_values['_cpt']);
       $a_specificity[] = $a_values;
       $input = array();
       $input['id'] = $pfTaskjobstate->fields['id'];

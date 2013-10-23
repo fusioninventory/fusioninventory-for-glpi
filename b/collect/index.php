@@ -53,14 +53,15 @@ if (isset($_GET['action'])) {
          if(isset($_GET['machineid'])) {
             $pfAgent = new PluginFusioninventoryAgent();
             $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-
             $a_agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
             if (isset($a_agent['id'])) {
                $moduleRun = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
              
                foreach ($moduleRun as $className => $array) {
                   if (class_exists($className)) {
+
                      if ($className == "PluginFusioninventoryCollect") {
+
                         $class = new PluginFusioninventoryCollect();
                         foreach ($array as $data) {
                            $out = $class->run($data, $a_agent);
@@ -103,6 +104,12 @@ if (isset($_GET['action'])) {
                $pfCRC->updateComputer($computers_id, 
                                       $a_values,
                                       $jobstate['items_id']);
+               if ($a_values['_cpt'] == 1) { // it last value
+                  $pfTaskjobstate->changeStatusFinish(
+                       $jobstate['id'], 
+                       $jobstate['items_id'],
+                       $jobstate['itemtype']);
+               }
                break;
 
             case 'PluginFusioninventoryCollect_Wmi':
@@ -111,6 +118,12 @@ if (isset($_GET['action'])) {
                $pfCWC->updateComputer($computers_id, 
                                       $a_values,
                                       $jobstate['items_id']);
+               if ($a_values['_cpt'] == 1) { // it last value
+                  $pfTaskjobstate->changeStatusFinish(
+                       $jobstate['id'], 
+                       $jobstate['items_id'],
+                       $jobstate['itemtype']);
+               }
                break;
 
             case 'PluginFusioninventoryCollect_File':
@@ -120,7 +133,7 @@ if (isset($_GET['action'])) {
                $pfTaskjobstate->changeStatus(
                        $jobstate['id'], 
                        PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
-               if ($a_values['cpt'] == 1) { // it last value
+               if ($a_values['_cpt'] == 1) { // it last value
                   $pfCFC->updateComputer($computers_id,
                                          $jobstate['items_id'],
                                          $jobstate['id']);
