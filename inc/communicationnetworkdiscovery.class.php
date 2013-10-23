@@ -485,22 +485,12 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                0
             );
 
-            // Update SNMP informations
             $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-            $a_snmpnetworkequipments = $pfNetworkEquipment->find(
-                       "`networkequipments_id`='".$item->getID()."'"
-                    );
-            $input = array();
-            if (count($a_snmpnetworkequipments) > 0) {
-               $addItem = FALSE;
-               $input = current($a_snmpnetworkequipments);
-            } else {
-               $input['networkequipments_id'] = $item->getID();
-               $id = $pfNetworkEquipment->add($input);
-               $pfNetworkEquipment->getFromDB($id);
-               $input = $pfNetworkEquipment->fields;
-            }
-
+            $input = _initSpecificInfo(
+               'networkequipments_id',
+               $item->getID(),
+               $pfNetworkEquipment
+            );
             _updateSNMPInfo($arrayinventory, $input, $pfNetworkEquipment);
 
             break;
@@ -524,20 +514,12 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                1
             );
 
-            // Update SNMP informations
             $pfPrinter = new PluginFusioninventoryPrinter();
-            $a_snmpprinters = $pfPrinter->find("`printers_id`='".$item->getID()."'");
-            $input = array();
-            if (count($a_snmpprinters) > 0) {
-               $addItem = FALSE;
-               $input = current($a_snmpprinters);
-            } else {
-               $input['printers_id'] = $item->getID();
-               $id = $pfPrinter->add($input);
-               $pfPrinter->getFromDB($id);
-               $input = $pfPrinter->fields;
-            }
-
+            $input = _initSpecificInfo(
+               'printers_id',
+               $item->getID(),
+               $pfPrinter
+            );
             _updateSNMPInfo($arrayinventory, $input, $pfPrinter);
 
             break;
@@ -620,6 +602,21 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
          }
       }
+   }
+
+   function _initSpecificInfo($key_field, $id, $item) {
+      $instances = $item->find("`$key_field`='$id'");
+      $input = array();
+      if (count($instances) > 0) {
+         $input = current($instances);
+      } else {
+         $input[$key_field] = $id;
+         $id = $item->add($input);
+         $item->getFromDB($id);
+         $input = $item->fields;
+      }
+
+      return $input;
    }
 
    function _updateSNMPInfo($arrayinventory, $input, $item) {
