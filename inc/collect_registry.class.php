@@ -89,12 +89,12 @@ class PluginFusioninventoryCollect_Registry extends CommonDBTM {
    
    static function getHives() {
       $hives = array(
-         "HKEY_CLASSES_ROOT"   => "HKEY_CLASSES_ROOT",
-         "HKEY_CURRENT_USER"   => "HKEY_CURRENT_USER",
+//         "HKEY_CLASSES_ROOT"   => "HKEY_CLASSES_ROOT",
+//         "HKEY_CURRENT_USER"   => "HKEY_CURRENT_USER",
          "HKEY_LOCAL_MACHINE"  => "HKEY_LOCAL_MACHINE",
-         "HKEY_USERS"          => "HKEY_USERS",
-         "HKEY_CURRENT_CONFIG" => "HKEY_CURRENT_CONFIG",
-         "HKEY_DYN_DATA"       => "HKEY_DYN_DATA"
+//         "HKEY_USERS"          => "HKEY_USERS",
+//         "HKEY_CURRENT_CONFIG" => "HKEY_CURRENT_CONFIG",
+//         "HKEY_DYN_DATA"       => "HKEY_DYN_DATA"
       );
       return $hives;
    }

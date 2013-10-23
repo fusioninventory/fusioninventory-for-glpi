@@ -43,7 +43,7 @@
 include ("../../../inc/includes.php");
 
 $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
-print_r($_POST);
+
 if (isset($_POST["add"])) {
    $pfCollect_Wmi->add($_POST);
    Html::back();
