@@ -596,6 +596,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             break;
 
          case 'NetworkEquipment':
+            // Write XML file
+            if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
+               PluginFusioninventoryToolbox::writeXML($input['id'],
+                                          serialize($_SESSION['SOURCE_XMLDEVICE']),
+                                          "NetworkEquipment");
+            }
+
             $item->update($input);
 
             $NetworkPort = new NetworkPort();
@@ -664,12 +671,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $pfNetworkEquipment->getFromDB($id);
                $input = $pfNetworkEquipment->fields;
             }
-            // Write XML file
-            if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
-               PluginFusioninventoryToolbox::writeXML($input['id'],
-                                          serialize($_SESSION['SOURCE_XMLDEVICE']),
-                                          "NetworkEquipment");
-            }
             $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
             $pfModel = new PluginFusioninventorySnmpmodel();
             if (isset($arrayinventory['MODELSNMP']) AND !empty($arrayinventory['MODELSNMP'])) {
@@ -683,6 +684,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             break;
 
          case 'Printer':
+            // Write XML file
+            if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
+               PluginFusioninventoryToolbox::writeXML($item->getID(),
+                                          serialize($_SESSION['SOURCE_XMLDEVICE']),
+                                          "Printer");
+            }
+
             $input['have_ethernet'] = '1';
             $item->update($input);
 
@@ -762,12 +770,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                $id = $pfPrinter->add($input);
                $pfPrinter->getFromDB($id);
                $input = $pfPrinter->fields;
-            }
-            // Write XML file
-            if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
-               PluginFusioninventoryToolbox::writeXML($item->getID(),
-                                          serialize($_SESSION['SOURCE_XMLDEVICE']),
-                                          "Printer");
             }
             $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
             if (isset($arrayinventory['MODELSNMP'])
