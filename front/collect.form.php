@@ -62,6 +62,8 @@ if (isset($_POST["add"])) {
    $pfCollect->redirectToList();
 }
 
+PluginFusioninventoryMenu::displayMenu("mini");
+
 if (!isset($_GET["id"])) {
    $_GET['id'] = '';
 }

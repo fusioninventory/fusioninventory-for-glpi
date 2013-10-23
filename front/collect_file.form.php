@@ -43,7 +43,7 @@
 include ("../../../inc/includes.php");
 
 $pfCollect_File = new PluginFusioninventoryCollect_File();
-print_r($_POST);
+
 if (isset($_POST["add"])) {
    // conversions
    if ($_POST['sizetype'] != 'none'

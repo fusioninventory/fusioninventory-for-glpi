@@ -43,8 +43,15 @@
 include ("../../../inc/includes.php");
 
 $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
-print_r($_POST);
+
 if (isset($_POST["add"])) {
+   if (!preg_match('/^\/()/', $_POST['path'])) {
+      $_POST['path'] = "/".$_POST['path'];
+   }
+   if (!preg_match('/\/$/', $_POST['path'])) {
+      $_POST['path'] = $_POST['path']."/";
+   }
+   
    $pfCollect_Registry->add($_POST);
    Html::back();
 } else if (isset($_POST["delete_x"])) {
