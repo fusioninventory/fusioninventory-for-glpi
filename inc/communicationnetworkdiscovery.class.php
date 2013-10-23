@@ -400,69 +400,14 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                   }
                }
                $item->update($input);
-               //Manage IP and Mac address
-               $NetworkPort = new NetworkPort();
-               $a_nports = current($NetworkPort->find(
-                       "`itemtype`='Computer' AND `items_id`='".$item->getID()."' 
-                           AND `instantiation_type`='NetworkPortEthernet'",
-                       "",
-                       1));
-               $networkports_id = 0;
-               if (isset($a_nports['id'])) {
-                  if (isset($arrayinventory['MAC']) 
-                          && !empty($arrayinventory['MAC'])) {
-                     $input = array();
-                     $input['id'] = $a_nports['id'];
-                     $input['mac'] = $arrayinventory['MAC'];
-                     $NetworkPort->update($input);
-                  }
-                  $networkports_id = $a_nports['id'];
-               } else {
-                  $input = array();
-                  $input['itemtype'] = 'Computer';
-                  $input['items_id'] = $item->getID();
-                  $input['instantiation_type'] = 'NetworkPortEthernet';
-                  $input['name'] = "management";
-                  if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
-                     $input['mac'] = $arrayinventory['MAC'];
-                  }
-                  $networkports_id = $NetworkPort->add($input);
-               }
 
-               $networkName = new NetworkName();
-               $a_networknames = current($networkName->find(
-                       "`itemtype`='NetworkPort' AND `items_id`='".$networkports_id."'",
-                       "",
-                       1));
-               $networknames_id = 0;
-               if (isset($a_networknames['id'])) {
-                  $networknames_id = $a_networknames['id'];
-               } else {
-                  $input = array();
-                  $input['itemtype'] = 'NetworkPort';
-                  $input['items_id'] = $networkports_id;
-                  $networknames_id = $networkName->add($input);
-               }
-               if (isset($arrayinventory['IP'])) {
-                  $iPAddress = new IPAddress();
-                  $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
-                                       AND `items_id`='".$networknames_id."'");
-                  if (count($a_ipaddresses) == 0) {
-                     $input = array();
-                     $input['itemtype'] = 'NetworkName';
-                     $input['items_id'] = $networknames_id;
-                     $input['name'] = $arrayinventory['IP'];
-                     $iPAddress->add($input);
-                  } else {
-                     $a_ipaddresse = current($a_ipaddresses);
-                     if ($a_ipaddresse['name'] != $arrayinventory['IP']) {
-                        $input = array();
-                        $input['id'] = $a_ipaddresse['id'];
-                        $input['name'] = $arrayinventory['IP'];
-                        $iPAddress->update($input);
-                     }
-                  }
-               }
+               _updateNetworkInfo(
+                  $arrayinventory,
+                  'Computer',
+                  $item->getID(),
+                  'NetworkPortEthernet',
+                  1
+               );
             }
             break;
 
@@ -512,69 +457,14 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
             _updateSNMPInfo($arrayinventory, $input, $item);
 
-            //Manage IP and Mac address
-            $NetworkPort = new NetworkPort();
-            $a_nports = current($NetworkPort->find(
-                    "`itemtype`='PluginFusioninventoryUnknownDevice' AND `items_id`='".$item->getID()."' 
-                        AND `instantiation_type`='NetworkPortEthernet'",
-                    "",
-                    1));
-            $networkports_id = 0;
-            if (isset($a_nports['id'])) {
-               if (isset($arrayinventory['MAC']) 
-                       && !empty($arrayinventory['MAC'])) {
-                  $input = array();
-                  $input['id'] = $a_nports['id'];
-                  $input['mac'] = $arrayinventory['MAC'];
-                  $NetworkPort->update($input);
-               }
-               $networkports_id = $a_nports['id'];
-            } else {
-               $input = array();
-               $input['itemtype'] = 'PluginFusioninventoryUnknownDevice';
-               $input['items_id'] = $item->getID();
-               $input['instantiation_type'] = 'NetworkPortEthernet';
-               $input['name'] = "management";
-               if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
-                  $input['mac'] = $arrayinventory['MAC'];
-               }
-               $networkports_id = $NetworkPort->add($input);
-            }
+            _updateNetworkInfo(
+               $arrayinventory,
+               'PluginFusioninventoryUnknownDevice',
+               $item->getID(),
+               'NetworkPortEthernet',
+               1
+            );
 
-            $networkName = new NetworkName();
-            $a_networknames = current($networkName->find(
-                    "`itemtype`='NetworkPort' AND `items_id`='".$networkports_id."'",
-                    "",
-                    1));
-            $networknames_id = 0;
-            if (isset($a_networknames['id'])) {
-               $networknames_id = $a_networknames['id'];
-            } else {
-               $input = array();
-               $input['itemtype'] = 'NetworkPort';
-               $input['items_id'] = $networkports_id;
-               $networknames_id = $networkName->add($input);
-            }
-            if (isset($arrayinventory['IP'])) {
-               $iPAddress = new IPAddress();
-               $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
-                                    AND `items_id`='".$networknames_id."'");
-               if (count($a_ipaddresses) == 0) {
-                  $input = array();
-                  $input['itemtype'] = 'NetworkName';
-                  $input['items_id'] = $networknames_id;
-                  $input['name'] = $arrayinventory['IP'];
-                  $iPAddress->add($input);
-               } else {
-                  $a_ipaddresse = current($a_ipaddresses);
-                  if ($a_ipaddresse['name'] != $arrayinventory['IP']) {
-                     $input = array();
-                     $input['id'] = $a_ipaddresse['id'];
-                     $input['name'] = $arrayinventory['IP'];
-                     $iPAddress->update($input);
-                  }
-               }
-            }
             break;
 
          case 'NetworkEquipment':
@@ -587,56 +477,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
             $item->update($input);
 
-            $NetworkPort = new NetworkPort();
-            $a_npAggregates = current($NetworkPort->find(
-                    "`itemtype`='NetworkEquipment' AND `items_id`='".$item->getID()."'".
-                       " AND `instantiation_type`='NetworkPortAggregate'",
-                    "",
-                    1));
-            $networkports_id = 0;
-            if (isset($a_npAggregates['id'])) {
-               if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
-                  $input = array();
-                  $input['id'] = $a_npAggregates['id'];
-                  $input['mac'] = $arrayinventory['MAC'];
-                  $NetworkPort->update($input);
-               }
-               $networkports_id = $a_npAggregates['id'];
-            } else {
-               $input = array();
-               $input['itemtype'] = 'NetworkEquipment';
-               $input['items_id'] = $item->getID();
-               $input['instantiation_type'] = 'NetworkPortAggregate';
-               $input['name'] = "management";
-               if (isset($arrayinventory['MAC']) 
-                       && !empty($arrayinventory['MAC'])) {
-                  $input['mac'] = $arrayinventory['MAC'];
-               }
-               $networkports_id = $NetworkPort->add($input);
-            }
-
-            $networkName = new NetworkName();
-            $a_networknames = current($networkName->find(
-                    "`itemtype`='NetworkPort' AND `items_id`='".$networkports_id."'",
-                    "",
-                    1));
-            $networknames_id = 0;
-            if (isset($a_networknames['id'])) {
-               $networknames_id = $a_networknames['id'];
-            } else {
-               $input = array();
-               $input['itemtype'] = 'NetworkPort';
-               $input['items_id'] = $networkports_id;
-               $networknames_id = $networkName->add($input);
-            }
-            if (isset($arrayinventory['IP'])) {
-               $iPAddress = new IPAddress();
-               $input = array();
-               $input['itemtype'] = 'NetworkName';
-               $input['items_id'] = $networknames_id;
-               $input['name'] = $arrayinventory['IP'];
-               $iPAddress->add($input);
-            }
+            _updateNetworkInfo(
+               $arrayinventory,
+               'NetworkEquipment',
+               $item->getID(),
+               'NetworkPortAggregate',
+               0
+            );
 
             // Update SNMP informations
             $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
@@ -669,69 +516,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $input['have_ethernet'] = '1';
             $item->update($input);
 
-            //Manage IP and Mac address
-            $NetworkPort = new NetworkPort();
-            $a_nports = current($NetworkPort->find(
-                    "`itemtype`='Printer' AND `items_id`='".$item->getID()."' 
-                        AND `instantiation_type`='NetworkPortEthernet'",
-                    "",
-                    1));
-            $networkports_id = 0;
-            if (isset($a_nports['id'])) {
-               if (isset($arrayinventory['MAC']) 
-                       && !empty($arrayinventory['MAC'])) {
-                  $input = array();
-                  $input['id'] = $a_nports['id'];
-                  $input['mac'] = $arrayinventory['MAC'];
-                  $NetworkPort->update($input);
-               }
-               $networkports_id = $a_nports['id'];
-            } else {
-               $input = array();
-               $input['itemtype'] = 'Printer';
-               $input['items_id'] = $item->getID();
-               $input['instantiation_type'] = 'NetworkPortEthernet';
-               $input['name'] = "management";
-               if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
-                  $input['mac'] = $arrayinventory['MAC'];
-               }
-               $networkports_id = $NetworkPort->add($input);
-            }
-
-            $networkName = new NetworkName();
-            $a_networknames = current($networkName->find(
-                    "`itemtype`='NetworkPort' AND `items_id`='".$networkports_id."'",
-                    "",
-                    1));
-            $networknames_id = 0;
-            if (isset($a_networknames['id'])) {
-               $networknames_id = $a_networknames['id'];
-            } else {
-               $input = array();
-               $input['itemtype'] = 'NetworkPort';
-               $input['items_id'] = $networkports_id;
-               $networknames_id = $networkName->add($input);
-            }
-            if (isset($arrayinventory['IP'])) {
-               $iPAddress = new IPAddress();
-               $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
-                                    AND `items_id`='".$networknames_id."'");
-               if (count($a_ipaddresses) == 0) {
-                  $input = array();
-                  $input['itemtype'] = 'NetworkName';
-                  $input['items_id'] = $networknames_id;
-                  $input['name'] = $arrayinventory['IP'];
-                  $iPAddress->add($input);
-               } else {
-                  $a_ipaddresse = current($a_ipaddresses);
-                  if ($a_ipaddresse['name'] != $arrayinventory['IP']) {
-                     $input = array();
-                     $input['id'] = $a_ipaddresse['id'];
-                     $input['name'] = $arrayinventory['IP'];
-                     $iPAddress->update($input);
-                  }
-               }
-            }
+            _updateNetworkInfo(
+               $arrayinventory,
+               'Printer',
+               $item->getID(),
+               'NetworkPortEthernet',
+               1
+            );
 
             // Update SNMP informations
             $pfPrinter = new PluginFusioninventoryPrinter();
@@ -751,6 +542,83 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
             break;
 
+      }
+   }
+
+   function _updateNetworkInfo($arrayinventory, $item_type, $id, $instanciation_type, $check_addresses) {
+      $NetworkPort = new NetworkPort();
+      $instance = current($NetworkPort->find(
+           "`itemtype`='$item_type' AND `items_id`='$id'".
+           " AND `instantiation_type`='$instanciation_type'",
+           "",
+           1
+        )
+     );
+      $networkports_id = 0;
+      if (isset($instance['id'])) {
+         if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
+            $input = array();
+            $input['id'] = $instance['id'];
+            $input['mac'] = $arrayinventory['MAC'];
+            $NetworkPort->update($input);
+         }
+         $networkports_id = $instance['id'];
+      } else {
+         $input = array();
+         $input['itemtype'] = $item_type;
+         $input['items_id'] = $id;
+         $input['instantiation_type'] = $instanciation_type;
+         $input['name'] = "management";
+         if (isset($arrayinventory['MAC']) 
+                 && !empty($arrayinventory['MAC'])) {
+            $input['mac'] = $arrayinventory['MAC'];
+         }
+         $networkports_id = $NetworkPort->add($input);
+      }
+
+      $networkName = new NetworkName();
+      $a_networknames = current($networkName->find(
+        "`itemtype`='NetworkPort' AND `items_id`='".$networkports_id."'",
+        "",
+        1)
+     );
+      $networknames_id = 0;
+
+      if (isset($a_networknames['id'])) {
+         $networknames_id = $a_networknames['id'];
+      } else {
+         $input = array();
+         $input['itemtype'] = 'NetworkPort';
+         $input['items_id'] = $networkports_id;
+         $networknames_id = $networkName->add($input);
+      }
+
+      if (isset($arrayinventory['IP'])) {
+
+         $iPAddress = new IPAddress();
+
+         if ($check_addresses) {
+            $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
+               AND `items_id`='".$networknames_id."'");
+         } else {
+            $a_ipaddresses = array();
+         }
+
+         if (count($a_ipaddresses) == 0) {
+            $input = array();
+            $input['itemtype'] = 'NetworkName';
+            $input['items_id'] = $networknames_id;
+            $input['name']     = $arrayinventory['IP'];
+            $iPAddress->add($input);
+         } else {
+            $a_ipaddresse = current($a_ipaddresses);
+            if ($a_ipaddresse['name'] != $arrayinventory['IP']) {
+               $input = array();
+               $input['id']   = $a_ipaddresse['id'];
+               $input['name'] = $arrayinventory['IP'];
+               $iPAddress->update($input);
+            }
+         }
       }
    }
 
