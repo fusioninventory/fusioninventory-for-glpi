@@ -417,10 +417,11 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          case 'PluginFusioninventoryUnknownDevice':
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
-               PluginFusioninventoryToolbox::writeXML($item->getID(),
-                                                      serialize($_SESSION['SOURCE_XMLDEVICE']),
-                                                      'PluginFusioninventoryUnknownDevice'
-                                                      );
+               PluginFusioninventoryToolbox::writeXML(
+                  $input['id'],
+                  serialize($_SESSION['SOURCE_XMLDEVICE']),
+                  'PluginFusioninventoryUnknownDevice'
+               );
             }
 
 
@@ -473,9 +474,11 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          case 'NetworkEquipment':
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
-               PluginFusioninventoryToolbox::writeXML($input['id'],
-                                          serialize($_SESSION['SOURCE_XMLDEVICE']),
-                                          "NetworkEquipment");
+               PluginFusioninventoryToolbox::writeXML(
+                  $input['id'],
+                  serialize($_SESSION['SOURCE_XMLDEVICE']),
+                  'NetworkEquipment'
+               );
             }
 
             $item->update($input);
@@ -501,9 +504,11 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          case 'Printer':
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
-               PluginFusioninventoryToolbox::writeXML($item->getID(),
-                                          serialize($_SESSION['SOURCE_XMLDEVICE']),
-                                          "Printer");
+               PluginFusioninventoryToolbox::writeXML(
+                  $input['id'],
+                  serialize($_SESSION['SOURCE_XMLDEVICE']),
+                  'Printer'
+               );
             }
 
             $input['have_ethernet'] = '1';
