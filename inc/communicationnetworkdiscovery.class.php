@@ -607,22 +607,22 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       }
    }
 
-   function _initSpecificInfo($key_field, $id, $item) {
-      $instances = $item->find("`$key_field`='$id'");
+   function _initSpecificInfo($key_field, $id, $class) {
+      $instances = $class->find("`$key_field`='$id'");
       $input = array();
       if (count($instances) > 0) {
          $input = current($instances);
       } else {
          $input[$key_field] = $id;
-         $id = $item->add($input);
-         $item->getFromDB($id);
-         $input = $item->fields;
+         $id = $class->add($input);
+         $class->getFromDB($id);
+         $input = $class->fields;
       }
 
       return $input;
    }
 
-   function _updateSNMPInfo($arrayinventory, $input, $item) {
+   function _updateSNMPInfo($arrayinventory, $input, $class) {
       $input['sysdescr']                                   =
          $arrayinventory['DESCRIPTION'];
       $input['plugin_fusioninventory_configsecurities_id'] =
@@ -648,7 +648,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          }
       }
 
-      $item->update($input);
+      $class->update($input);
    }
 
 
