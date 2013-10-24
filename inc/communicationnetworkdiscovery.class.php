@@ -532,76 +532,75 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
    function _updateNetworkInfo($arrayinventory, $item_type, $id, $instanciation_type, $check_addresses) {
       $NetworkPort = new NetworkPort();
-      $instance = current($NetworkPort->find(
+      $port = current($NetworkPort->find(
            "`itemtype`='$item_type' AND `items_id`='$id'".
            " AND `instantiation_type`='$instanciation_type'",
            "",
            1
         )
      );
-      $networkports_id = 0;
-      if (isset($instance['id'])) {
+      $port_id = 0;
+      if (isset($port['id'])) {
          if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
             $input = array();
-            $input['id'] = $instance['id'];
+            $input['id']  = $port['id'];
             $input['mac'] = $arrayinventory['MAC'];
             $NetworkPort->update($input);
          }
-         $networkports_id = $instance['id'];
+         $port_id = $instance['id'];
       } else {
          $input = array();
-         $input['itemtype'] = $item_type;
-         $input['items_id'] = $id;
+         $input['itemtype']           = $item_type;
+         $input['items_id']           = $id;
          $input['instantiation_type'] = $instanciation_type;
-         $input['name'] = "management";
+         $input['name']               = "management";
          if (isset($arrayinventory['MAC']) 
                  && !empty($arrayinventory['MAC'])) {
             $input['mac'] = $arrayinventory['MAC'];
          }
-         $networkports_id = $NetworkPort->add($input);
+         $port_id = $NetworkPort->add($input);
       }
 
-      $networkName = new NetworkName();
-      $a_networknames = current($networkName->find(
+      $NetworkName = new NetworkName();
+      $name = current($NetworkName->find(
         "`itemtype`='NetworkPort' AND `items_id`='".$networkports_id."'",
         "",
         1)
      );
-      $networknames_id = 0;
+      $name_id = 0;
 
-      if (isset($a_networknames['id'])) {
-         $networknames_id = $a_networknames['id'];
+      if (isset($name['id'])) {
+         $name_id = $name['id'];
       } else {
          $input = array();
          $input['itemtype'] = 'NetworkPort';
-         $input['items_id'] = $networkports_id;
-         $networknames_id = $networkName->add($input);
+         $input['items_id'] = $port_id;
+         $name_id = $NetworkName->add($input);
       }
 
       if (isset($arrayinventory['IP'])) {
-
-         $iPAddress = new IPAddress();
+         $IPAddress = new IPAddress();
 
          if ($check_addresses) {
-            $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
-               AND `items_id`='".$networknames_id."'");
+            $addresses = $IPAddress->find("`itemtype`='NetworkName'
+               AND `items_id`='".$port_id."'");
          } else {
-            $a_ipaddresses = array();
+            $addresses = array();
          }
 
-         if (count($a_ipaddresses) == 0) {
+         if (count($addresses) == 0) {
             $input = array();
             $input['itemtype'] = 'NetworkName';
-            $input['items_id'] = $networknames_id;
+            $input['items_id'] = $name_id;
             $input['name']     = $arrayinventory['IP'];
-            $iPAddress->add($input);
+            $IPAddress->add($input);
          } else {
-            $a_ipaddresse = current($a_ipaddresses);
-            if ($a_ipaddresse['name'] != $arrayinventory['IP']) {
+            $address = current($addresses);
+            if ($address['name'] != $arrayinventory['IP']) {
                $input = array();
-               $input['id']   = $a_ipaddresse['id'];
+               $input['id']   = $address['id'];
                $input['name'] = $arrayinventory['IP'];
-               $iPAddress->update($input);
+               $IPAddress->update($input);
             }
          }
       }
