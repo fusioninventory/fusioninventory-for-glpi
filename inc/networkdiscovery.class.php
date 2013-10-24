@@ -317,6 +317,9 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $a_versions = importArrayFromDB($pfAgent->fields["version"]);
       if (((isset($a_versions["NETWORKDISCOVERY"])) AND ($a_versions["NETWORKDISCOVERY"] >= 1.3))
               OR !isset($a_versions["NETWORKDISCOVERY"])) {
+         if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml")) {
+            PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile(FALSE);
+         }     
          $sxml_option->addChild('DICOHASH',
                                 md5_file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml"));
       }
@@ -374,7 +377,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                                        '0',
                                        'PluginFusioninventoryAgent',
                                        '1',
-                                       '');
+                                       $pfAgent->fields["threads_networkdiscovery"].' threads');
                $changestate = $pfTaskjobstate->fields['id'];
             } else {
                $pfTaskjobstate->changeStatusFinish($pfTaskjobstate->fields['id'],

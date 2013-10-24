@@ -274,6 +274,10 @@ class FusinvInstall extends PHPUnit_Framework_TestCase {
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'version' not added in config");
 
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
+         WHERE `type`='otherserial'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'otherserial' not added in config");
 
 
       // TODO : test glpi_displaypreferences, rules, bookmark...

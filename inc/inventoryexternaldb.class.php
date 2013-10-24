@@ -58,19 +58,20 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
     static function getDataFromPCIID($pciid) {
        global $DB;
 
-      $pciidArray = explode(":", $pciid);
-      $vendorId = $pciidArray[0];
-      
       $a_return = array();
       
-//      $query_select = "SELECT id, name FROM `glpi_plugin_fusioninventory_pcivendors`
-//        WHERE `vendorid`='".$vendorId."'
-//           LIMIT 1";
-//      $resultSelect = $DB->query($query_select);
-//      if ($DB->numrows($resultSelect) > 0) {
-//         $data = $DB->fetch_assoc($resultSelect);
-//         $a_return['manufacturer'] = html_entity_decode($data['name']);
-//      }
+      if ($pciid == '') {
+         return $a_return;
+      }
+      
+      $pciidArray = explode(":", $pciid);
+ 
+      if (!isset($pciidArray[1])) {
+         return $a_return;
+      }
+      
+      $vendorId = $pciidArray[0];
+      
       $query_select = "SELECT `glpi_plugin_fusioninventory_pcivendors`.`name` as `manufacturer`,
          `glpi_plugin_fusioninventory_pcidevices`.`name` as `name`
          FROM `glpi_plugin_fusioninventory_pcivendors`

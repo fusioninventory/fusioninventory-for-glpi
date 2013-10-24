@@ -56,14 +56,14 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
           ),
-          'soundcard'      => Array(),
-          'graphiccard'    => Array(),
-          'controller'     => Array(),
-          'processor'      => Array(),
+          'soundcard'      => array(),
+          'graphiccard'    => array(),
+          'controller'     => array(),
+          'processor'      => array(),
           "computerdisk"   => array(),
-          'memory'         => Array(),
-          'monitor'        => Array(),
-          'printer'        => Array(
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(
               array(
                   'name'    => 'p1',
                   'have_usb'=> 0,
@@ -75,13 +75,14 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
                   'serial'  => 's1537'
               )
           ),
-          'peripheral'     => Array(),
-          'networkport'    => Array(),
-          'software'       => Array(),
-          'harddrive'      => Array(),
-          'virtualmachine' => Array(),
-          'antivirus'      => Array(),
-          'storage'        => Array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'software'       => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
           'itemtype'       => 'Computer'
       );
 
@@ -115,14 +116,14 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
           ),
-          'soundcard'      => Array(),
-          'graphiccard'    => Array(),
-          'controller'     => Array(),
-          'processor'      => Array(),
+          'soundcard'      => array(),
+          'graphiccard'    => array(),
+          'controller'     => array(),
+          'processor'      => array(),
           "computerdisk"   => array(),
-          'memory'         => Array(),
-          'monitor'        => Array(),
-          'printer'        => Array(
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(
               array(
                   'name'    => 'p1',
                   'have_usb'=> 0,
@@ -134,13 +135,14 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
                   'serial'  => 's1537'
               )
           ),
-          'peripheral'     => Array(),
-          'networkport'    => Array(),
-          'software'       => Array(),
-          'harddrive'      => Array(),
-          'virtualmachine' => Array(),
-          'antivirus'      => Array(),
-          'storage'        => Array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'software'       => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
           'itemtype'       => 'Computer'
       );
       
@@ -153,14 +155,14 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
           ),
-          'soundcard'      => Array(),
-          'graphiccard'    => Array(),
-          'controller'     => Array(),
-          'processor'      => Array(),
+          'soundcard'      => array(),
+          'graphiccard'    => array(),
+          'controller'     => array(),
+          'processor'      => array(),
           "computerdisk"   => array(),
-          'memory'         => Array(),
-          'monitor'        => Array(),
-          'printer'        => Array(
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(
               array(
                   'name'    => 'p1',
                   'have_usb'=> 0,
@@ -172,13 +174,14 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
                   'serial'  => ''
               )
           ),
-          'peripheral'     => Array(),
-          'networkport'    => Array(),
-          'software'       => Array(),
-          'harddrive'      => Array(),
-          'virtualmachine' => Array(),
-          'antivirus'      => Array(),
-          'storage'        => Array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'software'       => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
           'itemtype'       => 'Computer'
       );
    }

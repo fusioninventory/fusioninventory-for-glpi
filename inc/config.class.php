@@ -56,7 +56,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    * @return nothing
    *
    **/
-   function initConfigModule() {
+   function initConfigModule($getOnly=FALSE) {
 
       $input = array();
       $input['version']                = PLUGIN_FUSIONINVENTORY_VERSION;
@@ -70,9 +70,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['users_id']               = $users_id;
       $input['agent_base_url']         = '';
 
-      $this->addValues($input);
-
-      $input = array();
       $input['import_monitor']         = 2;
       $input['import_printer']         = 2;
       $input['import_peripheral']      = 2;
@@ -97,17 +94,13 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['group']                  = 0;
       $input['create_vm']              = 0;
       $input['component_networkcardvirtual'] = 1;
-
-      $this->addValues($input);
-
-      $input = array();
+      $input['otherserial']            = 0;
+      
       $input['threads_networkdiscovery'] = 20;
       $input['threads_networkinventory'] = 10;
 
-      $this->addValues($input);
 
       //deploy config variables
-      $input = array();
       $input['server_upload_path'] =
               Toolbox::addslashes_deep(
                   implode(
@@ -121,6 +114,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                );
       $input['alert_winpath'] = 1;
       $input['server_as_mirror'] = 1;
+      
+      if ($getOnly) {
+         return $input;
+      }
       $this->addValues($input);
    }
 
@@ -426,8 +423,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $text = "* ".__('No import')."&nbsp;:&nbsp;".
       __('This option will not import this item', 'fusioninventory')."<br/><br/>".
       "* ".__('Global import', 'fusioninventory')."&nbsp;:&nbsp;".
-      __('This option will merge items with same name to reduce number of items if this '.
-            'management isn\'t important', 'fuioninventory')."<br/><br/>".
+      __("This option will merge items with same name to reduce number of items if this ".
+            "management isn't important", 'fusioninventory')."<br/><br/>".
       "* ".__('Unique import', 'fusioninventory')."&nbsp;:&nbsp;".
       __('This option will create one item for each item found', 'fusioninventory')."<br/><br/>".
       "* ".__('Unique import on serial number', 'fusioninventory')."&nbsp;:&nbsp;".
@@ -519,7 +516,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showFromArray("location",
                               array("0"=>"------",
-                                    "1"=>__('Tag')),
+                                    "1"=>__('FusionInventory tag', 'fusioninventory')),
                               array('value'=>$pfConfig->getValue('location')));
       echo "</td>";
       echo "<td>";
@@ -537,7 +534,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showFromArray("group",
                               array("0"=>"------",
-                                    "1"=>__('Tag')),
+                                    "1"=>__('FusionInventory tag', 'fusioninventory')),
                               array('value'=>$pfConfig->getValue('group')));
       echo "</td>";
       echo "<td>";
@@ -565,16 +562,30 @@ class PluginFusioninventoryConfig extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
-      echo __('Create computer based on virtual machine information ( only when the virtual machine has no inventory agent ! )', 'fusioninventory')."&nbsp;:";
+      echo __('Inventory number')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("create_vm", $pfConfig->getValue('create_vm'));
+      Dropdown::showFromArray("otherserial",
+                              array("0"=>"------",
+                                    "1"=>__('FusionInventory tag', 'fusioninventory')),
+                              array('value'=>$pfConfig->getValue('otherserial')));
       echo "</td>";
       echo "<td>";
       echo _n('Controller', 'Controllers', 2)."&nbsp;:";
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("component_control", $pfConfig->getValue('component_control'));
+      echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";      
+      echo "<td>";
+      echo __('Create computer based on virtual machine information ( only when the virtual machine has no inventory agent ! )', 'fusioninventory')."&nbsp;:";
+      echo "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("create_vm", $pfConfig->getValue('create_vm'));
+      echo "</td>";
+      echo "<td colspan='2'>";
       echo "</td>";
       echo "</tr>";
 

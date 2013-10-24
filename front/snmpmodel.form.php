@@ -65,7 +65,7 @@ if (isset ($_POST["add"])) {
    Session::checkRight('plugin_fusioninventory_model', PURGE);
    $pfModel->delete($_POST);
    PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
-   Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/model.php");
+   Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/snmpmodel.php");
 } else if (isset ($_FILES['importfile']['tmp_name']) && $_FILES['importfile']['tmp_name']!='') {
    Session::checkRight('plugin_fusioninventory_model', UPDATE);
    $pfImportExport->import($_FILES['importfile']['tmp_name']);

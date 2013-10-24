@@ -65,10 +65,12 @@ class PluginFusioninventoryFormatconvert {
       }
       $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
       // Hack for some sections
-         $a_fields = array('SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES', 'MEMORIES',
-                           'NETWORKS', 'SOFTWARE', 'USERS', 'VIRTUALMACHINES', 'ANTIVIRUS',
-                           'MONITORS', 'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
-                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES');
+         $a_fields = array('SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES', 
+                           'MEMORIES', 'NETWORKS', 'SOFTWARE', 'USERS', 
+                           'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS', 
+                           'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
+                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES', 
+                           'LICENSEINFOS');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -186,7 +188,7 @@ class PluginFusioninventoryFormatconvert {
     * Modify Computer inventory
     */
    static function computerInventoryTransformation($array) {
-      global $DB;
+      global $DB, $PF_ESXINVENTORY;
 
       $a_inventory = array();
       $thisc = new self();
@@ -223,9 +225,11 @@ class PluginFusioninventoryFormatconvert {
       }
       if (isset($array_tmp['users_id'])) {
          $array_tmp['contact'] = $array_tmp['users_id'];
+         $tmp_users_id = $array_tmp['users_id'];
+         $split_user = explode("@", $tmp_users_id);
          $query = "SELECT `id`
                    FROM `glpi_users`
-                   WHERE `name` = '" . $array_tmp['users_id'] . "'
+                   WHERE `name` = '" . $split_user[0] . "'
                    LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -363,7 +367,26 @@ class PluginFusioninventoryFormatconvert {
                  $array_tmp['plugin_fusioninventory_computerarchs_id'];
          }
       }
+      
+      // otherserial (on tag) if defined in config
+      if ($pfConfig->getValue('otherserial') == 1) {
+         if (isset($array['ACCOUNTINFO'])) {
+            if (isset($array['ACCOUNTINFO']['KEYNAME'])
+                    && $array['ACCOUNTINFO']['KEYNAME'] == 'TAG') {
+               if (isset($array['ACCOUNTINFO']['KEYVALUE'])
+                       && $array['ACCOUNTINFO']['KEYVALUE'] != '') {
+                  $a_inventory['Computer']['otherserial'] = $array['ACCOUNTINFO']['KEYVALUE'];
+               }
+            }
+         }
+      }
 
+      // Hack for problems of ESX inventory with same deviceid than real computer inventory
+      if (isset($a_inventory['Computer']['operatingsystems_id'])
+              && strstr($a_inventory['Computer']['operatingsystems_id'], 'VMware ESX')) {
+         $PF_ESXINVENTORY = TRUE;
+      }
+      
       // * BATTERIES
 //      $a_inventory['batteries'] = array();
 //      if (isset($array['BATTERIES'])) {
@@ -444,6 +467,7 @@ class PluginFusioninventoryFormatconvert {
                      if (isset($a_PCIData['name'])) {
                         $array_tmp['designation'] = $a_PCIData['name'];                        
                      }
+                     $array_tmp['designation'] = Toolbox::addslashes_deep($array_tmp['designation']);
                   }
                   $a_inventory['controller'][] = $array_tmp;
                }
@@ -1123,6 +1147,20 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 */
+      
+      // * LICENSEINFOS
+      $a_inventory['licenseinfo'] = array();
+      if (isset($array['LICENSEINFOS'])) {
+         foreach ($array['LICENSEINFOS'] as $a_licenseinfo) {
+            $array_tmp = $thisc->addValues($a_licenseinfo,
+                                           array(
+                                              'NAME'     => 'name',
+                                              'FULLNAME' => 'fullname',
+                                              'KEY'      => 'serial'));
+            $a_inventory['licenseinfo'][] = $array_tmp;
+         }
+      }
+      
       return $a_inventory;
    }
 

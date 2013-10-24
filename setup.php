@@ -44,6 +44,8 @@ define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.85+1.0");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
+// used to know if computer inventory is in reallity a ESX task
+$PF_ESXINVENTORY = FALSE;
 
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
@@ -123,6 +125,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryCollect_File_Content',
               array('addtabon' => array('PluginFusioninventoryCollect',
                                         'Computer')));
+      Plugin::registerClass('PluginFusioninventoryComputerLicenseInfo',
+              array('addtabon' => array('Computer')));
       
          //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocation');
