@@ -586,6 +586,8 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $sxml_param->addAttribute('CORE_QUERY', "1");
       $sxml_param->addAttribute('THREADS_QUERY',
          $pfAgent->fields["threads_networkinventory"]);
+      $sxml_param->addAttribute('TIMEOUT',
+         $pfAgent->fields["timeout_networkinventory"]);
       $sxml_param->addAttribute('PID', $current['id']);
 
 
@@ -605,7 +607,9 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                                     '0',
                                     'PluginFusioninventoryAgent',
                                     '1',
-                                    $pfAgent->fields["threads_networkinventory"].' threads');
+                                    $pfAgent->fields["threads_networkinventory"].' threads',
+                                    $pfAgent->fields["timeout_networkinventory"].' timeout'
+                                 );
             $changestate = $pfTaskjobstate->fields['id'];
          } else {
             $pfTaskjobstate->changeStatusFinish($taskjobstatedatas['id'],

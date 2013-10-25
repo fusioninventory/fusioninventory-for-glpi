@@ -342,6 +342,8 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $sxml_param->addAttribute('CORE_DISCOVERY', "1");
       $sxml_param->addAttribute('THREADS_DISCOVERY',
          $pfAgent->fields["threads_networkdiscovery"]);
+      $sxml_param->addAttribute('TIMEOUT',
+         $pfAgent->fields["timeout_networkdiscovery"]);
       $sxml_param->addAttribute('PID', $current['id']);
 
       $changestate = 0;
@@ -377,7 +379,9 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                                        '0',
                                        'PluginFusioninventoryAgent',
                                        '1',
-                                       $pfAgent->fields["threads_networkdiscovery"].' threads');
+                                       $pfAgent->fields["threads_networkdiscovery"].' threads',
+                                       $pfAgent->fields["timeout_networkdiscovery"].' timeout'
+                                    );
                $changestate = $pfTaskjobstate->fields['id'];
             } else {
                $pfTaskjobstate->changeStatusFinish($pfTaskjobstate->fields['id'],

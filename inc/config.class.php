@@ -98,7 +98,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       
       $input['threads_networkdiscovery'] = 20;
       $input['threads_networkinventory'] = 10;
-
+      $input['timeout_networkdiscovery'] = 1;
+      $input['timeout_networkinventory'] = 15;
 
       //deploy config variables
       $input['server_upload_path'] =
@@ -648,6 +649,15 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'max'   => 400)
       );
       echo "</td>";
+      echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
+              "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showNumber("timeout_networkdiscovery", array(
+             'value' => $pfConfig->getValue('timeout_networkdiscovery'),
+             'min'   => 1,
+             'max'   => 60)
+      );
+      echo "</td>";
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
@@ -655,6 +665,15 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'value' => $pfConfig->getValue('threads_networkinventory'), 
              'min'   => 1, 
              'max'   => 400)
+      );
+      echo "</td>";
+      echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
+              "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showNumber("timeout_networkinventory", array(
+             'value' => $pfConfig->getValue('timeout_networkinventory'),
+             'min'   => 1,
+             'max'   => 60)
       );
       echo "</td>";
       echo "</tr>";
