@@ -583,9 +583,10 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $sxml_option = $this->message->addChild('OPTION');
       $sxml_option->addChild('NAME', 'SNMPQUERY');
       $sxml_param = $sxml_option->addChild('PARAM');
-         $sxml_param->addAttribute('CORE_QUERY', "1");
-         $sxml_param->addAttribute('THREADS_QUERY', $pfAgent->fields["threads_networkinventory"]);
-         $sxml_param->addAttribute('PID', $current['id']);
+      $sxml_param->addAttribute('CORE_QUERY', "1");
+      $sxml_param->addAttribute('THREADS_QUERY',
+         $pfAgent->fields["threads_networkinventory"]);
+      $sxml_param->addAttribute('PID', $current['id']);
 
 
       $changestate = 0;
