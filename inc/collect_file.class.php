@@ -129,9 +129,9 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
          echo "</td>";
          echo "<td align='center'>
             <form name='form_bundle_item' action='".Toolbox::getItemTypeFormURL(__CLASS__).
-                   "' method='post'>
-            <input type='hidden' name='id' value='".$data['id']."'>
-            <input type='image' name='delete' src='../pics/drop.png'>";
+                   "' method='post'>";
+            Html::hidden('id', array('value' => $data['id']));
+            echo "<input type='image' name='delete' src='../pics/drop.png'>";
          Html::closeForm();
          echo "</td>";
          echo "</tr>";
@@ -154,8 +154,8 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo __('Name');
       echo "</td>";
       echo "<td>";
-      echo "<input type='hidden' name='plugin_fusioninventory_collects_id' 
-               value='".$contents_id."' />";
+      Html::hidden('plugin_fusioninventory_collects_id', 
+                   array('value' => $contents_id));
       echo "<input type='text' name='name' value='' />";
       echo "</td>";
       echo "<td>".__('Limit', 'fusioninventory')."</td>";

@@ -236,8 +236,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $oComputer = new Computer();
          $oComputer->getFromDB($this->fields["computers_id"]);
          echo $oComputer->getLink(1);
-         echo "<input type='hidden' name='computers_id' ".
-                 "value='".$this->fields["computers_id"]."'/>";
+         Html::hidden('computers_id', 
+                      array('value' => $this->fields["computers_id"]));
       } else {
          Computer_Item::dropdownConnect("Computer", "Computer", 'computers_id',
                                         $_SESSION['glpiactive_entity']);
@@ -583,8 +583,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          case 'waiting':
             $waiting = 1;
             echo __('Available');
-            echo "<input type='hidden' name='ip' value='".$ip."' />";
-            echo "<input type='hidden' name='agent_id' value='".$agent_id."' />";
+            Html::hidden('ip', array('value' => $ip));
+            Html::hidden('agent_id', array('value' => $agent_id));
             break;
 
          default:
