@@ -156,7 +156,6 @@ class PrinterUpdate extends PHPUnit_Framework_TestCase {
           'template_name'        => NULL,
           'init_pages_counter'   => '0',
           'last_pages_counter'   => '0',
-          'notepad'              => NULL,
           'users_id'             => '0',
           'groups_id'            => '0',
           'states_id'            => '0',

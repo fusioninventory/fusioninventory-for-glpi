@@ -236,7 +236,6 @@ class NetworkEquipmentUpdate extends PHPUnit_Framework_TestCase {
           'is_deleted'           => 0,
           'is_template'          => 0,
           'template_name'        => NULL,
-          'notepad'              => NULL,
           'users_id'             => 0,
           'groups_id'            => 0,
           'states_id'            => 0,
