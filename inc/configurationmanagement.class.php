@@ -772,6 +772,9 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
             $pfConfigurationManagement->update($input);
          }
       }
+      // Send emails
+      
+      
    }
 }
 

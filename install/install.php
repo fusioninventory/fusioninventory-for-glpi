@@ -313,6 +313,12 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $pfSetup = new PluginFusioninventorySetup();
       $pfSetup->initRules();
 
+      
+   /*
+    * Add notification for configuration management
+    */
+      
+      
 
 
    /*

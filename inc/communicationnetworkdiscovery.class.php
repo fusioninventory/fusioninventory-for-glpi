@@ -405,7 +405,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             $item->update($input);
 
-            _updateNetworkInfo(
+            $this->_updateNetworkInfo(
                $arrayinventory,
                'Computer',
                $item->getID(),
@@ -459,9 +459,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $input['plugin_fusioninventory_agents_id'] =
                            $_SESSION['glpi_plugin_fusioninventory_agentid'];
 
-            _updateSNMPInfo($arrayinventory, $input, $item);
+            $this->_updateSNMPInfo($arrayinventory, $input, $item);
 
-            _updateNetworkInfo(
+            $this->_updateNetworkInfo(
                $arrayinventory,
                'PluginFusioninventoryUnknownDevice',
                $item->getID(),
@@ -483,7 +483,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
             $item->update($input);
 
-            _updateNetworkInfo(
+            $this->_updateNetworkInfo(
                $arrayinventory,
                'NetworkEquipment',
                $item->getID(),
@@ -492,12 +492,12 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             );
 
             $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-            $input = _initSpecificInfo(
+            $input = $this->_initSpecificInfo(
                'networkequipments_id',
                $item->getID(),
                $pfNetworkEquipment
             );
-            _updateSNMPInfo($arrayinventory, $input, $pfNetworkEquipment);
+            $this->_updateSNMPInfo($arrayinventory, $input, $pfNetworkEquipment);
 
             break;
 
@@ -514,7 +514,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $input['have_ethernet'] = '1';
             $item->update($input);
 
-            _updateNetworkInfo(
+            $this->_updateNetworkInfo(
                $arrayinventory,
                'Printer',
                $item->getID(),
@@ -523,12 +523,12 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             );
 
             $pfPrinter = new PluginFusioninventoryPrinter();
-            $input = _initSpecificInfo(
+            $input = $this->_initSpecificInfo(
                'printers_id',
                $item->getID(),
                $pfPrinter
             );
-            _updateSNMPInfo($arrayinventory, $input, $pfPrinter);
+            $this->_updateSNMPInfo($arrayinventory, $input, $pfPrinter);
 
             break;
 
@@ -552,7 +552,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             $input['mac'] = $arrayinventory['MAC'];
             $NetworkPort->update($input);
          }
-         $port_id = $instance['id'];
+         $port_id = $port['id'];
       } else {
          $input = array();
          $input['itemtype']           = $item_type;
@@ -568,7 +568,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
       $NetworkName = new NetworkName();
       $name = current($NetworkName->find(
-        "`itemtype`='NetworkPort' AND `items_id`='".$networkports_id."'",
+        "`itemtype`='NetworkPort' AND `items_id`='".$port_id."'",
         "",
         1)
      );
@@ -611,6 +611,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       }
    }
 
+   
+   
    function _initSpecificInfo($key_field, $id, $class) {
       $instances = $class->find("`$key_field`='$id'");
       $input = array();
@@ -626,6 +628,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       return $input;
    }
 
+   
+   
    function _updateSNMPInfo($arrayinventory, $input, $class) {
       $input['sysdescr']                                   =
          $arrayinventory['DESCRIPTION'];
@@ -655,6 +659,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $class->update($input);
    }
 
+   
 
    /**
     * Used to add log in the task
