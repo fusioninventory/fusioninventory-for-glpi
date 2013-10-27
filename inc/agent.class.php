@@ -206,8 +206,12 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          unset($this->fields['id']);
          $this->fields['threads_networkdiscovery'] =
                  $pfConfig->getValue('threads_networkdiscovery');
+         $this->fields['timeout_networkdiscovery'] =
+                 $pfConfig->getValue('timeout_networkdiscovery');
          $this->fields['threads_networkinventory'] =
                  $pfConfig->getValue('threads_networkinventory');
+         $this->fields['timeout_networkinventory'] =
+                 $pfConfig->getValue('timeout_networkinventory');
          $this->fields['senddico'] = 0;
       }
       $this->initForm($computers_id, $options);
@@ -270,6 +274,16 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          );
 
       echo "</td>";
+      echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
+              "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showNumber("timeout_networkdiscovery", array(
+             'value' => $this->fields["timeout_networkdiscovery"],
+             'min' => 1,
+             'max' => 60)
+         );
+
+      echo "</td>";
       echo "<td>".__('Useragent', 'fusioninventory')."&nbsp:</td>";
       echo "<td align='center'>";
       echo $this->fields["useragent"];
@@ -284,6 +298,15 @@ class PluginFusioninventoryAgent extends CommonDBTM {
              'value' => $this->fields["threads_networkinventory"], 
              'min' => 1, 
              'max' => 400)
+      );
+      echo "</td>";
+      echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
+              "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showNumber("timeout_networkinventory", array(
+             'value' => $this->fields["timeout_networkinventory"],
+             'min' => 1,
+             'max' => 60)
       );
       echo "</td>";
       echo "<td>".__('Last contact', 'fusioninventory')."&nbsp:</td>";

@@ -583,9 +583,11 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $sxml_option = $this->message->addChild('OPTION');
       $sxml_option->addChild('NAME', 'SNMPQUERY');
       $sxml_param = $sxml_option->addChild('PARAM');
-         $sxml_param->addAttribute('CORE_QUERY', "1");
-         $sxml_param->addAttribute('THREADS_QUERY', $pfAgent->fields["threads_networkinventory"]);
-         $sxml_param->addAttribute('PID', $current['id']);
+      $sxml_param->addAttribute('THREADS_QUERY',
+         $pfAgent->fields["threads_networkinventory"]);
+      $sxml_param->addAttribute('TIMEOUT',
+         $pfAgent->fields["timeout_networkinventory"]);
+      $sxml_param->addAttribute('PID', $current['id']);
 
 
       $changestate = 0;
@@ -604,7 +606,9 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                                     '0',
                                     'PluginFusioninventoryAgent',
                                     '1',
-                                    $pfAgent->fields["threads_networkinventory"].' threads');
+                                    $pfAgent->fields["threads_networkinventory"].' threads',
+                                    $pfAgent->fields["timeout_networkinventory"].' timeout'
+                                 );
             $changestate = $pfTaskjobstate->fields['id'];
          } else {
             $pfTaskjobstate->changeStatusFinish($taskjobstatedatas['id'],

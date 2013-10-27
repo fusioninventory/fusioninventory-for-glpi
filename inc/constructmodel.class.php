@@ -58,9 +58,12 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
          curl_setopt($this->fp, CURLOPT_PROXYTYPE, 'HTTP');
          curl_setopt($this->fp, CURLOPT_PROXY, $CFG_GLPI['proxy_name']);
          if ($CFG_GLPI['proxy_user'] != '') {
+
+            $proxy_passwd = Toolbox::decrypt($CFG_GLPI['proxy_passwd'],GLPIKEY);
+
             curl_setopt($this->fp,
                         CURLOPT_PROXYUSERPWD,
-                        $CFG_GLPI['proxy_user'].":".$CFG_GLPI['proxy_passwd']);
+                        $CFG_GLPI['proxy_user'].":".$proxy_passwd);
          }
       }
       curl_setopt($this->fp, CURLOPT_POST, TRUE);
