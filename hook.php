@@ -138,6 +138,14 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5162]['joinparams']      = array('beforejoin'
                                             => array('table'      => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
                                                      'joinparams' => array('jointype'          => 'child')));
+         
+         $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_configurationmanagements';
+         $sopt[5163]['field']     = 'conform';
+         $sopt[5163]['name']      = __('Conformité (configuration management)', 'fusioninventory');
+         $sopt[5163]['joinparams']  = array('jointype' => 'itemtype_item');
+         $sopt[5163]['massiveaction'] = FALSE;
+         $sopt[5163]['datatype']  = 'bool';
+
    }
 
    if ($itemtype == 'Computer') {
@@ -2199,7 +2207,7 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
          break;
 
       // * Networking List (front/networking.php)
-      case NETWORKING_TYPE :
+      case 'NetworkEquipment':
          switch ($table.".".$field) {
 
          // ** FusionInventory - last inventory

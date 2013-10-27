@@ -507,8 +507,6 @@ class PluginFusioninventoryInventoryComputerInventory {
                        $PLUGIN_FUSIONINVENTORY_XML->asXML(),
                        'computer');
             }
-            $pfIConfigurationManagement = new PluginFusioninventoryInventoryConfigurationManagement();
-            $pfIConfigurationManagement->addLastInventory('Computer', $items_id);
          }
       } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
 

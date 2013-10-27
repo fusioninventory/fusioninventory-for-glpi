@@ -2311,10 +2311,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
    /*
-    * Table glpi_plugin_fusioninventory_inventoryconfigurationmanagements
+    * Table glpi_plugin_fusioninventory_configurationmanagements
     */
       $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_inventoryconfigurationmanagements';
+      $a_table['name'] = 'glpi_plugin_fusioninventory_configurationmanagements';
       $a_table['oldname'] = array();
 
       $a_table['fields']  = array();
@@ -2343,6 +2343,36 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                              'value'   => '0');
       $a_table['fields']['conform']                  = array('type'    => 'bool',
                                                              'value'   => '1');
+      
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+      
+      $a_table['keys']   = array();
+      
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_configurationmanagements_models
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_configurationmanagements_models';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement',
+                                               'value'   => '');
+      $a_table['fields']['name']       = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['itemtype']   = array(
+                        'type'    => "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL",
+                        'value'   => NULL);
+      $a_table['fields']['serialized_model']   = array('type'    => 'longblob',
+                                                             'value'   => "");
       
       $a_table['oldfields']  = array();
 
@@ -6139,6 +6169,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (!$crontask->getFromDBbyName('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs')) {
       Crontask::Register('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs', (3600 * 24),
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
+   }
+   if (!$crontask->getFromDBbyName('PluginFusioninventoryConfigurationManagement', 'checkdevices')) {
+      Crontask::Register('PluginFusioninventoryConfigurationManagement', 'checkdevices', 86400,
+                         array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
+                               'hourmin' =>22, 'hourmax'=>6, 
+                               'comment'=>'Check configuration management'));
    }
 
 

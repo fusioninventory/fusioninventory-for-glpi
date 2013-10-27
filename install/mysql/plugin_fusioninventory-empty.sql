@@ -466,9 +466,9 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstorages_storages` (
 
 
 
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventoryconfigurationmanagements`;
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configurationmanagements`;
 
-CREATE TABLE `glpi_plugin_fusioninventory_inventoryconfigurationmanagements` (
+CREATE TABLE `glpi_plugin_fusioninventory_configurationmanagements` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `items_id` int(11) NOT NULL DEFAULT '0',
   `itemtype` varchar(100) DEFAULT NULL,
@@ -478,6 +478,18 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventoryconfigurationmanagements` (
   `users_id` int(11) NOT NULL DEFAULT '0',
   `serialized_last` longblob,
   `sha_last` longblob,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_configurationmanagements_models`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_configurationmanagements_models` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `itemtype` varchar(100) DEFAULT NULL,
+  `serialized_model` longblob,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 

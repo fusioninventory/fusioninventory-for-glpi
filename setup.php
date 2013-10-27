@@ -108,7 +108,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
       Plugin::registerClass('PluginFusioninventoryInventoryComputerStorage',
               array('addtabon' => array('Computer')));
-      Plugin::registerClass('PluginFusioninventoryInventoryConfigurationManagement');
+      Plugin::registerClass('PluginFusioninventoryConfigurationManagement',
+              array('addtabon' => array('Computer')));
       Plugin::registerClass('PluginFusioninventoryCollect');
       Plugin::registerClass('PluginFusioninventoryCollect_Registry',
               array('addtabon' => array('PluginFusioninventoryCollect')));
@@ -366,6 +367,10 @@ function plugin_init_fusioninventory() {
          $hook_search['collect'] = 
              '../fusioninventory/front/collect.php';
          
+         $hook_add['configurationmanagement_model'] = 
+             '../fusioninventory/front/configurationmanagement_model.form.php?add=1';
+         $hook_search['configurationmanagement_model'] = 
+             '../configurationmanagement_model/front/configurationmanagement_model.php';
          
          
          /*

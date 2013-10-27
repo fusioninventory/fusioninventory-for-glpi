@@ -52,10 +52,16 @@ Html::header(__('FusionInventory', 'fusioninventory'),
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$pfIConfigurationmanagement = new PluginFusioninventoryInventoryConfigurationmanagement();
+$_GET['target']="configurationmanagement_notconform.php";
 
-$pfIConfigurationmanagement->display(array('id'           => $_GET["id"],
-                                           'withtemplate' => ""));
+$_GET['field'] = array('2');
+$_GET['searchtype'] = array('equals');
+$_GET['contains'] = array('0');
+
+Search::manageGetValues('PluginFusioninventoryConfigurationmanagement');
+Search::showList('PluginFusioninventoryConfigurationmanagement', $_GET);
+
+
 Html::footer();
 
 ?>

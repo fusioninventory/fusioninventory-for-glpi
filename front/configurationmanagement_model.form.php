@@ -35,26 +35,48 @@
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
+   @since     2010
 
    ------------------------------------------------------------------------
  */
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), 
-             $_SERVER["PHP_SELF"], 
-             "plugins", 
-             "fusioninventory", 
-             "configurationmanagement");
-
-//Session::checkRight('plugin_fusioninventory_blacklist', READ);
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
+             "fusioninventory", "configurationmanagement_model");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$_GET['target']="inventoryconfigurationmanagement_tobevalidated.php";
+$pfConfigurationManagement_Model = new PluginFusioninventoryConfigurationManagement_Model();
 
-Search::show('PluginFusioninventoryInventoryConfigurationmanagement');
+if (isset($_POST["add"])) {
+   $pfConfigurationManagement_Model->add($_POST);
+   Html::back();
+} else if (isset($_POST["update"])) {
+   $pfConfigurationManagement_Model->update($_POST);
+   Html::back();
+} else if (isset($_REQUEST["purge"])) {
+   $pfConfigurationManagement_Model->delete($_POST);
+   $pfConfigurationManagement_Model->redirectToList();
+} else if (isset($_POST['update_serialized'])) {
+   unset($_POST['update_serialized']);
+   $serialized_model = array();
+   foreach ($_POST as $key => $value) {
+      if ($value != 'notmanaged'
+              && $value != 'id') {
+         $serialized_model[$key] = $value;
+      }
+   }
+   $_POST['serialized_model'] = exportArrayToDB($serialized_model);
+   $pfConfigurationManagement_Model->update($_POST);
+   Html::back();
+}
+
+
+if (!isset($_GET["id"])) {
+   $_GET['id'] = '';
+}
+$pfConfigurationManagement_Model->showForm($_GET['id']);
 
 Html::footer();
 
