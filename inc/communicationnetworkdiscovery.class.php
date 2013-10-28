@@ -588,9 +588,17 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
          if ($check_addresses) {
             $addresses = $IPAddress->find("`itemtype`='NetworkName'
-               AND `items_id`='".$port_id."'");
+               AND `items_id`='".$port_id."'", '', 1);
          } else {
-            $addresses = array();
+            // Case of NetworkEquipment
+            $a_ips = $IPAddress->find("`itemtype`='NetworkName'
+               AND `items_id`='".$port_id."'
+               AND `name`='".$arrayinventory['IP']."'", '', 1);
+            if (count($a_ips) > 0) {
+               $addresses = current($a_ips);
+            } else {
+               $addresses = array();
+            }
          }
 
          if (count($addresses) == 0) {
