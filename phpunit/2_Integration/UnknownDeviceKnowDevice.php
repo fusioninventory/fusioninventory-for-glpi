@@ -214,6 +214,10 @@ class UnknownDeviceKnowDevice extends PHPUnit_Framework_TestCase {
       $_SESSION['glpiactive_entity'] = 0;
       $pfiComputerLib->updateComputer($a_inventory, $computers_id, FALSE);
 
+      $GLPIlog = new GLPIlogs();
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+      
       $a_networkports = $networkPort->find("`mac`='cc:f9:54:a1:03:45'");
 
       $this->assertEquals(1, count($a_networkports), "May have only one port with this mac address");      
