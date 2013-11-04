@@ -8323,7 +8323,9 @@ function migrateTablesFromFusinvDeploy ($migration) {
       $o_line = array();
       $of_line = array();
 
-
+      $o_line['checks'] = array();
+      $o_line['actions'] = array();
+      $o_line['associatedFiles'] = array();
 
       //=== Checks ===
       if (TableExists("glpi_plugin_fusinvdeploy_checks")) {
