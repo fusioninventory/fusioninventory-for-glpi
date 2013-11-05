@@ -8310,6 +8310,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
              $c_i++;
          }
       }
+
       $files_list = array();
       //=== Files ===
       if (TableExists("glpi_plugin_fusinvdeploy_files")) {
@@ -8354,11 +8355,6 @@ function migrateTablesFromFusinvDeploy ($migration) {
       //=== Fileparts ===
       if (TableExists('glpi_plugin_fusinvdeploy_fileparts')) {
          // multipart file datas
-         /*
-         $fp_query = "SELECT sha512
-            FROM glpi_plugin_fusinvdeploy_fileparts
-            WHERE plugin_fusinvdeploy_files_id =".$f_datas['id'];
-         */
          foreach ($files_list as $sha) {
             $shortsha = substr($sha, 0, 6);
             $fp_query = "SELECT  fp.`sha512` as filepart_hash, ".
@@ -8382,7 +8378,6 @@ function migrateTablesFromFusinvDeploy ($migration) {
                }
                fclose($fhandle);
             }
-
          }
       }
 
@@ -8432,7 +8427,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                   }
                }
 
-               //specifice case for commands : we must add status and env vars
+               //specific case for commands : we must add status and env vars
                if ($a_datas['itemtype'] === "PluginFusinvdeployAction_Command") {
                   $ret_cmd_query = "SELECT type, value
                      FROM glpi_plugin_fusinvdeploy_actions_commandstatus
