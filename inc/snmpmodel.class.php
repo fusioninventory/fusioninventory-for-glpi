@@ -319,30 +319,13 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
       $sysdescr = trim($sysdescr);
       $modelgetted = '';
       if (!empty($sysdescr)) {
-         $xml = @simplexml_load_file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml",
-                                     'SimpleXMLElement', LIBXML_NOCDATA);
-         foreach ($xml->DEVICE as $device) {
-            $device->SYSDESCR = str_replace("\r", "", $device->SYSDESCR);
-            $device->SYSDESCR = str_replace("\n", "", $device->SYSDESCR);
-            $device->SYSDESCR = trim($device->SYSDESCR);
-            if ($sysdescr == $device->SYSDESCR) {
-               if (isset($device->MODELSNMP)) {
-                  $modelgetted = $device->MODELSNMP;
-               }
-               break;
-            }
-         }
-
-         if (!empty($modelgetted)) {
-            $query = "SELECT *
-                      FROM `glpi_plugin_fusioninventory_snmpmodels`
-                      WHERE `discovery_key`='".$modelgetted."'
-                      LIMIT 0, 1";
-            $result = $DB->query($query);
-            $data = $DB->fetch_assoc($result);
-            $plugin_fusinvsnmp_models_id = $data['id'];
+         $pfSnmpmodeldevice = new PluginFusioninventorySnmpmodeldevice();
+         $a_devices = $pfSnmpmodeldevice->find("`sysdescr`='".$sysdescr."'", '', 1);
+         if (count($a_devices) == 1) {
+            $a_device = current($a_devices);
+            $plugin_fusinvsnmp_models_id = $a_device['plugin_fusioninventory_snmpmodels_id'];
             if ($comment != "") {
-               return $data['discovery_key'];
+               return $plugin_fusinvsnmp_models_id;
             } else {
                // Udpate Device with this model
                switch($type) {
@@ -366,6 +349,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
             }
          }
       }
+      return '';
    }
 
 
@@ -384,11 +368,8 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
    function getModelBySysdescr($sysdescr) {
       $key = $this->getrightmodel('0', '', $sysdescr);
-      if (isset($key) AND !empty($key)) {
-         $model_id = $this->getModelByKey($key);
-         if (isset($model_id) AND !empty($model_id)) {
-            return $model_id;
-         }
+      if ($key != '') {
+         return $key;
       }
       return 0;
    }

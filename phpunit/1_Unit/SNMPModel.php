@@ -115,7 +115,53 @@ class SNMPModel extends PHPUnit_Framework_TestCase {
                           'May have now no snmpmodel');
       
    }
- }
+   
+   
+   
+   public function testLoadRightModel() {
+      global $DB;
+
+      $DB->connect();
+      
+      $networkEquipment = new NetworkEquipment();
+      $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+      $pfSnmpmodel = new PluginFusioninventorySnmpmodel();
+      $GLPIlog = new GLPIlogs();
+      
+      $sysdescr = "Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(52)SE, RELEASE SOFTWARE (fc3)
+Copyright (c) 1986-2009 by Cisco Systems, Inc.
+Compiled Fri 25-Sep-09 08:49 by sasyamal";
+      
+      $networkequipments_id = $networkEquipment->add(array(
+          'name'        => 'switch',
+          'entities_id' => '0'
+      ));
+      $pfnetworkequipments_id = $pfNetworkEquipment->add(array(
+          'networkequipments_id' => $networkequipments_id,
+          'sysdescr' => $sysdescr
+      ));
+      
+      // find if this model is in models list
+      $a_models = getAllDatasFromTable(
+              "glpi_plugin_fusioninventory_snmpmodeldevices", 
+              "`sysdescr`='".str_replace("\n", "", $sysdescr)."'");
+      
+      $this->assertEquals(1, count($a_models), 
+                          'May have our sysdescr in SNMP model list');
+      $a_model = current($a_models);
+      
+      $pfSnmpmodel->getrightmodel($networkequipments_id, 'NetworkEquipment');
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      $pfNetworkEquipment->getFromDB($pfnetworkequipments_id);
+      
+      $this->assertEquals($a_model['plugin_fusioninventory_snmpmodels_id'], 
+                          $pfNetworkEquipment->fields['plugin_fusioninventory_snmpmodels_id'], 
+                          'May have the right model assigned to the switch');
+      
+   }
+}
 
 
 
