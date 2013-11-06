@@ -90,8 +90,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $networkPort                  = new NetworkPort();
       $networkName                  = new NetworkName();
       $iPAddress                    = new IPAddress();
+      $ipnetwork                    = new IPNetwork();
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
+      $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
+      
 //      $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();
 //      $pfInventoryComputerStorage_Storage =
 //             new PluginFusioninventoryInventoryComputerStorage_Storage();
@@ -540,7 +543,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $a_softfirst = current($a_computerinventory['software']);
                if (isset($a_softfirst['entities_id'])) {
                   $entities_id = $a_softfirst['entities_id'];
-         }
+               }
             }
             $db_software = array();
             if ($no_history === FALSE) {
@@ -569,8 +572,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['version'])) {
                      $data['version'] = Toolbox::addslashes_deep($data['version']);
                   }
-                  $comp_key = $data['name'].
-                               "$$$$".$data['version'].
+                  $comp_key = strtolower($data['name']).
+                               "$$$$".strtolower($data['version']).
                                "$$$$".$data['manufacturers_id'].
                                "$$$$".$data['entities_id'];
                   $db_software[$comp_key] = $idtmp;
@@ -616,7 +619,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                            unset($a_computerinventory['software'][$keysoft]);
                         }
                      }
-                     $ret = $DB->query("SELECT GET_LOCK('softwareversion', 3000)");
+                     $ret = $DB->query("SELECT RELEASE_LOCK('softwareversion')");
                   }
                }
                $ret = $DB->query("SELECT GET_LOCK('software', 3000)");
@@ -962,7 +965,52 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
+         
+         
+         
+      // * Licenseinfo
+         $db_licenseinfo = array();
+         if ($no_history === FALSE) {
+            $query = "SELECT `id`, `name`, `fullname`, `serial`
+                  FROM `glpi_plugin_fusioninventory_computerlicenseinfos`
+               WHERE `computers_id` = '$computers_id'";
+            $result = $DB->query($query);
+            while ($data = $DB->fetch_assoc($result)) {
+               $idtmp = $data['id'];
+               unset($data['id']);
+               $data1 = Toolbox::addslashes_deep($data);
+               $data2 = array_map('strtolower', $data1);
+               $db_licenseinfo[$idtmp] = $data2;
+            }
+         }
+         foreach ($a_computerinventory['licenseinfo'] as $key => $arrays) {
+            $arrayslower = array_map('strtolower', $arrays);
+            foreach ($db_licenseinfo as $keydb => $arraydb) {
+               if ($arrayslower == $arraydb) {
+                  unset($a_computerinventory['licenseinfo'][$key]);
+                  unset($db_licenseinfo[$keydb]);
+                  break;
+               }
+            }
+         }
+         if (count($a_computerinventory['licenseinfo']) == 0
+            AND count($db_licenseinfo) == 0) {
+            // Nothing to do
+         } else {
+            if (count($db_licenseinfo) != 0) {
+               foreach ($db_licenseinfo as $idtmp => $data) {
+                  $pfComputerLicenseInfo->delete(array('id'=>$idtmp), 1);
+               }
+            }
+            if (count($a_computerinventory['licenseinfo']) != 0) {
+               foreach($a_computerinventory['licenseinfo'] as $a_licenseinfo) {
+                  $a_licenseinfo['computers_id'] = $computers_id;
+                  $pfComputerLicenseInfo->add($a_licenseinfo, array(), FALSE);
+               }
+            }
+         }
 
+         
 
       // * Batteries
          /* Standby, see ticket http://forge.fusioninventory.org/issues/1907
@@ -1487,6 +1535,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $networkPort = new NetworkPort();
       $networkName = new NetworkName();
       $iPAddress   = new IPAddress();      
+      $iPNetwork   = new IPNetwork();
+
       foreach ($inventory_networkports as $a_networkport) {
          if ($a_networkport['mac'] != '') {
             $a_networkports = $networkPort->find("`mac`='".$a_networkport['mac']."'
@@ -1528,6 +1578,32 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       }
       $simplenetworkport = array();
       foreach ($inventory_networkports as $key=>$a_networkport) {
+         // Add ipnetwork if not exist
+         if (       $a_networkport['gateway'] != ''
+                 && $a_networkport['netmask'] != ''
+                 && $a_networkport['subnet']  != '') {
+            
+            if (countElementsInTable('glpi_ipnetworks', 
+                                     "`address`='".$a_networkport['subnet']."'
+                                     AND `netmask`='".$a_networkport['netmask']."'
+                                     AND `gateway`='".$a_networkport['gateway']."'
+                                     AND `entities_id`='".$_SESSION["plugin_fusioninventory_entity"]."'") == 0) {
+               
+               $input_ipanetwork = array(
+                   'name'    => $a_networkport['subnet'].'/'.
+                                $a_networkport['netmask'].' - '.
+                                $a_networkport['gateway'],
+                   'network' => $a_networkport['subnet'].' / '.
+                                $a_networkport['netmask'],
+                   'gateway' => $a_networkport['gateway'],
+                   'entities_id' => $_SESSION["plugin_fusioninventory_entity"]
+               );
+               $iPNetwork->add($input_ipanetwork);
+            }
+         }
+         
+         
+         // End add ipnetwork
          $a_field = array('name', 'mac', 'instantiation_type');
          foreach ($a_field as $field) {
             if (isset($a_networkport[$field])) {
@@ -1869,7 +1945,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       WHERE `entities_id`='".$entities_id."'".$whereid;
       $result = $DB->query($sql);
       while ($data = $DB->fetch_assoc($result)) {
-         $this->softVersionList[$data['name']."$$$$".$data['softwares_id']] = $data['id'];
+         $this->softVersionList[strtolower($data['name'])."$$$$".$data['softwares_id']] = $data['id'];
       }
       return $lastid;
    }
@@ -1933,13 +2009,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
       } else {
          $softwareversions_id = 0;
-         if (isset($this->softVersionList[$a_software['version']."$$$$".
+         if (isset($this->softVersionList[strtolower($a_software['version'])."$$$$".
                   $a_software['softwares_id']])) {
             $softwareversions_id =
-               $this->softVersionList[$a_software['version']."$$$$".$a_software['softwares_id']];
+               $this->softVersionList[strtolower($a_software['version'])."$$$$".$a_software['softwares_id']];
          } else {
             $a_software['name'] = $a_software['version'];
-      $a_software['_no_history'] = $no_history;
+            $a_software['_no_history'] = $no_history;
             $softwareversions_id = $this->softwareVersion->add($a_software, $options, FALSE);
             $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
          }

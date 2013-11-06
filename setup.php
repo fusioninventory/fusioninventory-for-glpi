@@ -44,6 +44,8 @@ define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.84+1.2");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
+// used to know if computer inventory is in reallity a ESX task
+$PF_ESXINVENTORY = FALSE;
 
 define ("PLUGIN_FUSIONINVENTORY_XML", '');
 
@@ -106,7 +108,25 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryInventoryComputerInventory');
       Plugin::registerClass('PluginFusioninventoryInventoryComputerStorage',
               array('addtabon' => array('Computer')));
-
+      Plugin::registerClass('PluginFusioninventoryCollect');
+      Plugin::registerClass('PluginFusioninventoryCollect_Registry',
+              array('addtabon' => array('PluginFusioninventoryCollect')));
+      Plugin::registerClass('PluginFusioninventoryCollect_Registry_Content',
+              array('addtabon' => array('PluginFusioninventoryCollect',
+                                        'Computer')));
+      Plugin::registerClass('PluginFusioninventoryCollect_Wmi',
+              array('addtabon' => array('PluginFusioninventoryCollect')));
+      Plugin::registerClass('PluginFusioninventoryCollect_Wmi_Content',
+              array('addtabon' => array('PluginFusioninventoryCollect',
+                                        'Computer')));
+      Plugin::registerClass('PluginFusioninventoryCollect_File',
+              array('addtabon' => array('PluginFusioninventoryCollect')));
+      Plugin::registerClass('PluginFusioninventoryCollect_File_Content',
+              array('addtabon' => array('PluginFusioninventoryCollect',
+                                        'Computer')));
+      Plugin::registerClass('PluginFusioninventoryComputerLicenseInfo',
+              array('addtabon' => array('Computer')));
+      
          //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocation');
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocationCollection',
@@ -305,10 +325,16 @@ function plugin_init_fusioninventory() {
                         = '../fusioninventory/front/inventoryruleentity.form.php';
          $hook_search['ruleentity']
                         = '../fusioninventory/front/inventoryruleentity.php';
+         
          $hook_add['rulelocation']
                         = '../fusioninventory/front/inventoryrulelocation.form.php';
          $hook_search['rulelocation']
                         = '../fusioninventory/front/inventoryrulelocation.php';
+
+         $hook_add['collectrule']
+                        = '../fusioninventory/front/collectrule.form.php';
+         $hook_search['collectrule']
+                        = '../fusioninventory/front/collectrule.php';
 
          $hook_add['blacklist']
                         = '../fusioninventory/front/inventorycomputerblacklist.form.php';
@@ -342,6 +368,13 @@ function plugin_init_fusioninventory() {
 
          }
 
+         $hook_add['collect'] = 
+             '../fusioninventory/front/collect.form.php?add=1';
+         $hook_search['collect'] = 
+             '../fusioninventory/front/collect.php';
+         
+         
+         
          /*
           * Deploy submenu entries
           */
@@ -545,7 +578,7 @@ function plugin_fusioninventory_check_prerequisites() {
       return FALSE;
    }
    
-   if (!function_exists('mime_content_type')) {
+   if (!function_exists('finfo_open')) {
       echo __('fileinfo extension (PHP) is required...', 'fusioninventory');
       return FALSE;
    }   

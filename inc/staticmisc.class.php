@@ -74,7 +74,7 @@ class PluginFusioninventoryStaticmisc {
                      'method'         => 'InventoryComputerESX',
                      'selection_type' => 'devices',
                      'name'           => __('VMware host remote inventory', 'fusioninventory'),
-                     'task'           => 'InventoryComputerESX',
+                     'task'           => 'ESX',
                      'use_rest'       => TRUE
             ),
 
@@ -100,6 +100,13 @@ class PluginFusioninventoryStaticmisc {
                      'name'           => __('Package uninstall', 'fusioninventory'),
                      'task'           => "DEPLOY",
                      'use_rest'       => TRUE
+            ),
+
+            array(   'module'         => 'fusioninventory',
+                     'method'         => 'collect',
+                     'name'           => __('Collect data', 'fusioninventory'),
+                     'task'           => "Collect",
+                     'use_rest'       => TRUE
             )
       );
       return $a_tasks;
@@ -119,7 +126,7 @@ class PluginFusioninventoryStaticmisc {
    static function task_definitiontype_wakeonlan($a_itemtype) {
 
       $a_itemtype['Computer'] = Computer::getTypeName();
-
+      $a_itemtype['PluginFusioninventoryDeployGroup'] = __('Dynamic Group');
       return $a_itemtype;
    }
 
@@ -141,6 +148,16 @@ class PluginFusioninventoryStaticmisc {
       $options['name'] = 'definitionselectiontoadd';
       $rand = Dropdown::show("Computer", $options);
       return $rand;
+   }
+
+   
+   
+   static function task_definitionselection_PluginFusioninventoryDeployGroup_wakeonlan($title) {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'definitionselectiontoadd';
+      return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
    }
 
 
@@ -240,7 +257,11 @@ class PluginFusioninventoryStaticmisc {
                 'name'    => __('Manage packages')),
 
          array('profil'  => 'status',
-                'name'    => __('Deployment status'))
+                'name'    => __('Deployment status')),
+          
+         array('profil'  => 'collect',
+                'name'    => __('Additional computer information finder', 'fusioninventory'))
+          
       );
 
    }
@@ -324,14 +345,14 @@ class PluginFusioninventoryStaticmisc {
    * @return dropdown list of computers
    *
    **/
-   static function task_actionselection_PluginFusioninventoryCredentialIp_ESX() {
+   static function task_actionselection_PluginFusioninventoryCredentialIp_InventoryComputerESX() {
       global $DB;
 
       $options = array();
       $options['name'] = 'definitionactiontoadd';
 
       $module = new PluginFusioninventoryAgentmodule();
-      $module_infos = $module->getActivationExceptions('esx');
+      $module_infos = $module->getActivationExceptions('InventoryComputerESX');
       $exceptions = json_decode($module_infos['exceptions'], TRUE);
 
       $in = "";
@@ -343,7 +364,7 @@ class PluginFusioninventoryStaticmisc {
                 FROM `glpi_plugin_fusioninventory_credentialips` as `a`
                 LEFT JOIN `glpi_plugin_fusioninventory_credentials` as `c`
                    ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id`
-                WHERE `c`.`itemtype`='PluginFusioninventoryVmwareESX'";
+                WHERE `c`.`itemtype`='PluginFusioninventoryInventoryComputerESX'";
       $query.= getEntitiesRestrictRequest(' AND', 'glpi_plugin_fusioninventory_credentialips');
 
       $results = $DB->query($query);
@@ -360,7 +381,7 @@ class PluginFusioninventoryStaticmisc {
 
       $array = array();
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      $array1 = $pfAgentmodule->getAgentsCanDo(strtoupper("ESX"));
+      $array1 = $pfAgentmodule->getAgentsCanDo(strtoupper("InventoryComputerESX"));
       foreach ($array1 as $id => $data) {
          $array[$id] = $data['name'];
       }
@@ -535,8 +556,8 @@ class PluginFusioninventoryStaticmisc {
                    'PluginFusioninventoryDeployPackage' => __('Package'));
    }
 
-
-
+   
+   
    static function task_definitionselection_PluginFusioninventoryDeployPackage_deployinstall() {
       $options['entity']      = $_SESSION['glpiactive_entity'];
       $options['entity_sons'] = 1;
@@ -675,6 +696,92 @@ class PluginFusioninventoryStaticmisc {
          "remote" => $config->getValue('agent_base_url') . "/plugins/fusioninventory/b/deploy/",
       );
    }
+   
+   
+
+   /*
+    * Collect 
+    */
+   static function task_definitiontype_collect($a_itemtype) {
+      return array('' => Dropdown::EMPTY_VALUE,
+                   'PluginFusioninventoryCollect' => __('Collect information', 'fusioninventory'));
+   }
+   
+   
+   
+   static function task_definitionselection_PluginFusioninventoryCollect_collect() {
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'definitionselectiontoadd';
+      return Dropdown::show("PluginFusioninventoryCollect", $options);
+   }
+
+
+   
+   static function task_actiontype_collect($a_itemtype) {
+      return array('' => Dropdown::EMPTY_VALUE,
+                   'Computer'                         => __('Computers'),
+                   'PluginFusioninventoryDeployGroup' => __('Dynamic Group'),
+                   'Group'                            => __('Group')
+                  );
+   }
+
+
+   
+   static function task_actionselection_Computer_collect() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      $options['condition']   =
+         implode( " ",
+            array(
+               '`id` IN ( ',
+               '  SELECT agents.`computers_id`',
+               '  FROM `glpi_plugin_fusioninventory_agents` as agents',
+               '  LEFT JOIN `glpi_plugin_fusioninventory_agentmodules` as module',
+               '  ON module.modulename = "Collect"',
+               '  WHERE',
+               '        (  module.is_active=1',
+               '           AND module.exceptions NOT LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+               '     OR (  module.is_active=0',
+               '           AND module.exceptions LIKE CONCAT(\'%"\',agents.`id`,\'"%\') )',
+               ')'
+            )
+         );
+      return Dropdown::show("Computer", $options);
+   }
+
+
+   
+   static function task_actionselection_Group_collect() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("Group", $options);
+   }
+   
+   
+   
+   static function task_actionselection_PluginFusioninventoryDeployGroup_collect() {
+      $options = array();
+      $options['entity']      = $_SESSION['glpiactive_entity'];
+      $options['entity_sons'] = 1;
+      $options['name']        = 'actionselectiontoadd';
+      return Dropdown::show("PluginFusioninventoryDeployGroup", $options);
+   }
+
+   
+   
+   static function task_collect_getParameters() {
+      $config = new PluginFusioninventoryConfig();
+      return array(
+         "task" => "Collect",
+         "remote" => $config->getValue('agent_base_url') . "/plugins/fusioninventory/b/collect/",
+      );
+   }
+   
 }
 
 ?>

@@ -65,10 +65,12 @@ class PluginFusioninventoryFormatconvert {
       }
       $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
       // Hack for some sections
-         $a_fields = array('SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES', 'MEMORIES',
-                           'NETWORKS', 'SOFTWARE', 'USERS', 'VIRTUALMACHINES', 'ANTIVIRUS',
-                           'MONITORS', 'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
-                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES');
+         $a_fields = array('SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES', 
+                           'MEMORIES', 'NETWORKS', 'SOFTWARE', 'USERS', 
+                           'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS', 
+                           'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
+                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES', 
+                           'LICENSEINFOS');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
                     AND !is_array($datainventory['CONTENT'][$field])) {
@@ -186,7 +188,7 @@ class PluginFusioninventoryFormatconvert {
     * Modify Computer inventory
     */
    static function computerInventoryTransformation($array) {
-      global $DB;
+      global $DB, $PF_ESXINVENTORY;
 
       $a_inventory = array();
       $thisc = new self();
@@ -223,9 +225,11 @@ class PluginFusioninventoryFormatconvert {
       }
       if (isset($array_tmp['users_id'])) {
          $array_tmp['contact'] = $array_tmp['users_id'];
+         $tmp_users_id = $array_tmp['users_id'];
+         $split_user = explode("@", $tmp_users_id);
          $query = "SELECT `id`
                    FROM `glpi_users`
-                   WHERE `name` = '" . $array_tmp['users_id'] . "'
+                   WHERE `name` = '" . $split_user[0] . "'
                    LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
@@ -363,7 +367,26 @@ class PluginFusioninventoryFormatconvert {
                  $array_tmp['plugin_fusioninventory_computerarchs_id'];
          }
       }
+      
+      // otherserial (on tag) if defined in config
+      if ($pfConfig->getValue('otherserial') == 1) {
+         if (isset($array['ACCOUNTINFO'])) {
+            if (isset($array['ACCOUNTINFO']['KEYNAME'])
+                    && $array['ACCOUNTINFO']['KEYNAME'] == 'TAG') {
+               if (isset($array['ACCOUNTINFO']['KEYVALUE'])
+                       && $array['ACCOUNTINFO']['KEYVALUE'] != '') {
+                  $a_inventory['Computer']['otherserial'] = $array['ACCOUNTINFO']['KEYVALUE'];
+               }
+            }
+         }
+      }
 
+      // Hack for problems of ESX inventory with same deviceid than real computer inventory
+      if (isset($a_inventory['Computer']['operatingsystems_id'])
+              && strstr($a_inventory['Computer']['operatingsystems_id'], 'VMware ESX')) {
+         $PF_ESXINVENTORY = TRUE;
+      }
+      
       // * BATTERIES
 //      $a_inventory['batteries'] = array();
 //      if (isset($array['BATTERIES'])) {
@@ -444,6 +467,7 @@ class PluginFusioninventoryFormatconvert {
                      if (isset($a_PCIData['name'])) {
                         $array_tmp['designation'] = $a_PCIData['name'];                        
                      }
+                     $array_tmp['designation'] = Toolbox::addslashes_deep($array_tmp['designation']);
                   }
                   $a_inventory['controller'][] = $array_tmp;
                }
@@ -968,6 +992,7 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['antivirus'][] = $array_tmp;
          }
       }
+      
       // * STORAGE/VOLUMES
       $a_inventory['storage'] = array();
 /* begin code, may works at 90%
@@ -1137,6 +1162,20 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 */
+      
+      // * LICENSEINFOS
+      $a_inventory['licenseinfo'] = array();
+      if (isset($array['LICENSEINFOS'])) {
+         foreach ($array['LICENSEINFOS'] as $a_licenseinfo) {
+            $array_tmp = $thisc->addValues($a_licenseinfo,
+                                           array(
+                                              'NAME'     => 'name',
+                                              'FULLNAME' => 'fullname',
+                                              'KEY'      => 'serial'));
+            $a_inventory['licenseinfo'][] = $array_tmp;
+         }
+      }
+      
       return $a_inventory;
    }
 
@@ -1232,8 +1271,8 @@ class PluginFusioninventoryFormatconvert {
                   $array_tmp['is_template_computer'] = 0;
                   $array_tmp['is_deleted_computer'] = 0;
 
-                  $comp_key = $array_tmp['name'].
-                               "$$$$".$array_tmp['version'].
+                  $comp_key = strtolower($array_tmp['name']).
+                               "$$$$".strtolower($array_tmp['version']).
                                "$$$$".$array_tmp['manufacturers_id'].
                                "$$$$".$array_tmp['entities_id'];
                   if (!isset($a_inventory['software'][$comp_key])) {
@@ -1247,6 +1286,115 @@ class PluginFusioninventoryFormatconvert {
       return $a_inventory;
    }
 
+   
+   
+   function extraCollectInfo($a_inventory, $computers_id) {
+      global $DB;
+      
+      $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
+      
+      // Get data from rules / collect registry, wmi, find files
+      $data_collect = array();
+
+      $data_registries = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_registries_contents', 
+                                         "`computers_id`='".$computers_id."'");
+      
+      foreach ($data_registries as $data) {
+         $res_rule = $pfCollectRuleCollection->processAllRules(
+                       array(
+                           "regkey"   => $data['key'],
+                           "regvalue" => $data['value'],
+                        )
+                     );
+         if (!isset($res_rule['_no_rule_matches'])) {
+            $data_collect = array_merge($data_collect, $res_rule);
+         }
+      }
+
+      $data_wmis = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_wmis_contents', 
+                                         "`computers_id`='".$computers_id."'");
+      
+      foreach ($data_registries as $data) {
+         $res_rule = $pfCollectRuleCollection->processAllRules(
+                       array(
+                           "wmiproperty"  => $data['property'],
+                           "wmivalue"     => $data['value'],
+                        )
+                     );
+         if (!isset($res_rule['_no_rule_matches'])) {
+            $data_collect = array_merge($data_collect, $res_rule);
+         }
+      }
+      
+      $data_files = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_files_contents', 
+                                         "`computers_id`='".$computers_id."'");
+      
+      foreach ($data_files as $data) {
+         $a_split = explode("/", $data['pathfile']);
+         $filename = array_pop($a_split);
+         $path = implode("/", $a_split);
+         
+         $res_rule = $pfCollectRuleCollection->processAllRules(
+                       array(
+                           "filename"  => $filename,
+                           "filepath"  => $path,
+                           "size"      => $data['size']
+                        )
+                     );
+         if (!isset($res_rule['_no_rule_matches'])) {
+            $data_collect = array_merge($data_collect, $res_rule);
+         }
+      }
+      
+      // * Update $a_inventory with $data_collect;
+
+      // Update computer model
+      if (isset($data_collect['computermodels_id'])) {
+         $a_inventory['Computer']['computermodels_id'] = $data_collect['computermodels_id'];
+      }
+      // Update computer type
+      if (isset($data_collect['computertypes_id'])) {
+         $a_inventory['Computer']['computertypes_id'] = $data_collect['computertypes_id'];
+      }
+      // Update computer OS
+      if (isset($data_collect['operatingsystems_id'])) {
+         $a_inventory['Computer']['operatingsystems_id'] = $data_collect['operatingsystems_id'];
+      }
+      // Update computer OS version
+      if (isset($data_collect['operatingsystemversions_id'])) {
+         $a_inventory['Computer']['operatingsystemversions_id'] = $data_collect['operatingsystemversions_id'];
+      }
+      // Update computer user
+      if (isset($data_collect['user'])) {
+         $query = "SELECT `id`
+                   FROM `glpi_users`
+                   WHERE `name` = '" . $data_collect['user'] . "'
+                   LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == 1) {
+            $a_inventory['Computer']['users_id'] = $DB->result($result, 0, 0);
+         }
+      }
+      // Update computer location
+      if (isset($data_collect['locations_id'])) {
+         $a_inventory['Computer']['locations_id'] = $data_collect['locations_id'];
+      }
+      // Update computer status
+      if (isset($data_collect['states_id'])) {
+         $a_inventory['Computer']['states_id'] = $data_collect['states_id'];
+      }
+      // Add software
+      if (isset($data_collect['software'])
+              && isset($data_collect['softwareversion'])) {
+         $a_inventory['SOFTWARES'][] = array(
+             'NAME'     => $data_collect['software'],
+             'VERSION'  => $data_collect['softwareversion']
+         );
+      }
+      
+      return $a_inventory;
+   }
+   
 
 
    static function addValues($array, $a_key) {

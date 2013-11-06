@@ -199,6 +199,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    global $DB;
 
    ini_set("max_execution_time", "0");
+   ini_set("memory_limit", "-1");
+
 
    foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc/*.php') as $file) {
       require_once($file);
@@ -4954,6 +4956,256 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     * Deploy Update End
     */
 
+      
+   /*
+    * Table glpi_plugin_fusioninventory_collects
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_collects';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => "autoincrement",
+                                               'value'   => '');
+      $a_table['fields']['name']       = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['entities_id']   = array('type'    => 'integer',
+                                                  'value'   => NULL);
+      $a_table['fields']['is_recursive']  = array('type'    => 'bool',
+                                                  'value'   => NULL);
+      $a_table['fields']['type']       = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['is_active']  = array('type'    => 'bool',
+                                               'value'   => NULL);
+      $a_table['fields']['comment']    = array('type'    => 'text',
+                                               'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+      
+
+   /*
+    * Table glpi_plugin_fusioninventory_collects_registries
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_collects_registries';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => "autoincrement",
+                                               'value'   => '');
+      $a_table['fields']['name']       = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['plugin_fusioninventory_collects_id']   = array('type'    => 'integer',
+                                                  'value'   => NULL);
+      $a_table['fields']['hive']       = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['path']       = array('type'    => 'text',
+                                               'value'   => NULL);
+      $a_table['fields']['key']        = array('type'    => 'string',
+                                               'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_collects_registries_contents
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_collects_registries_contents';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => "autoincrement",
+                                               'value'   => '');
+      $a_table['fields']['computers_id'] = array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['plugin_fusioninventory_collects_registries_id']   = array('type'    => 'integer',
+                                                  'value'   => NULL);
+      $a_table['fields']['key']       = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['value']     = array('type'    => 'string',
+                                               'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+
+      
+   /*
+    * Table glpi_plugin_fusioninventory_collects_wmis
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_collects_wmis';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => "autoincrement",
+                                               'value'   => '');
+      $a_table['fields']['name']       = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['plugin_fusioninventory_collects_id']   = array('type'    => 'integer',
+                                                  'value'   => NULL);
+      $a_table['fields']['moniker']    = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['class']      = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['properties'] = array('type'    => 'string',
+                                               'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_collects_wmis_contents
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_collects_wmis_contents';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => "autoincrement",
+                                               'value'   => '');
+      $a_table['fields']['computers_id'] = array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['plugin_fusioninventory_collects_wmis_id']   = array('type'    => 'integer',
+                                                  'value'   => NULL);
+      $a_table['fields']['property']   = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['value']      = array('type'    => 'string',
+                                               'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+      
+
+   /*
+    * Table glpi_plugin_fusioninventory_collects_files
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_collects_files';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => "autoincrement",
+                                               'value'   => '');
+      $a_table['fields']['name']       = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['plugin_fusioninventory_collects_id']   = array('type'    => 'integer',
+                                                  'value'   => NULL);
+      $a_table['fields']['dir']        = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['limit']      = array('type'    => "int(4) NOT NULL DEFAULT '50'",
+                                               'value'   => NULL);
+      $a_table['fields']['is_recursive'] = array('type'    => 'bool',
+                                               'value'   => NULL);
+      $a_table['fields']['filter_regex'] = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['filter_sizeequals'] = array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['filter_sizegreater'] = array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['filter_sizelower'] = array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['filter_checksumsha512'] = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['filter_checksumsha2'] = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['filter_name'] = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['filter_iname'] = array('type'    => 'string',
+                                               'value'   => NULL);
+      $a_table['fields']['filter_is_file'] = array('type'    => 'bool',
+                                               'value'   => '1');
+      $a_table['fields']['filter_is_dir'] = array('type'    => 'bool',
+                                               'value'   => '0');
+      
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+      
+      
+   /*
+    * Table glpi_plugin_fusioninventory_collects_files_contents
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_collects_files_contents';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => "autoincrement",
+                                               'value'   => '');
+      $a_table['fields']['computers_id'] = array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['plugin_fusioninventory_collects_files_id']   = array('type'    => 'integer',
+                                                  'value'   => NULL);
+      $a_table['fields']['pathfile']   = array('type'    => 'text',
+                                               'value'   => NULL);
+      $a_table['fields']['size']       = array('type'    => 'integer',
+                                               'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+      
+      
+      
+      
    /*
     * Add ESX module appear in version 2.4.0(0.80+1.0)
     */
@@ -4980,6 +5232,23 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
 
 
+   /*
+    * Add Collect module appear in version 0.84+2.0
+    */
+
+      $agentmodule = new PluginFusioninventoryAgentmodule();
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
+         WHERE `modulename`='Collect'
+         LIMIT 1";
+      $result = $DB->query($query);
+      if ($DB->numrows($result) == '0') {
+         $input = array();
+         $input['modulename'] = "Collect";
+         $input['is_active']  = 1;
+         $input['exceptions'] = exportArrayToDB(array());
+         $agentmodule->add($input);
+      }
+      
 
       /*
        * Update pci and usb ids and oui
@@ -5751,6 +6020,17 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $input['component_networkcardvirtual'] = 1;
       $config->addValues($input, FALSE);
 
+      // Add new config values if not added
+      $input = $config->initConfigModule(TRUE);
+      foreach ($input as $name=>$value) {
+         $a_conf = $config->find("`type`='".$name."'");
+         if (count($a_conf) == 0) {
+            $config->add(array('type' => $name, 'value' => $value));
+         }
+      }
+      
+      
+      
 
    /*
     * Remove / at the end of printers (bugs in older versions of agents.

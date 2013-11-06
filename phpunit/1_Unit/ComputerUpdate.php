@@ -68,21 +68,22 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
               'last_fusioninventory_update'     => $date
           ), 
-          'soundcard'      => Array(),
-          'graphiccard'    => Array(),
-          'controller'     => Array(),
-          'processor'      => Array(),
-          'computerdisk'   => Array(),
-          'memory'         => Array(),
-          'monitor'        => Array(),
-          'printer'        => Array(),
-          'peripheral'     => Array(),
-          'networkport'    => Array(),
-          'software'       => Array(),
-          'harddrive'      => Array(),
-          'virtualmachine' => Array(),
-          'antivirus'      => Array(),
-          'storage'        => Array(),
+          'soundcard'      => array(),
+          'graphiccard'    => array(),
+          'controller'     => array(),
+          'processor'      => array(),
+          'computerdisk'   => array(),
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'software'       => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
           'itemtype'       => 'Computer'
           );
       $a_inventory['Computer'] = array(
@@ -217,7 +218,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
         );
       
       $a_inventory['software'] = Array(
-            'GentiumBasic$$$$110$$$$1$$$$0' => Array(
+            'gentiumbasic$$$$110$$$$1$$$$0' => Array(
                     'name'                   => 'GentiumBasic',
                     'version'                => 110,
                     'manufacturers_id'       => 1,
@@ -225,7 +226,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'is_template_computer'   => 0,
                     'is_deleted_computer'    => 0
                 ),
-            'ImageMagick$$$$6.8.0.7_1$$$$2$$$$0' => Array(
+            'imagemagick$$$$6.8.0.7_1$$$$2$$$$0' => Array(
                     'name'                   => 'ImageMagick',
                     'version'                => '6.8.0.7_1',
                     'manufacturers_id'       => 2,
@@ -233,7 +234,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'is_template_computer'   => 0,
                     'is_deleted_computer'    => 0
                 ),
-            'ORBit2$$$$2.14.19$$$$3$$$$0' => Array(
+            'orbit2$$$$2.14.19$$$$3$$$$0' => Array(
                     'name'                   => 'ORBit2',
                     'version'                => '2.14.19',
                     'manufacturers_id'       => 3,
@@ -981,21 +982,22 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
               'last_fusioninventory_update'     => $date
           ), 
-          'soundcard'      => Array(),
-          'graphiccard'    => Array(),
-          'controller'     => Array(),
-          'processor'      => Array(),
-          'computerdisk'   => Array(),
-          'memory'         => Array(),
-          'monitor'        => Array(),
-          'printer'        => Array(),
-          'peripheral'     => Array(),
-          'networkport'    => Array(),
-          'software'       => Array(),
-          'harddrive'      => Array(),
-          'virtualmachine' => Array(),
-          'antivirus'      => Array(),
-          'storage'        => Array(),
+          'soundcard'      => array(),
+          'graphiccard'    => array(),
+          'controller'     => array(),
+          'processor'      => array(),
+          'computerdisk'   => array(),
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'software'       => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
           'itemtype'       => 'Computer'
           );
       $a_inventory['Computer'] = array(
@@ -1017,7 +1019,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'contact'                          => 'ddurieux'
       );
       $a_inventory['software'] = Array(
-            'acrobat_Reader_9.2$$$$1.0.0.0$$$$192$$$$0' => Array(
+            'acrobat_reader_9.2$$$$1.0.0.0$$$$192$$$$0' => Array(
                     'name'                   => 'acrobat_Reader_9.2',
                     'version'                => '1.0.0.0',
                     'manufacturers_id'       => 192,

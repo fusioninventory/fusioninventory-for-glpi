@@ -974,6 +974,112 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
 --
 
 
+-- Collect tables
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_collects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `type` varchar(255) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '0',
+  `comment` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_registries`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_collects_registries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `plugin_fusioninventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `hive` varchar(255) DEFAULT NULL,
+  `path` text DEFAULT NULL,
+  `key` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_registries_contents`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_collects_registries_contents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `computers_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_collects_registries_id` int(11) NOT NULL DEFAULT '0',
+  `key` varchar(255) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_wmis`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `plugin_fusioninventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `moniker` varchar(255) DEFAULT NULL,
+  `class` varchar(255) DEFAULT NULL,
+  `properties` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_wmis_contents`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_collects_wmis_contents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `computers_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_collects_wmis_id` int(11) NOT NULL DEFAULT '0',
+  `property` varchar(255) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_files`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_collects_files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `plugin_fusioninventory_collects_id` int(11) NOT NULL DEFAULT '0',
+  `dir` varchar(255) DEFAULT NULL,
+  `limit` int(4) NOT NULL DEFAULT '50',
+  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+  `filter_regex` varchar(255) DEFAULT NULL,
+  `filter_sizeequals` int(11) NOT NULL DEFAULT '0',
+  `filter_sizegreater` int(11) NOT NULL DEFAULT '0',
+  `filter_sizelower` int(11) NOT NULL DEFAULT '0',
+  `filter_checksumsha512` varchar(255) DEFAULT NULL,
+  `filter_checksumsha2` varchar(255) DEFAULT NULL,
+  `filter_name` varchar(255) DEFAULT NULL,
+  `filter_iname` varchar(255) DEFAULT NULL,
+  `filter_is_file` tinyint(1) NOT NULL DEFAULT '1',
+  `filter_is_dir` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_collects_files_contents`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_collects_files_contents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `computers_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_collects_files_id` int(11) NOT NULL DEFAULT '0',
+  `pathfile` text DEFAULT NULL,
+  `size` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 
 -- INSERT
 -- glpi_plugin_fusioninventory_configsecurities

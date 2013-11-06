@@ -93,21 +93,22 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
               'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date
           ), 
-          'soundcard'               => Array(),
-          'graphiccard'             => Array(),
-          'controller'              => Array(),
-          'processor'               => Array(),
-          'computerdisk'            => Array(),
-          'memory'                  => Array(),
-          'monitor'                 => Array(),
-          'printer'                 => Array(),
-          'peripheral'              => Array(),
-          'networkport'             => Array(),
-          'SOFTWARES'               => Array(),
-          'harddrive'               => Array(),
-          'virtualmachine'          => Array(),
-          'antivirus'               => Array(),
-          'storage'                 => Array()
+          'soundcard'               => array(),
+          'graphiccard'             => array(),
+          'controller'              => array(),
+          'processor'               => array(),
+          'computerdisk'            => array(),
+          'memory'                  => array(),
+          'monitor'                 => array(),
+          'printer'                 => array(),
+          'peripheral'              => array(),
+          'networkport'             => array(),
+          'SOFTWARES'               => array(),
+          'harddrive'               => array(),
+          'virtualmachine'          => array(),
+          'antivirus'               => array(),
+          'storage'                 => array(),
+          'licenseinfo'             => array()
           );
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
@@ -165,21 +166,22 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
               'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date
           ), 
-          'soundcard'               => Array(),
-          'graphiccard'             => Array(),
-          'controller'              => Array(),
-          'processor'               => Array(),
-          'computerdisk'            => Array(),
-          'memory'                  => Array(),
-          'monitor'                 => Array(),
-          'printer'                 => Array(),
-          'peripheral'              => Array(),
-          'networkport'             => Array(),
-          'SOFTWARES'               => Array(),
-          'harddrive'               => Array(),
-          'virtualmachine'          => Array(),
-          'antivirus'               => Array(),
-          'storage'                 => Array()
+          'soundcard'               => array(),
+          'graphiccard'             => array(),
+          'controller'              => array(),
+          'processor'               => array(),
+          'computerdisk'            => array(),
+          'memory'                  => array(),
+          'monitor'                 => array(),
+          'printer'                 => array(),
+          'peripheral'              => array(),
+          'networkport'             => array(),
+          'SOFTWARES'               => array(),
+          'harddrive'               => array(),
+          'virtualmachine'          => array(),
+          'antivirus'               => array(),
+          'storage'                 => array(),
+          'licenseinfo'             => array()
           );
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
@@ -256,21 +258,22 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
               'last_fusioninventory_update'              => $date,
               'plugin_fusioninventory_computerarchs_id'  => '32 bits'
           ), 
-          'soundcard'               => Array(),
-          'graphiccard'             => Array(),
-          'controller'              => Array(),
-          'processor'               => Array(),
-          'computerdisk'            => Array(),
-          'memory'                  => Array(),
-          'monitor'                 => Array(),
-          'printer'                 => Array(),
-          'peripheral'              => Array(),
-          'networkport'             => Array(),
-          'SOFTWARES'               => Array(),
-          'harddrive'               => Array(),
-          'virtualmachine'          => Array(),
-          'antivirus'               => Array(),
-          'storage'                 => Array()
+          'soundcard'               => array(),
+          'graphiccard'             => array(),
+          'controller'              => array(),
+          'processor'               => array(),
+          'computerdisk'            => array(),
+          'memory'                  => array(),
+          'monitor'                 => array(),
+          'printer'                 => array(),
+          'peripheral'              => array(),
+          'networkport'             => array(),
+          'SOFTWARES'               => array(),
+          'harddrive'               => array(),
+          'virtualmachine'          => array(),
+          'antivirus'               => array(),
+          'storage'                 => array(),
+          'licenseinfo'             => array()
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
@@ -337,21 +340,22 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
               'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date
           ), 
-          'soundcard'               => Array(),
-          'graphiccard'             => Array(),
-          'controller'              => Array(),
-          'processor'               => Array(),
-          'computerdisk'            => Array(),
-          'memory'                  => Array(),
-          'monitor'                 => Array(),
-          'printer'                 => Array(),
-          'peripheral'              => Array(),
-          'networkport'             => Array(),
-          'SOFTWARES'               => Array(),
-          'harddrive'               => Array(),
-          'virtualmachine'          => Array(),
-          'antivirus'               => Array(),
-          'storage'                 => Array()
+          'soundcard'               => array(),
+          'graphiccard'             => array(),
+          'controller'              => array(),
+          'processor'               => array(),
+          'computerdisk'            => array(),
+          'memory'                  => array(),
+          'monitor'                 => array(),
+          'printer'                 => array(),
+          'peripheral'              => array(),
+          'networkport'             => array(),
+          'SOFTWARES'               => array(),
+          'harddrive'               => array(),
+          'virtualmachine'          => array(),
+          'antivirus'               => array(),
+          'storage'                 => array(),
+          'licenseinfo'             => array()
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
@@ -492,6 +496,56 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
             'comment'            => ''
           );
       $this->assertEquals($a_reference, $a_return['monitor']); 
+   }
+   
+   
+   
+   public function testComputerLicenses() {
+      global $DB;
+
+      $DB->connect();
+      
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+
+      $a_computer = array();
+      $a_computer['HARDWARE'] = array(
+                'NAME'           => 'vbox-winxp',
+                'ARCHNAME'       => 'MSWin32-x86-multi-thread',
+                'CHASSIS_TYPE'   => '',
+                'DESCRIPTION'    => '',
+                'OSCOMMENTS'     => 'Service Pack 3 BAD',
+                'OSNAME'         => 'Microsoft Windows XP Professionnel BAD',
+                'OSVERSION'      => '5.1.2600 BAD',
+                'VMSYSTEM'       => 'VirtualBox',
+                'WINCOMPANY'     => 'siprossii',
+                'WINLANG'        => '1036',
+                'WINOWNER'       => 'test',
+                'WINPRODID'      => '76413-OEM-0054453-04701',
+                'WINPRODKEY'     => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
+                'WORKGROUP'      => 'WORKGROUP'
+            );
+
+      $a_computer['LICENSEINFOS'] = array(
+            array(
+               'COMPONENTS' => 'Word/Excel/Access/Outlook/PowerPoint/Publisher/InfoPath',
+               'FULLNAME'   => 'Microsoft Office Professional Edition 2003',
+               'KEY'        => 'xxxxx-xxxxx-P6RC4-xxxxx-xxxxx',
+               'NAME'       => 'Microsoft Office 2003',
+               'PRODUCTID'  => 'xxxxx-640-0000xxx-xxxxx'
+                )
+      );
+     
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+      
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+      
+      $a_reference = array();
+      $a_reference[0] = array(
+            'name'      => 'Microsoft Office 2003',
+            'fullname'  => 'Microsoft Office Professional Edition 2003',
+            'serial'    => 'xxxxx-xxxxx-P6RC4-xxxxx-xxxxx'
+          );
+      $this->assertEquals($a_reference, $a_return['licenseinfo']); 
    }
 }
 

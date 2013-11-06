@@ -144,6 +144,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
       echo "<th>".__('Starting date', 'fusioninventory')."</th>";
       echo "<th>".__('Ending date', 'fusioninventory')."</th>";
       echo "<th>".__('Total duration')."</th>";
+      echo "<th>".__('Threads number', 'fusioninventory')."</th>";
       echo "<th>".__('Total discovery devices', 'fusioninventory')."</th>";
       echo "<th>".__('Devices not imported', 'fusioninventory')."</th>";
       echo "<th>".__('Devices linked', 'fusioninventory')."</th>";
@@ -246,6 +247,7 @@ class PluginFusioninventoryStateDiscovery extends CommonDBTM {
                $interval = $pfStateInventory->date_diff($start_date, $end_date);
             }
          }
+         echo "<td>".$nb_threads."</td>";
          echo "<td>".$nb_found."</td>";
          echo "<td>".$notimporteddevices."</td>";
          echo "<td>".$updateddevices."</td>";

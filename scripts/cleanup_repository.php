@@ -18,8 +18,8 @@ function filepartIsUsed($file) {
    }
 
    $sql = sprintf("SELECT id FROM glpi_plugin_fusinvdeploy_fileparts WHERE shortsha512='%s' AND sha512='%s'",
-         mysql_real_escape_string($stack[1]),
-         mysql_real_escape_string($stack[1].$stack[2]));
+         $DB->escape($stack[1]),
+         $DB->escape($stack[1].$stack[2]));
 
    $result = $DB->query($sql);
    return ($DB->numrows($result)>0);

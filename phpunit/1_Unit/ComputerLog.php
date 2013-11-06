@@ -69,21 +69,22 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
               'last_fusioninventory_update'     => $date
           ), 
-          'soundcard'      => Array(),
-          'graphiccard'    => Array(),
-          'controller'     => Array(),
-          'processor'      => Array(),
-          'computerdisk'   => Array(),
-          'memory'         => Array(),
-          'monitor'        => Array(),
-          'printer'        => Array(),
-          'peripheral'     => Array(),
-          'networkport'    => Array(),
-          'software'       => Array(),
-          'harddrive'      => Array(),
-          'virtualmachine' => Array(),
-          'antivirus'      => Array(),
-          'storage'        => Array(),
+          'soundcard'      => array(),
+          'graphiccard'    => array(),
+          'controller'     => array(),
+          'processor'      => array(),
+          'computerdisk'   => array(),
+          'memory'         => array(),
+          'monitor'        => array(),
+          'printer'        => array(),
+          'peripheral'     => array(),
+          'networkport'    => array(),
+          'software'       => array(),
+          'harddrive'      => array(),
+          'virtualmachine' => array(),
+          'antivirus'      => array(),
+          'storage'        => array(),
+          'licenseinfo'    => array(),
           'itemtype'       => 'Computer'
           );
       $this->a_inventory['Computer'] = array(
@@ -192,7 +193,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
         );
       
       $this->a_inventory['software'] = Array(
-            'GentiumBasic$$$$110$$$$1$$$$0' => Array(
+            'gentiumbasic$$$$110$$$$1$$$$0' => Array(
                     'name'                   => 'GentiumBasic',
                     'version'                => 110,
                     'manufacturers_id'       => 1,
@@ -201,7 +202,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
                     'is_deleted_computer'    => 0,
                     'is_dynamic'             => 1
                 ),
-            'ImageMagick$$$$6.8.0.7_1$$$$2$$$$0' => Array(
+            'imagemagick$$$$6.8.0.7_1$$$$2$$$$0' => Array(
                     'name'                   => 'ImageMagick',
                     'version'                => '6.8.0.7_1',
                     'manufacturers_id'       => 2,
@@ -210,7 +211,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
                     'is_deleted_computer'    => 0,
                     'is_dynamic'             => 1
                 ),
-            'ORBit2$$$$2.14.19$$$$3$$$$0' => Array(
+            'orbit2$$$$2.14.19$$$$3$$$$0' => Array(
                     'name'                   => 'ORBit2',
                     'version'                => '2.14.19',
                     'manufacturers_id'       => 3,
@@ -305,7 +306,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
       // * Remove a software
       $this->a_inventory['Computer']['contact'] = 'root';
       unset($this->a_inventory['processor'][3]);
-      unset($this->a_inventory['software']['ORBit2$$$$2.14.19$$$$3$$$$0']);
+      unset($this->a_inventory['software']['orbit2$$$$2.14.19$$$$3$$$$0']);
       
       $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
       

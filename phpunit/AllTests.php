@@ -175,11 +175,15 @@ require_once '1_Unit/SNMPModel.php';
 require_once '2_Integration/ComputerEntity.php';
 require_once '2_Integration/RuleIgnoredImport.php';
 require_once '2_Integration/SoftwareEntityCreation.php';
+require_once '2_Integration/SoftwareVersionAdd.php';
 require_once '2_Integration/ComputerDynamic.php';
 require_once '2_Integration/UnknownDeviceKnowDevice.php';
 require_once '2_Integration/UnknownDeviceImport.php';
 require_once '2_Integration/TaskDeployDynamicGroup.php';
 require_once '2_Integration/ComputerPrinter.php';
+require_once '2_Integration/ComputerLicense.php';
+require_once '2_Integration/NetworkEquipmentLLDP.php';
+require_once '2_Integration/ComputerMonitor.php';
 
 require_once 'emulatoragent.php';
 
@@ -207,12 +211,18 @@ class AllTests {
       $suite->addTest(ComputerEntity_AllTests::suite());
       $suite->addTest(RuleIgnoredImport_AllTests::suite());
       $suite->addTest(SoftwareEntityCreation_AllTests::suite());
+      $suite->addTest(SoftwareVersionAdd_AllTests::suite());
       $suite->addTest(ComputerDynamic_AllTests::suite());
       $suite->addTest(UnknownDeviceKnowDevice_AllTests::suite());
       $suite->addTest(UnknownDeviceImport_AllTests::suite());
       $suite->addTest(TaskDeployDynamicGroup_AllTests::suite());
       $suite->addTest(ComputerPrinter_AllTests::suite());
-      
+      $suite->addTest(ComputerLicense_AllTests::suite());
+      $suite->addTest(NetworkEquipmentLLDP_AllTests::suite());
+      $suite->addTest(ComputerMonitor_AllTests::suite());
+
+      # For travis-CI
+      file_put_contents ( "result.stamp", "test ok" );
       return $suite;
    }
 }

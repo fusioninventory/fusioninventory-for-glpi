@@ -64,6 +64,78 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       $communication = $pfTask->fields['communication'];
       $a_definitions = importArrayFromDB($pfTaskjob->fields['definition']);
 
+      $a_computers_to_wake = array();
+      foreach ($a_definitions as $definition) {
+         $itemtype = key($definition);
+         $items_id = current($definition);
+
+         switch($itemtype) {
+            
+            case 'Computer':
+               $a_computers_to_wake[] = $items_id;
+               break;
+      
+            case 'PluginFusioninventoryDeployGroup':
+               $group = new PluginFusioninventoryDeployGroup;
+               $group->getFromDB($items_id);
+
+               switch ($group->getField('type')) {
+                  
+                  case 'STATIC':
+                     $query = "SELECT items_id
+                     FROM glpi_plugin_fusioninventory_deploygroups_staticdatas
+                     WHERE groups_id = '$items_id'
+                     AND itemtype = 'Computer'";
+                     $res = $DB->query($query);
+                     while ($row = $DB->fetch_assoc($res)) {
+                        $a_computers_to_wake[] = $row['items_id'];
+                     }
+                     break;
+                     
+                  case 'DYNAMIC':
+                     $query = "SELECT fields_array
+                     FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
+                     WHERE groups_id = '$items_id'
+                     LIMIT 1";
+                     $res = $DB->query($query);
+                     $row = $DB->fetch_assoc($res);
+
+                     if (isset($_GET)) {
+                        $get_tmp = $_GET;
+                     }
+                     if (isset($_SESSION["glpisearchcount"]['Computer'])) {
+                        unset($_SESSION["glpisearchcount"]['Computer']);
+                     }
+                     if (isset($_SESSION["glpisearchcount2"]['Computer'])) {
+                        unset($_SESSION["glpisearchcount2"]['Computer']);
+                     }
+
+                     $_GET = importArrayFromDB($row['fields_array']);
+
+                     $_GET["glpisearchcount"] = count($_GET['field']);
+                     if (isset($_GET['field2'])) {
+                        $_GET["glpisearchcount2"] = count($_GET['field2']);
+                     }
+
+                     $pfSearch = new PluginFusioninventorySearch();
+                     Search::manageGetValues('Computer');
+                     $glpilist_limit = $_SESSION['glpilist_limit'];
+                     $_SESSION['glpilist_limit'] = 999999999;
+                     $result = $pfSearch->constructSQL('Computer',
+                                                       $_GET);
+                     $_SESSION['glpilist_limit'] = $glpilist_limit;
+                     while ($data=$DB->fetch_array($result)) {
+                        $a_computers_to_wake[] = $data['id'];
+                     }
+                     if (count($get_tmp) > 0) {
+                        $_GET = $get_tmp;
+                     }
+
+                     break;
+                     
+               }
+         }
+      }
       $a_actions = importArrayFromDB($pfTaskjob->fields['action']);
 
       $a_agentList = array();
@@ -92,14 +164,14 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
        * Case 3 : dynamic agent
        */
       else if (strstr($pfTaskjob->fields['action'], '".1"')) {
-         $a_agentList = $this->getAgentsSubnet(count($a_definitions), $communication);
+         $a_agentList = $this->getAgentsSubnet(count($a_computers_to_wake), $communication);
       }
       /*
        * Case 4 : dynamic agent same subnet
        */
       else if (in_array('.2', $a_actions)) {
          $subnet = '';
-         foreach($a_definitions as $items_id) {
+         foreach($a_computers_to_wake as $items_id) {
             $sql = "SELECT * FROM `glpi_networkports`
                WHERE `items_id`='".$items_id."'
                   AND `itemtype`='Computer'
@@ -112,7 +184,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
             }
          }
          if ($subnet != '') {
-            $a_agentList = $this->getAgentsSubnet(count($a_definitions), $communication, $subnet);
+            $a_agentList = $this->getAgentsSubnet(count($a_computers_to_wake), $communication, $subnet);
          }
       }
 
@@ -137,19 +209,19 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                                              1,
                                              "Unable to find agent to run this job");
       } else {
-         $nb_computers = ceil(count($a_definitions) / count($a_agentList));
+         $nb_computers = ceil(count($a_computers_to_wake) / count($a_agentList));
 
          $a_input = array();
          $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
          $a_input['state'] = 0;
          $a_input['itemtype'] = 'Computer';
          $a_input['uniqid'] = $uniqid;
-         while(count($a_definitions) != 0) {
+         while(count($a_computers_to_wake) != 0) {
             $agent_id = array_pop($a_agentList);
             $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
             for ($i=0; $i < $nb_computers; $i++) {
                 //Add jobstate and put status
-                $a_input['items_id'] = current(array_pop($a_definitions));
+                $a_input['items_id'] = array_pop($a_computers_to_wake);
                 $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                   //Add log of taskjob
                   $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;

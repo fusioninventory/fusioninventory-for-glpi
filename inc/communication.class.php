@@ -182,8 +182,11 @@ class PluginFusioninventoryCommunication {
          $xmltag = "NETWORKINVENTORY";
       }
 
-
-      $agent = $pfAgent->InfosByKey($this->message['DEVICEID']);
+      if (!isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+         $agent = $pfAgent->InfosByKey($this->message['DEVICEID']);
+      } else {
+         $agent = array('id' => $_SESSION['plugin_fusioninventory_agents_id']);
+      }
       if ($xmltag == "PROLOG") {
          return FALSE;
       }
@@ -255,6 +258,7 @@ class PluginFusioninventoryCommunication {
             if (  $className != "PluginFusioninventoryInventoryComputerESX"
                && $className != "PluginFusioninventoryDeployinstall"
                && $className != "PluginFusioninventoryDeployuninstall"
+               && $className != "PluginFusioninventoryCollect"
             ) {
                $class = new $className();
                $sxml_temp = $class->run($array);

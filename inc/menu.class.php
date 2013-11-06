@@ -158,6 +158,12 @@ class PluginFusioninventoryMenu {
          $a_menu[0]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventorycomputerimportxml.php";
       }
+      
+      if (PluginFusioninventoryProfile::haveRight("collect", "r")) {
+         $a_menu[11]['name'] = __('Additional computer information', 'fusioninventory');
+         $a_menu[11]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
+         $a_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCollect');
+      }
 
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('Tasks', 'fusioninventory'),
@@ -200,12 +206,20 @@ class PluginFusioninventoryMenu {
          $a_menu[4]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventoryrulelocation.php";
       }
+      
+      if (PluginFusioninventoryProfile::haveRight("existantrule", "r")) {
+         $a_menu[5]['name'] = __('Additional computer information rules', 'fusioninventory');
+         $a_menu[5]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
+         $a_menu[5]['link'] = $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/collectrule.php";
+      }
+
 
       if (PluginFusioninventoryProfile::haveRight("blacklist", "r")) {
-         $a_menu[5]['name'] = _n('Blacklist', 'Blacklists', 1);
-         $a_menu[5]['pic']  = $CFG_GLPI['root_doc'].
+         $a_menu[6]['name'] = _n('Blacklist', 'Blacklists', 1);
+         $a_menu[6]['pic']  = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_blacklist.png";
-         $a_menu[5]['link'] = $CFG_GLPI['root_doc'].
+         $a_menu[6]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventorycomputerblacklist.php";
       }
 

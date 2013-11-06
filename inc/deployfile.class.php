@@ -724,7 +724,14 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       if (isset($params["orders_id"])) {
          $file_path = $params['filename'];
          $filename = basename($file_path);
-         $mime_type = @mime_content_type($file_path);
+         if (function_exists('finfo_open')
+             && ($finfo = finfo_open(FILEINFO_MIME))) {
+            $mime_type = finfo_file($finfo, $file_path);
+            finfo_close($finfo);
+
+         } else if (function_exists('mime_content_type')) {
+            $mime_type = mime_content_type($file_path);
+         }
          $filesize = filesize($file_path);
 
          //prepare file data for insertion in repo

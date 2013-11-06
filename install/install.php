@@ -43,6 +43,10 @@
 function pluginFusioninventoryInstall($version, $migration='') {
    global $DB;
 
+   ini_set("memory_limit", "-1");
+   ini_set("max_execution_time", "0");
+
+   
    if ($migration == '') {
       $migration = new Migration($version);
    }
@@ -300,6 +304,12 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $input = array();
       $input['modulename'] = "DEPLOY";
       $input['is_active']  = 0;
+      $input['exceptions'] = exportArrayToDB(array());
+      $pfAgentmodule->add($input);
+
+      $input = array();
+      $input['modulename'] = "Collect";
+      $input['is_active']  = 1;
       $input['exceptions'] = exportArrayToDB(array());
       $pfAgentmodule->add($input);
 
