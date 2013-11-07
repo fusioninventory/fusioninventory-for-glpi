@@ -179,7 +179,7 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
 
       $this->assertEquals(2, 
                           count($a_networkports), 
-                          'May have 2 network ports ('.print_r($a_networkports, true).')');
+                          'May have 2 network ports ('.print_r($a_networkports, TRUE).')');
 
       
       $a_ref = array(
@@ -260,7 +260,7 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
 
       $this->assertEquals(2, 
                           count($a_networkports), 
-                          'May have 2 network ports ('.print_r($a_networkports, true).')');
+                          'May have 2 network ports ('.print_r($a_networkports, TRUE).')');
 
       
       $a_ref = array(
@@ -328,7 +328,7 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
 
       $this->assertEquals(2, 
                           count($a_networkports), 
-                          'May have 2 network ports ('.print_r($a_networkports, true).')');
+                          'May have 2 network ports ('.print_r($a_networkports, TRUE).')');
 
       
       $a_ref = array(
@@ -436,7 +436,7 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
 
       $this->assertEquals(3, 
                           count($a_networkports), 
-                          'May have 3 network ports ('.print_r($a_networkports, true).')');
+                          'May have 3 network ports ('.print_r($a_networkports, TRUE).')');
 
       
       $a_ref = array(
@@ -535,13 +535,13 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
 
       $this->assertEquals(3, 
                           count($a_networkports), 
-                          'May have 3 network ports ('.print_r($a_networkports, true).')');
+                          'May have 3 network ports ('.print_r($a_networkports, TRUE).')');
 
       $a_unkowns = getAllDatasFromTable('glpi_plugin_fusioninventory_unknowndevices');
 
       $this->assertEquals(1, 
                           count($a_unkowns), 
-                          'May have only one unknown device ('.print_r($a_unkowns, true).')');
+                          'May have only one unknown device ('.print_r($a_unkowns, TRUE).')');
 
 
       $a_networkport_ref = array(
@@ -631,7 +631,7 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
 
       $this->assertEquals(2, 
                           count($a_networkports), 
-                          'May have 2 network ports ('.print_r($a_networkports, true).')');
+                          'May have 2 network ports ('.print_r($a_networkports, TRUE).')');
       
       $a_ref = array(
           'id'                => 1,
@@ -716,7 +716,7 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
 
       $this->assertEquals(2, 
                           count($a_networkports), 
-                          'May have 2 network ports ('.print_r($a_networkports, true).')');
+                          'May have 2 network ports ('.print_r($a_networkports, TRUE).')');
 
       
       $a_ref = array(
