@@ -168,6 +168,7 @@ require_once '1_Unit/SNMPModel.php';
 
 require_once '2_Integration/ComputerEntity.php';
 require_once '2_Integration/RuleIgnoredImport.php';
+require_once '2_Integration/RuleImport.php';
 require_once '2_Integration/SoftwareEntityCreation.php';
 require_once '2_Integration/SoftwareVersionAdd.php';
 require_once '2_Integration/ComputerDynamic.php';
@@ -187,33 +188,43 @@ class AllTests {
       if (file_exists("save.sql")) {
          unlink("save.sql");
       }
+    
       $suite->addTest(GLPIInstall_AllTests::suite());
       $suite->addTest(FusinvInstall_AllTests::suite());
-      
-      $suite->addTest(FormatConvertData_AllTests::suite());
-      $suite->addTest(SoftwareUpdate_AllTests::suite());
-      $suite->addTest(AgentChangeDeviceid_AllTests::suite());
-      $suite->addTest(ComputerTransformation_AllTests::suite());
-      $suite->addTest(ComputerUpdate_AllTests::suite());
-      $suite->addTest(PrinterTransformation_AllTests::suite());
-      $suite->addTest(PrinterUpdate_AllTests::suite());
-      $suite->addTest(NetworkEquipmentTransformation_AllTests::suite());
-      $suite->addTest(NetworkEquipmentUpdate_AllTests::suite());
-      $suite->addTest(ComputerLog_AllTests::suite());
-      $suite->addTest(SNMPModel_AllTests::suite());
-      
-      $suite->addTest(ComputerEntity_AllTests::suite());
-      $suite->addTest(RuleIgnoredImport_AllTests::suite());
-      $suite->addTest(SoftwareEntityCreation_AllTests::suite());
-      $suite->addTest(SoftwareVersionAdd_AllTests::suite());
-      $suite->addTest(ComputerDynamic_AllTests::suite());
-      $suite->addTest(UnknownDeviceKnowDevice_AllTests::suite());
-      $suite->addTest(UnknownDeviceImport_AllTests::suite());
-      $suite->addTest(TaskDeployDynamicGroup_AllTests::suite());
-      $suite->addTest(ComputerPrinter_AllTests::suite());
-      $suite->addTest(ComputerLicense_AllTests::suite());
-      $suite->addTest(NetworkEquipmentLLDP_AllTests::suite());
-      $suite->addTest(ComputerMonitor_AllTests::suite());
+
+      Plugin::loadLang('fusioninventory');
+
+      if (isset($_SERVER['argv'])
+              && isset($_SERVER['argv'][2])) {
+         $class = $_SERVER['argv'][2]."_AllTests";
+         $suite->addTest($class::suite());
+      } else {
+         $suite->addTest(FormatConvertData_AllTests::suite());
+         $suite->addTest(SoftwareUpdate_AllTests::suite());
+         $suite->addTest(AgentChangeDeviceid_AllTests::suite());
+         $suite->addTest(ComputerTransformation_AllTests::suite());
+         $suite->addTest(ComputerUpdate_AllTests::suite());
+         $suite->addTest(PrinterTransformation_AllTests::suite());
+         $suite->addTest(PrinterUpdate_AllTests::suite());
+         $suite->addTest(NetworkEquipmentTransformation_AllTests::suite());
+         $suite->addTest(NetworkEquipmentUpdate_AllTests::suite());
+         $suite->addTest(ComputerLog_AllTests::suite());
+         $suite->addTest(SNMPModel_AllTests::suite());
+
+         $suite->addTest(ComputerEntity_AllTests::suite());
+         $suite->addTest(RuleIgnoredImport_AllTests::suite());
+         $suite->addTest(RuleImport_AllTests::suite());
+         $suite->addTest(SoftwareEntityCreation_AllTests::suite());
+         $suite->addTest(SoftwareVersionAdd_AllTests::suite());
+         $suite->addTest(ComputerDynamic_AllTests::suite());
+         $suite->addTest(UnknownDeviceKnowDevice_AllTests::suite());
+         $suite->addTest(UnknownDeviceImport_AllTests::suite());
+         $suite->addTest(TaskDeployDynamicGroup_AllTests::suite());
+         $suite->addTest(ComputerPrinter_AllTests::suite());
+         $suite->addTest(ComputerLicense_AllTests::suite());
+         $suite->addTest(NetworkEquipmentLLDP_AllTests::suite());
+         $suite->addTest(ComputerMonitor_AllTests::suite());
+      }
 
       # For travis-CI
       file_put_contents ( "result.stamp", "test ok" );

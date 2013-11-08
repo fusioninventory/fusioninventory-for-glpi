@@ -176,7 +176,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
    static function getRuleActionValues() {
-
+      
       return array(self::RULE_ACTION_LINK_OR_CREATE    =>
                            __('Link if possible, else create device', 'fusioninventory'),
 
@@ -301,10 +301,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
 
-   function getCriteriaByID($ID) {
+   function getCriteriaByID($critname) {
       $criteria = array();
       foreach ($this->criterias as $criterion) {
-         if ($ID == $criterion->fields['criteria']) {
+         if ($critname == $criterion->fields['criteria']) {
             $criteria[] = $criterion;
          }
       }
@@ -369,7 +369,6 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
       //If a value is missing, then there's a problem !
       if (!$continue) {
-
          return FALSE;
       }
 
@@ -404,7 +403,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          $itemtypeselected = $input['itemtype'];
       } else if (isset($input['itemtype'])
               AND (!empty($input['itemtype']))
-              AND ($itemtype_global != "0")) {
+              AND ($itemtype_global > 0)) {
 
          $itemtypeselected[] = $input['itemtype'];
       } else {
