@@ -134,6 +134,49 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
       }
       return $output;
    }
+   
+   
+   /**
+    * Get Collection Datas : retrieve descriptions and rules
+    *
+    * @param $retrieve_criteria  Retrieve the criterias of the rules ? (default 0)
+    * @param $retrieve_action    Retrieve the action of the rules ? (default 0)
+   **/
+   function getCollectionDatas($retrieve_criteria=0, $retrieve_action=0) {
+      global $DB;
+
+      if ($this->RuleList === NULL) {
+         $this->RuleList = SingletonRuleList::getInstance($this->getRuleClassName(),
+                                                          $this->entity);
+      }
+      $need = 1+($retrieve_criteria?2:0)+($retrieve_action?4:0);
+
+      // check if load required
+//      if (($need & $this->RuleList->load) != $need) {
+         //Select all the rules of a different type
+         $sql = $this->getRuleListQuery();
+
+         $result = $DB->query($sql);
+         if ($result) {
+            $this->RuleList->list = array();
+
+            while ($rule = $DB->fetch_assoc($result)) {
+               //For each rule, get a Rule object with all the criterias and actions
+               $tempRule = $this->getRuleClass();
+
+               if ($tempRule->getRuleWithCriteriasAndActions($rule["id"], $retrieve_criteria,
+                                                             $retrieve_action)) {
+                  //Add the object to the list of rules
+                  $this->RuleList->list[] = $tempRule;
+               }
+            }
+
+            $this->RuleList->load = $need;
+         }
+//      }
+   }
+
+   
 }
 
 ?>

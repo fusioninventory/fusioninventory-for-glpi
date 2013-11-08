@@ -416,7 +416,7 @@ class ComputerEntity extends PHPUnit_Framework_TestCase {
       $Install = new Install();
       $Install->testInstall(0);
       
-      $PF_CONFIG['extradebug']        = 1;
+//      $PF_CONFIG['extradebug']        = 1;
       $PF_CONFIG['transfers_id_auto'] = 1;
       $GLPIlog = new GLPIlogs();
       

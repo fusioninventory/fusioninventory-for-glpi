@@ -86,6 +86,8 @@ class RuleIgnoredImport extends PHPUnit_Framework_TestCase {
          $ruleaction->add($input);
    }
 
+   
+   
    // computer inventory
    public function testIgnoreComputerImport() {
       global $DB;
@@ -189,8 +191,6 @@ class RuleIgnoredImport extends PHPUnit_Framework_TestCase {
    }
    
    // network inventory
-   
-   
    
  }
 
