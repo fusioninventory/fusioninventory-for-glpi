@@ -179,6 +179,7 @@ require_once '2_Integration/ComputerPrinter.php';
 require_once '2_Integration/ComputerLicense.php';
 require_once '2_Integration/NetworkEquipmentLLDP.php';
 require_once '2_Integration/ComputerMonitor.php';
+require_once '2_Integration/ComputerPeripheral.php';
 
 require_once 'emulatoragent.php';
 
@@ -224,6 +225,7 @@ class AllTests {
          $suite->addTest(ComputerLicense_AllTests::suite());
          $suite->addTest(NetworkEquipmentLLDP_AllTests::suite());
          $suite->addTest(ComputerMonitor_AllTests::suite());
+         $suite->addTest(ComputerPeripheral_AllTests::suite());
       }
 
       # For travis-CI

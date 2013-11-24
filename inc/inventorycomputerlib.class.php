@@ -2284,42 +2284,24 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       } else if ($pfConfig->getValue('import_peripheral') == 2) {
          // Unique import
          $added = 0;
-         if ($data['serial'] == '') {
-            $query = "SELECT `glpi_peripherals`.`id` FROM `glpi_peripherals`
-               WHERE `serial`='".$data['serial']."'
-                  AND `is_global`='0'
-                  AND `entities_id`='".$data['entities_id']."'
-               LIMIT 1";
-            $result = $DB->query($query);
-            if ($DB->numrows($result) == 1) {
-               $db_data = $DB->fetch_assoc($result);
-               $peripherals_id = $db_data['id'];
-            }
-         }
-         if ($peripherals_id == 0) {
-            $query = "SELECT `glpi_peripherals`.`id` FROM `glpi_peripherals`
-               LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_peripherals`.`id`
-               WHERE `name`='".$data['name']."'
-                  AND `manufacturers_id`='".$data['manufacturers_id']."'
-                  AND `serial`='".$data['serial']."'
-                  AND `is_global`='0'
-                  AND `entities_id`='".$data['entities_id']."'
-                  AND `glpi_computers_items`.`itemtype`='Monitor'
-                  AND `glpi_computers_items`.`id` IS NULL
-               LIMIT 1";
-            $result = $DB->query($query);
-            if ($DB->numrows($result) == 1) {
-               $db_data = $DB->fetch_assoc($result);
-               $peripherals_id = $db_data['id'];
-            } else {
-               $data['is_global'] = 0;
-               $peripherals_id = $peripheral->add($data);
-               $added = 1;
-            }
-         }
-         if ($added == 0) {
-            $peripheral->getFromDB($peripherals_id);
-            $computer_Item->disconnectForItem($peripheral);
+         $query = "SELECT `glpi_peripherals`.`id` FROM `glpi_peripherals`
+            LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_peripherals`.`id`
+               AND `glpi_computers_items`.`itemtype`='Peripheral'
+            WHERE `name`='".$data['name']."'
+               AND `manufacturers_id`='".$data['manufacturers_id']."'
+               AND `serial`='".$data['serial']."'
+               AND `is_global`='0'
+               AND `entities_id`='".$data['entities_id']."'
+               AND `glpi_computers_items`.`id` IS NULL
+            LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == 1) {
+            $db_data = $DB->fetch_assoc($result);
+            $peripherals_id = $db_data['id'];
+         } else {
+            $data['is_global'] = 0;
+            $peripherals_id = $peripheral->add($data);
+            $added = 1;
          }
       } else if ($pfConfig->getValue('import_peripheral') == 3) {
          // Unique import on serial number
