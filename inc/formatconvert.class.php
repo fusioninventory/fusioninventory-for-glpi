@@ -1314,7 +1314,7 @@ class PluginFusioninventoryFormatconvert {
       $data_wmis = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_wmis_contents', 
                                          "`computers_id`='".$computers_id."'");
       
-      foreach ($data_registries as $data) {
+      foreach ($data_wmis as $data) {
          $res_rule = $pfCollectRuleCollection->processAllRules(
                        array(
                            "wmiproperty"  => $data['property'],
