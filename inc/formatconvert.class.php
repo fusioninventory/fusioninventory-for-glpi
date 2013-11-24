@@ -265,7 +265,6 @@ class PluginFusioninventoryFormatconvert {
 
       // * BIOS
       if (isset($array['BIOS'])) {
-         $a_inventory['BIOS'] = array();
          if (isset($array['BIOS']['ASSETTAG'])) {
             $a_inventory['fusioninventorycomputer']['bios_assettag']= $array['BIOS']['ASSETTAG'];
          }
@@ -278,14 +277,16 @@ class PluginFusioninventoryFormatconvert {
          } else if ((isset($array['BIOS']['BMANUFACTURER']))
                       AND (!empty($array['BIOS']['BMANUFACTURER']))) {
             $a_inventory['Computer']['manufacturers_id'] = $array['BIOS']['BMANUFACTURER'];
-         }
-         if ((isset($array['BIOS']['MMANUFACTURER']))
-                      AND (!empty($array['BIOS']['MMANUFACTURER']))) {
-            $a_inventory['Computer']['mmanufacturer'] = $array['BIOS']['MMANUFACTURER'];
-         }
-         if ((isset($array['BIOS']['BMANUFACTURER']))
-                      AND (!empty($array['BIOS']['BMANUFACTURER']))) {
-            $a_inventory['Computer']['bmanufacturer'] = $array['BIOS']['BMANUFACTURER'];
+         } else {
+            if ((isset($array['BIOS']['MMANUFACTURER']))
+                         AND (!empty($array['BIOS']['MMANUFACTURER']))) {
+               $a_inventory['Computer']['manufacturers_id'] = $array['BIOS']['MMANUFACTURER'];
+            } else {
+               if ((isset($array['BIOS']['BMANUFACTURER']))
+                            AND (!empty($array['BIOS']['BMANUFACTURER']))) {
+                  $a_inventory['Computer']['manufacturers_id'] = $array['BIOS']['BMANUFACTURER'];
+               }
+            }
          }
 
          if (isset($array['BIOS']['SMODEL']) AND $array['BIOS']['SMODEL'] != '') {
@@ -297,15 +298,12 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['Computer']['serial'] = trim($array['BIOS']['SSN']);
             // HP patch for serial begin with 'S'
             if ((isset($a_inventory['Computer']['manufacturers_id']))
-                  AND (strstr($a_inventory['Computer']['manufacturers_id'], "ewlett"))) {
-
-               if (isset($a_inventory['BIOS']['SERIAL'])
-                       && preg_match("/^[sS]/", $a_inventory['BIOS']['SERIAL'])) {
-                  $a_inventory['Computer']['serial'] = trim(
-                                                   preg_replace("/^[sS]/",
-                                                                "",
-                                                                $a_inventory['BIOS']['SERIAL']));
-               }
+                  AND (strstr($a_inventory['Computer']['manufacturers_id'], "ewlett"))
+                    && preg_match("/^[sS]/", $a_inventory['Computer']['serial'])) {
+               $a_inventory['Computer']['serial'] = trim(
+                                                preg_replace("/^[sS]/",
+                                                             "",
+                                                             $a_inventory['Computer']['serial']));
             }
          }
       }
@@ -325,9 +323,9 @@ class PluginFusioninventoryFormatconvert {
          $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['VMSYSTEM'];
       }
 
-      if (isset($array['BIOS']['SKUNUMBER'])) {
-         $a_inventory['BIOS']['PARTNUMBER'] = $array['BIOS']['SKUNUMBER'];
-      }
+//      if (isset($array['BIOS']['SKUNUMBER'])) {
+//         $a_inventory['BIOS']['PARTNUMBER'] = $array['BIOS']['SKUNUMBER'];
+//      }
 
       if (isset($array['BIOS']['BDATE'])) {
          $a_split = explode("/", $array['BIOS']['BDATE']);
@@ -335,14 +333,14 @@ class PluginFusioninventoryFormatconvert {
          if (isset($a_split[0])
                  AND isset($a_split[1])
                  AND isset($a_split[2])) {
-            $a_inventory['BIOS']['DATE'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
+            $a_inventory['fusioninventorycomputer']['bios_date'] = $a_split[2]."-".$a_split[0]."-".$a_split[1];
          }
       }
       if (isset($array['BIOS']['BVERSION'])) {
-         $a_inventory['BIOS']['VERSION'] = $array['BIOS']['BVERSION'];
+         $a_inventory['fusioninventorycomputer']['bios_version'] = $array['BIOS']['BVERSION'];
       }
       if (isset($array['BIOS']['BMANUFACTURER'])) {
-         $a_inventory['BIOS']['BIOSMANUFACTURER'] = $array['BIOS']['BMANUFACTURER'];
+         $a_inventory['fusioninventorycomputer']['bios_manufacturers_id'] = $array['BIOS']['BMANUFACTURER'];
       }
 
       // * OPERATINGSYSTEM
