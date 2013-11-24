@@ -2070,43 +2070,25 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       } else if ($pfConfig->getValue('import_monitor') == 2) {
          // Unique import
          $added = 0;
-         if ($data['serial'] != '') {
-            $query = "SELECT `glpi_monitors`.`id` FROM `glpi_monitors`
-               WHERE `serial`='".$data['serial']."'
-                  AND `is_global`='0'
-                  AND `entities_id`='".$data['entities_id']."'
-               LIMIT 1";
-            $result = $DB->query($query);
-            if ($DB->numrows($result) == 1) {
-               $db_data = $DB->fetch_assoc($result);
-               $monitors_id = $db_data['id'];
-            }
-         }
-         if ($monitors_id == 0) {
-            $query = "SELECT `glpi_monitors`.`id` FROM `glpi_monitors`
-               LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_monitors`.`id`
-               WHERE `name`='".$data['name']."'
-                  AND `manufacturers_id`='".$data['manufacturers_id']."'
-                  AND `serial`='".$data['serial']."'
-                  AND `comment`='".$data['comment']."'
-                  AND `is_global`='0'
-                  AND `entities_id`='".$data['entities_id']."'
-                  AND `glpi_computers_items`.`itemtype`='Monitor'
-                  AND `glpi_computers_items`.`id` IS NULL
-               LIMIT 1";
-            $result = $DB->query($query);
-            if ($DB->numrows($result) == 1) {
-               $db_data = $DB->fetch_assoc($result);
-               $monitors_id = $db_data['id'];
-            } else {
-               $data['is_global'] = 0;
-               $monitors_id = $monitor->add($data);
-               $added = 1;
-            }
-         }
-         if ($added == 0) {
-            $monitor->getFromDB($monitors_id);
-            $computer_Item->disconnectForItem($monitor);
+         $query = "SELECT `glpi_monitors`.`id` FROM `glpi_monitors`
+            LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_monitors`.`id`
+               AND `glpi_computers_items`.`itemtype`='Monitor'
+            WHERE `name`='".$data['name']."'
+               AND `manufacturers_id`='".$data['manufacturers_id']."'
+               AND `serial`='".$data['serial']."'
+               AND `comment`='".$data['comment']."'
+               AND `is_global`='0'
+               AND `entities_id`='".$data['entities_id']."'
+               AND `glpi_computers_items`.`id` IS NULL
+            LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == 1) {
+            $db_data = $DB->fetch_assoc($result);
+            $monitors_id = $db_data['id'];
+         } else {
+            $data['is_global'] = 0;
+            $monitors_id = $monitor->add($data);
+            $added = 1;
          }
       } else if ($pfConfig->getValue('import_monitor') == 3) {
          // Unique import on serial number
@@ -2176,41 +2158,23 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       } else if ($pfConfig->getValue('import_printer') == 2) {
          // Unique import
          $added = 0;
-         if ($data['serial'] != '') {
-            $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
-               WHERE `serial`='".$data['serial']."'
-                  AND `is_global`='0'
-                  AND `entities_id`='".$data['entities_id']."'
-               LIMIT 1";
-            $result = $DB->query($query);
-            if ($DB->numrows($result) == 1) {
-               $db_data = $DB->fetch_assoc($result);
-               $printers_id = $db_data['id'];
-            }
-         }
-         if ($printers_id == 0) {
-            $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
-               LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_printers`.`id`
-               WHERE `name`='".$data['name']."'
-                  AND `serial`='".$data['serial']."'
-                  AND `is_global`='0'
-                  AND `entities_id`='".$data['entities_id']."'
-                  AND `glpi_computers_items`.`itemtype`='Printer'
-                  AND `glpi_computers_items`.`id` IS NULL
-               LIMIT 1";
-            $result = $DB->query($query);
-            if ($DB->numrows($result) == 1) {
-               $db_data = $DB->fetch_assoc($result);
-               $printers_id = $db_data['id'];
-            } else {
-               $data['is_global'] = 0;
-               $printers_id = $printer->add($data);
-               $added = 1;
-            }
-         }
-         if ($added == 0) {
-            $printer->getFromDB($printers_id);
-            $computer_Item->disconnectForItem($printer);
+         $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
+            LEFT JOIN `glpi_computers_items` ON `items_id`=`glpi_printers`.`id`
+               AND `glpi_computers_items`.`itemtype`='Printer'
+            WHERE `name`='".$data['name']."'
+               AND `serial`='".$data['serial']."'
+               AND `is_global`='0'
+               AND `entities_id`='".$data['entities_id']."'
+               AND `glpi_computers_items`.`id` IS NULL
+            LIMIT 1";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == 1) {
+            $db_data = $DB->fetch_assoc($result);
+            $printers_id = $db_data['id'];
+         } else {
+            $data['is_global'] = 0;
+            $printers_id = $printer->add($data);
+            $added = 1;
          }
       } else if ($pfConfig->getValue('import_printer') == 3) {
          // Unique import on serial number
