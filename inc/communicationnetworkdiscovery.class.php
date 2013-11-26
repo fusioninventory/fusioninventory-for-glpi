@@ -350,7 +350,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $arrayinventory = $_SESSION['SOURCE_XMLDEVICE'];
       $input = array();
       $input['id'] = $item->getID();
-
+      
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($item->getType()),
                                                              $item->getID());
 
