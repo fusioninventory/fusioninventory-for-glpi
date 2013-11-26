@@ -350,7 +350,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $arrayinventory = $_SESSION['SOURCE_XMLDEVICE'];
       $input = array();
       $input['id'] = $item->getID();
-
+      
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($item->getType()),
                                                              $item->getID());
 
@@ -642,11 +642,23 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             if (isset($arrayinventory['IP'])) {
                $iPAddress = new IPAddress();
-               $input = array();
-               $input['itemtype'] = 'NetworkName';
-               $input['items_id'] = $networknames_id;
-               $input['name'] = $arrayinventory['IP'];
-               $iPAddress->add($input);
+               $a_ipaddresses = $iPAddress->find("`itemtype`='NetworkName'
+                                    AND `items_id`='".$networknames_id."'");
+               if (count($a_ipaddresses) == 0) {
+                  $input = array();
+                  $input['itemtype'] = 'NetworkName';
+                  $input['items_id'] = $networknames_id;
+                  $input['name'] = $arrayinventory['IP'];
+                  $iPAddress->add($input);
+               } else {
+                  $a_ipaddresse = current($a_ipaddresses);
+                  if ($a_ipaddresse['name'] != $arrayinventory['IP']) {
+                     $input = array();
+                     $input['id'] = $a_ipaddresse['id'];
+                     $input['name'] = $arrayinventory['IP'];
+                     $iPAddress->update($input);
+                  }
+               }
             }
 
             // Update SNMP informations
@@ -658,7 +670,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             if (count($a_snmpnetworkequipments) > 0) {
                $addItem = FALSE;
                $a_snmpnetworkequipment = current($a_snmpnetworkequipments);
-               $input = $a_snmpnetworkequipment['id'];
+               $input['id'] = $a_snmpnetworkequipment['id'];
             } else {
                $input['networkequipments_id'] = $item->getID();
                $id = $pfNetworkEquipment->add($input);
@@ -667,7 +679,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
             }
             // Write XML file
             if (isset($_SESSION['SOURCE_XMLDEVICE'])) {
-               PluginFusioninventoryToolbox::writeXML($input['id'],
+               PluginFusioninventoryToolbox::writeXML($item->getID(),
                                           serialize($_SESSION['SOURCE_XMLDEVICE']),
                                           "NetworkEquipment");
             }

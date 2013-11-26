@@ -168,6 +168,7 @@ require_once '1_Unit/PrinterTransformation.php';
 require_once '1_Unit/PrinterUpdate.php';
 require_once '1_Unit/NetworkEquipmentTransformation.php';
 require_once '1_Unit/NetworkEquipmentUpdate.php';
+require_once '1_Unit/NetworkEquipmentUpdateDiscovery.php';
 require_once '1_Unit/ComputerLog.php';
 require_once '1_Unit/AgentChangeDeviceid.php';
 require_once '1_Unit/SNMPModel.php';
@@ -215,6 +216,7 @@ class AllTests {
          $suite->addTest(PrinterUpdate_AllTests::suite());
          $suite->addTest(NetworkEquipmentTransformation_AllTests::suite());
          $suite->addTest(NetworkEquipmentUpdate_AllTests::suite());
+         $suite->addTest(NetworkEquipmentUpdateDiscovery_AllTests::suite());
          $suite->addTest(ComputerLog_AllTests::suite());
          $suite->addTest(SNMPModel_AllTests::suite());
 
