@@ -841,7 +841,7 @@ function plugin_fusioninventory_MassiveActions($type) {
 
       case "Computer":
          return array (
-            "plugin_fusioninventory_manage_locks" => _n('Lock', 'Locks', 2, 'fusioninventory'),
+            "plugin_fusioninventory_manage_locks" => _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")",
             "plugin_fusioninventory_deploy_target_task" => __('Target a task', 'fusioninventory')
          );
          break;
@@ -854,7 +854,7 @@ function plugin_fusioninventory_MassiveActions($type) {
 
       case "NetworkEquipment":
          return array (
-            "plugin_fusioninventory_manage_locks"  => _n('Lock', 'Locks', 2, 'fusioninventory'),
+            "plugin_fusioninventory_manage_locks"  => _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")",
             "plugin_fusioninventory_get_model"     =>
                                           __('Load the correct SNMP model', 'fusioninventory'),
             "plugin_fusioninventory_assign_model"  => __('Assign SNMP model', 'fusioninventory'),
@@ -865,7 +865,7 @@ function plugin_fusioninventory_MassiveActions($type) {
 
       case "Printer":
          return array (
-            "plugin_fusioninventory_manage_locks"  => _n('Lock', 'Locks', 2, 'fusioninventory'),
+            "plugin_fusioninventory_manage_locks"  => _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")",
             "plugin_fusioninventory_get_model"     =>
                                           __('Load the correct SNMP model', 'fusioninventory'),
             "plugin_fusioninventory_assign_model"  => __('Assign SNMP model', 'fusioninventory'),
@@ -1604,7 +1604,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          }
       }
    }
-
+   return TRUE;
 }
 
 
