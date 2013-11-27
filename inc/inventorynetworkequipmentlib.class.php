@@ -82,6 +82,9 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                                                        $db_networkequipment, $a_lockable);
       $a_inventory['NetworkEquipment'] = $a_ret[0];
 
+      $mac = $a_inventory['NetworkEquipment']['mac'];
+      unset($a_inventory['NetworkEquipment']['mac']);
+      
       $input = $a_inventory['NetworkEquipment'];
 
       $input['id'] = $items_id;
@@ -89,7 +92,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
       $this->internalPorts($a_inventory['internalport'],
                            $items_id,
-                           $a_inventory['NetworkEquipment']['mac'],
+                           $mac,
                            'Internal');
 
 
