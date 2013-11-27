@@ -124,7 +124,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @return nothing (print the form)
     **/
    function showForm($p_target, $p_itemtype, $p_items_id=0) {
-
+      
       $can = 0;
       $typeright = strtolower($p_itemtype);
       if ($typeright == "networkequipment") {
@@ -142,12 +142,12 @@ class PluginFusioninventoryLock extends CommonDBTM{
          $locked = array();
       }
       $colspan = '2';
-      if ($p_items_id != '0') {
+      if ($p_items_id > 0) {
          $colspan = '3';
       }
 
       $item = new $p_itemtype;
-      if ($p_items_id == "0") {
+      if ($p_items_id == 0) {
          $item->getEmpty();
       } else {
          $item->getFromDB($p_items_id);
@@ -217,6 +217,32 @@ class PluginFusioninventoryLock extends CommonDBTM{
          }
       }
       if ($p_items_id == '0') {
+         foreach ($item->fields as $key=>$val) {
+            $key_source = $key;
+            if (!in_array($key, $a_exclude)) {
+               // Get name of field
+               $num = search::getOptionNumber($p_itemtype, $key);
+               if (isset($array[$num]['name'])) {
+                  $name = $array[$num]['name'];
+               }
+               $css_glpi_value = '';
+               // Get value of field
+               $val = $this->getValueForKey($val, $key);
+               echo "<tr class='tab_bg_1'>";
+               $table = getTableNameForForeignKeyField($key);
+               if ($table != "") {
+                  $linkItemtype = getItemTypeForTable($table);
+                  $class = new $linkItemtype();
+                  $name = $class->getTypeName();
+               }
+               echo "<td>".$name."</td>";
+               echo "<td align='center'><input type='checkbox' name='lockfield_fusioninventory[".
+                       $key_source."]' ></td>";
+               echo "</tr>";
+            }
+         }      
+         
+         
          // add option selection for add theses lock filed or remove them
          echo "<tr>";
          echo "<th colspan='2'>".__('Job', 'fusioninventory')."</th>";
@@ -236,7 +262,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       if ($can == '1') {
          echo "<tr class='tab_bg_2'>";
-         echo "<td align='center' colspan='".$colspan."'>";
+         echo "<td align='center' colspan='".($colspan + 1)."'>";
          echo "<input class='submit' type='submit' name='unlock_field_fusioninventory'
                          value='" . __('Update') . "'>";
          echo "</td>";
