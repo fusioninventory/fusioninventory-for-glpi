@@ -110,7 +110,33 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
    }
 
+   /*
+    * Get a sub element at index
+    * @param subtype the type of sub element
+    * @param the index in element list
+    * @return the sub element
+    */
+   function getSubElement($subtype, $index) {
 
+      $data_o = json_decode($this->fields['json'], TRUE);
+
+      return $data_o['jobs'][$subtype][$index];
+   }
+
+   /*
+    * Get Order's associated file by hash
+    * @param hash the sha512 hash of file
+    * @return the associated file for the selected hash
+    */
+   function getAssociatedFile($hash) {
+      $data_o = json_decode($this->fields['json'], TRUE);
+
+      if ( array_key_exists( $hash, $data_o['associatedFiles'] ) ) {
+         return $data_o['associatedFiles'][$hash];
+      }
+
+      return NULL;
+   }
 
    static function getJson($orders_id) {
       $order = new self;
