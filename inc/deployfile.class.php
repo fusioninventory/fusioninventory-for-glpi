@@ -74,9 +74,66 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
 
 
-   static function displayForm($order, $datas, $rand) {
+   static function displayForm($order, $request_data, $rand, $mode) {
       global $CFG_GLPI;
 
+      /*
+       * Get element config in 'edit' mode
+       */
+      $config = NULL;
+      if ( $mode === 'edit' && isset( $request_data['index'] ) ) {
+         /*
+          * Add an hidden input about element's index to be updated
+          */
+         echo "<input type='hidden' name='index' value='".$request_data['index']."' />";
+
+         $c = $order->getSubElement( 'associatedFiles', $request_data['index'] );
+         if ( $c ) {
+
+            $config = array(
+               'hash' => $c,
+               'data' => $order->getAssociatedFile($c)
+            );
+         }
+      }
+
+      /*
+       * Display start of div form
+       */
+      if ( in_array( $mode, array('init'), TRUE ) ) {
+         echo "<div id='files_block$rand' style='display:none'>";
+      }
+
+      /*
+       * Display element's dropdownType in 'create' mode
+       */
+      if ( in_array( $mode, array('create'), TRUE ) ) {
+         self::displayDropdownType($config,$request_data, $rand, $mode);
+      }
+
+      /*
+       * Display element's values in 'edit' mode only.
+       * In 'create' mode, those values are refreshed with dropdownType 'change'
+       * javascript event.
+       */
+      if ( in_array( $mode, array('create', 'edit'), TRUE ) ) {
+         echo "<span id='show_file_value{$rand}'>";
+         if ( $mode === 'edit' ) {
+            self::displayAjaxValues( $config, $request_data, $rand, $mode );
+         }
+         echo "</span>";
+      }
+
+
+      /*
+       * Close form div
+       */
+      if ( in_array( $mode, array('init'), TRUE ) ) {
+         echo "</div>";
+      }
+
+
+      /*
       if (!isset($datas['index'])) {
          echo "<div style='display:none' id='files_block$rand' >";
       } else {
@@ -121,7 +178,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "</div>";
 
       Html::closeForm();
-
+      */
    }
 
 
@@ -144,8 +201,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          $files_mapping[$f['shortsha512']] = $f['id'];
       }
 
-      Toolbox::logDebug(print_r($files, TRUE));
-      Toolbox::logDebug(print_r($files_mapping, TRUE));
       echo "<table class='tab_cadrehov package_item_list' id='table_file_$rand'>";
       $i = 0;
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
@@ -290,14 +345,28 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    }
 
 
-   static function dropdownType($datas) {
+   static function displayDropdownType($config, $request_data, $rand, $mode) {
       global $CFG_GLPI;
 
-      $rand = $datas['rand'];
+      /*
+       * Build dropdown options
+       */
+      $dropdown_options['rand'] = $rand;
+      if ($mode === 'edit') {
+         $dropdown_options['value'] = $config['type'];
+         $dropdown_options['readonly'] = true;
+      }
+
+      /*
+       * Build actions types list
+       */
 
       $file_types = self::getTypes();
       array_unshift($file_types, "---");
 
+      /*
+       * Display dropdown html
+       */
       $style = "";
       if (isset($datas['edit'])) {
          $style = "style='display:none'";
@@ -306,66 +375,69 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<tr>";
       echo "<th>".__("Source", 'fusioninventory')."</th>";
       echo "<td>";
-      $options['rand'] = $datas['rand'];
-      Dropdown::showFromArray("deploy_filetype", $file_types, $options);
+      Dropdown::showFromArray("deploy_filetype", $file_types, $dropdown_options);
       echo "</td>";
       echo "</tr></table>";
 
       //ajax update of file value span
-      $params = array(
-                      'value'      => '__VALUE__',
-                      'rand'       => $rand,
-                      'myname'     => 'method',
-                      'type'       => "file",
-                      'p2p'        => 0,
-                      'uncompress' => 0,
-               );
-      if (isset($datas['edit'])) {
-         $params['edit']                   = "true";
-         $params['index']                  = $datas['index'];
-         $params['p2p']                    = $datas['p2p'];
-         $params['p2p-retention-duration'] = $datas['p2p-retention-duration'];
-         $params['uncompress']             = $datas['uncompress'];
-      }
-      Ajax::updateItemOnEvent("dropdown_deploy_filetype".$rand,
-                              "show_file_value$rand",
-                              $CFG_GLPI["root_doc"].
-                              "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
-                              $params,
-                              array("change", "load"));
-      if (isset($datas['edit'])) {
-         echo "<script type='text/javascript'>";
-         Ajax::updateItemJsCode("show_file_value$rand",
-                                $CFG_GLPI["root_doc"].
-                                 "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
-                                $params,
-                                "dropdown_deploy_filetype$rand");
-         echo "</script>";
-      }
 
+      if ($mode === 'create') {
+         $params = array(
+            'value'  => '__VALUE__',
+            'rand'   => $rand,
+            'myname' => 'method',
+            'type'   => "file",
+            'mode'   => $mode
+         );
+
+         Ajax::updateItemOnEvent(
+            "dropdown_deploy_filetype".$rand,
+            "show_file_value$rand",
+            $CFG_GLPI["root_doc"].
+            "/plugins/fusioninventory/".
+            "ajax/deploy_displaytypevalue.php",
+            $params,
+            array("change", "load")
+         );
+      }
    }
 
 
 
-   static function displayAjaxValue($datas) {
+   static function displayAjaxValues($config, $request_data, $rand, $mode) {
       global $CFG_GLPI;
 
-      $source = $datas['value'];
-      $rand  = $datas['rand'];
+      $p2p = 0;
+      $p2p_retention_duration = 0;
+      $uncompress = 0;
 
-      $p2p_checked = $datas['p2p'] == 1?"checked='checked'":"";
-      $p2p_ret_value = isset($datas['p2p-retention-duration'])?$datas['p2p-retention-duration']:"";
-      $uncompress_checked = $datas['uncompress'] == 1?"checked='checked'":"";
+      if ($mode === 'create' ) {
+         $source = $request_data['value'];
+         /**
+          * No need to continue if there is no selected source
+          */
+         if ($source === '0') {
+            return;
+         }
+      } else {
+         $p2p = $config['data']['p2p'];
+         $p2p_retention_duration = $config['data']['p2p-retention-duration'];
+         $uncompress = $config['data']['uncompress'];
+      };
 
       echo "<table class='package_item'>";
-      if (!isset($datas['edit']) || $datas['edit'] !== "true") {
-         echo "<tr>";
-         echo "<th>".__("File", 'fusioninventory')."</th>";
-         echo "<td>";
+      /*
+       * Display file upload input only in 'create' mode
+       */
+      echo "<tr>";
+      echo "<th>".__("File", 'fusioninventory')."</th>";
+      echo "<td>";
+      if ( $mode === 'create' ) {
          switch ($source) {
             case "Computer":
                echo "<input type='file' name='file' value='".
                   __("filename", 'fusioninventory')."' />";
+               echo "<i>".self::getMaxUploadSize()."</i>";
                break;
             case "Server":
                echo "<input type='text' name='filename' id='server_filename$rand'".
@@ -380,35 +452,43 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                         )));
                break;
          }
-         echo "</td>";
-         echo "</tr>";
+      } else {
+         /*
+          * Display only name in 'edit' mode
+          */
+         echo $config['data']['name'];
       }
+      echo "</td>";
+      echo "</tr>";
       echo "<tr>";
       echo "<th>".__("Uncompress", 'fusioninventory')."<img style='float:right' ".
-             "src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory//pics/uncompress.png' /></th>";
-      echo "<td><input type='checkbox' name='uncompress' $uncompress_checked /></td>";
+         "src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory//pics/uncompress.png' /></th>";
+      $uncompress_check = $uncompress==1?"checked=checked":"";
+      echo "<td><input type='checkbox' name='uncompress' {$uncompress_check} /></td>";
       echo "</tr><tr>";
-      echo "<th>".__("P2p", 'fusioninventory').
+      echo "<th>".__("P2P", 'fusioninventory').
               "<img style='float:right' src='".$CFG_GLPI["root_doc"].
               "/plugins/fusioninventory//pics/p2p.png' /></th>";
-      echo "<td><input type='checkbox' name='p2p' $p2p_checked /></td>";
+
+      $p2p_check = $p2p==1?"checked=checked":"";
+      echo "<td><input type='checkbox' name='p2p' $p2p_check /></td>";
       echo "</tr><tr>";
       echo "<th>".__("retention days", 'fusioninventory')."</th>";
       echo "<td>";
+      /*
+       * TODO: use task periodicity input to propose days, months and years
+       */
       Dropdown::showNumber('p2p-retention-duration', array(
-             'value' => $p2p_ret_value, 
-             'min'   => 0, 
+             'value' => $p2p_retention_duration,
+             'min'   => 0,
              'max'   => 400)
       );
       echo "</td>";
       echo "</tr><tr>";
       echo "<td>";
-      if ($source === "Computer") {
-         echo "<i>".self::getMaxUploadSize()."</i>";
-      }
       echo "</td><td>";
-      if (isset($datas['edit'])) {
-         echo "<input type='hidden' name='index' value='".$datas['index']."' />";
+      if ( $mode === 'edit' ) {
+         echo "<input type='hidden' name='index' value='".$request_data['index']."' />";
          echo "<input type='submit' name='save_item' value=\"".
             _sx('button', 'Save')."\" class='submit' >";
       } else {
@@ -578,7 +658,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       //get current order json
       $datas = json_decode(PluginFusioninventoryDeployOrder::getJson($params['orders_id']), TRUE);
 
-
+      $files = $datas['jobs']['associatedFiles'];
       //remove selected checks
       foreach ($params['file_entries'] as $index) {
          //get sha512
@@ -588,14 +668,14 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          // I've commented the following piece of code because 
          // if you remove the first line in the files list,
          // PHP will transform these table as a json dictionnary instead of json list.
-         //unset($datas['jobs']['associatedFiles'][$index]);
-         array_splice($datas['jobs']['associatedFiles'], $index, 1);
+         unset($files[$index]);
+         //array_splice($datas['jobs']['associatedFiles'], $index, 1);
          unset($datas['associatedFiles'][$sha512]);
 
          //remove file in repo
          //self::removeFileInRepo($sha512, $params['orders_id']);
       }
-
+      $datas['jobs']['associatedFiles'] = array_values($files);
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
@@ -717,6 +797,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    }
 
    static function uploadFileFromServer($params) {
+
       if (preg_match('/\.\./', $params['filename'])) {
          die;
       }
@@ -945,6 +1026,8 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    }
 
    function checkPresenceFile($sha512) {
+      $manifests_path =
+         GLPI_ROOT."/files/_plugins/fusioninventory/files/manifests/";
       $parts_path =
          GLPI_ROOT."/files/_plugins/fusioninventory/files/repository/";
 
