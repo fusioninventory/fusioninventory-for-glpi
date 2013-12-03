@@ -93,7 +93,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return TRUE;
    }
 
-   //Check running tasks after getFromDB
+   //Get running tasks after getFromDB
    function post_getFromDB() {
       $this->getRunningTasks();
    }
@@ -248,8 +248,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return $tab;
    }
 
-   
-   
+
+
    function getAllDatas() {
       global $DB;
 
@@ -334,7 +334,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          $this->check(-1, 'w');
          $this->getEmpty();
       }
-      
+
       $options['colspan'] = 2;
       $this->showTabs($options);
       $this->showFormHeader($options);
@@ -384,30 +384,41 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $order = new PluginFusioninventoryDeployOrder($order_type, $packages_id);
       $datas = json_decode($order->fields['json'], TRUE);
+      Toolbox::logDebug($datas);
       $orders_id = $order->fields['id'];
       $order_type_label = PluginFusioninventoryDeployOrder::getOrderTypeLabel(
                               $order->fields['type']
                           );
 
 
+      /**
+       * Display an error if the package modification is not possible
+       **/
       $error_msg = $package->getEditErrorMessage($order_type_label);
       if(!empty($error_msg)) {
          Session::addMessageAfterRedirect($error_msg);
          Html::displayMessageAfterRedirect();
          echo "<div id='package_order_".$orders_id."_span'>";
       }
+
       echo "<table class='tab_cadre_fixe' id='package_order_".$orders_id."'>";
 
+      /**
+       * Display the lists of each subtypes of a package
+       **/
       foreach ($subtypes as $subtype => $label) {
 
          echo "<tr>";
          echo "<th id='th_title_{$subtype}_$rand'>";
          echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/$subtype.png' />";
          echo "&nbsp;".__($label, 'fusioninventory');
-         self::plusButton($subtype."s_block$rand");
+         self::plusButtonSubtype($orders_id, $subtype, $rand);
          echo "</th>";
          echo "</tr>";
 
+         /**
+          * File's form must be encoded as multipart/form-data
+          **/
          $multipart = "";
          if ($subtype == "file") {
             $multipart = "enctype='multipart/form-data'";
@@ -415,6 +426,9 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<tr>";
          echo "<td style='vertical-align:top'>";
 
+         /**
+          * Display subtype form
+          **/
          echo "<form name='addition$subtype' method='post' ".$multipart.
             " action='deploypackage.form.php'>";
          echo "<input type='hidden' name='orders_id' value='$orders_id' />";
@@ -422,23 +436,30 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
             ucfirst($subtype)."' />";
 
          $classname = "PluginFusioninventoryDeploy".ucfirst($subtype);
-         $classname::displayForm($order, $datas, $rand);
+         $classname::displayForm($order, $datas, $rand, "init");
          Html::closeForm();
 
          $json_subtype = $json_subtypes[$subtype];
-         //display stored actions datas
+         /**
+          * Display stored actions datas
+          **/
          if (  isset($datas['jobs'][$json_subtype])
                && !empty($datas['jobs'][$json_subtype])) {
             echo  "<div id='drag_" . $order_type_label . "_". $subtype . "s'>";
             echo  "<form name='remove" . $subtype. "s' ".
-                  "method='post' action='deploypackage.form.php?remove_item' ".
+                  "method='post' action='deploypackage.form.php' ".
                   "id='" . $subtype . "sList" . $rand . "'>";
+            echo "<input type='hidden' name='remove_item' />";
             echo "<input type='hidden' name='itemtype' value='". $classname . "' />";
             echo "<input type='hidden' name='orders_id' value='" . $order->fields['id'] . "' />";
             $classname::displayList($order, $datas, $rand);
             Html::closeForm();
             echo "</div>";
          }
+
+         /**
+          * Initialize drag and drop on subtype lists
+          **/
          echo "<script type='text/javascript'>";
          echo "redipsInit('$order_type_label', '$subtype', $orders_id);";
          echo "</script>";
@@ -464,6 +485,17 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                   });
                </script>";
       }
+   }
+
+   static function plusButtonSubtype($order_id, $subtype, $rand) {
+      global $CFG_GLPI;
+      echo "&nbsp;";
+      echo "<img id='plus_{$subtype}s_block{$rand}'";
+      echo " onclick=\"new_subtype('{$subtype}', {$order_id}, {$rand})\" ";
+      echo  " title='".__('Add')."' alt='".__('Add')."' ";
+      echo  " class='pointer' src='".
+            $CFG_GLPI["root_doc"].
+            "/pics/add_dropdown.png' /> ";
    }
 
    static function plusButton($dom_id, $clone = FALSE) {
@@ -494,7 +526,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
          echo "<textarea cols='132' rows='25' style='border:0' name='json'>";
          echo PluginFusioninventoryToolbox::displayJson($order->fields['json']);
          echo "</textarea>";
-         echo "<input type='hidden' name='id' value='{$order->fields['id']}' />";
+         echo "<input type='hidden' name='orders_id' value='{$order->fields['id']}' />";
          echo "<input type='submit' name='update_json' value=\"".
             _sx('button', 'Save')."\" class='submit'>";
          Html::closeForm();

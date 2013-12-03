@@ -133,12 +133,47 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
          $options = $options | JSON_UNESCAPED_SLASHES;
       }
-      return $order->update(array(
-         'id'   => $orders_id,
-         'json' => addcslashes(json_encode($datas, $options), "\\")
-      ));
-   }
 
+      $json = json_encode($datas, $options);
+
+      $json_error_consts = array(
+         JSON_ERROR_NONE => "JSON_ERROR_NONE",
+         JSON_ERROR_DEPTH => "JSON_ERROR_DEPTH",
+         JSON_ERROR_STATE_MISMATCH => "JSON_ERROR_STATE_MISMATCH",
+         JSON_ERROR_CTRL_CHAR => "JSON_ERROR_CTRL_CHAR",
+         JSON_ERROR_SYNTAX => "JSON_ERROR_SYNTAX",
+      );
+
+      if( version_compare(phpversion(), "5.3.3", "ge") ) {
+         $json_error_consts[JSON_ERROR_UTF8] = "JSON_ERROR_UTF8";
+      }
+
+      $error_json = json_last_error();
+
+      $error_json_message = json_last_error_msg();
+
+      $error = 0;
+
+      if ( $error_json != JSON_ERROR_NONE ) {
+         $error_msg = "";
+
+         $error_msg = $json_error_consts[$error_json];
+
+         Session::addMessageAfterRedirect(
+            __("The modified JSON contained a syntax error :", "fusioninventory") . "<br/>" .
+            $error_msg . "<br/>". $error_json_message, FALSE, ERROR, FALSE
+         );
+         $error = 1;
+      } else {
+         $error = $order->update(
+            array(
+               'id' => $_POST['orders_id'],
+               'json' => Toolbox::addslashes_deep($json)
+            )
+         );
+      }
+      return $error;
+   }
 
 
    /**
