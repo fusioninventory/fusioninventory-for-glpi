@@ -488,7 +488,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       echo "<td>";
       echo "</td><td>";
       if ( $mode === 'edit' ) {
-         echo "<input type='hidden' name='index' value='".$request_data['index']."' />";
          echo "<input type='submit' name='save_item' value=\"".
             _sx('button', 'Save')."\" class='submit' >";
       } else {
