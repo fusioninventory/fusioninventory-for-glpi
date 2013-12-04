@@ -44,70 +44,45 @@ include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
 
-if (isset($_REQUEST['update_json'])) {
+if (isset($_POST['update_json'])) {
    $order = new PluginFusioninventoryDeployOrder();
 
-   //flatten json to update
-   $json = json_decode($_REQUEST['json'], TRUE);
+   $json_clean = stripcslashes($_POST['json']);
 
-   $json_error_consts = array(
-      JSON_ERROR_NONE => "JSON_ERROR_NONE",
-      JSON_ERROR_DEPTH => "JSON_ERROR_DEPTH",
-      JSON_ERROR_STATE_MISMATCH => "JSON_ERROR_STATE_MISMATCH",
-      JSON_ERROR_CTRL_CHAR => "JSON_ERROR_CTRL_CHAR",
-      JSON_ERROR_SYNTAX => "JSON_ERROR_SYNTAX",
-   );
+   $json = json_decode($json_clean,TRUE);
 
-   if( version_compare(phpversion(), "5.3.3", "ge") ) {
-      $json_error_consts[JSON_ERROR_UTF8] = "JSON_ERROR_UTF8";
-   }
-
-   $error_json = json_last_error();
-
-   if ( $error_json != JSON_ERROR_NONE ) {
-      $error_msg = "";
-
-      $error_msg = $json_error_consts[$error_json];
-
-      Session::addMessageAfterRedirect(
-         __("The modified JSON contained a syntax error : <br/>", "fusioninventory") .
-         $error_msg, FALSE, ERROR, FALSE
-      );
-      Html::back();
-   } else {
-      $order->update(
-         array(
-            'id' => $_REQUEST['id'],
-            'json' => addslashes(json_encode($json))
-         )
-      );
-      Html::back();
-   }
+   $ret = PluginFusioninventoryDeployOrder::updateOrderJson($_POST['orders_id'], $json);
+   Html::back();
    exit;
-} elseif (isset($_REQUEST['add_item'])) {
-   PluginFusioninventoryDeployPackage::alter_json('add_item', $_REQUEST);
+} elseif (isset($_POST['add_item'])) {
+   $data = json_decode(stripcslashes(json_encode($_POST)),TRUE);
+   PluginFusioninventoryDeployPackage::alter_json('add_item', $data);
    Html::back();
-} elseif (isset($_REQUEST['save_item'])) {
-   PluginFusioninventoryDeployPackage::alter_json('save_item', $_REQUEST);
+} elseif (isset($_POST['save_item'])) {
+   $data = json_decode(stripcslashes(json_encode($_POST)),TRUE);
+   PluginFusioninventoryDeployPackage::alter_json('save_item', $data);
    Html::back();
-} elseif (isset($_REQUEST['remove_item'])) {
-   PluginFusioninventoryDeployPackage::alter_json('remove_item', $_REQUEST);
+} elseif (isset($_POST['remove_item'])) {
+   $data = json_decode(stripcslashes(json_encode($_POST)),TRUE);
+   PluginFusioninventoryDeployPackage::alter_json('remove_item', $data);
    Html::back();
 }
 
+$data = Toolbox::stripslashes_deep($_POST);
+
 $package = new PluginFusioninventoryDeployPackage();
 //general form
-if (isset ($_POST["add"])) {
+if (isset ($data["add"])) {
    PluginFusioninventoryProfile::checkRight("packages", "w");
-   $newID = $package->add($_POST);
+   $newID = $package->add($data);
    html::redirect(Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployPackage')."?id=".$newID);
-} else if (isset ($_POST["update"])) {
+} else if (isset ($data["update"])) {
    PluginFusioninventoryProfile::checkRight("packages", "w");
-   $package->update($_POST);
+   $package->update($data);
    Html::back();
-} else if (isset ($_POST["delete"])) {
+} else if (isset ($data["delete"])) {
    PluginFusioninventoryProfile::checkRight("packages", "w");
-   $package->delete($_POST);
+   $package->delete($data);
    $package->redirectToList();
 }
 

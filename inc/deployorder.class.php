@@ -110,7 +110,33 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       }
    }
 
+   /*
+    * Get a sub element at index
+    * @param subtype the type of sub element
+    * @param the index in element list
+    * @return the sub element
+    */
+   function getSubElement($subtype, $index) {
 
+      $data_o = json_decode($this->fields['json'], TRUE);
+
+      return $data_o['jobs'][$subtype][$index];
+   }
+
+   /*
+    * Get Order's associated file by hash
+    * @param hash the sha512 hash of file
+    * @return the associated file for the selected hash
+    */
+   function getAssociatedFile($hash) {
+      $data_o = json_decode($this->fields['json'], TRUE);
+
+      if ( array_key_exists( $hash, $data_o['associatedFiles'] ) ) {
+         return $data_o['associatedFiles'][$hash];
+      }
+
+      return NULL;
+   }
 
    static function getJson($orders_id) {
       $order = new self;
@@ -133,12 +159,47 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
          $options = $options | JSON_UNESCAPED_SLASHES;
       }
-      return $order->update(array(
-         'id'   => $orders_id,
-         'json' => addcslashes(json_encode($datas, $options), "\\")
-      ));
-   }
 
+      $json = json_encode($datas, $options);
+
+      $json_error_consts = array(
+         JSON_ERROR_NONE => "JSON_ERROR_NONE",
+         JSON_ERROR_DEPTH => "JSON_ERROR_DEPTH",
+         JSON_ERROR_STATE_MISMATCH => "JSON_ERROR_STATE_MISMATCH",
+         JSON_ERROR_CTRL_CHAR => "JSON_ERROR_CTRL_CHAR",
+         JSON_ERROR_SYNTAX => "JSON_ERROR_SYNTAX",
+      );
+
+      if( version_compare(phpversion(), "5.3.3", "ge") ) {
+         $json_error_consts[JSON_ERROR_UTF8] = "JSON_ERROR_UTF8";
+      }
+
+      $error_json = json_last_error();
+
+      $error_json_message = json_last_error_msg();
+
+      $error = 0;
+
+      if ( $error_json != JSON_ERROR_NONE ) {
+         $error_msg = "";
+
+         $error_msg = $json_error_consts[$error_json];
+
+         Session::addMessageAfterRedirect(
+            __("The modified JSON contained a syntax error :", "fusioninventory") . "<br/>" .
+            $error_msg . "<br/>". $error_json_message, FALSE, ERROR, FALSE
+         );
+         $error = 1;
+      } else {
+         $error = $order->update(
+            array(
+               'id' => $_POST['orders_id'],
+               'json' => Toolbox::addslashes_deep($json)
+            )
+         );
+      }
+      return $error;
+   }
 
 
    /**

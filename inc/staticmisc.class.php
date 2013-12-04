@@ -581,7 +581,7 @@ class PluginFusioninventoryStaticmisc {
    static function task_actiontype_deployinstall($a_itemtype) {
       return array('' => Dropdown::EMPTY_VALUE,
                    'Computer'                         => __('Computers'),
-                   'PluginFusioninventoryDeployGroup' => __('Dynamic Group'),
+                   'PluginFusioninventoryDeployGroup' => __('Fusinv', 'fusioninventory'). ' - ' .__('Group'),
                    'Group'                            => __('Group')
                   );
    }
@@ -591,7 +591,7 @@ class PluginFusioninventoryStaticmisc {
    static function task_actiontype_deployuninstall($a_itemtype) {
       return array('' => Dropdown::EMPTY_VALUE,
                    'Computer'                         => __('Computers'),
-                   'PluginFusioninventoryDeployGroup' => __('Dynamic Group'),
+                   'PluginFusioninventoryDeployGroup' => __('Fusinv'). ' - ' .__('Group'),
                    'Group'                            => __('Group')
 
                   );

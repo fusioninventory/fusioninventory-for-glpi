@@ -77,17 +77,19 @@ $order = new PluginFusioninventoryDeployOrder();
 
 $order->getFromDB($_REQUEST['orders_id']);
 
+$mode = $_POST['mode'];
+
 //TODO: In the displayForm function, $_REQUEST is somewhat too much for the '$datas' parameter
 // I think we could use only $order -- Kevin 'kiniou' Roy
 switch ($_REQUEST['subtype']) {
    case 'check':
-      PluginFusioninventoryDeployCheck::displayForm($order, $_REQUEST, $_REQUEST['rand']);
+      PluginFusioninventoryDeployCheck::displayForm($order, $_REQUEST, $_REQUEST['rand'], $mode);
       break;
    case 'file':
-      PluginFusioninventoryDeployFile::displayForm($order, $_REQUEST, $_REQUEST['rand']);
+      PluginFusioninventoryDeployFile::displayForm($order, $_REQUEST, $_REQUEST['rand'], $mode);
       break;
    case 'action':
-      PluginFusioninventoryDeployAction::displayForm($order, $_REQUEST, $_REQUEST['rand']);
+      PluginFusioninventoryDeployAction::displayForm($order, $_REQUEST, $_REQUEST['rand'], $mode);
       break;
    case 'package_json_debug':
       if ( isset($order->fields['json']) ) {

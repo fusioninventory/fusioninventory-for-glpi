@@ -45,19 +45,21 @@ header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 Session::checkCentralAccess();
 
-if (!isset($_REQUEST['rand']) && !isset($_REQUEST['subtype'])) {
+if (!isset($_POST['rand']) && !isset($_POST['subtype'])) {
    exit;
 }
 
-switch ($_REQUEST['type']) {
+$rand = $_POST['rand'];
+$mode = $_POST['mode'];
+
+switch ($_POST['type']) {
    case 'check':
-      PluginFusioninventoryDeployCheck::displayAjaxValue($_REQUEST);
+      PluginFusioninventoryDeployCheck::displayAjaxValues(NULL, $_POST, $rand, $mode);
       break;
    case 'file':
-      PluginFusioninventoryDeployFile::displayAjaxValue($_REQUEST);
+      PluginFusioninventoryDeployFile::displayAjaxValues( NULL, $_POST, $rand, $mode);
       break;
    case 'action':
-      PluginFusioninventoryDeployAction::displayAjaxValue($_REQUEST);
+      PluginFusioninventoryDeployAction::displayAjaxValues(NULL, $_POST, $rand, $mode);
       break;
 }
-?>

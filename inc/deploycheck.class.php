@@ -84,51 +84,63 @@ class PluginFusioninventoryDeployCheck {
       );
    }
 
-   static function displayForm($order, $datas, $rand) {
+   static function displayForm($order, $request_data, $rand, $mode) {
       global $CFG_GLPI;
 
+      /*
+       * Get element config in 'edit' mode
+       */
+      $config = NULL;
+      if ( $mode === 'edit' && isset( $request_data['index'] ) ) {
+         /*
+          * Add an hidden input about element's index to be updated
+          */
+         echo "<input type='hidden' name='index' value='".$request_data['index']."' />";
 
-      if (!isset($datas['index'])) {
-         echo "<div style='display:none' id='checks_block$rand' >";
-      } else {
-         //== edit selected data ==
+         $c = $order->getSubElement( 'checks', $request_data['index'] );
 
-         //get current order json
-         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order->fields['id']),
-                                TRUE);
+         if ( is_array( $c ) && count( $c ) ) {
 
-         //get data on index
-         $check = $datas_o['jobs']['checks'][$datas['index']];
+            $config = array(
+               'type' => $c['type'],
+               'data' => $c
+            );
+         }
       }
 
-      echo "<span id='show_check_type$rand'></span>";
-      echo "<script type='text/javascript'>";
-      $params = array(
-         'rand'    => $rand,
-         'subtype' => "check"
-      );
-      if (isset($check['type'])) {
-         $params['edit']   = "true";
-         $params['type']   = $check['type'];
-         $params['index']  = $datas['index'];
-         $params['path']   = addslashes($check['path']);
-         $params['value']  = addslashes($check['value']);
-         $params['return'] = $check['return'];
+      /*
+       * Display start of div form
+       */
+      if ( in_array( $mode, array('init'), TRUE ) ) {
+         echo "<div id='checks_block$rand' style='display:none'>";
       }
-      Ajax::updateItemJsCode("show_check_type$rand",
-                             $CFG_GLPI["root_doc"].
-                             "/plugins/fusioninventory/ajax/deploydropdown_packagesubtypes.php",
-                             $params,
-                             "dropdown_deploy_checktype");
-      echo "</script>";
 
-      echo "<span id='show_check_value$rand'></span>";
+      /*
+       * Display element's dropdownType in 'create' or 'edit' mode
+       */
+      if ( in_array( $mode, array('create', 'edit'), TRUE ) ) {
+         self::displayDropdownType($config,$request_data, $rand, $mode);
+      }
 
-      echo "<hr>";
-      if (!isset($datas['index'])) {
+      /*
+       * Display element's values in 'edit' mode only.
+       * In 'create' mode, those values are refreshed with dropdownType 'change'
+       * javascript event.
+       */
+      if ( in_array( $mode, array('create', 'edit'), TRUE ) ) {
+         echo "<span id='show_check_value{$rand}'>";
+         if ( $mode === 'edit' ) {
+            self::displayAjaxValues( $config, $request_data, $rand, $mode );
+         }
+         echo "</span>";
+      }
+
+      /*
+       * Close form div
+       */
+      if ( in_array( $mode, array('init'), TRUE ) ) {
          echo "</div>";
       }
-
    }
 
    static function displayList($order, $datas, $rand) {
@@ -179,142 +191,169 @@ class PluginFusioninventoryDeployCheck {
       Html::checkAllAsCheckbox("checksList$rand", mt_rand());
       echo "</th><th colspan='3' class='mark'></th></tr>";
       echo "</table>";
-      echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
+      echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt='' />";
       echo "<input type='submit' name='delete' value=\"".
-         __('Delete', 'fusioninventory')."\" class='submit'>";
+         __('Delete', 'fusioninventory')."\" class='submit' />";
    }
 
 
 
-   static function dropdownType($datas) {
+   static function displayDropdownType($config, $request_data, $rand, $mode) {
       global $CFG_GLPI;
 
-      $rand = $datas['rand'];
+      /*
+       * Build dropdown options
+       */
+      $dropdown_options['rand'] = $rand;
+      if ($mode === 'edit') {
+         $dropdown_options['value'] = $config['type'];
+         $dropdown_options['readonly'] = true;
+      }
 
+      /*
+       * Build actions types list
+       */
       $checks_types = self::getTypes();
       array_unshift($checks_types, "---");
+
+      /*
+       * Display dropdown html
+       */
       echo "<table class='package_item'>";
       echo "<tr>";
       echo "<th>".__("Type", 'fusioninventory')."</th>";
       echo "<td>";
-      $options['rand'] = $datas['rand'];
-      if (isset($datas['edit'])) {
-         $options['value'] = $datas['type'];
-      }
-      Dropdown::showFromArray("deploy_checktype", $checks_types, $options);
+      Dropdown::showFromArray("deploy_checktype", $checks_types, $dropdown_options);
       echo "</td>";
       echo "</tr></table>";
 
       //ajax update of check value span
-      $params = array('value'  => '__VALUE__',
-                      'rand'   => $rand,
-                      'myname' => 'method',
-                      'type'   => "check");
-      if (isset($datas['edit'])) {
-         $params['edit']   = "true";
-         $params['index']  = $datas['index'];
-         $params['path']   = addslashes($datas['path']);
-         $params['value2'] = addslashes($datas['value']);
-         $params['return'] = $datas['return'];
-      }
-      Ajax::updateItemOnEvent("dropdown_deploy_checktype$rand",
-                              "show_check_value$rand",
-                              $CFG_GLPI["root_doc"].
-                                 "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
-                              $params,
-                              array("change", "load"));
+      if ( $mode === 'create' ) {
+         $params = array(
+            'value'  => '__VALUE__',
+            'rand'   => $rand,
+            'myname' => 'method',
+            'type'   => "check"
+         );
 
-      if (isset($datas['edit'])) {
-         echo "<script type='text/javascript'>";
-         Ajax::updateItemJsCode("show_check_value$rand",
-                                $CFG_GLPI["root_doc"].
-                                 "/plugins/fusioninventory/ajax/deploy_displaytypevalue.php",
-                                $params,
-                                "dropdown_deploy_checktype$rand");
-         echo "</script>";
+         Ajax::updateItemOnEvent(
+            "dropdown_deploy_checktype$rand",
+            "show_check_value$rand",
+            $CFG_GLPI["root_doc"].
+            "/plugins/fusioninventory".
+            "/ajax/deploy_displaytypevalue.php",
+            $params,
+            array("change", "load")
+         );
       }
    }
 
 
+   static function getValues($type, $data, $mode) {
+      $values = array(
+         'path_label'   => "",
+         'path_value'   => "",
+         'value_type'   => "input",
+         'value_label'  => "",
+         'value'       => "",
+         'return'       => "error"
+      );
 
-   static function displayAjaxValue($datas) {
-
-      $value = $datas['value'];
-      $rand  = $datas['rand'];
-
-      $path_value = isset($datas['path'])?$datas['path']:"";
-      $value2 = isset($datas['value2'])?$datas['value2']:"";
-      $return = isset($datas['return'])?$datas['return']:"";
-      $value_type = "input";
-      switch ($value) {
+      if ( $mode === 'edit' ) {
+         $values['path_value'] = isset($data['path'])?$data['path']:"";
+         $values['value'] = isset($data['value'])?$data['value']:"";
+         $values['return'] = isset($data['return'])?$data['return']:"error";
+      }
+      switch ($type) {
          case "winkeyExists":
          case "winkeyMissing":
-            $path_label = __("Key", 'fusioninventory');
-            $value_label = FALSE;
+            $values['path_label'] = __("Key", 'fusioninventory');
+            $values['value_label'] = FALSE;
             break;
          case "winkeyEquals":
-            $path_label = __("Key", 'fusioninventory');
-            $value_label = __('Key value', 'fusioninventory');
+            $values['path_label'] = __("Key", 'fusioninventory');
+            $values['value_label'] = __('Key value', 'fusioninventory');
             break;
          case "fileExists":
          case "fileMissing":
-            $path_label = __("File", 'fusioninventory');
-            $value_label = FALSE;
+            $values['path_label'] = __("File", 'fusioninventory');
+            $values['value_label'] = FALSE;
             break;
          case "fileSizeGreater":
          case "fileSizeEquals":
          case "fileSizeLower":
-            $path_label = __("File", 'fusioninventory');
-            $value_label = __('Value', 'fusioninventory');
-            $value_type = "input+unit";
+            $values['path_label'] = __("File", 'fusioninventory');
+            $values['value_label'] = __('Value', 'fusioninventory');
+            $values['value_type'] = "input+unit";
             break;
          case "fileSHA512":
-            $path_label = __("File", 'fusioninventory');
-            $value_label = __('Value', 'fusioninventory');
-            $value_type = "textarea";
+            $values['path_label'] = __("File", 'fusioninventory');
+            $values['value_label'] = __('Value', 'fusioninventory');
+            $values['value_type'] = "textarea";
             break;
          case "freespaceGreater":
-            $path_label = __("Disk or directory", 'fusioninventory');
-            $value_label = __('Value', 'fusioninventory');
-            $value_type = "input+unit";
+            $values['path_label'] = __("Disk or directory", 'fusioninventory');
+            $values['value_label'] = __('Value', 'fusioninventory');
+            $values['value_type'] = "input+unit";
             break;
          default:
             return FALSE;
       }
+      return $values;
+   }
 
+   static function displayAjaxValues($config, $request_data, $rand, $mode) {
+
+      /*
+       * Get type from request params
+       */
+      $type = NULL;
+
+      if ( $mode === 'create' ) {
+         $type = $request_data['values'];
+      } else {
+         $type = $config['type'];
+         $config_data = $config['data'];
+      }
+
+      $values = self::getValues($type, $config_data, $mode);
+      if ($values === FALSE) {
+         return FALSE;
+      }
       echo "<table class='package_item'>";
       echo "<tr>";
-      echo "<th>$path_label</th>";
-      echo "<td><input type='text' name='path' id='check_path$rand' value='$path_value' /></td>";
+      echo "<th>{$values['path_label']}</th>";
+      echo "<td><input type='text' name='path' id='check_path{$rand}' value='{$values['path_value']}' /></td>";
       echo "</tr>";
-      if ($value_label !== FALSE) {
+      if ($values['value_label'] !== FALSE) {
          echo "<tr>";
-         echo "<th>$value_label</th>";
-         switch ($value_type) {
+         echo "<th>{$values['value_label']}</th>";
+         switch ($values['value_type']) {
             case "textarea":
-               echo "<td><textarea name='value' id='check_value$rand' rows='5'>".
-                  $value2."</textarea></td>";
+               echo "<td><textarea name='value' id='check_value{$rand}' rows='5'>".
+                  $values['value']."</textarea></td>";
                break;
             case "input":
-               echo "<td><input type='text' name='value' id='check_value$rand' value='".
-                  $value2."' /></td>";
+               echo "<td><input type='text' name='value' id='check_value{$rand}' value='".
+                  $values['value']."' /></td>";
                break;
             case "input+unit":
 
+               $value = $values['value'];
                // freespaceGreater check is saved as MiB
-               if ($value == 'freespaceGreater') {
-                  $value2 = $value2 * 1024 * 1024;
+               if ($type == 'freespaceGreater') {
+                  $value = $value * 1024 * 1024;
                }
                $options['value'] = 'KB';
-               if (isset($datas['edit'])) {
-                  if ($value2 >= self::getUnitSize('GB')) {
-                     $value2 = round($value2/ (self::getUnitSize('GB')), 1);
+               if ($mode === 'edit') {
+                  if ($value >= self::getUnitSize('GB')) {
+                     $value = $value / (self::getUnitSize('GB'));
                      $options['value'] = 'GB';
-                  } elseif ($value2 >= (self::getUnitSize('MB'))) {
-                     $value2 = round($value2/ (self::getUnitSize('MB')), 1);
+                  } elseif ($value >= (self::getUnitSize('MB'))) {
+                     $value = $value/ (self::getUnitSize('MB'));
                      $options['value'] = 'MB';
-                  }  elseif ($value2 >= (self::getUnitSize('KB'))) {
-                     $value2 = round($value2/ (self::getUnitSize('KB')), 1);
+                  }  elseif ($value >= (self::getUnitSize('KB'))) {
+                     $value = $value/ (self::getUnitSize('KB'));
                      $options['value'] = 'KB';
                   } else {
                      $options['value'] = 'B';
@@ -325,8 +364,8 @@ class PluginFusioninventoryDeployCheck {
                            "<input ".
                               "type='text' ".
                               "name='value' ".
-                              "id='check_value$rand' ".
-                              "value='".$value2."' ".
+                              "id='check_value{$rand}' ".
+                              "value='{$value}' ".
                            "/>";
                echo     "</td>";
                echo  "</tr><tr>";
@@ -340,7 +379,7 @@ class PluginFusioninventoryDeployCheck {
                 *                               -- Kevin 'kiniou' Roy
                 */
 
-               if ($value == 'freespaceGreater') {
+               if ($type == 'freespaceGreater') {
                   unset($unit_labels['KB']);
                   unset($unit_labels['B']);
                }
@@ -361,13 +400,12 @@ class PluginFusioninventoryDeployCheck {
       Dropdown::showFromArray('return', array(
                   "error"  => __('Error', 'fusioninventory'),
                   "ignore" => __("Ignore", 'fusioninventory')
-               ), array('value' => $return));
+               ), array('value' => $values['return']));
       echo "</td>";
       echo "</tr>";
 
       echo "<tr><td></td><td>";
-      if (isset($datas['edit'])) {
-         echo "<input type='hidden' name='index' value='".$datas['index']."' />";
+      if ($mode === 'edit') {
          echo "<input type='submit' name='save_item' value=\"".
             _sx('button', 'Save')."\" class='submit' >";
       } else {

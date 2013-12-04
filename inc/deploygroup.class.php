@@ -49,6 +49,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    protected $static_group_types = array('Computer');
    public $dohistory = TRUE;
 
+
    static function getTypeName($nb=0) {
 
       if ($nb>1) {
@@ -69,7 +70,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return TRUE;
    }
 
-
+   public function __construct() {
+      $this->grouptypes = array(
+            'STATIC'    => __('Static group', 'fusioninventory'),
+            'DYNAMIC'   => __('Dynamic group', 'fusioninventory')
+         );
+   }
 
 //   function defineTabs($options=array()) {
 //
@@ -144,18 +150,19 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Type')."&nbsp;:</td>";
       echo "<td align='center'>";
-      $types = array(
-         'STATIC'    => __('Static group', 'fusioninventory'),
-         'DYNAMIC'   => __('Dynamic group', 'fusioninventory')
-      );
-      Dropdown::showFromArray("type", $types, array('value'=>$this->fields['type']));
+      Dropdown::showFromArray("type", $this->grouptypes, array('value'=>$this->fields['type']));
       echo "</td>";
       echo "</tr>";
 
       $this->showFormButtons($options);
-//      $this->addDivForTabs();
-      if ($this->fields['type'] == 'DYNAMIC') {
-         $this->showDynamicForm();
+
+      switch($this->fields['type']) {
+         case 'DYNAMIC':
+            $this->showDynamicForm();
+            break;
+         case 'STATIC':
+            $this->showStaticForm();
+            break;
       }
 
       return TRUE;
@@ -302,13 +309,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $this->showSearchFields('static');
 
       echo "</table>";
-      echo "</div>";
 
       echo "<input type='button' value=\"".__('Search')
 
             ."\" id='group_search_submit' class='submit' name='add_item' />&nbsp;";
 
       echo "<div id='group_results'></div>";
+      echo "</div>";
 
       Html::closeForm();
    }
@@ -570,8 +577,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
    }
-
-
 
    static function groupAjaxLoad($type) {
       global $CFG_GLPI;
@@ -908,5 +913,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
              $CFG_GLPI["ajax_wildcard"]."';\" id='search_$id' name='____data_$id' size='$size'>\n";
    }
 }
+
+
 
 ?>
