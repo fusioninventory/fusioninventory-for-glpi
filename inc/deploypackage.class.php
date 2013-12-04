@@ -364,7 +364,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $order = new PluginFusioninventoryDeployOrder($order_type, $packages_id);
       $datas = json_decode($order->fields['json'], TRUE);
-      Toolbox::logDebug($datas);
       $orders_id = $order->fields['id'];
       $order_type_label = PluginFusioninventoryDeployOrder::getOrderTypeLabel(
                               $order->fields['type']
