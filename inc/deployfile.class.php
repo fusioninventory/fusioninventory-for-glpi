@@ -118,53 +118,6 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          echo "</div>";
       }
 
-
-      /*
-      if (!isset($datas['index'])) {
-         echo "<div style='display:none' id='files_block$rand' >";
-      } else {
-         //== edit selected data ==
-
-         //get current order json
-         $datas_o = json_decode(PluginFusioninventoryDeployOrder::getJson($order->fields['id']),
-                                TRUE);
-
-         //get data on index
-         $sha512 = $datas_o['jobs']['associatedFiles'][$datas['index']];
-         $file = $datas_o['associatedFiles'][$sha512];
-      }
-
-
-      echo "<span id='show_file_type$rand'></span>";
-      echo "<script type='text/javascript'>";
-      $params = array(
-         'rand'    => $rand,
-         'subtype' => "file"
-      );
-      if (isset($datas['index'])) {
-         $params['edit']                   = "true";
-         $params['index']                  = $datas['index'];
-         $params['p2p']                    = $file['p2p'];
-         $params['p2p-retention-duration'] = $file['p2p-retention-duration'];
-         $params['uncompress']             = $file['uncompress'];
-      }
-
-      Ajax::updateItemJsCode("show_file_type$rand",
-                             $CFG_GLPI["root_doc"].
-                             "/plugins/fusioninventory/ajax/deploydropdown_packagesubtypes.php",
-                             $params,
-                             "dropdown_deploy_filetype");
-
-      echo "</script>";
-
-
-      echo "<span id='show_file_value$rand'></span>";
-
-      echo "<hr>";
-      echo "</div>";
-
-      Html::closeForm();
-      */
    }
 
 
