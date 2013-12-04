@@ -54,7 +54,7 @@ $mode = $_POST['mode'];
 
 switch ($_POST['type']) {
    case 'check':
-      PluginFusioninventoryDeployCheck::displayAjaxValue(NULL, $_POST, $rand, $mode);
+      PluginFusioninventoryDeployCheck::displayAjaxValues(NULL, $_POST, $rand, $mode);
       break;
    case 'file':
       PluginFusioninventoryDeployFile::displayAjaxValues( NULL, $_POST, $rand, $mode);
