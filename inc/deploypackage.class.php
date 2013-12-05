@@ -59,6 +59,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
    
    function canEditPackage() {
+      $this->getRunningTasks();
       if (count($this->running_tasks) > 0) {
             return FALSE;
       }
@@ -81,18 +82,13 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       return TRUE;
    }
 
-   //Get running tasks after getFromDB
-   function post_getFromDB() {
-      $this->getRunningTasks();
-   }
-
-
    /**
    *  Check if we can edit (or delete) this item
    *  If it's not possible display an error message
    **/
    function getEditErrorMessage($order_type=NULL) {
 
+      $this->getRunningTasks();
       $error_message = "";
       $tasklist = array();
       if (isset($order_type)) {
