@@ -513,6 +513,17 @@ echo "<tr>";
    function constructSQL($itemtype,$params, $items_id_check=0) {
       global $CFG_GLPI;
 
+      /**
+       * the method Search::addMetaLeftJoin() on Software items uses
+       * getEntitiesRestrictRequest() which needs a list of active entities
+       * and ancestors at all costs.
+       *
+       * Since dynamic groups are not entity aware and Search::addMetaLeftJoin()
+       * does a recursive entities JOIN, the query is fixed with the root entity.
+       **/
+      $_SESSION['glpiactiveentities_string'] = '0';
+      $_SESSION['glpiparententities'] = array('0');
+
       // Instanciate an object to access method
       $item = NULL;
 
