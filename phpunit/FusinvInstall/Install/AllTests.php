@@ -87,7 +87,7 @@ class Install extends PHPUnit_Framework_TestCase {
             }
          }
          
-         passthru("cd ../tools && php -f cli_install.php");
+         passthru("cd ../scripts && php -f cli_install.php");
 
          Session::loadLanguage("en_GB");
 
