@@ -87,7 +87,7 @@ class Install extends PHPUnit_Framework_TestCase {
             }
          }
          
-         passthru("cd ../tools && php -f cli_install.php 4");
+         passthru("cd ../scripts && php -f cli_install.php 4");
 
          Session::loadLanguage("en_GB");
          $FusinvInstall = new FusinvInstall();
