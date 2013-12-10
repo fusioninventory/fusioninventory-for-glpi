@@ -233,7 +233,8 @@ class PluginFusioninventoryDeployCheck {
             'value'  => '__VALUE__',
             'rand'   => $rand,
             'myname' => 'method',
-            'type'   => "check"
+            'type'   => "check",
+            'mode'   => $mode
          );
 
          Ajax::updateItemOnEvent(
