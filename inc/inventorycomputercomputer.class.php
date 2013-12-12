@@ -114,14 +114,14 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
       if ($a_computerextend['bios_date'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('Date du BIOS', 'fusioninventory').'</td>';
+         echo '<td>'.__('BIOS date', 'fusioninventory').'</td>';
          echo '<td>'.Html::convDate($a_computerextend['bios_date']).'</td>';
          echo '</tr>';
       }
 
       if ($a_computerextend['bios_version'] != '') {
          echo '<tr class="tab_bg_1">';
-         echo '<td>'.__('Version du BIOS', 'fusioninventory').'</td>';
+         echo '<td>'.__('BIOS version', 'fusioninventory').'</td>';
          echo '<td>'.$a_computerextend['bios_version'].'</td>';
          echo '</tr>';
       }
