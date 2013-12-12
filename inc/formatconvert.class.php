@@ -1374,6 +1374,10 @@ class PluginFusioninventoryFormatconvert {
              'VERSION'  => $data_collect['softwareversion']
          );
       }
+      // Update computer inventory number
+      if (isset($data_collect['otherserial'])) {
+         $a_inventory['Computer']['otherserial'] = $data_collect['otherserial'];
+      }
       
       return $a_inventory;
    }
