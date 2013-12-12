@@ -49,7 +49,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
    // From RuleCollection
    public $stop_on_first_match = TRUE;
    static public $right        = 'rule_import';
-   public $menu_option         = 'linkcomputer';
+   public $menu_option         = 'fusionlinkcomputer';
 
 
    function getTitle() {
