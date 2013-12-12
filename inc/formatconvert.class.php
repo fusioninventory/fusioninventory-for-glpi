@@ -763,8 +763,10 @@ class PluginFusioninventoryFormatconvert {
                      $array_tmp['mac'] = strtolower($array_tmp['mac']);
                      if (isset($a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']])) {
                         if (isset($array_tmp['ip'])) {
-                           $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'][]
-                                   = $array_tmp['ip'];
+                           if (!in_array($array_tmp['ip'], $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'])) { 
+                              $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'][]
+                                      = $array_tmp['ip'];
+                           }
                         }
                      } else {
                         if (isset($array_tmp['ip'])
