@@ -237,9 +237,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment');
    }   
-   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload')) {
-      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload');
-   }
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/walks')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/walks');
    }
@@ -249,14 +246,40 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Deploy folders
     */
+
+   if (is_dir(GLPI_PLUGIN_DOC_DIR.'/fusinvdeploy/files')) {
+      rename(
+         GLPI_PLUGIN_DOC_DIR.'/fusinvdeploy/files',
+         GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files'
+      );
+   }
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files');
+   }
+
+
+   if (is_dir(GLPI_PLUGIN_DOC_DIR.'/fusinvdeploy/repository')) {
+      rename(
+         GLPI_PLUGIN_DOC_DIR.'/fusinvdeploy/repository',
+         GLPI_PLUGIN_DOC_DIR.'/fusioninventory/repository'
+      );
    }
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/repository')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/repository');
    }
+
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/files/manifests');
+   }
+
+   if (is_dir(GLPI_PLUGIN_DOC_DIR.'/fusinvdeploy/upload')) {
+      rename(
+         GLPI_PLUGIN_DOC_DIR.'/fusinvdeploy/upload',
+         GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload'
+      );
+   }
+   if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload')) {
+      mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/upload');
    }
 
 
