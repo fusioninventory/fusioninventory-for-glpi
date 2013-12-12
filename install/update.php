@@ -8316,6 +8316,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
       $o_line['associatedFiles'] = array();
 
       //=== Checks ===
+
       if (TableExists("glpi_plugin_fusinvdeploy_checks")) {
          $c_query = "SELECT type, path, value, 'error' as `return`
             FROM glpi_plugin_fusinvdeploy_checks
@@ -8326,7 +8327,11 @@ function migrateTablesFromFusinvDeploy ($migration) {
          while ($c_datas = $DB->fetch_assoc($c_res)) {
             foreach ($c_datas as $c_key => $c_value) {
                //specific case for filesytem sizes, convert to bytes
-               if (!empty($c_value) && is_numeric($c_value)) {
+               if (
+                  !empty($c_value)
+                  && is_numeric($c_value)
+                  && $c_datas['type'] !== 'freespaceGreater'
+               ) {
                   $c_value = $c_value * 1024 * 1024;
                }
 
