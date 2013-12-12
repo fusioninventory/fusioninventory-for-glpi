@@ -354,7 +354,31 @@ class ComputerMonitor extends PHPUnit_Framework_TestCase {
       $this->assertEquals(0, 
                           countElementsInTable('glpi_computers_items', 'itemtype="Monitor" AND `id` > 3'), 
                           'First computer (number id of links recreated) (4)');
+
+      // * Retry first computer with monitor have same serial number 
+      // but have different comment
+      $a_computerinventory = $this->a_computer1;
+      $a_computerinventory['monitor'][0]['comment'] = '31/2012';
+      $pfiComputerLib->updateComputer($a_computerinventory, 
+                                      $computers_id, 
+                                      FALSE, 
+                                      1);
       
+      $GLPIlog->testSQLlogs();
+      $GLPIlog->testPHPlogs();
+
+      $computer->getFromDB(1);
+      $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly (5)');
+      
+      $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer (5)');
+      $this->assertEquals(2, 
+                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'), 
+                          'First computer (links) (5)');
+      
+      $this->assertEquals(0, 
+                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor" AND `id` > 3'), 
+                          'First computer (number id of links recreated) (5)');
+    
 
       $pfConfig->updateValue('import_monitor', 2);
       PluginFusioninventoryConfig::loadCache();
