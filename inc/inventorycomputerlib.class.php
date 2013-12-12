@@ -1163,6 +1163,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                foreach ($a_computerinventory['monitor'] as $key => $arrays) {
                   $arrayslower = array_map('strtolower', $arrays);
                   foreach ($db_monitors as $keydb => $arraydb) {
+                     if ($pfConfig->getValue('import_monitor') == 3) {
+                        unset($arrayslower['comment']);
+                        unset($arraydb['comment']);
+                     }
                      if ($arrayslower == $arraydb) {
                         unset($a_computerinventory['monitor'][$key]);
                         unset($db_monitors[$keydb]);
@@ -2097,7 +2101,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             WHERE `name`='".$data['name']."'
                AND `manufacturers_id`='".$data['manufacturers_id']."'
                AND `serial`='".$data['serial']."'
-               AND `comment`='".$data['comment']."'
                AND `is_global`='0'
                AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
