@@ -5941,40 +5941,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $DB->query($queryu);
    }
 
-   /*
-    * Split tasks have more than 1 taskjob 
-    */
-   $pfTask = new PluginFusioninventoryTask();
-   $query = "SELECT *
-      FROM `glpi_plugin_fusioninventory_taskjobs`
-      GROUP BY `plugin_fusioninventory_tasks_id`
-      HAVING count( * ) >1";
-   $result = $DB->query($query);
-   while ($data=$DB->fetch_array($result)) {
-      $queryt = "SELECT *
-                FROM `glpi_plugin_fusioninventory_tasks`
-                WHERE `id` = '".$data['plugin_fusioninventory_tasks_id']."';";
-      $resultt = $DB->query($queryt);
-      $a_task = $DB->fetch_assoc($resultt);
-      unset($a_task['date_creation']);      
-      unset($a_task['id']);      
-      
-      $query_one = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobs`"
-              ." WHERE `plugin_fusioninventory_tasks_id`='".
-                       $data['plugin_fusioninventory_tasks_id']."'";
-      $result_one = $DB->query($query_one);
-      $i = 0;
-      while ($data_one = $DB->fetch_array($result_one)) {
-         if ($i > 0) {
-            // Add new task and link this taskjob to this new task
-            $tasks_id = $pfTask->add($a_task);
-            $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`"
-                    ." SET `plugin_fusioninventory_tasks_id`='".$tasks_id."'"
-                    ." WHERE `id`='".$data_one['id']."'");
-         }
-         $i++;
-      }
-   }
+
    /*
     * Update rules
     */
