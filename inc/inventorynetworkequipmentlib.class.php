@@ -205,8 +205,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
          AND count($a_ips_DB) == 0) {
          // Nothing to do
       } else {
-         if (count($a_ips_DB) != 0) {
-            // Delete processor in DB
+         if (count($a_ips_DB) != 0 && count($a_ips) != 0) {
+            // Delete IPs in DB
             foreach ($a_ips_DB as $idtmp => $ip) {
                $iPAddress->delete(array('id'=>$idtmp));
             }
