@@ -176,7 +176,11 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
 
       $error_json = json_last_error();
 
-      $error_json_message = json_last_error_msg();
+      if ( version_compare(PHP_VERSION, '5.5.0',"ge") ) {
+         $error_json_message = json_last_error_msg();
+      } else {
+         $error_json_message = "";
+      }
 
       $error = 0;
 

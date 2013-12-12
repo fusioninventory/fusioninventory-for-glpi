@@ -233,7 +233,8 @@ class PluginFusioninventoryDeployCheck {
             'value'  => '__VALUE__',
             'rand'   => $rand,
             'myname' => 'method',
-            'type'   => "check"
+            'type'   => "check",
+            'mode'   => $mode
          );
 
          Ajax::updateItemOnEvent(
@@ -310,7 +311,8 @@ class PluginFusioninventoryDeployCheck {
       $type = NULL;
 
       if ( $mode === 'create' ) {
-         $type = $request_data['values'];
+         $type = $request_data['value'];
+         $config_data = NULL;
       } else {
          $type = $config['type'];
          $config_data = $config['data'];
