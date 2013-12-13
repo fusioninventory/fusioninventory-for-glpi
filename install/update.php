@@ -8307,6 +8307,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                         "INNER JOIN `glpi_plugin_fusinvdeploy_fileparts` as fp ".
                         "ON   f.`id` = fp.`plugin_fusinvdeploy_files_id` ".
                         "     AND f.`shortsha512` = '{$shortsha}' ".
+                        "GROUP BY fp.`sha512` ".
                         "ORDER BY fp.`id`";
 
 
