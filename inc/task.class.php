@@ -283,10 +283,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
       echo "<td>";
-//      echo __('Advanced mode', 'fusioninventory')."&nbsp;:";
+      echo __('Advanced mode', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-//      Dropdown::showYesNo("is_advancedmode", $this->fields["is_advancedmode"]);
+      Dropdown::showYesNo("is_advancedmode", $this->fields["is_advancedmode"]);
       echo "</td>";
       echo "</tr>";
 
