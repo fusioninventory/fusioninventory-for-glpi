@@ -56,6 +56,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    
    
 
+
    static function getJoinQuery() {
 
       return(
@@ -111,46 +112,103 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    }
 
 
-
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $CFG_GLPI;
 
+      $tab_names = array();
       if (Session::haveRight('plugin_fusioninventory_task', READ)) {
-         return __('FusInv', 'fusioninventory')." "._n('Task', 'Tasks', 2);
+
+         if ($item->getType() == 'PluginFusioninventoryTask') {
+
+            if ($item->fields['id'] > 0) {
+
+               //Get taskjobs list tied to the currently displayed task in advanced mode
+               if ($item->fields["is_advancedmode"] == '1') {
+
+                  $pft = new PluginFusioninventoryTaskjob;
+
+                  $taskjobs = $pft->find(
+                     "`plugin_fusioninventory_tasks_id`='".$_GET['id'].
+                     "' AND `rescheduled_taskjob_id`='0' ",
+                     "id"
+                  );
+
+                  foreach($taskjobs as $data) {
+
+                     $tab_names[$data['id']] =
+                        __('Job', 'fusioninventory') . ": " .
+                        "<span style='display:inline;font-size:0.3em;font-style:italic'>".
+                        $data['name'].
+                        "</span>";
+
+                  }
+
+                  //Add a 'new' tab in order to create new taskjobs
+                  $tab_names['new'] = __('New action', 'fusioninventory')." <img src='".$CFG_GLPI['root_doc']."/pics/add_dropdown.png'/>";
+               } else {
+
+                  //The non advanced mode display only one tab
+                  $tab_names[0] = __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
+               }
+            }
+         }
       }
-      return '';
+
+      //Return tab names if list is not empty
+      if (!empty($tab_names)) {
+         return $tab_names;
+      } else {
+         return '';
+      }
+
    }
-
-
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getID() > 0) {
-         if ($item->getType() == 'Computer') {
-
-            // Possibility to remote agent
-            if (PluginFusioninventoryTaskjob::isAllowurlfopen(1)) {
-               $pfAgent = new PluginFusioninventoryAgent();
-               $pfAgent->forceRemoteAgent();
-            }
-         }
          if ($item->getType() == 'PluginFusioninventoryTask') {
+
             $pfTaskjob = new PluginFusioninventoryTaskjob();
-            $a_taskjob = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$_POST["id"]."'
-                  AND `rescheduled_taskjob_id`='0' ", "id");
+
+            // Find taskjob tied to the selected task
+            $a_taskjob = $pfTaskjob->find(
+               "`plugin_fusioninventory_tasks_id`='".$_POST["id"].
+                  "' AND `rescheduled_taskjob_id`='0' ",
+               "id"
+            );
+
             if ($item->fields['is_advancedmode'] == '0') {
+
                $taskjob = current($a_taskjob);
+
                if (!isset($taskjob["id"])) {
-                  $taskjobs_id = $pfTaskjob->add(array('name'=>$item->fields['name'],
-                                   'entities_id'=>$item->fields['entities_id'],
-                                   'plugin_fusioninventory_tasks_id'=>$item->getID()));
+
+                  $taskjobs_id = $pfTaskjob->add(
+                     array(
+                           'name'=>$item->fields['name'],
+                           'entities_id'=>$item->fields['entities_id'],
+                           'plugin_fusioninventory_tasks_id'=>$item->getID()
+                     )
+                  );
+
                   $pfTaskjob->showForm($taskjobs_id);
+
                } else {
+
                   $pfTaskjob->showForm($taskjob["id"]);
+
+               }
+            } else {
+               if ($tabnum !== 'new') {
+                  $taskjob_id = $tabnum;
+                  $pfTaskjob = new PluginFusioninventoryTaskjob();
+                  $pfTaskjob->showForm($taskjob_id);
+                  $pfTaskjob->manageTasksByObject($item->getType(), $item->getID());
+               } else {
+                  $pfTaskjob = new PluginFusioninventoryTaskjob();
+                  $pfTaskjob->showForm('');
                }
             }
-         } else {
-            $pfTaskjob = new PluginFusioninventoryTaskjob();
-            $pfTaskjob->manageTasksByObject($item->getType(), $item->getID());
          }
       }
       return TRUE;
@@ -210,6 +268,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             echo __('New action', 'fusioninventory')."&nbsp;:&nbsp;".
                  Dropdown::getDropdownName("glpi_entities", $this->fields['entities_id']);
          } else {
+
             echo __('New action', 'fusioninventory');
 
          }
@@ -218,8 +277,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo '</tr>';
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td height='18'>".__('Name')."&nbsp;:</td>";
-      echo "<td align='center'>";
+      echo "<td>".__('Name')."&nbsp;:</td>";
+      echo "<td>";
       if ($pfTask->fields["is_advancedmode"] == '0'
               AND $this->fields["name"] == '') {
 
@@ -227,10 +286,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       }
       Html::autocompletionTextField ($this, "name", $this->fields["name"]);
       echo "</td>";
-      echo "<td height='18'>".__('Module', 'fusioninventory')."&nbsp;:</td>";
-      echo "<td align='center'>";
-      $randmethod = $this->dropdownMethod("method", $this->fields['method']);
-      if ($id != '') {
+      if ($this->fields['id'] > 0) {
+         echo "<td>".__('Module', 'fusioninventory')."&nbsp;:</td>";
+         echo "<td>";
+         $randmethod = $this->dropdownMethod("method", $this->fields['method']);
          echo "<div style='display:none' id='methodupdate' >";
          $params = array('method' => '__VALUE__',
                          'rand'      => $randmethod,
@@ -248,49 +307,59 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td height='18'>".__('Comments')."&nbsp;:</td>";
-      echo "<td align='center'>";
+      echo "<td>".__('Comments')."&nbsp;:</td>";
+      echo "<td>";
       echo "<textarea cols='40' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
-      echo "<input type='hidden' name='plugin_fusioninventory_tasks_id' ".
-              "value='".$_POST['id']."' />";
-      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-      foreach ($a_methods as $datas) {
-         echo "<input type='hidden' name='method-".$datas['method']."' ".
-                 "value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
+
+      if ($this->fields['id'] > 0) {
+         echo
+            "<input type='hidden' name='plugin_fusioninventory_tasks_id' ".
+            "value='".$this->fields['id']."' />";
+
+         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+         foreach ($a_methods as $datas) {
+            echo 
+               "<input type='hidden' name='method-".$datas['method']."' "
+               ."value='".PluginFusioninventoryModule::getModuleId($datas['module'])
+               ."' />";
+         }
       }
       echo "</td>";
-      echo "<th width='25%'>";
+      // Display Definition choices
       if ($this->fields['id'] > 0) {
+      echo "<th width='25%'>";
          echo __('Definition', 'fusioninventory');
 
          $this->plusButton('definition'.$id);
          echo "<br/><i>".
              __('Action targets: what the action aims', 'fusioninventory').
              "</i>";
-      }
       echo "</th>";
-      echo "<th width='25%'>";
+      }
+
+      //Display Actors choices
       if ($this->fields['id'] > 0) {
+      echo "<th width='25%'>";
          echo __('Action');
 
          $this->plusButton('action'.$id);
          echo "<br/><i>".
              __('Action actor: what do the action', 'fusioninventory').
              "</i>";
-      }
       echo "</th>";
+      }
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       $rowspan = 4;
       if ($pfTask->fields["is_advancedmode"] == '1') {
-         echo "<td height='18'>";
+         echo "<td>";
          echo __('Time between task start and start this action', 'fusioninventory')."&nbsp;:";
          echo "</td>";
-         echo "<td align='center'>";
+         echo "<td>";
          Dropdown::showNumber("periodicity_count", array(
-                'value' => $this->fields['periodicity_count'], 
-                'min'   => 0, 
+                'value' => $this->fields['periodicity_count'],
+                'min'   => 0,
                 'max'   => 300)
          );
          $a_time = array();
@@ -315,21 +384,23 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          }
          $rowspan = 1;
       }
-      // ** Definitions
-      echo "<td rowspan='".$rowspan."' valign='top'>";
-      $this->showTaskjobItems('definition', $randmethod, $id);
-      echo "</td>";
 
-      // ** Actions
-      echo "<td rowspan='".$rowspan."' valign='top'>";
-      $this->showTaskjobItems('action', $randmethod, $id);
-      echo "</td>";
-      echo "</tr>";
+      if($this->fields['id'] > 0) {
+         // ** Definitions
+         echo "<td rowspan='".$rowspan."' valign='top'>";
+         $this->showTaskjobItems('definition', $randmethod, $id);
+         echo "</td>";
 
+         // ** Actions
+         echo "<td rowspan='".$rowspan."' valign='top'>";
+         $this->showTaskjobItems('action', $randmethod, $id);
+         echo "</td>";
+         echo "</tr>";
+      }
       if ($pfTask->fields["is_advancedmode"] == '1') {
          echo "<tr class='tab_bg_1'>";
          echo "<td>".__('Number of trials', 'fusioninventory')."&nbsp;:</td>";
-         echo "<td align='center'>";
+         echo "<td>";
          Dropdown::showNumber("retry_nb", array(
                 'value' => $this->fields['retry_nb'], 
                 'min'   => 0, 
@@ -340,7 +411,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
          echo "<tr class='tab_bg_1'>";
          echo "<td>".__('Time between 2 trials (in minutes)', 'fusioninventory')."&nbsp;:</td>";
-         echo "<td align='center'>";
+         echo "<td>";
          Dropdown::showNumber("retry_time", array(
                 'value' => $this->fields['retry_time'], 
                 'min'   => 0, 
@@ -542,7 +613,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
             }
          }
       }
-      
+
       $rand = Dropdown::showFromArray(ucfirst($myname)."Type", $a_type);
 
       $params=array(ucfirst($myname).'Type'=>'__VALUE__',
