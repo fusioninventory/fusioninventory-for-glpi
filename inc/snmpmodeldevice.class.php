@@ -97,6 +97,23 @@ class PluginFusioninventorySnmpmodeldevice extends CommonDBTM {
       echo "</table>";
    }
 
+   
+   
+   function cleanDevices() {
+      global $DB;
+      
+      $query = "SELECT `glpi_plugin_fusioninventory_snmpmodeldevices`.`id`
+                   FROM `glpi_plugin_fusioninventory_snmpmodeldevices`
+                LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
+                   ON `plugin_fusioninventory_snmpmodels_id`=".
+                        "`glpi_plugin_fusioninventory_snmpmodels`.`id`
+                WHERE `glpi_plugin_fusioninventory_snmpmodels`.`id` IS NULL";
+
+      $result=$DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         $this->delete($data);
+      }
+   }
 
 
    function generateDico() {
