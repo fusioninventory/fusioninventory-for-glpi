@@ -202,6 +202,8 @@ class PluginFusioninventorySnmpmodelImportExport extends CommonGLPI {
       } else {
          $this->createModel($xml, $message);
       }
+      $pfSnmpmodeldevice = new PluginFusioninventorySnmpmodeldevice();
+      $pfSnmpmodeldevice->cleanDevices();
    }
 
 
