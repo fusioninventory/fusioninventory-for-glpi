@@ -136,10 +136,12 @@ class TaskDeployDynamicGroup extends PHPUnit_Framework_TestCase {
       );
       $pfTask->add($input);
       
+      $a_plugins = current(getAllDatasFromTable('glpi_plugins', '`directory`="fusioninventory"'));
+      
       $input = array(
           'plugin_fusioninventory_tasks_id' => 1,
           'name'        =>'deploy',
-          'plugins_id'  => 1,
+          'plugins_id'  => $a_plugins['id'],
           'method'      => 'deployinstall',
           'action'      => '[{"PluginFusioninventoryDeployGroup":"1"}]'
       );
