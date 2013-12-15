@@ -557,6 +557,25 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          $PortID = $NetworkPort->add($input);
          return($PortID);
       }
+      // In case of mac is mac of switch, not a port
+      if ($PortID == '') {
+         $queryPort = "SELECT * 
+            FROM `glpi_networkports` 
+            WHERE `logical_number`='".$ifnumber."' 
+               AND `itemtype`='NetworkEquipment' 
+               AND `items_id` IN 
+               (SELECT `items_id`
+                FROM `glpi_networkports` 
+                WHERE `instantiation_type`='NetworkPortAggregate' 
+                  AND `mac`='".$sysmac."')
+            LIMIT 1";
+         $resultPort = $DB->query($queryPort);
+         $dataPort = $DB->fetch_assoc($resultPort);
+         if (isset($dataPort['id'])) {
+            $PortID = $dataPort['id'];
+         }
+      }
+      
       return($PortID);
    }
    
