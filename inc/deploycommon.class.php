@@ -56,8 +56,6 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       $jobstate  = new PluginFusioninventoryTaskjobstate();
       $agent      = new PluginFusioninventoryAgent();
 
-      $uniqid= uniqid();
-
       $job->getFromDB($taskjobs_id);
       $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
 
@@ -177,9 +175,9 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
       foreach($computers as $computer_id) {
          //Unique Id match taskjobstatuses for an agent(computer)
-         $uniqid= uniqid();
 
          foreach($definitions as $definition) {
+            $uniqid= uniqid();
             $package->getFromDB($definition['PluginFusioninventoryDeployPackage']);
 
             $c_input['state'] = 0;
