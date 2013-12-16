@@ -132,14 +132,13 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
                      "' AND `rescheduled_taskjob_id`='0' ",
                      "id"
                   );
-
+                  $i=0;
                   foreach($taskjobs as $data) {
+                     $i++;
 
                      $tab_names[$data['id']] =
-                        __('Job', 'fusioninventory') . ": " .
-                        "<span style='display:inline;font-size:0.3em;font-style:italic'>".
-                        $data['name'].
-                        "</span>";
+                        __('Job', 'fusioninventory') . " $i - " .
+                        $data['name'];
 
                   }
 
