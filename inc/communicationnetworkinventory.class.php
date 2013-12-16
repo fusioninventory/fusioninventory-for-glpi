@@ -159,7 +159,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                } else {
                   $a_devices[] = $child;
                }
+               $xml_num = 0;
                foreach ($a_devices as $dchild) {
+                  $_SESSION['plugin_fusioninventory_xmlnum'] = $xml_num;
                   $a_inventory = array();
                   if (isset($dchild['INFO'])) {
                      if ($dchild['INFO']['TYPE'] == "NETWORKING") {
@@ -192,6 +194,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                         $nbDevices++;
                      }
                   }
+                  $xml_num++;
                }
                break;
 
@@ -231,6 +234,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
     * @return errors string to be alimented if import ko / '' if ok
     */
    function importDevice($itemtype, $items_id, $a_inventory) {
+      global $PLUGIN_FUSIONINVENTORY_XML;
 
       PluginFusioninventoryCommunication::addLog(
               'Function PluginFusioninventoryCommunicationNetworkInventory->importDevice().');
@@ -240,17 +244,24 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
       // Write XML file
       if (count($a_inventory) > 0) {
-         $folder = substr($items_id, 0, -1);
-         if (empty($folder)) {
-            $folder = '0';
-         }
-         if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder)) {
-            mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder, 0777, TRUE);
-         }
-         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder."/".
-                           $items_id, 'w');
-         fwrite($fileopen, print_r($a_inventory, TRUE));
-         fclose($fileopen);
+         $xml = $PLUGIN_FUSIONINVENTORY_XML->CONTENT->DEVICE[$_SESSION['plugin_fusioninventory_xmlnum']]->asXML();
+         PluginFusioninventoryToolbox::writeXML(
+                 $items_id,
+                 $xml,
+                 $itemtype);
+
+         
+//         $folder = substr($items_id, 0, -1);
+//         if (empty($folder)) {
+//            $folder = '0';
+//         }
+//         if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder)) {
+//            mkdir(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder, 0777, TRUE);
+//         }
+//         $fileopen = fopen(GLPI_PLUGIN_DOC_DIR."/fusioninventory/".$itemtype."/".$folder."/".
+//                           $items_id, 'w');
+//         fwrite($fileopen, print_r($a_inventory, TRUE));
+//         fclose($fileopen);
        }
 
       $errors='';
