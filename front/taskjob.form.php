@@ -206,12 +206,9 @@ if (isset($_POST['definition_add'])) {
    // * Add and update taskjob
    Session::checkRight('plugin_fusioninventory_task', CREATE);
 
-   if (isset($_POST['method_id'])) {
-      $_POST['method']  = $_POST['method_id'];
-   }
-   $_POST['plugins_id'] = $_POST['method-'.$_POST['method']];
 
    if (isset($_POST['add'])) {
+
       if (!isset($_POST['entities_id'])) {
          $_POST['entities_id'] = $_SESSION['glpidefault_entity'];
       }
@@ -225,6 +222,10 @@ if (isset($_POST['definition_add'])) {
       $_POST['execution_id'] = $pfTask->fields['execution_id'];
       $mytaskjob->add($_POST);
    } else {
+      if (isset($_POST['method_id'])) {
+         $_POST['method']  = $_POST['method_id'];
+      }
+      $_POST['plugins_id'] = $_POST['method-'.$_POST['method']];
       $mytaskjob->update($_POST);
    }
    Html::back();
