@@ -310,10 +310,10 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
       echo "<td>";
       echo "<textarea cols='40' rows='2' name='comment' >".$this->fields["comment"]."</textarea>";
 
+      echo
+         "<input type='hidden' name='plugin_fusioninventory_tasks_id' ".
+         "value='".$pfTask->fields['id']."' />";
       if ($this->fields['id'] > 0) {
-         echo
-            "<input type='hidden' name='plugin_fusioninventory_tasks_id' ".
-            "value='".$this->fields['id']."' />";
 
          $a_methods = PluginFusioninventoryStaticmisc::getmethods();
          foreach ($a_methods as $datas) {
