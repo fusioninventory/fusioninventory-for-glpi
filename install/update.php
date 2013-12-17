@@ -5631,7 +5631,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
    }
    foreach($a_mappingdouble as $mapping_id=>$mappingkey) {
-      $query = "UPDATE `glpi_plugin_fusionmodel_snmpmodelmibs`
+      $query = "UPDATE `glpi_plugin_fusioninventory_snmpmodelmibs`
          SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
          WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
       $DB->query($query);
