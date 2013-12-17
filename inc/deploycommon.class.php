@@ -235,9 +235,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
     * $array = array with different ID
     *
     */
-   function run($taskjobs, $agent) {
-      //process the first task planned
-      $taskjob = array_shift($taskjobs);
+   function run($taskjob, $agent) {
       //get order type label
       $order_type_label = str_replace("PluginFusioninventoryDeploy", "", get_class($this));
       //get numeric order type from label
@@ -291,15 +289,12 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
          $order_files = (object)array();
       }
 
-      $final_order = array(
-         "jobs" => array(
-            $order_job
-         ),
+      $order = array(
+         "job" => $order_job,
          "associatedFiles" => $order_files
       );
-      //return data response as json
-      $json = json_encode($final_order);
-      return $json;
+
+      return $order;
    }
 }
 
