@@ -368,7 +368,9 @@ class PluginFusioninventoryCommunicationNetworkInventory {
 
          $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
          $inputdb = array();
-         $inputdb['name'] = $input['name'];
+         if (isset($input['name'])) {
+            $inputdb['name'] = $input['name'];
+         }
          $inputdb['date'] = date("Y-m-d H:i:s");
          $inputdb['itemtype'] = $input['itemtype'];
          if (isset($input['serial'])) {
