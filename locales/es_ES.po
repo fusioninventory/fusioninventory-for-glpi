@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-16 13:28+0100\n"
-"PO-Revision-Date: 2013-12-16 19:39+0000\n"
+"PO-Revision-Date: 2013-12-16 23:51+0000\n"
 "Last-Translator: Tomás Abad <tabadgp@gmail.com>\n"
 "Language-Team: Spanish (Spain) (http://www.transifex.com/projects/p/FusionInventory/language/es_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -342,7 +342,7 @@ msgstr ""
 
 #: front/popup.php:69
 msgid "Network ports display options"
-msgstr ""
+msgstr "Opciones de visualización de puertos de red"
 
 #: front/printerlogreport.php:92 inc/statediscovery.class.php:144
 #: inc/stateinventory.class.php:95
@@ -615,7 +615,7 @@ msgstr "WMI de Windows asociado"
 
 #: inc/collect_wmi.class.php:102 inc/collect_wmi_content.class.php:189
 msgid "Moniker"
-msgstr ""
+msgstr "Alias"
 
 #: inc/collect_wmi.class.php:103 inc/collect_wmi.class.php:152
 #: inc/collect_wmi_content.class.php:190
@@ -628,7 +628,7 @@ msgstr "Propiedades"
 
 #: inc/collect_wmi.class.php:144
 msgid "moniker"
-msgstr ""
+msgstr "alias"
 
 #: inc/collect_wmi_content.class.php:50 inc/collect_wmi_content.class.php:84
 #: inc/collect_wmi_content.class.php:90
