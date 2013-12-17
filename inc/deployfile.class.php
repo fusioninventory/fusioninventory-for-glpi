@@ -954,7 +954,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    function checkPresenceManifest($sha512) {
 
       $manifests_path =
-         GLPI_ROOT."/files/_plugins/fusioninventory/files/manifests/";
+         GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
       if (!file_exists($manifests_path.$sha512)) {
          return FALSE;
       }
@@ -963,9 +963,9 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    function checkPresenceFile($sha512) {
       $manifests_path =
-         GLPI_ROOT."/files/_plugins/fusioninventory/files/manifests/";
+         GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/";
       $parts_path =
-         GLPI_ROOT."/files/_plugins/fusioninventory/files/repository/";
+         GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/repository/";
 
       //Do not continue if the manifest is not found
       if ( !$this->checkPresenceManifest($sha512) ) {
