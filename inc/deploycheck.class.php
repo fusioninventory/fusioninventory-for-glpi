@@ -512,6 +512,10 @@ class PluginFusioninventoryDeployCheck {
          unset($datas['jobs']['checks'][$index]);
       }
 
+      //Ensure checks is an array and not a dictionnary
+      //Note: This happens when removing an array element from the begining
+      $datas['jobs']['checks'] = array_values($datas['jobs']['checks']);
+
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }

@@ -549,6 +549,10 @@ class PluginFusioninventoryDeployAction {
          unset($datas['jobs']['actions'][$index]);
       }
 
+      //Ensure actions list is an array and not a dictionnary
+      //Note: This happens when removing an array element from the begining
+      $datas['jobs']['actions'] = array_values($datas['jobs']['actions']);
+
       //update order
       PluginFusioninventoryDeployOrder::updateOrderJson($params['orders_id'], $datas);
    }
