@@ -78,10 +78,10 @@ if (isset($_GET['action'])) {
                ksort($new_taskjobs);
 
                //start of json response
-               $order = array(
-                  'jobs' => array(),
-                  'associatedFiles' => array()
-               );
+               $order = new stdClass;
+               $order->jobs = array();
+               $order->associatedFiles = new stdClass;
+
                //aggregate json orders in a single json response
                foreach ($new_taskjobs as $taskjob) {
                   //Get method associated to the taskjob
@@ -91,16 +91,21 @@ if (isset($_GET['action'])) {
                   $taskjob_order = $class->run($taskjob, $a_agent);
 
                   //Append order to the final json
-                  $order['jobs'][] = $taskjob_order['job'];
+                  $order->jobs[] = $taskjob_order['job'];
                   //Update associated files list
                   foreach( $taskjob_order['associatedFiles'] as $hash=>$associatedFiles) {
-                     if(!array_key_exists($hash, $order['associatedFiles']) ) {
-                        $order['associatedFiles'][$hash] = $associatedFiles;
+                     if(!array_key_exists($hash, $order->associatedFiles) ) {
+                        $order->associatedFiles->$hash = $associatedFiles;
                      }
                   }
                }
 
-               $response = json_encode($order);
+               // return an empty dictionnary if there are no jobs.
+               if ( count($order->jobs) == 0) {
+                  $response = "{}";
+               } else {
+                  $response = json_encode($order);
+               }
             }
          }
          break;
