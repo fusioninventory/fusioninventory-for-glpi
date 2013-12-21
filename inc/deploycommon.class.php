@@ -249,7 +249,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       //decode order data
       $order_data = json_decode($order->fields['json'], TRUE);
 
-      /*
+      /* TODO:
        * This has to be done properly in each corresponding classes.
        * Meanwhile, I just split the data to rebuild a proper and compliant JSON
        */
@@ -257,10 +257,10 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       //add uniqid to response data
       $order_job['uuid'] = $taskjob['uniqid'];
 
-      /*
-       * Orders should only contains job data and associatedFiles should be retrieved from the list
-       * inside Orders data.
-       * exemple:
+      /* TODO:
+       * Orders should only contain job data and associatedFiles should be retrieved from the
+       * list inside Orders data like the following :
+       *
        * $order_files = array()
        * foreach($order_job["associatedFiles"] as $hash) {
        *    if (!isset($order_files[$hash]) {
@@ -277,10 +277,10 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       foreach($order_files as $hash => $params) {
          $order_files[$hash]['mirrors'] = $mirrors;
          $manifest = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/".$hash;
+         $order_files[$hash]['multiparts'] = array();
          if ( file_exists($manifest) ) {
             $handle = fopen($manifest, "r");
             if ($handle) {
-               $order_files[$hash]['multiparts'] = array();
                while ( ($buffer = fgets($handle) ) !== FALSE) {
                   $order_files[$hash]['multiparts'][] = trim($buffer);
                }

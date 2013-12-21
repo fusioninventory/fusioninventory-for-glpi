@@ -47,7 +47,9 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployFile extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_package';
-   
+
+   const REGISTRY_NO_DB_ENTRY = 0x1;
+   const REGISTRY_NO_MANIFEST = 0x2;
 
    static function getTypes() {
       return array(
@@ -134,13 +136,19 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
       $i = 0;
       foreach ($datas['jobs']['associatedFiles'] as $sha512) {
          $short_sha = substr($sha512, 0, 6);
-         $no_db_entry = FALSE;
+
+         $fileregistry_error = 0;
          // check if the files is registered in database
          if (!array_key_exists($short_sha, $files_mapping)) {
-            $no_db_entry = TRUE;
+            $fileregistry_error |= self::REGISTRY_NO_DB_ENTRY;
          }
+
+         if (!$o_file->checkPresenceManifest($sha512)) {
+            $fileregistry_error |= self::REGISTRY_NO_MANIFEST;
+         }
+
          // get database entries
-         if ( !$no_db_entry ) {
+         if ( !$fileregistry_error ) {
             $file_id = $files_mapping[$short_sha];
             // get file's name
             $file_name = $files[$file_id]['name'];
@@ -224,16 +232,22 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
          }
          //sha fingerprint
          $sha_status = "good";
-         if($no_db_entry) {
+         if( $fileregistry_error != 0) {
                $sha_status = "bad";
          }
          echo  "<div class='fingerprint'>";
          echo     "<div class='fingerprint_".$sha_status."'>".
                      $sha512;
-         if ($no_db_entry) {
+         if ($fileregistry_error & self::REGISTRY_NO_DB_ENTRY) {
             echo  "<div class='fingerprint_badmsg'>".
                   __("This file is not correctly registered in database.")."<br/>".
                   __("You can fix it by uploading or selecting the good one.");
+            echo  "</div>";
+         }
+         if ($fileregistry_error & self::REGISTRY_NO_MANIFEST) {
+            echo  "<div class='fingerprint_badmsg'>".
+                  __("This file doesn't have any manifest file associated.")."<br/>".
+                  __("You must upload the file.");
             echo  "</div>";
          }
          echo     "</div>";
@@ -241,7 +255,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
 
          //filesize
-         if(!$no_db_entry) {
+         if(!$fileregistry_error) {
             echo "<div class='size'>";
             echo __('Size').": ".self::processFilesize($file_size);
             echo "</div>";
@@ -904,19 +918,28 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
    }
 
 
+   function checkPresenceManifest($sha512) {
+
+      $manifests_path =
+         GLPI_ROOT."/files/_plugins/fusioninventory/files/manifests/";
+      if (!file_exists($manifests_path.$sha512)) {
+         return FALSE;
+      }
+      return TRUE;
+   }
 
    function checkPresenceFile($sha512) {
-      $manifests_path =
-         GLPI_ROOT."files/_plugins/fusioninventory/files/manifests/";
       $parts_path =
-         GLPI_ROOT."files/_plugins/fusioninventory/files/repository/";
+         GLPI_ROOT."/files/_plugins/fusioninventory/files/repository/";
+
+      //Do not continue if the manifest is not found
+      if ( !$this->checkPresenceManifest($sha512) ) {
+         return FALSE;
+      }
 
       //Does the file needs to be created ?
       // Even if fileparts exists, we need to be sure
       // the manifest file is created
-      if (!file_exists($manifests_path.$sha512)) {
-         return FALSE;
-      }
       $fileparts_ok = TRUE;
       $fileparts_cnt = 0;
       $handle = fopen($manifests_path.$sha512, "r");
