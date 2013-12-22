@@ -316,15 +316,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
    function showForm($ID, $options=array()) {
 
-      if ($ID > 0) {
-         $this->check($ID, 'r');
-      } else {
-         $this->check(-1, 'w');
-         $this->getEmpty();
-      }
-      
-      $options['colspan'] = 2;
-      $this->showTabs($options);
+      $this->initForm($ID, $options);
       $this->showFormHeader($options);
       //Add redips_clone element before displaying tabs
       //If we don't do this, dragged element won't be visible on the other tab not displayed at
@@ -344,8 +336,8 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
       $this->showFormButtons($options);
 
-      echo "<div id='tabcontent'></div>";
-      echo "<script type='text/javascript'>loadDefaultTab();</script>";
+//      echo "<div id='tabcontent'></div>";
+//      echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
       return TRUE;
    }

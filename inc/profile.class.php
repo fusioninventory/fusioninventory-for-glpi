@@ -103,7 +103,7 @@ class PluginFusioninventoryProfile extends Profile {
     * @return nothing
     **/
    function showForm($profiles_id=0, $openform=TRUE, $closeform=TRUE) {
-
+      
       echo "<div class='firstbloc'>";
       if (($canedit = Session::haveRightsOr(self::$rightname, array(CREATE, UPDATE, PURGE)))
           && $openform) {

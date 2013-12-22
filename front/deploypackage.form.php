@@ -119,7 +119,6 @@ $id = "";
 if (isset($_GET["id"])) {
    $id = $_GET["id"];
 }
-Session::checkRight('plugin_fusioninventory_package', READ);
 $package->showForm($id);
 Html::footer();
 

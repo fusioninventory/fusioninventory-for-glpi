@@ -1103,6 +1103,78 @@ function appear_array(id){
       $comment = str_replace(",[", "<br/>[", $comment);
       return $comment;
    }
+   
+   
+   // ********** Functions for Monitoring / Logs ********** //
+
+   function listTasks() {
+      global $DB;
+      
+      $query = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.`id`,"
+              . "`glpi_plugin_fusioninventory_taskjobs`.`method`,"
+              . "`glpi_plugin_fusioninventory_taskjobs`.`name`"
+              . " FROM `glpi_plugin_fusioninventory_taskjobstates` "
+              . "LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` ON "
+              . "`plugin_fusioninventory_taskjobs_id`=`glpi_plugin_fusioninventory_taskjobs`.`id`"
+              ." ORDER BY `glpi_plugin_fusioninventory_taskjobstates`.`id` DESC";
+      $result = $DB->query($query);
+      $i = 1;
+      $nb = $DB->numrows($result);
+      while ($data = $DB->fetch_assoc($result)) {
+         $begintable = 0;
+         $endtable   = 0;
+         if ($i == 1) {
+            $begintable = 1;
+         } else if ($i == $nb) {
+            $endtable = 1;
+         }
+         $this->_showLine(
+                 $data['method'], 
+                 $data['name'], 
+                 '80 deployments (ok: 50, ko : 12, unneeded : 3)', 
+                 '81', 
+                 'RUNNING', 
+                 $begintable,
+                 $endtable);
+
+         $i++;
+      }
+   }
+   
+   
+   
+   function _showLine ($module, $name, $text, $percent, $state, $begintable=0, $endtable=0) {
+      global $CFG_GLPI;
+      
+      if ($begintable) {
+         echo "<table class='tab_cadrehov'>";
+      }
+      echo "<tr class='tab_bg_1'>";
+      echo "<td width='27'>";
+      echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/icon_".$module.".png'/>";
+      echo "</td>";
+      echo "<td width='27'>";
+      echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/icon_plus.png'/>";
+      echo "</td>";
+      echo "<td><strong>";
+      echo $name;
+      echo "</strong></td>";
+      echo "<td>";
+      echo $text;
+      echo "</td>";
+      echo "<td>";
+      echo __('Completion', 'fusioninventory').' : '.$percent.'%';
+      echo "</td>";
+      echo "<td>";
+      // image status
+      echo "</td>";
+      if ($endtable) {
+         echo "</table>";
+      }
+   }
+   
+   
+   
 }
 
 ?>

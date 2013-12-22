@@ -166,7 +166,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[2]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTask');
 
-         $a_menu[3]['name'] = __('Running jobs', 'fusioninventory');
+         $a_menu[3]['name'] = __('Monitoring / Logs', 'fusioninventory');
          $a_menu[3]['pic']  = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/pics/menu_runningjob.png";
          $a_menu[3]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryTaskJob');

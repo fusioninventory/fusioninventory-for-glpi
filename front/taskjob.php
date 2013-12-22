@@ -52,13 +52,8 @@ Session::checkRight('plugin_fusioninventory_task', READ);
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-if (!isset($_GET['sort'])) {
-   $_GET['sort'] = 6;
-   $_GET['order'] = 'DESC';
-}
-$_GET['target']="task.php";
-
-Search::show('PluginFusioninventoryTaskjob');
+$pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
+$pfTaskjoblog->listTasks();
 
 Html::footer();
 
