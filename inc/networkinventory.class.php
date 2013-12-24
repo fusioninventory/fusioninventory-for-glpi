@@ -329,6 +329,8 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
          $a_input['itemtype'] = '';
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
+         $a_input['execution_id'] = $task->fields['execution_id'];
+
          $taskvalid = 0;
          foreach($a_agentsubnet as $subnet=>$a_agentList) {
             if (!isset($a_agentList)
@@ -459,6 +461,8 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
             $a_input['itemtype'] = '';
             $a_input['items_id'] = 0;
             $a_input['uniqid'] = $uniqid;
+            $a_input['execution_id'] = $task->fields['execution_id'];
+
             $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                //Add log of taskjob
                $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
@@ -505,6 +509,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                $a_input['state'] = 0;
                $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
                $a_input['uniqid'] = $uniqid;
+               $a_input['execution_id'] = $task->fields['execution_id'];
                $alternate = 0;
                for ($d=0; $d < ceil($count_device / count($a_agentList)); $d++) {
                   if ((count($a_NetworkEquipment) + count($a_Printer)) > 0) {

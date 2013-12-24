@@ -1183,6 +1183,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                       'value'   => NULL);
       $a_table['fields']['execution_id'] = array('type'    => "bigint(20) NOT NULL DEFAULT '0'",
                                                  'value'   => NULL);
+      $a_table['fields']['ranking']    = array('type'    => 'integer',
+                                               'value'   => NULL);
 
       $a_table['oldfields']  = array();
 
@@ -1351,6 +1353,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                               "uniqid",
                               "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
+         $migration->addField($newTable,
+                              "execution_id",
+                              "bigint(20) NOT NULL DEFAULT '0'");
          $migration->addKey($newTable,
                             "plugin_fusioninventory_taskjobs_id");
          $migration->addKey($newTable,

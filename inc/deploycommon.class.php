@@ -171,6 +171,8 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       $c_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
       $c_input['state']                              = 0;
       $c_input['plugin_fusioninventory_agents_id']   = 0;
+      $c_input['execution_id']                       = $task->fields['execution_id'];
+
       $package = new PluginFusioninventoryDeployPackage();
 
       foreach($computers as $computer_id) {

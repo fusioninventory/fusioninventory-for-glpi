@@ -95,6 +95,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
          $a_input['state']                              = 0;
          $a_input['plugin_fusioninventory_agents_id']   = 0;
          $a_input['uniqid']                             = $uniqid;
+         $a_input['execution_id']                       = $task->fields['execution_id'];
 
          foreach ($task_definitions as $task_definition) {
             foreach ($task_definition as $task_itemtype => $task_items_id) {
@@ -133,6 +134,8 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
                      $a_input['items_id']                           = $task_items_id;
                      $a_input['uniqid']                             = $uniqid;
                      $a_input['date']                               = date("Y-m-d H:i:s");
+                     $a_input['execution_id']                       = $task->fields['execution_id'];
+
                      $jobstates_id = $jobstate->add($a_input);
                      //Add log of taskjob
                      $a_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;

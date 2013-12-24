@@ -140,11 +140,13 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
             if (!isset($a_agentListComplete) or empty($a_agentListComplete)) {
                $a_input = array();
                $a_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
-               $a_input['state'] = 1;
                $a_input['plugin_fusioninventory_agents_id'] = 0;
-               $a_input['itemtype'] = 'PluginFusioninventoryIPRange';
-               $a_input['items_id'] = $iprange_id;
-               $a_input['uniqid'] = $uniqid;
+               $a_input['state']        = 1;
+               $a_input['itemtype']     = 'PluginFusioninventoryIPRange';
+               $a_input['items_id']     = $iprange_id;
+               $a_input['uniqid']       = $uniqid;
+               $a_input['execution_id'] = $task->fields['execution_id'];
+
                $Taskjobstates_id = $pfTaskjobstate->add($a_input);
                   //Add log of taskjob
                   $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
@@ -177,6 +179,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                   $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
                   $a_input['itemtype'] = 'PluginFusioninventoryIPRange';
                   $a_input['uniqid'] = $uniqid;
+                  $a_input['execution_id'] = $task->fields['execution_id'];
 
                   $a_input['items_id'] = $iprange_id;
                   if (($iptimes + $nbIpAgent) > ($e-$s)) {
@@ -215,6 +218,8 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
          $a_input['itemtype'] = 'PluginFusioninventoryIPRange';
          $a_input['items_id'] = 0;
          $a_input['uniqid'] = $uniqid;
+         $a_input['execution_id'] = $task->fields['execution_id'];
+
          $Taskjobstates_id = $pfTaskjobstate->add($a_input);
             //Add log of taskjob
             $a_input['plugin_fusioninventory_taskjobstates_id'] = $Taskjobstates_id;
@@ -247,6 +252,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
             $a_input['plugin_fusioninventory_agents_id'] = $agent_id;
             $a_input['itemtype'] = 'PluginFusioninventoryIPRange';
             $a_input['uniqid'] = $uniqid;
+            $a_input['execution_id'] = $task->fields['execution_id'];
 
 //            $nbIpAgent = $numberIpByAgent;
             $nbIpadded = 0;
