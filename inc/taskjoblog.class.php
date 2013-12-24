@@ -1115,8 +1115,10 @@ function appear_array(id){
               . "`glpi_plugin_fusioninventory_taskjobs`.`name`"
               . " FROM `glpi_plugin_fusioninventory_taskjobstates` "
               . "LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` ON "
-              . "`plugin_fusioninventory_taskjobs_id`=`glpi_plugin_fusioninventory_taskjobs`.`id`"
-              ." ORDER BY `glpi_plugin_fusioninventory_taskjobstates`.`id` DESC";
+              . "`plugin_fusioninventory_taskjobs_id`=`glpi_plugin_fusioninventory_taskjobs`.`id` "
+              . "GROUP BY `glpi_plugin_fusioninventory_taskjobstates`.`plugin_fusioninventory_taskjobs_id`,"
+              . "`glpi_plugin_fusioninventory_taskjobstates`.`execution_id` "
+              . "ORDER BY `glpi_plugin_fusioninventory_taskjobstates`.`id` DESC ";
       $result = $DB->query($query);
       $i = 1;
       $nb = $DB->numrows($result);
