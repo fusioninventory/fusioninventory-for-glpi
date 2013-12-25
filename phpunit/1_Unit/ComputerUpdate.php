@@ -309,7 +309,8 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'groups_id'                        => '0',
           'states_id'                        => '0',
           'ticket_tco'                       => '0.0000',
-          'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220'
+          'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
+          'notepad'                          => NULL,
       );
       
       $this->assertEquals($a_reference, $computer->fields);      
@@ -389,7 +390,8 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'groups_id'               => '0',
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
-          'softwarecategories_id'   => '0'
+          'softwarecategories_id'   => '0',
+          'notepad'                 => NULL,
       );
       
       $this->assertEquals($a_reference, $software->fields);
@@ -425,7 +427,8 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'groups_id'               => '0',
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
-          'softwarecategories_id'   => '0'
+          'softwarecategories_id'   => '0',
+          'notepad'                 => NULL,
       );
       
       $this->assertEquals($a_reference, $software->fields);
@@ -461,7 +464,8 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'groups_id'               => '0',
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
-          'softwarecategories_id'   => '0'
+          'softwarecategories_id'   => '0',
+          'notepad'                 => NULL,
       );
       
       $this->assertEquals($a_reference, $software->fields);
@@ -889,7 +893,8 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'groups_id'         => '0',
           'states_id'         => '0',
           'ticket_tco'        => '0.0000',
-          'is_dynamic'        => '0'
+          'is_dynamic'        => '0',
+          'notepad'           => NULL,
       );
       
       $this->assertEquals($a_reference, $monitor->fields);      
@@ -949,7 +954,8 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'groups_id'            => '0',
           'states_id'            => '0',
           'ticket_tco'           => '0.0000',
-          'is_dynamic'           => '0'          
+          'is_dynamic'           => '0',
+          'notepad'              => NULL,
       );
       
       $this->assertEquals($a_reference, $printer->fields);      

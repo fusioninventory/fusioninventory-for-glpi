@@ -173,7 +173,8 @@ class TaskDeployDynamicGroup extends PHPUnit_Framework_TestCase {
               'itemtype'                           => "PluginFusioninventoryDeployPackage",
               'state'                              => 0,
               'plugin_fusioninventory_agents_id'   => 1,
-              'specificity'                        => ''
+              'specificity'                        => '',
+              'execution_id'                       => '0'
           ),
           2 => array(
               'id'                                 => 2,
@@ -182,7 +183,8 @@ class TaskDeployDynamicGroup extends PHPUnit_Framework_TestCase {
               'itemtype'                           => "PluginFusioninventoryDeployPackage",
               'state'                              => 0,
               'plugin_fusioninventory_agents_id'   => 2,
-              'specificity'                        => ''
+              'specificity'                        => '',
+              'execution_id'                       => '0'
           ),
           3 => array(
               'id'                                 => 3,
@@ -191,7 +193,8 @@ class TaskDeployDynamicGroup extends PHPUnit_Framework_TestCase {
               'itemtype'                           => "PluginFusioninventoryDeployPackage",
               'state'                              => 0,
               'plugin_fusioninventory_agents_id'   => 3,
-              'specificity'                        => ''
+              'specificity'                        => '',
+              'execution_id'                       => '0'
           ),
           4 => array(
               'id'                                 => 4,
@@ -200,7 +203,8 @@ class TaskDeployDynamicGroup extends PHPUnit_Framework_TestCase {
               'itemtype'                           => "PluginFusioninventoryDeployPackage",
               'state'                              => 0,
               'plugin_fusioninventory_agents_id'   => 4,
-              'specificity'                        => ''
+              'specificity'                        => '',
+              'execution_id'                       => '0'
           ),
           5 => array(
               'id'                                 => 5,
@@ -209,7 +213,8 @@ class TaskDeployDynamicGroup extends PHPUnit_Framework_TestCase {
               'itemtype'                           => "PluginFusioninventoryDeployPackage",
               'state'                              => 0,
               'plugin_fusioninventory_agents_id'   => 5,
-              'specificity'                        => ''
+              'specificity'                        => '',
+              'execution_id'                       => '0'
           ),
           6 => array(
               'id'                                 => 6,
@@ -218,7 +223,8 @@ class TaskDeployDynamicGroup extends PHPUnit_Framework_TestCase {
               'itemtype'                           => "PluginFusioninventoryDeployPackage",
               'state'                              => 0,
               'plugin_fusioninventory_agents_id'   => 6,
-              'specificity'                        => ''
+              'specificity'                        => '',
+              'execution_id'                       => '0'
           ),
           7 => array(
               'id'                                 => 7,
@@ -227,7 +233,8 @@ class TaskDeployDynamicGroup extends PHPUnit_Framework_TestCase {
               'itemtype'                           => "PluginFusioninventoryDeployPackage",
               'state'                              => 0,
               'plugin_fusioninventory_agents_id'   => 7,
-              'specificity'                        => ''
+              'specificity'                        => '',
+              'execution_id'                       => '0'
           ),
           8 => array(
               'id'                                 => 8,
@@ -236,7 +243,8 @@ class TaskDeployDynamicGroup extends PHPUnit_Framework_TestCase {
               'itemtype'                           => "PluginFusioninventoryDeployPackage",
               'state'                              => 0,
               'plugin_fusioninventory_agents_id'   => 8,
-              'specificity'                        => ''
+              'specificity'                        => '',
+              'execution_id'                       => '0'
           ),
           9 => array(
               'id'                                 => 9,
@@ -245,7 +253,8 @@ class TaskDeployDynamicGroup extends PHPUnit_Framework_TestCase {
               'itemtype'                           => "PluginFusioninventoryDeployPackage",
               'state'                              => 0,
               'plugin_fusioninventory_agents_id'   => 9,
-              'specificity'                        => ''
+              'specificity'                        => '',
+              'execution_id'                       => '0'
           ),
           10 => array(
               'id'                                 => 10,
@@ -254,7 +263,8 @@ class TaskDeployDynamicGroup extends PHPUnit_Framework_TestCase {
               'itemtype'                           => "PluginFusioninventoryDeployPackage",
               'state'                              => 0,
               'plugin_fusioninventory_agents_id'   => 10,
-              'specificity'                        => ''
+              'specificity'                        => '',
+              'execution_id'                       => '0'
           ),
           11 => array(
               'id'                                 => 11,
@@ -263,7 +273,8 @@ class TaskDeployDynamicGroup extends PHPUnit_Framework_TestCase {
               'itemtype'                           => "PluginFusioninventoryDeployPackage",
               'state'                              => 0,
               'plugin_fusioninventory_agents_id'   => 11,
-              'specificity'                        => ''
+              'specificity'                        => '',
+              'execution_id'                       => '0'
           ),
           12 => array(
               'id'                                 => 12,
@@ -272,7 +283,8 @@ class TaskDeployDynamicGroup extends PHPUnit_Framework_TestCase {
               'itemtype'                           => "PluginFusioninventoryDeployPackage",
               'state'                              => 0,
               'plugin_fusioninventory_agents_id'   => 12,
-              'specificity'                        => ''
+              'specificity'                        => '',
+              'execution_id'                       => '0'
           ),
           13 => array(
               'id'                                 => 13,
@@ -281,7 +293,8 @@ class TaskDeployDynamicGroup extends PHPUnit_Framework_TestCase {
               'itemtype'                           => "PluginFusioninventoryDeployPackage",
               'state'                              => 0,
               'plugin_fusioninventory_agents_id'   => 13,
-              'specificity'                        => ''
+              'specificity'                        => '',
+              'execution_id'                       => '0'
           )
       );
       
