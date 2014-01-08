@@ -6180,7 +6180,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
    if (!$crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'updatedynamictasks')) {
       CronTask::Register('PluginFusioninventoryTaskjob', 'updatedynamictasks', '60',
-                         array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
+                         array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30, 'state' => 0));
    }
 
 //   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
