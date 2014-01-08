@@ -1122,6 +1122,42 @@ return namelist;
    }
 
 
+   /*
+    * @function cronUpdateDynamicTasks
+    * This function update already running tasks with dynamic groups
+    */
+   static function cronUpdateDynamicTasks() {
+      global $DB;
+
+      $pfTask = new PluginFusioninventoryTask();
+
+      //Get every running tasks with dynamic groups
+      $running_tasks = $pfTask->getItemsFromDB(
+         array(
+            'is_running' => TRUE,
+            'definitions' => array('PluginFusioninventoryDeployGroup')
+         )
+      );
+
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      foreach ($running_tasks as $task) {
+         $task['taskjob']['definitions_filter'] = array('PluginFusioninventoryDeployGroupDynamic');
+         $pfTaskjob->getFromDB($task['taskjob']['id']);
+         $pfTaskjob->prepareRunTaskjob(
+            $task['taskjob']
+         );
+      }
+
+      if(isset($_SESSION['glpi_plugin_fusioninventory']['agents']) ) {
+         foreach (array_keys($_SESSION['glpi_plugin_fusioninventory']['agents']) as $agents_id) {
+            $pfTaskjob->startAgentRemotly($agents_id);
+         }
+         unset($_SESSION['glpi_plugin_fusioninventory']['agents']);
+      }
+
+      return 1;
+   }
+
 
    /**
    * re initialize all taskjob of a taskjob
@@ -2360,8 +2396,10 @@ return namelist;
       if ($pfTaskjob->verifyDefinitionActions($a_taskjob['id'])) {
          // Get module name
          $pluginName = PluginFusioninventoryModule::getModuleName($a_taskjob['plugins_id']);
-         if (strstr($pluginName, "fusioninventory")
-                 OR strstr($pluginName, "fusinv")) {
+         if (
+            strstr($pluginName, "fusioninventory")
+            OR strstr($pluginName, "fusinv")
+         ) {
 
             $input = array();
             $input['id'] = $a_taskjob['id'];
@@ -2370,7 +2408,17 @@ return namelist;
 
             $itemtype = "Plugin".ucfirst($pluginName).ucfirst($a_taskjob['method']);
             $item = new $itemtype;
-            $uniqid = $item->prepareRun($a_taskjob['id']);
+
+            if (
+               in_array(
+                  $a_taskjob['method'],
+                  array('deployinstall', 'deployuninstall')
+               ) && isset( $a_taskjob['definitions_filter'] )
+            ) {
+               $uniqid = $item->prepareRun($a_taskjob['id'], $a_taskjob['definitions_filter']);
+            } else {
+               $uniqid = $item->prepareRun($a_taskjob['id']);
+            }
          }
          return $uniqid;
       }

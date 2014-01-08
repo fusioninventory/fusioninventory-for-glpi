@@ -46,17 +46,36 @@ if(!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunication {
 
+   /*
+    * @function definitionFiltered
+    * Check if definition_type is present in definitions_filter array.
+    * This function returns TRUE if the definition_type is not in definitions_filter array.
+    * If definitions_filter is NULL, this check is inhibited and return FALSE.
+    */
+   public function definitionFiltered($definition_type, $definitions_filter) {
+      if (
+         !is_null($definitions_filter)
+         && is_array($definitions_filter)
+         && count($definitions_filter) > 0
+         && !in_array($definition_type, $definitions_filter)
+      ) {
+         return TRUE;
+      } else {
+         return FALSE;
+      }
+   }
+
    // Get all devices and put in taskjobstate each task for each device for each agent
-   function prepareRun($taskjobs_id) {
+   function prepareRun($taskjob_id , $definitions_filter=NULL) {
       global $DB;
 
       $task       = new PluginFusioninventoryTask();
       $job        = new PluginFusioninventoryTaskjob();
       $joblog     = new PluginFusioninventoryTaskjoblog();
-      $jobstate  = new PluginFusioninventoryTaskjobstate();
+      $jobstate   = new PluginFusioninventoryTaskjobstate();
       $agent      = new PluginFusioninventoryAgent();
 
-      $job->getFromDB($taskjobs_id);
+      $job->getFromDB($taskjob_id);
       $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
 
       $communication= $task->fields['communication'];
@@ -72,9 +91,15 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
          switch($itemtype) {
             case 'Computer':
+               if ($this->definitionFiltered("Computer", $definitions_filter) ) {
+                  break;
+               }
                $computers[] = $items_id;
                break;
             case 'Group':
+               if ($this->definitionFiltered("Group", $definitions_filter)) {
+                  break;
+               }
                $computer_object = new Computer();
 
                //find computers by user associated with this group
@@ -112,6 +137,9 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
                switch ($group->getField('type')) {
                   case 'STATIC':
+                     if ($this->definitionFiltered("PluginFusioninventoryDeployGroupStatic", $definitions_filter)) {
+                        break;
+                     }
                      $query = "SELECT items_id
                      FROM glpi_plugin_fusioninventory_deploygroups_staticdatas
                      WHERE groups_id = '$items_id'
@@ -122,6 +150,9 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      }
                      break;
                   case 'DYNAMIC':
+                     if ($this->definitionFiltered("PluginFusioninventoryDeployGroupDynamic", $definitions_filter)) {
+                        break;
+                     }
                      $query = "SELECT fields_array
                      FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
                      WHERE groups_id = '$items_id'
@@ -166,9 +197,20 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
          }
       }
 
+      //Remove duplicatas from array
+      //We are using isset for faster processing than array_unique because we might have many
+      //entries in this list.
+      $tmp_computers = array();
+      foreach( $computers as $computer) {
+         if( !isset($tmp_computers[$computer]) ) {
+            $tmp_computers[$computer] = 1;
+
+         }
+      }
+      $computers = array_keys($tmp_computers);
 
       $c_input= array();
-      $c_input['plugin_fusioninventory_taskjobs_id'] = $taskjobs_id;
+      $c_input['plugin_fusioninventory_taskjobs_id'] = $job->fields['id'];
       $c_input['state']                              = 0;
       $c_input['plugin_fusioninventory_agents_id']   = 0;
       $c_input['execution_id']                       = $task->fields['execution_id'];
@@ -188,7 +230,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
             $c_input['date'] = date("Y-m-d H:i:s");
             $c_input['uniqid'] = $uniqid;
 
-            //get agent if for this computer
+            //get agent for this computer
             $agents_id = $agent->getAgentWithComputerid($computer_id);
             if($agents_id === FALSE) {
                $jobstates_id = $jobstate->add($c_input);
@@ -202,20 +244,33 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
             } else {
                $c_input['plugin_fusioninventory_agents_id'] = $agents_id;
 
-               # Push the agent, in the stack of agent to awake
-               if ($communication == "push") {
-                  $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
+               $jobstates_running = $jobstate->find(
+                  implode(" ",
+                     array(
+                        "    `itemtype` = 'PluginFusioninventoryDeployPackage'",
+                        "AND `items_id` = ".$package->fields['id'],
+                        "AND `state` <> " . PluginFusioninventoryTaskjobstate::FINISHED,
+                        "AND `plugin_fusioninventory_agents_id` = " . $agents_id
+                     )
+                  )
+               );
+
+               if (count($jobstates_running) == 0) {
+                  # Push the agent, in the stack of agent to awake
+                  if ($communication == "push") {
+                     $_SESSION['glpi_plugin_fusioninventory']['agents'][$agents_id] = 1;
+                  }
+
+                  $jobstates_id= $jobstate->add($c_input);
+
+                  //Add log of taskjob
+                  $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
+                  $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
+                  $taskvalid++;
+                  $joblog->add($c_input);
+                  unset($c_input['state']);
+                  unset($c_input['plugin_fusioninventory_agents_id']);
                }
-
-               $jobstates_id= $jobstate->add($c_input);
-
-               //Add log of taskjob
-               $c_input['plugin_fusioninventory_taskjobstates_id'] = $jobstates_id;
-               $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
-               $taskvalid++;
-               $joblog->add($c_input);
-               unset($c_input['state']);
-               unset($c_input['plugin_fusioninventory_agents_id']);
             }
          }
       }

@@ -6174,6 +6174,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                'comment'=>'Check configuration management'));
    }
 
+   /*
+    * Update task's agents list from dynamic group periodically in order to automatically target new
+    * computer.
+    */
+   if (!$crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'updatedynamictasks')) {
+      CronTask::Register('PluginFusioninventoryTaskjob', 'updatedynamictasks', '60',
+                         array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
+   }
 
 //   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
 //   $pfIgnoredimportdevice->install();
