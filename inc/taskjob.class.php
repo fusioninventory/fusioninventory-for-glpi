@@ -1284,6 +1284,7 @@ return namelist;
             }
          }
          $data['execution_id'] = $exe + 1;
+         unset($data['comment']);
          $pfTask->update($data);
          return TRUE;
       } else {

@@ -521,8 +521,13 @@ echo "<tr>";
        * Since dynamic groups are not entity aware and Search::addMetaLeftJoin()
        * does a recursive entities JOIN, the query is fixed with the root entity.
        **/
-      $_SESSION['glpiactiveentities_string'] = '0';
-      $_SESSION['glpiparententities'] = array('0');
+      if (!isset($_SESSION['glpiactiveentities_string'])) {
+         $entities = getSonsOf("glpi_entities", 0);
+         $_SESSION['glpiactiveentities_string'] = "'".implode("', '", $entities)."'";
+      }
+      if (!isset($_SESSION['glpiparententities'])) {
+         $_SESSION['glpiparententities'] = '';
+      }
 
       // Instanciate an object to access method
       $item = NULL;
