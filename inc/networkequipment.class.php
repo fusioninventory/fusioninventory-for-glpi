@@ -200,6 +200,8 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
       WHERE glpi_networkports.items_id='".$id."'
          ".$where."
+         AND NOT (glpi_networkports.name='general'
+                     AND glpi_networkports.logical_number=0)
       ORDER BY logical_number ";
 
       $nbcol = 5;
