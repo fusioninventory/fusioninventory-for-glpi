@@ -637,6 +637,22 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $this->update($input);
    }
 
+   
+   
+   /**
+    * Get agent version
+    * 
+    * @param type $agent_id
+    */
+   function getAgentVersion($agent_id) {
+      $this->getFromDB($agent_id);
+      $a_version = importArrayFromDB($this->fields['version']);
+      if (isset($a_version['INVENTORY'])) {
+         return str_replace('v', '', $a_version['INVENTORY']);
+      }
+      return '0';
+   }
+
 
 
    /**
