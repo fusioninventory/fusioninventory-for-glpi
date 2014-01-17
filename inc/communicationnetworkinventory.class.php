@@ -335,13 +335,13 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                }
             }
          }
-         if (!empty($a_inventory['networkequipmentmodels_id'])) {
-            $input['model'] = $a_inventory['networkequipmentmodels_id'];
+         if (!empty($a_inventory[$a_inventory['itemtype']]['networkequipmentmodels_id'])) {
+            $input['model'] = $a_inventory[$a_inventory['itemtype']]['networkequipmentmodels_id'];
          }
-         if (!empty($a_inventory['name'])) {
-            $input['name'] = $a_inventory['name'];
+         if (!empty($a_inventory[$a_inventory['itemtype']]['name'])) {
+            $input['name'] = $a_inventory[$a_inventory['itemtype']]['name'];
          }
-
+         
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
       $_SESSION['plugin_fusioninventory_classrulepassed'] =
                                  "PluginFusioninventoryCommunicationNetworkInventory";
