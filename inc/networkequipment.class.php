@@ -206,7 +206,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       $nbcol = 5;
       if ($monitoring == '1') {
-         if (PluginMonitoringSession::haveRight('componentscatalog', 'r')) {
+         if (PluginMonitoringSession::haveRight("config_components_catalogs", 'r')) {
             echo "<form name='form' method='post' action='".$CFG_GLPI['root_doc'].
                     "/plugins/monitoring/front/networkport.form.php'>";
             echo "<input type='hidden' name='items_id' value='".$id."' />";
@@ -257,7 +257,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          }
       }
       if ($monitoring == '1') {
-         if (PluginMonitoringSession::haveRight('componentscatalog', 'w')) {
+         if (PluginMonitoringSession::haveRight("config_components_catalogs", 'w')) {
             echo "<tr class='tab_bg_1 center'>";
             echo "<td colspan='2'></td>";
             echo "<td class='center'>";
@@ -269,7 +269,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       }
       echo "</table>";
       if ($monitoring == '1') {
-         if (PluginMonitoringSession::haveRight('componentscatalog', 'w')) {
+         if (PluginMonitoringSession::haveRight("config_components_catalogs", 'w')) {
             Html::closeForm();
          }
       }
@@ -782,14 +782,14 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       if ($monitoring == '1') {
          echo "<td>";
          $state = PluginMonitoringNetworkport::isMonitoredNetworkport($data['id']);
-         if (PluginMonitoringSession::haveRight('componentscatalog', 'w')) {
+         if (PluginMonitoringSession::haveRight("config_components_catalogs", 'w')) {
             $checked = '';
             if ($state) {
                $checked = 'checked';
             }
             echo "<input type='checkbox' name='networkports_id[]' value='".$data['id']."' ".
                     $checked."/>";
-         } else if (PluginMonitoringSession::haveRight('componentscatalog', 'r')) {
+         } else if (PluginMonitoringSession::haveRight("config_components_catalogs", 'r')) {
             echo Dropdown::getYesNo($state);
          }
          echo "</td>";
