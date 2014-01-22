@@ -1807,7 +1807,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                      ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
                LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS taskjobstates
                      ON taskjobstates.`id` =
-                  (SELECT id
+                  (SELECT MAX(`id`)
                      FROM glpi_plugin_fusioninventory_taskjobstates
                    WHERE plugin_fusioninventory_taskjobs_id = taskjobs.`id`
                    ORDER BY id DESC
@@ -1815,7 +1815,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                   )
                LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs`
                   ON `glpi_plugin_fusioninventory_taskjoblogs`.`id` =
-                  (SELECT `id`
+                  (SELECT MAX(`id`)
                      FROM `glpi_plugin_fusioninventory_taskjoblogs`
                    WHERE `plugin_fusioninventory_taskjobstates_id`= taskjobstates.`id`
                    ORDER BY id DESC LIMIT 1

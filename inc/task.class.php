@@ -764,7 +764,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
             ON `plugin_fusioninventory_tasks_id` = `glpi_plugin_fusioninventory_tasks`.`id`
          LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` AS taskjobstates
             ON taskjobstates.`id` =
-            (SELECT id
+            (SELECT MAX(`id`)
              FROM glpi_plugin_fusioninventory_taskjobstates
              WHERE plugin_fusioninventory_taskjobs_id = taskjobs.`id`
              ORDER BY id DESC
@@ -772,7 +772,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
             )
          LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs`
             ON `glpi_plugin_fusioninventory_taskjoblogs`.`id` =
-            (SELECT `id`
+            (SELECT MAX(`id`)
             FROM `glpi_plugin_fusioninventory_taskjoblogs`
             WHERE `plugin_fusioninventory_taskjobstates_id`= taskjobstates.`id`
             ORDER BY id DESC LIMIT 1 )
