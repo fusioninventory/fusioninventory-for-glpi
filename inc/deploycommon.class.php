@@ -155,8 +155,8 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      }
                      
                      //$definitions_filter is NULL = update by crontask !
-                     if ($definitions_filter == NULL) {
-                        $where = "`can_update_group`='1'";
+                     if ($definitions_filter != NULL) {
+                        $where = " AND `can_update_group`='1'";
                      } else {
                         $where = "";
                      }
@@ -164,8 +164,13 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
                      WHERE groups_id = '$items_id' $where
                      LIMIT 1";
+                     Toolbox::logDebug($query);
                      $res = $DB->query($query);
                      $row = $DB->fetch_assoc($res);
+                     //No dynamic groups have been found : break
+                     if ($DB->numrows($res) == 0) {
+                        break;
+                     }
 
                      if (isset($_GET)) {
                         $get_tmp = $_GET;

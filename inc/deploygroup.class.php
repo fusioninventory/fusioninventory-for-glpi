@@ -355,6 +355,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             $pfDeployGroup_Dynamicdata->add($input);
       }
 
+      $pfDeployGroup_Dynamicdata->getFromDB($plugin_fusioninventory_deploygroup_dynamicdatas_id);
       if (isset($_SESSION['plugin_fusioninventory_dynamicgroup']) && 
          $_SESSION['plugin_fusioninventory_dynamicgroup']['plugin_fusioninventory_deploygroup_dynamicdatas_id'] 
               == $plugin_fusioninventory_deploygroup_dynamicdatas_id
@@ -368,7 +369,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             }
          }
       } else {
-         $pfDeployGroup_Dynamicdata->getFromDB($plugin_fusioninventory_deploygroup_dynamicdatas_id);
          $_GET = importArrayFromDB($pfDeployGroup_Dynamicdata->fields['fields_array']);
          unset($_SESSION["glpisearchcount"]['Computer']);
          unset($_SESSION["glpisearchcount2"]['Computer']);

@@ -57,7 +57,6 @@ if (isset($_GET['updaterule'])) {
       $_POST = $_GET;
       $input = array();
       $input['id'] = $_POST['plugin_fusioninventory_deploygroup_dynamicdatas_id'];
-      $input['can_update_group'] = $_POST['can_update_group'];
       unset($_POST['_glpi_csrf_token']);
       unset($_POST['start']);
       $input['fields_array'] = exportArrayToDB($_POST);
