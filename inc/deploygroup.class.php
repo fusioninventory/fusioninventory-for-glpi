@@ -406,20 +406,28 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $pfSearch->customIdVar        = 'plugin_fusioninventory_deploygroup_dynamicdatas_id';
       $pfSearch->displaydeletebuton = FALSE;
 
+      echo "<br/><br/>";
+      echo "<table class='tab_cadre_fixe'>";
 
+      echo "<form method='POST' name='update_group' id='update_group' action='".$pfSearch->formurl."'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>".__("Update")."</th></tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Automatic update')."&nbsp:&nbsp";
+      Dropdown::showYesNo('can_update_group', $pfDeployGroup_Dynamicdata->fields['can_update_group']);
+      echo "</td><td>";
+      echo "<input type='submit' class='submit' value='".__("Update")."' name='update_group'>";
+      echo "<input type='hidden' name='id' value='$plugin_fusioninventory_deploygroup_dynamicdatas_id'>";
+      echo "</td></tr>";
+      echo "</table>";
+      Html::closeForm();
+      
       $_GET[$pfSearch->customIdVar] = $plugin_fusioninventory_deploygroup_dynamicdatas_id;
       $_GET['id'] = $plugin_fusioninventory_deploygroup_dynamicdatas_id;
       $pfSearch->showGenericSearch('Computer', $_GET);
 
       echo "<br/><br/>";
       echo "<table class='tab_cadre_fixe'>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Automatic update')."&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showYesNo('can_update_group', $this->fields['can_update_group']);
-      echo "</td>";
-      echo "</tr>";
 
       echo "<tr>";
       echo "<th>";

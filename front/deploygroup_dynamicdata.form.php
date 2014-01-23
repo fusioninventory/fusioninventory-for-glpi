@@ -57,6 +57,7 @@ if (isset($_GET['updaterule'])) {
       $_POST = $_GET;
       $input = array();
       $input['id'] = $_POST['plugin_fusioninventory_deploygroup_dynamicdatas_id'];
+      $input['can_update_group'] = $_POST['can_update_group'];
       unset($_POST['_glpi_csrf_token']);
       unset($_POST['start']);
       $input['fields_array'] = exportArrayToDB($_POST);
@@ -73,7 +74,10 @@ if (isset($_GET['updaterule'])) {
    $_SESSION['plugin_fusioninventory_dynamicgroup_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
    Html::back();
 }
-
+if (isset($_POST['update_group'])) {
+   $pfDeployGroup_Dynamicdata->update($_POST);
+   Html::back();
+}
 if (isset($_POST['name'])) {      
    $a_construct = array();
    foreach ($_POST as $key=>$value) {
