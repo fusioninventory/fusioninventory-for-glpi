@@ -6183,6 +6183,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30, 'state' => 0));
    }
 
+   /**
+   * Add field to manage which group can be refreshed by updatedynamictasks crontask
+   */
+   if (!FieldExists('glpi_plugin_fusioninventory_deploygroups', 'can_update_group')) {
+      $migration->addField('glpi_plugin_fusioninventory_deploygroups', 'can_update_group', 'bool');
+      $migration->addKey('glpi_plugin_fusioninventory_deploygroups', 'can_update_group');
+      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups');
+   }
 //   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
 //   $pfIgnoredimportdevice->install();
 

@@ -150,10 +150,18 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Type')."&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showFromArray("type", $this->grouptypes, array('value'=>$this->fields['type']));
+      self::dropdownGroupType('type', $this->fields['type']);
       echo "</td>";
       echo "</tr>";
 
+      if ($this->fields['type'] == 'DYNAMIC') {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>".__('Automatic update')."&nbsp;:</td>";
+         echo "<td align='center'>";
+         Dropdown::showYesNo('can_update_group', $this->fields['can_update_group']);
+         echo "</td>";
+      }
+      
       $this->showFormButtons($options);
 
       switch($this->fields['type']) {
@@ -912,8 +920,72 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             type='text' value='$value' ondblclick=\"this.value='".
              $CFG_GLPI["ajax_wildcard"]."';\" id='search_$id' name='____data_$id' size='$size'>\n";
    }
+
+   function getSearchOptions() {
+
+      $tab = array();
+
+      $tab['common'] = __('Task');
+
+
+      $tab[1]['table']          = $this->getTable();
+      $tab[1]['field']          = 'name';
+      $tab[1]['linkfield']      = '';
+      $tab[1]['name']           = __('Name');
+      $tab[1]['datatype']       = 'itemlink';
+      $tab[1]['massiveaction']   = false;
+
+      $tab[2]['table']           = $this->getTable();
+      $tab[2]['field']           = 'type';
+      $tab[2]['name']            = __('Type');
+      $tab[2]['datatype']        = 'specific';
+      $tab[2]['massiveaction']   = false;
+      $tab[2]['searchtype']      = 'equals';
+      
+      $tab[3]['table']           = $this->getTable();
+      $tab[3]['field']           = 'can_update_group';
+      $tab[3]['name']            = __('Automatic update');
+      $tab[3]['datatype']        = 'bool';
+      $tab[3]['massiveaction']   = true;
+      $tab[3]['searchtype']      = 'equals';
+      
+      return $tab;
+   }
+   
+   static function getSpecificValueToDisplay($field, $values, array $options=array()) {
+      $group = new self();
+      if (!is_array($values)) {
+         $values = array($field => $values);
+      }
+      switch ($field) {
+         case 'type' :
+            return $group->grouptypes[$values[$field]];
+      }
+      return '';
+   }
+
+   /**
+   * Display dropdown to select dynamic of static group
+   */
+   static function dropdownGroupType($name = 'type', $value = 'STATIC') {
+      $group = new self();
+      return Dropdown::showFromArray($name, $group->grouptypes, array('value'=>$value));
+   }
+   
+   static function getSpecificValueToSelect($field, $name='', $values='', array $options=array()) {
+
+      if (!is_array($values)) {
+         $values = array($field => $values);
+      }
+      
+      $options['display'] = false;
+      switch ($field) {
+         case 'type':
+            return self::dropdownGroupType($name, $values[$field]);
+         default:
+            break;
+      }
+      return parent::getSpecificValueToSelect($field, $name, $values, $options);
+   }   
 }
-
-
-
 ?>

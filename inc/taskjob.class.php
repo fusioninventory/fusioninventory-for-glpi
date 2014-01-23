@@ -1141,7 +1141,7 @@ return namelist;
 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       foreach ($running_tasks as $task) {
-         $task['taskjob']['definitions_filter'] = array('PluginFusioninventoryDeployGroupDynamic');
+         $task['taskjob']['definitions_filter'] = array('PluginFusioninventoryDeployGroupDynamic', 'Group');
          $pfTaskjob->getFromDB($task['taskjob']['id']);
          $pfTaskjob->prepareRunTaskjob(
             $task['taskjob']
