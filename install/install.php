@@ -324,9 +324,8 @@ function pluginFusioninventoryInstall($version, $migration='') {
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
       Crontask::Register('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs', (3600 * 24),
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
-
-
-
+      CronTask::Register('PluginFusioninventoryTaskjob', 'updatedynamictasks', '60',
+                         array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30, 'state' => 0));
 
    /*
     * Create rules
