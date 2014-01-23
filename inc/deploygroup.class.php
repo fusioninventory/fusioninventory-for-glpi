@@ -153,14 +153,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       self::dropdownGroupType('type', $this->fields['type']);
       echo "</td>";
       echo "</tr>";
-
-      if ($this->fields['type'] == 'DYNAMIC') {
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>".__('Automatic update')."&nbsp;:</td>";
-         echo "<td align='center'>";
-         Dropdown::showYesNo('can_update_group', $this->fields['can_update_group']);
-         echo "</td>";
-      }
       
       $this->showFormButtons($options);
 
@@ -421,6 +413,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       echo "<br/><br/>";
       echo "<table class='tab_cadre_fixe'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Automatic update')."&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showYesNo('can_update_group', $this->fields['can_update_group']);
+      echo "</td>";
+      echo "</tr>";
 
       echo "<tr>";
       echo "<th>";
@@ -925,7 +924,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       $tab = array();
 
-      $tab['common'] = __('Task');
+      $tab['common'] = self::getTypeName();
 
 
       $tab[1]['table']          = $this->getTable();
@@ -941,14 +940,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $tab[2]['datatype']        = 'specific';
       $tab[2]['massiveaction']   = false;
       $tab[2]['searchtype']      = 'equals';
-      
-      $tab[3]['table']           = $this->getTable();
-      $tab[3]['field']           = 'can_update_group';
-      $tab[3]['name']            = __('Automatic update');
-      $tab[3]['datatype']        = 'bool';
-      $tab[3]['massiveaction']   = true;
-      $tab[3]['searchtype']      = 'equals';
-      
+
       return $tab;
    }
    

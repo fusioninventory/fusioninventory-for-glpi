@@ -6186,10 +6186,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /**
    * Add field to manage which group can be refreshed by updatedynamictasks crontask
    */
-   if (!FieldExists('glpi_plugin_fusioninventory_deploygroups', 'can_update_group')) {
-      $migration->addField('glpi_plugin_fusioninventory_deploygroups', 'can_update_group', 'bool');
-      $migration->addKey('glpi_plugin_fusioninventory_deploygroups', 'can_update_group');
-      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups');
+   if (!FieldExists('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group')) {
+      $migration->addField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group', 'bool');
+      $migration->addKey('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group');
+      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_dynamicdatas');
    }
 //   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
 //   $pfIgnoredimportdevice->install();

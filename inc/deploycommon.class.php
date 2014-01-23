@@ -153,9 +153,16 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      if ($this->definitionFiltered("PluginFusioninventoryDeployGroupDynamic", $definitions_filter)) {
                         break;
                      }
+                     
+                     //$definitions_filter is NULL = update by crontask !
+                     if ($definitions_filter == NULL) {
+                        $where = "`can_update_group`='1'";
+                     } else {
+                        $where = "";
+                     }
                      $query = "SELECT fields_array
                      FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
-                     WHERE groups_id = '$items_id'
+                     WHERE groups_id = '$items_id' $where
                      LIMIT 1";
                      $res = $DB->query($query);
                      $row = $DB->fetch_assoc($res);
