@@ -245,7 +245,8 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $networkports_id = 0;
       foreach ($a_inventory['networkport'] as $a_port) {
          $ifType = $a_port['iftype'];
-         if ($pfNetworkporttype->isImportType($ifType)) {
+         if ($pfNetworkporttype->isImportType($ifType)
+                 || isset($a_inventory['aggregate'][$a_port['logical_number']])) {
             $a_ports_DB = current($networkPort->find(
                        "`itemtype`='NetworkEquipment'
                           AND `items_id`='".$items_id."'
@@ -327,6 +328,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
 
+      $portID = FALSE;
       if ($a_lldp['ip'] != '') {
          $portID = $pfNetworkPort->getPortIDfromDeviceIP($a_lldp['ip'],
                                                          $a_lldp['ifdescr'],
@@ -342,7 +344,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       }
 
       if ($portID
-              AND $portID > 0) {
+              && $portID > 0) {
          $wire = new NetworkPort_NetworkPort();
          $contact_id = $wire->getOppositeContact($networkports_id);
          if (!($contact_id

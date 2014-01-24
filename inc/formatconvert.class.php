@@ -1185,13 +1185,18 @@ class PluginFusioninventoryFormatconvert {
 
       $entities_id_software = Entity::getUsedConfig('entities_id_software',
                                                     $entities_id);
-
+      $is_software_recursive = false;
       $nb_RuleDictionnarySoftware = countElementsInTable("glpi_rules",
                                                          "`sub_type`='RuleDictionnarySoftware'
                                                             AND `is_active`='1'");
 
+      //Configuration says that software can be created in the computer's entity
       if ($entities_id_software < 0) {
          $entities_id_software = $entities_id;
+      } else {
+         //Software will be created in an entity which is not the computer's entity.
+         //It should be set as recursive
+         $is_software_recursive = true;
       }
       $a_inventory['software'] = array();
 
@@ -1260,6 +1265,7 @@ class PluginFusioninventoryFormatconvert {
                   }
                   if (isset($res_rule['new_entities_id'])) {
                      $array_tmp['entities_id'] = $res_rule['new_entities_id'];
+                     $is_software_recursive = true;
                   }
                   if (!isset($array_tmp['entities_id'])
                           || $array_tmp['entities_id'] == '') {
@@ -1270,7 +1276,7 @@ class PluginFusioninventoryFormatconvert {
                   }
                   $array_tmp['is_template_computer'] = 0;
                   $array_tmp['is_deleted_computer'] = 0;
-
+                  $array_tmp['is_recursive']= $is_software_recursive;
                   $comp_key = strtolower($array_tmp['name']).
                                "$$$$".strtolower($array_tmp['version']).
                                "$$$$".$array_tmp['manufacturers_id'].

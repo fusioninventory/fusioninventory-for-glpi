@@ -210,11 +210,13 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
       WHERE glpi_networkports.items_id='".$id."'
          ".$where."
+         AND NOT (glpi_networkports.name='general'
+                     AND glpi_networkports.logical_number=0)
       ORDER BY logical_number ";
 
       $nbcol = 5;
       if ($monitoring == '1') {
-         if (PluginMonitoringProfile::haveRight("componentscatalog", 'r')) {
+         if (PluginMonitoringProfile::haveRight("config_components_catalogs", 'r')) {
             echo "<form name='form' method='post' action='".$CFG_GLPI['root_doc'].
                     "/plugins/monitoring/front/networkport.form.php'>";
             echo "<input type='hidden' name='items_id' value='".$id."' />";
@@ -265,7 +267,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          }
       }
       if ($monitoring == '1') {
-         if (PluginMonitoringProfile::haveRight("componentscatalog", 'w')) {
+         if (PluginMonitoringProfile::haveRight("config_components_catalogs", 'w')) {
             echo "<tr class='tab_bg_1 center'>";
             echo "<td colspan='2'></td>";
             echo "<td class='center'>";
@@ -277,7 +279,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       }
       echo "</table>";
       if ($monitoring == '1') {
-         if (PluginMonitoringProfile::haveRight("componentscatalog", 'w')) {
+         if (PluginMonitoringProfile::haveRight("config_components_catalogs", 'w')) {
             Html::closeForm();
          }
       }
@@ -790,14 +792,14 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       if ($monitoring == '1') {
          echo "<td>";
          $state = PluginMonitoringNetworkport::isMonitoredNetworkport($data['id']);
-         if (PluginMonitoringProfile::haveRight("componentscatalog", 'w')) {
+         if (PluginMonitoringProfile::haveRight("config_components_catalogs", 'w')) {
             $checked = '';
             if ($state) {
                $checked = 'checked';
             }
             echo "<input type='checkbox' name='networkports_id[]' value='".$data['id']."' ".
                     $checked."/>";
-         } else if (PluginMonitoringProfile::haveRight("componentscatalog", 'r')) {
+         } else if (PluginMonitoringProfile::haveRight("config_components_catalogs", 'r')) {
             echo Dropdown::getYesNo($state);
          }
          echo "</td>";
