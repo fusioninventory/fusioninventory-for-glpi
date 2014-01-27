@@ -486,7 +486,9 @@ class PluginFusioninventoryFormatconvert {
                                                     'SPEED'        => 'frequency',
                                                     'MANUFACTURER' => 'manufacturers_id',
                                                     'SERIAL'       => 'serial',
-                                                    'NAME'         => 'designation'));
+                                                    'NAME'         => 'designation',
+                                                    'CORE'         => 'nbcores',
+                                                    'THREAD'       => 'nbthreads'));
                   if ($array_tmp['designation'] == ''
                           && isset($a_cpus['TYPE'])) {
                      $array_tmp['designation'] = $a_cpus['TYPE'];
@@ -560,7 +562,8 @@ class PluginFusioninventoryFormatconvert {
                                                     'CAPACITY'     => 'size',
                                                     'SPEED'        => 'frequence',
                                                     'TYPE'         => 'devicememorytypes_id',
-                                                    'SERIALNUMBER' => 'serial'));
+                                                    'SERIALNUMBER' => 'serial',
+                                                    'NUMSLOTS'     => 'busID'));
                   if ($array_tmp['size'] > 0) {
                      $array_tmp['designation'] = "";
                      if (isset($a_memories["TYPE"])
