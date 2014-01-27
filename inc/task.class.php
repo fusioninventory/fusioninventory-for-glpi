@@ -291,8 +291,10 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons($options);
-      $this->addDivForTabs();
+//      $this->addDivForTabs();
 
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskjob->displayList($id);
       return TRUE;
    }
 

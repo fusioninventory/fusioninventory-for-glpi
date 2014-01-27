@@ -203,14 +203,17 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
       //load drag and drop javascript library on Package Interface
-      if (script_endswith("deploypackage.form.php")) {
+      if (script_endswith("deploypackage.form.php")
+              || script_endswith("task.form.php")) {
          $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array(
              "lib/REDIPS_drag/redips-drag-source.js",
              "lib/REDIPS_drag/drag_table_rows.js",
-             "lib/plusbutton.js",
-             "lib/deploy_editsubtype.js",
-             "lib/jquery/jquery-1.9.1.min.js"
+             "lib/plusbutton.js"
          );
+      }
+      if (script_endswith("deploypackage.form.php")) {
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = 
+                 "lib/deploy_editsubtype.js";
       }
 
       if (Session::haveRight('plugin_fusioninventory_configuration', READ) 

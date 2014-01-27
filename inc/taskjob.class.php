@@ -2351,6 +2351,168 @@ return namelist;
          }
       }
    }
+   
+   
+   
+   function displayList($tasks_id) {
+      global $CFG_GLPI;
+
+      $rand = mt_rand();
+      
+      echo "<script type=\"text/javascript\">
+function edit_subtype(id,el) {
+
+   //remove all border to previous selected item (remove classes)
+//   Ext.select('#table_taskjob_'+ _rand +' tr').removeClass('selected');
+
+
+   var row = null;
+   if (el) {
+      // get parent row of the selected element
+      row = jQuery(el).parents('tr:first')
+   }
+
+   if (row) {
+      //add border to selected index (add class)
+      row.addClass('selected');
+//      params['index'] = row.index();
+      // change mode to edit
+//      params['mode'] = 'edit';
+      arg = 'taskjobs_id=' + id;
+   } else {
+      arg = 'tasks_id=' + id;
+   }
+
+   //scroll to edit form
+//   document.getElementById('th_title_taskjob_' + _rand).scrollIntoView();
+
+   //show and load form
+//   $('taskjobs_block' + _rand).setDisplayed('block');
+   $('#taskjobs_block').load('../ajax/taskjob_form.php?' + arg);
+}
+
+/*
+ * Create a new subtype element.
+ * This method just override *edit_subtype* with a null element.
+ */
+function new_subtype(id) {
+   edit_subtype(id, null);
+}
+</script>";
+      
+      echo "<table class='tab_cadre_fixe' id='package_order_".$tasks_id."'>";
+      
+      echo "<tr>";
+      echo "<th id='th_title_taskjob_$rand'>";
+      //echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/$subtype.png' />";
+      echo "&nbsp;".$this->getTypeName();
+      
+      echo "&nbsp;";
+      echo "<img id='plus_taskjobs_block{$rand}'";
+      echo " onclick=\"new_subtype({$tasks_id})\" ";
+      echo  " title='".__('Add')."' alt='".__('Add')."' ";
+      echo  " class='pointer' src='".
+            $CFG_GLPI["root_doc"]."/pics/add_dropdown.png' /> ";
+      
+      echo "</th>";
+      echo "</tr>";
+
+      echo "<tr>";
+      echo "<td style='vertical-align:top'>";
+
+      /**
+       * Display subtype form
+       **/
+      echo "<form name='additiontaskjob' method='post' ".
+         " action='taskjob.form.php'>";
+      echo "<input type='hidden' name='orders_id' value='$tasks_id' />";
+      echo "<input type='hidden' name='itemtype' value='PluginFusioninventoryDeploy".
+         ucfirst('taskjob')."' />";
+
+      echo "<div id='taskjobs_block'></div>";
+      Html::closeForm();
+      
+      $a_taskjobs = getAllDatasFromTable(
+              $this->getTable(), 
+              "`plugin_fusioninventory_tasks_id`='".$tasks_id."'",
+              FALSE,
+              '`ranking`');
+      echo  "<div id='drag_taskjob_taskjobs'>";
+      echo "<table class='tab_cadrehov package_item_list' id='table_taskjob_$rand' style='width: 950px'>";
+      $i=0;
+      foreach ($a_taskjobs as $data) {
+         echo Search::showNewLine(Search::HTML_OUTPUT, ($i%2));
+         echo "<td class='control'>";
+         echo "<input type='checkbox' name='taskjob_entries[]' value='$i' />";
+         echo "</td>";
+         echo "<td>";
+         echo "<a class='edit' ".
+                 "onclick=\"edit_subtype({$data['id']}, this)\">";
+         echo $data['name'];
+         echo "</a><br />";
+
+         echo "<b>";
+         echo __('Definition', 'fusioninventory');
+         echo "</b>";
+         echo "<ul class='retChecks'>";
+         $a_definitions = importArrayFromDB($data['definition']);
+         foreach ($a_definitions as $a_definition) {
+            foreach ($a_definition as $itemtype=>$items_id) {
+               echo "<li>";
+               $item = new $itemtype();
+               $item->getFromDB($items_id);
+               echo $item->getTypeName()." > ";
+               echo $item->getLink();
+               echo "</li>";
+            }
+         }
+         echo "</ul>";
+
+         echo "<b>";
+         echo __('Action', 'fusioninventory');
+         echo "</b>";
+         echo "<ul class='retChecks'>";
+         $a_actions = importArrayFromDB($data['action']);
+         foreach ($a_actions as $a_action) {
+            foreach ($a_action as $itemtype=>$items_id) {
+               echo "<li>";
+               $item = new $itemtype();
+               $item->getFromDB($items_id);
+               echo $item->getTypeName()." > ";
+               echo $item->getLink();
+               echo "</li>";
+            }
+         }
+         echo "</ul>";
+
+         
+         echo "</td>";
+         echo "</td>";
+         echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
+            "'><div class='drag row'></div></td>";
+         echo "</tr>";
+         $i++;
+      }
+      echo "<tr><th>";
+      Html::checkAllAsCheckbox("taskjobsList$rand", mt_rand());
+      echo "</th><th colspan='3' class='mark'></th></tr>";
+      echo "</table>";
+      echo "</div>";
+      echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
+      echo "<input type='submit' name='delete' value=\"".
+         __('Delete', 'fusioninventory')."\" class='submit'>";
+      
+
+      /**
+       * Initialize drag and drop on subtype lists
+       **/
+      echo "<script type=\"text/javascript\">
+      redipsInit('taskjob', 'taskjob', $tasks_id);
+</script>";
+ 
+      echo "</table>";
+   }   
+
 }
 
 ?>
