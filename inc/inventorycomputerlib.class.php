@@ -86,6 +86,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $item_DeviceControl           = new Item_DeviceControl();
       $item_DeviceHardDrive         = new Item_DeviceHardDrive();
       $item_DeviceGraphicCard       = new Item_DeviceGraphicCard();
+      $item_DeviceNetworkCard       = new Item_DeviceNetworkCard();
       $item_DeviceSoundCard         = new Item_DeviceSoundCard();
       $networkPort                  = new NetworkPort();
       $networkName                  = new NetworkName();
@@ -421,6 +422,66 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
          }
 
+         
+      // * networkcard
+         if ($pfConfig->getValue("component_networkcard") != 0) {
+            $db_networkcards = array();
+            if ($no_history === FALSE) {
+               $query = "SELECT `glpi_items_devicenetworkcards`.`id`, `designation`, `mac`
+                     FROM `glpi_items_devicenetworkcards`
+                  LEFT JOIN `glpi_devicenetworkcards`
+                     ON `devicenetworkcards_id`=`glpi_devicenetworkcards`.`id`
+                  WHERE `items_id` = '$computers_id'
+                     AND `itemtype`='Computer'
+                     AND `is_dynamic`='1'";
+               $result = $DB->query($query);
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);
+                  if (preg_match("/[^a-zA-Z0-9 \-_\(\)]+/", $data['designation'])) {
+                     $data['designation'] = Toolbox::addslashes_deep($data['designation']);
+                  }
+                  $data['designation'] = trim(strtolower($data['designation']));
+                  $db_networkcards[$idtmp] = $data;
+               }
+            }
+
+            if (count($db_networkcards) == 0) {
+               foreach ($a_computerinventory['networkcard'] as $a_networkcard) {
+                  $this->addNetworkCard($a_networkcard, $computers_id, $no_history);
+               }
+            } else {
+               // Check all fields from source: 'designation', 'mac'
+               foreach ($a_computerinventory['networkcard'] as $key => $arrays) {
+                  $arrays['designation'] = strtolower($arrays['designation']);
+                  foreach ($db_networkcards as $keydb => $arraydb) {
+                     if ($arrays == $arraydb) {
+                        unset($a_computerinventory['networkcard'][$key]);
+                        unset($db_networkcards[$keydb]);
+                        break;
+                     }
+                  }
+               }
+
+               if (count($a_computerinventory['networkcard']) == 0
+                  AND count($db_networkcards) == 0) {
+                  // Nothing to do
+               } else {
+                  if (count($db_networkcards) != 0) {
+                     // Delete networkcard in DB
+                     foreach ($db_networkcards as $idtmp => $data) {
+                        $item_DeviceNetworkCard->delete(array('id'=>$idtmp), 1);
+                     }
+                  }
+                  if (count($a_computerinventory['networkcard']) != 0) {
+                     foreach($a_computerinventory['networkcard'] as $a_networkcard) {
+                        $this->addNetworkCard($a_networkcard, $computers_id, $no_history);
+                     }
+                  }
+               }
+            }
+         }
+         
 
       // * Sound
          if ($pfConfig->getValue("component_soundcard") != 0) {
@@ -1833,6 +1894,30 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
+   
+   /**
+    * Add a new network card component
+    *
+    * @param type $data
+    * @param type $computers_id
+    * @param type $no_history
+    *
+    * @return nothing
+    */
+   function addNetworkCard($data, $computers_id, $no_history) {
+      $item_DeviceNetworkCard       = new Item_DeviceNetworkCard();
+      $deviceNetworkCard            = new DeviceNetworkCard();
+
+      $networkcards_id = $deviceNetworkCard->import($data);
+      $data['devicenetworkcards_id']   = $networkcards_id;
+      $data['itemtype']                = 'Computer';
+      $data['items_id']                = $computers_id;
+      $data['is_dynamic']              = 1;
+      $data['_no_history']             = $no_history;
+      $item_DeviceNetworkCard->add($data, array(), FALSE);
+   }
+
+   
 
    /**
     * Add a new sound card component

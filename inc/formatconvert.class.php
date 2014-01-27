@@ -442,6 +442,147 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
+      // * NETWORK CARD
+      $a_inventory['networkcard'] = array();
+      if ($pfConfig->getValue('component_networkcard') == 1) {
+         if (isset($array['NETWORKS'])) {
+            foreach ($array['NETWORKS'] as $a_netcards) {
+               if (is_array($a_netcards)
+                       && isset($a_netcards['DESCRIPTION'])) {
+                  
+                  // Search in controller if find NAME = CONTROLLER TYPE
+                  $a_found = array();
+                  if (isset($array['CONTROLLERS'])) {
+                     foreach ($array['CONTROLLERS'] as $a_controllers) {
+                        if (count($a_found) == 0) {
+                           if (($a_netcards['DESCRIPTION'] == $a_controllers['TYPE']
+                                   || strtolower($a_netcards['DESCRIPTION']." controller") == 
+                                          strtolower($a_controllers['TYPE']))
+                                 && !isset($ignorecontrollers[$a_controllers['NAME']])) {
+                              $a_found = $a_controllers;
+                              if (isset($a_netcards['MACADDR'])) {
+                                 $a_found['MACADDR'] = $a_netcards['MACADDR'];
+                              }
+                           }
+                        }
+                     }  
+                  }
+                  if (count($a_found) > 0) {
+                     $array_tmp = $thisc->addValues($a_found,
+                                                    array(
+                                                       'NAME'          => 'designation',
+                                                       'MANUFACTURER'  => 'manufacturers_id',
+                                                       'TYPE'          => 'interfacetypes_id',
+                                                       'MACADDR'       => 'mac'));
+                     if (isset($a_found['PCIID'])) {
+                        $a_PCIData = 
+                              PluginFusioninventoryInventoryExternalDB::getDataFromPCIID(
+                                $a_found['PCIID']
+                              );
+                        if (isset($a_PCIData['manufacturer'])) {
+                           $array_tmp['manufacturers_id'] = $a_PCIData['manufacturer'];
+                        }
+                        if (isset($a_PCIData['name'])) {
+                           $array_tmp['designation'] = $a_PCIData['name'];                        
+                        }
+                        $array_tmp['designation'] = Toolbox::addslashes_deep($array_tmp['designation']);
+                     }
+                     $a_inventory['networkcard'][] = $array_tmp;
+
+                     if (isset($a_found['NAME'])) {
+                        $ignorecontrollers[$a_found['NAME']] = 1;
+                     }
+                  }
+               }
+            }
+         }
+      }
+      
+      // * NETWORKS
+      $a_inventory['networkport'] = array();
+      if ($pfConfig->getValue('component_networkcard') == 1) {
+         if (isset($array['NETWORKS'])) {
+            $a_networknames = array();
+            foreach ($array['NETWORKS'] as $a_networks) {
+               $virtual_import = 1;
+               if ($pfConfig->getValue("component_networkcardvirtual") == 0) {
+                  if (isset($a_networks['VIRTUALDEV'])
+                          && $a_networks['VIRTUALDEV'] == 1) {
+
+                     $virtual_import = 0;
+                  }
+               }
+               if ($virtual_import == 1) {
+                  $array_tmp = $thisc->addValues($a_networks,
+                                                 array(
+                                                    'DESCRIPTION' => 'name',
+                                                    'MACADDR'     => 'mac',
+                                                    'TYPE'        => 'instantiation_type',
+                                                    'IPADDRESS'   => 'ip',
+                                                    'VIRTUALDEV'  => 'virtualdev',
+                                                    'IPSUBNET'    => 'subnet',
+                                                    'SSID'        => 'ssid',
+                                                    'IPGATEWAY'   => 'gateway',
+                                                    'IPMASK'      => 'netmask',
+                                                    'IPDHCP'      => 'dhcpserver'));
+
+                  if ((isset($array_tmp['name'])
+                          && $array_tmp['name'] != '')
+                       || (isset($array_tmp['mac'])
+                          && $array_tmp['mac'] != '')) {
+
+                     if (!isset($array_tmp['virtualdev'])
+                             || $array_tmp['virtualdev'] != 1) {
+                        $array_tmp['virtualdev'] = 0;
+                     }
+                     $array_tmp['logical_number'] = 1;
+                     if ($array_tmp['virtualdev'] == 1) {
+                        $array_tmp['logical_number'] = 0;
+                     } 
+
+                     $array_tmp['mac'] = strtolower($array_tmp['mac']);
+                     if (isset($a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']])) {
+                        if (isset($array_tmp['ip'])) {
+                           if (!in_array($array_tmp['ip'], $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'])) { 
+                              $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'][]
+                                      = $array_tmp['ip'];
+                           }
+                        }
+                     } else {
+                        if (isset($array_tmp['ip'])
+                                && $array_tmp['ip'] != '') {
+                           $array_tmp['ipaddress'] = array($array_tmp['ip']);
+                           unset($array_tmp['ip']);
+                        } else {
+                           $array_tmp['ipaddress'] = array();
+                        }
+                        if (isset($a_networks['IPADDRESS6'])
+                              && $a_networks['IPADDRESS6'] != '') {
+                           $array_tmp['ipaddress'][] = $a_networks['IPADDRESS6'];
+                        }
+
+                        if (isset($array_tmp["instantiation_type"])
+                                AND $array_tmp["instantiation_type"] == 'Ethernet') {
+                           $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
+                        } else if (isset($array_tmp["instantiation_type"])
+                                AND ($array_tmp["instantiation_type"] == 'Wifi'
+                                     OR $array_tmp["instantiation_type"] == 'IEEE')) {
+                           $array_tmp["instantiation_type"] = 'NetworkPortWifi';
+                        } else if ($array_tmp['mac'] != '') {
+                           $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
+                        } else {
+                           $array_tmp["instantiation_type"] = 'NetworkPortLocal';
+                        }
+                        $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']] = $array_tmp;
+                     }
+                  }
+               }
+            }
+            $a_inventory['networkport'] = $a_networknames;
+         }
+      }
+      
+
       // * CONTROLLERS
       $a_inventory['controller'] = array();
       if ($pfConfig->getValue('component_control') == 1) {
@@ -721,89 +862,6 @@ class PluginFusioninventoryFormatconvert {
       }
 
 
-      // * NETWORKS
-      $a_inventory['networkport'] = array();
-      if ($pfConfig->getValue('component_networkcard') == 1) {
-         if (isset($array['NETWORKS'])) {
-            $a_networknames = array();
-            foreach ($array['NETWORKS'] as $a_networks) {
-               $virtual_import = 1;
-               if ($pfConfig->getValue("component_networkcardvirtual") == 0) {
-                  if (isset($a_networks['VIRTUALDEV'])
-                          && $a_networks['VIRTUALDEV'] == 1) {
-
-                     $virtual_import = 0;
-                  }
-               }
-               if ($virtual_import == 1) {
-                  $array_tmp = $thisc->addValues($a_networks,
-                                                 array(
-                                                    'DESCRIPTION' => 'name',
-                                                    'MACADDR'     => 'mac',
-                                                    'TYPE'        => 'instantiation_type',
-                                                    'IPADDRESS'   => 'ip',
-                                                    'VIRTUALDEV'  => 'virtualdev',
-                                                    'IPSUBNET'    => 'subnet',
-                                                    'SSID'        => 'ssid',
-                                                    'IPGATEWAY'   => 'gateway',
-                                                    'IPMASK'      => 'netmask',
-                                                    'IPDHCP'      => 'dhcpserver'));
-
-                  if ((isset($array_tmp['name'])
-                          && $array_tmp['name'] != '')
-                       || (isset($array_tmp['mac'])
-                          && $array_tmp['mac'] != '')) {
-
-                     if (!isset($array_tmp['virtualdev'])
-                             || $array_tmp['virtualdev'] != 1) {
-                        $array_tmp['virtualdev'] = 0;
-                     }
-                     $array_tmp['logical_number'] = 1;
-                     if ($array_tmp['virtualdev'] == 1) {
-                        $array_tmp['logical_number'] = 0;
-                     } 
-
-                     $array_tmp['mac'] = strtolower($array_tmp['mac']);
-                     if (isset($a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']])) {
-                        if (isset($array_tmp['ip'])) {
-                           if (!in_array($array_tmp['ip'], $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'])) { 
-                              $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'][]
-                                      = $array_tmp['ip'];
-                           }
-                        }
-                     } else {
-                        if (isset($array_tmp['ip'])
-                                && $array_tmp['ip'] != '') {
-                           $array_tmp['ipaddress'] = array($array_tmp['ip']);
-                           unset($array_tmp['ip']);
-                        } else {
-                           $array_tmp['ipaddress'] = array();
-                        }
-                        if (isset($a_networks['IPADDRESS6'])
-                              && $a_networks['IPADDRESS6'] != '') {
-                           $array_tmp['ipaddress'][] = $a_networks['IPADDRESS6'];
-                        }
-
-                        if (isset($array_tmp["instantiation_type"])
-                                AND $array_tmp["instantiation_type"] == 'Ethernet') {
-                           $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
-                        } else if (isset($array_tmp["instantiation_type"])
-                                AND ($array_tmp["instantiation_type"] == 'Wifi'
-                                     OR $array_tmp["instantiation_type"] == 'IEEE')) {
-                           $array_tmp["instantiation_type"] = 'NetworkPortWifi';
-                        } else if ($array_tmp['mac'] != '') {
-                           $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
-                        } else {
-                           $array_tmp["instantiation_type"] = 'NetworkPortLocal';
-                        }
-                        $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']] = $array_tmp;
-                     }
-                  }
-               }
-            }
-            $a_inventory['networkport'] = $a_networknames;
-         }
-      }
 
       // * SLOTS
 
