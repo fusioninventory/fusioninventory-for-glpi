@@ -190,6 +190,23 @@ class PluginFusioninventoryInventoryComputerInventory {
                }
             }
          }
+         // Case of virtualmachines
+         if (!isset($input['mac'])
+                 && !isset($input['ip'])) {
+            foreach($a_computerinventory['networkport'] as $network) {
+               if ((isset($network['mac'])) AND (!empty($network['mac']))) {
+                  $input['mac'][] = $network['mac'];
+               }
+               foreach ($network['ipaddress'] as $ip) {
+                  if ($ip != '127.0.0.1' && $ip != '::1') {
+                     $input['ip'][] = $ip;
+                  }
+               }
+               if ((isset($network['subnet'])) AND (!empty($network['subnet']))) {
+                  $input['subnet'][] = $network['subnet'];
+               }
+            }
+         }
 
          if ((isset($a_computerinventory['Computer']['os_license_number']))
                AND (!empty($a_computerinventory['Computer']['os_license_number']))) {
@@ -232,8 +249,8 @@ class PluginFusioninventoryInventoryComputerInventory {
          // If transfer is disable, get entity and search only on this entity
          // (see http://forge.fusioninventory.org/issues/1503)
          $pfConfig = new PluginFusioninventoryConfig();
-
-
+         
+         
          // * entity rules
             $inputent = $input;
             if ((isset($a_computerinventory['Computer']['domains_id']))
