@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Mathieu Simon <mathieu.sim@gmail.com>, 2012-2013
+# Mathieu Simon <mathieu.sim@gmail.com>, 2012-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-16 13:28+0100\n"
-"PO-Revision-Date: 2013-12-16 12:29+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2014-01-24 15:10+0000\n"
+"Last-Translator: Mathieu Simon <mathieu.sim@gmail.com>\n"
 "Language-Team: German (Germany) (http://www.transifex.com/projects/p/FusionInventory/language/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -449,11 +449,11 @@ msgstr ""
 
 #: inc/collect.class.php:82
 msgid "Registry"
-msgstr ""
+msgstr "Registry"
 
 #: inc/collect.class.php:83
 msgid "WMI"
-msgstr ""
+msgstr "WMI"
 
 #: inc/collect.class.php:84 inc/collect_file.class.php:50
 #: inc/collect_file.class.php:72
@@ -466,38 +466,38 @@ msgstr ""
 
 #: inc/collect_file.class.php:102 inc/collect_file.class.php:172
 msgid "Limit"
-msgstr ""
+msgstr "Limite"
 
 #: inc/collect_file.class.php:103 inc/collect_file.class.php:138
 #: inc/collect_file.class.php:257
 msgid "Folder"
-msgstr ""
+msgstr "Ordner"
 
 #: inc/collect_file.class.php:104
 msgid "Recursive"
-msgstr ""
+msgstr "Rekursiv"
 
 #: inc/collect_file.class.php:105 inc/collect_file.class.php:205
 msgid "Regex"
-msgstr ""
+msgstr "Regulärer Ausdruck"
 
 #: inc/collect_file.class.php:106 inc/collect_file.class.php:211
 #: inc/collect_file_content.class.php:200
 #: inc/collect_file_content.class.php:238
 msgid "Size"
-msgstr ""
+msgstr "Grösse"
 
 #: inc/collect_file.class.php:107 inc/collect_file.class.php:226
 msgid "Checksum SHA512"
-msgstr ""
+msgstr "SHA512-Prüfsumme"
 
 #: inc/collect_file.class.php:108 inc/collect_file.class.php:232
 msgid "Checksum SHA2"
-msgstr ""
+msgstr "SHA2-Prüfsumme"
 
 #: inc/collect_file.class.php:109
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: inc/collect_file.class.php:110
 msgid "Iname"
@@ -517,12 +517,12 @@ msgstr "Datei"
 #: inc/collect_file.class.php:184
 msgid "Filter"
 msgid_plural "Filters"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Filter"
+msgstr[1] "Filter"
 
 #: inc/collect_file.class.php:190
 msgid "Base folder"
-msgstr ""
+msgstr "Basisordner"
 
 #: inc/collect_file.class.php:196
 msgid "Folder recursive"
@@ -530,19 +530,19 @@ msgstr ""
 
 #: inc/collect_file.class.php:215 inc/collect_file.class.php:245
 msgid "Disabled"
-msgstr ""
+msgstr "Deaktiviert"
 
 #: inc/collect_file.class.php:241
 msgid "Filename"
-msgstr ""
+msgstr "Dateiname"
 
 #: inc/collect_file.class.php:246
 msgid "Non sentitive case"
-msgstr ""
+msgstr "Gross-/Kleinschreibung nicht beachten"
 
 #: inc/collect_file.class.php:247
 msgid "Sentitive case"
-msgstr ""
+msgstr "Gross-/Kleinschreibung beachten"
 
 #: inc/collect_file_content.class.php:50 inc/collect_file_content.class.php:84
 #: inc/collect_file_content.class.php:90
@@ -559,7 +559,7 @@ msgstr ""
 
 #: inc/collect_registry.class.php:50 inc/collect_registry.class.php:72
 msgid "Windows registry"
-msgstr ""
+msgstr "Windows-Registrierungsdatenbank"
 
 #: inc/collect_registry.class.php:112
 msgid "Windows registry associated"
@@ -580,12 +580,12 @@ msgstr ""
 #: inc/deploycheck.class.php:287 inc/deploycheck.class.php:292
 #: inc/deploycheck.class.php:297
 msgid "Value"
-msgstr ""
+msgstr "Wert"
 
 #: inc/collect_registry.class.php:166
 #: inc/collect_registry_content.class.php:189
 msgid "Path"
-msgstr ""
+msgstr "Pfad"
 
 #: inc/collect_registry.class.php:172 inc/deploycheck.class.php:271
 #: inc/deploycheck.class.php:275
@@ -601,11 +601,11 @@ msgstr ""
 #: inc/collect_registry_content.class.php:191
 #: inc/collect_registry_content.class.php:235
 msgid "Data"
-msgstr ""
+msgstr "Daten"
 
 #: inc/collect_wmi.class.php:50 inc/collect_wmi.class.php:72
 msgid "Windows WMI"
-msgstr ""
+msgstr "Windows WMI"
 
 #: inc/collect_wmi.class.php:98
 msgid "Windows WMI associated"
@@ -618,11 +618,11 @@ msgstr ""
 #: inc/collect_wmi.class.php:103 inc/collect_wmi.class.php:152
 #: inc/collect_wmi_content.class.php:190
 msgid "Class"
-msgstr ""
+msgstr "Klasse"
 
 #: inc/collect_wmi.class.php:104 inc/collect_wmi.class.php:158
 msgid "Properties"
-msgstr ""
+msgstr "Eigenschaften"
 
 #: inc/collect_wmi.class.php:144
 msgid "moniker"
@@ -635,7 +635,7 @@ msgstr ""
 
 #: inc/collect_wmi_content.class.php:191 inc/collect_wmi_content.class.php:236
 msgid "Property"
-msgstr ""
+msgstr "Eigenschaft"
 
 #: inc/collectrule.class.php:57 inc/collectrulecollection.class.php:55
 #: inc/menu.class.php:211
@@ -644,31 +644,31 @@ msgstr ""
 
 #: inc/collectrule.class.php:125
 msgid "Registry key"
-msgstr ""
+msgstr "Registry-Schlüssel"
 
 #: inc/collectrule.class.php:129
 msgid "Registry value"
-msgstr ""
+msgstr "Wert in der Registrierungsdatenbank"
 
 #: inc/collectrule.class.php:132
 msgid "WMI property"
-msgstr ""
+msgstr "WMI-Eigenschaft"
 
 #: inc/collectrule.class.php:136
 msgid "WMI value"
-msgstr ""
+msgstr "WMI-Wert"
 
 #: inc/collectrule.class.php:139
 msgid "File name"
-msgstr ""
+msgstr "Dateiname"
 
 #: inc/collectrule.class.php:142
 msgid "File path"
-msgstr ""
+msgstr "Dateipfad"
 
 #: inc/collectrule.class.php:145
 msgid "File size"
-msgstr ""
+msgstr "Dateigrösse"
 
 #: inc/communication.class.php:224
 #: inc/communicationnetworkinventory.class.php:219
@@ -678,7 +678,7 @@ msgstr ""
 
 #: inc/computerlicenseinfo.class.php:70
 msgid "Software licenses"
-msgstr ""
+msgstr "Softwarelizenz"
 
 #: inc/computerlicenseinfo.class.php:125
 msgid "Serial number"
@@ -877,15 +877,15 @@ msgstr "Remote-Inventarisierung von Geräten"
 
 #: inc/deployaction.class.php:52
 msgid "Return code is equal to"
-msgstr ""
+msgstr "Rückgabewert ist gleich"
 
 #: inc/deployaction.class.php:53
 msgid "Return code is not equal to"
-msgstr ""
+msgstr "Rückgabewert ist nicht gleich"
 
 #: inc/deployaction.class.php:54
 msgid "Command output contains"
-msgstr ""
+msgstr "Ausgabe des Kommandos enthält"
 
 #: inc/deployaction.class.php:55
 msgid "Command output does not contains"
@@ -893,15 +893,15 @@ msgstr ""
 
 #: inc/deployaction.class.php:71
 msgid "Command"
-msgstr ""
+msgstr "Befehl"
 
 #: inc/deployaction.class.php:72
 msgid "Move"
-msgstr ""
+msgstr "Verschieben"
 
 #: inc/deployaction.class.php:73
 msgid "Copy"
-msgstr ""
+msgstr "Kopieren"
 
 #: inc/deployaction.class.php:74 inc/deployaction.class.php:220
 #: inc/deploycheck.class.php:196 inc/deployfile.class.php:296
@@ -916,11 +916,11 @@ msgstr "Löschen"
 
 #: inc/deployaction.class.php:75
 msgid "Make directory"
-msgstr ""
+msgstr "Ordner erstellen"
 
 #: inc/deployaction.class.php:183
 msgid "Command to execute"
-msgstr ""
+msgstr "Auszuführender Befehl"
 
 #: inc/deployaction.class.php:197
 msgid "return codes saved for this command"
@@ -957,11 +957,11 @@ msgstr "Registry-Key ist vorhanden"
 
 #: inc/deploycheck.class.php:52
 msgid "Registry key missing"
-msgstr ""
+msgstr "Registrierungsschlüssel fehlt"
 
 #: inc/deploycheck.class.php:53
 msgid "Registry key value equals to"
-msgstr ""
+msgstr "Registrierungsschlüssel ist gleich"
 
 #: inc/deploycheck.class.php:54
 msgid "File exists"
@@ -993,7 +993,7 @@ msgstr "Freier Speicherplatz grösser als"
 
 #: inc/deploycheck.class.php:80
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: inc/deploycheck.class.php:81
 msgid "KiB"
@@ -1009,7 +1009,7 @@ msgstr "GiB"
 
 #: inc/deploycheck.class.php:276
 msgid "Key value"
-msgstr ""
+msgstr "Schlüsselwert"
 
 #: inc/deploycheck.class.php:296
 msgid "Disk or directory"
@@ -1029,7 +1029,7 @@ msgstr "Fehler"
 
 #: inc/deploycheck.class.php:404
 msgid "Ignore"
-msgstr ""
+msgstr "Ignorieren"
 
 #: inc/deploycommand.class.php:50
 msgid "Execute a command"
@@ -1081,7 +1081,7 @@ msgstr "Dekomprimieren"
 
 #: inc/deployfile.class.php:422
 msgid "P2P"
-msgstr ""
+msgstr "P2P"
 
 #: inc/deployfile.class.php:429
 msgid "retention days"
@@ -1129,7 +1129,7 @@ msgstr "Maximale Dateigrösse"
 
 #: inc/deployfile.class.php:1036
 msgid "Mio"
-msgstr ""
+msgstr "Mio"
 
 #: inc/deploygroup.class.php:75 inc/deploygroup_staticdata.class.php:74
 msgid "Static group"
@@ -1272,11 +1272,11 @@ msgstr "Öffentliche Kontaktadresse"
 
 #: inc/inventorycomputercomputer.class.php:117
 msgid "BIOS date"
-msgstr ""
+msgstr "BIOS-Datum"
 
 #: inc/inventorycomputercomputer.class.php:124
 msgid "BIOS version"
-msgstr ""
+msgstr "BIOS-Version"
 
 #: inc/inventorycomputercomputer.class.php:201
 #: inc/networkequipment.class.php:1099 inc/printer.class.php:247
@@ -1395,7 +1395,7 @@ msgstr "IP-Adresse inkorrekt"
 
 #: inc/lock.class.php:164
 msgid "Values GLPI"
-msgstr ""
+msgstr "GLPI-Werte"
 
 #: inc/lock.class.php:165
 msgid "Values of last inventory"
@@ -2437,7 +2437,7 @@ msgstr "Duplex"
 
 #: inc/networkequipment.class.php:716 inc/networkport.class.php:121
 msgid "Port not connected since"
-msgstr ""
+msgstr "Port nicht verbunden seit"
 
 #: inc/networkport.class.php:89
 msgid "Last change"
@@ -2573,7 +2573,7 @@ msgstr ""
 #: inc/snmpmodelimportexport.class.php:490
 #: inc/snmpmodelimportexport.class.php:495
 msgid "Importing SNMP models, please wait..."
-msgstr ""
+msgstr "Importiere SNMP-Modelle, bitte warten..."
 
 #: inc/snmpmodelconstructdevice.class.php:58
 msgid "Back to device form information"
@@ -2746,7 +2746,7 @@ msgstr "Dynamische Auto-Verwaltung des Agents"
 
 #: inc/staticmisc.class.php:584
 msgid "Fusinv"
-msgstr ""
+msgstr "Fusinv"
 
 #: inc/task.class.php:86 inc/task.class.php:240 inc/taskjob.class.php:1491
 #: inc/taskjob.class.php:1855
@@ -2991,4 +2991,4 @@ msgstr "Logindaten"
 
 #: report/computer_last_inventory.php:73
 msgid "Number of days (minimum) since last inventory"
-msgstr ""
+msgstr "Anzahl Tage (Minimum) seit letzter Inventarisierung"

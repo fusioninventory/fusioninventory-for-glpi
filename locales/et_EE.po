@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# pexy <pexyyy@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-16 13:28+0100\n"
-"PO-Revision-Date: 2013-12-16 12:29+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2014-01-05 01:07+0000\n"
+"Last-Translator: pexy <pexyyy@gmail.com>\n"
 "Language-Team: Estonian (Estonia) (http://www.transifex.com/projects/p/FusionInventory/language/et_EE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -54,7 +55,7 @@ msgstr ""
 #: inc/inventoryruleimport.class.php:143
 #: inc/inventoryrulelocation.class.php:126
 msgid "FusionInventory tag"
-msgstr ""
+msgstr "FusionInventory märge"
 
 #: hook.php:135 inc/computerarch.class.php:51
 msgid "Architecture"
@@ -72,7 +73,7 @@ msgstr ""
 #: inc/staticmisc.class.php:239 inc/unknowndevice.class.php:174
 #: inc/unknowndevice.class.php:395
 msgid "SNMP authentication"
-msgstr ""
+msgstr "SNMP autentimine"
 
 #: hook.php:217 hook.php:259 inc/networkequipment.class.php:442
 #: inc/printer.class.php:153 inc/snmpmodel.class.php:107
@@ -111,24 +112,24 @@ msgstr ""
 #: inc/ignoredimportdevice.class.php:124 inc/rulematchedlog.class.php:179
 #: inc/rulematchedlog.class.php:249 inc/taskjob.class.php:237
 msgid "Module"
-msgstr ""
+msgstr "Moodul"
 
 #: hook.php:878 hook.php:882 inc/agent.class.php:272 inc/agent.class.php:289
 #: inc/config.class.php:650 inc/config.class.php:659
 #: inc/statediscovery.class.php:147 inc/stateinventory.class.php:99
 msgid "Threads number"
-msgstr ""
+msgstr "Lõimede arv"
 
 #: hook.php:879 inc/agent.class.php:273 inc/config.class.php:651
 #: inc/staticmisc.class.php:83
 msgid "Network discovery"
-msgstr ""
+msgstr "Võrgu skaneerimine"
 
 #: hook.php:884 inc/agent.class.php:290 inc/agentmodule.class.php:134
 #: inc/agentmodule.class.php:244 inc/config.class.php:660
 #: inc/staticmisc.class.php:88
 msgid "Network inventory (SNMP)"
-msgstr ""
+msgstr "Võrguseadmete inventeerimine (SNMP)"
 
 #: hook.php:915 inc/taskjoblog.class.php:442 inc/taskjoblog.class.php:885
 #: inc/taskjoblog.class.php:943
@@ -187,7 +188,7 @@ msgstr ""
 #: report/computer_last_inventory.php:49 report/not_queried_recently.php:51
 #: report/ports_date_connections.php:49 report/switch_ports.history.php:50
 msgid "FusionInventory"
-msgstr ""
+msgstr "FusionInventory"
 
 #: setup.php:292 inc/printerlog.class.php:474
 msgid "Printed page counter"
@@ -220,25 +221,25 @@ msgstr ""
 #: setup.php:420 inc/menu.class.php:135 inc/menu.class.php:142
 #: inc/task.class.php:53 inc/task.class.php:810 inc/task.class.php:819
 msgid "Task management"
-msgstr ""
+msgstr "Tegevuste haldus"
 
 #: setup.php:423 inc/menu.class.php:148
 msgid "Running jobs"
-msgstr ""
+msgstr "Jooksvad tegevused"
 
 #: setup.php:426 inc/menu.class.php:100
 msgid "Agents management"
-msgstr ""
+msgstr "Agentide haldus"
 
 #: setup.php:432 inc/menu.class.php:106 inc/unknowndevice.class.php:54
 #: inc/unknowndevice.class.php:72
 msgid "Unknown device"
-msgstr ""
+msgstr "Tundmatud seadmed"
 
 #: setup.php:435 inc/inventoryruleimportcollection.class.php:57
 #: inc/menu.class.php:181
 msgid "Equipment import and link rules"
-msgstr ""
+msgstr "Vara importimise ja seostamise reeglid"
 
 #: setup.php:438
 msgid "Wizard"
@@ -251,12 +252,12 @@ msgstr ""
 #: setup.php:444 inc/deploypackage.class.php:54
 #: inc/deploypackage.class.php:287
 msgid "Packages"
-msgstr ""
+msgstr "Pakk"
 
 #: setup.php:447 inc/deploygroup.class.php:58 inc/deploygroup.class.php:107
 #: inc/deploytaskjob.class.php:170 inc/menu.class.php:112
 msgid "Groups of computers"
-msgstr ""
+msgstr "Arvutite grupid"
 
 #: setup.php:450 inc/ignoredimportdevice.class.php:51
 msgid "Equipment ignored on import"
@@ -274,11 +275,11 @@ msgstr ""
 
 #: setup.php:462 inc/menu.class.php:155
 msgid "Import agent XML file"
-msgstr ""
+msgstr "Impordi agendi XML fail"
 
 #: setup.php:471 inc/menu.class.php:277
 msgid "Discovery status"
-msgstr ""
+msgstr "Skaneerimise olek"
 
 #: setup.php:474
 msgid "Inventory status"
@@ -427,15 +428,15 @@ msgstr ""
 #: inc/agentmodule.class.php:61 inc/agentmodule.class.php:63
 #: inc/configuration.class.php:56
 msgid "Agents modules"
-msgstr ""
+msgstr "Agendi moodulid"
 
 #: inc/agentmodule.class.php:110
 msgid "Activation (by default)"
-msgstr ""
+msgstr "Vaikimisi aktiveeritud"
 
 #: inc/agentmodule.class.php:111
 msgid "Exceptions"
-msgstr ""
+msgstr "Erandid"
 
 #: inc/agentmodule.class.php:139 inc/agentmodule.class.php:249
 #: inc/deploystaticmisc.class.php:56
@@ -505,13 +506,13 @@ msgstr ""
 #: inc/collect_file.class.php:111 inc/collect_file.class.php:252
 #: inc/deployaction.class.php:255 inc/deploycheck.class.php:224
 msgid "Type"
-msgstr ""
+msgstr "Tüüp"
 
 #: inc/collect_file.class.php:136 inc/collect_file.class.php:256
 #: inc/deploycheck.class.php:280 inc/deploycheck.class.php:286
 #: inc/deploycheck.class.php:291 inc/deployfile.class.php:386
 msgid "File"
-msgstr ""
+msgstr "Fail"
 
 #: inc/collect_file.class.php:184
 msgid "Filter"
@@ -579,7 +580,7 @@ msgstr ""
 #: inc/deploycheck.class.php:287 inc/deploycheck.class.php:292
 #: inc/deploycheck.class.php:297
 msgid "Value"
-msgstr ""
+msgstr "Väärtus"
 
 #: inc/collect_registry.class.php:166
 #: inc/collect_registry_content.class.php:189
@@ -589,7 +590,7 @@ msgstr ""
 #: inc/collect_registry.class.php:172 inc/deploycheck.class.php:271
 #: inc/deploycheck.class.php:275
 msgid "Key"
-msgstr ""
+msgstr "Võti"
 
 #: inc/collect_registry_content.class.php:50
 #: inc/collect_registry_content.class.php:84
@@ -697,31 +698,31 @@ msgstr ""
 
 #: inc/config.class.php:209 inc/staticmisc.class.php:69
 msgid "Computer Inventory"
-msgstr ""
+msgstr "Arvuti inventeerimine"
 
 #: inc/config.class.php:211
 msgid "Network Inventory"
-msgstr ""
+msgstr "Võrguseadmete inventeerimine"
 
 #: inc/config.class.php:213 inc/menu.class.php:323
 msgid "Package management"
-msgstr ""
+msgstr "Pakihaldus"
 
 #: inc/config.class.php:300
 msgid "SSL-only for agent"
-msgstr ""
+msgstr "Ainult SSL ühendus agentidega"
 
 #: inc/config.class.php:304
 msgid "Inventory frequency (in hours)"
-msgstr ""
+msgstr "Inventeerimise sagedus (tundides)"
 
 #: inc/config.class.php:315
 msgid "Delete tasks after"
-msgstr ""
+msgstr "Kustuta tegevused pärast"
 
 #: inc/config.class.php:325
 msgid "Agent port"
-msgstr ""
+msgstr "Agendi port"
 
 #: inc/config.class.php:332
 msgid "Extra-debug"
@@ -729,7 +730,7 @@ msgstr ""
 
 #: inc/config.class.php:337
 msgid "Service URL"
-msgstr ""
+msgstr "Teenuse aadress"
 
 #: inc/config.class.php:385 inc/wizard.class.php:340
 msgid "Import options"
@@ -737,11 +738,11 @@ msgstr "Importimise valikud"
 
 #: inc/config.class.php:423 inc/config.class.php:433
 msgid "Global import"
-msgstr "Üldine import"
+msgstr ""
 
 #: inc/config.class.php:424 inc/config.class.php:436
 msgid "Unique import"
-msgstr "Ainulaadne import"
+msgstr ""
 
 #: inc/config.class.php:425 inc/config.class.php:438
 msgid "Unique import on serial number"
@@ -767,28 +768,28 @@ msgstr ""
 
 #: inc/config.class.php:496
 msgid "Virtual network card"
-msgstr ""
+msgstr "Virtuaalsed võrgukaardid"
 
 #: inc/config.class.php:506 inc/inventorycomputerantivirus.class.php:50
 #: inc/inventorycomputerantivirus.class.php:86
 #: inc/inventorycomputerantivirus.class.php:142
 #: inc/inventorycomputerbatteries.class.php:123
 msgid "Antivirus"
-msgstr ""
+msgstr "Antiviirus"
 
 #: inc/config.class.php:557
 msgid "Default status"
-msgstr "Vaikimisi staatus"
+msgstr "Vaikimisi olek"
 
 #: inc/config.class.php:564
 msgid "Network drives"
-msgstr ""
+msgstr "Võrgukettad"
 
 #: inc/config.class.php:591
 msgid ""
 "Create computer based on virtual machine information ( only when the virtual"
 " machine has no inventory agent ! )"
-msgstr ""
+msgstr "Loo uus arvuti virtuaalmasina info põhjal (ainult siis, kui virtuaalmasinas ei ole agenti)"
 
 #: inc/config.class.php:601
 msgid "Automatic computers transfer"
@@ -804,7 +805,7 @@ msgstr ""
 
 #: inc/config.class.php:700
 msgid "Root folder for sending files from server"
-msgstr ""
+msgstr "Kataloog, kus asuvad pakid alla laadimiseks"
 
 #: inc/config.class.php:708
 msgid "Use this GLPI server as a mirror server"
@@ -812,15 +813,15 @@ msgstr ""
 
 #: inc/configlogfield.class.php:145
 msgid "History configuration"
-msgstr ""
+msgstr "Ajaloo seadistamine"
 
 #: inc/configlogfield.class.php:152
 msgid "List of fields for which to keep history"
-msgstr ""
+msgstr "Väljad mille kohta ajalugu hoida"
 
 #: inc/configlogfield.class.php:156
 msgid "Retention in days"
-msgstr ""
+msgstr "Säilitamine (päevades)"
 
 #: inc/configsecurity.class.php:90
 msgid "SNMP version"
@@ -884,23 +885,23 @@ msgstr ""
 
 #: inc/deployaction.class.php:54
 msgid "Command output contains"
-msgstr ""
+msgstr "Käsu väljund sisaldab"
 
 #: inc/deployaction.class.php:55
 msgid "Command output does not contains"
-msgstr ""
+msgstr "Käsu väljund ei sisalda"
 
 #: inc/deployaction.class.php:71
 msgid "Command"
-msgstr ""
+msgstr "Käivita käsk"
 
 #: inc/deployaction.class.php:72
 msgid "Move"
-msgstr ""
+msgstr "Liiguta"
 
 #: inc/deployaction.class.php:73
 msgid "Copy"
-msgstr ""
+msgstr "Kopeeri"
 
 #: inc/deployaction.class.php:74 inc/deployaction.class.php:220
 #: inc/deploycheck.class.php:196 inc/deployfile.class.php:296
@@ -911,15 +912,15 @@ msgstr ""
 #: inc/taskjob.class.php:442 inc/taskjob.class.php:685
 #: inc/taskjob.class.php:697
 msgid "Delete"
-msgstr ""
+msgstr "Kustuta"
 
 #: inc/deployaction.class.php:75
 msgid "Make directory"
-msgstr ""
+msgstr "Loo kataloog"
 
 #: inc/deployaction.class.php:183
 msgid "Command to execute"
-msgstr ""
+msgstr "Käivitatav käsk"
 
 #: inc/deployaction.class.php:197
 msgid "return codes saved for this command"
@@ -928,107 +929,107 @@ msgstr ""
 #: inc/deployaction.class.php:209 inc/deploycheck.class.php:185
 #: inc/deployfile.class.php:286
 msgid "drag"
-msgstr ""
+msgstr "Lohista"
 
 #: inc/deployaction.class.php:317
 msgid "From"
-msgstr ""
+msgstr "Kust"
 
 #: inc/deployaction.class.php:319
 msgid "To"
-msgstr ""
+msgstr "Kuhu"
 
 #: inc/deployaction.class.php:327
 msgid "exec"
-msgstr ""
+msgstr "Käsk"
 
 #: inc/deployaction.class.php:340
 msgid "path"
-msgstr ""
+msgstr "Failitee"
 
 #: inc/deployaction.class.php:379
 msgid "Execution checks"
-msgstr ""
+msgstr "Käivitamise kontrollid"
 
 #: inc/deploycheck.class.php:51
 msgid "Registry key exists"
-msgstr ""
+msgstr "Registrivõti on olemas"
 
 #: inc/deploycheck.class.php:52
 msgid "Registry key missing"
-msgstr ""
+msgstr "Registrivõti puudub"
 
 #: inc/deploycheck.class.php:53
 msgid "Registry key value equals to"
-msgstr ""
+msgstr "Registrivõtme väärtus on"
 
 #: inc/deploycheck.class.php:54
 msgid "File exists"
-msgstr ""
+msgstr "Fail on olemas"
 
 #: inc/deploycheck.class.php:55
 msgid "File is missing"
-msgstr ""
+msgstr "Fail puudub"
 
 #: inc/deploycheck.class.php:56
 msgid "File size is greater than"
-msgstr ""
+msgstr "Fail on suurem kui"
 
 #: inc/deploycheck.class.php:57
 msgid "File size is equal to"
-msgstr ""
+msgstr "Faili suurus on"
 
 #: inc/deploycheck.class.php:58
 msgid "File size is lower than"
-msgstr ""
+msgstr "Fail on väiksem kui"
 
 #: inc/deploycheck.class.php:59
 msgid "SHA-512 hash value is"
-msgstr ""
+msgstr "Faili SHA-512 räsi on"
 
 #: inc/deploycheck.class.php:60
 msgid "Free space is greater than"
-msgstr ""
+msgstr "Vaba ruumi on rohkem kui"
 
 #: inc/deploycheck.class.php:80
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: inc/deploycheck.class.php:81
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #: inc/deploycheck.class.php:82
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #: inc/deploycheck.class.php:83
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #: inc/deploycheck.class.php:276
 msgid "Key value"
-msgstr ""
+msgstr "Väärtus"
 
 #: inc/deploycheck.class.php:296
 msgid "Disk or directory"
-msgstr ""
+msgstr "Ketas või kataloog"
 
 #: inc/deploycheck.class.php:374
 msgid "Unit"
-msgstr ""
+msgstr "Ühik"
 
 #: inc/deploycheck.class.php:400
 msgid "In case of error"
-msgstr ""
+msgstr "Vea korral"
 
 #: inc/deploycheck.class.php:403 inc/deploystate.class.php:127
 msgid "Error"
-msgstr ""
+msgstr "Viga"
 
 #: inc/deploycheck.class.php:404
 msgid "Ignore"
-msgstr ""
+msgstr "Ignoreeri"
 
 #: inc/deploycommand.class.php:50
 msgid "Execute a command"
@@ -1036,11 +1037,11 @@ msgstr ""
 
 #: inc/deployfile.class.php:70
 msgid "Upload from computer"
-msgstr ""
+msgstr "Lae üles arvutist"
 
 #: inc/deployfile.class.php:71
 msgid "Upload from server"
-msgstr ""
+msgstr "Vali fail serveris"
 
 #: inc/deployfile.class.php:234
 msgid "p2p"
@@ -1060,7 +1061,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:329
 msgid "Source"
-msgstr ""
+msgstr "Faili allikas"
 
 #: inc/deployfile.class.php:392
 msgid "filename"
@@ -1068,19 +1069,19 @@ msgstr ""
 
 #: inc/deployfile.class.php:398
 msgid "Choose"
-msgstr ""
+msgstr "Vali"
 
 #: inc/deployfile.class.php:402
 msgid "Select the file on server"
-msgstr ""
+msgstr "Vali serveris olev fail"
 
 #: inc/deployfile.class.php:417
 msgid "Uncompress"
-msgstr ""
+msgstr "Paki lahti"
 
 #: inc/deployfile.class.php:422
 msgid "P2P"
-msgstr ""
+msgstr "P2P"
 
 #: inc/deployfile.class.php:429
 msgid "retention days"
@@ -1096,7 +1097,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:704
 msgid "No file was uploaded"
-msgstr ""
+msgstr "Fail oli valimata"
 
 #: inc/deployfile.class.php:707
 msgid "Missing a temporary folder"
@@ -1112,7 +1113,7 @@ msgstr ""
 
 #: inc/deployfile.class.php:740 inc/deployfile.class.php:785
 msgid "File saved!"
-msgstr ""
+msgstr "Fail üles laetud"
 
 #: inc/deployfile.class.php:743 inc/deployfile.class.php:788
 msgid "Failed to copy file"
@@ -1124,11 +1125,11 @@ msgstr ""
 
 #: inc/deployfile.class.php:1034
 msgid "Max file size"
-msgstr ""
+msgstr "Maksimaalne suurus"
 
 #: inc/deployfile.class.php:1036
 msgid "Mio"
-msgstr ""
+msgstr "MB"
 
 #: inc/deploygroup.class.php:75 inc/deploygroup_staticdata.class.php:74
 msgid "Static group"
@@ -1144,7 +1145,7 @@ msgstr ""
 
 #: inc/deployinstall.class.php:50 inc/deployinstall.class.php:58
 msgid "Installation"
-msgstr ""
+msgstr "Paigaldamine"
 
 #: inc/deploymirror.class.php:137 inc/deploymirror.class.php:198
 msgid "Mirror server address"
@@ -1170,19 +1171,19 @@ msgstr[1] ""
 
 #: inc/deploypackage.class.php:291
 msgid "Add a package"
-msgstr ""
+msgstr "Loo uus pakk"
 
 #: inc/deploypackage.class.php:370
 msgid "Audits"
-msgstr ""
+msgstr "Kontrollid"
 
 #: inc/deploypackage.class.php:371
 msgid "Files"
-msgstr ""
+msgstr "Failid"
 
 #: inc/deploypackage.class.php:372
 msgid "Actions"
-msgstr ""
+msgstr "Käsud"
 
 #: inc/deploypackage.class.php:694
 msgid "Item successfully added"
@@ -1208,7 +1209,7 @@ msgstr ""
 
 #: inc/deploystaticmisc.class.php:61 inc/staticmisc.class.php:100
 msgid "Package uninstall"
-msgstr ""
+msgstr "Paigalda pakk"
 
 #: inc/deploystaticmisc.class.php:94 inc/deploytask.class.php:54
 msgid "Group of computers"
@@ -1240,7 +1241,7 @@ msgstr ""
 
 #: inc/deployuninstall.class.php:50 inc/deployuninstall.class.php:58
 msgid "Uninstallation"
-msgstr ""
+msgstr "Eemaldamine"
 
 #: inc/display.class.php:174
 msgid "Progress"
@@ -2302,11 +2303,11 @@ msgstr ""
 
 #: inc/menu.class.php:117
 msgid "General configuration"
-msgstr ""
+msgstr "Üldine seadistus"
 
 #: inc/menu.class.php:124
 msgid "General"
-msgstr ""
+msgstr "Üldine"
 
 #: inc/menu.class.php:163
 msgid "Additional computer information"
@@ -2314,7 +2315,7 @@ msgstr ""
 
 #: inc/menu.class.php:169
 msgid "Tasks"
-msgstr ""
+msgstr "Tegevused"
 
 #: inc/menu.class.php:189
 msgid "Ignored import devices"
@@ -2330,11 +2331,11 @@ msgstr ""
 
 #: inc/menu.class.php:227
 msgid "Rules"
-msgstr ""
+msgstr "Reeglid"
 
 #: inc/menu.class.php:285
 msgid "Network inventory status"
-msgstr ""
+msgstr "Võrguseadmete inventeerimise olek"
 
 #: inc/menu.class.php:303
 msgid "SNMP models creation"
@@ -2342,11 +2343,11 @@ msgstr ""
 
 #: inc/menu.class.php:310
 msgid "Networking"
-msgstr ""
+msgstr "Võrk"
 
 #: inc/menu.class.php:336
 msgid "Deploy"
-msgstr ""
+msgstr "Pakipaigaldus"
 
 #: inc/networkequipment.class.php:64 inc/printer.class.php:71
 msgid "FusionInventory SNMP"
@@ -2683,7 +2684,7 @@ msgstr ""
 
 #: inc/staticmisc.class.php:93
 msgid "Package install"
-msgstr ""
+msgstr "Eemalda pakk"
 
 #: inc/staticmisc.class.php:107
 msgid "Collect data"

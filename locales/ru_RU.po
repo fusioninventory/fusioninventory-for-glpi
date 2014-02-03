@@ -4,14 +4,14 @@
 # 
 # Translators:
 # sayanvd <sayanvd@yandex.ru>, 2013
-# sayanvd <sayanvd@yandex.ru>, 2013
+# sayanvd <sayanvd@yandex.ru>, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-16 13:28+0100\n"
-"PO-Revision-Date: 2013-12-16 12:29+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2014-01-02 09:15+0000\n"
+"Last-Translator: sayanvd <sayanvd@yandex.ru>\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/projects/p/FusionInventory/language/ru_RU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,11 +56,11 @@ msgstr "Useragent"
 #: inc/inventoryruleimport.class.php:143
 #: inc/inventoryrulelocation.class.php:126
 msgid "FusionInventory tag"
-msgstr "FusionInventory tag"
+msgstr "Тег FusionInventory"
 
 #: hook.php:135 inc/computerarch.class.php:51
 msgid "Architecture"
-msgstr ""
+msgstr "Архитектура"
 
 #: hook.php:178 hook.php:226 inc/menu.class.php:295
 #: inc/networkequipment.class.php:448 inc/printer.class.php:171
@@ -241,7 +241,7 @@ msgstr "Неизвестное устройство"
 #: setup.php:435 inc/inventoryruleimportcollection.class.php:57
 #: inc/menu.class.php:181
 msgid "Equipment import and link rules"
-msgstr "Правила импорта оборудования и ссылок"
+msgstr "Правила импорта и связей оборудования"
 
 #: setup.php:438
 msgid "Wizard"
@@ -273,7 +273,7 @@ msgstr "Правила организации"
 #: setup.php:459 inc/inventoryrulelocation.class.php:57
 #: inc/inventoryrulelocationcollection.class.php:56
 msgid "Location rules"
-msgstr ""
+msgstr "Правила расположения"
 
 #: setup.php:462 inc/menu.class.php:155
 msgid "Import agent XML file"
@@ -297,7 +297,7 @@ msgstr "GLPI версия не совместима, требуется верс
 
 #: setup.php:582
 msgid "fileinfo extension (PHP) is required..."
-msgstr ""
+msgstr "требуется fileinfo расширение (PHP)  ..."
 
 #: setup.php:595
 #, php-format
@@ -306,7 +306,7 @@ msgstr "Пожалуйста, удалите папку %s из glpi/plugins/"
 
 #: ajax/dropdownsnmpmodelconstruct_progressbar.php:53
 msgid "Printer cartridges"
-msgstr ""
+msgstr "Картриджи для принтеров"
 
 #: front/agent.form.php:58
 msgid "The agent is running"
@@ -318,7 +318,7 @@ msgstr "Невозможно обратиться к агенту!"
 
 #: front/collect.form.php:45
 msgid "Collect management"
-msgstr ""
+msgstr "Управление сбором"
 
 #: front/config.form.php:47 front/configlogfield.form.php:47
 msgid "Features"
@@ -326,7 +326,7 @@ msgstr "Функции"
 
 #: front/constructsendmodel.php:52
 msgid "Importing SNMP models finished."
-msgstr ""
+msgstr "Импорт SNMP моделей завершен."
 
 #: front/inventorycomputerimportxml.php:68
 msgid "Can't read zip file!"
@@ -417,7 +417,7 @@ msgstr "Статус Агента"
 
 #: inc/agent.class.php:588
 msgid "Force inventory"
-msgstr "Группы инвенторизации"
+msgstr "Принудительная инвентаризация"
 
 #: inc/agent.class.php:744
 msgid "Informations for agent configuration"
@@ -447,63 +447,63 @@ msgstr "Развертывание пакета"
 
 #: inc/collect.class.php:50 inc/staticmisc.class.php:707
 msgid "Collect information"
-msgstr ""
+msgstr "Сбор сведений"
 
 #: inc/collect.class.php:82
 msgid "Registry"
-msgstr ""
+msgstr "Реестр"
 
 #: inc/collect.class.php:83
 msgid "WMI"
-msgstr ""
+msgstr "WMI"
 
 #: inc/collect.class.php:84 inc/collect_file.class.php:50
 #: inc/collect_file.class.php:72
 msgid "Find file"
-msgstr ""
+msgstr "Поиск файла"
 
 #: inc/collect_file.class.php:98
 msgid "Find file associated"
-msgstr ""
+msgstr "Поиск ассоциированного файла"
 
 #: inc/collect_file.class.php:102 inc/collect_file.class.php:172
 msgid "Limit"
-msgstr ""
+msgstr "Лимит"
 
 #: inc/collect_file.class.php:103 inc/collect_file.class.php:138
 #: inc/collect_file.class.php:257
 msgid "Folder"
-msgstr ""
+msgstr "Папка"
 
 #: inc/collect_file.class.php:104
 msgid "Recursive"
-msgstr ""
+msgstr "Рекурсивный"
 
 #: inc/collect_file.class.php:105 inc/collect_file.class.php:205
 msgid "Regex"
-msgstr ""
+msgstr "Regex"
 
 #: inc/collect_file.class.php:106 inc/collect_file.class.php:211
 #: inc/collect_file_content.class.php:200
 #: inc/collect_file_content.class.php:238
 msgid "Size"
-msgstr ""
+msgstr "Размер"
 
 #: inc/collect_file.class.php:107 inc/collect_file.class.php:226
 msgid "Checksum SHA512"
-msgstr ""
+msgstr "Контрольная сумма SHA512"
 
 #: inc/collect_file.class.php:108 inc/collect_file.class.php:232
 msgid "Checksum SHA2"
-msgstr ""
+msgstr "Контрольная сумма SHA2"
 
 #: inc/collect_file.class.php:109
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: inc/collect_file.class.php:110
 msgid "Iname"
-msgstr ""
+msgstr "Iname"
 
 #: inc/collect_file.class.php:111 inc/collect_file.class.php:252
 #: inc/deployaction.class.php:255 inc/deploycheck.class.php:224
@@ -519,62 +519,62 @@ msgstr "Файл"
 #: inc/collect_file.class.php:184
 msgid "Filter"
 msgid_plural "Filters"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Фильтр"
+msgstr[1] "Фильтр"
+msgstr[2] "Фильтры"
 
 #: inc/collect_file.class.php:190
 msgid "Base folder"
-msgstr ""
+msgstr "Базовая папка"
 
 #: inc/collect_file.class.php:196
 msgid "Folder recursive"
-msgstr ""
+msgstr "Рекурсивная папка"
 
 #: inc/collect_file.class.php:215 inc/collect_file.class.php:245
 msgid "Disabled"
-msgstr ""
+msgstr "Отключено"
 
 #: inc/collect_file.class.php:241
 msgid "Filename"
-msgstr ""
+msgstr "Имя файла"
 
 #: inc/collect_file.class.php:246
 msgid "Non sentitive case"
-msgstr ""
+msgstr "Без учета регистра"
 
 #: inc/collect_file.class.php:247
 msgid "Sentitive case"
-msgstr ""
+msgstr "С учетом регистра"
 
 #: inc/collect_file_content.class.php:50 inc/collect_file_content.class.php:84
 #: inc/collect_file_content.class.php:90
 msgid "Find file content"
-msgstr ""
+msgstr "Поиск содержимого файла"
 
 #: inc/collect_file_content.class.php:199
 msgid "Path/file"
-msgstr ""
+msgstr "Путь/файл"
 
 #: inc/collect_file_content.class.php:237
 msgid "pathfile"
-msgstr ""
+msgstr "pathfile"
 
 #: inc/collect_registry.class.php:50 inc/collect_registry.class.php:72
 msgid "Windows registry"
-msgstr ""
+msgstr "Реестр Windows"
 
 #: inc/collect_registry.class.php:112
 msgid "Windows registry associated"
-msgstr ""
+msgstr "Связанный с реестром Windows"
 
 #: inc/collect_registry.class.php:116 inc/collect_registry.class.php:158
 msgid "Hive"
-msgstr ""
+msgstr "Куст"
 
 #: inc/collect_registry.class.php:117
 msgid "Path/key"
-msgstr ""
+msgstr "Путь/ключ"
 
 #: inc/collect_registry.class.php:118
 #: inc/collect_registry_content.class.php:190
@@ -583,12 +583,12 @@ msgstr ""
 #: inc/deploycheck.class.php:287 inc/deploycheck.class.php:292
 #: inc/deploycheck.class.php:297
 msgid "Value"
-msgstr ""
+msgstr "Значение"
 
 #: inc/collect_registry.class.php:166
 #: inc/collect_registry_content.class.php:189
 msgid "Path"
-msgstr ""
+msgstr "Путь"
 
 #: inc/collect_registry.class.php:172 inc/deploycheck.class.php:271
 #: inc/deploycheck.class.php:275
@@ -599,79 +599,79 @@ msgstr "Ключ"
 #: inc/collect_registry_content.class.php:84
 #: inc/collect_registry_content.class.php:90
 msgid "Windows registry content"
-msgstr ""
+msgstr "Содержимое реестра Windows"
 
 #: inc/collect_registry_content.class.php:191
 #: inc/collect_registry_content.class.php:235
 msgid "Data"
-msgstr ""
+msgstr "Данные"
 
 #: inc/collect_wmi.class.php:50 inc/collect_wmi.class.php:72
 msgid "Windows WMI"
-msgstr ""
+msgstr "Windows WMI"
 
 #: inc/collect_wmi.class.php:98
 msgid "Windows WMI associated"
-msgstr ""
+msgstr "Связанный с Windows WMI"
 
 #: inc/collect_wmi.class.php:102 inc/collect_wmi_content.class.php:189
 msgid "Moniker"
-msgstr ""
+msgstr "Моникер"
 
 #: inc/collect_wmi.class.php:103 inc/collect_wmi.class.php:152
 #: inc/collect_wmi_content.class.php:190
 msgid "Class"
-msgstr ""
+msgstr "Класс"
 
 #: inc/collect_wmi.class.php:104 inc/collect_wmi.class.php:158
 msgid "Properties"
-msgstr ""
+msgstr "Свойства"
 
 #: inc/collect_wmi.class.php:144
 msgid "moniker"
-msgstr ""
+msgstr "моникер"
 
 #: inc/collect_wmi_content.class.php:50 inc/collect_wmi_content.class.php:84
 #: inc/collect_wmi_content.class.php:90
 msgid "Windows WMI content"
-msgstr ""
+msgstr "Содержимое Windows WMI"
 
 #: inc/collect_wmi_content.class.php:191 inc/collect_wmi_content.class.php:236
 msgid "Property"
-msgstr ""
+msgstr "Свойство"
 
 #: inc/collectrule.class.php:57 inc/collectrulecollection.class.php:55
 #: inc/menu.class.php:211
 msgid "Additional computer information rules"
-msgstr ""
+msgstr "Правила дополнительных сведений о компьютере"
 
 #: inc/collectrule.class.php:125
 msgid "Registry key"
-msgstr ""
+msgstr "Ключ реестра"
 
 #: inc/collectrule.class.php:129
 msgid "Registry value"
-msgstr ""
+msgstr "Значение реестра"
 
 #: inc/collectrule.class.php:132
 msgid "WMI property"
-msgstr ""
+msgstr "Свойство WMI"
 
 #: inc/collectrule.class.php:136
 msgid "WMI value"
-msgstr ""
+msgstr "Значение WMI"
 
 #: inc/collectrule.class.php:139
 msgid "File name"
-msgstr ""
+msgstr "Имя файла"
 
 #: inc/collectrule.class.php:142
 msgid "File path"
-msgstr ""
+msgstr "Путь к файлу"
 
 #: inc/collectrule.class.php:145
 msgid "File size"
-msgstr ""
+msgstr "Размер файла"
 
 #: inc/communication.class.php:224
 #: inc/communicationnetworkinventory.class.php:219
@@ -681,7 +681,7 @@ msgstr "Не подключённый элемент в"
 
 #: inc/computerlicenseinfo.class.php:70
 msgid "Software licenses"
-msgstr ""
+msgstr "Лицензии на ПО"
 
 #: inc/computerlicenseinfo.class.php:125
 msgid "Serial number"
@@ -792,7 +792,7 @@ msgstr "Сетевые диски"
 msgid ""
 "Create computer based on virtual machine information ( only when the virtual"
 " machine has no inventory agent ! )"
-msgstr ""
+msgstr "Создание компьютера на основе сведений виртуальной машины (только если она не имеет никакого агента инвентаризации ! )"
 
 #: inc/config.class.php:601
 msgid "Automatic computers transfer"
@@ -812,7 +812,7 @@ msgstr "Корневая папка для отправки файлов с се
 
 #: inc/config.class.php:708
 msgid "Use this GLPI server as a mirror server"
-msgstr ""
+msgstr "Использовать этот сервер GLPI как зеркальный сервер"
 
 #: inc/configlogfield.class.php:145
 msgid "History configuration"
@@ -844,11 +844,11 @@ msgstr "Протокол шифрования для данных"
 
 #: inc/constructmodel.class.php:343
 msgid "Get SNMP model"
-msgstr ""
+msgstr "Получить модель SNMP"
 
 #: inc/constructmodel.class.php:349
 msgid "Import SNMP model"
-msgstr ""
+msgstr "Импорт модели SNMP"
 
 #: inc/constructmodel.class.php:702
 msgid "Sorted by"
@@ -856,7 +856,7 @@ msgstr "Упорядочено по"
 
 #: inc/constructmodel.class.php:976 inc/constructmodel.class.php:982
 msgid "Download SNMP models, please wait..."
-msgstr ""
+msgstr "Загрузка модели SNMP, пожалуйста, подождите..."
 
 #: inc/credential.class.php:53 inc/credential.class.php:148
 #: inc/credentialip.class.php:109 inc/credentialip.class.php:122
@@ -880,11 +880,11 @@ msgstr "Инвентаризация удаленного устройства"
 
 #: inc/deployaction.class.php:52
 msgid "Return code is equal to"
-msgstr ""
+msgstr "Код возврата равный"
 
 #: inc/deployaction.class.php:53
 msgid "Return code is not equal to"
-msgstr ""
+msgstr "Код возврата не равный"
 
 #: inc/deployaction.class.php:54
 msgid "Command output contains"
@@ -896,15 +896,15 @@ msgstr "Вывод команды не содержит"
 
 #: inc/deployaction.class.php:71
 msgid "Command"
-msgstr ""
+msgstr "Команда"
 
 #: inc/deployaction.class.php:72
 msgid "Move"
-msgstr ""
+msgstr "Переместить"
 
 #: inc/deployaction.class.php:73
 msgid "Copy"
-msgstr ""
+msgstr "Копировать"
 
 #: inc/deployaction.class.php:74 inc/deployaction.class.php:220
 #: inc/deploycheck.class.php:196 inc/deployfile.class.php:296
@@ -919,11 +919,11 @@ msgstr "Удалить"
 
 #: inc/deployaction.class.php:75
 msgid "Make directory"
-msgstr ""
+msgstr "Создать директорию"
 
 #: inc/deployaction.class.php:183
 msgid "Command to execute"
-msgstr ""
+msgstr "Команда для выполнения"
 
 #: inc/deployaction.class.php:197
 msgid "return codes saved for this command"
@@ -952,7 +952,7 @@ msgstr "путь"
 
 #: inc/deployaction.class.php:379
 msgid "Execution checks"
-msgstr ""
+msgstr "Выполнение проверено"
 
 #: inc/deploycheck.class.php:51
 msgid "Registry key exists"
@@ -1012,7 +1012,7 @@ msgstr "ГиБ"
 
 #: inc/deploycheck.class.php:276
 msgid "Key value"
-msgstr ""
+msgstr "Значение ключа"
 
 #: inc/deploycheck.class.php:296
 msgid "Disk or directory"
@@ -1024,7 +1024,7 @@ msgstr "Единица"
 
 #: inc/deploycheck.class.php:400
 msgid "In case of error"
-msgstr ""
+msgstr "В случае ошибки"
 
 #: inc/deploycheck.class.php:403 inc/deploystate.class.php:127
 msgid "Error"
@@ -1032,7 +1032,7 @@ msgstr "Ошибка"
 
 #: inc/deploycheck.class.php:404
 msgid "Ignore"
-msgstr ""
+msgstr "Игнорировать"
 
 #: inc/deploycommand.class.php:50
 msgid "Execute a command"
@@ -1084,7 +1084,7 @@ msgstr "Распаковать"
 
 #: inc/deployfile.class.php:422
 msgid "P2P"
-msgstr ""
+msgstr "P2P"
 
 #: inc/deployfile.class.php:429
 msgid "retention days"
@@ -1156,11 +1156,11 @@ msgstr "Адрес сервера зеркала"
 
 #: inc/deploymirror.class.php:143
 msgid "Mirror location"
-msgstr ""
+msgstr "Местоположение зеркала"
 
 #: inc/deployorder.class.php:193
 msgid "The modified JSON contained a syntax error :"
-msgstr ""
+msgstr "Модифицированный JSON содержит синтаксическую ошибку :"
 
 #: inc/deploypackage.class.php:120
 msgid "Modification Denied"
@@ -1276,11 +1276,11 @@ msgstr "Публичный контактный адрес"
 
 #: inc/inventorycomputercomputer.class.php:117
 msgid "BIOS date"
-msgstr ""
+msgstr "Дата BIOS"
 
 #: inc/inventorycomputercomputer.class.php:124
 msgid "BIOS version"
-msgstr ""
+msgstr "Версия BIOS"
 
 #: inc/inventorycomputercomputer.class.php:201
 #: inc/networkequipment.class.php:1099 inc/printer.class.php:247
@@ -1289,7 +1289,7 @@ msgstr "Скачать"
 
 #: inc/inventorycomputercomputer.class.php:210
 msgid "PHP Array"
-msgstr ""
+msgstr "Массив PHP"
 
 #: inc/inventorycomputerimportxml.class.php:68
 msgid "Import XML file from an Agent"
@@ -1399,11 +1399,11 @@ msgstr "Неверный IP"
 
 #: inc/lock.class.php:164
 msgid "Values GLPI"
-msgstr ""
+msgstr "Значения GLPI"
 
 #: inc/lock.class.php:165
 msgid "Values of last inventory"
-msgstr ""
+msgstr "Значения последней инвентаризации"
 
 #: inc/lock.class.php:248 inc/taskjob.class.php:52 inc/taskjob.class.php:1470
 #: inc/taskjoblog.class.php:138 inc/taskjobstate.class.php:193
@@ -1997,7 +1997,7 @@ msgstr "Внутренний MAC адрес"
 #: inc/mapping.class.php:713 inc/networkequipment.class.php:720
 #: inc/networkport.class.php:125
 msgid "Alias"
-msgstr ""
+msgstr "Псевдоним"
 
 #: inc/mapping.class.php:717 inc/printerlog.class.php:145
 msgid "Total number of printed pages"
@@ -2315,7 +2315,7 @@ msgstr "Общее"
 
 #: inc/menu.class.php:163
 msgid "Additional computer information"
-msgstr ""
+msgstr "Дополнительные сведения о компьютере"
 
 #: inc/menu.class.php:169
 msgid "Tasks"
@@ -2331,7 +2331,7 @@ msgstr "Правила записей ПК"
 
 #: inc/menu.class.php:204
 msgid "Computer location rules"
-msgstr ""
+msgstr "Правила местоположения ПК"
 
 #: inc/menu.class.php:227
 msgid "Rules"
@@ -2343,7 +2343,7 @@ msgstr "Статус инвентаризации сети"
 
 #: inc/menu.class.php:303
 msgid "SNMP models creation"
-msgstr ""
+msgstr "Создание моделей SNMP"
 
 #: inc/menu.class.php:310
 msgid "Networking"
@@ -2441,7 +2441,7 @@ msgstr "Дуплекс"
 
 #: inc/networkequipment.class.php:716 inc/networkport.class.php:121
 msgid "Port not connected since"
-msgstr ""
+msgstr "Порт не подключен с"
 
 #: inc/networkport.class.php:89
 msgid "Last change"
@@ -2551,11 +2551,11 @@ msgstr "Управление правами"
 
 #: inc/rulematchedlog.class.php:82 inc/rulematchedlog.class.php:87
 msgid "Import information"
-msgstr ""
+msgstr "Сведения об импорте"
 
 #: inc/rulematchedlog.class.php:160 inc/rulematchedlog.class.php:226
 msgid "Rule import logs"
-msgstr "Правила импорта журнала"
+msgstr "Журнал правил импорта"
 
 #: inc/snmpmodel.class.php:96
 msgid "Key of model discovery"
@@ -2571,17 +2571,17 @@ msgstr "Изменить модель SNMP"
 
 #: inc/snmpmodel.class.php:175
 msgid "Discovery key"
-msgstr ""
+msgstr "Ключ обнаружения"
 
 #: inc/snmpmodel.class.php:424 inc/snmpmodel.class.php:429
 #: inc/snmpmodelimportexport.class.php:490
 #: inc/snmpmodelimportexport.class.php:495
 msgid "Importing SNMP models, please wait..."
-msgstr ""
+msgstr "Импорт SNMP моделей. Пожалуйста, подождите..."
 
 #: inc/snmpmodelconstructdevice.class.php:58
 msgid "Back to device form information"
-msgstr ""
+msgstr "Вернуться к форме сведений об устройстве"
 
 #: inc/snmpmodelconstructdevice.class.php:531 inc/snmpmodelmib.class.php:103
 #: inc/snmpmodelmib.class.php:252
@@ -2692,7 +2692,7 @@ msgstr "Установка пакета"
 
 #: inc/staticmisc.class.php:107
 msgid "Collect data"
-msgstr ""
+msgstr "Сбор данных"
 
 #: inc/staticmisc.class.php:200 inc/staticmisc.class.php:336
 msgid "Agents"
@@ -2740,7 +2740,7 @@ msgstr "Отчет о принтерах"
 
 #: inc/staticmisc.class.php:263
 msgid "Additional computer information finder"
-msgstr ""
+msgstr "Дополнительные поисковые сведения о компьютере"
 
 #: inc/staticmisc.class.php:480 inc/staticmisc.class.php:486
 #: inc/taskjob.class.php:456 inc/taskjob.class.php:657
@@ -2750,7 +2750,7 @@ msgstr "Автоматическое управление динамически
 
 #: inc/staticmisc.class.php:584
 msgid "Fusinv"
-msgstr ""
+msgstr "Fusinv"
 
 #: inc/task.class.php:86 inc/task.class.php:240 inc/taskjob.class.php:1491
 #: inc/taskjob.class.php:1855
@@ -2801,11 +2801,11 @@ msgstr "Определение"
 
 #: inc/taskjob.class.php:275
 msgid "Action targets: what the action aims"
-msgstr ""
+msgstr "Плановые действия: что нужно сделать "
 
 #: inc/taskjob.class.php:285
 msgid "Action actor: what do the action"
-msgstr ""
+msgstr "Исполнитель действий: кто должен сделать"
 
 #: inc/taskjob.class.php:295
 msgid "Time between task start and start this action"
@@ -2909,7 +2909,7 @@ msgstr "Подробно"
 
 #: inc/taskjoblog.class.php:1095
 msgid "Agent communication error, impossible to start agent"
-msgstr ""
+msgstr "Ошибка связи агента, невозможно запустить агент"
 
 #: inc/taskjoblog.class.php:1096
 msgid "Agent stopped/crashed"
@@ -2983,7 +2983,7 @@ msgstr "Добро пожаловать в FusionInventory. Приступить
 
 #: inc/wizard.class.php:488
 msgid "ESX servers"
-msgstr "ESX сервера"
+msgstr "ESX серверы"
 
 #: inc/wizard.class.php:492
 msgid "Network devices and printers"
