@@ -72,17 +72,18 @@ class GLPIInstall extends PHPUnit_Framework_TestCase {
       $this->assertTrue($res, "Fail: SQL Error during install");
 
       // update default language
-      $query = "UPDATE `glpi_configs`
-                SET `value` = 'fr_FR'
-                WHERE `name`='language'";
-      $this->assertTrue($DB->query($query), "Fail: can't set default language");
-      $query = "UPDATE `glpi_users`
-                SET `language` = 'fr_FR'";
-      $this->assertTrue($DB->query($query), "Fail: can't set users language");
 
-      $GLPIlog = new GLPIlogs();
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
+//      $query = "UPDATE `glpi_configs`
+//                SET `value` = 'fr_FR'
+//                WHERE `name`='language'";
+//      $this->assertTrue($DB->query($query), "Fail: can't set default language");
+//      $query = "UPDATE `glpi_users`
+//                SET `language` = 'fr_FR'";
+//      $this->assertTrue($DB->query($query), "Fail: can't set users language");
+//
+//      $GLPIlog = new GLPIlogs();
+//      $GLPIlog->testSQLlogs();
+//      $GLPIlog->testPHPlogs();
    }
 }
 
