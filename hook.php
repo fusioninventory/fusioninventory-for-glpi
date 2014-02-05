@@ -340,11 +340,11 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
       case "glpi_plugin_fusioninventory_taskjobs.status":
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-         return $pfTaskjobstate->stateTaskjob($data['id'], '200', 'htmlvar', 'simple');
+         return $pfTaskjobstate->stateTaskjob($data['raw']['id'], '200', 'htmlvar', 'simple');
          break;
 
       case "glpi_plugin_fusioninventory_agents.version":
-         $array = importArrayFromDB($data['ITEM_'.$num]);
+         $array = importArrayFromDB($data['raw']['ITEM_'.$num]);
          $input = "";
          foreach ($array as $name=>$version){
             $input .= "<strong>".$name."</strong> : ".$version."<br/>";
@@ -355,7 +355,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
          break;
 
       case "glpi_plugin_fusioninventory_credentials.itemtype":
-        if ($label = PluginFusioninventoryCredential::getLabelByItemtype($data['ITEM_'.$num])) {
+        if ($label = PluginFusioninventoryCredential::getLabelByItemtype($data['raw']['ITEM_'.$num])) {
            return $label;
         } else {
            return '';
@@ -364,21 +364,21 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
      case 'glpi_plugin_fusioninventory_taskjoblogs.state':
         $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-        return $pfTaskjoblog->getDivState($data['ITEM_'.$num]);
+        return $pfTaskjoblog->getDivState($data['raw']['ITEM_'.$num]);
         break;
 
       case 'glpi_plugin_fusioninventory_taskjoblogs.comment':
-         $comment = $data['ITEM_'.$num];
+         $comment = $data['raw']['ITEM_'.$num];
          return PluginFusioninventoryTaskjoblog::convertComment($comment);
          break;
 
       case 'glpi_plugin_fusioninventory_taskjobstates.plugin_fusioninventory_agents_id':
          $pfAgent = new PluginFusioninventoryAgent();
-         $pfAgent->getFromDB($data['ITEM_'.$num]);
+         $pfAgent->getFromDB($data['raw']['ITEM_'.$num]);
          if (!isset($pfAgent->fields['name'])) {
             return NOT_AVAILABLE;
          }
-         $itemtype = PluginFusioninventoryTaskjoblog::getStateItemtype($data['ITEM_0']);
+         $itemtype = PluginFusioninventoryTaskjoblog::getStateItemtype($data['raw']['ITEM_0']);
          if ($itemtype == 'PluginFusioninventoryDeployPackage') {
             $computer = new Computer();
             $computer->getFromDB($pfAgent->fields['computers_id']);
@@ -430,8 +430,8 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
       case 'Computer':
          if ($table.'.'.$field == 'glpi_plugin_fusioninventory_networkports.id') {
-            if (strstr($data["ITEM_$num"], "$")) {
-               $split=explode("$$$$", $data["ITEM_$num"]);
+            if (strstr($data['raw']["ITEM_$num"], "$")) {
+               $split=explode("$$$$", $data['raw']["ITEM_$num"]);
                $ports = array();
 
                foreach ($split as $portconcat) {
@@ -457,8 +457,8 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
       case 'Printer':
          if ($table.'.'.$field == 'glpi_plugin_fusioninventory_networkequipments.name') {
-            if (strstr($data["ITEM_$num"], "$")) {
-               $split=explode("$$$$", $data["ITEM_$num"]);
+            if (strstr($data['raw']["ITEM_$num"], "$")) {
+               $split=explode("$$$$", $data['raw']["ITEM_$num"]);
                $out = implode("<br/>", $split);
                return $out;
             }
@@ -472,7 +472,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             // ** Name of type of model (network, printer...)
             case "glpi_plugin_fusioninventory_snmpmodels.itemtype" :
                $out = '<center> ';
-               switch ($data["ITEM_$num"]) {
+               switch ($data['raw']["ITEM_$num"]) {
                   case COMPUTER_TYPE:
                      $out .= __('Computers');
 
@@ -509,7 +509,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                $out .= "<form method='get' action='";
                $out .= $CFG_GLPI['root_doc'] . "/plugins/fusinvsnmp/front/models.export.php' ".
                        "target='_blank'>
-                  <input type='hidden' name='model' value='" . $data["id"] . "' />
+                  <input type='hidden' name='model' value='" . $data['raw']["id"] . "' />
                   <input name='export' src='" . $CFG_GLPI['root_doc'];
                $out.= "/pics/right.png' title='Exporter' value='Exporter' type='image'>";
                $out .= Html::closeForm(FALSE);
@@ -528,7 +528,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             // ** Hidden auth passphrase (SNMP v3)
             case "glpi_plugin_fusioninventory_configsecurities.auth_passphrase" :
                $out = "";
-               if (empty($data["ITEM_$num"])) {
+               if (empty($data['raw']["ITEM_$num"])) {
 
                } else {
                   $out = "********";
@@ -539,7 +539,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             // ** Hidden priv passphrase (SNMP v3)
             case "glpi_plugin_fusioninventory_configsecurities.priv_passphrase" :
                $out = "";
-               if (empty($data["ITEM_$num"])) {
+               if (empty($data['raw']["ITEM_$num"])) {
 
                } else {
                   $out = "********";
@@ -558,7 +558,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             case "glpi_plugin_fusioninventory_networkequipments.id" :
                $out = '';
                $NetworkPort = new NetworkPort;
-               $list = explode("$$$$", $data["ITEM_$num"]);
+               $list = explode("$$$$", $data['raw']["ITEM_$num"]);
                foreach ($list as $numtmp=>$vartmp) {
                   $NetworkPort->getDeviceData($vartmp, 'PluginFusioninventoryUnknownDevice');
 
@@ -577,8 +577,8 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             // ** FusionInventory - switch port
             case "glpi_plugin_fusioninventory_networkports.id" :
                $out = '';
-               if (!empty($data["ITEM_$num"])) {
-                  $list = explode("$$$$", $data["ITEM_$num"]);
+               if (!empty($data['raw']["ITEM_$num"])) {
+                  $list = explode("$$$$", $data['raw']["ITEM_$num"]);
                   $np = new NetworkPort;
                   foreach ($list as $numtmp=>$vartmp) {
                      $np->getFromDB($vartmp);
@@ -592,7 +592,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
             case "glpi_plugin_fusinvsnmp_unknowndevices.type" :
                $out = '<center> ';
-               switch ($data["ITEM_$num"]) {
+               switch ($data['raw']["ITEM_$num"]) {
                   case COMPUTER_TYPE:
                      $out .= __('Computers');
 
@@ -639,7 +639,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                               LEFT JOIN `glpi_plugin_fusioninventory_networkports`
                                         ON `glpi_networkports`.`id`=`networkports_id`
                          WHERE `glpi_plugin_fusioninventory_networkports`.`id`='".
-                            $data["ITEM_$num"]."'
+                            $data['raw']["ITEM_$num"]."'
                          LIMIT 0, 1;";
                $result = $DB->query($query);
                $data2 = $DB->fetch_assoc($result);
@@ -652,20 +652,20 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             // ** Name and link of port of networking device (port of switch)
             case "glpi_plugin_fusioninventory_networkports.networkports_id" :
                $NetworkPort=new NetworkPort;
-               $NetworkPort->getFromDB($data["ITEM_$num"]);
+               $NetworkPort->getFromDB($data['raw']["ITEM_$num"]);
                $name = "";
                if (isset($NetworkPort->fields["name"])) {
                   $name = $NetworkPort->fields["name"];
                }
                $out = "<a href='".$CFG_GLPI['root_doc']."/front/networkport.form.php?id=".
-                          $data["ITEM_$num"];
+                          $data['raw']["ITEM_$num"];
                $out.= "'>".$name."</a>";
                return "<center>".$out."</center>";
                break;
 
             // ** Location of switch
             case "glpi_locations.id" :
-               $out = Dropdown::getDropdownName("glpi_locations", $data["ITEM_$num"]);
+               $out = Dropdown::getDropdownName("glpi_locations", $data['raw']["ITEM_$num"]);
                return "<center>".$out."</center>";
                break;
 
@@ -679,8 +679,8 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
             // ** Display entity name
             case "glpi_entities.name" :
-               if ($data["ITEM_$num"] == '') {
-                  $out = Dropdown::getDropdownName("glpi_entities", $data["ITEM_$num"]);
+               if ($data['raw']["ITEM_$num"] == '') {
+                  $out = Dropdown::getDropdownName("glpi_entities", $data['raw']["ITEM_$num"]);
                   return "<center>".$out."</center>";
                }
                break;
@@ -695,7 +695,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             case "glpi_networkports.id" :
                $Array_device =
                   PluginFusioninventoryNetworkPort::getUniqueObjectfieldsByportID(
-                             $data["ITEM_$num"]
+                             $data['raw']["ITEM_$num"]
                           );
                $item = new $Array_device["itemtype"];
                $item->getFromDB($Array_device["items_id"]);
@@ -703,12 +703,12 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
                $query = "SELECT *
                          FROM `glpi_networkports`
-                         WHERE `id`='" . $data["ITEM_$num"] . "';";
+                         WHERE `id`='" . $data['raw']["ITEM_$num"] . "';";
                $result = $DB->query($query);
 
                if ($DB->numrows($result) != "0") {
                   $out .= "<br/><a href='".$CFG_GLPI['root_doc']."/front/networkport.form.php?id=";
-                  $out .= $data["ITEM_$num"]."'>".$DB->result($result, 0, "name")."</a>";
+                  $out .= $data['raw']["ITEM_$num"]."'>".$DB->result($result, 0, "name")."</a>";
                }
                $out .= "</td>";
                return $out;
@@ -716,10 +716,10 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
             // ** Display GLPI field of device
             case "glpi_plugin_fusinvsnmp_networkportlogs.field" :
-//               $out = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data["ITEM_$num"]]['name'];
+//               $out = $FUSIONINVENTORY_MAPPING[NETWORKING_TYPE][$data['raw']["ITEM_$num"]]['name'];
                $out = '';
                $map = new PluginFusioninventoryMapping;
-               $mapfields = $map->get('NetworkEquipment', $data["ITEM_$num"]);
+               $mapfields = $map->get('NetworkEquipment', $data['raw']["ITEM_$num"]);
                if ($mapfields != FALSE) {
                   $out = _get('_LANG[\'plugin_fusinvsnmp\'][\'mapping\'][$mapfields["locale"]]');
                }
@@ -729,15 +729,17 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             // ** Display Old Value (before changement of value)
             case "glpi_plugin_fusinvsnmp_networkportlogs.old_value" :
                // TODO ADD LINK TO DEVICE
-               if ((substr_count($data["ITEM_$num"], ":") == 5) AND (empty($data["ITEM_3"]))) {
-                  return "<center><b>".$data["ITEM_$num"]."</b></center>";
+               if ((substr_count($data['raw']["ITEM_$num"], ":") == 5) 
+                       && (empty($data['raw']["ITEM_3"]))) {
+                  return "<center><b>".$data['raw']["ITEM_$num"]."</b></center>";
                }
                break;
 
             // ** Display New Value (new value modified)
             case "glpi_plugin_fusinvsnmp_networkportlogs.new_value" :
-               if ((substr_count($data["ITEM_$num"], ":") == 5) AND (empty($data["ITEM_3"]))) {
-                  return "<center><b>".$data["ITEM_$num"]."</b></center>";
+               if ((substr_count($data['raw']["ITEM_$num"], ":") == 5) 
+                       && (empty($data['raw']["ITEM_3"]))) {
+                  return "<center><b>".$data['raw']["ITEM_$num"]."</b></center>";
                }
                break;
 
@@ -760,7 +762,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                        AND (isset($_SESSION['glpi_plugin_fusioninventory_date_end']))) {
 
                   $query = "SELECT * FROM `glpi_plugin_fusioninventory_printerlogs`
-                     WHERE `printers_id`='".$data['ITEM_0_2']."'
+                     WHERE `printers_id`='".$data['raw']['ITEM_0_2']."'
                         AND `date`>= '".$_SESSION['glpi_plugin_fusioninventory_date_start']."'
                         AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end'].
                            " 23:59:59'
@@ -771,7 +773,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                      $_SESSION['glpi_plugin_fusioninventory_history_start'] = $data2;
                   }
                   $query = "SELECT * FROM `glpi_plugin_fusioninventory_printerlogs`
-                     WHERE `printers_id`='".$data['ITEM_0_2']."'
+                     WHERE `printers_id`='".$data['raw']['ITEM_0_2']."'
                         AND `date`>= '".$_SESSION['glpi_plugin_fusioninventory_date_start']."'
                         AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end'].
                            " 23:59:59'
