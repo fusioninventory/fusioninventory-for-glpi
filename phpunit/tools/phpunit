@@ -1,0 +1,64 @@
+#!/usr/bin/env php
+<?php
+
+$separator = DIRECTORY_SEPARATOR;
+
+$base_path = array(
+    dirname(__FILE__)
+);
+
+$pear_bin_path = array(
+    'pear','usr', 'bin'
+);
+
+$pear_lib_path = array(
+    'pear','usr', 'share', 'php'
+);
+
+$pear_exists = (
+    file_exists(
+        implode(
+            $separator,
+            array_merge(
+                $base_path,
+                $pear_bin_path
+            )
+        )
+    )
+    && file_exists(
+        implode(
+            $separator,
+            array_merge(
+                $base_path,
+                $pear_lib_path
+            )
+        )
+    )
+);
+
+if (! $pear_exists ) {
+    echo "ERROR: You need to reinstall PEAR directory.\n";
+    exit(1);
+}
+
+$phpunit_bin = implode(
+    $separator,
+    array_merge(
+        $base_path,
+        $pear_bin_path,
+        array('phpunit')
+    )
+);
+
+$include_path = implode(
+    $separator,
+    array_merge(
+        $base_path,
+        $pear_lib_path
+    )
+);
+set_include_path( $include_path . PATH_SEPARATOR . get_include_path() );
+
+include ($phpunit_bin);
+
+PHPUnit_MAIN_METHOD();

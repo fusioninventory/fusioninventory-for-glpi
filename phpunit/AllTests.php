@@ -166,6 +166,12 @@ require_once '1_Unit/NetworkEquipmentUpdateDiscovery.php';
 require_once '1_Unit/ComputerLog.php';
 require_once '1_Unit/AgentChangeDeviceid.php';
 require_once '1_Unit/SNMPModel.php';
+//require_once '1_Unit/Tasks/Task.php';
+//require_once '1_Unit/Tasks/Job.php';
+//require_once '1_Unit/Tasks/Tasks_Jobs.php';
+//require_once '1_Unit/Tasks/Tasks_Jobs_Run.php';
+
+
 
 require_once '2_Integration/ComputerEntity.php';
 require_once '2_Integration/RuleIgnoredImport.php';
