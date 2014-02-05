@@ -145,6 +145,57 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5163]['joinparams']  = array('jointype' => 'itemtype_item');
          $sopt[5163]['massiveaction'] = FALSE;
          $sopt[5163]['datatype']  = 'bool';
+         
+         $sopt[5164]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+         $sopt[5164]['field']         = "DEPLOY";
+         $sopt[5164]['linkfield']     = "DEPLOY";
+         $sopt[5164]['name']          = __('Module', 'fusioninventory')."-".__('Deploy', 'fusioninventory');
+         $sopt[5164]['datatype']      = 'bool';
+         $sopt[5164]['massiveaction'] = FALSE;
+
+         $sopt[5165]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+         $sopt[5165]['field']         = "WAKEONLAN";
+         $sopt[5165]['linkfield']     = "WAKEONLAN";
+         $sopt[5165]['name']          = __('Module', 'fusioninventory')."-".__('WakeOnLan', 'fusioninventory');
+         $sopt[5165]['datatype']      = 'bool';
+         $sopt[5165]['massiveaction'] = FALSE;
+
+         $sopt[5166]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+         $sopt[5166]['field']         = "INVENTORY";
+         $sopt[5166]['linkfield']     = "INVENTORY";
+         $sopt[5166]['name']          = __('Module', 'fusioninventory')."-".__('Local inventory', 'fusioninventory');
+         $sopt[5166]['datatype']      = 'bool';
+         $sopt[5166]['massiveaction'] = FALSE;
+
+         $sopt[5167]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+         $sopt[5167]['field']         = "InventoryComputerESX";
+         $sopt[5167]['linkfield']     = "InventoryComputerESX";
+         $sopt[5167]['name']          = __('Module', 'fusioninventory')."-".__('ESX/VMWare', 'fusioninventory');
+         $sopt[5167]['datatype']      = 'bool';
+         $sopt[5167]['massiveaction'] = FALSE;
+
+         $sopt[5168]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+         $sopt[5168]['field']         = "NETWORKINVENTORY";
+         $sopt[5168]['linkfield']     = "NETWORKINVENTORY";
+         $sopt[5168]['name']          = __('Module', 'fusioninventory')."-".__('Network inventory', 'fusioninventory');
+         $sopt[5168]['datatype']      = 'bool';
+         $sopt[5168]['massiveaction'] = FALSE;
+
+         $sopt[5169]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+         $sopt[5169]['field']         = "NETWORKDISCOVERY";
+         $sopt[5169]['linkfield']     = "NETWORKDISCOVERY";
+         $sopt[5169]['name']          = __('Module', 'fusioninventory')."-".__('Network discovery', 'fusioninventory');
+         $sopt[5169]['datatype']      = 'bool';
+         $sopt[5169]['massiveaction'] = FALSE;
+
+         $sopt[5170]['table']         = "glpi_plugin_fusioninventory_agentmodules";
+         $sopt[5170]['field']         = "Collect";
+         $sopt[5170]['linkfield']     = "Collect";
+         $sopt[5170]['name']          = __('Module', 'fusioninventory')."-".__('Collect', 'fusioninventory');
+         $sopt[5170]['datatype']      = 'bool';
+         $sopt[5170]['massiveaction'] = FALSE;
+
+         
 
    }
 
@@ -337,22 +388,39 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
          break;
 
    }
-
+   
    if ($table == "glpi_plugin_fusioninventory_agentmodules") {
-      $pfAgentmodule = new PluginFusioninventoryAgentmodule();
-      $a_modules = $pfAgentmodule->find();
-      foreach ($a_modules as $data2) {
+      if ($type == 'Computer') {
+         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $pfAgentmodule->find("`modulename`='".$field."'");
+         $data2 = current($a_modules);
          if ($table.".".$field ==
                  "glpi_plugin_fusioninventory_agentmodules.".$data2['modulename']) {
-            if (strstr($data["ITEM_".$num."_0"], '"'.$data['id'].'"')) {
-               if ($data['ITEM_'.$num] == '0') {
-                  return Dropdown::getYesNo('1');
+            if (strstr($data['raw']["ITEM_".$num."_0"], '"'.$data['raw']["ITEM_".$num."_1"].'"')) {
+               if ($data['raw']['ITEM_'.$num] == '0') {
+                  return Dropdown::getYesNo(TRUE);
                } else {
-                  return Dropdown::getYesNo('0');
+                  return Dropdown::getYesNo(FALSE);
                }
 
             }
-            return Dropdown::getYesNo($data['ITEM_'.$num]);
+            return Dropdown::getYesNo($data['raw']['ITEM_'.$num]);
+         }
+      } else {
+         $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+         $a_modules = $pfAgentmodule->find("`modulename`='".$field."'");
+         foreach ($a_modules as $data2) {
+            if ($table.".".$field ==
+                    "glpi_plugin_fusioninventory_agentmodules.".$data2['modulename']) {
+               if (strstr($data['raw']["ITEM_".$num."_0"], '"'.$data['raw']['id'].'"')) {
+                  if ($data['raw']['ITEM_'.$num] == 0) {
+                     return Dropdown::getYesNo('1');
+                  } else {
+                     return Dropdown::getYesNo('0');
+                  }
+               }
+               return Dropdown::getYesNo($data['raw']['ITEM_'.$num]);
+            }
          }
       }
    }
@@ -1645,6 +1713,17 @@ function plugin_fusioninventory_addSelect($type, $id, $num) {
                      CONCAT_WS('....', FUSIONINVENTORY_22.items_id, FUSIONINVENTORY_22.name)
                   SEPARATOR '$$$$') AS ITEM_$num, ";
                break;
+            
+         }
+         $a_agent_modules = PluginFusioninventoryAgentmodule::getModules();
+         foreach ($a_agent_modules as $module) {
+            if ($table.".".$field == 
+                    'glpi_plugin_fusioninventory_agentmodules.'.$module) {
+               
+               return " `FUSION_".$module."`.`is_active` AS ITEM_$num, ".
+                          "`FUSION_".$module."`.`exceptions`  AS ITEM_".$num."_0, ".
+                          "`agent".strtolower($module)."`.`id`  AS ITEM_".$num."_1, ";
+            }
          }
          break;
 
@@ -1841,7 +1920,17 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                       "`computers_id` ) ";
                  break;
               
-          }
+         }      
+         $a_agent_modules = PluginFusioninventoryAgentmodule::getModules();
+         foreach ($a_agent_modules as $module) {
+            if ($new_table.".".$linkfield == 
+                    'glpi_plugin_fusioninventory_agentmodules.'.$module) {
+               return " LEFT JOIN `glpi_plugin_fusioninventory_agentmodules` AS FUSION_".$module."
+                             ON FUSION_".$module.".`modulename`='".$module."' 
+                          LEFT JOIN `glpi_plugin_fusioninventory_agents` as agent".strtolower($module)."
+                             ON (`glpi_computers`.`id`=`agent".strtolower($module)."`.`computers_id`)";
+            }
+         }
        
          break;
 
@@ -2202,7 +2291,42 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
                }
                return $link." (FUSIONINVENTORY_22.name  LIKE '%".$val."%' $ADD ) ";
                break;
+              
+         }
+         
+         $a_agent_modules = PluginFusioninventoryAgentmodule::getModules();
+         foreach ($a_agent_modules as $module) {
+            if ($table.".".$field == 'glpi_plugin_fusioninventory_agentmodules.'.$module) {
+               $pfAgentmodule = new PluginFusioninventoryAgentmodule();
+               $a_modules = $pfAgentmodule->find("`modulename`='".$module."'");
+               $data = current($a_modules);
+               if (($data['exceptions'] != "[]") AND ($data['exceptions'] != "")) {
+                  $a_exceptions = importArrayFromDB($data['exceptions']);
+                  $current_id = current($a_exceptions);
+                  $in = "(";
+                  foreach($a_exceptions as $agent_id) {
+                     $in .= $agent_id.", ";
+                  }
+                  $in .= ")";
+                  $in = str_replace(", )", ")", $in);
 
+                  if ($val != $data['is_active']) {
+                     return $link." (FUSION_".$module.".`exceptions` LIKE '%\"".
+                             $current_id."\"%' ) AND `agent".strtolower($module)."`.`id` IN ".
+                             $in." ";
+                  } else {
+                     return $link." `agent".strtolower($module)."`.`id` NOT IN ".$in." ";
+                  }
+               } else {
+                  if ($val != $data['is_active']) {
+                     return $link." (FUSION_".$module.".`is_active`!='".
+                              $data['is_active']."') ";
+                  } else {
+                     return $link." (FUSION_".$module.".`is_active`='".
+                              $data['is_active']."') ";
+                  }
+               }
+            }
          }
          break;
 

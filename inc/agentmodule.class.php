@@ -428,6 +428,20 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       return $config->getValue('agent_base_url').'/plugins/fusioninventory/b/'.
               strtolower($modulename).'/';
    }
+   
+   
+   
+   /**
+    * Get modules in the table
+    */
+   static function getModules() {
+      $a_modules = array();
+      $a_data = getAllDatasFromTable(PluginFusioninventoryAgentmodule::getTable());
+      foreach ($a_data as $data) {
+         $a_modules[] = $data['modulename'];
+      }
+      return $a_modules;
+   }
 }
 
 ?>
