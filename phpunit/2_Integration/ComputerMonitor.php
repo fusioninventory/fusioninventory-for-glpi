@@ -78,6 +78,7 @@ class ComputerMonitor extends PHPUnit_Framework_TestCase {
           'antivirus'      => array(),
           'storage'        => array(),
           'licenseinfo'    => array(),
+          'networkcard'    => array(),
           'itemtype'       => 'Computer'
       );
 
@@ -133,6 +134,7 @@ class ComputerMonitor extends PHPUnit_Framework_TestCase {
           'antivirus'      => array(),
           'storage'        => array(),
           'licenseinfo'    => array(),
+          'networkcard'    => array(),
           'itemtype'       => 'Computer'
       );
    }

@@ -76,6 +76,7 @@ class ComputerLicense extends PHPUnit_Framework_TestCase {
                   'serial'   => 'xxxxx-xxxxx-P6RC4-xxxxx-xxxxx'
               )
           ),
+          'networkcard'    => array(),
           'itemtype'       => 'Computer'
       );
 
