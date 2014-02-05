@@ -108,7 +108,8 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'virtualmachine'          => array(),
           'antivirus'               => array(),
           'storage'                 => array(),
-          'licenseinfo'             => array()
+          'licenseinfo'             => array(),
+          'networkcard'             => array()
           );
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
@@ -181,7 +182,8 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'virtualmachine'          => array(),
           'antivirus'               => array(),
           'storage'                 => array(),
-          'licenseinfo'             => array()
+          'licenseinfo'             => array(),
+          'networkcard'             => array()
           );
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
@@ -273,7 +275,8 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'virtualmachine'          => array(),
           'antivirus'               => array(),
           'storage'                 => array(),
-          'licenseinfo'             => array()
+          'licenseinfo'             => array(),
+          'networkcard'             => array()
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
@@ -355,7 +358,8 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'virtualmachine'          => array(),
           'antivirus'               => array(),
           'storage'                 => array(),
-          'licenseinfo'             => array()
+          'licenseinfo'             => array(),
+          'networkcard'             => array()
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
@@ -622,7 +626,8 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'virtualmachine'          => array(),
           'antivirus'               => array(),
           'storage'                 => array(),
-          'licenseinfo'             => array()
+          'licenseinfo'             => array(),
+          'networkcard'             => array()
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
