@@ -85,6 +85,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
           'antivirus'      => array(),
           'storage'        => array(),
           'licenseinfo'    => array(),
+          'networkcard'    => array(),
           'itemtype'       => 'Computer'
           );
       $this->a_inventory['Computer'] = array(
