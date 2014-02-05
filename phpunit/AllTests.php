@@ -223,7 +223,7 @@ class AllTests {
          $suite->addTest(ComputerDynamic_AllTests::suite());
          $suite->addTest(UnknownDeviceKnowDevice_AllTests::suite());
          $suite->addTest(UnknownDeviceImport_AllTests::suite());
-         $suite->addTest(TaskDeployDynamicGroup_AllTests::suite());
+         //$suite->addTest(TaskDeployDynamicGroup_AllTests::suite());
          $suite->addTest(ComputerPrinter_AllTests::suite());
          $suite->addTest(ComputerLicense_AllTests::suite());
          $suite->addTest(NetworkEquipmentLLDP_AllTests::suite());
