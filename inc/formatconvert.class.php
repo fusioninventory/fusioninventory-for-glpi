@@ -1231,7 +1231,7 @@ class PluginFusioninventoryFormatconvert {
 
       $entities_id_software = Entity::getUsedConfig('entities_id_software',
                                                     $entities_id);
-      $is_software_recursive = false;
+      $is_software_recursive = 0;
       $nb_RuleDictionnarySoftware = countElementsInTable("glpi_rules",
                                                          "`sub_type`='RuleDictionnarySoftware'
                                                             AND `is_active`='1'");
@@ -1242,7 +1242,7 @@ class PluginFusioninventoryFormatconvert {
       } else {
          //Software will be created in an entity which is not the computer's entity.
          //It should be set as recursive
-         $is_software_recursive = true;
+         $is_software_recursive = 1;
       }
       $a_inventory['software'] = array();
 
@@ -1311,7 +1311,7 @@ class PluginFusioninventoryFormatconvert {
                   }
                   if (isset($res_rule['new_entities_id'])) {
                      $array_tmp['entities_id'] = $res_rule['new_entities_id'];
-                     $is_software_recursive = true;
+                     $is_software_recursive = 1;
                   }
                   if (!isset($array_tmp['entities_id'])
                           || $array_tmp['entities_id'] == '') {
@@ -1499,11 +1499,15 @@ class PluginFusioninventoryFormatconvert {
             if ((array)$value === $value) {
                $array[$key] = $this->replaceids($value);
             } else {
-               if ($key == "manufacturers_id") {
+               if ($key == "manufacturers_id"
+                       || $key == "bios_manufacturers_id") {
                   $manufacturer = new Manufacturer();
                   $array[$key]  = $manufacturer->processName($value);
                }
-               if (isset($this->foreignkey_itemtype[$key])) {
+               if ($key == "bios_manufacturers_id") {
+                  $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype['manufacturers_id'],
+                                                          $value);
+               } else if (isset($this->foreignkey_itemtype[$key])) {
                   $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
                                                           $value);
                } else if (isForeignKeyField($key)

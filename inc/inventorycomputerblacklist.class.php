@@ -278,13 +278,13 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                         $a_computerinventory['Computer']['mmanufacturer'];
 
                      foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
-                     if ((isset($a_computerinventory['Computer']['manufacturers_id']))
-                             && ($a_computerinventory['Computer']['manufacturers_id'] ==
-                                     $blacklist_data['value'])) {
-                        $a_computerinventory['Computer']['manufacturers_id'] = "";
-                        break;
+                        if ((isset($a_computerinventory['Computer']['manufacturers_id']))
+                                && ($a_computerinventory['Computer']['manufacturers_id'] ==
+                                        $blacklist_data['value'])) {
+                           $a_computerinventory['Computer']['manufacturers_id'] = "";
+                           break;
+                        }
                      }
-                  }
                   }
                }
                if ($a_computerinventory['Computer']['manufacturers_id'] == "") {
@@ -293,13 +293,13 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                         $a_computerinventory['Computer']['bmanufacturer'];
 
                      foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
-                     if ((isset($a_computerinventory['Computer']['manufacturers_id']))
-                             && ($a_computerinventory['Computer']['manufacturers_id'] ==
-                                     $blacklist_data['value'])) {
-                        $a_computerinventory['Computer']['manufacturers_id'] = "";
-                        break;
+                        if ((isset($a_computerinventory['Computer']['manufacturers_id']))
+                                && ($a_computerinventory['Computer']['manufacturers_id'] ==
+                                        $blacklist_data['value'])) {
+                           $a_computerinventory['Computer']['manufacturers_id'] = "";
+                           break;
+                        }
                      }
-                  }
                   }
                }
               break;
