@@ -197,7 +197,8 @@ class AllTests {
       Plugin::loadLang('fusioninventory');
 
       if (isset($_SERVER['argv'])
-              && isset($_SERVER['argv'][2])) {
+              && isset($_SERVER['argv'][2])
+              && !isset($_SERVER['argv'][3])) {
          $class = $_SERVER['argv'][2]."_AllTests";
          $suite->addTest($class::suite());
       } else {
