@@ -636,12 +636,6 @@ class PluginFusioninventoryFormatconvert {
                   }
                   $array_tmp['frequence'] = $array_tmp['frequency'];
                   $array_tmp['frequency_default'] = $array_tmp['frequency'];
-                  if ($array_tmp['nbcores'] == '') {
-                     $array_tmp['nbcores'] = 0;
-                  }
-                  if ($array_tmp['nbthreads'] == '') {
-                     $array_tmp['nbthreads'] = 0;
-                  }
                   $a_inventory['processor'][] = $array_tmp;
                }
             }

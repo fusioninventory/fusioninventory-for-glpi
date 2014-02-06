@@ -391,6 +391,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
           'softwarecategories_id'   => '0',
+          'is_valid'                => '0',
       );
       
       $this->assertEquals($a_reference, $software->fields);
@@ -427,6 +428,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
           'softwarecategories_id'   => '0',
+          'is_valid'                => '0',
       );
       
       $this->assertEquals($a_reference, $software->fields);
@@ -463,6 +465,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
           'softwarecategories_id'   => '0',
+          'is_valid'                => '0',
       );
       
       $this->assertEquals($a_reference, $software->fields);
@@ -634,6 +637,10 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'comment'            => NULL,
                      'manufacturers_id'   => '1',
                      'frequency_default'  => '2400',
+                     'nbcores_default'    => NULL,
+                     'nbthreads_default'  => NULL,
+                     'entities_id'        => '0',
+                     'is_recursive'       => '0'
                  ),
           '2' => array(
                      'id'                    => '2',
@@ -642,6 +649,10 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'comment'            => NULL,
                      'manufacturers_id'   => '1',
                      'frequency_default'  => '2600',
+                     'nbcores_default'    => NULL,
+                     'nbthreads_default'  => NULL,
+                     'entities_id'        => '0',
+                     'is_recursive'       => '0'
                  )
       );
       $this->assertEquals($a_reference, $a_data);  
@@ -667,7 +678,12 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'frequency'             => '2400',
                      'serial'                => '',
                      'is_deleted'            => '0',
-                     'is_dynamic'            => '1'
+                     'is_dynamic'            => '1',
+                     'nbcores'               => NULL,
+                     'nbthreads'             => NULL,
+                     'entities_id'           => '0',
+                     'is_recursive'          => '0',
+                     'busID'                 => NULL
                  ),
           '2' => array(
                      'id' => '2',
@@ -677,7 +693,12 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'frequency'             => '2400',
                      'serial'                => '',
                      'is_deleted'            => '0',
-                     'is_dynamic'            => '1'
+                     'is_dynamic'            => '1',
+                     'nbcores'               => NULL,
+                     'nbthreads'             => NULL,
+                     'entities_id'           => '0',
+                     'is_recursive'          => '0',
+                     'busID'                 => NULL
                  ),
           '3' => array(
                      'id' => '3',
@@ -687,7 +708,12 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'frequency'             => '2405',
                      'serial'                => '',
                      'is_deleted'            => '0',
-                     'is_dynamic'            => '1'
+                     'is_dynamic'            => '1',
+                     'nbcores'               => NULL,
+                     'nbthreads'             => NULL,
+                     'entities_id'           => '0',
+                     'is_recursive'          => '0',
+                     'busID'                 => NULL
                  ),
           '4' => array(
                      'id' => '4',
@@ -697,7 +723,12 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'frequency'             => '2600',
                      'serial'                => '',
                      'is_deleted'            => '0',
-                     'is_dynamic'            => '1'
+                     'is_dynamic'            => '1',
+                     'nbcores'               => NULL,
+                     'nbthreads'             => NULL,
+                     'entities_id'           => '0',
+                     'is_recursive'          => '0',
+                     'busID'                 => NULL
                  )
       );
       
@@ -720,7 +751,9 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'comment'               => NULL,
                      'manufacturers_id'      => '0',
                      'size_default'          => '0',
-                     'devicememorytypes_id'  => '5'
+                     'devicememorytypes_id'  => '5',
+                     'entities_id'           => '0',
+                     'is_recursive'          => '0',
                  ),
           '2' => array(
                      'id'                    => '2',
@@ -729,7 +762,9 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'comment'               => NULL,
                      'manufacturers_id'      => '0',
                      'size_default'          => '0',
-                     'devicememorytypes_id'  => '5'
+                     'devicememorytypes_id'  => '5',
+                     'entities_id'           => '0',
+                     'is_recursive'          => '0',
                  )
       );
       $this->assertEquals($a_reference, $a_data);      
@@ -755,7 +790,10 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'is_deleted'            => '0',
                      'is_dynamic'            => '1',
                      'devicememories_id'     => '1',
-                     'size'                  => '2048'
+                     'size'                  => '2048',
+                     'entities_id'           => '0',
+                     'is_recursive'          => '0',
+                     'busID'                 => NULL
                  ),
           '2' => array(
                      'id' => '2',
@@ -765,7 +803,10 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'is_deleted'            => '0',
                      'is_dynamic'            => '1',
                      'devicememories_id'     => '1',
-                     'size'                  => '2048'
+                     'size'                  => '2048',
+                     'entities_id'           => '0',
+                     'is_recursive'          => '0',
+                     'busID'                 => NULL
                  ),
           '3' => array(
                      'id' => '3',
@@ -775,7 +816,10 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'is_deleted'            => '0',
                      'is_dynamic'            => '1',
                      'devicememories_id'     => '1',
-                     'size'                  => '2048'
+                     'size'                  => '2048',
+                     'entities_id'           => '0',
+                     'is_recursive'          => '0',
+                     'busID'                 => NULL
                  ),
           '4' => array(
                      'id' => '4',
@@ -785,7 +829,10 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'is_deleted'            => '0',
                      'is_dynamic'            => '1',
                      'devicememories_id'     => '2',
-                     'size'                  => '2048'
+                     'size'                  => '2048',
+                     'entities_id'           => '0',
+                     'is_recursive'          => '0',
+                     'busID'                 => NULL
                  )
       );
       
