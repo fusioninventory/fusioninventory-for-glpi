@@ -162,6 +162,7 @@ class UnknownDeviceKnowDevice extends PHPUnit_Framework_TestCase {
           'antivirus'      => array(),
           'storage'        => array(),
           'licenseinfo'    => array(),
+          'networkcard'    => array(),
           'itemtype'       => 'Computer'
           );
       $a_inventory['Computer'] = array(

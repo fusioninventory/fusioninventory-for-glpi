@@ -142,7 +142,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
     * @param $retrieve_criteria  Retrieve the criterias of the rules ? (default 0)
     * @param $retrieve_action    Retrieve the action of the rules ? (default 0)
    **/
-   function getCollectionDatas($retrieve_criteria=0, $retrieve_action=0) {
+   function getCollectionDatas($retrieve_criteria=0, $retrieve_action=0, $condition = 0) {
       global $DB;
 
       if ($this->RuleList === NULL) {

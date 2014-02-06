@@ -83,6 +83,7 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
           'antivirus'      => array(),
           'storage'        => array(),
           'licenseinfo'    => array(),
+          'networkcard'    => array(),
           'itemtype'       => 'Computer'
       );
 
@@ -143,6 +144,7 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
           'antivirus'      => array(),
           'storage'        => array(),
           'licenseinfo'    => array(),
+          'networkcard'    => array(),
           'itemtype'       => 'Computer'
       );
       
@@ -182,6 +184,7 @@ class ComputerPrinter extends PHPUnit_Framework_TestCase {
           'antivirus'      => array(),
           'storage'        => array(),
           'licenseinfo'    => array(),
+          'networkcard'    => array(),
           'itemtype'       => 'Computer'
       );
    }

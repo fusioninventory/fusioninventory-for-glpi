@@ -181,7 +181,7 @@ function plugin_init_fusioninventory() {
 
       // ##### 4. Set in session module_id #####
 
-      $_SESSION["plugin_fuioninventory_moduleid"] = $moduleId;
+      $_SESSION["plugin_fusioninventory_moduleid"] = $moduleId;
 
       // ##### 5. Set in session XMLtags of methods #####
 

@@ -84,6 +84,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'antivirus'      => array(),
           'storage'        => array(),
           'licenseinfo'    => array(),
+          'networkcard'    => array(),
           'itemtype'       => 'Computer'
           );
       $a_inventory['Computer'] = array(
@@ -309,8 +310,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'groups_id'                        => '0',
           'states_id'                        => '0',
           'ticket_tco'                       => '0.0000',
-          'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220',
-          'notepad'                          => NULL,
+          'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220'
       );
       
       $this->assertEquals($a_reference, $computer->fields);      
@@ -391,7 +391,6 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
           'softwarecategories_id'   => '0',
-          'notepad'                 => NULL,
       );
       
       $this->assertEquals($a_reference, $software->fields);
@@ -428,7 +427,6 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
           'softwarecategories_id'   => '0',
-          'notepad'                 => NULL,
       );
       
       $this->assertEquals($a_reference, $software->fields);
@@ -465,7 +463,6 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
           'softwarecategories_id'   => '0',
-          'notepad'                 => NULL,
       );
       
       $this->assertEquals($a_reference, $software->fields);
@@ -894,7 +891,6 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'states_id'         => '0',
           'ticket_tco'        => '0.0000',
           'is_dynamic'        => '0',
-          'notepad'           => NULL,
       );
       
       $this->assertEquals($a_reference, $monitor->fields);      
@@ -955,7 +951,6 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'states_id'            => '0',
           'ticket_tco'           => '0.0000',
           'is_dynamic'           => '0',
-          'notepad'              => NULL,
       );
       
       $this->assertEquals($a_reference, $printer->fields);      
@@ -998,6 +993,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'antivirus'      => array(),
           'storage'        => array(),
           'licenseinfo'    => array(),
+          'networkcard'    => array(),
           'itemtype'       => 'Computer'
           );
       $a_inventory['Computer'] = array(

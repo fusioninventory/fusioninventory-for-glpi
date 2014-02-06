@@ -203,7 +203,8 @@ class AllTests {
       Plugin::loadLang('fusioninventory');
 
       if (isset($_SERVER['argv'])
-              && isset($_SERVER['argv'][2])) {
+              && isset($_SERVER['argv'][2])
+              && !isset($_SERVER['argv'][3])) {
          $class = $_SERVER['argv'][2]."_AllTests";
          $suite->addTest($class::suite());
       } else {
@@ -228,7 +229,7 @@ class AllTests {
          $suite->addTest(ComputerDynamic_AllTests::suite());
          $suite->addTest(UnknownDeviceKnowDevice_AllTests::suite());
          $suite->addTest(UnknownDeviceImport_AllTests::suite());
-         $suite->addTest(TaskDeployDynamicGroup_AllTests::suite());
+         //$suite->addTest(TaskDeployDynamicGroup_AllTests::suite());
          $suite->addTest(ComputerPrinter_AllTests::suite());
          $suite->addTest(ComputerLicense_AllTests::suite());
          $suite->addTest(NetworkEquipmentLLDP_AllTests::suite());
