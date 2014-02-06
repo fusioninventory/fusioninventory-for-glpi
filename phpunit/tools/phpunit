@@ -2,6 +2,6 @@
 
 TOOLS_PATH=$(dirname $(readlink -f ${0}))
 export CURRENT_INCPATH=$(php -r "echo get_include_path();")
-export NEW_INCPATH=${TOOLS_PATH}/pear/usr/share/php
+export NEW_INCPATH=./pear/usr/share/php
 export PHPBIN=/usr/bin/php
-/usr/bin/php -c ${TOOLS_PATH}/php.ini ${TOOLS_PATH}/pear/usr/bin/phpunit $@
+/usr/bin/php -c ${TOOLS_PATH}/php.ini ./pear/usr/bin/phpunit $@
