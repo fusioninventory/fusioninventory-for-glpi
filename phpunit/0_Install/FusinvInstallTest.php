@@ -83,7 +83,7 @@ class FusinvInstallTest extends BaseTestCase {
       $this->assertGreaterThan(0, strlen($output));
 
       $FusinvDBTest = new FusinvDBTest();
-      $FusinvDBTest->testDB("fusioninventory", "upgrade from ".$version);
+      $FusinvDBTest->testDB("fusioninventory", "install new version");
 
 
       $this->assertFileExists("../../../files/_plugins/fusioninventory/discovery.xml",
