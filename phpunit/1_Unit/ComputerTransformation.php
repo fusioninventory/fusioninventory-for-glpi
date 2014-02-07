@@ -434,7 +434,9 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
                     'serial'            => '',
                     'frequency'         => 2400,
                     'frequence'         => 2400,
-                    'frequency_default' => 2400
+                    'frequency_default' => 2400,
+                    'nbcores'           => '',
+                    'nbthreads'         => ''
           );
       
       $this->assertEquals($a_reference, $a_return['processor']); 
