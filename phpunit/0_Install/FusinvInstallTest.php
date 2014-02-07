@@ -59,67 +59,41 @@ class FusinvInstallTest extends BaseTestCase {
       $DB->connect();
       $this->assertTrue($DB->connected, "Problem connecting to the Database");
 
-//      if (file_exists("save.sql") AND $verify == '0') {
-//
-//         $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
-//         $result = $DB->query($query);
-//         while ($data=$DB->fetch_array($result)) {
-//            $DB->query("DROP VIEW ".$data[0]);
-//         }
-//
-//         $query = "SHOW TABLES";
-//         $result = $DB->query($query);
-//         while ($data=$DB->fetch_array($result)) {
-//            $DB->query("DROP TABLE ".$data[0]);
-//         }
-//
-//         $res = $DB->runFile("save.sql");
-//         $this->assertTrue($res, "Fail: SQL Error during import saved GLPI DB");
-//
-//         echo "\n======= Import save.sql file =======\n";
-//
-//         $FusinvInstall = new FusinvInstall();
-//         $FusinvInstall->testDB("fusioninventory", "install new version");
-//      } else {
 
-         // Delete if Table of FusionInventory or Tracker yet in DB
-         $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
-         $result = $DB->query($query);
-         while ($data=$DB->fetch_array($result)) {
-            if (strstr($data[0], "fusi")) {
-               $DB->query("DROP VIEW ".$data[0]);
-            }
+      // Delete if Table of FusionInventory or Tracker yet in DB
+      $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         if (strstr($data[0], "fusi")) {
+            $DB->query("DROP VIEW ".$data[0]);
          }
+      }
 
-         $query = "SHOW TABLES";
-         $result = $DB->query($query);
-         while ($data=$DB->fetch_array($result)) {
-            if (strstr($data[0], "tracker")
-                    OR strstr($data[0], "fusi")) {
+      $query = "SHOW TABLES";
+      $result = $DB->query($query);
+      while ($data=$DB->fetch_array($result)) {
+         if (strstr($data[0], "tracker")
+            OR strstr($data[0], "fusi")) {
                $DB->query("DROP TABLE ".$data[0]);
             }
-         }
-
-         $output = shell_exec("/usr/bin/php -f ../scripts/cli_install.php 4 2>&1 1>/dev/null");
-         $this->assertNotNull($output);
-         $this->assertGreaterThan(0, strlen($output));
-
-//         Session::loadLanguage("en_GB");
-//         $FusinvInstall = new FusinvInstall();
-//         $FusinvInstall->testDB("fusioninventory", "install new version");
-         $FusinvDBTest = new FusinvDBTest();
-         $FusinvDBTest->testDB("fusioninventory", "upgrade from ".$version);
-
-
-         $this->assertFileExists("../../../files/_plugins/fusioninventory/discovery.xml",
-                 'Discovery file (SNMP MODELS) not created');
-         $file = file_get_contents("../../../files/_plugins/fusioninventory/discovery.xml");
-         $a_lines = explode("\n", $file);
-
-         // TODO: Use assertTag or assertEqualXMLStructure in order to test the discovery.xml file
-         $this->assertGreaterThan(20, count($a_lines), 'Discovery.xml file not right generated (nb lines)');
-
       }
+
+      $output = shell_exec("/usr/bin/php -f ../scripts/cli_install.php 4 2>&1 1>/dev/null");
+      $this->assertNotNull($output);
+      $this->assertGreaterThan(0, strlen($output));
+
+      $FusinvDBTest = new FusinvDBTest();
+      $FusinvDBTest->testDB("fusioninventory", "upgrade from ".$version);
+
+
+      $this->assertFileExists("../../../files/_plugins/fusioninventory/discovery.xml",
+         'Discovery file (SNMP MODELS) not created');
+      $file = file_get_contents("../../../files/_plugins/fusioninventory/discovery.xml");
+      $a_lines = explode("\n", $file);
+
+      // TODO: Use assertTag or assertEqualXMLStructure in order to test the discovery.xml file
+      $this->assertGreaterThan(20, count($a_lines), 'Discovery.xml file not right generated (nb lines)');
+
 
       PluginFusioninventoryConfig::loadCache();
    }
