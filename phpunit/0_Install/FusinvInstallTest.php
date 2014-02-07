@@ -49,6 +49,9 @@ class FusinvInstallTest extends BaseTestCase {
       return FALSE;
    }
 
+   /**
+    * @depends GLPIInstallTest::installDatabase
+    */
    public function testInstall() {
 
 
