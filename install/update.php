@@ -1278,7 +1278,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                $comment = str_replace("==".$key."==", "==".$value."==", $comment);
             }
             $DB->query("UPDATE `".$a_table['name']."`
-               SET `comment`='".$comment."'
+               SET `comment`='".$DB->escape($comment)."'
                WHERE `id`='".$data['id']."'");
          }
 
