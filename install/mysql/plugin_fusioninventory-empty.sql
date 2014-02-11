@@ -966,8 +966,10 @@ CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `groups_id` int(11) NOT NULL,
   `fields_array` text NOT NULL,
+  `can_update_group` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `groups_id` (`groups_id`)
+  KEY `groups_id` (`groups_id`),
+  KEY `can_update_group` (`can_update_group`)
 ) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;
 --
 -- END DEPLOY

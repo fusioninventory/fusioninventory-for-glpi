@@ -150,10 +150,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Type')."&nbsp;:</td>";
       echo "<td align='center'>";
-      Dropdown::showFromArray("type", $this->grouptypes, array('value'=>$this->fields['type']));
+      self::dropdownGroupType('type', $this->fields['type']);
       echo "</td>";
       echo "</tr>";
-
+      
       $this->showFormButtons($options);
 
       switch($this->fields['type']) {
@@ -355,6 +355,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             $pfDeployGroup_Dynamicdata->add($input);
       }
 
+      $pfDeployGroup_Dynamicdata->getFromDB($plugin_fusioninventory_deploygroup_dynamicdatas_id);
       if (isset($_SESSION['plugin_fusioninventory_dynamicgroup']) && 
          $_SESSION['plugin_fusioninventory_dynamicgroup']['plugin_fusioninventory_deploygroup_dynamicdatas_id'] 
               == $plugin_fusioninventory_deploygroup_dynamicdatas_id
@@ -368,7 +369,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             }
          }
       } else {
-         $pfDeployGroup_Dynamicdata->getFromDB($plugin_fusioninventory_deploygroup_dynamicdatas_id);
          $_GET = importArrayFromDB($pfDeployGroup_Dynamicdata->fields['fields_array']);
          unset($_SESSION["glpisearchcount"]['Computer']);
          unset($_SESSION["glpisearchcount2"]['Computer']);
@@ -406,7 +406,22 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $pfSearch->customIdVar        = 'plugin_fusioninventory_deploygroup_dynamicdatas_id';
       $pfSearch->displaydeletebuton = FALSE;
 
+      echo "<br/><br/>";
+      echo "<table class='tab_cadre_fixe'>";
 
+      echo "<form method='POST' name='update_group' id='update_group' action='".$pfSearch->formurl."'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>".__("Update")."</th></tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Automatic update')."&nbsp:&nbsp";
+      Dropdown::showYesNo('can_update_group', $pfDeployGroup_Dynamicdata->fields['can_update_group']);
+      echo "</td><td>";
+      echo "<input type='submit' class='submit' value='".__("Update")."' name='update_group'>";
+      echo "<input type='hidden' name='id' value='$plugin_fusioninventory_deploygroup_dynamicdatas_id'>";
+      echo "</td></tr>";
+      echo "</table>";
+      Html::closeForm();
+      
       $_GET[$pfSearch->customIdVar] = $plugin_fusioninventory_deploygroup_dynamicdatas_id;
       $_GET['id'] = $plugin_fusioninventory_deploygroup_dynamicdatas_id;
       $pfSearch->showGenericSearch('Computer', $_GET);
@@ -912,8 +927,65 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             type='text' value='$value' ondblclick=\"this.value='".
              $CFG_GLPI["ajax_wildcard"]."';\" id='search_$id' name='____data_$id' size='$size'>\n";
    }
+
+   function getSearchOptions() {
+
+      $tab = array();
+
+      $tab['common'] = self::getTypeName();
+
+
+      $tab[1]['table']          = $this->getTable();
+      $tab[1]['field']          = 'name';
+      $tab[1]['linkfield']      = '';
+      $tab[1]['name']           = __('Name');
+      $tab[1]['datatype']       = 'itemlink';
+      $tab[1]['massiveaction']   = false;
+
+      $tab[2]['table']           = $this->getTable();
+      $tab[2]['field']           = 'type';
+      $tab[2]['name']            = __('Type');
+      $tab[2]['datatype']        = 'specific';
+      $tab[2]['massiveaction']   = false;
+      $tab[2]['searchtype']      = 'equals';
+
+      return $tab;
+   }
+   
+   static function getSpecificValueToDisplay($field, $values, array $options=array()) {
+      $group = new self();
+      if (!is_array($values)) {
+         $values = array($field => $values);
+      }
+      switch ($field) {
+         case 'type' :
+            return $group->grouptypes[$values[$field]];
+      }
+      return '';
+   }
+
+   /**
+   * Display dropdown to select dynamic of static group
+   */
+   static function dropdownGroupType($name = 'type', $value = 'STATIC') {
+      $group = new self();
+      return Dropdown::showFromArray($name, $group->grouptypes, array('value'=>$value));
+   }
+   
+   static function getSpecificValueToSelect($field, $name='', $values='', array $options=array()) {
+
+      if (!is_array($values)) {
+         $values = array($field => $values);
+      }
+      
+      $options['display'] = false;
+      switch ($field) {
+         case 'type':
+            return self::dropdownGroupType($name, $values[$field]);
+         default:
+            break;
+      }
+      return parent::getSpecificValueToSelect($field, $name, $values, $options);
+   }   
 }
-
-
-
 ?>
