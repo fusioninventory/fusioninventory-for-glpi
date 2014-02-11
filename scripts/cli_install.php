@@ -72,39 +72,6 @@ if (!$DB->connected) {
    die("No DB connection\n");
 }
 
-/* ----------------------------------------------------------------- */
-/**
- * Extends class Migration to redefine display mode
-**/
-class CliMigration extends Migration {
-
-   function __construct($ver) {
-
-      $this->deb     = time();
-      $this->version = $ver;
-   }
-
-
-   function displayMessage ($msg) {
-
-      $msg .= " (".Html::timestampToString(time()-$this->deb).")";
-      echo str_pad($msg, 100)."\r";
-   }
-
-
-   function displayTitle($title) {
-      echo "\n".str_pad(" $title ", 100, '=', STR_PAD_BOTH)."\n";
-   }
-
-
-   function displayWarning($msg, $red=FALSE) {
-
-      if ($red) {
-         $msg = "** $msg";
-      }
-      echo str_pad($msg, 100)."\n";
-   }
-}
 
 /*---------------------------------------------------------------------*/
 
@@ -115,6 +82,7 @@ if (!TableExists("glpi_configs")) {
 $plugin = new Plugin();
 
 
+require_once (GLPI_ROOT . "/plugins/fusioninventory/install/climigration.class.php");
 include (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
 $current_version = pluginFusioninventoryGetCurrentVersion();
 

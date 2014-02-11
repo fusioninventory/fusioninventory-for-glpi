@@ -201,7 +201,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    ini_set("max_execution_time", "0");
    ini_set("memory_limit", "-1");
 
-
    foreach (glob(GLPI_ROOT.'/plugins/fusioninventory/inc/*.php') as $file) {
       require_once($file);
    }
@@ -214,6 +213,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $a_plugin = plugin_version_fusioninventory();
    $plugins_id = PluginFusioninventoryModule::getModuleId($a_plugin['shortname']);
 
+   $migration->displayMessage("Migration Classname : " . $migrationname);
    $migration->displayMessage("Update of plugin FusionInventory");
 
    /*
@@ -6100,6 +6100,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       
       
       
+   $migration->displayMessage("Clean printers");
 
    /*
     * Remove / at the end of printers (bugs in older versions of agents.
@@ -6168,6 +6169,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
 
+   $migration->displayMessage("Add Crontasks");
    /*
     * Add Crontask if not exist
     */

@@ -874,6 +874,9 @@ function plugin_fusioninventory_install() {
 
    if (basename($_SERVER['SCRIPT_NAME']) != "cli_install.php") {
       Html::header(__('Setup'), $_SERVER['PHP_SELF'], "config", "plugins");
+      $migrationname = 'Migration';
+   } else {
+      $migrationname = 'CliMigration';
    }
 
    require_once (GLPI_ROOT . "/plugins/fusioninventory/install/update.php");
@@ -882,13 +885,13 @@ function plugin_fusioninventory_install() {
    if ((isset($version_detected))
       AND ($version_detected != PLUGIN_FUSIONINVENTORY_VERSION)
         AND $version_detected!='0') {
-      pluginFusioninventoryUpdate($version_detected);
+      pluginFusioninventoryUpdate($version_detected, $migrationname);
    } else if ((isset($version_detected))
            && ($version_detected == PLUGIN_FUSIONINVENTORY_VERSION)) {
-
+         //Same version : Nothing to do
    } else {
       require_once (GLPI_ROOT . "/plugins/fusioninventory/install/install.php");
-      pluginFusioninventoryInstall(PLUGIN_FUSIONINVENTORY_VERSION);
+      pluginFusioninventoryInstall(PLUGIN_FUSIONINVENTORY_VERSION, $migrationname);
    }
 
    return TRUE;

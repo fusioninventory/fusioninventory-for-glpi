@@ -40,16 +40,13 @@
    ------------------------------------------------------------------------
  */
 
-function pluginFusioninventoryInstall($version, $migration='') {
+function pluginFusioninventoryInstall($version, $migrationname='Migration') {
    global $DB;
 
    ini_set("memory_limit", "-1");
    ini_set("max_execution_time", "0");
 
-   
-   if ($migration == '') {
-      $migration = new Migration($version);
-   }
+   $migration = new $migrationname($version);
 
    /*
     * Load classes
@@ -313,12 +310,12 @@ function pluginFusioninventoryInstall($version, $migration='') {
       $pfSetup = new PluginFusioninventorySetup();
       $pfSetup->initRules();
 
-      
+
    /*
     * Add notification for configuration management
     */
-      
-      
+
+
 
 
    /*
@@ -338,8 +335,9 @@ function pluginFusioninventoryInstall($version, $migration='') {
    $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
    $pfNetworkporttype->init();
 
-   // Import models
-   PluginFusioninventorySnmpmodel::importAllModels();
+   $mode_cli = (basename($_SERVER['SCRIPT_NAME']) == "cli_install.php");
+
+   PluginFusioninventorySnmpmodel::importAllModels('', $mode_cli);
 
 }
 
