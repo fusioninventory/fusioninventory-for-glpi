@@ -8396,11 +8396,16 @@ function migrateTablesFromFusinvDeploy ($migration) {
                      WHERE plugin_fusinvdeploy_commands_id = ".$at_datas['id'];
                   $ret_cmd_res = $DB->query($ret_cmd_query);
                   while ($res_cmd_datas = $DB->fetch_assoc($ret_cmd_res)) {
-                     //construct command status array entry
-                     $o_line['actions'][$a_i][$type]['retChecks'][] = array(
-                        'type'  => $cmdStatus[$res_cmd_datas['type']],
-                        'values' => array($res_cmd_datas['value'])
-                     );
+                     // Skip empty retchecks type:
+                     // This surely means they have been drop at some point but entry has not been
+                     // removed from database.
+                     if (!empty($res_cmd_datas['type'])) {
+                        //construct command status array entry
+                        $o_line['actions'][$a_i][$type]['retChecks'][] = array(
+                           'type'  => $cmdStatus[$res_cmd_datas['type']],
+                           'values' => array($res_cmd_datas['value'])
+                        );
+                     }
                   }
                }
             }
