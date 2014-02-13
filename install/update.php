@@ -1309,7 +1309,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                $comment = str_replace("==".$key."==", "==".$value."==", $comment);
             }
             $DB->query("UPDATE `".$newTable."`
-               SET `comment`='".$comment."'
+               SET `comment`='".$DB->escape($comment)."'
                WHERE `id`='".$data['id']."'");
          }
 
@@ -5893,40 +5893,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $DB->query($queryu);
    }
 
-   /*
-    * Split tasks have more than 1 taskjob 
-    */
-   $pfTask = new PluginFusioninventoryTask();
-   $query = "SELECT *
-      FROM `glpi_plugin_fusioninventory_taskjobs`
-      GROUP BY `plugin_fusioninventory_tasks_id`
-      HAVING count( * ) >1";
-   $result = $DB->query($query);
-   while ($data=$DB->fetch_array($result)) {
-      $queryt = "SELECT *
-                FROM `glpi_plugin_fusioninventory_tasks`
-                WHERE `id` = '".$data['plugin_fusioninventory_tasks_id']."';";
-      $resultt = $DB->query($queryt);
-      $a_task = $DB->fetch_assoc($resultt);
-      unset($a_task['date_creation']);      
-      unset($a_task['id']);      
-      
-      $query_one = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobs`"
-              ." WHERE `plugin_fusioninventory_tasks_id`='".
-                       $data['plugin_fusioninventory_tasks_id']."'";
-      $result_one = $DB->query($query_one);
-      $i = 0;
-      while ($data_one = $DB->fetch_array($result_one)) {
-         if ($i > 0) {
-            // Add new task and link this taskjob to this new task
-            $tasks_id = $pfTask->add($a_task);
-            $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`"
-                    ." SET `plugin_fusioninventory_tasks_id`='".$tasks_id."'"
-                    ." WHERE `id`='".$data_one['id']."'");
-         }
-         $i++;
-      }
-   }
+
    /*
     * Update rules
     */
@@ -6153,7 +6120,23 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
    }
 
+   /*
+    * Update task's agents list from dynamic group periodically in order to automatically target new
+    * computer.
+    */
+   if (!$crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'updatedynamictasks')) {
+      CronTask::Register('PluginFusioninventoryTaskjob', 'updatedynamictasks', '60',
+                         array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30, 'state' => 0));
+   }
 
+   /**
+   * Add field to manage which group can be refreshed by updatedynamictasks crontask
+   */
+   if (!FieldExists('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group')) {
+      $migration->addField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group', 'bool');
+      $migration->addKey('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 'can_update_group');
+      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_dynamicdatas');
+   }
 //   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
 //   $pfIgnoredimportdevice->install();
 
@@ -6243,10 +6226,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $DB->query("UPDATE `glpi_printers` SET `is_dynamic`='1'
                         WHERE `id`='".$data['printers_id']."'");
       }
-
-   // Disable is_advancedmode in tasks
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_tasks`
-         SET `is_advancedmode`='0'");
 
 
 
@@ -8417,11 +8396,16 @@ function migrateTablesFromFusinvDeploy ($migration) {
                      WHERE plugin_fusinvdeploy_commands_id = ".$at_datas['id'];
                   $ret_cmd_res = $DB->query($ret_cmd_query);
                   while ($res_cmd_datas = $DB->fetch_assoc($ret_cmd_res)) {
-                     //construct command status array entry
-                     $o_line['actions'][$a_i][$type]['retChecks'][] = array(
-                        'type'  => $cmdStatus[$res_cmd_datas['type']],
-                        'values' => array($res_cmd_datas['value'])
-                     );
+                     // Skip empty retchecks type:
+                     // This surely means they have been drop at some point but entry has not been
+                     // removed from database.
+                     if (!empty($res_cmd_datas['type'])) {
+                        //construct command status array entry
+                        $o_line['actions'][$a_i][$type]['retChecks'][] = array(
+                           'type'  => $cmdStatus[$res_cmd_datas['type']],
+                           'values' => array($res_cmd_datas['value'])
+                        );
+                     }
                   }
                }
             }

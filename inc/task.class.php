@@ -126,30 +126,49 @@ class PluginFusioninventoryTask extends CommonDBTM {
    }
 
 
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $CFG_GLPI;
+      $tab_names = array();
+      if (PluginFusioninventoryProfile::haveRight("task", "r")) {
+         if ($item->getType() == 'Computer') {
+            $tab_names[] = __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
+         }
+
+      }
+
+      if (!empty($tab_names)) {
+         return $tab_names;
+      } else {
+         return '';
+      }
+   }
 
    function defineTabs($options=array()){
-
+      global $CFG_GLPI;
       $ong = array();
-      $this->addStandardTab('PluginFusioninventoryTaskjob', $ong, $options);
 
-//      if ($this->fields['id'] > 0) {
-//         if ($this->fields["is_advancedmode"] == '1') {
-//            $pft = new PluginFusioninventoryTaskjob;
-//            $a_taskjob = $pft->find("`plugin_fusioninventory_tasks_id`='".$_GET['id']."'
-//                  AND `rescheduled_taskjob_id`='0' ", "id");
-//            $i = 1;
-//            foreach($a_taskjob as $datas) {
-//               $i++;
-//               $ong[$i] = __('Job', 'fusioninventory')." ".($i-1);
-//            }
-//
-//            $i++;
-//            $ong[$i] = __('New action', 'fusioninventory')." <img src='".$CFG_GLPI['root_doc']."/pics/add_dropdown.png'/>";
-//         }
-//      }
+      /*
+       * TODO: The "All" tab is malfunctionning and i had no other choice but to disable it.
+       * This is not crucial at the moment and should be reconsidered when refactoring Tasks.
+       */
+      $ong['no_all_tab'] = TRUE;
+      //Tabs in this form are handled by TaskJob class
+      $this->addStandardTab('PluginFusioninventoryTaskJob', $ong, $options);
+
       return $ong;
    }
 
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      if ($item->getType() == 'Computer') {
+
+         // Possibility to remote agent
+         if (PluginFusioninventoryTaskjob::isAllowurlfopen(1)) {
+            $pfAgent = new PluginFusioninventoryAgent();
+            $pfAgent->forceRemoteAgent();
+         }
+      }
+   }
 
 
    /**
@@ -291,12 +310,15 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2'></td>";
+      if (! $this->fields["is_advancedmode"]) {
       echo "<td>";
-//      echo __('Advanced mode', 'fusioninventory')."&nbsp;:";
+      echo __('Advanced mode', 'fusioninventory')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-//      Dropdown::showYesNo("is_advancedmode", $this->fields["is_advancedmode"]);
+         Dropdown::showYesNo("is_advancedmode", $this->fields["is_advancedmode"]);
       echo "</td>";
+      }
+
       echo "</tr>";
 
       $this->showFormButtons($options);

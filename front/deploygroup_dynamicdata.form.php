@@ -73,7 +73,10 @@ if (isset($_GET['updaterule'])) {
    $_SESSION['plugin_fusioninventory_dynamicgroup_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
    Html::back();
 }
-
+if (isset($_POST['update_group'])) {
+   $pfDeployGroup_Dynamicdata->update($_POST);
+   Html::back();
+}
 if (isset($_POST['name'])) {      
    $a_construct = array();
    foreach ($_POST as $key=>$value) {
