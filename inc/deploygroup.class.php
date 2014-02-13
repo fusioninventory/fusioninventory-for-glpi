@@ -400,7 +400,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 //      unset($_SESSION["glpisearchcount"]['Computer']);
 //      unset($_SESSION["glpisearch"]);
       
-      Search::manageGetValues('Computer');
+      Search::manageGetValues('Computer', FALSE);
       $pfSearch = new PluginFusioninventorySearch();
       $pfSearch->formurl            = $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/deploygroup_dynamicdata.form.php';
       $pfSearch->customIdVar        = 'plugin_fusioninventory_deploygroup_dynamicdatas_id';
