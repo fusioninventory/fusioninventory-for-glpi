@@ -1359,7 +1359,7 @@ class PluginFusioninventoryFormatconvert {
                         )
                      );
          if (!isset($res_rule['_no_rule_matches'])) {
-            $data_collect = array_merge($data_collect, $res_rule);
+            $data_collect[] = $res_rule;
          }
       }
 
@@ -1374,7 +1374,7 @@ class PluginFusioninventoryFormatconvert {
                         )
                      );
          if (!isset($res_rule['_no_rule_matches'])) {
-            $data_collect = array_merge($data_collect, $res_rule);
+            $data_collect[] = $res_rule;
          }
       }
       
@@ -1394,60 +1394,61 @@ class PluginFusioninventoryFormatconvert {
                         )
                      );
          if (!isset($res_rule['_no_rule_matches'])) {
-            $data_collect = array_merge($data_collect, $res_rule);
+            $data_collect[] = $res_rule;
          }
       }
       
       // * Update $a_inventory with $data_collect;
 
-      // Update computer model
-      if (isset($data_collect['computermodels_id'])) {
-         $a_inventory['Computer']['computermodels_id'] = $data_collect['computermodels_id'];
-      }
-      // Update computer type
-      if (isset($data_collect['computertypes_id'])) {
-         $a_inventory['Computer']['computertypes_id'] = $data_collect['computertypes_id'];
-      }
-      // Update computer OS
-      if (isset($data_collect['operatingsystems_id'])) {
-         $a_inventory['Computer']['operatingsystems_id'] = $data_collect['operatingsystems_id'];
-      }
-      // Update computer OS version
-      if (isset($data_collect['operatingsystemversions_id'])) {
-         $a_inventory['Computer']['operatingsystemversions_id'] = $data_collect['operatingsystemversions_id'];
-      }
-      // Update computer user
-      if (isset($data_collect['user'])) {
-         $query = "SELECT `id`
-                   FROM `glpi_users`
-                   WHERE `name` = '" . $data_collect['user'] . "'
-                   LIMIT 1";
-         $result = $DB->query($query);
-         if ($DB->numrows($result) == 1) {
-            $a_inventory['Computer']['users_id'] = $DB->result($result, 0, 0);
+      foreach ($data_collect as $data) {
+         // Update computer model
+         if (isset($data['computermodels_id'])) {
+            $a_inventory['Computer']['computermodels_id'] = $data['computermodels_id'];
          }
-      }
-      // Update computer location
-      if (isset($data_collect['locations_id'])) {
-         $a_inventory['Computer']['locations_id'] = $data_collect['locations_id'];
-      }
-      // Update computer status
-      if (isset($data_collect['states_id'])) {
-         $a_inventory['Computer']['states_id'] = $data_collect['states_id'];
-      }
-      // Add software
-      if (isset($data_collect['software'])
-              && isset($data_collect['softwareversion'])) {
-         $a_inventory['SOFTWARES'][] = array(
-             'NAME'     => $data_collect['software'],
-             'VERSION'  => $data_collect['softwareversion']
-         );
-      }
-      // Update computer inventory number
-      if (isset($data_collect['otherserial'])) {
-         $a_inventory['Computer']['otherserial'] = $data_collect['otherserial'];
-      }
-      
+         // Update computer type
+         if (isset($data['computertypes_id'])) {
+            $a_inventory['Computer']['computertypes_id'] = $data['computertypes_id'];
+         }
+         // Update computer OS
+         if (isset($data['operatingsystems_id'])) {
+            $a_inventory['Computer']['operatingsystems_id'] = $data['operatingsystems_id'];
+         }
+         // Update computer OS version
+         if (isset($data['operatingsystemversions_id'])) {
+            $a_inventory['Computer']['operatingsystemversions_id'] = $data['operatingsystemversions_id'];
+         }
+         // Update computer user
+         if (isset($data['user'])) {
+            $query = "SELECT `id`
+                      FROM `glpi_users`
+                      WHERE `name` = '" . $data['user'] . "'
+                      LIMIT 1";
+            $result = $DB->query($query);
+            if ($DB->numrows($result) == 1) {
+               $a_inventory['Computer']['users_id'] = $DB->result($result, 0, 0);
+            }
+         }
+         // Update computer location
+         if (isset($data['locations_id'])) {
+            $a_inventory['Computer']['locations_id'] = $data['locations_id'];
+         }
+         // Update computer status
+         if (isset($data['states_id'])) {
+            $a_inventory['Computer']['states_id'] = $data['states_id'];
+         }
+         // Add software
+         if (isset($data['software'])
+                 && isset($data['softwareversion'])) {
+            $a_inventory['SOFTWARES'][] = array(
+                'NAME'     => $data['software'],
+                'VERSION'  => $data['softwareversion']
+            );
+         }
+         // Update computer inventory number
+         if (isset($data['otherserial'])) {
+            $a_inventory['Computer']['otherserial'] = $data['otherserial'];
+         }
+      }      
       return $a_inventory;
    }
    
