@@ -504,6 +504,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
             $this->update($input);
             $this->delete($oldAgent);
          }
+         return TRUE;
       } else { # This is a new computer
          // Link agent with computer
          $agent = $this->InfosByKey($device_id);
@@ -511,8 +512,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
              $agent['computers_id'] = $computers_id;
              $agent['entities_id']  = $entities_id;
              $this->update($agent);
+             return TRUE;
          }
       }
+      return FALSE;
    }
 
 
