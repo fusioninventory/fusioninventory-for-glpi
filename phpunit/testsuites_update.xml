@@ -1,0 +1,23 @@
+<phpunit
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/3.7/phpunit.xsd"
+  bootstrap="bootstrap.php"
+  processIsolation="true"
+  strict="false"
+  >
+  <logging>
+    <log type="tap" target="/tmp/logfile.tap"/>
+    <log type="json" target="/tmp/logfile.json"/>
+    <log type="junit" target="/tmp/logfile.xml"/>
+  </logging>
+  <testsuites>
+    <testsuite name="Update">
+      <!-- First, install GLPI -->
+      <file>./0_Install/GLPIInstallTest.php</file>
+      <!-- Then, dump the GLPI install (for quicker setUp) -->
+      <file>./0_Install/SaveInstallTest.php</file>
+      <!-- Finally, test update from various Fusioninventory version -->
+      <file>./0_Install/FusinvUpdateTest.php</file>
+    </testsuite>
+  </testsuites>
+</phpunit>

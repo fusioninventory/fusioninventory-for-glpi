@@ -20,7 +20,18 @@ class GLPIInstallTest extends PHPUnit_Framework_TestCase {
       include_once (GLPI_CONFIG_DIR . "/config_db.php");
       $DB = new DB();
 
-      $result = load_mysql(
+      drop_database(
+         $DB->dbuser,
+         $DB->dbhost,
+         $DB->dbdefault,
+         $DB->dbpassword
+      );
+
+//      $DB->query("DROP DATABASE IF EXISTS ".$DB->dbdefault);
+//
+//      $DB->query("CREATE DATABASE ".$DB->dbdefault);
+
+      $result = load_mysql_file(
          $DB->dbuser,
          $DB->dbhost,
          $DB->dbdefault,
@@ -28,9 +39,9 @@ class GLPIInstallTest extends PHPUnit_Framework_TestCase {
          GLPI_ROOT ."/install/mysql/glpi-0.85-empty.sql"
       );
 
-      $this->assertEquals( 0, $result[0],
+      $this->assertEquals( 0, $result['returncode'],
          "Failed to install GLPI database:\n".
-         implode("\n", $result[1])
+         implode("\n", $result['output'])
       );
 
    }

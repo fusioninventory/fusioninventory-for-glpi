@@ -40,28 +40,26 @@
    ------------------------------------------------------------------------
  */
 
-class ComputerLog extends PHPUnit_Framework_TestCase {
+class ComputerLog extends BaseTestCase {
 
    private $a_inventory = array();
-   
+
    public function testLog() {
       global $DB;
 
+
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
 
       $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
       $computer         = new Computer();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
 
       $date = date('Y-m-d H:i:s');
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
-      
+
       $this->a_inventory = array(
           'fusioninventorycomputer' => Array(
               'winowner'                        => 'test',
@@ -106,7 +104,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
           'is_dynamic'                       => 1,
           'contact'                          => 'ddurieux'
       );
-      
+
       $this->a_inventory['processor'] = Array(
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
@@ -192,7 +190,7 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
                     'ipaddress'            => Array('::1', 'fe80::1', '127.0.0.1')
                 )
         );
-      
+
       $this->a_inventory['software'] = Array(
             'gentiumbasic$$$$110$$$$1$$$$0' => Array(
                     'name'                   => 'GentiumBasic',
@@ -223,18 +221,18 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
                 )
           );
       $this->a_inventory = $pfFormatconvert->replaceids($this->a_inventory);
-      
+
       $serialized = gzcompress(serialize($this->a_inventory));
-      $this->a_inventory['fusioninventorycomputer']['serialized_inventory'] = 
+      $this->a_inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
-      
-      
+
+
       $computer->add(array('serial' => 'XB63J7D',
                            'entities_id' => 0));
-      
+
       $this->assertGreaterThan(0, 1, FALSE);
 
-      
+
       $_SESSION['glpiactive_entity'] = 0;
       $pfiComputerLib->updateComputer($this->a_inventory, 1, TRUE);
 
@@ -285,32 +283,34 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
 
       $this->assertEquals($a_reference, $a_logs, "Log may be empty");
 
-      
       // To be sure not have 2 same informations
       $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
-      
+
       $query = "SELECT * FROM `glpi_logs`
       WHERE `id` > '117'";
       $result = $DB->query($query);
       $a_logs = array();
       $a_reference = array();
 
-      while ($data=$DB->fetch_assoc($result)) {
-         $a_logs[$data['id']] = $data;
-         $a_reference[$data['id']] = array();
+      $this->assertNotNull($result, "Lines above 117 not found");
+      if (!is_null($result) ) {
+         while ($data=$DB->fetch_assoc($result)) {
+            $a_logs[$data['id']] = $data;
+            $a_reference[$data['id']] = array();
+         }
       }
       $this->assertEquals($a_reference, $a_logs, "Log may be empty");
 
-      
-      // * Modify: contact 
-      // * remove a processor 
+
+      // * Modify: contact
+      // * remove a processor
       // * Remove a software
       $this->a_inventory['Computer']['contact'] = 'root';
       unset($this->a_inventory['processor'][3]);
       unset($this->a_inventory['software']['orbit2$$$$2.14.19$$$$3$$$$0']);
-      
+
       $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
-      
+
       $query = "SELECT * FROM `glpi_logs`
       WHERE `id` > '117'";
       $result = $DB->query($query);
@@ -379,22 +379,14 @@ class ComputerLog extends PHPUnit_Framework_TestCase {
       }
       $this->assertEquals($a_reference, $a_logs, "May have 3 logs (update contact, remove processor
          and remove a software)");
-      
-      $GLPIlog = new GLPIlogs();
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
+
+//      $GLPIlog = new GLPIlogs();
+//      $GLPIlog->testSQLlogs();
+//      $GLPIlog->testPHPlogs();
    }
  }
 
 
 
-class ComputerLog_AllTests  {
-
-   public static function suite() {
-
-      $suite = new PHPUnit_Framework_TestSuite('ComputerLog');
-      return $suite;
-   }
-}
 
 ?>

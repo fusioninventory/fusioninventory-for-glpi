@@ -1,6 +1,5 @@
 <?php
 /**
- * @backupGlobals disabled
  * @runTestsInSeparateProcesses
  */
 class TaskTest extends BaseTestCase {

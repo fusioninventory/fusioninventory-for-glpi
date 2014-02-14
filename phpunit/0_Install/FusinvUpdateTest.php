@@ -40,59 +40,22 @@
    ------------------------------------------------------------------------
  */
 
-require_once("0_Install/GLPIInstallTest.php");
-require_once("0_Install/FusinvDBTest.php");
 require_once("commonfunction.php");
-class Update extends BaseTestCase {
+require_once("0_Install/FusinvDBTest.php");
+
+class UpdateTest extends BaseTestCase {
 
    /**
     * @dataProvider provider
+    * @test
     */
-
-
-//   public function testUpdate2_3_3() {
-//      global $PF_CONFIG;
-//
-//      $PF_CONFIG = array();
-//
-//      $Update = new Update();
-//      $Update->update($DB, "2.3.3");
-//   }
-//
-//
-//   public function testUpdate2_1_3() {
-//      global $PF_CONFIG, $DB;
-//
-//      $PF_CONFIG = array();
-//
-//      $Update = new Update();
-//      $Update->update($DB, "2.1.3");
-//   }
-//
-//
-//   public function testUpdate083_21() {
-//      global $PF_CONFIG, $DB;
-//
-//      $PF_CONFIG = array();
-//
-//      $Update = new Update();
-//      $Update->update($DB, "0.83+2.1");
-//      $Update->testEntityRule(1);
-//      $Update->verifyConfig($DB);
-//   }
-
-
-
-   function testUpdate($version = '', $verify = FALSE, $nbrules = 0) {
+   function update($version = '', $verify = FALSE, $nbrules = 0) {
       global $DB;
       $DB->connect();
 
       if ($version == '') {
          return;
       }
-
-      $GLPIInstall = new GLPIInstallTest();
-      $GLPIInstall->installDatabase();
 
 
       $query = "SHOW TABLES";
@@ -109,33 +72,37 @@ class Update extends BaseTestCase {
          WHERE `itemtype` LIKE 'PluginFus%'";
       $DB->query($query);
 
+      $sqlfile = GLPI_ROOT ."/plugins/fusioninventory/phpunit/0_Install/mysql/i-".$version.".sql";
       // Load specific FusionInventory version in database
-      $result = load_mysql(
+      $result = load_mysql_file(
          $DB->dbuser,
          $DB->dbhost,
          $DB->dbdefault,
          $DB->dbpassword,
-         GLPI_ROOT ."/plugins/fusioninventory/phpunit/FusinvInstall/Update/mysql/i-".$version.".sql"
+         $sqlfile
       );
-
-      $this->assertEquals( 0, $result[0],
-         "Failed to install GLPI database:\n".
-         implode("\n", $result[1])
+      $this->assertEquals( 0, $result['returncode'],
+         "Failed to install Fusioninventory ".$sqlfile.":\n".
+         implode("\n", $result['output'])
       );
+      $output = array();
+      $returncode = 0;
+      exec(
+         "/usr/bin/php -f ../scripts/cli_install.php 4 1>/dev/null",
+         $output,
+         $returncode
+      );
+      $this->assertEquals(0,$returncode);
+      $this->assertEquals(0, count($output), implode("\n", str_replace("\r","\n",$output)));
 
-      $output = shell_exec("/usr/bin/php -f ../scripts/cli_install.php 4 2>&1 1>/dev/null");
-      $this->assertNotNull($output);
-      $this->assertGreaterThan(0, strlen($output));
-
-      $FusinvDBTest = new FusinvDBTest();
-      $FusinvDBTest->testDB("fusioninventory", "upgrade from ".$version);
+      $FusinvDB = new FusinvDB();
+      $FusinvDB->checkInstall("fusioninventory", "upgrade from ".$version);
 
       $this->verifyEntityRules($nbrules);
 
       if ( $verify ) {
          $this->verifyConfig();
       }
-
 
    }
 

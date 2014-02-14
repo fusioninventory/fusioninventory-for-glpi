@@ -2,28 +2,30 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/3.7/phpunit.xsd"
   bootstrap="bootstrap.php"
-  processIsolation="true"
+  processIsolation="false"
   backupGlobals="false"
+  strict="false"
   >
   <logging>
     <log type="tap" target="/tmp/logfile.tap"/>
     <log type="json" target="/tmp/logfile.json"/>
     <log type="junit" target="/tmp/logfile.xml"/>
-  </logging>
+    <log type="coverage-html" target="/tmp/report" showUncoveredFiles="true"/>
+    </logging>
+    <filter>
+      <blacklist>
+        <directory suffix=".php">.</directory>
+        <directory suffix=".php">../../../</directory>
+        <exclude>
+          <directory suffix=".php">..</directory>
+        </exclude>
+      </blacklist>
+    </filter>
   <testsuites>
-    <testsuite name="Update">
-      <file>./0_Install/FusinvUpdateTest.php</file>
-    </testsuite>
-    <testsuite name="Install">
-      <file>./0_Install/GLPIInstallTest.php</file>
-      <file>./0_Install/FusinvInstallTest.php</file>
-      <file>./0_Install/SaveInstallTest.php</file>
-    </testsuite>
     <testsuite name="Unit">
+      <directory suffix="Test.php">./1_Unit/</directory>
       <directory suffix="Test.php">./1_Unit/Tasks/</directory>
-    </testsuite>
-    <testsuite name="Integration">
-      <directory suffix="Test.php">./2_Integration/Tasks/</directory>
     </testsuite>
   </testsuites>
 </phpunit>
+

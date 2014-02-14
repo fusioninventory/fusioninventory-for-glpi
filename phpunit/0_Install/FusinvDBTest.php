@@ -40,10 +40,11 @@
    ------------------------------------------------------------------------
  */
 
-class FusinvDBTest extends BaseTestCase {
+class FusinvDB extends PHPUnit_Framework_Assert{
 
-   public function testDB($pluginname='', $when='') {
+   public function checkInstall($pluginname='', $when='') {
       global $DB;
+
 
       if ($pluginname == '') {
          return;

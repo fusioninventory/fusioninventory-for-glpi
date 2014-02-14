@@ -40,98 +40,105 @@
    ------------------------------------------------------------------------
  */
 
-class AgentChangeDeviceid extends PHPUnit_Framework_TestCase {
+class AgentTest extends BaseTestCase {
 
-   private $agents_id = 0;
 
-    
-   protected function setUp() {
-      global $DB;
-
-      $DB->connect();
-
-      $Install = new Install();
-      $Install->testInstall(0);
-      
+   /**
+    * @test
+    */
+   public function addAgent() {
       $pfAgent = new PluginFusioninventoryAgent();
-      
-      // Add an agent
-      $input = array(
-          'name'           => 'port004.bureau.siprossii.com-2012-12-20-16-27-27',
-          'device_id'      => 'port004.bureau.siprossii.com-2012-12-20-16-27-27',
-          'computers_id'   => 100
+      $agent_id = $pfAgent->add(
+         array(
+            'name'           => 'port004.bureau.siprossii.com-2012-12-20-16-27-27',
+            'device_id'      => 'port004.bureau.siprossii.com-2012-12-20-16-27-27',
+            'computers_id'   => 100
+         )
       );
-      $this->agents_id = $pfAgent->add($input);
-     
-      $pfAgent->setAgentWithComputerid(100, 
-                                       'port004.bureau.siprossii.com-2013-01-01-16-27-27', 
-                                       1);
+      $this->assertNotEquals(FALSE, $agent_id);
+      return $pfAgent;
    }
 
-   
-   
-   public function testNbAgent() {
-      global $DB;
+   /**
+    * @test
+    * @depends addAgent
+    */
+   public function linkNewAgentWithAsset($pfAgent) {
 
-      $DB->connect();
+      $result = $pfAgent->setAgentWithComputerid(
+         100,
+         'port004.bureau.siprossii.com-2013-01-01-16-27-27',
+         1
+      );
+      $this->assertTrue($result, "Problem when linking agent to asset");
+      return $pfAgent;
+   }
+
+   /**
+    * @test
+    */
+   public function agentExists() {
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $a_agents = $pfAgent->find("`device_id` LIKE 'port004%'");
 
-      $this->assertEquals(1, count($a_agents));
+      $a_agents = $pfAgent->find(
+         "`device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27'"
+      );
+
+      $this->assertEquals(1, count($a_agents), "Agent not found");
    }
 
-
-   
-   public function testAgentChangeDeviceid() {
-      global $DB;
-
-      $DB->connect();
+   /**
+    * @test
+    */
+   public function newAgentLinkedToSameAsset() {
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $a_agents = $pfAgent->find("`device_id`='port004.bureau.siprossii.com-2013-01-01-16-27-27'");
+      $agent = $pfAgent->find(
+         "`device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27'",
+         "",
+         1
+      );
+      $this->assertEquals(1, count($agent));
+      $agent_id = current($agent)['id'];
 
-      $this->assertEquals(1, count($a_agents));
-   }
-   
+      $agent_from_asset = current($pfAgent->find("`computers_id` = '100'"));
 
-   
-   public function testNewAgentAssociatedWithComputer() {
-      global $DB;
+      $this->assertEquals($agent_id, $agent_from_asset['id']);
 
-      $DB->connect();
-
-      $pfAgent = new PluginFusioninventoryAgent();
-      $a_agents = current($pfAgent->find("`computers_id`='100'"));
-
-      $this->assertEquals($this->agents_id, $a_agents['id']);
    }
 
-   
-   
-   public function testNewAgentChangeEntity() {
-      global $DB;
-
-      $DB->connect();
+   /**
+    * @test
+    */
+   public function newAgentCheckEntity() {
 
       $pfAgent = new PluginFusioninventoryAgent();
       $a_agents = current($pfAgent->find("`computers_id`='100'"));
 
       $this->assertEquals(1, $a_agents['entities_id']);
    }
-   
 
-   
-   public function testNewAgentChangeEntityOnly() {
-      global $DB;
 
-      $DB->connect();
+   /**
+    * @test
+    */
+   public function newAgentChangeEntity() {
 
       $pfAgent = new PluginFusioninventoryAgent();
-      $pfAgent->setAgentWithComputerid(100, 
-                                       'port004.bureau.siprossii.com-2013-01-01-16-27-27', 
+      // Load Agent
+      $this->assertTrue(
+         $pfAgent->getFromDBByQuery(
+            "WHERE `device_id` = 'port004.bureau.siprossii.com-2013-01-01-16-27-27' ".
+            "LIMIT 1"
+         ),
+         "Could not load agent"
+      );
+
+      $pfAgent->setAgentWithComputerid(100,
+                                       'port004.bureau.siprossii.com-2013-01-01-16-27-27',
                                        0);
-      
+
       $pfAgent = new PluginFusioninventoryAgent();
       $a_agents = current($pfAgent->find("`computers_id`='100'"));
 
@@ -139,15 +146,3 @@ class AgentChangeDeviceid extends PHPUnit_Framework_TestCase {
    }
 }
 
-
-
-class AgentChangeDeviceid_AllTests  {
-
-   public static function suite() {
-
-      $suite = new PHPUnit_Framework_TestSuite('AgentChangeDeviceid');
-      return $suite;
-   }
-}
-
-?>
