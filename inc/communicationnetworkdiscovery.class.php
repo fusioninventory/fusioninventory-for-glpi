@@ -525,7 +525,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                   $input['plugin_fusioninventory_snmpmodels_id'] = $model_id;
                }
             }
-            if (isset($arrayinventory['AUTHSNMP']) AND !empty($$arrayinventory['AUTHSNMP'])) {
+            if (isset($arrayinventory['AUTHSNMP']) AND !empty($arrayinventory['AUTHSNMP'])) {
                $input['plugin_fusioninventory_configsecurities_id'] = $arrayinventory['AUTHSNMP'];
             }
             $item->update($input);
