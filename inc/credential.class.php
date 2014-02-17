@@ -279,7 +279,7 @@ class PluginFusioninventoryCredential extends CommonDropdown {
       $p = array();
       if ($params['id'] == -1) {
          $p['value']    = '';
-         $p['itemtype'] = '';
+         $p['itemtype'] = 0;
          $p['id']       = 0;
 
       } else {
