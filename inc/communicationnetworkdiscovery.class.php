@@ -641,8 +641,11 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
    function _updateSNMPInfo($arrayinventory, $input, $class) {
       $input['sysdescr']                                   =
          $arrayinventory['DESCRIPTION'];
-      $input['plugin_fusioninventory_configsecurities_id'] =
-         $arrayinventory['AUTHSNMP'];
+
+      if (isset($arrayinventory['AUTHSNMP']) AND !empty($arrayinventory['AUTHSNMP'])) {
+         $input['plugin_fusioninventory_configsecurities_id'] =
+            $arrayinventory['AUTHSNMP'];
+      }
 
       $pfModel = new PluginFusioninventorySnmpmodel();
       if (
