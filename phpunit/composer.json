@@ -1,0 +1,16 @@
+{
+    "name": "fusioninventory/fusioninventory_unittests_dependencies",
+    "description" : "Fusioninventory plugin's unittests dependencies",
+    "license" : "AGPL-3.0",
+
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+
+    "require" : {
+        "pdepend/pdepend" : "1.1.0"
+    },
+    "config": {
+        "cache-dir": "./tools/composer.cache"
+    }
+}

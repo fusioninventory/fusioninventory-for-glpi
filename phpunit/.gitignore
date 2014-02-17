@@ -1,2 +1,4 @@
-pear
+composer.lock
+tools/composer.cache
+vendor
 save.sql
