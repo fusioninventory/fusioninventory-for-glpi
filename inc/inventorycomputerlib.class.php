@@ -2135,8 +2135,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($data['serial'] == '') {
             $where_serial = '';
          }
-         $where_manufacturer = "AND (`manufacturers_id`='".$data['manufacturers_id']."'
-                  OR `manufacturers_id`='0')";
+         $where_manufacturer = "AND (`manufacturers_id`='".$data['manufacturers_id']."')";
          if ($data['manufacturers_id'] == 0) {
             $where_manufacturer = '';
          }
@@ -2313,8 +2312,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($data['serial'] == '') {
             $where_serial = '';
          }
-         $where_manufacturer = "AND (`manufacturers_id`='".$data['manufacturers_id']."'
-                  OR `manufacturers_id`='0')";
+         $where_manufacturer = "AND (`manufacturers_id`='".$data['manufacturers_id']."')";
          if ($data['manufacturers_id'] == 0) {
             $where_manufacturer = '';
          }
