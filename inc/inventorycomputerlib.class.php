@@ -2096,9 +2096,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          // Unique import on serial number
          $added = 0;
          $query = "SELECT `glpi_monitors`.`id` FROM `glpi_monitors`
-            WHERE `name`='".$data['name']."'
-               AND `manufacturers_id`='".$data['manufacturers_id']."'
-               AND `serial`='".$data['serial']."'
+            WHERE `serial`='".$data['serial']."'
                AND `is_global`='0'
                AND `entities_id`='".$data['entities_id']."'
             LIMIT 1";
