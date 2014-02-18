@@ -363,11 +363,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          echo "<input type='text' name='ip' value='" . $this->fields["ip"] . "' size='35'/>";
          echo "</td>";
 
-         echo "<td align='center'>" . __('MAC') . "&nbsp;:</td>";
-         echo "</td>";
-         echo "<td align='center'>";
-         echo "<input type='text' name='mac' value='" . $this->fields["mac"] . "' size='35'/>";
-         echo "</td>";
+         echo "<td colspan='2'></td>";
          echo "</tr>";
       }
 
