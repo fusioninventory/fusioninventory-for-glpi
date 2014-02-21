@@ -49,8 +49,7 @@ Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "pl
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
-$pfIgnoredimportdevice->showDevices();
+Search::show('PluginFusioninventoryIgnoredimportdevice');
 
 Html::footer();
 

@@ -55,148 +55,78 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
    }
 
 
+   
+   
+   function getSearchOptions() {
 
-   function showDevices() {
-      global $DB;
+      $tab = array();
 
-      $rule = new PluginFusioninventoryInventoryRuleImport();
-      $entity = new Entity();
+      $tab['common'] = __('Agent', 'fusioninventory');
 
-      $start = 0;
-      if (isset($_REQUEST["start"])) {
-         $start = $_REQUEST["start"];
-      }
+      $tab[1]['table']     = $this->getTable();
+      $tab[1]['field']     = 'name';
+      $tab[1]['linkfield'] = 'name';
+      $tab[1]['name']      = __('Name');
+      $tab[1]['massiveaction']  = false;
 
-      $nb_elements = countElementsInTableForMyEntities($this->getTable());
+      $tab[2]['table']     = 'glpi_rules';
+      $tab[2]['field']     = 'name';
+      $tab[2]['name']      = __('Rule name');
+      $tab[2]['datatype']  = 'itemlink';
+      $tab[2]['massiveaction']  = false;
       
-      Html::printPager($start, 
-                       $nb_elements, 
-                       Toolbox::getItemTypeSearchURL(
-                               'PluginFusioninventoryIgnoredimportdevice'
-                       ),
-                       "");
+      $tab[3]['table']     = $this->getTable();
+      $tab[3]['field']     = 'date';
+      $tab[3]['linkfield'] = '';
+      $tab[3]['name']      = __('Date');
+      $tab[3]['datatype']  = 'datetime';
+      $tab[3]['massiveaction']  = false;
+      
+      $tab[4]['table']         = $this->getTable();
+      $tab[4]['field']         = 'itemtype';
+      $tab[4]['name']          = __('Item type');
+      $tab[4]['massiveaction'] = false;
+      $tab[4]['datatype']      = 'itemtypename';
+      $tab[4]['massiveaction']  = false;
 
-      echo "<br/><table class='tab_cadrehov' >";
+      $tab[5]['table']     = 'glpi_entities';
+      $tab[5]['field']     = 'completename';
+      $tab[5]['name']      = __('Entity');
+      $tab[5]['massiveaction']  = false;
+      
+      $tab[6]['table']           = $this->getTable();
+      $tab[6]['field']           = 'serial';
+      $tab[6]['name']            = __('Serial number');
+      $tab[6]['datatype']        = 'string';
+      $tab[6]['massiveaction']  = false;
+      
+      $tab[7]['table']          = $this->getTable();
+      $tab[7]['field']          = 'uuid';
+      $tab[7]['name']           = __('UUID');
+      $tab[7]['datatype']       = 'string';
+      $tab[7]['massiveaction']  = false;
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<th>";
-      echo __('Name');
-      echo "</th>";
+      $tab[8]['table']           = $this->getTable();
+      $tab[8]['field']           = 'ip';
+      $tab[8]['name']            = __('IP');
+      $tab[8]['datatype']        = 'string';
+      $tab[8]['massiveaction']  = false;
 
-      echo "<th>";
-      echo __('Rule name');
-      echo "</th>";
+      $tab[9]['table']           = $this->getTable();
+      $tab[9]['field']           = 'mac';
+      $tab[9]['name']            = __('MAC');
+      $tab[9]['datatype']        = 'string';
+      $tab[9]['massiveaction']  = false;
 
-      echo "<th>";
-      echo __('Date');
-      echo "</th>";
-
-      echo "<th>";
-      echo __('Type');
-      echo "</th>";
-
-      echo "<th>";
-      echo __('Entity');
-      echo "</th>";
-
-      echo "<th>";
-      echo __('Serial number');
-      echo "</th>";
-
-      echo "<th>";
-      echo __('UUID');
-      echo "</th>";
-
-      echo "<th>";
-      echo __('IP');
-      echo "</th>";
-
-      echo "<th>";
-      echo __('MAC');
-      echo "</th>";
-
-      echo "<th>";
-      echo __('Module', 'fusioninventory');
-      echo "</th>";
-      echo "</tr>";
-
-      $query = "SELECT * FROM `".$this->getTable()."`
-         WHERE ".getEntitiesRestrictRequest("",
-                                            $this->getTable(),
-                                            '',
-                                            '',
-                                            $this->maybeRecursive())."
-         ORDER BY `date`DESC
-         LIMIT ".intval($start).", ".intval($_SESSION['glpilist_limit']);
-      $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         echo "<tr class='tab_bg_1'>";
-         echo "<td align='center'>";
-         echo $data['name'];
-         echo "</td>";
-
-         echo "<td align='center'>";
-         $rule->getFromDB($data['rules_id']);
-         echo $rule->getLink(1);
-         echo "</td>";
-
-         echo "<td align='center'>";
-         echo Html::convDateTime($data['date']);
-         echo "</td>";
-
-         echo "<td align='center'>";
-         $itemtype = $data['itemtype'];
-         if ($itemtype != '') {
-            $item = new $itemtype();
-            echo $item->getTypeName();
-         } else {
-            echo NOT_AVAILABLE;
-         }
-         echo "</td>";
-
-         echo "<td align='center'>";
-         $entity->getFromDB($data['entities_id']);
-         echo $entity->getName();
-         echo "</td>";
-
-         echo "<td align='center'>";
-         echo $data['serial'];
-         echo "</td>";
-
-         echo "<td align='center'>";
-         echo $data['uuid'];
-         echo "</td>";
-
-         echo "<td align='center'>";
-         $a_ip = importArrayFromDB($data['ip']);
-         echo implode("<br/>", $a_ip);
-         echo "</td>";
-
-         echo "<td align='center'>";
-         $a_mac = importArrayFromDB($data['mac']);
-         echo implode("<br/>", $a_mac);
-         echo "</td>";
-
-         echo "<td>";
-         $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-         foreach ($a_methods as $mdata) {
-            if ($mdata['method'] == $data['method']) {
-               echo $mdata['name'];
-            }
-         }
-         echo "</td>";
-         echo "</tr>";
-      }
-
-      echo "</table><br/>";
-
-      Html::printPager($start, 
-                       $nb_elements, 
-                       Toolbox::getItemTypeSearchURL(
-                               'PluginFusioninventoryIgnoredimportdevice'
-                       ),
-                       "");
+      $tab[10]['table']           = $this->getTable();
+      $tab[10]['field']           = 'method';
+      $tab[10]['name']            = __('Module', 'fusioninventory');
+      $tab[10]['datatype']        = 'string';
+      $tab[10]['massiveaction']  = false;
+      
+      return $tab;
    }
+
 }
 
 ?>
