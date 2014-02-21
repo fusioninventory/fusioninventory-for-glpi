@@ -470,7 +470,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                break;
 
             case 'ip':
-               $sql_where .= " AND `glpi_ipaddresses`.`ip` IN ('";
+               $sql_where .= " AND `glpi_ipaddresses`.`name` IN ('";
                if (is_array($input['ip'])) {
                   $sql_where .= implode("', '", $input['ip']);
                } else {
