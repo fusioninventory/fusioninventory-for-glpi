@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name='plugin-fusioninventory-custom'>
+  <include file='build.xml' />
+  <property name="tests.directory" value='${basedir}/glpi/plugins/fusioninventory/phpunit' />
+  <target name="phpunit.unit.custom" depends='plugin-fusioninventory.prepare' description="Run unit tests with PHPUnit">
+   <phpunit.run configuration='${fusioninventory.directory}/phpunit/testsuites_integration.xml'>
+    <!--
+     <testfile>
+       <arg path='${tests.directory}/2_Integration/SoftwareVersionAddTest.php' />
+     </testfile>
+     -->
+   </phpunit.run>
+   <fail>
+     <condition>
+       <isfailure code='${phpunit.returncode}' />
+     </condition>
+   </fail>
+ </target>
+ <target name='format.testlog'>
+  <format.testlog />
+ </target>
+</project>
