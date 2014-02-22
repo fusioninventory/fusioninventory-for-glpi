@@ -1,4 +1,4 @@
 composer.lock
 tools/composer.cache
-vendor
+./vendor
 save.sql
