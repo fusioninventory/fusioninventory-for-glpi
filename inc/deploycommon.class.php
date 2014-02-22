@@ -147,7 +147,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      }
 
                      $pfSearch = new PluginFusioninventorySearch();
-                     Search::manageGetValues('Computer');
+                     Search::manageParams('Computer');
                      $glpilist_limit = $_SESSION['glpilist_limit'];
                      $_SESSION['glpilist_limit'] = 999999999;
                      $result = $pfSearch->constructSQL('Computer',
