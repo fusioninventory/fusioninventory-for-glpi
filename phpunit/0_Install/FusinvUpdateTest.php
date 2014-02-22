@@ -120,7 +120,7 @@ class UpdateTest extends RestoreDatabase_TestCase {
       // version, verifyConfig, nb entity rules
       return array(
          array("2.3.3", FALSE, 0),
-         array("2.1.3", FALSE, 0),
+         //array("2.1.3", FALSE, 0),
          array("0.83+2.1", TRUE, 1),
       );
    }
