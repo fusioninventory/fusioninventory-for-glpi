@@ -280,7 +280,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
                $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
                $NetworkEquipment = new NetworkEquipment();
                if($NetworkEquipment->getFromDB($device_id)) {
-                  $NetworkEquipment->check($device_id, READ);
+                  $NetworkEquipment->can($device_id, READ);
                   $a_data = $pfNetworkEquipment->find("`networkequipments_id`='".$device_id."'",
                                                       "", "1");
                   $data = current($a_data);
@@ -299,7 +299,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
                $pfPrinter = new PluginFusioninventoryPrinter();
                $Printer = new Printer();
                if($Printer->getFromDB($device_id)) {
-                  $Printer->check($device_id, READ);
+                  $Printer->can($device_id, READ);
                   $a_data = $pfPrinter->find("`printers_id`='".$device_id."'", "", "1");
                   $data = current($a_data);
                   $sysdescr = $data["sysdescr"];
