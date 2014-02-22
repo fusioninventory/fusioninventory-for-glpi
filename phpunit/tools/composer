@@ -1,3 +1,5 @@
 #!/bin/sh
 
-/usr/bin/env php ./tools/composer.src/bin/composer $@
+basedir=$(dirname ${0})
+
+/usr/bin/env php ${basedir}/composer.src/bin/composer ${@}

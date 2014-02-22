@@ -40,13 +40,16 @@
    ------------------------------------------------------------------------
  */
 
-class NetworkEquipmentTransformation extends PHPUnit_Framework_TestCase {
-   
-   public function testConvertXMLtoArray1() {
+class NetworkEquipmentTransformationTest extends RestoreDatabase_TestCase {
+
+   /**
+    * @test
+    */
+   public function ConvertXMLtoArray1() {
       global $DB;
 
       $DB->connect();
-      
+
       $xml_source = '<?xml version="1.0"?>
 <REQUEST>
 <CONTENT>
@@ -86,17 +89,17 @@ class NetworkEquipmentTransformation extends PHPUnit_Framework_TestCase {
               <NUMBER>160</NUMBER>
             </VLAN>
           </VLANS>
-        </PORT>  
+        </PORT>
       </PORTS>
    </DEVICE>
 </CONTENT>
 </REQUEST>';
-      
+
       $xml = simplexml_load_string($xml_source, 'SimpleXMLElement', LIBXML_NOCDATA);
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $a_return = $pfFormatconvert->XMLtoArray($xml);
-      
+
       $a_reference = array(
           'CONTENT' => array(
           'DEVICE' => array(
@@ -146,17 +149,20 @@ class NetworkEquipmentTransformation extends PHPUnit_Framework_TestCase {
               )
               )
       );
-      
+
       $this->assertEquals($a_reference, $a_return);
    }
 
-   
-   
-   public function testConvertXMLtoArrayAggregatePort() {
+
+
+   /**
+    * @test
+    */
+   public function ConvertXMLtoArrayAggregatePort() {
       global $DB;
 
       $DB->connect();
-      
+
       $xml_source = '<?xml version="1.0"?>
 <REQUEST>
 <CONTENT>
@@ -202,12 +208,12 @@ class NetworkEquipmentTransformation extends PHPUnit_Framework_TestCase {
    </DEVICE>
 </CONTENT>
 </REQUEST>';
-      
+
       $xml = simplexml_load_string($xml_source, 'SimpleXMLElement', LIBXML_NOCDATA);
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $a_return = $pfFormatconvert->XMLtoArray($xml);
-      
+
       $a_reference = array(
           'CONTENT' => array(
           'DEVICE' => array(
@@ -254,18 +260,21 @@ class NetworkEquipmentTransformation extends PHPUnit_Framework_TestCase {
               )
               )
       );
-      
+
       $this->assertEquals($a_reference, $a_return);
    }
 
-   
-   
-   
-   public function testConvertXMLtoArrayMultiVlan() {
+
+
+
+   /**
+    * @test
+    */
+   public function ConvertXMLtoArrayMultiVlan() {
       global $DB;
 
       $DB->connect();
-      
+
       $xml_source = '<?xml version="1.0"?>
 <REQUEST>
 <CONTENT>
@@ -294,17 +303,17 @@ class NetworkEquipmentTransformation extends PHPUnit_Framework_TestCase {
               <NUMBER>161</NUMBER>
             </VLAN>
           </VLANS>
-        </PORT>  
+        </PORT>
       </PORTS>
    </DEVICE>
 </CONTENT>
 </REQUEST>';
-      
+
       $xml = simplexml_load_string($xml_source, 'SimpleXMLElement', LIBXML_NOCDATA);
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $a_return = $pfFormatconvert->XMLtoArray($xml);
-      
+
       $a_reference = array(
           'CONTENT' => array(
           'DEVICE' => array(
@@ -343,17 +352,20 @@ class NetworkEquipmentTransformation extends PHPUnit_Framework_TestCase {
               )
               )
       );
-      
+
       $this->assertEquals($a_reference, $a_return);
    }
-   
-   
-   
-   public function testNetworkEquipmentGeneral() {
+
+
+
+   /**
+    * @test
+    */
+   public function NetworkEquipmentGeneral() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_inventory = array();
@@ -378,9 +390,9 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
                 'OTHERSERIAL'    => 'SW003',
                 'MANUFACTURER'   => 'Cisco'
             );
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->networkequipmentInventoryTransformation($a_inventory);
       $date = date('Y-m-d H:i:s');
       if (isset($a_return['PluginFusioninventoryNetworkEquipment'])
@@ -415,22 +427,25 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
                'otherserial'                    => 'SW003',
                'manufacturers_id'               => 'Cisco',
                'is_dynamic'                     => 1
-          
+
       );
-      $this->assertEquals($a_reference, $a_return);      
-      
+      $this->assertEquals($a_reference, $a_return);
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
-   }   
-   
-   
-   
-   public function testNetworkEquipmentConnectionMac() {
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function NetworkEquipmentConnectionMac() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_inventory = array();
@@ -473,46 +488,31 @@ Compiled Sat 07-Aug-10 22:45 by prod_rel_team',
           'IFTYPE'   => 6,
           'MAC'      => 'b4:39:d6:3a:7f:3e'
       );
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->networkequipmentInventoryTransformation($a_inventory);
 
       $a_reference = array(
                '00:0f:fe:0d:30:70'
-          
+
       );
-      $this->assertEquals($a_reference, $a_return['connection-mac'][1]); 
-      
-      
+      $this->assertEquals($a_reference, $a_return['connection-mac'][1]);
+
+
       $a_reference = array();
       $a_reference = array(
                '00:0f:fe:0d:30:76',
                '00:0f:fe:0d:30:77',
                '00:0f:fe:0d:30:78'
-          
+
       );
-      $this->assertEquals($a_reference, $a_return['connection-mac'][2]);      
-      
+      $this->assertEquals($a_reference, $a_return['connection-mac'][2]);
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
-   } 
-    
-}
-
-
-
-class NetworkEquipmentTransformation_AllTests  {
-
-   public static function suite() {
-
-//      $Install = new Install();
-//      $Install->testInstall(0);
-      
-      $suite = new PHPUnit_Framework_TestSuite('NetworkEquipmentTransformation');
-      return $suite;
    }
-}
 
+}
 ?>

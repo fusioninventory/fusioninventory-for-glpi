@@ -40,43 +40,43 @@
    ------------------------------------------------------------------------
  */
 
-class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
-   
-  
+class SoftwareEntityCreationTest extends Common_TestCase {
+
+
       /*
       Tests: Add computer in entity 1
-       
+
        * (step1: new install) entities_id_software = -2 (current entity)
-       
+
             * add pc1 => Software in entity 1
-      
+
        * (step2: new install) entities_id_software = 0 (root entity)
-       
+
             * add pc1 => Software in entity 0
 
        * (step3: current install) entities_id_software = -2 (current entity)
-       
-            * delete pc1   
+
+            * delete pc1
             * add pc1 with same softwares => Software duplucate (name) in entity 1
-      
+
       */
-      
-   
-   public function testAddComputerStep1() {
+
+
+   /**
+    * @test
+    */
+   public function AddComputerStep1() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
-      
-      $GLPIlog = new GLPIlogs();
-      
-      $DB->query("INSERT INTO `glpi_entities` 
-         (`id`, `name`, `entities_id`, `completename`, `level`) 
+
+      self::restore_database();
+
+      $DB->query("INSERT INTO `glpi_entities`
+         (`id`, `name`, `entities_id`, `completename`, `level`)
          VALUES (1, 'entity1', 0, 'Entité racine > entity1', 2)");
-      
-    
+
+
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
@@ -84,7 +84,7 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
       $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
       $computer = new Computer();
       $software = new Software();
-      
+
       $a_inventory = array();
       $a_inventory['CONTENT']['HARDWARE'] = array(
           'NAME' => 'pc1'
@@ -94,7 +94,7 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
           'NAME'     => "curl",
           'VERSION'  => "7.24.0_1"
           );
-      
+
       // * Add rule ignore
          $rule = new Rule();
          $ruleCriteria = new RuleCriteria();
@@ -105,7 +105,7 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
          $input['name']       = 'pc1';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
-         $rules_id = $rule->add($input); 
+         $rules_id = $rule->add($input);
 
          $input = array();
          $input['rules_id']   = $rules_id;
@@ -119,7 +119,7 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
          $input['action_type']   = 'assign';
          $input['field']         = 'entities_id';
          $input['value']         = 1;
-         $ruleAction->add($input);  
+         $ruleAction->add($input);
 
       // ** Add agent
          $pfAgent = new PluginFusioninventoryAgent();
@@ -130,41 +130,37 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
       // ** Add
          $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
 
-         $GLPIlog->testSQLlogs();
-         $GLPIlog->testPHPlogs();
-
          $computer->getFromDB(1);
          $this->assertEquals(1, $computer->fields['entities_id'], 'Add computer');
-         
+
          $software->getFromDB(1);
          $this->assertEquals(1, $software->fields['entities_id'], 'Add computer');
-         
-   }   
 
-   
-   
-   public function testAddComputerStep2() {
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function AddComputerStep2() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
-      
-      $GLPIlog = new GLPIlogs();
-      
-      $DB->query("INSERT INTO `glpi_entities` 
-         (`id`, `name`, `entities_id`, `completename`, `level`, `entities_id_software`) 
-         VALUES (1, 'entity1', 0, 'Entité racine > entity1', 2, 0)");
-      
-    
+
+
+      $DB->query("UPDATE `glpi_entities`
+         SET `entities_id_software` = '0'
+         WHERE `id`='1'");
+
+
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
       $_SESSION['glpiname'] = 'glpi';
       $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
       $computer = new Computer();
-      
+
       $a_inventory = array();
       $a_inventory['CONTENT']['HARDWARE'] = array(
           'NAME' => 'pc1'
@@ -174,7 +170,7 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
           'NAME'     => "curl",
           'VERSION'  => "7.24.0_1"
           );
-      
+
       // * Add rule ignore
          $rule = new Rule();
          $ruleCriteria = new RuleCriteria();
@@ -185,7 +181,7 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
          $input['name']       = 'pc1';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
-         $rules_id = $rule->add($input); 
+         $rules_id = $rule->add($input);
 
          $input = array();
          $input['rules_id']   = $rules_id;
@@ -199,7 +195,7 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
          $input['action_type']   = 'assign';
          $input['field']         = 'entities_id';
          $input['value']         = 1;
-         $ruleAction->add($input);  
+         $ruleAction->add($input);
 
       // ** Add agent
          $pfAgent = new PluginFusioninventoryAgent();
@@ -210,27 +206,25 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
       // ** Add
          $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
 
-         $GLPIlog->testSQLlogs();
-         $GLPIlog->testPHPlogs();
-
          $computer->getFromDB(1);
          $this->assertEquals(1, $computer->fields['entities_id'], 'Add computer');
-         
-   }   
 
-   
-   
-   public function testAddComputerStep3() {
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function AddComputerStep3() {
       global $DB;
 
       $DB->connect();
-      
-      $GLPIlog = new GLPIlogs();
-      
-      $DB->query("UPDATE `glpi_entities` 
-         SET `entities_id_software` = '-2' 
+
+      $DB->query("UPDATE `glpi_entities`
+         SET `entities_id_software` = '-2'
          WHERE `id`='1'");
-      
+
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
@@ -240,7 +234,7 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
       $software = new Software();
 
       $computer->add(array('name' => 'pc2', 'entities_id' => 1));
-      
+
       $a_inventory = array();
       $a_inventory['CONTENT']['HARDWARE'] = array(
           'NAME' => 'pc2'
@@ -260,33 +254,21 @@ class SoftwareEntityCreation extends PHPUnit_Framework_TestCase {
       // ** Add
          $pfiComputerInv->import("pc2-2013-02-13", "", $a_inventory); // creation
 
-         $GLPIlog->testSQLlogs();
-         $GLPIlog->testPHPlogs();
-
          $computer->getFromDB(2);
          $this->assertEquals(1, $computer->fields['entities_id'], 'Add computer');
-         
+
          $nbSoftwares = countElementsInTable("glpi_softwares");
          $this->assertEquals(2, $nbSoftwares, 'Nb softwares');
-         
+
          $software->getFromDB(2);
-         $this->assertEquals(1, $software->fields['entities_id'], 'Entity software of pc2');
-            
-        
-   }   
- }
+         $this->assertEquals(1, $software->fields['entities_id'],
+            " The tested software must be in the entity1 (ID 1) since Root entity default\n".
+            "configuration should not change entity (cf. entity.class.php and search for\n".
+            "CONFIG_NEVER -10).\n".
+            " This is most likely a GLPI framework related bug and should be reported\n".
+            "to the GLPI team.\n"
+         );
 
-
-
-class SoftwareEntityCreation_AllTests  {
-
-   public static function suite() {
-
- 
-     
-      $suite = new PHPUnit_Framework_TestSuite('SoftwareEntityCreation');
-      return $suite;
    }
 }
-
 ?>

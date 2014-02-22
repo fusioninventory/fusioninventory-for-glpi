@@ -40,34 +40,33 @@
    ------------------------------------------------------------------------
  */
 
-class ComputerUpdate extends PHPUnit_Framework_TestCase {
-   
+class ComputerUpdateTest extends RestoreDatabase_TestCase {
+
    public $items_id = 0;
    public $datelatupdate = '';
 
-   
-   public function testAddComputer() {
+   /**
+    * @test
+    */
+   public function AddComputer() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
-      
+
       $date = date('Y-m-d H:i:s');
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
-      
+
       $a_inventory = array(
           'fusioninventorycomputer' => Array(
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
               'last_fusioninventory_update'     => $date
-          ), 
+          ),
           'soundcard'      => array(),
           'graphiccard'    => array(),
           'controller'     => array(),
@@ -105,7 +104,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'is_dynamic'                       => 1,
           'contact'                          => 'ddurieux'
       );
-      
+
       $a_inventory['processor'] = Array(
             Array(
                     'manufacturers_id'  => 'Intel Corporation',
@@ -180,15 +179,15 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'manufacturers_id'  => 'Lenovo'
                 )
       );
-      
+
       $a_inventory['printer'] = Array(
             Array(
                     'name'      => 'HP Deskjet 5700 Series',
                     'serial'    => 'MY47L1W1JHEB6',
                     'have_usb'  => 1
                 )
-      );   
-      
+      );
+
       $a_inventory['networkport'] = Array(
             'em0-00:23:18:cf:0d:93' => Array(
                     'name'                 => 'em0',
@@ -217,7 +216,7 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'ipaddress'            => Array('::1', 'fe80::1', '127.0.0.1')
                 )
         );
-      
+
       $a_inventory['software'] = Array(
             'gentiumbasic$$$$110$$$$1$$$$0' => Array(
                     'name'                   => 'GentiumBasic',
@@ -248,13 +247,13 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
       $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
-      
+
       $a_inventory = $pfFormatconvert->replaceids($a_inventory);
-  
+
       $serialized = gzcompress(serialize($a_inventory));
-      $a_inventory['fusioninventorycomputer']['serialized_inventory'] = 
+      $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
-      
+
       $this->items_id = $computer->add(array('serial'      => 'XB63J7D',
                                              'entities_id' => 0));
 
@@ -263,20 +262,23 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
 
       // To be sure not have 2 same informations
       $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
-   
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
-   
-   
-   public function testComputerGeneral() {
+
+
+   /**
+    * @test
+    */
+   public function ComputerGeneral() {
       global $DB;
 
       $DB->connect();
-      
+
       $computer = new Computer();
-      
+
       $computer->getFromDB(1);
       unset($computer->fields['date_mod']);
       $a_reference = array(
@@ -312,17 +314,20 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'ticket_tco'                       => '0.0000',
           'uuid'                             => '68405E00-E5BE-11DF-801C-B05981201220'
       );
-      
-      $this->assertEquals($a_reference, $computer->fields);      
-   }   
-   
 
-   
-   public function testComputerExtension() {
+      $this->assertEquals($a_reference, $computer->fields);
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerExtension() {
       global $DB;
 
       $DB->connect();
-      
+
       $pfiComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
       $a_computer = current($pfiComputerComputer->find("`computers_id`='1'", "", 1));
       unset($a_computer['last_fusioninventory_update']);
@@ -341,34 +346,40 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'remote_addr'                               => NULL,
           'plugin_fusioninventory_computerarchs_id'   => 0
       );
-      
-      $this->assertEquals($a_reference, $a_computer);      
-      
-      $this->assertNotEquals(NULL, $serialized_inventory);      
-      
-   }  
-   
 
-   
-   public function testSoftwareadded() {
-      global $DB;
+      $this->assertEquals($a_reference, $a_computer);
 
-      $DB->connect();
-      
-      $nbsoftware = countElementsInTable("glpi_softwares");
-      
-      $this->assertEquals(3, $nbsoftware);   
+      $this->assertNotEquals(NULL, $serialized_inventory);
+
    }
-   
-   
-      
-   public function testSoftwareGentiumBasicadded() {
+
+
+
+   /**
+    * @test
+    */
+   public function Softwareadded() {
       global $DB;
 
       $DB->connect();
-      
+
+      $nbsoftware = countElementsInTable("glpi_softwares");
+
+      $this->assertEquals(3, $nbsoftware);
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function SoftwareGentiumBasicadded() {
+      global $DB;
+
+      $DB->connect();
+
       $software = new Software();
-            
+
       $software->getFromDB(1);
       unset($software->fields['date_mod']);
       $a_reference = array(
@@ -393,19 +404,22 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'softwarecategories_id'   => '0',
           'valid'                   => '1',
       );
-      
-      $this->assertEquals($a_reference, $software->fields);
-   } 
 
-   
-   
-   public function testSoftwareImageMagickadded() {
+      $this->assertEquals($a_reference, $software->fields);
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function SoftwareImageMagickadded() {
       global $DB;
 
       $DB->connect();
-      
+
       $software = new Software();
-      
+
       $software->getFromDB(2);
       unset($software->fields['date_mod']);
       $a_reference = array(
@@ -430,19 +444,22 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'softwarecategories_id'   => '0',
           'valid'                   => '1',
       );
-      
+
       $this->assertEquals($a_reference, $software->fields);
    }
-    
-   
-   
-   public function testSoftwareORBit2added() {
+
+
+
+   /**
+    * @test
+    */
+   public function SoftwareORBit2added() {
       global $DB;
 
       $DB->connect();
-      
+
       $software = new Software();
-      
+
       $software->getFromDB(3);
       unset($software->fields['date_mod']);
       $a_reference = array(
@@ -467,19 +484,22 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'softwarecategories_id'   => '0',
           'valid'                   => '1',
       );
-      
+
       $this->assertEquals($a_reference, $software->fields);
    }
-      
-   
-   
-   public function testSoftwareVersionGentiumBasicadded() {
+
+
+
+   /**
+    * @test
+    */
+   public function SoftwareVersionGentiumBasicadded() {
       global $DB;
 
       $DB->connect();
-      
+
       $softwareVersion = new SoftwareVersion();
-            
+
       $softwareVersion->getFromDB(1);
       unset($softwareVersion->fields['date_mod']);
       $a_reference = array(
@@ -492,19 +512,22 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'comment'              => NULL,
           'operatingsystems_id'  => '0'
       );
-      
+
       $this->assertEquals($a_reference, $softwareVersion->fields);
-   } 
-      
-   
-   
-   public function testSoftwareVersionImageMagickadded() {
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function SoftwareVersionImageMagickadded() {
       global $DB;
 
       $DB->connect();
-      
+
       $softwareVersion = new SoftwareVersion();
-            
+
       $softwareVersion->getFromDB(2);
       unset($softwareVersion->fields['date_mod']);
       $a_reference = array(
@@ -517,19 +540,22 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'comment'              => NULL,
           'operatingsystems_id'  => '0'
       );
-      
+
       $this->assertEquals($a_reference, $softwareVersion->fields);
-   } 
-      
-   
-   
-   public function testSoftwareVersionORBit2added() {
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function SoftwareVersionORBit2added() {
       global $DB;
 
       $DB->connect();
-      
+
       $softwareVersion = new SoftwareVersion();
-            
+
       $softwareVersion->getFromDB(3);
       unset($softwareVersion->fields['date_mod']);
       $a_reference = array(
@@ -542,21 +568,24 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'comment'              => NULL,
           'operatingsystems_id'  => '0'
       );
-      
+
       $this->assertEquals($a_reference, $softwareVersion->fields);
    }
-   
 
-   
-   public function testComputerSoftwareGentiumBasic() {
+
+
+   /**
+    * @test
+    */
+   public function ComputerSoftwareGentiumBasic() {
       global $DB;
 
       $DB->connect();
-                  
+
       $computer_SoftwareVersion = new Computer_SoftwareVersion();
-            
+
       $computer_SoftwareVersion->getFromDB(1);
-      
+
       $a_reference = array(
           'id'                   => '1',
           'computers_id'         => '1',
@@ -567,21 +596,24 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'is_deleted'           => '0',
           'is_dynamic'           => '1'
       );
-      
-      $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);      
-   }
-   
 
-   
-   public function testComputerSoftwareImageMagick() {
+      $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerSoftwareImageMagick() {
       global $DB;
 
       $DB->connect();
-                  
+
       $computer_SoftwareVersion = new Computer_SoftwareVersion();
-            
+
       $computer_SoftwareVersion->getFromDB(2);
-      
+
       $a_reference = array(
           'id'                   => '2',
           'computers_id'         => '1',
@@ -592,21 +624,24 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'is_deleted'           => '0',
           'is_dynamic'           => '1'
       );
-      
-      $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);      
-   }
-   
 
-   
-   public function testComputerSoftwareORBit2() {
+      $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerSoftwareORBit2() {
       global $DB;
 
       $DB->connect();
-                  
+
       $computer_SoftwareVersion = new Computer_SoftwareVersion();
-            
+
       $computer_SoftwareVersion->getFromDB(3);
-      
+
       $a_reference = array(
           'id'                   => '3',
           'computers_id'         => '1',
@@ -617,17 +652,20 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'is_deleted'           => '0',
           'is_dynamic'           => '1'
       );
-      
-      $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);      
+
+      $this->assertEquals($a_reference, $computer_SoftwareVersion->fields);
    }
-   
-   
-   
-   public function testComputerProcessor() {
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerProcessor() {
       global $DB;
 
       $DB->connect();
-      
+
       $a_data = getAllDatasFromTable("glpi_deviceprocessors");
       $a_reference = array(
           '1' => array(
@@ -655,20 +693,23 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'is_recursive'       => '0'
                  )
       );
-      $this->assertEquals($a_reference, $a_data);  
+      $this->assertEquals($a_reference, $a_data);
    }
-   
-   
-   
-   public function testComputerProcessorLink() {
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerProcessorLink() {
       global $DB;
 
       $DB->connect();
 
-      $a_dataLink = getAllDatasFromTable("glpi_items_deviceprocessors", 
+      $a_dataLink = getAllDatasFromTable("glpi_items_deviceprocessors",
                                          "`itemtype`='Computer'
                                             AND `items_id`='1'");
-      
+
       $a_reference = array(
           '1' => array(
                      'id'                    => '1',
@@ -731,17 +772,20 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'busID'                 => NULL
                  )
       );
-      
-      $this->assertEquals($a_reference, $a_dataLink);      
+
+      $this->assertEquals($a_reference, $a_dataLink);
    }
-   
-   
-   
-   public function testComputerMemory() {
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerMemory() {
       global $DB;
 
       $DB->connect();
-      
+
       $a_data = getAllDatasFromTable("glpi_devicememories");
       $a_reference = array(
           '1' => array(
@@ -767,20 +811,23 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'is_recursive'          => '0',
                  )
       );
-      $this->assertEquals($a_reference, $a_data);      
+      $this->assertEquals($a_reference, $a_data);
    }
-   
-   
-   
-   public function testComputerMemoryLink() {
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerMemoryLink() {
       global $DB;
 
       $DB->connect();
 
-      $a_dataLink = getAllDatasFromTable("glpi_items_devicememories", 
+      $a_dataLink = getAllDatasFromTable("glpi_items_devicememories",
                                          "`itemtype`='Computer'
                                             AND `items_id`='1'");
-      
+
       $a_reference = array(
           '1' => array(
                      'id'                    => '1',
@@ -835,21 +882,24 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'busID'                 => NULL
                  )
       );
-      
-      $this->assertEquals($a_reference, $a_dataLink);      
+
+      $this->assertEquals($a_reference, $a_dataLink);
    }
-   
-   
-   
-   public function testComputerNetworkport() {
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerNetworkport() {
       global $DB;
 
       $DB->connect();
 
-      $a_dataLink = getAllDatasFromTable("glpi_networkports", 
+      $a_dataLink = getAllDatasFromTable("glpi_networkports",
                                          "`itemtype`='Computer'
                                             AND `items_id`='1'");
-      
+
       $a_reference = array(
           '1' => array(
                      'id'                    => '1',
@@ -881,30 +931,33 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                      'comment'               => NULL
                  )
       );
-      
-      $this->assertEquals($a_reference, $a_dataLink);      
+
+      $this->assertEquals($a_reference, $a_dataLink);
    }
-   
-   
-   
-   public function testComputerMonitor() {
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerMonitor() {
       global $DB;
 
       $DB->connect();
 
-      $a_dataLink = getAllDatasFromTable("glpi_computers_items", 
+      $a_dataLink = getAllDatasFromTable("glpi_computers_items",
                                          "`itemtype`='Monitor'
                                             AND `computers_id`='1'");
-      
+
       $this->assertEquals(1, count($a_dataLink), "Number of monitors not right");
-      
+
       $a_dataLink = current($a_dataLink);
-      
+
       $monitor = new Monitor();
       $monitor->getFromDB($a_dataLink['items_id']);
-      
+
       unset($monitor->fields['date_mod']);
-      
+
       $a_reference = array(
           'id'                => '1',
           'entities_id'       => '0',
@@ -939,30 +992,33 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'ticket_tco'        => '0.0000',
           'is_dynamic'        => '0',
       );
-      
-      $this->assertEquals($a_reference, $monitor->fields);      
+
+      $this->assertEquals($a_reference, $monitor->fields);
    }
-   
-   
-   
-   public function testComputerPrinter() {
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerPrinter() {
       global $DB;
 
       $DB->connect();
 
-      $a_dataLink = getAllDatasFromTable("glpi_computers_items", 
+      $a_dataLink = getAllDatasFromTable("glpi_computers_items",
                                          "`itemtype`='Printer'
                                             AND `computers_id`='1'");
-      
+
       $this->assertEquals(1, count($a_dataLink), "Number of printers not right");
-      
+
       $a_dataLink = current($a_dataLink);
-      
+
       $printer = new Printer();
       $printer->getFromDB($a_dataLink['items_id']);
-      
+
       unset($printer->fields['date_mod']);
-      
+
       $a_reference = array(
           'id'                   => '1',
           'entities_id'          => '0',
@@ -999,31 +1055,34 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
           'ticket_tco'           => '0.0000',
           'is_dynamic'           => '0',
       );
-      
-      $this->assertEquals($a_reference, $printer->fields);      
+
+      $this->assertEquals($a_reference, $printer->fields);
    }
-   
-   
-   
-   public function testSoftwareUniqueForTwoComputers() {
+
+
+
+   /**
+    * @test
+    */
+   public function SoftwareUniqueForTwoComputers() {
       global $DB;
 
       $DB->connect();
 
       $date = date('Y-m-d H:i:s');
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
 
-      
+
       $a_inventory = array(
           'fusioninventorycomputer' => Array(
               'winowner'                        => 'test',
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
               'last_fusioninventory_update'     => $date
-          ), 
+          ),
           'soundcard'      => array(),
           'graphiccard'    => array(),
           'controller'     => array(),
@@ -1071,45 +1130,34 @@ class ComputerUpdate extends PHPUnit_Framework_TestCase {
                     'is_deleted_computer'    => 0
                 )
           );
-      
+
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
       $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
       $software         = new Software();
-      
+
       $a_inventory = $pfFormatconvert->replaceids($a_inventory);
-      
+
       $serialized = gzcompress(serialize($a_inventory));
-      $a_inventory['fusioninventorycomputer']['serialized_inventory'] = 
+      $a_inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
-      
+
       $this->items_id = $computer->add(array('serial'      => 'XB63J7J1',
                                              'entities_id' => 0));
 
       $_SESSION['glpiactive_entity'] = 0;
       $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
-      
+
       $a_software = $software->find("`name`='acrobat_Reader_9.2'");
       $this->assertEquals(1, count($a_software), "First computer added");
-      
+
       $a_inventory['Computer']['name'] = "pcJ2";
       $a_inventory['Computer']['serial'] = "XB63J7J2";
       $pfiComputerLib->updateComputer($a_inventory, $this->items_id, FALSE);
-      
+
       $a_software = $software->find("`name`='acrobat_Reader_9.2'");
       $this->assertEquals(1, count($a_software), "Second computer added");
    }
  }
-
-
-
-class ComputerUpdate_AllTests  {
-
-   public static function suite() {
-
-      $suite = new PHPUnit_Framework_TestSuite('ComputerUpdate');
-      return $suite;
-   }
-}
 
 ?>

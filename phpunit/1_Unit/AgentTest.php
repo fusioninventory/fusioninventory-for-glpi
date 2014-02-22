@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-class AgentTest extends BaseTestCase {
+class AgentTest extends RestoreDatabase_TestCase {
 
 
    /**

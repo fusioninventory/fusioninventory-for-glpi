@@ -40,12 +40,12 @@
    ------------------------------------------------------------------------
  */
 
-class ComputerPeripheral extends PHPUnit_Framework_TestCase {
+class ComputerPeripheral extends RestoreDatabase_TestCase {
    public $a_computer1_XML = array();
-   
+
    function __construct() {
 
-      $this->a_computer1_XML = 
+      $this->a_computer1_XML =
 "<REQUEST>
    <CONTENT>
     <HARDWARE>
@@ -136,52 +136,53 @@ class ComputerPeripheral extends PHPUnit_Framework_TestCase {
 </REQUEST>";
 
    }
-   
-   
+
+
    // Import Peripheral of computer with each options:
    //   * 1 = Global import
    //   * 2 = Unique import
    //   * 3 = Unique import on serial number
-   
-   
-   public function testPeripheralGlobalimport() {
+
+   /**
+    * TODO: use dataProvider here.
+    */
+
+   /**
+    * @test
+    */
+   public function PeripheralGlobalimport() {
       global $DB, $PLUGIN_FUSIONINVENTORY_XML;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
+
+      self::restore_database();
 
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      
+
       $pfConfig         = new PluginFusioninventoryConfig();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
-      $GLPIlog          = new GLPIlogs();
-      
+
       $pfConfig->updateValue('import_peripheral', 1);
       PluginFusioninventoryConfig::loadCache();
 
       $pxml = @simplexml_load_string($this->a_computer1_XML, 'SimpleXMLElement', LIBXML_NOCDATA);
-      
+
       $arrayinventory = PluginFusioninventoryFormatconvert::XMLtoArray($pxml);
-      
+
       $agent = new PluginFusioninventoryAgent();
       $agents_id = $agent->importToken($arrayinventory);
       $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
 
       $pfInventoryComputerInventory = new PluginFusioninventoryInventoryComputerInventory();
-      $pfInventoryComputerInventory->import('deviceid', 
+      $pfInventoryComputerInventory->import('deviceid',
                                             $arrayinventory['CONTENT'],
                                             $arrayinventory);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
-     
+
       $a_ref = array(
           1 => array(
               'name'                => 'Intel(R) Centrino(R) Wireless Bluetooth(R) 4.0 + High Speed Adapter',
@@ -345,7 +346,7 @@ class ComputerPeripheral extends PHPUnit_Framework_TestCase {
          );
          $a_db_peripherals[$id] = $data_temp;
       }
-      
+
       $this->assertEquals($a_ref, $a_db_peripherals, 'List of peripherals');
 
       // Update computer and may not have new values in glpi_logs
@@ -355,58 +356,53 @@ class ComputerPeripheral extends PHPUnit_Framework_TestCase {
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
       $last_id = $data['id'];
-      $pfInventoryComputerInventory->import('deviceid', 
+      $pfInventoryComputerInventory->import('deviceid',
                                             $arrayinventory['CONTENT'],
                                             $arrayinventory);
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
-      
       $data = getAllDatasFromTable('glpi_logs', "`id`>'".$last_id."'");
       $this->assertEquals(array(), $data, 'On update peripherals, may not have new lines in glpi_logs');
-      
-   }   
-   
-   
-   
-   public function testPeripheralUniqueimport() {
+
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function PeripheralUniqueimport() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
+
+      self::restore_database();
 
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      
+
       $pfConfig         = new PluginFusioninventoryConfig();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
-      $GLPIlog          = new GLPIlogs();
-      
+
       $pfConfig->updateValue('import_peripheral', 2);
       PluginFusioninventoryConfig::loadCache();
 
       $pxml = @simplexml_load_string($this->a_computer1_XML, 'SimpleXMLElement', LIBXML_NOCDATA);
-      
+
       $arrayinventory = PluginFusioninventoryFormatconvert::XMLtoArray($pxml);
-      
+
       $agent = new PluginFusioninventoryAgent();
       $agents_id = $agent->importToken($arrayinventory);
       $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
 
       $pfInventoryComputerInventory = new PluginFusioninventoryInventoryComputerInventory();
-      $pfInventoryComputerInventory->import('deviceid', 
+      $pfInventoryComputerInventory->import('deviceid',
                                             $arrayinventory['CONTENT'],
                                             $arrayinventory);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
-     
+
       $a_ref = array(
           1 => array(
               'name'                => 'Intel(R) Centrino(R) Wireless Bluetooth(R) 4.0 + High Speed Adapter',
@@ -606,7 +602,7 @@ class ComputerPeripheral extends PHPUnit_Framework_TestCase {
          );
          $a_db_peripherals[$id] = $data_temp;
       }
-      
+
       $this->assertEquals($a_ref, $a_db_peripherals, 'List of peripherals');
 
       // Update computer and may not have new values in glpi_logs
@@ -616,58 +612,53 @@ class ComputerPeripheral extends PHPUnit_Framework_TestCase {
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
       $last_id = $data['id'];
-      $pfInventoryComputerInventory->import('deviceid', 
+      $pfInventoryComputerInventory->import('deviceid',
                                             $arrayinventory['CONTENT'],
                                             $arrayinventory);
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
-      
       $data = getAllDatasFromTable('glpi_logs', "`id`>'".$last_id."'");
       $this->assertEquals(array(), $data, 'On update peripherals, may not have new lines in glpi_logs'.print_r($data, true));
-      
+
    }
-   
-  
-   
-   public function testPeripheralUniqueSerialimport() {
+
+
+
+   /**
+    * @test
+    */
+   public function PeripheralUniqueSerialimport() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
 
+      self::restore_database();
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      
+
       $pfConfig         = new PluginFusioninventoryConfig();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
       $GLPIlog          = new GLPIlogs();
-      
+
       $pfConfig->updateValue('import_peripheral', 3);
       PluginFusioninventoryConfig::loadCache();
-      
+
       $pxml = @simplexml_load_string($this->a_computer1_XML, 'SimpleXMLElement', LIBXML_NOCDATA);
-      
+
       $arrayinventory = PluginFusioninventoryFormatconvert::XMLtoArray($pxml);
-      
+
       $agent = new PluginFusioninventoryAgent();
       $agents_id = $agent->importToken($arrayinventory);
       $_SESSION['plugin_fusioninventory_agents_id'] = $agents_id;
 
       $pfInventoryComputerInventory = new PluginFusioninventoryInventoryComputerInventory();
-      $pfInventoryComputerInventory->import('deviceid', 
+      $pfInventoryComputerInventory->import('deviceid',
                                             $arrayinventory['CONTENT'],
                                             $arrayinventory);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
-     
+
       $a_ref = array(
           1 => array(
               'name' => 'Périphérique USB composite',
@@ -723,7 +714,7 @@ class ComputerPeripheral extends PHPUnit_Framework_TestCase {
          );
          $a_db_peripherals[$id] = $data_temp;
       }
-      
+
       $this->assertEquals($a_ref, $a_db_peripherals, 'List of peripherals');
 
       // Update computer and may not have new values in glpi_logs
@@ -733,28 +724,13 @@ class ComputerPeripheral extends PHPUnit_Framework_TestCase {
       $result = $DB->query($query);
       $data = $DB->fetch_assoc($result);
       $last_id = $data['id'];
-      $pfInventoryComputerInventory->import('deviceid', 
+      $pfInventoryComputerInventory->import('deviceid',
                                             $arrayinventory['CONTENT'],
                                             $arrayinventory);
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
-      
       $data = getAllDatasFromTable('glpi_logs', "`id`>'".$last_id."'");
       $this->assertEquals(array(), $data, 'On update peripherals, may not have new lines in glpi_logs');
-      
+
    }
 }
-
-
-
-class ComputerPeripheral_AllTests  {
-
-   public static function suite() {
-     
-      $suite = new PHPUnit_Framework_TestSuite('ComputerPeripheral');
-      return $suite;
-   }
-}
-
 ?>

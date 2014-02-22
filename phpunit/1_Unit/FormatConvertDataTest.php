@@ -40,14 +40,17 @@
    ------------------------------------------------------------------------
  */
 
-class FormatConvertData extends PHPUnit_Framework_TestCase {
-   
-   
-   public function testJsontoArray() {
+class FormatConvertDataTest extends RestoreDatabase_TestCase {
+
+
+   /**
+    * @test
+    */
+   public function JsontoArray() {
       global $DB;
 
       $DB->connect();
-      
+
       $a_inventory['hardware'] = array(
           "dns"                  => "10.0.5.105",
           "userid"               => "root/goneri",
@@ -73,11 +76,11 @@ class FormatConvertData extends PHPUnit_Framework_TestCase {
           "processorn"           => 1,
           "datelastloggeduser"   => "Wed Mar 30 19:29"
       );
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->JSONtoArray(json_encode($a_inventory));
-      
+
       $a_reference['HARDWARE'] = array(
           'ARCHNAME'             => 'x86_64-linux-gnu-thread-multi',
           'CHECKSUM'             => '262143',
@@ -102,22 +105,24 @@ class FormatConvertData extends PHPUnit_Framework_TestCase {
           'UUID'                 => 'AAE79880-C977-11DF-801C-B05991157081',
           'VMSYSTEM'             => 'Physical',
           'WORKGROUP'            => 'rulezlan.org'
-          
+
       );
-      $this->assertEquals($a_reference, $a_return);      
-      
+      $this->assertEquals($a_reference, $a_return);
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
-   }   
-   
-   
-   
-   public function testReplaceids() {
+   }
+
+
+   /**
+    * @test
+    */
+   public function Replaceids() {
       global $DB;
 
       $DB->connect();
-      
+
       $a_inventory['software'] = array();
       $a_inventory['Computer'] = array(
           'name'                             => 'pc',
@@ -126,10 +131,10 @@ class FormatConvertData extends PHPUnit_Framework_TestCase {
           'operatingsystems_id'              => 'freebsd',
           'operatingsystemversions_id'       => '9.1-RELEASE'
           );
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
       $a_inventory = $pfFormatconvert->replaceids($a_inventory);
-      
+
       $a_reference['software'] = array();
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
@@ -138,17 +143,20 @@ class FormatConvertData extends PHPUnit_Framework_TestCase {
           'operatingsystems_id'              => 1,
           'operatingsystemversions_id'       => 1
           );
-      
-       $this->assertEquals($a_reference, $a_inventory);      
-       
+
+       $this->assertEquals($a_reference, $a_inventory);
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
    }
-   
-   
-   
-   function testDiscoveryDeviceConvert() {
+
+
+
+   /**
+    * @test
+    */
+   function DiscoveryDeviceConvert() {
       global $DB;
 
       $DB->connect();
@@ -172,24 +180,13 @@ class FormatConvertData extends PHPUnit_Framework_TestCase {
   <QUERY>NETDISCOVERY</QUERY>
 </REQUEST>';
       $xml = @simplexml_load_string($sxml, 'SimpleXMLElement', LIBXML_NOCDATA);
-      
+
       PluginFusioninventoryFormatconvert::XMLtoArray($xml);
-      
+
       $GLPIlog = new GLPIlogs();
       $GLPIlog->testSQLlogs();
       $GLPIlog->testPHPlogs();
-      
+
    }
 }
-
-
-
-class FormatConvertData_AllTests  {
-
-   public static function suite() {
-      $suite = new PHPUnit_Framework_TestSuite('FormatConvertData');
-      return $suite;
-   }
-}
-
 ?>

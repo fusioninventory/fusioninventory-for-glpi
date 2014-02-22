@@ -40,20 +40,15 @@
    ------------------------------------------------------------------------
  */
 
-require_once("0_Install/FusinvDBTest.php");
+require_once("0_Install/FusinvDB.php");
 
-class FusinvInstallTest extends BaseTestCase {
+class FusinvInstallTest extends Common_TestCase {
 
-
-   public function should_restore_install() {
-      return FALSE;
-   }
 
    /**
     * @depends GLPIInstallTest::installDatabase
     */
    public function testInstall() {
-
 
       global $DB;
       $DB->connect();
@@ -78,17 +73,24 @@ class FusinvInstallTest extends BaseTestCase {
             }
       }
 
-      $output = shell_exec("/usr/bin/php -f ../scripts/cli_install.php 4 2>&1 1>/dev/null");
-      $this->assertNotNull($output);
-      $this->assertGreaterThan(0, strlen($output));
+      $output = array();
+      $returncode = 0;
+      exec(
+         "/usr/bin/php -f ".FUSINV_ROOT. "/scripts/cli_install.php 4",
+         $output, $returncode
+      );
+      $this->assertEquals(0,$returncode,
+         "Error when installing plugin in CLI mode\n".
+         implode("\n",$output)
+      );
 
       $FusinvDBTest = new FusinvDB();
       $FusinvDBTest->checkInstall("fusioninventory", "install new version");
 
 
-      $this->assertFileExists("../../../files/_plugins/fusioninventory/discovery.xml",
+      $this->assertFileExists(GLPI_ROOT."/files/_plugins/fusioninventory/discovery.xml",
          'Discovery file (SNMP MODELS) not created');
-      $file = file_get_contents("../../../files/_plugins/fusioninventory/discovery.xml");
+      $file = file_get_contents(GLPI_ROOT."/files/_plugins/fusioninventory/discovery.xml");
       $a_lines = explode("\n", $file);
 
       // TODO: Use assertTag or assertEqualXMLStructure in order to test the discovery.xml file

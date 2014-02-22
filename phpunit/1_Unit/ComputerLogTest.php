@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-class ComputerLog extends BaseTestCase {
+class ComputerLog extends RestoreDatabase_TestCase {
 
    private $a_inventory = array();
 
@@ -380,9 +380,6 @@ class ComputerLog extends BaseTestCase {
       $this->assertEquals($a_reference, $a_logs, "May have 3 logs (update contact, remove processor
          and remove a software)");
 
-//      $GLPIlog = new GLPIlogs();
-//      $GLPIlog->testSQLlogs();
-//      $GLPIlog->testPHPlogs();
    }
  }
 

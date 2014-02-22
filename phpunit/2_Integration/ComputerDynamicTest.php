@@ -40,26 +40,29 @@
    ------------------------------------------------------------------------
  */
 
-class ComputerDynamic extends PHPUnit_Framework_TestCase {
-   
-   
-   public function testUpdateComputerManuallyAdded() {
+class ComputerDynamic extends RestoreDatabase_TestCase {
+
+
+   /**
+    * @test
+    */
+   public function UpdateComputerManuallyAdded() {
       global $DB;
 
       $DB->connect();
-    
+
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      
+
       $pfiComputerLib  = new PluginFusioninventoryInventoryComputerLib();
       $computer = new Computer();
       $computerDisk = new ComputerDisk();
-      
+
       $a_computerinventory = array(
           "Computer" => array(
               "name"   => "pc002",
               "serial" => "ggheb7ne7"
-          ), 
+          ),
           "fusioninventorycomputer" => Array(
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
@@ -91,10 +94,10 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
           'networkcard'    => array(),
           'itemtype'       => 'Computer'
       );
-      
+
       $a_computer = $a_computerinventory['Computer'];
       $a_computer["entities_id"] = 0;
-      
+
       $computers_id = $computer->add($a_computer);
       $a_cdisk = array(
           "computers_id" => $computers_id,
@@ -103,44 +106,46 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
           "entities_id"  => 0
       );
       $computerDisk->add($a_cdisk);
-      
+
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
       $this->assertEquals(1, count($a_computerdisk), 'Right no dynamic added');
-      
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
+
+      $pfiComputerLib->updateComputer($a_computerinventory,
+                                      $computers_id,
+                                      FALSE,
                                       1);
-      
+
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
       $this->assertEquals(1, count($a_computerdisk), 'May have only 1 computerdisk');
-      
+
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
          AND `is_dynamic`='1'");
       $this->assertEquals(1, count($a_computerdisk), 'May have only 1 computerdisk and is dynamic');
-   }   
-   
-   
-   
-   public function testUpdateComputerFusioninventoryAdded() {
+   }
+
+
+   /**
+    * @test
+    */
+   public function UpdateComputerFusioninventoryAdded() {
       global $DB;
 
       $DB->connect();
-      
+
       // Add manually a computerdisk
-      
+
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      
+
       $pfiComputerLib  = new PluginFusioninventoryInventoryComputerLib();
       $computer = new Computer();
       $computerDisk = new ComputerDisk();
-      
+
       $a_computerinventory = array(
           "Computer" => array(
               "name"   => "pc002",
               "serial" => "ggheb7ne72"
-          ), 
+          ),
           "fusioninventorycomputer" => Array(
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
@@ -175,14 +180,14 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
 
       $a_computer = $a_computerinventory['Computer'];
       $a_computer["entities_id"] = 0;
-      
+
       $computers_id = $computer->add($a_computer);
-      
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
+
+      $pfiComputerLib->updateComputer($a_computerinventory,
+                                      $computers_id,
+                                      FALSE,
                                       0);
-      
+
       $a_cdisk = array(
           "computers_id" => $computers_id,
           "name"         => "D:",
@@ -193,41 +198,44 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
 
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
       $this->assertEquals(2, count($a_computerdisk), 'May have dynamic + no dynamic computerdisk');
-      
+
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
          AND `is_dynamic`='0'");
       $this->assertEquals(1, count($a_computerdisk), '(1)Not dynamic');
-      
+
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
          AND `is_dynamic`='1'");
       $this->assertEquals(1, count($a_computerdisk), '(2)Dynamic');
-      
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
+
+      $pfiComputerLib->updateComputer($a_computerinventory,
+                                      $computers_id,
+                                      FALSE,
                                       1);
-      
+
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'");
       $this->assertEquals(2, count($a_computerdisk), 'May ALWAYS have dynamic '.
                                                      '+ no dynamic computerdisk');
-            
+
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
          AND `is_dynamic`='0'");
       $this->assertEquals(1, count($a_computerdisk), '(3)Not dynamic');
-      
+
       $a_computerdisk = $computerDisk->find("`computers_id`='".$computers_id."'
          AND `is_dynamic`='1'");
       $this->assertEquals(1, count($a_computerdisk), '(4)Dynamic');
    }
-   
-   
-   public function testUpdateComputerRemoveProcessor() {
+
+
+   /**
+    * @test
+    */
+   public function UpdateComputerRemoveProcessor() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      
+
       $a_inventory = array(
           'Computer' => array(
              'name'                             => 'pcxxx1',
@@ -249,7 +257,7 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
               'last_fusioninventory_update'     => date('Y-m-d H:i:s')
-          ), 
+          ),
           'soundcard'      => Array(),
           'graphiccard'    => Array(),
           'controller'     => Array(),
@@ -288,41 +296,29 @@ class ComputerDynamic extends PHPUnit_Framework_TestCase {
           'networkcard'    => array(),
           'itemtype'       => 'Computer'
           );
-      
+
       $computer         = new Computer();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $item_DeviceProcessor = new Item_DeviceProcessor();
-      
+
       $computers_id = $computer->add(array('serial'      => 'XB63J7DH',
                                            'entities_id' => 0));
-      
+
       $_SESSION['glpiactive_entity'] = 0;
       $pfiComputerLib->updateComputer($a_inventory, $computers_id, FALSE);
-      
+
       $a_processors = $item_DeviceProcessor->find("`items_id`='".$computers_id."'
          AND `itemtype`='Computer'");
       $this->assertEquals(2, count($a_processors), 'May have the 2 Processors');
-      
+
       // Remove one processor from inventory
       unset($a_inventory['processor'][1]);
       $pfiComputerLib->updateComputer($a_inventory, $computers_id, FALSE);
-      
+
       $a_processors = $item_DeviceProcessor->find("`items_id`='".$computers_id."'
          AND `itemtype`='Computer'");
-      $this->assertEquals(1, count($a_processors), 'May have the only 1 processor after 
+      $this->assertEquals(1, count($a_processors), 'May have the only 1 processor after
                            deleted a processor from inventory');
    }
- }
-
-
-
-class ComputerDynamic_AllTests  {
-
-   public static function suite() {
-    
-      $suite = new PHPUnit_Framework_TestSuite('ComputerDynamic');
-      return $suite;
-   }
 }
-
 ?>

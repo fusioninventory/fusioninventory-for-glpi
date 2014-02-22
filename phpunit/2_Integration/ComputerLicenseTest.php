@@ -40,16 +40,19 @@
    ------------------------------------------------------------------------
  */
 
-class ComputerLicense extends PHPUnit_Framework_TestCase {
+class ComputerLicenseTest extends RestoreDatabase_TestCase {
    public $a_computer1 = array();
    public $a_computer1_beforeformat = array();
-   
+
+   /*
+    * Why do you define a constructor here while you can set this 2 variables up ahead ???
+    */
    function __construct() {
       $this->a_computer1 = array(
           "Computer" => array(
               "name"   => "pc001",
               "serial" => "ggheb7ne7"
-          ), 
+          ),
           "fusioninventorycomputer" => Array(
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
@@ -87,7 +90,7 @@ class ComputerLicense extends PHPUnit_Framework_TestCase {
               ),
               "BIOS" => array(
                   "SSN" => "ggheb7ne7"
-              ), 
+              ),
               'LICENSEINFOS' => Array(
                   array(
                       'COMPONENTS' => 'Word/Excel/Access/Outlook/PowerPoint/Publisher/InfoPath',
@@ -100,44 +103,41 @@ class ComputerLicense extends PHPUnit_Framework_TestCase {
           )
       );
    }
-   
-   
-   
-   public function testLicenses() {
+
+
+
+   /**
+    * @test
+    */
+   public function Licenses() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
 
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      
+
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
       $GLPIlog          = new GLPIlogs();
-      
+
       $a_computerinventory = $this->a_computer1;
       $a_computer = $a_computerinventory['Computer'];
       $a_computer["entities_id"] = 0;
       $computers_id = $computer->add($a_computer);
-      
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
+
+      $pfiComputerLib->updateComputer($a_computerinventory,
+                                      $computers_id,
+                                      FALSE,
                                       1);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
-      
-      $this->assertEquals(1, 
-                          countElementsInTable('glpi_plugin_fusioninventory_computerlicenseinfos'), 
+
+      $this->assertEquals(1,
+                          countElementsInTable('glpi_plugin_fusioninventory_computerlicenseinfos'),
                           'License may be added in fusion table');
-      
+
       $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
       $pfComputerLicenseInfo->getFromDB(1);
       $a_ref = array(
@@ -152,24 +152,12 @@ class ComputerLicense extends PHPUnit_Framework_TestCase {
           'is_oem'               => '0',
           'activation_date'      => NULL
       );
-      
-      $this->assertEquals($a_ref, 
-                          $pfComputerLicenseInfo->fields, 
+
+      $this->assertEquals($a_ref,
+                          $pfComputerLicenseInfo->fields,
                           'License data');
-      
-      
-   }   
-}
 
 
-
-class ComputerLicense_AllTests  {
-
-   public static function suite() {
-     
-      $suite = new PHPUnit_Framework_TestSuite('ComputerLicense');
-      return $suite;
    }
 }
-
 ?>

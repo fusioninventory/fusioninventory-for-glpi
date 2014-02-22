@@ -40,21 +40,22 @@
    ------------------------------------------------------------------------
  */
 
-class RuleIgnoredImport extends PHPUnit_Framework_TestCase {
-   
-   
+class RuleIgnoredImport extends Common_TestCase {
+
+
    protected function setUp() {
       global $DB;
 
+      parent::setUp();
+
       $DB->connect();
 
-      $Install = new Install();
-      $Install->testInstall(0);
-   
+      self::restore_database();
+
       $DB->query("UPDATE `glpi_rules`
          SET `is_active`='0'
          WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport'");
-      
+
       // Add a rule to ignore import
       // Create rule for import into unknown devices
       $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
@@ -66,34 +67,37 @@ class RuleIgnoredImport extends PHPUnit_Framework_TestCase {
       $input['ranking'] = 200;
       $rule_id = $rulecollection->add($input);
 
-         // Add criteria
-         $rule = $rulecollection->getRuleClass();
-         $rulecriteria = new RuleCriteria(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['criteria'] = "name";
-         $input['pattern']= '*';
-         $input['condition']=0;
-         $rulecriteria->add($input);
+      // Add criteria
+      $rule = $rulecollection->getRuleClass();
+      $rulecriteria = new RuleCriteria(get_class($rule));
+      $input = array();
+      $input['rules_id'] = $rule_id;
+      $input['criteria'] = "name";
+      $input['pattern']= '*';
+      $input['condition']=0;
+      $rulecriteria->add($input);
 
-         // Add action
-         $ruleaction = new RuleAction(get_class($rule));
-         $input = array();
-         $input['rules_id'] = $rule_id;
-         $input['action_type'] = 'assign';
-         $input['field'] = '_ignore_import';
-         $input['value'] = '1';
-         $ruleaction->add($input);
+      // Add action
+      $ruleaction = new RuleAction(get_class($rule));
+      $input = array();
+      $input['rules_id'] = $rule_id;
+      $input['action_type'] = 'assign';
+      $input['field'] = '_ignore_import';
+      $input['value'] = '1';
+      $ruleaction->add($input);
    }
 
-   
-   
-   // computer inventory
-   public function testIgnoreComputerImport() {
+
+
+   /**
+    * @test
+    * computer inventory
+    */
+   public function IgnoreComputerImport() {
       global $DB;
 
       $DB->connect();
- 
+
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
@@ -102,14 +106,13 @@ class RuleIgnoredImport extends PHPUnit_Framework_TestCase {
       $computer = new Computer();
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
       $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
-      $GLPIlog = new GLPIlogs();
 
       $a_inventory = array();
       $a_inventory['CONTENT']['HARDWARE'] = array(
           'NAME' => 'pc1'
       );
       $a_inventory['CONTENT']['SOFTWARES'][] = array();
-      
+
       // ** Add agent
          $pfAgent = new PluginFusioninventoryAgent();
          $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
@@ -118,15 +121,12 @@ class RuleIgnoredImport extends PHPUnit_Framework_TestCase {
 
       $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
 
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-
       $a_computers = $computer->find();
       $this->assertEquals(0, count($a_computers), 'Computer may not be added');
 
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(0, count($a_unknown), 'Unknowndevice may not be added');
-      
+
       $a_ignored = $pfIgnoredimportdevice->find();
       $this->assertEquals(1, count($a_ignored), 'May have only one ignored device import');
 
@@ -148,9 +148,12 @@ class RuleIgnoredImport extends PHPUnit_Framework_TestCase {
       $pfIgnoredimportdevice->delete($a_ignore);
    }
 
-   
-   // network discovery 
-   public function testIgnoreNetworkDiscoveryImport() {
+
+   /**
+    * @test
+    * network discovery
+    */
+   public function IgnoreNetworkDiscoveryImport() {
       global $DB;
 
       $DB->connect();
@@ -160,7 +163,7 @@ class RuleIgnoredImport extends PHPUnit_Framework_TestCase {
           'ENTITY'      => 0,
           'IP'          => '192.168.20.3'
       );
-      
+
       $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
       $computer = new Computer();
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
@@ -172,37 +175,27 @@ class RuleIgnoredImport extends PHPUnit_Framework_TestCase {
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype']    = 'Computer';
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['state']       = 0;
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']     = '';
-      
-      $pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);
 
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
+      $pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);
 
       $a_computers = $computer->find();
       $this->assertEquals(0, count($a_computers), 'Computer may not be added');
 
       $a_unknown = $pfUnknownDevice->find();
       $this->assertEquals(0, count($a_unknown), 'Unknowndevice may not be added');
-      
+
       $a_ignored = $pfIgnoredimportdevice->find();
       $this->assertEquals(1, count($a_ignored), 'May have only one ignored device import');
 
-      
+
    }
-   
-   // network inventory
-   
- }
 
-
-
-class RuleIgnoredImport_AllTests  {
-
-   public static function suite() {
-    
-      $suite = new PHPUnit_Framework_TestSuite('RuleIgnoredImport');
-      return $suite;
+   /**
+    * @test
+    * network inventory
+    */
+   public function IgnoreNetworkInventoryImport() {
+      $this->mark_incomplete();
    }
 }
-
 ?>

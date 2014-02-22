@@ -40,31 +40,24 @@
    ------------------------------------------------------------------------
  */
 
-class UnknownDeviceImport extends PHPUnit_Framework_TestCase {
-   
-   
-   protected function setUp() {
+class UnknownDeviceImportTest extends Common_TestCase {
+
+
+
+   /**
+    * @test
+    */
+   public function ImportNetworkEquipment() {
       global $DB;
 
-      $DB->connect();
+      self::restore_database();
 
-      $Install = new Install();
-      $Install->testInstall(0);
-   }
-   
-   
-   
-   public function testImportNetworkEquipment() {
-      global $DB;
-
-      $DB->connect();
-      
       $pfUnknownDevice  = new PluginFusioninventoryUnknownDevice();
       $networkEquipment = new NetworkEquipment();
       $networkPort      = new NetworkPort();
       $networkName      = new NetworkName();
       $iPAddress        = new IPAddress();
-      
+
       $input= array(
           'name'        => 'switch',
           'entities_id' => 0,
@@ -78,7 +71,7 @@ class UnknownDeviceImport extends PHPUnit_Framework_TestCase {
           'plugin_fusioninventory_configsecurities_id' => 1
       );
       $unknowndevices_id = $pfUnknownDevice->add($input);
-      
+
       // * Add networkport
       $input = array();
       $input['itemtype']            = 'PluginFusioninventoryUnknownDevice';
@@ -88,14 +81,14 @@ class UnknownDeviceImport extends PHPUnit_Framework_TestCase {
       $input['mac']                 = '00:00:00:43:ae:0f';
       $input['is_dynamic']          = 1;
       $networkports_id = $networkPort->add($input);
-      
+
       $input = array();
       $input['items_id']   = $networkports_id;
       $input['itemtype']   = 'NetworkPort';
       $input['name']       = '';
       $input['is_dynamic'] = 1;
       $networknames_id     = $networkName->add($input);
-      
+
       $input = array();
       $input['entities_id']   = 0;
       $input['itemtype']      = 'NetworkName';
@@ -103,26 +96,26 @@ class UnknownDeviceImport extends PHPUnit_Framework_TestCase {
       $input['name']          = '192.168.20.1';
       $input['is_dynamic']    = 1;
       $iPAddress->add($input);
-      
-      
+
+
       $pfUnknownDevice->import($unknowndevices_id);
-      
+
       $cnt = countElementsInTable("glpi_networkequipments");
-      
-      $this->assertEquals(1, $cnt, "May have network equipment added");      
-      
+
+      $this->assertEquals(1, $cnt, "May have network equipment added");
+
       $cnt = countElementsInTable("glpi_plugin_fusioninventory_unknowndevices");
-      
+
       $this->assertEquals(0, $cnt, "Unknown device may be deleted");
-      
+
       $networkEquipment->getFromDB(1);
-      
+
       $this->assertEquals('XXS6BEF3', $networkEquipment->fields['serial'], "Serial");
       $this->assertEquals('switch', $networkEquipment->fields['name'], "Name");
       $this->assertEquals(1, $networkEquipment->fields['is_dynamic'], "is_dynamic");
       $this->assertEquals(1, $networkEquipment->fields['locations_id'], "locations_id");
       $this->assertEquals('this is a comment', $networkEquipment->fields['comment'], "comment");
-      
+
       $networkPort->getFromDB(1);
       $a_reference = array(
           'name'                 => 'general',
@@ -168,41 +161,36 @@ class UnknownDeviceImport extends PHPUnit_Framework_TestCase {
           'is_dynamic'  => '1'
       );
       $this->assertEquals($a_reference, $iPAddress->fields, "IPAddress");
-      
+
    }
-   
-   
-   
-   public function testImportComputer() {
+
+
+
+   /**
+    * @test
+    */
+   public function ImportComputer() {
+      $this->mark_incomplete();
       global $DB;
 
       $DB->connect();
-      
+
 
    }
-   
-   
-   
-   public function testImportPrinter() {
+
+
+
+   /**
+    * @test
+    */
+   public function ImportPrinter() {
+      $this->mark_incomplete();
       global $DB;
 
       $DB->connect();
-      
+
 
    }
-   
-   
- }
 
-
-
-class UnknownDeviceImport_AllTests  {
-
-   public static function suite() {
-    
-      $suite = new PHPUnit_Framework_TestSuite('UnknownDeviceImport');
-      return $suite;
-   }
 }
-
 ?>

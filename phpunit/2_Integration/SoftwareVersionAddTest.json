@@ -1,0 +1,164 @@
+{ "data" : [
+
+  [{
+    "inventory" : {
+      "CONTENT" : {
+        "HARDWARE" : { "NAME" : "pc1" },
+        "SOFTWARES" : [
+          {
+            "NAME" : "curl",
+            "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
+            "VERSION" : "7.24.0_1"
+          }
+        ]
+      },
+      "AGENT" : {
+        "name" : "pc1-2013-02-13",
+        "device_id" : "pc1-2013-02-13"
+      }
+    },
+    "expected_results" : {
+      "nb_softwares" : 1,
+      "nb_versions" : 1
+    }
+  }],
+
+  [{
+    "inventory" : {
+      "CONTENT" : {
+        "HARDWARE" : { "NAME" : "pc2" },
+        "SOFTWARES" : [
+          {
+            "NAME" : "curl",
+            "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
+            "VERSION" : "7.24.0_1"
+          }
+        ]
+      },
+      "AGENT" : {
+        "name" : "pc-2013-02-13",
+        "device_id" : "pc-2013-02-13"
+      }
+    },
+    "expected_results" : {
+      "nb_softwares" : 1,
+      "nb_versions" : 1
+    }
+  }],
+
+  [{
+    "inventory" : {
+      "CONTENT" : {
+        "HARDWARE" : { "NAME" : "pc3" },
+        "SOFTWARES" : [
+          {
+            "NAME" : "curl",
+            "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
+            "VERSION" : "7.24.0_1-Beta"
+          }
+        ]
+      },
+      "AGENT" : {
+        "name" : "pc-2013-02-13",
+        "device_id" : "pc-2013-02-13"
+      }
+    },
+    "expected_results" : {
+      "nb_softwares" : 1,
+      "nb_versions" : 2
+    }
+  }],
+
+  [{
+    "inventory" : {
+      "CONTENT" : {
+        "HARDWARE" : { "NAME" : "pc4" },
+        "SOFTWARES" : [
+          {
+            "NAME" : "curl",
+            "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
+            "VERSION" : "7.24.0_1-Beta"
+          }
+        ]
+      },
+      "AGENT" : {
+        "name" : "pc-2013-02-13",
+        "device_id" : "pc-2013-02-13"
+      }
+    },
+    "expected_results" : {
+      "nb_softwares" : 1,
+      "nb_versions" : 2
+    }
+  }],
+
+  [{
+    "inventory" : {
+      "CONTENT" : {
+        "HARDWARE" : { "NAME" : "pc5" },
+        "SOFTWARES" : [
+          {
+            "NAME" : "curl",
+            "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
+            "VERSION" : "7.24.0_1-Beta"
+          }
+        ]
+      },
+      "AGENT" : {
+        "name" : "pc-2013-02-13",
+        "device_id" : "pc-2013-02-13"
+      }
+    },
+    "expected_results" : {
+      "nb_softwares" : 1,
+      "nb_versions" : 2
+    }
+  }],
+
+  [{
+    "inventory" : {
+      "CONTENT" : {
+        "HARDWARE" : { "NAME" : "pc6" },
+        "SOFTWARES" : [
+          {
+            "NAME" : "curl",
+            "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
+            "VERSION" : "2.3.2 (x86 edition)"
+          }
+        ]
+      },
+      "AGENT" : {
+        "name" : "pc-2013-02-13",
+        "device_id" : "pc-2013-02-13"
+      }
+    },
+    "expected_results" : {
+      "nb_softwares" : 1,
+      "nb_versions" : 3
+    }
+  }],
+
+  [{
+    "inventory" : {
+      "CONTENT" : {
+        "HARDWARE" : { "NAME" : "pc7" },
+        "SOFTWARES" : [
+          {
+            "NAME" : "curl",
+            "COMMENTS" : "Non-interactive tool to get files from FTP, GOPHER, HTTP(S)",
+            "VERSION" : "2.3.2 (x86 edition)"
+          }
+        ]
+      },
+      "AGENT" : {
+        "name" : "pc-2013-02-13",
+        "device_id" : "pc-2013-02-13"
+      }
+    },
+    "expected_results" : {
+      "nb_softwares" : 1,
+      "nb_versions" : 3
+    }
+  }]
+]}
+

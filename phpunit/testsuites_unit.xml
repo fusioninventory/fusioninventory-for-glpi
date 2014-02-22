@@ -7,22 +7,23 @@
   strict="false"
   >
   <logging>
-    <log type="tap" target="/tmp/logfile.tap"/>
-    <log type="json" target="/tmp/logfile.json"/>
-    <log type="junit" target="/tmp/logfile.xml"/>
-    <log type="coverage-html" target="/tmp/report" showUncoveredFiles="true"/>
-    </logging>
-    <filter>
-      <blacklist>
-        <directory suffix=".php">.</directory>
-        <directory suffix=".php">../../../</directory>
-        <exclude>
-          <directory suffix=".php">..</directory>
-        </exclude>
-      </blacklist>
-    </filter>
+    <log type="junit" target="../../../../build/logs/junit_unit.xml" logIncompleteSkipped="true" />
+  </logging>
+  <!-- exclude relatively to ${basedir} -->
+  <filter>
+    <blacklist>
+      <directory suffix=".php">glpi/*</directory>
+    </blacklist>
+    <whitelist>
+      <directory suffix=".php">glpi/plugins/fusioninventory/*</directory>
+      <exclude>
+        <directory suffix=".php">glpi/plugins/fusioninventory/phpunit/*</directory>
+      </exclude>
+    </whitelist>
+  </filter>
   <testsuites>
     <testsuite name="Unit">
+      <!-- directory tag (unlike the file tag) are walked relatively to this xml configuration files -->
       <directory suffix="Test.php">./1_Unit/</directory>
       <directory suffix="Test.php">./1_Unit/Tasks/</directory>
     </testsuite>

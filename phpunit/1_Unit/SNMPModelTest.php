@@ -40,19 +40,18 @@
    ------------------------------------------------------------------------
  */
 
-class SNMPModel extends PHPUnit_Framework_TestCase {
-   
-   public function testDeleteModelDeleteItInNetworkEquipment() {
+class SNMPModel extends RestoreDatabase_TestCase {
+
+   /**
+    * @test
+    */
+   public function DeleteModelDeleteItInNetworkEquipment() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
-      
-      $GLPIlog = new GLPIlogs();
+
       $pfSnmpmodel = new PluginFusioninventorySnmpmodel();
-      
+
       $DB->query("INSERT INTO `glpi_plugin_fusioninventory_networkequipments`
          (`networkequipments_id`, `plugin_fusioninventory_snmpmodels_id`)
          VALUES ('1', '1')");
@@ -61,77 +60,67 @@ class SNMPModel extends PHPUnit_Framework_TestCase {
          (`networkequipments_id`, `plugin_fusioninventory_snmpmodels_id`)
          VALUES ('2', '2')");
 
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-      
+
       $pfSnmpmodel->delete(array('id'=>1), 1);
 
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-      
-      $this->assertEquals(2, countElementsInTable('glpi_plugin_fusioninventory_networkequipments'), 
+      $this->assertEquals(2, countElementsInTable('glpi_plugin_fusioninventory_networkequipments'),
                           'May have 2 networkequipment line in DB');
-      
+
       $a_pfnes = getAllDatasFromTable('glpi_plugin_fusioninventory_networkequipments');
-      
-      $this->assertEquals(0, $a_pfnes[1]['plugin_fusioninventory_snmpmodels_id'], 
+
+      $this->assertEquals(0, $a_pfnes[1]['plugin_fusioninventory_snmpmodels_id'],
                           'May have now no snmpmodel');
-      
-      $this->assertEquals(2, $a_pfnes[2]['plugin_fusioninventory_snmpmodels_id'], 
+
+      $this->assertEquals(2, $a_pfnes[2]['plugin_fusioninventory_snmpmodels_id'],
                           'May have always snmpmodel id=2');
    }
-   
-   
-   
-   public function testDeleteModelDeleteItInPrinter() {
+
+
+
+   /**
+    * @test
+    */
+   public function DeleteModelInPrinter() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
-      
-      $GLPIlog = new GLPIlogs();
+
       $pfSnmpmodel = new PluginFusioninventorySnmpmodel();
-      
+
       $DB->query("INSERT INTO `glpi_plugin_fusioninventory_printers`
          (`printers_id`, `plugin_fusioninventory_snmpmodels_id`)
          VALUES ('1', '1')");
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-      
+
       $pfSnmpmodel->delete(array('id'=>1), 1);
 
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-      
-      $this->assertEquals(1, countElementsInTable('glpi_plugin_fusioninventory_printers'), 
-                          'May have a printer line in DB');
-      
+      $this->assertEquals(1, countElementsInTable('glpi_plugin_fusioninventory_printers'),
+                          'There must be only one printer entry in database');
+
       $a_pfnes = getAllDatasFromTable('glpi_plugin_fusioninventory_printers');
-      
-      $this->assertEquals(0, $a_pfnes[1]['plugin_fusioninventory_snmpmodels_id'], 
-                          'May have now no snmpmodel');
-      
+
+      $this->assertEquals(0, $a_pfnes[1]['plugin_fusioninventory_snmpmodels_id'],
+                          'The printer must not have any snmpmodel');
+
    }
-   
-   
-   
-   public function testLoadRightModel() {
+
+
+
+   /**
+    * @test
+    */
+   public function LoadTheCorrectModel() {
       global $DB;
 
       $DB->connect();
-      
+
       $networkEquipment = new NetworkEquipment();
       $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
       $pfSnmpmodel = new PluginFusioninventorySnmpmodel();
-      $GLPIlog = new GLPIlogs();
-      
+
       $sysdescr = "Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(52)SE, RELEASE SOFTWARE (fc3)
 Copyright (c) 1986-2009 by Cisco Systems, Inc.
 Compiled Fri 25-Sep-09 08:49 by sasyamal";
-      
+
       $networkequipments_id = $networkEquipment->add(array(
           'name'        => 'switch',
           'entities_id' => '0'
@@ -140,38 +129,24 @@ Compiled Fri 25-Sep-09 08:49 by sasyamal";
           'networkequipments_id' => $networkequipments_id,
           'sysdescr' => $sysdescr
       ));
-      
+
       // find if this model is in models list
       $a_models = getAllDatasFromTable(
-              "glpi_plugin_fusioninventory_snmpmodeldevices", 
+              "glpi_plugin_fusioninventory_snmpmodeldevices",
               "`sysdescr`='".str_replace("\n", "", $sysdescr)."'");
-      
-      $this->assertEquals(1, count($a_models), 
-                          'May have our sysdescr in SNMP model list');
+
+      $this->assertEquals(1, count($a_models),
+                          'Must have the sysdescr in SNMP model list');
       $a_model = current($a_models);
-      
+
       $pfSnmpmodel->getrightmodel($networkequipments_id, 'NetworkEquipment');
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
       $pfNetworkEquipment->getFromDB($pfnetworkequipments_id);
-      
-      $this->assertEquals($a_model['plugin_fusioninventory_snmpmodels_id'], 
-                          $pfNetworkEquipment->fields['plugin_fusioninventory_snmpmodels_id'], 
+
+      $this->assertEquals($a_model['plugin_fusioninventory_snmpmodels_id'],
+                          $pfNetworkEquipment->fields['plugin_fusioninventory_snmpmodels_id'],
                           'May have the right model assigned to the switch');
-      
+
    }
 }
-
-
-
-class SNMPModel_AllTests  {
-
-   public static function suite() {
-
-      $suite = new PHPUnit_Framework_TestSuite('SNMPModel');
-      return $suite;
-   }
-}
-
 ?>

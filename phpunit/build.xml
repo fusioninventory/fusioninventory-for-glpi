@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="name-of-project" default="build">
+<project name="plugin-fusioninventory" default="build">
+
+ <property name="fusioninventory.directory" value="${basedir}/glpi/plugins/fusioninventory" />
+
  <target name="build"
-   depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpdox,phpunit"/>
+  depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpdox"/>
 
  <target name="build-parallel"
-   depends="prepare,lint,tools-parallel,phpunit"/>
+  depends="tools-parallel"/>
 
- <target name="tools-parallel" description="Run tools in parallel">
+ <target name="tools-parallel" depends="prepare, lint" description="Run tools in parallel">
   <parallel threadCount="2">
    <sequential>
     <antcall target="pdepend"/>
@@ -17,18 +20,29 @@
    <antcall target="phpcs-ci"/>
    <antcall target="phploc"/>
    <antcall target="phpdox"/>
+   <!--   <antcall target="phpunit.all"/> -->
   </parallel>
  </target>
 
  <target name="clean" description="Cleanup build artifacts">
-  <delete dir="${basedir}/build/api"/>
-  <delete dir="${basedir}/build/code-browser"/>
-  <delete dir="${basedir}/build/coverage"/>
-  <delete dir="${basedir}/build/logs"/>
-  <delete dir="${basedir}/build/pdepend"/>
+  <delete dir="${basedir}/build/api" />
+  <delete dir="${basedir}/build/code-browser" />
+  <delete dir="${basedir}/build/coverage" />
+  <delete dir="${basedir}/build/logs" />
+  <delete dir="${basedir}/build/pdepend" />
+  <copy overwrite='true'
+   file="${basedir}/glpi/plugins/fusioninventory/phpunit/composer.json"
+   tofile="${basedir}/composer.json"
+   />
  </target>
 
- <target name="prepare" depends="clean" description="Prepare for build">
+ <target name="composer" description="Ensure composer is installed">
+  <exec dir="${basedir}" executable="./glpi/plugins/fusioninventory/phpunit/tools/composer">
+   <arg value="install" />
+  </exec>
+ </target>
+
+ <target name="prepare" depends="clean,composer" description="Prepare for build">
   <mkdir dir="${basedir}/build/api"/>
   <mkdir dir="${basedir}/build/code-browser"/>
   <mkdir dir="${basedir}/build/coverage"/>
@@ -43,6 +57,9 @@
 
    <fileset dir="${basedir}/glpi/plugins">
     <include name="**/*.php" />
+    <exclude name="fusioninventory/phpunit/vendor/**/*.php" />
+    <exclude name="fusioninventory/phpunit/tools/composer.src/**/*.*" />
+    <exclude name="fusioninventory/phpunit/tools/composer.cache/**/*.*" />
     <modified />
    </fileset>
 
@@ -50,15 +67,17 @@
  </target>
 
  <target name="phploc" description="Measure project size using PHPLOC">
-  <exec executable="phploc">
+  <exec dir="${basedir}" executable="./vendor/bin/phploc">
+   <arg value="--vvv" />
    <arg value="--log-csv" />
    <arg value="${basedir}/build/logs/phploc.csv" />
-   <arg path="${basedir}/glpi/plugins" />
+   <arg line='--exclude="${basedir}/glpi/plugins/phpunit/vendor"' />
+   <arg path="${basedir}/glpi/plugins/fusioninventory" />
   </exec>
  </target>
 
  <target name="pdepend" description="Calculate software metrics using PHP_Depend">
-  <exec executable="pdepend">
+  <exec dir="${basedir}" executable="./vendor/bin/pdepend">
    <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
    <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
    <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
@@ -67,15 +86,15 @@
  </target>
 
  <target name="phpmd"
-         description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
-  <exec executable="phpmd">
+  description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
+  <exec dir="${basedir}/glpi/plugins/fusioninventory/phpunit/" executable="./vendor/bin/phpmd">
    <arg path="${basedir}/glpi/plugins" />
    <arg value="text" />
-   </exec>
+  </exec>
  </target>
 
  <target name="phpmd-ci" description="Perform project mess detection using PHPMD creating a log file for the continuous integration server">
-  <exec executable="phpmd">
+  <exec dir="${basedir}" executable="./vendor/bin/phpmd">
    <arg path="${basedir}/glpi/plugins" />
    <arg value="xml" />
    <arg value="codesize,unusedcode,naming" />
@@ -87,7 +106,8 @@
  </target>
 
  <target name="phpcs-ci" description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server">
-  <exec executable="phpcs" output="/dev/null">
+  <exec dir="${basedir}" executable="./vendor/bin/phpcs" output="/dev/null">
+   <arg path="${basedir}/glpi/plugins" />
    <arg value="--report=checkstyle" />
    <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
    <arg value="--standard=FusionInventory" />
@@ -96,8 +116,10 @@
   </exec>
  </target>
 
+ <!-- TODO: move vendor to ${basedir} root -->
  <target name="phpcpd" description="Find duplicate code using PHPCPD">
-  <exec executable="phpcpd">
+  <exec dir="${basedir}" executable="./vendor/bin/phpcpd">
+   <arg line='--exclude="vendor"' />
    <arg value="--log-pmd" />
    <arg value="${basedir}/build/logs/pmd-cpd.xml" />
    <arg path="${basedir}/glpi/plugins" />
@@ -105,21 +127,139 @@
  </target>
 
  <target name="phpdox" description="Generate API documentation using phpDox">
-  <exec executable="phpdox"/>
+  <exec dir="${basedir}" executable="./vendor/bin/phpdox" />
  </target>
 
- <target name="phpunit" description="Run unit tests with PHPUnit">
-  <exec dir="${basedir}/glpi/plugins/fusioninventory/phpunit" executable="phpunit" failonerror="true">
-   <arg value="--log-junit" />
-   <arg value="${basedir}/build/logs/junit.xml" />
-   <arg value="--coverage-clover" />
-   <arg value="${basedir}/build/coverage/clover.xml" />
-   <arg value="--coverage-html" />
-   <arg value="${basedir}/build/coverage/." />
-   <arg value="--configuration" />
-   <arg value="${basedir}/coverageexclude.xml" />
-   <arg value="AllTests.php" />
-  </exec>
+ <!-- check for clover coverage reporting option -->
+ <condition property='phpunit.arg.coverage.clover'
+  value='--coverage-clover ${basedir}/build/coverage/clover.xml'
+  else=''>
+  <isset property='with.coverage.clover'/>
+ </condition>
+
+ <!-- check for HTML coverage reporting option -->
+ <condition property='phpunit.arg.coverage.html'
+  value='--coverage-html ${basedir}/build/coverage/'
+  else=''>
+  <isset property='with.coverage.html'/>
+ </condition>
+
+
+ <macrodef name='phpunit.run'>
+  <attribute name='configuration' />
+  <attribute name='type' />
+  <element name='testfile' optional='true'/><!-- used for debugging only one test -->
+  <sequential>
+   <exec
+    dir="${basedir}"
+    executable="./vendor/bin/phpunit"
+    failonerror="false"
+    resultproperty='phpunit.returncode.@{type}'
+    >
+    <arg value="--debug" />
+    <arg line="${phpunit.arg.coverage.clover}" />
+    <arg line="${phpunit.arg.coverage.html}" />
+    <arg line="--configuration @{configuration}" />
+    <testfile />
+   </exec>
+  </sequential>
+ </macrodef>
+
+ <macrodef name='format.testlog'>
+  <sequential>
+   <exec
+    dir="${basedir}"
+    executable='./glpi/plugins/fusioninventory/phpunit/tools/format_phpunitlogs.sh'
+    failonerror="false"
+    >
+    <arg path='${basedir}'/>
+    <arg value='${ant.project.name}' />
+   </exec>
+  </sequential>
+ </macrodef>
+
+ <target name="phpunit.update" depends='prepare' description="Run update tests with PHPUnit">
+  <phpunit.run type='update' configuration='${fusioninventory.directory}/phpunit/testsuites_update.xml' />
+  <format.testlog />
+  <fail>
+   <condition>
+    <isfailure code='${phpunit.returncode.update}' />
+   </condition>
+  </fail>
+ </target>
+
+ <target name="phpunit.install" depends='prepare' description="Run installation tests with PHPUnit">
+  <phpunit.run type='install'
+   configuration='${fusioninventory.directory}/phpunit/testsuites_install.xml' />
+  <format.testlog />
+  <fail>
+   <condition>
+    <isfailure code='${phpunit.returncode.install}' />
+   </condition>
+  </fail>
+ </target>
+
+ <target name="phpunit.unit" depends='prepare' description="Run unit tests with PHPUnit">
+  <phpunit.run type='unit'
+    configuration='${fusioninventory.directory}/phpunit/testsuites_unit.xml' />
+  <format.testlog />
+  <fail>
+   <condition>
+    <isfailure code='${phpunit.returncode.unit}' />
+   </condition>
+  </fail>
+ </target>
+
+ <target name="phpunit.integration" depends='prepare' description="Run integration tests with PHPUnit">
+  <phpunit.run type='integration'
+    configuration='${fusioninventory.directory}/phpunit/testsuites_integration.xml' />
+  <format.testlog />
+  <fail>
+   <condition>
+    <isfailure code='${phpunit.returncode.integration}' />
+   </condition>
+  </fail>
+ </target>
+
+ <target name="phpunit.all" depends='prepare' description="Run every unit tests with PHPUnit">
+
+  <phpunit.run type='update'
+   configuration='${fusioninventory.directory}/phpunit/testsuites_update.xml' />
+
+  <phpunit.run type='install'
+   configuration='${fusioninventory.directory}/phpunit/testsuites_install.xml' />
+
+  <!--
+       No need to continue only if install fails since we need a good save.sql
+       TODO: This should be only needed by integration tests but not by unit tests. This must be fixed.
+  -->
+  <format.testlog />
+
+  <fail>
+   <condition>
+    <isfailure code='${phpunit.returncode.install}' />
+   </condition>
+  </fail>
+
+  <phpunit.run type='unit'
+   configuration='${fusioninventory.directory}/phpunit/testsuites_unit.xml' />
+
+  <phpunit.run type='integration'
+   configuration='${fusioninventory.directory}/phpunit/testsuites_integration.xml' />
+
+  <format.testlog />
+
+
+  <fail>
+   <condition>
+    <or>
+     <isfailure code='${phpunit.returncode.update}' />
+     <isfailure code='${phpunit.returncode.install}' />
+     <isfailure code='${phpunit.returncode.unit}' />
+     <isfailure code='${phpunit.returncode.integration}' />
+    </or>
+   </condition>
+  </fail>
  </target>
 
 </project>

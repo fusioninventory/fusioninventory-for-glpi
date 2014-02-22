@@ -40,14 +40,17 @@
    ------------------------------------------------------------------------
  */
 
-class PrinterTransformation extends PHPUnit_Framework_TestCase {
-   
-   
-   public function testPrinterGeneral() {
+class PrinterTransformation extends RestoreDatabase_TestCase {
+
+
+   /**
+    * @test
+    */
+   public function PrinterGeneral() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_printer = array();
@@ -63,9 +66,9 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
                 'TYPE'           => 'PRINTER',
                 'MEMORY'         => 64
             );
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->printerInventoryTransformation($a_printer);
       $date = date('Y-m-d H:i:s');
       if (isset($a_return['PluginFusioninventoryPrinter'])
@@ -94,20 +97,20 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
                'is_dynamic'         => 1,
                'have_ethernet'      => 1
       );
-      $this->assertEquals($a_reference, $a_return);      
-      
-      $GLPIlog = new GLPIlogs();
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-   }   
-   
-   
-   
-   public function testPrinterPageCounter() {
+      $this->assertEquals($a_reference, $a_return);
+
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function PrinterPageCounter() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_printer = array();
@@ -123,9 +126,9 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
                 'TOTAL'       => 15134,
                 'COPYTOTAL'   => ''
             );
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->printerInventoryTransformation($a_printer);
       $date = date('Y-m-d H:i:s');
       if (isset($a_return['PluginFusioninventoryPrinter'])
@@ -168,27 +171,7 @@ class PrinterTransformation extends PHPUnit_Framework_TestCase {
                'pages_total_fax'    => 0
 
           );
-      $this->assertEquals($a_reference, $a_return);      
-
-      $GLPIlog = new GLPIlogs();
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-
-   }  
- }
-
-
-
-class PrinterTransformation_AllTests  {
-
-   public static function suite() {
-
-//      $Install = new Install();
-//      $Install->testInstall(0);
-      
-      $suite = new PHPUnit_Framework_TestSuite('PrinterTransformation');
-      return $suite;
+      $this->assertEquals($a_reference, $a_return);
    }
 }
-
 ?>

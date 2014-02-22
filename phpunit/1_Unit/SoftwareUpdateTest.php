@@ -40,24 +40,27 @@
    ------------------------------------------------------------------------
  */
 
-class SoftwareUpdate extends PHPUnit_Framework_TestCase {
-   
-   public function testAddAllRules() {
+class SoftwareUpdateTest extends RestoreDatabase_TestCase {
+
+   /**
+    * @test
+    */
+   public function AddAllRules() {
       global $DB;
 
       $DB->connect();
-      
+
       // * Add rule ignore
          $rule = new Rule();
          $ruleCriteria = new RuleCriteria();
          $ruleAction = new RuleAction();
-         
+
          $input = array();
          $input['sub_type']   = 'RuleDictionnarySoftware';
          $input['name']       = 'glpi';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
-         $rules_id = $rule->add($input); 
+         $rules_id = $rule->add($input);
 
          $input = array();
          $input['rules_id']   = $rules_id;
@@ -65,22 +68,22 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
          $input['condition']  = 0;
          $input['pattern']    = 'glpi';
          $ruleCriteria->add($input);
-         
+
          $input = array();
          $input['rules_id']      = $rules_id;
          $input['action_type']   = 'assign';
          $input['field']         = '_ignore_import';
          $input['value']         = 1;
-         $ruleAction->add($input);  
-         
-         
+         $ruleAction->add($input);
+
+
       // * Add rule rename software
          $input = array();
          $input['sub_type']   = 'RuleDictionnarySoftware';
          $input['name']       = 'glpi0.85';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
-         $rules_id = $rule->add($input); 
+         $rules_id = $rule->add($input);
 
          $input = array();
          $input['rules_id']   = $rules_id;
@@ -88,21 +91,21 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
          $input['condition']  = 0;
          $input['pattern']    = 'glpi0.85';
          $ruleCriteria->add($input);
-         
+
          $input = array();
          $input['rules_id']      = $rules_id;
          $input['action_type']   = 'assign';
          $input['field']         = 'name';
          $input['value']         = 'glpi';
-         $ruleAction->add($input); 
-         
+         $ruleAction->add($input);
+
       // * Add rule rename manufacturer
          $input = array();
          $input['sub_type']   = 'RuleDictionnaryManufacturer';
          $input['name']       = 'indepnet';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
-         $rules_id = $rule->add($input); 
+         $rules_id = $rule->add($input);
 
          $input = array();
          $input['rules_id']   = $rules_id;
@@ -110,21 +113,21 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
          $input['condition']  = 0;
          $input['pattern']    = 'indepnet assoce';
          $ruleCriteria->add($input);
-         
+
          $input = array();
          $input['rules_id']      = $rules_id;
          $input['action_type']   = 'assign';
          $input['field']         = 'name';
          $input['value']         = 'indepnet';
-         $ruleAction->add($input); 
-         
+         $ruleAction->add($input);
+
       // * Add rule Modify version
          $input = array();
          $input['sub_type']   = 'RuleDictionnarySoftware';
          $input['name']       = 'glpi0.85';
          $input['match']      = 'AND';
          $input['is_active']  = 1;
-         $rules_id = $rule->add($input); 
+         $rules_id = $rule->add($input);
 
          $input = array();
          $input['rules_id']   = $rules_id;
@@ -132,22 +135,25 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
          $input['condition']  = 0;
          $input['pattern']    = 'glpi0.85';
          $ruleCriteria->add($input);
-         
+
          $input = array();
          $input['rules_id']      = $rules_id;
          $input['action_type']   = 'assign';
          $input['field']         = 'version';
          $input['value']         = '0.85';
-         $ruleAction->add($input); 
+         $ruleAction->add($input);
    }
-   
-   
-   
-   public function testAddSoftwareNormal() {
+
+
+
+   /**
+    * @test
+    */
+   public function AddSoftwareNormal() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_software = array();
@@ -156,9 +162,9 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
                 'NAME'      => 'fusioninventory',
                 'VERSION'   => '0.85+1.0'
             );
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
@@ -171,14 +177,17 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
                'entities_id'           => 0,
                'is_recursive'          => 0
             );
-      
-      $this->assertEquals($a_reference, $a_return);
-      
-   }
-   
-   
 
-   public function testAddSoftwareIgnore() {
+      $this->assertEquals($a_reference, $a_return);
+
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function AddSoftwareIgnore() {
       global $DB;
 
       $DB->connect();
@@ -191,25 +200,27 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
                 'NAME'      => 'glpi',
                 'VERSION'   => '0.85'
             );
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
-      
+
       $a_reference = array();
       $a_reference['software'] = array();
-      
-      $this->assertEquals($a_reference, $a_return);
-      
-   }
-   
-   
 
-   public function testAddSoftwareRename() {
+      $this->assertEquals($a_reference, $a_return);
+
+   }
+
+
+   /**
+    * @test
+    */
+   public function AddSoftwareRename() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_software = array();
@@ -218,9 +229,9 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
                 'NAME'      => 'glpi0.85',
                 'VERSION'   => '0.85'
             );
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
@@ -233,18 +244,21 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
                'entities_id'           => 0,
                'is_recursive'          => 0
             );
-      
-      $this->assertEquals($a_reference, $a_return);
-      
-   }
-   
-   
 
-   public function testAddSoftwareRenameManufacturer() {
+      $this->assertEquals($a_reference, $a_return);
+
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function AddSoftwareRenameManufacturer() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_software = array();
@@ -253,9 +267,9 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
                 'NAME'      => 'glpi0.85',
                 'VERSION'   => '0.85'
             );
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
@@ -268,18 +282,21 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
                'entities_id'           => 0,
                'is_recursive'          => 0
             );
-      
-      $this->assertEquals($a_reference, $a_return);
-      
-   }
-   
-   
 
-   public function testAddSoftwareVersion() {
+      $this->assertEquals($a_reference, $a_return);
+
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function AddSoftwareVersion() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_software = array();
@@ -288,9 +305,9 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
                 'NAME'      => 'glpi0.85',
                 'VERSION'   => '0.85'
             );
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->computerSoftwareTransformation($a_software, 0);
 
       $a_reference = array();
@@ -303,24 +320,9 @@ class SoftwareUpdate extends PHPUnit_Framework_TestCase {
                'entities_id'           => 0,
                'is_recursive'          => 0
             );
-      
+
       $this->assertEquals($a_reference, $a_return);
-      
+
    }
 }
-
-
-
-class SoftwareUpdate_AllTests  {
-
-   public static function suite() {
-
-      $Install = new Install();
-      $Install->testInstall(0);
-      
-      $suite = new PHPUnit_Framework_TestSuite('SoftwareUpdate');
-      return $suite;
-   }
-}
-
 ?>

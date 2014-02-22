@@ -40,21 +40,22 @@
    ------------------------------------------------------------------------
  */
 
-class RuleImport extends PHPUnit_Framework_TestCase {
-   
-   
+class RuleImportTest extends Common_TestCase {
+
+
    protected function setUp() {
       global $DB;
 
+      parent::setUp();
+
       $DB->connect();
 
-      $Install = new Install();
-      $Install->testInstall(0);
-   
+      self::restore_database();
+
       $DB->query("UPDATE `glpi_rules`
          SET `is_active`='0'
          WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport'");
-      
+
       // Add a rule to ignore import
       // Create rule for import into unknown devices
       $rule = new Rule();
@@ -96,7 +97,7 @@ class RuleImport extends PHPUnit_Framework_TestCase {
          $input['condition']=0;
          $rulecriteria->add($input);
 
-         
+
          // Add action
          $ruleaction = new RuleAction();
          $input = array();
@@ -105,7 +106,7 @@ class RuleImport extends PHPUnit_Framework_TestCase {
          $input['field'] = '_fusion';
          $input['value'] = '1';
          $ruleaction->add($input);
-         
+
       // Denied import
       $input = array();
       $input['is_active']=1;
@@ -133,9 +134,12 @@ class RuleImport extends PHPUnit_Framework_TestCase {
 
    }
 
-   
-   
-   public function testPrinterDiscoveryImport() {
+
+
+   /**
+    * @test
+    */
+   public function PrinterDiscoveryImport() {
       global $DB, $PF_CONFIG;
 
       $DB->connect();
@@ -155,38 +159,37 @@ class RuleImport extends PHPUnit_Framework_TestCase {
           'SNMPHOSTNAME' => 'UH4DLPT01',
           'TYPE'         => 'PRINTER'
       );
-      
+
       $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
       $printer = new Printer();
-      $GLPIlog = new GLPIlogs();
-      
+
       $printer->add(array(
           'entities_id' => '0',
           'serial'      => 'E8J596100'
       ));
-      
+
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 1;
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id']    = '1';
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype']    = 'Printer';
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['state']       = 0;
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']     = '';
-      
-      $pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);
 
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
+      $pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);
 
       $a_printers = $printer->find();
       $this->assertEquals(1, count($a_printers), 'May have only one Printer');
 
       $a_printer = current($a_printers);
       $this->assertEquals('UH4DLPT01', $a_printer['name'], 'Hostname of printer may be updated');
-      
+
    }
 
-   
-   
-   public function testPrinterDiscoveryImportDenied() {
+
+
+   /**
+    * @test
+    */
+   public function PrinterDiscoveryImportDenied() {
       global $DB;
 
       $DB->connect();
@@ -206,21 +209,17 @@ class RuleImport extends PHPUnit_Framework_TestCase {
           'SNMPHOSTNAME' => 'UH4DLPT01',
           'TYPE'         => 'PRINTER'
       );
-      
+
       $pfCommunicationNetworkDiscovery = new PluginFusioninventoryCommunicationNetworkDiscovery();
       $printer = new Printer();
-      $GLPIlog = new GLPIlogs();
-      
+
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['taskjobs_id'] = 1;
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['items_id']    = '1';
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['itemtype']    = 'Printer';
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['state']       = 0;
       $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']     = '';
-      
-      $pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);
 
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
+      $pfCommunicationNetworkDiscovery->sendCriteria($a_inventory);
 
       $a_printers = $printer->find();
       $this->assertEquals(0, count($a_printers), 'May have only one Printer');
@@ -230,21 +229,9 @@ class RuleImport extends PHPUnit_Framework_TestCase {
       $a_log = current($a_logs);
       $this->assertEquals('==importdenied== [serial]:E8J596100A, '.
               '[mac]:00:80:77:d9:51:c3, [ip]:10.36.4.29, [model]:Printer0442, '.
-              '[name]:UH4DLPT01, [entities_id]:0, [itemtype]:Printer', 
+              '[name]:UH4DLPT01, [entities_id]:0, [itemtype]:Printer',
               $a_log['comment'], 'Import denied message');
    }
 
- }
-
-
-
-class RuleImport_AllTests  {
-
-   public static function suite() {
-    
-      $suite = new PHPUnit_Framework_TestSuite('RuleImport');
-      return $suite;
-   }
 }
-
 ?>

@@ -40,14 +40,17 @@
    ------------------------------------------------------------------------
  */
 
-class ComputerTransformation extends PHPUnit_Framework_TestCase {
-   
-   
-   public function testComputerGeneral() {
+class ComputerTransformation extends RestoreDatabase_TestCase {
+
+
+   /**
+    * @test
+    */
+   public function ComputerGeneral() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_computer = array();
@@ -77,9 +80,9 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
                 'VMSYSTEM'             => 'Physical',
                 'WORKGROUP'            => 'mydomain.local'
             );
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
       if (isset($a_return['fusioninventorycomputer'])
@@ -92,7 +95,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
               'wincompany'                      => '',
               'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date
-          ), 
+          ),
           'soundcard'               => array(),
           'graphiccard'             => array(),
           'controller'              => array(),
@@ -130,16 +133,19 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'contact'                          => 'ddurieux'
      );
       // users_id = 0 because user notin DB
-      $this->assertEquals($a_reference, $a_return);      
-   }   
-   
-   
-   
-   public function testComputerUsers() {
+      $this->assertEquals($a_reference, $a_return);
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerUsers() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_computer = array();
@@ -151,9 +157,9 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
       $a_computer['USERS'][] = array('LOGIN'  => 'ddurieux');
       $a_computer['USERS'][] = array('LOGIN'  => 'admin',
                                      'DOMAIN' => 'local.com');
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
       if (isset($a_return['fusioninventorycomputer'])
@@ -166,7 +172,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
               'wincompany'                      => '',
               'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date
-          ), 
+          ),
           'soundcard'               => array(),
           'graphiccard'             => array(),
           'controller'              => array(),
@@ -204,16 +210,19 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'contact'                          => 'ddurieux/admin@local.com'
      );
       // users_id = 0 because user notin DB
-      $this->assertEquals($a_reference, $a_return);      
-   }   
-   
-   
+      $this->assertEquals($a_reference, $a_return);
+   }
 
-   public function testComputerOperatingSystem() {
+
+
+   /**
+    * @test
+    */
+   public function ComputerOperatingSystem() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_computer = array();
@@ -233,7 +242,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
                 'WINPRODKEY'     => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
                 'WORKGROUP'      => 'WORKGROUP'
             );
-      
+
       $a_computer['OPERATINGSYSTEM'] = array(
           'FULL_NAME'      => 'Microsoft Windows XP Professionnel',
           'INSTALL_DATE'   => '2012-10-16 08:12:56',
@@ -243,9 +252,9 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'SERVICE_PACK'   => 'Service Pack 3',
           'ARCH'           => '32 bits');
 
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
       if (isset($a_return['fusioninventorycomputer'])
@@ -259,7 +268,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
               'operatingsystem_installationdate'         => '2012-10-16 08:12:56',
               'last_fusioninventory_update'              => $date,
               'plugin_fusioninventory_computerarchs_id'  => '32 bits'
-          ), 
+          ),
           'soundcard'               => array(),
           'graphiccard'             => array(),
           'controller'              => array(),
@@ -297,16 +306,19 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'contact'                          => ''
      );
       // users_id = 0 because user notin DB
-      $this->assertEquals($a_reference, $a_return); 
-   }   
-   
-   
-   
-   public function testComputerOperatingSystemOCSType() {
+      $this->assertEquals($a_reference, $a_return);
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerOperatingSystemOCSType() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_computer = array();
@@ -327,9 +339,9 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
                 'WORKGROUP'      => 'WORKGROUP'
             );
 
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
       if (isset($a_return['fusioninventorycomputer'])
@@ -342,7 +354,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> 'NULL',
               'last_fusioninventory_update'     => $date
-          ), 
+          ),
           'soundcard'               => array(),
           'graphiccard'             => array(),
           'controller'              => array(),
@@ -380,16 +392,19 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'contact'                          => ''
      );
       // users_id = 0 because user notin DB
-      $this->assertEquals($a_reference, $a_return); 
+      $this->assertEquals($a_reference, $a_return);
    }
-   
-   
-   
-   public function testComputerProcessor() {
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerProcessor() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_computer = array();
@@ -422,12 +437,12 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
                 'SPEED'          => 2400,
                 'STEPPING'       => 5
                 ));
- 
-     
+
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
-      
+
       $a_reference[0] = array(
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
@@ -438,17 +453,20 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
                     'nbcores'           => '',
                     'nbthreads'         => ''
           );
-      
-      $this->assertEquals($a_reference, $a_return['processor']); 
+
+      $this->assertEquals($a_reference, $a_return['processor']);
    }
-   
-   
-   
-   public function testComputerMonitor() {
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerMonitor() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_computer = array();
@@ -483,11 +501,11 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
                'SERIAL'       => 'UBYVUTFYEIUI'
              )
       );
-     
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
-      
+
       $a_reference = array();
       $a_reference[0] = array(
             'manufacturers_id'   => 'NEC Technologies, Inc.',
@@ -501,16 +519,19 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
             'serial'             => 'UBYVUTFYEIUI',
             'comment'            => ''
           );
-      $this->assertEquals($a_reference, $a_return['monitor']); 
+      $this->assertEquals($a_reference, $a_return['monitor']);
    }
-   
-   
-   
-   public function testComputerLicenses() {
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerLicenses() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_computer = array();
@@ -540,27 +561,30 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
                'PRODUCTID'  => 'xxxxx-640-0000xxx-xxxxx'
                 )
       );
-     
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
-      
+
       $a_reference = array();
       $a_reference[0] = array(
             'name'      => 'Microsoft Office 2003',
             'fullname'  => 'Microsoft Office Professional Edition 2003',
             'serial'    => 'xxxxx-xxxxx-P6RC4-xxxxx-xxxxx'
           );
-      $this->assertEquals($a_reference, $a_return['licenseinfo']); 
+      $this->assertEquals($a_reference, $a_return['licenseinfo']);
    }
-   
-   
-   
-   public function testComputerBios() {
+
+
+
+   /**
+    * @test
+    */
+   public function ComputerBios() {
       global $DB;
 
       $DB->connect();
-      
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_computer = array();
@@ -580,7 +604,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
                 'WINPRODKEY'     => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
                 'WORKGROUP'      => 'WORKGROUP'
             );
-      
+
       $a_computer['BIOS'] = array(
           'ASSETTAG'      => '',
           'BDATE'         => '05/30/2006',
@@ -593,9 +617,9 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'SMANUFACTURER' => 'Dell Inc.',
           'SMODEL'        => 'Dell DXP051',
           'SSN'           => '6PkkD1K');
-      
+
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
-      
+
       $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
       $date = date('Y-m-d H:i:s');
       if (isset($a_return['fusioninventorycomputer'])
@@ -612,7 +636,7 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
               'bios_version'                             => 'A05',
               'bios_assettag'                            => '',
               'bios_manufacturers_id'                    => 'Dell Inc.'
-          ), 
+          ),
           'soundcard'               => array(),
           'graphiccard'             => array(),
           'controller'              => array(),
@@ -650,23 +674,9 @@ class ComputerTransformation extends PHPUnit_Framework_TestCase {
           'contact'                          => ''
      );
       // users_id = 0 because user notin DB
-      $this->assertEquals($a_reference, $a_return); 
-   }   
-
-}
-
-
-
-class ComputerTransformation_AllTests  {
-
-   public static function suite() {
-
-//      $Install = new Install();
-//      $Install->testInstall(0);
-      
-      $suite = new PHPUnit_Framework_TestSuite('ComputerTransformation');
-      return $suite;
+      $this->assertEquals($a_reference, $a_return);
    }
+
 }
 
 ?>

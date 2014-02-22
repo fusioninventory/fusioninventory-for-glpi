@@ -40,17 +40,20 @@
    ------------------------------------------------------------------------
  */
 
-class ComputerMonitor extends PHPUnit_Framework_TestCase {
+class ComputerMonitor extends Common_TestCase {
    public $a_computer1 = array();
    public $a_computer1_beforeformat = array();
    public $a_computer2 = array();
-   
+
+   /*
+    * Why do you define a constructor here while you can set this 2 variables up ahead ???
+    */
    function __construct() {
       $this->a_computer1 = array(
           "Computer" => array(
               "name"   => "pc001",
               "serial" => "ggheb7ne7"
-          ), 
+          ),
           "fusioninventorycomputer" => Array(
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
@@ -89,7 +92,7 @@ class ComputerMonitor extends PHPUnit_Framework_TestCase {
               ),
               "BIOS" => array(
                   "SSN" => "ggheb7ne7"
-              ), 
+              ),
               'MONITORS'        => Array(
                   array(
                       'BASE64' => 'AP///////wAQrDbwQjdFMB8VAQMOKRp47u6Vo1RMmSYPUFS/74CVAHFPgYCVD4EAAQEBAQEBmimg0FGEIjBQmDYAmP8QAAAcAAAA/wBXNlZQSjE4NDBFN0IKAAAA/ABERUxMIEUxOTExCiAgAAAA/QA4Sx5TDgAKICAgICAgALM=',
@@ -101,12 +104,12 @@ class ComputerMonitor extends PHPUnit_Framework_TestCase {
               )
           )
       );
-      
+
       $this->a_computer2 = array(
           "Computer" => array(
               "name"   => "pc002",
               "serial" => "ggheb7ne8"
-          ), 
+          ),
           "fusioninventorycomputer" => Array(
               'last_fusioninventory_update' => date('Y-m-d H:i:s'),
               'serialized_inventory'        => 'something'
@@ -138,264 +141,233 @@ class ComputerMonitor extends PHPUnit_Framework_TestCase {
           'itemtype'       => 'Computer'
       );
    }
-   
-   
+
+
    // Import Monitor of computer with each options:
    //   * 1 = Global import
    //   * 2 = Unique import
    //   * 3 = Unique import on serial number
-   
-   
-   public function testPrinterGlobalimport() {
+
+   /**
+    * TODO: use some dataProvider
+    */
+
+   /**
+    * @test
+    */
+   public function PrinterGlobalimport() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
+
+      self::restore_database();
 
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      
+
       $pfConfig         = new PluginFusioninventoryConfig();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
-      $GLPIlog          = new GLPIlogs();
-      
+
       $pfConfig->updateValue('import_monitor', 1);
       PluginFusioninventoryConfig::loadCache();
-      
+
       $a_computerinventory = $this->a_computer1;
       $a_computer = $a_computerinventory['Computer'];
       $a_computer["entities_id"] = 0;
       $computers_id = $computer->add($a_computer);
-      
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
+
+      $pfiComputerLib->updateComputer($a_computerinventory,
+                                      $computers_id,
+                                      FALSE,
                                       1);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
-      
+
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer');
-      $this->assertEquals(1, 
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'), 
+      $this->assertEquals(1,
+                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
                           'First computer (links)');
 
       $a_computerinventory = $this->a_computer2;
       $a_computer = $a_computerinventory['Computer'];
       $a_computer["entities_id"] = 0;
       $computers_id = $computer->add($a_computer);
-      
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
+
+      $pfiComputerLib->updateComputer($a_computerinventory,
+                                      $computers_id,
+                                      FALSE,
                                       1);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-      
+
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'Second computer');
-      $this->assertEquals(2, 
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'), 
+      $this->assertEquals(2,
+                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
                           'Second computer (links)');
-      
+
       // * Retry first computer
       $a_computerinventory = $this->a_computer1;
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
+      $pfiComputerLib->updateComputer($a_computerinventory,
+                                      $computers_id,
+                                      FALSE,
                                       1);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
-      
+
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer');
-      $this->assertEquals(2, 
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'), 
+      $this->assertEquals(2,
+                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
                           'First computer (links)');
-      
-      $this->assertEquals(0, 
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor" AND `id` > 6'), 
+
+      $this->assertEquals(0,
+                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor" AND `id` > 6'),
                           'First computer (number id of links recreated)');
-      
+
 
       $pfConfig->updateValue('import_monitor', 2);
       PluginFusioninventoryConfig::loadCache();
-   }   
-   
-   
-   
-   public function testMonitorUniqueimport() {
-      
    }
-   
-   
-   
-   public function testMonitorUniqueSerialimport() {
+
+
+
+   /**
+    * @test
+    */
+   public function MonitorUniqueimport() {
+      $this->mark_incomplete();
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function MonitorUniqueSerialimport() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
+
+      self::restore_database();
 
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
-      
+
       $pfConfig         = new PluginFusioninventoryConfig();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
-      $GLPIlog          = new GLPIlogs();
-      
+
       $pfConfig->updateValue('import_monitor', 3);
       PluginFusioninventoryConfig::loadCache();
-      
+
       $a_computerinventory = $this->a_computer1;
       $a_computer = $a_computerinventory['Computer'];
       $a_computer["entities_id"] = 0;
       $computers_id = $computer->add($a_computer);
-      
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
+
+      $pfiComputerLib->updateComputer($a_computerinventory,
+                                      $computers_id,
+                                      FALSE,
                                       1);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly');
-      
+
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer');
-      $this->assertEquals(1, 
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'), 
+      $this->assertEquals(1,
+                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
                           'First computer (links)');
 
       // Second try (verify not create a second same monitor)
-       $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
+       $pfiComputerLib->updateComputer($a_computerinventory,
+                                      $computers_id,
+                                      FALSE,
                                       1);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly (2)');
-      
+
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer (2)');
-      $this->assertEquals(1, 
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'), 
+      $this->assertEquals(1,
+                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
                           'First computer (links) (2)');
-     
+
       // Second computer with same monitor
       $a_computerinventory = $this->a_computer2;
       $a_computer = $a_computerinventory['Computer'];
       $a_computer["entities_id"] = 0;
       $computers_id = $computer->add($a_computer);
-      
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
+
+      $pfiComputerLib->updateComputer($a_computerinventory,
+                                      $computers_id,
+                                      FALSE,
                                       1);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-      
+
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'Second computer');
-      $this->assertEquals(2, 
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'), 
+      $this->assertEquals(2,
+                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
                           'Second computer (links)');
 
       // Retry first computer without monitor
       $a_computerinventory = $this->a_computer1;
       $a_computerinventory['monitor'] = array();
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
+      $pfiComputerLib->updateComputer($a_computerinventory,
+                                      $computers_id,
+                                      FALSE,
                                       1);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly (3)');
-      
+
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer (3)');
-      $this->assertEquals(1, 
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'), 
+      $this->assertEquals(1,
+                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
                           'First computer (links) (3)');
-      
-      
+
+
       // * Retry first computer with monitor
       $a_computerinventory = $this->a_computer1;
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
+      $pfiComputerLib->updateComputer($a_computerinventory,
+                                      $computers_id,
+                                      FALSE,
                                       1);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly (4)');
-      
+
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer (4)');
-      $this->assertEquals(2, 
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'), 
+      $this->assertEquals(2,
+                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
                           'First computer (links) (4)');
-      
-      $this->assertEquals(0, 
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor" AND `id` > 3'), 
+
+      $this->assertEquals(0,
+                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor" AND `id` > 3'),
                           'First computer (number id of links recreated) (4)');
 
-      // * Retry first computer with monitor have same serial number 
+      // * Retry first computer with monitor have same serial number
       // but have different comment
       $a_computerinventory = $this->a_computer1;
       $a_computerinventory['monitor'][0]['comment'] = '31/2012';
-      $pfiComputerLib->updateComputer($a_computerinventory, 
-                                      $computers_id, 
-                                      FALSE, 
+      $pfiComputerLib->updateComputer($a_computerinventory,
+                                      $computers_id,
+                                      FALSE,
                                       1);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
 
       $computer->getFromDB(1);
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly (5)');
-      
+
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer (5)');
-      $this->assertEquals(2, 
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'), 
+      $this->assertEquals(2,
+                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
                           'First computer (links) (5)');
-      
-      $this->assertEquals(0, 
-                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor" AND `id` > 3'), 
+
+      $this->assertEquals(0,
+                          countElementsInTable('glpi_computers_items', 'itemtype="Monitor" AND `id` > 3'),
                           'First computer (number id of links recreated) (5)');
-    
+
 
       $pfConfig->updateValue('import_monitor', 2);
       PluginFusioninventoryConfig::loadCache();
    }
 }
-
-
-
-class ComputerMonitor_AllTests  {
-
-   public static function suite() {
-     
-      $suite = new PHPUnit_Framework_TestSuite('ComputerMonitor');
-      return $suite;
-   }
-}
-
 ?>

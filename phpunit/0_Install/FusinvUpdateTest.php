@@ -40,16 +40,27 @@
    ------------------------------------------------------------------------
  */
 
-require_once("commonfunction.php");
-require_once("0_Install/FusinvDBTest.php");
+/*
+ * bootstrop.php needs to be loaded since tests are run in separate process
+ */
+include_once('bootstrap.php');
+include_once('commonfunction.php');
+include_once (GLPI_ROOT . "/config/based_config.php");
+include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
+include_once (GLPI_CONFIG_DIR . "/config_db.php");
 
-class UpdateTest extends BaseTestCase {
+include_once('0_Install/FusinvDB.php');
+
+class UpdateTest extends RestoreDatabase_TestCase {
 
    /**
     * @dataProvider provider
+    * @runInSeparateProcess
+    * @preserveGlobalState disabled
     * @test
     */
    function update($version = '', $verify = FALSE, $nbrules = 0) {
+      self::restore_database();
       global $DB;
       $DB->connect();
 
@@ -88,12 +99,11 @@ class UpdateTest extends BaseTestCase {
       $output = array();
       $returncode = 0;
       exec(
-         "/usr/bin/php -f ../scripts/cli_install.php 4 1>/dev/null",
+         "/usr/bin/php -f ".FUSINV_ROOT."/scripts/cli_install.php 4",
          $output,
          $returncode
       );
-      $this->assertEquals(0,$returncode);
-      $this->assertEquals(0, count($output), implode("\n", str_replace("\r","\n",$output)));
+      $this->assertEquals(0,$returncode,implode("\n", $output));
 
       $FusinvDB = new FusinvDB();
       $FusinvDB->checkInstall("fusioninventory", "upgrade from ".$version);

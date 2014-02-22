@@ -1,14 +1,11 @@
 <?php
-/**
- * @runTestsInSeparateProcesses
- */
-class TaskTest extends BaseTestCase {
+class TaskTest extends Common_TestCase {
 
    /**
     * @dataProvider provider
+    * @test
     */
-
-   public function testDummy($a) {
+   public function Dummy($a) {
       $session = new Session();
       sleep(1);
       $this->assertEquals(strlen($a), 11);
@@ -17,7 +14,7 @@ class TaskTest extends BaseTestCase {
    public function provider() {
       return array(
          array( "Hello World"),
-         array( "Couin Couin"),
+         array( "Coui Couin"),
          array( "Trouver moi")
       );
    }

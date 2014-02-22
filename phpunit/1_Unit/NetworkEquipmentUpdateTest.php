@@ -40,26 +40,26 @@
    ------------------------------------------------------------------------
  */
 
-class NetworkEquipmentUpdate extends PHPUnit_Framework_TestCase {
-   
+class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
+
    public $items_id = 0;
    public $datelatupdate = '';
 
-   
-   public function testAddNetworkEquipment() {
+
+   /**
+    * @test
+    */
+   public function AddNetworkEquipment() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
 
       $DB->query("UPDATE `glpi_plugin_fusioninventory_networkporttypes`"
               ." SET `import`='1'"
               ." WHERE `number`='53'");
-      
+
       $this->datelatupdate = date('Y-m-d H:i:s');
-      
+
       $a_inventory = array(
           'PluginFusioninventoryNetworkEquipment' => Array(
                   'sysdescr'                    => 'Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(50)SE4, RELEASE SOFTWARE (fc1)\nTechnical Support: http://www.cisco.com/techsupport\nCopyright (c) 1986-2010 by Cisco Systems, Inc.\nCompiled Fri 26-Mar-10 09:14 by prod_rel_team',
@@ -82,14 +82,14 @@ class NetworkEquipmentUpdate extends PHPUnit_Framework_TestCase {
                'otherserial'        => '',
                'manufacturers_id'   => 29,
                'locations_id'       => 3,
-               'networkequipmentmodels_id' => 3, 
-               'networkequipmentfirmwares_id' => 3,          
-               'memory'             => 18,          
+               'networkequipmentmodels_id' => 3,
+               'networkequipmentfirmwares_id' => 3,
+               'memory'             => 18,
                'ram'                => 64,
                'is_dynamic'         => 1,
                'mac'                => '6c:50:4d:39:59:80'
       );
-      
+
       $a_inventory['networkport'] = array(
           '10001' => array(
               'ifdescr'          => 'FastEthernet0/1',
@@ -182,35 +182,34 @@ class NetworkEquipmentUpdate extends PHPUnit_Framework_TestCase {
       $a_inventory['aggregate'] = array(
           '5005' => array('10001', '10002')
       );
-      
+
 
       $pfiNetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
       $networkEquipment = new NetworkEquipment();
-      
+
       $this->items_id = $networkEquipment->add(array('serial'      => 'FOC147UJEU4',
                                                      'entities_id' => 0));
 
       $this->assertGreaterThan(0, $this->items_id);
-      
+
       $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
 
       // To be sure not have 2 sme informations
       $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id);
-   
-      $GLPIlog = new GLPIlogs();
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
+
    }
 
-   
-   
-   public function testNetworkEquipmentGeneral() {
+
+   /**
+    * @test
+    */
+   public function NetworkEquipmentGeneral() {
       global $DB;
 
       $DB->connect();
-      
+
       $networkEquipment = new NetworkEquipment();
-      
+
       $networkEquipment->getFromDB(1);
       unset($networkEquipment->fields['date_mod']);
       $a_reference = array(
@@ -242,17 +241,20 @@ class NetworkEquipmentUpdate extends PHPUnit_Framework_TestCase {
           'ticket_tco'           => '0.0000',
           'is_dynamic'           => '1',
       );
-      
-      $this->assertEquals($a_reference, $networkEquipment->fields);      
-   }   
-   
 
-   
-   public function testNetworkEquipmentSNMPExtension() {
+      $this->assertEquals($a_reference, $networkEquipment->fields);
+   }
+
+
+
+   /**
+    * @test
+    */
+   public function NetworkEquipmentSnmpExtension() {
       global $DB;
 
       $DB->connect();
-      
+
       $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
       $a_networkequipment = current($pfNetworkEquipment->find("`networkequipments_id`='1'", "", 1));
       unset($a_networkequipment['last_fusioninventory_update']);
@@ -271,32 +273,34 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
           'last_PID_update'                             => '0',
           'serialized_inventory'                        => NULL
       );
-      
-      $this->assertEquals($a_reference, $a_networkequipment);      
-      
+
+      $this->assertEquals($a_reference, $a_networkequipment);
+
    }
-   
-   
-   
-   public function testNetworkEquipmentInternalPorts() {
+
+
+   /**
+    * @test
+    */
+   public function NetworkEquipmentInternalPorts() {
       global $DB;
 
       $DB->connect();
-      
+
       $networkPort = new NetworkPort();
       $networkName = new NetworkName();
       $iPAddress   = new IPAddress();
-      
+
       $a_networkports = $networkPort->find("`instantiation_type`='NetworkPortAggregate'
          AND `itemtype`='NetworkEquipment'
          AND `items_id`='1'
          AND `logical_number`='0'");
-      
-      $this->assertEquals(1, count($a_networkports), 'Number internal ports');      
-      
+
+      $this->assertEquals(1, count($a_networkports), 'Number internal ports');
+
       $a_networkport = current($a_networkports);
       $this->assertEquals('6c:50:4d:39:59:80', $a_networkport['mac']);
-      
+
       // May have 3 IP
       $a_networkname = current($networkName->find("`items_id`='".$a_networkport['id']."'
                                                          AND `itemtype`='NetworkPort'", "", 1));
@@ -307,32 +311,37 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
          $a_ips[] = $data['name'];
       }
       $this->assertEquals(array('192.168.30.67', '192.168.40.67', '192.168.50.67'), $a_ips);
-      
-   }     
-   
-   
-   
-   public function testUnknowndeviceNetworkPort() {
+
+   }
+
+
+   /**
+    * @test
+    */
+   public function UnknowndeviceNetworkPort() {
       global $DB;
 
       $DB->connect();
-      
+
       $networkPort = new NetworkPort();
-         
+
       $a_networkports = $networkPort->find("`mac`='cc:f9:54:a1:03:35'
          AND `itemtype`='PluginFusioninventoryUnknownDevice'");
-      
+
       $this->assertEquals(1, count($a_networkports), 'Number of networkport may be 1');
-      
+
       $a_networkport = current($a_networkports);
       $this->assertEquals('NetworkPortEthernet', $a_networkport['instantiation_type'], 'instantiation type may be "NetworkPortEthernet"');
-      
+
       $this->assertGreaterThan(0, $a_networkport['items_id'], 'items_id may be more than 0');
    }
 
-   
-   
-   public function testNetworkPortConnection() {
+
+
+   /**
+    * @test
+    */
+   public function NetworkPortConnection() {
       global $DB;
 
       $DB->connect();
@@ -340,35 +349,38 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $networkPort = new NetworkPort();
       $networkPort_NetworkPort = new NetworkPort_NetworkPort();
       $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
-      
+
       $a_networkports = $networkPort->find("`logical_number`='10001'");
 
       $this->assertEquals(1, count($a_networkports), 'Number of networkport 10001 may be 1');
 
       $a_networkport= current($a_networkports);
       $opposites_id = $networkPort_NetworkPort->getOppositeContact($a_networkport['id']);
-      
+
       $networkPort->getFromDB($opposites_id);
       $pfUnknownDevice->getFromDB($networkPort->fields['items_id']);
 
       $this->assertEquals(0, $pfUnknownDevice->fields['hub'], 'May not be a hub');
-      
+
       $a_networkports = $networkPort->find("`items_id`='".$pfUnknownDevice->fields['id']."'
          AND `itemtype`='PluginFusioninventoryUnknownDevice'");
-      
+
       $this->assertEquals(1, count($a_networkports), 'Number of networkport of unknown ports may be 1');
    }
 
-   
-   
-   public function testNetworkPortAggregation() {
+
+
+   /**
+    * @test
+    */
+   public function NetworkPortAggregation() {
       global $DB;
 
       $DB->connect();
 
       $networkPort = new NetworkPort();
       $networkPortAggregate = new NetworkPortAggregate();
-      
+
       $a_networkports = $networkPort->find("`logical_number`='5005'");
 
       $this->assertEquals(1, count($a_networkports), 'Number of networkport 5005 may be 1');
@@ -378,45 +390,35 @@ Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
       $a_aggregate = current($networkPortAggregate->find("`networkports_id`='".$a_networkport['id']."'", '', 1));
 
       $a_ports = importArrayFromDB($a_aggregate['networkports_id_list']);
-      
+
       $this->assertEquals(array('2', '4'), $a_ports, 'aggregate ports');
    }
-   
-   
-   
-   public function testVlansPort10002() {
+
+
+
+   /**
+    * @test
+    */
+   public function VlansPort10002() {
       global $DB;
 
       $DB->connect();
-      
+
       $networkPort = new NetworkPort();
-      
+
       $a_networkports = $networkPort->find("`instantiation_type`='NetworkPortEthernet'
          AND `itemtype`='NetworkEquipment'
          AND `items_id`='1'
          AND `name`='Fa0/2'");
-      
-      $this->assertEquals(1, count($a_networkports), 'Networkport 10002 of switch may be 1');
+
+      $this->assertEquals(1, count($a_networkports),
+         'Networkport 10002 of switch must have only 1 port'
+      );
 
       $a_networkport = current($a_networkports);
-      
+
       $a_vlans = NetworkPort_Vlan::getVlansForNetworkPort($a_networkport['id']);
       $this->assertEquals(2, count($a_vlans), 'Networkport 10002 of switch may have 2 Vlans');
    }
 }
-
-
-
-class NetworkEquipmentUpdate_AllTests  {
-
-   public static function suite() {
-
-//      $Install = new Install();
-//      $Install->testInstall(0);
-      
-      $suite = new PHPUnit_Framework_TestSuite('NetworkEquipmentUpdate');
-      return $suite;
-   }
-}
-
 ?>

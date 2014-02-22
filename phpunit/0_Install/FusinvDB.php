@@ -53,7 +53,7 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $comparaisonSQLFile = "plugin_".$pluginname."-empty.sql";
       // See http://joefreeman.co.uk/blog/2009/07/php-script-to-compare-mysql-database-schemas/
 
-      $file_content = file_get_contents("../../".$pluginname."/install/mysql/".$comparaisonSQLFile);
+      $file_content = file_get_contents(GLPI_ROOT."/plugins/".$pluginname."/install/mysql/".$comparaisonSQLFile);
       $a_lines = explode("\n", $file_content);
 
       $a_tables_ref = array();

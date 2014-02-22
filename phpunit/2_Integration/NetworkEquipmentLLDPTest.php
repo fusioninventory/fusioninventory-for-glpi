@@ -40,14 +40,14 @@
    ------------------------------------------------------------------------
  */
 
-class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
-   
+class NetworkEquipmentLLDPTest extends Common_TestCase {
+
    // Cases of LLDP informations
-   
+
    /*
     * Nortel
     */
-   
+
 /*
           <CONNECTIONS>
             <CDP>1</CDP>
@@ -57,11 +57,11 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
             </CONNECTION>
           </CONNECTIONS>
 */
-   
+
    /*
     * Cisco
     */
-   
+
 /*
           <CONNECTIONS>
             <CDP>1</CDP>
@@ -84,8 +84,8 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
             </CONNECTION>
           </CONNECTIONS>
 */
-   
-   
+
+
    /*
     * Procurve
     */
@@ -98,8 +98,8 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
               <IP>10.226.164.55</IP>
             </CONNECTION>
           </CONNECTIONS>
-*/ 
-   
+*/
+
 /*
           <CONNECTIONS>
             <CDP>1</CDP>
@@ -112,16 +112,18 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
             </CONNECTION>
           </CONNECTIONS>
 */
-   
-   
-   
-   public function testNortelSwitch() {
+
+
+
+   /**
+    * @test
+    */
+   public function NortelSwitch() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
+
+      self::restore_database();
 
       $a_lldp = array(
           'ifdescr'        => '',
@@ -132,18 +134,18 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
           'mac'            => '00:24:b5:bd:c8:01',
           'name'           => ''
       );
-      
+
       $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkport            = new NetworkPort();
       $GLPIlog                = new GLPIlogs();
-      
+
       // Nortel switch
       $networkequipments_id = $networkEquipment->add(array(
           'name'        => 'nortel',
           'entities_id' => 0
       ));
-      
+
       $networkports_id = $networkport->add(array(
           'itemtype'    => 'NetworkEquipment',
           'items_id'    => $networkequipments_id,
@@ -155,7 +157,7 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
           'name'        => 'otherswitch',
           'entities_id' => 0
       ));
-      
+
       $networkports_other_id = $networkport->add(array(
           'itemtype'       => 'NetworkEquipment',
           'items_id'       => $networkequipments_other_id,
@@ -165,45 +167,44 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
       ));
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-      
+
       $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
-      
-      $this->assertEquals(1, 
-                          count($a_portslinks), 
+
+      $this->assertEquals(1,
+                          count($a_portslinks),
                           'May have 1 connection between 2 network ports');
 
       $a_networkports = getAllDatasFromTable('glpi_networkports');
 
-      $this->assertEquals(2, 
-                          count($a_networkports), 
+      $this->assertEquals(2,
+                          count($a_networkports),
                           'May have 2 network ports ('.print_r($a_networkports, TRUE).')');
 
-      
+
       $a_ref = array(
           'id'                => 1,
           'networkports_id_1' => $networkports_id,
           'networkports_id_2' => $networkports_other_id
       );
-      
-      $this->assertEquals($a_ref, 
-                          current($a_portslinks), 
+
+      $this->assertEquals($a_ref,
+                          current($a_portslinks),
                           'Link port');
-      
+
    }
-   
-   
-   
-   public function testNortelUnknowndevice() {
+
+
+
+   /**
+    * @test
+    */
+   public function NortelUnknowndevice() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
-      
+
+      self::restore_database();
+
       $a_lldp = array(
           'ifdescr'        => '',
           'logical_number' => 22,
@@ -213,19 +214,18 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
           'mac'            => '00:24:b5:bd:c8:01',
           'name'           => ''
       );
-      
+
       $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkport            = new NetworkPort();
-      $GLPIlog                = new GLPIlogs();
       $pfUnknownDevice        = new PluginFusioninventoryUnknownDevice();
-      
+
       // Nortel switch
       $networkequipments_id = $networkEquipment->add(array(
           'name'        => 'nortel',
           'entities_id' => 0
       ));
-      
+
       $networkports_id = $networkport->add(array(
           'itemtype'    => 'NetworkEquipment',
           'items_id'    => $networkequipments_id,
@@ -237,7 +237,7 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
           'name'        => 'otherswitch',
           'entities_id' => 0
       ));
-      
+
       $networkports_unknown_id = $networkport->add(array(
           'itemtype'       => 'PluginFusioninventoryUnknownDevice',
           'items_id'       => $unknowndevices_id,
@@ -246,45 +246,44 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
       ));
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-      
+
       $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
-      
-      $this->assertEquals(1, 
-                          count($a_portslinks), 
+
+      $this->assertEquals(1,
+                          count($a_portslinks),
                           'May have 1 connection between 2 network ports');
 
       $a_networkports = getAllDatasFromTable('glpi_networkports');
 
-      $this->assertEquals(2, 
-                          count($a_networkports), 
+      $this->assertEquals(2,
+                          count($a_networkports),
                           'May have 2 network ports ('.print_r($a_networkports, TRUE).')');
 
-      
+
       $a_ref = array(
           'id'                => 1,
           'networkports_id_1' => $networkports_id,
           'networkports_id_2' => $networkports_unknown_id
       );
-      
-      $this->assertEquals($a_ref, 
-                          current($a_portslinks), 
+
+      $this->assertEquals($a_ref,
+                          current($a_portslinks),
                           'Link port');
-      
+
    }
 
-   
-   
-   public function testNortelNodevice() {
+
+
+   /**
+    * @test
+    */
+   public function NortelNodevice() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
-      
+
+      self::restore_database();
+
       $a_lldp = array(
           'ifdescr'        => '',
           'logical_number' => 22,
@@ -294,18 +293,17 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
           'mac'            => '00:24:b5:bd:c8:01',
           'name'           => ''
       );
-      
+
       $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkport            = new NetworkPort();
-      $GLPIlog                = new GLPIlogs();
-      
+
       // Nortel switch
       $networkequipments_id = $networkEquipment->add(array(
           'name'        => 'nortel',
           'entities_id' => 0
       ));
-      
+
       $networkports_id = $networkport->add(array(
           'itemtype'    => 'NetworkEquipment',
           'items_id'    => $networkequipments_id,
@@ -314,44 +312,43 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
 
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-      
+
       $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
-      
-      $this->assertEquals(1, 
-                          count($a_portslinks), 
+
+      $this->assertEquals(1,
+                          count($a_portslinks),
                           'May have 1 connection between 2 network ports');
 
       $a_networkports = getAllDatasFromTable('glpi_networkports');
 
-      $this->assertEquals(2, 
-                          count($a_networkports), 
+      $this->assertEquals(2,
+                          count($a_networkports),
                           'May have 2 network ports ('.print_r($a_networkports, TRUE).')');
 
-      
+
       $a_ref = array(
           'id'                => 1,
           'networkports_id_1' => $networkports_id,
           'networkports_id_2' => 2
       );
-      
-      $this->assertEquals($a_ref, 
-                          current($a_portslinks), 
+
+      $this->assertEquals($a_ref,
+                          current($a_portslinks),
                           'Link port');
-      
+
    }
 
-   
-   
-   public function testCisco1Switch() {
+
+
+   /**
+    * @test
+    */
+   public function Cisco1Switch() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
+
+      self::restore_database();
 
       $a_lldp = array(
           'ifdescr'        => 'GigabitEthernet0/10',
@@ -362,21 +359,20 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
           'mac'            => '',
           'name'           => ''
       );
-      
+
       $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkport            = new NetworkPort();
-      $GLPIlog                = new GLPIlogs();
       $networkName            = new NetworkName();
       $iPAddress              = new IPAddress();
       $pfNetworkPort          = new PluginFusioninventoryNetworkPort();
-      
+
       // Nortel switch
       $networkequipments_id = $networkEquipment->add(array(
           'name'        => 'cisco1',
           'entities_id' => 0
       ));
-      
+
       $networkports_id = $networkport->add(array(
           'itemtype'    => 'NetworkEquipment',
           'items_id'    => $networkequipments_id,
@@ -388,7 +384,7 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
           'name'        => 'otherswitch',
           'entities_id' => 0
       ));
-      
+
       // Management port
       $managementports_id = $networkport->add(array(
           'itemtype'          => 'NetworkEquipment',
@@ -407,7 +403,7 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
           'items_id' => $networknames_id,
           'name' => '192.168.200.124'
       ));
-      
+
       // Port GigabitEthernet0/10
       $networkports_other_id = $networkport->add(array(
           'itemtype'       => 'NetworkEquipment',
@@ -422,47 +418,44 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
       ));
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-      
+
       $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
-      
-      $this->assertEquals(1, 
-                          count($a_portslinks), 
+
+      $this->assertEquals(1,
+                          count($a_portslinks),
                           'May have 1 connection between 2 network ports');
 
       $a_networkports = getAllDatasFromTable('glpi_networkports');
 
-      $this->assertEquals(3, 
-                          count($a_networkports), 
+      $this->assertEquals(3,
+                          count($a_networkports),
                           'May have 3 network ports ('.print_r($a_networkports, TRUE).')');
 
-      
+
       $a_ref = array(
           'id'                => 1,
           'networkports_id_1' => $networkports_id,
           'networkports_id_2' => $networkports_other_id
       );
-      
-      $this->assertEquals($a_ref, 
-                          current($a_portslinks), 
+
+      $this->assertEquals($a_ref,
+                          current($a_portslinks),
                           'Link port');
-      
+
    }
-   
-   
+
+
 
    /*
+    * @test
     * It find unknown device, but may add the port with this ifdescr
     */
-   public function testCisco1Unknowndevice() {
+   public function Cisco1Unknowndevice() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
+
+      self::restore_database();
 
       $a_lldp = array(
           'ifdescr'        => 'GigabitEthernet0/10',
@@ -473,22 +466,21 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
           'mac'            => '',
           'name'           => ''
       );
-      
+
       $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkport            = new NetworkPort();
-      $GLPIlog                = new GLPIlogs();
       $networkName            = new NetworkName();
       $iPAddress              = new IPAddress();
       $pfNetworkPort          = new PluginFusioninventoryNetworkPort();
       $pfUnknownDevice        = new PluginFusioninventoryUnknownDevice();
-      
+
       // Nortel switch
       $networkequipments_id = $networkEquipment->add(array(
           'name'        => 'cisco1',
           'entities_id' => 0
       ));
-      
+
       $networkports_id = $networkport->add(array(
           'itemtype'    => 'NetworkEquipment',
           'items_id'    => $networkequipments_id,
@@ -500,7 +492,7 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
           'name'        => 'otherswitch',
           'entities_id' => 0
       ));
-      
+
       $networkports_unknown_id = $networkport->add(array(
           'itemtype'       => 'PluginFusioninventoryUnknownDevice',
           'items_id'       => $unknowndevices_id,
@@ -521,26 +513,23 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
 
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-      
+
       $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
-      
-      $this->assertEquals(1, 
-                          count($a_portslinks), 
+
+      $this->assertEquals(1,
+                          count($a_portslinks),
                           'May have 1 connection between 2 network ports');
 
       $a_networkports = getAllDatasFromTable('glpi_networkports');
 
-      $this->assertEquals(3, 
-                          count($a_networkports), 
+      $this->assertEquals(3,
+                          count($a_networkports),
                           'May have 3 network ports ('.print_r($a_networkports, TRUE).')');
 
       $a_unkowns = getAllDatasFromTable('glpi_plugin_fusioninventory_unknowndevices');
 
-      $this->assertEquals(1, 
-                          count($a_unkowns), 
+      $this->assertEquals(1,
+                          count($a_unkowns),
                           'May have only one unknown device ('.print_r($a_unkowns, TRUE).')');
 
 
@@ -560,34 +549,36 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
 
       );
       $networkport->getFromDB(3);
-      $this->assertEquals($a_networkport_ref, 
-                          $networkport->fields, 
+      $this->assertEquals($a_networkport_ref,
+                          $networkport->fields,
                           'New unknown port created');
 
-      
+
       $a_ref = array(
           'id'                => 1,
           'networkports_id_1' => $networkports_id,
           'networkports_id_2' => 3
       );
-      
-      $this->assertEquals($a_ref, 
-                          current($a_portslinks), 
+
+      $this->assertEquals($a_ref,
+                          current($a_portslinks),
                           'Link port');
-      
+
 
    }
 
-   
-   
-   public function testCisco1Nodevice() {
+
+
+   /**
+    * @test
+    */
+   public function Cisco1Nodevice() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
-      
+
+      self::restore_database();
+
       $a_lldp = array(
           'ifdescr'        => 'GigabitEthernet0/10',
           'logical_number' => '',
@@ -597,18 +588,17 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
           'mac'            => '',
           'name'           => ''
       );
-      
+
       $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkport            = new NetworkPort();
-      $GLPIlog                = new GLPIlogs();
-      
+
       // Cisco switch
       $networkequipments_id = $networkEquipment->add(array(
           'name'        => 'cisco',
           'entities_id' => 0
       ));
-      
+
       $networkports_id = $networkport->add(array(
           'itemtype'    => 'NetworkEquipment',
           'items_id'    => $networkequipments_id,
@@ -617,42 +607,41 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
 
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-      
+
       $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
-      
-      $this->assertEquals(1, 
-                          count($a_portslinks), 
+
+      $this->assertEquals(1,
+                          count($a_portslinks),
                           'May have 1 connection between 2 network ports');
 
       $a_networkports = getAllDatasFromTable('glpi_networkports');
 
-      $this->assertEquals(2, 
-                          count($a_networkports), 
+      $this->assertEquals(2,
+                          count($a_networkports),
                           'May have 2 network ports ('.print_r($a_networkports, TRUE).')');
-      
+
       $a_ref = array(
           'id'                => 1,
           'networkports_id_1' => $networkports_id,
           'networkports_id_2' => 2
       );
-      
-      $this->assertEquals($a_ref, 
-                          current($a_portslinks), 
+
+      $this->assertEquals($a_ref,
+                          current($a_portslinks),
                           'Link port');
    }
 
-   
-   
-   public function testCisco2Switch() {
+
+
+   /**
+    * @test
+    */
+   public function Cisco2Switch() {
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
+
+      self::restore_database();
 
       $a_lldp = array(
           'ifdescr'        => 'ge-0/0/1.0',
@@ -663,19 +652,18 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
           'mac'            => '2c:6b:f5:98:f9:70',
           'name'           => 'juniperswitch3'
       );
-      
+
       $pfINetworkEquipmentLib = new PluginFusioninventoryInventoryNetworkEquipmentLib();
       $networkEquipment       = new NetworkEquipment();
       $networkport            = new NetworkPort();
-      $GLPIlog                = new GLPIlogs();
       $pfNetworkPort          = new PluginFusioninventoryNetworkPort();
-      
+
       // Cisco switch
       $networkequipments_id = $networkEquipment->add(array(
           'name'        => 'cisco2',
           'entities_id' => 0
       ));
-      
+
       $networkports_id = $networkport->add(array(
           'itemtype'    => 'NetworkEquipment',
           'items_id'    => $networkequipments_id,
@@ -687,7 +675,7 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
           'name'        => 'juniperswitch3',
           'entities_id' => 0
       ));
-      
+
       // Port ge-0/0/1.0
       $networkports_other_id = $networkport->add(array(
           'itemtype'       => 'NetworkEquipment',
@@ -702,69 +690,59 @@ class NetworkEquipmentLLDP extends PHPUnit_Framework_TestCase {
       ));
 
       $pfINetworkEquipmentLib->importConnectionLLDP($a_lldp, $networkports_id);
-      
-      $GLPIlog->testSQLlogs();
-      $GLPIlog->testPHPlogs();
-      
+
       $a_portslinks = getAllDatasFromTable('glpi_networkports_networkports');
-      
-      $this->assertEquals(1, 
-                          count($a_portslinks), 
+
+      $this->assertEquals(1,
+                          count($a_portslinks),
                           'May have 1 connection between 2 network ports');
 
       $a_networkports = getAllDatasFromTable('glpi_networkports');
 
-      $this->assertEquals(2, 
-                          count($a_networkports), 
+      $this->assertEquals(2,
+                          count($a_networkports),
                           'May have 2 network ports ('.print_r($a_networkports, TRUE).')');
 
-      
+
       $a_ref = array(
           'id'                => 1,
           'networkports_id_1' => $networkports_id,
           'networkports_id_2' => $networkports_other_id
       );
-      
-      $this->assertEquals($a_ref, 
-                          current($a_portslinks), 
+
+      $this->assertEquals($a_ref,
+                          current($a_portslinks),
                           'Link port');
-      
+
    }
-   
-   
-   
+
+
+   /**
+    * @test
+    */
    public function testCisco2Unknowndevice() {
+
+      $this->mark_incomplete();
+
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
-      
    }
 
-   
-   
-   public function testCisco2Nodevice() {
+
+
+   /**
+    * @test
+    */
+   public function Cisco2Nodevice() {
+
+      $this->mark_incomplete();
+
       global $DB;
 
       $DB->connect();
-      
-      $Install = new Install();
-      $Install->testInstall(0);
+
    }
 
 }
-
-
-
-class NetworkEquipmentLLDP_AllTests  {
-
-   public static function suite() {
-      
-      $suite = new PHPUnit_Framework_TestSuite('NetworkEquipmentLLDP');
-      return $suite;
-   }
-}
-
 ?>

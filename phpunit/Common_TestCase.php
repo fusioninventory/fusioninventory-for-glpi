@@ -1,51 +1,63 @@
 <?php
+include_once('bootstrap.php');
+include_once('commonfunction.php');
 
-class BaseTestCase extends PHPUnit_Framework_TestCase {
+include_once (GLPI_ROOT . "/config/based_config.php");
+include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
+include_once (GLPI_CONFIG_DIR . "/config_db.php");
 
-   public static function should_restore_install() {
-      return TRUE;
+
+abstract class Common_TestCase extends PHPUnit_Framework_TestCase {
+
+   public function mark_incomplete() {
+      $this->markTestIncomplete('This test is not implemented yet');
    }
 
-   public static function setUpBeforeClass()
-   {
+   public static function restore_database() {
 
-      if (!defined('GLPI_ROOT')) {
-         define('GLPI_ROOT', realpath('../../..'));
-      }
-      include_once (GLPI_ROOT . "/config/based_config.php");
-      include_once (GLPI_ROOT . "/inc/dbmysql.class.php");
-      include_once (GLPI_CONFIG_DIR . "/config_db.php");
+      self::drop_database();
+      self::load_mysql_file('./save.sql');
+
+   }
+
+   public static function load_mysql_file($filename) {
+
+      self::assertFileExists($filename, 'File '.$filename.' does not exist!');
 
       $DBvars = get_class_vars('DB');
 
-      if (self::should_restore_install()) {
-         $result = drop_database(
-            $DBvars['dbuser'],
-            $DBvars['dbhost'],
-            $DBvars['dbdefault'],
-            $DBvars['dbpassword']
-         );
+      $result = load_mysql_file(
+         $DBvars['dbuser'],
+         $DBvars['dbhost'],
+         $DBvars['dbdefault'],
+         $DBvars['dbpassword'],
+         $filename
+      );
 
-         self::assertEquals( 0, $result['returncode'],
-            "Failed to drop GLPI database:\n".
-            implode("\n", $result['output'])
-         );
-         self::assertFileExists('save.sql');
-
-         $result = load_mysql_file(
-            $DBvars['dbuser'],
-            $DBvars['dbhost'],
-            $DBvars['dbdefault'],
-            $DBvars['dbpassword'],
-            "save.sql"
-         );
-
-         self::assertEquals( 0, $result['returncode'],
-            "Failed to restore database:\n".
-            implode("\n", $result['output'])
-         );
-      }
+      self::assertEquals( 0, $result['returncode'],
+         "Failed to restore database:\n".
+         implode("\n", $result['output'])
+      );
    }
+
+   public static function drop_database() {
+
+      $DBvars = get_class_vars('DB');
+
+      $result = drop_database(
+         $DBvars['dbuser'],
+         $DBvars['dbhost'],
+         $DBvars['dbdefault'],
+         $DBvars['dbpassword']
+      );
+
+      self::assertEquals( 0, $result['returncode'],
+         "Failed to drop GLPI database:\n".
+         implode("\n", $result['output'])
+      );
+
+   }
+
 
    protected function setUp() {
       global $CFG_GLPI,$DB;
@@ -58,12 +70,8 @@ class BaseTestCase extends PHPUnit_Framework_TestCase {
       $_SESSION['glpiactiveentities'] = array(0, 1);
 
       $_SESSION['glpi_use_mode'] = Session::NORMAL_MODE;
-      //$CFG_GLPI['debug_sql'] = TRUE;
 
-      //$CFG_GLPI['root_doc'] = GLPI_ROOT;
       require (GLPI_ROOT . "/inc/includes.php");
-      //$this->assertTrue(FALSE, var_export(spl_classes(),TRUE));
-      //$this->assertTrue(FALSE, var_export($CFG_GLPI,TRUE));
 
 
       $plugin = new Plugin();
