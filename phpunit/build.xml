@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="plugin-fusioninventory" default="build">
+<project name="plugin-fusioninventory" default="build"
+ xmlns:if="ant:if"
+ xmlns:unless="ant:unless"
+ >
 
  <property name="fusioninventory.directory" value="${basedir}/glpi/plugins/fusioninventory" />
 
@@ -144,6 +147,15 @@
   <isset property='with.coverage.html'/>
  </condition>
 
+ <!-- clear SQL savepoint -->
+ <condition property='clear.savepoint'
+  value='true'
+  else='false'>
+  <and>
+   <isset property='clearsavepoint'/>
+   <istrue value='${clearsavepoint}' />
+  </and>
+ </condition>
 
  <macrodef name='phpunit.run'>
   <attribute name='configuration' />
@@ -223,11 +235,12 @@
 
  <target name="phpunit.all" depends='prepare' description="Run every unit tests with PHPUnit">
 
-  <phpunit.run type='update'
-   configuration='${fusioninventory.directory}/phpunit/testsuites_update.xml' />
+  <sequential if:true="${clear.savepoint}">
+   <phpunit.run type='update'
+    configuration='${fusioninventory.directory}/phpunit/testsuites_update.xml'/>
 
-  <phpunit.run type='install'
-   configuration='${fusioninventory.directory}/phpunit/testsuites_install.xml' />
+   <phpunit.run type='install'
+    configuration='${fusioninventory.directory}/phpunit/testsuites_install.xml' />
 
   <!--
        No need to continue only if install fails since we need a good save.sql
@@ -240,26 +253,28 @@
     <isfailure code='${phpunit.returncode.install}' />
    </condition>
   </fail>
+  </sequential>
 
-  <phpunit.run type='unit'
-   configuration='${fusioninventory.directory}/phpunit/testsuites_unit.xml' />
+  <sequential>
+   <phpunit.run type='unit'
+    configuration='${fusioninventory.directory}/phpunit/testsuites_unit.xml' />
 
-  <phpunit.run type='integration'
-   configuration='${fusioninventory.directory}/phpunit/testsuites_integration.xml' />
+   <phpunit.run type='integration'
+    configuration='${fusioninventory.directory}/phpunit/testsuites_integration.xml' />
 
-  <format.testlog />
+   <format.testlog />
 
-
-  <fail>
-   <condition>
-    <or>
-     <isfailure code='${phpunit.returncode.update}' />
-     <isfailure code='${phpunit.returncode.install}' />
-     <isfailure code='${phpunit.returncode.unit}' />
-     <isfailure code='${phpunit.returncode.integration}' />
-    </or>
-   </condition>
-  </fail>
+   <fail>
+    <condition>
+     <or>
+      <isfailure code='${phpunit.returncode.update}' />
+      <isfailure code='${phpunit.returncode.install}' />
+      <isfailure code='${phpunit.returncode.unit}' />
+      <isfailure code='${phpunit.returncode.integration}' />
+     </or>
+    </condition>
+   </fail>
+  </sequential>
  </target>
 
 </project>
