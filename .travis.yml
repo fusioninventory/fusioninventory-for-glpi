@@ -9,9 +9,9 @@ before_install:
  - git clone git://github.com/fusinv/glpi.git glpi
  - sudo mkdir /var/www/fi_testsuite/
  - sudo mv glpi /var/www/fi_testsuite/glpi
- - mysql -e "GRANT ALL PRIVILEGES ON glpi.* TO 'travis'@'localhost';"
- - mysql -e "FLUSH PRIVILEGES;"
- - mysql -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis')"
+ - mysql -u root -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis')"
+ - mysql -u root -e "GRANT ALL PRIVILEGES ON glpi.* TO 'travis'@'localhost';"
+ - mysql -u root -e "FLUSH PRIVILEGES;"
  - sudo echo '<?php class DB extends DBmysql {var $dbhost = "localhost";var $dbuser = "travis";var $dbpassword= "travis";var $dbdefault = "glpi";}' > /var/www/fi_testsuite/glpi/config/config_db.php
  - sudo mkdir /var/www/fi_testsuite/glpi/plugins/fusioninventory
  - sudo cp -r . /var/www/fi_testsuite/glpi/plugins/fusioninventory/
