@@ -5,24 +5,21 @@ php:
   - 5.5
 before_install:
  - sudo apt-get update -qq
- - sudo apt-get install -qq libapache2-mod-php5 php5-mysql
+ - sudo apt-get install -qq libapache2-mod-php5 php5-cli php5-mysql php5-xmlrpc php5-xsl php5-ldap php5-json php5-intl php5-imap php5-gd php5-curl ant
  - git clone git://github.com/fusinv/glpi.git glpi
- - sudo mv glpi /var/www/fusion0.85
- - mysql -e "CREATE DATABASE glpi;"
- - mysql -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis')";
- - sudo echo '<?php class DB extends DBmysql {var $dbhost = "localhost";var $dbuser = "travis";var $dbpassword= "travis";var $dbdefault = "glpi";}' > /var/www/fusion0.85/config/config_db.php
- - cat /var/www/fusion0.85/install/mysql/glpi-0.85-empty.sql | mysql -utravis -ptravis glpi
- - sudo mkdir /var/www/fusion0.85/plugins/fusioninventory
- - sudo cp -r . /var/www/fusion0.85/plugins/fusioninventory
- - sudo chown -R travis:www-data /var/www/fusion0.85
- - sudo chmod -R g+w /var/www/fusion0.85
- - cd /var/www/fusion0.85/plugins/fusioninventory/tools
- - php cli_install.php
- - cd /var/www/fusion0.85/plugins/fusioninventory/phpunit/
- - echo > /var/www/fusion0.85/files/_log/php-errors.log
+ - sudo mkdir /var/www/fi_testsuite/
+ - sudo mv glpi /var/www/fi_testsuite/glpi
+ - mysql -e "CREATE USER 'travis'@'localhost' IDENTIFIED BY 'travis';"
+ - mysql -e "GRANT ALL PRIVILEGES ON glpi.* TO 'travis'@'localhost';"
+ - mysql -e "FLUSH PRIVILEGES;"
+ - sudo echo '<?php class DB extends DBmysql {var $dbhost = "localhost";var $dbuser = "travis";var $dbpassword= "travis";var $dbdefault = "glpi";}' > /var/www/fi_testsuite/glpi/config/config_db.php
+ - sudo mkdir /var/www/fi_testsuite/glpi/plugins/fusioninventory
+ - sudo cp -r . /var/www/fi_testsuite/glpi/plugins/fusioninventory/
+ - sudo chown -R travis:www-data /var/www/fi_testsuite
+ - sudo chmod -R g+w /var/www/fi_testsuite
 
-script: phpunit AllTests.php && test -f result.stamp
+script: cd /var/www/fi_testsuite && ant -Dclearsavepoint='true' -Dbasedir=. -f ./glpi/plugins/fusioninventory/phpunit/build.xml phpunit.all
+
 branches:
   only:
     - master
-    - glpi0.84
