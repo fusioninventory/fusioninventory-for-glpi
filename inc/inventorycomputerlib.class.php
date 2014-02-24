@@ -2180,16 +2180,27 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       } else if ($pfConfig->getValue('import_monitor') == 3) {
          // Unique import on serial number
+         $entity = "AND `entities_id`='".$data['entities_id']."'";
+         if ($pfConfig->getValue('transfers_id_auto') > 0) {
+            $entity = '';
+         }
          $added = 0;
-         $query = "SELECT `glpi_monitors`.`id` FROM `glpi_monitors`
+         $query = "SELECT `glpi_monitors`.`id`, `glpi_monitors`.`entities_id` 
+            FROM `glpi_monitors`
             WHERE `serial`='".$data['serial']."'
                AND `is_global`='0'
-               AND `entities_id`='".$data['entities_id']."'
+               ".$entity."
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
             $db_data = $DB->fetch_assoc($result);
             $monitors_id = $db_data['id'];
+            if ($db_data['entities_id'] != $data['entities_id']) {
+               $transfer = new Transfer();
+               $transfer->getFromDB($pfConfig->getValue('transfers_id_auto'));
+               $item_to_transfer = array("Monitor" => array($db_data['id']=>$db_data['id']));
+               $transfer->moveItems($item_to_transfer, $data['entities_id'], $transfer->fields);
+            }
          } else {
             $data['is_global'] = 0;
             $monitors_id = $monitor->add($data);
@@ -2263,17 +2274,28 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       } else if ($pfConfig->getValue('import_printer') == 3) {
          // Unique import on serial number
+         $entity = "AND `entities_id`='".$data['entities_id']."'";
+         if ($pfConfig->getValue('transfers_id_auto') > 0) {
+            $entity = '';
+         }
          $added = 0;
-         $query = "SELECT `glpi_printers`.`id` FROM `glpi_printers`
+         $query = "SELECT `glpi_printers`.`id`, `glpi_printers`.`entities_id` 
+            FROM `glpi_printers`
             WHERE `name`='".$data['name']."'
                AND `serial`='".$data['serial']."'
                AND `is_global`='0'
-               AND `entities_id`='".$data['entities_id']."'
+               ".$entity."
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
             $db_data = $DB->fetch_assoc($result);
             $printers_id = $db_data['id'];
+            if ($db_data['entities_id'] != $data['entities_id']) {
+               $transfer = new Transfer();
+               $transfer->getFromDB($pfConfig->getValue('transfers_id_auto'));
+               $item_to_transfer = array("Printer" => array($db_data['id']=>$db_data['id']));
+               $transfer->moveItems($item_to_transfer, $data['entities_id'], $transfer->fields);
+            }
          } else {
             $data['is_global'] = 0;
             $printers_id = $printer->add($data);
@@ -2353,18 +2375,29 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          }
       } else if ($pfConfig->getValue('import_peripheral') == 3) {
          // Unique import on serial number
+         $entity = "AND `entities_id`='".$data['entities_id']."'";
+         if ($pfConfig->getValue('transfers_id_auto') > 0) {
+            $entity = '';
+         }
          $added = 0;
-         $query = "SELECT `glpi_peripherals`.`id` FROM `glpi_peripherals`
+         $query = "SELECT `glpi_peripherals`.`id`, `glpi_peripherals`.`entities_id` 
+            FROM `glpi_peripherals`
             WHERE `name`='".$data['name']."'
                AND `manufacturers_id`='".$data['manufacturers_id']."'
                AND `serial`='".$data['serial']."'
                AND `is_global`='0'
-               AND `entities_id`='".$data['entities_id']."'
+               ".$entity."
             LIMIT 1";
          $result = $DB->query($query);
          if ($DB->numrows($result) == 1) {
             $db_data = $DB->fetch_assoc($result);
             $peripherals_id = $db_data['id'];
+            if ($db_data['entities_id'] != $data['entities_id']) {
+               $transfer = new Transfer();
+               $transfer->getFromDB($pfConfig->getValue('transfers_id_auto'));
+               $item_to_transfer = array("Peripheral" => array($db_data['id']=>$db_data['id']));
+               $transfer->moveItems($item_to_transfer, $data['entities_id'], $transfer->fields);
+            }
          } else {
             $data['is_global'] = 0;
             $peripherals_id = $peripheral->add($data);
