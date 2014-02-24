@@ -745,7 +745,6 @@ class PluginFusioninventoryFormatconvert {
                                                     'IPGATEWAY'   => 'gateway',
                                                     'IPMASK'      => 'netmask',
                                                     'IPDHCP'      => 'dhcpserver'));
-
                   if ((isset($array_tmp['name'])
                           && $array_tmp['name'] != '')
                        || (isset($array_tmp['mac'])
@@ -1447,7 +1446,8 @@ class PluginFusioninventoryFormatconvert {
 
       foreach ($array as $key=>$value) {
          if (!is_int($key)
-                 && $key == "software") {
+                 && ($key == "software"
+                     || $key == 'ipaddress')) {
             // do nothing
          } else {
             //if (is_array($value)) {
