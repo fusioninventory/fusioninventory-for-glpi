@@ -681,7 +681,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
    function getAgentsSubnet($nb_computers, $communication, $subnet='', $ipstart='', $ipend='') {
       global $DB;
-
+      
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
 
@@ -693,12 +693,12 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $a_agentList = array();
 
       if ($subnet != '') {
-         $subnet = " AND `ip` LIKE '".$subnet."%' ";
+         $subnet = " AND `glpi_ipaddresses`.`name` LIKE '".$subnet."%' ";
       } else if ($ipstart != '' AND $ipend != '') {
-         $subnet = " AND ( INET_ATON(`ip`) > INET_ATON('".$ipstart."')
-            AND  INET_ATON(`ip`) < INET_ATON('".$ipend."') ) ";
+         $subnet = " AND ( INET_ATON(`glpi_ipaddresses`.`name`) > INET_ATON('".$ipstart."')
+            AND  INET_ATON(`glpi_ipaddresses`.`name`) < INET_ATON('".$ipend."') ) ";
       }
-      $a_agents = $pfAgentmodule->getAgentsCanDo('SNMPQUERY');
+      $a_agents = $pfAgentmodule->getAgentsCanDo('NETWORKINVENTORY');
       $a_agentsid = array();
       foreach($a_agents as $a_agent) {
          $a_agentsid[] = $a_agent['id'];
@@ -710,17 +710,25 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $where = " AND `glpi_plugin_fusioninventory_agents`.`ID` IN (";
       $where .= implode(', ', $a_agentsid);
       $where .= ")
-         AND `ip` != '127.0.0.1' ";
+         AND `glpi_ipaddresses`.`name` != '127.0.0.1' ";
 
-      $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, ip, subnet, token
+      $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, 
+         `glpi_ipaddresses`.`name` as ip, token
          FROM `glpi_plugin_fusioninventory_agents`
          LEFT JOIN `glpi_networkports`
-            ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+            ON `glpi_networkports`.`items_id` = `glpi_plugin_fusioninventory_agents`.`computers_id`
+         LEFT JOIN `glpi_networknames`
+              ON `glpi_networknames`.`items_id`=`glpi_networkports`.`id`
+                 AND `glpi_networknames`.`itemtype`='NetworkPort'
+         LEFT JOIN `glpi_ipaddresses`
+              ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
+                 AND `glpi_ipaddresses`.`itemtype`='NetworkName'
          LEFT JOIN `glpi_computers`
-            ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`items_id`
+            ON `glpi_computers`.`id` = `glpi_plugin_fusioninventory_agents`.`computers_id`
          WHERE `glpi_networkports`.`itemtype`='Computer'
             ".$subnet."
             ".$where." ";
+      Toolbox::logInFile('NET', $query);
       $result = $DB->query($query);
       if ($result) {
          while ($data=$DB->fetch_array($result)) {
