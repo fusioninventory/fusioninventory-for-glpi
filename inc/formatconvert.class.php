@@ -861,8 +861,6 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
-
-
       // * SLOTS
 
       // * SOFTWARES
@@ -1493,7 +1491,8 @@ class PluginFusioninventoryFormatconvert {
 
       foreach ($array as $key=>$value) {
          if (!is_int($key)
-                 && $key == "software") {
+                 && ($key == "software"
+                     || $key == 'ipaddress')) {
             // do nothing
          } else {
             //if (is_array($value)) {
