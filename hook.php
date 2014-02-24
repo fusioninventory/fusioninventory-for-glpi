@@ -1114,7 +1114,7 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 
 
 function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
-   global $DB;
+   global $DB, $CFG_GLPI;
 
       switch ($options['action']) {
          case "plugin_fusioninventory_manage_locks" :
@@ -1122,7 +1122,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
             $pfil->showForm($_SERVER["PHP_SELF"], $options['itemtype']);
             break;
 
-       case 'plugin_fusinvdeploy_deploy_target_task' :
+       case 'plugin_fusioninventory_deploy_target_task' :
           echo "<table class='tab_cadre'>";
           echo "<tr>";
           echo "<td>";
@@ -1130,14 +1130,14 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
           echo "</td>";
           echo "<td>";
          $rand = mt_rand();
-         Dropdown::show('PluginFusioninventoryDeployTask', array(
+         Dropdown::show('PluginFusioninventoryTask', array(
                'name'      => "tasks_id",
                'condition' => "is_active = 0",
                'toupdate'  => array(
-                     'value_fieldname' => "__VALUE__",
-                     'to_update'       => "dropdown_PluginFusioninventoryTaskjobs_id$rand",
-                     'url'             => GLPI_ROOT.
-                                             "/plugins/fusinvdeploy/ajax/dropdown_taskjob.php"
+                     'value_fieldname' => "id",
+                     'to_update'       => "dropdown_packages_id$rand",
+                     'url'             => $CFG_GLPI["root_doc"].
+                                             "/plugins/fusioninventory/ajax/dropdown_taskjob.php"
             )
          ));
          echo "</td>";
@@ -1148,7 +1148,8 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          echo "</td>";
          echo "<td>";
          Dropdown::show('PluginFusioninventoryDeployPackage', array(
-                  'name'      => "packages_id"
+                  'name' => "packages_id",
+                  'rand' => $rand
          ));
          echo "</td>";
          echo "</tr>";
@@ -1271,7 +1272,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
 
 function plugin_fusioninventory_MassiveActionsProcess($data) {
    global $DB;
-
+   
    switch ($data['action']) {
       case "plugin_fusioninventory_manage_locks" :
          if (($data['itemtype'] == "NetworkEquipment")
@@ -1295,12 +1296,12 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          }
          break;
 
-      case 'plugin_fusinvdeploy_targetDeployTask' :
-         $taskjob = new PluginFusioninventoryDeployTaskjob;
+      case 'plugin_fusioninventory_deploy_target_task' :
+         $taskjob = new PluginFusioninventoryDeployTaskjob();
          $tasks = array();
 
          //get old datas
-         $oldjobs = $taskjob->find("plugin_fusinvdeploy_tasks_id = '".$data['tasks_id']."'");
+         $oldjobs = $taskjob->find("plugin_fusioninventory_tasks_id = '".$data['tasks_id']."'");
 
          switch($data['itemtype']) {
             case 'PluginFusioninventoryDeployGroup':
@@ -1356,7 +1357,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
 
             //reimport old jobs
             foreach($oldjobs as $job) {
-               $sql = "INSERT INTO glpi_plugin_fusinvdeploy_taskjobs (";
+               $sql = "INSERT INTO glpi_plugin_fusioninventory_taskjobs (";
                foreach ($job as $key => $val) {
                   $sql .= "`$key`, ";
                }
