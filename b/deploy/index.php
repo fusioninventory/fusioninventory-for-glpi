@@ -111,6 +111,7 @@ if (isset($_GET['action'])) {
          break;
 
       case 'getFilePart':
+         $DB->close();
          PluginFusioninventoryDeployFilepart::httpSendFile($_GET);
          exit;
          break;
