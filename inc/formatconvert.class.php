@@ -1454,9 +1454,14 @@ class PluginFusioninventoryFormatconvert {
             if ((array)$value === $value) {
                $array[$key] = $this->replaceids($value);
             } else {
-               if ($key == "manufacturers_id") {
+               if ($key == "manufacturers_id"
+                       || $key == 'bios_manufacturers_id') {
                   $manufacturer = new Manufacturer();
                   $array[$key]  = $manufacturer->processName($value);
+                  if ($key == 'bios_manufacturers_id') {
+                     $this->foreignkey_itemtype[$key] =
+                              getItemTypeForTable(getTableNameForForeignKeyField('manufacturers_id'));
+                  }
                }
                if (isset($this->foreignkey_itemtype[$key])) {
                   $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
