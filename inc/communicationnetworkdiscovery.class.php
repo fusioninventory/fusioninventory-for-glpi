@@ -227,7 +227,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
          $pfIgnoredimport = new PluginFusioninventoryIgnoredimportdevice();
          $inputdb = array();
-         $inputdb['name'] = $input['name'];
+         if (isset($input['name'])) {
+            $inputdb['name'] = $input['name'];
+         }
          $inputdb['date'] = date("Y-m-d H:i:s");
          if (isset($input['itemtype'])) {
             $inputdb['itemtype'] = $input['itemtype'];
@@ -683,7 +685,10 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                                           serialize($_SESSION['SOURCE_XMLDEVICE']),
                                           "NetworkEquipment");
             }
-            $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
+            if (isset($arrayinventory['DESCRIPTION'])
+                    && !empty($arrayinventory['DESCRIPTION'])) {
+               $input['sysdescr'] = $arrayinventory['DESCRIPTION'];
+            }
             $pfModel = new PluginFusioninventorySnmpmodel();
             if (isset($arrayinventory['MODELSNMP']) 
                     && !empty($arrayinventory['MODELSNMP'])) {
@@ -692,7 +697,10 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
                   $input['plugin_fusioninventory_snmpmodels_id'] = $model_id;
                }
             }
-            $input['plugin_fusioninventory_configsecurities_id'] = $arrayinventory['AUTHSNMP'];
+            if (isset($arrayinventory['AUTHSNMP'])
+                    && !empty($arrayinventory['AUTHSNMP'])) {
+               $input['plugin_fusioninventory_configsecurities_id'] = $arrayinventory['AUTHSNMP'];
+            }
             $pfNetworkEquipment->update($input);
             break;
 
