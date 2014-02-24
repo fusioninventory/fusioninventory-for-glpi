@@ -847,7 +847,7 @@ function plugin_fusioninventory_MassiveActions($type) {
       case "Computer":
          return array (
             "plugin_fusioninventory_manage_locks" => _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")",
-            "plugin_fusioninventory_deploy_target_task" => __('Target a task', 'fusioninventory')
+            "plugin_fusioninventory_deploy_target_task" => __('Target a deployment task', 'fusioninventory')
          );
          break;
 
@@ -1053,24 +1053,23 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
                'condition' => "is_active = 0",
                'toupdate'  => array(
                      'value_fieldname' => "id",
-                     'to_update'       => "dropdown_packages_id$rand",
+                     'to_update'       => "dropdown_taskjobs_id$rand",
                      'url'             => $CFG_GLPI["root_doc"].
                                              "/plugins/fusioninventory/ajax/dropdown_taskjob.php"
             )
          ));
          echo "</td>";
          echo "</tr>";
+         
          echo "<tr>";
          echo "<td>";
          echo __('Package', 'fusioninventory')."&nbsp;:";
          echo "</td>";
          echo "<td>";
-         Dropdown::show('PluginFusioninventoryDeployPackage', array(
-                  'name' => "packages_id",
-                  'rand' => $rand
-         ));
+         Dropdown::showFromArray('taskjobs_id', array(), array('rand' => $rand));
          echo "</td>";
          echo "</tr>";
+         
          echo "<tr>";
          echo "<td colspan='2'>";
          echo "<input type='checkbox' name='separate_jobs' value='1'/>&nbsp;";
@@ -1081,6 +1080,14 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
          }
          echo "</td>";
          echo "</tr>";
+         
+         echo "<tr>";
+         echo "<td colspan='2'>";
+         echo "<input type='checkbox' name='replaceitems' value='1'/>&nbsp;";
+         echo __('Replace items yet in job', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+         
          echo "<tr>";
          echo "<td colspan='2' align='center'>";
          echo "<input type='submit' name='massiveaction' class='submit' value='".
@@ -1217,82 +1224,49 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
          break;
 
       case 'plugin_fusioninventory_deploy_target_task' :
-         $taskjob = new PluginFusioninventoryDeployTaskjob();
-         $tasks = array();
+         
+         if (isset($data['taskjobs_id'])
+                 && $data['taskjobs_id'] > 0) {
+            $pfTaskjob = new PluginFusioninventoryTaskjob();
+            $pfTaskjob->getFromDB($data['taskjobs_id']);
 
-         //get old datas
-         $oldjobs = $taskjob->find("plugin_fusioninventory_tasks_id = '".$data['tasks_id']."'");
+            if (isset($data['separate_jobs'])
+                    && $data['separate_jobs'] == 1) {
 
-         switch($data['itemtype']) {
-            case 'PluginFusioninventoryDeployGroup':
-            case 'Computer':
-
-            // TODO: rename 'tasks' variables into 'job'
-            // The 'separate jobs' option allows to create a taskjob for each computer
-            // (I can't see the point but it may be
-            // usefull for some people ... even if it creates 500 jobs for just a
-            // single deployment package targetted ... i prefer not to comment
-            // furthermore :) ).
-
-            if (array_key_exists('separate_jobs', $data)) {
-               foreach ($data['item'] as $key => $val) {
-                  $task = new StdClass;
-                  $task->package_id = $data['packages_id'];
-                  $task->method = 'deployinstall';
-                  $task->retry_nb = 3;
-                  $task->retry_time = 0;
-                  //add new datas
-                  $task->action = array(array($data['itemtype'] => $key));
-                  $tasks[] = $task;
-               }
+               $input = $pfTaskjob->fields;
+               unset($input['id']);
+               unset($input['date_creation']);
+               foreach ($data['item'] as $items_id=>$num) {
+                  $input['action'] = exportArrayToDB(array(array($data['itemtype'] => $items_id)));
+                  $pfTaskjob->add($input);
+               }               
             } else {
-               $task = new StdClass;
-               $task->package_id = $data['packages_id'];
-               $task->method = 'deployinstall';
-               $task->retry_nb = 3;
-               $task->retry_time = 0;
-               $task->action = array();
-               //add new datas
-               foreach ($data['item'] as $key => $val) {
-                  $task->action[] = array($data['itemtype'] => $key);
+               $actions = importArrayFromDB($pfTaskjob->fields['action']);
+               if (isset($data['replaceitems'])
+                       && $data['replaceitems'] == 1) {
+                  $actions = array();
                }
-               $tasks[] = $task;
-            }
-            break;
-
-         }
-            if ($data['tasks_id'] == 0) {
-               $pfTask = new PluginFusioninventoryTask();
-               $input = array();
-               $input['name'] = 'Deploy';
-               $input['communication'] = 'push';
-               $input['date_scheduled'] = date("Y-m-d H:i:s");
-               $data['tasks_id'] = $pfTask->add($input);
-            }
-            $params = array(
-               'tasks_id'        => $data['tasks_id'],
-               'tasks' => json_encode($tasks)
-            );
-            $taskjob->saveDatas($params);
-
-            //reimport old jobs
-            foreach($oldjobs as $job) {
-               $sql = "INSERT INTO glpi_plugin_fusioninventory_taskjobs (";
-               foreach ($job as $key => $val) {
-                  $sql .= "`$key`, ";
-               }
-               $sql = substr($sql, 0, -2).") VALUES (";
-               foreach ($job as $val) {
-                  if (is_numeric($val) && (int)$val == $val) {
-                     $sql .= "$val, ";
-                  } else {
-                     $sql .= "'$val', ";
+               foreach ($data['item'] as $items_id=>$num) {
+                  $add = 1;
+                  foreach ($actions as $datas) {
+                     foreach ($datas as $itemtype2=>$items_id2) {
+                        if ($itemtype2 == $data['itemtype']
+                                && $items_id2 == $items_id) {
+                           $add = 0;
+                        }
+                     }
+                  }
+                  if ($add == 1) {
+                     $actions[] = array($data['itemtype'] => $items_id);
                   }
                }
-               $sql = substr($sql, 0, -2).");";
-
-               $DB->query($sql);
+               $input = array(
+                   'id'     => $data['taskjobs_id'],
+                   'action' => exportArrayToDB($actions)
+               );
+               $pfTaskjob->update($input);
             }
+         }
          break;
 
       case "plugin_fusioninventory_unknown_import" :
