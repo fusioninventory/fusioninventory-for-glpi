@@ -227,7 +227,9 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
          $pfIgnoredimport = new PluginFusioninventoryIgnoredimportdevice();
          $inputdb = array();
-         $inputdb['name'] = $input['name'];
+         if (isset($input['name'])) {
+            $inputdb['name'] = $input['name'];
+         }
          $inputdb['date'] = date("Y-m-d H:i:s");
          if (isset($input['itemtype'])) {
             $inputdb['itemtype'] = $input['itemtype'];
@@ -639,12 +641,13 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
    
    
    function _updateSNMPInfo($arrayinventory, $input, $class) {
-      $input['sysdescr']                                   =
-         $arrayinventory['DESCRIPTION'];
+      if (isset($arrayinventory['DESCRIPTION'])
+                    && !empty($arrayinventory['DESCRIPTION'])) {
+         $input['sysdescr']  = $arrayinventory['DESCRIPTION'];
+      }
 
       if (isset($arrayinventory['AUTHSNMP']) AND !empty($arrayinventory['AUTHSNMP'])) {
-         $input['plugin_fusioninventory_configsecurities_id'] =
-            $arrayinventory['AUTHSNMP'];
+         $input['plugin_fusioninventory_configsecurities_id'] = $arrayinventory['AUTHSNMP'];
       }
 
       $pfModel = new PluginFusioninventorySnmpmodel();
