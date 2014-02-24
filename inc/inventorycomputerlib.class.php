@@ -1141,7 +1141,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                if ($pfConfig->getValue('import_monitor') == 1) {
                   // Global import
                   $query = "SELECT `glpi_monitors`.`name`, `glpi_monitors`.`manufacturers_id`,
-                        `glpi_monitors`.`serial`, `glpi_monitors`.`comment`,
+                        `glpi_monitors`.`serial`, 
                         `glpi_monitors`.`is_global`, `glpi_computers_items`.`id` as link_id
                         FROM `glpi_computers_items`
                      LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
@@ -1165,7 +1165,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                } else if ($pfConfig->getValue('import_monitor') == 2) {
                   // Unique import
                   $query = "SELECT `glpi_monitors`.`name`, `glpi_monitors`.`manufacturers_id`,
-                        `glpi_monitors`.`serial`, `glpi_monitors`.`comment`,
+                        `glpi_monitors`.`serial`, 
                         `glpi_monitors`.`is_global`, `glpi_computers_items`.`id` as link_id
                         FROM `glpi_computers_items`
                      LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
@@ -1189,7 +1189,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                } else if ($pfConfig->getValue('import_monitor') == 3) {
                   // Unique import on serial number
                   $query = "SELECT `glpi_monitors`.`name`, `glpi_monitors`.`manufacturers_id`,
-                        `glpi_monitors`.`serial`, `glpi_monitors`.`comment`,
+                        `glpi_monitors`.`serial`,
                         `glpi_monitors`.`is_global`, `glpi_computers_items`.`id` as link_id
                         FROM `glpi_computers_items`
                      LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
@@ -1224,10 +1224,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                foreach ($a_computerinventory['monitor'] as $key => $arrays) {
                   $arrayslower = array_map('strtolower', $arrays);
                   foreach ($db_monitors as $keydb => $arraydb) {
-                     if ($pfConfig->getValue('import_monitor') == 3) {
-                        unset($arrayslower['comment']);
-                        unset($arraydb['comment']);
-                     }
                      if ($arrayslower == $arraydb) {
                         unset($a_computerinventory['monitor'][$key]);
                         unset($db_monitors[$keydb]);
@@ -1238,11 +1234,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                if ($pfConfig->getValue('import_monitor') == 1) {
                   foreach ($a_computerinventory['monitor'] as $key => $arrays) {
                      unset($arrays['serial']);
-                     unset($arrays['comment']);
                      $arrayslower = array_map('strtolower', $arrays);
                      foreach ($db_monitors as $keydb => $arraydb) {
                         unset($arraydb['serial']);
-                        unset($arraydb['comment']);
                         if ($arrayslower == $arraydb) {
                            unset($a_computerinventory['monitor'][$key]);
                            unset($db_monitors[$keydb]);
@@ -2164,7 +2158,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             WHERE `name`='".$data['name']."'
                AND `manufacturers_id`='".$data['manufacturers_id']."'
                AND `serial`='".$data['serial']."'
-               AND `comment`='".$data['comment']."'
                AND `is_global`='0'
                AND `entities_id`='".$data['entities_id']."'
                AND `glpi_computers_items`.`id` IS NULL
