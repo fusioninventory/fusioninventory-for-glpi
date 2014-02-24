@@ -605,8 +605,12 @@ class PluginFusioninventoryFormatconvert {
                   if (!isset($array_tmp['name'])) {
                      $array_tmp['name'] = '';
                   }
-                  if (!isset($array_tmp['comment'])) {
-                     $array_tmp['comment'] = '';
+                  if ($array_tmp['name'] == ''
+                          && isset($array_tmp['comment'])) {
+                     $array_tmp['name'] = $array_tmp['comment'];
+                  }
+                  if (isset($array_tmp['comment'])) {
+                     unset($array_tmp['comment']);
                   }
                   if (!isset($array_tmp['serial'])) {
                      $array_tmp['serial'] = '';
