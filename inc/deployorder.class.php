@@ -197,7 +197,7 @@ class PluginFusioninventoryDeployOrder extends CommonDBTM {
       } else {
          $error = $order->update(
             array(
-               'id' => $_POST['orders_id'],
+               'id' => $orders_id,
                'json' => Toolbox::addslashes_deep($json)
             )
          );
