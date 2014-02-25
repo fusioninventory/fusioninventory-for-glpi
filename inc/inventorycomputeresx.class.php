@@ -77,13 +77,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
             $item = new $itemtype();
             // Detect if agent exists
             if($item->getFromDB($items_id)) {
-               if($task->fields['communication'] == 'push') {
-                  if ($job->isAgentAlive('1', $items_id)) {
-                     $agent_actionslist[$items_id] = 1;
-                  }
-               } elseif($task->fields['communication'] == 'pull') {
-                  $agent_actionslist[$items_id] = 1;
-               }
+               $agent_actionslist[$items_id] = 1;
             }
          }
       }
@@ -160,25 +154,27 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
     *
     * @return $response array
     */
-   function run($a_Taskjobstates, $response) {
-      $response      = array();
+   function run($configurations) {
+      $response      = array(
+         'jobs' => array()
+      );
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
       $credential    = new PluginFusioninventoryCredential();
       $credentialip  = new PluginFusioninventoryCredentialIp();
 
-      foreach ($a_Taskjobstates as $taskjobstatedatas) {
-         $credentialip->getFromDB($taskjobstatedatas['items_id']);
+      foreach ($configurations as $configuration) {
+         $credentialip->getFromDB($configuration['items_id']);
          $credential->getFromDB($credentialip->fields['plugin_fusioninventory_credentials_id']);
-         $responsetmp = array();
-         $responsetmp['uuid']        = $taskjobstatedatas['uniqid'];
-         $responsetmp['host']        = $credentialip->fields['ip'];
-         $responsetmp['user']        = $credential->fields['username'];
-         $responsetmp['password']    = $credential->fields['password'];
-         $response['jobs'][] = $responsetmp;
+         $response['jobs'][] = array(
+            'uuid'      => $configuration['uniqid'],
+            'host'      => $credentialip->fields['ip'],
+            'user'      => $credential->fields['username'],
+            'password'  => $credential->fields['password']
+         );
 
-         $pfTaskjobstate->changeStatus($taskjobstatedatas['id'], 1);
-         $pfTaskjoblog->addTaskjoblog($taskjobstatedatas['id'],
+         $pfTaskjobstate->changeStatus($configuration['id'], 1);
+         $pfTaskjoblog->addTaskjoblog($configuration['id'],
                                  '0',
                                  'PluginFusioninventoryAgent',
                                  '1',

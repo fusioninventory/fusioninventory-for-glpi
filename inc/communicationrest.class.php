@@ -112,8 +112,6 @@ class PluginFusioninventoryCommunicationRest {
       return array('configValidityPeriod' => 600, 'schedule' => $schedule);
    }
 
-   
-   
    /**
     * Get jobs for an agent
     * TODO: This methods must be used inplace of other methods in order to mutualize code and
@@ -131,8 +129,7 @@ class PluginFusioninventoryCommunicationRest {
       return FALSE;
    }
 
-   
-   
+
    /**
     * Send to the agent an OK code
     */
@@ -166,6 +163,8 @@ class PluginFusioninventoryCommunicationRest {
     * @return nothing
     */
    static function updateLog($params = array()) {
+      global $DB;
+
       $p = array();
       $p['machineid'] = ''; //DeviceId
       $p['uuid']      = ''; //Task uuid
@@ -175,43 +174,54 @@ class PluginFusioninventoryCommunicationRest {
          $p[$key] = $value;
       }
 
-      $taskjobstates = new PluginFusioninventoryTaskjobstate();
 
       //Get the agent ID by its deviceid
       $agent = PluginFusioninventoryAgent::getByDeviceID($p['machineid']);
-      //Get task job status : identifier is the uuid given by the agent
-      $taskjobstate_found = $taskjobstates->getFromDBByQuery("WHERE `uniqid`='" . $p['uuid'] . "'");
 
-      if ($agent && $taskjobstate_found) {
-         $params["agent"] = $agent;
-         $params["taskjobstate_found"] = $taskjobstates;
+      //No need to continue since the requested agent doesn't exists in database
+      if ($agent === FALSE) {
+         self::sendError();
+         return;
+      }
+      //Get task job status : identifier is the uuid given by the agent
+      $taskjobstates = $DB->request(
+         getTableForItemType('PluginFusioninventoryTaskjobstate'),
+         "`uniqid`='".$p['uuid']."'"
+      );
+
+      $taskjobstate = new PluginFusioninventoryTaskjobstate();
+      foreach( $taskjobstates as $jobstate ) {
+         $taskjobstate->getFromDB($jobstate['id']);
+
          //Get taskjoblog associated
          $taskjoblog = new PluginFusioninventoryTaskjobLog();
-         $taskjoblog->getFromDBByQuery("WHERE `plugin_fusioninventory_taskjobstates_id`=". $taskjobstates->fields['id']);
+         $taskjoblog->getFromDBByQuery(
+            "WHERE `plugin_fusioninventory_taskjobstates_id`=". $jobstate['id']
+         );
          switch($p['code']) {
             case 'running':
                $taskjoblog->addTaskjoblog(
-                  $taskjobstates->fields['id'],
-                  $taskjobstates->fields['items_id'],
-                  $taskjobstates->fields['itemtype'],
+                  $taskjobstate->fields['id'],
+                  $taskjobstate->fields['items_id'],
+                  $taskjobstate->fields['itemtype'],
                   PluginFusioninventoryTaskjoblog::TASK_RUNNING,
                   $p['msg']
                );
                break;
             case 'ok':
-               $taskjobstates->changeStatusFinish(
-                  $taskjobstates->fields['id'],
-                  $taskjobstates->fields['items_id'],
-                  $taskjobstates->fields['itemtype'],
+               $taskjobstate->changeStatusFinish(
+                  $taskjobstate->fields['id'],
+                  $taskjobstate->fields['items_id'],
+                  $taskjobstate->fields['itemtype'],
                   0, // everything goes well
                   $p['msg']
                );
                break;
             case 'ko':
-               $taskjobstates->changeStatusFinish(
-                  $taskjobstates->fields['id'],
-                  $taskjobstates->fields['items_id'],
-                  $taskjobstates->fields['itemtype'],
+               $taskjobstate->changeStatusFinish(
+                  $taskjobstate->fields['id'],
+                  $taskjobstate->fields['items_id'],
+                  $taskjobstate->fields['itemtype'],
                   1, // there was an error
                   $p['msg']
                );
