@@ -389,7 +389,10 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
    static function importAllModels($folder='',$mode_cli=FALSE) {
       global $DB;
-      
+
+      if ( $mode_cli && defined('NO_MODELS_UPDATE') ) {
+         return TRUE;
+      }
       /*
        * Manage models migration
        */
