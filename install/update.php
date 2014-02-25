@@ -8277,227 +8277,240 @@ function migrateTablesFromFusinvDeploy ($migration) {
    global $DB;
 
 
-   //add json field in deploy order table to store datas from old misc tables
-   $field_created = $migration->addField("glpi_plugin_fusioninventory_deployorders",
-                                 "json",
-                                 "longtext DEFAULT NULL");
 
-   if (  !TableExists("glpi_plugin_fusinvdeploy_checks")
-         && !TableExists("glpi_plugin_fusinvdeploy_files")
-         && !TableExists("glpi_plugin_fusinvdeploy_actions")
-         && !$field_created
+   if (     TableExists("glpi_plugin_fusioninventory_deployorders")
+         && TableExists("glpi_plugin_fusinvdeploy_checks")
+         && TableExists("glpi_plugin_fusinvdeploy_files")
+         && TableExists("glpi_plugin_fusinvdeploy_actions")
    ) {
-      return;
-   }
 
 
-   $migration->migrationOneTable("glpi_plugin_fusioninventory_deployorders");
+      //add json field in deploy order table to store datas from old misc tables
+      $field_created = $migration->addField("glpi_plugin_fusioninventory_deployorders",
+                                    "json",
+                                    "longtext DEFAULT NULL");
+      $migration->migrationOneTable("glpi_plugin_fusioninventory_deployorders");
 
-   $final_datas = array();
+      $final_datas = array();
 
-   //== glpi_plugin_fusioninventory_deployorders ==
-   $o_query = "SELECT * FROM glpi_plugin_fusioninventory_deployorders";
-   $o_res = $DB->query($o_query);
-   while($o_datas = $DB->fetch_assoc($o_res)) {
-      $order_id = $o_datas['id'];
+      //== glpi_plugin_fusioninventory_deployorders ==
+      $o_query = "SELECT * FROM glpi_plugin_fusioninventory_deployorders";
+      $o_res = $DB->query($o_query);
+      while($o_datas = $DB->fetch_assoc($o_res)) {
+         $order_id = $o_datas['id'];
 
-      $o_line = array();
-      $of_line = array();
+         $o_line = array();
+         $of_line = array();
 
-      $o_line['checks'] = array();
-      $o_line['actions'] = array();
-      $o_line['associatedFiles'] = array();
+         $o_line['checks'] = array();
+         $o_line['actions'] = array();
+         $o_line['associatedFiles'] = array();
 
-      //=== Checks ===
+         //=== Checks ===
 
-      if (TableExists("glpi_plugin_fusinvdeploy_checks")) {
-         $c_query = "SELECT type, path, value, 'error' as `return`
-            FROM glpi_plugin_fusinvdeploy_checks
-            WHERE plugin_fusinvdeploy_orders_id = $order_id
-            ORDER BY ranking ASC";
-         $c_res = $DB->query($c_query);
-         $c_i = 0;
-         while ($c_datas = $DB->fetch_assoc($c_res)) {
-            foreach ($c_datas as $c_key => $c_value) {
-               //specific case for filesytem sizes, convert to bytes
-               if (
-                  !empty($c_value)
-                  && is_numeric($c_value)
-                  && $c_datas['type'] !== 'freespaceGreater'
-               ) {
-                  $c_value = $c_value * 1024 * 1024;
+         if (TableExists("glpi_plugin_fusinvdeploy_checks")) {
+            $c_query = "SELECT type, path, value, 'error' as `return`
+               FROM glpi_plugin_fusinvdeploy_checks
+               WHERE plugin_fusinvdeploy_orders_id = $order_id
+               ORDER BY ranking ASC";
+            $c_res = $DB->query($c_query);
+            $c_i = 0;
+            while ($c_datas = $DB->fetch_assoc($c_res)) {
+               foreach ($c_datas as $c_key => $c_value) {
+                  //specific case for filesytem sizes, convert to bytes
+                  if (
+                     !empty($c_value)
+                     && is_numeric($c_value)
+                     && $c_datas['type'] !== 'freespaceGreater'
+                  ) {
+                     $c_value = $c_value * 1024 * 1024;
+                  }
+
+                  //construct job check entry
+                  $o_line['checks'][$c_i][$c_key] = $c_value;
                }
-
-               //construct job check entry
-               $o_line['checks'][$c_i][$c_key] = $c_value;
+                $c_i++;
             }
-             $c_i++;
          }
-      }
 
-      $files_list = array();
-      //=== Files ===
-      if (TableExists("glpi_plugin_fusinvdeploy_files")) {
-         $f_query =
-            "SELECT id, name, is_p2p as p2p, filesize, mimetype, ".
-            "p2p_retention_days as `p2p-retention-duration`, uncompress, sha512 ".
-            "FROM glpi_plugin_fusinvdeploy_files ".
-            "WHERE plugin_fusinvdeploy_orders_id = $order_id";
-         $f_res = $DB->query($f_query);
-         while ($f_datas = $DB->fetch_assoc($f_res)) {
+         $files_list = array();
+         //=== Files ===
+         if (TableExists("glpi_plugin_fusinvdeploy_files")) {
+            $f_query =
+               "SELECT id, name, is_p2p as p2p, filesize, mimetype, ".
+               "p2p_retention_days as `p2p-retention-duration`, uncompress, sha512 ".
+               "FROM glpi_plugin_fusinvdeploy_files ".
+               "WHERE plugin_fusinvdeploy_orders_id = $order_id";
+            $f_res = $DB->query($f_query);
+            while ($f_datas = $DB->fetch_assoc($f_res)) {
 
-            //jump to next entry if sha512 is empty
-            // This kind of entries could happen sometimes on upload errors
-            if (empty($f_datas['sha512'])) {
-               continue;
-            }
-
-            //construct job file entry
-            $o_line['associatedFiles'][] = $f_datas['sha512'];
-
-            foreach ($f_datas as $f_key => $f_value) {
-
-               //we don't store the sha512 field in json
-               if (  $f_key == "sha512"
-                  || $f_key == "id"
-                  || $f_key == "filesize"
-                  || $f_key == "mimetype") {
+               //jump to next entry if sha512 is empty
+               // This kind of entries could happen sometimes on upload errors
+               if (empty($f_datas['sha512'])) {
                   continue;
                }
 
-               //construct order file entry
-               $of_line[$f_datas['sha512']][$f_key] = $f_value;
-            }
+               //construct job file entry
+               $o_line['associatedFiles'][] = $f_datas['sha512'];
 
-            if (!in_array($f_datas['sha512'], $files_list)) {
-               $files_list[] = $f_datas['sha512'];
-            }
+               foreach ($f_datas as $f_key => $f_value) {
 
-         }
-      }
-
-      //=== Fileparts ===
-      if (TableExists('glpi_plugin_fusinvdeploy_fileparts')) {
-         // multipart file datas
-         foreach ($files_list as $sha) {
-            $shortsha = substr($sha, 0, 6);
-            $fp_query = "SELECT  fp.`sha512` as filepart_hash, ".
-                        "        f.`sha512`  as file_hash      ".
-                        "FROM `glpi_plugin_fusinvdeploy_files` as f ".
-                        "INNER JOIN `glpi_plugin_fusinvdeploy_fileparts` as fp ".
-                        "ON   f.`id` = fp.`plugin_fusinvdeploy_files_id` ".
-                        "     AND f.`shortsha512` = '{$shortsha}' ".
-                        "GROUP BY fp.`sha512` ".
-                        "ORDER BY fp.`id`";
-
-
-            $fp_res = $DB->query($fp_query);
-            if ($DB->numrows($fp_res) > 0) {
-               $fhandle = fopen(
-                  GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}",
-                  'w+'
-               );
-               while ($fp_datas = $DB->fetch_assoc($fp_res)) {
-                  if ($fp_datas['file_hash'] === $sha) {
-                     fwrite($fhandle, $fp_datas['filepart_hash']."\n");
-                  }
-               }
-               fclose($fhandle);
-            }
-         }
-      }
-
-
-      //=== Actions ===
-      $cmdStatus['RETURNCODE_OK'] = 'okCode';
-      $cmdStatus['RETURNCODE_KO'] = 'errorCode';
-      $cmdStatus['REGEX_OK'] = 'okPattern';
-      $cmdStatus['REGEX_KO'] = 'errorPattern';
-
-      if (TableExists("glpi_plugin_fusinvdeploy_actions")) {
-         $a_query = "SELECT *
-            FROM glpi_plugin_fusinvdeploy_actions
-            WHERE plugin_fusinvdeploy_orders_id = $order_id
-            ORDER BY ranking ASC";
-         $a_res = $DB->query($a_query);
-         $a_i = 0;
-         while ($a_datas = $DB->fetch_assoc($a_res)) {
-
-            //get type
-            $type = strtolower(str_replace("PluginFusinvdeployAction_", "", $a_datas['itemtype']));
-
-            //specific case for command type
-            $type = str_replace("command", "cmd", $type);
-
-            //table for action itemtype
-            $a_table = getTableForItemType($a_datas['itemtype']);
-
-            //get table fields
-            $at_query = "SELECT *
-               FROM $a_table
-               WHERE id = ".$a_datas['items_id'];
-            $at_res = $DB->query($at_query);
-            while($at_datas = $DB->fetch_assoc($at_res)) {
-               foreach($at_datas as $at_key => $at_value) {
-                  //we don't store the id field of action itemtype table in json
-                  if ($at_key == "id") {
+                  //we don't store the sha512 field in json
+                  if (  $f_key == "sha512"
+                     || $f_key == "id"
+                     || $f_key == "filesize"
+                     || $f_key == "mimetype") {
                      continue;
                   }
 
-                  //specific case for 'path' field
-                  if ($at_key == "path") {
-                     $o_line['actions'][$a_i][$type]['list'][] = $at_value;
-                  } else {
-                     //construct job actions entry
-                     $o_line['actions'][$a_i][$type][$at_key] = $at_value;
-                  }
+                  //construct order file entry
+                  $of_line[$f_datas['sha512']][$f_key] = $f_value;
                }
 
-               //specific case for commands : we must add status and env vars
-               if ($a_datas['itemtype'] === "PluginFusinvdeployAction_Command") {
-                  $ret_cmd_query = "SELECT type, value
-                     FROM glpi_plugin_fusinvdeploy_actions_commandstatus
-                     WHERE plugin_fusinvdeploy_commands_id = ".$at_datas['id'];
-                  $ret_cmd_res = $DB->query($ret_cmd_query);
-                  while ($res_cmd_datas = $DB->fetch_assoc($ret_cmd_res)) {
-                     // Skip empty retchecks type:
-                     // This surely means they have been drop at some point but entry has not been
-                     // removed from database.
-                     if (!empty($res_cmd_datas['type'])) {
-                        //construct command status array entry
-                        $o_line['actions'][$a_i][$type]['retChecks'][] = array(
-                           'type'  => $cmdStatus[$res_cmd_datas['type']],
-                           'values' => array($res_cmd_datas['value'])
-                        );
+               if (!in_array($f_datas['sha512'], $files_list)) {
+                  $files_list[] = $f_datas['sha512'];
+               }
+
+            }
+         }
+
+
+
+         //=== Actions ===
+         $cmdStatus['RETURNCODE_OK'] = 'okCode';
+         $cmdStatus['RETURNCODE_KO'] = 'errorCode';
+         $cmdStatus['REGEX_OK'] = 'okPattern';
+         $cmdStatus['REGEX_KO'] = 'errorPattern';
+
+         if (TableExists("glpi_plugin_fusinvdeploy_actions")) {
+            $a_query = "SELECT *
+               FROM glpi_plugin_fusinvdeploy_actions
+               WHERE plugin_fusinvdeploy_orders_id = $order_id
+               ORDER BY ranking ASC";
+            $a_res = $DB->query($a_query);
+            $a_i = 0;
+            while ($a_datas = $DB->fetch_assoc($a_res)) {
+
+               //get type
+               $type = strtolower(str_replace("PluginFusinvdeployAction_", "", $a_datas['itemtype']));
+
+               //specific case for command type
+               $type = str_replace("command", "cmd", $type);
+
+               //table for action itemtype
+               $a_table = getTableForItemType($a_datas['itemtype']);
+
+               //get table fields
+               $at_query = "SELECT *
+                  FROM $a_table
+                  WHERE id = ".$a_datas['items_id'];
+               $at_res = $DB->query($at_query);
+               while($at_datas = $DB->fetch_assoc($at_res)) {
+                  foreach($at_datas as $at_key => $at_value) {
+                     //we don't store the id field of action itemtype table in json
+                     if ($at_key == "id") {
+                        continue;
+                     }
+
+                     //specific case for 'path' field
+                     if ($at_key == "path") {
+                        $o_line['actions'][$a_i][$type]['list'][] = $at_value;
+                     } else {
+                        //construct job actions entry
+                        $o_line['actions'][$a_i][$type][$at_key] = $at_value;
+                     }
+                  }
+
+                  //specific case for commands : we must add status and env vars
+                  if ($a_datas['itemtype'] === "PluginFusinvdeployAction_Command") {
+                     $ret_cmd_query = "SELECT type, value
+                        FROM glpi_plugin_fusinvdeploy_actions_commandstatus
+                        WHERE plugin_fusinvdeploy_commands_id = ".$at_datas['id'];
+                     $ret_cmd_res = $DB->query($ret_cmd_query);
+                     while ($res_cmd_datas = $DB->fetch_assoc($ret_cmd_res)) {
+                        // Skip empty retchecks type:
+                        // This surely means they have been drop at some point but entry has not been
+                        // removed from database.
+                        if (!empty($res_cmd_datas['type'])) {
+                           //construct command status array entry
+                           $o_line['actions'][$a_i][$type]['retChecks'][] = array(
+                              'type'  => $cmdStatus[$res_cmd_datas['type']],
+                              'values' => array($res_cmd_datas['value'])
+                           );
+                        }
                      }
                   }
                }
+               $a_i++;
             }
-            $a_i++;
+         }
+         $final_datas[$order_id]['jobs'] = $o_line;
+         $final_datas[$order_id]['associatedFiles'] = $of_line;
+         unset($o_line);
+         unset($of_line);
+      }
+      $options = 0;
+      if (version_compare(PHP_VERSION, '5.3.3') >= 0) {
+         $options = $options | JSON_NUMERIC_CHECK;
+      }
+      if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
+         $options = $options | JSON_UNESCAPED_SLASHES;
+      }
+
+      //store json in order table
+      foreach ($final_datas as $order_id => $data) {
+         $json = $DB->escape(json_encode($data, $options));
+
+         $order_query = "UPDATE glpi_plugin_fusioninventory_deployorders
+            SET json = '$json'
+            WHERE id = $order_id";
+         $DB->query($order_query);
+      }
+   }
+
+
+
+   //=== Fileparts ===
+   if (     TableExists('glpi_plugin_fusinvdeploy_fileparts')
+         && TableExists('glpi_plugin_fusinvdeploy_files')
+   ) {
+      $files_list = $DB->request('glpi_plugin_fusinvdeploy_files');
+      Toolbox::logDebug(array(
+         "files" => $files_list
+         )
+      );
+      // multipart file datas
+      foreach ($files_list as $file) {
+         $sha = $file['sha512'];
+         if( empty($sha) ){
+            continue;
+         }
+         $shortsha = substr($sha, 0, 6);
+         $fp_query = "SELECT  fp.`sha512` as filepart_hash, ".
+            "        f.`sha512`  as file_hash      ".
+            "FROM `glpi_plugin_fusinvdeploy_files` as f ".
+            "INNER JOIN `glpi_plugin_fusinvdeploy_fileparts` as fp ".
+            "ON   f.`id` = fp.`plugin_fusinvdeploy_files_id` ".
+            "     AND f.`shortsha512` = '{$shortsha}' ".
+            "GROUP BY fp.`sha512` ".
+            "ORDER BY fp.`id`";
+
+
+         $fp_res = $DB->query($fp_query);
+         if ($DB->numrows($fp_res) > 0) {
+            print("writing file : " . GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}" . "\n");
+            $fhandle = fopen(
+               GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}",
+               'w+'
+            );
+            while ($fp_datas = $DB->fetch_assoc($fp_res)) {
+               if ($fp_datas['file_hash'] === $sha) {
+                  fwrite($fhandle, $fp_datas['filepart_hash']."\n");
+               }
+            }
+            fclose($fhandle);
          }
       }
-      $final_datas[$order_id]['jobs'] = $o_line;
-      $final_datas[$order_id]['associatedFiles'] = $of_line;
-      unset($o_line);
-      unset($of_line);
-   }
-
-   $options = 0;
-   if (version_compare(PHP_VERSION, '5.3.3') >= 0) {
-      $options = $options | JSON_NUMERIC_CHECK;
-   }
-   if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
-      $options = $options | JSON_UNESCAPED_SLASHES;
-   }
-
-   //store json in order table
-   foreach ($final_datas as $order_id => $data) {
-      $json = $DB->escape(json_encode($data, $options));
-
-      $order_query = "UPDATE glpi_plugin_fusioninventory_deployorders
-         SET json = '$json'
-         WHERE id = $order_id";
-      $DB->query($order_query);
    }
 
    //migrate fusinvdeploy_files to fusioninventory_deployfiles
