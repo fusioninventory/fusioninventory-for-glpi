@@ -935,6 +935,19 @@ class PluginFusioninventoryFormatconvert {
                   $user .= "@".$array_tmp['domain'];
                }
             }
+            if ($cnt == 0) {
+               if (isset($array_tmp['login'])) {
+                  $query = "SELECT `id`
+                            FROM `glpi_users`
+                            WHERE `name` = '" . $array_tmp['login'] . "'
+                            LIMIT 1";
+                  $result = $DB->query($query);
+                  if ($DB->numrows($result) == 1) {
+                     $a_inventory['Computer']['users_id'] = $DB->result($result, 0, 0);
+                  }
+               }
+            }
+
             if ($user != '') {
                if (isset($a_inventory['Computer']['contact'])) {
                   if ($a_inventory['Computer']['contact'] == '') {
@@ -1508,19 +1521,21 @@ class PluginFusioninventoryFormatconvert {
                   $manufacturer = new Manufacturer();
                   $array[$key]  = $manufacturer->processName($value);
                }
-               if ($key == "bios_manufacturers_id") {
-                  $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype['manufacturers_id'],
-                                                          $value);
-               } else if (isset($this->foreignkey_itemtype[$key])) {
-                  $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                          $value);
-               } else if (isForeignKeyField($key)
-                       && $key != "users_id") {
+               if (!is_numeric($key)) {
+                  if ($key == "bios_manufacturers_id") {
+                     $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype['manufacturers_id'],
+                                                             $value);
+                  } else if (isset($this->foreignkey_itemtype[$key])) {
+                     $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
+                                                             $value);
+                  } else if (isForeignKeyField($key)
+                          && $key != "users_id") {
 
-                  $this->foreignkey_itemtype[$key] =
-                              getItemTypeForTable(getTableNameForForeignKeyField($key));
-                  $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                          $value);
+                     $this->foreignkey_itemtype[$key] =
+                                 getItemTypeForTable(getTableNameForForeignKeyField($key));
+                     $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
+                                                             $value);
+                  }
                }
             }
          }
