@@ -116,6 +116,9 @@ $migration = new CliMigration($current_version);
 
    $migration->displayWarning($mess);
 
+   if (in_array('--no-models-update', $_SERVER['argv'])) {
+      define('NO_MODELS_UPDATE', TRUE);
+   }
    $plugin->getFromDBbyDir("fusioninventory");
    print("Installing Plugin...\n");
    $plugin->install($plugin->fields['id']);
