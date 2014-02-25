@@ -51,24 +51,27 @@ ob_end_clean();
 $response = FALSE;
 //Agent communication using REST protocol
 if (isset($_GET['action']) && isset($_GET['machineid'])) {
+
    switch ($_GET['action']) {
+
       case 'getJobs':
+         $response = array('jobs' => array());
          //Specific to ESX
          $pfAgent = new PluginFusioninventoryAgent();
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
-         $a_agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
-         $moduleRun = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
-         foreach ($moduleRun as $className => $array) {
-            if (class_exists($className)) {
-               if ($className == "PluginFusioninventoryInventoryComputerESX") {
-                  $class = new $className();
-                  $response = $class->run($array, $response);
-
+         $agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
+         $modules = $pfTaskjobstate->getTaskjobsAgent($agent['id']);
+         foreach ($modules as $module => $configurations) {
+            if (class_exists($module)) {
+               if ($module == "PluginFusioninventoryInventoryComputerESX") {
+                  $class = new $module();
+                  $response = $class->run($configurations);
                }
             }
          }
          break;
+
       case 'setLog':
          //Generic method to update logs
          PluginFusioninventoryCommunicationRest::updateLog($_GET);
