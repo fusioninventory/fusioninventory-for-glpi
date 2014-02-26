@@ -77,7 +77,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
        */
       // get all snmpauth
       $a_snmpauth = getAllDatasFromTable("glpi_plugin_fusioninventory_configsecurities");
-      
+
 
       // get items_id by type
       $a_iprange = array();
@@ -160,12 +160,9 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   LEFT JOIN `glpi_ipaddresses`
                        ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                           AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-                  INNER join `glpi_plugin_fusioninventory_snmpmodels`
+                  LEFT join `glpi_plugin_fusioninventory_snmpmodels`
                        ON `plugin_fusioninventory_snmpmodels_id`=
                            `glpi_plugin_fusioninventory_snmpmodels`.`id`
-                  LEFT join `glpi_plugin_fusioninventory_configsecurities`
-                       ON `plugin_fusioninventory_configsecurities_id`=
-                           `glpi_plugin_fusioninventory_configsecurities`.`id`
                   WHERE `glpi_printers`.`is_deleted`=0
                         AND `plugin_fusioninventory_configsecurities_id`!='0'
                         AND (`glpi_plugin_fusioninventory_snmpmodels`.`itemtype`='Printer'
@@ -268,12 +265,9 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   LEFT JOIN `glpi_ipaddresses`
                        ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                           AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-                  INNER join `glpi_plugin_fusioninventory_snmpmodels`
+                  LEFT join `glpi_plugin_fusioninventory_snmpmodels`
                        ON `plugin_fusioninventory_snmpmodels_id`=
                            `glpi_plugin_fusioninventory_snmpmodels`.`id`
-                  LEFT join `glpi_plugin_fusioninventory_configsecurities`
-                       ON `plugin_fusioninventory_configsecurities_id`=
-                           `glpi_plugin_fusioninventory_configsecurities`.`id`
                   WHERE `glpi_printers`.`is_deleted`=0
                         AND `plugin_fusioninventory_configsecurities_id`!='0'
                         AND (`glpi_plugin_fusioninventory_snmpmodels`.`itemtype`='Printer'
@@ -485,7 +479,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                }
             }
          }
-         
+
          /*
           * Case : dynamic agent
           */
@@ -681,7 +675,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
    function getAgentsSubnet($nb_computers, $communication, $subnet='', $ipstart='', $ipend='') {
       global $DB;
-      
+
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfAgentmodule = new PluginFusioninventoryAgentmodule();
 
@@ -712,7 +706,7 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
       $where .= ")
          AND `glpi_ipaddresses`.`name` != '127.0.0.1' ";
 
-      $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`, 
+      $query = "SELECT `glpi_plugin_fusioninventory_agents`.`id` as `a_id`,
          `glpi_ipaddresses`.`name` as ip, token
          FROM `glpi_plugin_fusioninventory_agents`
          LEFT JOIN `glpi_networkports`
