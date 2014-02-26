@@ -164,7 +164,6 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
                      WHERE groups_id = '$items_id' $where
                      LIMIT 1";
-                     Toolbox::logDebug($query);
                      $res = $DB->query($query);
                      $row = $DB->fetch_assoc($res);
                      //No dynamic groups have been found : break
