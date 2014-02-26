@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Rafael Ferreira <rafael.f.f1@gmail.com>, 2012-2013
+# Thiago Passamani <thiagopassamani@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-16 13:28+0100\n"
-"PO-Revision-Date: 2013-12-16 12:29+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2014-02-04 15:03+0000\n"
+"Last-Translator: Thiago Passamani <thiagopassamani@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/FusionInventory/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -485,7 +486,7 @@ msgstr ""
 #: inc/collect_file_content.class.php:200
 #: inc/collect_file_content.class.php:238
 msgid "Size"
-msgstr ""
+msgstr "Tamanho"
 
 #: inc/collect_file.class.php:107 inc/collect_file.class.php:226
 msgid "Checksum SHA512"
@@ -497,7 +498,7 @@ msgstr ""
 
 #: inc/collect_file.class.php:109
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: inc/collect_file.class.php:110
 msgid "Iname"
@@ -517,8 +518,8 @@ msgstr "Arquivo"
 #: inc/collect_file.class.php:184
 msgid "Filter"
 msgid_plural "Filters"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Filtro"
+msgstr[1] "Filtros"
 
 #: inc/collect_file.class.php:190
 msgid "Base folder"
@@ -530,11 +531,11 @@ msgstr ""
 
 #: inc/collect_file.class.php:215 inc/collect_file.class.php:245
 msgid "Disabled"
-msgstr ""
+msgstr "Desabilitado"
 
 #: inc/collect_file.class.php:241
 msgid "Filename"
-msgstr ""
+msgstr "Nome do arquivo"
 
 #: inc/collect_file.class.php:246
 msgid "Non sentitive case"
@@ -601,7 +602,7 @@ msgstr ""
 #: inc/collect_registry_content.class.php:191
 #: inc/collect_registry_content.class.php:235
 msgid "Data"
-msgstr ""
+msgstr "Data"
 
 #: inc/collect_wmi.class.php:50 inc/collect_wmi.class.php:72
 msgid "Windows WMI"
@@ -660,7 +661,7 @@ msgstr ""
 
 #: inc/collectrule.class.php:139
 msgid "File name"
-msgstr ""
+msgstr "Nome do arquivo"
 
 #: inc/collectrule.class.php:142
 msgid "File path"
@@ -668,7 +669,7 @@ msgstr ""
 
 #: inc/collectrule.class.php:145
 msgid "File size"
-msgstr ""
+msgstr "Tamanho do arquivo"
 
 #: inc/communication.class.php:224
 #: inc/communicationnetworkinventory.class.php:219
@@ -678,7 +679,7 @@ msgstr "Elemento autônomo em"
 
 #: inc/computerlicenseinfo.class.php:70
 msgid "Software licenses"
-msgstr ""
+msgstr "Licença de Software"
 
 #: inc/computerlicenseinfo.class.php:125
 msgid "Serial number"
@@ -1081,7 +1082,7 @@ msgstr "Descompactar"
 
 #: inc/deployfile.class.php:422
 msgid "P2P"
-msgstr ""
+msgstr "P2P"
 
 #: inc/deployfile.class.php:429
 msgid "retention days"
@@ -1272,11 +1273,11 @@ msgstr "Endereço de contato público"
 
 #: inc/inventorycomputercomputer.class.php:117
 msgid "BIOS date"
-msgstr ""
+msgstr "Data da BIOS"
 
 #: inc/inventorycomputercomputer.class.php:124
 msgid "BIOS version"
-msgstr ""
+msgstr "Versão da BIOS"
 
 #: inc/inventorycomputercomputer.class.php:201
 #: inc/networkequipment.class.php:1099 inc/printer.class.php:247
@@ -2746,7 +2747,7 @@ msgstr "Gestão automática e dinâmica de agentes"
 
 #: inc/staticmisc.class.php:584
 msgid "Fusinv"
-msgstr ""
+msgstr "Fusinv"
 
 #: inc/task.class.php:86 inc/task.class.php:240 inc/taskjob.class.php:1491
 #: inc/taskjob.class.php:1855
