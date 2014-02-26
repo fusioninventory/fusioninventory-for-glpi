@@ -236,7 +236,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    }
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/xml/networkequipment');
-   }   
+   }
    if (!is_dir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/walks')) {
       mkdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory/walks');
    }
@@ -1212,7 +1212,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
          SET `method`='networkdiscovery'
          WHERE `method`='netdiscovery'");
-      // * Update plugins_id      
+      // * Update plugins_id
       $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
          SET `plugins_id`='".$plugins_id."'");
 
@@ -1609,7 +1609,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             "date_mod");
       $migration->migrationOneTable($newTable);
       $DB->list_fields($newTable, FALSE);
-      
+
       if (TableExists('glpi_plugin_fusinvsnmp_unknowndevices')) {
          $query = "SELECT * FROM `glpi_plugin_fusinvsnmp_unknowndevices`";
          $result=$DB->query($query);
@@ -2709,8 +2709,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $migration->migrationOneTable($newTable);
    $DB->list_fields($newTable, FALSE);
 
-   
-   
+
+
 
    /*
     * Table glpi_plugin_fusioninventory_snmpmodelconstructdevices_users
@@ -2737,11 +2737,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       $a_table['keys']   = array();
       $a_table['keys'][] = array('field' => 'users_id', 'name' => '', 'type' => 'INDEX');
-      
+
       $a_table['oldkeys'] = array();
 
       migrateTablesFusionInventory($migration, $a_table);
-      
+
 
 
    /*
@@ -4490,7 +4490,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                         'value'   => NULL);
       $a_table['fields']['activation_date']     = array('type'    => 'datetime',
                                                         'value'   => NULL);
-      
+
       $a_table['oldfields']  = array();
 
       $a_table['renamefields'] = array();
@@ -4530,8 +4530,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['oldkeys'] = array();
 
       migrateTablesFusionInventory($migration, $a_table);
-      
-      
+
+
    /*
     * Deploy Update Begin
     */
@@ -4651,6 +4651,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          ),
          'plugin_fusioninventory_deploypackages_id' =>  array(
                   'type' => 'int(11) NOT NULL',
+                  'value' => NULL
+         ),
+         'json' =>  array(
+                  'type' => 'longtext DEFAULT NULL',
                   'value' => NULL
          ),
       );
@@ -4979,7 +4983,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     * Deploy Update End
     */
 
-      
+
    /*
     * Table glpi_plugin_fusioninventory_collects
     */
@@ -5013,7 +5017,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       migrateTablesFusionInventory($migration, $a_table);
 
-      
+
 
    /*
     * Table glpi_plugin_fusioninventory_collects_registries
@@ -5046,8 +5050,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       migrateTablesFusionInventory($migration, $a_table);
 
-      
-      
+
+
    /*
     * Table glpi_plugin_fusioninventory_collects_registries_contents
     */
@@ -5078,7 +5082,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       migrateTablesFusionInventory($migration, $a_table);
 
 
-      
+
    /*
     * Table glpi_plugin_fusioninventory_collects_wmis
     */
@@ -5110,8 +5114,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       migrateTablesFusionInventory($migration, $a_table);
 
-      
-      
+
+
    /*
     * Table glpi_plugin_fusioninventory_collects_wmis_contents
     */
@@ -5141,7 +5145,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       migrateTablesFusionInventory($migration, $a_table);
 
-      
+
 
    /*
     * Table glpi_plugin_fusioninventory_collects_files
@@ -5183,7 +5187,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => '1');
       $a_table['fields']['filter_is_dir'] = array('type'    => 'bool',
                                                'value'   => '0');
-      
+
       $a_table['oldfields']  = array();
 
       $a_table['renamefields'] = array();
@@ -5194,8 +5198,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       migrateTablesFusionInventory($migration, $a_table);
 
-      
-      
+
+
    /*
     * Table glpi_plugin_fusioninventory_collects_files_contents
     */
@@ -5225,10 +5229,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       migrateTablesFusionInventory($migration, $a_table);
 
-      
-      
-      
-      
+
+
+
+
    /*
     * Add ESX module appear in version 2.4.0(0.80+1.0)
     */
@@ -5271,7 +5275,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $input['exceptions'] = exportArrayToDB(array());
          $agentmodule->add($input);
       }
-      
+
 
       /*
        * Update pci and usb ids and oui
@@ -5717,7 +5721,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
             AND (`num`='11' OR `num`='12')";
       $DB->query($queryd);
-   
+
 
    /*
     * Modify displaypreference for PluginFusioninventoryPrinterLog
@@ -5975,7 +5979,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_input['alert_winpath'] = 1;
       $a_input['server_as_mirror'] = 1;
       $config->addValues($a_input, FALSE);
-      
+
       $pfSetup = new PluginFusioninventorySetup();
       $users_id = $pfSetup->createFusionInventoryUser();
       $query = "UPDATE `glpi_plugin_fusioninventory_configs`
@@ -6018,9 +6022,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $config->add(array('type' => $name, 'value' => $value));
          }
       }
-      
-      
-      
+
+
+
 
    /*
     * Remove / at the end of printers (bugs in older versions of agents.
@@ -6166,7 +6170,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $mode_cli = (basename($_SERVER['SCRIPT_NAME']) == "cli_install.php");
 
    PluginFusioninventorySnmpmodel::importAllModels('', $mode_cli);
-   
+
       // Delete snmpmodels_id on networkequipments and printers which has been
       //  deleted and so now not exist
       $query = "SELECT `glpi_plugin_fusioninventory_printers`.`id`
@@ -6201,8 +6205,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
              'plugin_fusioninventory_snmpmodels_id' => 0
          ));
       }
-   
-   
+
+
    /*
     * Manage devices with is_dynamic
     */
@@ -6233,7 +6237,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
    $pfNetworkporttype->init();
 
-   
+
    // Define lastup field of fusion networkports
    $query = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`
       WHERE `name`='ifstatus'
@@ -6253,9 +6257,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $DB->query("UPDATE `glpi_plugin_fusioninventory_networkports`
                SET `lastup`='".$data_nplog['date_mod']."'
                WHERE `id`='".$data_np['id']."'");
-         }      
+         }
       }
-   }   
+   }
 }
 
 
