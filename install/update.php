@@ -8475,10 +8475,6 @@ function migrateTablesFromFusinvDeploy ($migration) {
          && TableExists('glpi_plugin_fusinvdeploy_files')
    ) {
       $files_list = $DB->request('glpi_plugin_fusinvdeploy_files');
-      Toolbox::logDebug(array(
-         "files" => $files_list
-         )
-      );
       // multipart file datas
       foreach ($files_list as $file) {
          $sha = $file['sha512'];
