@@ -160,12 +160,9 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   LEFT JOIN `glpi_ipaddresses`
                        ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                           AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-                  INNER join `glpi_plugin_fusioninventory_snmpmodels`
+                  LEFT join `glpi_plugin_fusioninventory_snmpmodels`
                        ON `plugin_fusioninventory_snmpmodels_id`=
                            `glpi_plugin_fusioninventory_snmpmodels`.`id`
-                  LEFT join `glpi_plugin_fusioninventory_configsecurities`
-                       ON `plugin_fusioninventory_configsecurities_id`=
-                           `glpi_plugin_fusioninventory_configsecurities`.`id`
                   WHERE `glpi_printers`.`is_deleted`=0
                         AND `plugin_fusioninventory_configsecurities_id`!='0'
                         AND (`glpi_plugin_fusioninventory_snmpmodels`.`itemtype`='Printer'
@@ -268,12 +265,9 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
                   LEFT JOIN `glpi_ipaddresses`
                        ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                           AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-                  INNER join `glpi_plugin_fusioninventory_snmpmodels`
+                  LEFT join `glpi_plugin_fusioninventory_snmpmodels`
                        ON `plugin_fusioninventory_snmpmodels_id`=
                            `glpi_plugin_fusioninventory_snmpmodels`.`id`
-                  LEFT join `glpi_plugin_fusioninventory_configsecurities`
-                       ON `plugin_fusioninventory_configsecurities_id`=
-                           `glpi_plugin_fusioninventory_configsecurities`.`id`
                   WHERE `glpi_printers`.`is_deleted`=0
                         AND `plugin_fusioninventory_configsecurities_id`!='0'
                         AND (`glpi_plugin_fusioninventory_snmpmodels`.`itemtype`='Printer'
