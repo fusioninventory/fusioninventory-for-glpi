@@ -862,7 +862,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $pfAgent  = new PluginFusioninventoryAgent();
 
       $retentiontime = $pfConfig->getValue('agents_old_days');
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_agents`
+      if ($retentiontime == 0) {
+         return TRUE;
+      }
+      $sql = "SELECT * FROM `glpi_plugin_fusioninventory_agents`
                 WHERE `last_contact` < date_add(now(), interval -".$retentiontime." day)";
       $result=$DB->query($sql);
       if ($result) {

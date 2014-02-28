@@ -69,7 +69,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $users_id = $pfSetup->createFusionInventoryUser();
       $input['users_id']               = $users_id;
       $input['agent_base_url']         = '';
-      $input['agents_old_days']        = '365';
+      $input['agents_old_days']        = '0';
 
       $input['import_monitor']         = 2;
       $input['import_printer']         = 2;
@@ -357,7 +357,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showNumber("agents_old_days", array(
              'value' => $this->getValue('agents_old_days'),
              'min' => 1,
-             'max' => 1000)
+             'max' => 1000,
+             'toadd' => array('0'=>__('Disabled')))
          );
       echo "</td>";
       echo "<td></td>";
