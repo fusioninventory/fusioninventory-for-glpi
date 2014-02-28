@@ -236,7 +236,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $oComputer = new Computer();
          $oComputer->getFromDB($this->fields["computers_id"]);
          echo $oComputer->getLink(1);
-         Html::hidden('computers_id', 
+         Html::hidden('computers_id',
                       array('value' => $this->fields["computers_id"]));
       } else {
          Computer_Item::dropdownConnect("Computer", "Computer", 'computers_id',
@@ -844,6 +844,33 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          echo '<td>'.$this->fields['tag'].'</td>';
          echo '</tr>';
       }
+   }
+
+
+
+   /**
+   * Clean agent too old (so haven't contacted glpi
+    * since xx days)
+   *
+   * @return bool cron is ok or not
+   *
+   **/
+   static function cronCleanoldagents() {
+      global $DB;
+
+      $pfConfig = new PluginFusioninventoryConfig();
+      $pfAgent  = new PluginFusioninventoryAgent();
+
+      $retentiontime = $pfConfig->getValue('agents_old_days');
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_agents`
+                WHERE `last_contact` < date_add(now(), interval -".$retentiontime." day)";
+      $result=$DB->query($sql);
+      if ($result) {
+         while ($data=$DB->fetch_array($result)) {
+            $pfAgent->delete($data);
+         }
+      }
+      return TRUE;
    }
 }
 

@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryConfig extends CommonDBTM {
    public $displaylist = FALSE;
 
-   
+
    static $rightname = 'plugin_fusioninventory_configuration';
 
    /**
@@ -69,6 +69,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $users_id = $pfSetup->createFusionInventoryUser();
       $input['users_id']               = $users_id;
       $input['agent_base_url']         = '';
+      $input['agents_old_days']        = '365';
 
       $input['import_monitor']         = 2;
       $input['import_printer']         = 2;
@@ -95,7 +96,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['create_vm']              = 0;
       $input['component_networkcardvirtual'] = 1;
       $input['otherserial']            = 0;
-      
+
       $input['threads_networkdiscovery'] = 20;
       $input['threads_networkinventory'] = 10;
       $input['timeout_networkdiscovery'] = 1;
@@ -115,7 +116,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
                );
       $input['alert_winpath'] = 1;
       $input['server_as_mirror'] = 1;
-      
+
       if ($getOnly) {
          return $input;
       }
@@ -297,8 +298,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>".__('Inventory frequency (in hours)', 'fusioninventory')."&nbsp;:</td>";
       echo "<td width='20%'>";
       Dropdown::showNumber("inventory_frequence", array(
-             'value' => $this->getValue('inventory_frequence'), 
-             'min' => 1, 
+             'value' => $this->getValue('inventory_frequence'),
+             'min' => 1,
              'max' => 240)
          );
       echo "</td>";
@@ -308,8 +309,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>".__('Delete tasks after', 'fusioninventory')." :</td>";
       echo "<td>";
       Dropdown::showNumber("delete_task", array(
-             'value' => $this->getValue('delete_task'), 
-             'min'   => 1, 
+             'value' => $this->getValue('delete_task'),
+             'min'   => 1,
              'max'   => 240,
              'unit'  => 'day')
       );
@@ -347,6 +348,20 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       echo "<input type='text' name='agent_base_url' size='50' ".
                "value='".$this->getValue('agent_base_url')."'/>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('Clean agents not have contacted server since (in days)', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td width='20%'>";
+      Dropdown::showNumber("agents_old_days", array(
+             'value' => $this->getValue('agents_old_days'),
+             'min' => 1,
+             'max' => 1000)
+         );
+      echo "</td>";
+      echo "<td></td>";
+      echo "<td>";
       echo "</td>";
       echo "</tr>";
 
@@ -578,8 +593,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showYesNo("component_control", $pfConfig->getValue('component_control'));
       echo "</td>";
       echo "</tr>";
-      
-      echo "<tr class='tab_bg_1'>";      
+
+      echo "<tr class='tab_bg_1'>";
       echo "<td>";
       echo __('Create computer based on virtual machine information ( only when the virtual machine has no inventory agent ! )', 'fusioninventory')."&nbsp;:";
       echo "</td>";
@@ -644,8 +659,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
               "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showNumber("threads_networkdiscovery", array(
-             'value' => $pfConfig->getValue('threads_networkdiscovery'), 
-             'min'   => 1, 
+             'value' => $pfConfig->getValue('threads_networkdiscovery'),
+             'min'   => 1,
              'max'   => 400)
       );
       echo "</td>";
@@ -662,8 +677,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showNumber("threads_networkinventory", array(
-             'value' => $pfConfig->getValue('threads_networkinventory'), 
-             'min'   => 1, 
+             'value' => $pfConfig->getValue('threads_networkinventory'),
+             'min'   => 1,
              'max'   => 400)
       );
       echo "</td>";

@@ -299,10 +299,13 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30));
       Crontask::Register('PluginFusioninventoryConfigurationManagement', 'checkdevices', 86400,
                          array('mode'=>2, 'allowmode'=>3, 'logs_lifetime'=>30,
-                               'hourmin' =>22, 'hourmax'=>6, 
+                               'hourmin' =>22, 'hourmax'=>6,
                                'comment'=>'Check configuration management'));
       CronTask::Register('PluginFusioninventoryTaskjob', 'updatedynamictasks', '60',
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30, 'state' => 0));
+      Crontask::Register('PluginFusioninventoryAgent', 'cleanoldagents', (3600 * 24),
+                         array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30,
+                               'comment'=>'Clean agents not contacted since xxx days'));
 
    /*
     * Create rules
