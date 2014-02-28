@@ -4701,6 +4701,10 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                   'type' => 'int(11) NOT NULL',
                   'value' => NULL
          ),
+         'json' =>  array(
+                  'type' => 'longtext DEFAULT NULL',
+                  'value' => NULL
+         ),
       );
 
       $a_table['oldfields'] = array(
