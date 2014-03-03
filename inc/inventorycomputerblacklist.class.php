@@ -272,32 +272,34 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                      break;
                   }
                }
-               if ($a_computerinventory['Computer']['manufacturers_id'] == "") {
-                  if (isset($a_computerinventory['Computer']['mmanufacturer'])) {
-                     $a_computerinventory['Computer']['manufacturers_id'] =
-                        $a_computerinventory['Computer']['mmanufacturer'];
+               if (isset($a_computerinventory['Computer'])) {
+                  if ($a_computerinventory['Computer']['manufacturers_id'] == "") {
+                     if (isset($a_computerinventory['Computer']['mmanufacturer'])) {
+                        $a_computerinventory['Computer']['manufacturers_id'] =
+                           $a_computerinventory['Computer']['mmanufacturer'];
 
-                     foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
-                        if ((isset($a_computerinventory['Computer']['manufacturers_id']))
-                                && ($a_computerinventory['Computer']['manufacturers_id'] ==
-                                        $blacklist_data['value'])) {
-                           $a_computerinventory['Computer']['manufacturers_id'] = "";
-                           break;
+                        foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
+                           if ((isset($a_computerinventory['Computer']['manufacturers_id']))
+                                   && ($a_computerinventory['Computer']['manufacturers_id'] ==
+                                           $blacklist_data['value'])) {
+                              $a_computerinventory['Computer']['manufacturers_id'] = "";
+                              break;
+                           }
                         }
                      }
                   }
-               }
-               if ($a_computerinventory['Computer']['manufacturers_id'] == "") {
-                  if (isset($a_computerinventory['Computer']['bmanufacturer'])) {
-                     $a_computerinventory['Computer']['manufacturers_id'] =
-                        $a_computerinventory['Computer']['bmanufacturer'];
+                  if ($a_computerinventory['Computer']['manufacturers_id'] == "") {
+                     if (isset($a_computerinventory['Computer']['bmanufacturer'])) {
+                        $a_computerinventory['Computer']['manufacturers_id'] =
+                           $a_computerinventory['Computer']['bmanufacturer'];
 
-                     foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
-                        if ((isset($a_computerinventory['Computer']['manufacturers_id']))
-                                && ($a_computerinventory['Computer']['manufacturers_id'] ==
-                                        $blacklist_data['value'])) {
-                           $a_computerinventory['Computer']['manufacturers_id'] = "";
-                           break;
+                        foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
+                           if ((isset($a_computerinventory['Computer']['manufacturers_id']))
+                                   && ($a_computerinventory['Computer']['manufacturers_id'] ==
+                                           $blacklist_data['value'])) {
+                              $a_computerinventory['Computer']['manufacturers_id'] = "";
+                              break;
+                           }
                         }
                      }
                   }
