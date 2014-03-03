@@ -99,68 +99,69 @@ if (isset($_GET['action'])) {
          $jobstate = current($pfTaskjobstate->find("`uniqid`='".$_GET['uuid']."'
             AND `state`!='".PluginFusioninventoryTaskjobstate::FINISHED."'", '', 1));
 
-         $pfAgent->getFromDB($jobstate['plugin_fusioninventory_agents_id']);
-         $computers_id = $pfAgent->fields['computers_id'];
+         if (isset($jobstate['plugin_fusioninventory_agents_id'])) {
+            $pfAgent->getFromDB($jobstate['plugin_fusioninventory_agents_id']);
+            $computers_id = $pfAgent->fields['computers_id'];
 
-         $a_values = $_GET;
-         unset($a_values['action']);
-         unset($a_values['uuid']);
+            $a_values = $_GET;
+            unset($a_values['action']);
+            unset($a_values['uuid']);
 
-         switch ($jobstate['itemtype']) {
+            switch ($jobstate['itemtype']) {
 
-            case 'PluginFusioninventoryCollect_Registry':
-               // update registry content
-               $pfCRC = new PluginFusioninventoryCollect_Registry_Content();
-               $pfCRC->updateComputer($computers_id,
-                                      $a_values,
-                                      $jobstate['items_id']);
-               $pfTaskjobstate->changeStatus(
-                       $jobstate['id'],
-                       PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
-               if ($a_values['_cpt'] == 1) { // it last value
-                  $pfTaskjobstate->changeStatusFinish(
-                       $jobstate['id'],
-                       $jobstate['items_id'],
-                       $jobstate['itemtype']);
-               }
-               break;
+               case 'PluginFusioninventoryCollect_Registry':
+                  // update registry content
+                  $pfCRC = new PluginFusioninventoryCollect_Registry_Content();
+                  $pfCRC->updateComputer($computers_id,
+                                         $a_values,
+                                         $jobstate['items_id']);
+                  $pfTaskjobstate->changeStatus(
+                          $jobstate['id'],
+                          PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
+                  if ($a_values['_cpt'] == 1) { // it last value
+                     $pfTaskjobstate->changeStatusFinish(
+                          $jobstate['id'],
+                          $jobstate['items_id'],
+                          $jobstate['itemtype']);
+                  }
+                  break;
 
-            case 'PluginFusioninventoryCollect_Wmi':
-               // update registry content
-               $pfCWC = new PluginFusioninventoryCollect_Wmi_Content();
-               $pfCWC->updateComputer($computers_id,
-                                      $a_values,
-                                      $jobstate['items_id']);
-               $pfTaskjobstate->changeStatus(
-                       $jobstate['id'],
-                       PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
-               if ($a_values['_cpt'] == 1) { // it last value
-                  $pfTaskjobstate->changeStatusFinish(
-                       $jobstate['id'],
-                       $jobstate['items_id'],
-                       $jobstate['itemtype']);
-               }
-               break;
+               case 'PluginFusioninventoryCollect_Wmi':
+                  // update registry content
+                  $pfCWC = new PluginFusioninventoryCollect_Wmi_Content();
+                  $pfCWC->updateComputer($computers_id,
+                                         $a_values,
+                                         $jobstate['items_id']);
+                  $pfTaskjobstate->changeStatus(
+                          $jobstate['id'],
+                          PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
+                  if ($a_values['_cpt'] == 1) { // it last value
+                     $pfTaskjobstate->changeStatusFinish(
+                          $jobstate['id'],
+                          $jobstate['items_id'],
+                          $jobstate['itemtype']);
+                  }
+                  break;
 
-            case 'PluginFusioninventoryCollect_File':
-               // update registry content
-               $pfCFC = new PluginFusioninventoryCollect_File_Content();
-               $pfCFC->storeTempFilesFound($jobstate['id'], $a_values);
-               $pfTaskjobstate->changeStatus(
-                       $jobstate['id'],
-                       PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
-               if ($a_values['_cpt'] == 1) { // it last value
-                  $pfCFC->updateComputer($computers_id,
-                                         $jobstate['items_id'],
-                                         $jobstate['id']);
-                  $pfTaskjobstate->changeStatusFinish(
-                       $jobstate['id'],
-                       $jobstate['items_id'],
-                       $jobstate['itemtype']);
-               }
-               break;
+               case 'PluginFusioninventoryCollect_File':
+                  // update registry content
+                  $pfCFC = new PluginFusioninventoryCollect_File_Content();
+                  $pfCFC->storeTempFilesFound($jobstate['id'], $a_values);
+                  $pfTaskjobstate->changeStatus(
+                          $jobstate['id'],
+                          PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
+                  if ($a_values['_cpt'] == 1) { // it last value
+                     $pfCFC->updateComputer($computers_id,
+                                            $jobstate['items_id'],
+                                            $jobstate['id']);
+                     $pfTaskjobstate->changeStatusFinish(
+                          $jobstate['id'],
+                          $jobstate['items_id'],
+                          $jobstate['itemtype']);
+                  }
+                  break;
 
-
+            }
          }
          break;
 
