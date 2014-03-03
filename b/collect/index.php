@@ -118,7 +118,8 @@ if (isset($_GET['action'])) {
                   $pfTaskjobstate->changeStatus(
                           $jobstate['id'],
                           PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA);
-                  if ($a_values['_cpt'] == 1) { // it last value
+                  if (isset($a_values['_cpt'])
+                          && $a_values['_cpt'] == 1) { // it last value
                      $pfTaskjobstate->changeStatusFinish(
                           $jobstate['id'],
                           $jobstate['items_id'],
