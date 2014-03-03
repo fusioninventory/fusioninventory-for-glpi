@@ -291,7 +291,7 @@ class PluginFusioninventoryInventoryComputerBlacklist extends CommonDBTM {
                   if ($a_computerinventory['Computer']['manufacturers_id'] == "") {
                      if (isset($a_computerinventory['Computer']['bmanufacturer'])) {
                         $a_computerinventory['Computer']['manufacturers_id'] =
-                           $a_computerinventory['Computer']['bmanufacturer'];
+                              $a_computerinventory['Computer']['bmanufacturer'];
 
                         foreach($a_blacklist as $blacklist_id=>$blacklist_data) {
                            if ((isset($a_computerinventory['Computer']['manufacturers_id']))
