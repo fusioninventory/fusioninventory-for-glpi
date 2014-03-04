@@ -46,9 +46,9 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventorySnmpmodeldevice extends CommonDBTM {
 
-   
+
    static $rightname = 'plugin_fusioninventory_model';
-   
+
 
    function updateDevicesForModel($models_id, $a_devices) {
       $a_devicesDBtmp = $this->find("`plugin_fusioninventory_snmpmodels_id`='".$models_id."'");
@@ -97,11 +97,11 @@ class PluginFusioninventorySnmpmodeldevice extends CommonDBTM {
       echo "</table>";
    }
 
-   
-   
+
+
    function cleanDevices() {
       global $DB;
-      
+
       $query = "SELECT `glpi_plugin_fusioninventory_snmpmodeldevices`.`id`
                    FROM `glpi_plugin_fusioninventory_snmpmodeldevices`
                 LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`

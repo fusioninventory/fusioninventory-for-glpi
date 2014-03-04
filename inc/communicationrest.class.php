@@ -255,8 +255,8 @@ class PluginFusioninventoryCommunicationRest {
       }
    }
 
-   
-   
+
+
    /**
     * Manage REST parameters
     **/

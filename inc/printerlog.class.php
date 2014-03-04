@@ -130,9 +130,9 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                                         'beforejoin'        => array('table' => 'glpi_networknames',
                                                                      'joinparams'
                                                                              => $networkNameJoin));
-      
-      
-      
+
+
+
 
 //      $tab[4]['table'] = 'glpi_infocoms';
 //      $tab[4]['field'] = 'budget';

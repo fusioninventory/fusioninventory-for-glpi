@@ -29,7 +29,7 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
@@ -127,14 +127,14 @@ class PluginFusioninventoryCollectRule extends Rule {
 
       $criterias['regvalue']['field']     = 'name';
       $criterias['regvalue']['name']      = __('Registry value', 'fusioninventory');
-      
+
       $criterias['wmiproperty']['field']  = 'name';
       $criterias['wmiproperty']['name']   = __('WMI property', 'fusioninventory');
       $criterias['wmiproperty']['table']  = 'glpi_plugin_fusioninventory_collects_wmis';
 
       $criterias['wmivalue']['field']     = 'name';
       $criterias['wmivalue']['name']      = __('WMI value', 'fusioninventory');
-      
+
       $criterias['filename']['field']     = 'name';
       $criterias['filename']['name']      = __('File name', 'fusioninventory');
 
@@ -143,7 +143,7 @@ class PluginFusioninventoryCollectRule extends Rule {
 
       $criterias['filesize']['field']     = 'name';
       $criterias['filesize']['name']      = __('File size', 'fusioninventory');
-      
+
       return $criterias;
    }
 
@@ -171,7 +171,7 @@ class PluginFusioninventoryCollectRule extends Rule {
 
       $actions['user']['name']  = __('User');
       $actions['user']['force_actions'] = array('assign', 'regex_result');
-      
+
       $actions['locations_id']['name']  = __('Location');
       $actions['locations_id']['type']  = 'dropdown';
       $actions['locations_id']['table'] = 'glpi_locations';
@@ -181,13 +181,13 @@ class PluginFusioninventoryCollectRule extends Rule {
       $actions['states_id']['table'] = 'glpi_states';
 
       $actions['software']['name']  = __('Software');
-   
+
       $actions['softwareversion']['name']  = __('Software version');
       $actions['softwareversion']['force_actions'] = array('assign', 'regex_result');
 
       $actions['otherserial']['name']  = __('Inventory number');
       $actions['otherserial']['force_actions'] = array('assign', 'regex_result');
-      
+
       return $actions;
    }
 }

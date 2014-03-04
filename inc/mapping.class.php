@@ -103,8 +103,8 @@ class PluginFusioninventoryMapping extends CommonDBTM {
       }
    }
 
-   
-   
+
+
    function getTranslation ($mapping) {
 
       switch ($mapping['locale']) {

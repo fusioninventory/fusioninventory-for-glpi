@@ -89,7 +89,7 @@ if (isset($_GET['file'])) {
          if ($fsize){
             echo fread($f, filesize($file));
          } else {
-            
+
          }
 
          if ($mc) {

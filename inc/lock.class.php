@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryLock extends CommonDBTM{
 
-   
+
    static $rightname = 'plugin_fusioninventory_lock';
 
    static function getTypeName($nb=0) {
@@ -116,7 +116,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
     * @return nothing (print the form)
     **/
    function showForm($p_target, $p_itemtype, $p_items_id=0) {
-      
+
       $can = 0;
       $typeright = strtolower($p_itemtype);
       if ($typeright == "networkequipment") {
@@ -232,9 +232,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
                        $key_source."]' ></td>";
                echo "</tr>";
             }
-         }      
-         
-         
+         }
+
+
          // add option selection for add theses lock filed or remove them
          echo "<tr>";
          echo "<th colspan='2'>".__('Job', 'fusioninventory')."</th>";
@@ -529,7 +529,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
    *
    **/
    static function deleteLock($item) {
-      
+
       $pfLock = new PluginFusioninventoryLock();
 
       $itemtype = getItemTypeForTable($item->fields['tablename']);
@@ -592,10 +592,10 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
    }
 
-   
-   
+
+
    function getSerialized_InventoryArray($itemtype, $items_id) {
-      
+
       $item_extend = new PluginFusioninventoryLock();
       if ($itemtype == 'Computer') {
          $item_extend = new PluginFusioninventoryInventoryComputerComputer();
@@ -604,7 +604,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       } else if ($itemtype == 'Printer') {
          $item_extend = new PluginFusioninventoryPrinter();
       }
-      
+
       if ($item_extend->getType() != 'PluginFusioninventoryLock') {
          // Get device info + field 'serialized_inventory'
          $a_lists = $item_extend->find("`".getForeignKeyFieldForItemType($itemtype)."`='".$items_id."'", "", 1);
@@ -618,9 +618,9 @@ class PluginFusioninventoryLock extends CommonDBTM{
       }
       return array();
    }
-   
-   
-   
+
+
+
    function getValueForKey($val, $key) {
       if ((strstr($key, "_id")
               || ($key == 'is_ocs_import'))
@@ -628,7 +628,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
          $val = "";
       }
-      
+
       $table = getTableNameForForeignKeyField($key);
       if ($table != "") {
          $linkItemtype = getItemTypeForTable($table);

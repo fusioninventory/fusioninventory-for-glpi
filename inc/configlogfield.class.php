@@ -88,14 +88,14 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
                   $this->add($input);
                } else {
                   // On old version, can have many times same value in DB
-                  $query = "SELECT *  FROM `glpi_plugin_fusioninventory_configlogfields` 
+                  $query = "SELECT *  FROM `glpi_plugin_fusioninventory_configlogfields`
                      WHERE `plugin_fusioninventory_mappings_id` = '".$mapfields['id']."'
                      LIMIT 1,1000";
                   $result=$DB->query($query);
                   while ($data=$DB->fetch_array($result)) {
                      $DB->query("DELETE FROM `glpi_plugin_fusioninventory_configlogfields`"
                              ." WHERE `id`='".$data['id']."'");
-                  }                  
+                  }
                }
             }
          }

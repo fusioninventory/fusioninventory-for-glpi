@@ -128,7 +128,7 @@ function plugin_init_fusioninventory() {
                                         'Computer')));
       Plugin::registerClass('PluginFusioninventoryComputerLicenseInfo',
               array('addtabon' => array('Computer')));
-      
+
          //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocation');
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocationCollection',
@@ -169,7 +169,6 @@ function plugin_init_fusioninventory() {
 
       $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] =
                                                       "glpi_plugin_fusioninventory_printers";
-
 
       // ##### 3. get informations of the plugin #####
 
@@ -212,11 +211,11 @@ function plugin_init_fusioninventory() {
          );
       }
       if (script_endswith("deploypackage.form.php")) {
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = 
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
                  "lib/deploy_editsubtype.js";
       }
 
-      if (Session::haveRight('plugin_fusioninventory_configuration', READ) 
+      if (Session::haveRight('plugin_fusioninventory_configuration', READ)
               || Session::haveRight('profile', UPDATE)) {// Config page
          $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/config.form.php'.
                  '?itemtype=pluginfusioninventoryconfig&glpi_tab=1';
@@ -322,7 +321,7 @@ function plugin_init_fusioninventory() {
                         = '../fusioninventory/front/inventoryruleentity.form.php';
          $hook_search['ruleentity']
                         = '../fusioninventory/front/inventoryruleentity.php';
-         
+
          $hook_add['rulelocation']
                         = '../fusioninventory/front/inventoryrulelocation.form.php';
          $hook_search['rulelocation']
@@ -365,17 +364,17 @@ function plugin_init_fusioninventory() {
 
          }
 
-         $hook_add['collect'] = 
+         $hook_add['collect'] =
              '../fusioninventory/front/collect.form.php?add=1';
-         $hook_search['collect'] = 
+         $hook_search['collect'] =
              '../fusioninventory/front/collect.php';
-         
-         $hook_add['configurationmanagement_model'] = 
+
+         $hook_add['configurationmanagement_model'] =
              '../fusioninventory/front/configurationmanagement_model.form.php?add=1';
-         $hook_search['configurationmanagement_model'] = 
+         $hook_search['configurationmanagement_model'] =
              '../configurationmanagement_model/front/configurationmanagement_model.php';
-         
-         
+
+
          /*
           * Deploy submenu entries
           */
@@ -578,12 +577,12 @@ function plugin_fusioninventory_check_prerequisites() {
       echo __('Your GLPI version not compatible, require 0.85', 'fusioninventory');
       return FALSE;
    }
-   
+
    if (!function_exists('finfo_open')) {
       echo __('fileinfo extension (PHP) is required...', 'fusioninventory');
       return FALSE;
-   }   
-   
+   }
+
    $plugin = new Plugin();
    if ($plugin->isActivated("fusioninventory")
            && !TableExists("glpi_plugin_fusioninventory_configs")) {

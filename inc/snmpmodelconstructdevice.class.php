@@ -59,7 +59,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
          </td>
          </tr>
          </table>";
-      
+
       $a_mapping_name = array();
       foreach ($data->mappings as $datamib) {
          if (!empty($datamib->name)
@@ -103,7 +103,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                         console.log('".$mapping_name." : ' + (100 -((used * 100) / max)));
                         progressbar = 1;
                      }
-                  } 
+                  }
                   if (progressbar == 0
                      && document.getElementById('number_".$mapping_name."max').textContent > 0
                      && document.getElementById('number_".$mapping_name."remaining').textContent > 0) {
@@ -137,11 +137,11 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                      url: '".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownsnmpmodelconstruct_progressbar.php',
                      scripts: true,
                      params: cartridgevalues
-                  });   
-               };   
+                  });
+               };
          </script>";
       }
-         
+
       echo "<form name='form' method='post' action='".$this->getFormURL()."'>";
       echo "<input type='hidden' name='devices_id' value='".$id."' />";
 
@@ -152,7 +152,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
             updatecartridge();
          </script>";
       }
-      
+
       if ($ret) {
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr class='tab_bg_1'>";
@@ -180,12 +180,12 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
 
       if ($json->device->itemtype == 'Printer') {
          // Display gauge for printer cartridge
-         echo '<div style="position:fixed;top:90px;left:0px;width:300px; 
+         echo '<div style="position:fixed;top:90px;left:0px;width:300px;
             background-color:#e1dddd; z-index:10;border: 1px solid #828282;">
             <div id="displaycartridgebar"></div>';
          echo "</div>";
       }
-      
+
       $snmpwalk = '';
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks`
                    WHERE `plugin_fusioninventory_snmpmodelconstructdevices_id`='".$devices_id."'
@@ -474,7 +474,7 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
          }
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='3'>";
-         if ($onchange != '' 
+         if ($onchange != ''
                  && strstr($data, "Hex-STRING")) {
             $split = explode(': ', trim($data));
             $split[1] = str_replace(' ', '', $split[1]);
@@ -483,16 +483,16 @@ class PluginFusioninventorySnmpmodelConstructDevice extends CommonDBTM {
                $str .= chr(hexdec(substr($split[1], $i, 2)));
             }
             echo $split[0].": ".$str;
-            
+
          } else {
             echo trim($data);
          }
-         if (count($a_match) == 1 
+         if (count($a_match) == 1
                  && $onchange != '') {
             $split = explode(':', trim($data));
             $valuefromoid = $split[(count($split) - 1)];
             if (count($split) == 1) {
-               $valuefromoid = 0; 
+               $valuefromoid = 0;
            }
             echo "<div style='visibility:hidden' id='value_".$mapping_name."[".$num."]'>".trim($valuefromoid, '" ')."</div>";
          } else if ($onchange != '') {

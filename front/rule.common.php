@@ -139,9 +139,9 @@ if (isset($_GET["action"])) {
 
    } else {
       // Next run
-      $offset       = $rulecollection->replayRulesOnExistingDB($_GET['offset'], 
-                                                               $max, 
-                                                               array(), 
+      $offset       = $rulecollection->replayRulesOnExistingDB($_GET['offset'],
+                                                               $max,
+                                                               array(),
                                                                $_GET);
       $manufacturer = $_GET["manufacturer"];
 

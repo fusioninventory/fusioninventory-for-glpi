@@ -134,8 +134,8 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
       }
       return $output;
    }
-   
-   
+
+
    /**
     * Get Collection Datas : retrieve descriptions and rules
     *
@@ -176,7 +176,7 @@ class PluginFusioninventoryInventoryRuleImportCollection extends RuleCollection 
 //      }
    }
 
-   
+
 }
 
 ?>

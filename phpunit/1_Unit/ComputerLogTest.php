@@ -66,7 +66,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'wincompany'                      => 'siprossii',
               'operatingsystem_installationdate'=> '2012-10-16 08:12:56',
               'last_fusioninventory_update'     => $date
-          ), 
+          ),
           'soundcard'      => array(),
           'graphiccard'    => array(),
           'controller'     => array(),

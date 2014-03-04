@@ -47,8 +47,8 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryComputerStorageType extends CommonDropdown {
 
    static $rightname = 'computer';
-   
-   
+
+
    static function getTypeName($nb=0) {
       return __('Storage type', 'fusioninventory');
    }

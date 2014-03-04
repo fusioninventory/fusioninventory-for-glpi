@@ -45,10 +45,10 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
-   
+
    static $rightname = 'plugin_fusioninventory_agent';
 
-   
+
    /**
    * Get name of this type
    *
@@ -94,19 +94,19 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
       $tab[4]['massiveaction']     = false;
       $tab[4]['additionalfields']  = array('itemtype');
 
-      
+
       $tab[5]['table']            = $this->getTable();
       $tab[5]['field']            = 'itemtype';
       $tab[5]['name']             = __('Type');
       $tab[5]['massiveaction']    = false;
       $tab[5]['datatype']         = 'itemtypename';
 
-      
+
       return $tab;
    }
-   
-   
-   
+
+
+
    /**
     * @see CommonGLPI::defineTabs()
    **/
@@ -118,8 +118,8 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
       return $ong;
    }
 
-   
-   
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       $a_tabs = array();
@@ -130,7 +130,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          }
       } else if ($item->getType() == 'Computer') {
          $a_tabs[1] = 'Configuration Management';
-      } 
+      }
       return $a_tabs;
    }
 
@@ -162,14 +162,14 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                $pfConfigurationManagement->displayDiff($data['id'], $a_currentinv);
             }
          }
-         
-      } 
+
+      }
       return TRUE;
    }
-   
-   
-   
-   
+
+
+
+
    /** Display item with tabs
     *
     * @since version 0.85
@@ -186,14 +186,14 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
       $this->showNavigationHeader($options);
       $this->showTabsContent($options);
    }
-   
-   
-   
+
+
+
    function showForm($item) {
 
       $this->getEmpty();
       $this->showFormHeader();
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
       echo "To add configuratiom management of this device, click on add button...";
@@ -201,16 +201,16 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
       echo Html::hidden('items_id', array('value' => $item->getID()));
       echo "</td>";
       echo "</tr>";
-      
+
       $this->showFormButtons();
 
       return true;
    }
 
-   
-   
+
+
    function showLinkToDefineRef($id) {
-      
+
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th>";
@@ -219,20 +219,20 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
       echo "</tr>";
       echo "</table>";
    }
-   
-   
-   
+
+
+
    function generateReferential($items_id) {
       global $CFG_GLPI;
-      
+
       $pfconfmanage_model = new PluginFusioninventoryConfigurationManagement_Model();
 
       $list_fields = $pfconfmanage_model->getListFields();
 
       $this->getFromDB($items_id);
-      
+
       // Use model
-      
+
       echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] .
          "/plugins/fusioninventory/front/configurationmanagement.form.php\">";
 
@@ -254,12 +254,12 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          "\" class='submit' type='submit'>";
       echo "</th>";
       echo "</tr>";
-      
+
       echo "</table>";
       Html::closeForm();
    }
-   
-   
+
+
 
    function displayGenerateLine($rank, $a_fields, $new, $tree, $items_id=0, $itemtype='', $a_DBvalues=array()) {
       foreach ($a_fields as $key=>$data) {
@@ -327,7 +327,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                   echo '<td></td>';
                }
                echo '<td colspan="'.(2-($rank-2)).'">';
-               echo $data;            
+               echo $data;
                echo '</td>';
                echo '<td class="center">';
                $tree_temp = $tree."/".$key;
@@ -353,14 +353,14 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          }
       }
    }
-   
-   
-   
+
+
+
    function getData_fromDB($name, $items_id, $itemtype, $tree) {
       $a_DBdata = array();
       $item = new $itemtype();
       if ($item->getFromDB($items_id)) {
-      
+
          switch ($name) {
             case 'manufacturers_id':
                $manufacturer = new Manufacturer();
@@ -400,7 +400,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                   $a_add['frequency'] = $a_proc['frequency'];
                   $a_add['serial'] = $a_proc['serial'];
                   $a_add['id'] = $a_proc['id'];
-                  $a_DBdata[] = $a_add;               
+                  $a_DBdata[] = $a_add;
                }
                break;
 
@@ -415,7 +415,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                   $software->getFromDB($softwareVersion->fields['softwares_id']);
                   $a_add = $software->fields;
                   $a_add['version'] = $softwareVersion->fields['name'];
-                  $a_DBdata[] = $a_add;               
+                  $a_DBdata[] = $a_add;
                }
                break;
 
@@ -424,9 +424,9 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
       return $a_DBdata;
    }
 
-   
 
-   function generateCurrentInventory($id, $a_ref=array(), $a_currentinv=array(), 
+
+   function generateCurrentInventory($id, $a_ref=array(), $a_currentinv=array(),
                                      $a_fields=array(), $tree='', $items_id=0, $itemtype='', $a_DBvalues=array()) {
       if (count($a_ref) == 0) {
          $this->getFromDB($id);
@@ -479,21 +479,21 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
       }
       return $a_currentinv;
    }
-   
-   
-   
+
+
+
    function displayDiff($items_id, $a_currentinv) {
-      
+
       $pfconfmanage_model = new PluginFusioninventoryConfigurationManagement_Model();
 
       $list_fields = $pfconfmanage_model->getListFields();
-      
+
       $this->getFromDB($items_id);
       $a_ref = importArrayFromDB($this->fields['serialized_referential']);
 
       $a_missingInCurrentinv = array_diff_key($a_ref, $a_currentinv);
       $a_missingInRef = array_diff_key($a_currentinv, $a_ref);
-      
+
       $a_update = array();
       foreach ($a_ref as $key=>$value) {
          if (isset($a_currentinv[$key])
@@ -501,7 +501,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
             $a_update[$key] = $value;
          }
       }
-      
+
       echo "<table class='tab_cadre_fixe'>";
 
       if (count($a_missingInCurrentinv)) {
@@ -514,7 +514,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          echo "</th>";
          echo "</tr>";
 
-         
+
          echo "<tr class='tab_bg_1'>";
          echo "<th>";
          echo "What";
@@ -536,14 +536,14 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          echo "</th>";
          echo "</tr>";
       }
-      
+
       $a_miss_curr = array();
       foreach ($a_missingInCurrentinv as $key=>$value) {
          $split = explode('/', $key);
          unset($split[(count($split) - 1)]);
          $a_miss_curr[(implode('/', $split))] = "";
       }
-      
+
       foreach ($a_miss_curr as $key=>$value) {
          // Get all elements of the section
          $split = explode('/', $key);
@@ -551,7 +551,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          for ($i=1; $i < count($split); $i += 2) {
             $list_fields_temp = $list_fields_temp[$split[$i]];
          }
-         
+
          echo "<tr class='tab_bg_3'>";
          echo "<th>";
          echo $list_fields_temp['_internal_name_'];
@@ -564,7 +564,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          echo "<td colspan='3'>";
          echo "</td>";
          echo "</tr>";
-         
+
          foreach ($list_fields_temp as $keyref=>$valueref) {
             if ($keyref != '_internal_name_'
                  && $keyref != '_itemtype_') {
@@ -585,13 +585,13 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                      echo "</td>";
                      echo "<td>";
                      echo "</td>";
-                     echo "</tr>";   
+                     echo "</tr>";
                   }
                }
             }
          }
       }
-      
+
 
       if (count($a_missingInRef)) {
          echo "<tr class='tab_bg_1'>";
@@ -599,7 +599,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          echo "Values found in current inventory but not referenced";
          echo "</th>";
          echo "</tr>";
-         
+
          echo "<tr class='tab_bg_1'>";
          echo "<th>";
          echo "What";
@@ -612,14 +612,14 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          echo "</th>";
          echo "</tr>";
       }
-      
+
       $a_miss_ref = array();
       foreach ($a_missingInRef as $key=>$value) {
          $split = explode('/', $key);
          unset($split[(count($split) - 1)]);
          $a_miss_ref[(implode('/', $split))] = "";
       }
-      
+
       foreach ($a_miss_ref as $key=>$value) {
          // Get all elements of the section
          $split = explode('/', $key);
@@ -627,7 +627,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          for ($i=1; $i < count($split); $i += 2) {
             $list_fields_temp = $list_fields_temp[$split[$i]];
          }
-         
+
          echo "<tr class='tab_bg_3'>";
          echo "<th>";
          echo $list_fields_temp['_internal_name_'];
@@ -635,7 +635,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          echo "<td colspan='2'>";
          echo "</td>";
          echo "</tr>";
-         
+
          foreach ($list_fields_temp as $keyref=>$valueref) {
             if ($keyref != '_internal_name_'
                  && $keyref != '_itemtype_') {
@@ -650,14 +650,14 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                      echo "<td style='background-color:#ccffcc'>";
                      echo $a_currentinv[$key.'/'.$keyref];
                      echo "</td>";
-                     echo "</tr>";   
+                     echo "</tr>";
                   }
                }
             }
          }
       }
 
-      
+
       if (count($a_update)) {
          echo "<tr class='tab_bg_1'>";
          echo "<th colspan='3'>";
@@ -665,7 +665,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          echo "</th>";
          echo "</tr>";
 
-         
+
          echo "<tr class='tab_bg_1'>";
          echo "<th>";
          echo "What";
@@ -685,7 +685,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          unset($split[(count($split) - 1)]);
          $a_update_sections[(implode('/', $split))] = "";
       }
-      
+
       foreach ($a_update_sections as $key=>$value) {
          // Get all elements of the section
          $split = explode('/', $key);
@@ -693,7 +693,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          for ($i=1; $i < count($split); $i += 2) {
             $list_fields_temp = $list_fields_temp[$split[$i]];
          }
-         
+
          echo "<tr class='tab_bg_3'>";
          echo "<th>";
          echo $list_fields_temp['_internal_name_'];
@@ -701,7 +701,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          echo "<td colspan='2'>";
          echo "</td>";
          echo "</tr>";
-         
+
          foreach ($list_fields_temp as $keyref=>$valueref) {
             if ($keyref != '_internal_name_'
                  && $keyref != '_itemtype_') {
@@ -717,7 +717,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                      echo "<td style='background-color:#ffcccc'>";
                      echo $a_currentinv[$key.'/'.$keyref];
                      echo "</td>";
-                     echo "</tr>";   
+                     echo "</tr>";
                   } else {
                      echo "<tr>";
                      echo "<td>";
@@ -726,28 +726,28 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                      echo "<td colspan='2' class='tab_bg_3' style='background-color:#ccffcc'>";
                      echo $a_ref[$key.'/'.$keyref];
                      echo "</td>";
-                     echo "</tr>";   
+                     echo "</tr>";
                   }
                }
             }
          }
       }
-      
+
       echo "</table>";
-      
+
    }
-   
-   
-   
+
+
+
    static function cronCheckdevices() {
-      
+
       $pfConfigurationManagement = new PluginFusioninventoryConfigurationManagement();
       $a_list = $pfConfigurationManagement->find("`sha_referential` IS NOT NULL");
       foreach ($a_list as $id=>$data) {
-         
+
          $a_currinv = $pfConfigurationManagement->generateCurrentInventory($id);
          $sha = sha1(exportArrayToDB($a_currinv));
-         
+
          if ($sha == $data['sha_referential']) {
             $input = array();
             $input['id'] = $id;
@@ -773,8 +773,8 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          }
       }
       // Send emails
-      
-      
+
+
    }
 }
 

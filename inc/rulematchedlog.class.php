@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryRulematchedlog extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_ruleimport';
-   
+
    static function getTypeName($nb=0) {
 
    }

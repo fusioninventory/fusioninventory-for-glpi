@@ -29,14 +29,14 @@
 
    @package   FusionInventory
    @author    David Durieux
-   @co-author 
+   @co-author
    @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
    @since     2012
- 
+
    ------------------------------------------------------------------------
  */
 
@@ -47,10 +47,10 @@ include ("../../../inc/includes.php");
 
 // END DEV
 
-Html::header(__('FusionInventory', 'fusioninventory'), 
-             $_SERVER["PHP_SELF"], 
-             "plugins", 
-             "fusioninventory", 
+Html::header(__('FusionInventory', 'fusioninventory'),
+             $_SERVER["PHP_SELF"],
+             "plugins",
+             "fusioninventory",
              "constructdevice");
 Session::checkLoginUser();
 
@@ -89,13 +89,13 @@ if ($pfConstructmodel->connect()) {
             unset($_SESSION['plugin_fusioninventory_itemtype']);
          }
          Html::redirect($CFG_GLPI['root_doc']."/plugins/fusioninventory/front/constructmodel.php");
-      
+
       } else if (isset($_FILES['snmpwalkfile'])) {
          if (isset($_POST['sysdescr'])) {
-            $jsonret = $pfConstructmodel->setLock($_POST['sysdescr'], 
+            $jsonret = $pfConstructmodel->setLock($_POST['sysdescr'],
                                                   $_POST['itemtype']);
          } else {
-            $jsonret = $pfConstructmodel->setLock($_SESSION['plugin_fusioninventory_sysdescr'], 
+            $jsonret = $pfConstructmodel->setLock($_SESSION['plugin_fusioninventory_sysdescr'],
                                                   $_SESSION['plugin_fusioninventory_itemtype']);
          }
          $i = 1;
@@ -107,14 +107,14 @@ if ($pfConstructmodel->connect()) {
             $result = $DB->query($query);
             if ($DB->numrows($result) == "0") {
                $i = 0;
-            }   
+            }
          }
 
-         $query_ins = "INSERT INTO `glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks` 
+         $query_ins = "INSERT INTO `glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks`
             (`id`, `plugin_fusioninventory_snmpmodelconstructdevices_id`, `log`)
             VALUES (NULL , '".$jsonret->device->id."', '".$md5."')";
          $id_ins = $DB->query($query_ins);
-         move_uploaded_file($_FILES['snmpwalkfile']['tmp_name'], 
+         move_uploaded_file($_FILES['snmpwalkfile']['tmp_name'],
                             GLPI_PLUGIN_DOC_DIR."/fusioninventory/walks/".$md5);
 
          $_SESSION['plugin_fusioninventory_snmpwalks_id'] = $jsonret->device->id;
@@ -136,9 +136,9 @@ if ($pfConstructmodel->connect()) {
               AND isset($_SESSION['plugin_fusioninventory_sysdescr'])
               AND $_SESSION['plugin_fusioninventory_sysdescr'] != ''
               AND $_SESSION['plugin_fusioninventory_itemtype'] != '0') {
-         $pfConstructmodel->sendGetsysdescr($_SESSION['plugin_fusioninventory_sysdescr'], 
+         $pfConstructmodel->sendGetsysdescr($_SESSION['plugin_fusioninventory_sysdescr'],
                                             $_SESSION['plugin_fusioninventory_itemtype']);
-      
+
 //      } else if ((isset($_GET['editoid'])
 //              OR isset($_GET['id']))
 //              AND isset($_SESSION['plugin_fusioninventory_snmpwalks_id'])
@@ -150,7 +150,7 @@ if ($pfConstructmodel->connect()) {
          $pfConstructDevice = new PluginFusioninventorySnmpmodelConstructDevice();
          $dataret = $pfConstructmodel->sendGetDevice($_GET['editoid']);
          $pfConstructDevice->showForm($_GET['editoid'], $dataret);
-      
+
       } else if (isset($_POST['sendsnmpwalk'])
               AND $_POST['sysdescr'] != '') {
          $message = array();

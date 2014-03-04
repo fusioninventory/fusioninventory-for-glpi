@@ -50,8 +50,8 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
    private $DB_data = array();
    private $reference = array();
    static $rightname = 'plugin_fusioninventory_agent';
- 
-   
+
+
    function showForm($ID, $options=array()) {
 
       $this->initForm($ID, $options);
@@ -69,23 +69,23 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
       $elements = array(
           'Computer' => __('Computer')
       );
-      Dropdown::showFromArray('itemtype', 
+      Dropdown::showFromArray('itemtype',
                               $elements,
                               array('value' => $this->fields['itemtype']));
       echo "</td>";
       echo "</tr>\n";
 
       $this->showFormButtons($options);
-   
+
       if ($ID > 0) {
          $this->manageModel();
       }
-      
+
       return TRUE;
    }
 
-   
-   
+
+
    function manageModel($items_id_1=-1, $items_id_2=-1) {
       global $CFG_GLPI;
 
@@ -95,9 +95,9 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
          $new = FALSE;
          $this->model_tree = importArrayFromDB($this->fields['serialized_model']);
       }
-      
+
       $a_fields = $this->getListFields();
-      
+
       echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] .
          "/plugins/fusioninventory/front/configurationmanagement_model.form.php\">";
 
@@ -114,9 +114,9 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
       echo '<th>Ignoré</th>';
       echo '<th>Pas géré</th>';
       echo '</tr>';
-      
+
       $this->manageModelLine(1, $a_fields, $new);
-      
+
       echo "<tr>";
       echo "<th colspan='5'>";
       echo Html::hidden('id', array('value' => $this->getID()));
@@ -124,13 +124,13 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
          "\" class='submit' type='submit'>";
       echo "</th>";
       echo "</tr>";
-      
+
       echo "</table>";
       Html::closeForm();
    }
-   
-   
-   
+
+
+
    function manageModelLine($rank, $a_fields, $new, $tree='') {
       foreach ($a_fields as $key=>$data) {
          if ($key != '_internal_name_'
@@ -170,7 +170,7 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
                $managed_checked = '';
                $ignored_checked = '';
                $notmanaged_checked = '';
-               
+
                if ($new) {
                   $managed_checked = 'checked';
                } else if (isset($this->model_tree[$tree."/".$key])) {
@@ -182,13 +182,13 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
                      $notmanaged_checked = 'checked';
                   }
                }
-               
+
                echo "<tr class='tab_bg_3'>";
                for ($i=2; $i < $rank; $i++) {
                   echo '<td></td>';
                }
                echo '<td colspan="'.(2-($rank-2)).'">';
-               echo $data;            
+               echo $data;
                echo '</td>';
                echo '<td class="center">';
                $tree_temp = $tree."/".$key;
@@ -206,10 +206,10 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
       }
    }
 
-   
-     
+
+
    function getListFields() {
-      
+
       $a_fields = array();
       $a_fields['Computer'] = array(
           '_internal_name_' => 'Computer info',
@@ -253,7 +253,7 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
               '_itemtype_' => 'OperatingSystemVersion',
               'id'   => __('ID'),
               'name' => __('Name')
-          ),          
+          ),
           'os_license_number' => __('Serial of the operating system'),
           'os_licenseid' => __('Product ID of the operating system'),
           'autoupdatesystems_id' => array(

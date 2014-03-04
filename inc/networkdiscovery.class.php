@@ -325,7 +325,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
               OR !isset($a_versions["NETWORKDISCOVERY"])) {
          if (!file_exists(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml")) {
             PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile(FALSE);
-         }     
+         }
          $sxml_option->addChild('DICOHASH',
                                 md5_file(GLPI_PLUGIN_DOC_DIR."/fusioninventory/discovery.xml"));
       }

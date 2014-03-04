@@ -300,7 +300,7 @@ class PluginFusioninventoryCommunication {
 
    /**
     * Manage communication with old protocol (XML over POST)
-    * 
+    *
     **/
    function handleOCSCommunication($xml='') {
 
@@ -324,9 +324,9 @@ class PluginFusioninventoryCommunication {
          $_SESSION['glpiactiveprofile']['computer']   = 'w';
          $_SESSION['glpiactiveprofile']['monitor']    = 'w';
          $_SESSION['glpiactiveprofile']['printer']    = 'w';
-         $_SESSION['glpiactiveprofile']['peripheral'] = 'w';           
+         $_SESSION['glpiactiveprofile']['peripheral'] = 'w';
          $_SESSION['glpiactiveprofile']['networking'] = 'w';
-         
+
          $_SESSION["glpi_plugin_fusioninventory_profile"]['unknowndevice'] = 'w';
       }
 
@@ -349,7 +349,7 @@ class PluginFusioninventoryCommunication {
             $xml = $GLOBALS["HTTP_RAW_POST_DATA"];
             $compressmode = 'none';
       } else {
-               
+
          # try each algorithm successively
          if (($xml = gzuncompress($GLOBALS["HTTP_RAW_POST_DATA"]))) {
             $compressmode = "zlib";

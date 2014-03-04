@@ -47,11 +47,11 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryMenu extends CommonGLPI {
 
-   
+
    static $rightname = 'plugin_fusioninventory_menu';
-   
-   
-   
+
+
+
    /**
     * Name of the type
     *
@@ -60,18 +60,18 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    static function getTypeName($nb=0) {
       return 'FusionInventory';
    }
-   
-   
-   
+
+
+
    static function canView() {
       if ((static::$rightname) && (Session::haveRight(static::$rightname, READ))) {
          return TRUE;
       }
       return FALSE;
    }
-   
-   
-   
+
+
+
    /**
    * Display the menu of FusionInventory
    *
@@ -144,7 +144,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[3]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/config.form.php";
       }
-      
+
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('General', 'fusioninventory'),
                                                              $a_menu,
@@ -179,7 +179,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[0]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventorycomputerimportxml.php";
       }
-      
+
       if (Session::haveRight("plugin_fusioninventory_collect", READ)) {
          $a_menu[11]['name'] = __('Additional computer information', 'fusioninventory');
          $a_menu[11]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
@@ -225,7 +225,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[4]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventoryrulelocation.php";
       }
-      
+
       if (Session::haveRight("plugin_fusioninventory_existantrule", READ)) {
          $a_menu[5]['name'] = __('Additional computer information rules', 'fusioninventory');
          $a_menu[5]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
@@ -361,37 +361,37 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       /*
        * Configuration management
        */
-      $a_menu = array();      
+      $a_menu = array();
 
       if (Session::haveRight('config', UPDATE)) {
-         $nb = countElementsInTable("glpi_plugin_fusioninventory_configurationmanagements", 
+         $nb = countElementsInTable("glpi_plugin_fusioninventory_configurationmanagements",
                                     "`conform`='0'");
          $a_menu[0]['name'] = __('Not conform', 'fusioninventory')." <sup>(".$nb.")</sup>";
          $a_menu[0]['pic']  = "";
          $a_menu[0]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/configurationmanagement_notconform.php";
-         
-         $nb = countElementsInTable("glpi_plugin_fusioninventory_configurationmanagements", 
+
+         $nb = countElementsInTable("glpi_plugin_fusioninventory_configurationmanagements",
                                     "`sha_referential`='' OR `sha_referential` IS NULL");
          $a_menu[1]['name'] = __('To be validated', 'fusioninventory')." <sup>(".$nb.")</sup>";
          $a_menu[1]['pic']  = "";
          $a_menu[1]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/configurationmanagement_tobevalidated.php";
-         
+
          $a_menu[2]['name'] = __('Models', 'fusioninventory');
          $a_menu[2]['pic']  = "";
          $a_menu[2]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/configurationmanagement_model.php";
 
       }
-      
+
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('Configuration management', 'fusioninventory'),
                                                              $a_menu,
                                                              $type,
                                                              $width_status);
       }
-      
+
       echo "</td>";
       echo "</tr>";
       echo "</table>";

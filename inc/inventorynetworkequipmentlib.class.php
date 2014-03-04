@@ -84,7 +84,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
       $mac = $a_inventory['NetworkEquipment']['mac'];
       unset($a_inventory['NetworkEquipment']['mac']);
-      
+
       $input = $a_inventory['NetworkEquipment'];
 
       $input['id'] = $items_id;
@@ -309,14 +309,14 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                $this->importPortVlan($a_inventory['vlans'][$a_port['logical_number']],
                                      $networkports_id);
             }
-            
+
             // Aggegation
             if (isset($a_inventory['aggregate'])
                     && isset($a_inventory['aggregate'][$a_port['logical_number']])) {
                $this->importPortAggregate($a_inventory['aggregate'][$a_port['logical_number']],
                                           $networkports_id, $items_id);
             }
-            
+
          }
       }
 
@@ -360,7 +360,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
 
 
    function importConnectionMac($a_portconnection, $networkports_id) {
-      
+
       $wire = new NetworkPort_NetworkPort();
       $networkPort = new NetworkPort();
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
@@ -448,7 +448,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                $a_ports = $networkPort->find("`mac`='".$ifmac."' AND `logical_number`='1'", "", 1);
                if (count($a_ports) == 0) {
                   $a_ports = $networkPort->find("`mac`='".$ifmac."'", "", 1);
-               }               
+               }
                if (count($a_ports) > 0) {
                   $a_port = current($a_ports);
                   $hub = 0;
@@ -531,7 +531,7 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
                   // Create unknown device
                   $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
                   $input = array();
-                  $manufacturer = 
+                  $manufacturer =
                      PluginFusioninventoryInventoryExternalDB::getManufacturerWithMAC($ifmac);
                   $input['name'] = $manufacturer;
                   if (isset($_SESSION["plugin_fusioninventory_entity"])) {
@@ -628,16 +628,16 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
       $input['vlans_id'] = $vlans_id;
       $networkPort_Vlan->add($input);
    }
-   
-   
-   
+
+
+
    function importPortAggregate($a_ports, $networkports_id, $networkequipments_id) {
 
       $networkPort = new NetworkPort();
       $networkPortAggregate = new NetworkPortAggregate();
-      
+
       $a_aggregates = $networkPortAggregate->find("`networkports_id`='".$networkports_id."'", "", 1);
-      
+
       $input = array();
       if (count($a_aggregates) == 1) {
          $input = current($a_aggregates);

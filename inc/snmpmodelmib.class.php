@@ -65,12 +65,12 @@ class PluginFusioninventorySnmpmodelMib extends CommonDBTM {
                           `glpi_plugin_fusioninventory_mappings`.`name`,
                           `glpi_plugin_fusioninventory_mappings`.`locale`
                    FROM `glpi_plugin_fusioninventory_snmpmodelmibs`
-                   
+
                   LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
                      ON `glpi_plugin_fusioninventory_snmpmodelmibs`.".
                         "`plugin_fusioninventory_snmpmodels_id`=
                      `glpi_plugin_fusioninventory_snmpmodels`.`id`
-                     
+
                   LEFT JOIN `glpi_plugin_fusioninventory_mappings`
                      ON `glpi_plugin_fusioninventory_snmpmodelmibs`.".
                         "`plugin_fusioninventory_mappings_id`=

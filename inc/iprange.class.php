@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryIPRange extends CommonDBTM {
 
    public $dohistory = TRUE;
-   
+
    static $rightname = 'plugin_fusioninventory_iprange';
 
    static function getTypeName($nb=0) {

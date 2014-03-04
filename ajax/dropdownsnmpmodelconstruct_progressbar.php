@@ -57,7 +57,7 @@ foreach ($_POST as $cartridge_name => $percentage) {
             <td>";
       if ($percentage > 100) {
          echo sprintf(__('Problem, have percentage > 100 (%s) for %s'),
-                         "<strong>".ceil($percentage)."%</strong>", 
+                         "<strong>".ceil($percentage)."%</strong>",
                          "<strong>".$cartridge_name."</strong>");
          echo __('');
       } else {

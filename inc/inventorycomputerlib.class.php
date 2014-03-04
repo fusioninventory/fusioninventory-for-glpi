@@ -74,7 +74,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
     */
    function updateComputer($a_computerinventory, $computers_id, $no_history, $setdynamic=0) {
       global $DB;
-      
+
       $computer                     = new Computer();
       $pfInventoryComputerComputer  = new PluginFusioninventoryInventoryComputerComputer();
       $item_DeviceProcessor         = new Item_DeviceProcessor();
@@ -95,7 +95,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
       $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
-      
+
 //      $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();
 //      $pfInventoryComputerStorage_Storage =
 //             new PluginFusioninventoryInventoryComputerStorage_Storage();
@@ -209,7 +209,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $frequencedb = $arraydb['frequence'];
                      unset($arraydb['frequence']);
                      unset($arraydb['frequency']);
-                     unset($arraydb['frequency_default']);                     
+                     unset($arraydb['frequency_default']);
                      if ($arrays == $arraydb) {
                         $a_criteria = $deviceProcessor->getImportCriteria();
                         $criteriafrequence = $a_criteria['frequence'];
@@ -422,7 +422,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
          }
 
-         
+
       // * networkcard
          if ($pfConfig->getValue("component_networkcard") != 0) {
             $db_networkcards = array();
@@ -481,7 +481,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
-         
+
 
       // * Sound
          if ($pfConfig->getValue("component_soundcard") != 0) {
@@ -858,14 +858,14 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("create_vm") == 1) {
             // Create VM based on information of section VIRTUALMACHINE
             $pfAgent = new PluginFusioninventoryAgent();
-            
+
             // Use ComputerVirtualMachine::getUUIDRestrictRequest to get existant
             // vm in computer list
             $computervm = new Computer();
             foreach ($a_computerinventory['virtualmachine_creation'] as $a_vm) {
                // Define location of physical computer (host)
                $a_vm['locations_id'] = $computer->fields['locations_id'];
-               
+
                if (isset($a_vm['uuid'])
                        && $a_vm['uuid'] != '') {
                   $query = "SELECT * FROM `glpi_computers`
@@ -879,7 +879,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if ($computers_vm_id == 0) {
                      // Add computer
                      $a_vm['entities_id'] = $computer->fields['entities_id'];
-                     $computers_vm_id = $computervm->add($a_vm); 
+                     $computers_vm_id = $computervm->add($a_vm);
                      // Manage networks
                      $this->manageNetworkPort($a_vm['networkport'], $computers_vm_id, FALSE);
                   } else {
@@ -1026,9 +1026,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
             }
          }
-         
-         
-         
+
+
+
       // * Licenseinfo
          $db_licenseinfo = array();
          if ($no_history === FALSE) {
@@ -1071,7 +1071,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
          }
 
-         
+
 
       // * Batteries
          /* Standby, see ticket http://forge.fusioninventory.org/issues/1907
@@ -1141,7 +1141,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                if ($pfConfig->getValue('import_monitor') == 1) {
                   // Global import
                   $query = "SELECT `glpi_monitors`.`name`, `glpi_monitors`.`manufacturers_id`,
-                        `glpi_monitors`.`serial`, 
+                        `glpi_monitors`.`serial`,
                         `glpi_monitors`.`is_global`, `glpi_computers_items`.`id` as link_id
                         FROM `glpi_computers_items`
                      LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
@@ -1165,7 +1165,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                } else if ($pfConfig->getValue('import_monitor') == 2) {
                   // Unique import
                   $query = "SELECT `glpi_monitors`.`name`, `glpi_monitors`.`manufacturers_id`,
-                        `glpi_monitors`.`serial`, 
+                        `glpi_monitors`.`serial`,
                         `glpi_monitors`.`is_global`, `glpi_computers_items`.`id` as link_id
                         FROM `glpi_computers_items`
                      LEFT JOIN `glpi_monitors` ON `items_id`=`glpi_monitors`.`id`
@@ -1585,15 +1585,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
    }
-   
-   
-   
+
+
+
    function manageNetworkPort($inventory_networkports, $computers_id, $no_history) {
       global $DB;
-      
+
       $networkPort = new NetworkPort();
       $networkName = new NetworkName();
-      $iPAddress   = new IPAddress();      
+      $iPAddress   = new IPAddress();
       $iPNetwork   = new IPNetwork();
 
       foreach ($inventory_networkports as $a_networkport) {
@@ -1613,7 +1613,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $pfUnknownDevice->delete(array('id'=>$unknowndevices_id), 1);
             }
          }
-      }            
+      }
       // end get port from unknwon device
 
       $db_networkport = array();
@@ -1642,13 +1642,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if (       $a_networkport['gateway'] != ''
                  && $a_networkport['netmask'] != ''
                  && $a_networkport['subnet']  != '') {
-            
-            if (countElementsInTable('glpi_ipnetworks', 
+
+            if (countElementsInTable('glpi_ipnetworks',
                                      "`address`='".$a_networkport['subnet']."'
                                      AND `netmask`='".$a_networkport['netmask']."'
                                      AND `gateway`='".$a_networkport['gateway']."'
                                      AND `entities_id`='".$_SESSION["plugin_fusioninventory_entity"]."'") == 0) {
-               
+
                $input_ipanetwork = array(
                    'name'    => $a_networkport['subnet'].'/'.
                                 $a_networkport['netmask'].' - '.
@@ -1661,8 +1661,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $iPNetwork->add($input_ipanetwork);
             }
          }
-         
-         
+
+
          // End add ipnetwork
          $a_field = array('name', 'mac', 'instantiation_type');
          foreach ($a_field as $field) {
@@ -1683,7 +1683,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $input['logical_number'] = $inventory_networkports[$key]['logical_number'];
                   $networkPort->update($input);
                }
-               
+
                // Get networkname
                $a_networknames_find = current($networkName->find("`items_id`='".$keydb."'
                                                     AND `itemtype`='NetworkPort'", "", 1));
@@ -1888,7 +1888,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
    }
 
 
-   
+
    /**
     * Add a new network card component
     *
@@ -1911,7 +1911,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $item_DeviceNetworkCard->add($data, array(), FALSE);
    }
 
-   
+
 
    /**
     * Add a new sound card component
@@ -2178,7 +2178,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $entity = '';
          }
          $added = 0;
-         $query = "SELECT `glpi_monitors`.`id`, `glpi_monitors`.`entities_id` 
+         $query = "SELECT `glpi_monitors`.`id`, `glpi_monitors`.`entities_id`
             FROM `glpi_monitors`
             WHERE `serial`='".$data['serial']."'
                AND `is_global`='0'
@@ -2272,7 +2272,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $entity = '';
          }
          $added = 0;
-         $query = "SELECT `glpi_printers`.`id`, `glpi_printers`.`entities_id` 
+         $query = "SELECT `glpi_printers`.`id`, `glpi_printers`.`entities_id`
             FROM `glpi_printers`
             WHERE `name`='".$data['name']."'
                AND `serial`='".$data['serial']."'
@@ -2373,7 +2373,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $entity = '';
          }
          $added = 0;
-         $query = "SELECT `glpi_peripherals`.`id`, `glpi_peripherals`.`entities_id` 
+         $query = "SELECT `glpi_peripherals`.`id`, `glpi_peripherals`.`entities_id`
             FROM `glpi_peripherals`
             WHERE `name`='".$data['name']."'
                AND `manufacturers_id`='".$data['manufacturers_id']."'

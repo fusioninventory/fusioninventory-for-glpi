@@ -153,7 +153,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      if ($this->definitionFiltered("PluginFusioninventoryDeployGroupDynamic", $definitions_filter)) {
                         break;
                      }
-                     
+
                      //$definitions_filter is NULL = update by crontask !
                      if ($definitions_filter != NULL) {
                         $where = " AND `can_update_group`='1'";

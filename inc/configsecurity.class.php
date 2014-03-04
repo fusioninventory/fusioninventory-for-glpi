@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryConfigSecurity extends CommonDBTM {
 
    public $dohistory = TRUE;
-   
+
    static $rightname = 'plugin_fusioninventory_configsecurity';
 
 

@@ -157,7 +157,7 @@ if (!isset($_GET['wizz'])) {
          }
          if (!(isset($_SESSION['plugin_fusioninventory_wizard'])
                  && isset($_SESSION['plugin_fusioninventory_wizard']['credentialips_id'])
-                 && $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'] == 
+                 && $_SESSION['plugin_fusioninventory_wizard']['credentialips_id'] ==
                         $credentialips_id)) {
             if (isset($_SESSION['plugin_fusioninventory_wizard']['tasks_id'])) {
                unset($_SESSION['plugin_fusioninventory_wizard']['tasks_id']);

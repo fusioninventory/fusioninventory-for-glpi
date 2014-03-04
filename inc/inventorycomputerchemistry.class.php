@@ -50,7 +50,7 @@ class PluginFusioninventoryInventoryComputerChemistry extends CommonDropdown {
    public $second_level_menu = "fusioninventory";
 
    static $rightname = 'computer';
-   
+
    static function getTypeName($nb=0) {
       return __('Chemistry', 'fusioninventory');
    }

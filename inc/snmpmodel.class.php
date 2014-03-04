@@ -46,9 +46,9 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
-   
+
    static $rightname = 'plugin_fusioninventory_model';
-   
+
    /**
    * Get name of this type
    *
@@ -58,7 +58,7 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
    static function getTypeName($nb=0) {
       return __('SNMP models', 'fusioninventory');
    }
-   
+
 
 
    function getSearchOptions() {
@@ -458,16 +458,16 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
          $pfModel->getrightmodel($a_printer['printers_id'], "Printer");
       }
    }
-   
-   
-   
+
+
+
    /**
     * Actions done after the DELETE of the item in the database
     *
     *@return nothing
    **/
    function post_deleteFromDB() {
-      global $DB;      
+      global $DB;
 
       $query = "SELECT `glpi_plugin_fusioninventory_printers`.`id`
                 FROM `glpi_plugin_fusioninventory_printers`

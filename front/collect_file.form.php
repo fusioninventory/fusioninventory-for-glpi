@@ -61,7 +61,7 @@ if (isset($_POST["add"])) {
       $_POST['filter_is_file'] = 0;
       $_POST['filter_is_dir'] = 1;
    }
-   
+
    $pfCollect_File->add($_POST);
    Html::back();
 } else if (isset($_POST["delete_x"])) {

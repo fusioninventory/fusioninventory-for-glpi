@@ -56,8 +56,8 @@ class PluginFusioninventoryInventoryComputerImportXML extends CommonDBTM  {
       return array(CREATE  => array('class' => 'create',
                                     'label' => __('Create')));
    }
-   
-   
+
+
 
    /**
    * Display form for import XML

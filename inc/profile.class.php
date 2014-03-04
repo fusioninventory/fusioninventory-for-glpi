@@ -46,11 +46,11 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryProfile extends Profile {
 
-   
+
 
       /*
        * Old profile names:
-       * 
+       *
        *    agent
        *    remotecontrol
        *    configuration
@@ -73,7 +73,7 @@ class PluginFusioninventoryProfile extends Profile {
        *    packages
        *    status
        */
-   
+
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       if ($item->getID() > 0
@@ -92,7 +92,7 @@ class PluginFusioninventoryProfile extends Profile {
       return TRUE;
    }
 
-   
+
 
     /**
     * Show profile form
@@ -103,36 +103,36 @@ class PluginFusioninventoryProfile extends Profile {
     * @return nothing
     **/
    function showForm($profiles_id=0, $openform=TRUE, $closeform=TRUE) {
-      
+
       echo "<div class='firstbloc'>";
       if (($canedit = Session::haveRightsOr(self::$rightname, array(CREATE, UPDATE, PURGE)))
           && $openform) {
          $profile = new Profile();
          echo "<form method='post' action='".$profile->getFormURL()."'>";
       }
-      
+
       $profile = new Profile();
       $profile->getFromDB($profiles_id);
-      
+
       $rights = $this->getRightsGeneral();
       $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
                                                       'title'         => __('General', 'fusioninventory')));
-      
+
       $rights = $this->getRightsRules();
       $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
-                                                      'title'         => _n('Rule', 'Rules', 2))); 
-      
+                                                      'title'         => _n('Rule', 'Rules', 2)));
+
       $rights = $this->getRightsInventory();
       $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
-                                                      'title'         => __('Inventory', 'fusioninventory'))); 
-      
+                                                      'title'         => __('Inventory', 'fusioninventory')));
+
       $rights = $this->getRightsDeploy();
       $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
                                                       'default_class' => 'tab_bg_2',
-                                                      'title'         => __('Software deployment', 'fusioninventory'))); 
+                                                      'title'         => __('Software deployment', 'fusioninventory')));
       if ($canedit
           && $closeform) {
          echo "<div class='center'>";
@@ -145,8 +145,8 @@ class PluginFusioninventoryProfile extends Profile {
 
       $this->showLegend();
    }
-   
-   
+
+
 
    /**
     * Init profiles
@@ -155,7 +155,7 @@ class PluginFusioninventoryProfile extends Profile {
    static function initProfile() {
       $pfProfile = new self();
       $profile = new Profile();
-      
+
       $a_rights = $pfProfile->getAllRights();
       foreach ($a_rights as $data) {
          if (countElementsInTable("glpi_profilerights", "`name` = '".$data['field']."'") == 0) {
@@ -186,9 +186,9 @@ class PluginFusioninventoryProfile extends Profile {
          $profile->update($dataprofile);
       }
    }
-   
-   
-   
+
+
+
    static function uninstallProfile() {
       $pfProfile = new self();
       $a_rights = $pfProfile->getAllRights();
@@ -196,9 +196,9 @@ class PluginFusioninventoryProfile extends Profile {
          ProfileRight::deleteProfileRights(array($data['field']));
       }
    }
-   
-   
-   
+
+
+
    function getAllRights() {
       $a_rights = array();
       $a_rights = array_merge($a_rights, $this->getRightsGeneral());
@@ -207,9 +207,9 @@ class PluginFusioninventoryProfile extends Profile {
       $a_rights = array_merge($a_rights, $this->getRightsDeploy());
       return $a_rights;
    }
-   
-   
-   
+
+
+
    function getRightsRules() {
       $rights = array(
           array('itemtype'  => 'PluginFusioninventoryInventoryRuleImport',
@@ -231,9 +231,9 @@ class PluginFusioninventoryProfile extends Profile {
       );
       return $rights;
    }
-   
-   
-   
+
+
+
    function getRightsDeploy() {
       $rights = array(
           array('itemtype'  => 'PluginFusioninventoryDeployPackage',
@@ -246,11 +246,11 @@ class PluginFusioninventoryProfile extends Profile {
                 'label'     => __('Deployment status'),
                 'field'     => 'plugin_fusioninventory_status')
       );
-      return $rights;      
+      return $rights;
    }
-   
-   
-   
+
+
+
    function getRightsInventory() {
       $rights = array(
           array('itemtype'  => 'PluginFusioninventoryIprange',
@@ -293,11 +293,11 @@ class PluginFusioninventoryProfile extends Profile {
                 'label'     => __('Lock', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_lock')
       );
-      return $rights;      
+      return $rights;
    }
-   
-   
-   
+
+
+
    function getRightsGeneral() {
       $rights = array(
           array('rights'    => CommonDBTM::getRights(),
@@ -319,8 +319,8 @@ class PluginFusioninventoryProfile extends Profile {
                 'label'     => __('Wake On LAN', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_wol')
       );
-      return $rights; 
-   }   
+      return $rights;
+   }
 }
 
 ?>

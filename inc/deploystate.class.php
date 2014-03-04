@@ -60,9 +60,9 @@ class PluginFusioninventoryDeployState extends CommonDBTM {
       return array(READ    => array('class' => 'view',
                                     'label' => __('Read')));
    }
-   
-   
-   
+
+
+
    static function showTasks() {
        echo "<table class='deploy_extjs'>
          <tbody>

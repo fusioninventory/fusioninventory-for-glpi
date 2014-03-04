@@ -70,17 +70,17 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
          $items_id = current($definition);
 
          switch($itemtype) {
-            
+
             case 'Computer':
                $a_computers_to_wake[] = $items_id;
                break;
-      
+
             case 'PluginFusioninventoryDeployGroup':
                $group = new PluginFusioninventoryDeployGroup;
                $group->getFromDB($items_id);
 
                switch ($group->getField('type')) {
-                  
+
                   case 'STATIC':
                      $query = "SELECT items_id
                      FROM glpi_plugin_fusioninventory_deploygroups_staticdatas
@@ -91,7 +91,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                         $a_computers_to_wake[] = $row['items_id'];
                      }
                      break;
-                     
+
                   case 'DYNAMIC':
                      $query = "SELECT fields_array
                      FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
@@ -132,7 +132,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                      }
 
                      break;
-                     
+
                }
          }
       }
@@ -156,7 +156,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                         $a_agentList[] = $agent_id;
                      }
                   }
-               }               
+               }
             }
          }
       }

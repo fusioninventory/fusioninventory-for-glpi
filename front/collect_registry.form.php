@@ -51,7 +51,7 @@ if (isset($_POST["add"])) {
    if (!preg_match('/\/$/', $_POST['path'])) {
       $_POST['path'] = $_POST['path']."/";
    }
-   
+
    $pfCollect_Registry->add($_POST);
    Html::back();
 } else if (isset($_POST["delete_x"])) {

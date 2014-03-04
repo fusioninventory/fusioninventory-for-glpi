@@ -66,7 +66,7 @@ class PluginFusioninventoryDisplay extends CommonDBTM {
                      <tr>
                         <td align='center' width='".$width."'>";
 
-      if ((!empty($pourcentage)) 
+      if ((!empty($pourcentage))
               || ($pourcentage == "0")) {
          echo $pourcentage."% ".$message;
       }

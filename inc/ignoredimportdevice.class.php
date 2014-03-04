@@ -46,17 +46,17 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
 
-   
+
    static $rightname = 'plugin_fusioninventory_ruleimport';
-   
+
 
    static function getTypeName($nb=0) {
       return __('Equipment ignored on import', 'fusioninventory');
    }
 
 
-   
-   
+
+
    function getSearchOptions() {
 
       $tab = array();
@@ -74,14 +74,14 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       $tab[2]['name']      = __('Rule name');
       $tab[2]['datatype']  = 'itemlink';
       $tab[2]['massiveaction']  = false;
-      
+
       $tab[3]['table']     = $this->getTable();
       $tab[3]['field']     = 'date';
       $tab[3]['linkfield'] = '';
       $tab[3]['name']      = __('Date');
       $tab[3]['datatype']  = 'datetime';
       $tab[3]['massiveaction']  = false;
-      
+
       $tab[4]['table']         = $this->getTable();
       $tab[4]['field']         = 'itemtype';
       $tab[4]['name']          = __('Item type');
@@ -93,13 +93,13 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       $tab[5]['field']     = 'completename';
       $tab[5]['name']      = __('Entity');
       $tab[5]['massiveaction']  = false;
-      
+
       $tab[6]['table']           = $this->getTable();
       $tab[6]['field']           = 'serial';
       $tab[6]['name']            = __('Serial number');
       $tab[6]['datatype']        = 'string';
       $tab[6]['massiveaction']  = false;
-      
+
       $tab[7]['table']          = $this->getTable();
       $tab[7]['field']          = 'uuid';
       $tab[7]['name']           = __('UUID');
@@ -123,7 +123,7 @@ class PluginFusioninventoryIgnoredimportdevice extends CommonDBTM {
       $tab[10]['name']            = __('Module', 'fusioninventory');
       $tab[10]['datatype']        = 'string';
       $tab[10]['massiveaction']  = false;
-      
+
       return $tab;
    }
 

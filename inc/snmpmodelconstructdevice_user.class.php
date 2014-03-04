@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventorySnmpmodelConstructdevice_User extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_model';
-   
+
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       if ($this->canView()) {
@@ -70,14 +70,14 @@ class PluginFusioninventorySnmpmodelConstructdevice_User extends CommonDBTM {
 
 
    function showForm($users_id, $options=array()) {
-      
+
       $a_constructdeviceusers = current($this->find("`users_id`='".$users_id."'", '', 1));
       if (isset($a_constructdeviceusers['id'])) {
          $this->getFromDB($a_constructdeviceusers['id']);
       } else {
          $this->getEmpty();
       }
-      
+
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
