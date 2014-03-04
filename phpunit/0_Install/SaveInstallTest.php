@@ -36,7 +36,8 @@ class SaveInstallTest extends PHPUnit_Framework_TestCase {
       fclose($dumpfile);
 
       $this->assertFileExists("./save.sql");
-      $length = stat("./save.sql")[7];
+      $filestats = stat("./save.sql");
+      $length = $filestats[7];
       $this->assertGreaterThan(0, $length);
    }
 }
