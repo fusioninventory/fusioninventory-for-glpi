@@ -42,6 +42,7 @@
 
 include ("../../../inc/includes.php");
 
+
 Html::header(__('FusionInventory', 'fusioninventory'),
              $_SERVER["PHP_SELF"],
              "plugins",
@@ -54,13 +55,11 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 PluginFusioninventoryTaskjob::isAllowurlfopen();
 
-$pfTask = new PluginFusioninventoryTask();
-$pfTask->menuTasksLogs();
+use Fusioninventory\View as View;
 
+$pfTaskView = new View\PluginFusioninventoryViewTask();
 
-//$_GET['target']="task.php";
-//
-Search::show('PluginFusioninventoryTask');
+$pfTaskView->showList();
 
 Html::footer();
 

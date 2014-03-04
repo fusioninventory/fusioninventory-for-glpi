@@ -53,6 +53,18 @@ define ("PLUGIN_FUSIONINVENTORY_OFFICIAL_RELEASE", "0");
 define ("PLUGIN_FUSIONINVENTORY_REALVERSION", "0.85+1.0 SNAPSHOT");
 include_once(GLPI_ROOT."/inc/includes.php");
 
+include_once( GLPI_ROOT . "/plugins/fusioninventory/lib/autoload.php");
+
+define("PLUGIN_FUSIONINVENTORY_ROOT",
+   implode(DIRECTORY_SEPARATOR , array(GLPI_ROOT,'plugins', 'fusioninventory', 'inc'))
+);
+
+$options = array(
+   PLUGIN_FUSIONINVENTORY_ROOT
+);
+
+$fi_loader = new ModifiedIncludePathAutoloader($options);
+$fi_loader->register();
 /*
  * @function script_endswith()
  * @param $scriptname : string representing the script to test
@@ -201,9 +213,11 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
+
       //load drag and drop javascript library on Package Interface
-      if (script_endswith("deploypackage.form.php")
-              || script_endswith("task.form.php")) {
+      if (  script_endswith("deploypackage.form.php")
+         || script_endswith("task.form.php")
+      ) {
          $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array(
              "lib/REDIPS_drag/redips-drag-source.js",
              "lib/REDIPS_drag/drag_table_rows.js",
