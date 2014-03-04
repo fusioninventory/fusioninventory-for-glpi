@@ -47,6 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_agent';
+   private $referential = array();
 
 
    /**
@@ -230,24 +231,18 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
       $list_fields = $pfconfmanage_model->getListFields();
 
       $this->getFromDB($items_id);
+      $this->referential = importArrayFromDB($this->fields['serialized_referential']);
 
       // Use model
 
-      echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] .
-         "/plugins/fusioninventory/front/configurationmanagement.form.php\">";
+      // Add form to add for example a software to the referential
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
-      echo '<th colspan="3"></th>';
-      echo '<th colspan="2">Défini dans le référentiel</th>';
-      echo '<th></th>';
-      echo '</tr>';
-      echo "<tr class='tab_bg_1'>";
       echo '<th colspan="2"></th>';
       echo '<th>Valeur de référence</th>';
-      echo '<th>Avec alerte</th>';
-      echo '<th>Sans alerte</th>';
-      echo '<th>Pas géré</th>';
+      echo '<th>Config</th>';
+      echo '<th>Action</th>';
       echo '</tr>';
       $this->displayGenerateLine(1, $list_fields, 1, '', $this->fields['items_id'],$this->fields['itemtype']);
       echo "</table>";
@@ -261,12 +256,21 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
       echo "</tr>";
 
       echo "</table>";
-      Html::closeForm();
+
+      echo "<script>
+         function viewAction(id, managed, ignored, notmanaged) {
+            $('#' + id).load('".$CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/configurationamanagement_action.php'
+               ,{managed:managed,ignored:ignored,notmanaged:notmanaged}
+            )
+         };
+      </script>";
    }
 
 
 
    function displayGenerateLine($rank, $a_fields, $new, $tree, $items_id=0, $itemtype='', $a_DBvalues=array()) {
+      global $CFG_GLPI;
+
       foreach ($a_fields as $key=>$data) {
          if ($key != '_internal_name_'
                  && $key != '_itemtype_') {
@@ -277,11 +281,20 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                   $a_DBData = $this->getData_fromDB($key, $items_id, $itemtype, $tree."/".$items_id."/".$key);
                }
                foreach ($a_DBData as $k=>$a_val) {
-                  echo "<tr class='tab_bg_3'>";
-                  echo '<td colspan="2">';
-                  if ($rank != 1) {
-                     echo str_repeat("&nbsp;", 9);
+                  if ($rank == 1) {
+                     echo "<tr class='tab_bg_3'>";
+                     echo '<td colspan="5">&nbsp;';
+                     echo "</td>";
+                     echo "</tr>";
                   }
+
+                  echo "<tr class='tab_bg_3'>";
+                  echo '<td colspan="3">';
+                  $indent = 0;
+                  if ($rank != 1) {
+                     $indent = 9;
+                  }
+                  echo str_repeat("&nbsp;", $indent);
                   echo "<strong>ₒ</strong> ";
                   echo $data['_internal_name_'];
                   echo '</td>';
@@ -298,15 +311,28 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                         $ignored_checked = 'checked';
                      }
                   }
+                  $elements = array(
+                      '_managed_'    => __('In referentiel + alert', 'fusioninventory'),
+                      '_ignored_'    => __('In referentiel - alert', 'fusioninventory'),
+                      '_notmanaged_' => __('Not in referentiel', 'fusioninventory'),
+                  );
+                  echo '<td>';
+                  if (isset($this->referential[$tree_temp])) {
+                     echo str_repeat("&nbsp;", $indent);
+                     echo "<strong>ₒ</strong> ";
+                     echo $elements['_'.$this->referential[$tree_temp].'_'];
+                     unset($elements['_'.$this->referential[$tree_temp].'_']);
+                  } else if (isset($this->referential[$tree.'/_managetype_'])) {
+                     echo str_repeat("&nbsp;", $indent);
+                     echo "<strong>ₒ</strong> ";
+                     echo "<font color='#b0b0b0'>";
+                     echo __('Inheritance of the parent entity');
+                     echo "</font>";
+                     unset($elements['_'.$this->referential[$tree.'/_managetype_'].'_']);
+                  }
+                  echo '</td>';
                   echo '<td>';
                   echo '</td>';
-                  echo '<td class="center">';
-                  echo "<input type='radio' name='".$tree_temp."' value='managed' ".$managed_checked." />";
-                  echo '</td>';
-                  echo '<td class="center">';
-                  echo "<input type='radio' name='".$tree_temp."' value='ignored' ".$ignored_checked." />";
-                  echo '</td>';
-                  echo '<td class="center"></td>';
                   echo "</tr>";
                   $this->displayGenerateLine(($rank+1), $data, $new, $tree."/".$key."/".$a_val['id'], $a_val['id'], $data['_itemtype_'], $a_val);
                }
@@ -342,19 +368,47 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                   echo $a_DBvalues[$key];
                }
                echo '</td>';
-               echo '<td class="center">';
                $tree_temp = $tree."/".$key;
                $value = '';
                if (isset($a_DBvalues[$key])) {
                   $value = $a_DBvalues[$key];
                }
-               echo "<input type='radio' name='".$tree_temp."' value='".$value."' ".$managed_checked." />";
+               $elements = array(
+                   '_managed_'    => __('In referentiel + alert', 'fusioninventory'),
+                   '_ignored_'    => __('In referentiel - alert', 'fusioninventory'),
+                   '_notmanaged_' => __('Not in referentiel', 'fusioninventory'),
+               );
+               echo '<td>';
+               if (isset($this->referential[$tree_temp.'/_managetype_'])) {
+                  echo str_repeat("&nbsp;", $indent);
+                  echo "<strong>ₒ</strong> ";
+                  echo $elements['_'.$this->referential[$tree_temp.'/_managetype_'].'_'];
+                  unset($elements['_'.$this->referential[$tree_temp.'/_managetype_'].'_']);
+               } else if (isset($this->referential[$tree.'/_managetype_'])) {
+                  echo str_repeat("&nbsp;", $indent);
+                  echo "<strong>ₒ</strong> ";
+                  echo "<font color='#b0b0b0'>";
+                  echo __('Inheritance of the parent entity');
+                  echo "</font>";
+                  unset($elements['_'.$this->referential[$tree.'/_managetype_'].'_']);
+               }
                echo '</td>';
-               echo '<td class="center">';
-               echo "<input type='radio' name='".$tree_temp."' value='_ignored_' ".$ignored_checked." />";
-               echo '</td>';
-               echo '<td class="center">';
-               echo "<input type='radio' name='".$tree_temp."' value='_notmanaged_' ".$notmanaged_checked." />";
+               echo '<td>';
+
+               $rand = mt_rand();
+               $js_vals = array(
+                   'managed'    => 0,
+                   'ignored'    => 0,
+                   'notmanaged' => 0
+               );
+               foreach ($elements as $elkey => $elvalue) {
+                  $js_vals[trim($elkey, '_')] = 1;
+               }
+               echo "<div id='".$rand."'>";
+               echo "<a href='javascript:viewAction(".$rand.", "
+                       .$js_vals['managed'].",".$js_vals['ignored'].", "
+                       .$js_vals['notmanaged'].");'>".__('View actions', 'fusioninventory')."</a>";
+               echo "</div>";
                echo '</td>';
                echo "</tr>";
             }
@@ -800,8 +854,20 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          }
       }
       // Send emails
+   }
 
 
+
+   function addToReferential() {
+
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+      echo "Add software :";
+
+      echo "</td>";
+      echo "</td>";
+      echo "</table>";
    }
 }
 
