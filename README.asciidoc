@@ -19,7 +19,8 @@ If you want to report bugs or check for development status, you can check http:/
 
 == Third-party icons and images
 
-Some icons used comes from :
+Some icons used in the project comes from the following set of
+graphics licensed:
 
 * Dortmund is copyright by http://pc.de/icons/[PC.DE] and made available under a
  http://creativecommons.org/licenses/by/3.0/deed[Creative Commons Attribution 3.0 License].
