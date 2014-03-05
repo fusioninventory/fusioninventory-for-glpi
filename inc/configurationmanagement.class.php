@@ -48,7 +48,8 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_agent';
    private $referential = array();
-
+   private $managetype = '';
+   public $a_trees = array();
 
    /**
    * Get name of this type
@@ -244,23 +245,46 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
       echo '<th>Config</th>';
       echo '<th>Action</th>';
       echo '</tr>';
+
+      echo "<tr class='tab_bg_3'>";
+      echo '<td colspan="3" align="center">';
+      echo "<i><strong>All</strong></i>";
+      echo '</td>';
+      echo '<td>';
+      if (isset($this->referential['/_managetype_'])) {
+         $elements = array(
+             '_managed_'    => __('In referentiel + alert', 'fusioninventory'),
+             '_ignored_'    => __('In referentiel - alert', 'fusioninventory'),
+             '_notmanaged_' => __('Not in referentiel', 'fusioninventory'),
+         );
+         echo $elements['_'.$this->referential['/_managetype_'].'_'];
+      }
+      echo '</td>';
+      echo '<td>';
+      $rand = mt_rand();
+      $js_vals = array(
+          'managed'    => 1,
+          'ignored'    => 1,
+          'notmanaged' => 1
+      );
+      echo "<div id='".$rand."'>";
+      echo "<a href='javascript:viewAction(".$rand.", \"/\","
+              .$js_vals['managed'].",".$js_vals['ignored'].", "
+              .$js_vals['notmanaged'].");'>".__('View actions', 'fusioninventory')."</a>";
+      echo "</div>";
+      echo '</td>';
+      echo "</tr>";
+      if (isset($this->referential['/_managetype_'])) {
+         $this->managetype = $this->referential['/_managetype_'];
+      }
+
       $this->displayGenerateLine(1, $list_fields, 1, '', $this->fields['items_id'],$this->fields['itemtype']);
       echo "</table>";
 
-      echo "<tr>";
-      echo "<th colspan='5'>";
-      echo Html::hidden('id', array('value' => $items_id));
-      echo "<input name='update_serialized' value=\"".__('Save').
-         "\" class='submit' type='submit'>";
-      echo "</th>";
-      echo "</tr>";
-
-      echo "</table>";
-
       echo "<script>
-         function viewAction(id, managed, ignored, notmanaged) {
+         function viewAction(id, tree, managed, ignored, notmanaged) {
             $('#' + id).load('".$CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/configurationamanagement_action.php'
-               ,{managed:managed,ignored:ignored,notmanaged:notmanaged}
+               ,{tree:tree,items_id:".$items_id.",managed:managed,ignored:ignored,notmanaged:notmanaged}
             )
          };
       </script>";
@@ -292,11 +316,11 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                   echo '<td colspan="3">';
                   $indent = 0;
                   if ($rank != 1) {
-                     $indent = 9;
+                     $indent = 4;
                   }
                   echo str_repeat("&nbsp;", $indent);
                   echo "<strong>ₒ</strong> ";
-                  echo $data['_internal_name_'];
+                  echo "<i>".$data['_internal_name_']."</i>";
                   echo '</td>';
                   $managed_checked = '';
                   $ignored_checked = '';
@@ -328,10 +352,31 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                      echo "<font color='#b0b0b0'>";
                      echo __('Inheritance of the parent entity');
                      echo "</font>";
+                     $this->managetype = $this->referential[$tree.'/_managetype_'];
                      unset($elements['_'.$this->referential[$tree.'/_managetype_'].'_']);
+                  } else if ($this->managetype != '') {
+                     echo str_repeat("&nbsp;", $indent);
+                     echo "<strong>ₒ</strong> ";
+                     echo "<font color='#b0b0b0'>";
+                     echo __('Inheritance of the parent entity');
+                     echo "</font>";
                   }
                   echo '</td>';
                   echo '<td>';
+                  $rand = mt_rand();
+                  $js_vals = array(
+                      'managed'    => 0,
+                      'ignored'    => 0,
+                      'notmanaged' => 0
+                  );
+                  foreach ($elements as $elkey => $elvalue) {
+                     $js_vals[trim($elkey, '_')] = 1;
+                  }
+                  echo "<div id='".$rand."'>";
+                  echo "<a href='javascript:viewAction(".$rand.", \"".$tree."/".$key."/".$a_val['id']."\","
+                          .$js_vals['managed'].",".$js_vals['ignored'].", "
+                          .$js_vals['notmanaged'].");'>".__('View actions', 'fusioninventory')."</a>";
+                  echo "</div>";
                   echo '</td>';
                   echo "</tr>";
                   $this->displayGenerateLine(($rank+1), $data, $new, $tree."/".$key."/".$a_val['id'], $a_val['id'], $data['_itemtype_'], $a_val);
@@ -357,7 +402,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                echo "<tr class='tab_bg_3'>";
                echo '<td colspan="2">';
                if ($rank == 3) {
-                  $indent = 14;
+                  $indent = 9;
                }
                echo str_repeat("&nbsp;", $indent);
                echo "<strong>ₒ</strong> ";
@@ -391,7 +436,13 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                   echo __('Inheritance of the parent entity');
                   echo "</font>";
                   unset($elements['_'.$this->referential[$tree.'/_managetype_'].'_']);
-               }
+               } else if ($this->managetype != '') {
+                     echo str_repeat("&nbsp;", $indent);
+                     echo "<strong>ₒ</strong> ";
+                     echo "<font color='#b0b0b0'>";
+                     echo __('Inheritance of the parent entity');
+                     echo "</font>";
+                  }
                echo '</td>';
                echo '<td>';
 
@@ -405,12 +456,40 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                   $js_vals[trim($elkey, '_')] = 1;
                }
                echo "<div id='".$rand."'>";
-               echo "<a href='javascript:viewAction(".$rand.", "
+               echo "<a href='javascript:viewAction(".$rand.", \"".$tree_temp."\","
                        .$js_vals['managed'].",".$js_vals['ignored'].", "
                        .$js_vals['notmanaged'].");'>".__('View actions', 'fusioninventory')."</a>";
                echo "</div>";
                echo '</td>';
                echo "</tr>";
+            }
+         }
+      }
+   }
+
+
+
+   function generateTree($rank, $a_fields, $new, $tree, $items_id=0, $itemtype='', $a_DBvalues=array()) {
+
+      foreach ($a_fields as $key=>$data) {
+         if ($key != '_internal_name_'
+                 && $key != '_itemtype_') {
+            if (is_array($data)) {
+               if ($itemtype == '') {
+                  $a_DBData = $this->getData_fromDB($key, $items_id, $data['_itemtype_'], $tree.$key."/".$items_id."/");
+               } else {
+                  $a_DBData = $this->getData_fromDB($key, $items_id, $itemtype, $tree."/".$items_id."/".$key);
+               }
+               foreach ($a_DBData as $k=>$a_val) {
+                  $this->a_trees[$tree."/".$key."/".$a_val['id']] = '';
+                  $this->generateTree(($rank+1), $data, $new, $tree."/".$key."/".$a_val['id'], $a_val['id'], $data['_itemtype_'], $a_val);
+               }
+            } else {
+               $value = '';
+               if (isset($a_DBvalues[$key])) {
+                  $value = $a_DBvalues[$key];
+               }
+               $this->a_trees[$tree."/".$key] = $value;
             }
          }
       }
@@ -509,7 +588,8 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                   $a_DBData = $this->getData_fromDB($key, $items_id, $itemtype, $tree."/".$items_id."/".$key);
                }
                foreach ($a_DBData as $k=>$a_val) {
-                  $tree_temp = $tree."/".$key."/".$a_val['id']."/_managetype_";
+                  #$tree_temp = $tree."/".$key."/".$a_val['id']."/_managetype_";
+                  $tree_temp = $tree."/".$key."/".$a_val['id'];
                   if (isset($a_ref[$tree_temp])) {
                      $a_currentinv[$tree_temp] = $a_ref[$tree_temp];
                   } else {
@@ -564,32 +644,20 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          }
       }
 
-      echo "<table class='tab_cadre_fixe'>";
 
-      if (count($a_missingInCurrentinv)) {
-         echo "<tr class='tab_bg_1'>";
-         echo "<th colspan='2'>";
-         echo "What";
-         echo "</th>";
-         echo "<th>";
-         echo "Référentiel";
-         echo "</th>";
-         echo "<th>";
-         echo "valeur trouvée";
-         echo "</th>";
-         echo "<th width='40'>";
-         echo "Action";
-         echo "</th>";
-         echo "</tr>";
-      }
+      $a_onlyinref = array();
+      $a_notinref = array();
 
+      // Get sections in ref but not in current
       $a_miss_curr = array();
       foreach ($a_missingInCurrentinv as $key=>$value) {
          $split = explode('/', $key);
          unset($split[(count($split) - 1)]);
          $a_miss_curr[(implode('/', $split))] = "";
       }
-
+      $current_itemtype = '';
+      $current_id = '';
+      $base_tree = '';
       foreach ($a_miss_curr as $key=>$value) {
          // Get all elements of the section
          $split = explode('/', $key);
@@ -597,71 +665,27 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          for ($i=1; $i < count($split); $i += 2) {
             $list_fields_temp = $list_fields_temp[$split[$i]];
          }
-
-         echo "<tr class='tab_bg_3' style='background-color:#ffcccc'>";
-         echo "<td width='10'>-</td>";
-         $indent = 0;
-         if (count($split) <= 3) {
-            echo "<td><strong>ₒ</strong> ";
-         } else {
-            echo "<td>&nbsp;&nbsp;&nbsp;<strong>ₒ</strong> ";
-         }
-         echo $list_fields_temp['_internal_name_'];
-         if (count($split) > 3) {
-            $indent = 4;
-//            echo " (".$key.")";
-         }
-         echo "</td>";
-         echo "<td colspan='2'>";
-         echo "</td>";
-         echo "<td colspan='4'>";
-         echo "</td>";
-         echo "</tr>";
-
-         foreach ($list_fields_temp as $keyref=>$valueref) {
-            if ($keyref != '_internal_name_'
-                 && $keyref != '_itemtype_') {
-               if (!is_array($valueref)) {
-                  if (isset($a_missingInCurrentinv[$key.'/'.$keyref])) {
-                     echo "<tr class='tab_bg_3' style='background-color:#ffcccc'>";
-                     echo "<td>-</td>";
-                     echo "<td>&nbsp;&nbsp;&nbsp;";
-                     echo str_repeat("&nbsp;", $indent);
-                     echo "<strong>ₒ</strong> ";
-                     echo $valueref;
-                     echo "</td>";
-                     echo "<td>"; //  style='background-color:#ccffcc'
-                     echo $a_ref[$key.'/'.$keyref];
-                     echo "</td>";
-                     echo "<td style='background-color:#ffcccc'>";
-                     echo "</td>";
-                     echo "<td>";
-                     echo "<input type='submit' class='submit' value='Remove from the referential' />";
-                     echo "</td>";
-                     echo "</tr>";
+         if ($key != '') {
+            if (count($split) <= 3) {
+               $current_itemtype = $split[count($split) - 2];
+               $current_id = $split[count($split) - 1];
+               $base_tree = $key;
+            }
+            foreach ($list_fields_temp as $keyref=>$valueref) {
+               if ($keyref != '_internal_name_'
+                    && $keyref != '_itemtype_') {
+                  if (!is_array($valueref)) {
+                     if (isset($a_missingInCurrentinv[$key.'/'.$keyref])) {
+                        $a_onlyinref[$current_itemtype][$current_id][str_replace($base_tree.'/', '', $key.'/'.$keyref)]
+                                = $a_ref[$key.'/'.$keyref];
+                     }
                   }
                }
             }
          }
       }
-
-
-      if (count($a_missingInRef)) {
-         echo "<tr class='tab_bg_1'>";
-         echo "<th colspan='2'>";
-         echo "What";
-         echo "</th>";
-         echo "<th>";
-         echo "Référentiel";
-         echo "</th>";
-         echo "<th>";
-         echo "valeur trouvée";
-         echo "</th>";
-         echo "<th>";
-         echo "Action";
-         echo "</th>";
-         echo "</tr>";
-      }
+//echo "<pre align='left'>";print_r($a_onlyinref);echo "</pre>";
+      // Get sections not in ref but in current
 
       $a_miss_ref = array();
       foreach ($a_missingInRef as $key=>$value) {
@@ -670,6 +694,9 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          $a_miss_ref[(implode('/', $split))] = "";
       }
 
+      $current_itemtype = '';
+      $current_id = '';
+      $base_tree = '';
       foreach ($a_miss_ref as $key=>$value) {
          // Get all elements of the section
          $split = explode('/', $key);
@@ -677,68 +704,57 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
          for ($i=1; $i < count($split); $i += 2) {
             $list_fields_temp = $list_fields_temp[$split[$i]];
          }
-
-         echo "<tr class='tab_bg_3' style='background-color:#ccffcc'>";
-         echo "<td>+</td>";
-         $indent = 0;
          if (count($split) <= 3) {
-            echo "<td><strong>ₒ</strong> ";
-         } else {
-            echo "<td>&nbsp;&nbsp;&nbsp;<strong>ₒ</strong> ";
+            $current_itemtype = $split[count($split) - 2];
+            $current_id = $split[count($split) - 1];
+            $base_tree = $key;
          }
-         echo $list_fields_temp['_internal_name_'];
-         if (count($split) > 3) {
-            $indent = 4;
-         }
-         echo "</td>";
-         echo "<td colspan='3'>";
-         echo "</td>";
-         echo "</tr>";
-
          foreach ($list_fields_temp as $keyref=>$valueref) {
             if ($keyref != '_internal_name_'
                  && $keyref != '_itemtype_') {
                if (!is_array($valueref)) {
                   if (isset($a_missingInRef[$key.'/'.$keyref])) {
-                     echo "<tr class='tab_bg_3' style='background-color:#ccffcc'>";
-                     echo "<td>+</td>";
-                     echo "<td>&nbsp;&nbsp;&nbsp;";
-                     echo str_repeat("&nbsp;", $indent);
-                     echo "<strong>ₒ</strong> ";
-                     echo $valueref;
-                     echo "</td>";
-                     echo "<td>";
-                     echo "</td>";
-                     echo "<td>";
-                     echo $a_currentinv[$key.'/'.$keyref];
-                     echo "</td>";
-                     echo "<td>";
-                     echo "<input type='submit' class='submit' value='Add into the referential' />";
-                     echo "</td>";
-                     echo "</tr>";
+                        $a_notinref[$current_itemtype][$current_id][str_replace($base_tree.'/', '', $key.'/'.$keyref)]
+                                = $a_currentinv[$key.'/'.$keyref];
                   }
                }
             }
          }
       }
 
-
-      if (count($a_update)) {
-         echo "<tr class='tab_bg_1'>";
-         echo "<th colspan='2'>";
-         echo "What";
-         echo "</th>";
-         echo "<th>";
-         echo "Référentiel";
-         echo "</th>";
-         echo "<th>";
-         echo "valeur trouvée";
-         echo "</th>";
-         echo "<th>";
-         echo "Action";
-         echo "</th>";
-         echo "</tr>";
+      // Check between onlyinref and notinref
+      $a_keys_Update_ref = array();
+      foreach ($a_onlyinref as $itemtype=>$data) {
+         foreach ($data as $keyref=>$dataref) {
+            if (isset($a_onlyinref[$itemtype])) {
+               foreach ($a_notinref[$itemtype] as $keynotref=>$datanotref) {
+                  if ($dataref === $datanotref) {
+                     $a_keys_Update_ref[$itemtype.'/'.$keyref] = $keynotref;
+                     unset($a_notinref[$itemtype][$keynotref]);
+                     unset($a_onlyinref[$itemtype][$keyref]);
+                     break;
+                  }
+               }
+            }
+         }
       }
+
+      echo "<table class='tab_cadre_fixe'>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>";
+      echo "What";
+      echo "</th>";
+      echo "<th>";
+      echo "Référentiel";
+      echo "</th>";
+      echo "<th>";
+      echo "valeur trouvée";
+      echo "</th>";
+      echo "<th>";
+      echo "Action";
+      echo "</th>";
+      echo "</tr>";
 
       $a_update_sections = array();
       foreach ($a_update as $key=>$value) {
@@ -755,15 +771,22 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
             $list_fields_temp = $list_fields_temp[$split[$i]];
          }
 
+         if (count($split) <= 3) {
+            echo "<tr class='tab_bg_3'>";
+            echo "<td colspan='5'>&nbsp;</td>";
+            echo "</tr>";
+         }
          echo "<tr class='tab_bg_3'>";
          echo "<td></td>";
          $indent = 0;
          if (count($split) <= 3) {
-            echo "<td><strong>ₒ</strong> ";
+            echo "<td><strong>ₒ ";
+            echo $list_fields_temp['_internal_name_'];
+            echo "</strong>";
          } else {
             echo "<td>&nbsp;&nbsp;&nbsp;<strong>ₒ</strong> ";
+            echo $list_fields_temp['_internal_name_'];
          }
-         echo $list_fields_temp['_internal_name_'];
          if (count($split) > 3) {
             $indent = 4;
          }
@@ -810,6 +833,76 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                      echo "</tr>";
                   }
                }
+            }
+         }
+      }
+      foreach ($a_onlyinref as $itemtype=>$data) {
+         foreach ($data as $id=>$a_var) {
+            echo "<tr class='tab_bg_3'>";
+            echo "<td colspan='5'>&nbsp;</td>";
+            echo "</tr>";
+
+            echo "<tr class='tab_bg_3'>";
+            echo "<td></td>";
+            echo "<td><strong>ₒ ";
+            echo $itemtype;
+            echo "</strong>";
+            echo "</td>";
+            echo "<td colspan='3'>";
+            echo "</td>";
+            echo "</tr>";
+
+            foreach ($a_var as $key=>$value) {
+               echo "<tr class='tab_bg_3'>";
+               echo "<td></td>";
+               echo "<td>&nbsp;&nbsp;&nbsp;";
+               echo str_repeat("&nbsp;", 4);
+               echo "<strong>ₒ</strong> ";
+               echo $key;
+               echo "</td>";
+               echo "<td style='background-color:#ccffcc'>";
+               echo $value;
+               echo "</td>";
+               echo "<td style='background-color:#ffcccc'>";
+               echo "</td>";
+               echo "<td>";
+               echo "</td>";
+               echo "</tr>";
+            }
+         }
+      }
+      foreach ($a_notinref as $itemtype=>$data) {
+         foreach ($data as $id=>$a_var) {
+            echo "<tr class='tab_bg_3'>";
+            echo "<td colspan='5'>&nbsp;</td>";
+            echo "</tr>";
+
+            echo "<tr class='tab_bg_3'>";
+            echo "<td></td>";
+            echo "<td><strong>ₒ ";
+            echo $itemtype;
+            echo "</strong>";
+            echo "</td>";
+            echo "<td colspan='3'>";
+            echo "</td>";
+            echo "</tr>";
+
+            foreach ($a_var as $key=>$value) {
+               echo "<tr class='tab_bg_3'>";
+               echo "<td></td>";
+               echo "<td>&nbsp;&nbsp;&nbsp;";
+               echo str_repeat("&nbsp;", 4);
+               echo "<strong>ₒ</strong> ";
+               echo $key;
+               echo "</td>";
+               echo "<td>";
+               echo "</td>";
+               echo "<td style='background-color:#ffcccc'>";
+               echo $value;
+               echo "</td>";
+               echo "<td>";
+               echo "</td>";
+               echo "</tr>";
             }
          }
       }

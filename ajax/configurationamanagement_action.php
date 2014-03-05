@@ -60,9 +60,17 @@ $elements = array(
 echo "<form method='post' name='' id=''  action=\"".$CFG_GLPI['root_doc'] .
    "/plugins/fusioninventory/front/configurationmanagement.form.php\">";
 
+$tree = $_POST['tree'];
+$items_id = $_POST['items_id'];
+unset($_POST['tree']);
+unset($_POST['items_id']);
+
+echo Html::hidden('id', array('value' => $items_id));
+echo Html::hidden('tree', array('value' => $tree));
+
 foreach ($_POST as $elkey => $elvalue) {
    if ($elvalue == 1) {
-      echo "<input type='submit' class='submit' value='".$elements['_'.$elkey.'_']."' /> ";
+      echo "<input type='submit' class='submit' name='update_".$elkey."' value='".$elements['_'.$elkey.'_']."' /> ";
    }
 }
 Html::closeForm();
