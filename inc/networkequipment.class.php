@@ -179,6 +179,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       LEFT JOIN glpi_networkports
       ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
       WHERE glpi_networkports.items_id='".$id."'
+         AND glpi_networkports.itemtype='NetworkEquipment'
          AND `instantiation_type`='NetworkPortAggregate'
       ORDER BY logical_number ";
       $result = $DB->query($query);
@@ -207,7 +208,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       FROM glpi_plugin_fusioninventory_networkports
 
       LEFT JOIN glpi_networkports
-      ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
+         ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
       WHERE glpi_networkports.items_id='".$id."'
          ".$where."
          AND NOT (glpi_networkports.name='general'
@@ -733,11 +734,11 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
    /**
     * Display detail networkport based on glpi core networkport and fusioninventory
     * networkport
-    * 
+    *
     * @param array $data with id ant fusionid
     * @param boolean $monitoring true if monitoring installed && actived
     * @param boolean $aggrega true if this port is aggregate port
-    * 
+    *
     * @return nothing
     */
    function showNetworkPortDetail($data, $monitoring, $aggrega=0) {
@@ -748,12 +749,12 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       $networkPort   = new NetworkPort();
       $pfNetworkPort = new PluginFusioninventoryNetworkPort();
       $iPAddress = new IPAddress();
-      
+
       $networkPort->getFromDB($data['id']);
       $pfNetworkPort->getFromDB($data['fusionid']);
 
       $background_img = "";
-      if (($pfNetworkPort->fields["trunk"] == "1") 
+      if (($pfNetworkPort->fields["trunk"] == "1")
                  && (strstr($pfNetworkPort->fields["ifstatus"], "up")
               || $pfNetworkPort->fields["ifstatus"] == 1)) {
          $background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
@@ -763,7 +764,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
               || $pfNetworkPort->fields["ifstatus"] == 1)) {
          $background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
                               "/plugins/fusioninventory/pics/multiple_mac_addresses.png\"); '";
-      } else if (strstr($pfNetworkPort->fields["ifstatus"], "up") 
+      } else if (strstr($pfNetworkPort->fields["ifstatus"], "up")
               || $pfNetworkPort->fields["ifstatus"] == 1) {
          $background_img = " style='background-image: url(\"".$CFG_GLPI['root_doc'].
                               "/plugins/fusioninventory/pics/connected_trunk.png\"); '";
@@ -820,10 +821,10 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
             case 6:
                echo "<td>";
-               if (strstr($pfNetworkPort->fields["ifstatus"], "up") 
+               if (strstr($pfNetworkPort->fields["ifstatus"], "up")
                        || strstr($pfNetworkPort->fields["ifinternalstatus"], "1")) {
                   echo "<img src='".$CFG_GLPI['root_doc']."/pics/greenbutton.png'/>";
-               } else if (strstr($pfNetworkPort->fields["ifstatus"], "down") 
+               } else if (strstr($pfNetworkPort->fields["ifstatus"], "down")
                        || strstr($pfNetworkPort->fields["ifinternalstatus"], "2")) {
                   echo "<img src='".$CFG_GLPI['root_doc']."/pics/redbutton.png'/>";
                } else if (strstr($pfNetworkPort->fields["ifstatus"], "testing")
@@ -888,7 +889,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
             case 13:
                // ** Mac address and link to device which are connected to this port
                $opposite_port = $nw->getOppositeContact($data["id"]);
-               if ($opposite_port != "" 
+               if ($opposite_port != ""
                        && $opposite_port!= 0) {
                   $networkPortOpposite = new NetworkPort();
                   if ($networkPortOpposite->getFromDB($opposite_port)) {
@@ -964,7 +965,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
                                     $link2 = str_replace($computer->getName(0),
                                                          $networkport->fields["ip"],
                                                          $computer->getLink());
-                                    
+
                                     echo $icon.$link1;
                                     if (!empty($link)) {
                                        echo "<br/>".$link;
@@ -989,7 +990,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
             case 14:
                // ** Connection status
                echo "<td>";
-               if (strstr($pfNetworkPort->fields["ifstatus"], "up") 
+               if (strstr($pfNetworkPort->fields["ifstatus"], "up")
                        || strstr($pfNetworkPort->fields["ifstatus"], "1")) {
                   echo "<img src='".$CFG_GLPI['root_doc'].
                           "/plugins/fusioninventory/pics/wired_on.png'/>";
@@ -1129,12 +1130,12 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       echo "</table>";
    }
-   
-   
-   
+
+
+
    function getItemtypeIcon($itemtype) {
       global $CFG_GLPI;
-      
+
       $icon = '';
       if ($itemtype == 'Computer') {
          $icon = "<img src='".$CFG_GLPI['root_doc'].
