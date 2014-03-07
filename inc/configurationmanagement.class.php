@@ -962,6 +962,126 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
       echo "</td>";
       echo "</table>";
    }
+
+
+
+   /**
+    * This function display synthetic data like:
+    *  ~ Number of computers have referential / not conform / not have referential
+    *  ~ Number of printers have referential / not conform / not have referential
+    *  ~ Number of network equipments have referential / not conform / not have referential
+    *  ~
+    */
+   function dashboard() {
+      global $CFG_GLPI;
+
+      echo "<center><h2>Configuration management summary</h2></center>";
+      echo "<table class='tab_cadre'>";
+
+      $a_itemtypes = array(
+          'Computer',
+          'Printer',
+          'NetworkEquipment'
+      );
+
+      echo "<tr class='tab_bg_1'>";
+      foreach ($a_itemtypes as $itemtype) {
+         echo "<th>";
+         echo $itemtype;
+         echo "</th>";
+      }
+      echo "</tr>";
+
+      echo "<tr>";
+      foreach ($a_itemtypes as $itemtype) {
+         echo "<td>";
+         $this->drawPie(mt_rand(10,80), mt_rand(0,2), 8);
+         echo "</td>";
+      }
+      echo "</tr>";
+
+      echo "</table>";
+
+   }
+
+
+
+   function drawPie($havereferential, $notconform, $total) {
+      global $CFG_GLPI;
+
+      $colorcircle = 'ececec';
+      if ($notconform > 0) {
+         $colorcircle = 'ff8f8f';
+      }
+
+      echo '<script src="'.$CFG_GLPI["root_doc"].'/plugins/fusioninventory/lib/d3-3.4.3/d3.min.js"></script>';
+
+      $rand = mt_rand();
+      echo "<div id='pie".$rand."'></div>";
+      echo '<script>
+
+var width = 350,
+    height = 150,
+    radius = Math.min(width, height) / 2;
+
+var arc = d3.svg.arc()
+    .outerRadius(radius - 10)
+    .innerRadius(radius - 35);
+
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d) { return d.percentage; });
+
+var svg'.$rand.' = d3.select("#pie'.$rand.'").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+';
+
+echo "var jsonstr".$rand." = '".json_encode(array(array('percentage' => $havereferential, 'color' => '#6aff75'),
+                                         array('percentage' => (100 - $havereferential), 'color' => '#ececec')))."';
+var jsonstrconf".$rand." = '".json_encode(array('notconform' => $notconform, 'total' => $total, 'color' => '#'.$colorcircle))."';
+";
+echo '
+var data'.$rand.' = JSON.parse(jsonstr'.$rand.');
+var dataconf'.$rand.' = JSON.parse(jsonstrconf'.$rand.');
+
+  data'.$rand.'.forEach(function(d) {
+    d.percentage = +d.percentage;
+  });
+
+  var g'.$rand.' = svg'.$rand.'.selectAll(".arc")
+      .data(pie(data'.$rand.'))
+    .enter();
+
+    g'.$rand.'.append("circle")
+       .attr("r", 40)
+       .style("stroke", "#bdbdbd")
+       .style("fill", function(d) { return dataconf'.$rand.'.color; });
+
+  g'.$rand.'.append("path")
+      .attr("d", arc)
+      .style("stroke", "#bdbdbd")
+      .style("fill", function(d) { return d.data.color; })
+      .attr("class", "arc");
+
+  g'.$rand.'.append("text")
+      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+      .attr("dy", ".35em")
+      .style("text-anchor", "middle")
+      .text(function(d) { return d.data.percentage + "%"; });
+
+    g'.$rand.'.append("text")
+      .attr("dy", ".35em")
+      .style("text-anchor", "middle")
+      .text(function(d) { return dataconf'.$rand.'.notconform + " / " + dataconf'.$rand.'.total; });
+
+
+</script>';
+
+   }
 }
 
 ?>
