@@ -75,19 +75,19 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    static function getAdditionalMenuOptions() {
 
       $elements = array(
-          'iprange' => 'PluginFusioninventoryIPRange',
-          'task'    => 'PluginFusioninventoryTask',
-          'unknowndevice' => 'PluginFusioninventoryUnknownDevice',
-          'inventoryruleimport' => 'PluginFusioninventoryInventoryRuleImport',
-          'inventoryruleentity' => 'PluginFusioninventoryInventoryRuleEntity',
-          'inventoryrulelocation' => 'PluginFusioninventoryInventoryRuleLocation',
-          'collectrule' => 'PluginFusioninventoryCollectRule',
+          'iprange'              => 'PluginFusioninventoryIPRange',
+          'task'                 => 'PluginFusioninventoryTask',
+          'unknowndevice'        => 'PluginFusioninventoryUnknownDevice',
+          'inventoryruleimport'  => 'PluginFusioninventoryInventoryRuleImport',
+          'inventoryruleentity'  => 'PluginFusioninventoryInventoryRuleEntity',
+          'inventoryrulelocation'=> 'PluginFusioninventoryInventoryRuleLocation',
+          'collectrule'          => 'PluginFusioninventoryCollectRule',
           'inventorycomputerblacklist' => 'PluginFusioninventoryInventoryComputerBlacklist',
-          'snmpmodel' => 'PluginFusioninventorySnmpmodel',
-          'configsecurity' => 'PluginFusioninventoryConfigSecurity',
-          'credential' => 'PluginFusioninventoryCredential',
-          'credentialip' => 'PluginFusioninventoryCredentialIp',
-          'collect' => 'PluginFusioninventoryCollect',
+          'snmpmodel'            => 'PluginFusioninventorySnmpmodel',
+          'configsecurity'       => 'PluginFusioninventoryConfigSecurity',
+          'credential'           => 'PluginFusioninventoryCredential',
+          'credentialip'         => 'PluginFusioninventoryCredentialIp',
+          'collect'              => 'PluginFusioninventoryCollect',
       );
       $options = array();
       foreach ($elements as $type=>$itemtype) {
