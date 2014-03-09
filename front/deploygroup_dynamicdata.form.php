@@ -43,7 +43,7 @@
 include ("../../../inc/includes.php");
 
 Html::header(__('Features'), $_SERVER["PHP_SELF"],
-             "plugins", "fusioninventory", "deploygroup");
+             "plugins", "pluginfusioninventorymenu", "deploygroup");
 
 
 $pfDeployGroup = new PluginFusioninventoryDeployGroup();
@@ -65,7 +65,7 @@ if (isset($_GET['updaterule'])) {
    }
 } else if (isset($_GET['contains'])
         OR isset($_GET['reset'])) {
-   
+
    if (isset($_SESSION['plugin_fusioninventory_dynamicgroup'])) {
       unset($_SESSION['plugin_fusioninventory_dynamicgroup']);
    }
@@ -77,7 +77,7 @@ if (isset($_POST['update_group'])) {
    $pfDeployGroup_Dynamicdata->update($_POST);
    Html::back();
 }
-if (isset($_POST['name'])) {      
+if (isset($_POST['name'])) {
    $a_construct = array();
    foreach ($_POST as $key=>$value) {
       $a_construct[] = $key."=".$value;

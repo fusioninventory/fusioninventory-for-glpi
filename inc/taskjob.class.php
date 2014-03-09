@@ -43,7 +43,7 @@
 class PluginFusioninventoryTaskjob extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_task';
-   
+
    /**
    * Get name of this type
    *
@@ -53,8 +53,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
    static function getTypeName($nb=0) {
       return __('Job', 'fusioninventory');
    }
-   
-   
+
+
 
 
    static function getJoinQuery() {
@@ -317,7 +317,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
          $a_methods = PluginFusioninventoryStaticmisc::getmethods();
          foreach ($a_methods as $datas) {
-            echo 
+            echo
                "<input type='hidden' name='method-".$datas['method']."' "
                ."value='".PluginFusioninventoryModule::getModuleId($datas['module'])
                ."' />";
@@ -401,8 +401,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "<td>".__('Number of trials', 'fusioninventory')."&nbsp;:</td>";
          echo "<td>";
          Dropdown::showNumber("retry_nb", array(
-                'value' => $this->fields['retry_nb'], 
-                'min'   => 0, 
+                'value' => $this->fields['retry_nb'],
+                'min'   => 0,
                 'max'   => 30)
          );
          echo "</td>";
@@ -412,8 +412,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "<td>".__('Time between 2 trials (in minutes)', 'fusioninventory')."&nbsp;:</td>";
          echo "<td>";
          Dropdown::showNumber("retry_time", array(
-                'value' => $this->fields['retry_time'], 
-                'min'   => 0, 
+                'value' => $this->fields['retry_time'],
+                'min'   => 0,
                 'max'   => 360)
        );
          echo "</td>";
@@ -2110,8 +2110,8 @@ return namelist;
       echo "<td>".__('Periodicity')."&nbsp;:</td>";
       echo "<td>";
       Dropdown::showNumber("periodicity_count", array(
-                'value' => $this->fields['periodicity_count'], 
-                'min'   => 0, 
+                'value' => $this->fields['periodicity_count'],
+                'min'   => 0,
                 'max'   => 300)
       );
       $a_time = array();
@@ -2470,14 +2470,14 @@ return namelist;
          }
       }
    }
-   
-   
-   
+
+
+
    function displayList($tasks_id) {
       global $CFG_GLPI;
 
       $rand = mt_rand();
-      
+
       echo "<script type=\"text/javascript\">
 function edit_subtype(id,el) {
 
@@ -2518,21 +2518,21 @@ function new_subtype(id) {
    edit_subtype(id, null);
 }
 </script>";
-      
+
       echo "<table class='tab_cadre_fixe' id='package_order_".$tasks_id."'>";
-      
+
       echo "<tr>";
       echo "<th id='th_title_taskjob_$rand'>";
       //echo "<img src='".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/pics/$subtype.png' />";
       echo "&nbsp;".$this->getTypeName();
-      
+
       echo "&nbsp;";
       echo "<img id='plus_taskjobs_block{$rand}'";
       echo " onclick=\"new_subtype({$tasks_id})\" ";
       echo  " title='".__('Add')."' alt='".__('Add')."' ";
       echo  " class='pointer' src='".
             $CFG_GLPI["root_doc"]."/pics/add_dropdown.png' /> ";
-      
+
       echo "</th>";
       echo "</tr>";
 
@@ -2550,9 +2550,9 @@ function new_subtype(id) {
 
       echo "<div id='taskjobs_block'></div>";
       Html::closeForm();
-      
+
       $a_taskjobs = getAllDatasFromTable(
-              $this->getTable(), 
+              $this->getTable(),
               "`plugin_fusioninventory_tasks_id`='".$tasks_id."'",
               FALSE,
               '`ranking`');
@@ -2604,7 +2604,7 @@ function new_subtype(id) {
          }
          echo "</ul>";
 
-         
+
          echo "</td>";
          echo "</td>";
          echo "<td class='rowhandler control' title='".__('drag', 'fusioninventory').
@@ -2620,7 +2620,7 @@ function new_subtype(id) {
       echo "&nbsp;&nbsp;<img src='".$CFG_GLPI["root_doc"]."/pics/arrow-left.png' alt=''>";
       echo "<input type='submit' name='delete' value=\"".
          __('Delete', 'fusioninventory')."\" class='submit'>";
-      
+
 
       /**
        * Initialize drag and drop on subtype lists
@@ -2628,9 +2628,9 @@ function new_subtype(id) {
       echo "<script type=\"text/javascript\">
       redipsInit('taskjob', 'taskjob', $tasks_id);
 </script>";
- 
+
       echo "</table>";
-   }   
+   }
 
 }
 

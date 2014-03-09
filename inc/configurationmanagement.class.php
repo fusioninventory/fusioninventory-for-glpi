@@ -51,6 +51,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
    private $managetype = '';
    public $a_trees = array();
 
+
    /**
    * Get name of this type
    *

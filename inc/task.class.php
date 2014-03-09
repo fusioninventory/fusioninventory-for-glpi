@@ -44,7 +44,7 @@
 class PluginFusioninventoryTask extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_task';
-   
+
    /**
    * Get name of this type
    *
@@ -279,8 +279,8 @@ class PluginFusioninventoryTask extends CommonDBTM {
       echo "<td>".__('Periodicity')."&nbsp;:</td>";
       echo "<td>";
       Dropdown::showNumber("periodicity_count", array(
-             'value' => $this->fields['periodicity_count'], 
-             'min'   => 0, 
+             'value' => $this->fields['periodicity_count'],
+             'min'   => 0,
              'max'   => 300)
       );
       $a_time = array();

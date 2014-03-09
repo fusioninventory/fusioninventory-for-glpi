@@ -45,11 +45,11 @@ include ("../../../inc/includes.php");
 $pfUnknownDevice = new PluginFusioninventoryUnknownDevice();
 $ptt  = new PluginFusioninventoryTask();
 
-Html::header(__('FusionInventory', 'fusioninventory'), 
-             $_SERVER["PHP_SELF"], 
-             "plugins", 
-             "fusioninventory", 
-             "unknown");
+Html::header(__('FusionInventory', 'fusioninventory'),
+             $_SERVER["PHP_SELF"],
+             "plugins",
+             "pluginfusioninventorymenu",
+             "unknowndevice");
 
 Session::checkRight('plugin_fusioninventory_unknowndevice', READ);
 

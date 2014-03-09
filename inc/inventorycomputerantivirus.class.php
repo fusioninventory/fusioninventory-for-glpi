@@ -47,8 +47,8 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryComputerAntivirus extends CommonDBTM {
 
    static $rightname = 'computer';
-   
-   
+
+
    static function getTypeName($nb=0) {
       return __('Antivirus', 'fusioninventory');
    }

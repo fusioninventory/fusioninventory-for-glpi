@@ -124,7 +124,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       $tab[16]['field']         = 'ifalias';
       $tab[16]['name']          = __('Alias', 'fusioninventory');
 
-      
+
       return $tab;
    }
 
@@ -154,7 +154,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
       }
    }
 
-   
+
 
    /**
     * Disconnect a port in DB
@@ -326,7 +326,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                           LEFT JOIN `glpi_ipaddresses`
                              ON `glpi_ipaddresses`.`items_id`=`glpi_networknames`.`id`
                                 AND `glpi_ipaddresses`.`itemtype`='NetworkName'
-                             
+
                           WHERE `glpi_ipaddresses`.`name`='".$IP."'
                                 AND `glpi_networkports`.`itemtype`='Phone'
                                 AND `glpi_phones`.`name`='".$sysname."'
@@ -398,7 +398,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                AND `glpi_ipaddresses`.`name`='".$IP."'
              LIMIT 1";
          $result0 = $DB->query($query0);
-         if ($DB->numrows($result0) == 1) {            
+         if ($DB->numrows($result0) == 1) {
             $data0 = $DB->fetch_assoc($result0);
             // Search port and add if required
             $query1 = "SELECT *
@@ -419,7 +419,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                $input['name'] = $ifDescr;
                $input['instantiation_type'] = 'NetworkPortEthernet';
                $PortID = $NetworkPort->add($input);
-               
+
                $input = array();
                $input['itemtype'] = 'NetworkPort';
                $input['items_id'] = $PortID;
@@ -459,18 +459,18 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          $input['name'] = $ifDescr;
          $input['instantiation_type'] = 'NetworkPortEthernet';
          $PortID = $NetworkPort->add($input);
-         
+
          $input = array();
          $input['itemtype'] = 'NetworkPort';
          $input['items_id'] = $PortID;
          $networknames_id = $networkName->add($input);
-         
+
          $input = array();
          $input['itemtype'] = 'NetworkName';
          $input['items_id'] = $networknames_id;
          $input['name'] = $IP;
          $iPAddress->add($input);
-        
+
          return($PortID);
       }
       return($PortID);
@@ -479,7 +479,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
 
    /*
-    * Used to find port of a device tell LLDP 
+    * Used to find port of a device tell LLDP
     */
    function getPortIDfromSysmacandPortnumber($sysmac, $ifnumber, $params = array()) {
       global $DB;
@@ -520,14 +520,14 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
 
       // In case of mac is mac of switch, not a port
       if ($PortID == '') {
-         $queryPort = "SELECT * 
-            FROM `glpi_networkports` 
-            WHERE `logical_number`='".$ifnumber."' 
-               AND `itemtype`='NetworkEquipment' 
-               AND `items_id` IN 
+         $queryPort = "SELECT *
+            FROM `glpi_networkports`
+            WHERE `logical_number`='".$ifnumber."'
+               AND `itemtype`='NetworkEquipment'
+               AND `items_id` IN
                (SELECT `items_id`
-                FROM `glpi_networkports` 
-                WHERE `instantiation_type`='NetworkPortAggregate' 
+                FROM `glpi_networkports`
+                WHERE `instantiation_type`='NetworkPortAggregate'
                   AND `mac`='".$sysmac."')
             LIMIT 1";
          $resultPort = $DB->query($queryPort);
@@ -536,7 +536,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
             $PortID = $dataPort['id'];
          }
       }
-      
+
       if ($PortID == "") {
          $NetworkPort = new NetworkPort();
          $PluginFusioninventoryUnknownDevice = new PluginFusioninventoryUnknownDevice();
@@ -576,22 +576,22 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
          $PortID = $NetworkPort->add($input);
          return($PortID);
       }
-     
+
       return($PortID);
    }
-   
-   
-   
+
+
+
    /**
     * Function used to detect if port has multiple mac connected
     */
    static function isPortHasMultipleMac($networkports_id) {
-      $nw = new NetworkPort_NetworkPort();   
+      $nw = new NetworkPort_NetworkPort();
       $networkPort = new NetworkPort();
-      
+
       $is_multiple = FALSE;
       $opposite_port = $nw->getOppositeContact($networkports_id);
-      if ($opposite_port != "" 
+      if ($opposite_port != ""
               && $opposite_port!= 0) {
          $networkPort->getFromDB($opposite_port);
          if ($networkPort->fields["itemtype"] == 'PluginFusioninventoryUnknownDevice') {
@@ -600,7 +600,7 @@ class PluginFusioninventoryNetworkPort extends CommonDBTM {
                if ($pfUnknownDevice->fields['hub'] == 1) {
                   $is_multiple = TRUE;
                }
-            }                  
+            }
          }
       }
       return $is_multiple;

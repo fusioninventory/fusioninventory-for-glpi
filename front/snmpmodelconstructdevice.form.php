@@ -44,7 +44,8 @@ include ("../../../inc/includes.php");
 
 $pfConstructDevice = new PluginFusioninventorySnmpmodelConstructDevice();
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "constructdevice");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
+        "plugins", "pluginfusioninventorymenu", "snmpmodelconstructdevice");
 Session::checkLoginUser();
 
 PluginFusioninventoryMenu::displayMenu("mini");
@@ -62,17 +63,17 @@ if (isset($_POST['update'])) {
                                  'vlan' => $_POST['vlan_'.$split[0]],
                                  'oid_port_dyn' => $_POST['oid_port_dyn_'.$split[0]],
                                  'mappings_id' => $split[1],
-                                 'oid_port_counter' => $portcounter); 
+                                 'oid_port_counter' => $portcounter);
    }
-   
+
    $a_json['devices_id'] = $_POST['devices_id'];
-   
+
    $pfConstructmodel = new PluginFusioninventoryConstructmodel();
    if ($pfConstructmodel->connect()) {
       if ($pfConstructmodel->showAuth()) {
          if (isset($_POST['devices_id'])
             AND $_POST['devices_id'] > 0) {
-            
+
             $pfConstructDevice = new PluginFusioninventorySnmpmodelConstructDevice();
             $dataret = $pfConstructmodel->sendMib($a_json);
          }

@@ -59,19 +59,19 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
        global $DB;
 
       $a_return = array();
-      
+
       if ($pciid == '') {
          return $a_return;
       }
-      
+
       $pciidArray = explode(":", $pciid);
- 
+
       if (!isset($pciidArray[1])) {
          return $a_return;
       }
-      
+
       $vendorId = $pciidArray[0];
-      
+
       $query_select = "SELECT `glpi_plugin_fusioninventory_pcivendors`.`name` as `manufacturer`,
          `glpi_plugin_fusioninventory_pcidevices`.`name` as `name`
          FROM `glpi_plugin_fusioninventory_pcivendors`
@@ -130,12 +130,12 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
       }
       return array($vendors_name, $devices_name);
    }
-   
-   
-   
+
+
+
    static function getManufacturerWithMAC($mac) {
       global $DB;
-      
+
       $a_mac = explode(":", $mac);
       if (isset($a_mac[2])) {
          $searchMac = $a_mac[0].":".$a_mac[1].":".$a_mac[2];

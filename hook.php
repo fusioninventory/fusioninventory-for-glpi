@@ -92,7 +92,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5155]['datatype']  = 'date';
          $sopt[5155]['joinparams']  = array('jointype' => 'child');
          $sopt[5155]['massiveaction'] = FALSE;
-         
+
          $sopt[5156]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5156]['field']     = 'bios_version';
          $sopt[5156]['name']      = __('BIOS', 'fusioninventory')."-".__('Version');
@@ -118,7 +118,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5159]['name']      = __('Company', 'fusioninventory');
          $sopt[5159]['joinparams']  = array('jointype' => 'child');
          $sopt[5159]['massiveaction'] = FALSE;
-         
+
          $sopt[5160]['table']     = 'glpi_plugin_fusioninventory_agents';
          $sopt[5160]['field']     = 'useragent';
          $sopt[5160]['name']      = __('Useragent', 'fusioninventory');
@@ -138,14 +138,14 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5162]['joinparams']      = array('beforejoin'
                                             => array('table'      => 'glpi_plugin_fusioninventory_inventorycomputercomputers',
                                                      'joinparams' => array('jointype'          => 'child')));
-         
+
          $sopt[5163]['table']     = 'glpi_plugin_fusioninventory_configurationmanagements';
          $sopt[5163]['field']     = 'conform';
          $sopt[5163]['name']      = __('Conformité (configuration management)', 'fusioninventory');
          $sopt[5163]['joinparams']  = array('jointype' => 'itemtype_item');
          $sopt[5163]['massiveaction'] = FALSE;
          $sopt[5163]['datatype']  = 'bool';
-         
+
          $sopt[5164]['table']         = "glpi_plugin_fusioninventory_agentmodules";
          $sopt[5164]['field']         = "DEPLOY";
          $sopt[5164]['linkfield']     = "DEPLOY";
@@ -195,7 +195,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5170]['datatype']      = 'bool';
          $sopt[5170]['massiveaction'] = FALSE;
 
-         
+
 
    }
 
@@ -330,7 +330,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
    $searchopt = &Search::getOptions($type);
    $table = $searchopt[$id]["table"];
    $field = $searchopt[$id]["field"];
-   
+
    switch ($table.'.'.$field) {
 
       case "glpi_plugin_fusioninventory_tasks.id" :
@@ -402,7 +402,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
          }
          break;
    }
-   
+
    if ($table == "glpi_plugin_fusioninventory_agentmodules") {
       if ($type == 'Computer') {
          $pfAgentmodule = new PluginFusioninventoryAgentmodule();
@@ -743,7 +743,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
             // ** Display Old Value (before changement of value)
             case "glpi_plugin_fusinvsnmp_networkportlogs.old_value" :
                // TODO ADD LINK TO DEVICE
-               if ((substr_count($data['raw']["ITEM_$num"], ":") == 5) 
+               if ((substr_count($data['raw']["ITEM_$num"], ":") == 5)
                        && (empty($data['raw']["ITEM_3"]))) {
                   return "<center><b>".$data['raw']["ITEM_$num"]."</b></center>";
                }
@@ -751,7 +751,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
             // ** Display New Value (new value modified)
             case "glpi_plugin_fusinvsnmp_networkportlogs.new_value" :
-               if ((substr_count($data['raw']["ITEM_$num"], ":") == 5) 
+               if ((substr_count($data['raw']["ITEM_$num"], ":") == 5)
                        && (empty($data['raw']["ITEM_3"]))) {
                   return "<center><b>".$data['raw']["ITEM_$num"]."</b></center>";
                }
@@ -1070,8 +1070,8 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 
       case 'glpi_plugin_fusioninventory_agents.threads_discovery' :
          Dropdown::showNumber("threads_discovery", array(
-             'value' => $linkfield, 
-             'min' => 1, 
+             'value' => $linkfield,
+             'min' => 1,
              'max' => 400)
          );
          return TRUE;
@@ -1079,8 +1079,8 @@ function plugin_fusioninventory_MassiveActionsFieldsDisplay($options=array()) {
 
       case 'glpi_plugin_fusioninventory_agents.threads_query' :
          Dropdown::showNumber("threads_query", array(
-             'value' => $linkfield, 
-             'min' => 1, 
+             'value' => $linkfield,
+             'min' => 1,
              'max' => 400)
          );
          return TRUE;
@@ -1272,7 +1272,7 @@ function plugin_fusioninventory_MassiveActionsDisplay($options=array()) {
 
 function plugin_fusioninventory_MassiveActionsProcess($data) {
    global $DB;
-   
+
    switch ($data['action']) {
       case "plugin_fusioninventory_manage_locks" :
          if (($data['itemtype'] == "NetworkEquipment")
@@ -1421,7 +1421,7 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
                      $pfDeployPackage->update($input);
                   }
                }
-            } 
+            }
          } else if ($data['itemtype'] == 'PluginFusioninventoryDeployMirror') {
             foreach ($data["item"] as $key => $val) {
                if ($val == 1) {
@@ -1733,13 +1733,13 @@ function plugin_fusioninventory_addSelect($type, $id, $num) {
                      CONCAT_WS('....', FUSIONINVENTORY_22.items_id, FUSIONINVENTORY_22.name)
                   SEPARATOR '$$$$') AS ITEM_$num, ";
                break;
-            
+
          }
          $a_agent_modules = PluginFusioninventoryAgentmodule::getModules();
          foreach ($a_agent_modules as $module) {
-            if ($table.".".$field == 
+            if ($table.".".$field ==
                     'glpi_plugin_fusioninventory_agentmodules.'.$module) {
-               
+
                return " `FUSION_".$module."`.`is_active` AS ITEM_$num, ".
                           "`FUSION_".$module."`.`exceptions`  AS ITEM_".$num."_0, ".
                           "`agent".strtolower($module)."`.`id`  AS ITEM_".$num."_1, ";
@@ -1939,19 +1939,19 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                       "`glpi_plugin_fusioninventory_inventorycomputercomputers_id`.".
                       "`computers_id` ) ";
                  break;
-              
-         }      
+
+         }
          $a_agent_modules = PluginFusioninventoryAgentmodule::getModules();
          foreach ($a_agent_modules as $module) {
-            if ($new_table.".".$linkfield == 
+            if ($new_table.".".$linkfield ==
                     'glpi_plugin_fusioninventory_agentmodules.'.$module) {
                return " LEFT JOIN `glpi_plugin_fusioninventory_agentmodules` AS FUSION_".$module."
-                             ON FUSION_".$module.".`modulename`='".$module."' 
+                             ON FUSION_".$module.".`modulename`='".$module."'
                           LEFT JOIN `glpi_plugin_fusioninventory_agents` as agent".strtolower($module)."
                              ON (`glpi_computers`.`id`=`agent".strtolower($module)."`.`computers_id`)";
             }
          }
-       
+
          break;
 
       case 'NetworkEquipment':
@@ -2140,7 +2140,7 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
                return " LEFT JOIN `glpi_plugin_fusioninventory_printerlogs`
                   ON (`glpi_plugin_fusioninventory_printerlogs`.`printers_id` = `glpi_printers`.`id`) ";
                break;
-            
+
             case 'glpi_networkports.networkports_id':
                return " LEFT JOIN `glpi_networkports` ON (`glpi_printers`.`id` = `glpi_networkports`.`items_id` AND `glpi_networkports`.`itemtype` = 'Printer' ) ";
                break;
@@ -2311,9 +2311,9 @@ function plugin_fusioninventory_addWhere($link, $nott, $type, $id, $val) {
                }
                return $link." (FUSIONINVENTORY_22.name  LIKE '%".$val."%' $ADD ) ";
                break;
-              
+
          }
-         
+
          $a_agent_modules = PluginFusioninventoryAgentmodule::getModules();
          foreach ($a_agent_modules as $module) {
             if ($table.".".$field == 'glpi_plugin_fusioninventory_agentmodules.'.$module) {

@@ -100,7 +100,8 @@ class AgentTest extends RestoreDatabase_TestCase {
          1
       );
       $this->assertEquals(1, count($agent));
-      $agent_id = current($agent)['id'];
+      $current_agent = current($agent);
+      $agent_id = $current_agent['id'];
 
       $agent_from_asset = current($pfAgent->find("`computers_id` = '100'"));
 

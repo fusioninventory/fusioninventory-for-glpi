@@ -55,7 +55,7 @@ if (isset($_REQUEST['type'])) {
    }
    if ($_REQUEST['type'] == 'dynamic') {
       $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
-   }  
+   }
 }
 
 if (isset($_POST["add"])) {
@@ -158,15 +158,15 @@ if (isset($_POST["add"])) {
 
 } else {
    Html::header(__('FusionInventory DEPLOY'), $_SERVER["PHP_SELF"], "plugins",
-   "fusioninventory", "group");
+   "pluginfusioninventorymenu", "deploygroup");
 
    PluginFusioninventoryMenu::displayMenu("mini");
-   
+
    if (!isset($_GET["id"])
            || $_GET["id"] == '') {
       $_GET["id"] = 0;
    }
-   
+
    $group->showForm($_GET["id"]);
    Html::footer();
 }

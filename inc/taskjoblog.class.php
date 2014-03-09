@@ -162,7 +162,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       $sopt[8]['table']          = "glpi_plugin_fusioninventory_agents";
       $sopt[8]['field']          = 'name';
-      $sopt[8]['name']           = __('Agent', 'fusioninventory');      
+      $sopt[8]['name']           = __('Agent', 'fusioninventory');
       $sopt[8]['datatype']       = 'itemlink';
       $sopt[8]['forcegroupby']   = TRUE;
       $sopt[8]['joinparams']     = array('beforejoin'
@@ -1103,13 +1103,13 @@ function appear_array(id){
       $comment = str_replace(",[", "<br/>[", $comment);
       return $comment;
    }
-   
-   
+
+
    // ********** Functions for Monitoring / Logs ********** //
 
    function listTasks() {
       global $DB;
-      
+
       $query = "SELECT `glpi_plugin_fusioninventory_taskjobstates`.`id`,"
               . "`glpi_plugin_fusioninventory_taskjobs`.`method`,"
               . "`glpi_plugin_fusioninventory_taskjobs`.`name`"
@@ -1131,23 +1131,23 @@ function appear_array(id){
             $endtable = 1;
          }
          $this->_showLine(
-                 $data['method'], 
-                 $data['name'], 
-                 '80 deployments (ok: 50, ko : 12, unneeded : 3)', 
-                 '81', 
-                 'RUNNING', 
+                 $data['method'],
+                 $data['name'],
+                 '80 deployments (ok: 50, ko : 12, unneeded : 3)',
+                 '81',
+                 'RUNNING',
                  $begintable,
                  $endtable);
 
          $i++;
       }
    }
-   
-   
-   
+
+
+
    function _showLine ($module, $name, $text, $percent, $state, $begintable=0, $endtable=0) {
       global $CFG_GLPI;
-      
+
       if ($begintable) {
          echo "<table class='tab_cadrehov'>";
       }
@@ -1174,9 +1174,9 @@ function appear_array(id){
          echo "</table>";
       }
    }
-   
-   
-   
+
+
+
 }
 
 ?>

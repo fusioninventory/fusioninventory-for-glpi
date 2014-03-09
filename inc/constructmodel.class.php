@@ -1096,8 +1096,8 @@ class PluginFusioninventoryConstructmodel extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showNumber("nboids_after", array(
-             'value' => 0, 
-             'min'   => 0, 
+             'value' => 0,
+             'min'   => 0,
              'max'   => 20)
       );
       echo "</td>";

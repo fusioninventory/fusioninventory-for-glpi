@@ -44,7 +44,8 @@ include ("../../../inc/includes.php");
 
 Session::checkRight('config', UPDATE);
 
-Html::header(__('Features', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "summary");
+Html::header(__('Features', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
+        "pluginfusioninventorymenu", "configlogfield");
 
 if (isset($_POST['update'])) {
 

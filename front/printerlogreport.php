@@ -45,20 +45,20 @@ $DBCONNECTION_REQUIRED=0;
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), 
-             $_SERVER["PHP_SELF"], 
-             "plugins", 
-             "fusioninventory", 
-             "printerlog");
+Html::header(__('FusionInventory', 'fusioninventory'),
+             $_SERVER["PHP_SELF"],
+             "plugins",
+             "pluginfusioninventorymenu",
+             "printerlogreport");
 
 Session::checkRight('plugin_fusioninventory_reportprinter', READ);
 
 if (isset($_POST['glpi_plugin_fusioninventory_date_start'])) {
-   $_SESSION['glpi_plugin_fusioninventory_date_start'] = 
+   $_SESSION['glpi_plugin_fusioninventory_date_start'] =
                                  $_POST['glpi_plugin_fusioninventory_date_start'];
 }
 if (isset($_POST['glpi_plugin_fusioninventory_date_end'])) {
-   $_SESSION['glpi_plugin_fusioninventory_date_end'] = 
+   $_SESSION['glpi_plugin_fusioninventory_date_end'] =
                                  $_POST['glpi_plugin_fusioninventory_date_end'];
 }
 
@@ -92,7 +92,7 @@ function displaySearchForm() {
    echo __('Starting date', 'fusioninventory')." :";
    echo "</td>";
    echo "<td width='120'>";
-   Html::showDateFormItem("glpi_plugin_fusioninventory_date_start", 
+   Html::showDateFormItem("glpi_plugin_fusioninventory_date_start",
                           $_SESSION['glpi_plugin_fusioninventory_date_start']);
    echo "</td>";
 
@@ -100,7 +100,7 @@ function displaySearchForm() {
    echo __('Ending date', 'fusioninventory')." :";
    echo "</td>";
    echo "<td width='120'>";
-   Html::showDateFormItem("glpi_plugin_fusioninventory_date_end", 
+   Html::showDateFormItem("glpi_plugin_fusioninventory_date_end",
                           $_SESSION['glpi_plugin_fusioninventory_date_end']);
    echo "</td>";
 

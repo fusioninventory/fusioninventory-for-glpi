@@ -128,7 +128,7 @@ function plugin_init_fusioninventory() {
                                         'Computer')));
       Plugin::registerClass('PluginFusioninventoryComputerLicenseInfo',
               array('addtabon' => array('Computer')));
-      
+
          //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocation');
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocationCollection',
@@ -169,7 +169,6 @@ function plugin_init_fusioninventory() {
 
       $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] =
                                                       "glpi_plugin_fusioninventory_printers";
-
 
       // ##### 3. get informations of the plugin #####
 
@@ -212,11 +211,11 @@ function plugin_init_fusioninventory() {
          );
       }
       if (script_endswith("deploypackage.form.php")) {
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] = 
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
                  "lib/deploy_editsubtype.js";
       }
 
-      if (Session::haveRight('plugin_fusioninventory_configuration', READ) 
+      if (Session::haveRight('plugin_fusioninventory_configuration', READ)
               || Session::haveRight('profile', UPDATE)) {// Config page
          $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/config.form.php'.
                  '?itemtype=pluginfusioninventoryconfig&glpi_tab=1';
@@ -302,108 +301,13 @@ function plugin_init_fusioninventory() {
          }
          $PLUGIN_HOOKS['reports']['fusioninventory'] = $report_list;
 
-
-         // * Icons add, search...
-         $hook_add = array();
-         $hook_search = array();
-
-         $hook_add['tasks'] = 'front/task.form.php?add=1';
-         $hook_search['tasks'] = 'front/task.php';
-
-         $hook_add['unknown'] = 'front/unknowndevice.form.php?add=1';
-         $hook_search['unknown'] = 'front/unknowndevice.php';
-
-         $hook_add['inventoryruleimport'] = 'front/inventoryruleimport.form.php';
-         $hook_search['inventoryruleimport'] = 'front/inventoryruleimport.php';
-
-         $hook_search['agents'] = 'front/agent.php';
-
-         $hook_add['ruleentity']
-                        = '../fusioninventory/front/inventoryruleentity.form.php';
-         $hook_search['ruleentity']
-                        = '../fusioninventory/front/inventoryruleentity.php';
-         
-         $hook_add['rulelocation']
-                        = '../fusioninventory/front/inventoryrulelocation.form.php';
-         $hook_search['rulelocation']
-                        = '../fusioninventory/front/inventoryrulelocation.php';
-
-         $hook_add['collectrule']
-                        = '../fusioninventory/front/collectrule.form.php';
-         $hook_search['collectrule']
-                        = '../fusioninventory/front/collectrule.php';
-
-         $hook_add['blacklist']
-                        = '../fusioninventory/front/inventorycomputerblacklist.form.php';
-         $hook_search['blacklist']
-                        = '../fusioninventory/front/inventorycomputerblacklist.php';
-
-         $hook_add['models'] = '../fusioninventory/front/snmpmodel.form.php?add=1';
-         $hook_search['models'] = '../fusioninventory/front/snmpmodel.php';
-
-         $hook_add['configsecurity'] = '../fusioninventory/front/configsecurity.form.php?add=1';
-         $hook_search['configsecurity'] = '../fusioninventory/front/configsecurity.php';
-
-
-         if (Session::haveRight('plugin_fusioninventory_iprange', UPDATE)) {
-            $hook_add['iprange'] = '../fusioninventory/front/iprange.form.php?add=1';
-            $hook_search['iprange'] = '../fusioninventory/front/iprange.php';
-         }
-
-         if (Session::haveRight('plugin_fusioninventory_credential', UPDATE)) {
-            $hook_add['PluginFusioninventoryCredential'] =
-               '../fusioninventory/front/credential.form.php?add=1';
-            $hook_search['PluginFusioninventoryCredential'] =
-               '../fusioninventory/front/credential.php';
-          }
-
-         if (Session::haveRight('plugin_fusioninventory_credential', UPDATE)) {
-            $hook_add['PluginFusioninventoryCredentialIp'] =
-               '../fusioninventory/front/credentialip.form.php?add=1';
-            $hook_search['PluginFusioninventoryCredentialIp'] =
-               '../fusioninventory/front/credentialip.php';
-
-         }
-
-         $hook_add['collect'] = 
-             '../fusioninventory/front/collect.form.php?add=1';
-         $hook_search['collect'] = 
-             '../fusioninventory/front/collect.php';
-         
-         $hook_add['configurationmanagement_model'] = 
-             '../fusioninventory/front/configurationmanagement_model.form.php?add=1';
-         $hook_search['configurationmanagement_model'] = 
-             '../configurationmanagement_model/front/configurationmanagement_model.php';
-         
-         
          /*
           * Deploy submenu entries
           */
 
-         $hook_add['packages'] = '../fusioninventory/front/deploypackage.form.php?add=1';
-         $hook_search['packages'] = '../fusioninventory/front/deploypackage.php';
-
-         $hook_add['mirror'] = '../fusioninventory/front/deploymirror.form.php?add=1';
-         $hook_search['mirror'] = '../fusioninventory/front/deploymirror.php';
-
-         $hook_add['task'] = '../fusioninventory/front/deploytask.form.php?add=1';
-         $hook_search['task'] = '../fusioninventory/front/deploytask.php';
-
-         $hook_add['group'] = '../fusioninventory/front/deploygroup.form.php?add=1';
-         $hook_search['group'] = '../fusioninventory/front/deploygroup.php';
-
-         if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
-            if (Session::haveRight('plugin_fusioninventory_agents', UPDATE)) {
-               $hook_search['agents'] = 'front/agent.php';
-            }
-
-            if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {// Config page
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/config.form.php';
-            }
+         if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {// Config page
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/config.form.php';
          }
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']    = $hook_add;
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search'] = $hook_search;
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']
             ["<img  src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/books.png'
@@ -578,12 +482,12 @@ function plugin_fusioninventory_check_prerequisites() {
       echo __('Your GLPI version not compatible, require 0.85', 'fusioninventory');
       return FALSE;
    }
-   
+
    if (!function_exists('finfo_open')) {
       echo __('fileinfo extension (PHP) is required...', 'fusioninventory');
       return FALSE;
-   }   
-   
+   }
+
    $plugin = new Plugin();
    if ($plugin->isActivated("fusioninventory")
            && !TableExists("glpi_plugin_fusioninventory_configs")) {

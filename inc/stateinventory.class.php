@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryStateInventory extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_task';
-   
+
    function __construct() {
       global $CFG_GLPI;
 

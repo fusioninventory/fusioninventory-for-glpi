@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryPrinter extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_printer';
-   
+
    static function getTypeName($nb=0) {
 
    }

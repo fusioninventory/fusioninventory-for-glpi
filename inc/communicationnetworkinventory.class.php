@@ -59,7 +59,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
    }
 
 
-   
+
    /**
     * Import data
     *
@@ -239,7 +239,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                  $xml,
                  $itemtype);
 
-         
+
 //         $folder = substr($items_id, 0, -1);
 //         if (empty($folder)) {
 //            $folder = '0';
@@ -341,7 +341,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
          if (!empty($a_inventory[$a_inventory['itemtype']]['name'])) {
             $input['name'] = $a_inventory[$a_inventory['itemtype']]['name'];
          }
-         
+
       $_SESSION['plugin_fusinvsnmp_datacriteria'] = serialize($input);
       $_SESSION['plugin_fusioninventory_classrulepassed'] =
                                  "PluginFusioninventoryCommunicationNetworkInventory";
@@ -524,7 +524,7 @@ class PluginFusioninventoryCommunicationNetworkInventory {
                      $_SESSION['plugin_fusinvsnmp_taskjoblog']['comment']);
    }
 
-   
+
 
    static function getMethod() {
       return 'snmpinventory';

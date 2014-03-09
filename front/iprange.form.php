@@ -45,7 +45,7 @@ include ("../../../inc/includes.php");
 $iprange = new PluginFusioninventoryIPRange();
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
-             "fusioninventory", "iprange");
+             "pluginfusioninventorymenu", "iprange");
 
 Session::checkRight('plugin_fusioninventory_iprange', READ);
 

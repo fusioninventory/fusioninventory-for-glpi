@@ -45,7 +45,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    public $dohistory = TRUE;
 
    static $rightname = 'plugin_fusioninventory_unknowndevice';
-   
+
    /**
    * Get name of this type
    *
@@ -160,12 +160,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[16]['field']     = 'name';
       $tab[16]['linkfield'] = 'plugin_fusioninventory_snmpmodels_id';
       $tab[16]['name']      = __('SNMP models', 'fusioninventory');
-      
+
       $tab[17]['table']     = 'glpi_plugin_fusioninventory_configsecurities';
       $tab[17]['field']     = 'name';
       $tab[17]['linkfield'] = 'plugin_fusioninventory_configsecurities_id';
       $tab[17]['name']      = __('SNMP authentication', 'fusioninventory');
-      
+
       $tab += NetworkPort::getSearchOptionsToAdd("PluginFusioninventoryUnknownDevice");
 
       return $tab;
@@ -472,7 +472,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    }
 
 
-   
+
 // ************************* Hub Management ************************ //
 
    /**

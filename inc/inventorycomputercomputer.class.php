@@ -46,9 +46,9 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
 
-   
+
    static $rightname = 'computer';
-   
+
    static function getTypeName($nb=0) {
       return "";
    }

@@ -43,11 +43,11 @@
 include ("../../../inc/includes.php");
 
 Session::checkLoginUser();
-Html::header(__('FusionInventory', 'fusioninventory'), 
-             $_SERVER["PHP_SELF"], 
-             "plugins", 
-             "fusioninventory", 
-             "rulelocation");
+Html::header(__('FusionInventory', 'fusioninventory'),
+             $_SERVER["PHP_SELF"],
+             "plugins",
+             "pluginfusioninventorymenu",
+             "inventoryrulelocation");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

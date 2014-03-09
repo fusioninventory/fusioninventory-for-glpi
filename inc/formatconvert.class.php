@@ -65,11 +65,11 @@ class PluginFusioninventoryFormatconvert {
       }
       $datainventory = PluginFusioninventoryFormatconvert::cleanArray($datainventory);
       // Hack for some sections
-         $a_fields = array('SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES', 
-                           'MEMORIES', 'NETWORKS', 'SOFTWARE', 'USERS', 
-                           'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS', 
+         $a_fields = array('SOUNDS', 'VIDEOS', 'CONTROLLERS', 'CPUS', 'DRIVES',
+                           'MEMORIES', 'NETWORKS', 'SOFTWARE', 'USERS',
+                           'VIRTUALMACHINES', 'ANTIVIRUS', 'MONITORS',
                            'PRINTERS', 'USBDEVICES', 'PHYSICAL_VOLUMES',
-                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES', 
+                           'VOLUME_GROUPS', 'LOGICAL_VOLUMES', 'BATTERIES',
                            'LICENSEINFOS', 'STORAGES');
          foreach ($a_fields as $field) {
             if (isset($datainventory['CONTENT'][$field])
@@ -84,14 +84,14 @@ class PluginFusioninventoryFormatconvert {
               && isset($datainventory['CONTENT']['BIOS'])
               && !is_array($datainventory['CONTENT']['BIOS'])) {
          unset($datainventory['CONTENT']['BIOS']);
-      }            
+      }
       if (isset($datainventory['CONTENT']['VIRTUALMACHINES'])){
          foreach ($datainventory['CONTENT']['VIRTUALMACHINES'] as $key=>$data){
             if (isset($data['NETWORKS'])
                     && !is_int(key($data['NETWORKS']))) {
                $datainventory['CONTENT']['VIRTUALMACHINES'][$key]['NETWORKS'] =
                   array($datainventory['CONTENT']['VIRTUALMACHINES'][$key]['NETWORKS']);
-               
+
             }
          }
       }
@@ -361,11 +361,11 @@ class PluginFusioninventoryFormatconvert {
          }
          if (isset($array_tmp['plugin_fusioninventory_computerarchs_id'])
                  && $array_tmp['plugin_fusioninventory_computerarchs_id'] != '') {
-            $a_inventory['fusioninventorycomputer']['plugin_fusioninventory_computerarchs_id'] = 
+            $a_inventory['fusioninventorycomputer']['plugin_fusioninventory_computerarchs_id'] =
                  $array_tmp['plugin_fusioninventory_computerarchs_id'];
          }
       }
-      
+
       // otherserial (on tag) if defined in config
       if ($pfConfig->getValue('otherserial') == 1) {
          if (isset($array['ACCOUNTINFO'])) {
@@ -384,7 +384,7 @@ class PluginFusioninventoryFormatconvert {
               && strstr($a_inventory['Computer']['operatingsystems_id'], 'VMware ESX')) {
          $PF_ESXINVENTORY = TRUE;
       }
-      
+
       // * BATTERIES
 //      $a_inventory['batteries'] = array();
 //      if (isset($array['BATTERIES'])) {
@@ -449,14 +449,14 @@ class PluginFusioninventoryFormatconvert {
             foreach ($array['NETWORKS'] as $a_netcards) {
                if (is_array($a_netcards)
                        && isset($a_netcards['DESCRIPTION'])) {
-                  
+
                   // Search in controller if find NAME = CONTROLLER TYPE
                   $a_found = array();
                   if (isset($array['CONTROLLERS'])) {
                      foreach ($array['CONTROLLERS'] as $a_controllers) {
                         if (count($a_found) == 0) {
                            if (($a_netcards['DESCRIPTION'] == $a_controllers['TYPE']
-                                   || strtolower($a_netcards['DESCRIPTION']." controller") == 
+                                   || strtolower($a_netcards['DESCRIPTION']." controller") ==
                                           strtolower($a_controllers['TYPE']))
                                  && !isset($ignorecontrollers[$a_controllers['NAME']])) {
                               $a_found = $a_controllers;
@@ -465,7 +465,7 @@ class PluginFusioninventoryFormatconvert {
                               }
                            }
                         }
-                     }  
+                     }
                   }
                   if (count($a_found) > 0) {
                      $array_tmp = $thisc->addValues($a_found,
@@ -475,7 +475,7 @@ class PluginFusioninventoryFormatconvert {
                                                        'TYPE'          => 'interfacetypes_id',
                                                        'MACADDR'       => 'mac'));
                      if (isset($a_found['PCIID'])) {
-                        $a_PCIData = 
+                        $a_PCIData =
                               PluginFusioninventoryInventoryExternalDB::getDataFromPCIID(
                                 $a_found['PCIID']
                               );
@@ -483,7 +483,7 @@ class PluginFusioninventoryFormatconvert {
                            $array_tmp['manufacturers_id'] = $a_PCIData['manufacturer'];
                         }
                         if (isset($a_PCIData['name'])) {
-                           $array_tmp['designation'] = $a_PCIData['name'];                        
+                           $array_tmp['designation'] = $a_PCIData['name'];
                         }
                         $array_tmp['designation'] = Toolbox::addslashes_deep($array_tmp['designation']);
                      }
@@ -497,7 +497,7 @@ class PluginFusioninventoryFormatconvert {
             }
          }
       }
-      
+
       // * NETWORKS
       $a_inventory['networkport'] = array();
       if ($pfConfig->getValue('component_networkcard') == 1) {
@@ -538,12 +538,12 @@ class PluginFusioninventoryFormatconvert {
                      $array_tmp['logical_number'] = 1;
                      if ($array_tmp['virtualdev'] == 1) {
                         $array_tmp['logical_number'] = 0;
-                     } 
+                     }
 
                      $array_tmp['mac'] = strtolower($array_tmp['mac']);
                      if (isset($a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']])) {
                         if (isset($array_tmp['ip'])) {
-                           if (!in_array($array_tmp['ip'], $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'])) { 
+                           if (!in_array($array_tmp['ip'], $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'])) {
                               $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']]['ipaddress'][]
                                       = $array_tmp['ip'];
                            }
@@ -581,7 +581,7 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['networkport'] = $a_networknames;
          }
       }
-      
+
 
       // * CONTROLLERS
       $a_inventory['controller'] = array();
@@ -596,7 +596,7 @@ class PluginFusioninventoryFormatconvert {
                                                     'MANUFACTURER'  => 'manufacturers_id',
                                                     'type'          => 'interfacetypes_id'));
                   if (isset($a_controllers['PCIID'])) {
-                     $a_PCIData = 
+                     $a_PCIData =
                            PluginFusioninventoryInventoryExternalDB::getDataFromPCIID(
                              $a_controllers['PCIID']
                            );
@@ -604,7 +604,7 @@ class PluginFusioninventoryFormatconvert {
                         $array_tmp['manufacturers_id'] = $a_PCIData['manufacturer'];
                      }
                      if (isset($a_PCIData['name'])) {
-                        $array_tmp['designation'] = $a_PCIData['name'];                        
+                        $array_tmp['designation'] = $a_PCIData['name'];
                      }
                      $array_tmp['designation'] = Toolbox::addslashes_deep($array_tmp['designation']);
                   }
@@ -996,7 +996,7 @@ class PluginFusioninventoryFormatconvert {
                if (isset($a_virtualmachines['NETWORKS'])
                        && is_array($a_virtualmachines['NETWORKS'])) {
                   foreach ($a_virtualmachines['NETWORKS'] as $data) {
-               
+
                      $array_tmp_np = $thisc->addValues($data,
                                   array(
                                      'DESCRIPTION' => 'name',
@@ -1009,17 +1009,17 @@ class PluginFusioninventoryFormatconvert {
                            $array_tmp['networkport'][$array_tmp_np['name'].'-'.$array_tmp_np['mac']]['ipaddress'][]
                                    = $array_tmp_np['ip'];
                         }
-                     } else {    
+                     } else {
                         if (isset($array_tmp_np['ip'])
                                 && $array_tmp_np['ip'] != '') {
                            $array_tmp_np['ipaddress'] = array($array_tmp_np['ip']);
                            unset($array_tmp_np['ip']);
                         } else {
                            $array_tmp_np['ipaddress'] = array();
-                        }                        
+                        }
                         $array_tmp['networkport'][$array_tmp_np['name'].'-'.$array_tmp_np['mac']] = $array_tmp_np;
                      }
-                  }                  
+                  }
                }
                $a_inventory['virtualmachine_creation'][] = $array_tmp;
             }
@@ -1040,7 +1040,7 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['antivirus'][] = $array_tmp;
          }
       }
-      
+
       // * STORAGE/VOLUMES
       $a_inventory['storage'] = array();
 /* begin code, may works at 90%
@@ -1210,7 +1210,7 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 */
-      
+
       // * LICENSEINFOS
       $a_inventory['licenseinfo'] = array();
       if (isset($array['LICENSEINFOS'])) {
@@ -1223,7 +1223,7 @@ class PluginFusioninventoryFormatconvert {
             $a_inventory['licenseinfo'][] = $array_tmp;
          }
       }
-      
+
       return $a_inventory;
    }
 
@@ -1340,19 +1340,19 @@ class PluginFusioninventoryFormatconvert {
       return $a_inventory;
    }
 
-   
-   
+
+
    function extraCollectInfo($a_inventory, $computers_id) {
       global $DB;
-      
+
       $pfCollectRuleCollection = new PluginFusioninventoryCollectRuleCollection();
-      
+
       // Get data from rules / collect registry, wmi, find files
       $data_collect = array();
 
-      $data_registries = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_registries_contents', 
+      $data_registries = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_registries_contents',
                                          "`computers_id`='".$computers_id."'");
-      
+
       foreach ($data_registries as $data) {
          $res_rule = $pfCollectRuleCollection->processAllRules(
                        array(
@@ -1365,9 +1365,9 @@ class PluginFusioninventoryFormatconvert {
          }
       }
 
-      $data_wmis = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_wmis_contents', 
+      $data_wmis = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_wmis_contents',
                                          "`computers_id`='".$computers_id."'");
-      
+
       foreach ($data_wmis as $data) {
          $res_rule = $pfCollectRuleCollection->processAllRules(
                        array(
@@ -1379,15 +1379,15 @@ class PluginFusioninventoryFormatconvert {
             $data_collect[] = $res_rule;
          }
       }
-      
-      $data_files = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_files_contents', 
+
+      $data_files = getAllDatasFromTable('glpi_plugin_fusioninventory_collects_files_contents',
                                          "`computers_id`='".$computers_id."'");
-      
+
       foreach ($data_files as $data) {
          $a_split = explode("/", $data['pathfile']);
          $filename = array_pop($a_split);
          $path = implode("/", $a_split);
-         
+
          $res_rule = $pfCollectRuleCollection->processAllRules(
                        array(
                            "filename"  => $filename,
@@ -1399,7 +1399,7 @@ class PluginFusioninventoryFormatconvert {
             $data_collect[] = $res_rule;
          }
       }
-      
+
       // * Update $a_inventory with $data_collect;
 
       foreach ($data_collect as $data) {
@@ -1450,10 +1450,10 @@ class PluginFusioninventoryFormatconvert {
          if (isset($data['otherserial'])) {
             $a_inventory['Computer']['otherserial'] = $data['otherserial'];
          }
-      }      
+      }
       return $a_inventory;
    }
-   
+
 
 
    static function addValues($array, $a_key) {

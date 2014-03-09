@@ -47,8 +47,8 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryComputerStorage_Storage extends CommonDBTM {
 
    static $rightname = 'computer';
-   
-   
+
+
    static function getTypeName($nb=0) {
       return __('Storage', 'fusioninventory');
    }

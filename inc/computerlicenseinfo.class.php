@@ -46,10 +46,10 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
 
-   
+
    static $rightname = 'computer';
-   
-   
+
+
    static function getTypeName($nb=0) {
       return __('License');
    }
@@ -63,13 +63,13 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       return Session::haveRight('computer', 'r');
    }
 
-   
-   
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      
+
       if ($item->getID() > 0) {
          if (get_class($item) == 'Computer') {
-            if (countElementsInTable('glpi_plugin_fusioninventory_computerlicenseinfos', 
+            if (countElementsInTable('glpi_plugin_fusioninventory_computerlicenseinfos',
                              "`computers_id`='".$item->getID()."'") > 0) {
                return array(__('Software licenses', 'fusioninventory'));
             }
@@ -81,7 +81,7 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
 
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      
+
       $pfComputerLicenseInfo = new PluginFusioninventoryComputerLicenseInfo();
       if (get_class($item) == 'Computer') {
          $pfComputerLicenseInfo->showForm($item->getID());

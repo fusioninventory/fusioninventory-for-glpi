@@ -209,7 +209,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $data = $rule->processAllRules($input, array());
       PluginFusioninventoryConfig::logIfExtradebug("pluginFusioninventory-rules",
                                                    $data);
-      
+
       if (isset($data['action'])
              && ($data['action'] == PluginFusioninventoryInventoryRuleImport::LINK_RESULT_DENIED)) {
 
@@ -352,7 +352,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $arrayinventory = $_SESSION['SOURCE_XMLDEVICE'];
       $input = array();
       $input['id'] = $item->getID();
-      
+
       $a_lockable = PluginFusioninventoryLock::getLockFields(getTableForItemType($item->getType()),
                                                              $item->getID());
 
@@ -561,7 +561,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $input['items_id']           = $id;
          $input['instantiation_type'] = $instanciation_type;
          $input['name']               = "management";
-         if (isset($arrayinventory['MAC']) 
+         if (isset($arrayinventory['MAC'])
                  && !empty($arrayinventory['MAC'])) {
             $input['mac'] = $arrayinventory['MAC'];
          }
@@ -621,8 +621,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       }
    }
 
-   
-   
+
+
    function _initSpecificInfo($key_field, $id, $class) {
       $instances = $class->find("`$key_field`='$id'");
       $input = array();
@@ -638,8 +638,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       return $input;
    }
 
-   
-   
+
+
    function _updateSNMPInfo($arrayinventory, $input, $class) {
       if (isset($arrayinventory['DESCRIPTION'])
                     && !empty($arrayinventory['DESCRIPTION'])) {
@@ -673,7 +673,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
       $class->update($input);
    }
 
-   
+
 
    /**
     * Used to add log in the task

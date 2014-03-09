@@ -153,7 +153,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
       $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
       $a_computerinventory = $pfBlacklist->cleanBlacklist($a_computerinventory);
-      
+
       if (isset($a_computerinventory['monitor'])) {
          foreach ($a_computerinventory['monitor'] as $num=>$a_monit) {
             $a_computerinventory['monitor'][$num] = $pfBlacklist->cleanBlacklist($a_monit);
@@ -237,7 +237,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 //            }
 //         }
          $input['tag'] = $tagAgent;
-         
+
          if ((isset($a_computerinventory['Computer']['name']))
                  AND ($a_computerinventory['Computer']['name'] != '')) {
             $input['name'] = $a_computerinventory['Computer']['name'];
@@ -249,8 +249,8 @@ class PluginFusioninventoryInventoryComputerInventory {
          // If transfer is disable, get entity and search only on this entity
          // (see http://forge.fusioninventory.org/issues/1503)
          $pfConfig = new PluginFusioninventoryConfig();
-         
-         
+
+
          // * entity rules
             $inputent = $input;
             if ((isset($a_computerinventory['Computer']['domains_id']))
@@ -261,10 +261,10 @@ class PluginFusioninventoryInventoryComputerInventory {
                $inputent['serialnumber'] = $inputent['serial'];
             }
             $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
-            
+
             // * Reload rules (required for unit tests)
             $ruleEntity->getCollectionPart();
-            
+
             $dataEntity = $ruleEntity->processAllRules($inputent, array());
             if (isset($dataEntity['_ignore_import'])) {
                return;
@@ -295,7 +295,7 @@ class PluginFusioninventoryInventoryComputerInventory {
                      "PluginFusioninventoryInventoryComputerInventory";
 
       $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
-      
+
       // * Reload rules (required for unit tests)
       $ruleLocation->getCollectionPart();
 
@@ -306,7 +306,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       }
 
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
-      
+
       // * Reload rules (required for unit tests)
       $rule->getCollectionPart();
 
@@ -410,7 +410,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       if ($_SESSION["plugin_fusioninventory_entity"] < 0) {
          $_SESSION["plugin_fusioninventory_entity"] = $entities_id;
       }
-      
+
       if ($itemtype == 'Computer') {
          $a_computerinventory = $pfFormatconvert->extraCollectInfo(
                                                 $a_computerinventory,
@@ -481,7 +481,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          // * For benchs
          //$start = microtime(TRUE);
-         
+
          $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 300)");
          if ($DB->result($ret, 0, 0) == 1) {
 
@@ -493,12 +493,12 @@ class PluginFusioninventoryInventoryComputerInventory {
 
             $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
             $pfInventoryComputerLib->addLog();
-            
+
             $plugin = new Plugin();
             if ($plugin->isActivated('monitoring')) {
                Plugin::doOneHook("monitoring", "ReplayRulesForItem", array('Computer', $items_id));
             }
-            
+
             // * For benchs
             //Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
             //  memory_get_usage()."\n".

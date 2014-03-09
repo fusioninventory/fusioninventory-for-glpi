@@ -55,7 +55,7 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
 
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      
+
       if ($item->getID() > 0) {
          if ($item->fields['type'] == 'wmi') {
             return array(__('Windows WMI', 'fusioninventory'));
@@ -67,20 +67,20 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
 
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      
+
       $pfCollect_Wmi = new PluginFusioninventoryCollect_Wmi();
       $pfCollect_Wmi->showWmi($item->getID());
       $pfCollect_Wmi->showForm($item->getID());
       return TRUE;
    }
-   
 
-   
+
+
    function showWmi($contents_id) {
-      
+
       $content = $this->find("`plugin_fusioninventory_collects_id`='".
                               $contents_id."'");
-      
+
       echo "<div class='spaced'>";
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
@@ -111,13 +111,13 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
       echo "</table>";
       echo "</div>";
    }
-   
-   
+
+
 
    function showForm($contents_id, $options=array()) {
 
       $ID = 0;
-      
+
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
 
@@ -126,7 +126,7 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
       echo __('Name');
       echo "</td>";
       echo "<td>";
-      echo "<input type='hidden' name='plugin_fusioninventory_collects_id' 
+      echo "<input type='hidden' name='plugin_fusioninventory_collects_id'
                value='".$contents_id."' />";
       echo "<input type='text' name='name' value='' />";
       echo "</td>";
@@ -135,7 +135,7 @@ class PluginFusioninventoryCollect_Wmi extends CommonDBTM {
       echo "<input type='text' name='moniker' value='' size='50' />";
       echo "</td>";
       echo "</tr>\n";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
       echo __('Class', 'fusioninventory');

@@ -176,7 +176,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
 
    static function getRuleActionValues() {
-      
+
       return array(self::RULE_ACTION_LINK_OR_CREATE    =>
                            __('Link if possible, else create device', 'fusioninventory'),
 
@@ -674,7 +674,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                     $output['found_equipment'] = array(0, $itemtype);
                                     return $output;
                                  } else {
-                                    $_SESSION['plugin_fusioninventory_rules_id'] = 
+                                    $_SESSION['plugin_fusioninventory_rules_id'] =
                                             $this->fields['id'];
                                     $output['action'] = self::LINK_RESULT_CREATE;
                                     return $output;

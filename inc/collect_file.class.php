@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryCollect_File extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_collect';
-   
+
    static function getTypeName($nb=0) {
       return __('Find file', 'fusioninventory');
    }
@@ -55,7 +55,7 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
 
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      
+
       if ($item->getID() > 0) {
          if ($item->fields['type'] == 'file') {
             return array(__('Find file', 'fusioninventory'));
@@ -67,20 +67,20 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
 
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      
+
       $pfCollect_File = new PluginFusioninventoryCollect_File();
       $pfCollect_File->showFile($item->getID());
       $pfCollect_File->showForm($item->getID());
       return TRUE;
    }
-   
 
-   
+
+
    function showFile($contents_id) {
-      
+
       $content = $this->find("`plugin_fusioninventory_collects_id`='".
                               $contents_id."'");
-      
+
       echo "<div class='spaced'>";
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
@@ -111,7 +111,7 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
          if (!empty($data['filter_sizeequals'])) {
             echo '= '.$data['filter_sizeequals'];
          } else if (!empty($data['filter_sizegreater'])) {
-            echo '> '.$data['filter_sizegreater'];            
+            echo '> '.$data['filter_sizegreater'];
          } else if (!empty($data['filter_sizelower'])) {
             echo '< '.$data['filter_sizelower'];
          }
@@ -139,13 +139,13 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo "</table>";
       echo "</div>";
    }
-   
-   
+
+
 
    function showForm($contents_id, $options=array()) {
 
       $ID = 0;
-      
+
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
 
@@ -154,7 +154,7 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo __('Name');
       echo "</td>";
       echo "<td>";
-      Html::hidden('plugin_fusioninventory_collects_id', 
+      Html::hidden('plugin_fusioninventory_collects_id',
                    array('value' => $contents_id));
       echo "<input type='text' name='name' value='' />";
       echo "</td>";
@@ -188,7 +188,7 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       Dropdown::showYesNo('is_recursive', 1);
       echo "</td>";
       echo "</tr>\n";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
       echo __('Regex', 'fusioninventory');

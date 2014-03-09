@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryDeployMirror extends CommonDBTM {
 
    public $dohistory = TRUE;
-   
+
    static $rightname = 'plugin_fusioninventory_deploymirror';
 
    static function getTypeName($nb=0) {
@@ -140,12 +140,12 @@ class PluginFusioninventoryDeployMirror extends CommonDBTM {
       echo "<script type='text/javascript'>\n";
       echo "document.getElementsByName('is_recursive')[0].id = 'is_recursive';\n";
       echo "</script>";
-      
+
       $params = array('is_recursive' => '__VALUE__',
                       'id'           => $id);
-      Ajax::updateItemOnEvent('is_recursive', "displaydropdownlocation", 
+      Ajax::updateItemOnEvent('is_recursive', "displaydropdownlocation",
               $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/dropdownlocation.php", $params);
-      
+
       echo "<div id='displaydropdownlocation'>";
       // Location option
       Location::dropdown(
