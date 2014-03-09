@@ -85,7 +85,7 @@ if (isset($_POST["add"])) {
       $serialized_referential = array();
    }
    if ($treeKey == "/") {
-      $serialized_referential['/_managetype_'] = 'managed';
+      $serialized_referential['/_managetype_'] = '_managed_';
    }
    foreach ($pfConfigurationmanagement->a_trees as $key=>$value) {
       if ($treeKey == "/") {
@@ -96,7 +96,7 @@ if (isset($_POST["add"])) {
          }
       } else {
          if ($key == $treeKey) {
-            $serialized_referential[$key.'/_managetype_'] = 'managed';
+            $serialized_referential[$key.'/_managetype_'] = '_managed_';
          }
          if (substr($key, 0, strlen($treeKey)) == $treeKey) {
             if ($key != $treeKey

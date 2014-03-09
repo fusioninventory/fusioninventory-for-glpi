@@ -258,7 +258,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
              '_ignored_'    => __('In referentiel - alert', 'fusioninventory'),
              '_notmanaged_' => __('Not in referentiel', 'fusioninventory'),
          );
-         echo $elements['_'.$this->referential['/_managetype_'].'_'];
+         echo $elements[$this->referential['/_managetype_']];
       }
       echo '</td>';
       echo '<td>';
@@ -345,8 +345,8 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                   if (isset($this->referential[$tree_temp])) {
                      echo str_repeat("&nbsp;", $indent);
                      echo "<strong>ₒ</strong> ";
-                     echo $elements['_'.$this->referential[$tree_temp].'_'];
-                     unset($elements['_'.$this->referential[$tree_temp].'_']);
+                     echo $elements[$this->referential[$tree_temp]];
+                     unset($elements[$this->referential[$tree_temp]]);
                   } else if (isset($this->referential[$tree.'/_managetype_'])) {
                      echo str_repeat("&nbsp;", $indent);
                      echo "<strong>ₒ</strong> ";
@@ -354,7 +354,7 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                      echo __('Inheritance of the parent entity');
                      echo "</font>";
                      $this->managetype = $this->referential[$tree.'/_managetype_'];
-                     unset($elements['_'.$this->referential[$tree.'/_managetype_'].'_']);
+                     unset($elements[$this->referential[$tree.'/_managetype_']]);
                   } else if ($this->managetype != '') {
                      echo str_repeat("&nbsp;", $indent);
                      echo "<strong>ₒ</strong> ";
@@ -428,15 +428,15 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
                if (isset($this->referential[$tree_temp.'/_managetype_'])) {
                   echo str_repeat("&nbsp;", $indent);
                   echo "<strong>ₒ</strong> ";
-                  echo $elements['_'.$this->referential[$tree_temp.'/_managetype_'].'_'];
-                  unset($elements['_'.$this->referential[$tree_temp.'/_managetype_'].'_']);
+                  echo $elements[$this->referential[$tree_temp.'/_managetype_']];
+                  unset($elements[$this->referential[$tree_temp.'/_managetype_']]);
                } else if (isset($this->referential[$tree.'/_managetype_'])) {
                   echo str_repeat("&nbsp;", $indent);
                   echo "<strong>ₒ</strong> ";
                   echo "<font color='#b0b0b0'>";
                   echo __('Inheritance of the parent entity');
                   echo "</font>";
-                  unset($elements['_'.$this->referential[$tree.'/_managetype_'].'_']);
+                  unset($elements[$this->referential[$tree.'/_managetype_']]);
                } else if ($this->managetype != '') {
                      echo str_repeat("&nbsp;", $indent);
                      echo "<strong>ₒ</strong> ";
