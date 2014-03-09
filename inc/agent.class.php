@@ -408,26 +408,24 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    * @param $items_id integer ID of the item
    * @param $type 'Agent' by default to get IP of agent or of a computer if set other text
    *
-   * @return Array with all IP of this agent or computer
+   * @return Every IP addresses registered for this agent or false
    *
    **/
-   function getIPs($items_id, $type = 'Agent') {
-      $ip = array();
+   function getIPs() {
+      $ip_addresses = array();
+
       $computers_id = 0;
-      if ($type == 'Agent') {
-         if ($this->getFromDB($items_id)) {
-            $computers_id = $this->fields['computers_id'];
-         } else {
-            return array();
+
+      if (isset($this->fields['computers_id']) ) {
+         if ( $this->fields['computers_id'] > 0 ) {
          }
       } else {
-         $computers_id = $items_id;
+         trigger_error('Agent must be initialized');
       }
 
-      if ($computers_id > 0) {
-         $ip = PluginFusioninventoryToolbox::getIPforDevice('Computer', $computers_id);
-      }
-      return $ip;
+      $ip_addresses = PluginFusioninventoryToolbox::getIPforDevice('Computer', $this->fields['computers_id']);
+
+      return $ip_addresses;
    }
 
 
@@ -452,6 +450,25 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       return FALSE;
    }
 
+   /**
+   * Get Computer associated with this agent
+   *
+   * @return A Computer object or False
+   *
+   **/
+
+   function getAssociatedComputer() {
+
+      $computer = new Computer();
+
+      if (!isset($this->fields['id'])) {
+         trigger_error("Agent must be initialized!");
+         return false;
+      }
+
+      $computer->getFromDB($this->fields['computers_id']);
+      return $computer;
+   }
 
 
    /**
@@ -526,14 +543,24 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    * @return Nothing (display)
    *
    **/
-   function forceRemoteAgent() {
+   function showRemoteStatus($computer = null) {
       global $CFG_GLPI;
 
-      $agent_id = $this->getAgentWithComputerid($_POST['id']);
-
-      if (!$agent_id) {
+      /**
+       * Check for initialized agent
+       */
+      if (!isset($this->fields['id'])) {
          return;
       }
+
+      /**
+       * Check for initialized $computer
+       */
+      if ( is_null($computer) && !isset($computer->fields['id']) ) {
+         return;
+      }
+
+      $agent_id = $this->fields['id'];
 
       $pfTaskjob = new PluginFusioninventoryTaskjob();
 
@@ -552,9 +579,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo __('Agent', 'fusioninventory')."&nbsp:";
       echo "</td>";
       echo "<td>";
-      $pfAgent = new PluginFusioninventoryAgent();
-      $pfAgent->getFromDB($agent_id);
-      echo $pfAgent->getLink(1);
+      echo $this->getLink(1);
       echo "</td>";
       echo "</tr>";
 
@@ -564,17 +589,14 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</td>";
       echo "<td>";
 
-      $this->getFromDB($agent_id);
-      $a_ip = $this->getIPs($_POST['id'], 'Computer');
       $waiting = 0;
-      $ip = "";
-      while(empty($ip) && count($ip)) {
-         $ip = array_shift($a_ip);
-      }
 
-      $agentStatus = $pfTaskjob->getRealStateAgent($agent_id);
-      switch($agentStatus) {
+      $agentStatus = $this->getStatus();
 
+      Toolbox::logDebug($agentStatus);
+      switch($agentStatus['message']) {
+
+         case 'executing scheduled tasks':
          case 'running':
             echo __('Running');
             break;
@@ -585,9 +607,12 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
          case 'waiting':
             $waiting = 1;
-            echo __('Available');
-            Html::hidden('ip', array('value' => $ip));
-            Html::hidden('agent_id', array('value' => $agent_id));
+            echo __(
+               'Available on <a target="_blank" href="'. $agentStatus['url_ok'] . '">' .
+               $agentStatus['url_ok'] .
+               '</a>'
+            );
+            echo Html::hidden('agent_id', array('value' => $agent_id));
             break;
 
          default:
@@ -613,7 +638,148 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<br/>";
    }
 
+   /**
+    * Get current state of the agent
+    *
+    * @param $items_id integer id of the agent
+    *
+    * @return string message/state of the agent
+    *
+    */
+   function getStatus() {
 
+      $url_addresses = $this->getAgentStatusURLs();
+
+      $this->disableDebug();
+
+      ob_start();
+      ini_set("allow_url_fopen", "1");
+
+      $ctx = stream_context_create(array(
+         'http' => array(
+            'timeout' => 1
+            )
+         )
+      );
+
+      $contents="";
+      $url_ok = null;
+      $url_headers=array();
+      foreach( $url_addresses as $url) {
+         if ( $stream = fopen($url, 'r', false, $ctx) ) {
+            //$result = file_get_contents($url, FALSE, $ctx);
+            $contents = stream_get_contents($stream);
+            $url_headers[$url] = stream_get_meta_data($stream);
+            fclose($stream);
+            if ($contents !== false) {
+               $url_ok = $url;
+               break;
+            }
+         }
+      }
+      $error = ob_get_contents();
+      ob_end_clean();
+      $this->restoreDebug();
+      Toolbox::logDebug($url_headers);
+
+
+      $status = array(
+         "url_ok" => $url_ok,
+         "message" => ""
+      );
+
+      if ($contents !== "") {
+         $status['message'] = preg_replace("/^status: /", "", $contents);
+      }
+
+      if ($contents == '' AND !strstr($error, "failed to open stream: Permission denied")) {
+         $status['message'] = "noanswer";
+      }
+
+      return $status;
+   }
+
+
+   /**
+   * Start agent remotly from server
+   *
+   * @param $agent_id integer id of the agent
+   *
+   * @return bool TRUE if agent wake up
+   *
+   **/
+   function wakeUp() {
+
+      $ret = FALSE;
+
+      $this->disableDebug();
+      $urls = $this->getAgentRunURLs();
+
+      $ctx = stream_context_create(array('http' => array('timeout' => 2)));
+      foreach ( $urls as $url ) {
+         if (!$ret) {
+            if (@file_get_contents($url, 0, $ctx) !== FALSE) {
+               $ret = TRUE;
+               break;
+            }
+         }
+      }
+      $this->restoreDebug();
+
+      return $ret;
+   }
+
+   /**
+   * Get state of agent
+   *
+   * @param $ip value IP address of the computer where agent is installed
+   * @param $agentid integer id of the agent
+   *
+   * @return bool TRUE if agent is ready else FALSE
+   *
+   **/
+   function isAgentAlive() {
+
+      if ( $this->getStatus() === 'waiting') {
+         return true;
+      }
+
+      return false;
+   }
+
+
+   /**
+   * Disable debug mode because we don't want the errors
+   *
+   **/
+   function disableDebug() {
+      error_reporting(0);
+      set_error_handler(array($this, 'errorempty'));
+   }
+
+   /**
+   * When debug is disabled, we transfer every errors in this emtpy function.
+   *
+   **/
+   static function errorempty() {}
+
+   /**
+   * Resotre debug mode if it has been explicitely set by the user in his settings.
+   *
+   **/
+   function restoreDebug() {
+      if ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE){
+         ini_set('display_errors', 'On');
+         // Recommended development settings
+         error_reporting(E_ALL | E_STRICT);
+         set_error_handler(array('Toolbox', 'userErrorHandlerDebug'));
+      } else {
+         ini_set('display_errors', 'Off');
+         error_reporting(E_ALL);
+         set_error_handler(array('Toolbox', 'userErrorHandlerNormal'));
+      }
+
+   }
 
    /**
    * Set agent version of each module
@@ -684,25 +850,27 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     *
     * @return a list of http url to contact the agent
     */
-   static function getAgentBaseURLs($agent_id) {
+   public function getAgentBaseURLs() {
       $config  = new PluginFusioninventoryConfig();
-      $pfAgent = new PluginFusioninventoryAgent();
 
-      $ret = array();
+      $port = $config->getValue('agent_port');
+      $url_addresses = array();
 
-      if ($pfAgent->getFromDB($agent_id)) {
-         $computer = new Computer();
-         $computer->getFromDB($pfAgent->fields['computers_id']);
+
+      if ( isset($this->fields['id']) ) {
+         $computer = $this->getAssociatedComputer();
          if ($computer->fields["name"] && $computer->fields["name"] != "localhost") {
-            array_push($ret, "http://".$computer->fields["name"].
-               ":".$config->getValue('agent_port'));
+            array_push($url_addresses, "http://".$computer->fields["name"].
+               ":".$port);
 
             $domain = new Domain();
-            $domain->getFromDB($computer->fields['domains_id']);
-            array_push($ret, "http://".
-               $computer->fields["name"].'.'.
-               $domain->fields["name"].
-               ":".$config->getValue('agent_port'));
+            if ($computer->fields['domains_id'] != 0) {
+               $domain->getFromDB($computer->fields['domains_id']);
+               array_push($url_addresses, "http://".
+                  $computer->fields["name"].'.'.
+                  $domain->fields["name"].
+                  ":".$port);
+            }
          }
       }
 
@@ -710,18 +878,18 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       # useful when Windows domain != DNS domain
       $stack = array();
       if(preg_match('/(\S+)-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}$/',
-                    $pfAgent->fields['name'],
+                    $this->fields['name'],
                     $stack)) {
-         array_push($ret, "http://".$stack[1].":".$config->getValue('agent_port'));
+         array_push($url_addresses, "http://".$stack[1].":".$port);
       }
 
-      $a_ips = $pfAgent->getIPs($agent_id);
-      foreach ($a_ips as $ip) {
-         if ($ip != '') {
-            array_push($ret, "http://".$ip.":".$config->getValue('agent_port'));
+      $ip_addresses = $this->getIPs();
+      foreach ($ip_addresses as $ip_address) {
+         if ($ip_address != '') {
+            array_push($url_addresses, "http://".$ip_address.":".$port);
          }
       }
-      return $ret;
+      return $url_addresses;
    }
 
 
@@ -733,9 +901,10 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     *
     * @return an array of http url to get the agent's state
     */
-   static function getAgentStatusURLs($agent_id) {
+   public function getAgentStatusURLs() {
       $ret = array();
-      foreach (self::getAgentBaseURLs($agent_id) as $url) {
+
+      foreach ($this->getAgentBaseURLs() as $url) {
          array_push($ret, $url."/status");
       }
       return $ret;
@@ -750,14 +919,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
     *
     * @return an http url to ask the agent to wake up
     */
-   static function getAgentRunURLs($agent_id) {
-      $pfAgent = new PluginFusioninventoryAgent();
-
-      $pfAgent->getFromDB($agent_id);
-
+   public function getAgentRunURLs() {
       $ret = array();
-      foreach (self::getAgentBaseURLs($agent_id) as $url) {
-         array_push($ret, $url."/now/".$pfAgent->fields['token']);
+
+      foreach ($this->getAgentBaseURLs() as $url) {
+         array_push($ret, $url."/now/".$this->fields['token']);
       }
       return $ret;
    }

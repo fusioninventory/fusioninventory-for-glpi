@@ -52,9 +52,9 @@ Session::checkRight('plugin_fusioninventory_agent', READ);
 PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset($_POST['startagent'])) {
-   $taskjob = new PluginFusioninventoryTaskjob();
-
-   if ($taskjob->startAgentRemotly($_POST['agent_id'])) {
+   $agent = new PluginFusioninventoryAgent();
+   $agent->getFromDB($_POST['agent_id']);
+   if ($agent->wakeUp()) {
        Session::addMessageAfterRedirect(__('The agent is running', 'fusioninventory'));
 
    } else {

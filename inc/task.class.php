@@ -156,7 +156,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
          // Possibility to remote agent
          if (PluginFusioninventoryTaskjob::isAllowurlfopen(1)) {
             $pfAgent = new PluginFusioninventoryAgent();
-            $pfAgent->forceRemoteAgent();
+            if ($pfAgent->getAgentWithComputerid($item->fields['id'])) {
+               $pfAgent->showRemoteStatus($item);
+            }
          }
       }
    }
@@ -404,7 +406,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       return $DB->query($query);
    }
-
 
 
 }

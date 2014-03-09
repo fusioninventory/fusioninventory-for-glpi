@@ -107,7 +107,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
          foreach($a_agents as $data) {
             if (($count_ip / 10) >= count($a_agentlist)) {
                $pfAgent->getFromDB($data['id']);
-               $a_ip = $pfAgent->getIPs($data['id']);
+               $a_ip = $pfAgent->getIPs();
                foreach($a_ip as $ip) {
                   if ($pfTask->fields['communication'] == 'push') {
                      if ($pfTaskjob->isAgentAlive('1', $data['id'])) {
