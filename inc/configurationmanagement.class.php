@@ -913,6 +913,37 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
 
 
 
+   function cleanArray($a_inventory, $a_ref=array()) {
+      $a_remove = array();
+
+      if (count($a_ref) > 0) {
+         foreach ($a_ref as $key=>$value) {
+            if ($value == '_ignored_'
+                    || $value == '_notmanaged_') {
+               $a_remove[$key] = '';
+            }
+         }
+      }
+
+      foreach ($a_inventory as $key=>$value) {
+         if ($value == '_managed_') {
+            unset($a_inventory[$key]);
+         } else if ($value == '_ignored_'
+                 || $value == '_notmanaged_') {
+            unset($a_inventory[$key]);
+            $a_remove[$key] = '';
+         } else {
+            $a_foundKeys = preg_filter('/^'.$key.'/', '', array_keys($a_remove));
+            if (count($a_foundKeys) > 0) {
+               unset($a_inventory[$key]);
+            }
+         }
+      }
+      return $a_inventory;
+   }
+
+
+
    static function cronCheckdevices() {
 
       $pfConfigurationManagement = new PluginFusioninventoryConfigurationManagement();
@@ -920,6 +951,9 @@ class PluginFusioninventoryConfigurationManagement extends CommonDBTM {
       foreach ($a_list as $id=>$data) {
 
          $a_currinv = $pfConfigurationManagement->generateCurrentInventory($id);
+         $a_currinv = $pfConfigurationManagement->cleanArray(
+                 $a_currinv,
+                 importArrayFromDB($data['serialized_referential']));
          $sha = sha1(exportArrayToDB($a_currinv));
 
          if ($sha == $data['sha_referential']) {

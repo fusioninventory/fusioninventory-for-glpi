@@ -116,7 +116,11 @@ if (isset($_POST["add"])) {
 //      }
 //   }
    $_POST['serialized_referential'] = exportArrayToDB($serialized_referential);
-   $_POST['sha_referential'] = sha1($_POST['serialized_referential']);
+
+   // Prepare the sha for the array cleaned
+   $cleanarray = $pfConfigurationmanagement->cleanArray($serialized_referential);
+
+   $_POST['sha_referential'] = sha1(exportArrayToDB($cleanarray));
    $pfConfigurationmanagement->update($_POST);
    Html::back();
 }

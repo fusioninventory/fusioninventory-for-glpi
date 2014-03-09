@@ -42,15 +42,17 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), 
-             $_SERVER["PHP_SELF"], 
-             "plugins", 
-             "fusioninventory", 
+Html::header(__('FusionInventory', 'fusioninventory'),
+             $_SERVER["PHP_SELF"],
+             "plugins",
+             "fusioninventory",
              "configurationmanagement");
 
 //Session::checkRight('plugin_fusioninventory_blacklist', READ);
 
 PluginFusioninventoryMenu::displayMenu("mini");
+
+PluginFusioninventoryConfigurationManagement::cronCheckdevices();
 
 $_GET['target']="configurationmanagement_notconform.php";
 
@@ -58,7 +60,7 @@ $_GET['field'] = array('2');
 $_GET['searchtype'] = array('equals');
 $_GET['contains'] = array('0');
 
-Search::manageGetValues('PluginFusioninventoryConfigurationmanagement');
+//Search::manageGetValues('PluginFusioninventoryConfigurationmanagement');
 Search::showList('PluginFusioninventoryConfigurationmanagement', $_GET);
 
 
