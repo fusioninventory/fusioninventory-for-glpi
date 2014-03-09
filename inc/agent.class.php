@@ -296,16 +296,17 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<td align='center'>";
       Dropdown::showNumber("threads_networkinventory", array(
              'value' => $this->fields["threads_networkinventory"],
-             'min' => 1,
+             'min' => 0,
              'max' => 400)
       );
       echo "</td>";
+
       echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showNumber("timeout_networkinventory", array(
              'value' => $this->fields["timeout_networkinventory"],
-             'min' => 1,
+             'min' => 0,
              'max' => 60)
       );
       echo "</td>";
