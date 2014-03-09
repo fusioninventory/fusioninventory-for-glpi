@@ -2155,32 +2155,37 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
 
 function plugin_fusioninventory_addOrderBy($type, $id, $order, $key=0) {
 
-   if ($type == 'PluginFusioninventoryTask') {
-           //AND isset($_SESSION['glpisearch']['PluginFusioninventoryTask'])) {
+   /**
+    * This hook has been disabled since i do not know what it is doing. I just suppose it add some
+    * sorting feature to the Task list. -- Kevin 'kiniou' Roy
+    */
 
-      $toview = Search::addDefaultToView($type);
+   //if ($type == 'PluginFusioninventoryTask') {
+   //        //AND isset($_SESSION['glpisearch']['PluginFusioninventoryTask'])) {
 
-      // Add items to display depending of personal prefs
-      $displaypref = DisplayPreference::getForTypeUser($type, Session::getLoginUserID());
-      if (count($displaypref)) {
-         foreach ($displaypref as $val) {
-            array_push($toview, $val);
-         }
-      }
+   //   $toview = Search::addDefaultToView($type);
 
-      // Add searched items
-      if (count($_GET['field'])>0) {
-         foreach ($_GET['field'] as $key => $val) {
-            if (!in_array($val, $toview) && $val!='all' && $val!='view') {
-               array_push($toview, $val);
-            }
-         }
-      }
-      if (in_array('8', $toview)) {
-         return "GROUP BY `plugin_fusioninventory_tasks_id`
-            ORDER BY ITEM_".$key." ".$order;
-      }
-   }
+   //   // Add items to display depending of personal prefs
+   //   $displaypref = DisplayPreference::getForTypeUser($type, Session::getLoginUserID());
+   //   if (count($displaypref)) {
+   //      foreach ($displaypref as $val) {
+   //         array_push($toview, $val);
+   //      }
+   //   }
+
+   //   // Add searched items
+   //   if (count($_GET['field'])>0) {
+   //      foreach ($_GET['field'] as $key => $val) {
+   //         if (!in_array($val, $toview) && $val!='all' && $val!='view') {
+   //            array_push($toview, $val);
+   //         }
+   //      }
+   //   }
+   //   if (in_array('8', $toview)) {
+   //      return "GROUP BY `plugin_fusioninventory_tasks_id`
+   //         ORDER BY ITEM_".$key." ".$order;
+   //   }
+   //}
 
    return "";
 }

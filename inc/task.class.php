@@ -120,7 +120,7 @@ class PluginFusioninventoryTask extends CommonDBTM {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       global $CFG_GLPI;
       $tab_names = array();
-      if (PluginFusioninventoryProfile::haveRight("task", "r")) {
+      if ( self::can("task", "r") ) {
          if ($item->getType() == 'Computer') {
             $tab_names[] = __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
          }
@@ -156,7 +156,9 @@ class PluginFusioninventoryTask extends CommonDBTM {
          // Possibility to remote agent
          if (PluginFusioninventoryTaskjob::isAllowurlfopen(1)) {
             $pfAgent = new PluginFusioninventoryAgent();
-            $pfAgent->forceRemoteAgent();
+            if ($pfAgent->getAgentWithComputerid($item->fields['id'])) {
+               $pfAgent->showRemoteStatus($item);
+            }
          }
       }
    }
@@ -404,7 +406,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
 
       return $DB->query($query);
    }
-
 
 
 }

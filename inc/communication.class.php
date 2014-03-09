@@ -334,8 +334,8 @@ class PluginFusioninventoryCommunication {
       $pfToolbox = new PluginFusioninventoryToolbox();
 
       // identify message compression algorithm
-      $taskjob = new PluginFusioninventoryTaskjob();
-      $taskjob->disableDebug();
+      $agent = new PluginFusioninventoryAgent();
+      $agent->disableDebug();
       $compressmode = '';
       if (!empty($xml)) {
             $compressmode = 'none';
@@ -369,7 +369,7 @@ class PluginFusioninventoryCommunication {
             $compressmode = 'none';
          }
       }
-      $taskjob->reenableusemode();
+      $agent->restoreDebug();
 
       // check if we are in ssl only mode
       $ssl = $config->getValue('ssl_only');

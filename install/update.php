@@ -481,13 +481,26 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['fields']['tag']           = array('type'    => 'string',
                                                   'value'   => NULL);
       $a_table['fields']['threads_networkdiscovery'] = array(
-                        'type' => "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
-                        'value'   => NULL);
+         'type' => "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
+         'value'   => NULL);
+
       $a_table['fields']['threads_networkinventory'] = array(
-                        'type' => "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
-                        'value'   => NULL);
-      $a_table['fields']['senddico']      = array('type'    => 'bool',
-                                                  'value'   => NULL);
+         'type' => "int(4) NOT NULL DEFAULT '1' COMMENT 'array(xmltag=>value)'",
+         'value'   => NULL);
+
+      $a_table['fields']['senddico']      = array(
+         'type'    => 'bool',
+         'value'   => NULL
+      );
+
+      $a_table['fields']['timeout_networkdiscovery'] = array(
+         'type' => "int(4) NOT NULL DEFAULT '0' COMMENT 'Network Discovery task timeout'",
+         'value'   => NULL
+      );
+      $a_table['fields']['timeout_networkinventory'] = array(
+         'type' => "int(4) NOT NULL DEFAULT '0' COMMENT 'Network Inventory task timeout'",
+         'value'   => NULL
+      );
 
       $a_table['oldfields']  = array(
          'module_snmpquery',

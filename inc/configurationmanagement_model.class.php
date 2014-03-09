@@ -225,7 +225,7 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
           'users_id_tech'  => array(
               '_internal_name_' => __('Technician in charge of the hardware'),
               '_itemtype_' => 'User',
-              'id'         => __('ID'),
+//              'id'         => __('ID'),
               'name'       => __('Name'),
               'realname'   => __('Surname'),
               'firstname'  => __('First name')
@@ -233,25 +233,25 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
           'groups_id_tech' => array(
               '_internal_name_' => __('Group in charge of the hardware'),
               '_itemtype_' => 'Group',
-              'id'        => __('ID'),
+//              'id'        => __('ID'),
               'name'      => __('Name'),
           ),
           'operatingsystems_id' => array(
               '_internal_name_' => __('Operating system'),
               '_itemtype_' => 'OperatingSystem',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           ),
           'operatingsystemservicepacks_id' => array(
               '_internal_name_' => __('Service pack'),
               '_itemtype_' => 'OperatingSystemServicePack',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           ),
           'operatingsystemversions_id' => array(
               '_internal_name_' => __('Version of the operating system'),
               '_itemtype_' => 'OperatingSystemVersion',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           ),
           'os_license_number' => __('Serial of the operating system'),
@@ -259,49 +259,49 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
           'autoupdatesystems_id' => array(
               '_internal_name_' => __('Update Source'),
               '_itemtype_' => 'AutoUpdateSystem',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           ),
           'locations_id' => array(
               '_internal_name_' => __('Location'),
               '_itemtype_' => 'Location',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           ),
           'domains_id' => array(
               '_internal_name_' => __('Domain'),
               '_itemtype_' => 'Domain',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           ),
           'networks_id' => array(
               '_internal_name_' => __('Network'),
               '_itemtype_' => 'Network',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           ),
           'computermodels_id' => array(
               '_internal_name_' => __('Model'),
               '_itemtype_' => 'ComputerModel',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           ),
           'computertypes_id' => array(
               '_internal_name_' => __('Type'),
               '_itemtype_' => 'ComputerType',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           ),
           'manufacturers_id' => array(
               '_internal_name_' => __('Manufacturer'),
               '_itemtype_' => 'Manufacturer',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           ),
           'users_id' => array(
               '_internal_name_' => __('User'),
               '_itemtype_' => 'User',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name'),
               'realname'  => __('Surname'),
               'firstname' => __('First name')
@@ -309,20 +309,20 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
           'groups_id' => array(
               '_internal_name_' => __('Group'),
               '_itemtype_' => 'Group',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           ),
           'states_id' => array(
               '_internal_name_' => __('Status'),
               '_itemtype_' => 'State',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           )
       );
       $a_fields['processor'] = array(
           '_internal_name_' => __('Processor'),
           '_itemtype_' => 'DeviceProcessor',
-          'id'    => __('ID'),
+//          'id'    => __('ID'),
           'designation'  => __('Name'),
           'frequence' => __('Frequency'),
           'frequency' => __('Frequency'),
@@ -330,14 +330,14 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
           'manufacturers_id' => array(
               '_internal_name_' => __('Manufacturer'),
               '_itemtype_' => 'Manufacturer',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           )
       );
       $a_fields['memory'] = array(
           '_internal_name_' => __('Memory'),
           '_itemtype_' => 'DeviceMemory',
-          'id'    => __('ID'),
+//          'id'    => __('ID'),
           'designation'  => __('Name'),
           'frequence' => '',
           'size' => '',
@@ -345,26 +345,26 @@ class PluginFusioninventoryConfigurationManagement_Model extends CommonDBTM {
           'manufacturers_id' => array(
               '_internal_name_' => __('Manufacturer'),
               '_itemtype_' => 'Manufacturer',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           ),
           'devicememorytypes_id' => array(
               '_internal_name_' => '',
               '_itemtype_' => 'DeviceMemoryType',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           )
       );
       $a_fields['software'] = array(
           '_internal_name_' => __('Software'),
           '_itemtype_' => 'Software',
-          'id'    => __('ID'),
+//          'id'    => __('ID'),
           'name'  => __('Name'),
           'version' => __('Version'),
           'manufacturers_id' => array(
               '_internal_name_' => __('Manufacturer'),
               '_itemtype_' => 'Manufacturer',
-              'id'   => __('ID'),
+//              'id'   => __('ID'),
               'name' => __('Name')
           )
       );

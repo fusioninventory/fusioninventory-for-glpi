@@ -52,15 +52,14 @@ Html::header(__('FusionInventory', 'fusioninventory'),
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-$_GET['target']="configurationmanagement_notconform.php";
+PluginFusioninventoryConfigurationManagement::cronCheckdevices();
 
-$_GET['field'] = array('2');
-$_GET['searchtype'] = array('equals');
-$_GET['contains'] = array('0');
+$params = Search::manageParams('PluginFusioninventoryConfigurationmanagement', $_GET);
+$params['criteria'][0]['field']      = 2;
+$params['criteria'][0]['searchtype'] = 'equals';
+$params['criteria'][0]['value']      = '0';
 
-Search::manageGetValues('PluginFusioninventoryConfigurationmanagement');
-Search::showList('PluginFusioninventoryConfigurationmanagement', $_GET);
-
+Search::showList('PluginFusioninventoryConfigurationmanagement', $params);
 
 Html::footer();
 

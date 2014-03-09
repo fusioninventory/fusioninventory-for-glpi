@@ -53,6 +53,7 @@ Html::header(__('FusionInventory', 'fusioninventory'),
 PluginFusioninventoryMenu::displayMenu("mini");
 
 $pfConfigurationmanagement = new PluginFusioninventoryConfigurationmanagement();
+$pfconfmanage_model = new PluginFusioninventoryConfigurationManagement_Model();
 
 if (isset($_POST["add"])) {
    $pfConfigurationmanagement->add($_POST);
@@ -63,20 +64,63 @@ if (isset($_POST["add"])) {
 } else if (isset($_REQUEST["purge"])) {
    $pfConfigurationmanagement->delete($_POST);
    $pfConfigurationmanagement->redirectToList();
-} else if (isset($_POST['update_serialized'])) {
-   unset($_POST['update_serialized']);
+} else if (isset($_POST['update_managed'])) {
+   $treeKey = $_POST['tree'];
+   unset($_POST['update_managed']);
+   unset($_POST['tree']);
    unset($_POST['_glpi_csrf_token']);
-   $serialized_model = array();
-   foreach ($_POST as $key => $value) {
-      if ($value != 'notmanaged'
-              && $value != 'id'
-              && $key != 'id'
-              && $key != '_glpi_csrf_token') {
-         $serialized_model[$key] = $value;
+
+   $pfConfigurationmanagement->getFromDB($_POST['id']);
+   $list_fields = $pfconfmanage_model->getListFields();
+   $pfConfigurationmanagement->generateTree(
+           1,
+           $list_fields,
+           1,
+           '',
+           $pfConfigurationmanagement->fields['items_id'],
+           $pfConfigurationmanagement->fields['itemtype']);
+
+   $serialized_referential = importArrayFromDB($pfConfigurationmanagement->fields['serialized_referential']);
+   if (!is_array($serialized_referential)) {
+      $serialized_referential = array();
+   }
+   if ($treeKey == "/") {
+      $serialized_referential['/_managetype_'] = '_managed_';
+   }
+   foreach ($pfConfigurationmanagement->a_trees as $key=>$value) {
+      if ($treeKey == "/") {
+         $serialized_referential[$key] = $value;
+         if ($key != $treeKey
+                 && isset($serialized_referential[$key.'/_managetype_'])) {
+            unset($serialized_referential[$key.'/_managetype_']);
+         }
+      } else {
+         if ($key == $treeKey) {
+            $serialized_referential[$key.'/_managetype_'] = '_managed_';
+         }
+         if (substr($key, 0, strlen($treeKey)) == $treeKey) {
+            if ($key != $treeKey
+                    && isset($serialized_referential[$key.'/_managetype_'])) {
+               unset($serialized_referential[$key.'/_managetype_']);
+            }
+            $serialized_referential[$key] = $value;
+         }
       }
    }
-   $_POST['serialized_referential'] = exportArrayToDB($serialized_model);
-   $_POST['sha_referential'] = sha1($_POST['serialized_referential']);
+//   foreach ($_POST as $key => $value) {
+//      if ($value != 'notmanaged'
+//              && $value != 'id'
+//              && $key != 'id'
+//              && $key != '_glpi_csrf_token') {
+//         $serialized_model[$key] = $value;
+//      }
+//   }
+   $_POST['serialized_referential'] = exportArrayToDB($serialized_referential);
+
+   // Prepare the sha for the array cleaned
+   $cleanarray = $pfConfigurationmanagement->cleanArray($serialized_referential);
+
+   $_POST['sha_referential'] = sha1(exportArrayToDB($cleanarray));
    $pfConfigurationmanagement->update($_POST);
    Html::back();
 }
