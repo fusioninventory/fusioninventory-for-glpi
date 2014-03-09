@@ -305,30 +305,9 @@ function plugin_init_fusioninventory() {
           * Deploy submenu entries
           */
 
-         $hook_add['packages'] = '../fusioninventory/front/deploypackage.form.php?add=1';
-         $hook_search['packages'] = '../fusioninventory/front/deploypackage.php';
-
-         $hook_add['mirror'] = '../fusioninventory/front/deploymirror.form.php?add=1';
-         $hook_search['mirror'] = '../fusioninventory/front/deploymirror.php';
-
-         $hook_add['task'] = '../fusioninventory/front/deploytask.form.php?add=1';
-         $hook_search['task'] = '../fusioninventory/front/deploytask.php';
-
-         $hook_add['group'] = '../fusioninventory/front/deploygroup.form.php?add=1';
-         $hook_search['group'] = '../fusioninventory/front/deploygroup.php';
-
-         if (Session::haveRight('plugin_fusioninventory_agent', READ)) {
-            if (Session::haveRight('plugin_fusioninventory_agents', UPDATE)) {
-               $hook_search['agents'] = 'front/agent.php';
-            }
-
-            if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {// Config page
-               $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/config.form.php';
-            }
+         if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {// Config page
+            $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['config'] = 'front/config.form.php';
          }
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['add']    = $hook_add;
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['search'] = $hook_search;
 
          $PLUGIN_HOOKS['submenu_entry']['fusioninventory']
             ["<img  src='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/books.png'

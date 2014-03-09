@@ -88,6 +88,10 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'credential'           => 'PluginFusioninventoryCredential',
           'credentialip'         => 'PluginFusioninventoryCredentialIp',
           'collect'              => 'PluginFusioninventoryCollect',
+          'deploypackage'        => 'PluginFusioninventoryDeployPackage',
+          'deploymirror'         => 'PluginFusioninventoryDeployMirror',
+          'deploytask'           => 'PluginFusioninventoryDeployTask',
+          'deploygroup'          => 'PluginFusioninventoryDeployGroup'
       );
       $options = array();
       foreach ($elements as $type=>$itemtype) {
