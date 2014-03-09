@@ -158,9 +158,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    function defineTabs($options=array()){
 
       $ong = array();
-      if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)) {
-         $ong[1]=__('Main');
-      }
+      $this->addDefaultFormTab($ong);
       $this->addStandardTab('PluginFusioninventoryAgentmodule', $ong, $options);
       $this->addStandardTab('Log', $ong, $options);
 
@@ -215,7 +213,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $this->fields['senddico'] = 0;
       }
       $this->initForm($computers_id, $options);
-      $this->showTabs($options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
@@ -325,7 +322,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons($options);
-      $this->addDivForTabs();
 
       return TRUE;
    }

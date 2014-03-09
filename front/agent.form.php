@@ -83,9 +83,17 @@ if (isset($_POST['startagent'])) {
 
 
 if (isset($_GET["id"])) {
-   $agent->showForm($_GET["id"]);
+   $agent->display(
+      array(
+         "id" => $_GET["id"]
+      )
+   );
 } else {
-   $agent->showForm("");
+   $agent->display(
+      array(
+         "id" => 0
+      )
+   );
 }
 
 Html::footer();
