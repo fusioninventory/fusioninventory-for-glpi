@@ -48,8 +48,8 @@ include ("../../../inc/includes.php");
 Html::header(__('FusionInventory', 'fusioninventory'),
              $_SERVER["PHP_SELF"],
              "plugins",
-             "fusioninventory",
-             "printerlog");
+             "pluginfusioninventorymenu",
+             "printerlogreport");
 
 Session::checkRight('plugin_fusioninventory_reportprinter', READ);
 

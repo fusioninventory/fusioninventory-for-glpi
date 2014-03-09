@@ -72,6 +72,50 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
 
+   static function getAdditionalMenuOptions() {
+
+      $elements = array(
+          'iprange' => 'PluginFusioninventoryIPRange',
+          'task'    => 'PluginFusioninventoryTask',
+          'unknowndevice' => 'PluginFusioninventoryUnknownDevice',
+          'inventoryruleimport' => 'PluginFusioninventoryInventoryRuleImport',
+          'inventoryruleentity' => 'PluginFusioninventoryInventoryRuleEntity',
+          'inventoryrulelocation' => 'PluginFusioninventoryInventoryRuleLocation',
+          'collectrule' => 'PluginFusioninventoryCollectRule',
+          'inventorycomputerblacklist' => 'PluginFusioninventoryInventoryComputerBlacklist',
+          'snmpmodel' => 'PluginFusioninventorySnmpmodel',
+          'configsecurity' => 'PluginFusioninventoryConfigSecurity',
+          'credential' => 'PluginFusioninventoryCredential',
+          'credentialip' => 'PluginFusioninventoryCredentialIp',
+          'collect' => 'PluginFusioninventoryCollect',
+      );
+
+
+/*
+         $hook_search['agents'] = 'front/agent.php';
+
+ */
+      $options = array();
+      foreach ($elements as $type=>$itemtype) {
+         $options[$type] = array(
+              'title' => $itemtype::getTypeName(),
+              'page'  => $itemtype::getSearchURL(false),
+              'links' => array(
+                  'search' => '/plugins/fusioninventory/front/'.$type.'.php',
+                  'add'    => '/plugins/fusioninventory/front/'.$type.'.form.php'
+              ));
+      }
+      $options['agent'] = array(
+           'title' => PluginFusioninventoryAgent::getTypeName(),
+           'page'  => PluginFusioninventoryAgent::getSearchURL(false),
+           'links' => array(
+               'search' => '/plugins/fusioninventory/front/agent.php'
+           ));
+      return $options;
+   }
+
+
+
    /**
    * Display the menu of FusionInventory
    *

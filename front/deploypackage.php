@@ -44,7 +44,7 @@ include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
 Html::header(__('FusionInventory'), $_SERVER["PHP_SELF"], "plugins",
-             "fusioninventory", "packages");
+             "pluginfusioninventorymenu", "deploypackage");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

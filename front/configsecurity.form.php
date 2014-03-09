@@ -48,7 +48,7 @@ $pfConfigSecurity = new PluginFusioninventoryConfigSecurity();
 $config = new PluginFusioninventoryConfig();
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
-         "fusioninventory", "configsecurity");
+         "pluginfusioninventorymenu", "configsecurity");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 

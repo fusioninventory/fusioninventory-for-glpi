@@ -44,7 +44,7 @@ include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
 Html::header(__('Groups of computers'), $_SERVER["PHP_SELF"], "plugins",
-             "fusioninventory", "group");
+             "pluginfusioninventorymenu", "deploygroup");
 
 
 PluginFusioninventoryMenu::displayMenu("mini");

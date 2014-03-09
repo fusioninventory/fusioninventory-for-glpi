@@ -46,7 +46,7 @@ Session::checkLoginUser();
 Html::header(__('FusionInventory', 'fusioninventory'),
              $_SERVER["PHP_SELF"],
              "plugins",
-             "fusioninventory",
+             "pluginfusioninventorymenu",
              "collectrule");
 
 PluginFusioninventoryMenu::displayMenu("mini");

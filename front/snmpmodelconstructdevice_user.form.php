@@ -49,8 +49,8 @@ $pfConstructdevice_User = new PluginFusioninventorySnmpmodelConstructdevice_User
 Html::header(__('FusionInventory', 'fusioninventory'),
              $_SERVER["PHP_SELF"],
              "plugins",
-             "fusioninventory",
-             "models");
+             "pluginfusioninventorymenu",
+             "snmpmodelconstructdevice_user");
 
 if (isset ($_POST["add"])) {
    Session::checkRight('plugin_fusioninventory_model', CREATE);
