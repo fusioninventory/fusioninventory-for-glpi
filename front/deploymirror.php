@@ -44,7 +44,7 @@ include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
 Html::header(__('Mirror servers'), $_SERVER["PHP_SELF"], "plugins",
-             "fusioninventory", "mirror");
+             "pluginfusioninventorymenu", "deploymirror");
 
 //PluginFusioninventoryProfile::checkRight("Fusioninventory", "agents", "r");
 

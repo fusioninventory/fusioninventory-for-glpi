@@ -45,7 +45,7 @@ include ("../../../inc/includes.php");
 Html::header(__('FusionInventory', 'fusioninventory'),
              $_SERVER["PHP_SELF"],
              "plugins",
-             "fusioninventory",
+             "pluginfusioninventorymenu",
              "collect");
 
 PluginFusioninventoryProfile::checkRight("collect", "r");

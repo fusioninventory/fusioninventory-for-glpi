@@ -158,7 +158,7 @@ if (isset($_POST["add"])) {
 
 } else {
    Html::header(__('FusionInventory DEPLOY'), $_SERVER["PHP_SELF"], "plugins",
-   "fusioninventory", "group");
+   "pluginfusioninventorymenu", "deploygroup");
 
    PluginFusioninventoryMenu::displayMenu("mini");
 

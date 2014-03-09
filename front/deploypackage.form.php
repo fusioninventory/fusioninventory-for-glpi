@@ -88,7 +88,7 @@ if (isset ($data["add"])) {
 
 
 Html::header(__('FusionInventory DEPLOY'), $_SERVER["PHP_SELF"], "plugins",
-   "fusioninventory", "packages");
+   "pluginfusioninventorymenu", "deploypackage");
 PluginFusioninventoryMenu::displayMenu("mini");
 $id = "";
 if (isset($_GET["id"])) {

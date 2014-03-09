@@ -43,7 +43,7 @@
 include ("../../../inc/includes.php");
 
 Html::header(__('Features'), $_SERVER["PHP_SELF"],
-             "plugins", "fusioninventory", "deploygroup");
+             "plugins", "pluginfusioninventorymenu", "deploygroup");
 
 
 $pfDeployGroup = new PluginFusioninventoryDeployGroup();

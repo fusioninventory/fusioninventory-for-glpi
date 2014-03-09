@@ -48,8 +48,8 @@ $ptt  = new PluginFusioninventoryTask();
 Html::header(__('FusionInventory', 'fusioninventory'),
              $_SERVER["PHP_SELF"],
              "plugins",
-             "fusioninventory",
-             "unknown");
+             "pluginfusioninventorymenu",
+             "unknowndevice");
 
 Session::checkRight('plugin_fusioninventory_unknowndevice', READ);
 

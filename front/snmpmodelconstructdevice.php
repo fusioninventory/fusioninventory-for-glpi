@@ -42,7 +42,8 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "constructdevice");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
+        "plugins", "pluginfusioninventorymenu", "snmpmodelconstructdevice");
 Session::checkLoginUser();
 
 PluginFusioninventoryMenu::displayMenu("mini");

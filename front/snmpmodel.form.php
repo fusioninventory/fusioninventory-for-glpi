@@ -48,7 +48,8 @@ $pfModel = new PluginFusioninventorySnmpmodel();
 $pfModelMib = new PluginFusioninventorySnmpmodelMib();
 $pfImportExport = new PluginFusioninventorySnmpmodelImportExport();
 
-Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins", "fusioninventory", "models");
+Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
+        "plugins", "pluginfusioninventorymenu", "snmpmodel");
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
