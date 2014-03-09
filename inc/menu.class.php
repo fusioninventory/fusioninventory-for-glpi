@@ -89,12 +89,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'credentialip' => 'PluginFusioninventoryCredentialIp',
           'collect' => 'PluginFusioninventoryCollect',
       );
-
-
-/*
-         $hook_search['agents'] = 'front/agent.php';
-
- */
       $options = array();
       foreach ($elements as $type=>$itemtype) {
          $options[$type] = array(
