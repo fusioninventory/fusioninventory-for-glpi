@@ -162,12 +162,9 @@ if (isset($_POST["add"])) {
 
    PluginFusioninventoryMenu::displayMenu("mini");
 
-   if (!isset($_GET["id"])
-           || $_GET["id"] == '') {
-      $_GET["id"] = 0;
-   }
 
-   $group->showForm($_GET["id"]);
+   $group->display($_GET);
+
    Html::footer();
 }
 
