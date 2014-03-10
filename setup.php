@@ -84,25 +84,41 @@ function plugin_init_fusioninventory() {
    $Plugin = new Plugin();
    $moduleId = 0;
    if ($Plugin->isActivated('fusioninventory')) { // check if plugin is active
-      // ##### 1. (Not required here) #####
 
-      // ##### 2. register class #####
+      // Register classes into GLPI plugin factory
 
       Plugin::registerClass('PluginFusioninventoryAgent');
       Plugin::registerClass('PluginFusioninventoryAgentmodule');
       Plugin::registerClass('PluginFusioninventoryConfig');
       Plugin::registerClass('PluginFusioninventoryTask',
-              array('addtabon' => array('Computer',
-                                        'Printer',
-                                        'NetworkEquipment',
-                                        'PluginFusioninventoryCredentialIp')));
+         array(
+            'addtabon' => array(
+               'Computer',
+               'Printer',
+               'NetworkEquipment',
+               'PluginFusioninventoryCredentialIp'
+            )
+         )
+      );
       Plugin::registerClass('PluginFusioninventoryTaskjob',
-              array('addtabon' => array('Computer',
-                                        'Printer',
-                                        'NetworkEquipment',
-                                        'PluginFusioninventoryUnknowndevice')));
+         array(
+            'addtabon' => array(
+               'Computer',
+               'Printer',
+               'NetworkEquipment',
+               'PluginFusioninventoryTask',
+               'PluginFusioninventoryUnknowndevice'
+            )
+         )
+      );
       Plugin::registerClass('PluginFusioninventoryTaskjob');
-      Plugin::registerClass('PluginFusioninventoryTaskjobstate');
+      Plugin::registerClass('PluginFusioninventoryTaskjobstate',
+         array(
+            'addtabon' => array(
+               'PluginFusioninventoryTask'
+            )
+         )
+      );
       Plugin::registerClass('PluginFusioninventoryUnknownDevice');
       Plugin::registerClass('PluginFusioninventoryModule');
       Plugin::registerClass('PluginFusioninventoryProfile',

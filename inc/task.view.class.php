@@ -75,7 +75,6 @@ class PluginFusioninventoryTaskView extends CommonDBTM {
       $ong['no_all_tab'] = TRUE;
       //Tabs in this form are handled by TaskJob class
       $this->addDefaultFormTab($ong);
-      $this->addStandardTab('PluginFusioninventoryTaskJob', $ong, $options);
 
       return $ong;
    }
@@ -92,11 +91,8 @@ class PluginFusioninventoryTaskView extends CommonDBTM {
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
-      Toolbox::logDebug($id);
       if ($id!='') {
          $this->getFromDB($id);
-         Toolbox::logDebug($this);
-         Toolbox::logDebug($this->getTable());
       } else {
          $this->getEmpty();
       }
