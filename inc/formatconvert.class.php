@@ -1485,7 +1485,7 @@ class PluginFusioninventoryFormatconvert {
          'pages_total', 'pages_n_b', 'pages_color', 'pages_recto_verso', 'scanned',
          'pages_total_print', 'pages_n_b_print', 'pages_color_print', 'pages_total_copy',
          'pages_n_b_copy', 'pages_color_copy', 'pages_total_fax',
-         'cpu', 'trunk', 'is_active', 'uptodate',
+         'cpu', 'trunk', 'is_active', 'uptodate', 'nbthreads',
          'ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu', 'speed');
 
       foreach ($a_key as $key=>$value) {
