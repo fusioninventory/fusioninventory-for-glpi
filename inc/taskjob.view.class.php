@@ -47,45 +47,8 @@ class PluginFusioninventoryTaskjobView extends CommonDBTM {
 
       $tab_names = array();
       if ( $item->getID() > 0 and $this->can('task', 'r') ) {
-         $tab_names[] = __('Task Jobs');
+         $tab_names[] = __('Jobs', 'fusioninventory');
       }
-
-      //if (Session::haveRight('plugin_fusioninventory_task', READ)) {
-
-      //   if ($item->getType() == 'PluginFusioninventoryTask') {
-
-      //      if ($item->fields['id'] > 0) {
-
-      //         //Get taskjobs list tied to the currently displayed task in advanced mode
-      //         if ($item->fields["is_advancedmode"] == '1') {
-
-      //            $pft = new PluginFusioninventoryTaskjob;
-
-      //            $taskjobs = $pft->find(
-      //               "`plugin_fusioninventory_tasks_id`='".$_GET['id'].
-      //               "' AND `rescheduled_taskjob_id`='0' ",
-      //               "id"
-      //            );
-      //            $i=0;
-      //            foreach($taskjobs as $data) {
-      //               $i++;
-
-      //               $tab_names[$data['id']] =
-      //                  __('Job', 'fusioninventory') . " $i - " .
-      //                  $data['name'];
-
-      //            }
-
-      //            //Add a 'new' tab in order to create new taskjobs
-      //            $tab_names['new'] = __('New action', 'fusioninventory')." <img src='".$CFG_GLPI['root_doc']."/pics/add_dropdown.png'/>";
-      //         } else {
-
-      //            //The non advanced mode display only one tab
-      //            $tab_names[0] = __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
-      //         }
-      //      }
-      //   }
-      //}
 
       //Return tab names if list is not empty
       if (!empty($tab_names)) {
@@ -98,12 +61,12 @@ class PluginFusioninventoryTaskjobView extends CommonDBTM {
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $pfTaskJob = new PluginFusioninventoryTaskjob();
 
       if ($item->getID() > 0) {
          if ($item->getType() == 'PluginFusioninventoryTask') {
 
-            $pfTaskJob->showList();
+            $pfTaskJob->showListForTask($item->getID());
 
 
       //      if ($item->fields['is_advancedmode'] == '0') {
@@ -143,11 +106,11 @@ class PluginFusioninventoryTaskjobView extends CommonDBTM {
       return true;
    }
 
-   public function getList() {
+   public function getTaskjobs($task_id) {
       // Find taskjobs tied to the selected task
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $taskjobs = $this->find(
-         "`plugin_fusioninventory_tasks_id` = '".$item->getID()."'".
+         "`plugin_fusioninventory_tasks_id` = '".$task_id."'".
          " AND `rescheduled_taskjob_id` = '0' ",
          "id"
       );
@@ -155,8 +118,35 @@ class PluginFusioninventoryTaskjobView extends CommonDBTM {
       return $taskjobs;
    }
 
-   public function showList() {
-      $taskjobs = $this->getList();
+   public function showListForTask($task_id) {
+      $taskjobs = $this->getTaskjobs($task_id);
+
+      echo "<table class='tab_cadre_fixe package_item_list'>\n";
+      foreach( $taskjobs as $taskjob_id => $taskjob_data ) {
+         echo "<tr>\n";
+         $this->showTaskjobSummary( $taskjob_data );
+         echo "</tr>\n";
+      }
+      echo "</table>\n";
+   }
+
+   public function showTaskjobSummary($taskjob_data) {
+      $id = $taskjob_data['id'];
+      $name = $taskjob_data['name'];
+      echo implode( "\n",
+         array(
+            "<td class='control'>",
+            "<input type='checkbox' name='action_entries[]' value='$id' />",
+            "</td>"
+         )
+      );
+      echo implode( "\n",
+         array(
+            "<td id='taskjob_${id}' class='taskjob_block'>",
+            "  <h2>${name}</h2>",
+            "</td>",
+         )
+      );
    }
 
    public function showTargets() {
