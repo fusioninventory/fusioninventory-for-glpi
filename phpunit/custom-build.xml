@@ -4,16 +4,14 @@
   <include file='build.xml' />
   <property name="tests.directory" value='${basedir}/glpi/plugins/fusioninventory/phpunit' />
   <target name="phpunit.unit.custom" depends='plugin-fusioninventory.prepare' description="Run unit tests with PHPUnit">
-   <phpunit.run configuration='${fusioninventory.directory}/phpunit/testsuites_integration.xml'>
-    <!--
+   <phpunit.run type="custom" configuration='${fusioninventory.directory}/phpunit/testsuites_unit.xml'>
      <testfile>
-       <arg path='${tests.directory}/2_Integration/SoftwareVersionAddTest.php' />
+       <arg path='${tests.directory}/1_Unit/VirtualmachineTest.php' />
      </testfile>
-     -->
    </phpunit.run>
    <fail>
      <condition>
-       <isfailure code='${phpunit.returncode}' />
+       <isfailure code='${phpunit.returncode.custom}' />
      </condition>
    </fail>
  </target>

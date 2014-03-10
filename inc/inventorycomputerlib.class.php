@@ -797,7 +797,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $db_computervirtualmachine[$idtmp] = $data1;
                }
             }
-
             $simplecomputervirtualmachine = array();
             if (isset($a_computerinventory['virtualmachine'])) {
                foreach ($a_computerinventory['virtualmachine'] as $key=>$a_computervirtualmachine) {
