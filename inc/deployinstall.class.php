@@ -67,7 +67,7 @@ class PluginFusioninventoryDeployinstall extends PluginFusioninventoryDeployComm
          case 'PluginFusioninventoryDeployPackage':
             PluginFusioninventoryDeployPackage::displayOrderTypeForm(
                      PluginFusioninventoryDeployOrder::INSTALLATION_ORDER,
-                     $_POST['id'],
+                     $item->getID(),
                      $item);
             break;
       }

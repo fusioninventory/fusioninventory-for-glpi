@@ -67,7 +67,7 @@ class PluginFusioninventoryDeployuninstall extends PluginFusioninventoryDeployCo
          case 'PluginFusioninventoryDeployPackage':
             PluginFusioninventoryDeployPackage::displayOrderTypeForm(
                      PluginFusioninventoryDeployOrder::UNINSTALLATION_ORDER,
-                     $_POST['id'],
+                     $item->getID(),
                      $item);
             break;
       }
