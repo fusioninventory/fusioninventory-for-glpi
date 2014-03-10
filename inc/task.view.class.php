@@ -40,16 +40,45 @@
    ------------------------------------------------------------------------
  */
 
-namespace Fusioninventory\View;
-
-
-class PluginFusioninventoryViewTask {
+class PluginFusioninventoryTaskView extends CommonDBTM {
 
 
    public function showList() {
-      \Search::show('PluginFusioninventoryTask');
+      Search::show('PluginFusioninventoryTask');
    }
 
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $CFG_GLPI;
+      $tab_names = array();
+      if ( $this->can("task", "r") ) {
+         if ($item->getType() == 'Computer') {
+            $tab_names[] = __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
+         }
+
+      }
+
+      if (!empty($tab_names)) {
+         return $tab_names;
+      } else {
+         return '';
+      }
+   }
+
+   function defineTabs($options=array()){
+      global $CFG_GLPI;
+      $ong = array();
+
+      /*
+       * TODO: The "All" tab is malfunctionning and i had no other choice but to disable it.
+       * This is not crucial at the moment and should be reconsidered when refactoring Tasks.
+       */
+      $ong['no_all_tab'] = TRUE;
+      //Tabs in this form are handled by TaskJob class
+      $this->addDefaultFormTab($ong);
+      $this->addStandardTab('PluginFusioninventoryTaskJob', $ong, $options);
+
+      return $ong;
+   }
    /**
     * Display form for task configuration
     *
@@ -60,18 +89,20 @@ class PluginFusioninventoryViewTask {
     *
     **/
    function showForm($id, $options=array()) {
-
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
+      Toolbox::logDebug($id);
       if ($id!='') {
          $this->getFromDB($id);
+         Toolbox::logDebug($this);
+         Toolbox::logDebug($this->getTable());
       } else {
          $this->getEmpty();
       }
 
       $options['colspan'] = 2;
-      $this->showTabs($options);
+      $this->initForm($id,$options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
@@ -80,12 +111,12 @@ class PluginFusioninventoryViewTask {
       Html::autocompletionTextField ($this, "name", $this->fields["name"]);
       echo "</td>";
 
-      $a_taskjob = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'", "id");
+      $taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'", "id");
       echo "<td>";
       echo __('Active')."&nbsp;:";
       echo "</td>";
       echo "<td>";
-      if (count($a_taskjob) > 0) {
+      if (count($taskjobs) > 0) {
          Dropdown::showYesNo("is_active", $this->fields["is_active"]);
       }
       echo "</td>";
@@ -138,9 +169,21 @@ class PluginFusioninventoryViewTask {
       echo "<td>".__('Scheduled date', 'fusioninventory')."&nbsp;:</td>";
       echo "<td>";
       if ($id) {
-         Html::showDateTimeFormItem("date_scheduled", $this->fields["date_scheduled"], 1, FALSE);
+         Html::showDateTimeField(
+            "date_scheduled",
+            array(
+               "value" => $this->fields["date_scheduled"],
+               "timestep"=>1,
+               "maybeempty" => false
+            )
+         );
       } else {
-         Html::showDateTimeFormItem("date_scheduled", date("Y-m-d H:i:s"), 1);
+         Html::showDateTimeField( "date_scheduled",
+            array(
+               "value" => date("Y-m-d H:i:s"),
+               "timestep"=>1
+            )
+         );
       }
       echo "</td>";
       echo "</tr>";
@@ -157,9 +200,11 @@ class PluginFusioninventoryViewTask {
 
       $com['pull'] = __('Agent contacts the server (pull)', 'fusioninventory');
 
-      Dropdown::showFromArray("communication",
+      Dropdown::showFromArray(
+         "communication",
          $com,
-         array('value'=>$this->fields["communication"]));
+         array('value'=>$this->fields["communication"])
+      );
       echo "</td>";
       echo "</tr>";
 
@@ -187,63 +232,50 @@ class PluginFusioninventoryViewTask {
       echo "</td>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='2'></td>";
-      if (! $this->fields["is_advancedmode"]) {
-         echo "<td>";
-         echo __('Advanced mode', 'fusioninventory')."&nbsp;:";
-         echo "</td>";
-         echo "<td>";
-         Dropdown::showYesNo("is_advancedmode", $this->fields["is_advancedmode"]);
-         echo "</td>";
-      }
-
-      echo "</tr>";
 
       $this->showFormButtons($options);
-      //      $this->addDivForTabs();
 
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTaskjob->displayList($id);
-      return TRUE;
+      //$pfTaskjob = new PluginFusioninventoryTaskjob();
+      //$pfTaskjob->displayList($id);
+      return true;
    }
 
-   public function menuTasksLogs() {
-      global $CFG_GLPI;
+   //public function menuTasksLogs() {
+   //   global $CFG_GLPI;
 
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_1'>";
+   //   echo "<table class='tab_cadre_fixe'>";
+   //   echo "<tr class='tab_bg_1'>";
 
-      $cell = 'td';
-      if (strstr($_SERVER['PHP_SELF'], '/tasksummary.')) {
-         $cell ='th';
-      }
-      echo "<".$cell." align='center' width='33%'>";
-      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/tasksummary.php'>".
-         __('Task management', 'fusioninventory')." (".__('Summary').")</a>";
-      echo "</".$cell.">";
+   //   $cell = 'td';
+   //   if (strstr($_SERVER['PHP_SELF'], '/tasksummary.')) {
+   //      $cell ='th';
+   //   }
+   //   echo "<".$cell." align='center' width='33%'>";
+   //   echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/tasksummary.php'>".
+   //      __('Task management', 'fusioninventory')." (".__('Summary').")</a>";
+   //   echo "</".$cell.">";
 
-      $cell = 'td';
-      if (strstr($_SERVER['PHP_SELF'], '/task.')) {
-         $cell ='th';
-      }
-      echo "<".$cell." align='center' width='33%'>";
-      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/task.php'>".
-         __('Task management', 'fusioninventory')." (".__('Normal').")</a>";
-      echo "</".$cell.">";
+   //   $cell = 'td';
+   //   if (strstr($_SERVER['PHP_SELF'], '/task.')) {
+   //      $cell ='th';
+   //   }
+   //   echo "<".$cell." align='center' width='33%'>";
+   //   echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/task.php'>".
+   //      __('Task management', 'fusioninventory')." (".__('Normal').")</a>";
+   //   echo "</".$cell.">";
 
-      $cell = 'td';
-      if (strstr($_SERVER['PHP_SELF'], '/taskjoblog.')) {
-         $cell ='th';
-      }
-      echo "<".$cell." align='center'>";
-      echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php'>".
-         __('Logs')."</a>";
-      echo "</".$cell.">";
-      echo "</tr>";
-      echo "</table>";
+   //   $cell = 'td';
+   //   if (strstr($_SERVER['PHP_SELF'], '/taskjoblog.')) {
+   //      $cell ='th';
+   //   }
+   //   echo "<".$cell." align='center'>";
+   //   echo "<a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjoblog.php'>".
+   //      __('Logs')."</a>";
+   //   echo "</".$cell.">";
+   //   echo "</tr>";
+   //   echo "</table>";
 
-   }
+   //}
 
    function displayTask($condition) {
       global $DB, $CFG_GLPI;
