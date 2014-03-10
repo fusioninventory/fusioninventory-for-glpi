@@ -55,11 +55,9 @@ PluginFusioninventoryMenu::displayMenu("mini");
 
 PluginFusioninventoryTaskjob::isAllowurlfopen();
 
-use Fusioninventory\View as View;
+$pfTask = new PluginFusioninventoryTask();
 
-$pfTaskView = new View\PluginFusioninventoryViewTask();
-
-$pfTaskView->showList();
+$pfTask->showList();
 
 Html::footer();
 

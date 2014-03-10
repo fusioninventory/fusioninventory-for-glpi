@@ -42,7 +42,8 @@
 
 include ("../../../inc/includes.php");
 
-$pft = new PluginFusioninventoryTask();
+$pfTask = new PluginFusioninventoryTask();
+
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
         "plugins", "pluginfusioninventorymenu", "task");
@@ -52,64 +53,88 @@ Session::checkRight('plugin_fusioninventory_task', READ);
 PluginFusioninventoryMenu::displayMenu("mini");
 
 if (isset($_POST['forcestart'])) {
-   Session::checkRight('plugin_fusioninventory_task', UPDATE);
-   $pfTaskjob = new PluginFusioninventoryTaskjob();
-   $pfTaskjob->forceRunningTask($_POST['id']);
-   Html::back();
-} else if (isset($_POST['reset'])) {
-   $pfTask    = new PluginFusioninventoryTask();
 
-   $pfTask->getFromDB($_POST['id']);
+   Session::checkRight('plugin_fusioninventory_task', UPDATE);
+
+   $pfTaskjob = new PluginFusioninventoryTaskjob();
+
+   $pfTaskjob->forceRunningTask($_POST['id']);
+
+   Html::back();
+
+} else if (isset($_POST['reset'])) {
+
+   $pfTaskView->getFromDB($_POST['id']);
+
    $query = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
-         SET `execution_id`='".$pfTask->fields['execution_id']."',
+         SET `execution_id`='".$pfTaskView->fields['execution_id']."',
             `status`='0'
       WHERE `plugin_fusioninventory_tasks_id`='".$_POST['id']."'";
+
    $DB->query($query);
+
    Html::back();
 
 } else if (isset ($_POST["add"])) {
+
    Session::checkRight('plugin_fusioninventory_task', CREATE);
 
-   $itens_id = $pft->add($_POST);
-   Html::redirect(str_replace("add=1", "", $_SERVER['HTTP_REFERER'])."id=".$itens_id);
+   $items_id = $pfTask->add($_POST);
+
+   Html::redirect(str_replace("add=1", "", $_SERVER['HTTP_REFERER'])."?id=".$items_id);
+
 } else if (isset($_POST["delete"])) {
+
    Session::checkRight('plugin_fusioninventory_task', PURGE);
 
-   $pftj = new PluginFusioninventoryTaskjob();
+   $pfTaskJob = new PluginFusioninventoryTaskjob();
 
-   $a_taskjob = $pftj->find("`plugin_fusioninventory_tasks_id` = '".$_POST['id']."' ");
-   foreach ($a_taskjob as $datas) {
-      $pftj->delete($datas);
+   $taskjobs = $pftj->find("`plugin_fusioninventory_tasks_id` = '".$_POST['id']."' ");
+
+   foreach ($taskjobs as $taskjob) {
+      $pfTaskJob->delete($taskjob);
    }
-   $pft->delete($_POST);
+
+   $pfTask->delete($_POST);
+
    Html::redirect(Toolbox::getItemTypeSearchURL('PluginFusioninventoryTask'));
+
 } else if (isset($_POST["update"])) {
    Session::checkRight('plugin_fusioninventory_task', UPDATE);
 
-  $pft->getFromDB($_POST['id']);
+   $pfTask->getFromDB($_POST['id']);
 
-  if ((($_POST['date_scheduled'] != $pft->fields['date_scheduled'])
-            AND ($_POST['periodicity_count'] == '0'))
-          OR ($_POST['periodicity_count'] == '0'
-            AND $_POST['periodicity_count'] != $pft->fields['periodicity_count'])){
-     $_POST['execution_id'] = 0;
-     $query = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
+   if (
+      (
+         $_POST['date_scheduled'] != $pft->fields['date_scheduled']
+         AND $_POST['periodicity_count'] == '0'
+      )
+      OR (
+         $_POST['periodicity_count'] == '0'
+         AND $_POST['periodicity_count'] != $pft->fields['periodicity_count']
+      )
+   ) {
+         $_POST['execution_id'] = 0;
+         $query = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
             SET `execution_id`='0',
-               `status`='0'
-         WHERE `plugin_fusioninventory_tasks_id`='".$_POST['id']."'";
-     $DB->query($query);
-  }
-  $pft->update($_POST);
+            `status`='0'
+            WHERE `plugin_fusioninventory_tasks_id`='".$_POST['id']."'";
+         $DB->query($query);
+      }
+   $pfTask->update($_POST);
 
    Html::back();
 }
 
 PluginFusioninventoryTaskjob::isAllowurlfopen();
 
+Toolbox::logDebug($_GET['id']);
 if (isset($_GET["id"])) {
-   $pft->showForm($_GET["id"]);
+   $pfTask->display(array(
+      'id' =>$_GET["id"]
+   ));
 } else {
-   $pft->showForm("");
+   $pfTask->display(array(""));
 }
 
 Html::footer();
