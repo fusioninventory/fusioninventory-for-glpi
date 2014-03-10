@@ -128,13 +128,18 @@ if (isset($_POST['forcestart'])) {
 
 PluginFusioninventoryTaskjob::isAllowurlfopen();
 
-Toolbox::logDebug($_GET['id']);
 if (isset($_GET["id"])) {
-   $pfTask->display(array(
-      'id' =>$_GET["id"]
-   ));
+   $pfTask->display(
+      array(
+         'id' =>$_GET["id"]
+      )
+   );
 } else {
-   $pfTask->display(array(""));
+   $pfTask->display(
+      array(
+         'id' => ''
+      )
+   );
 }
 
 Html::footer();
