@@ -257,6 +257,7 @@ class ComputerMonitor extends Common_TestCase {
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();
 
+      // Unique import on serial number
       $pfConfig->updateValue('import_monitor', 3);
       PluginFusioninventoryConfig::loadCache();
 
@@ -304,7 +305,7 @@ class ComputerMonitor extends Common_TestCase {
                                       1);
 
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'Second computer');
-      $this->assertEquals(2,
+      $this->assertEquals(1,
                           countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
                           'Second computer (links)');
 
@@ -336,7 +337,7 @@ class ComputerMonitor extends Common_TestCase {
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly (4)');
 
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer (4)');
-      $this->assertEquals(2,
+      $this->assertEquals(1,
                           countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
                           'First computer (links) (4)');
 
@@ -357,7 +358,7 @@ class ComputerMonitor extends Common_TestCase {
       $this->assertEquals('ggheb7ne7', $computer->fields['serial'], 'Computer not updated correctly (5)');
 
       $this->assertEquals(1, countElementsInTable('glpi_monitors'), 'First computer (5)');
-      $this->assertEquals(2,
+      $this->assertEquals(1,
                           countElementsInTable('glpi_computers_items', 'itemtype="Monitor"'),
                           'First computer (links) (5)');
 

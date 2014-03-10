@@ -917,6 +917,7 @@ class PluginFusioninventoryFormatconvert {
 
 
       // * USERS
+      $cnt = 0;
       if (isset($array['USERS'])) {
          if (count($array['USERS']) > 0) {
             $user_temp = $a_inventory['Computer']['contact'];
@@ -935,6 +936,19 @@ class PluginFusioninventoryFormatconvert {
                   $user .= "@".$array_tmp['domain'];
                }
             }
+            if ($cnt == 0) {
+               if (isset($array_tmp['login'])) {
+                  $query = "SELECT `id`
+                            FROM `glpi_users`
+                            WHERE `name` = '" . $array_tmp['login'] . "'
+                            LIMIT 1";
+                  $result = $DB->query($query);
+                  if ($DB->numrows($result) == 1) {
+                     $a_inventory['Computer']['users_id'] = $DB->result($result, 0, 0);
+                  }
+               }
+            }
+
             if ($user != '') {
                if (isset($a_inventory['Computer']['contact'])) {
                   if ($a_inventory['Computer']['contact'] == '') {
@@ -946,6 +960,7 @@ class PluginFusioninventoryFormatconvert {
                   $a_inventory['Computer']['contact'] = $user;
                }
             }
+            $cnt++;
          }
          if (empty($a_inventory['Computer']['contact'])) {
             $a_inventory['Computer']['contact'] = $user_temp;
@@ -1472,7 +1487,7 @@ class PluginFusioninventoryFormatconvert {
          'pages_total', 'pages_n_b', 'pages_color', 'pages_recto_verso', 'scanned',
          'pages_total_print', 'pages_n_b_print', 'pages_color_print', 'pages_total_copy',
          'pages_n_b_copy', 'pages_color_copy', 'pages_total_fax',
-         'cpu', 'trunk', 'is_active', 'uptodate',
+         'cpu', 'trunk', 'is_active', 'uptodate', 'nbthreads',
          'ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu', 'speed');
 
       foreach ($a_key as $key=>$value) {
@@ -1508,19 +1523,21 @@ class PluginFusioninventoryFormatconvert {
                   $manufacturer = new Manufacturer();
                   $array[$key]  = $manufacturer->processName($value);
                }
-               if ($key == "bios_manufacturers_id") {
-                  $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype['manufacturers_id'],
-                                                          $value);
-               } else if (isset($this->foreignkey_itemtype[$key])) {
-                  $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                          $value);
-               } else if (isForeignKeyField($key)
-                       && $key != "users_id") {
+               if (!is_numeric($key)) {
+                  if ($key == "bios_manufacturers_id") {
+                     $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype['manufacturers_id'],
+                                                             $value);
+                  } else if (isset($this->foreignkey_itemtype[$key])) {
+                     $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
+                                                             $value);
+                  } else if (isForeignKeyField($key)
+                          && $key != "users_id") {
 
-                  $this->foreignkey_itemtype[$key] =
-                              getItemTypeForTable(getTableNameForForeignKeyField($key));
-                  $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                          $value);
+                     $this->foreignkey_itemtype[$key] =
+                                 getItemTypeForTable(getTableNameForForeignKeyField($key));
+                     $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
+                                                             $value);
+                  }
                }
             }
          }

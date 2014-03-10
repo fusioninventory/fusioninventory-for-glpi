@@ -169,6 +169,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       LEFT JOIN glpi_networkports
       ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
       WHERE glpi_networkports.items_id='".$id."'
+         AND glpi_networkports.itemtype='NetworkEquipment'
          AND `instantiation_type`='NetworkPortAggregate'
       ORDER BY logical_number ";
       $result = $DB->query($query);
@@ -197,8 +198,9 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       FROM glpi_plugin_fusioninventory_networkports
 
       LEFT JOIN glpi_networkports
-      ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
+         ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
       WHERE glpi_networkports.items_id='".$id."'
+         AND `glpi_networkports`.`itemtype`='NetworkEquipment'
          ".$where."
          AND NOT (glpi_networkports.name='general'
                      AND glpi_networkports.logical_number=0)
