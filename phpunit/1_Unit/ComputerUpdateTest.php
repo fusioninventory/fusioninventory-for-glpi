@@ -1158,6 +1158,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $a_software = $software->find("`name`='acrobat_Reader_9.2'");
       $this->assertEquals(1, count($a_software), "Second computer added");
    }
- }
+}
 
 ?>

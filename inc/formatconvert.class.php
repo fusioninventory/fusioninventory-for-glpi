@@ -989,6 +989,18 @@ class PluginFusioninventoryFormatconvert {
       if ($pfConfig->getValue('create_vm') == 1) {
          if (isset($array['VIRTUALMACHINES'])) {
             foreach ($array['VIRTUALMACHINES'] as $a_virtualmachines) {
+               if (strstr($a_virtualmachines['MEMORY'], 'MB')) {
+                  $a_virtualmachines['MEMORY'] = str_replace('MB', '', $a_virtualmachines['MEMORY']);
+               } else if (strstr($a_virtualmachines['MEMORY'], 'KB')) {
+                  $a_virtualmachines['MEMORY'] = str_replace('KB', '', $a_virtualmachines['MEMORY']);
+                  $a_virtualmachines['MEMORY'] = $a_virtualmachines['MEMORY'] / 1000;
+               } else if (strstr($a_virtualmachines['MEMORY'], 'GB')) {
+                  $a_virtualmachines['MEMORY'] = str_replace('GB', '', $a_virtualmachines['MEMORY']);
+                  $a_virtualmachines['MEMORY'] = $a_virtualmachines['MEMORY'] * 1000;
+               } else if (strstr($a_virtualmachines['MEMORY'], 'B')) {
+                  $a_virtualmachines['MEMORY'] = str_replace('B', '', $a_virtualmachines['MEMORY']);
+                  $a_virtualmachines['MEMORY'] = $a_virtualmachines['MEMORY'] / 1000000;
+               }
                $array_tmp = $thisc->addValues($a_virtualmachines,
                                               array(
                                                  'NAME'            => 'name',
@@ -1487,7 +1499,7 @@ class PluginFusioninventoryFormatconvert {
          'pages_total', 'pages_n_b', 'pages_color', 'pages_recto_verso', 'scanned',
          'pages_total_print', 'pages_n_b_print', 'pages_color_print', 'pages_total_copy',
          'pages_n_b_copy', 'pages_color_copy', 'pages_total_fax',
-         'cpu', 'trunk', 'is_active', 'uptodate', 'nbthreads',
+         'cpu', 'trunk', 'is_active', 'uptodate', 'nbthreads', 'vcpu', 'ram',
          'ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu', 'speed');
 
       foreach ($a_key as $key=>$value) {
