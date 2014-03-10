@@ -63,7 +63,7 @@ $options = array(
    PLUGIN_FUSIONINVENTORY_ROOT
 );
 
-$fi_loader = new ModifiedIncludePathAutoloader($options);
+$fi_loader = new FusioninventoryIncludePathAutoloader($options);
 $fi_loader->register();
 /*
  * @function script_endswith()
