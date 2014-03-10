@@ -154,6 +154,18 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $criterias['itemtype']['is_global']       = FALSE;
       $criterias['itemtype']['allow_condition'] = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
 
+      $criterias['domains_id']['table']           = 'glpi_domains';
+      $criterias['domains_id']['field']           = 'name';
+      $criterias['domains_id']['name']            =
+                     __('Assets to import', 'fusioninventory').' : '.
+                     __('Domain');
+      $criterias['domains_id']['linkfield']       = 'domain';
+      $criterias['domains_id']['type']            = 'dropdown';
+      //Means that this criterion can only be used in a global search query
+      $criterias['domains_id']['is_global']       = TRUE;
+//      $criterias['domains_id']['allow_condition'] = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
+
+
       return $criterias;
    }
 
@@ -324,8 +336,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $complex_criterias = array();
       $sql_where         = '';
       $sql_from          = '';
-      $sql_where_computer  = '';
-      $sql_from_computer   = '';
+      $sql_where_computer= '';
+      $sql_where_domain  = '';
+      $sql_from_computer = '';
+      $sql_from_domain   = '';
       $continue          = TRUE;
       $global_criteria   = array('model',
                                  'mac',
@@ -336,7 +350,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                  'uuid',
                                  'mskey',
                                  'name',
-                                 'itemtype');
+                                 'itemtype',
+                                 'domains_id');
       $nb_crit_find = 0;
       foreach ($global_criteria as $criterion) {
          $criteria = $this->getCriteriaByID($criterion);
@@ -451,7 +466,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                      "`[typetable]`.`".strtolower("[typename]models_id")."`
                                      AND `glpi_networkports`.`itemtype` = '[typename]') ";
                $sql_where_temp = " AND `[typetable]`.`".strtolower("[typename]")."models_id` = '".
-                                    $input["serial"]."'";
+                                    $input["model"]."'";
 
                $sql_from .= $sql_from_temp;
                $sql_where  .= $sql_where_temp;
@@ -534,6 +549,13 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                $sql_where_computer .= ' AND `uuid`="'.$input['uuid'].'"';
                break;
 
+            case 'domains_id':
+               $sql_from_domain .= " LEFT JOIN `glpi_domains`
+                                 ON `glpi_domains`.`id` = ".
+                                     "`[typetable]`.`domains_id` ";
+               $sql_where_domain .= " AND `glpi_domains`.`name` = '".
+                                    $input["domains_id"]."'";
+               break;
          }
       }
 
@@ -552,6 +574,17 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
          if ($itemtype == "Computer") {
             $sql_from_temp .= $sql_from_computer;
             $sql_where_temp .= $sql_where_computer;
+            $sql_from_temp .= $sql_from_domain;
+            $sql_where_temp .= $sql_where_domain;
+         } else if ($itemtype == 'NetworkEquipment') {
+            $sql_from_temp .= $sql_from_domain;
+            $sql_where_temp .= $sql_where_domain;
+         } else if ($itemtype == 'Printer') {
+            $sql_from_temp .= $sql_from_domain;
+            $sql_where_temp .= $sql_where_domain;
+         } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
+            $sql_from_temp .= $sql_from_domain;
+            $sql_where_temp .= $sql_where_domain;
          }
 
          if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {

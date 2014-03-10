@@ -221,6 +221,11 @@ class PluginFusioninventoryInventoryComputerInventory {
                  AND (!empty($a_computerinventory['Computer']['models_id']))) {
             $input['model'] = $a_computerinventory['Computer']['models_id'];
          }
+         if ((isset($a_computerinventory['Computer']['domains_id']))
+                 AND (!empty($a_computerinventory['Computer']['domains_id']))) {
+            $input['domains_id'] = $a_computerinventory['Computer']['domains_id'];
+         }
+
          // TODO
 //         if (isset($arrayinventory['CONTENT']['STORAGES'])) {
 //            foreach($arrayinventory['CONTENT']['STORAGES'] as $storage) {
