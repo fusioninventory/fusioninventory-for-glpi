@@ -99,7 +99,7 @@ class UpdateTest extends RestoreDatabase_TestCase {
       $output = array();
       $returncode = 0;
       exec(
-         "/usr/bin/php -f ".FUSINV_ROOT."/scripts/cli_install.php 4",
+         "php -f ".FUSINV_ROOT."/scripts/cli_install.php 4",
          $output,
          $returncode
       );

@@ -321,6 +321,7 @@ class ComputerPrinter extends Common_TestCase {
       $pfConfig         = new PluginFusioninventoryConfig();
       $computer         = new Computer();
 
+      // Unique import
       $pfConfig->updateValue('import_printer', 2);
       PluginFusioninventoryConfig::loadCache();
 
@@ -357,15 +358,6 @@ class ComputerPrinter extends Common_TestCase {
       $input['value'] = '1';
       $ruleaction->add($input);
 
-
-      // Add action
-      $ruleaction = new RuleAction(get_class($rule));
-      $input = array();
-      $input['rules_id'] = $rule_id;
-      $input['action_type'] = 'assign';
-      $input['field'] = 'is_global';
-      $input['value'] = '0';
-      $ruleaction->add($input);
 
       // Add dictionnary rule for ignore import for printer p3
       $rulecollection = new RuleDictionnaryPrinterCollection();
@@ -455,6 +447,7 @@ class ComputerPrinter extends Common_TestCase {
 
       $pfConfig->updateValue('import_printer', 2);
       PluginFusioninventoryConfig::loadCache();
+      $DB->query("TRUNCATE TABLE `glpi_printers`");
 
       $pfici = new PluginFusioninventoryInventoryComputerInventory();
 
