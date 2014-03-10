@@ -57,7 +57,18 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    const FINISHED             = 3;
 
 
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $CFG_GLPI;
 
+      $tab_names = array();
+      $tab_names[] = __("Job executions");
+      //Return tab names if list is not empty
+      if (!empty($tab_names)) {
+         return $tab_names;
+      } else {
+         return '';
+      }
+   }
    /**
    * Display state of taskjob
    *
