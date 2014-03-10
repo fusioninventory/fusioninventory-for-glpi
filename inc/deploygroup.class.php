@@ -46,7 +46,10 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
+   static $rightname = "plugin_fusioninventory";
+
    protected $static_group_types = array('Computer');
+
    public $dohistory = TRUE;
 
 
@@ -59,15 +62,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    }
 
    static function canCreate() {
-      return TRUE;
-   }
-
-   static function canView() {
-      return TRUE;
-   }
-
-   function canCreateItem() {
-      return TRUE;
+      return true;
    }
 
    public function __construct() {
@@ -92,7 +87,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    function showMenu($options=array())  {
 
-      $this->displaylist = FALSE;
+      $this->displaylist = false;
 
       $this->fields['id'] = -1;
       $this->showList();
@@ -132,7 +127,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          $this->getEmpty();
       }
 
-      $this->showTabs($options);
+      $this->initForm($ID, $options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
