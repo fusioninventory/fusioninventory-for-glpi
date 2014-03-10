@@ -917,6 +917,7 @@ class PluginFusioninventoryFormatconvert {
 
 
       // * USERS
+      $cnt = 0;
       if (isset($array['USERS'])) {
          if (count($array['USERS']) > 0) {
             $user_temp = $a_inventory['Computer']['contact'];
@@ -959,6 +960,7 @@ class PluginFusioninventoryFormatconvert {
                   $a_inventory['Computer']['contact'] = $user;
                }
             }
+            $cnt++;
          }
          if (empty($a_inventory['Computer']['contact'])) {
             $a_inventory['Computer']['contact'] = $user_temp;
