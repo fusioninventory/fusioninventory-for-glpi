@@ -59,24 +59,24 @@ if (isset($_REQUEST['type'])) {
 }
 
 if (isset($_POST["add"])) {
-   $group->check(-1, 'w', $_POST);
+   $group->check(-1, UPDATE, $_POST);
    $newID = $group->add($_POST);
-   Html::redirect($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/deploygroup.form.php?id=".$newID);
+   Html::redirect(Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup")."?id=".$newID);
 
 } else if (isset($_POST["delete"])) {
-   $group->check($_REQUEST['id'], 'd');
+   $group->check($_REQUEST['id'], DELETE);
    $ok = $group->delete($_POST);
 
    $group->redirectToList();
 
 } else if (isset($_REQUEST["purge"])) {
-   $group->check($_REQUEST['id'], 'd');
+   $group->check($_REQUEST['id'], DELETE);
    $ok = $group->delete($_REQUEST, 1);
 
    $group->redirectToList();
 
 } else if (isset($_POST["update"])) {
-   $group->check($_REQUEST['id'], 'w');
+   $group->check($_REQUEST['id'], UPDATE);
    $group->update($_POST);
 
    Html::back();
@@ -145,7 +145,7 @@ if (isset($_POST["add"])) {
    if ($_REQUEST['type'] == 'static') {
       if (count($_REQUEST["item"])) {
          foreach ($_REQUEST["item"] as $key => $val) {
-            if ($group_item->can($key, 'w')) {
+            if ($group_item->can($key, UPDATE)) {
                $group_item->delete(array('id' => $key));
             }
          }

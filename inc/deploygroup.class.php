@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
-   static $rightname = "plugin_fusioninventory";
+   static $rightname = "plugin_fusioninventory_configuration";
 
    protected $static_group_types = array('Computer');
 
@@ -118,15 +118,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          unset($_SESSION['groupSearchResults']);
       }
 
-      if ($ID > 0) {
-         $this->check($ID, 'r');
-         $this->getFromDB($ID);
-      } else {
-         // Create item
-         $this->check(-1, 'w');
-         $this->getEmpty();
-      }
-
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
 
@@ -148,23 +139,15 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       self::dropdownGroupType('type', $this->fields['type']);
       echo "</td>";
       echo "</tr>";
-
+      echo "</table></div>";
+      
       $this->showFormButtons($options);
-
-      switch($this->fields['type']) {
-         case 'DYNAMIC':
-            $this->showDynamicForm();
-            break;
-         case 'STATIC':
-            $this->showStaticForm();
-            break;
-      }
 
       return TRUE;
    }
 
 
-
+/*
    function showStaticForm() {
       global $DB, $CFG_GLPI;
 
@@ -314,337 +297,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       Html::closeForm();
    }
-
-
-
-   /**
-    * Display dynamic search form
-    *
-    * @global type $DB
-    * @global type $CFG_GLPI
-    *
-    * @return boolean
-    */
-
-   function showDynamicForm() {
-      global $DB, $CFG_GLPI;
-
-      $pfDeployGroup_Dynamicdata = new PluginFusioninventoryDeployGroup_Dynamicdata();
-
-      $ID = $this->fields['id'];
-
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
-         WHERE `groups_id`='".$ID."'
-         LIMIT 1";
-      $result=$DB->query($query);
-      $plugin_fusioninventory_deploygroup_dynamicdatas_id = 0;
-
-      if ($DB->numrows($result) == 1) {
-         $data = $DB->fetch_assoc($result);
-         $plugin_fusioninventory_deploygroup_dynamicdatas_id = $data['id'];
-      } else {
-         $input = array();
-         $input['groups_id'] = $ID;
-         $input['fields_array'] = exportArrayToDB(array());
-         $plugin_fusioninventory_deploygroup_dynamicdatas_id =
-            $pfDeployGroup_Dynamicdata->add($input);
-      }
-
-      $pfDeployGroup_Dynamicdata->getFromDB($plugin_fusioninventory_deploygroup_dynamicdatas_id);
-      if (isset($_SESSION['plugin_fusioninventory_dynamicgroup']) &&
-         $_SESSION['plugin_fusioninventory_dynamicgroup']['plugin_fusioninventory_deploygroup_dynamicdatas_id']
-              == $plugin_fusioninventory_deploygroup_dynamicdatas_id
-      ) {
-         $_GET = $_SESSION['plugin_fusioninventory_dynamicgroup'];
-         $array_delete = array('add_search_count', 'delete_search_count',
-                               'add_search_count2', 'delete_search_count2');
-         foreach ($array_delete as $value_delete) {
-            if (isset($_SESSION['plugin_fusioninventory_dynamicgroup'][$value_delete])) {
-               unset($_SESSION['plugin_fusioninventory_dynamicgroup'][$value_delete]);
-            }
-         }
-      } else {
-         $_GET = importArrayFromDB($pfDeployGroup_Dynamicdata->fields['fields_array']);
-         unset($_SESSION["glpisearchcount"]['Computer']);
-         unset($_SESSION["glpisearchcount2"]['Computer']);
-         unset($_SESSION["glpisearch"]);
-         unset($_SESSION['plugin_fusioninventory_dynamicgroup']);
-         if (isset($_GET['field'])) {
-            $_GET["glpisearchcount"] = count($_GET['field']);
-         }
-         if (isset($_GET['field2'])) {
-            $_GET["glpisearchcount2"] = count($_GET['field2']);
-         }
-         if (!isset($_GET["glpisearchcount"])
-                 || $_GET["glpisearchcount"] == 0) {
-            $_GET["glpisearchcount"] = 1;
-         }
-      }
-
-      if (!isset($_GET['field'])) {
-         $_GET['field'] = array('');
-      }
-//              && count($_GET['field'])) {
-//         $_GET["glpisearchcount"] = count($_GET['field']);
-//      }
-//      if (!isset($_GET["glpisearchcount"])) {
-//         $_GET["glpisearchcount"] = 1;
-//      }
-      $_GET['name'] = 'rule';
-      $_GET['itemtype'] = 'Computer';
-//      unset($_SESSION["glpisearchcount"]['Computer']);
-//      unset($_SESSION["glpisearch"]);
-
-      Search::manageGetValues('Computer', FALSE);
-      $pfSearch = new PluginFusioninventorySearch();
-      $pfSearch->formurl            = $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/deploygroup_dynamicdata.form.php';
-      $pfSearch->customIdVar        = 'plugin_fusioninventory_deploygroup_dynamicdatas_id';
-      $pfSearch->displaydeletebuton = FALSE;
-
-      echo "<br/><br/>";
-      echo "<table class='tab_cadre_fixe'>";
-
-      echo "<form method='POST' name='update_group' id='update_group' action='".$pfSearch->formurl."'>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2'>".__("Update")."</th></tr>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Automatic update')."&nbsp:&nbsp";
-      Dropdown::showYesNo('can_update_group', $pfDeployGroup_Dynamicdata->fields['can_update_group']);
-      echo "</td><td>";
-      echo "<input type='submit' class='submit' value='".__("Update")."' name='update_group'>";
-      echo "<input type='hidden' name='id' value='$plugin_fusioninventory_deploygroup_dynamicdatas_id'>";
-      echo "</td></tr>";
-      echo "</table>";
-      Html::closeForm();
-
-      $_GET[$pfSearch->customIdVar] = $plugin_fusioninventory_deploygroup_dynamicdatas_id;
-      $_GET['id'] = $plugin_fusioninventory_deploygroup_dynamicdatas_id;
-      $pfSearch->showGenericSearch('Computer', $_GET);
-
-      echo "<br/><br/>";
-      echo "<table class='tab_cadre_fixe'>";
-
-      echo "<tr>";
-      echo "<th>";
-      echo __('Preview');
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<tr>";
-      echo "<td>";
-
-
-      $default_entity = 0;
-      if (isset($_SESSION['glpiactive_entity'])) {
-         $default_entity = $_SESSION['glpiactive_entity'];
-      }
-      $entities_isrecursive = 0;
-      if (isset($_SESSION['glpiactiveentities'])
-              AND count($_SESSION['glpiactiveentities']) > 1) {
-         $entities_isrecursive = 1;
-      }
-
-      Search::showList('Computer', $_GET);
-
-      echo "</td>";
-      echo "</tr>";
-      echo "</table>";
-   }
-
-
-
-   function showSearchFields($type = 'static', $fields = array())  {
-      global $CFG_GLPI;
-
-      if (count($fields) == 0) {
-         $fields = array(
-            'itemtype'              => 'computer',
-            'start'                 => '0',
-            'limit'                 => '',
-            'serial'                => '',
-            'otherserial'           => '',
-            'locations_id'          => '',
-            'operatingsystems_id'   => '0',
-            'operatingsystem_name'  => '',
-            'room'                  => '',
-            'building'              => '',
-            'name'                  => ''
-         );
-
-         if (isset($_SESSION['groupSearchResults'])) {
-            foreach($_SESSION['groupSearchResults'] as $key => $field) {
-               $fields[$key] = $field;
-            }
-         }
-      }
-
-      echo "<tr><th colspan='4'>".__('Search')."</th></tr>";
-      echo "<tr>";
-
-      echo "<td class='left'></td>";
-      echo "<td class='left'>";
-      echo "<input type='hidden' name='itemtype' id='group_search_itemtype' value='Computer' />";
-      echo "</td>";
-
-      echo "<td>".__('Location')."&nbsp;: </td>";
-      echo "<td>";
-      $rand_location = '';
-      Dropdown::show('Location', array(
-         'value'  => $fields['locations_id'],
-         'name'   => 'locations_id',
-         'rand'   => $rand_location
-      ));
-      echo "</td>";
-
-      echo "</tr><tr>";
-
-/*
-      echo "<td class='left'>".__('Start')." : ";
-      echo "<input type='text' name='start' id='group_search_start' value='".$fields['start']
-         ."' value='0' size='3' /></td>";
-
-      echo "<td class='left'>".__('Display')."&nbsp;";
-      echo "<input type='text' name='limit' id='group_search_limit' value='".$fields['limit']
-         ."' size='3' />&nbsp;";
-      echo __('items');
-
-      echo "</td>";
 */
 
-      echo "<td class='left'>".__('Room number')." : </td>";
-      echo "<td class='left'><input type='text' name='room' id='group_search_room' value='"
-         .$fields['room']."' size='15' /></td>";
 
-      echo "<td class='left'>".__('Building number')." : </td>";
-      echo "<td class='left'><input type='text' name='building' id='group_search_building' value='"
-         .$fields['building']."' size='15' /></td>";
-
-      echo "</tr><tr>";
-
-      echo "<td class='left'>".__('Serial Number')." : </td>";
-      echo "<td class='left'><input type='text' name='serial' id='group_search_serial' value='"
-         .$fields['serial']."' size='15' /></td>";
-
-      echo "<td class='left'>".__('Computer\'s name')." : </td>";
-      echo "<td class='left'><input type='text' name='name' id='group_search_name' value='"
-         .$fields['name']."' size='15' /></td>";
-
-      echo "</tr><tr>";
-
-      echo "<td class='left'>".__('Inventory number')." : </td>";
-      echo "<td class='left'><input type='text' name='otherserial' id='group_search_otherserial' ".
-              "value='".$fields['otherserial']."' size='15' /></td>";
-
-      echo "<td class='left'>".__('Operating system')." : </td>";
-      echo "<td>";
-      /*$rand_os = mt_rand();
-      Dropdown::show('OperatingSystem', array(
-         'value'  => $fields['operatingsystems_id'],
-         'name'   => 'operatingsystems_id',
-         'rand'   => $rand_os
-      ));
-      echo "<hr />";*/
-
-      self::ajaxDisplaySearchTextForDropdown("operatingsystems_id",
-                                             $fields['operatingsystem_name'],
-                                             8);
-
-      $params_os = array('searchText'     => '__VALUE__',
-                             'myname'     => 'operatingsystems_id',
-                             'table'      => 'glpi_operatingsystems',
-                             'value'      => $fields['operatingsystems_id']);
-
-      Ajax::updateItemOnInputTextEvent("search_operatingsystems_id",
-                                       "operatingsystems_dropdown",
-                                       $CFG_GLPI["root_doc"].
-                                          "/plugins/fusioninventory/ajax/".
-                                          "deploydropdown_operatingsystems.php",
-                                       $params_os);
-
-      //load default operatingsystems_dropdown
-      Ajax::updateItem("operatingsystems_dropdown",
-                       $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/".
-                          "deploydropdown_operatingsystems.php",
-                       $params_os, /*false,*/ "search_operatingsystems_id");
-
-      echo "<span id='operatingsystems_dropdown'>";
-      echo "<select name='operatingsystems_id' id='operatingsystems_id'><option value='0'>".
-              Dropdown::EMPTY_VALUE."</option></select>";
-      echo "</span>\n";
-
-      Html::showToolTip("* ".__('for all')."<br />".
-      __('If no line in the list is selected, the text fields on the left will be used for search.')
-                       );
-
-      echo "</td>";
-
-      echo "</tr><tr>";
-
-      echo "<td class='center' colspan='4'>";
-
-      self::groupAjaxLoad($type);
-
-      echo "</td>";
-      echo "</tr>";
-   }
-
-   static function groupAjaxLoad($type) {
-      global $CFG_GLPI;
-
-      self::ajaxLoad(
-         'group_search_submit',
-         'group_results',
-         $CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/deploygroup_results.php",
-         array(
-            'itemtype'              => 'group_search_itemtype',
-            'locations_id'          => 'dropdown_locations_id',
-            'operatingsystem_name'  => 'search_operatingsystems_id',
-            'operatingsystems_id'   => 'operatingsystems_id',
-            'serial'                => 'group_search_serial',
-            'otherserial'           => 'group_search_otherserial',
-            'name'                  => 'group_search_name'
-         ),
-         $type
-      );
-
-   }
-
-
-
-   static function ajaxLoad($to_observe, $toupdate, $url, $params_id, $type) {
-      $start = 0;
-      if (isset($_REQUEST['start'])) {
-         $start = $_REQUEST['start'];
-      }
-
-      echo "<script type='text/javascript'>
-      Ext.onReady(function() {
-         function loadResults() {
-            Ext.get('$toupdate').load({
-               url: '$url',
-               scripts: true,
-               params: {
-                  type: '$type',
-                  start: '$start',
-                  ";
-                  $out = "";
-                  foreach($params_id as $name => $id) {
-                     $out .= "$name: Ext.get('$id').getValue(),";
-                  }
-                  echo substr($out, 0, -1);
-               echo"}
-            });
-         }
-         Ext.get('$to_observe').on('click', function() {
-            loadResults();
-         });";
-      if (isset($_REQUEST['start'])) {
-         echo "setTimeout(function(thisObj) { loadResults(); }, 200, this);";
-      }
-
-      echo "})
-      </script>";
-   }
 
 
 
@@ -915,13 +570,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
 
 
-   static function ajaxDisplaySearchTextForDropdown($id, $value, $size=4) {
-      global $CFG_GLPI;
-
-      echo "<input title=\"".__('Search')." (".$CFG_GLPI['ajax_wildcard']." ".__('for all').")\"
-            type='text' value='$value' ondblclick=\"this.value='".
-             $CFG_GLPI["ajax_wildcard"]."';\" id='search_$id' name='____data_$id' size='$size'>\n";
-   }
 
    function getSearchOptions() {
 
