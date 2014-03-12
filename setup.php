@@ -235,7 +235,11 @@ function plugin_init_fusioninventory() {
        */
       if (  script_endswith("deploypackage.form.php") ) {
 
+         $PLUGIN_HOOKS['add_css']['fusioninventory'][]="lib/extjs/resources/css/ext-all.css";
+
          $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array(
+             "lib/extjs/adapter/ext/ext-base.js",
+             "lib/extjs/ext-all-debug.js",
              "lib/REDIPS_drag/redips-drag-source.js",
              "lib/REDIPS_drag/drag_table_rows.js",
              "lib/plusbutton.js",
