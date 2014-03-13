@@ -6345,9 +6345,36 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          }
       }
    }
+   
+   $query = "SELECT `id`, `fields_array` FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`";
+   foreach ($DB->request($query) as $dynamic_data) {
+      $new_values = migrationDynamicGroupFields($dynamic_data['fields_array']);
+      $query_update = "UPDATE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` 
+                       SET `fields_array`='".serialize($new_values)."'
+                       WHERE `id`='".$dynamic_data['id']."'";
+      $DB->query($query_update);
+   }
 }
 
-
+function migrationDynamicGroupFields($old_fields) {
+   $new_fields    = array();
+   $searchOptions = Search::getOptions('Computer');
+   foreach ($old_fields as $key => $value) {
+       
+      if (!empty($value) && $value != 0 && $value != '') {
+         foreach ($searchOptions as $id => $searchOption) {
+            if (is_array($searchOption) && isset ($searchOption['linkfield']) && $searchOption['linkfield'] == $key) {
+               $new_value['value']      = $value;
+               $new_value['field']      = $id;
+               $new_value['searchtype'] = 'equals';
+               $new_fields[]            = $new_value; 
+               break;
+            }
+         }
+      }
+   }
+   return $new_fields;
+}
 
 function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
    static $created=0;
@@ -6374,8 +6401,6 @@ function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
    Html::glpi_flush();
 }
 
-
-
 function changeDisplayPreference($olditemtype, $newitemtype) {
    global $DB;
 
@@ -6397,8 +6422,6 @@ function changeDisplayPreference($olditemtype, $newitemtype) {
       WHERE `itemtype`='".$olditemtype."' ";
    $DB->query($sql);
 }
-
-
 
 function pluginFusioninventoryUpdatemapping() {
 
@@ -7566,8 +7589,6 @@ function pluginFusioninventoryUpdatemapping() {
 
 }
 
-
-
 function update213to220_ConvertField($migration) {
    global $DB;
 
@@ -8226,8 +8247,6 @@ function pluginFusioninventorychangeDisplayPreference($olditemtype, $newitemtype
    }
 }
 
-
-
 function migrateTablesFusionInventory($migration, $a_table) {
    global $DB;
 
@@ -8601,30 +8620,30 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
       // Checks for /jobs json property
       if( !isset($json_order->jobs) || !is_object($json_order->jobs) ) {
-         print("deployorders fixer : create missing required 'jobs' property\n");
+         //print("deployorders fixer : create missing required 'jobs' property\n");
          $json_order->jobs = new stdClass();
       }
 
       if ( !isset($json_order->jobs->checks) ) {
-         print("deployorders fixer : create missing required '/jobs/checks' array property\n");
+         //print("deployorders fixer : create missing required '/jobs/checks' array property\n");
          $json_order->jobs->checks = array();
       }
       if ( !isset($json_order->jobs->actions) ) {
-         print("deployorders fixer : create missing required '/jobs/actions' array property\n");
+         //print("deployorders fixer : create missing required '/jobs/actions' array property\n");
          $json_order->jobs->actions = array();
       }
       if ( !isset($json_order->jobs->associatedFiles) ) {
-         print("deployorders fixer : create missing required '/jobs/associatedFiles' array property\n");
+         //print("deployorders fixer : create missing required '/jobs/associatedFiles' array property\n");
          $json_order->jobs->associatedFiles = array();
       }
 
       // Checks for /associatedFiles json property
       if( !isset($json_order->associatedFiles) || !is_object($json_order->associatedFiles) ) {
-         print("deployorders fixer : create missing required 'associatedFiles' property\n");
+         //print("deployorders fixer : create missing required 'associatedFiles' property\n");
          $json_order->associatedFiles = new stdClass();
       }
       print(
-         "deployorders fixer : final order structure for ID ".$order_config['id']."\n" .
+         //"deployorders fixer : final order structure for ID ".$order_config['id']."\n" .
          json_encode($json_order,JSON_PRETTY_PRINT) ."\n"
       );
       $pfDeployOrder::updateOrderJson($order_config['id'], $json_order);

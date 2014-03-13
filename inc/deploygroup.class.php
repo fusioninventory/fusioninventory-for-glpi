@@ -75,13 +75,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          );
    }
 
-   /*
+   
    function defineTabs($options=array()) {
       $ong = array();
+      $this->addDefaultFormTab($ong);
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
-   }*/
-
+   }
 
    function showMenu($options=array())  {
 
@@ -113,7 +113,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    function showForm($ID, $options = array()) {
 
       $this->initForm($ID, $options);
-      $this->showNavigationHeader($options);
       $this->showFormHeader($options);
     
       echo "<tr class='tab_bg_1'>";
@@ -136,25 +135,23 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</tr>";
       
       $this->showFormButtons($options);
-
-      //Display computers in the group only if it's static
-      if ($this->fields['type'] == self::STATIC_GROUP) {
-         PluginFusioninventoryDeployGroup_Staticdata::showResultsForGroup($this);
-      }
       
-      $params           = Search::manageParams('PluginFusioninventoryComputer', $_POST);
-      $params['target'] = Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployGroup')."?id=".$this->getID();
+      
+      return TRUE;
+   }
+
+   static function showSearchForComputers(PluginFusioninventoryDeployGroup $group, $params = array()) {
+      $params           = Search::manageParams('PluginFusioninventoryComputer', $params);
+      $params['target'] = Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployGroup')."?id=".$group->getID();
       
       //TODO exclude computers that already belong to the static group
       //$params['criteria'][] = array('field' => 2, 'value' => 9, 'searchtype' => 'notequals');
       
-      //if (!isset($params['metacriteria']) && empty($params['metacriteria'])) {
-         $params['metacriteria'] = array();
-      //}
+      $params['metacriteria'] = array();
       if (!isset($_POST['preview'])) {
          unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
       }
-      self::showCriteria($this, true, $params);
+      self::showCriteria($group, true, $params);
       if (isset($_POST['preview'])) {
          Search::showList('PluginFusioninventoryComputer', $params);
       } else {
@@ -162,11 +159,10 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          //if (isset($_SESSION['groupSearchResults'])) {
          //unset($_SESSION['groupSearchResults']);
          //}
-         $_SESSION['plugin_fusioninventory_group_search_id'] = $ID;
+         $_SESSION['plugin_fusioninventory_group_search_id'] = $group->getID();
       }
-      return TRUE;
    }
-
+   
    /**
     * Print pager for group list
     *
@@ -176,6 +172,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     *
     * @return nothing (print a pager)
     **/
+    
+    /*
    static function printGroupPager($title, $start, $numrows) {
       global $CFG_GLPI;
 
@@ -248,8 +246,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       // End pager
       echo "</tr></table>";
-   }
+   }*/
 
+   /*
    static function showSearchResults($params) {
       global $DB;
 
@@ -427,7 +426,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       return json_encode($json);
    }
-
+*/
    function getSearchOptions() {
 
       $tab = array();
@@ -498,14 +497,15 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       global $CFG_GLPI, $DB;
 
 
+      $is_dynamic = ($group->fields['type'] == self::DYNAMIC_GROUP);
       $itemtype = "PluginFusioninventoryComputer";
       //unset($_SESSION['glpisearch'][$itemtype]);
       //$p = array();
       
-      if ($group->fields['type'] == self::DYNAMIC_GROUP) {
+      if ($is_dynamic) {
          $query = "SELECT `fields_array` 
                    FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` 
-                   WHERE `plugin_fusioninventory_deploygroups_groups_id`='".$group->getID()."'";
+                   WHERE `plugin_fusioninventory_deploygroups_id`='".$group->getID()."'";
          $result = $DB->query($query);
          if ($DB->numrows($result) > 0) {
             $fields_array = $DB->result($result, 0, 'fields_array');
@@ -513,8 +513,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          }
       }
  
-      //$p = Search::manageParams($itemtype, $p);
-
       if ($formcontrol) {
          //show generic search form (duplicated from Search class)
          echo "<form name='group_search_form' method='post'>";
@@ -576,11 +574,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       if ($formcontrol) {
          // add new button to search form (to store and preview)
          echo "<div class='center'>";
-         //echo "<input type='submit' value=\" "._sx('button', 'Save').
-         //     " \" class='submit' name='update'>&nbsp;";
-        
-        echo "<input type='submit' value=\" ".__('Preview')." \" class='submit' name='preview'>";
-         echo "</div>";
+         if ($is_dynamic) {
+            echo "<input type='submit' value=\" "._sx('button', 'Save').
+               " \" class='submit' name='save'>&nbsp;";
+         } else {
+            echo "<input type='submit' value=\" ".__('Preview')." \" class='submit' name='preview'>";
+            echo "</div>";
+         }
       }
 
       echo "</td></tr></table>";

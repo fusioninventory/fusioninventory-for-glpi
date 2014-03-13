@@ -54,8 +54,9 @@ class PluginFusioninventoryComputer extends Computer {
       $options['6000']['table']         = getTableForItemType('PluginFusioninventoryDeployGroup');
       $options['6000']['massiveaction'] = FALSE;
       $options['6000']['field']         ='name';
-      $options['6000']['forcegroupby']   = true;
-      $options['6000']['usehaving']      = true;
+      $options['6000']['forcegroupby']  = true;
+      $options['6000']['usehaving']     = true;
+      $options['6000']['datatype']      = 'dropdown';
       $options['6000']['joinparams']    = array('beforejoin'
                                          => array('table'      => 'glpi_plugin_fusioninventory_deploygroups_staticdatas',
                                                   'joinparams' => array('jointype'          => 'itemtype_item',
@@ -64,10 +65,11 @@ class PluginFusioninventoryComputer extends Computer {
    }
    
    function getSpecificMassiveActions($checkitem=NULL) {
-      $isadmin = static::canUpdate();
-
-      if ($isadmin) {
-         $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add'] = _x('button', 'Add to group');
+      global $DEPLOY_MASSIVEACTION_OPTIONS;
+      $actions = array();
+      if (static::canUpdate() && (isset($DEPLOY_MASSIVEACTION_OPTIONS) && $DEPLOY_MASSIVEACTION_OPTIONS != 'view')) {
+         $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']        = _x('button', 'Add to group');
+         $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem'] = _x('button', 'Delete');
       }
 
       return $actions;
@@ -80,6 +82,7 @@ class PluginFusioninventoryComputer extends Computer {
 
       $forbidden   = parent::getForbiddenStandardMassiveAction();
       $forbidden[] = 'update';
+      $forbidden[] = 'add';
       $forbidden[] = 'delete';
       return $forbidden;
    }
@@ -117,6 +120,14 @@ class PluginFusioninventoryComputer extends Computer {
             }
          }
          return;
+         
+         case 'deleteitem':
+            
+            foreach ($ids as $key) {
+               $group_item->deleteByCriteria(array('items_id' => $key, 
+                                                   'itemtype' => 'Computer', 
+                                                   'plugin_fusioninventory_deploygroups_id' => $_SESSION['plugin_fusioninventory_group_search_id']));
+         }
       }
    }
 
