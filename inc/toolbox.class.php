@@ -634,6 +634,44 @@ class PluginFusioninventoryToolbox {
          );
       }
    }
+
+
+
+   /**
+    * Dropdown for display hours
+    *
+    * @return type
+    */
+   static function showHours($name, $options=array()) {
+
+      $p['value']          = '';
+      $p['display']        = true;
+      $p['width']          = '80%';
+      $p['step']           = 5;
+      $p['begin']          = 0;
+      $p['end']            = (24 * 3600);
+
+      if (is_array($options) && count($options)) {
+         foreach ($options as $key => $val) {
+            $p[$key] = $val;
+         }
+      }
+
+      if ($p['step'] <= 0) {
+         $p['step'] = 5;
+      }
+
+      $values   = array();
+
+      $p['step'] = $p['step'] * 60; // to have in seconds
+      for ($s=$p['begin'] ; $s<$p['end'] ; $s+=$p['step']) {
+         $hour = floor($s / 3600);
+         $minute = (($s - ((floor($s / 3600)) * 3600)) / 60);
+         $values[$s] = sprintf("%02s", $hour).":".sprintf("%02s", $minute);
+      }
+      return Dropdown::showFromArray($name, $values, $p);
+   }
+
 }
 
 ?>
