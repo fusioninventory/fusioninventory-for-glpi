@@ -116,8 +116,25 @@ $migration = new CliMigration($current_version);
 
    $migration->displayWarning($mess);
 
-   if (in_array('--no-models-update', $_SERVER['argv'])) {
+   $options = getopt(
+      "",
+      array(
+         "no-models-update",
+         "as-user:"
+      )
+   );
+
+   if (array_key_exists('no-models-update', $options)) {
       define('NO_MODELS_UPDATE', TRUE);
+   }
+
+   if (array_key_exists('as-user', $options)) {
+      $user = new User();
+      $user->getFromDBbyName($options['as-user']);
+      $auth = new Auth();
+      $auth->auth_succeded = true;
+      $auth->user = $user;
+      Session::init($auth);
    }
    $plugin->getFromDBbyDir("fusioninventory");
    print("Installing Plugin...\n");
