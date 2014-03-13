@@ -317,7 +317,7 @@ class PluginFusioninventoryProfile extends Profile {
                 'label'     => __('Configuration', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_configuration'),
           array('itemtype'  => 'PluginFusioninventoryTask',
-                'label'     => _n('Task', 'Tasks', 2),
+                'label'     => _n('Task', 'Tasks', 2, 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_task'),
           array('rights'    => CommonDBTM::getRights(),
                 'label'     => __('Wake On LAN', 'fusioninventory'),

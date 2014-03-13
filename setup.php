@@ -228,6 +228,10 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
                  "lib/deploy_editsubtype.js";
       }
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+              "lib/d3-3.4.3/d3.min.js";
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+              "lib/timeslot.js";
 
       if (Session::haveRight('plugin_fusioninventory_configuration', READ)
               || Session::haveRight('profile', UPDATE)) {// Config page

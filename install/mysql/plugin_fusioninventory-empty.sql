@@ -1119,6 +1119,36 @@ CREATE TABLE `glpi_plugin_fusioninventory_collects_files_contents` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_timeslots`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_timeslots` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `entities_id` int(11) NOT NULL DEFAULT '0',
+  `is_recursive` tinyint(1) NOT NULL DEFAULT '1',
+  `name` varchar(255) DEFAULT NULL,
+  `comment` text DEFAULT NULL,
+  `date_mod` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_timeslotentries`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_timeslotentries` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `plugin_fusioninventory_timeslots_id` int(11) NOT NULL DEFAULT '0',
+ `entities_id` int(11) NOT NULL DEFAULT '0',
+ `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
+ `day` tinyint(1) NOT NULL DEFAULT '1',
+ `begin` int(11) DEFAULT NULL,
+ `end` int(11) DEFAULT NULL,
+ PRIMARY KEY (`id`),
+ KEY `plugin_fusioninventory_calendars_id` (`plugin_fusioninventory_timeslots_id`),
+ KEY `day` (`day`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 -- INSERT
 -- glpi_plugin_fusioninventory_configsecurities
 INSERT INTO `glpi_plugin_fusioninventory_configsecurities`
