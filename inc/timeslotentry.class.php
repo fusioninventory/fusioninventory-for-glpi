@@ -179,11 +179,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       }
 
       echo '<script>timeslot(\''.json_encode($dates).'\')</script>';
-      echo "<pre>"; print_r(getAllDatasFromTable(
-                        'glpi_plugin_fusioninventory_timeslotentries',
-                        '',
-                        '`day`,`begin` ASC'));
-
    }
 
 
