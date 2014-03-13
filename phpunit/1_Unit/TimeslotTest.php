@@ -187,5 +187,105 @@ class TimeslotTest extends RestoreDatabase_TestCase {
       $this->assertEquals($references, $db, "May have 3 entries ".print_r($db, true));
    }
 
+
+
+  /**
+    * @test
+    */
+   public function addEntrieslotNotInRanges() {
+
+      $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
+      $input = array(
+          'timeslots_id' => 1,
+          'beginday'     => 1,
+          'lastday'      => 1,
+          'beginhours'   => 15,
+          'lasthours'    => 30
+      );
+      $pfTimeslotEntry->addEntry($input);
+
+      $references = array(
+          '1' => array(
+              'id' => '1',
+              'entities_id'  => '0',
+              'plugin_fusioninventory_timeslots_id' => '1',
+              'is_recursive' => '0',
+              'day'          => '1',
+              'begin'        => '7215',
+              'end'          => '43200'
+          ),
+          '2' => array(
+              'id'           => '2',
+              'entities_id'  => '0',
+              'plugin_fusioninventory_timeslots_id' => '1',
+              'is_recursive' => '0',
+              'day'          => '1',
+              'begin'        => '72000',
+              'end'          => '79200'
+          ),
+          '3' => array(
+              'id'           => '3',
+              'entities_id'  => '0',
+              'plugin_fusioninventory_timeslots_id' => '1',
+              'is_recursive' => '0',
+              'day'          => '3',
+              'begin'        => '39600',
+              'end'          => '79200'
+          ),
+          '4' => array(
+              'id'           => '4',
+              'entities_id'  => '0',
+              'plugin_fusioninventory_timeslots_id' => '1',
+              'is_recursive' => '0',
+              'day'          => '1',
+              'begin'        => '15',
+              'end'          => '30'
+          )
+      );
+      $db = getAllDatasFromTable('glpi_plugin_fusioninventory_timeslotentries');
+      $this->assertEquals($references, $db, "May have 3 entries ".print_r($db, true));
+   }
+
+
+
+  /**
+    * @test
+    */
+   public function addEntryin2Ranges() {
+
+      $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
+      $input = array(
+          'timeslots_id' => 1,
+          'beginday'     => 1,
+          'lastday'      => 1,
+          'beginhours'   => 0,
+          'lasthours'    => 79215
+      );
+      $pfTimeslotEntry->addEntry($input);
+
+      $references = array(
+          '1' => array(
+              'id' => '1',
+              'entities_id'  => '0',
+              'plugin_fusioninventory_timeslots_id' => '1',
+              'is_recursive' => '0',
+              'day'          => '1',
+              'begin'        => '0',
+              'end'          => '79215'
+          ),
+          '3' => array(
+              'id'           => '3',
+              'entities_id'  => '0',
+              'plugin_fusioninventory_timeslots_id' => '1',
+              'is_recursive' => '0',
+              'day'          => '3',
+              'begin'        => '39600',
+              'end'          => '79200'
+          )
+      );
+      $db = getAllDatasFromTable('glpi_plugin_fusioninventory_timeslotentries');
+      $this->assertEquals($references, $db, "May have 3 entries ".print_r($db, true));
+   }
+
 }
 

@@ -212,8 +212,9 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
                         '',
                         '`begin` ASC');
 
-         $rangeToUpdate = array();
+         $rangeToUpdate = $dbentries;
          $rangeToAdd = array();
+         $rangeToDelete = array();
 
          foreach ($dbentries as $entries) {
             // the entry if before this db entry
@@ -233,11 +234,9 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
             }
 
             if ($range['beginhours'] < $entries['begin']) {
+               $rangeToUpdate[$entries['id']]['begin'] = $range['beginhours'];
                if ($range['lasthours'] < $entries['end']) {
-                  $rangeToUpdate = array(array(
-                      'id'    => $entries['id'],
-                      'begin' => $range['beginhours']
-                  ));
+                  unset($range['beginhours']);
                   break;
                } else {
                   $range['beginhours'] = $entries['end'];
@@ -248,6 +247,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
                }
             }
          }
+
          if (isset($range['beginhours'])
                  && $range['beginhours'] != $range['lasthours']) {
             $rangeToAdd = array(array(
@@ -257,11 +257,53 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
                 'day'   => $day
             ));
          }
+
+         $previousend = 0;
+         $previousid  = 0;
+         $newbegin    = false;
+         foreach ($rangeToAdd as $key=>$dbToAdd) {
+            if ($dbToAdd['begin'] == 0) {
+               unset($rangeToAdd[$key]);
+               $newbegin = true;
+            }
+         }
+
+         foreach ($rangeToUpdate as $dbToUpdate) {
+            if ($newbegin) {
+               $rangeToUpdate[$dbToUpdate['id']]['begin'] = 0;
+               $newbegin = false;
+            }
+            if ($dbToUpdate['begin'] > 0) {
+               if ($dbToUpdate['begin'] == $previousend
+                       || $dbToUpdate['begin'] == ($previousend + 15)) {
+                  // delete this db entry
+                  $rangeToDelete[$dbToUpdate['id']] = $dbToUpdate;
+                  unset($rangeToUpdate[$dbToUpdate['id']]);
+                  $dbToUpdate['id'] = $previousid;
+                  $rangeToUpdate[$previousid]['end'] = $dbToUpdate['end'];
+               }
+               // Manage $range (the entry to add)
+               foreach ($rangeToAdd as $key=>$dbToAdd) {
+                  if ($dbToAdd['begin'] == $dbToUpdate['end']
+                          || ($dbToAdd['begin'] == ($dbToUpdate['end'] + 15))) {
+                     unset($rangeToAdd[$key]);
+                     $rangeToUpdate[$dbToUpdate['id']]['end'] = $dbToAdd['end'];
+                     $dbToUpdate['end'] = $dbToAdd['end'];
+                  }
+               }
+            }
+            $previousend = $dbToUpdate['end'];
+            $previousid  = $dbToUpdate['id'];
+         }
+
          foreach ($rangeToAdd as $toadd) {
             $this->add($toadd);
          }
          foreach ($rangeToUpdate as $toupdate) {
             $this->update($toupdate);
+         }
+         foreach ($rangeToDelete as $todelete) {
+            $this->delete($todelete);
          }
       }
    }
