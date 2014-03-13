@@ -164,7 +164,10 @@ class PluginFusioninventoryProfile extends Profile {
          }
       }
       // Add all rights to current profile of the user
-      if (isset($_SESSION['glpiactiveprofile'])) {
+      if (
+         isset($_SESSION['glpiactiveprofile'])
+         and isset($_SESSION['glpiactiveprofile']['id'])
+      ) {
          $dataprofile = array();
          $dataprofile['id'] = $_SESSION['glpiactiveprofile']['id'];
          $profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
