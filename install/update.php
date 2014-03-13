@@ -6218,6 +6218,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 //   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
 //   $pfIgnoredimportdevice->install();
 
+      //Change static & dynamic structure to fit the GLPI framework
+      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 
+                              'groups_id', 
+                              'plugin_fusioninventory_deploygroups_id', 'integer');
+      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_dynamicdatas');
+      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_staticdatas', 
+                              'groups_id', 'plugin_fusioninventory_deploygroups_id', 'integer');
+      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_staticdatas');
 
 
    // Delete data in glpi_logs(agent problem => ticket http://forge.fusioninventory.org/issues/1546)
@@ -8589,7 +8597,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
    foreach( $orders as $order_config ) {
       $pfDeployOrder = new PluginFusioninventoryDeployOrder();
       $json_order = json_decode($order_config['json']);
-      print("deployorders fixer : actual order structure for ID ".$order_config['id']."\n" . print_r($json_order,true) ."\n");
+      //print("deployorders fixer : actual order structure for ID ".$order_config['id']."\n" . print_r($json_order,true) ."\n");
 
       // Checks for /jobs json property
       if( !isset($json_order->jobs) || !is_object($json_order->jobs) ) {

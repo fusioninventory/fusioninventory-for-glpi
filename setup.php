@@ -201,6 +201,8 @@ function plugin_init_fusioninventory() {
 
       $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] =
                                                       "glpi_plugin_fusioninventory_printers";
+      $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryComputer"] =
+                                                      "glpi_computers";
 
       // ##### 3. get informations of the plugin #####
 

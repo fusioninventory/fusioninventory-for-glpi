@@ -66,22 +66,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       return parent::can($ID, $right, $input);
    }
 
-
-
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
-      if ($item->fields['type'] == 'STATIC') {
-         return __('Static group', 'fusioninventory');
-      }
-   }
-
-
-
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      self::showForGroup($item);
-   }
-
-   static function showForGroup(PluginFusioninventoryDeployGroup $group) {
+   static function showResultsForGroup(PluginFusioninventoryDeployGroup $group) {
       global $DB, $CFG_GLPI;
 
       $groupID = $group->getID();
@@ -93,18 +78,20 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
 
       $query = "SELECT DISTINCT `itemtype`
                 FROM `glpi_plugin_fusioninventory_deploygroups_staticdatas` as `staticdatas`
-                WHERE `staticdatas`.`groups_id` = '$groupID'
+                WHERE `staticdatas`.`plugin_fusioninventory_deploygroups_id` = '$groupID'
                 ORDER BY `itemtype`";
 
       $result = $DB->query($query);
       $number = $DB->numrows($result);
       $totalnb = 0;
-/*
+
       echo "<form name='group_form$rand' 
                   id='group_form$rand' 
                   method='POST' 
                   action='".Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup")."'>";
-*/
+
+       echo "<input type='hidden' name='type' value='static' />";
+
       echo "<div class='center'><table class='tab_cadre_fixe'>";
       echo "<tr><th colspan='5'>";
       echo __('Associated items');
@@ -116,10 +103,6 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       } else {
          if ($canedit) {
             echo "</table></div>";
-
-//            echo "<form method='post' name='group_form$rand' id='group_form$rand' action=\"".
-//                   $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/deploygroup.form.php\">";
-            echo "<input type='hidden' name='type' value='static' />";
 
             echo "<div class='spaced'>";
             echo "<table class='tab_cadre_fixe'>";
@@ -146,7 +129,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
                                  AS `staticdatas`, `$itemtable`";
                $query .= " WHERE `$itemtable`.`id` = `staticdatas`.`items_id`
                                  AND `staticdatas`.`itemtype` = '$itemtype'
-                                 AND `staticdatas`.`groups_id` = '$groupID'";
+                                 AND `staticdatas`.`plugin_fusioninventory_deploygroups_id` = '$groupID'";
 
                if ($item->maybeTemplate()) {
                   $query .= " AND `$itemtable`.`is_template` = '0'";
@@ -203,28 +186,6 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       }
 
       echo "</div>";
-//      Html::closeForm();
-
-      echo "<form name='group_search' 
-                  id='group_search' 
-                  method='POST' 
-                  action='".Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup")."'>";
-      echo "<input type='hidden' name='groupID' value='$groupID' />";
-      echo "<input type='hidden' name='type' value='static' />";
-      echo "<div class='center'>";
-      echo "<table class='tab_cadre_fixe'>";
-
-      self::showSearchFields('static');
-
-      echo "</table>";
-
-      echo "<input type='button' value=\"".__('Search')
-
-            ."\" id='group_search_submit' class='submit' name='add_item' />&nbsp;";
-
-      echo "<div id='group_results'></div>";
-      echo "</div>";
-
       Html::closeForm();
    }
 

@@ -163,6 +163,7 @@ if (isset($_POST["add"])) {
    PluginFusioninventoryMenu::displayMenu("mini");
 
 
+   //$group->showForm($_GET['id']);
    $group->display($_GET);
 
    Html::footer();

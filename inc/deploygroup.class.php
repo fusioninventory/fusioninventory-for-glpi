@@ -46,12 +46,15 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
+   const STATIC_GROUP  = 'STATIC';
+   const DYNAMIC_GROUP = 'DYNAMIC';
+
    static $rightname = "plugin_fusioninventory_configuration";
 
    protected $static_group_types = array('Computer');
 
    public $dohistory = TRUE;
-
+   
 
    static function getTypeName($nb=0) {
 
@@ -67,22 +70,17 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    public function __construct() {
       $this->grouptypes = array(
-            'STATIC'    => __('Static group', 'fusioninventory'),
-            'DYNAMIC'   => __('Dynamic group', 'fusioninventory')
+            self::STATIC_GROUP  => __('Static group', 'fusioninventory'),
+            self::DYNAMIC_GROUP => __('Dynamic group', 'fusioninventory')
          );
    }
 
-//   function defineTabs($options=array()) {
-//
-//      $ong = array();
-//      if ($this->fields['id'] > 0){
-//         $this->addStandardTab("PluginFusioninventoryDeployGroup_Staticdata", $ong, $options);
-//         $this->addStandardTab("PluginFusioninventoryDeployGroup_Dynamicdata", $ong, $options);
-//      }
-//      $this->addStandardTab('Log', $ong, $options);
-//      return $ong;
-//   }
-
+   /*
+   function defineTabs($options=array()) {
+      $ong = array();
+      $this->addStandardTab('Log', $ong, $options);
+      return $ong;
+   }*/
 
 
    function showMenu($options=array())  {
@@ -114,13 +112,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
    function showForm($ID, $options = array()) {
 
-      if (isset($_SESSION['groupSearchResults'])) {
-         unset($_SESSION['groupSearchResults']);
-      }
-
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
-
+    
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -139,169 +133,36 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       self::dropdownGroupType('type', $this->fields['type']);
       echo "</td>";
       echo "</tr>";
-      echo "</table></div>";
       
       $this->showFormButtons($options);
 
+      //Display computers in the group only if it's static
+      if ($this->fields['type'] == self::STATIC_GROUP) {
+         PluginFusioninventoryDeployGroup_Staticdata::showResultsForGroup($this);
+      }
+      
+      $params           = Search::manageParams('PluginFusioninventoryComputer', $_POST);
+      $params['target'] = Toolbox::getItemTypeFormURL('PluginFusioninventoryDeployGroup')."?id=".$this->getID();
+      
+      //TODO exclude computers that already belong to the static group
+      //$params['criteria'][] = array('field' => 2, 'value' => 9, 'searchtype' => 'notequals');
+      
+      //if (!isset($params['metacriteria']) && empty($params['metacriteria'])) {
+         $params['metacriteria'] = array();
+      //}
+
+      self::showCriteria($this, true, $params);
+      if (isset($_POST['preview'])) {
+         Search::showList('PluginFusioninventoryComputer', $params);
+      } else {
+         //If not preview requested : clear search parameters in session
+         if (isset($_SESSION['groupSearchResults'])) {
+         unset($_SESSION['groupSearchResults']);
+         }
+         $_SESSION['plugin_fusioninventory_group_search_id'] = $ID;
+      }
       return TRUE;
    }
-
-
-/*
-   function showStaticForm() {
-      global $DB, $CFG_GLPI;
-
-      $groupID = $this->fields['id'];
-      if (!$this->can($groupID, 'r')) {
-         return FALSE;
-      }
-      $canedit = $this->can($groupID, 'w');
-      $rand = mt_rand();
-
-      $query = "SELECT DISTINCT `itemtype`
-                FROM `glpi_plugin_fusioninventory_deploygroups_staticdatas` as `staticdatas`
-                WHERE `staticdatas`.`groups_id` = '$groupID'
-                ORDER BY `itemtype`";
-
-      $result = $DB->query($query);
-      $number = $DB->numrows($result);
-
-
-      echo "<div class='center'><table class='tab_cadre_fixe'>";
-      echo "<tr><th colspan='5'>";
-      if ($DB->numrows($result)==0) {
-         echo __('No associated element');
-      } else {
-         echo __('Associated items');
-      }
-      echo "</th></tr>";
-      $totalnb = 0;
-      if ($number > 0) {
-         if ($canedit) {
-            echo "</table></div>";
-
-            echo "<form method='post' name='group_form$rand' id='group_form$rand' action=\"".
-                   $CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/deploygroup.form.php\">";
-            echo "<input type='hidden' name='type' value='static' />";
-
-            echo "<div class='spaced'>";
-            echo "<table class='tab_cadre_fixe'>";
-            // massive action checkbox
-            echo "<tr><th>&nbsp;</th>";
-         } else {
-            echo "<tr>";
-         }
-
-
-
-         echo "<th>".__('Type')."</th>";
-         echo "<th>".__('Name')."</th></tr>";
-
-
-
-
-         for ($i=0 ; $i<$number ; $i++) {
-            $itemtype = $DB->result($result, $i, "itemtype");
-            if (!class_exists($itemtype)) {
-               continue;
-            }
-            $item = new $itemtype();
-            if ($item->canView()) {
-               $itemtable = getTableForItemType($itemtype);
-               $query = "SELECT `$itemtable`.*,
-                                `staticdatas`.`id` AS IDD
-                         FROM `glpi_plugin_fusioninventory_deploygroups_staticdatas`
-                                 AS `staticdatas`, `$itemtable`";
-               $query .= " WHERE `$itemtable`.`id` = `staticdatas`.`items_id`
-                                 AND `staticdatas`.`itemtype` = '$itemtype'
-                                 AND `staticdatas`.`groups_id` = '$groupID'";
-
-               if ($item->maybeTemplate()) {
-                  $query .= " AND `$itemtable`.`is_template` = '0'";
-               }
-
-               $result_linked = $DB->query($query);
-               $nb = $DB->numrows($result_linked);
-
-
-               while ($data=$DB->fetch_assoc($result_linked)) {
-                  $ID = "";
-                  if ($_SESSION["glpiis_ids_visible"] || empty($data["name"])) {
-                     $ID = " (".$data["id"].")";
-                  }
-                  $link = Toolbox::getItemTypeFormURL($itemtype);
-                  $name = "<a href=\"".$link."?id=".$data["id"]."\">".$data["name"]."$ID</a>";
-
-                  echo "<tr class='tab_bg_1'>";
-                  if ($canedit) {
-                     $sel = "";
-                     if (isset($_GET["select"]) && $_GET["select"]=="all") {
-                        $sel = "checked";
-                     }
-                     echo "<td width='10'>";
-                     echo "<input type='checkbox' name='item[".$data["IDD"]."]' ".
-                             "value='1' $sel></td>";
-                  }
-
-                  echo "<td class='center top'>".$item->getTypeName()."</td>";
-                  echo "<td class='center".
-                         (isset($data['is_deleted']) && $data['is_deleted'] ? " tab_bg_2_2'" : "'");
-                  echo ">".$name."</td>";
-                  echo "</tr>";
-               }
-
-               $totalnb += $nb;
-            }
-         }
-      }
-
-      echo "<tr class='tab_bg_2'>";
-      echo "<td class='center' colspan='2'><b>".($totalnb>0? __('Total').
-
-             "&nbsp;=&nbsp;$totalnb</b></td>" : "&nbsp;</b></td>");
-      echo "<td colspan='4'>&nbsp;</td></tr> ";
-
-      if ($canedit && $totalnb > 0) {
-         echo "</table>";
-
-         Html::openArrowMassives("group_form$rand", TRUE);
-         echo "<input type='hidden' name='groups_id' value='$groupID'>";
-         Html::closeArrowMassives(array('deleteitem' => __('Delete')));
-
-
-      } else {
-         echo "</table>";
-      }
-
-
-      echo "</div>";
-      Html::closeForm();
-
-      echo "<form name='group_search' id='group_search' method='POST' action='"
-         .$CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/deploygroup.form.php'>";
-      echo "<input type='hidden' name='groupID' value='$groupID' />";
-      echo "<input type='hidden' name='type' value='static' />";
-      echo "<div class='center'>";
-      echo "<table class='tab_cadre_fixe'>";
-
-      $this->showSearchFields('static');
-
-      echo "</table>";
-
-      echo "<input type='button' value=\"".__('Search')
-
-            ."\" id='group_search_submit' class='submit' name='add_item' />&nbsp;";
-
-      echo "<div id='group_results'></div>";
-      echo "</div>";
-
-      Html::closeForm();
-   }
-*/
-
-
-
-
 
    /**
     * Print pager for group list
@@ -385,8 +246,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       // End pager
       echo "</tr></table>";
    }
-
-
 
    static function showSearchResults($params) {
       global $DB;
@@ -543,8 +402,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</div>";
    }
 
-
-
    static function getAllDatas($root = 'groups')  {
       global $DB;
 
@@ -567,9 +424,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       return json_encode($json);
    }
-
-
-
 
    function getSearchOptions() {
 
@@ -630,5 +484,129 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       }
       return parent::getSpecificValueToSelect($field, $name, $values, $options);
    }
+
+   /**
+    * Displays tab content
+    * This function adapted from Search::showGenericSearch with controls removed
+    * @param  bool $formcontrol : display form buttons
+    * @return nothing, displays a seach form
+    */
+   static function showCriteria(PluginFusioninventoryDeployGroup $group, $formcontrol = true, $criteria) {
+      global $CFG_GLPI, $DB;
+
+
+      $itemtype = "PluginFusioninventoryComputer";
+      unset($_SESSION['glpisearch'][$itemtype]);
+      $p = array();
+      
+      if ($group->fields['type'] == self::DYNAMIC_GROUP) {
+         $query = "SELECT `fields_array` 
+                   FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` 
+                   WHERE `plugin_fusioninventory_deploygroups_groups_id`='".$group->getID()."'";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) > 0) {
+            $fields_array = $DB->result($result, 0, 'fields_array');
+            $p['criteria'] = json_decode($fields_array, true);
+         }
+      }
+      
+      // load saved criterias
+      //$p['criteria'] = $this->getCriteria();
+      //$p['metacriteria'] = $this->getMetaCriteria();
+
+      //if (isset($_SESSION['glpisearch'][$itemtype])) {
+      //   $p['criteria'] = $_SESSION['glpisearch'][$itemtype];
+      //}
+      //manage sessions
+      
+      $p = Search::manageParams($itemtype, $p);
+
+      if ($formcontrol) {
+         //show generic search form (duplicated from Search class)
+         echo "<form name='group_search_form' method='post'>";
+         echo "<input type='hidden' name='id' value='".$group->getID()."'>";  
+
+         // add tow hidden fields to permit delete of (meta)criteria
+         echo "<input type='hidden' name='criteria' value=''>";     
+         echo "<input type='hidden' name='metacriteria' value=''>"; 
+      } 
+
+      echo "<div class='tabs_criteria'>";
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr><th>"._n('Criterion', 'Criteria', 2)."</th></tr>";
+      echo "<tr><td>";
+
+      echo "<div id='searchcriteria'>";
+      $nb_criteria = count($p['criteria']);
+      if ($nb_criteria == 0) $nb_criteria++;
+      $nbsearchcountvar = 'nbcriteria'.strtolower($itemtype).mt_rand();
+      $nbmetasearchcountvar = 'nbmetacriteria'.strtolower($itemtype).mt_rand();
+      $searchcriteriatableid = 'criteriatable'.strtolower($itemtype).mt_rand();
+      // init criteria count
+      $js = "var $nbsearchcountvar=".$nb_criteria.";";
+      $js .= "var $nbmetasearchcountvar=".count($p['metacriteria']).";";
+      echo Html::scriptBlock($js);
+
+      echo "<table class='tab_cadre_fixe' >";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>";
+
+      echo "<table class='tab_format' id='$searchcriteriatableid'>";
+
+      // Displays normal search parameters
+      for ($i=0 ; $i<$nb_criteria ; $i++) {
+         $_POST['itemtype'] = $itemtype;
+         $_POST['num'] = $i ;
+         include(GLPI_ROOT.'/ajax/searchrow.php');
+      }
+
+      $metanames = array();
+      $linked =  Search::getMetaItemtypeAvailable($itemtype);
+      
+      if (is_array($linked) && (count($linked) > 0)) {
+         for ($i=0 ; $i<count($p['metacriteria']) ; $i++) {
+
+            $_POST['itemtype'] = $itemtype;
+            $_POST['num'] = $i ;
+            include(GLPI_ROOT.'/ajax/searchmetarow.php');
+         }
+      }
+      echo "</table>\n";
+      echo "</td>"; 
+      echo "</tr>";
+      echo "</table>\n";
+
+      // For dropdown
+      echo "<input type='hidden' name='itemtype' value='$itemtype'>";
+
+      if ($formcontrol) {
+         // add new button to search form (to store and preview)
+         echo "<div class='center'>";
+         //echo "<input type='submit' value=\" "._sx('button', 'Save').
+         //     " \" class='submit' name='update'>&nbsp;";
+        
+        echo "<input type='submit' value=\" ".__('Preview')." \" class='submit' name='preview'>";
+         echo "</div>";
+      }
+
+      echo "</td></tr></table>";
+      echo "</div>";
+
+      //restore search session variables
+      //$_SESSION['glpisearch'] = $glpisearch_session;
+
+      // Reset to start when submit new search
+      echo "<input type='hidden' name='start' value='0'>";
+
+      Html::closeForm();
+
+      //clean with javascript search control
+      $clean_script = "jQuery( document ).ready(function( $ ) {
+         $('#parent_criteria img').remove();
+         $('.tabs_criteria img[name=img_deleted').remove();
+      });";
+      echo Html::scriptBlock($clean_script);
+   }
+   
 }
 ?>
