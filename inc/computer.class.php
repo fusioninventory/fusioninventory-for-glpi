@@ -54,10 +54,12 @@ class PluginFusioninventoryComputer extends Computer {
       $options['6000']['table']         = getTableForItemType('PluginFusioninventoryDeployGroup');
       $options['6000']['massiveaction'] = FALSE;
       $options['6000']['field']         ='name';
-      $options['6000']['joinparams']    = array('jointype'
-                                             => array('table'      => 'glpi_plugin_fusioninventory_deploygroups_staticdatas',
-                                                      'joinparams' => 'child'));
-
+      $options['6000']['forcegroupby']   = true;
+      $options['6000']['usehaving']      = true;
+      $options['6000']['joinparams']    = array('beforejoin'
+                                         => array('table'      => 'glpi_plugin_fusioninventory_deploygroups_staticdatas',
+                                                  'joinparams' => array('jointype'          => 'itemtype_item',
+                                                                        'specific_itemtype' => 'Computer')));
       return $options;
    }
    
@@ -97,18 +99,17 @@ class PluginFusioninventoryComputer extends Computer {
             $input = $ma->getInput();
             foreach ($ids as $key) {
                if ($item->can($key, UPDATE)) {
-                  Toolbox::logDebug($ma, $item);
                   if (!countElementsInTable($group_item->getTable(), 
-                                            "`groups_id`='".$_SESSION['plugin_fusioninventory_group_search_id']."' 
+                                            "`plugin_fusioninventory_deploygroups_id`='".$_SESSION['plugin_fusioninventory_group_search_id']."' 
                                               AND `itemtype`='Computer' 
                                               AND `items_id`='$key'")) {
                      $group_item->add(array(
-                        'groups_id' => $_SESSION['plugin_fusioninventory_group_search_id'],
+                        'plugin_fusioninventory_deploygroups_id' => $_SESSION['plugin_fusioninventory_group_search_id'],
                         'itemtype' => 'Computer',
                         'items_id' => $key));
                      $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                   } else {
-                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
                   }
             } else {
                $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_NORIGHT);

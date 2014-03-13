@@ -142,12 +142,12 @@ if (isset($_POST["add"])) {
    Html::back();
 
 } else if (isset($_REQUEST["deleteitem"])) {
-   if ($_REQUEST['type'] == 'static') {
+   if ($_REQUEST['type'] == PluginFusioninventoryDeployGroup::STATIC_GROUP) {
       if (count($_REQUEST["item"])) {
          foreach ($_REQUEST["item"] as $key => $val) {
-            if ($group_item->can($key, UPDATE)) {
+            ///if ($group_item->can($key, UPDATE)) {
                $group_item->delete(array('id' => $key));
-            }
+            //}
          }
       }
    } elseif ($_REQUEST['type'] == 'dynamic') {
@@ -163,8 +163,7 @@ if (isset($_POST["add"])) {
    PluginFusioninventoryMenu::displayMenu("mini");
 
 
-   //$group->showForm($_GET['id']);
-   $group->display($_GET);
+   $group->showForm($_GET['id']);
 
    Html::footer();
 }

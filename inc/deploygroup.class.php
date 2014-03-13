@@ -113,6 +113,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    function showForm($ID, $options = array()) {
 
       $this->initForm($ID, $options);
+      $this->showNavigationHeader($options);
       $this->showFormHeader($options);
     
       echo "<tr class='tab_bg_1'>";
@@ -150,15 +151,17 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       //if (!isset($params['metacriteria']) && empty($params['metacriteria'])) {
          $params['metacriteria'] = array();
       //}
-
+      if (!isset($_POST['preview'])) {
+         unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
+      }
       self::showCriteria($this, true, $params);
       if (isset($_POST['preview'])) {
          Search::showList('PluginFusioninventoryComputer', $params);
       } else {
          //If not preview requested : clear search parameters in session
-         if (isset($_SESSION['groupSearchResults'])) {
-         unset($_SESSION['groupSearchResults']);
-         }
+         //if (isset($_SESSION['groupSearchResults'])) {
+         //unset($_SESSION['groupSearchResults']);
+         //}
          $_SESSION['plugin_fusioninventory_group_search_id'] = $ID;
       }
       return TRUE;
@@ -491,13 +494,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
     * @param  bool $formcontrol : display form buttons
     * @return nothing, displays a seach form
     */
-   static function showCriteria(PluginFusioninventoryDeployGroup $group, $formcontrol = true, $criteria) {
+   static function showCriteria(PluginFusioninventoryDeployGroup $group, $formcontrol = true, $p) {
       global $CFG_GLPI, $DB;
 
 
       $itemtype = "PluginFusioninventoryComputer";
-      unset($_SESSION['glpisearch'][$itemtype]);
-      $p = array();
+      //unset($_SESSION['glpisearch'][$itemtype]);
+      //$p = array();
       
       if ($group->fields['type'] == self::DYNAMIC_GROUP) {
          $query = "SELECT `fields_array` 
@@ -509,17 +512,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             $p['criteria'] = json_decode($fields_array, true);
          }
       }
-      
-      // load saved criterias
-      //$p['criteria'] = $this->getCriteria();
-      //$p['metacriteria'] = $this->getMetaCriteria();
-
-      //if (isset($_SESSION['glpisearch'][$itemtype])) {
-      //   $p['criteria'] = $_SESSION['glpisearch'][$itemtype];
-      //}
-      //manage sessions
-      
-      $p = Search::manageParams($itemtype, $p);
+ 
+      //$p = Search::manageParams($itemtype, $p);
 
       if ($formcontrol) {
          //show generic search form (duplicated from Search class)
