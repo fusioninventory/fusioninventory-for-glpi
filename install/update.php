@@ -1105,7 +1105,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       /*
        * Update tasks related database tables
        */
-      pluginFusioninventoryUpdateTasks($migration);
+      pluginFusioninventoryUpdateTasks($migration, $plugins_id);
 
 
    /*

@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-function pluginFusioninventoryUpdateTasks( $migration ) {
+function pluginFusioninventoryUpdateTasks( $migration , $plugin_id) {
 
    global $DB;
    /*
@@ -211,7 +211,7 @@ function pluginFusioninventoryUpdateTasks( $migration ) {
          WHERE `method`='netdiscovery'");
       // * Update plugins_id
       $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
-         SET `plugins_id`='".$plugins_id."'");
+         SET `plugins_id`='".$plugin_id."'");
 
 
 
