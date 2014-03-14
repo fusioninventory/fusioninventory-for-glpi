@@ -48,15 +48,18 @@ if (!isset($_REQUEST["id"])) {
 }
 
 $group = new PluginFusioninventoryDeployGroup();
+//Store $_REQUEST params for further use : it's ugly, 
+//but I cannot find a best solution...
+$group->setSearchParams($_REQUEST);
 
 if (isset($_POST['save'])) {
    $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
-   if (!countElementsInTable($group_item->getTable(), "plugin_fusioninventory_deploygroups_id='".$_POST['id']."'")) {
-      $values = array('plugin_fusioninventory_deploygroups_id' => $_POST['id'], 
-                     'fields_array' => serialize($_POST['criteria']));
-      $group_item->add($values);
+   if (!countElementsInTable($group_item->getTable(), 
+                             "plugin_fusioninventory_deploygroups_id='".$_POST['plugin_fusioninventory_deploygroups_id']."'")) {
+      $group_item->add($_POST);
    } else {
-      $item = getAllDatasFromTable($group_item->getTable(), "plugin_fusioninventory_deploygroups_id='".$_POST['id']."'");
+      $item = getAllDatasFromTable($group_item->getTable(), 
+                                   "plugin_fusioninventory_deploygroups_id='".$_POST['plugin_fusioninventory_deploygroups_id']."'");
       $values = array_pop($item);
       $values['fields_array'] = serialize($_POST['criteria']);
       $group_item->update($values);
@@ -90,8 +93,16 @@ if (isset($_POST['save'])) {
                 "pluginfusioninventorymenu", "deploygroup");
 
    PluginFusioninventoryMenu::displayMenu("mini");
-   //$group->showForm($_GET['id']);
+   if (!isset($_POST['preview'])) {
+      //Remove session variable to clean search engine criteria
+      unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
+   }
+   //Store groups_id for further use
+   $_SESSION['plugin_fusioninventory_group_search_id'] = $_REQUEST['id'];
+   
    $group->display(array('id' => $_REQUEST['id']));
+   $res = PluginFusioninventoryDeployGroup::getTargetsForGroup($_REQUEST['id']);
+   Toolbox::logDebug($res);
    Html::footer();
 }
 

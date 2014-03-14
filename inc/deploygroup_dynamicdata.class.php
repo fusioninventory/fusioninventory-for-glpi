@@ -51,18 +51,18 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static public $items_id = 'plugin_fusioninventory_deploygroups_id';
 
    static function canCreate() {
-      return TRUE;
+      return parent::canCreate();
    }
 
    static function canView() {
-      return TRUE;
+      return parent::canView();
    }
    
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if (!$withtemplate
           && $item->fields['type'] == PluginFusioninventoryDeployGroup::DYNAMIC_GROUP) {
-         return array (__('Search'), __('Associated Items'));
+         return array (_n('Criterion', 'Criteria', 2), _n('Associated item','Associated items', 2));
       }
       return '';
    }
@@ -75,46 +75,60 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch ($tabnum) {
          case 0:
-            $params = self::getSearchParamsAsAnArray($item);
-            Toolbox::logDebug($params);
-            PluginFusioninventoryDeployGroup::showSearchForComputers($item, $params);
+            $params = self::getSearchParamsAsAnArray($item, false);
+            PluginFusioninventoryDeployGroup::showCriteria($item, true, $params);
             break;
          case 1:
-            self::showResults($item);
+            Search::showList('PluginFusioninventoryComputer', self::getSearchParamsAsAnArray($item));
             break;
       }
 
       return true;
    }
 
-   static function showResults(PluginFusioninventoryDeployGroup $group) {
-      global $DEPLOY_MASSIVEACTION_OPTIONS;
-      
-      $DEPLOY_MASSIVEACTION_OPTIONS = 'view';
-      
-      $computers_params['criteria']     = self::getSearchParamsAsAnArray($group);
-      $computers_params['metacriteria'] = array();
-      $search_params                    = Search::manageParams('PluginFusioninventoryComputer', $computers_params);
-      Search::showList('PluginFusioninventoryComputer', $search_params);
-   }
-   
-   static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group) {
+   /**
+   *
+   */
+   static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group, $check_post_values = false) {
       global $DB;
       $computers_params = array();
-      if ($group->fields['type'] == PluginFusioninventoryDeployGroup::DYNAMIC_GROUP) {
-         $query = "SELECT `fields_array` 
-                   FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` 
-                   WHERE `plugin_fusioninventory_deploygroups_id`='".$group->getID()."'";
-         $result = $DB->query($query);
-         if ($DB->numrows($result) > 0) {
-            $fields_array = $DB->result($result, 0, 'fields_array');
-            $computers_params = unserialize($fields_array);
+      
+      //Check criteria from DB
+      if (!$check_post_values) {
+         $computers_params['metacriteria'] = array();
+         if ($group->fields['type'] == PluginFusioninventoryDeployGroup::DYNAMIC_GROUP) {
+            $query = "SELECT `fields_array` 
+                     FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` 
+                     WHERE `plugin_fusioninventory_deploygroups_id`='".$group->getID()."'";
+            $result = $DB->query($query);
+            if ($DB->numrows($result) > 0) {
+               $fields_array = $DB->result($result, 0, 'fields_array');
+               $computers_params['criteria'] = unserialize($fields_array);
+            }
          }
+      } else {
+         //Look for criteria in the PluginFusioninventoryDeployGroup object (stored from $_POST)
+         $computers_params = $group->getSearchParams();
       }
-      $search_params = Search::manageParams('PluginFusioninventoryComputer', $computers_params);
-      return $search_params;
+      return Search::manageParams('PluginFusioninventoryComputer', $computers_params);
    }
    
+   function prepareInputForAdd($input = array()) {
+      $input['fields_array'] = serialize($input['criteria']);
+      return $input;
+   }
+   
+   static function getTargetsByGroup(PluginFusioninventoryDeployGroup $group) {
+      //Only retrieve computers IDs
+      $results = Search::getDatas('PluginFusioninventoryComputer', 
+                                  self::getSearchParamsAsAnArray($group), 
+                                  array(2));
+      $ids     = array();
+      foreach ($results['data']['rows'] as $id => $row) {
+         $ids[$row['id']] = $row['id'];
+      }
+      return $ids;
+   }
 }
 
 ?>

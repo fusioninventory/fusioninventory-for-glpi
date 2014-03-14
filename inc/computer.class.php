@@ -65,13 +65,15 @@ class PluginFusioninventoryComputer extends Computer {
    }
    
    function getSpecificMassiveActions($checkitem=NULL) {
-      global $DEPLOY_MASSIVEACTION_OPTIONS;
       $actions = array();
-      if (static::canUpdate() && (isset($DEPLOY_MASSIVEACTION_OPTIONS) && $DEPLOY_MASSIVEACTION_OPTIONS != 'view')) {
-         $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']        = _x('button', 'Add to group');
+      
+      $group   = new PluginFusioninventoryDeployGroup();
+      $group->getFromDB($_SESSION['plugin_fusioninventory_group_search_id']);
+      Toolbox::logDebug($_SESSION['plugin_fusioninventory_group_search_id'], $group);
+      if (!$group->isDynamicGroup()) {
          $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'deleteitem'] = _x('button', 'Delete');
+         $actions['PluginFusioninventoryComputer'.MassiveAction::CLASS_ACTION_SEPARATOR.'add']        = _x('button', 'Add to group');
       }
-
       return $actions;
    }
 

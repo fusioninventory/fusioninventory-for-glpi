@@ -4108,7 +4108,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $datas = $DB->fetch_assoc($result);
             $nb = $datas['count(ID)'];
 
-            echo "Move Connections history to another table...";
+            //echo "Move Connections history to another table...";
 
             for ($i=0; $i < $nb; $i = $i + 500) {
                $migration->displayMessage("$i / $nb");
@@ -5594,7 +5594,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     *  Clean old ports deleted but have some informations in SNMP tables
     */
-   echo "Clean ports purged\n";
+   //echo "Clean ports purged\n";
    $query_select = "SELECT `glpi_plugin_fusioninventory_networkports`.`id`
                     FROM `glpi_plugin_fusioninventory_networkports`
                           LEFT JOIN `glpi_networkports`
@@ -5614,7 +5614,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Clean for switch more informations again in DB when switch is purged
     */
-   echo "Clean for switch more informations again in DB when switch is purged\n";
+   //echo "Clean for switch more informations again in DB when switch is purged\n";
    $query_select = "SELECT `glpi_plugin_fusioninventory_networkequipments`.`id`
                     FROM `glpi_plugin_fusioninventory_networkequipments`
                     LEFT JOIN `glpi_networkequipments`
@@ -5632,7 +5632,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Clean for printer more informations again in DB when printer is purged
     */
-   "Clean for printer more informations again in DB when printer is purged\n";
+   //echo "Clean for printer more informations again in DB when printer is purged\n";
    $query_select = "SELECT `glpi_plugin_fusioninventory_printers`.`id`
                     FROM `glpi_plugin_fusioninventory_printers`
                           LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
@@ -5649,7 +5649,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     *  Clean printer cartridge not deleted with the printer associated
     */
-   echo "Clean printer cartridge not deleted with the printer associated\n";
+   //echo "Clean printer cartridge not deleted with the printer associated\n";
    $query_select = "SELECT `glpi_plugin_fusioninventory_printercartridges`.`id`
                     FROM `glpi_plugin_fusioninventory_printercartridges`
                           LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
@@ -5666,7 +5666,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     *  Clean printer history not deleted with printer associated
     */
-   echo "Clean printer history not deleted with printer associated\n";
+   //echo "Clean printer history not deleted with printer associated\n";
    $query_select = "SELECT `glpi_plugin_fusioninventory_printerlogs`.`id`
                     FROM `glpi_plugin_fusioninventory_printerlogs`
                           LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
@@ -6345,18 +6345,37 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          }
       }
    }
+   //Migrate search params for dynamic groups
+   doDynamicDataSearchParamsMigration();
+}
+
+/**
+* @since 0.85+1.0
+* Migrate search params from the old system to the new one
+* As search engine integration has been improved with GLPI 0.85
+*/
+function doDynamicDataSearchParamsMigration() {
+   global $DB;
    
    $query = "SELECT `id`, `fields_array` FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`";
    foreach ($DB->request($query) as $dynamic_data) {
-      $new_values = migrationDynamicGroupFields($dynamic_data['fields_array']);
+      $new_values   = migrationDynamicGroupFields($dynamic_data['fields_array']);
       $query_update = "UPDATE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` 
-                       SET `fields_array`='".serialize($new_values)."'
+                       SET `fields_array`='$new_values'
                        WHERE `id`='".$dynamic_data['id']."'";
       $DB->query($query_update);
    }
 }
 
-function migrationDynamicGroupFields($old_fields) {
+/**
+* @since 0.85+1.0
+* 
+* Migration of one dynamic group
+* @param fields search paramas in old format (serialized)
+* @return search paramas in new format (serialized)
+*/
+function migrationDynamicGroupFields($fields) {
+   $old_fields    = unserialize($fields);
    $new_fields    = array();
    $searchOptions = Search::getOptions('Computer');
    foreach ($old_fields as $key => $value) {
@@ -6373,7 +6392,7 @@ function migrationDynamicGroupFields($old_fields) {
          }
       }
    }
-   return $new_fields;
+   return serialize($new_fields);
 }
 
 function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
@@ -8088,7 +8107,7 @@ function update213to220_ConvertField($migration) {
    $constantsfield['Drucker > Port > Indexnummer'] = 'ifIndex';
 
    if (TableExists("glpi_plugin_tracker_snmp_history")) {
-      echo "Converting history port ...\n";
+      //echo "Converting history port ...\n";
       $i = 0;
       $nb = count($constantsfield);
          $migration->addKey("glpi_plugin_tracker_snmp_history",
@@ -8113,7 +8132,7 @@ function update213to220_ConvertField($migration) {
 
       // Move connections from glpi_plugin_fusioninventory_snmp_history to
       // glpi_plugin_fusioninventory_snmp_history_connections
-      echo "Moving creation connections history\n";
+      //echo "Moving creation connections history\n";
       $query = "SELECT *
                 FROM `glpi_plugin_tracker_snmp_history`
                 WHERE `Field` = '0'
@@ -8169,7 +8188,7 @@ function update213to220_ConvertField($migration) {
          $migration->displayMessage("$i / $nb");
       }
 
-      echo "Moving deleted connections history\n";
+      //echo "Moving deleted connections history\n";
       $query = "SELECT *
                 FROM `glpi_plugin_tracker_snmp_history`
                 WHERE `Field` = '0'
@@ -8538,7 +8557,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
          $fp_res = $DB->query($fp_query);
          if ($DB->numrows($fp_res) > 0) {
-            print("writing file : " . GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}" . "\n");
+            //print("writing file : " . GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}" . "\n");
             $fhandle = fopen(
                GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}",
                'w+'
@@ -8642,10 +8661,10 @@ function migrateTablesFromFusinvDeploy ($migration) {
          //print("deployorders fixer : create missing required 'associatedFiles' property\n");
          $json_order->associatedFiles = new stdClass();
       }
-      print(
+      //print(
          //"deployorders fixer : final order structure for ID ".$order_config['id']."\n" .
-         json_encode($json_order,JSON_PRETTY_PRINT) ."\n"
-      );
+      //   json_encode($json_order,JSON_PRETTY_PRINT) ."\n"
+      //);
       $pfDeployOrder::updateOrderJson($order_config['id'], $json_order);
    }
 
