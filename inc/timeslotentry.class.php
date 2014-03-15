@@ -164,7 +164,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
       foreach ($dbentries as $dbentry) {
 
-         echo "<tr class='tab_bg_1'>";
+         echo "<tr class='tab_bg_3'>";
          echo "<td>";
          $daysofweek = Toolbox::getDaysOfWeekArray();
          $daysofweek[7] = $daysofweek[0];
@@ -172,13 +172,12 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
          echo $daysofweek[$dbentry['day']];
          echo "</td>";
          echo "<td>";
-         $hour = floor($dbentry['begin'] / 3600);
-         $minute = (($dbentry['begin'] - ((floor($dbentry['begin'] / 3600)) * 3600)) / 60);
-         echo sprintf("%02s", $hour).":".sprintf("%02s", $minute);
+         echo PluginFusioninventoryToolbox::getHourMinute($dbentry['begin']);
          echo " - ";
-         $hour = floor($dbentry['end'] / 3600);
-         $minute = (($dbentry['end'] - ((floor($dbentry['end'] / 3600)) * 3600)) / 60);
-         echo sprintf("%02s", $hour).":".sprintf("%02s", $minute);
+         echo PluginFusioninventoryToolbox::getHourMinute($dbentry['end']);
+         echo "</td>";
+         echo "<td colspan='2'>";
+         echo "<input type='submit' class='submit' name='purge-".$dbentry['id']."' value='delete' />";
          echo "</td>";
          echo "</tr>";
       }

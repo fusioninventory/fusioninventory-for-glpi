@@ -665,11 +665,20 @@ class PluginFusioninventoryToolbox {
 
       $p['step'] = $p['step'] * 60; // to have in seconds
       for ($s=$p['begin'] ; $s<$p['end'] ; $s+=$p['step']) {
-         $hour = floor($s / 3600);
-         $minute = (($s - ((floor($s / 3600)) * 3600)) / 60);
-         $values[$s] = sprintf("%02s", $hour).":".sprintf("%02s", $minute);
+         $values[$s] = PluginFusioninventoryToolbox::getHourMinute($s);
       }
       return Dropdown::showFromArray($name, $values, $p);
+   }
+
+
+
+   /**
+    * Get hour:minute from number of seconds
+    */
+   static function getHourMinute($seconds) {
+      $hour = floor($seconds / 3600);
+      $minute = (($seconds - ((floor($seconds / 3600)) * 3600)) / 60);
+      return sprintf("%02s", $hour).":".sprintf("%02s", $minute);
    }
 
 }
