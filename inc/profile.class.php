@@ -164,7 +164,10 @@ class PluginFusioninventoryProfile extends Profile {
          }
       }
       // Add all rights to current profile of the user
-      if (isset($_SESSION['glpiactiveprofile'])) {
+      if (
+         isset($_SESSION['glpiactiveprofile'])
+         and isset($_SESSION['glpiactiveprofile']['id'])
+      ) {
          $dataprofile = array();
          $dataprofile['id'] = $_SESSION['glpiactiveprofile']['id'];
          $profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
@@ -317,7 +320,7 @@ class PluginFusioninventoryProfile extends Profile {
                 'label'     => __('Configuration', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_configuration'),
           array('itemtype'  => 'PluginFusioninventoryTask',
-                'label'     => _n('Task', 'Tasks', 2),
+                'label'     => _n('Task', 'Tasks', 2, 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_task'),
           array('rights'    => CommonDBTM::getRights(),
                 'label'     => __('Wake On LAN', 'fusioninventory'),

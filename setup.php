@@ -261,6 +261,10 @@ function plugin_init_fusioninventory() {
              "lib/plusbutton.js",
          );
       }
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+              "lib/d3-3.4.3/d3.min.js";
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+              "lib/timeslot.js";
 
 
       if (Session::haveRight('plugin_fusioninventory_configuration', READ)
