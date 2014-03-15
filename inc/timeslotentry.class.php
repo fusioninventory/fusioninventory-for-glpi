@@ -141,10 +141,49 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       echo Html::hidden('timeslots_id', array('value' => $timeslots_id));
       echo "</td>";
       echo "</tr>";
-
       $this->showFormButtons($options);
 
+      $this->formDeleteEntry($timeslots_id);
+
       $this->showTimeSlot($timeslots_id);
+   }
+
+
+
+   function formDeleteEntry($timeslots_id) {
+
+      $dbentries = getAllDatasFromTable(
+                     'glpi_plugin_fusioninventory_timeslotentries',
+                     "`plugin_fusioninventory_timeslots_id`='".$timeslots_id."'",
+                     '',
+                     '`day`, `begin` ASC');
+
+      $options = array();
+      $this->initForm(key($dbentries), $options);
+      $this->showFormHeader($options);
+
+      foreach ($dbentries as $dbentry) {
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         $daysofweek = Toolbox::getDaysOfWeekArray();
+         $daysofweek[7] = $daysofweek[0];
+         unset($daysofweek[0]);
+         echo $daysofweek[$dbentry['day']];
+         echo "</td>";
+         echo "<td>";
+         $hour = floor($dbentry['begin'] / 3600);
+         $minute = (($dbentry['begin'] - ((floor($dbentry['begin'] / 3600)) * 3600)) / 60);
+         echo sprintf("%02s", $hour).":".sprintf("%02s", $minute);
+         echo " - ";
+         $hour = floor($dbentry['end'] / 3600);
+         $minute = (($dbentry['end'] - ((floor($dbentry['end'] / 3600)) * 3600)) / 60);
+         echo sprintf("%02s", $hour).":".sprintf("%02s", $minute);
+         echo "</td>";
+         echo "</tr>";
+      }
+
+      $this->showFormButtons(array('canedit' => false));
    }
 
 
@@ -175,10 +214,10 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
                         '',
                         '`begin` ASC');
          foreach ($dbentries as $entries) {
-            $dates[$daysofweek[$day]] = array(array(
+            $dates[$daysofweek[$day]][] = array(
                 'start' => $entries['begin'],
                 'end'   => $entries['end']
-            ));
+            );
          }
       }
 
