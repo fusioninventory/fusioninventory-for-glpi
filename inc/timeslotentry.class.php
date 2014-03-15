@@ -251,61 +251,84 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
          if (isset($range['beginhours'])
                  && $range['beginhours'] != $range['lasthours']) {
             $rangeToAdd = array(array(
-                'begin' => $range['beginhours'],
-                'end'   => $range['lasthours'],
                 'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
-                'day'   => $day
+                'day'   => $day,
+                'begin' => $range['beginhours'],
+                'end'   => $range['lasthours']
             ));
          }
 
-         $previousend = 0;
-         $previousid  = 0;
-         $newbegin    = false;
-         foreach ($rangeToAdd as $key=>$dbToAdd) {
-            if ($dbToAdd['begin'] == 0) {
-               unset($rangeToAdd[$key]);
-               $newbegin = true;
-            }
-         }
-
+         $periods = array();
          foreach ($rangeToUpdate as $dbToUpdate) {
-            if ($newbegin) {
-               $rangeToUpdate[$dbToUpdate['id']]['begin'] = 0;
-               $newbegin = false;
+            $periods[$dbToUpdate['begin']] = $dbToUpdate;
+         }
+         foreach ($rangeToAdd as $dbToAdd) {
+            $periods[$dbToAdd['begin']] = $dbToAdd;
+         }
+         ksort($periods);
+         $periods = $this->mergePeriods($periods);
+         
+         foreach ($dbentries as $dbentry) {
+            if (count($periods) > 0) {
+               $input = array_pop($periods);
+               $input['id'] = $dbentry['id'];
+               $input['day'] = $day;
+               $this->update($input);
+            } else {
+               $this->delete($dbentry);
             }
-            if ($dbToUpdate['begin'] > 0) {
-               if ($dbToUpdate['begin'] == $previousend
-                       || $dbToUpdate['begin'] == ($previousend + 15)) {
-                  // delete this db entry
-                  $rangeToDelete[$dbToUpdate['id']] = $dbToUpdate;
-                  unset($rangeToUpdate[$dbToUpdate['id']]);
-                  $dbToUpdate['id'] = $previousid;
-                  $rangeToUpdate[$previousid]['end'] = $dbToUpdate['end'];
+         }
+         if (count($periods) > 0) {
+            foreach ($periods as $period) {
+               $input = $period;
+               if (isset($input['id'])) {
+                  unset($input['id']);
                }
-               // Manage $range (the entry to add)
-               foreach ($rangeToAdd as $key=>$dbToAdd) {
-                  if ($dbToAdd['begin'] == $dbToUpdate['end']
-                          || ($dbToAdd['begin'] == ($dbToUpdate['end'] + 15))) {
-                     unset($rangeToAdd[$key]);
-                     $rangeToUpdate[$dbToUpdate['id']]['end'] = $dbToAdd['end'];
-                     $dbToUpdate['end'] = $dbToAdd['end'];
-                  }
-               }
+               $this->add($input);
             }
-            $previousend = $dbToUpdate['end'];
-            $previousid  = $dbToUpdate['id'];
          }
 
-         foreach ($rangeToAdd as $toadd) {
-            $this->add($toadd);
-         }
-         foreach ($rangeToUpdate as $toupdate) {
-            $this->update($toupdate);
-         }
-         foreach ($rangeToDelete as $todelete) {
-            $this->delete($todelete);
+//         foreach ($rangeToAdd as $toadd) {
+//            $this->add($toadd);
+//         }
+//         foreach ($rangeToUpdate as $toupdate) {
+//            $this->update($toupdate);
+//         }
+//         foreach ($rangeToDelete as $todelete) {
+//            $this->delete($todelete);
+//         }
+      }
+   }
+
+
+
+   function mergePeriods($periods) {
+
+      $update = false;
+      $previouskey = 0;
+      $first = true;
+      foreach ($periods as $key=>$period) {
+         if ($first) {
+            $first = false;
+            $previouskey = $key;
+         } else {
+            if ($period['begin'] <= $periods[$previouskey]['end']
+                    || $period['begin'] == ($periods[$previouskey]['end'] + 15)) {
+
+               if ($period['end'] > $periods[$previouskey]['end']) {
+                  $periods[$previouskey]['end'] = $period['end'];
+               }
+               unset($periods[$key]);
+               $update = true;
+            } else {
+               $previouskey = $key;
+            }
          }
       }
+      if ($update) {
+         $periods = $this->mergePeriods($periods);
+      }
+      return $periods;
    }
 }
 
