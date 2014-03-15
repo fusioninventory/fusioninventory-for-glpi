@@ -126,7 +126,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
          $hours[$timestamp] = date('H:i', $timestamp);
       }
       PluginFusioninventoryToolbox::showHours('beginhours', array('step' => 15));
-//      echo "<input type='text' name='begin' id='begintimeslot'> ";
       echo "</td>";
       echo "</tr>";
 
@@ -139,13 +138,18 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       Dropdown::showFromArray('lastday', $days);
       echo '</div>';
       PluginFusioninventoryToolbox::showHours('lasthours', array('step' => 15));
-//      echo "<input type='text' name='last' id='lasttimeslot'> ";
       echo Html::hidden('timeslots_id', array('value' => $timeslots_id));
       echo "</td>";
       echo "</tr>";
 
       $this->showFormButtons($options);
 
+      $this->showTimeSlot($timeslots_id);
+   }
+
+
+
+   function showTimeSlot($timeslots_id) {
       echo "<div id='chart'></div>";
       echo "<div id='startperiod'></div>";
       echo "<div id='stopperiod'></div>";
@@ -267,7 +271,7 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
          }
          ksort($periods);
          $periods = $this->mergePeriods($periods);
-         
+
          foreach ($dbentries as $dbentry) {
             if (count($periods) > 0) {
                $input = array_pop($periods);
@@ -287,16 +291,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
                $this->add($input);
             }
          }
-
-//         foreach ($rangeToAdd as $toadd) {
-//            $this->add($toadd);
-//         }
-//         foreach ($rangeToUpdate as $toupdate) {
-//            $this->update($toupdate);
-//         }
-//         foreach ($rangeToDelete as $todelete) {
-//            $this->delete($todelete);
-//         }
       }
    }
 
