@@ -1254,39 +1254,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $this->reinitializeTaskjobs($this->fields['plugin_fusioninventory_tasks_id']);
    }
 
-
-
-   /**
-    * Get information if allow_url_fopen is activated and display message if not
-    *
-    * @param $wakecomputer boolean (1 if it's for wakeonlan, 0 if it's for task)
-    *
-    * @return boolean
-    */
-   static function isAllowurlfopen($wakecomputer=0) {
-
-      if (!ini_get('allow_url_fopen')) {
-         echo "<center>";
-         echo "<table class='tab_cadre' height='30' width='700'>";
-         echo "<tr class='tab_bg_1'>";
-         echo "<td align='center'><strong>";
-         if ($wakecomputer == '0') {
-            echo __('PHP allow_url_fopen is off, push mode can\'t work')." !";
-         } else {
-            echo __('PHP allow_url_fopen is off, can\'t wake agent to do inventory')." !";
-         }
-         echo "</strong></td>";
-         echo "</tr>";
-         echo "</table>";
-         echo "</center>";
-         echo "<br/>";
-         return FALSE;
-      }
-      return TRUE;
-   }
-
-
-
    /*
     * Display static list of taskjob
     *

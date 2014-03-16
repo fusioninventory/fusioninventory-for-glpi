@@ -111,19 +111,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       return $sopt;
    }
 
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      if ($item->getType() == 'Computer') {
-
-         // Possibility to remote agent
-         if (PluginFusioninventoryTaskjob::isAllowurlfopen(1)) {
-            $pfAgent = new PluginFusioninventoryAgent();
-            if ($pfAgent->getAgentWithComputerid($item->fields['id'])) {
-               $pfAgent->showRemoteStatus($item);
-            }
-         }
-      }
-   }
-
    /**
    * Purge task and taskjob
    *
