@@ -402,7 +402,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
           'softwarecategories_id'   => '0',
-          'valid'                   => '1',
+          'is_valid'                   => '1',
       );
 
       $this->assertEquals($a_reference, $software->fields);
@@ -442,7 +442,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
           'softwarecategories_id'   => '0',
-          'valid'                   => '1',
+          'is_valid'                   => '1',
       );
 
       $this->assertEquals($a_reference, $software->fields);
@@ -482,7 +482,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'ticket_tco'              => '0.0000',
           'is_helpdesk_visible'     => '1',
           'softwarecategories_id'   => '0',
-          'valid'                   => '1',
+          'is_valid'                   => '1',
       );
 
       $this->assertEquals($a_reference, $software->fields);
