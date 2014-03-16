@@ -126,7 +126,6 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
          $hours[$timestamp] = date('H:i', $timestamp);
       }
       PluginFusioninventoryToolbox::showHours('beginhours', array('step' => 15));
-//      echo "<input type='text' name='begin' id='begintimeslot'> ";
       echo "</td>";
       echo "</tr>";
 
@@ -139,13 +138,56 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
       Dropdown::showFromArray('lastday', $days);
       echo '</div>';
       PluginFusioninventoryToolbox::showHours('lasthours', array('step' => 15));
-//      echo "<input type='text' name='last' id='lasttimeslot'> ";
       echo Html::hidden('timeslots_id', array('value' => $timeslots_id));
       echo "</td>";
       echo "</tr>";
-
       $this->showFormButtons($options);
 
+      $this->formDeleteEntry($timeslots_id);
+
+      $this->showTimeSlot($timeslots_id);
+   }
+
+
+
+   function formDeleteEntry($timeslots_id) {
+
+      $dbentries = getAllDatasFromTable(
+                     'glpi_plugin_fusioninventory_timeslotentries',
+                     "`plugin_fusioninventory_timeslots_id`='".$timeslots_id."'",
+                     '',
+                     '`day`, `begin` ASC');
+
+      $options = array();
+      $this->initForm(key($dbentries), $options);
+      $this->showFormHeader($options);
+
+      foreach ($dbentries as $dbentry) {
+
+         echo "<tr class='tab_bg_3'>";
+         echo "<td>";
+         $daysofweek = Toolbox::getDaysOfWeekArray();
+         $daysofweek[7] = $daysofweek[0];
+         unset($daysofweek[0]);
+         echo $daysofweek[$dbentry['day']];
+         echo "</td>";
+         echo "<td>";
+         echo PluginFusioninventoryToolbox::getHourMinute($dbentry['begin']);
+         echo " - ";
+         echo PluginFusioninventoryToolbox::getHourMinute($dbentry['end']);
+         echo "</td>";
+         echo "<td colspan='2'>";
+         echo "<input type='submit' class='submit' name='purge-".$dbentry['id']."' value='delete' />";
+         echo "</td>";
+         echo "</tr>";
+      }
+
+      $this->showFormButtons(array('canedit' => false));
+   }
+
+
+
+   function showTimeSlot($timeslots_id) {
       echo "<div id='chart'></div>";
       echo "<div id='startperiod'></div>";
       echo "<div id='stopperiod'></div>";
@@ -171,10 +213,10 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
                         '',
                         '`begin` ASC');
          foreach ($dbentries as $entries) {
-            $dates[$daysofweek[$day]] = array(array(
+            $dates[$daysofweek[$day]][] = array(
                 'start' => $entries['begin'],
                 'end'   => $entries['end']
-            ));
+            );
          }
       }
 
@@ -251,61 +293,74 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
          if (isset($range['beginhours'])
                  && $range['beginhours'] != $range['lasthours']) {
             $rangeToAdd = array(array(
-                'begin' => $range['beginhours'],
-                'end'   => $range['lasthours'],
                 'plugin_fusioninventory_timeslots_id' => $data['timeslots_id'],
-                'day'   => $day
+                'day'   => $day,
+                'begin' => $range['beginhours'],
+                'end'   => $range['lasthours']
             ));
          }
 
-         $previousend = 0;
-         $previousid  = 0;
-         $newbegin    = false;
-         foreach ($rangeToAdd as $key=>$dbToAdd) {
-            if ($dbToAdd['begin'] == 0) {
-               unset($rangeToAdd[$key]);
-               $newbegin = true;
-            }
-         }
-
+         $periods = array();
          foreach ($rangeToUpdate as $dbToUpdate) {
-            if ($newbegin) {
-               $rangeToUpdate[$dbToUpdate['id']]['begin'] = 0;
-               $newbegin = false;
-            }
-            if ($dbToUpdate['begin'] > 0) {
-               if ($dbToUpdate['begin'] == $previousend
-                       || $dbToUpdate['begin'] == ($previousend + 15)) {
-                  // delete this db entry
-                  $rangeToDelete[$dbToUpdate['id']] = $dbToUpdate;
-                  unset($rangeToUpdate[$dbToUpdate['id']]);
-                  $dbToUpdate['id'] = $previousid;
-                  $rangeToUpdate[$previousid]['end'] = $dbToUpdate['end'];
-               }
-               // Manage $range (the entry to add)
-               foreach ($rangeToAdd as $key=>$dbToAdd) {
-                  if ($dbToAdd['begin'] == $dbToUpdate['end']
-                          || ($dbToAdd['begin'] == ($dbToUpdate['end'] + 15))) {
-                     unset($rangeToAdd[$key]);
-                     $rangeToUpdate[$dbToUpdate['id']]['end'] = $dbToAdd['end'];
-                     $dbToUpdate['end'] = $dbToAdd['end'];
-                  }
-               }
-            }
-            $previousend = $dbToUpdate['end'];
-            $previousid  = $dbToUpdate['id'];
+            $periods[$dbToUpdate['begin']] = $dbToUpdate;
          }
+         foreach ($rangeToAdd as $dbToAdd) {
+            $periods[$dbToAdd['begin']] = $dbToAdd;
+         }
+         ksort($periods);
+         $periods = $this->mergePeriods($periods);
 
-         foreach ($rangeToAdd as $toadd) {
-            $this->add($toadd);
+         foreach ($dbentries as $dbentry) {
+            if (count($periods) > 0) {
+               $input = array_pop($periods);
+               $input['id'] = $dbentry['id'];
+               $input['day'] = $day;
+               $this->update($input);
+            } else {
+               $this->delete($dbentry);
+            }
          }
-         foreach ($rangeToUpdate as $toupdate) {
-            $this->update($toupdate);
-         }
-         foreach ($rangeToDelete as $todelete) {
-            $this->delete($todelete);
+         if (count($periods) > 0) {
+            foreach ($periods as $period) {
+               $input = $period;
+               if (isset($input['id'])) {
+                  unset($input['id']);
+               }
+               $this->add($input);
+            }
          }
       }
+   }
+
+
+
+   function mergePeriods($periods) {
+
+      $update = false;
+      $previouskey = 0;
+      $first = true;
+      foreach ($periods as $key=>$period) {
+         if ($first) {
+            $first = false;
+            $previouskey = $key;
+         } else {
+            if ($period['begin'] <= $periods[$previouskey]['end']
+                    || $period['begin'] == ($periods[$previouskey]['end'] + 15)) {
+
+               if ($period['end'] > $periods[$previouskey]['end']) {
+                  $periods[$previouskey]['end'] = $period['end'];
+               }
+               unset($periods[$key]);
+               $update = true;
+            } else {
+               $previouskey = $key;
+            }
+         }
+      }
+      if ($update) {
+         $periods = $this->mergePeriods($periods);
+      }
+      return $periods;
    }
 }
 

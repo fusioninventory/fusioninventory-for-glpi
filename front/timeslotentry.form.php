@@ -49,6 +49,17 @@ if (!isset($_GET["id"])) {
 }
 
 $pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
+foreach ($_POST as $key=>$value) {
+   if (strstr($key, 'purge-')) {
+      $split = explode('-', $key);
+      $_POST['id'] = $split[1];
+      $pfTimeslotEntry->check($_POST['id'], PURGE);
+      $pfTimeslotEntry->delete($_POST,1);
+      Html::back();
+   }
+}
+
+$pfTimeslotEntry = new PluginFusioninventoryTimeslotEntry();
 
 $pfTimeslotEntry->addEntry($_POST);
 
