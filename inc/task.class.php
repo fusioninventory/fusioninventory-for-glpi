@@ -117,52 +117,6 @@ class PluginFusioninventoryTask extends CommonDBTM {
    }
 
 
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      global $CFG_GLPI;
-      $tab_names = array();
-      if ( self::can("task", "r") ) {
-         if ($item->getType() == 'Computer') {
-            $tab_names[] = __('FusInv', 'fusioninventory').' '. _n('Task', 'Tasks', 2);
-         }
-
-      }
-
-      if (!empty($tab_names)) {
-         return $tab_names;
-      } else {
-         return '';
-      }
-   }
-
-   function defineTabs($options=array()){
-      global $CFG_GLPI;
-      $ong = array();
-
-      /*
-       * TODO: The "All" tab is malfunctionning and i had no other choice but to disable it.
-       * This is not crucial at the moment and should be reconsidered when refactoring Tasks.
-       */
-      $ong['no_all_tab'] = TRUE;
-      //Tabs in this form are handled by TaskJob class
-      $this->addStandardTab('PluginFusioninventoryTaskJob', $ong, $options);
-
-      return $ong;
-   }
-
-
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      if ($item->getType() == 'Computer') {
-
-         // Possibility to remote agent
-         if (PluginFusioninventoryTaskjob::isAllowurlfopen(1)) {
-            $pfAgent = new PluginFusioninventoryAgent();
-            if ($pfAgent->getAgentWithComputerid($item->fields['id'])) {
-               $pfAgent->showRemoteStatus($item);
-            }
-         }
-      }
-   }
-
    /**
    * Purge task and taskjob
    *

@@ -88,21 +88,48 @@ function plugin_init_fusioninventory() {
 
       // ##### 2. register class #####
 
-      Plugin::registerClass('PluginFusioninventoryAgent');
+      Plugin::registerClass('PluginFusioninventoryAgent',
+         array(
+            'addtabon' => array(
+               'Computer',
+               'Printer',
+               'NetworkEquipment',
+               'PluginFusioninventoryCredentialIp'
+            )
+         )
+      );
       Plugin::registerClass('PluginFusioninventoryAgentmodule');
       Plugin::registerClass('PluginFusioninventoryConfig');
       Plugin::registerClass('PluginFusioninventoryTask',
-              array('addtabon' => array('Computer',
-                                        'Printer',
-                                        'NetworkEquipment',
-                                        'PluginFusioninventoryCredentialIp')));
+         array(
+            'addtabon' => array(
+               'Computer',
+               'Printer',
+               'NetworkEquipment',
+               'PluginFusioninventoryCredentialIp',
+            )
+         )
+      );
       Plugin::registerClass('PluginFusioninventoryTaskjob',
-              array('addtabon' => array('Computer',
-                                        'Printer',
-                                        'NetworkEquipment',
-                                        'PluginFusioninventoryUnknowndevice')));
-      Plugin::registerClass('PluginFusioninventoryTaskjob');
-      Plugin::registerClass('PluginFusioninventoryTaskjobstate');
+         array(
+            'addtabon' => array(
+               //'Computer',
+               //'Printer',
+               //'NetworkEquipment',
+               //'PluginFusioninventoryUnknowndevice',
+               'PluginFusioninventoryTask',
+            )
+         )
+      );
+
+      Plugin::registerClass('PluginFusioninventoryTaskjobstate',
+         array(
+            'addtabon' => array(
+               'PluginFusioninventoryTask'
+            )
+         )
+      );
+
       Plugin::registerClass('PluginFusioninventoryUnknownDevice');
       Plugin::registerClass('PluginFusioninventoryModule');
       Plugin::registerClass('PluginFusioninventoryProfile',

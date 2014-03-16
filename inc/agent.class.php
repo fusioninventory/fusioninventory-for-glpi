@@ -165,7 +165,37 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       return $ong;
    }
 
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $CFG_GLPI;
+      $tab_names = array();
+      if ( $this->can("task", "r") ) {
+         if ($item->getType() == 'Computer') {
+            $tab_names[] = __('FusInv', 'fusioninventory').' '. __('Agent');
+         }
 
+      }
+
+      if (!empty($tab_names)) {
+         return $tab_names;
+      } else {
+         return '';
+      }
+   }
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      Toolbox::logDebug($item);
+      if ($item->getType() == 'Computer') {
+
+         // Possibility to remote agent
+         if (PluginFusioninventoryToolbox::isAllowurlfopen(1)) {
+            $pfAgent = new PluginFusioninventoryAgent();
+            if ($pfAgent->getAgentWithComputerid($item->fields['id'])) {
+               $pfAgent->showRemoteStatus($item);
+            }
+         }
+      }
+   }
 
    /**
     * Display personalized comments (in tooltip) of item
