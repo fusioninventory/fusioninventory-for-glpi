@@ -42,8 +42,9 @@
 
 function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
+   Toolbox::logDebug($itemtype);
    $sopt = array();
-   if ($itemtype == 'Computer') {
+   if ($itemtype == 'Computer' or $itemtype == 'PluginFusioninventoryComputer') {
 
          $sopt[5150]['table']     = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
          $sopt[5150]['field']     = 'last_fusioninventory_update';
