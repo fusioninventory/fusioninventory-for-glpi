@@ -150,6 +150,10 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
 
 
 
+   /**
+    * TODO: rename this method in showTimeslots() since it's not only used to delete but also to
+    * show the list of Timeslot Entries. -- Kevin 'kiniou' Roy
+    */
    function formDeleteEntry($timeslots_id) {
 
       $dbentries = getAllDatasFromTable(
@@ -186,7 +190,11 @@ class PluginFusioninventoryTimeslotEntry extends CommonDBTM {
    }
 
 
-
+   /**
+    * @todo This must be moved in Timeslot class since a Task class is linked to a Timeslot and not
+    * directly to a TimeslotEntry. The Timeslot class must be the entry point of any other class.
+    * -- Kevin 'kiniou' Roy
+    */
    function showTimeSlot($timeslots_id) {
       echo "<div id='chart'></div>";
       echo "<div id='startperiod'></div>";
