@@ -74,14 +74,12 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $sopt[1]['field']          = 'name';
       $sopt[1]['linkfield']      = 'name';
       $sopt[1]['name']           = __('Name');
-
       $sopt[1]['datatype']       = 'itemlink';
 
       $sopt[2]['table']          = $this->getTable();
-      $sopt[2]['field']          = 'date_scheduled';
-      $sopt[2]['linkfield']      = 'date_scheduled';
-      $sopt[2]['name']           = __('Scheduled date', 'fusioninventory');
-
+      $sopt[2]['field']          = 'datetime_start';
+      $sopt[2]['linkfield']      = 'datetime_start';
+      $sopt[2]['name']           = __('Schedule start', 'fusioninventory');
       $sopt[2]['datatype']       = 'datetime';
 
       $sopt[3]['table']          = 'glpi_entities';
@@ -89,29 +87,20 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $sopt[3]['linkfield']      = 'entities_id';
       $sopt[3]['name']           = __('Entity');
 
-
       $sopt[4]['table']          = $this->getTable();
       $sopt[4]['field']          = 'comment';
       $sopt[4]['linkfield']      = 'comment';
       $sopt[4]['name']           = __('Comments');
 
-
       $sopt[5]['table']          = $this->getTable();
       $sopt[5]['field']          = 'is_active';
       $sopt[5]['linkfield']      = 'is_active';
       $sopt[5]['name']           = __('Active');
-
       $sopt[5]['datatype']       = 'bool';
 
-      $sopt[6]['table']          = $this->getTable();
-      $sopt[6]['field']          = 'communication';
-      $sopt[6]['linkfield']      = '';
-      $sopt[6]['name']           = __('Communication type', 'fusioninventory');
-
-
-      $sopt[8]['table']          = 'glpi_plugin_fusioninventory_taskjoblogs';
-      $sopt[8]['field']          = 'state';
-      $sopt[8]['name']           = 'Running';
+      //$sopt[8]['table']          = 'glpi_plugin_fusioninventory_taskjoblogs';
+      //$sopt[8]['field']          = 'state';
+      //$sopt[8]['name']           = 'Running';
 
       $sopt[30]['table']          = $this->getTable();
       $sopt[30]['field']          = 'id';
@@ -120,19 +109,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $sopt[30]['datatype']      = 'number';
 
       return $sopt;
-   }
-
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      if ($item->getType() == 'Computer') {
-
-         // Possibility to remote agent
-         if (PluginFusioninventoryTaskjob::isAllowurlfopen(1)) {
-            $pfAgent = new PluginFusioninventoryAgent();
-            if ($pfAgent->getAgentWithComputerid($item->fields['id'])) {
-               $pfAgent->showRemoteStatus($item);
-            }
-         }
-      }
    }
 
    /**

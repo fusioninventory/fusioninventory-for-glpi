@@ -40,14 +40,14 @@
    ------------------------------------------------------------------------
  */
 
-class PluginFusioninventoryTaskjobView extends CommonDBTM {
+class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       global $CFG_GLPI;
 
       $tab_names = array();
       if ( $item->getID() > 0 and $this->can('task', 'r') ) {
-         $tab_names[] = __('Jobs', 'fusioninventory');
+         $tab_names[] = __('Jobs configuration', 'fusioninventory');
       }
 
       //Return tab names if list is not empty

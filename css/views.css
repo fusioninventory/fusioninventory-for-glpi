@@ -116,3 +116,52 @@ td:not(#foo) > input[type=radio]:checked + label {
    font-family: monospace;
 }
 
+
+/*
+ * The following css is used with elements from PluginFusioninventoryCommonView
+ */
+
+.fusinv_form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.fusinv_form label,
+.fusinv_form input ,
+.fusinv_form textarea
+{
+    display: inline-block;
+}
+
+.fusinv_form label
+{
+    width: 30%;
+    text-align: right;
+    vertical-align:top;
+    padding:2px;
+    /*border-top: solid 1px #ccc;*/
+    /*border-bottom: solid 1px #ccc;*/
+    margin-bottom: 1%;
+}
+
+.fusinv_form div.input_wrap {
+    margin: 0 20% 0 0;
+    display: inline-block;
+    padding: 0;
+    width:40%
+}
+
+.fusinv_form label + div.input_wrap > span + input,
+.fusinv_form label + div.input_wrap > input,
+.fusinv_form label + div.input_wrap > textarea {
+    width:100%;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-top: solid 1px #ccc;
+}
+
+.fusinv_form label + div.input_wrap.datetime input[type="text"],
+.fusinv_form label + div.input_wrap input[type="checkbox"]
+{
+    width: auto;
+}

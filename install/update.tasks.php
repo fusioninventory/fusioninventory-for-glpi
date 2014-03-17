@@ -140,60 +140,121 @@ function pluginFusioninventoryUpdateTasks( $migration , $plugin_id) {
       $a_table['oldname'] = array();
 
       $a_table['fields']  = array();
-      $a_table['fields']['id']         = array('type'    => 'autoincrement',
-                                               'value'   => '');
-      $a_table['fields']['plugin_fusioninventory_tasks_id']= array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['entities_id']= array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['name']       = array('type'    => 'string',
-                                               'value'   => NULL);
-      $a_table['fields']['date_creation'] = array('type'    => 'datetime',
-                                                  'value'   => NULL);
-      $a_table['fields']['retry_nb'] = array('type'    => "tinyint(2) NOT NULL DEFAULT '0'",
-                                               'value'   => NULL);
-      $a_table['fields']['retry_time'] = array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['plugins_id'] = array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['method']     = array('type'    => 'string',
-                                               'value'   => NULL);
-      $a_table['fields']['definition'] = array('type'    => 'text',
-                                               'value'   => NULL);
-      $a_table['fields']['action']     = array('type'    => 'text',
-                                               'value'   => NULL);
-      $a_table['fields']['comment']    = array('type'    => 'text',
-                                               'value'   => NULL);
-      $a_table['fields']['users_id']   = array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['status']     = array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['rescheduled_taskjob_id'] = array('type'    => 'integer',
-                                                           'value'   => NULL);
-      $a_table['fields']['statuscomments'] = array('type'    => 'text',
-                                                   'value'   => NULL);
-      $a_table['fields']['periodicity_count'] = array('type'    => "int(6) NOT NULL DEFAULT '0'",
-                                                      'value'   => NULL);
-      $a_table['fields']['periodicity_type']  = array('type'    => 'string',
-                                                      'value'   => NULL);
-      $a_table['fields']['execution_id'] = array('type'    => "bigint(20) NOT NULL DEFAULT '0'",
-                                                 'value'   => NULL);
-      $a_table['fields']['ranking']    = array('type'    => 'integer',
-                                               'value'   => NULL);
+      $a_table['fields']['id'] = array(
+         'type'    => 'autoincrement',
+         'value'   => ''
+      );
+      $a_table['fields']['plugin_fusioninventory_tasks_id']= array(
+         'type'    => 'integer',
+         'value'   => NULL
+      );
+      $a_table['fields']['entities_id']= array(
+         'type'    => 'integer',
+         'value'   => NULL
+      );
+      $a_table['fields']['name']       = array(
+         'type'    => 'string',
+         'value'   => NULL
+      );
+      $a_table['fields']['date_creation'] = array(
+         'type'    => 'datetime',
+         'value'   => NULL
+      );
+      $a_table['fields']['retry_nb'] = array(
+         'type'    => "tinyint(2) NOT NULL DEFAULT '0'",
+         'value'   => NULL
+      );
+      $a_table['fields']['retry_time'] = array(
+         'type'    => 'integer',
+         'value'   => NULL
+      );
+      $a_table['fields']['plugins_id'] = array(
+         'type'    => 'integer',
+         'value'   => NULL
+      );
+      $a_table['fields']['method']     = array(
+         'type'    => 'string',
+         'value'   => NULL
+      );
+      $a_table['fields']['definition'] = array(
+         'type'    => 'text',
+         'value'   => NULL
+      );
+      $a_table['fields']['action']     = array(
+         'type'    => 'text',
+         'value'   => NULL
+      );
+      $a_table['fields']['comment']    = array(
+         'type'    => 'text',
+         'value'   => NULL
+      );
+      $a_table['fields']['users_id']   = array(
+         'type'    => 'integer',
+         'value'   => NULL
+      );
+      $a_table['fields']['status']     = array(
+         'type'    => 'integer',
+         'value'   => NULL
+      );
+      $a_table['fields']['rescheduled_taskjob_id'] = array(
+         'type'    => 'integer',
+         'value'   => NULL
+      );
+      $a_table['fields']['statuscomments'] = array(
+         'type'    => 'text',
+         'value'   => NULL
+      );
+      $a_table['fields']['periodicity_count'] = array(
+         'type'    => "int(6) NOT NULL DEFAULT '0'",
+         'value'   => NULL
+      );
+      $a_table['fields']['periodicity_type']  = array(
+         'type'    => 'string',
+         'value'   => NULL
+      );
+      $a_table['fields']['execution_id'] = array(
+         'type'    => "bigint(20) NOT NULL DEFAULT '0'",
+         'value'   => NULL
+      );
+      $a_table['fields']['ranking']    = array(
+         'type'    => 'integer',
+         'value'   => NULL
+      );
 
       $a_table['oldfields']  = array();
 
       $a_table['renamefields'] = array();
 
       $a_table['keys']   = array();
-      $a_table['keys'][] = array('field' => 'plugin_fusioninventory_tasks_id',
-                                 'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'entities_id', 'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'plugins_id' , 'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'users_id'   , 'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'rescheduled_taskjob_id',
-                                                            'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'method'      , 'name' => '', 'type' => 'INDEX');
+      $a_table['keys'][] = array(
+         'field' => 'plugin_fusioninventory_tasks_id',
+         'name' => '', 'type' => 'INDEX'
+      );
+      $a_table['keys'][] = array(
+         'field' => 'entities_id',
+         'name' => '',
+         'type' => 'INDEX'
+      );
+      $a_table['keys'][] = array(
+         'field' => 'plugins_id',
+         'name' => '',
+         'type' => 'INDEX'
+      );
+      $a_table['keys'][] = array(
+         'field' => 'users_id',
+         'name' => '',
+         'type' => 'INDEX'
+      );
+      $a_table['keys'][] = array(
+         'field' => 'rescheduled_taskjob_id',
+         'name' => '',
+         'type' => 'INDEX'
+      );
+      $a_table['keys'][] = array(
+         'field' => 'method',
+         'name' => '',
+         'type' => 'INDEX'
+      );
 
       $a_table['oldkeys'] = array();
 
@@ -223,15 +284,34 @@ function pluginFusioninventoryUpdateTasks( $migration , $plugin_id) {
       $a_table['oldname'] = array();
 
       $a_table['fields']  = array(
-         'id'         => array('type' => 'BIGINT(20) NOT NULL AUTO_INCREMENT', 'value' => ''),
-         'plugin_fusioninventory_taskjobstates_id' =>
-                         array('type' => 'integer',                            'value' => NULL),
-         'date'       => array('type' => 'datetime',                           'value' => NULL),
-         'items_id'   => array('type' => 'integer',                            'value' => NULL),
-         'itemtype'   => array('type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
-                                                                               'value' => NULL),
-         'state'      => array('type' => 'integer',                            'value' => NULL),
-         'comment'    => array('type' => 'text',                               'value' => NULL)
+         'id' => array(
+            'type' => 'BIGINT(20) NOT NULL AUTO_INCREMENT',
+            'value' => ''
+         ),
+         'plugin_fusioninventory_taskjobstates_id' => array(
+            'type' => 'integer',
+            'value' => NULL
+         ),
+         'date' => array(
+            'type' => 'datetime',
+            'value' => NULL
+         ),
+         'items_id' => array(
+            'type' => 'integer',
+            'value' => NULL
+         ),
+         'itemtype' => array(
+            'type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
+            'value' => NULL
+         ),
+         'state' => array(
+            'type' => 'integer',
+            'value' => NULL
+         ),
+         'comment' => array(
+            'type' => 'text',
+            'value' => NULL
+         )
       );
 
       $a_table['oldfields']  = array();

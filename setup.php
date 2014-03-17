@@ -87,10 +87,7 @@ function plugin_init_fusioninventory() {
 
       // Register classes into GLPI plugin factory
 
-      Plugin::registerClass('PluginFusioninventoryAgent');
-      Plugin::registerClass('PluginFusioninventoryAgentmodule');
-      Plugin::registerClass('PluginFusioninventoryConfig');
-      Plugin::registerClass('PluginFusioninventoryTask',
+      Plugin::registerClass('PluginFusioninventoryAgent',
          array(
             'addtabon' => array(
                'Computer',
@@ -100,18 +97,30 @@ function plugin_init_fusioninventory() {
             )
          )
       );
-      Plugin::registerClass('PluginFusioninventoryTaskjob',
+      Plugin::registerClass('PluginFusioninventoryAgentmodule');
+      Plugin::registerClass('PluginFusioninventoryConfig');
+      Plugin::registerClass('PluginFusioninventoryTask',
          array(
             'addtabon' => array(
                'Computer',
                'Printer',
                'NetworkEquipment',
-               'PluginFusioninventoryTask',
-               'PluginFusioninventoryUnknowndevice'
+               'PluginFusioninventoryCredentialIp',
             )
          )
       );
-      Plugin::registerClass('PluginFusioninventoryTaskjob');
+      Plugin::registerClass('PluginFusioninventoryTaskjob',
+         array(
+            'addtabon' => array(
+               //'Computer',
+               //'Printer',
+               //'NetworkEquipment',
+               //'PluginFusioninventoryUnknowndevice',
+               'PluginFusioninventoryTask',
+            )
+         )
+      );
+
       Plugin::registerClass('PluginFusioninventoryTaskjobstate',
          array(
             'addtabon' => array(
@@ -119,6 +128,7 @@ function plugin_init_fusioninventory() {
             )
          )
       );
+
       Plugin::registerClass('PluginFusioninventoryUnknownDevice');
       Plugin::registerClass('PluginFusioninventoryModule');
       Plugin::registerClass('PluginFusioninventoryProfile',
