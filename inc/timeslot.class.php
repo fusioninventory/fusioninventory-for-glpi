@@ -138,9 +138,10 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
       $this->showFormButtons($options);
 
-      $pf = new PluginFusioninventoryTimeslotEntry();
-      $pf->formEntry($ID);
-
+      if ($ID > 0) {
+         $pf = new PluginFusioninventoryTimeslotEntry();
+         $pf->formEntry($ID);
+      }
       return true;
    }
 }
