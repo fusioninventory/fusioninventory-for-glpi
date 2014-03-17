@@ -82,6 +82,12 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $sopt[2]['name']           = __('Schedule start', 'fusioninventory');
       $sopt[2]['datatype']       = 'datetime';
 
+      $sopt[2]['table']          = $this->getTable();
+      $sopt[2]['field']          = 'datetime_end';
+      $sopt[2]['linkfield']      = 'datetime_end';
+      $sopt[2]['name']           = __('Schedule end', 'fusioninventory');
+      $sopt[2]['datatype']       = 'datetime';
+
       $sopt[3]['table']          = 'glpi_entities';
       $sopt[3]['field']          = 'completename';
       $sopt[3]['linkfield']      = 'entities_id';

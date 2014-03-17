@@ -86,11 +86,12 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
     **/
    function showForm($id, $options=array()) {
       $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
+      //$pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
 
       $taskjobs = array();
       $new_item = false;
-      if ($id!='') {
+      Toolbox::logDebug($id);
+      if ($id > 0) {
          $this->getFromDB($id);
          $taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'", "id");
       } else {
@@ -110,13 +111,25 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       $this->showTextField( __('Name'), "name");
       $this->showTextArea(__('Comments'), "comment");
-      $this->showCheckboxField(
-         __('Active'), "is_active",
-         array(
-            'readonly' => !(count($taskjobs) > 0),
-         )
-      );
+      if ( ! $new_item ) {
+         $this->showCheckboxField( __('Active'), "is_active" );
 
+         $datetime_field_options = array(
+            'timestep' => 1,
+            'maybeempty' => true,
+         );
+         $this->showDateTimeField(
+            __('Schedule start', 'fusioninventory'),
+            "datetime_start",
+            $datetime_field_options
+         );
+
+         $this->showDateTimeField(
+            __('Schedule end', 'fusioninventory'),
+            "datetime_end",
+            $datetime_field_options
+         );
+      }
       /**
        * TODO: the "force run" needs to be properly moved to taskjobstate.
        */
@@ -183,22 +196,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       //   );
       //}
       //echo "</td>";
-      $datetime_field_options = array(
-         'timestep' => 1,
-         'maybeempty' => true,
-      //   'canedit' => false
-         );
-      $this->showDateTimeField(
-         __('Schedule start', 'fusioninventory'),
-         "datetime_start",
-         $datetime_field_options
-      );
-
-      $this->showDateTimeField(
-         __('Schedule end', 'fusioninventory'),
-         "datetime_end",
-         $datetime_field_options
-      );
 
 
 
