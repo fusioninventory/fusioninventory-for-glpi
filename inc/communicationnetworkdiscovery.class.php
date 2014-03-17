@@ -544,8 +544,8 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
            " AND `instantiation_type`='$instanciation_type'",
            "",
            1
-        )
-     );
+         )
+      );
       $port_id = 0;
       if (isset($port['id'])) {
          if (isset($arrayinventory['MAC']) AND !empty($arrayinventory['MAC'])) {
@@ -573,7 +573,7 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
         "`itemtype`='NetworkPort' AND `items_id`='".$port_id."'",
         "",
         1)
-     );
+      );
       $name_id = 0;
 
       if (isset($name['id'])) {
@@ -590,14 +590,14 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
 
          if ($check_addresses) {
             $addresses = $IPAddress->find("`itemtype`='NetworkName'
-               AND `items_id`='".$port_id."'", '', 1);
+               AND `items_id`='".$name_id."'", '', 1);
          } else {
             // Case of NetworkEquipment
             $a_ips = $IPAddress->find("`itemtype`='NetworkName'
-               AND `items_id`='".$port_id."'
+               AND `items_id`='".$name_id."'
                AND `name`='".$arrayinventory['IP']."'", '', 1);
             if (count($a_ips) > 0) {
-               $addresses = current($a_ips);
+               $addresses = $a_ips;
             } else {
                $addresses = array();
             }
