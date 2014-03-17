@@ -52,6 +52,11 @@ class UnknownDeviceImportTest extends Common_TestCase {
 
       self::restore_database();
 
+      // Load session rights
+      $_SESSION['glpidefault_entity'] = 0;
+      Session::initEntityProfiles(2);
+      Session::changeProfile(4);
+
       $pfUnknownDevice  = new PluginFusioninventoryUnknownDevice();
       $networkEquipment = new NetworkEquipment();
       $networkPort      = new NetworkPort();
