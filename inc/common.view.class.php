@@ -61,10 +61,10 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
    }
 
    public function showCheckboxField($title, $varname, $options = array()) {
-      Toolbox::logDebug($options);
       echo "<label>" . $title."&nbsp;:" . "</label>";
       $options['name'] = $varname;
-      $options['value'] = $value;
+      $options['checked'] = $this->fields[$varname];
+      $options['zero_on_empty']= true;
 
       echo "<div class='input_wrap'>";
       Html::showCheckbox($options);
@@ -79,7 +79,13 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
          $value = $this->fields[$varname];
       } else {
          // Else set default value to current date and time
-         $value = date("Y-m-d H:i:s");
+         if (  array_key_exists('maybeempty', $options)
+               and $options['maybeempty']
+         ) {
+            $value = "";
+         } else {
+            $value = date("Y-m-d H:i:s");
+         }
       }
       $options['value'] = $value;
 
