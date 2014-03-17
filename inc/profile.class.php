@@ -290,9 +290,6 @@ class PluginFusioninventoryProfile extends Profile {
           array('rights'    => CommonDBTM::getRights(),
                 'label'     => __('Network report'),
                 'field'     => 'plugin_fusioninventory_reportnetworkequipment'),
-          array('itemtype'  => 'PluginFusioninventorySnmpmodel',
-                'label'     => __('SNMP model', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_model'),
           array('itemtype'  => 'PluginFusioninventoryLock',
                 'label'     => __('Lock', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_lock')

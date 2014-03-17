@@ -84,7 +84,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'inventoryrulelocation'=> 'PluginFusioninventoryInventoryRuleLocation',
           'collectrule'          => 'PluginFusioninventoryCollectRule',
           'inventorycomputerblacklist' => 'PluginFusioninventoryInventoryComputerBlacklist',
-          'snmpmodel'            => 'PluginFusioninventorySnmpmodel',
           'configsecurity'       => 'PluginFusioninventoryConfigSecurity',
           'credential'           => 'PluginFusioninventoryCredential',
           'credentialip'         => 'PluginFusioninventoryCredentialIp',
@@ -354,14 +353,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                               "/plugins/fusioninventory/pics/menu_inventory_status.png",
                'link' =>   $CFG_GLPI['root_doc'].
                               "/plugins/fusioninventory/front/stateinventory.php",
-         );
-      }
-
-      if (Session::haveRight('plugin_fusioninventory_model', READ)) {
-         $a_menu[] = array(
-            'name' => __('SNMP models', 'fusioninventory'),
-            'pic'  => $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_models.png",
-            'link' => $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/snmpmodel.php"
          );
       }
 

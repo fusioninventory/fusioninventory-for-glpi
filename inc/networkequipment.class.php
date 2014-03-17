@@ -406,8 +406,7 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
          $plugin_fusinvsnmp_configsecurities_id = 0;
       }
       $query = "UPDATE `glpi_plugin_fusioninventory_networkequipments`
-                SET `plugin_fusioninventory_snmpmodels_id`='".$plugin_fusinvsnmp_models_id."',
-                    `plugin_fusioninventory_configsecurities_id`=
+                SET `plugin_fusioninventory_configsecurities_id`=
                         '".$plugin_fusinvsnmp_configsecurities_id."',
                     `sysdescr`='".$sysdescr."'
                 WHERE `networkequipments_id`='".$id."';";
@@ -439,29 +438,8 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
       echo "<textarea name='sysdescr' cols='45' rows='5'>";
       echo $this->fields['sysdescr'];
       echo "</textarea>";
-      echo "<td align='center' rowspan='2'>".__('SNMP models', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td align='center'></td>";
       echo "<td align='center'>";
-      $query_models = "SELECT *
-                       FROM `glpi_plugin_fusioninventory_snmpmodels`
-                       WHERE `itemtype`!='NetworkEquipment'
-                           AND `itemtype`!=''";
-      $result_models=$DB->query($query_models);
-      $exclude_models = array();
-      while ($data_models=$DB->fetch_array($result_models)) {
-         $exclude_models[] = $data_models['id'];
-      }
-      Dropdown::show("PluginFusioninventorySnmpmodel",
-                     array('name'=>"model_infos",
-                           'value'=>$this->fields['plugin_fusioninventory_snmpmodels_id'],
-                           'comment'=>0,
-                           'used'=>$exclude_models));
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      echo "<input type='submit' name='GetRightModel'
-              value='".__('Load the correct model', 'fusioninventory')."' class='submit'/>";
       echo "</td>";
       echo "</tr>";
 

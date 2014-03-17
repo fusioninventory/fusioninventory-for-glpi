@@ -650,26 +650,6 @@ class PluginFusioninventoryCommunicationNetworkDiscovery {
          $input['plugin_fusioninventory_configsecurities_id'] = $arrayinventory['AUTHSNMP'];
       }
 
-      $pfModel = new PluginFusioninventorySnmpmodel();
-      if (
-         isset($arrayinventory['MODELSNMP']) AND
-         !empty($arrayinventory['MODELSNMP'])
-      ) {
-         $model_id = $pfModel->getModelByKey($arrayinventory['MODELSNMP']);
-
-         if (
-            $model_id == '0' AND
-            isset($arrayinventory['DESCRIPTION']) AND
-            !empty($arrayinventory['DESCRIPTION'])
-         ) {
-            $model_id = $pfModel->getModelBySysdescr($arrayinventory['DESCRIPTION']);
-         }
-         if ($model_id != '0') {
-
-            $input['plugin_fusioninventory_snmpmodels_id'] = $model_id;
-         }
-      }
-
       $class->update($input);
    }
 

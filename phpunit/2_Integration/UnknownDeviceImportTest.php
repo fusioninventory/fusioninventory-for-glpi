@@ -72,7 +72,6 @@ class UnknownDeviceImportTest extends Common_TestCase {
           'is_dynamic'  => 1,
           'serial'      => 'XXS6BEF3',
           'comment'     => 'this is a comment',
-          'plugin_fusioninventory_snmpmodels_id'       => 1,
           'plugin_fusioninventory_configsecurities_id' => 1
       );
       $unknowndevices_id = $pfUnknownDevice->add($input);
