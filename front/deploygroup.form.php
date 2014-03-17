@@ -48,123 +48,61 @@ if (!isset($_REQUEST["id"])) {
 }
 
 $group = new PluginFusioninventoryDeployGroup();
+//Store $_REQUEST params for further use : it's ugly, 
+//but I cannot find a best solution...
+$group->setSearchParams($_REQUEST);
 
-if (isset($_REQUEST['type'])) {
-   if ($_REQUEST['type'] == 'static') {
-      $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
+if (isset($_POST['save'])) {
+   $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
+   if (!countElementsInTable($group_item->getTable(), 
+                             "plugin_fusioninventory_deploygroups_id='".$_POST['plugin_fusioninventory_deploygroups_id']."'")) {
+      $group_item->add($_POST);
+   } else {
+      $item = getAllDatasFromTable($group_item->getTable(), 
+                                   "plugin_fusioninventory_deploygroups_id='".$_POST['plugin_fusioninventory_deploygroups_id']."'");
+      $values = array_pop($item);
+      $values['fields_array'] = serialize($_POST['criteria']);
+      $group_item->update($values);
    }
-   if ($_REQUEST['type'] == 'dynamic') {
-      $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
-   }
-}
 
-if (isset($_POST["add"])) {
-   $group->check(-1, 'w', $_POST);
+   Html::back();
+} elseif (isset($_POST["add"])) {
+   $group->check(-1, UPDATE, $_POST);
    $newID = $group->add($_POST);
-   Html::redirect($CFG_GLPI["root_doc"]."/plugins/fusioninventory/front/deploygroup.form.php?id=".$newID);
+   Html::redirect(Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup")."?id=".$newID);
 
 } else if (isset($_POST["delete"])) {
-   $group->check($_REQUEST['id'], 'd');
+   $group->check($_REQUEST['id'], DELETE);
    $ok = $group->delete($_POST);
 
    $group->redirectToList();
 
 } else if (isset($_REQUEST["purge"])) {
-   $group->check($_REQUEST['id'], 'd');
+   $group->check($_REQUEST['id'], DELETE);
    $ok = $group->delete($_REQUEST, 1);
 
    $group->redirectToList();
 
 } else if (isset($_POST["update"])) {
-   $group->check($_REQUEST['id'], 'w');
+   $group->check($_REQUEST['id'], UPDATE);
    $group->update($_POST);
 
    Html::back();
-
-} else if (isset($_POST["additem"])) {
-   //$group_item->check(-1, 'w', $_POST);
-
-   if ($_REQUEST['type'] == 'static') {
-      if (isset($_REQUEST["item"])) {
-         if (count($_REQUEST["item"])) {
-            foreach ($_REQUEST["item"] as $key => $val) {
-               $group_item->add(array(
-                  'groups_id' => $_REQUEST['groupID'],
-                  'itemtype' => $_REQUEST['itemtype'],
-                  'items_id' => $val
-               ));
-            }
-         }
-      }
-   } elseif ($_REQUEST['type'] == 'dynamic') {
-      $fields_array = array(
-         'itemtype'              => $_REQUEST['itemtype'],
-/*       'start'                 => $_REQUEST['start'],
-         'limit'                 => $_REQUEST['limit'],*/
-         'serial'                => $_REQUEST['serial'],
-         'otherserial'           => $_REQUEST['otherserial'],
-         'locations_id'          => $_REQUEST['locations_id'],
-         'operatingsystems_id'   => $_REQUEST['operatingsystems_id'],
-         'operatingsystem_name'  => $_REQUEST['____data_operatingsystems_id'],
-         'room'                  => $_REQUEST['room'],
-         'building'              => $_REQUEST['building'],
-         'name'                  => $_REQUEST['name']
-      );
-      $group_item->add(array(
-         'groups_id' => $_REQUEST['groupID'],
-         'fields_array' => serialize($fields_array)
-      ));
-   }
-
-   Html::back();
-} else if (isset($_POST["updateitem"])) {
-   //$group_item->check(-1, 'w', $_POST);
-   if ($_REQUEST['type'] == 'dynamic') {
-      $fields_array = array(
-         'itemtype'              => $_REQUEST['itemtype'],
-/*       'start'                 => $_REQUEST['start'],
-         'limit'                 => $_REQUEST['limit'],*/
-         'serial'                => $_REQUEST['serial'],
-         'otherserial'           => $_REQUEST['otherserial'],
-         'locations_id'          => $_REQUEST['locations_id'],
-         'operatingsystems_id'   => $_REQUEST['operatingsystems_id'],
-         'operatingsystem_name'  => $_REQUEST['____data_operatingsystems_id'],
-         'room'                  => $_REQUEST['room'],
-         'building'              => $_REQUEST['building'],
-         'name'                  => $_REQUEST['name']
-      );
-      $group_item->update(array(
-         'id' => $_REQUEST['id'],
-         'fields_array' => serialize($fields_array)
-      ));
-   }
-
-   Html::back();
-
-} else if (isset($_REQUEST["deleteitem"])) {
-   if ($_REQUEST['type'] == 'static') {
-      if (count($_REQUEST["item"])) {
-         foreach ($_REQUEST["item"] as $key => $val) {
-            if ($group_item->can($key, 'w')) {
-               $group_item->delete(array('id' => $key));
-            }
-         }
-      }
-   } elseif ($_REQUEST['type'] == 'dynamic') {
-
-   }
-
-   Html::back();
-
 } else {
    Html::header(__('FusionInventory DEPLOY'), $_SERVER["PHP_SELF"], "plugins",
-   "pluginfusioninventorymenu", "deploygroup");
+                "pluginfusioninventorymenu", "deploygroup");
 
    PluginFusioninventoryMenu::displayMenu("mini");
-
-
-   $group->display($_GET);
-
+   if (!isset($_POST['preview'])) {
+      //Remove session variable to clean search engine criteria
+      unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
+   }
+   //Store groups_id for further use
+   $_SESSION['plugin_fusioninventory_group_search_id'] = $_REQUEST['id'];
+   
+   $group->display(array('id' => $_REQUEST['id']));
+   $res = PluginFusioninventoryDeployGroup::getTargetsForGroup($_REQUEST['id']);
+   Toolbox::logDebug($res);
    Html::footer();
 }
 

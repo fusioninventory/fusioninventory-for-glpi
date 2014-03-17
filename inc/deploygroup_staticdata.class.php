@@ -53,34 +53,54 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
    static public $itemtype_2 = 'itemtype';
    static public $items_id_2 = 'items_id';
 
-   function can($ID, $right, array &$input=NULL) {
-
-      if ($ID<0) {
-         // Ajout
-         $group = new PluginFusioninventoryDeployGroup();
-
-         if (!$group->getFromDB($input['groups_id'])) {
-            return FALSE;
-         }
-      }
-      return parent::can($ID, $right, $input);
-   }
-
-
-
+   /**
+    * @see CommonGLPI::getTabNameForItem()
+   **/
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-      if ($item->fields['type'] == 'STATIC') {
-         return __('Static group', 'fusioninventory');
+      if (!$withtemplate
+          && ($item->getType() == 'PluginFusioninventoryDeployGroup') 
+             && $item->fields['type'] == PluginFusioninventoryDeployGroup::STATIC_GROUP) {
+              
+         $tabs[1] = _n('Criterion', 'Criteria', 2);
+         if (countElementsInTable(getTableForItemType(__CLASS__), 
+                                  "`itemtype`='Computer' 
+                                    AND `plugin_fusioninventory_deploygroups_id`='".$item->getID()."'")) {
+            $tabs[2]= _n('Associated item','Associated items', 2);
+         }
+         return $tabs;
       }
+      return '';
    }
-
-
-
+   
+   /**
+    * @param $item         CommonGLPI object
+    * @param $tabnum       (default 1)
+    * @param $withtemplate (default 0)
+   **/
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      $item->showStaticForm();
-   }
+      switch ($tabnum) {
+         case 1:
+            $search_params = Search::manageParams('PluginFusioninventoryComputer', $item->getSearchParams());
+            PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
+            if ($item->isPreviewRequest()) {
 
+               Search::showList('PluginFusioninventoryComputer', $search_params);
+            }
+            break;
+         case 2:
+            self::showResults($item);
+            break;
+      }
+
+      return true;
+   }
+   
+   static function showResults(PluginFusioninventoryDeployGroup $group) {
+      $computers_params['metacriteria'] = array();
+      $search_params    = Search::manageParams('PluginFusioninventoryComputer', $computers_params);
+      Search::showList('PluginFusioninventoryComputer', $search_params);
+   }
 }
 
 ?>
