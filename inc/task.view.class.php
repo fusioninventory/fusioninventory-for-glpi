@@ -215,7 +215,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
    public function submitForm($postvars) {
 
-      Toolbox::logDebug(Toolbox::getItemTypeSearchURL(get_class($this)));
       if (isset($postvars['forcestart'])) {
          Session::checkRight('plugin_fusioninventory_task', UPDATE);
 
