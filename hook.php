@@ -195,6 +195,17 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5170]['datatype']      = 'bool';
          $sopt[5170]['massiveaction'] = FALSE;
 
+         $sopt[5171]['name']          = __('Static group', 'fusioninventory');
+         $sopt[5171]['table']         = getTableForItemType('PluginFusioninventoryDeployGroup');
+         $sopt[5171]['massiveaction'] = FALSE;
+         $sopt[5171]['field']         ='name';
+         $sopt[5171]['forcegroupby']  = true;
+         $sopt[5171]['usehaving']     = true;
+         $sopt[5171]['datatype']      = 'dropdown';
+         $sopt[5171]['joinparams']    = array('beforejoin'
+                                          => array('table'      => 'glpi_plugin_fusioninventory_deploygroups_staticdatas',
+                                                   'joinparams' => array('jointype'          => 'itemtype_item',
+                                                                           'specific_itemtype' => 'Computer')));
 
 
    }
@@ -929,7 +940,9 @@ function plugin_fusioninventory_MassiveActions($type) {
       case "Computer":
          return array (
             "plugin_fusioninventory_manage_locks" => _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")",
-            "plugin_fusioninventory_deploy_target_task" => __('Target a task', 'fusioninventory')
+            "plugin_fusioninventory_deploy_target_task" => __('Target a task', 'fusioninventory'),
+            'PluginFusioninventoryDeployGroup'.MassiveAction::CLASS_ACTION_SEPARATOR."add_to_static_group" 
+               => __('Add to static group', 'fusioninventory')
          );
          break;
 
@@ -1274,6 +1287,10 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
    global $DB;
 
    switch ($data['action']) {
+   
+   
+      case "add_to_static_group":
+      
       case "plugin_fusioninventory_manage_locks" :
          if (($data['itemtype'] == "NetworkEquipment")
                  OR ($data['itemtype'] == "Printer")
