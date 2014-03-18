@@ -5165,6 +5165,17 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       WHERE `sub_type`='PluginFusioninventoryRuleImportEquipment'";
    $DB->query($query);
 
+   $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobs`
+               WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport'";
+   $result = $DB->query($query);
+   while ($data=$DB->fetch_array($result)) {
+      $querya = "UPDATE glpi_ruleactions SET `value`='1'
+         WHERE `rules_id`='".$data['id']."'
+            AND `value`='0'
+            AND `field`='_fusion'";
+      $DB->query($querya);
+   }
+
    $query = "UPDATE glpi_rules SET `sub_type`='PluginFusioninventoryInventoryRuleEntity'
       WHERE `sub_type`='PluginFusinvinventoryRuleEntity'";
    $DB->query($query);
