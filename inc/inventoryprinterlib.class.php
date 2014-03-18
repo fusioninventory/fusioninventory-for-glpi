@@ -106,7 +106,6 @@ class PluginFusioninventoryInventoryPrinterLib extends CommonDBTM {
             $idtmp = $db_printer['id'];
             unset($db_printer['id']);
             unset($db_printer['printers_id']);
-            unset($db_printer['plugin_fusioninventory_snmpmodels_id']);
             unset($db_printer['plugin_fusioninventory_configsecurities_id']);
 
             $a_ret = PluginFusioninventoryToolbox::checkLock(

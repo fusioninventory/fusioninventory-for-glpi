@@ -371,25 +371,6 @@ class PluginFusioninventoryToolbox {
 
 
    /**
-    * Add SNMO model strings to XML node 'MODEL'
-    *
-    * @param type $p_sxml_node
-    * @param type $p_id
-    */
-   function addModel($p_sxml_node, $p_id) {
-      $pfModel = new PluginFusioninventorySnmpmodel();
-      $pfModelMib = new PluginFusioninventorySnmpmodelMib();
-
-      $pfModel->getFromDB($p_id);
-      $sxml_model = $p_sxml_node->addChild('MODEL');
-         $sxml_model->addAttribute('ID', $p_id);
-         $sxml_model->addAttribute('NAME', $pfModel->fields['name']);
-         $pfModelMib->oidList($sxml_model, $p_id);
-   }
-
-
-
-   /**
     * Add GET oids to XML node 'GET'
     *
     * @param type $p_sxml_node

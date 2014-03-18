@@ -115,7 +115,6 @@ class PluginFusioninventoryInventoryNetworkEquipmentLib extends CommonDBTM {
             $idtmp = $db_networkequipment['id'];
             unset($db_networkequipment['id']);
             unset($db_networkequipment['networkequipments_id']);
-            unset($db_networkequipment['plugin_fusioninventory_snmpmodels_id']);
             unset($db_networkequipment['plugin_fusioninventory_configsecurities_id']);
 
             $a_ret = PluginFusioninventoryToolbox::checkLock(

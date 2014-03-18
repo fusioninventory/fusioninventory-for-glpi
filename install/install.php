@@ -341,8 +341,6 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
 
    $mode_cli = (basename($_SERVER['SCRIPT_NAME']) == "cli_install.php");
 
-   PluginFusioninventorySnmpmodel::importAllModels('', $mode_cli);
-
 }
 
 ?>

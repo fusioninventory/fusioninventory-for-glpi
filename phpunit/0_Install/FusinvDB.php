@@ -295,26 +295,6 @@ class FusinvDB extends PHPUnit_Framework_Assert{
 
 
 
-      /*
-       * Verify SNMP models have a right itemtype
-       */
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_snmpmodels`
-         WHERE `itemtype` NOT IN('Computer','NetworkEquipment', 'Printer')";
-      $result = $DB->query($query);
-      $this->assertEquals($DB->numrows($result), 0, "SNMP models have invalid itemtype");
-
-
-      /*
-       * Verify SNMP models not in double
-       */
-      $query = "SELECT count(*) as cnt, `name` FROM `glpi_plugin_fusioninventory_snmpmodels`
-         GROUP BY `name`
-         HAVING cnt >1";
-      $result = $DB->query($query);
-      $this->assertEquals($DB->numrows($result), 0, "SNMP models are in double (name of models)");
-
-
-
    }
 }
 

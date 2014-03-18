@@ -162,37 +162,13 @@ class PluginFusioninventoryPrinter extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center' rowspan='2'>".__('SNMP models', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td align='center'></td>";
       echo "<td align='center'>";
-      $query_models = "SELECT *
-                       FROM `glpi_plugin_fusioninventory_snmpmodels`
-                       WHERE `itemtype`!='Printer'
-                             AND `itemtype`!=''";
-      $result_models=$DB->query($query_models);
-      $exclude_models = array();
-      while ($data_models=$DB->fetch_array($result_models)) {
-         $exclude_models[] = $data_models['id'];
-      }
-      Dropdown::show("PluginFusioninventorySnmpmodel",
-                     array('name'=>"plugin_fusioninventory_snmpmodels_id",
-                           'value'=>
-                    $this->fields['plugin_fusioninventory_snmpmodels_id'],
-                           'comment'=>FALSE,
-                           'used'=>$exclude_models));
       echo "</td>";
       echo "<td align='center'>".__('SNMP authentication', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
       PluginFusioninventoryConfigSecurity::auth_dropdown(
               $this->fields["plugin_fusioninventory_configsecurities_id"]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
-      echo "<input type='submit' name='GetRightModel'
-              value='".__('Load the correct model', 'fusioninventory')."' class='submit'/>";
-      echo "</td>";
-      echo "<td colspan='2'>";
       echo "</td>";
       echo "</tr>";
 
