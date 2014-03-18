@@ -156,11 +156,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[15]['name']      = __('Sysdescr', 'fusioninventory');
       $tab[15]['datatype']  = 'text';
 
-      $tab[16]['table']     = 'glpi_plugin_fusioninventory_snmpmodels';
-      $tab[16]['field']     = 'name';
-      $tab[16]['linkfield'] = 'plugin_fusioninventory_snmpmodels_id';
-      $tab[16]['name']      = __('SNMP models', 'fusioninventory');
-
       $tab[17]['table']     = 'glpi_plugin_fusioninventory_configsecurities';
       $tab[17]['field']     = 'name';
       $tab[17]['linkfield'] = 'plugin_fusioninventory_configsecurities_id';
@@ -368,15 +363,8 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<textarea name='sysdescr'  cols='45' rows='5' />".$this->fields["sysdescr"].
               "</textarea>";
 
-      echo "<td align='center'>".__('SNMP models', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td align='center'></td>";
       echo "<td align='center'>";
-      if (!empty($this->fields['item_type'])) {
-         Dropdown::show("PluginFusioninventorySnmpmodel",
-                     array('name'=>"plugin_fusioninventory_snmpmodels_id",
-                           'value'=>$this->fields['plugin_fusioninventory_snmpmodels_id'],
-                           'comment'=>1,
-                           'condition'=>"`itemtype`='".$this->fields['item_type']."'"));
-      }
       echo "</td>";
       echo "</tr>";
 
@@ -876,8 +864,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
                $data = $DB->fetch_assoc($result);
             }
             $data['sysdescr'] = $this->fields['sysdescr'];
-            $data['plugin_fusioninventory_snmpmodels_id'] =
-                           $this->fields['plugin_fusioninventory_snmpmodels_id'];
             $data['plugin_fusioninventory_configsecurities_id'] =
                            $this->fields['plugin_fusioninventory_configsecurities_id'];
             if ($DB->numrows($result) == 0) {
@@ -929,8 +915,6 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
             }
 
             $data['sysdescr'] = $this->fields['sysdescr'];
-            $data['plugin_fusioninventory_snmpmodels_id'] =
-                           $this->fields['plugin_fusioninventory_snmpmodels_id'];
             $data['plugin_fusioninventory_configsecurities_id'] =
                            $this->fields['plugin_fusioninventory_configsecurities_id'];
             if ($DB->numrows($result) == 0) {
