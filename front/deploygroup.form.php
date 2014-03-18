@@ -48,9 +48,6 @@ if (!isset($_REQUEST["id"])) {
 }
 
 $group = new PluginFusioninventoryDeployGroup();
-//Store $_REQUEST params for further use : it's ugly, 
-//but I cannot find a best solution...
-$group->setSearchParams($_REQUEST);
 
 if (isset($_POST['save'])) {
    $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
@@ -93,16 +90,7 @@ if (isset($_POST['save'])) {
                 "pluginfusioninventorymenu", "deploygroup");
 
    PluginFusioninventoryMenu::displayMenu("mini");
-   if (!isset($_POST['preview'])) {
-      //Remove session variable to clean search engine criteria
-      unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
-   }
-   //Store groups_id for further use
-   $_SESSION['plugin_fusioninventory_group_search_id'] = $_REQUEST['id'];
-   
-   $group->display(array('id' => $_REQUEST['id']));
-   $res = PluginFusioninventoryDeployGroup::getTargetsForGroup($_REQUEST['id']);
-   Toolbox::logDebug($res);
+   $group->display(array('id' => $_GET['id']));
    Html::footer();
 }
 

@@ -55,15 +55,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    protected $static_group_types = array('Computer');
 
    public $dohistory = TRUE;
-   protected $search_params = array();
-
-   function getSearchParams() {
-      return $this->search_params;
-   }
-   
-   function setSearchParams($params = array()) {
-      $this->search_params = $params;
-   }
    
    static function getTypeName($nb=0) {
 
@@ -177,14 +168,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return ($this->fields['type'] == self::STATIC_GROUP);
    }
    
-   function isPreviewRequest() {
-      if (isset($this->search_params['preview'])) {
-         return $this->search_params['preview'];
-      } else {
-         return false;
-      }
-   }
-   
    static function getSpecificValueToDisplay($field, $values, array $options=array()) {
       $group = new self();
       if (!is_array($values)) {
@@ -235,8 +218,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       
       if ($formcontrol) {
          //show generic search form (duplicated from Search class)
-         echo "<form name='group_search_form' method='post'>";
+         echo "<form name='group_search_form' method='GET'>";
          echo "<input type='hidden' name='plugin_fusioninventory_deploygroups_id' value='".$item->getID()."'>";  
+         echo "<input type='hidden' name='id' value='".$item->getID()."'>";  
 
          // add tow hidden fields to permit delete of (meta)criteria
          echo "<input type='hidden' name='criteria' value=''>";     
@@ -300,8 +284,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
                " \" class='submit' name='save'>&nbsp;";
          } else {
             echo "<input type='submit' value=\" ".__('Preview')." \" class='submit' name='preview'>";
-            echo "</div>";
          }
+         echo "</div>";
       }
 
       echo "</td></tr></table>";
@@ -337,6 +321,55 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          $results = PluginFusioninventoryDeployGroup_Dynamicdata::getTargetsByGroup($group);
       }
       return $results;
+   }
+
+   static function showMassiveActionsSubForm(MassiveAction $ma) {
+      switch ($ma->getAction()) {
+         case 'add_to_static_group':
+          Dropdown::show('PluginFusioninventoryDeployGroup', 
+                         array('condition' => "`type`='".PluginFusioninventoryDeployGroup::STATIC_GROUP."'"));
+         echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
+         return true;
+    }
+      return parent::showMassiveActionsSubForm($ma);
+   }
+   
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::processMassiveActionsForOneItemtype()
+   **/
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
+                                                       array $ids) {
+      global $DB;
+      
+      switch ($ma->getAction()) {
+         case 'add_to_static_group' :
+            if ($item->getType() == 'Computer') {
+               $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
+               foreach ($ids as $id) {
+                  //if ($group_item->can($id, UPDATE)) {
+                     if (!countElementsInTable($group_item->getTable(), 
+                                             "`plugin_fusioninventory_deploygroups_id`='".$_POST['plugin_fusioninventory_deploygroups_id']."' 
+                                                AND `itemtype`='Computer' 
+                                                AND `items_id`='$id'")) {
+                        $values = array(
+                           'plugin_fusioninventory_deploygroups_id' => $_POST['plugin_fusioninventory_deploygroups_id'],
+                           'itemtype' => 'Computer',
+                           'items_id' => $id);  
+                        $group_item->add($values);
+                        $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
+                     } else {
+                        $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
+                     }
+               //} else {
+               //   $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_NORIGHT);
+               //   $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
+               //}
+            }
+         }
+         parent::processMassiveActionsForOneItemtype($ma, $item, $ids);
+      }
    }
 }
 ?>

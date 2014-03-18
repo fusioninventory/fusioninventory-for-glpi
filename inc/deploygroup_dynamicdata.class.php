@@ -79,7 +79,9 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
             PluginFusioninventoryDeployGroup::showCriteria($item, true, $params);
             break;
          case 1:
-            Search::showList('PluginFusioninventoryComputer', self::getSearchParamsAsAnArray($item));
+            $params = self::getSearchParamsAsAnArray($item);
+            $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
+            Search::showList('PluginFusioninventoryComputer', $params);
             break;
       }
 
@@ -118,6 +120,12 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       return $input;
    }
    
+   /**
+   * Get computers belonging to a dynamic group
+   * @since 0.85+1.0
+   * @param group the group object
+   * @return an array of computer ids
+   */
    static function getTargetsByGroup(PluginFusioninventoryDeployGroup $group) {
       //Only retrieve computers IDs
       $results = Search::getDatas('PluginFusioninventoryComputer', 

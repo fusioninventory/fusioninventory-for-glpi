@@ -204,6 +204,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryPrinterLogReport');
       Plugin::registerClass('PluginFusioninventorySnmpmodelConstructdevice_User',
               array('addtabon' => array('User')));
+      Plugin::registerClass('PluginFusioninventoryDeployGroup');
       Plugin::registerClass('PluginFusioninventoryDeployGroup_Staticdata',
               array('addtabon' => array('PluginFusioninventoryDeployGroup')));
       Plugin::registerClass('PluginFusioninventoryDeployGroup_Dynamicdata',
