@@ -122,8 +122,10 @@ td:not(#foo) > input[type=radio]:checked + label {
  */
 
 .fusinv_form {
-    width: 80%;
+    width: 50%;
     margin: 0 auto;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .fusinv_form label,
@@ -145,19 +147,21 @@ td:not(#foo) > input[type=radio]:checked + label {
 }
 
 .fusinv_form div.input_wrap {
-    margin: 0 20% 0 0;
+    margin: 0 0 0 0;
     display: inline-block;
     padding: 0;
-    width:40%
+    width:60%
 }
 
-.fusinv_form label + div.input_wrap > span + input,
+/*.fusinv_form label + div.input_wrap > span +i input,*/
 .fusinv_form label + div.input_wrap > input,
+.fusinv_form label + div.input_wrap > select,
 .fusinv_form label + div.input_wrap > textarea {
     width:100%;
     padding: 2px;
     border: 1px solid #ccc;
     border-top: solid 1px #ccc;
+    max-width: 100%;
 }
 
 .fusinv_form label + div.input_wrap.datetime input[type="text"],
