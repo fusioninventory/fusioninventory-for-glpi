@@ -183,7 +183,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
 
@@ -228,7 +228,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
       $ranking++;
@@ -274,7 +274,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
      $ranking++;
@@ -318,7 +318,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
       $ranking++;
@@ -355,7 +355,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
 
@@ -401,7 +401,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
       $ranking++;
@@ -445,7 +445,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
       $ranking++;
@@ -489,7 +489,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
       $ranking++;
@@ -526,7 +526,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
       $ranking++;
@@ -570,7 +570,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
       $ranking++;
@@ -614,7 +614,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
       $ranking++;
@@ -644,7 +644,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
       $ranking++;
@@ -681,7 +681,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
 
@@ -719,7 +719,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
 
@@ -757,7 +757,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
 
 
@@ -788,7 +788,7 @@ class PluginFusioninventorySetup {
          $input['rules_id'] = $rule_id;
          $input['action_type'] = 'assign';
          $input['field'] = '_fusion';
-         $input['value'] = '0';
+         $input['value'] = '1';
          $ruleaction->add($input);
    }
 
