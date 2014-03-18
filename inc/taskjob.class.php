@@ -117,6 +117,13 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       return $tab;
    }
 
+   function getTask() {
+      Toolbox::logDebug($this->fields);
+      $pfTask = new PluginFusioninventoryTask();
+      $pfTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
+      return $pfTask;
+   }
+
    /*
     * Manage definitions
     *
@@ -203,35 +210,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       Html::closeForm();
    }
 
-   /**
-   * Display methods availables
-   *
-   * @param $myname value name of dropdown
-   * @param $value value name of the method (used for edit taskjob)
-   * @param $entity_restrict restriction of entity if required
-   *
-   * @return value rand of the dropdown
-   *
-   **/
-   function dropdownMethod($myname, $value=0, $entity_restrict='') {
-
-      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-
-      $a_methods2 = array();
-      $a_methods2[''] = "------";
-      foreach ($a_methods as $datas) {
-         if (!((isset($datas['hidetask']) AND $datas['hidetask'] == '1'))) {
-            if (isset($datas['name'])) {
-               $a_methods2[$datas['method']] = $datas['name'];
-            } else {
-               $a_methods2[$datas['method']] = $datas['method'];
-            }
-         }
-      }
-
-      $rand = Dropdown::showFromArray($myname, $a_methods2, array('value'=>$value));
-      return $rand;
-   }
 
 
 
@@ -1153,16 +1131,14 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
 
    /**
-    * Verify if definition or action not deleted
+    * Check for configuration consistency.
+    * Remove items targets or actors that have been deleted.
     *
-    * @param $items_id integer id of taskjobs
-    *
-    * @return boolean
+    * @return boolean ( What does this return value mean ? -- Kevin Roy <kiniou@gmail.com> )
     */
-   function verifyDefinitionActions($items_id) {
+   function checkConfiguration() {
 
-      $return = TRUE;
-      $this->getFromDB($items_id);
+      $return = true;
       $input = array();
       $input['id'] = $this->fields['id'];
       $a_definitions = importArrayFromDB($this->fields['definition']);
@@ -1356,130 +1332,131 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
 
    /*
-    * Quick add or update taskjob
+    * Quick add or update taskjob from Wizard
+    * TODO: As of 0.85, this is disabled until we refactor the Wizard class.
     *
     * @param $id integer id of taskjobs
     * @param $method string method name
     *
     */
-   function showQuickForm($id, $method) {
-      global $CFG_GLPI;
+   //function showQuickForm($id, $method) {
+   //   global $CFG_GLPI;
 
-      $pfTask = new PluginFusioninventoryTask();
-      if (($id!='') AND ($id != '0')) {
-         $this->getFromDB($id);
-         $pfTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
-      } else {
-         $this->getEmpty();
-         $pfTask->getEmpty();
-      }
+   //   $pfTask = new PluginFusioninventoryTask();
+   //   if (($id!='') AND ($id != '0')) {
+   //      $this->getFromDB($id);
+   //      $pfTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
+   //   } else {
+   //      $this->getEmpty();
+   //      $pfTask->getEmpty();
+   //   }
 
-      if (strstr($_SERVER['PHP_SELF'], 'wizard')) {
-         echo "<a href=\"javascript:showHideDiv('tabsbody', 'tabsbodyimg', '".$CFG_GLPI["root_doc"].
-                    "/pics/deplier_down.png', '".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">";
-         echo "<img alt='' name='tabsbodyimg' ".
-                 "src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_up.png\">";
-         echo "</a>&nbsp;&nbsp;";
+   //   if (strstr($_SERVER['PHP_SELF'], 'wizard')) {
+   //      echo "<a href=\"javascript:showHideDiv('tabsbody', 'tabsbodyimg', '".$CFG_GLPI["root_doc"].
+   //                 "/pics/deplier_down.png', '".$CFG_GLPI["root_doc"]."/pics/deplier_up.png')\">";
+   //      echo "<img alt='' name='tabsbodyimg' ".
+   //              "src=\"".$CFG_GLPI["root_doc"]."/pics/deplier_up.png\">";
+   //      echo "</a>&nbsp;&nbsp;";
 
-         echo "<a href=\"".$_SERVER['PHP_SELF']."?wizz=".$_GET['wizz'].
-                 "&ariane=".$_GET['ariane']."\">";
-         echo __('List');
+   //      echo "<a href=\"".$_SERVER['PHP_SELF']."?wizz=".$_GET['wizz'].
+   //              "&ariane=".$_GET['ariane']."\">";
+   //      echo __('List');
 
-         echo "</a>";
+   //      echo "</a>";
 
-      } else {
-         $this->showTabs();
-      }
-      $this->showFormHeader(array());
+   //   } else {
+   //      $this->showTabs();
+   //   }
+   //   $this->showFormHeader(array());
 
-      $a_methods = PluginFusioninventoryStaticmisc::getmethods();
-      foreach ($a_methods as $datas) {
-         echo "<input type='hidden' name='method-".$datas['method']."' ".
-                 "value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
-      }
+   //   $a_methods = PluginFusioninventoryStaticmisc::getmethods();
+   //   foreach ($a_methods as $datas) {
+   //      echo "<input type='hidden' name='method-".$datas['method']."' ".
+   //              "value='".PluginFusioninventoryModule::getModuleId($datas['module'])."' />";
+   //   }
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Name')."&nbsp;:</td>";
-      echo "<td><input type='text' name='name' value='".$this->fields['name']."' /></td>";
-      echo "<td>".__('Active')."&nbsp;:</td>";
-      echo "<td>";
-      Dropdown::showYesNo("is_active", $pfTask->fields['is_active']);
-      echo "</td>";
-      echo "</tr>";
+   //   echo "<tr class='tab_bg_1'>";
+   //   echo "<td>".__('Name')."&nbsp;:</td>";
+   //   echo "<td><input type='text' name='name' value='".$this->fields['name']."' /></td>";
+   //   echo "<td>".__('Active')."&nbsp;:</td>";
+   //   echo "<td>";
+   //   Dropdown::showYesNo("is_active", $pfTask->fields['is_active']);
+   //   echo "</td>";
+   //   echo "</tr>";
 
-      echo "<tr class='tab_bg_1' style='display:none'>";
-      echo "<td colspan='4'>";
-      echo "<input type='hidden' name='quickform' value='1' />";
-      $rand = $this->dropdownMethod("method", $method);
-      echo "</td>";
-      echo "</tr>";
+   //   echo "<tr class='tab_bg_1' style='display:none'>";
+   //   echo "<td colspan='4'>";
+   //   echo "<input type='hidden' name='quickform' value='1' />";
+   //   $rand = $this->dropdownMethod("method", $method);
+   //   echo "</td>";
+   //   echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Communication type', 'fusioninventory')."&nbsp;:</td>";
-      echo "<td>";
-      $com = array();
-      $com['push'] = __('Server contacts the agent (push)', 'fusioninventory');
+   //   echo "<tr class='tab_bg_1'>";
+   //   echo "<td>".__('Communication type', 'fusioninventory')."&nbsp;:</td>";
+   //   echo "<td>";
+   //   $com = array();
+   //   $com['push'] = __('Server contacts the agent (push)', 'fusioninventory');
 
-      $com['pull'] = __('Agent contacts the server (pull)', 'fusioninventory');
+   //   $com['pull'] = __('Agent contacts the server (pull)', 'fusioninventory');
 
-      Dropdown::showFromArray("communication",
-                              $com,
-                              array('value'=>$pfTask->fields["communication"]));
-      echo "</td>";
-      echo "<td>".__('Periodicity')."&nbsp;:</td>";
-      echo "<td>";
-      Dropdown::showNumber("periodicity_count", array(
-                'value' => $this->fields['periodicity_count'],
-                'min'   => 0,
-                'max'   => 300)
-      );
-      $a_time = array();
-      $a_time[] = "------";
-      $a_time['minutes'] = __('Minute(s)', 'fusioninventory');
+   //   Dropdown::showFromArray("communication",
+   //                           $com,
+   //                           array('value'=>$pfTask->fields["communication"]));
+   //   echo "</td>";
+   //   echo "<td>".__('Periodicity')."&nbsp;:</td>";
+   //   echo "<td>";
+   //   Dropdown::showNumber("periodicity_count", array(
+   //             'value' => $this->fields['periodicity_count'],
+   //             'min'   => 0,
+   //             'max'   => 300)
+   //   );
+   //   $a_time = array();
+   //   $a_time[] = "------";
+   //   $a_time['minutes'] = __('Minute(s)', 'fusioninventory');
 
-      $a_time['hours'] = ucfirst(__('hour(s)', 'fusioninventory'));
+   //   $a_time['hours'] = ucfirst(__('hour(s)', 'fusioninventory'));
 
-      $a_time['days'] = ucfirst(__('day(s)', 'fusioninventory'));
+   //   $a_time['days'] = ucfirst(__('day(s)', 'fusioninventory'));
 
-      $a_time['months'] = ucfirst(__('month(s)', 'fusioninventory'));
+   //   $a_time['months'] = ucfirst(__('month(s)', 'fusioninventory'));
 
-      Dropdown::showFromArray("periodicity_type",
-                              $a_time,
-                              array('value'=>$pfTask->fields['periodicity_type']));
-      echo "</td>";
-      echo "</tr>";
+   //   Dropdown::showFromArray("periodicity_type",
+   //                           $a_time,
+   //                           array('value'=>$pfTask->fields['periodicity_type']));
+   //   echo "</td>";
+   //   echo "</tr>";
 
-      if ($id) {
-         $this->showFormButtons(array());
+   //   if ($id) {
+   //      $this->showFormButtons(array());
 
-         $this->manageDefinitionsActions($id, "definition");
-         $this->manageDefinitionsActions($id, "action");
+   //      $this->manageDefinitionsActions($id, "definition");
+   //      $this->manageDefinitionsActions($id, "action");
 
-         $params=array('method_id'=>'__VALUE__',
-               'entity_restrict'=>'',
-               'rand'=>$rand,
-               'myname'=>"method"
-               );
-         echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("show_DefinitionType_id",
-                                $CFG_GLPI["root_doc"].
-                                   "/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",
-                                $params,
-                                TRUE,
-                                "dropdown_method".$rand);
-         echo "</script>";
-         echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("show_ActionType_id",
-                                $CFG_GLPI["root_doc"].
-                                   "/plugins/fusioninventory/ajax/dropdownactiontype.php",
-                                $params,
-                                TRUE,
-                                "dropdown_method".$rand);
-         echo "</script>";
-      } else  {
-         $this->showFormButtons(array());
-      }
-   }
+   //      $params=array('method_id'=>'__VALUE__',
+   //            'entity_restrict'=>'',
+   //            'rand'=>$rand,
+   //            'myname'=>"method"
+   //            );
+   //      echo "<script type='text/javascript'>";
+   //      Ajax::UpdateItemJsCode("show_DefinitionType_id",
+   //                             $CFG_GLPI["root_doc"].
+   //                                "/plugins/fusioninventory/ajax/dropdowndefinitiontype.php",
+   //                             $params,
+   //                             TRUE,
+   //                             "dropdown_method".$rand);
+   //      echo "</script>";
+   //      echo "<script type='text/javascript'>";
+   //      Ajax::UpdateItemJsCode("show_ActionType_id",
+   //                             $CFG_GLPI["root_doc"].
+   //                                "/plugins/fusioninventory/ajax/dropdownactiontype.php",
+   //                             $params,
+   //                             TRUE,
+   //                             "dropdown_method".$rand);
+   //      echo "</script>";
+   //   } else  {
+   //      $this->showFormButtons(array());
+   //   }
+   //}
 
 
 

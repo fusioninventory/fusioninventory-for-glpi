@@ -112,6 +112,33 @@ class PluginFusioninventoryStaticmisc {
       return $a_tasks;
    }
 
+   /**
+   * Display methods availables
+   *
+   * @param $myname value name of dropdown
+   * @param $value value name of the method (used for edit taskjob)
+   * @param $entity_restrict restriction of entity if required
+   *
+   * @return value rand of the dropdown
+   *
+   **/
+   static function getModulesMethods() {
+
+      $methods = PluginFusioninventoryStaticmisc::getmethods();
+
+      $modules_methods = array();
+      $modules_methods[''] = "------";
+      foreach ($methods as $method) {
+         if (!((isset($method['hidetask']) AND $method['hidetask'] == '1'))) {
+            if (isset($method['name'])) {
+               $modules_methods[$method['method']] = $method['name'];
+            } else {
+               $modules_methods[$method['method']] = $method['method'];
+            }
+         }
+      }
+      return $modules_methods;
+   }
 
 
    /**
