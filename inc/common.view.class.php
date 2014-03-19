@@ -42,6 +42,10 @@
 
 class PluginFusioninventoryCommonView extends CommonDBTM {
 
+   const MSG_INFO    = 0;
+   const MSG_WARNING = 1;
+   const MSG_ERROR   = 2;
+
    public function showList() {
       Toolbox::logDebug(get_class($this));
       Search::show(get_class($this));
@@ -70,6 +74,20 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       Html::showCheckbox($options);
       echo "</div>";
 
+   }
+
+   public function showDropdownFromArray($title, $varname, $values = array()) {
+      echo "<label>" . $title."&nbsp;:" . "</label>";
+      echo "<div class='input_wrap'>";
+      $rand = Dropdown::showFromArray(
+         $varname, $values,
+         array(
+            'value'=>$this->fields[$varname],
+            'width'=>'100%'
+         )
+      );
+      echo "</div>";
+      return $rand;
    }
 
    public function showDateTimeField($title, $varname, $options = array()) {
@@ -108,5 +126,33 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       echo "</div>";
    }
 
+   public function getMessage($msg,$type=self::MSG_INFO) {
+      switch ($type) {
+         case self::MSG_WARNING:
+            $msg = __('Warning:', 'fusioninventory') . " $msg";
+            $class_msg = 'warning';
+            break;
+         case self::MSG_ERROR:
+            $msg = __('Error:', 'fusioninventory') . " $msg";
+            $class_msg = 'error';
+            break;
+         case self::MSG_INFO:
+         default:
+            $class_msg = '';
+            break;
+      }
+
+      return implode("\n", array(
+         "<div class='box' style='margin-bottom:20px;'>",
+         "<div class='box-tleft'><div class='box-tright'><div class='box-tcenter'>",
+         "</div></div></div>",
+         "<div class='box-mleft'><div class='box-mright'><div class='box-mcenter'>",
+         "<span class='b $class_msg'>$msg</span>",
+         "</div></div></div>",
+         "<div class='box-bleft'><div class='box-bright'><div class='box-bcenter'>",
+         "</div></div></div>",
+         "</div>",
+      ));
+   }
 }
 

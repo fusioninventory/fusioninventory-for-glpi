@@ -111,7 +111,9 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       $this->showTextField( __('Name'), "name");
       $this->showTextArea(__('Comments'), "comment");
+      echo "</div>";
       if ( ! $new_item ) {
+      echo "<div class='fusinv_form'>";
          $this->showCheckboxField( __('Active'), "is_active" );
 
          $datetime_field_options = array(
@@ -129,6 +131,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             "datetime_end",
             $datetime_field_options
          );
+      echo "</div>";
       }
       /**
        * TODO: the "force run" needs to be properly moved to taskjobstate.
@@ -212,7 +215,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
    public function submitForm($postvars) {
 
-      Toolbox::logDebug(Toolbox::getItemTypeSearchURL(get_class($this)));
       if (isset($postvars['forcestart'])) {
          Session::checkRight('plugin_fusioninventory_task', UPDATE);
 

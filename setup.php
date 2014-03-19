@@ -270,6 +270,7 @@ function plugin_init_fusioninventory() {
              "lib/REDIPS_drag/redips-drag-source.js",
              "lib/REDIPS_drag/drag_table_rows.js",
              "lib/plusbutton.js",
+             "js/taskjobs.js",
          );
       }
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
