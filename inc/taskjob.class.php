@@ -1643,45 +1643,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
 
 
-   function showTaskjobItems($name, $randmethod, $id) {
-      global $CFG_GLPI;
-
-      echo "<div style='display:none' id='".$name.$id."' >";
-      $params = array('method' => '__VALUE__',
-                      'rand'      => $randmethod,
-                      'myname'    => 'method',
-                      'typename'  => $name,
-                      'taskjobs_id'=>$id );
-      Ajax::updateItemOnEvent("dropdown_method".$randmethod,
-                              "show".$name."Type".$id,
-                              $CFG_GLPI["root_doc"].
-                                 "/plugins/fusioninventory/ajax/dropdowntype.php",
-                              $params,
-                              array("change", "load"));
-      if ($this->fields['method'] != "") {
-         echo "<script type='text/javascript'>";
-         Ajax::UpdateItemJsCode("show".$name."Type".$id,
-                                $CFG_GLPI["root_doc"].
-                                   "/plugins/fusioninventory/ajax/dropdowntype.php",
-                                $params,
-                                "dropdown_method".$randmethod);
-         echo "</script>";
-      }
-      echo "<span id='show".$name."Type".$id."'>&nbsp;</span>";
-      echo "<span id='show_".ucfirst($name)."List".$id."'>&nbsp;</span>";
-      echo "<hr>";
-      echo "</div>";
-      // Display itemname list
-      echo "<script type='text/javascript'>";
-      $params['taskjobs_id'] = $id;
-      Ajax::UpdateItemJsCode("show".$name."list".$id."_",
-                                $CFG_GLPI["root_doc"].
-                                   "/plugins/fusioninventory/ajax/dropdownlist.php",
-                                $params,
-                                "dropdown_method".$randmethod);
-      echo "</script>";
-      echo "<span id='show".$name."list".$id."_'>&nbsp;</span>";
-   }
 
 
 

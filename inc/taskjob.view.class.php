@@ -45,7 +45,12 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    function getUrls() {
       global $CFG_GLPI;
       $urls = array(
-         "ajaxGetForm" => $CFG_GLPI['root_doc'].'/plugins/fusioninventory/ajax/taskjob_form.php'
+         "ajaxGetForm" =>
+            $CFG_GLPI['root_doc'].'/plugins/fusioninventory/ajax/taskjob_form.php',
+         "ajaxGetTargetsForm" =>
+               $CFG_GLPI['root_doc'].'/plugins/fusioninventory/ajax/taskjob_form.php',
+         "ajaxGetActorsForm" =>
+               $CFG_GLPI['root_doc'].'/plugins/fusioninventory/ajax/taskjob_form.php',
       );
       return $urls;
    }
@@ -73,9 +78,9 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
       if ($item->getID() > 0) {
          if ($item->getType() == 'PluginFusioninventoryTask') {
-            echo "<div id='taskjobs_form' style='display:none'>";
+            echo "<div id='taskjobs_form'>";
             echo "</div>";
-            echo "<div id='taskjobs_list'>";
+            echo "<div id='taskjobs_list' class='tab_cadre_fixe'>";
             $pfTaskJob->showListForTask($item->getID());
             echo "</div>";
 
@@ -183,19 +188,17 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          echo Html::getCheckAllAsCheckbox("taskjobs_list", mt_rand());
          echo "</th>";
       }
-
-      echo "<th colspan='1' class='center'>";
+      echo "<th colspan='2' class='center'>";
       echo implode("\n", array(
-         "<p>",
          "<input ",
-         "  type='button' class='submit' ",
+         "  type='button' class='submit'",
+         "  style='padding:5px;margin:0;right:0'",
          "  value=' ".__('Add a job', 'fusioninventory')." ' ",
          "  onclick='taskjobs.create(",
-         "     \"".$taskjobs_urls['ajaxGetForm']."\", ",
-         "     { task_id : $task_id }",
+         "     \"".$CFG_GLPI['root_doc']."\", ",
+         "     $task_id",
          "  )'",
          "/>",
-         "</p>",
       ));
       echo "</th></tr>";
       echo "</table>\n";
@@ -222,9 +225,9 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
    public function showTaskjobSummary($taskjob_data) {
+      global $CFG_GLPI;
       $id = $taskjob_data['id'];
       $name = $taskjob_data['name'];
-      $taskjobs_urls = $this->getUrls();
       echo implode( "\n",
          array(
             "<td class='control'>",
@@ -236,13 +239,15 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          array(
             "<td id='taskjob_${id}' class='taskjob_block'>",
             "  <a ",
+            "     href='#taskjobs_form'",
             "     onclick='taskjobs.edit(",
-            "        \"".$taskjobs_urls['ajaxGetForm']."\", ",
-            "        { id : $id }",
+            "        \"".$CFG_GLPI['root_doc']."\", ",
+            "        $id",
             "     )'>${name}</a>",
             "</td>",
          )
       );
+      echo "<td class='rowhandler control'><div class='drag'/></td>";
    }
 
    public function showTargets() {
@@ -414,6 +419,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       Toolbox::logDebug(array($id, $options));
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
+      $taskjobs_urls = $this->getUrls();
       $new_item = false;
       if ($id > 0) {
          if ($this->getFromDB($id)) {
@@ -549,28 +555,51 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       echo "</div>";
       // Display Definition choices
       if (!$new_item) {
+         //Start second column of the form
+         echo "<div class='fusinv_form'>";
 
-         echo "<div style='display:none' id='configuration_form' />";
+         echo "<div class='input_wrap split_column tab_bg_4'>";
+         echo implode("\n", array(
+            "<a ",
+            "  class='addbutton'",
+            "  href='javascript:void(0)'",
+            "  onclick='taskjobs.add_target(",
+            "     \"".$CFG_GLPI['root_doc']."\", ",
+            "     { id : $id }",
+            "  )'",
+            ">",
+            __('Targets', 'fusioninventory'),
+            "<img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />",
+            "</a>"
+         ));
+         echo "<br/><span style='font-size:50%;font-style:italic'>";
+         echo __('The items that should be applied for this job.', 'fusioninventory');
+         echo "</span>";
+         echo "</div>";
 
-         echo "<th width='25%'>";
-         echo __('Definition', 'fusioninventory');
+         echo "<div class='input_wrap split_column tab_bg_4'>";
+         echo implode("\n", array(
+            "<a ",
+            "  class='addbutton'",
+            "  href='javascript:void(0)'",
+            "  onclick='taskjobs.showActors(",
+            "     \"".$CFG_GLPI['root_doc']."\", ",
+            "     { id : $id }",
+            "  )'",
+            ">",
+            __('Actors', 'fusioninventory'),
+            "<img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />",
+            "</a>"
+         ));
+         echo "<br/><span style='font-size:50%;font-style:italic'>";
+         echo __('The items that should carry out those targets.', 'fusioninventory');
+         echo "</span>";
+         echo "</div>";
 
-         $this->plusButton('definition'.$id);
-         echo "<br/><i>".
-            __('Action targets: what the action aims', 'fusioninventory').
-            "</i>";
-         echo "</th>";
-
-      echo "<th width='25%'>";
-         echo __('Action');
-
-         $this->plusButton('action'.$id);
-         echo "<br/><i>".
-             __('Action actor: what do the action', 'fusioninventory').
-             "</i>";
-      echo "</th>";
+         echo "<div id='configuration_form' />";
+         echo "<div id='methodupdate' ></div>";
+         echo "</div>";
       }
-      echo "</tr>";
 
       /*
        * Advanced mode related display (should be dropped)
@@ -650,13 +679,15 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       //   echo "</tr>";
       //}
 
-      echo "<tr>";
 
       if ($new_item) {
+         echo "<tr>";
          echo "<td colspan='4' valign='top' align='center'>";
          echo "<input type='submit' name='add' value=\"".__('Add')."\" class='submit'>";
          echo "</td>";
+         echo '</tr>';
       } else {
+         echo "<tr>";
          echo "<td valign='top' align='center' colspan='2'>";
          echo "<input type='submit' name='update' value=\"".__('Update')."\" class='submit'>";
          echo "</td>";
@@ -666,8 +697,8 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                Html::addConfirmationOnAction(__('Confirm the final deletion ?', 'fusioninventory')).
                  ">";
          echo "</td>";
+         echo '</tr>';
       }
-      echo '</tr>';
 
       echo "</table>";
       Html::closeForm();
@@ -690,6 +721,46 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       return TRUE;
    }
 
+   function showTaskjobItems($name, $randmethod, $id) {
+      global $CFG_GLPI;
+/*
+      echo "<div style='display:none' id='".$name.$id."' >";
+      $params = array('method' => '__VALUE__',
+                      'rand'      => $randmethod,
+                      'myname'    => 'method',
+                      'typename'  => $name,
+                      'taskjobs_id'=>$id );
+      Ajax::updateItemOnEvent("dropdown_method".$randmethod,
+                              "show".$name."Type".$id,
+                              $CFG_GLPI["root_doc"].
+                                 "/plugins/fusioninventory/ajax/dropdowntype.php",
+                              $params,
+                              array("change", "load"));
+      if ($this->fields['method'] != "") {
+         echo "<script type='text/javascript'>";
+         Ajax::UpdateItemJsCode("show".$name."Type".$id,
+                                $CFG_GLPI["root_doc"].
+                                   "/plugins/fusioninventory/ajax/dropdowntype.php",
+                                $params,
+                                "dropdown_method".$randmethod);
+         echo "</script>";
+      }
+      echo "<span id='show".$name."Type".$id."'>&nbsp;</span>";
+      echo "<span id='show_".ucfirst($name)."List".$id."'>&nbsp;</span>";
+      echo "<hr>";
+      echo "</div>";
+      // Display itemname list
+      echo "<script type='text/javascript'>";
+      $params['taskjobs_id'] = $id;
+      Ajax::UpdateItemJsCode("show".$name."list".$id."_",
+                                $CFG_GLPI["root_doc"].
+                                   "/plugins/fusioninventory/ajax/dropdownlist.php",
+                                $params,
+                                "dropdown_method".$randmethod);
+      echo "</script>";
+      echo "<span id='show".$name."list".$id."_'>&nbsp;</span>";
+ */
+   }
 
    /**
     * Submit Form values
@@ -875,8 +946,9 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             if (isset($postvars['method_id'])) {
                $postvars['method']  = $postvars['method_id'];
             }
-            $postvars['plugins_id'] = $postvars['method-'.$postvars['method']];
-            $mytaskjob->update($postvars);
+            //TODO: get rid of plugins_id and use method
+            //$postvars['plugins_id'] = $postvars['method-'.$postvars['method']];
+            $this->update($postvars);
          }
 
       } else if (isset($postvars["delete"])) {
