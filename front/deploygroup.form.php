@@ -49,20 +49,23 @@ if (!isset($_REQUEST["id"])) {
 
 $group = new PluginFusioninventoryDeployGroup();
 
-if (isset($_POST['save'])) {
+if (isset($_GET['save'])) {
    $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
    if (!countElementsInTable($group_item->getTable(), 
-                             "plugin_fusioninventory_deploygroups_id='".$_POST['plugin_fusioninventory_deploygroups_id']."'")) {
-      $group_item->add($_POST);
+                             "plugin_fusioninventory_deploygroups_id='".$_GET['id']."'")) {
+      $values['plugin_fusioninventory_deploygroups_id'] = $_GET['id'];
+      $values['fields_array'] = $_GET['fields_array']; 
+      $group_item->add($values);
    } else {
       $item = getAllDatasFromTable($group_item->getTable(), 
-                                   "plugin_fusioninventory_deploygroups_id='".$_POST['plugin_fusioninventory_deploygroups_id']."'");
-      $values = array_pop($item);
-      $values['fields_array'] = serialize($_POST['criteria']);
+                                   "plugin_fusioninventory_deploygroups_id='".$_GET['id']."'");
+      $values                 = array_pop($item);
+      $values['fields_array'] = serialize($_GET['criteria']);
       $group_item->update($values);
    }
 
-   Html::back();
+   Html::redirect(Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup")."?id=".$_GET['id']);
+
 } elseif (isset($_POST["add"])) {
    $group->check(-1, UPDATE, $_POST);
    $newID = $group->add($_POST);
@@ -90,7 +93,9 @@ if (isset($_POST['save'])) {
                 "pluginfusioninventorymenu", "deploygroup");
 
    PluginFusioninventoryMenu::displayMenu("mini");
-   $group->display(array('id' => $_GET['id']));
+   $values       = $_POST;
+   $values['id'] = $_GET['id'];
+   $group->display($values);
    Html::footer();
 }
 

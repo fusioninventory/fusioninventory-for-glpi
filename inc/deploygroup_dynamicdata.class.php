@@ -75,8 +75,8 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch ($tabnum) {
          case 0:
-            $params = self::getSearchParamsAsAnArray($item, false);
-            PluginFusioninventoryDeployGroup::showCriteria($item, true, $params);
+            $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
+            PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
             break;
          case 1:
             $params = self::getSearchParamsAsAnArray($item);
@@ -91,6 +91,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    /**
    *
    */
+   /*
    static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group, $check_post_values = false) {
       global $DB;
       $computers_params = array();
@@ -113,7 +114,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
          $computers_params = $group->getSearchParams();
       }
       return Search::manageParams('PluginFusioninventoryComputer', $computers_params);
-   }
+   }*/
    
    function prepareInputForAdd($input = array()) {
       $input['fields_array'] = serialize($input['criteria']);

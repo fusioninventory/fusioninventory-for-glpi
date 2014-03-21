@@ -216,16 +216,16 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $is_dynamic = $item->isDynamicGroup();
       $itemtype   = "PluginFusioninventoryComputer";
       
-      if ($formcontrol) {
+      //if ($formcontrol) {
          //show generic search form (duplicated from Search class)
-         echo "<form name='group_search_form' method='GET'>";
+         echo "<form name='group_search_form' method='POST'>";
          echo "<input type='hidden' name='plugin_fusioninventory_deploygroups_id' value='".$item->getID()."'>";  
          echo "<input type='hidden' name='id' value='".$item->getID()."'>";  
 
          // add tow hidden fields to permit delete of (meta)criteria
          echo "<input type='hidden' name='criteria' value=''>";     
          echo "<input type='hidden' name='metacriteria' value=''>"; 
-      } 
+      //} 
 
       echo "<div class='tabs_criteria'>";
       echo "<table class='tab_cadre_fixe'>";
@@ -275,7 +275,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       // For dropdown
       echo "<input type='hidden' name='itemtype' value='$itemtype'>";
 
-      if ($formcontrol) {
+      //if ($formcontrol) {
          // add new button to search form (to store and preview)
          echo "<div class='center'>";
 
@@ -286,7 +286,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             echo "<input type='submit' value=\" ".__('Preview')." \" class='submit' name='preview'>";
          }
          echo "</div>";
-      }
+      //}
 
       echo "</td></tr></table>";
       echo "</div>";
@@ -300,11 +300,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       Html::closeForm();
 
       //clean with javascript search control
+      /*
       $clean_script = "jQuery( document ).ready(function( $ ) {
          $('#parent_criteria img').remove();
          $('.tabs_criteria img[name=img_deleted').remove();
       });";
-      echo Html::scriptBlock($clean_script);
+      echo Html::scriptBlock($clean_script);*/
    }
    
    static function getTargetsForGroup($groups_id) {
@@ -321,6 +322,32 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          $results = PluginFusioninventoryDeployGroup_Dynamicdata::getTargetsByGroup($group);
       }
       return $results;
+   }
+
+   /**
+   *
+   */
+   static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group, $check_post_values = false) {
+      global $DB;
+      $computers_params = array();
+      
+      //Check criteria from DB
+      if (!$check_post_values) {
+         $computers_params['metacriteria'] = array();
+         if ($group->fields['type'] == PluginFusioninventoryDeployGroup::DYNAMIC_GROUP) {
+            $query = "SELECT `fields_array` 
+                     FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` 
+                     WHERE `plugin_fusioninventory_deploygroups_id`='".$group->getID()."'";
+            $result = $DB->query($query);
+            if ($DB->numrows($result) > 0) {
+               $fields_array = $DB->result($result, 0, 'fields_array');
+               $computers_params['criteria'] = unserialize($fields_array);
+            }
+         }
+      } else {
+         $computers_params = $_GET;
+      }
+      return Search::manageParams('PluginFusioninventoryComputer', $computers_params);
    }
 
    static function showMassiveActionsSubForm(MassiveAction $ma) {
