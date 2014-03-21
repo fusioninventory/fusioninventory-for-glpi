@@ -510,7 +510,6 @@ function plugin_init_fusioninventory() {
       }
    }
 
-
    // Add unknown devices in list of devices with networport
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
 
