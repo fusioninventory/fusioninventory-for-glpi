@@ -48,8 +48,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryRuleImport extends Rule {
 
    const PATTERN_IS_EMPTY              = 30;
-   const RULE_ACTION_LINK_OR_CREATE    = 0;
-   const RULE_ACTION_LINK_OR_NO_CREATE = 1;
+   const RULE_ACTION_LINK              = 1;
    const RULE_ACTION_DENIED            = 2;
 
    const LINK_RESULT_DENIED            = 0;
@@ -189,11 +188,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
    static function getRuleActionValues() {
 
-      return array(self::RULE_ACTION_LINK_OR_CREATE    =>
-                           __('Link if possible, else create device', 'fusioninventory'),
-
-                   self::RULE_ACTION_LINK_OR_NO_CREATE =>
-                           __('Link if possible, else import denied', 'fusioninventory'),
+      return array(self::RULE_ACTION_LINK =>
+                           __('Link', 'fusioninventory'),
 
                    self::RULE_ACTION_DENIED            => __('Import denied', 'fusioninventory'));
 
@@ -670,8 +666,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                   "value".$action->fields["value"]."\n"
                );
 
-               if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_CREATE
-                       OR $action->fields["value"] == self::RULE_ACTION_LINK_OR_NO_CREATE) {
+               if ($action->fields["value"] == self::RULE_ACTION_LINK) {
                   if (isset($this->criterias_results['found_equipment'])) {
                      foreach ($this->criterias_results['found_equipment'] as $itemtype=>$datas) {
                         $items_id = current($datas);
@@ -690,43 +685,38 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                         }
                      }
                   } else {
-                     if ($action->fields["value"] == self::RULE_ACTION_LINK_OR_NO_CREATE) {
-                       $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
-                        $output['action'] = self::LINK_RESULT_DENIED;
-                     } else {
-                        // Import into new equipment
-                        $itemtype_found = 0;
-                        if (count($this->criterias)) {
-                           foreach ($this->criterias as $criteria){
-                              if ($criteria->fields['criteria'] == 'itemtype') {
-                                 $itemtype = $criteria->fields['pattern'];
-                                 if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
-                                    $_SESSION['plugin_fusioninventory_rules_id'] =
-                                                   $this->fields['id'];
-                                    $class->rulepassed("0", $itemtype);
-                                    $output['found_equipment'] = array(0, $itemtype);
-                                    return $output;
-                                 } else {
-                                    $_SESSION['plugin_fusioninventory_rules_id'] =
-                                            $this->fields['id'];
-                                    $output['action'] = self::LINK_RESULT_CREATE;
-                                    return $output;
-                                 }
-                                 $itemtype_found = 1;
+                     // Import into new equipment
+                     $itemtype_found = 0;
+                     if (count($this->criterias)) {
+                        foreach ($this->criterias as $criteria){
+                           if ($criteria->fields['criteria'] == 'itemtype') {
+                              $itemtype = $criteria->fields['pattern'];
+                              if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                                 $_SESSION['plugin_fusioninventory_rules_id'] =
+                                                $this->fields['id'];
+                                 $class->rulepassed("0", $itemtype);
+                                 $output['found_equipment'] = array(0, $itemtype);
+                                 return $output;
+                              } else {
+                                 $_SESSION['plugin_fusioninventory_rules_id'] =
+                                         $this->fields['id'];
+                                 $output['action'] = self::LINK_RESULT_CREATE;
+                                 return $output;
                               }
+                              $itemtype_found = 1;
                            }
                         }
-                        if ($itemtype_found == "0") {
-                           if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
-                              $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
-                              $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
-                              $output['found_equipment'] = array(0, $itemtype);
-                              return $output;
-                           } else {
-                              $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
-                              $output['action'] = self::LINK_RESULT_CREATE;
-                              return $output;
-                           }
+                     }
+                     if ($itemtype_found == "0") {
+                        if (isset($_SESSION['plugin_fusioninventory_classrulepassed'])) {
+                           $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
+                           $class->rulepassed("0", "PluginFusioninventoryUnknownDevice");
+                           $output['found_equipment'] = array(0, $itemtype);
+                           return $output;
+                        } else {
+                           $_SESSION['plugin_fusioninventory_rules_id'] = $this->fields['id'];
+                           $output['action'] = self::LINK_RESULT_CREATE;
+                           return $output;
                         }
                      }
                   }
