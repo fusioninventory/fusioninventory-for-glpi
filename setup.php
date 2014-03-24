@@ -40,7 +40,7 @@
    ------------------------------------------------------------------------
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.84+2.1");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "0.84+2.2");
 
 // Used for use config values in 'cache'
 $PF_CONFIG = array();
@@ -126,7 +126,7 @@ function plugin_init_fusioninventory() {
                                         'Computer')));
       Plugin::registerClass('PluginFusioninventoryComputerLicenseInfo',
               array('addtabon' => array('Computer')));
-      
+
          //Classes for rulesengine
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocation');
       Plugin::registerClass('PluginFusioninventoryInventoryRuleLocationCollection',
@@ -325,7 +325,7 @@ function plugin_init_fusioninventory() {
                         = '../fusioninventory/front/inventoryruleentity.form.php';
          $hook_search['ruleentity']
                         = '../fusioninventory/front/inventoryruleentity.php';
-         
+
          $hook_add['rulelocation']
                         = '../fusioninventory/front/inventoryrulelocation.form.php';
          $hook_search['rulelocation']
@@ -368,13 +368,13 @@ function plugin_init_fusioninventory() {
 
          }
 
-         $hook_add['collect'] = 
+         $hook_add['collect'] =
              '../fusioninventory/front/collect.form.php?add=1';
-         $hook_search['collect'] = 
+         $hook_search['collect'] =
              '../fusioninventory/front/collect.php';
-         
-         
-         
+
+
+
          /*
           * Deploy submenu entries
           */
@@ -577,12 +577,12 @@ function plugin_fusioninventory_check_prerequisites() {
       echo __('Your GLPI version not compatible, require 0.84', 'fusioninventory');
       return FALSE;
    }
-   
+
    if (!function_exists('finfo_open')) {
       echo __('fileinfo extension (PHP) is required...', 'fusioninventory');
       return FALSE;
-   }   
-   
+   }
+
    $plugin = new Plugin();
    if ($plugin->isActivated("fusioninventory")
            && !TableExists("glpi_plugin_fusioninventory_configs")) {
