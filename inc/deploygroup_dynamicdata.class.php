@@ -46,6 +46,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
 
+   static $rightname = "plugin_fusioninventory_group";
+
    // From CommonDBChild
    static public $itemtype = 'PluginFusioninventoryDeployGroup';
    static public $items_id = 'plugin_fusioninventory_deploygroups_id';
@@ -79,7 +81,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
             PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
             break;
          case 1:
-            $params = self::getSearchParamsAsAnArray($item);
+            $params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item);
             $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
             Search::showList('PluginFusioninventoryComputer', $params);
             break;
@@ -115,11 +117,6 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       }
       return Search::manageParams('PluginFusioninventoryComputer', $computers_params);
    }*/
-   
-   function prepareInputForAdd($input = array()) {
-      $input['fields_array'] = serialize($input['criteria']);
-      return $input;
-   }
    
    /**
    * Get computers belonging to a dynamic group
