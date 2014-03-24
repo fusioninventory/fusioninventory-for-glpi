@@ -4894,7 +4894,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       WHERE `sub_type`='PluginFusioninventoryRuleImportEquipment'";
    $DB->query($query);
 
-   $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobs`
+   $query = "SELECT * FROM `glpi_rules`
                WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport'";
    $result = $DB->query($query);
    while ($data=$DB->fetch_array($result)) {
