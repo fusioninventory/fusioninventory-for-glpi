@@ -163,12 +163,19 @@ td:not(#foo) > input[type=radio]:checked + label {
 /*.fusinv_form label + div.input_wrap > span +i input,*/
 .fusinv_form label + div.input_wrap > input,
 .fusinv_form label + div.input_wrap > select,
-.fusinv_form label + div.input_wrap > textarea {
+.fusinv_form label + div.input_wrap > textarea,
+.fusinv_form label + div.input_wrap > div > textarea {
     width:100%;
     padding: 2px;
     border: 1px solid #ccc;
     border-top: solid 1px #ccc;
     max-width: 100%;
+    box-sizing: border-box;
+}
+
+.expanding-wrapper {
+   width: 100%;
+   max-height: 100px;
 }
 
 .fusinv_form label + div.input_wrap.datetime input[type="text"],

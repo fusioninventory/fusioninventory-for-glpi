@@ -171,10 +171,16 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       echo "<label>".$title."&nbsp;:</label>";
       echo "<div class='input_wrap'>";
       echo
-         "<textarea rows='4' name='".$varname."' >".
+         "<textarea class='expanding' name='".$varname."' >".
          $this->fields[$varname].
          "</textarea>";
       echo "</div>";
+
+      echo implode("\n", array(
+         "<script type='text/javascript'>",
+         "  $('.expanding').expanding();",
+         "</script>"
+      ));
    }
 
    public function getMessage($msg,$type=self::MSG_INFO) {

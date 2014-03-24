@@ -274,9 +274,12 @@ function plugin_init_fusioninventory() {
          );
       }
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
-              "lib/d3-3.4.3/d3.min.js";
+         "lib/d3-3.4.3/d3.min.js";
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
-              "lib/timeslot.js";
+         "lib/timeslot.js";
+
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+         "js/expanding.js";
 
 
       if (Session::haveRight('plugin_fusioninventory_configuration', READ)
