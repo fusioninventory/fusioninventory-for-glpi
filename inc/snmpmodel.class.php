@@ -454,29 +454,29 @@ class PluginFusioninventorySnmpmodel extends CommonDBTM {
 
       PluginFusioninventorySnmpmodelImportExport::exportDictionnaryFile();
 
-      // Reload model for networkequipment have sysdescr
-      $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-      $a_networkequipments = $pfNetworkEquipment->find("`sysdescr`!=''");
-      foreach ($a_networkequipments as $a_networkequipment) {
-         $pfModel->getrightmodel($a_networkequipment['networkequipments_id'], "NetworkEquipment");
-      }
-      // Reload model for printers have sysdescr
-      $pfPrinter = new PluginFusioninventoryPrinter();;
-      $a_printers = $pfPrinter->find("`sysdescr`!=''");
-      foreach ($a_printers as $a_printer) {
-         $pfModel->getrightmodel($a_printer['printers_id'], "Printer");
-      }
+//      // Reload model for networkequipment have sysdescr
+//      $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+//      $a_networkequipments = $pfNetworkEquipment->find("`sysdescr`!=''");
+//      foreach ($a_networkequipments as $a_networkequipment) {
+//         $pfModel->getrightmodel($a_networkequipment['networkequipments_id'], "NetworkEquipment");
+//      }
+//      // Reload model for printers have sysdescr
+//      $pfPrinter = new PluginFusioninventoryPrinter();;
+//      $a_printers = $pfPrinter->find("`sysdescr`!=''");
+//      foreach ($a_printers as $a_printer) {
+//         $pfModel->getrightmodel($a_printer['printers_id'], "Printer");
+//      }
    }
-   
-   
-   
+
+
+
    /**
     * Actions done after the DELETE of the item in the database
     *
     *@return nothing
    **/
    function post_deleteFromDB() {
-      global $DB;      
+      global $DB;
 
       $query = "SELECT `glpi_plugin_fusioninventory_printers`.`id`
                 FROM `glpi_plugin_fusioninventory_printers`
