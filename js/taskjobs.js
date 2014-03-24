@@ -113,7 +113,7 @@ taskjobs.add_item = function (moduletype, itemtype, itemtype_name, rand_id) {
          // TODO: replace this with an ajax call to taskjobview class.
          $('#taskjob_' + moduletype + '_list')
             .append(
-               "<div class='taskjob_item' id='" + item_to_add.id + "'"+
+               "<div class='taskjob_item new' id='" + item_to_add.id + "'"+
                //"  onclick='$(this).children(\"input[type=checkbox]\").trigger(\"click\")'"+
                "  >" +
                "  <input type='checkbox'>" +
