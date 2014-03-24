@@ -42,10 +42,10 @@
 
 include ("../../../inc/includes.php");
 
-Html::header(__('FusionInventory', 'fusioninventory'), 
-             $_SERVER["PHP_SELF"], 
-             "plugins", 
-             "fusioninventory", 
+Html::header(__('FusionInventory', 'fusioninventory'),
+             $_SERVER["PHP_SELF"],
+             "plugins",
+             "fusioninventory",
              "wizard-start");
 
 if (!isset($_SERVER['HTTP_REFERER'])
@@ -55,19 +55,19 @@ if (!isset($_SERVER['HTTP_REFERER'])
    PluginFusioninventoryMenu::displayMenu("mini");
 }
 
-if (PluginFusioninventoryProfile::haveRight("task", "w")) {
-   if (isset($_GET["wizz"])) {
-      if (method_exists('PluginFusioninventoryWizard', $_GET["wizz"])) {
-         $ariane = '';
-         if (isset($_GET['ariane'])) {
-            $ariane = $_GET['ariane'];
-         }
-         PluginFusioninventoryWizard::$_GET["wizz"]($ariane);
-      }
-   } else {
-      PluginFusioninventoryWizard::w_start();
-   }
-}
+//if (PluginFusioninventoryProfile::haveRight("task", "w")) {
+//   if (isset($_GET["wizz"])) {
+//      if (method_exists('PluginFusioninventoryWizard', $_GET["wizz"])) {
+//         $ariane = '';
+//         if (isset($_GET['ariane'])) {
+//            $ariane = $_GET['ariane'];
+//         }
+//         PluginFusioninventoryWizard::$_GET["wizz"]($ariane);
+//      }
+//   } else {
+//      PluginFusioninventoryWizard::w_start();
+//   }
+//}
 Html::footer();
 
 ?>
