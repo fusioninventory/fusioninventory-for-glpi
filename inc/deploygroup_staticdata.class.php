@@ -46,6 +46,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
 
+   static $rightname = "plugin_fusioninventory_group";
+
    // From CommonDBRelation
    static public $itemtype_1 = 'PluginFusioninventoryDeployGroup';
    static public $items_id_1 = 'groups_id';
@@ -97,7 +99,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
    
    static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
             $search_params                 = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, true);
-            $search_params['metacriteria'] = array();
+            //$search_params['metacriteria'] = array();
             PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
 
             unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);

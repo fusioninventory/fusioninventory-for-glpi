@@ -46,6 +46,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryComputer extends Computer {
 
+   static $rightname = "plugin_fusioninventory_group";
+
    function getSearchOptions() {
       $computer = new Computer();
       $options  = $computer->getSearchOptions();
@@ -65,6 +67,7 @@ class PluginFusioninventoryComputer extends Computer {
    }
    
    function getSpecificMassiveActions($checkitem=NULL) {
+   
       $actions = array();
       if (isset($_GET['id'])) {
          $id = $_GET['id'];
@@ -75,7 +78,7 @@ class PluginFusioninventoryComputer extends Computer {
       $group->getFromDB($id);
 
       //There's no massive action associated with a dynamic group !
-      if ($group->isDynamicGroup()) {
+      if ($group->isDynamicGroup() || !$group->canEdit($group->getID())) {
          return array();
       }
 

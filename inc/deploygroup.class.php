@@ -50,7 +50,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    const STATIC_GROUP  = 'STATIC';
    const DYNAMIC_GROUP = 'DYNAMIC';
 
-   static $rightname = "plugin_fusioninventory_configuration";
+   static $rightname = "plugin_fusioninventory_group";
 
    protected $static_group_types = array('Computer');
 
@@ -64,9 +64,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       return __('Groups of computers', 'fusioninventory');
    }
 
-   static function canCreate() {
-      return true;
-   }
+   //static function canCreate() {
+   //   return true;
+   //}
 
    public function __construct() {
       $this->grouptypes = array(
@@ -215,8 +215,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       $is_dynamic = $item->isDynamicGroup();
       $itemtype   = "PluginFusioninventoryComputer";
-      
-      //if ($formcontrol) {
+      $can_update = $item->canEdit($item->getID()); 
+
+      if ($can_update) {
          //show generic search form (duplicated from Search class)
          echo "<form name='group_search_form' method='POST'>";
          echo "<input type='hidden' name='plugin_fusioninventory_deploygroups_id' value='".$item->getID()."'>";  
@@ -224,8 +225,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
          // add tow hidden fields to permit delete of (meta)criteria
          echo "<input type='hidden' name='criteria' value=''>";     
-         echo "<input type='hidden' name='metacriteria' value=''>"; 
-      //} 
+//         echo "<input type='hidden' name='metacriteria' value=''>"; 
+      } 
 
       echo "<div class='tabs_criteria'>";
       echo "<table class='tab_cadre_fixe'>";
@@ -243,10 +244,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $js .= "var $nbmetasearchcountvar=".count($p['metacriteria']).";";
       echo Html::scriptBlock($js);
 
-      echo "<table class='tab_cadre_fixe' >";
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-
       echo "<table class='tab_format' id='$searchcriteriatableid'>";
 
       // Displays normal search parameters
@@ -257,8 +254,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       }
 
       $metanames = array();
-      $linked =  Search::getMetaItemtypeAvailable($itemtype);
-      
+      $linked =  Search::getMetaItemtypeAvailable('Computer');
+
       if (is_array($linked) && (count($linked) > 0)) {
          for ($i=0 ; $i<count($p['metacriteria']) ; $i++) {
 
@@ -275,18 +272,18 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       // For dropdown
       echo "<input type='hidden' name='itemtype' value='$itemtype'>";
 
-      //if ($formcontrol) {
+      if ($can_update) {
          // add new button to search form (to store and preview)
          echo "<div class='center'>";
 
          if ($is_dynamic) {
             echo "<input type='submit' value=\" "._sx('button', 'Save').
-               " \" class='submit' name='save'>&nbsp;";
+               " \" class='submit' name='save'>";
          } else {
             echo "<input type='submit' value=\" ".__('Preview')." \" class='submit' name='preview'>";
          }
          echo "</div>";
-      //}
+      }
 
       echo "</td></tr></table>";
       echo "</div>";

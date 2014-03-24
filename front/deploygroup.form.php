@@ -43,24 +43,20 @@
 include ("../../../inc/includes.php");
 Session::checkLoginUser();
 
-if (!isset($_REQUEST["id"])) {
-   $_REQUEST["id"] = "";
-}
-
 $group = new PluginFusioninventoryDeployGroup();
 
-if (isset($_GET['save'])) {
+if (isset($_POST['save'])) {
    $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
    if (!countElementsInTable($group_item->getTable(), 
-                             "plugin_fusioninventory_deploygroups_id='".$_GET['id']."'")) {
-      $values['plugin_fusioninventory_deploygroups_id'] = $_GET['id'];
-      $values['fields_array'] = $_GET['fields_array']; 
+                             "plugin_fusioninventory_deploygroups_id='".$_POST['id']."'")) {
+      $values['plugin_fusioninventory_deploygroups_id'] = $_POST['id'];
+      $values['fields_array'] = serialize($_POST['criteria']); 
       $group_item->add($values);
    } else {
       $item = getAllDatasFromTable($group_item->getTable(), 
-                                   "plugin_fusioninventory_deploygroups_id='".$_GET['id']."'");
+                                   "plugin_fusioninventory_deploygroups_id='".$_POST['id']."'");
       $values                 = array_pop($item);
-      $values['fields_array'] = serialize($_GET['criteria']);
+      $values['fields_array'] = serialize($_POST['criteria']);
       $group_item->update($values);
    }
 
@@ -72,19 +68,19 @@ if (isset($_GET['save'])) {
    Html::redirect(Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup")."?id=".$newID);
 
 } else if (isset($_POST["delete"])) {
-   $group->check($_REQUEST['id'], DELETE);
+   $group->check($_POST['id'], DELETE);
    $ok = $group->delete($_POST);
 
    $group->redirectToList();
 
-} else if (isset($_REQUEST["purge"])) {
-   $group->check($_REQUEST['id'], DELETE);
+} else if (isset($_POST["purge"])) {
+   $group->check($_POST['id'], DELETE);
    $ok = $group->delete($_REQUEST, 1);
 
    $group->redirectToList();
 
 } else if (isset($_POST["update"])) {
-   $group->check($_REQUEST['id'], UPDATE);
+   $group->check($_POST['id'], UPDATE);
    $group->update($_POST);
 
    Html::back();
@@ -94,7 +90,12 @@ if (isset($_GET['save'])) {
 
    PluginFusioninventoryMenu::displayMenu("mini");
    $values       = $_POST;
-   $values['id'] = $_GET['id'];
+   if (!isset($_GET['id'])) {
+      $id = '';
+   } else {
+      $id = $_GET['id'];
+   }
+   $values['id'] = $id;
    $group->display($values);
    Html::footer();
 }
