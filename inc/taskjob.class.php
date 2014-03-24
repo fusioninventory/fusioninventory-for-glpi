@@ -44,6 +44,10 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
 
    static $rightname = 'plugin_fusioninventory_task';
 
+   function __construct() {
+      parent::__construct();
+   }
+
    /**
    * Get name of this type
    *
@@ -211,8 +215,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
 
-
-
    /**
    * Display definitions type (itemtypes)
    *
@@ -264,7 +266,54 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       return $rand;
    }
 
+   /**
+    * Get Itemtypes list for the selected method.
+    */
+   function getTypesForModule($method, $moduletype) {
 
+      $available_methods = PluginFusioninventoryStaticmisc::getmethods();
+      $types = array();
+      //$a_type[''] = '------';
+      if ($moduletype === 'actors') {
+         $types['PluginFusioninventoryAgent'] = PluginFusioninventoryAgent::getTypeName();
+      }
+
+      /**
+       * TODO: move staticmisc actors and targets related methods to the relevant Module classes
+       * ( I don't have time for this yet and this is why i can live with a simple mapping string
+       * table)
+       */
+      switch($moduletype) {
+         case 'actors':
+            $moduletype_tmp = 'action';
+            break;
+
+         case 'targets':
+            $moduletype_tmp = 'definition';
+            break;
+      }
+
+      foreach ($available_methods as $available_method) {
+         if ($method == $available_method['method']) {
+            $module = $available_method['module'];
+            $class = PluginFusioninventoryStaticmisc::getStaticMiscClass($module);
+            $class_method = array($class, "task_".$moduletype_tmp."type_".$method);
+            if (is_callable($class_method)) {
+               $types = call_user_func($class_method, $types);
+            }
+         }
+      }
+      return $types;
+   }
+
+
+   /**
+    * Get Items list from the Itemtype previously selected in the Module types dropdown
+    */
+
+   function getItemsForModuleItemtype($method, $itemtype) {
+      
+   }
 
    /**
    * Display definitions value with preselection of definition type

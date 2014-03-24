@@ -177,3 +177,18 @@ td:not(#foo) > input[type=radio]:checked + label {
     width: auto;
 }
 
+.taskjob_item {
+   display: inline-block;
+   margin: 2px;
+   padding: 2px;
+   border: 1px #e0e0e0 solid;
+   border-radius: 3px;
+   background-color: #e7e7e7;
+}
+
+.taskjob_item:hover {
+   border-color: #777;
+   box-shadow: 0 0 2px #777;
+   background-color: #777;
+   color: white;
+}

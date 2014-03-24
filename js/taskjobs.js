@@ -1,60 +1,164 @@
 var taskjobs = {}
 
-taskjobs.urls = {
-   "create"    : "/plugins/fusioninventory/ajax/taskjob_form.php",
-   "edit"      : "/plugins/fusioninventory/ajax/taskjob_form.php",
-   "targets"   : "/plugins/fusioninventory/ajax/taskjob_targets.php",
-   "actors"    : "/plugins/fusioninventory/ajax/taskjob_actors.php"
-}
-
-taskjobs.showForm = function( data, textStatus, jqXHR) {
+taskjobs.show_form = function( data, textStatus, jqXHR) {
    $('#taskjobs_form')
       .html(data);
 }
 
-taskjobs.hideForm = function () {
+taskjobs.hide_form = function () {
    $('#taskjobs_form')
       .html('');
 }
 
-taskjobs.create = function(plugin_url, task_id) {
+taskjobs.register_update_method = function (rand_id) {
+
+   //reset onchange event
+   $("#" + rand_id ).off("change", "*");
+   $("#" + rand_id ).on("change",
+      function(e) {
+         $("#method_selected").text(e.val);
+         //reset targets and actors dropdown
+         taskjobs.hide_moduletypes_dropdown();
+         taskjobs.hide_moduleitems_dropdown();
+         taskjobs.clear_list('targets');
+         taskjobs.clear_list('actors');
+      }
+      );
+}
+
+taskjobs.register_update_items = function (rand_id, moduletype, ajax_url) {
+   //reset onchange event
+   $("#" + rand_id ).off("change", "*");
+   $("#" + rand_id ).on("change",
+         function(e) {
+            //$("#taskjob_moduleitems_dropdown").text(e.val);
+            taskjobs.show_moduleitems(ajax_url, moduletype, e.val)
+         }
+         );
+}
+
+taskjobs.register_form_changed = function () {
+   //reset onchange event
+   $("form[name=form_taskjob]" ).off("change", "*");
+   $("form[name=form_taskjob]" ).on("change",
+         function(e) {
+            $('#cancel_job_changes_button').show();
+         }
+         );
+}
+
+taskjobs.create = function(ajax_url, task_id) {
    $.ajax({
-      url: plugin_url + taskjobs.urls.create,
+      url: ajax_url,
       data: {
          "task_id" : task_id
       },
-      success: taskjobs.showForm
+      success: taskjobs.show_form
    })
 }
 
-taskjobs.edit = function(plugin_url, taskjob_id) {
+taskjobs.edit = function(ajax_url, taskjob_id) {
    $.ajax({
-      url: plugin_url + taskjobs.urls.edit,
+      url: ajax_url,
       data: {
          "id" : taskjob_id
       },
-      success: taskjobs.showForm
+      success: taskjobs.show_form
    })
 }
 
-taskjobs.showTargets = function(plugin_url, taskjob_id, module) {
+taskjobs.hide_moduletypes_dropdown = function() {
+   $('#taskjob_moduletypes_dropdown')
+      .html('');
+}
+
+taskjobs.show_moduletypes_dropdown = function(dropdown_dom) {
+   $('#taskjob_moduletypes_dropdown')
+      .html(dropdown_dom);
+}
+
+taskjobs.hide_moduleitems_dropdown = function() {
+   $('#taskjob_moduleitems_dropdown')
+      .html('');
+}
+
+taskjobs.show_moduleitems_dropdown = function(dropdown_dom) {
+   $('#taskjob_moduleitems_dropdown')
+      .html(dropdown_dom);
+}
+
+taskjobs.clear_list = function(moduletype) {
+   $('#taskjob_'+moduletype+'_list')
+      .html('');
+}
+
+taskjobs.delete_items_selected = function(moduletype) {
+   $('#taskjob_'+moduletype+'_list')
+      .find(".taskjob_item")
+      .has('input[type=checkbox]:checked')
+      .remove()
+}
+
+taskjobs.add_item = function (moduletype, itemtype, itemtype_name, rand_id) {
+   item_id = $("#"+rand_id).val();
+   item_name = $("#taskjob_moduleitems_dropdown .select2-chosen").text();
+   if ( item_id > 0 ) {
+      item_to_add = {
+         'id' : itemtype + "-" + item_id,
+         'name' : item_name
+      }
+      item_exists = $('#taskjob_' + moduletype + '_list').find('#'+item_to_add.id);
+      if (item_exists.length == 0) {
+         // Append the element to the list input
+         // TODO: replace this with an ajax call to taskjobview class.
+         $('#taskjob_' + moduletype + '_list')
+            .append(
+               "<div class='taskjob_item' id='" + item_to_add.id + "'"+
+               //"  onclick='$(this).children(\"input[type=checkbox]\").trigger(\"click\")'"+
+               "  >" +
+               "  <input type='checkbox'>" +
+               "  </input>" +
+               "  <span class='"+itemtype+"'></span>"+
+               "  <label>"+
+               "     <span style='font-style:oblique'>" + itemtype_name +"</span>" +
+               "     "+ item_to_add.name +
+               "  </label>"+
+               "  <input type='hidden' name='"+moduletype+"[]' value='"+item_to_add.id+"'>" +
+               "  </input>" +
+               "</div>"
+            );
+      } else {
+         item_exists.fadeOut(100).fadeIn(100);
+      }
+   }
+}
+
+taskjobs.show_moduletypes = function(ajax_url, moduletype) {
+   taskjobs.hide_moduletypes_dropdown();
+   taskjobs.hide_moduleitems_dropdown();
    $.ajax({
-      url: plugin_url + taskjobs.urls.targets,
+      url: ajax_url,
       data: {
-         "id" : taskjob_id,
-         "module" : module
+         "moduletype" : moduletype,
+         "method" : $('#method_selected').text()
       },
-      success: showTargetForm
+      success: function( data, textStatus, jqXHR) {
+         taskjobs.show_moduletypes_dropdown( data )
+      }
    });
 }
 
-taskjobs.showActors = function(plugin_url, taskjob_id, module) {
+taskjobs.show_moduleitems = function(ajax_url, moduletype, itemtype) {
+   taskjobs.hide_moduleitems_dropdown();
    $.ajax({
-      url: plugin_url + taskjobs.urls.actors,
+      url: ajax_url,
       data: {
-         "id" : taskjob_id,
-         "module" : module
+         "itemtype" : itemtype,
+         "moduletype" : moduletype,
+         "method" : $('#method_selected').text()
       },
-      success: showTargetForm
+      success: function( data, textStatus, jqXHR) {
+         taskjobs.show_moduleitems_dropdown( data )
+      }
    });
 }

@@ -46,6 +46,38 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
    const MSG_WARNING = 1;
    const MSG_ERROR   = 2;
 
+   public $base_urls = array();
+
+   public function __construct() {
+      global $CFG_GLPI;
+      parent::__construct();
+      $this->base_urls = array(
+         'fi.base' => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory",
+         'fi.ajax' => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/ajax",
+         'fi.front' => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/front",
+         'fi.pics' => $CFG_GLPI['root_doc'] . "/plugins/fusioninventory/pics",
+         'glpi.pics' => $CFG_GLPI['root_doc'] . "/pics",
+      );
+   }
+
+   /**
+    * Get a specific url root by type name
+    *
+    * @param string $name The type of url requested (can be used for ajax call or pictures location)
+    *
+    * @return string Returns the requested url if found else returns empty string and trigger some
+    * error message
+    */
+   function getBaseUrlFor($name) {
+      if ( array_key_exists($name, $this->base_urls) ) {
+         return $this->base_urls[$name];
+      }
+      trigger_error(
+         "The requested url type '$name' doesn't exists. ".
+         "Maybe the developper have forgotten to register it in the 'base_urls' variable.");
+      return "";
+   }
+
    public function showList() {
       Toolbox::logDebug(get_class($this));
       Search::show(get_class($this));
@@ -76,15 +108,34 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
 
    }
 
+   public function showDropdownForItemtype($title, $itemtype, $options=array()) {
+      echo "<label>" . $title."&nbsp;:" . "</label>";
+      echo "<div class='input_wrap'>";
+      $dropdown_options = array_merge(
+         array(
+            'width'=>'100%',
+            'display'=>true,
+         ),
+         $options
+      );
+      $rand = Dropdown::show($itemtype, $dropdown_options);
+      echo "</div>";
+      return $rand;
+   }
+
    public function showDropdownFromArray($title, $varname, $values = array()) {
       echo "<label>" . $title."&nbsp;:" . "</label>";
       echo "<div class='input_wrap'>";
+      $options = array(
+         'width'=>'100%'
+      );
+
+      if (!is_null($varname)) {
+         $options['value'] = $this->fields[$varname];
+      }
       $rand = Dropdown::showFromArray(
          $varname, $values,
-         array(
-            'value'=>$this->fields[$varname],
-            'width'=>'100%'
-         )
+         $options
       );
       echo "</div>";
       return $rand;

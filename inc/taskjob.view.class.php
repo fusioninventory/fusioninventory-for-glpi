@@ -42,17 +42,14 @@
 
 class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
-   function getUrls() {
-      global $CFG_GLPI;
-      $urls = array(
-         "ajaxGetForm" =>
-            $CFG_GLPI['root_doc'].'/plugins/fusioninventory/ajax/taskjob_form.php',
-         "ajaxGetTargetsForm" =>
-               $CFG_GLPI['root_doc'].'/plugins/fusioninventory/ajax/taskjob_form.php',
-         "ajaxGetActorsForm" =>
-               $CFG_GLPI['root_doc'].'/plugins/fusioninventory/ajax/taskjob_form.php',
-      );
-      return $urls;
+   function __construct() {
+      parent::__construct();
+      $this->base_urls = array_merge( $this->base_urls, array(
+         'fi.job.create' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_form.php",
+         'fi.job.edit' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_form.php",
+         'fi.job.moduletypes' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_moduletypes.php",
+         'fi.job.moduleitems' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_moduleitems.php",
+      ));
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
@@ -84,6 +81,8 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             $pfTaskJob->showListForTask($item->getID());
             echo "</div>";
 
+            //Just a sortable test (must me removed after testing)
+            //echo file_get_contents('http://' . $_SERVER['HTTP_HOST'] . "/test.html");
 
       //      if ($item->fields['is_advancedmode'] == '0') {
 
@@ -122,7 +121,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       return true;
    }
 
-   function ajaxGetForm($options) {
+   function ajaxLoadItem($options) {
       /*
        * The following has been borrowed from Html::display() and CommonGLPI::showTabsContent().
        *
@@ -160,31 +159,19 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             }
          }
       }
+      return $ID;
+   }
 
+   function ajaxGetForm($options) {
+      $ID = $this->ajaxLoadItem($options);
       $this->showForm($ID,$options);
    }
 
-   public function showListForTask($task_id) {
-
-      global $CFG_GLPI;
-
-      $taskjobs_urls = $this->getUrls();
-
-      $taskjobs = $this->getTaskjobs($task_id);
-
-      //Activate massive deletion if there are some.
-      $deletion_activated = (count($taskjobs)>0);
-
-      echo "<form id='taskjobs_form' method='post' action='".$this->getFormURL()."'>";
-      echo "<table class='tab_cadrehov package_item_list' id='taskjobs_list'>\n";
-      foreach( $taskjobs as $taskjob_id => $taskjob_data ) {
-         echo "<tr class='tab_bg_2'>\n";
-         $this->showTaskjobSummary( $taskjob_data );
-         echo "</tr>\n";
-      }
+   public function showListHeader($task_id, $deletion_activated) {
+      echo "<tr>";
       //Show checkbox to select every objects for deletion.
       if ($deletion_activated) {
-         echo "<tr><th>";
+         echo "<th>";
          echo Html::getCheckAllAsCheckbox("taskjobs_list", mt_rand());
          echo "</th>";
       }
@@ -195,12 +182,92 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          "  style='padding:5px;margin:0;right:0'",
          "  value=' ".__('Add a job', 'fusioninventory')." ' ",
          "  onclick='taskjobs.create(",
-         "     \"".$CFG_GLPI['root_doc']."\", ",
+         "     \"".$this->getBaseUrlFor('fi.job.create')."\", ",
          "     $task_id",
          "  )'",
          "/>",
       ));
-      echo "</th></tr>";
+      echo "</th>";
+      echo "</tr>";
+   }
+
+   public function getItemsList($module_type) {
+      /**
+       * TODO: Remove this when 'definition' and 'action' fields will be renamed.
+       */
+      $fieldname = "";
+      switch ($module_type) {
+         case 'actors':
+            $fieldname = 'action';
+            break;
+         case 'targets':
+            $fieldname = 'definition';
+            break;
+      }
+
+      $items = importArrayFromDB($this->fields[$fieldname]);
+      $result = array();
+      foreach($items as $item) {
+         Toolbox::logDebug($items);
+         $itemtype = key($item);
+         $itemid = $item[$itemtype];
+         $result[] = $this->getItemDisplay($module_type, $itemtype, $itemid);
+      }
+      return implode("\n", $result);
+   }
+
+   public function getItemDisplay($module_type, $itemtype, $itemid) {
+      $item = getItemForItemtype($itemtype);
+      $item->getFromDB($itemid);
+      $itemtype_name = $item->getTypeName();
+      //Toolbox::logDebug($item);
+      Toolbox::logDebug($itemtype);
+      Toolbox::logDebug($itemtype_name);
+      $item_fullid = $itemtype . '-' . $itemid;
+      return implode("\n", array(
+         "<div class='taskjob_item' id='" . $item_fullid . "'",
+         "  >" ,
+         "  <input type='checkbox'>" ,
+         "  </input>" ,
+         "  <span class='" . $itemtype ."'></span>",
+         "  <label>",
+         "     <span style='font-style:oblique'>" . $itemtype_name ."</span>" ,
+         "     ". $item->fields['name'] ,
+         "  </label>",
+         "  <input type='hidden' name='" . $module_type ."[]' value='". $item_fullid ."'>" ,
+         "  </input>" ,
+         "</div>"
+      ));
+
+   }
+
+   public function showListForTask($task_id) {
+
+      global $CFG_GLPI;
+
+      $taskjobs = $this->getTaskjobs($task_id);
+
+      //Activate massive deletion if there are some.
+      $deletion_activated = (count($taskjobs)>0);
+
+      /**
+       * TODO: use sortable jqueryUI widget for drag and drop
+       */
+      //echo implde(array("\n", array(
+      //   "<script type='text/javascript'>",
+      //   "$('#taskjobs_list ')",
+      //   "</script>"
+      //));
+      echo "<form id='taskjobs_form' method='post' action='".$this->getFormURL()."'>";
+      echo "<table class='tab_cadrehov package_item_list' id='taskjobs_list'>\n";
+      $this->showListHeader($task_id, $deletion_activated);
+      foreach( $taskjobs as $taskjob_id => $taskjob_data ) {
+         echo "<tr class='tab_bg_2'>\n";
+         $this->showTaskjobSummary( $taskjob_data );
+         echo "</tr>\n";
+      }
+
+      $this->showListHeader($task_id, $deletion_activated);
       echo "</table>\n";
 
       //Show the delete button for selected object
@@ -241,7 +308,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             "  <a ",
             "     href='#taskjobs_form'",
             "     onclick='taskjobs.edit(",
-            "        \"".$CFG_GLPI['root_doc']."\", ",
+            "        \"".$this->getBaseUrlFor('fi.job.edit')."\", ",
             "        $id",
             "     )'>${name}</a>",
             "</td>",
@@ -250,12 +317,103 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       echo "<td class='rowhandler control'><div class='drag'/></td>";
    }
 
-   public function showTargets() {
-      $id = $this->fields['id'];
+   public function ajaxModuleTypesDropdown($options) {
+
+      switch ($options['moduletype']) {
+         case 'actors':
+            $title = __('Actor Type', 'fusioninventory');
+            break;
+
+         case 'targets':
+            $title = __('Target Type', 'fusioninventory');
+            break;
+      }
+      /**
+       * get Itemtype choices dropdown
+       */
+      $module_types = array_merge(
+         array('' => '------'),
+         $this->getTypesForModule($options['method'], $options['moduletype'])
+      );
+      $module_types_dropdown = $this->showDropdownFromArray(
+         $title, null, $module_types
+      );
+      echo implode(array("\n",
+         "<script type='text/javascript'>",
+         "  taskjobs.register_update_items(",
+         "     'dropdown_$module_types_dropdown', ",
+         "     '".$options['moduletype']."', ",
+         "     '".$this->getBaseUrlFor('fi.job.moduleitems')."' ",
+         "  );",
+         "</script>"
+      ));
+   }
+
+   public function ajaxModuleItemsDropdown($options) {
+      Toolbox::logDebug($options);
+      $moduletype = $options['moduletype'];
+      $itemtype = $options['itemtype'];
+      if ($itemtype === "") {
+         return;
+      }
+      switch ($options['moduletype']) {
+         case 'actors':
+            $title = __('Actor Item', 'fusioninventory');
+            break;
+
+         case 'targets':
+            $title = __('Target Item', 'fusioninventory');
+            break;
+      }
+      /**
+       * get Itemtype choices dropdown
+       */
+      $dropdown_rand = $this->showDropdownForItemtype(
+         $title,
+         $itemtype,
+         array('width'=>"95%")
+      );
+      $item = getItemForItemtype($itemtype);
+      $itemtype_name = $item->getTypeName();
+      $item_key_id = $item->getForeignKeyField();
+      $dropdown_rand_id = "dropdown_".$item_key_id . $dropdown_rand;
+      echo implode( array("\n",
+         "<div class='center'>",
+         "<input type='button' class=submit",
+         "  value='".__('Add')." $title'",
+         "  onclick='taskjobs.add_item(",
+         "     \"$moduletype\", \"$itemtype\", \"$itemtype_name\", \"$dropdown_rand_id\")'>",
+         "</input>",
+         "</div>"
+      ));
+      //return $this->getItemsForModuleItemType($options['method'], $options['moduletype']);
+      /*
+      $module_items_dropdown = $this->showDropdownFromArray(
+         $title, null, $module_types
+      );
+       */
 
    }
 
-   public function showActors() {
+   public function getAddItemtypeButton($title, $itemtype, $method) {
+      return
+         implode("\n", array(
+            "<a ",
+            "  class='addbutton'",
+            "  href='javascript:void(0)'",
+            "  onclick='taskjobs.show_moduletypes(",
+            "     \"".$this->getBaseUrlFor('fi.job.moduletypes')."\", ",
+            "     \"".$itemtype."\",",
+            "     \"".$method."\"",
+            "  )'",
+            ">",
+            $title,
+            "<img src='".$this->getBaseUrlFor('glpi.pics')."/add_dropdown.png' />",
+            "</a>"
+         ));
+   }
+
+   public function _showActors() {
       global $CFG_GLPI;
 
       //$ok = $this->getFromDB($id);
@@ -417,9 +575,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       global $CFG_GLPI;
 
       Toolbox::logDebug(array($id, $options));
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
 
-      $taskjobs_urls = $this->getUrls();
       $new_item = false;
       if ($id > 0) {
          if ($this->getFromDB($id)) {
@@ -525,23 +681,29 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
       $modules_methods = PluginFusioninventoryStaticmisc::getModulesMethods();
       $modules_methods_rand = $this->showDropdownFromArray(
-         __('Module', 'fusioninventory'), "method",
+         __('Module method', 'fusioninventory'), "method",
          $modules_methods
       );
-
       if (!$new_item) {
-         $params = array('method' => '__VALUE__',
-            'rand'      => $modules_methods_rand,
-            'myname'    => 'method',
-            'name'      => 'configuration_form',
-            'taskjobs_id'=>$id );
-         Ajax::updateItemOnEvent(
-            "dropdown_method".$modules_methods_rand,
-            "methodupdate",
-            $CFG_GLPI["root_doc"].
-            "/plugins/fusioninventory/ajax/taskmethodupdate.php",
-            $params);
+         echo "<script type='text/javascript'>";
+         echo "   taskjobs.register_update_method( 'dropdown_method".$modules_methods_rand."');";
+         echo "</script>";
+
+         echo "<div style='display:none' id='method_selected'>".$this->fields['method']."</div>";
       }
+      //if (!$new_item) {
+      //   $params = array('method' => '__VALUE__',
+      //      'rand'      => $modules_methods_rand,
+      //      'myname'    => 'method',
+      //      'name'      => 'configuration_form',
+      //      'taskjobs_id'=>$id );
+      //   Ajax::updateItemOnEvent(
+      //      "dropdown_method".$modules_methods_rand,
+      //      "methodupdate",
+      //      $CFG_GLPI["root_doc"].
+      //      "/plugins/fusioninventory/ajax/taskmethodupdate.php",
+      //      $params);
+      //}
 
       //if (! $new_item) {
 
@@ -552,55 +714,82 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       //         ."' />";
       //   }
       //}
-      echo "</div>";
+      echo "</div>"; // end of first inputs column wrapper
+
       // Display Definition choices
       if (!$new_item) {
          //Start second column of the form
          echo "<div class='fusinv_form'>";
 
          echo "<div class='input_wrap split_column tab_bg_4'>";
-         echo implode("\n", array(
-            "<a ",
-            "  class='addbutton'",
-            "  href='javascript:void(0)'",
-            "  onclick='taskjobs.add_target(",
-            "     \"".$CFG_GLPI['root_doc']."\", ",
-            "     { id : $id }",
-            "  )'",
-            ">",
+         echo $this->getAddItemtypeButton(
             __('Targets', 'fusioninventory'),
-            "<img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />",
-            "</a>"
-         ));
+            'targets', $this->fields['method']
+         );
          echo "<br/><span style='font-size:50%;font-style:italic'>";
          echo __('The items that should be applied for this job.', 'fusioninventory');
          echo "</span>";
          echo "</div>";
 
          echo "<div class='input_wrap split_column tab_bg_4'>";
-         echo implode("\n", array(
-            "<a ",
-            "  class='addbutton'",
-            "  href='javascript:void(0)'",
-            "  onclick='taskjobs.showActors(",
-            "     \"".$CFG_GLPI['root_doc']."\", ",
-            "     { id : $id }",
-            "  )'",
-            ">",
+         echo $this->getAddItemtypeButton(
             __('Actors', 'fusioninventory'),
-            "<img src='".$CFG_GLPI["root_doc"]."/pics/add_dropdown.png' />",
-            "</a>"
-         ));
+            'actors', $this->fields['method']
+         );
          echo "<br/><span style='font-size:50%;font-style:italic'>";
          echo __('The items that should carry out those targets.', 'fusioninventory');
          echo "</span>";
          echo "</div>";
 
-         echo "<div id='configuration_form' />";
-         echo "<div id='methodupdate' ></div>";
+         echo "<div id='taskjob_moduletypes_dropdown' />";
+         echo "<div id='taskjob_moduleitems_dropdown' />";
          echo "</div>";
       }
 
+      $targets_display_list = $this->getItemsList('targets');
+      // Display targets and actors lists
+      echo implode("\n", array(
+         "<hr/>",
+         "<div>",
+         "  <div class='taskjob_list_header'>",
+         "     <label>".__('Targets', 'fusioninventory')."&nbsp;:</label>",
+         "  </div>",
+         "  <div id='taskjob_targets_list'>",
+         $targets_display_list,
+         "  </div>",
+         "  <div>",
+         "     <a href='javascript:void(0)'",
+         "        onclick='taskjobs.clear_list(\"targets\")'",
+         "        >".__('Clear list', 'fusioninventory')."</a>",
+         "        /",
+         "     <a href='javascript:void(0)'",
+         "        onclick='taskjobs.delete_items_selected(\"targets\")'",
+         "        >".__('Delete selected items', 'fusioninventory')."</a>",
+         "  </div>",
+         "</div>",
+      ));
+
+      $actors_display_list = $this->getItemsList('actors');
+      echo implode("\n", array(
+         "<hr/>",
+         "<div>",
+         "  <div class='taskjob_list_header'>",
+         "     <label>".__('Actors', 'fusioninventory')."&nbsp;:</label>",
+         "  </div>",
+         "  <div id='taskjob_actors_list'>",
+         $actors_display_list,
+         "  </div>",
+         "  <div>",
+         "     <a href='javascript:void(0)'",
+         "        onclick='taskjobs.clear_list(\"actors\")'",
+         "        >".__('Clear list', 'fusioninventory')."</a>",
+         "        /",
+         "     <a href='javascript:void(0)'",
+         "        onclick='taskjobs.delete_items_selected(\"actors\")'",
+         "        >".__('Delete selected items', 'fusioninventory')."</a>",
+         "  </div>",
+         "</div>",
+      ));
       /*
        * Advanced mode related display (should be dropped)
        */
@@ -642,12 +831,12 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       if( !$new_item ) {
          // ** Definitions
          //echo "<td rowspan='".$rowspan."' valign='top'>";
-         $this->showTaskjobItems('definition', $modules_methods_rand, $id);
+         //$this->showTaskjobItems('definition', $modules_methods_rand, $id);
          //echo "</td>";
 
          // ** Actions
          //echo "<td rowspan='".$rowspan."' valign='top'>";
-         $this->showTaskjobItems('action', $modules_methods_rand, $id);
+         //$this->showTaskjobItems('action', $modules_methods_rand, $id);
          //echo "</td>";
          //echo "</tr>";
       }
@@ -688,10 +877,24 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          echo '</tr>';
       } else {
          echo "<tr>";
-         echo "<td valign='top' align='center' colspan='2'>";
+         echo "<td class='center'>";
          echo "<input type='submit' name='update' value=\"".__('Update')."\" class='submit'>";
          echo "</td>";
-         echo "<td valign='top' align='center' colspan='2'>";
+
+         echo implode("\n", array(
+            "<td class='center' colspan='2'>",
+            "<div id='cancel_job_changes_button' style='display:none'>",
+            "<input type='button' class='submit'",
+            "     onclick='taskjobs.edit(",
+            "        \"".$this->getBaseUrlFor('fi.job.edit')."\", ",
+            "        $id",
+            "     )'",
+            " value=\"".__('Cancel modifications','fusioninventory')."\"/>",
+            "</div>",
+            "</td>",
+         ));
+
+         echo "<td class='center'>";
          echo "<input type='submit' name='delete' value=\"".__('Purge', 'fusioninventory')."\"
                          class='submit' ".
                Html::addConfirmationOnAction(__('Confirm the final deletion ?', 'fusioninventory')).
@@ -703,7 +906,13 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       echo "</table>";
       Html::closeForm();
 
-      echo implode(array("\n",
+      echo implode("\n", array(
+         "<script type='text/javascript'>",
+         "  taskjobs.register_form_changed();",
+         "</script>"
+      ));
+
+      echo implode("\n", array(
          "<script language='javascript'>",
          "  function expandtaskjobform() {",
          "     document.getElementById('taskjobdisplay').style.overflow='visible';",
@@ -946,8 +1155,47 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             if (isset($postvars['method_id'])) {
                $postvars['method']  = $postvars['method_id'];
             }
-            //TODO: get rid of plugins_id and use method
+
+            $targets = array();
+            Toolbox::logDebug(
+               var_export(
+                  (
+                     array_key_exists('targets', $postvars)
+                     and is_array($postvars['targets'])
+                     and count($postvars['targets']) > 0
+                  )
+                  ,true
+               )
+            );
+            if( array_key_exists('targets', $postvars)
+               and is_array($postvars['targets'])
+               and count($postvars['targets']) > 0
+            ) {
+               foreach( $postvars['targets'] as $target ) {
+                  list($itemtype, $itemid) = explode('-',$target);
+                  $targets[] = array($itemtype => $itemid);
+               }
+            }
+
+            $postvars['definition'] = exportArrayToDB($targets);
+
+            $actors = array();
+            if(
+               array_key_exists('actors', $postvars)
+               and is_array($postvars['actors'])
+               and count($postvars['actors']) > 0
+            ) {
+               foreach( $postvars['actors'] as $actor ) {
+                  list($itemtype, $itemid) = explode('-',$actor);
+                  $actors[] = array($itemtype => $itemid);
+               }
+            }
+
+            $postvars['action'] = exportArrayToDB($actors);
+
+            //TODO: get rid of plugins_id and just use method
             //$postvars['plugins_id'] = $postvars['method-'.$postvars['method']];
+            Toolbox::logDebug($postvars);
             $this->update($postvars);
          }
 
