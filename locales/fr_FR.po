@@ -5,7 +5,7 @@
 # Translators:
 # lostprophet91 <lostprophet91@gmail.com>, 2013
 # Asmodojo <asmodojo@outlook.com>, 2013
-# David Durieux <d.durieux@siprossii.com>, 2012-2013
+# David Durieux <d.durieux@siprossii.com>, 2012-2014
 # EmmanuelLeNormand <emmanuel@le-normand.org>, 2013
 # Gonéri Le Bouder <goneri@rulezlan.org>, 2013
 # kiniou <kiniou@gmail.com>, 2013
@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-12-16 13:28+0100\n"
-"PO-Revision-Date: 2013-12-16 21:50+0000\n"
+"PO-Revision-Date: 2014-03-03 08:41+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: French (France) (http://www.transifex.com/projects/p/FusionInventory/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
@@ -843,11 +843,11 @@ msgstr "Communauté"
 
 #: inc/configsecurity.class.php:115
 msgid "Encryption protocol for authentication "
-msgstr "Protocole de cryptage pour authentification "
+msgstr "Protocole de chiffrement pour authentification "
 
 #: inc/configsecurity.class.php:133
 msgid "Encryption protocol for data"
-msgstr "Protocole de cryptage pour les données"
+msgstr "Protocole de chiffrement pour les données"
 
 #: inc/constructmodel.class.php:343
 msgid "Get SNMP model"
