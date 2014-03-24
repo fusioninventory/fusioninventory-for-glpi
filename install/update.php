@@ -8512,36 +8512,36 @@ function migrateTablesFromFusinvDeploy ($migration) {
    foreach( $orders as $order_config ) {
       $pfDeployOrder = new PluginFusioninventoryDeployOrder();
       $json_order = json_decode($order_config['json']);
-      print("deployorders fixer : actual order structure for ID ".$order_config['id']."\n" . print_r($json_order,true) ."\n");
+//      print("deployorders fixer : actual order structure for ID ".$order_config['id']."\n" . print_r($json_order,true) ."\n");
 
       // Checks for /jobs json property
       if( !isset($json_order->jobs) || !is_object($json_order->jobs) ) {
-         print("deployorders fixer : create missing required 'jobs' property\n");
+//         print("deployorders fixer : create missing required 'jobs' property\n");
          $json_order->jobs = new stdClass();
       }
 
       if ( !isset($json_order->jobs->checks) ) {
-         print("deployorders fixer : create missing required '/jobs/checks' array property\n");
+//         print("deployorders fixer : create missing required '/jobs/checks' array property\n");
          $json_order->jobs->checks = array();
       }
       if ( !isset($json_order->jobs->actions) ) {
-         print("deployorders fixer : create missing required '/jobs/actions' array property\n");
+//         print("deployorders fixer : create missing required '/jobs/actions' array property\n");
          $json_order->jobs->actions = array();
       }
       if ( !isset($json_order->jobs->associatedFiles) ) {
-         print("deployorders fixer : create missing required '/jobs/associatedFiles' array property\n");
+//         print("deployorders fixer : create missing required '/jobs/associatedFiles' array property\n");
          $json_order->jobs->associatedFiles = array();
       }
 
       // Checks for /associatedFiles json property
       if( !isset($json_order->associatedFiles) || !is_object($json_order->associatedFiles) ) {
-         print("deployorders fixer : create missing required 'associatedFiles' property\n");
+//         print("deployorders fixer : create missing required 'associatedFiles' property\n");
          $json_order->associatedFiles = new stdClass();
       }
-      print(
-         "deployorders fixer : final order structure for ID ".$order_config['id']."\n" .
-         json_encode($json_order,JSON_PRETTY_PRINT) ."\n"
-      );
+//      print(
+//         "deployorders fixer : final order structure for ID ".$order_config['id']."\n" .
+//         json_encode($json_order,JSON_PRETTY_PRINT) ."\n"
+//      );
       $pfDeployOrder::updateOrderJson($order_config['id'], $json_order);
    }
 
