@@ -263,6 +263,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          // this taskjobstate.
 
          //Add the jobstate to the list seems previous checks are good.
+         //TODO: The following method (actually defined as member of taskjob) needs to be
+         //initialized when getting the jobstate from DB (with a getfromDB hook for example)
+         $jobstate->method = $result['job']['method'];
          $jobstates[$jobstate->fields['id']] = $jobstate;
       }
       Toolbox::logDebug(
@@ -272,6 +275,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          )
       );
       //Remove the list of jobstates previously filtered for removal.
+      //TODO: maybe we should only cancel the jobstate.
       foreach( $jobstates_to_delete as $jobstate) {
          $jobstate->deleteFromDB();
       }

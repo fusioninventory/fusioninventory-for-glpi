@@ -54,6 +54,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    const CANCELLED            = 5;  // the job has been cancelled either by a user or the agent
                                     // himself (eg. if it has been forbidden to run this taskjob)
 
+   public $method = '';
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       global $CFG_GLPI;

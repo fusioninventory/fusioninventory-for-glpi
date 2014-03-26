@@ -60,21 +60,6 @@ if (isset($_GET['action'])) {
                $taskjobstates = $pfTask->getTaskjobstatesForAgent(
                   $agent['id'], array('deployinstall', 'deployuninstall')
                );
-//               Toolbox::logDebug($taskjobstates);
-               //Reconstruct taskjobs list by id and not by classname
-               //foreach ($methods as $className => $taskjobs) {
-               //   if (class_exists($className)) {
-               //      if (     $className == "PluginFusioninventoryDeployinstall"
-               //         || $className == "PluginFusioninventoryDeployuninstall"
-               //      ) {
-               //         //For each taskjob, add classname information
-               //         foreach($taskjobs as $id => $taskjob) {
-               //            $taskjob['class_name'] = $className;
-               //            $new_taskjobs[$taskjob['id']] = $taskjob;
-               //         }
-               //      }
-               //   }
-               //}
 
                //sort taskjobs by key id
                /**
@@ -87,22 +72,24 @@ if (isset($_GET['action'])) {
                $order->associatedFiles = new stdClass;
 
                ////aggregate json orders in a single json response
-               //foreach ($new_taskjobs as $taskjob) {
-               //   //Get method associated to the taskjob
-               //   $classname = $taskjob['class_name'];
-               //   $class = new $classname();
-               //   //Get taskjob json order
-               //   $taskjob_order = $class->run($taskjob, $a_agent);
+               foreach ($taskjobstates as $taskjobstate) {
 
-               //   //Append order to the final json
-               //   $order->jobs[] = $taskjob_order['job'];
-               //   //Update associated files list
-               //   foreach( $taskjob_order['associatedFiles'] as $hash=>$associatedFiles) {
-               //      if(!array_key_exists($hash, $order->associatedFiles) ) {
-               //         $order->associatedFiles->$hash = $associatedFiles;
-               //      }
-               //   }
-               //}
+                  // TODO: The run() method should be renamed as getData() and moved to the Package
+                  // class since we want package configuration (Order class may be useless ... needs
+                  // some thinking)
+                  $deploycommon = new PluginFusioninventoryDeployCommon();
+                  // Get taskjob json order
+                  $jobstate_order = $deploycommon->run($taskjobstate);
+
+                  // Append order to the final json
+                  $order->jobs[] = $jobstate_order['job'];
+                  // Update associated files list
+                  foreach( $jobstate_order['associatedFiles'] as $hash=>$associatedFiles) {
+                     if(!array_key_exists($hash, $order->associatedFiles) ) {
+                        $order->associatedFiles->$hash = $associatedFiles;
+                     }
+                  }
+               }
 
                // return an empty dictionnary if there are no jobs.
                if ( count($order->jobs) == 0) {
