@@ -261,7 +261,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
                  );
       }
 
-      if (Session::haveRight('plugin_fusioninventory_existantrule', READ)) {
+      if (Session::haveRight('plugin_fusioninventory_ruleentity', READ)) {
          $a_menu[3]['name'] = __('Computer entity rules', 'fusioninventory');
          $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[3]['link'] = $CFG_GLPI['root_doc'].
