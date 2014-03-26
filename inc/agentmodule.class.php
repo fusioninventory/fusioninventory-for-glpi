@@ -187,7 +187,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
          echo "</table>";
-         Html::hidden('id', array('value' => $data['id']));
+         echo Html::hidden('id', array('value' => $data['id']));
          Html::closeForm();
          echo "<br/>";
       }
