@@ -311,7 +311,8 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       
       $results = array();
       if ($group->isStaticGroup()) {
-         foreach ($group->find("`plugin_fusioninventory_deploygroups_id`='$groups_id' 
+         $staticgroup = new PluginFusioninventoryDeployGroup_Staticdata();
+         foreach ($staticgroup->find("`plugin_fusioninventory_deploygroups_id`='$groups_id' 
                                 AND `itemtype`='Computer'") as $tmpgroup) {
             $results[$tmpgroup['items_id']] = $tmpgroup['items_id']; 
          }
