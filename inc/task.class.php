@@ -136,6 +136,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
    }
 
+
    /**
    * Purge task and taskjob related with method
    *
@@ -173,6 +174,176 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
    }
 
+   /**
+    * Get the list of itemtype related to the methods asked by the agent
+    * TODO: StaticMisc methods to get itemtype should be simplified.
+    */
+   function getTaskjobsForAgent($agent_id, $methods = array()) {
+
+      $taskjobs = array();
+
+
+
+      return $taskjobs;
+   }
+
+
+   function prepareTaskjobs( $methods = array()) {
+      global $DB;
+
+
+      // Get all Items where lies the agent.
+      //$items = $this->getActorItemsForAgent($agent_id, $methods);
+
+      //transform methods array into string for database query
+      $methods = "'" . implode("','", $methods) . "'";
+
+      $query = implode( "\n", array(
+         "select",
+         "     task.`id`, task.`name`,",
+         "     job.`id`, job.`name`, job.`method`, ",
+         "     job.`definition`, job.`action`,",
+         "     run.`id`, run.`plugin_fusioninventory_agents_id`",
+         "from `glpi_plugin_fusioninventory_taskjobs` job",
+         "left join `glpi_plugin_fusioninventory_tasks` task",
+         "  on task.`id` = job.`plugin_fusioninventory_tasks_id`",
+         "left join `glpi_plugin_fusioninventory_taskjobstates` run",
+         "  on job.`id` = run.`plugin_fusioninventory_taskjobs_id`",
+         "where task.`is_active` = 1",
+         "and (",
+         /**
+          * Filter jobs by the time of the agent's request
+          * TODO: add the timeslot condition.
+          */
+         // check only if now() >= datetime_start if datetime_end is null
+         "        (   task.`datetime_start` is not null and task.`datetime_end` is null",
+         "              and now() >= task.`datetime_start` )",
+         "     or",
+         // check if now() is between datetime_start and datetime_end
+         "        (   task.`datetime_start` is not null and task.`datetime_end` is not null",
+         "              and now() between task.`datetime_start` and task.`datetime_end` )",
+         "     or",
+         // finally, check if this task can be run at any time ( datetime_start and datetime_end are
+         // both null)
+         "        ( task.`datetime_start` is null and task.`datetime_end` is null )",
+         ")",
+         "and job.`method` in (".$methods.")",
+         // order the result by job.id
+         // TODO: the result should be ordered by the future job.index field when drag and drop
+         // feature will be properly activated in the taskjobs list.
+         "order by job.`id`",
+      ));
+      $query_result = $DB->query($query);
+      $results = array();
+      if ($query_result) {
+         $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
+      }
+
+      $agent_ids = array();
+      $computer_ids = array();
+      foreach($results as $index => $result) {
+         Toolbox::logDebug($result['job']['method']);
+         $targets = importArrayFromDB($result['job']['definition']);
+         $actors = importArrayFromDB($result['job']['action']);
+         foreach( $this->getAgentsFromActors($actors) as $agent_id) {
+            $agent_ids[$agent_id] = 1;
+         }
+      }
+      $agent_ids = array_keys($agent_ids);
+      Toolbox::logDebug($agent_ids);
+      return($results);
+   }
+
+   /**
+    * Get Computers from Actors defined in taskjobs
+    * TODO: this method should be rewritten to call directly a getAgents() method in the
+    * corresponding itemtype classes.
+    */
+   public function getAgentsFromActors($actors) {
+      $agents = array();
+      $computers = array();
+      $computer = new Computer();
+      $agent = new PluginFusioninventoryAgent();
+      foreach($actors as $actor) {
+         $itemtype = key($actor);
+         $itemid = $actor[$itemtype];
+         $item = getItemForItemtype($itemtype);
+         $item->getFromDB($itemid);
+         switch($itemtype) {
+            case 'Computer':
+                  $computers[$itemid] = 1;
+               break;
+            case 'PluginFusioninventoryDeployGroup':
+
+               // Force user and active entity Session since Search class can't live without it.
+               // (cf. DeployGroupDynamicData)
+               $OLD_SESSION = array();
+               if (isset($_SESSION['glpiname'])) {
+                  $OLD_SESSION['glpiname'] = $_SESSION['glpiname'];
+               }
+               if (isset($_SESSION['glpiactiveentities_string'])) {
+                  $OLD_SESSION['glpiactiveentities_string'] = $_SESSION['glpiactiveentities_string'];
+               }
+               $_SESSION['glpiname'] = 'Plugin_FusionInventory';
+               $_SESSION['glpiactiveentities_string'] = '0';
+
+               foreach(
+                  PluginFusioninventoryDeployGroup::getTargetsForGroup($itemid) as $computerid
+               ) {
+                  $computers[$computerid] = 1;
+               }
+               // Get back to original session variable
+               if (isset($OLD_SESSION['glpiname'])) {
+                  $_SESSION['glpiname'] = $OLD_SESSION['glpiname'];
+               }
+               if (isset($OLD_SESSION['glpiactiveentities_string'])) {
+                  $_SESSION['glpiactiveentities_string'] = $OLD_SESSION['glpiactiveentities_string'];
+               }
+               break;
+            case 'Group':
+
+               //find computers by user associated with this group
+               $group_users   = new Group_User();
+
+               $members = array();
+
+               //array_keys($group_users->find("groups_id = '$items_id'"));
+               $members = $group_users->getGroupUsers($itemid);
+
+               foreach ($members as $member) {
+                  $computers_from_user = $computer->find("users_id = '${member['id']}'");
+                  foreach($computers_from_user as $computer_entry) {
+                     $computers[$computer_entry['id']] = 1;
+                  }
+               }
+
+               //find computers directly associated with this group
+               $computer_from_group = $computer->find("groups_id = '$itemid'");
+               foreach($computer_from_group as $computer_entry) {
+                  $computers[$computer_entry['id']] = 1;
+               }
+
+               break;
+            case 'PluginFusioninventoryAgent':
+               switch($itemid) {
+                  case "dynamic":
+                     break;
+                  case "dynamic-same-subnet":
+                     break;
+                  default:
+                     $agents[$itemid] = 1;
+                     break;
+               }
+               break;
+         }
+      }
+      //Get agents from the computer's ids list
+      foreach($agent->getAgentsFromComputers(array_keys($computers)) as $agent_entry) {
+         $agents[$agent_entry['id']] = 1;
+      }
+
+      return(array_keys($agents));
+   }
 
    function getTasksRunning($tasks_id=0) {
       global $DB;
