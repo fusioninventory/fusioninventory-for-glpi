@@ -52,53 +52,57 @@ if (isset($_GET['action'])) {
             $pfAgent = new PluginFusioninventoryAgent();
             $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
             $pfTaskjob = new PluginFusioninventoryTaskjob();
+            $pfTask = new PluginFusioninventoryTask();
 
-            $a_agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
+            $agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
 
-            if(isset($a_agent['id'])) {
-               $methods = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
-
-
-               $new_taskjobs = array();
+            if(isset($agent['id'])) {
+               $taskjobstates = $pfTask->getTaskjobstatesForAgent(
+                  $agent['id'], array('deployinstall', 'deployuninstall')
+               );
+//               Toolbox::logDebug($taskjobstates);
                //Reconstruct taskjobs list by id and not by classname
-               foreach ($methods as $className => $taskjobs) {
-                  if (class_exists($className)) {
-                     if (     $className == "PluginFusioninventoryDeployinstall"
-                           || $className == "PluginFusioninventoryDeployuninstall"
-                     ) {
-                        //For each taskjob, add classname information
-                        foreach($taskjobs as $id => $taskjob) {
-                           $taskjob['class_name'] = $className;
-                           $new_taskjobs[$taskjob['id']] = $taskjob;
-                        }
-                     }
-                  }
-               }
-               //sort taskjobs by key id
-               ksort($new_taskjobs);
+               //foreach ($methods as $className => $taskjobs) {
+               //   if (class_exists($className)) {
+               //      if (     $className == "PluginFusioninventoryDeployinstall"
+               //         || $className == "PluginFusioninventoryDeployuninstall"
+               //      ) {
+               //         //For each taskjob, add classname information
+               //         foreach($taskjobs as $id => $taskjob) {
+               //            $taskjob['class_name'] = $className;
+               //            $new_taskjobs[$taskjob['id']] = $taskjob;
+               //         }
+               //      }
+               //   }
+               //}
 
-               //start of json response
+               //sort taskjobs by key id
+               /**
+                * TODO: sort taskjobs by 'index' field in the taskjob query since it can be
+                * manipulated by drad and drop (cf. Task::getTaskjobsForAgent() ).
+                */
+               ////start of json response
                $order = new stdClass;
                $order->jobs = array();
                $order->associatedFiles = new stdClass;
 
-               //aggregate json orders in a single json response
-               foreach ($new_taskjobs as $taskjob) {
-                  //Get method associated to the taskjob
-                  $classname = $taskjob['class_name'];
-                  $class = new $classname();
-                  //Get taskjob json order
-                  $taskjob_order = $class->run($taskjob, $a_agent);
+               ////aggregate json orders in a single json response
+               //foreach ($new_taskjobs as $taskjob) {
+               //   //Get method associated to the taskjob
+               //   $classname = $taskjob['class_name'];
+               //   $class = new $classname();
+               //   //Get taskjob json order
+               //   $taskjob_order = $class->run($taskjob, $a_agent);
 
-                  //Append order to the final json
-                  $order->jobs[] = $taskjob_order['job'];
-                  //Update associated files list
-                  foreach( $taskjob_order['associatedFiles'] as $hash=>$associatedFiles) {
-                     if(!array_key_exists($hash, $order->associatedFiles) ) {
-                        $order->associatedFiles->$hash = $associatedFiles;
-                     }
-                  }
-               }
+               //   //Append order to the final json
+               //   $order->jobs[] = $taskjob_order['job'];
+               //   //Update associated files list
+               //   foreach( $taskjob_order['associatedFiles'] as $hash=>$associatedFiles) {
+               //      if(!array_key_exists($hash, $order->associatedFiles) ) {
+               //         $order->associatedFiles->$hash = $associatedFiles;
+               //      }
+               //   }
+               //}
 
                // return an empty dictionnary if there are no jobs.
                if ( count($order->jobs) == 0) {

@@ -175,22 +175,113 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    }
 
    /**
-    * Get the list of itemtype related to the methods asked by the agent
-    * TODO: StaticMisc methods to get itemtype should be simplified.
+    * Get the list of taskjobstates
     */
-   function getTaskjobsForAgent($agent_id, $methods = array()) {
+   function getTaskjobstatesForAgent($agent_id, $methods = array()) {
 
-      $taskjobs = array();
+      global $DB;
 
+      $pfJobstate = new PluginFusioninventoryTaskjobstate();
 
+      $jobstates = array();
+      // list of jobstates not allowed to run (ie. filtered by schedule and timeslots)
+      $jobstates_to_delete = array();
 
-      return $taskjobs;
+      $query = implode( "\n", array(
+         "select",
+         "     task.`id`, task.`name`, task.`is_active`,",
+         "     task.`datetime_start`, task.`datetime_end`,",
+         "     job.`id`, job.`name`, job.`method`,",
+         "     run.`itemtype`, run.`items_id`,",
+         "     run.`id`, run.`plugin_fusioninventory_agents_id`",
+         "from `glpi_plugin_fusioninventory_taskjobstates` run",
+         "left join `glpi_plugin_fusioninventory_taskjobs` job",
+         "  on job.`id` = run.`plugin_fusioninventory_taskjobs_id`",
+         "left join `glpi_plugin_fusioninventory_tasks` task",
+         "  on task.`id` = job.`plugin_fusioninventory_tasks_id`",
+         "where",
+         "  job.`method` in ('".implode("','", $methods)."')",
+         "  and run.`state` = ". PluginFusioninventoryTaskjobstate::PREPARED,
+         // order the result by job.id
+         // TODO: the result should be ordered by the future job.index field when drag and drop
+         // feature will be properly activated in the taskjobs list.
+         "order by job.`id`",
+      ));
+
+      //DEBUG SQL
+      file_put_contents("/tmp/get_taskjobstates.sql", $query);
+
+      $query_result = $DB->query($query);
+      $results = array();
+      if ($query_result) {
+         $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
+      }
+
+      /**
+       * Ensure the agent's jobstates are allowed to run at the time of the agent's request.
+       * The following checks if:
+       * - The tasks associated with those taskjobs are not disabled.
+       * - The task's schedule and timeslots still match the time those jobstates have been
+       * requested.
+       * - [ToBeDone] The agent is still present in the dynamic actors (eg. Dynamic groups)
+       * TODO: add the timeslot condition.
+       */
+      foreach($results as $result ) {
+
+         $jobstate = new PluginFusioninventoryTaskjobstate();
+         $jobstate->getFromDB($result['run']['id']);
+
+         //Delete the jobstate if the related tasks has been deactivated
+         if ($result['task']['is_active'] == 0) {
+            $jobstates_to_delete[$jobstate->fields['id']] = $jobstate;
+            continue;
+         };
+
+         // Delete the jobstate if it the schedule or timeslots doesn't match.
+         $now = new Datetime();
+         Toolbox::logDebug(var_export($result['task'],true));
+         if ( !is_null($result['task']['datetime_start']) ) {
+            $schedule_start = new DateTime($result['task']['datetime_start']);
+
+            if ( !is_null($result['task']['datetime_end']) ) {
+               $schedule_end = new DateTime($result['task']['datetime_end']);
+            } else {
+               $schedule_end = $now;
+            }
+
+            if ( !($schedule_start <= $now and $now <= $schedule_end) ) {
+               Toolbox::logDebug(
+                  "removing jobstate ".$result['run']['id']." because it doesn't ".
+                  "respect the task's schedule or timeslots"
+               );
+               $jobstates_to_delete[$jobstate->fields['id']] = $jobstate;
+               continue;
+            }
+         }
+
+         // TODO: Make sure the agent is still present in the dynamic actor itemtype that generated
+         // this taskjobstate.
+
+         //Add the jobstate to the list seems previous checks are good.
+         $jobstates[$jobstate->fields['id']] = $jobstate;
+      }
+      Toolbox::logDebug(
+         array(
+            "jobstates to delete" => array_keys($jobstates_to_delete),
+            "jobstates" => array_keys($jobstates),
+         )
+      );
+      //Remove the list of jobstates previously filtered for removal.
+      foreach( $jobstates_to_delete as $jobstate) {
+         $jobstate->deleteFromDB();
+      }
+      return $jobstates;
    }
 
 
    function prepareTaskjobs( $methods = array()) {
       global $DB;
-
+      $agent = new PluginFusioninventoryAgent();
 
       // Get all Items where lies the agent.
       //$items = $this->getActorItemsForAgent($agent_id, $methods);
@@ -212,7 +303,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "where task.`is_active` = 1",
          "and (",
          /**
-          * Filter jobs by the time of the agent's request
+          * Filter jobs by the schedule and timeslots
           * TODO: add the timeslot condition.
           */
          // check only if now() >= datetime_start if datetime_end is null
@@ -239,19 +330,87 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
       }
 
-      $agent_ids = array();
-      $computer_ids = array();
+      // Set basic elements of jobstates
+      $run_base = array(
+         'state' => PluginFusioninventoryTaskjobstate::PREPARED,
+         'date'  => date("Y-m-d H:i:s"),
+      );
+
+      $jobstate = new PluginFusioninventoryTaskjobstate();
+
       foreach($results as $index => $result) {
-         Toolbox::logDebug($result['job']['method']);
-         $targets = importArrayFromDB($result['job']['definition']);
+
          $actors = importArrayFromDB($result['job']['action']);
+         // Get agents linked to the actors
+         $agent_ids = array();
          foreach( $this->getAgentsFromActors($actors) as $agent_id) {
-            $agent_ids[$agent_id] = 1;
+            $agent_ids[$agent_id] = true;
          }
+         //Continue with next job if there are no agents found from actors.
+         //TODO: This may be good to report this kind of information. We just need to do a list of
+         //agent's ids generated by actors like array('actors_type-id' => array( 'agent_0',...).
+         //Then the following could be put in the targets foreach loop before looping through
+         //agents.
+         if (count($agent_ids) == 0) {
+            continue;
+         }
+
+         $targets = importArrayFromDB($result['job']['definition']);
+
+         foreach($targets as $target) {
+            $item_type = key($target);
+            $item_id = current($target);
+            $job_id = $result['job']['id'];
+
+            $jobstates_running = $jobstate->find(
+               implode("\n", array(
+                  "    `itemtype` = '" . $item_type . "'",
+                  "and `items_id` = ".$item_id,
+                  "and `plugin_fusioninventory_taskjobs_id` = ". $job_id,
+                  "and `state` <> " . PluginFusioninventoryTaskjobstate::FINISHED,
+                  "and `plugin_fusioninventory_agents_id` in (",
+                  "  '" . implode("','", array_keys($agent_ids)) . "'",
+                  ")"
+               ))
+            );
+
+            // Filter out agents that are already running the targets.
+            foreach( $jobstates_running as $jobstate_running) {
+               Toolbox::logDebug($jobstate_running);
+               $jobstate_agent_id = $jobstate_running['plugin_fusioninventory_agents_id'];
+               if ( isset( $agent_ids[$jobstate_agent_id] )
+               ) {
+                  $agent_ids[$jobstate_agent_id] = false;
+               }
+            }
+
+            foreach($agent_ids as $agent_id => $agent_not_running) {
+               Toolbox::logDebug(array(
+                  "agent_id" => $agent_id,
+                  "agent_not_running" => var_export($agent_not_running,true)
+                  ));
+               if( $agent_not_running) {
+                  $run = array_merge(
+                     $run_base,
+                     array(
+                        'itemtype' => $item_type,
+                        'items_id' => $item_id,
+                        'plugin_fusioninventory_taskjobs_id' => $job_id,
+                        'plugin_fusioninventory_agents_id' => $agent_id,
+                        'uniqid' => uniqid(),
+                     )
+                  );
+
+                  $jobstate->add($run);
+               }
+            }
+
+         }
+
       }
-      $agent_ids = array_keys($agent_ids);
-      Toolbox::logDebug($agent_ids);
-      return($results);
+
+      return true;
+
    }
 
    /**
