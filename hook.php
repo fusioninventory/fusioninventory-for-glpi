@@ -331,11 +331,6 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
 
    switch ($table.'.'.$field) {
 
-      case "glpi_plugin_fusioninventory_tasks.id" :
-         // Get progression bar
-         return "";
-         break;
-
       case "glpi_plugin_fusioninventory_taskjobs.status":
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
          return $pfTaskjobstate->stateTaskjob($data['raw']['id'], '200', 'htmlvar', 'simple');
@@ -872,7 +867,7 @@ function plugin_fusioninventory_MassiveActions($type) {
          return array (
             "plugin_fusioninventory_manage_locks" => _n('Lock', 'Locks', 2, 'fusioninventory')." (".strtolower(_n('Field', 'Fields', 2)).")",
             "plugin_fusioninventory_deploy_target_task" => __('Target a task', 'fusioninventory'),
-            'PluginFusioninventoryDeployGroup'.MassiveAction::CLASS_ACTION_SEPARATOR."add_to_static_group" 
+            'PluginFusioninventoryDeployGroup'.MassiveAction::CLASS_ACTION_SEPARATOR."add_to_static_group"
                => __('Add to static group', 'fusioninventory')
          );
          break;
@@ -1175,10 +1170,10 @@ function plugin_fusioninventory_MassiveActionsProcess($data) {
    global $DB;
 
    switch ($data['action']) {
-   
-   
+
+
       case "add_to_static_group":
-      
+
       case "plugin_fusioninventory_manage_locks" :
          if (($data['itemtype'] == "NetworkEquipment")
                  OR ($data['itemtype'] == "Printer")
@@ -1939,39 +1934,6 @@ function plugin_fusioninventory_addLeftJoin($itemtype, $ref_table, $new_table, $
 
 
 function plugin_fusioninventory_addOrderBy($type, $id, $order, $key=0) {
-
-   /**
-    * This hook has been disabled since i do not know what it is doing. I just suppose it add some
-    * sorting feature to the Task list. -- Kevin 'kiniou' Roy
-    */
-
-   //if ($type == 'PluginFusioninventoryTask') {
-   //        //AND isset($_SESSION['glpisearch']['PluginFusioninventoryTask'])) {
-
-   //   $toview = Search::addDefaultToView($type);
-
-   //   // Add items to display depending of personal prefs
-   //   $displaypref = DisplayPreference::getForTypeUser($type, Session::getLoginUserID());
-   //   if (count($displaypref)) {
-   //      foreach ($displaypref as $val) {
-   //         array_push($toview, $val);
-   //      }
-   //   }
-
-   //   // Add searched items
-   //   if (count($_GET['field'])>0) {
-   //      foreach ($_GET['field'] as $key => $val) {
-   //         if (!in_array($val, $toview) && $val!='all' && $val!='view') {
-   //            array_push($toview, $val);
-   //         }
-   //      }
-   //   }
-   //   if (in_array('8', $toview)) {
-   //      return "GROUP BY `plugin_fusioninventory_tasks_id`
-   //         ORDER BY ITEM_".$key." ".$order;
-   //   }
-   //}
-
    return "";
 }
 
