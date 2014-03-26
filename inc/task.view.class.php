@@ -257,6 +257,13 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
          $this->getFromDB($postvars['id']);
 
+         //Ensure empty value are set to NULL for datetime fields
+         if( isset($postvars['datetime_start']) and $postvars['datetime_start'] === '') {
+            $postvars['datetime_start'] = 'NULL';
+         }
+         if( isset($postvars['datetime_end']) and $postvars['datetime_end'] === '') {
+            $postvars['datetime_end'] = 'NULL';
+         }
          $this->update($postvars);
 
          Html::back();

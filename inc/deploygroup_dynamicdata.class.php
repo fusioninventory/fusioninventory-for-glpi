@@ -127,14 +127,15 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static function getTargetsByGroup(PluginFusioninventoryDeployGroup $group) {
       //Only retrieve computers IDs
       $results = Search::getDatas('PluginFusioninventoryComputer', 
-                                  self::getSearchParamsAsAnArray($group), 
-                                  array(2));
+                                  PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($group)
+                                  );
       $ids     = array();
       foreach ($results['data']['rows'] as $id => $row) {
          $ids[$row['id']] = $row['id'];
       }
       return $ids;
    }
+
 }
 
 ?>

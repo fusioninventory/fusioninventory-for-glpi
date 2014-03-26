@@ -476,6 +476,23 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
    /**
+   * Get agent id of a computer
+   *
+   * @param $computers_id integer ID of the computer
+   *
+   * @return agent id or False
+   *
+   **/
+   function getAgentsFromComputers($computer_ids = array()) {
+
+      $computer_ids = "'" . implode("','", $computer_ids) . "'";
+
+      $agents = $this->find("`computers_id` in (".$computer_ids.")", "");
+
+      return $agents;
+   }
+
+   /**
    * Get Computer associated with this agent
    *
    * @return A Computer object or False
