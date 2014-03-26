@@ -43,18 +43,16 @@
 class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
    /*
-    * Define different state
-    *
-    * 0 : task prepared : not data yet sent
-    * 1 : server has sent data to agent
-    * 2 : return of agent data and update glpi
-    * 3 : finish
+    * Taskjobstate status definitions
     */
 
-   const PREPARED             = 0;
-   const SERVER_HAS_SENT_DATA = 1;
-   const AGENT_HAS_SENT_DATA  = 2;
-   const FINISHED             = 3;
+   const PREPARED             = 0;  // the job is just prepared and waiting for agent request
+   const SERVER_HAS_SENT_DATA = 1;  // the job is running and the server sent the job config
+   const AGENT_HAS_SENT_DATA  = 2;  // the job is running and the agent sent reply to the server
+   const FINISHED             = 3;  // the agent completed successfully the job
+   const IN_ERROR             = 4;  // the agent failed to complete the job
+   const CANCELLED            = 5;  // the job has been cancelled either by a user or the agent
+                                    // himself (eg. if it has been forbidden to run this taskjob)
 
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
