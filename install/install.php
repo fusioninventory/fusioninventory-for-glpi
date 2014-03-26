@@ -291,7 +291,7 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
     * Add cron task
     */
       $migration->displayMessage("Initialize cron task");
-      CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60',
+      CronTask::Register('PluginFusioninventoryTask', 'taskscheduler', '60',
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
       Crontask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));

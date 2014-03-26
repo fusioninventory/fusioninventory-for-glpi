@@ -345,6 +345,22 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       return(array_keys($agents));
    }
 
+   /**
+   * Prepare Taskjobs for current
+   *
+   * @return bool cron is ok or not
+   *
+   **/
+   static function cronTaskscheduler() {
+      $task = new self();
+      $methods = array();
+      foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {
+         $methods[] = $method['method'];
+      }
+      Toolbox::logDebug($methods);
+      return $task->prepareTaskjobs($methods);
+   }
+
    function getTasksRunning($tasks_id=0) {
       global $DB;
 

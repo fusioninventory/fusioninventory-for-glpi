@@ -5098,8 +5098,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     * Add Crontask if not exist
     */
    $crontask = new CronTask();
-   if (!$crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'taskscheduler')) {
-      CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60',
+   if ($crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'taskscheduler')) {
+      $crontask->fields['itemtype'] = 'PluginFusioninventoryTask';
+      $crontask->updateInDB(array('itemtype'));
+   }
+   if (!$crontask->getFromDBbyName('PluginFusioninventoryTask', 'taskscheduler')) {
+      CronTask::Register('PluginFusioninventoryTask', 'taskscheduler', '60',
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
    }
    if ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstate', 'cleantaskjob')
