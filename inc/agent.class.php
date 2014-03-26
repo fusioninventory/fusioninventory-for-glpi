@@ -106,10 +106,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $tab[7]['table']         = 'glpi_computers';
       $tab[7]['field']         = 'name';
-      $tab[7]['linkfield']     = 'computers_id';
       $tab[7]['name']          = __('Computer link', 'fusioninventory');
       $tab[7]['datatype']      = 'itemlink';
-      $tab[7]['itemlink_type'] = 'Computer';
 
       $tab[8]['table']     = $this->getTable();
       $tab[8]['field']     = 'version';
