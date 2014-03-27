@@ -56,10 +56,11 @@ class PluginFusioninventoryStaticmisc {
    static function task_methods() {
 
       $a_tasks = array(
-            array(   'module'          => 'fusioninventory',
-                     'method'          => 'wakeonlan',
-                     'name'            => __('Wake On LAN', 'fusioninventory'),
-                     'use_rest'        => FALSE
+            array(   'module'         => 'fusioninventory',
+                     'classname'      => 'PluginFusioninventoryWakeonlan',
+                     'method'         => 'wakeonlan',
+                     'name'           => __('Wake On LAN', 'fusioninventory'),
+                     'use_rest'       => FALSE
             ),
 
             array(   'module'         => 'fusioninventory',
@@ -71,6 +72,7 @@ class PluginFusioninventoryStaticmisc {
             ),
 
             array(   'module'         => 'fusioninventory',
+                     'classname'      => 'PluginFusioninventoryInventoryComputerESX',
                      'method'         => 'InventoryComputerESX',
                      'selection_type' => 'devices',
                      'name'           => __('VMware host remote inventory', 'fusioninventory'),
@@ -79,16 +81,19 @@ class PluginFusioninventoryStaticmisc {
             ),
 
             array(   'module'         => 'fusioninventory',
+                     'classname'      => 'PluginFusioninventoryNetworkDiscovery',
                      'method'         => 'networkdiscovery',
                      'name'           => __('Network discovery', 'fusioninventory')
             ),
 
             array(   'module'         => 'fusioninventory',
+                     'classname'      => 'PluginFusioninventoryNetworkInventory',
                      'method'         => 'networkinventory',
                      'name'           => __('Network inventory (SNMP)', 'fusioninventory')
             ),
 
             array(   'module'         => 'fusioninventory',
+                     'classname'      => 'PluginFusioninventoryDeployCommon',
                      'method'         => 'deployinstall',
                      'name'           => __('Package install', 'fusioninventory'),
                      'task'           => "DEPLOY",
@@ -96,6 +101,7 @@ class PluginFusioninventoryStaticmisc {
             ),
 
             array(   'module'         => 'fusioninventory',
+                     'classname'      => 'PluginFusioninventoryDeployCommon',
                      'method'         => 'deployuninstall',
                      'name'           => __('Package uninstall', 'fusioninventory'),
                      'task'           => "DEPLOY",
@@ -103,6 +109,7 @@ class PluginFusioninventoryStaticmisc {
             ),
 
             array(   'module'         => 'fusioninventory',
+                     'classname'      => 'PluginFusioninventoryCollect',
                      'method'         => 'collect',
                      'name'           => __('Collect data', 'fusioninventory'),
                      'task'           => "Collect",

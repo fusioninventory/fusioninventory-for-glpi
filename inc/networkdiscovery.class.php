@@ -303,7 +303,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
     * $a_Taskjobstates array with all taskjobstatus
     *
     */
-   function run($a_Taskjobstates) {
+   function run($jobstate) {
 
       $pfAgent = new PluginFusioninventoryAgent();
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
@@ -314,8 +314,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
       $pfToolbox = new PluginFusioninventoryToolbox();
 
 
-      $current = current($a_Taskjobstates);
-      $pfAgent->getFromDB($current['plugin_fusioninventory_agents_id']);
+      $pfAgent->getFromDB($jobstate->fields['plugin_fusioninventory_agents_id']);
 
       $sxml_option = $this->message->addChild('OPTION');
       $sxml_option->addChild('NAME', 'NETDISCOVERY');
@@ -349,10 +348,11 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
          $pfAgent->fields["threads_networkdiscovery"]);
       $sxml_param->addAttribute('TIMEOUT',
          $pfAgent->fields["timeout_networkdiscovery"]);
-      $sxml_param->addAttribute('PID', $current['id']);
+      $sxml_param->addAttribute('PID', $jobstate->fields['id']);
 
       $changestate = 0;
-      foreach ($a_Taskjobstates as $taskjobstatedatas) {
+      //foreach ($a_Taskjobstates as $taskjobstate) {
+         $taskjobstatedatas = $taskjobstate->fields;
          $sxml_rangeip = $sxml_option->addChild('RANGEIP');
             $pfTaskjob->getFromDB($taskjobstatedatas['plugin_fusioninventory_taskjobs_id']);
             $pfTaskjobstate->getFromDB($taskjobstatedatas['id']);
@@ -395,7 +395,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
                                                                  0,
                                                                  "Merged with ".$changestate);
             }
-      }
+      //}
       $a_versions = array(3, 2, 1);
       foreach ($a_versions as $version) {
          $snmpauthlist=$pfConfigSecurity->find("`is_deleted`='0'
