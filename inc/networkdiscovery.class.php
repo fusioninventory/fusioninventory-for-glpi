@@ -352,7 +352,7 @@ class PluginFusioninventoryNetworkdiscovery extends PluginFusioninventoryCommuni
 
       $changestate = 0;
       //foreach ($a_Taskjobstates as $taskjobstate) {
-         $taskjobstatedatas = $taskjobstate->fields;
+         $taskjobstatedatas = $jobstate->fields;
          $sxml_rangeip = $sxml_option->addChild('RANGEIP');
             $pfTaskjob->getFromDB($taskjobstatedatas['plugin_fusioninventory_taskjobs_id']);
             $pfTaskjobstate->getFromDB($taskjobstatedatas['id']);
