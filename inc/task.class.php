@@ -202,6 +202,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "where",
          "  job.`method` in ('".implode("','", $methods)."')",
          "  and run.`state` = ". PluginFusioninventoryTaskjobstate::PREPARED,
+         "  and run.`plugin_fusioninventory_agents_id` = " . $agent_id,
          // order the result by job.id
          // TODO: the result should be ordered by the future job.index field when drag and drop
          // feature will be properly activated in the taskjobs list.
