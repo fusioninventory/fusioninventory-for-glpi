@@ -240,7 +240,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
          // Delete the jobstate if it the schedule or timeslots doesn't match.
          $now = new Datetime();
-         Toolbox::logDebug(var_export($result['task'],true));
          if ( !is_null($result['task']['datetime_start']) ) {
             $schedule_start = new DateTime($result['task']['datetime_start']);
 
@@ -269,14 +268,15 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $jobstate->method = $result['job']['method'];
          $jobstates[$jobstate->fields['id']] = $jobstate;
       }
-      Toolbox::logDebug(
-         array(
-            "jobstates to delete" => array_keys($jobstates_to_delete),
-            "jobstates" => array_keys($jobstates),
-         )
-      );
+      //Toolbox::logDebug(
+      //   array(
+      //      "jobstates to delete" => array_keys($jobstates_to_delete),
+      //      "jobstates" => array_keys($jobstates),
+      //   )
+      //);
+
       //Remove the list of jobstates previously filtered for removal.
-      //TODO: maybe we should only cancel the jobstate.
+      //TODO: maybe we should only cancel the jobstate and explain why it has been removed.
       foreach( $jobstates_to_delete as $jobstate) {
          $jobstate->deleteFromDB();
       }
@@ -381,7 +381,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
             // Filter out agents that are already running the targets.
             foreach( $jobstates_running as $jobstate_running) {
-               Toolbox::logDebug($jobstate_running);
+
                $jobstate_agent_id = $jobstate_running['plugin_fusioninventory_agents_id'];
                if ( isset( $agent_ids[$jobstate_agent_id] )
                ) {
@@ -390,10 +390,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             }
 
             foreach($agent_ids as $agent_id => $agent_not_running) {
-               Toolbox::logDebug(array(
-                  "agent_id" => $agent_id,
-                  "agent_not_running" => var_export($agent_not_running,true)
-                  ));
                if( $agent_not_running) {
                   $run = array_merge(
                      $run_base,
