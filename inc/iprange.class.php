@@ -50,6 +50,10 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_iprange';
 
+   static function canCreate() {
+      return true;
+   }
+
    static function getTypeName($nb=0) {
 
       if (isset($_SERVER['HTTP_REFERER']) AND strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
@@ -120,11 +124,12 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    function defineTabs($options=array()){
 
       $ong = array();
-      if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
-         $ong[1] = _n('Task', 'Tasks', 2);
+//      if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
+//         $ong[1] = _n('Task', 'Tasks', 2);
          //$pfTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", $_POST['id']);
-      }
-      $this->addStandardTab('Log', $ong, $options);
+//      }
+//      $this->addStandardTab('Log', $ong, $options);
+      $this->addDefaultFormTab($ong);
       return $ong;
    }
 
@@ -138,7 +143,8 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          $this->getEmpty();
       }
 
-      $this->showTabs($options);
+      $this->initForm($id,$options);
+ //     $this->showTabs($options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
@@ -227,7 +233,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons($options);
-      $this->addDivForTabs();
+      return true;
    }
 
 
