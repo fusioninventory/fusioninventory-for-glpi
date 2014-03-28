@@ -84,8 +84,6 @@ class PluginFusioninventoryInventoryComputerInventory {
       if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
          unset($_SESSION['plugin_fusioninventory_entityrestrict']);
       }
-      $_SESSION['plugin_fusioninventory_noruleentity'] = FALSE;
-
 
       $this->device_id = $p_DEVICEID;
       // * Hacks
@@ -153,7 +151,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
       $pfBlacklist = new PluginFusioninventoryInventoryComputerBlacklist();
       $a_computerinventory = $pfBlacklist->cleanBlacklist($a_computerinventory);
-      
+
       if (isset($a_computerinventory['monitor'])) {
          foreach ($a_computerinventory['monitor'] as $num=>$a_monit) {
             $a_computerinventory['monitor'][$num] = $pfBlacklist->cleanBlacklist($a_monit);
@@ -237,7 +235,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 //            }
 //         }
          $input['tag'] = $tagAgent;
-         
+
          if ((isset($a_computerinventory['Computer']['name']))
                  AND ($a_computerinventory['Computer']['name'] != '')) {
             $input['name'] = $a_computerinventory['Computer']['name'];
@@ -249,8 +247,8 @@ class PluginFusioninventoryInventoryComputerInventory {
          // If transfer is disable, get entity and search only on this entity
          // (see http://forge.fusioninventory.org/issues/1503)
          $pfConfig = new PluginFusioninventoryConfig();
-         
-         
+         $pfEntity = new PluginFusioninventoryEntity();
+
          // * entity rules
             $inputent = $input;
             if ((isset($a_computerinventory['Computer']['domains_id']))
@@ -261,41 +259,32 @@ class PluginFusioninventoryInventoryComputerInventory {
                $inputent['serialnumber'] = $inputent['serial'];
             }
             $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
-            
+
             // * Reload rules (required for unit tests)
             $ruleEntity->getCollectionPart();
-            
+
             $dataEntity = $ruleEntity->processAllRules($inputent, array());
             if (isset($dataEntity['_ignore_import'])) {
                return;
             }
-            if ($pfConfig->getValue('transfers_id_auto') > 0) {
-               if (isset($dataEntity['entities_id'])) {
-                  $_SESSION["plugin_fusioninventory_entity"] = $dataEntity['entities_id'];
-                  $input['entities_id'] = $dataEntity['entities_id'];
-               } else {
-                  $_SESSION['plugin_fusioninventory_noruleentity'] = TRUE;
-                  $input['entities_id'] = 0;
-               }
-               if (isset($dataEntity['locations_id'])) {
-                  $_SESSION['plugin_fusioninventory_locations_id'] = $dataEntity['locations_id'];
-               }
+
+            if (isset($dataEntity['entities_id'])) {
+               $_SESSION["plugin_fusioninventory_entity"] = $dataEntity['entities_id'];
+               $input['entities_id'] = $dataEntity['entities_id'];
             } else {
-               if (isset($dataEntity['entities_id'])) {
-                  $_SESSION['plugin_fusioninventory_entityrestrict'] = $dataEntity['entities_id'];
-                  $_SESSION["plugin_fusioninventory_entity"] = $dataEntity['entities_id'];
-                  $input['entities_id'] = $dataEntity['entities_id'];
-               } else {
-                  $input['entities_id'] = 0;
-                  $_SESSION['plugin_fusioninventory_noruleentity'] = TRUE;
-               }
+               $input['entities_id'] = 0;
+               $_SESSION["plugin_fusioninventory_entity"] = 0;
+            }
+
+            if (isset($dataEntity['locations_id'])) {
+               $_SESSION['plugin_fusioninventory_locations_id'] = $dataEntity['locations_id'];
             }
          // End entity rules
       $_SESSION['plugin_fusioninventory_classrulepassed'] =
                      "PluginFusioninventoryInventoryComputerInventory";
 
       $ruleLocation = new PluginFusioninventoryInventoryRuleLocationCollection();
-      
+
       // * Reload rules (required for unit tests)
       $ruleLocation->getCollectionPart();
 
@@ -306,7 +295,7 @@ class PluginFusioninventoryInventoryComputerInventory {
       }
 
       $rule = new PluginFusioninventoryInventoryRuleImportCollection();
-      
+
       // * Reload rules (required for unit tests)
       $rule->getCollectionPart();
 
@@ -339,13 +328,8 @@ class PluginFusioninventoryInventoryComputerInventory {
          if (isset($input['mac'])) {
             $inputdb['mac'] = $input['mac'];
          }
-         if ($pfConfig->getValue('transfers_id_auto') != '0') {
-            $ruleEntity = new PluginFusioninventoryInventoryRuleEntityCollection();
-            $dataEntity = $ruleEntity->processAllRules($input, array());
-            if (isset($dataEntity['entities_id'])) {
-               $inputdb['entities_id'] = $dataEntity['entities_id'];
-            }
-         }
+
+         $inputdb['entities_id'] = $input['entities_id'];
 
          if (isset($input['ip'])) {
             $inputdb['ip'] = exportArrayToDB($input['ip']);
@@ -380,37 +364,8 @@ class PluginFusioninventoryInventoryComputerInventory {
       $pfFormatconvert = new PluginFusioninventoryFormatconvert();
 
       $a_computerinventory = $pfFormatconvert->replaceids($this->arrayinventory);
-      $entities_id = 0;
-      if ($_SESSION['plugin_fusioninventory_noruleentity']) {
-         if ($items_id == 0) {
-            $entities_id = 0;
-         } else {
-            $item = new $itemtype();
-            $item->getFromDB($items_id);
-            $entities_id = $item->fields['entities_id'];
-         }
-      } else {
-         if ($_SESSION["plugin_fusioninventory_entity"] >= 0
-                 && !isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
-            $entities_id = $_SESSION["plugin_fusioninventory_entity"];
-         } else {
-            if ($items_id == 0) {
-               if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
-                  $entities_id = $_SESSION['plugin_fusioninventory_entityrestrict'];
-               } else {
-                  $entities_id = 0;
-               }
-            } else {
-               $item = new $itemtype();
-               $item->getFromDB($items_id);
-               $entities_id = $item->fields['entities_id'];
-            }
-         }
-      }
-      if ($_SESSION["plugin_fusioninventory_entity"] < 0) {
-         $_SESSION["plugin_fusioninventory_entity"] = $entities_id;
-      }
-      
+      $entities_id = $_SESSION["plugin_fusioninventory_entity"];
+
       if ($itemtype == 'Computer') {
          $a_computerinventory = $pfFormatconvert->extraCollectInfo(
                                                 $a_computerinventory,
@@ -427,21 +382,30 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          $computer   = new Computer();
          if ($items_id == '0') {
-            $_SESSION['glpiactiveentities'] = array($entities_id);
+            $_SESSION['glpiactiveentities']        = array($entities_id);
             $_SESSION['glpiactiveentities_string'] = $entities_id;
-            $_SESSION['glpiactive_entity'] = $entities_id;
+            $_SESSION['glpiactive_entity']         = $entities_id;
          } else {
             $computer->getFromDB($items_id);
-            $_SESSION['glpiactiveentities'] = array($entities_id);
+            $_SESSION['glpiactiveentities']        = array($entities_id);
             $_SESSION['glpiactiveentities_string'] = $entities_id;
-            $_SESSION['glpiactive_entity'] = $entities_id;
+            $_SESSION['glpiactive_entity']         = $entities_id;
 
             if ($computer->fields['entities_id'] != $entities_id) {
-               $transfer = new Transfer();
-               $pfConfig = new PluginFusioninventoryConfig();
-               $transfer->getFromDB($pfConfig->getValue('transfers_id_auto'));
-               $item_to_transfer = array("Computer" => array($items_id=>$items_id));
-               $transfer->moveItems($item_to_transfer, $entities_id, $transfer->fields);
+               $pfEntity = new PluginFusioninventoryEntity();
+               if ($pfEntity->getValue('transfers_id_auto', $computer->fields['entities_id']) > 0) {
+                  $pfEntity = new PluginFusioninventoryEntity();
+                  $transfer = new Transfer();
+                  $transfer->getFromDB($pfEntity->getValue('transfers_id_auto', $entities_id));
+                  $item_to_transfer = array("Computer" => array($items_id=>$items_id));
+                  $transfer->moveItems($item_to_transfer, $entities_id, $transfer->fields);
+               } else {
+                  $_SESSION["plugin_fusioninventory_entity"] = $computer->fields['entities_id'];
+                  $_SESSION['glpiactiveentities']        = array($computer->fields['entities_id']);
+                  $_SESSION['glpiactiveentities_string'] = $computer->fields['entities_id'];
+                  $_SESSION['glpiactive_entity']         = $computer->fields['entities_id'];
+                  $entities_id = $computer->fields['entities_id'];
+               }
             }
          }
 
@@ -481,7 +445,7 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          // * For benchs
          //$start = microtime(TRUE);
-         
+
          $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 300)");
          if ($DB->result($ret, 0, 0) == 1) {
 
@@ -493,12 +457,12 @@ class PluginFusioninventoryInventoryComputerInventory {
 
             $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
             $pfInventoryComputerLib->addLog();
-            
+
             $plugin = new Plugin();
             if ($plugin->isActivated('monitoring')) {
                Plugin::doOneHook("monitoring", "ReplayRulesForItem", array('Computer', $items_id));
             }
-            
+
             // * For benchs
             //Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
             //  memory_get_usage()."\n".

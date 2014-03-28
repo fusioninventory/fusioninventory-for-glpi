@@ -2034,6 +2034,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $computer_Item = new Computer_Item();
       $monitor       = new Monitor();
       $pfConfig      = new PluginFusioninventoryConfig();
+      $pfEntity      = new PluginFusioninventoryEntity();
 
       $monitors_id = 0;
       if ($pfConfig->getValue('import_monitor') == 1) {
@@ -2088,7 +2089,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       } else if ($pfConfig->getValue('import_monitor') == 3) {
          // Unique import on serial number
          $entity = "AND `entities_id`='".$data['entities_id']."'";
-         if ($pfConfig->getValue('transfers_id_auto') > 0) {
+         if ($pfEntity->getValue('transfers_id_auto', $data['entities_id']) > 0) {
             $entity = '';
          }
          $added = 0;
@@ -2104,7 +2105,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $monitors_id = $db_data['id'];
             if ($db_data['entities_id'] != $data['entities_id']) {
                $transfer = new Transfer();
-               $transfer->getFromDB($pfConfig->getValue('transfers_id_auto'));
+               $transfer->getFromDB($pfEntity->getValue('transfers_id_auto', $data['entities_id']) > 0);
                $item_to_transfer = array("Monitor" => array($db_data['id']=>$db_data['id']));
                $transfer->moveItems($item_to_transfer, $data['entities_id'], $transfer->fields);
             }
@@ -2134,6 +2135,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $computer_Item = new Computer_Item();
       $printer       = new Printer();
       $pfConfig      = new PluginFusioninventoryConfig();
+      $pfEntity      = new PluginFusioninventoryEntity();
 
       $printers_id = 0;
       if ($pfConfig->getValue('import_printer') == 1) {
@@ -2182,7 +2184,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       } else if ($pfConfig->getValue('import_printer') == 3) {
          // Unique import on serial number
          $entity = "AND `entities_id`='".$data['entities_id']."'";
-         if ($pfConfig->getValue('transfers_id_auto') > 0) {
+         if ($pfEntity->getValue('transfers_id_auto', $data['entities_id']) > 0) {
             $entity = '';
          }
          $added = 0;
@@ -2199,7 +2201,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $printers_id = $db_data['id'];
             if ($db_data['entities_id'] != $data['entities_id']) {
                $transfer = new Transfer();
-               $transfer->getFromDB($pfConfig->getValue('transfers_id_auto'));
+               $transfer->getFromDB($pfEntity->getValue('transfers_id_auto', $data['entities_id']) > 0);
                $item_to_transfer = array("Printer" => array($db_data['id']=>$db_data['id']));
                $transfer->moveItems($item_to_transfer, $data['entities_id'], $transfer->fields);
             }
@@ -2229,6 +2231,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $computer_Item = new Computer_Item();
       $peripheral    = new Peripheral();
       $pfConfig      = new PluginFusioninventoryConfig();
+      $pfEntity      = new PluginFusioninventoryEntity();
 
       $peripherals_id = 0;
       if ($pfConfig->getValue('import_peripheral') == 1) {
@@ -2283,7 +2286,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       } else if ($pfConfig->getValue('import_peripheral') == 3) {
          // Unique import on serial number
          $entity = "AND `entities_id`='".$data['entities_id']."'";
-         if ($pfConfig->getValue('transfers_id_auto') > 0) {
+         if ($pfEntity->getValue('transfers_id_auto', $data['entities_id']) > 0) {
             $entity = '';
          }
          $added = 0;
@@ -2301,7 +2304,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $peripherals_id = $db_data['id'];
             if ($db_data['entities_id'] != $data['entities_id']) {
                $transfer = new Transfer();
-               $transfer->getFromDB($pfConfig->getValue('transfers_id_auto'));
+               $transfer->getFromDB($pfEntity->getValue('transfers_id_auto', $data['entities_id']) > 0);
                $item_to_transfer = array("Peripheral" => array($db_data['id']=>$db_data['id']));
                $transfer->moveItems($item_to_transfer, $data['entities_id'], $transfer->fields);
             }

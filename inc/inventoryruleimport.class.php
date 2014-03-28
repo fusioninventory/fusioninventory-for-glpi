@@ -48,6 +48,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryInventoryRuleImport extends Rule {
 
    const PATTERN_IS_EMPTY              = 30;
+   const PATTERN_ENTITY_RESTRICT       = 202;
    const RULE_ACTION_LINK              = 1;
    const RULE_ACTION_DENIED            = 2;
 
@@ -153,6 +154,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $criterias['itemtype']['is_global']       = FALSE;
       $criterias['itemtype']['allow_condition'] = array(Rule::PATTERN_IS, Rule::PATTERN_IS_NOT);
 
+      $criterias['entityrestrict']['name']      = __('Restrict search in defined entity', 'fusioninventory');
+      $criterias['entityrestrict']['allow_condition'] = array(PluginFusioninventoryInventoryRuleImport::PATTERN_ENTITY_RESTRICT);
+
+
       return $criterias;
    }
 
@@ -226,8 +231,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
    static function addMoreCriteria($criterion='') {
 
       return array(Rule::PATTERN_FIND     => __('is already present in GLPI'),
-
-                   self::PATTERN_IS_EMPTY => __('is empty in GLPI'));
+                   self::PATTERN_IS_EMPTY => __('is empty in GLPI'),
+                   self::PATTERN_ENTITY_RESTRICT => __('Yes'));
 
    }
 
@@ -237,7 +242,9 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
 
       if ($condition == self::PATTERN_IS_EMPTY) {
           return __('Yes');
-
+      }
+      if ($condition == self::PATTERN_ENTITY_RESTRICT) {
+          return __('Yes');
       }
       if ($condition==self::PATTERN_IS || $condition==self::PATTERN_IS_NOT) {
          $crit = $this->getCriteria($ID);
@@ -265,6 +272,10 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       }
 
       switch ($condition) {
+
+         case self::PATTERN_ENTITY_RESTRICT:
+            return TRUE;
+            break;
 
          case Rule::PATTERN_EXISTS:
          case Rule::PATTERN_DOES_NOT_EXISTS:
@@ -322,6 +333,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
       $sql_where_computer  = '';
       $sql_from_computer   = '';
       $continue          = TRUE;
+      $entityRestrict    = FALSE;
       $global_criteria   = array('model',
                                  'mac',
                                  'ip',
@@ -331,7 +343,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                                  'uuid',
                                  'mskey',
                                  'name',
-                                 'itemtype');
+                                 'itemtype',
+                                 'entityrestrict');
       $nb_crit_find = 0;
       foreach ($global_criteria as $criterion) {
          $criteria = $this->getCriteriaByID($criterion);
@@ -353,6 +366,8 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                   }
                } else if($crit->fields["criteria"] == 'itemtype') {
                   $complex_criterias[] = $crit;
+               } else if ($crit->fields["criteria"] == 'entityrestrict') {
+                  $entityRestrict = TRUE;
                }
             }
          }
@@ -549,9 +564,13 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
             $sql_where_temp .= $sql_where_computer;
          }
 
-         if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
-            $sql_where_temp .= " AND `[typetable]`.`entities_id`='".
-                                    $_SESSION['plugin_fusioninventory_entityrestrict']."'";
+         if ($entityRestrict) {
+            if (isset($_SESSION['plugin_fusioninventory_entityrestrict'])) {
+               $sql_where_temp .= " AND `[typetable]`.`entities_id`='".
+                                       $_SESSION['plugin_fusioninventory_entityrestrict']."'";
+            } else {
+               $sql_where_temp .= " AND `[typetable]`.`entities_id`='0'";
+            }
          }
 
          $item = new $itemtype();

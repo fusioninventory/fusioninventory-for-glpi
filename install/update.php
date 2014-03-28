@@ -734,6 +734,46 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       migrateTablesFusionInventory($migration, $a_table);
 
 
+
+   /*
+    * Table glpi_plugin_fusioninventory_entities
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_entities';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement',
+                                               'value'   => '');
+      $a_table['fields']['entities_id']= array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['transfers_id_auto']= array('type'    => 'integer',
+                                                 'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+      if (countElementsInTable($a_table['name']) == 0) {
+         $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
+                                           "`type`='transfers_id_auto'");
+         $transfers_id_auto = 0;
+         if (count($a_configs) > 0) {
+            $a_config = current($a_configs);
+            $transfers_id_auto = $a_config['value'];
+         }
+         $DB->query("INSERT INTO `glpi_plugin_fusioninventory_entities`
+               (`entities_id`, `transfers_id_auto`)
+            VALUES ('0', '".$transfers_id_auto."');");
+      }
+
+
    /*
     * Table glpi_plugin_fusioninventory_credentials
     */
@@ -6018,7 +6058,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $input['component_drive']        = 1;
       $input['component_networkdrive'] = 1;
       $input['component_control']      = 1;
-      $input['transfers_id_auto']      = 1;
       $input['states_id_default']      = 0;
       $input['location']               = 0;
       $input['group']                  = 0;
