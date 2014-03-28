@@ -134,6 +134,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryModule');
       Plugin::registerClass('PluginFusioninventoryProfile',
               array('addtabon' => array('Profile')));
+      Plugin::registerClass('PluginFusioninventoryEntity',
+              array('addtabon' => array('Entity')));
       Plugin::registerClass('PluginFusioninventorySetup');
       Plugin::registerClass('PluginFusioninventoryIPRange');
       Plugin::registerClass('PluginFusioninventoryCredential');
@@ -324,8 +326,8 @@ function plugin_init_fusioninventory() {
 
 
       // * Tabs for each type
-      $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
-      $PLUGIN_HOOKS['headings_action']['fusioninventory'] = 'plugin_headings_actions_fusioninventory';
+//      $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
+//      $PLUGIN_HOOKS['headings_action']['fusioninventory'] = 'plugin_headings_actions_fusioninventory';
 
       if (isset($_SESSION["glpiname"])) {
          $report_list = array();
