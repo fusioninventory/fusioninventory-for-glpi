@@ -74,6 +74,32 @@ class PluginFusioninventoryProfile extends Profile {
        *    status
        */
 
+   static function getOldRightsMappings() {
+      $types = array ('agent'                  => 'plugin_fusioninventory_agent', 
+                      'remotecontrol'          => 'plugin_fusioninventory_remotecontrol',
+                      'configuration'          => 'plugin_fusioninventory_configuration', 
+                      'wol'                    => 'plugin_fusioninventory_wol', 
+                      'unknowndevice'          => 'plugin_fusioninventory_unknowndevice',
+                      'task'                   => 'plugin_fusioninventory_task', 
+                      'credential'             => 'plugin_fusioninventory_credential',
+                      'credentialip'           => 'plugin_fusioninventory_credentialip',
+                      'existantrule'           => array('plugin_fusioninventory_ruleimport', 
+                                                         'plugin_fusioninventory_ruleentity', 
+                                                         'plugin_fusioninventory_location'),
+                      'importxml'              => 'plugin_fusioninventory_importxml',
+                      'blacklist'              => 'plugin_fusioninventory_blacklist',
+                      'ESX'                    => 'plugin_fusioninventory_esx',
+                      'configsecurity'         => 'plugin_fusioninventory_configsecurity',
+                      'networkequipment'       => 'plugin_fusioninventory_networkequipment',
+                      'printer'                => 'plugin_fusioninventory_printer',
+                      'reportprinter'          => 'plugin_fusioninventory_reportprinter',
+                      'reportnetworkequipment' => 'plugin_fusioninventory_reportnetworkequipment',
+                      'packages'               => 'plugin_fusioninventory_package',
+                      'status'                 => 'plugin_fusioninventory_status',
+                      'collect'                => 'plugin_fusioninventory_collect');
+                      
+      return $types;
+   }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       if ($item->getID() > 0
@@ -357,8 +383,10 @@ class PluginFusioninventoryProfile extends Profile {
    static function migrateProfiles() {
       global $DB;
       $profiles = getAllDatasFromTable(getTableForItemType(__CLASS__));
+      $oldrights = self::getOldRightsMappings();
+      
       foreach ($profiles as $id => $profile) {
-         switch ($profile['type']) {
+         switch ($profile['right']) {
             case 'r' :
                $value = READ;
                break;
@@ -370,8 +398,17 @@ class PluginFusioninventoryProfile extends Profile {
                $value = 0;
                break;
          }
-         self::addDefaultProfileInfos($profile['profiles_id'], 
-                                      array('plugin_fusioninventory_'.$profile['type'] => $value));
+         if (isset($oldrights[$profile['type']])) {
+            if (!is_array($oldrights[$profile['type']])) {
+               self::addDefaultProfileInfos($profile['profiles_id'], 
+                                            array($oldrights[$profile['type']] => $value));
+            } else {
+               foreach ($oldrights[$profile['type']] as $newtype) {
+                  self::addDefaultProfileInfos($profile['profiles_id'], 
+                                               array($newtype => $value));
+               }
+            }
+         }
       }
    }
 }
