@@ -382,9 +382,13 @@ class PluginFusioninventoryProfile extends Profile {
 
    static function migrateProfiles() {
       global $DB;
+      //Get all rights from the old table
       $profiles = getAllDatasFromTable(getTableForItemType(__CLASS__));
+      
+      //Load mapping of old rights to their new equivalent
       $oldrights = self::getOldRightsMappings();
       
+      //for each old profile : translate old right the new one
       foreach ($profiles as $id => $profile) {
          switch ($profile['right']) {
             case 'r' :
@@ -398,6 +402,7 @@ class PluginFusioninventoryProfile extends Profile {
                $value = 0;
                break;
          }
+         //Write in glpi_profilerights the new fusioninventory right
          if (isset($oldrights[$profile['type']])) {
             if (!is_array($oldrights[$profile['type']])) {
                self::addDefaultProfileInfos($profile['profiles_id'], 
