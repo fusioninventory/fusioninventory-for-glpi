@@ -42,7 +42,6 @@
 
 function plugin_fusioninventory_getAddSearchOptions($itemtype) {
 
-   Toolbox::logDebug($itemtype);
    $sopt = array();
    if ($itemtype == 'Computer' or $itemtype == 'PluginFusioninventoryComputer') {
 
