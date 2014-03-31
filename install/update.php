@@ -5520,7 +5520,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
    // Update rules
-   PluginFusioninventoryProfile::initProfile();
+   //PluginFusioninventoryProfile::initProfile();
+   PluginFusioninventoryProfile::migrateProfiles();
+   PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
 
    // Define lastup field of fusion networkports
    $query = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`

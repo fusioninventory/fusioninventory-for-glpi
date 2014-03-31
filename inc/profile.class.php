@@ -136,8 +136,8 @@ class PluginFusioninventoryProfile extends Profile {
       if ($canedit
           && $closeform) {
          echo "<div class='center'>";
-         echo "<input type='hidden' name='id' value='".$profiles_id."'>";
-         echo "<input type='submit' name='update' value=\""._sx('button', 'Save')."\" class='submit'>";
+         echo Html::hidden('id', array('value' => $profiles_id));
+         echo Html::submit(_sx('button', 'Save'), array('name' => 'update'));
          echo "</div>\n";
          Html::closeForm();
       }
@@ -152,6 +152,8 @@ class PluginFusioninventoryProfile extends Profile {
     * Init profiles
     *
     **/
+    
+   /*
    static function initProfile() {
       $pfProfile = new self();
       $profile = new Profile();
@@ -185,7 +187,7 @@ class PluginFusioninventoryProfile extends Profile {
          }
          $profile->update($dataprofile);
       }
-   }
+   }*/
 
 
 
@@ -321,6 +323,56 @@ class PluginFusioninventoryProfile extends Profile {
                 'field'     => 'plugin_fusioninventory_wol')
       );
       return $rights;
+   }
+   
+   static function addDefaultProfileInfos($profiles_id, $rights) {
+      $profileRight = new ProfileRight();
+      foreach ($rights as $right => $value) {
+         if (!countElementsInTable('glpi_profilerights',
+                                   "`profiles_id`='$profiles_id' AND `name`='$right'")) {
+            $myright['profiles_id'] = $profiles_id;
+            $myright['name']        = $right;
+            $myright['rights']      = $value;
+            $profileRight->add($myright);
+
+            //Add right to the current session
+            $_SESSION['glpiactiveprofile'][$right] = $value;
+         }
+      }
+   }
+
+   /**
+    * @param $ID  integer
+    */
+   static function createFirstAccess($profiles_id) {
+      include_once(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
+      $profile = new self();
+      foreach ($profile->getAllRights() as $right) {
+         self::addDefaultProfileInfos($profiles_id, 
+                                      array($right['field'] => ALLSTANDARDRIGHT));
+      }
+   }
+
+
+   static function migrateProfiles() {
+      global $DB;
+      $profiles = getAllDatasFromTable(getTableForItemType(__CLASS__));
+      foreach ($profiles as $id => $profile) {
+         switch ($profile['type']) {
+            case 'r' :
+               $value = READ;
+               break;
+            case 'w':
+               $value = ALLSTANDARDRIGHT;
+               break;
+            case 0:
+            default:
+               $value = 0;
+               break;
+         }
+         self::addDefaultProfileInfos($profile['profiles_id'], 
+                                      array('plugin_fusioninventory_'.$profile['type'] => $value));
+      }
    }
 }
 
