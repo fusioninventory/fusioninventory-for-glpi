@@ -138,6 +138,8 @@ function plugin_init_fusioninventory() {
               array('addtabon' => array('Entity')));
       Plugin::registerClass('PluginFusioninventorySetup');
       Plugin::registerClass('PluginFusioninventoryIPRange');
+      Plugin::registerClass('PluginFusioninventoryIPRange_ConfigSecurity',
+              array('addtabon' => 'PluginFusioninventoryIPRange'));
       Plugin::registerClass('PluginFusioninventoryCredential');
       Plugin::registerClass('PluginFusioninventoryLock',
               array('addtabon' => array('Computer', 'Printer', 'NetworkEquipment')));

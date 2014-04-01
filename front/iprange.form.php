@@ -130,7 +130,7 @@ if (isset($_SERVER['HTTP_REFERER'])
    Html::redirect($_SERVER['HTTP_REFERER']."&id=".$id);
 }
 
-$iprange->showForm($id, array( "allowcreate" => $allowcreate));
+$iprange->display(array('id' => $id));
 
 Html::footer();
 

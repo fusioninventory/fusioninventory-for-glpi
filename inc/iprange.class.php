@@ -120,6 +120,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    function defineTabs($options=array()){
 
       $ong = array();
+      $this->addDefaultFormTab($ong);
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1] = _n('Task', 'Tasks', 2);
          //$pfTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", $_POST['id']);
@@ -132,13 +133,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
    function showForm($id, $options=array()) {
 
-      if ($id!='') {
-         $this->getFromDB($id);
-      } else {
-         $this->getEmpty();
-      }
-
-      $this->showTabs($options);
+      $this->initForm($id, $options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
@@ -227,7 +222,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons($options);
-      $this->addDivForTabs();
    }
 
 
@@ -282,6 +276,22 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       }
       return $int;
    }
+
+
+
+   function post_deleteItem() {
+
+      $pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
+      $a_data = getAllDatasFromTable('glpi_plugin_fusioninventory_ipranges_configsecurities',
+                                     "`plugin_fusioninventory_ipranges_id`='".$this->fields['id']."'");
+      foreach ($a_data as $data) {
+         $pfIPRange_ConfigSecurity->delete($data);
+      }
+
+      parent::post_deleteItem();
+   }
+
+
 }
 
 ?>

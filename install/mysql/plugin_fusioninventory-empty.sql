@@ -276,6 +276,19 @@ CREATE TABLE `glpi_plugin_fusioninventory_ipranges` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_ipranges_configsecurities`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_ipranges_configsecurities` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plugin_fusioninventory_ipranges_id` int(11) NOT NULL DEFAULT '0',
+  `plugin_fusioninventory_configsecurities_id` int(11) NOT NULL DEFAULT '0',
+  `rank` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `unicity` (`plugin_fusioninventory_ipranges_id`,`plugin_fusioninventory_configsecurities_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_credentials`;
 
 CREATE TABLE  `glpi_plugin_fusioninventory_credentials` (
