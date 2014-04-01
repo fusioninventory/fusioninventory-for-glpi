@@ -1397,6 +1397,76 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
    /*
+    * Table glpi_plugin_fusioninventory_timeslots
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_timeslots';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']           = array('type'    => 'autoincrement',
+                                                 'value'   => '');
+      $a_table['fields']['entities_id']  = array('type'    => 'integer',
+                                                 'value'   => NULL);
+      $a_table['fields']['is_recursive'] = array('type'    => 'bool',
+                                                 'value'   => '1');
+      $a_table['fields']['name']         = array('type'    => 'string',
+                                                 'value'   => NULL);
+      $a_table['fields']['comment']      = array('type'    => 'text',
+                                                 'value'   => NULL);
+      $a_table['fields']['date_mod']     = array('type'    => 'datetime',
+                                                 'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+
+
+   /*
+    * Table glpi_plugin_fusioninventory_timeslotentries
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_timeslotentries';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']           = array('type'    => 'autoincrement',
+                                                 'value'   => '');
+      $a_table['fields']['plugin_fusioninventory_timeslots_id']  = array('type'    => 'integer',
+                                                 'value'   => NULL);
+      $a_table['fields']['entities_id']  = array('type'    => 'integer',
+                                                 'value'   => NULL);
+      $a_table['fields']['is_recursive'] = array('type'    => 'bool',
+                                                 'value'   => '1');
+      $a_table['fields']['day']          = array('type'    => 'bool',
+                                                 'value'   => 1);
+      $a_table['fields']['name']         = array('type'    => 'string',
+                                                 'value'   => NULL);
+      $a_table['fields']['begin']        = array('type'    => 'integer',
+                                                 'value'   => NULL);
+      $a_table['fields']['end']          = array('type'    => 'integer',
+                                                 'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+
+
+   /*
     * Table glpi_plugin_fusioninventory_unknowndevices
     */
       $newTable = "glpi_plugin_fusioninventory_unknowndevices";
