@@ -102,8 +102,7 @@ class PluginFusioninventoryProfile extends Profile {
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      if ($item->getID() > 0
-              && $item->fields['interface'] == 'central') {
+      if ($item->fields['interface'] == 'central') {
          return self::createTabEntry('FusionInventory');
       }
    }
@@ -111,10 +110,8 @@ class PluginFusioninventoryProfile extends Profile {
 
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      if ($item->getID() > 0) {
-         $pfProfile = new self();
-         $pfProfile->showForm($item->getID());
-      }
+      $pfProfile = new self();
+      $pfProfile->showForm($item->getID());
       return TRUE;
    }
 

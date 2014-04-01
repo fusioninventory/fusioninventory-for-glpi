@@ -61,15 +61,107 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       return 'FusionInventory';
    }
 
+   static function canView() {
+      $can_display = false;
+      $profile     = new PluginFusioninventoryProfile();
+      
+      foreach ($profile->getAllRights() as $right) {
+         if (Session::haveRight($right['field'], READ)) {
+            $can_display = true;
+            break;
+         }
+      }
+      return $can_display;
+   }
+   
+   static function getMenuName() {
+      return self::getTypeName();
+   }
 
+   static function getMenuContent() {
+      global $CFG_GLPI;
+      $menu          = array();
+      if (self::canView()) {
+      
+         // * Fil ariane
+         $menu= array();
+         $menu['title'] = __('Menu', 'fusioninventory');
+         $menu['page']  = '/plugins/fusioninventory/front/wizard.php';
 
+         $menu['options']['tasks']['title'] = __('Task management', 'fusioninventory');
+         $menu['options']['tasks']['page']  = '/plugins/fusioninventory/front/task.php';
+
+         $menu['options']['taskjob']['title'] = __('Running jobs', 'fusioninventory');
+         $menu['options']['taskjob']['page']  = '/plugins/fusioninventory/front/taskjob.php';
+
+         $menu['options']['agents']['title'] = __('Agents management', 'fusioninventory');
+         $menu['options']['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
+
+         $menu['options']['configuration']['title'] = __('General setup');
+         $menu['options']['configuration']['page']  = '/plugins/fusioninventory/front/config.form.php';
+
+         $menu['options']['unknown']['title'] = __('Unknown device', 'fusioninventory');
+         $menu['options']['unknown']['page']  = '/plugins/fusioninventory/front/unknowndevice.php';
+
+         $menu['options']['inventoryruleimport']['title'] = __('Equipment import and link rules', 'fusioninventory');
+         $menu['options']['inventoryruleimport']['page']  = '/plugins/fusioninventory/front/inventoryruleimport.php';
+
+         $menu['options']['wizard-start']['title'] = __('Wizard', 'fusioninventory');
+         $menu['options']['wizard-start']['page']  = '/plugins/fusioninventory/front/wizard.php';
+
+         $menu['options']['iprange']['title'] = __('IP range configuration', 'fusioninventory');
+         $menu['options']['iprange']['page']  = '/plugins/fusioninventory/front/iprange.php';
+
+         $menu['options']['packages']['title'] = __('Packages', 'fusioninventory');
+         $menu['options']['packages']['page']  = '/plugins/fusioninventory/front/deploypackage.php';
+
+         $menu['options']['group']['title'] = __('Groups of computers', 'fusioninventory');
+         $menu['options']['group']['page']  = '/plugins/fusioninventory/front/deploygroup.php';
+
+         $menu['options']['ignoredimportrules']['title'] = __('Equipment ignored on import', 'fusioninventory');
+         $menu['options']['ignoredimportrules']['page']  = '/plugins/fusioninventory/front/ignoredimportdevice.php';
+
+         $menu['options']['blacklist']['title'] = __('BlackList');
+         $menu['options']['blacklist']['page']  = '/plugins/fusioninventory/front/inventorycomputerblacklist.php';
+
+         $menu['options']['ruleentity']['title'] = __('Entity rules', 'fusioninventory');
+         $menu['options']['ruleentity']['page']  = '/plugins/fusioninventory/front/inventoryruleentity.php';
+
+         $menu['options']['rulelocation']['title'] = __('Location rules', 'fusioninventory');
+         $menu['options']['rulelocation']['page']  = '/plugins/fusioninventory/front/inventoryrulelocation.php';
+
+         $menu['options']['importxmlfile']['title'] = __('Import agent XML file', 'fusioninventory');
+         $menu['options']['importxmlfile']['page']  = '/plugins/fusioninventory/front/inventorycomputerimportxml.php';
+
+         $menu['options']['models']['title'] = __('SNMP models');
+         $menu['options']['models']['page']  = '/plugins/fusioninventory/front/snmpmodel.php';
+
+         $menu['options']['configsecurity']['title'] = __('SNMP authentication');
+         $menu['options']['configsecurity']['page']  = '/plugins/fusioninventory/front/configsecurity.php';
+
+         $menu['options']['statediscovery']['title'] = __('Discovery status', 'fusioninventory');
+         $menu['options']['statediscovery']['page']  = '/plugins/fusioninventory/front/statediscovery.php';
+
+         $menu['options']['stateinventory']['title'] = __('Inventory status', 'fusioninventory');
+         $menu['options']['stateinventory']['page']  = '/plugins/fusioninventory/front/stateinventory.php';
+
+         $menu['options']['mirror']['title'] = __('Mirror servers', 'fusioninventory');
+         $menu['options']['mirror']['page']  = '/plugins/fusioninventory/front/deploymirror.php';
+      
+         $menu['title']           = self::getTypeName();
+         $menu['page']            = self::getSearchURL(false);
+         $menu['links']['search'] = self::getSearchURL(false);
+      }
+      return $menu;
+   }
+/*
    static function canView() {
       if ((static::$rightname) && (Session::haveRight(static::$rightname, READ))) {
          return TRUE;
       }
       return FALSE;
    }
-
+*/
 
 
    static function getAdditionalMenuOptions() {
@@ -169,10 +261,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[0]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryAgent');
       }
 
-      $a_menu[2]['name'] = __('Groups of computers', 'fusioninventory');
-      $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_group.png";
-      $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploygroup.php";
-
+      if (Session::haveRight('plugin_fusioninventory_group', READ)) {
+         $a_menu[2]['name'] = __('Groups of computers', 'fusioninventory');
+         $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_group.png";
+         $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploygroup.php";
+      }
+      
       if (Session::haveRight('config', UPDATE)) {
          $a_menu[3]['name'] = __('General configuration', 'fusioninventory');
          $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
@@ -379,10 +473,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          );
       }
 
-      $a_menu[1]['name'] = __('Mirror servers', 'fusioninventory');
-      $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_files.png";
-      $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploymirror.php";
-
+      if (Session::haveRight('plugin_fusioninventory_deploymirror', READ)) {
+         $a_menu[1]['name'] = __('Mirror servers', 'fusioninventory');
+         $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_files.png";
+         $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploymirror.php";
+      }
+      
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('Deploy', 'fusioninventory'),
                                                              $a_menu,
