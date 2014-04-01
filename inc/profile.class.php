@@ -46,7 +46,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryProfile extends Profile {
 
-
+      static $rightname = "config";
 
       /*
        * Old profile names:
@@ -171,51 +171,6 @@ class PluginFusioninventoryProfile extends Profile {
 
       $this->showLegend();
    }
-
-
-
-   /**
-    * Init profiles
-    *
-    **/
-    
-   /*
-   static function initProfile() {
-      $pfProfile = new self();
-      $profile = new Profile();
-
-      $a_rights = $pfProfile->getAllRights();
-      foreach ($a_rights as $data) {
-         if (countElementsInTable("glpi_profilerights", "`name` = '".$data['field']."'") == 0) {
-            ProfileRight::addProfileRights(array($data['field']));
-            $_SESSION['glpiactiveprofile'][$data['field']] = 0;
-         }
-      }
-      // Add all rights to current profile of the user
-      if (isset($_SESSION['glpiactiveprofile'])) {
-         $dataprofile = array();
-         $dataprofile['id'] = $_SESSION['glpiactiveprofile']['id'];
-         $profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
-         foreach ($a_rights as $info) {
-            if (is_array($info) && ((!empty($info['itemtype'])) || (!empty($info['rights'])))
-                && (!empty($info['label'])) && (!empty($info['field']))) {
-
-               if (isset($info['rights'])) {
-                  $rights = $info['rights'];
-               } else {
-                  $rights = $profile->getRightsFor($info['itemtype']);
-               }
-
-               foreach ($rights as $right => $label) {
-                  $dataprofile['_'.$info['field']][$right] = 1;
-               }
-            }
-         }
-         $profile->update($dataprofile);
-      }
-   }*/
-
-
 
    static function uninstallProfile() {
       $pfProfile = new self();

@@ -319,15 +319,10 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
 
-         $PLUGIN_HOOKS["menu_toadd"]['fusioninventory'] = array(
-             'plugins' => 'PluginFusioninventoryMenu',
-             'assets'  => 'PluginFusioninventoryUnknowndevice'
-         );
-
-
-      // * Tabs for each type
-//      $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
-//      $PLUGIN_HOOKS['headings_action']['fusioninventory'] = 'plugin_headings_actions_fusioninventory';
+      $PLUGIN_HOOKS["menu_toadd"]['fusioninventory'] = array(
+          'plugins' => 'PluginFusioninventoryMenu',
+          'assets'  => 'PluginFusioninventoryUnknowndevice'
+      );
 
       if (isset($_SESSION["glpiname"])) {
          $report_list = array();

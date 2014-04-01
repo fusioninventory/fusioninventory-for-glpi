@@ -75,39 +75,39 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    static function getAdditionalMenuOptions() {
 
       $elements = array(
-          'iprange'              => 'PluginFusioninventoryIPRange',
-          'task'                 => 'PluginFusioninventoryTask',
-          'timeslot'             => 'PluginFusioninventoryTimeslot',
-          'unknowndevice'        => 'PluginFusioninventoryUnknownDevice',
-          'inventoryruleimport'  => 'PluginFusioninventoryInventoryRuleImport',
-          'inventoryruleentity'  => 'PluginFusioninventoryInventoryRuleEntity',
-          'inventoryrulelocation'=> 'PluginFusioninventoryInventoryRuleLocation',
-          'collectrule'          => 'PluginFusioninventoryCollectRule',
+          'iprange'                    => 'PluginFusioninventoryIPRange',
+          'task'                       => 'PluginFusioninventoryTask',
+          'timeslot'                   => 'PluginFusioninventoryTimeslot',
+          'unknowndevice'              => 'PluginFusioninventoryUnknownDevice',
+          'inventoryruleimport'        => 'PluginFusioninventoryInventoryRuleImport',
+          'inventoryruleentity'        => 'PluginFusioninventoryInventoryRuleEntity',
+          'inventoryrulelocation'      => 'PluginFusioninventoryInventoryRuleLocation',
+          'collectrule'                => 'PluginFusioninventoryCollectRule',
           'inventorycomputerblacklist' => 'PluginFusioninventoryInventoryComputerBlacklist',
-          'configsecurity'       => 'PluginFusioninventoryConfigSecurity',
-          'credential'           => 'PluginFusioninventoryCredential',
-          'credentialip'         => 'PluginFusioninventoryCredentialIp',
-          'collect'              => 'PluginFusioninventoryCollect',
-          'deploypackage'        => 'PluginFusioninventoryDeployPackage',
-          'deploymirror'         => 'PluginFusioninventoryDeployMirror',
-          'deploytask'           => 'PluginFusioninventoryDeployTask',
-          'deploygroup'          => 'PluginFusioninventoryDeployGroup'
+          'configsecurity'             => 'PluginFusioninventoryConfigSecurity',
+          'credential'                 => 'PluginFusioninventoryCredential',
+          'credentialip'               => 'PluginFusioninventoryCredentialIp',
+          'collect'                    => 'PluginFusioninventoryCollect',
+          'deploypackage'              => 'PluginFusioninventoryDeployPackage',
+          'deploymirror'               => 'PluginFusioninventoryDeployMirror',
+          'deploytask'                 => 'PluginFusioninventoryDeployTask',
+          'deploygroup'                => 'PluginFusioninventoryDeployGroup'
       );
       $options = array();
-      foreach ($elements as $type=>$itemtype) {
+      foreach ($elements as $type => $itemtype) {
          $options[$type] = array(
               'title' => $itemtype::getTypeName(),
               'page'  => $itemtype::getSearchURL(false),
               'links' => array(
-                  'search' => '/plugins/fusioninventory/front/'.$type.'.php',
-                  'add'    => '/plugins/fusioninventory/front/'.$type.'.form.php'
+                  'search' => Toolbox::getItemTypeSearchURL($type),
+                  'add'    => Toolbox::getItemTypeFormURL($type)
               ));
       }
       $options['agent'] = array(
            'title' => PluginFusioninventoryAgent::getTypeName(),
            'page'  => PluginFusioninventoryAgent::getSearchURL(false),
            'links' => array(
-               'search' => '/plugins/fusioninventory/front/agent.php'
+               'search' => Toolbox::getItemTypeSearchURL('PluginFusioninventoryAgent')
            ));
       return $options;
    }
@@ -168,13 +168,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[0]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
          $a_menu[0]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryAgent');
       }
-
-//      if (Session::haveRight('plugin_fusioninventory_unknowndevice', READ)) {
-//         $a_menu[1]['name'] = __('Unknown device', 'fusioninventory');
-//         $a_menu[1]['pic']  = $CFG_GLPI['root_doc'].
-//                                 "/plugins/fusioninventory/pics/menu_unknown_device.png";
-//         $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryUnknownDevice');
-//      }
 
       $a_menu[2]['name'] = __('Groups of computers', 'fusioninventory');
       $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_group.png";

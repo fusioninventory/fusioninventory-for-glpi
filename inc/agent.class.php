@@ -50,7 +50,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_agent';
 
-
    /**
    * Get name of this type
    *
