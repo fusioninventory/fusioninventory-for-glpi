@@ -363,7 +363,18 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                         'glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids',
                         'glpi_plugin_fusioninventory_snmpmodelmibs',
                         'glpi_plugin_fusioninventory_snmpmodels',
-                        'glpi_plugin_fusioninventory_snmpmodeldevices');
+                        'glpi_plugin_fusioninventory_snmpmodeldevices',
+                        'glpi_plugin_fusinvsnmp_constructdevice_miboids',
+                        'glpi_plugin_fusinvsnmp_constructdevices',
+                        'glpi_plugin_fusinvsnmp_constructdevices_users',
+                        'glpi_plugin_fusinvsnmp_miblabels',
+                        'glpi_plugin_fusinvsnmp_mibobjects',
+                        'glpi_plugin_fusinvsnmp_miboids',
+                        'glpi_plugin_fusinvsnmp_modeldevices',
+                        'glpi_plugin_fusinvsnmp_modelmibs',
+                        'glpi_plugin_fusinvsnmp_models',
+                        'glpi_plugin_fusioninventory_construct_walks'
+       );
 
    foreach ($a_droptable as $newTable) {
       $migration->dropTable($newTable);
@@ -1409,7 +1420,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['fields']['entities_id']  = array('type'    => 'integer',
                                                  'value'   => NULL);
       $a_table['fields']['is_recursive'] = array('type'    => 'bool',
-                                                 'value'   => '1');
+                                                 'value'   => '0');
       $a_table['fields']['name']         = array('type'    => 'string',
                                                  'value'   => NULL);
       $a_table['fields']['comment']      = array('type'    => 'text',
@@ -1444,14 +1455,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $a_table['fields']['entities_id']  = array('type'    => 'integer',
                                                  'value'   => NULL);
       $a_table['fields']['is_recursive'] = array('type'    => 'bool',
-                                                 'value'   => '1');
+                                                 'value'   => '0');
       $a_table['fields']['day']          = array('type'    => 'bool',
                                                  'value'   => 1);
-      $a_table['fields']['name']         = array('type'    => 'string',
+      $a_table['fields']['begin']        = array('type'    => 'int(11) DEFAULT NULL',
                                                  'value'   => NULL);
-      $a_table['fields']['begin']        = array('type'    => 'integer',
-                                                 'value'   => NULL);
-      $a_table['fields']['end']          = array('type'    => 'integer',
+      $a_table['fields']['end']          = array('type'    => 'int(11) DEFAULT NULL',
                                                  'value'   => NULL);
 
       $a_table['oldfields']  = array();

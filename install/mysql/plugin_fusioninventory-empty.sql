@@ -975,7 +975,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_timeslots`;
 CREATE TABLE `glpi_plugin_fusioninventory_timeslots` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entities_id` int(11) NOT NULL DEFAULT '0',
-  `is_recursive` tinyint(1) NOT NULL DEFAULT '1',
+  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
   `comment` text DEFAULT NULL,
   `date_mod` datetime DEFAULT NULL,
