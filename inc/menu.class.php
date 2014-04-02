@@ -81,6 +81,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $elements = array(
           'iprange'                    => 'PluginFusioninventoryIPRange',
+          'config'                     => 'PluginFusioninventoryConfig',
           'task'                       => 'PluginFusioninventoryTask',
           'timeslot'                   => 'PluginFusioninventoryTimeslot',
           'unknowndevice'              => 'PluginFusioninventoryUnknownDevice',
@@ -181,7 +182,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploygroup.php";
       }
       
-      if (Session::haveRight('config', UPDATE)) {
+      if (Session::haveRight('config', UPDATE) || Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
          $a_menu[3]['name'] = __('General configuration', 'fusioninventory');
          $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
          $a_menu[3]['link'] = $CFG_GLPI['root_doc'].

@@ -302,7 +302,8 @@ class PluginFusioninventoryProfile extends Profile {
                 'label'     => _n('Task', 'Tasks', 2, 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_task'),
           array('rights'    => CommonDBTM::getRights(),
-                'label'     => __('Wake On LAN', 'fusioninventory'))
+                'label'     => __('Wake On LAN', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_wol')
       );
       return $rights;
    }

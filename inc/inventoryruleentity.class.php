@@ -57,8 +57,6 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       return __('Entity rules', 'fusioninventory');
    }
 
-
-
    function preProcessPreviewResults($output) {
       return $output;
    }
