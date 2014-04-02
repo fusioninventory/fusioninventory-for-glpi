@@ -14,7 +14,7 @@ class TaskTest extends Common_TestCase {
    public function provider() {
       return array(
          array( "Hello World"),
-         array( "Coui Couin"),
+         array( "Couin Couin"),
          array( "Trouver moi")
       );
    }

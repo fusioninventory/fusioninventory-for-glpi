@@ -133,6 +133,8 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryModule');
       Plugin::registerClass('PluginFusioninventoryProfile',
               array('addtabon' => array('Profile')));
+      Plugin::registerClass('PluginFusioninventoryEntity',
+              array('addtabon' => array('Entity')));
       Plugin::registerClass('PluginFusioninventorySetup');
       Plugin::registerClass('PluginFusioninventoryIPRange');
       Plugin::registerClass('PluginFusioninventoryCredential');
@@ -339,15 +341,12 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
 
-         $PLUGIN_HOOKS["menu_toadd"]['fusioninventory'] = array(
-             'plugins' => 'PluginFusioninventoryMenu',
-             'assets'  => 'PluginFusioninventoryUnknowndevice'
-         );
-
-
-      // * Tabs for each type
-      $PLUGIN_HOOKS['headings']['fusioninventory'] = 'plugin_get_headings_fusioninventory';
-      $PLUGIN_HOOKS['headings_action']['fusioninventory'] = 'plugin_headings_actions_fusioninventory';
+      if (PluginFusioninventoryUnknowndevice::canView()) {
+         $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['assets'] = 'PluginFusioninventoryUnknowndevice';
+      }
+      if (PluginFusioninventoryMenu::canView()) {
+         $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['plugins'] = 'PluginFusioninventoryMenu';
+      }
 
       if (isset($_SESSION["glpiname"])) {
          $report_list = array();
@@ -383,73 +382,6 @@ function plugin_init_fusioninventory() {
             'front/documentation.php';
 
          $PLUGIN_HOOKS['webservices']['fusioninventory'] = 'plugin_fusioninventory_registerMethods';
-
-         // * Fil ariane
-         $filariane= array();
-         $filariane['menu']['title'] = __('Menu', 'fusioninventory');
-         $filariane['menu']['page']  = '/plugins/fusioninventory/front/wizard.php';
-
-         $filariane['tasks']['title'] = __('Task management', 'fusioninventory');
-         $filariane['tasks']['page']  = '/plugins/fusioninventory/front/task.php';
-
-         $filariane['taskjob']['title'] = __('Running jobs', 'fusioninventory');
-         $filariane['taskjob']['page']  = '/plugins/fusioninventory/front/taskjob.php';
-
-         $filariane['agents']['title'] = __('Agents management', 'fusioninventory');
-         $filariane['agents']['page']  = '/plugins/fusioninventory/front/agent.php';
-
-         $filariane['configuration']['title'] = __('General setup');
-         $filariane['configuration']['page']  = '/plugins/fusioninventory/front/config.form.php';
-
-         $filariane['unknown']['title'] = __('Unknown device', 'fusioninventory');
-         $filariane['unknown']['page']  = '/plugins/fusioninventory/front/unknowndevice.php';
-
-         $filariane['inventoryruleimport']['title'] = __('Equipment import and link rules', 'fusioninventory');
-         $filariane['inventoryruleimport']['page']  = '/plugins/fusioninventory/front/inventoryruleimport.php';
-
-         $filariane['wizard-start']['title'] = __('Wizard', 'fusioninventory');
-         $filariane['wizard-start']['page']  = '/plugins/fusioninventory/front/wizard.php';
-
-         $filariane['iprange']['title'] = __('IP range configuration', 'fusioninventory');
-         $filariane['iprange']['page']  = '/plugins/fusioninventory/front/iprange.php';
-
-         $filariane['packages']['title'] = __('Packages', 'fusioninventory');
-         $filariane['packages']['page']  = '/plugins/fusioninventory/front/deploypackage.php';
-
-         $filariane['group']['title'] = __('Groups of computers', 'fusioninventory');
-         $filariane['group']['page']  = '/plugins/fusioninventory/front/deploygroup.php';
-
-         $filariane['ignoredimportrules']['title'] = __('Equipment ignored on import', 'fusioninventory');
-         $filariane['ignoredimportrules']['page']  = '/plugins/fusioninventory/front/ignoredimportdevice.php';
-
-         $filariane['blacklist']['title'] = __('BlackList');
-         $filariane['blacklist']['page']  = '/plugins/fusioninventory/front/inventorycomputerblacklist.php';
-
-         $filariane['ruleentity']['title'] = __('Entity rules', 'fusioninventory');
-         $filariane['ruleentity']['page']  = '/plugins/fusioninventory/front/inventoryruleentity.php';
-
-         $filariane['rulelocation']['title'] = __('Location rules', 'fusioninventory');
-         $filariane['rulelocation']['page']  = '/plugins/fusioninventory/front/inventoryrulelocation.php';
-
-         $filariane['importxmlfile']['title'] = __('Import agent XML file', 'fusioninventory');
-         $filariane['importxmlfile']['page']  = '/plugins/fusioninventory/front/inventorycomputerimportxml.php';
-
-         $filariane['models']['title'] = __('SNMP models');
-         $filariane['models']['page']  = '/plugins/fusioninventory/front/snmpmodel.php';
-
-         $filariane['configsecurity']['title'] = __('SNMP authentication');
-         $filariane['configsecurity']['page']  = '/plugins/fusioninventory/front/configsecurity.php';
-
-         $filariane['statediscovery']['title'] = __('Discovery status', 'fusioninventory');
-         $filariane['statediscovery']['page']  = '/plugins/fusioninventory/front/statediscovery.php';
-
-         $filariane['stateinventory']['title'] = __('Inventory status', 'fusioninventory');
-         $filariane['stateinventory']['page']  = '/plugins/fusioninventory/front/stateinventory.php';
-
-         $filariane['mirror']['title'] = __('Mirror servers', 'fusioninventory');
-         $filariane['mirror']['page']  = '/plugins/fusioninventory/front/deploymirror.php';
-
-         $PLUGIN_HOOKS['submenu_entry']['fusioninventory']['options'] = $filariane;
 
          // Hack for NetworkEquipment display ports
          if (strstr($_SERVER['PHP_SELF'], '/ajax/common.tabs.php')) {
@@ -515,7 +447,6 @@ function plugin_init_fusioninventory() {
 
    // Add unknown devices in list of devices with networport
    $CFG_GLPI["netport_types"][] = "PluginFusioninventoryUnknownDevice";
-
 }
 
 

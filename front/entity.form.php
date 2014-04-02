@@ -28,61 +28,31 @@
    ------------------------------------------------------------------------
 
    @package   FusionInventory
-   @author    Vincent Mazzoni
+   @author    David Durieux
    @co-author
    @copyright Copyright (c) 2010-2013 FusionInventory team
    @license   AGPL License 3.0 or (at your option) any later version
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2010
+   @since     2014
 
    ------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
-}
+include ("../../../inc/includes.php");
 
-class PluginFusioninventoryConfiguration extends CommonDBTM {
+$pfEntity = new PluginFusioninventoryEntity();
 
-   static $rightname = "plugin_fusioninventory_configuration";
-   
-   function defineTabs($options=array()){
-
-      $tabs = array();
-      $moduleTabs = array();
-      $tabs[1]=__('General setup');
-
-      $tabs[2]=__('Agents modules', 'fusioninventory');
-
-      if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
-         $fusionTabs = $tabs;
-         $moduleTabForms =
-               $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'];
-         if (count($moduleTabForms)) {
-            foreach ($moduleTabForms as $module=>$form) {
-               $plugin = new Plugin;
-               if ($plugin->isActivated($module)) {
-                  $tabs[] = key($form);
-               }
-            }
-            $moduleTabs = array_diff($tabs, $fusionTabs);
-         }
-         $_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabs'] = $moduleTabs;
-      }
-      return $tabs;
-   }
-
-
-
-   function showForm($options=array()) {
-
-      $this->showTabs($options);
-      $this->addDivForTabs();
-
-      return TRUE;
-   }
+if (isset($_POST["add"])) {
+   $pfEntity->add($_POST);
+   Html::back();
+} else if (isset($_POST["update"])) {
+   $pfEntity->update($_POST);
+   Html::back();
+} else if (isset($_REQUEST["purge"])) {
+   $pfEntity->delete($_POST);
+   Html::back();
 }
 
 ?>

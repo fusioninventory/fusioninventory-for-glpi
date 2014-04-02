@@ -45,7 +45,9 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginFusioninventoryInventoryRuleLocationCollection extends RuleCollection {
-
+   
+   static $rightname = "plugin_fusioninventory_rulelocation";
+   
    // From RuleCollection
    public $stop_on_first_match=TRUE;
    //public $right='rule_import';

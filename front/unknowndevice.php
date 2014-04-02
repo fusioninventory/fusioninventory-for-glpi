@@ -43,13 +43,11 @@
 include ("../../../inc/includes.php");
 
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
-        "plugins", "pluginfusioninventorymenu", "unknowndevice");
+        "assets", "pluginfusioninventoryunknowndevice",  "unknowndevice");
 
 Session::checkRight('plugin_fusioninventory_unknowndevice', READ);
 
-//PluginFusioninventoryMenu::displayMenu("mini");
-
-$_GET['target']="unknowndevice.php";
+$_GET['target'] = "unknowndevice.php";
 
 Search::show('PluginFusioninventoryUnknownDevice');
 

@@ -15,7 +15,7 @@ function load_mysql_file($dbuser='', $dbhost='', $dbdefault='', $dbpassword='', 
       return $result;
    }
 
-   $cmd = $result . " " . $dbdefault . " < ". $file;
+   $cmd = $result . " " . $dbdefault . " < ". $file ." 2>&1";
 
 
    $returncode = 0;
@@ -63,7 +63,7 @@ function drop_database($dbuser='', $dbhost='', $dbdefault='', $dbpassword=''){
       return $cmd;
    }
 
-   $cmd = 'echo "DROP DATABASE IF EXISTS '.$dbdefault .'; CREATE DATABASE '.$dbdefault.'" | ' . $cmd;
+   $cmd = 'echo "DROP DATABASE IF EXISTS '.$dbdefault .'; CREATE DATABASE '.$dbdefault.'" | ' . $cmd ." 2>&1";
 
 
    $returncode = 0;
