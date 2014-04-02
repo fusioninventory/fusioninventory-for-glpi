@@ -85,7 +85,7 @@ class PluginFusioninventoryProfile extends Profile {
                       'credentialip'           => 'plugin_fusioninventory_credentialip',
                       'existantrule'           => array('plugin_fusioninventory_ruleimport', 
                                                          'plugin_fusioninventory_ruleentity', 
-                                                         'plugin_fusioninventory_location'),
+                                                         'plugin_fusioninventory_rulelocation'),
                       'importxml'              => 'plugin_fusioninventory_importxml',
                       'blacklist'              => 'plugin_fusioninventory_blacklist',
                       'ESX'                    => 'plugin_fusioninventory_esx',
@@ -96,7 +96,8 @@ class PluginFusioninventoryProfile extends Profile {
                       'reportnetworkequipment' => 'plugin_fusioninventory_reportnetworkequipment',
                       'packages'               => 'plugin_fusioninventory_package',
                       'status'                 => 'plugin_fusioninventory_status',
-                      'collect'                => 'plugin_fusioninventory_collect');
+                      'collect'                => array('plugin_fusioninventory_collect', 
+                                                        'plugin_fusioninventory_rulecollect'));
                       
       return $types;
    }
@@ -207,6 +208,10 @@ class PluginFusioninventoryProfile extends Profile {
           array('itemtype'  => 'PluginFusioninventoryInventoryComputerBlacklist',
                 'label'     => __('Fields blacklist', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_blacklist'
+          ),
+          array('itemtype'  => 'PluginFusioninventoryCollectRule',
+                'label'     => __('Additional computer information rules', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_rulecollect'
           )
       );
       return $rights;
@@ -297,8 +302,7 @@ class PluginFusioninventoryProfile extends Profile {
                 'label'     => _n('Task', 'Tasks', 2, 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_task'),
           array('rights'    => CommonDBTM::getRights(),
-                'label'     => __('Wake On LAN', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_wol')
+                'label'     => __('Wake On LAN', 'fusioninventory'))
       );
       return $rights;
    }

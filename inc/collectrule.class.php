@@ -52,7 +52,6 @@ class PluginFusioninventoryCollectRule extends Rule {
    public $specific_parameters = FALSE;
 
 
-
    function getTitle() {
       return __('Additional computer information rules', 'fusioninventory');
    }
