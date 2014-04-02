@@ -96,7 +96,8 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'deploypackage'              => 'PluginFusioninventoryDeployPackage',
           'deploymirror'               => 'PluginFusioninventoryDeployMirror',
           'deploytask'                 => 'PluginFusioninventoryDeployTask',
-          'deploygroup'                => 'PluginFusioninventoryDeployGroup'
+          'deploygroup'                => 'PluginFusioninventoryDeployGroup',
+          'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice'
       );
       $options = array();
       foreach ($elements as $type => $itemtype) {
