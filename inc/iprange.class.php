@@ -120,6 +120,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
    function defineTabs($options=array()){
 
       $ong = array();
+      $this->addDefaultFormTab($ong);
       if ((isset($this->fields['id'])) AND ($this->fields['id'] > 0)){
          $ong[1] = _n('Task', 'Tasks', 2);
          //$pfTaskjob->manageTasksByObject("PluginFusioninventoryIPRange", $_POST['id']);
@@ -138,7 +139,7 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
          $this->getEmpty();
       }
 
-      $this->showTabs($options);
+      $this->initForm($id, $options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
@@ -227,7 +228,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons($options);
-      $this->addDivForTabs();
    }
 
 
