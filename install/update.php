@@ -5598,8 +5598,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $pfNetworkporttype->init();
 
 
-   // Update rules
-   PluginFusioninventoryProfile::initProfile();
+   //Migrate rights to the new system introduction in GLPI 0.85
+   PluginFusioninventoryProfile::migrateProfiles();
+   //Drop old table
+   $migration->dropTable('glpi_plugin_fusioninventory_profiles');
+   
+   //Create first access to the current profile is needed
+   PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
 
    // Define lastup field of fusion networkports
    $query = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`

@@ -56,7 +56,20 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       return __('Unknown device', 'fusioninventory');
    }
 
+   static function getMenuName() {
+      return self::getTypeName();
+   }
 
+   static function getMenuContent() {
+      global $CFG_GLPI;
+      $menu          = array();
+      if (Session::haveRight(static::$rightname, READ)) {
+         $menu['title']           = self::getTypeName();
+         $menu['page']            = self::getSearchURL(false);
+         $menu['links']['search'] = self::getSearchURL(false);
+      }
+      return $menu;
+   }
 
    function getSearchOptions() {
 
@@ -80,25 +93,22 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[3]['field']     = 'name';
       $tab[3]['linkfield'] = 'locations_id';
       $tab[3]['name']      = __('Location');
-      $tab[3]['datatype']  = 'text';
+      $tab[3]['datatype']  = 'dropdown';
 
       $tab[4]['table']     = $this->getTable();
       $tab[4]['field']     = 'serial';
       $tab[4]['linkfield'] = 'serial';
       $tab[4]['name']      = __('Serial Number');
-      $tab[4]['datatype']  = 'text';
 
       $tab[5]['table']     = $this->getTable();
       $tab[5]['field']     = 'otherserial';
       $tab[5]['linkfield'] = 'otherserial';
       $tab[5]['name']      = __('Inventory number');
-      $tab[5]['datatype']  = 'text';
 
       $tab[6]['table']     = $this->getTable();
       $tab[6]['field']     = 'contact';
       $tab[6]['linkfield'] = 'contact';
       $tab[6]['name']      = __('Contact');
-      $tab[6]['datatype']  = 'text';
 
       $tab[7]['table']     = $this->getTable();
       $tab[7]['field']     = 'hub';
@@ -116,6 +126,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[9]['field']     = 'name';
       $tab[9]['linkfield'] = 'domain';
       $tab[9]['name']      = __('Domain');
+      $tab[9]['datatype']  = 'dropdown';
 
 
       $tab[10]['table']     = $this->getTable();
@@ -124,31 +135,17 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[10]['name']      = __('Comments');
       $tab[10]['datatype']  = 'text';
 
-//      $tab[11]['table']     = $this->getTable();
-//      $tab[11]['field']     = 'ip';
-//      $tab[11]['linkfield'] = 'ip';
-//      $tab[11]['name']      = __('IP');
-//      $tab[11]['datatype']  = 'text';
-//
-//      $tab[12]['table']     = $this->getTable();
-//      $tab[12]['field']     = 'mac';
-//      $tab[12]['linkfield'] = 'mac';
-//      $tab[12]['name']      = __('MAC');
-//      $tab[12]['datatype']  = 'text';
-
       $tab[13]['table']     = $this->getTable();
       $tab[13]['field']     = 'item_type';
       $tab[13]['linkfield'] = 'item_type';
       $tab[13]['name']      = __('Type');
-
-//      $tab[13]['datatype']  = 'text';
+      $tab[13]['datatype']  = 'dropdown';
 
       $tab[14]['table']     = $this->getTable();
       $tab[14]['field']     = 'date_mod';
       $tab[14]['linkfield'] = '';
       $tab[14]['name']      = __('Last update');
       $tab[14]['datatype']  = 'datetime';
-
 
       $tab[15]['table']     = $this->getTable();
       $tab[15]['field']     = 'sysdescr';
@@ -160,6 +157,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[17]['field']     = 'name';
       $tab[17]['linkfield'] = 'plugin_fusioninventory_configsecurities_id';
       $tab[17]['name']      = __('SNMP authentication', 'fusioninventory');
+      $tab[17]['datatype']  = 'dropdown';
 
       $tab += NetworkPort::getSearchOptionsToAdd("PluginFusioninventoryUnknownDevice");
 
