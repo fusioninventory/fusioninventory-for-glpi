@@ -126,7 +126,6 @@ if (isset($_GET['allowcreate'])) {
 }
 
 $iprange->display($_GET);
-//$id, array( "allowcreate" => $allowcreate));
 
 Html::footer();
 

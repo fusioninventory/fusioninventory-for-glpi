@@ -63,6 +63,17 @@ CREATE TABLE `glpi_plugin_fusioninventory_configs` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_entities`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_entities` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `entities_id` int(11) NOT NULL DEFAULT '0',
+   `transfers_id_auto` int(11) NOT NULL DEFAULT '0',
+   PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_locks`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_locks` (
@@ -960,7 +971,7 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_timeslots`;
 CREATE TABLE `glpi_plugin_fusioninventory_timeslots` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entities_id` int(11) NOT NULL DEFAULT '0',
-  `is_recursive` tinyint(1) NOT NULL DEFAULT '1',
+  `is_recursive` tinyint(1) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
   `comment` text DEFAULT NULL,
   `date_mod` datetime DEFAULT NULL,
@@ -992,6 +1003,11 @@ INSERT INTO `glpi_plugin_fusioninventory_configsecurities`
    VALUES (1, 'Public community v1', '1', 'public', '', '0', '', '0', '', '0'),
           (2, 'Public community v2c', '2', 'public', '', '0', '', '0', '', '0');
 
+
+-- glpi_plugin_fusioninventory_entities
+INSERT INTO `glpi_plugin_fusioninventory_entities`
+      (`entities_id`, `transfers_id_auto`)
+   VALUES ('0', '0');
 
 
 -- glpi_displaypreferences

@@ -259,6 +259,11 @@ class SoftwareUpdateTest extends RestoreDatabase_TestCase {
 
       $DB->connect();
 
+      $this->mark_incomplete();
+      return;
+      // TODO: recode this test (and verify all the tests in this file)
+
+
       $_SESSION["plugin_fusioninventory_entity"] = 0;
 
       $a_software = array();

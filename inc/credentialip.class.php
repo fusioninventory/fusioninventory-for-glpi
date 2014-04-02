@@ -47,15 +47,14 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryCredentialIp extends CommonDropdown {
 
    public $first_level_menu  = "plugins";
-   public $second_level_menu = "fusioninventory";
-
+   public $second_level_menu = "pluginfusioninventorymenu";
+   public $third_level_menu  = "credentialip";
+   
    static $rightname = 'plugin_fusioninventory_credentialip';
 
    static function getTypeName($nb=0) {
       return __('Remote device inventory', 'fusioninventory');
    }
-
-
 
    function getAdditionalFields() {
 

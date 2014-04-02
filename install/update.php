@@ -365,7 +365,18 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                         'glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids',
                         'glpi_plugin_fusioninventory_snmpmodelmibs',
                         'glpi_plugin_fusioninventory_snmpmodels',
-                        'glpi_plugin_fusioninventory_snmpmodeldevices');
+                        'glpi_plugin_fusioninventory_snmpmodeldevices',
+                        'glpi_plugin_fusinvsnmp_constructdevice_miboids',
+                        'glpi_plugin_fusinvsnmp_constructdevices',
+                        'glpi_plugin_fusinvsnmp_constructdevices_users',
+                        'glpi_plugin_fusinvsnmp_miblabels',
+                        'glpi_plugin_fusinvsnmp_mibobjects',
+                        'glpi_plugin_fusinvsnmp_miboids',
+                        'glpi_plugin_fusinvsnmp_modeldevices',
+                        'glpi_plugin_fusinvsnmp_modelmibs',
+                        'glpi_plugin_fusinvsnmp_models',
+                        'glpi_plugin_fusioninventory_construct_walks'
+       );
 
    foreach ($a_droptable as $newTable) {
       $migration->dropTable($newTable);
@@ -759,6 +770,46 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       migrateTablesFusionInventory($migration, $a_table);
 
 
+
+   /*
+    * Table glpi_plugin_fusioninventory_entities
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_entities';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement',
+                                               'value'   => '');
+      $a_table['fields']['entities_id']= array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['transfers_id_auto']= array('type'    => 'integer',
+                                                 'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+      if (countElementsInTable($a_table['name']) == 0) {
+         $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
+                                           "`type`='transfers_id_auto'");
+         $transfers_id_auto = 0;
+         if (count($a_configs) > 0) {
+            $a_config = current($a_configs);
+            $transfers_id_auto = $a_config['value'];
+         }
+         $DB->query("INSERT INTO `glpi_plugin_fusioninventory_entities`
+               (`entities_id`, `transfers_id_auto`)
+            VALUES ('0', '".$transfers_id_auto."');");
+      }
+
+
    /*
     * Table glpi_plugin_fusioninventory_credentials
     */
@@ -1083,6 +1134,74 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
        * Update tasks related database tables
        */
       pluginFusioninventoryUpdateTasks($migration, $plugins_id);
+
+
+   /*
+    * Table glpi_plugin_fusioninventory_timeslots
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_timeslots';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']           = array('type'    => 'autoincrement',
+                                                 'value'   => '');
+      $a_table['fields']['entities_id']  = array('type'    => 'integer',
+                                                 'value'   => NULL);
+      $a_table['fields']['is_recursive'] = array('type'    => 'bool',
+                                                 'value'   => '0');
+      $a_table['fields']['name']         = array('type'    => 'string',
+                                                 'value'   => NULL);
+      $a_table['fields']['comment']      = array('type'    => 'text',
+                                                 'value'   => NULL);
+      $a_table['fields']['date_mod']     = array('type'    => 'datetime',
+                                                 'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+
+
+   /*
+    * Table glpi_plugin_fusioninventory_timeslotentries
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_timeslotentries';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']           = array('type'    => 'autoincrement',
+                                                 'value'   => '');
+      $a_table['fields']['plugin_fusioninventory_timeslots_id']  = array('type'    => 'integer',
+                                                 'value'   => NULL);
+      $a_table['fields']['entities_id']  = array('type'    => 'integer',
+                                                 'value'   => NULL);
+      $a_table['fields']['is_recursive'] = array('type'    => 'bool',
+                                                 'value'   => '0');
+      $a_table['fields']['day']          = array('type'    => 'bool',
+                                                 'value'   => 1);
+      $a_table['fields']['begin']        = array('type'    => 'int(11) DEFAULT NULL',
+                                                 'value'   => NULL);
+      $a_table['fields']['end']          = array('type'    => 'int(11) DEFAULT NULL',
+                                                 'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
 
 
    /*
@@ -5006,7 +5125,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $input['component_drive']        = 1;
       $input['component_networkdrive'] = 1;
       $input['component_control']      = 1;
-      $input['transfers_id_auto']      = 1;
       $input['states_id_default']      = 0;
       $input['location']               = 0;
       $input['group']                  = 0;
@@ -5221,8 +5339,13 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $pfNetworkporttype->init();
 
 
-   // Update rules
-   PluginFusioninventoryProfile::initProfile();
+   //Migrate rights to the new system introduction in GLPI 0.85
+   PluginFusioninventoryProfile::migrateProfiles();
+   //Drop old table
+   $migration->dropTable('glpi_plugin_fusioninventory_profiles');
+   
+   //Create first access to the current profile is needed
+   PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
 
    // Define lastup field of fusion networkports
    $query = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`

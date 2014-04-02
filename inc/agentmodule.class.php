@@ -46,7 +46,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
-
+   static $rightname = "plugin_fusioninventory_agent";
+   
    /**
     * Display tab
     *
