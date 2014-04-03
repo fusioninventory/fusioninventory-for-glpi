@@ -113,7 +113,7 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       echo "<div class='input_wrap'>";
       $dropdown_options = array_merge(
          array(
-            'width'=>'100%',
+            'width'=>'90%',
             'display'=>true,
          ),
          $options
