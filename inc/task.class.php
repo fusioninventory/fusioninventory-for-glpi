@@ -370,7 +370,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   "    `itemtype` = '" . $item_type . "'",
                   "and `items_id` = ".$item_id,
                   "and `plugin_fusioninventory_taskjobs_id` = ". $job_id,
-                  "and `state` <> " . PluginFusioninventoryTaskjobstate::FINISHED,
+                  "and `state` not in ( " . implode( "," , array(
+                     PluginFusioninventoryTaskjobstate::FINISHED,
+                     PluginFusioninventoryTaskjobstate::IN_ERROR,
+                     PluginFusioninventoryTaskjobstate::CANCELLED
+                  )) . ")",
                   "and `plugin_fusioninventory_agents_id` in (",
                   "  '" . implode("','", array_keys($agent_ids)) . "'",
                   ")"
