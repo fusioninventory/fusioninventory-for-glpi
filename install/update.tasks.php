@@ -75,14 +75,6 @@ function pluginFusioninventoryUpdateTasks( $migration , $plugin_id) {
             'type'    => 'bool',
             'value'   => NULL
          ),
-         //'communication' => array(
-         //   'type'    => 'string',
-         //   'value'   => 'push'
-         //),
-         //'permanent'  => array(
-         //   'type'    => 'string',
-         //   'value'   => NULL
-         //),
          'datetime_start' => array(
             'type'    => 'datetime',
             'value'   => NULL
@@ -91,22 +83,10 @@ function pluginFusioninventoryUpdateTasks( $migration , $plugin_id) {
             'type'    => 'datetime',
             'value'   => NULL
          ),
-         //'periodicity_count' => array(
-         //   'type'    => "int(6) NOT NULL DEFAULT '0'",
-         //   'value'   => NULL
-         //),
-         //'periodicity_type' => array(
-         //   'type'    => 'string',
-         //   'value'   => NULL
-         //),
-         //'execution_id' => array(
-         //   'type'    => "bigint(20) NOT NULL DEFAULT '0'",
-         //   'value'   => NULL
-         //),
-         //'is_advancedmode' => array(
-         //   'type'    => 'bool',
-         //   'value'   => NULL
-         //),
+         'plugin_fusioninventory_timeslots_id' => array(
+            'type'    => 'integer',
+            'value'   => NULL
+         ),
       );
 
       $table['oldfields']  = array(

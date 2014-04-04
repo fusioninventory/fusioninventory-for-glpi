@@ -100,6 +100,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `permanent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `datetime_start` datetime DEFAULT NULL,
   `datetime_end` datetime DEFAULT NULL,
+  `plugin_fusioninventory_timeslots_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `is_active` (`is_active`)
