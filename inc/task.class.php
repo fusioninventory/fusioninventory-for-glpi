@@ -519,8 +519,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {
          $methods[] = $method['method'];
       }
-      Toolbox::logDebug($methods);
-      return $task->prepareTaskjobs($methods);
+      $task->prepareTaskjobs($methods);
+      return true;
    }
 
    function getTasksRunning($tasks_id=0) {
