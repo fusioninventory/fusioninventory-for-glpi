@@ -184,8 +184,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $pfJobstate = new PluginFusioninventoryTaskjobstate();
 
       $jobstates = array();
+
       // list of jobstates not allowed to run (ie. filtered by schedule and timeslots)
-      $jobstates_to_delete = array();
+      $jobstates_to_cancel = array();
 
       $query = implode( "\n", array(
          "select",
@@ -232,13 +233,16 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $jobstate = new PluginFusioninventoryTaskjobstate();
          $jobstate->getFromDB($result['run']['id']);
 
-         //Delete the jobstate if the related tasks has been deactivated
+         //Cancel the jobstate if the related tasks has been deactivated
          if ($result['task']['is_active'] == 0) {
-            $jobstates_to_delete[$jobstate->fields['id']] = $jobstate;
+            $jobstates_to_cancel[$jobstate->fields['id']] = array(
+               'jobstate' => $jobstate,
+               'reason' => __('The task has been deactivated after preparation of this job.')
+            );
             continue;
          };
 
-         // Delete the jobstate if it the schedule or timeslots doesn't match.
+         // Cancel the jobstate if it the schedule or timeslots doesn't match.
          $now = new Datetime();
          if ( !is_null($result['task']['datetime_start']) ) {
             $schedule_start = new DateTime($result['task']['datetime_start']);
@@ -250,11 +254,12 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             }
 
             if ( !($schedule_start <= $now and $now <= $schedule_end) ) {
-               Toolbox::logDebug(
-                  "removing jobstate ".$result['run']['id']." because it doesn't ".
-                  "respect the task's schedule or timeslots"
+               $jobstates_to_cancel[$jobstate->fields['id']] = array(
+                  'jobstate' => $jobstate,
+                  'reason' => __(
+                     "This job can not be executed anymore due to the task's schedule."
+                  )
                );
-               $jobstates_to_delete[$jobstate->fields['id']] = $jobstate;
                continue;
             }
          }
@@ -268,17 +273,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $jobstate->method = $result['job']['method'];
          $jobstates[$jobstate->fields['id']] = $jobstate;
       }
-      //Toolbox::logDebug(
-      //   array(
-      //      "jobstates to delete" => array_keys($jobstates_to_delete),
-      //      "jobstates" => array_keys($jobstates),
-      //   )
-      //);
 
       //Remove the list of jobstates previously filtered for removal.
-      //TODO: maybe we should only cancel the jobstate and explain why it has been removed.
-      foreach( $jobstates_to_delete as $jobstate) {
-         $jobstate->deleteFromDB();
+      foreach( $jobstates_to_cancel as $jobstate) {
+         $jobstate['jobstate']->cancel($jobstate['reason']);
       }
       return $jobstates;
    }

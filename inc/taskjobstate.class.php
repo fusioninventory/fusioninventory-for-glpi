@@ -333,6 +333,25 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    }
 
 
+   function cancel($reason='') {
+      Toolbox::logDebug($this);
+      $log = new PluginFusioninventoryTaskjoblog();
+
+      $log_input = array(
+         'plugin_fusioninventory_taskjobstates_id' => $this->fields['id'],
+         'items_id' => $this->fields['items_id'],
+         'itemtype' => $this->fields['itemtype'],
+         'date' => date("Y-m-d H:i:s"),
+         'comment' => $reason
+      );
+
+      $log->add($log_input);
+
+      $this->update(array(
+         'id' => $this->fields['id'],
+         'state' => self::CANCELLED
+         ));
+   }
 
    /**
     * Cron for clean taskjob
