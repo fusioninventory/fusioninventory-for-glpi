@@ -213,8 +213,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "</tr>";
       $this->showFormButtons($options);
 
-      //$pfTaskjob = new PluginFusioninventoryTaskjob();
-      //$pfTaskjob->displayList($id);
       return true;
    }
 
