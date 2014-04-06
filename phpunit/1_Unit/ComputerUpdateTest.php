@@ -174,7 +174,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $a_inventory['monitor'] = Array(
             Array(
                     'name'              => 'ThinkPad Display 1280x800',
-                    'comment'           => '',
                     'serial'            => 'UBYVUTFYEIUI',
                     'manufacturers_id'  => 'Lenovo'
                 )

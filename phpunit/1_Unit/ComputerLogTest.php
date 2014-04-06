@@ -47,7 +47,6 @@ class ComputerLog extends RestoreDatabase_TestCase {
    public function testLog() {
       global $DB;
 
-
       $DB->connect();
 
       $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
@@ -156,7 +155,6 @@ class ComputerLog extends RestoreDatabase_TestCase {
       $this->a_inventory['monitor'] = Array(
             Array(
                     'name'              => '',
-                    'comment'           => '',
                     'serial'            => '',
                     'manufacturers_id'  => ''
                 )
@@ -221,58 +219,40 @@ class ComputerLog extends RestoreDatabase_TestCase {
                 )
           );
 
-      $this->mark_incomplete();
-      return;
-      // TODO: recode all this test
-
-
       $this->a_inventory = $pfFormatconvert->replaceids($this->a_inventory);
 
       $serialized = gzcompress(serialize($this->a_inventory));
       $this->a_inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
-
       $computer->add(array('serial' => 'XB63J7D',
                            'entities_id' => 0));
 
-      $this->assertGreaterThan(0, 1, FALSE);
+      // truncate glpi_logs
+      $DB->query('TRUNCATE TABLE `glpi_logs`;');
 
+      $this->assertEquals(0, countElementsInTable('glpi_logs'), "Log must be empty (truncate)");
 
       $_SESSION['glpiactive_entity'] = 0;
-      $pfiComputerLib->updateComputer($this->a_inventory, 1, TRUE);
+      $pfiComputerLib->updateComputer($this->a_inventory, 1, TRUE, 1);
 
-      $query = "SELECT * FROM `glpi_logs`
-         WHERE `id` > '117'";
-      $result = $DB->query($query);
-      $a_logs = array();
+      $a_logs = getAllDatasFromTable('glpi_logs');
 
-      while ($data=$DB->fetch_assoc($result)) {
-         unset($data['date_mod']);
-         $a_logs[$data['id']] = $data;
-      }
       $a_reference = array(
       );
 
-      $this->assertEquals($a_reference, $a_logs, "Log may be empty");
+      $this->assertEquals($a_reference, $a_logs, "Log must be empty ".print_r($a_logs, true));
 
-      // To be sure not have 2 same informations
-      $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
+      // Update a second time and must not have any new lines in glpi_logs
+      $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE, 1);
 
-      $query = "SELECT * FROM `glpi_logs`
-      WHERE `id` > '117'";
-      $result = $DB->query($query);
-      $a_logs = array();
+      $a_logs = getAllDatasFromTable('glpi_logs');
       $a_reference = array();
 
-      $this->assertNotNull($result, "Lines above 117 not found");
-      if (!is_null($result) ) {
-         while ($data=$DB->fetch_assoc($result)) {
-            $a_logs[$data['id']] = $data;
-            $a_reference[$data['id']] = array();
-         }
-      }
-      $this->assertEquals($a_reference, $a_logs, "Log may be empty");
+      $this->assertEquals($a_reference, $a_logs, "Log may be empty at second update ".print_r($a_logs, true));
+
+      return;
+      //################# END #################//
 
 
       // * Modify: contact
