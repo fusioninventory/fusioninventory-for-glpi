@@ -330,8 +330,6 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
       $pfLock->importFromOcs();
 
 
-   CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60',
-                      array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
    Crontask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
                       array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
 
