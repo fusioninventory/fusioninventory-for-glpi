@@ -1043,90 +1043,90 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       pluginFusioninventoryUpdatemapping();
 
 
+   if (TableExists('glpi_plugin_fusioninventory_profiles')) {
+      /*
+       * Table glpi_plugin_fusioninventory_profiles
+       */
+         $a_table = array();
+         $a_table['name'] = 'glpi_plugin_fusioninventory_profiles';
+         $a_table['oldname'] = array();
 
-   /*
-    * Table glpi_plugin_fusioninventory_profiles
-    */
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_profiles';
-      $a_table['oldname'] = array();
+         $a_table['fields']  = array();
+         $a_table['fields']['id']         = array('type'    => 'autoincrement',
+                                                  'value'   => '');
+         $a_table['fields']['type']       = array('type'    => 'string',
+                                                  'value'   => '');
+         $a_table['fields']['right']      = array('type'    => 'char',
+                                                  'value'   => NULL);
+         $a_table['fields']['plugins_id'] = array('type'    => 'integer',
+                                                  'value'   => NULL);
+         $a_table['fields']['profiles_id']= array('type'    => 'integer',
+                                                  'value'   => NULL);
 
-      $a_table['fields']  = array();
-      $a_table['fields']['id']         = array('type'    => 'autoincrement',
-                                               'value'   => '');
-      $a_table['fields']['type']       = array('type'    => 'string',
-                                               'value'   => '');
-      $a_table['fields']['right']      = array('type'    => 'char',
-                                               'value'   => NULL);
-      $a_table['fields']['plugins_id'] = array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['profiles_id']= array('type'    => 'integer',
-                                               'value'   => NULL);
+         $a_table['oldfields']  = array(
+             'name',
+             'interface',
+             'is_default',
+             'snmp_networking',
+             'snmp_printers',
+             'snmp_models',
+             'snmp_authentification',
+             'rangeip',
+             'agents',
+             'remotecontrol',
+             'agentsprocesses',
+             'unknowndevices',
+             'reports',
+             'deviceinventory',
+             'netdiscovery',
+             'snmp_query',
+             'wol',
+             'configuration');
 
-      $a_table['oldfields']  = array(
-          'name',
-          'interface',
-          'is_default',
-          'snmp_networking',
-          'snmp_printers',
-          'snmp_models',
-          'snmp_authentification',
-          'rangeip',
-          'agents',
-          'remotecontrol',
-          'agentsprocesses',
-          'unknowndevices',
-          'reports',
-          'deviceinventory',
-          'netdiscovery',
-          'snmp_query',
-          'wol',
-          'configuration');
+         $a_table['renamefields'] = array();
+         $a_table['renamefields']['ID'] = 'id';
 
-      $a_table['renamefields'] = array();
-      $a_table['renamefields']['ID'] = 'id';
+         $a_table['keys']   = array();
 
-      $a_table['keys']   = array();
+         $a_table['oldkeys'] = array();
 
-      $a_table['oldkeys'] = array();
+         migrateTablesFusionInventory($migration, $a_table);
 
-      migrateTablesFusionInventory($migration, $a_table);
+            // Remove multiple lines can have problem with unicity
+            $query = "SELECT * , count(`id`) AS cnt
+               FROM `glpi_plugin_fusioninventory_profiles`
+               GROUP BY `type`,`plugins_id`,`profiles_id`
+               HAVING cnt >1
+               ORDER BY cnt";
+            $result=$DB->query($query);
+            while ($data=$DB->fetch_array($result)) {
+               $queryd = "DELETE FROM `glpi_plugin_fusioninventory_profiles`
+                  WHERE `type`='".$data['type']."'
+                     AND `plugins_id`='".$data['plugins_id']."'
+                     AND `profiles_id`='".$data['profiles_id']."'
+                  ORDER BY `id` DESC
+                  LIMIT ".($data['cnt'] - 1)." ";
+               $DB->query($queryd);
+            }
 
-         // Remove multiple lines can have problem with unicity
-         $query = "SELECT * , count(`id`) AS cnt
-            FROM `glpi_plugin_fusioninventory_profiles`
-            GROUP BY `type`,`plugins_id`,`profiles_id`
-            HAVING cnt >1
-            ORDER BY cnt";
-         $result=$DB->query($query);
-         while ($data=$DB->fetch_array($result)) {
-            $queryd = "DELETE FROM `glpi_plugin_fusioninventory_profiles`
-               WHERE `type`='".$data['type']."'
-                  AND `plugins_id`='".$data['plugins_id']."'
-                  AND `profiles_id`='".$data['profiles_id']."'
-               ORDER BY `id` DESC
-               LIMIT ".($data['cnt'] - 1)." ";
-            $DB->query($queryd);
-         }
+         $a_table = array();
+         $a_table['name'] = 'glpi_plugin_fusioninventory_profiles';
+         $a_table['oldname'] = array();
 
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_profiles';
-      $a_table['oldname'] = array();
+         $a_table['fields']  = array();
 
-      $a_table['fields']  = array();
+         $a_table['oldfields']  = array();
 
-      $a_table['oldfields']  = array();
+         $a_table['renamefields'] = array();
 
-      $a_table['renamefields'] = array();
+         $a_table['keys']   = array();
+         $a_table['keys'][] = array('field' => array("type", "plugins_id", "profiles_id"),
+                                    'name' => 'unicity', 'type' => 'UNIQUE');
 
-      $a_table['keys']   = array();
-      $a_table['keys'][] = array('field' => array("type", "plugins_id", "profiles_id"),
-                                 'name' => 'unicity', 'type' => 'UNIQUE');
+         $a_table['oldkeys'] = array();
 
-      $a_table['oldkeys'] = array();
-
-      migrateTablesFusionInventory($migration, $a_table);
-
+         migrateTablesFusionInventory($migration, $a_table);
+   }
 
 
    /*
@@ -5597,11 +5597,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
    $pfNetworkporttype->init();
 
-
-   //Migrate rights to the new system introduction in GLPI 0.85
-   PluginFusioninventoryProfile::migrateProfiles();
-   //Drop old table
-   $migration->dropTable('glpi_plugin_fusioninventory_profiles');
+   if (TableExists('glpi_plugin_fusioninventory_profiles')) {
+      //Migrate rights to the new system introduction in GLPI 0.85
+      PluginFusioninventoryProfile::migrateProfiles();
+      //Drop old table
+      $migration->dropTable('glpi_plugin_fusioninventory_profiles');
+   }
    
    //Create first access to the current profile is needed
    PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);

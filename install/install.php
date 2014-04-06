@@ -208,7 +208,7 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
     * Manage profiles
     */
       $migration->displayMessage("Initialize profiles");
-      PluginFusioninventoryProfile::initProfile();
+      PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
 
 
 
