@@ -251,9 +251,6 @@ class ComputerLog extends RestoreDatabase_TestCase {
 
       $this->assertEquals($a_reference, $a_logs, "Log may be empty at second update ".print_r($a_logs, true));
 
-      return;
-      //################# END #################//
-
 
       // * Modify: contact
       // * remove a processor
@@ -264,13 +261,14 @@ class ComputerLog extends RestoreDatabase_TestCase {
 
       $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
 
-      $query = "SELECT * FROM `glpi_logs`
-      WHERE `id` > '120'";
-      $result = $DB->query($query);
-      $a_logs = array();
+      $a_logs = getAllDatasFromTable('glpi_logs');
+      foreach ($a_logs as $id=>$data) {
+         unset($data['date_mod']);
+         $a_logs[$id] = $data;
+      }
       $a_reference = array(
-          121 => array(
-              'id'               => '121',
+          1 => array(
+              'id'               => '1',
               'itemtype'         => 'Computer',
               'items_id'         => '1',
               'itemtype_link'    => '',
@@ -280,8 +278,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'old_value'        => 'ddurieux',
               'new_value'        => 'root'
           ),
-          122 => array(
-              'id'               => '122',
+          2 => array(
+              'id'               => '2',
               'itemtype'         => 'Monitor',
               'items_id'         => '1',
               'itemtype_link'    => '',
@@ -291,8 +289,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'old_value'        => 'ddurieux',
               'new_value'        => 'root'
           ),
-          123 => array(
-              'id'               => '123',
+          3 => array(
+              'id'               => '3',
               'itemtype'         => 'Computer',
               'items_id'         => '1',
               'itemtype_link'    => 'DeviceProcessor',
@@ -302,8 +300,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'old_value'        => 'Core i3 (1)',
               'new_value'        => ''
           ),
-          124 => array(
-              'id'               => '124',
+          4 => array(
+              'id'               => '4',
               'itemtype'         => 'Computer',
               'items_id'         => '1',
               'itemtype_link'    => 'SoftwareVersion',
@@ -313,8 +311,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'old_value'        => 'ORBit2 - 2.14.19 (3)',
               'new_value'        => ''
           ),
-          125 => array(
-              'id'               => '125',
+          5 => array(
+              'id'               => '5',
               'itemtype'         => 'SoftwareVersion',
               'items_id'         => '3',
               'itemtype_link'    => 'Computer',
@@ -326,10 +324,6 @@ class ComputerLog extends RestoreDatabase_TestCase {
           )
       );
 
-      while ($data=$DB->fetch_assoc($result)) {
-         unset($data['date_mod']);
-         $a_logs[$data['id']] = $data;
-      }
       $this->assertEquals($a_reference, $a_logs, "May have 3 logs (update contact, remove processor
          and remove a software)");
 
