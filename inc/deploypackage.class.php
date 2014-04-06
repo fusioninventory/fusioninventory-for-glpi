@@ -283,6 +283,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    function defineTabs($options=array()) {
 
       $ong = array();
+      $this->addDefaultFormTab($ong);
       if ($this->fields['id'] > 0){
          $this->addStandardTab('PluginFusioninventoryDeployinstall', $ong, $options);
          $this->addStandardTab('PluginFusioninventoryDeployuninstall', $ong, $options);
@@ -312,9 +313,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons($options);
-
-//      echo "<div id='tabcontent'></div>";
-//      echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
       return TRUE;
    }
