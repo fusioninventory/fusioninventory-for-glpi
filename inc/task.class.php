@@ -104,10 +104,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $sopt[5]['name']           = __('Active');
       $sopt[5]['datatype']       = 'bool';
 
-      //$sopt[8]['table']          = 'glpi_plugin_fusioninventory_taskjoblogs';
-      //$sopt[8]['field']          = 'state';
-      //$sopt[8]['name']           = 'Running';
-
       $sopt[30]['table']          = $this->getTable();
       $sopt[30]['field']          = 'id';
       $sopt[30]['linkfield']      = '';
@@ -421,7 +417,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     * TODO: this method should be rewritten to call directly a getAgents() method in the
     * corresponding itemtype classes.
     */
-   public function getAgentsFromActors($actors) {
+   public function getAgentsFromActors($actors = array()) {
       $agents = array();
       $computers = array();
       $computer = new Computer();
@@ -486,6 +482,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                }
 
                break;
+
+            /**
+             * TODO: The following should be replaced with Dynamic groups
+             */
             case 'PluginFusioninventoryAgent':
                switch($itemid) {
                   case "dynamic":
@@ -504,6 +504,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $agents[$agent_entry['id']] = 1;
       }
 
+      // Return the list of agent's ids.
+      // (We used hash keys to avoid duplicates in the list)
       return(array_keys($agents));
    }
 
