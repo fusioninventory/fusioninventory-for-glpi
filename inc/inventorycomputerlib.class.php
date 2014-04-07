@@ -179,7 +179,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if ($no_history === FALSE) {
                $query = "SELECT `glpi_items_deviceprocessors`.`id`, `designation`,
                      `frequency`, `frequence`, `frequency_default`,
-                     `serial`, `manufacturers_id`
+                     `serial`, `manufacturers_id`, `nbcores`, `nbthreads`
                   FROM `glpi_items_deviceprocessors`
                   LEFT JOIN `glpi_deviceprocessors`
                      ON `deviceprocessors_id`=`glpi_deviceprocessors`.`id`
@@ -198,18 +198,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $this->addProcessor($a_processor, $computers_id, $no_history);
                }
             } else {
-
                // Check all fields from source: 'designation', 'serial', 'manufacturers_id',
                // 'frequence'
                foreach ($a_computerinventory['processor'] as $key => $arrays) {
                   $frequence = $arrays['frequence'];
                   unset($arrays['frequence']);
-                  unset($arrays['frequency']);
                   unset($arrays['frequency_default']);
                   foreach ($db_processors as $keydb => $arraydb) {
                      $frequencedb = $arraydb['frequence'];
                      unset($arraydb['frequence']);
-                     unset($arraydb['frequency']);
                      unset($arraydb['frequency_default']);
                      if ($arrays == $arraydb) {
                         $a_criteria = $deviceProcessor->getImportCriteria();

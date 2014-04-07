@@ -106,32 +106,44 @@ class ComputerLog extends RestoreDatabase_TestCase {
 
       $this->a_inventory['processor'] = Array(
             Array(
+                    'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
+                    'nbthreads'         => 2,
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'frequency_default' => 2400
                 ),
             Array(
+                    'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
+                    'nbthreads'         => 2,
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'frequency_default' => 2400
                 ),
             Array(
+                    'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
+                    'nbthreads'         => 2,
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'frequency_default' => 2400
                 ),
             Array(
+                    'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
+                    'nbthreads'         => 2,
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'frequency_default' => 2400
                 )
         );
 
@@ -234,7 +246,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
       $this->assertEquals(0, countElementsInTable('glpi_logs'), "Log must be empty (truncate)");
 
       $_SESSION['glpiactive_entity'] = 0;
-      $pfiComputerLib->updateComputer($this->a_inventory, 1, TRUE, 1);
+      $pfiComputerLib->updateComputer($this->a_inventory, 1, TRUE, 0);
 
       $a_logs = getAllDatasFromTable('glpi_logs');
 
