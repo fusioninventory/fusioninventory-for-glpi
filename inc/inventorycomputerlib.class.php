@@ -246,7 +246,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $db_memories = array();
             if ($no_history === FALSE) {
                $query = "SELECT `glpi_items_devicememories`.`id`, `designation`, `size`,
-                     `frequence`, `serial`, `devicememorytypes_id` FROM `glpi_items_devicememories`
+                     `frequence`, `serial`, `devicememorytypes_id`,
+                     `glpi_items_devicememories`.`busID`
+                     FROM `glpi_items_devicememories`
                   LEFT JOIN `glpi_devicememories` ON `devicememories_id`=`glpi_devicememories`.`id`
                   WHERE `items_id` = '$computers_id'
                      AND `itemtype`='Computer'
