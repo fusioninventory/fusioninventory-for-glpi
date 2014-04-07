@@ -192,23 +192,10 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
    public function getItemsList($module_type) {
-      /**
-       * TODO: Remove this when 'definition' and 'action' fields will be renamed.
-       */
-      $fieldname = "";
-      switch ($module_type) {
-         case 'actors':
-            $fieldname = 'action';
-            break;
-         case 'targets':
-            $fieldname = 'definition';
-            break;
-      }
 
-      $items = importArrayFromDB($this->fields[$fieldname]);
+      $items = importArrayFromDB($this->fields[$module_type]);
       $result = array();
       foreach($items as $item) {
-         Toolbox::logDebug($items);
          $itemtype = key($item);
          $itemid = $item[$itemtype];
          $result[] = $this->getItemDisplay($module_type, $itemtype, $itemid);
@@ -217,12 +204,11 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
    public function getItemDisplay($module_type, $itemtype, $itemid) {
+
       $item = getItemForItemtype($itemtype);
       $item->getFromDB($itemid);
       $itemtype_name = $item->getTypeName();
-      //Toolbox::logDebug($item);
-      Toolbox::logDebug($itemtype);
-      Toolbox::logDebug($itemtype_name);
+
       $item_fullid = $itemtype . '-' . $itemid;
       return implode("\n", array(
          "<div class='taskjob_item' id='" . $item_fullid . "'",
@@ -1177,7 +1163,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                }
             }
 
-            $postvars['definition'] = exportArrayToDB($targets);
+            $postvars['targets'] = exportArrayToDB($targets);
 
             $actors = array();
             if(
@@ -1191,7 +1177,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                }
             }
 
-            $postvars['action'] = exportArrayToDB($actors);
+            $postvars['actors'] = exportArrayToDB($actors);
 
             //TODO: get rid of plugins_id and just use method
             //$postvars['plugins_id'] = $postvars['method-'.$postvars['method']];
