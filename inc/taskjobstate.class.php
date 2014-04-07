@@ -334,7 +334,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
 
    function cancel($reason='') {
-      Toolbox::logDebug($this);
+
       $log = new PluginFusioninventoryTaskjoblog();
 
       $log_input = array(

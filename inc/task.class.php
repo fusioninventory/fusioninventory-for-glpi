@@ -212,9 +212,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "order by job.`id`",
       ));
 
-      //DEBUG SQL
-      file_put_contents("/tmp/get_taskjobstates.sql", $query);
-
       $query_result = $DB->query($query);
       $results = array();
       if ($query_result) {
