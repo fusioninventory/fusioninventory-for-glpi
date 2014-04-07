@@ -472,7 +472,6 @@ class PluginFusioninventoryFormatconvert {
                                                     array(
                                                        'NAME'          => 'designation',
                                                        'MANUFACTURER'  => 'manufacturers_id',
-                                                       'TYPE'          => 'interfacetypes_id',
                                                        'MACADDR'       => 'mac'));
                      if (isset($a_found['PCIID'])) {
                         $a_PCIData =
@@ -487,6 +486,7 @@ class PluginFusioninventoryFormatconvert {
                         }
                         $array_tmp['designation'] = Toolbox::addslashes_deep($array_tmp['designation']);
                      }
+                     $array_tmp['mac'] = strtolower($array_tmp['mac']);
                      $a_inventory['networkcard'][] = $array_tmp;
 
                      if (isset($a_found['NAME'])) {

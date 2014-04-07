@@ -427,7 +427,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          if ($pfConfig->getValue("component_networkcard") != 0) {
             $db_networkcards = array();
             if ($no_history === FALSE) {
-               $query = "SELECT `glpi_items_devicenetworkcards`.`id`, `designation`, `mac`
+               $query = "SELECT `glpi_items_devicenetworkcards`.`id`, `designation`, `mac`,
+                     `manufacturers_id`
                      FROM `glpi_items_devicenetworkcards`
                   LEFT JOIN `glpi_devicenetworkcards`
                      ON `devicenetworkcards_id`=`glpi_devicenetworkcards`.`id`
@@ -451,6 +452,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $this->addNetworkCard($a_networkcard, $computers_id, $no_history);
                }
             } else {
+               Toolbox::logInFile('TOTO', print_r($a_computerinventory['networkcard'], true));
+               Toolbox::logInFile('TOTO', print_r($db_networkcards, true));
                // Check all fields from source: 'designation', 'mac'
                foreach ($a_computerinventory['networkcard'] as $key => $arrays) {
                   $arrays['designation'] = strtolower($arrays['designation']);
