@@ -1051,39 +1051,39 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
       $return = true;
       $input = array();
       $input['id'] = $this->fields['id'];
-      $a_definitions = importArrayFromDB($this->fields['definition']);
-      foreach ($a_definitions as $num=>$data) {
+      $targets = importArrayFromDB($this->fields['targets']);
+      foreach ($targets as $num=>$data) {
          $classname = key($data);
          if ($classname == '') {
-            unset($a_definitions[$num]);
+            unset($targets[$num]);
          } else {
             $Class = new $classname;
             if (!$Class->getFromDB(current($data))) {
-               unset($a_definitions[$num]);
+               unset($targets[$num]);
             }
          }
       }
-      if (count($a_definitions) == '0') {
-         $input['definition'] = '';
+      if (count($targets) == '0') {
+         $input['targets'] = '';
          $return = FALSE;
       } else {
-         $input['definition'] = exportArrayToDB($a_definitions);
+         $input['targets'] = exportArrayToDB($targets);
       }
-      $a_actions = importArrayFromDB($this->fields['action']);
-      foreach ($a_actions as $num=>$data) {
+      $actors = importArrayFromDB($this->fields['actors']);
+      foreach ($actors as $num=>$data) {
          $classname = key($data);
          $Class = new $classname;
          if (!$Class->getFromDB(current($data))
                  AND (current($data) != ".1")
                  AND (current($data) != ".2")) {
-            unset($a_actions[$num]);
+            unset($actors[$num]);
          }
       }
-      if (count($a_actions) == '0') {
-         $input['action'] = '';
+      if (count($actors) == '0') {
+         $input['actors'] = '';
          $return = FALSE;
       } else {
-         $input['action'] = exportArrayToDB($a_actions);
+         $input['actors'] = exportArrayToDB($actors);
       }
       $this->update($input);
       return $return;

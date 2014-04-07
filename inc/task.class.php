@@ -104,10 +104,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       $sopt[5]['name']           = __('Active');
       $sopt[5]['datatype']       = 'bool';
 
-      //$sopt[8]['table']          = 'glpi_plugin_fusioninventory_taskjoblogs';
-      //$sopt[8]['field']          = 'state';
-      //$sopt[8]['name']           = 'Running';
-
       $sopt[30]['table']          = $this->getTable();
       $sopt[30]['field']          = 'id';
       $sopt[30]['linkfield']      = '';
@@ -183,15 +179,22 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       $pfJobstate = new PluginFusioninventoryTaskjobstate();
 
+      $pfTimeslot = new PluginFusioninventoryTimeslot();
+
       $jobstates = array();
+
+      //Get the datetime of agent request
+      $now = new Datetime();
+
       // list of jobstates not allowed to run (ie. filtered by schedule and timeslots)
-      $jobstates_to_delete = array();
+      $jobstates_to_cancel = array();
 
       $query = implode( "\n", array(
          "select",
          "     task.`id`, task.`name`, task.`is_active`,",
          "     task.`datetime_start`, task.`datetime_end`,",
-         "     job.`id`, job.`name`, job.`method`,",
+         "     task.`plugin_fusioninventory_timeslots_id` as timeslot_id,",
+         "     job.`id`, job.`name`, job.`method`, job.`actors`,",
          "     run.`itemtype`, run.`items_id`,",
          "     run.`id`, run.`plugin_fusioninventory_agents_id`",
          "from `glpi_plugin_fusioninventory_taskjobstates` run",
@@ -209,14 +212,37 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "order by job.`id`",
       ));
 
-      //DEBUG SQL
-      file_put_contents("/tmp/get_taskjobstates.sql", $query);
-
       $query_result = $DB->query($query);
       $results = array();
       if ($query_result) {
          $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
       }
+
+      // Get timeslot's entries from this list at the time of the request (ie. get entries according
+      // to the day of the week)
+      $timeslot_entries = array();
+      Toolbox::logDebug("Day of week : ". $now->format("N"));
+      $day_of_week = $now->format("N");
+
+      $timeslot_ids = array();
+      foreach( $results as $result ) {
+         $timeslot_ids[$result['task']['timeslot_id']] = 1;
+      }
+      Toolbox::logDebug($pfTimeslot->getTimeslotEntries(array_keys($timeslot_ids), $day_of_week));
+
+      foreach( $results as $result ) {
+         $timeslot_id = $result['task']['timeslot_id'];
+         if ( !array_key_exists($timeslot_id, $timeslot_entries) ) {
+            $timeslot_entries[$timeslot_id] = getAllDatasFromTable(
+               "glpi_plugin_fusioninventory_timeslotentries",
+               "`plugin_fusioninventory_timeslots_id`='".$timeslot_id."' ".
+               "AND `day`='".$day_of_week."'",
+               false, ''
+            );
+         }
+      }
+      $today = new Datetime($now->format("Y-m-d 0:0:0"));
+      $timeslot_cursor = date_create('@0')->add($today->diff($now,true))->getTimestamp();
 
       /**
        * Ensure the agent's jobstates are allowed to run at the time of the agent's request.
@@ -232,14 +258,16 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $jobstate = new PluginFusioninventoryTaskjobstate();
          $jobstate->getFromDB($result['run']['id']);
 
-         //Delete the jobstate if the related tasks has been deactivated
+         //Cancel the jobstate if the related tasks has been deactivated
          if ($result['task']['is_active'] == 0) {
-            $jobstates_to_delete[$jobstate->fields['id']] = $jobstate;
+            $jobstates_to_cancel[$jobstate->fields['id']] = array(
+               'jobstate' => $jobstate,
+               'reason' => __('The task has been deactivated after preparation of this job.')
+            );
             continue;
          };
 
-         // Delete the jobstate if it the schedule or timeslots doesn't match.
-         $now = new Datetime();
+         // Cancel the jobstate if it the schedule doesn't match.
          if ( !is_null($result['task']['datetime_start']) ) {
             $schedule_start = new DateTime($result['task']['datetime_start']);
 
@@ -250,35 +278,74 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             }
 
             if ( !($schedule_start <= $now and $now <= $schedule_end) ) {
-               Toolbox::logDebug(
-                  "removing jobstate ".$result['run']['id']." because it doesn't ".
-                  "respect the task's schedule or timeslots"
+               $jobstates_to_cancel[$jobstate->fields['id']] = array(
+                  'jobstate' => $jobstate,
+                  'reason' => __(
+                     "This job can not be executed anymore due to the task's schedule."
+                  )
                );
-               $jobstates_to_delete[$jobstate->fields['id']] = $jobstate;
                continue;
             }
          }
 
-         // TODO: Make sure the agent is still present in the dynamic actor itemtype that generated
-         // this taskjobstate.
+         // Cancel the jobstate if it is requested outside of any timeslot.
+         Toolbox::logDebug(var_export($result,true));
+         $timeslot_id = $result['task']['timeslot_id'];
+         if ($timeslot_id > 0) {
+            $timeslot_matched = false;
+            foreach( $timeslot_entries[$timeslot_id] as $timeslot_entry ) {
+               Toolbox::logDebug($timeslot_entry);
+               if (
+                  $timeslot_entry['begin'] <= $timeslot_cursor
+                  and $timeslot_cursor <= $timeslot_entry['end']
+               ) {
+                  //The timeslot cursor (ie. time of request) matched a timeslot entry so we can
+                  //break the loop here.
+                  $timeslot_matched = true;
+                  break;
+               }
+            }
+            // If no timeslot matched, cancel this jobstate.
+            if ( !$timeslot_matched ) {
+               $jobstates_to_cancel[$jobstate->fields['id']] = array(
+                  'jobstate' => $jobstate,
+                  'reason' => __(
+                     "This job can not be executed anymore due to the task's timeslot."
+                  )
+               );
+               continue;
+            }
+         }
 
-         //Add the jobstate to the list seems previous checks are good.
+         // Make sure the agent is still present in the list of actors that generated
+         // this jobstate.
+         // TODO: If this jobstate needs to be cancelled, it would be worth to point out which actor
+         // is the source of this execution. To do this, we need to track the 'actor_source' in the
+         // jobstate when it's generated by prepareTaskjobs().
+
+         $actors = importArrayFromDB($result['job']['actors']);
+         $agents = $this->getAgentsFromActors($actors);
+         if ( !in_array($agent_id, $agents) ) {
+            $jobstates_to_cancel[$jobstate->fields['id']] = array(
+               'jobstate' => $jobstate,
+               'reason' => __(
+                  'This agent does not belong anymore in the actors defined in the job.'
+               )
+            );
+            continue;
+         }
+
          //TODO: The following method (actually defined as member of taskjob) needs to be
          //initialized when getting the jobstate from DB (with a getfromDB hook for example)
          $jobstate->method = $result['job']['method'];
+
+         //Add the jobstate to the list since previous checks are good.
          $jobstates[$jobstate->fields['id']] = $jobstate;
       }
-      //Toolbox::logDebug(
-      //   array(
-      //      "jobstates to delete" => array_keys($jobstates_to_delete),
-      //      "jobstates" => array_keys($jobstates),
-      //   )
-      //);
 
       //Remove the list of jobstates previously filtered for removal.
-      //TODO: maybe we should only cancel the jobstate and explain why it has been removed.
-      foreach( $jobstates_to_delete as $jobstate) {
-         $jobstate->deleteFromDB();
+      foreach( $jobstates_to_cancel as $jobstate) {
+         $jobstate['jobstate']->cancel($jobstate['reason']);
       }
       return $jobstates;
    }
@@ -286,10 +353,12 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
    function prepareTaskjobs( $methods = array()) {
       global $DB;
+
       $agent = new PluginFusioninventoryAgent();
 
-      // Get all Items where lies the agent.
-      //$items = $this->getActorItemsForAgent($agent_id, $methods);
+      $timeslot = new PluginFusioninventoryTimeslot();
+
+      $now = new DateTime();
 
       //transform methods array into string for database query
       $methods = "'" . implode("','", $methods) . "'";
@@ -298,7 +367,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "select",
          "     task.`id`, task.`name`,",
          "     job.`id`, job.`name`, job.`method`, ",
-         "     job.`definition`, job.`action`,",
+         "     job.`targets`, job.`actors`,",
          "     run.`id`, run.`plugin_fusioninventory_agents_id`",
          "from `glpi_plugin_fusioninventory_taskjobs` job",
          "left join `glpi_plugin_fusioninventory_tasks` task",
@@ -309,15 +378,15 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "and (",
          /**
           * Filter jobs by the schedule and timeslots
-          * TODO: add the timeslot condition.
           */
          // check only if now() >= datetime_start if datetime_end is null
          "        (   task.`datetime_start` is not null and task.`datetime_end` is null",
-         "              and now() >= task.`datetime_start` )",
+         "              and '".$now->format("Y-m-d H:i:s")."' >= task.`datetime_start` )",
          "     or",
          // check if now() is between datetime_start and datetime_end
          "        (   task.`datetime_start` is not null and task.`datetime_end` is not null",
-         "              and now() between task.`datetime_start` and task.`datetime_end` )",
+         "              and '".$now->format("Y-m-d H:i:s")."' ",
+         "                    between task.`datetime_start` and task.`datetime_end` )",
          "     or",
          // finally, check if this task can be run at any time ( datetime_start and datetime_end are
          // both null)
@@ -329,6 +398,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          // feature will be properly activated in the taskjobs list.
          "order by job.`id`",
       ));
+
       $query_result = $DB->query($query);
       $results = array();
       if ($query_result) {
@@ -338,14 +408,14 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       // Set basic elements of jobstates
       $run_base = array(
          'state' => PluginFusioninventoryTaskjobstate::PREPARED,
-         'date'  => date("Y-m-d H:i:s"),
+         'date'  => $now->format("Y-m-d H:i:s"),
       );
 
       $jobstate = new PluginFusioninventoryTaskjobstate();
 
       foreach($results as $index => $result) {
 
-         $actors = importArrayFromDB($result['job']['action']);
+         $actors = importArrayFromDB($result['job']['actors']);
          // Get agents linked to the actors
          $agent_ids = array();
          foreach( $this->getAgentsFromActors($actors) as $agent_id) {
@@ -360,19 +430,22 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             continue;
          }
 
-         $targets = importArrayFromDB($result['job']['definition']);
+         $targets = importArrayFromDB($result['job']['targets']);
 
          foreach($targets as $target) {
             $item_type = key($target);
             $item_id = current($target);
             $job_id = $result['job']['id'];
-
             $jobstates_running = $jobstate->find(
                implode("\n", array(
                   "    `itemtype` = '" . $item_type . "'",
                   "and `items_id` = ".$item_id,
                   "and `plugin_fusioninventory_taskjobs_id` = ". $job_id,
-                  "and `state` <> " . PluginFusioninventoryTaskjobstate::FINISHED,
+                  "and `state` not in ( " . implode( "," , array(
+                     PluginFusioninventoryTaskjobstate::FINISHED,
+                     PluginFusioninventoryTaskjobstate::IN_ERROR,
+                     PluginFusioninventoryTaskjobstate::CANCELLED
+                  )) . ")",
                   "and `plugin_fusioninventory_agents_id` in (",
                   "  '" . implode("','", array_keys($agent_ids)) . "'",
                   ")"
@@ -419,7 +492,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
     * TODO: this method should be rewritten to call directly a getAgents() method in the
     * corresponding itemtype classes.
     */
-   public function getAgentsFromActors($actors) {
+   public function getAgentsFromActors($actors = array()) {
       $agents = array();
       $computers = array();
       $computer = new Computer();
@@ -484,6 +557,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                }
 
                break;
+
+            /**
+             * TODO: The following should be replaced with Dynamic groups
+             */
             case 'PluginFusioninventoryAgent':
                switch($itemid) {
                   case "dynamic":
@@ -502,6 +579,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $agents[$agent_entry['id']] = 1;
       }
 
+      // Return the list of agent's ids.
+      // (We used hash keys to avoid duplicates in the list)
       return(array_keys($agents));
    }
 
@@ -517,8 +596,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {
          $methods[] = $method['method'];
       }
-      Toolbox::logDebug($methods);
-      return $task->prepareTaskjobs($methods);
+      $task->prepareTaskjobs($methods);
+      return true;
    }
 
    function getTasksRunning($tasks_id=0) {

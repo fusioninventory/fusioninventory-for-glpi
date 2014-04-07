@@ -131,6 +131,12 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             "datetime_end",
             $datetime_field_options
          );
+
+         $this->showDropdownForItemtype(
+            __('Timeslot','fusioninventory'),
+            "PluginFusioninventoryTimeslot",
+            array('value' => $this->fields['plugin_fusioninventory_timeslots_id'])
+            );
       echo "</div>";
       }
       /**
@@ -207,8 +213,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "</tr>";
       $this->showFormButtons($options);
 
-      //$pfTaskjob = new PluginFusioninventoryTaskjob();
-      //$pfTaskjob->displayList($id);
       return true;
    }
 

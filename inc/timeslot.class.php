@@ -104,7 +104,52 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       return $ong;
    }
 
+   /*
+    * Get Timeslot entries.
+    * @param timeslot_ids  A list of timeslot's ids.
+    * @param weekdays      A list of numeric representation of days of week
+    * return The list of timeslots entries organized by timeslots ids.
+    */
 
+   function getTimeslotEntries($timeslot_ids = array(), $weekdays = null ) {
+
+      $condition = array(
+         "`plugin_fusioninventory_timeslots_id` in ('".implode("','",$timeslot_ids)."'",
+      );
+      if ( !is_null($weekdays) ) {
+         $condition[] = "and `day` = '".$weekdays."')";
+      }
+
+      $results = array();
+
+      $timeslot_entries = getAllDatasFromTable(
+         "glpi_plugin_fusioninventory_timeslotentries",
+         implode("\n", $condition),
+         false, '');
+
+      Toolbox::logDebug($timeslot_entries);
+      foreach ( $timeslot_entries as $timeslot_entry ) {
+         Toolbox::logDebug($timeslot_entry);
+      }
+
+      return $results;
+   }
+
+   /**
+    * Get Timeslot cursor (ie. seconds since 00:00) according to a certain datetime
+    * @param date    The date and time we want to transform into cursor. If null the default value
+    *                is now()
+    * @since 0.85+1.0
+    */
+
+   function getTimeslotCursor(DateTime $datetime = null) {
+      if (is_null($date)) {
+         $datetime = new DateTime();
+      }
+      $dateday = new DateTime( $datetime->format("Y-m-d 0:0:0") );
+      $timeslot_cursor = date_create('@0')->add($dateday->diff($datetime,true))->getTimestamp();
+      return $timeslot_cursor;
+   }
 
    /**
    * Display form for agent configuration

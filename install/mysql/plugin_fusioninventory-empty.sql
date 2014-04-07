@@ -100,6 +100,7 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `permanent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `datetime_start` datetime DEFAULT NULL,
   `datetime_end` datetime DEFAULT NULL,
+  `plugin_fusioninventory_timeslots_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
   KEY `is_active` (`is_active`)
@@ -168,7 +169,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobstates` (
   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
   `specificity` text DEFAULT NULL,
   `uniqid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `execution_id` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_taskjobs_id` (`plugin_fusioninventory_taskjobs_id`),
   KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`,`state`),
