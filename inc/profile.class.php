@@ -340,10 +340,23 @@ class PluginFusioninventoryProfile extends Profile {
 
    static function removeRightsFromSession() {
       $profile = new self();
-      foreach ($profile->getAllRights(true) as $right) {
+      foreach ($profile->getAllRights() as $right) {
          if (isset($_SESSION['glpiactiveprofile'][$right['field']])) {
             unset($_SESSION['glpiactiveprofile'][$right['field']]);
          }
+      }
+      
+      if (isset($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryMenu'])) {
+         unset ($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryMenu']);
+      }
+      if (isset($_SESSION['glpimenu']['plugins']['content']['pluginfusioninventorymenu'])) {
+         unset ($_SESSION['glpimenu']['plugins']['content']['pluginfusioninventorymenu']);
+      }
+      if (isset($_SESSION['glpimenu']['assets']['types']['PluginFusioninventoryUnknowndevice'])) {
+         unset ($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryUnknowndevice']);
+      }
+      if (isset($_SESSION['glpimenu']['assets']['content']['pluginfusioninventoryunknowndevice'])) {
+         unset ($_SESSION['glpimenu']['assets']['content']['pluginfusioninventoryunknowndevice']);
       }
    }
 
