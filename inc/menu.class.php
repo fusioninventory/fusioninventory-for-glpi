@@ -445,8 +445,81 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "</tr>";
       echo "</table>";
       echo "</div><br/><br/><br/>";
+
+      self::board();
       self::displayMenu2();
    }
+
+
+
+   /**
+    * htmlMenu
+    *
+    *@param $menu_name value of the menu
+    *@param $a_menu array menu of each module
+    *@param $type value "big" or "mini"
+    *@param $width_status integer width of space before and after menu position
+    *
+    *@return $width_status integer total width used by menu
+    **/
+   static function htmlMenu($menu_name, $a_menu = array(), $type = "big", $width_status='300') {
+      global $CFG_GLPI;
+
+      $width_max = 1250;
+
+      $width = 180;
+
+      if (($width + $width_status) > $width_max) {
+         $width_status = 0;
+         echo "</td>";
+         echo "</tr>";
+         echo "</table>";
+         echo "<table>";
+         echo "<tr>";
+         echo "<td valign='top'>";
+      } else {
+         echo "</td>";
+         echo "<td valign='top'>";
+      }
+      $width_status = ($width + $width_status);
+
+      echo "<table class='tab_cadre'
+         onMouseOver='document.getElementById(\"menu".$menu_name."\").style.display=\"block\"'
+         onMouseOut='document.getElementById(\"menu".$menu_name."\").style.display=\"none\"'>";
+
+      echo "<tr>";
+      echo "<th colspan='".count($a_menu)."' nowrap width='".$width."'>
+         <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
+         &nbsp;".str_replace("FusionInventory ", "", $menu_name)."&nbsp;
+         <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
+      </th>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1' id='menu".$menu_name."' style='display:none'>";
+      echo "<td>";
+
+      echo "<table>";
+      foreach ($a_menu as $menu_id) {
+         echo "<tr>";
+         $menu_id['pic'] = str_replace("/menu_", "/menu_mini_", $menu_id['pic']);
+         echo "<th>";
+         if (!empty($menu_id['pic'])) {
+            echo "<img src='".$menu_id['pic']."' width='16' height='16'/>";
+         }
+         echo "</th>";
+         echo "<th colspan='".(count($a_menu) - 1)."' width='".($width - 40)."'>
+                  <a href='".$menu_id['link']."'>".$menu_id['name']."</a></th>";
+         echo "</tr>";
+      }
+      echo "</table>";
+
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+
+      return $width_status;
+   }
+
 
 
    static function displayMenu2() {
@@ -670,72 +743,170 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
 
-   /**
-    * htmlMenu
-    *
-    *@param $menu_name value of the menu
-    *@param $a_menu array menu of each module
-    *@param $type value "big" or "mini"
-    *@param $width_status integer width of space before and after menu position
-    *
-    *@return $width_status integer total width used by menu
-    **/
-   static function htmlMenu($menu_name, $a_menu = array(), $type = "big", $width_status='300') {
-      global $CFG_GLPI;
+   static function board() {
+      global $DB;
 
-      $width_max = 1250;
+      // Computers
+      $fusionComputers = countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers');
+      $allComputers    = countElementsInTable('glpi_computers',
+                                              "`is_deleted`='0' AND `is_template`='0'");
 
-      $width = 180;
+      $dataComputer = array();
+      $dataComputer[] = array(
+          'key' => 'FusionInventory computers : '.$fusionComputers,
+          'y'   => $fusionComputers,
+          'color' => '#3dff7d'
+      );
+      $dataComputer[] = array(
+          'key' => 'Other computers : '.($allComputers - $fusionComputers),
+          'y'   => ($allComputers - $fusionComputers),
+          'color' => "#dedede"
+      );
 
-      if (($width + $width_status) > $width_max) {
-         $width_status = 0;
-         echo "</td>";
-         echo "</tr>";
-         echo "</table>";
-         echo "<table>";
-         echo "<tr>";
-         echo "<td valign='top'>";
-      } else {
-         echo "</td>";
-         echo "<td valign='top'>";
-      }
-      $width_status = ($width + $width_status);
 
-      echo "<table class='tab_cadre'
-         onMouseOver='document.getElementById(\"menu".$menu_name."\").style.display=\"block\"'
-         onMouseOut='document.getElementById(\"menu".$menu_name."\").style.display=\"none\"'>";
+      // SNMP
+      $networkequipment = countElementsInTable('glpi_plugin_fusioninventory_networkequipments');
+      $printer    = countElementsInTable('glpi_plugin_fusioninventory_printers');
 
-      echo "<tr>";
-      echo "<th colspan='".count($a_menu)."' nowrap width='".$width."'>
-         <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
-         &nbsp;".str_replace("FusionInventory ", "", $menu_name)."&nbsp;
-         <img src='".$CFG_GLPI["root_doc"]."/pics/deplier_down.png' />
-      </th>";
+      $dataSNMP = array();
+      $dataSNMP[] = array(
+          'key' => 'NetworkEquipments (SNMP) : '.$networkequipment,
+          'y'   => $networkequipment,
+          'color' => '#3d94ff'
+      );
+      $dataSNMP[] = array(
+          'key' => 'Printers (SNMP) : '.$printer,
+          'y'   => $printer,
+          'color' => '#3dff7d'
+      );
+
+
+      // switches ports
+      $allSwitchesPortSNMP = countElementsInTable('glpi_plugin_fusioninventory_networkports');
+      $query = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
+              LEFT JOIN `glpi_plugin_fusioninventory_networkports`
+                 ON `glpi_plugin_fusioninventory_networkports`.`networkports_id` = `glpi_networkports`.`id`
+              LEFT JOIN glpi_networkports_networkports
+                  ON (`networkports_id_1`=`glpi_networkports`.`id`
+                     OR `networkports_id_2`=`glpi_networkports`.`id`)
+              WHERE `glpi_plugin_fusioninventory_networkports`.`id` IS NOT NULL
+                  AND `glpi_networkports_networkports`.`id` IS NOT NULL";
+      $result = $DB->query($query);
+      $networkPortsLinked = $DB->numrows($result);
+
+      $dataPortL = array();
+      $dataPortL[] = array(
+          'key' => 'SNMP switch network ports linked : '.$networkPortsLinked,
+          'y'   => $networkPortsLinked,
+          'color' => '#3dff7d'
+      );
+      $dataPortL[] = array(
+          'key' => 'SNMP switch network ports not linked : '.($allSwitchesPortSNMP - $networkPortsLinked),
+          'y'   => ($allSwitchesPortSNMP - $networkPortsLinked),
+          'color' => '#dedede'
+      );
+
+      // Ports connected at last SNMP inventory
+      $networkPortsConnected = countElementsInTable('glpi_plugin_fusioninventory_networkports',
+                                                    "`ifstatus`='1' OR `ifstatus`='up'");
+      $dataPortC = array();
+      $dataPortC[] = array(
+          'key' => 'Ports connected : '.$networkPortsConnected,
+          'y'   => $networkPortsConnected,
+          'color' => '#3dff7d'
+      );
+      $dataPortC[] = array(
+          'key' => 'Ports not connected : '.($allSwitchesPortSNMP - $networkPortsConnected),
+          'y'   => ($allSwitchesPortSNMP - $networkPortsConnected),
+          'color' => '#dedede'
+      );
+
+      $dataDeploy = array();
+      $dataDeploy[] = array(
+          'key' => 'Deployment successfull : 400',
+          'y'   => 400,
+          'color' => '#3dff7d'
+      );
+      $dataDeploy[] = array(
+          'key' => 'Deployment in error : 55',
+          'y'   => 55,
+          'color' => '#ff3d3d'
+      );
+      $dataDeploy[] = array(
+          'key' => 'Deployment prepared and waiting : 568',
+          'y'   => 568,
+          'color' => '#feffc9'
+      );
+
+
+      echo "<table align='center'>";
+      echo "<tr height='280'>";
+      echo "<td width='380'>";
+      self::showChart('computers', $dataComputer);
+      echo "</td>";
+      echo "<td width='380'>";
+
+      echo "</td>";
+      echo "<td width='380'>";
+      self::showChart('deploy', $dataDeploy);
+      echo "</td>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1' id='menu".$menu_name."' style='display:none'>";
+      echo "<tr height='280'>";
       echo "<td>";
-
-      echo "<table>";
-      foreach ($a_menu as $menu_id) {
-         echo "<tr>";
-         $menu_id['pic'] = str_replace("/menu_", "/menu_mini_", $menu_id['pic']);
-         echo "<th>";
-         if (!empty($menu_id['pic'])) {
-            echo "<img src='".$menu_id['pic']."' width='16' height='16'/>";
-         }
-         echo "</th>";
-         echo "<th colspan='".(count($a_menu) - 1)."' width='".($width - 40)."'>
-                  <a href='".$menu_id['link']."'>".$menu_id['name']."</a></th>";
-         echo "</tr>";
-      }
-      echo "</table>";
-
+      self::showChart('snmp', $dataSNMP);
+      echo "</td>";
+      echo "<td>";
+      self::showChart('ports', $dataPortL);
+      echo "</td>";
+      echo "<td>";
+      self::showChart('portsconnected', $dataPortC);
       echo "</td>";
       echo "</tr>";
       echo "</table>";
 
-      return $width_status;
+   }
+
+
+   static function showChart($name, $data) {
+
+      echo '<svg id="'.$name.'"></svg>';
+
+      echo "<script>
+var testdata".$name." = ".  json_encode($data).";
+
+      nv.addGraph(function() {
+
+    var width = 400,
+        height = 400;
+
+    var chart = nv.models.pieChart()
+        .x(function(d) { return d.key })
+        .values(function(d) { return d })
+        .showLabels(false)
+//        .color(d3.scale.category10().range())
+        .color(function(d) {return d.data.color})
+        .width(width)
+        .height(height)
+        .donut(true);
+
+    chart.pie
+        .startAngle(function(d) { return d.startAngle/2 -Math.PI/2 })
+        .endAngle(function(d) { return d.endAngle/2 -Math.PI/2 });
+
+
+      d3.select('#".$name."')
+          .datum([testdata".$name."])
+        .transition().duration(1200)
+          .attr('width', width)
+          .attr('height', height)
+          .call(chart);
+
+    return chart;
+});
+</script>";
+
+
    }
 }
 

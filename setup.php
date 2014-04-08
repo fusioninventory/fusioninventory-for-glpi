@@ -375,7 +375,8 @@ function plugin_init_fusioninventory() {
             }
          }
          // Load nvd3 for printerpage counter graph
-         if (strstr($_SERVER['PHP_SELF'], '/front/printer.form.php')) {
+         if (strstr($_SERVER['PHP_SELF'], '/front/printer.form.php')
+                 || strstr($_SERVER['PHP_SELF'], '/front/menu.php')) {
             echo '<link href="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
                     '/src/nv.d3.css" rel="stylesheet" type="text/css" />
                <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
