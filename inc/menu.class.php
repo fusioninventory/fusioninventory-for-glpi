@@ -884,7 +884,6 @@ var testdata".$name." = ".  json_encode($data).";
         .x(function(d) { return d.key })
         .values(function(d) { return d })
         .showLabels(false)
-//        .color(d3.scale.category10().range())
         .color(function(d) {return d.data.color})
         .width(width)
         .height(height)
