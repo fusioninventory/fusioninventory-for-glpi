@@ -207,8 +207,8 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
    /*
     * Manage profiles
     */
-      //$migration->displayMessage("Initialize profiles");
-      //PluginFusioninventoryProfile::initProfile();
+    $migration->displayMessage("Initialize profiles");
+    PluginFusioninventoryProfile::initProfile();
 
 
 
