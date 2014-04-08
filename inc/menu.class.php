@@ -59,7 +59,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    static function canView() {
       $can_display = false;
       $profile     = new PluginFusioninventoryProfile();
-      
+
       foreach ($profile->getAllRights() as $right) {
          if (Session::haveRight($right['field'], READ)) {
             $can_display = true;
@@ -68,11 +68,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
       return $can_display;
    }
-   
+
    static function canCreate() {
       return false;
    }
-   
+
    static function getMenuName() {
       return self::getTypeName();
    }
@@ -181,7 +181,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_group.png";
          $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploygroup.php";
       }
-      
+
       if (Session::haveRight('config', UPDATE) || Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
          $a_menu[3]['name'] = __('General configuration', 'fusioninventory');
          $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
@@ -269,7 +269,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[3]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventoryruleentity.php";
       }
-      
+
       if (Session::haveRight('plugin_fusioninventory_rulelocation', READ)) {
          $a_menu[4]['name'] = __('Computer location rules', 'fusioninventory');
          $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
@@ -395,7 +395,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_files.png";
          $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploymirror.php";
       }
-      
+
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('Deploy', 'fusioninventory'),
                                                              $a_menu,
@@ -445,6 +445,227 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "</tr>";
       echo "</table>";
       echo "</div><br/><br/><br/>";
+      self::displayMenu2();
+   }
+
+
+   static function displayMenu2() {
+      global $CFG_GLPI;
+
+      /*
+       * menus
+       *
+         * computer inventory
+       *
+         * computer collect
+       *
+         * Network discovery
+       *
+         * network inventory (SNMP)
+       *
+         * ESX inventory
+       *
+         * software deployment
+       *
+         * Wake on Lan
+       *
+       */
+
+
+      echo "<table>";
+      echo "<tr>";
+      echo "<td valign='top'>";
+      // * Computer inventory
+         echo "<table class='tab_cadre' width='200'>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<th>";
+         echo __('Computer inventory', 'fusioninventory');
+         echo "</th>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('Configuration', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo _n('Blacklist', 'Blacklists', 1);
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('Entity rules', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('Equipment import and link rules', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('Computer location rules', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('Additional computer information rules', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('Ignored import devices', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<th>";
+         echo __('Server url for agents', 'fusioninventory');
+         echo "</th>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         $split = explode('front/', $_SERVER['PHP_SELF']);
+         $port = '';
+         $ports = '';
+         if ($_SERVER['SERVER_PORT'] != 80
+                 && $_SERVER['SERVER_PORT'] != 443) {
+            $port = $_SERVER['SERVER_PORT'];
+         }
+         echo 'http://'.$_SERVER['SERVER_NAME'].$port.$split[0];
+         echo "<br/>".__('or')."<br/>";
+         echo 'https://'.$_SERVER['SERVER_NAME'].$ports.$split[0];
+         echo "</td>";
+         echo "</tr>";
+
+         echo "</table>";
+
+      echo "</td>";
+      echo "<td valign='top'>";
+
+      // * Computer collect
+         echo "<table class='tab_cadre' width='200'>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<th>";
+         echo __('Additional computer information', 'fusioninventory');
+         echo "</th>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('Additional computer information', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('Additional computer information rules', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "</table>";
+
+      echo "</td>";
+      echo "<td valign='top'>";
+
+      // * Network discovery
+         echo "<table class='tab_cadre' width='200'>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<th>";
+         echo __('Network discovery', 'fusioninventory');
+         echo "</th>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('SNMP authentication', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('IP ranges', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('Equipment import and link rules', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('Task management', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('Discovery status', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "</table>";
+
+      echo "</td>";
+      echo "<td valign='top'>";
+
+      // * Network inventory (SNMP)
+         echo "<table class='tab_cadre' width='200'>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<th>";
+         echo __('Network inventory (SNMP)', 'fusioninventory');
+         echo "</th>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('SNMP authentication', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('IP ranges', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('Equipment import and link rules', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('Task management', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>";
+         echo __('Network inventory status', 'fusioninventory');
+         echo "</td>";
+         echo "</tr>";
+
+         echo "</table>";
+
+      echo "</td>";
+      echo "</table>";
+
    }
 
 
