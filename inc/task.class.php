@@ -592,24 +592,49 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       return true;
    }
 
-   function getTasksRunning($tasks_id=0) {
+   static function getTasksRunning($methods = array(), $entities_id = null) {
       global $DB;
 
-      $where = '';
-      $where .= getEntitiesRestrictRequest("AND", 'task');
-      if ($tasks_id > 0) {
-         $where = " AND task.`id`='".$tasks_id."'
-            LIMIT 1 ";
+      $methods_restrict = null;
+      if( !is_array($methods) ) {
+         trigger_error("'methods' must be an array.");
+      } else {
+         if (count($methods_restrict) > 0) {
+            $methods_restrict = "and job.`method` in ('".implode("','",$methods)."')";
+         }
       }
 
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_tasks` as task
-         WHERE execution_id !=
-            (SELECT execution_id FROM glpi_plugin_fusioninventory_taskjobs as taskjob
-               WHERE taskjob.`plugin_fusioninventory_tasks_id`=task.`id`
-               ORDER BY execution_id DESC
-               LIMIT 1
-            )".$where;
-      return $DB->query($query);
+      $entities_restrict = null;
+      if (!is_null($entities_id) and isset($_SESSION['glpiactiveentities_string'])) {
+         $entities_restrict = getEntitiesRestrictRequest("AND", 'task');
+      }
+
+      $query = implode("\n", array_filter( array(
+         "select",
+         "  task.`id`, task.`name`,",
+         "  job.`id`, job.`name`,",
+         "  run.`id`",
+         "from `glpi_plugin_fusioninventory_tasks` as task",
+         "left join `glpi_plugin_fusioninventory_taskjobs` as job",
+         "  on job.`plugin_fusioninventory_tasks_id` = task.`id`",
+         "left join `glpi_plugin_fusioninventory_taskjobstates` as run",
+         "  on run.`plugin_fusioninventory_taskjobs_id` = job.`id`",
+         "where",
+         "  run.`state` not in (". implode( "," , array(
+            PluginFusioninventoryTaskjobstate::FINISHED,
+            PluginFusioninventoryTaskjobstate::IN_ERROR,
+            PluginFusioninventoryTaskjobstate::CANCELLED
+         )) . ")",
+         (!is_null($methods_restrict)?"  ".$methods_restrict:null),
+         (!empty($entities_restrict)?"  ".$entities_restrict:null),
+      )));
+      $query_result = $DB->query($query);
+      echo $query."\n";
+      $results = array();
+      if ( $query_result ) {
+         $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
+      }
+      return $results;
    }
 
 
