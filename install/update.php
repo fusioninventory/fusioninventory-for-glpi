@@ -40,6 +40,8 @@
    ------------------------------------------------------------------------
  */
 
+include_once( GLPI_ROOT . "/plugins/fusioninventory/install/update.tasks.php" );
+
 function pluginFusioninventoryGetCurrentVersion() {
    global $DB;
 
@@ -353,7 +355,28 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                         'glpi_plugin_fusinvinventory_pcivendors',
                         'glpi_plugin_fusinvinventory_usbdevices',
                         'glpi_plugin_fusinvinventory_usbvendors',
-                        'glpi_plugin_fusinvsnmp_constructdevicewalks');
+                        'glpi_plugin_fusinvsnmp_constructdevicewalks',
+                        'glpi_plugin_fusioninventory_snmpmodelmiblabels',
+                        'glpi_plugin_fusioninventory_snmpmodelmibobjects',
+                        'glpi_plugin_fusioninventory_snmpmodelmiboids',
+                        'glpi_plugin_fusioninventory_snmpmodelconstructdevices',
+                        'glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks'.
+                        'glpi_plugin_fusioninventory_snmpmodelconstructdevices_users',
+                        'glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids',
+                        'glpi_plugin_fusioninventory_snmpmodelmibs',
+                        'glpi_plugin_fusioninventory_snmpmodels',
+                        'glpi_plugin_fusioninventory_snmpmodeldevices',
+                        'glpi_plugin_fusinvsnmp_constructdevice_miboids',
+                        'glpi_plugin_fusinvsnmp_constructdevices',
+                        'glpi_plugin_fusinvsnmp_constructdevices_users',
+                        'glpi_plugin_fusinvsnmp_miblabels',
+                        'glpi_plugin_fusinvsnmp_mibobjects',
+                        'glpi_plugin_fusinvsnmp_miboids',
+                        'glpi_plugin_fusinvsnmp_modeldevices',
+                        'glpi_plugin_fusinvsnmp_modelmibs',
+                        'glpi_plugin_fusinvsnmp_models',
+                        'glpi_plugin_fusioninventory_construct_walks'
+       );
 
    foreach ($a_droptable as $newTable) {
       $migration->dropTable($newTable);
@@ -747,6 +770,46 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       migrateTablesFusionInventory($migration, $a_table);
 
 
+
+   /*
+    * Table glpi_plugin_fusioninventory_entities
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_entities';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement',
+                                               'value'   => '');
+      $a_table['fields']['entities_id']= array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['transfers_id_auto']= array('type'    => 'integer',
+                                                 'value'   => NULL);
+
+      $a_table['oldfields']  = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']   = array();
+
+      $a_table['oldkeys'] = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+      if (countElementsInTable($a_table['name']) == 0) {
+         $a_configs = getAllDatasFromTable('glpi_plugin_fusioninventory_configs',
+                                           "`type`='transfers_id_auto'");
+         $transfers_id_auto = 0;
+         if (count($a_configs) > 0) {
+            $a_config = current($a_configs);
+            $transfers_id_auto = $a_config['value'];
+         }
+         $DB->query("INSERT INTO `glpi_plugin_fusioninventory_entities`
+               (`entities_id`, `transfers_id_auto`)
+            VALUES ('0', '".$transfers_id_auto."');");
+      }
+
+
    /*
     * Table glpi_plugin_fusioninventory_credentials
     */
@@ -910,39 +973,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
    /*
-    * Table glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks
-    */
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_snmpmodelconstructdevicewalks';
-      $a_table['oldname'] = array('glpi_plugin_fusioninventory_construct_walks');
-
-      $a_table['fields']  = array();
-      $a_table['fields']['id']         = array('type'    => 'autoincrement',
-                                               'value'   => '');
-      $a_table['fields']['plugin_fusioninventory_snmpmodelconstructdevices_id']
-                                       = array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['log']        = array('type'    => 'text',
-                                               'value'   => NULL);
-
-      $a_table['oldfields']  = array();
-
-      $a_table['renamefields'] = array(
-          'ID' => 'id',
-          'construct_device_id' => 'plugin_fusioninventory_snmpmodelconstructdevices_id'
-      );
-
-      $a_table['keys']   = array();
-      $a_table['keys'][] = array('field' => 'plugin_fusioninventory_snmpmodelconstructdevices_id',
-                                 'name' => '', 'type' => 'INDEX');
-
-      $a_table['oldkeys'] = array();
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
-
-   /*
     * Table glpi_plugin_fusioninventory_locks
     */
       $a_table = array();
@@ -1015,367 +1045,162 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       pluginFusioninventoryUpdatemapping();
 
 
+   if (TableExists('glpi_plugin_fusioninventory_profiles')) {
+      /*
+       * Table glpi_plugin_fusioninventory_profiles
+       */
+         $a_table = array();
+         $a_table['name'] = 'glpi_plugin_fusioninventory_profiles';
+         $a_table['oldname'] = array();
 
-   /*
-    * Table glpi_plugin_fusioninventory_profiles
-    */
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_profiles';
-      $a_table['oldname'] = array();
-
-      $a_table['fields']  = array();
-      $a_table['fields']['id']         = array('type'    => 'autoincrement',
-                                               'value'   => '');
-      $a_table['fields']['type']       = array('type'    => 'string',
-                                               'value'   => '');
-      $a_table['fields']['right']      = array('type'    => 'char',
-                                               'value'   => NULL);
-      $a_table['fields']['plugins_id'] = array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['profiles_id']= array('type'    => 'integer',
-                                               'value'   => NULL);
-
-      $a_table['oldfields']  = array(
-          'name',
-          'interface',
-          'is_default',
-          'snmp_networking',
-          'snmp_printers',
-          'snmp_models',
-          'snmp_authentification',
-          'rangeip',
-          'agents',
-          'remotecontrol',
-          'agentsprocesses',
-          'unknowndevices',
-          'reports',
-          'deviceinventory',
-          'netdiscovery',
-          'snmp_query',
-          'wol',
-          'configuration');
-
-      $a_table['renamefields'] = array();
-      $a_table['renamefields']['ID'] = 'id';
-
-      $a_table['keys']   = array();
-
-      $a_table['oldkeys'] = array();
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-         // Remove multiple lines can have problem with unicity
-         $query = "SELECT * , count(`id`) AS cnt
-            FROM `glpi_plugin_fusioninventory_profiles`
-            GROUP BY `type`,`plugins_id`,`profiles_id`
-            HAVING cnt >1
-            ORDER BY cnt";
-         $result=$DB->query($query);
-         while ($data=$DB->fetch_array($result)) {
-            $queryd = "DELETE FROM `glpi_plugin_fusioninventory_profiles`
-               WHERE `type`='".$data['type']."'
-                  AND `plugins_id`='".$data['plugins_id']."'
-                  AND `profiles_id`='".$data['profiles_id']."'
-               ORDER BY `id` DESC
-               LIMIT ".($data['cnt'] - 1)." ";
-            $DB->query($queryd);
-         }
-
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_profiles';
-      $a_table['oldname'] = array();
-
-      $a_table['fields']  = array();
-
-      $a_table['oldfields']  = array();
-
-      $a_table['renamefields'] = array();
-
-      $a_table['keys']   = array();
-      $a_table['keys'][] = array('field' => array("type", "plugins_id", "profiles_id"),
-                                 'name' => 'unicity', 'type' => 'UNIQUE');
-
-      $a_table['oldkeys'] = array();
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_tasks
-    */
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_tasks';
-      $a_table['oldname'] = array();
-
-      $a_table['fields']  = array();
-      $a_table['fields']['id']         = array('type'    => 'autoincrement',
-                                               'value'   => '');
-      $a_table['fields']['entities_id']= array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['name']       = array('type'    => 'string',
-                                               'value'   => NULL);
-      $a_table['fields']['date_creation']= array('type'    => 'datetime',
-                                                 'value'   => NULL);
-      $a_table['fields']['comment']    = array('type'    => 'text',
-                                               'value'   => NULL);
-      $a_table['fields']['is_active']  = array('type'    => 'bool',
-                                               'value'   => NULL);
-      $a_table['fields']['communication']= array('type'    => 'string',
-                                                 'value'   => 'push');
-      $a_table['fields']['permanent']  = array('type'    => 'string',
-                                               'value'   => NULL);
-      $a_table['fields']['date_scheduled'] = array('type'    => 'datetime',
-                                                   'value'   => NULL);
-      $a_table['fields']['periodicity_count'] = array('type'    => "int(6) NOT NULL DEFAULT '0'",
-                                                      'value'   => NULL);
-      $a_table['fields']['periodicity_type'] = array('type'    => 'string',
-                                                     'value'   => NULL);
-      $a_table['fields']['execution_id'] = array('type'    => "bigint(20) NOT NULL DEFAULT '0'",
-                                                 'value'   => NULL);
-      $a_table['fields']['is_advancedmode'] = array('type'    => 'bool',
-                                                    'value'   => NULL);
-
-      $a_table['oldfields']  = array();
-
-      $a_table['renamefields'] = array();
-
-      $a_table['keys']   = array();
-      $a_table['keys'][] = array('field' => 'entities_id', 'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'is_active', 'name' => '', 'type' => 'INDEX');
-
-      $a_table['oldkeys'] = array();
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_taskjobs
-    */
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_taskjobs';
-      $a_table['oldname'] = array();
-
-      $a_table['fields']  = array();
-      $a_table['fields']['id']         = array('type'    => 'autoincrement',
-                                               'value'   => '');
-      $a_table['fields']['plugin_fusioninventory_tasks_id']= array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['entities_id']= array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['name']       = array('type'    => 'string',
-                                               'value'   => NULL);
-      $a_table['fields']['date_creation'] = array('type'    => 'datetime',
+         $a_table['fields']  = array();
+         $a_table['fields']['id']         = array('type'    => 'autoincrement',
+                                                  'value'   => '');
+         $a_table['fields']['type']       = array('type'    => 'string',
+                                                  'value'   => '');
+         $a_table['fields']['right']      = array('type'    => 'char',
                                                   'value'   => NULL);
-      $a_table['fields']['retry_nb'] = array('type'    => "tinyint(2) NOT NULL DEFAULT '0'",
-                                               'value'   => NULL);
-      $a_table['fields']['retry_time'] = array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['plugins_id'] = array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['method']     = array('type'    => 'string',
-                                               'value'   => NULL);
-      $a_table['fields']['definition'] = array('type'    => 'text',
-                                               'value'   => NULL);
-      $a_table['fields']['action']     = array('type'    => 'text',
-                                               'value'   => NULL);
-      $a_table['fields']['comment']    = array('type'    => 'text',
-                                               'value'   => NULL);
-      $a_table['fields']['users_id']   = array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['status']     = array('type'    => 'integer',
-                                               'value'   => NULL);
-      $a_table['fields']['rescheduled_taskjob_id'] = array('type'    => 'integer',
-                                                           'value'   => NULL);
-      $a_table['fields']['statuscomments'] = array('type'    => 'text',
-                                                   'value'   => NULL);
-      $a_table['fields']['periodicity_count'] = array('type'    => "int(6) NOT NULL DEFAULT '0'",
-                                                      'value'   => NULL);
-      $a_table['fields']['periodicity_type']  = array('type'    => 'string',
-                                                      'value'   => NULL);
-      $a_table['fields']['execution_id'] = array('type'    => "bigint(20) NOT NULL DEFAULT '0'",
+         $a_table['fields']['plugins_id'] = array('type'    => 'integer',
+                                                  'value'   => NULL);
+         $a_table['fields']['profiles_id']= array('type'    => 'integer',
+                                                  'value'   => NULL);
+
+         $a_table['oldfields']  = array(
+             'name',
+             'interface',
+             'is_default',
+             'snmp_networking',
+             'snmp_printers',
+             'snmp_models',
+             'snmp_authentification',
+             'rangeip',
+             'agents',
+             'remotecontrol',
+             'agentsprocesses',
+             'unknowndevices',
+             'reports',
+             'deviceinventory',
+             'netdiscovery',
+             'snmp_query',
+             'wol',
+             'configuration');
+
+         $a_table['renamefields'] = array();
+         $a_table['renamefields']['ID'] = 'id';
+
+         $a_table['keys']   = array();
+
+         $a_table['oldkeys'] = array();
+
+         migrateTablesFusionInventory($migration, $a_table);
+
+            // Remove multiple lines can have problem with unicity
+            $query = "SELECT * , count(`id`) AS cnt
+               FROM `glpi_plugin_fusioninventory_profiles`
+               GROUP BY `type`,`plugins_id`,`profiles_id`
+               HAVING cnt >1
+               ORDER BY cnt";
+            $result=$DB->query($query);
+            while ($data=$DB->fetch_array($result)) {
+               $queryd = "DELETE FROM `glpi_plugin_fusioninventory_profiles`
+                  WHERE `type`='".$data['type']."'
+                     AND `plugins_id`='".$data['plugins_id']."'
+                     AND `profiles_id`='".$data['profiles_id']."'
+                  ORDER BY `id` DESC
+                  LIMIT ".($data['cnt'] - 1)." ";
+               $DB->query($queryd);
+            }
+
+         $a_table = array();
+         $a_table['name'] = 'glpi_plugin_fusioninventory_profiles';
+         $a_table['oldname'] = array();
+
+         $a_table['fields']  = array();
+
+         $a_table['oldfields']  = array();
+
+         $a_table['renamefields'] = array();
+
+         $a_table['keys']   = array();
+         $a_table['keys'][] = array('field' => array("type", "plugins_id", "profiles_id"),
+                                    'name' => 'unicity', 'type' => 'UNIQUE');
+
+         $a_table['oldkeys'] = array();
+
+         migrateTablesFusionInventory($migration, $a_table);
+   }
+
+      /*
+       * Update tasks related database tables
+       */
+      pluginFusioninventoryUpdateTasks($migration, $plugins_id);
+
+
+   /*
+    * Table glpi_plugin_fusioninventory_timeslots
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_timeslots';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']           = array('type'    => 'autoincrement',
+                                                 'value'   => '');
+      $a_table['fields']['entities_id']  = array('type'    => 'integer',
                                                  'value'   => NULL);
-      $a_table['fields']['ranking']    = array('type'    => 'integer',
-                                               'value'   => NULL);
+      $a_table['fields']['is_recursive'] = array('type'    => 'bool',
+                                                 'value'   => '0');
+      $a_table['fields']['name']         = array('type'    => 'string',
+                                                 'value'   => NULL);
+      $a_table['fields']['comment']      = array('type'    => 'text',
+                                                 'value'   => NULL);
+      $a_table['fields']['date_mod']     = array('type'    => 'datetime',
+                                                 'value'   => NULL);
 
       $a_table['oldfields']  = array();
 
       $a_table['renamefields'] = array();
 
       $a_table['keys']   = array();
-      $a_table['keys'][] = array('field' => 'plugin_fusioninventory_tasks_id',
-                                 'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'entities_id', 'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'plugins_id' , 'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'users_id'   , 'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'rescheduled_taskjob_id',
-                                                            'name' => '', 'type' => 'INDEX');
-      $a_table['keys'][] = array('field' => 'method'      , 'name' => '', 'type' => 'INDEX');
 
       $a_table['oldkeys'] = array();
 
       migrateTablesFusionInventory($migration, $a_table);
 
-      // * Update method name changed
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
-         SET `method`='InventoryComputerESX'
-         WHERE `method`='ESX'");
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
-         SET `method`='networkinventory'
-         WHERE `method`='snmpinventory'");
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
-         SET `method`='networkdiscovery'
-         WHERE `method`='netdiscovery'");
-      // * Update plugins_id
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_taskjobs`
-         SET `plugins_id`='".$plugins_id."'");
-
 
 
    /*
-    * Table glpi_plugin_fusioninventory_taskjoblogs
+    * Table glpi_plugin_fusioninventory_timeslotentries
     */
       $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_taskjoblogs';
+      $a_table['name'] = 'glpi_plugin_fusioninventory_timeslotentries';
       $a_table['oldname'] = array();
 
-      $a_table['fields']  = array(
-         'id'         => array('type' => 'BIGINT(20) NOT NULL AUTO_INCREMENT', 'value' => ''),
-         'plugin_fusioninventory_taskjobstates_id' =>
-                         array('type' => 'integer',                            'value' => NULL),
-         'date'       => array('type' => 'datetime',                           'value' => NULL),
-         'items_id'   => array('type' => 'integer',                            'value' => NULL),
-         'itemtype'   => array('type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
-                                                                               'value' => NULL),
-         'state'      => array('type' => 'integer',                            'value' => NULL),
-         'comment'    => array('type' => 'text',                               'value' => NULL)
-      );
+      $a_table['fields']  = array();
+      $a_table['fields']['id']           = array('type'    => 'autoincrement',
+                                                 'value'   => '');
+      $a_table['fields']['plugin_fusioninventory_timeslots_id']  = array('type'    => 'integer',
+                                                 'value'   => NULL);
+      $a_table['fields']['entities_id']  = array('type'    => 'integer',
+                                                 'value'   => NULL);
+      $a_table['fields']['is_recursive'] = array('type'    => 'bool',
+                                                 'value'   => '0');
+      $a_table['fields']['day']          = array('type'    => 'bool',
+                                                 'value'   => 1);
+      $a_table['fields']['begin']        = array('type'    => 'int(11) DEFAULT NULL',
+                                                 'value'   => NULL);
+      $a_table['fields']['end']          = array('type'    => 'int(11) DEFAULT NULL',
+                                                 'value'   => NULL);
 
       $a_table['oldfields']  = array();
 
-      $a_table['renamefields'] = array(
-         'plugin_fusioninventory_taskjobstatus_id' => 'plugin_fusioninventory_taskjobstates_id'
-      );
+      $a_table['renamefields'] = array();
 
-      $a_table['keys']   = array(
-         array('field' => array('plugin_fusioninventory_taskjobstates_id', 'state', 'date'),
-               'name' => 'plugin_fusioninventory_taskjobstates_id', 'type' => 'INDEX')
-      );
+      $a_table['keys']   = array();
 
-      $a_table['oldkeys'] = array(
-         'plugin_fusioninventory_taskjobstatus_id'
-      );
+      $a_table['oldkeys'] = array();
 
       migrateTablesFusionInventory($migration, $a_table);
-
-      // rename comments for new lang system (gettext in 0.84)
-         $a_text = array(
-               'fusinvsnmp::1' => 'devicesqueried',
-               'fusinvsnmp::2' => 'devicesfound',
-               'fusinvsnmp::3' => 'diconotuptodate',
-               'fusinvsnmp::4' => 'addtheitem',
-               'fusinvsnmp::5' => 'updatetheitem',
-               'fusinvsnmp::6' => 'inventorystarted',
-               'fusinvsnmp::7' => 'detail',
-               'fusioninventory::1' => 'badtoken',
-               'fusioninventory::2' => 'agentcrashed',
-               'fusioninventory::3' => 'importdenied'
-            );
-         $query = "SELECT * FROM `".$a_table['name']."`
-            WHERE `comment` LIKE '%==%'";
-         $result=$DB->query($query);
-         while ($data=$DB->fetch_array($result)) {
-            $comment = $data['comment'];
-            foreach ($a_text as $key=>$value) {
-               $comment = str_replace("==".$key."==", "==".$value."==", $comment);
-            }
-            $DB->query("UPDATE `".$a_table['name']."`
-               SET `comment`='".$DB->escape($comment)."'
-               WHERE `id`='".$data['id']."'");
-         }
-
-   /*
-    * Table glpi_plugin_fusioninventory_taskjobstates
-    */
-      $newTable = "glpi_plugin_fusioninventory_taskjobstates";
-      if (TableExists("glpi_plugin_fusioninventory_taskjobstatus")) {
-         $migration->renameTable("glpi_plugin_fusioninventory_taskjobstatus", $newTable);
-      }
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "bigint(20) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_taskjobs_id",
-                                 "plugin_fusioninventory_taskjobs_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "items_id",
-                                 "items_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "itemtype",
-                                 "itemtype",
-                                 "varchar(100) DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "state",
-                                 "state",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_agents_id",
-                                 "plugin_fusioninventory_agents_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "specificity",
-                                 "specificity",
-                                 "text DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "uniqid",
-                                 "uniqid",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                              "id",
-                              "bigint(20) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                              "plugin_fusioninventory_taskjobs_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "items_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "itemtype",
-                              "varchar(100) DEFAULT NULL");
-         $migration->addField($newTable,
-                              "state",
-                              "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "plugin_fusioninventory_agents_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "specificity",
-                              "text DEFAULT NULL");
-         $migration->addField($newTable,
-                              "uniqid",
-                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                              "execution_id",
-                              "bigint(20) NOT NULL DEFAULT '0'");
-         $migration->addKey($newTable,
-                            "plugin_fusioninventory_taskjobs_id");
-         $migration->addKey($newTable,
-                            array("plugin_fusioninventory_agents_id", "state"),
-                            "plugin_fusioninventory_agents_id");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, FALSE);
 
 
 
@@ -1494,14 +1319,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "sysdescr",
                                  "text DEFAULT NULL");
          $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_models_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
                                  "plugin_fusioninventory_configsecurities_id",
                                  "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
@@ -1517,6 +1334,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->dropField($newTable, "FK_agent");
          $migration->dropField($newTable, "mac");
          $migration->dropField($newTable, "ifmac");
+         $migration->dropField($newTable, "plugin_fusinvsnmp_models_id");
+         $migration->dropField($newTable, "plugin_fusioninventory_snmpmodels_id");
       $migration->migrationOneTable($newTable);
          $migration->addField($newTable,
                               'id',
@@ -1573,9 +1392,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "sysdescr",
                                  "text DEFAULT NULL");
          $migration->addField($newTable,
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
                                  "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
@@ -1601,7 +1417,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          while ($data=$DB->fetch_array($result)) {
             $DB->query("UPDATE `glpi_plugin_fusioninventory_unknowndevices`
                SET `sysdescr`='".$data['sysdescr']."',
-                   `plugin_fusioninventory_snmpmodels_id`='".$data['plugin_fusinvsnmp_models_id']."',
                    `plugin_fusioninventory_configsecurities_id`='".$data['plugin_fusinvsnmp_configsecurities_id']."'
                WHERE `id`='".$data['plugin_fusioninventory_unknowndevices_id']."'");
          }
@@ -2428,160 +2243,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
    /*
-    * Table glpi_plugin_fusioninventory_agentmodules
-    */
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_snmpmodeldevices';
-      $a_table['oldname'] = array('glpi_plugin_fusinvsnmp_modeldevices');
-
-      $a_table['fields']  = array();
-      $a_table['fields']['id']         = array('type'    => 'autoincrement',
-                                               'value'   => '');
-      $a_table['fields']['plugin_fusioninventory_snmpmodels_id'] = array('type'    => 'integer',
-                                                                         'value'   => NULL);
-      $a_table['fields']['sysdescr']   = array('type'    => 'text',
-                                               'value'   => NULL);
-
-      $a_table['oldfields']  = array();
-
-      $a_table['renamefields'] = array();
-      $a_table['renamefields']['plugin_fusinvsnmp_models_id'] = 'plugin_fusioninventory_snmpmodels_id';
-
-      $a_table['keys']   = array();
-      $a_table['keys'][] = array('field' => 'plugin_fusioninventory_snmpmodels_id', 'name' => '', 'type' => 'INDEX');
-
-      $a_table['oldkeys'] = array('plugin_fusinvsnmp_models_id');
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_snmpmodelmiblabels
-    */
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_snmpmodelmiblabels';
-      $a_table['oldname'] = array('glpi_dropdown_plugin_tracker_mib_label',
-                                  'glpi_plugin_fusinvsnmp_miblabels');
-
-      $a_table['fields']  = array();
-      $a_table['fields']['id']         = array('type'    => 'autoincrement',
-                                               'value'   => '');
-      $a_table['fields']['name']       = array('type'    => 'string',
-                                               'value'   => NULL);
-      $a_table['fields']['comment']    = array('type'    => 'text',
-                                               'value'   => NULL);
-
-      $a_table['oldfields']  = array();
-
-      $a_table['renamefields'] = array();
-      $a_table['renamefields']['ID'] = 'id';
-      $a_table['renamefields']['comments'] = 'comment';
-
-      $a_table['keys']   = array();
-
-      $a_table['oldkeys'] = array();
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_snmpmodelmibobjects
-    */
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_snmpmodelmibobjects';
-      $a_table['oldname'] = array('glpi_dropdown_plugin_tracker_mib_object',
-                                  'glpi_plugin_fusinvsnmp_mibobjects');
-
-      $a_table['fields']  = array();
-      $a_table['fields']['id']         = array('type'    => 'autoincrement',
-                                               'value'   => '');
-      $a_table['fields']['name']       = array('type'    => 'string',
-                                               'value'   => NULL);
-      $a_table['fields']['comment']    = array('type'    => 'text',
-                                               'value'   => NULL);
-
-      $a_table['oldfields']  = array();
-
-      $a_table['renamefields'] = array();
-      $a_table['renamefields']['ID'] = 'id';
-      $a_table['renamefields']['comments'] = 'comment';
-
-      $a_table['keys']   = array();
-
-      $a_table['oldkeys'] = array();
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_snmpmodelmiboids
-    */
-      $newTable = "glpi_plugin_fusioninventory_snmpmodelmiboids";
-      $migration->renameTable("glpi_dropdown_plugin_tracker_mib_oid",
-                              $newTable);
-      $migration->renameTable("glpi_plugin_fusinvsnmp_miboids",
-                              $newTable);
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "name",
-                                 "name",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "comment",
-                                 "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "comments",
-                                 "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->dropField($newTable,
-                               "plugin_fusinvsnmp_constructdevices_id");
-         $migration->dropField($newTable,
-                               "oid_port_counter");
-         $migration->dropField($newTable,
-                               "oid_port_dyn");
-         $migration->dropField($newTable,
-                               "itemtype");
-         $migration->dropField($newTable,
-                               "vlan");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                                 "name",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "comment",
-                                 "text COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, FALSE);
-
-
-
-   /*
     * glpi_plugin_fusioninventory_configlogfields
     */
       $newTable = "glpi_plugin_fusioninventory_configlogfields";
@@ -2654,292 +2315,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
          $configLogField = new PluginFusioninventoryConfigLogField();
          $configLogField->initConfig();
-
-
-
-   /*
-    * glpi_plugin_fusioninventory_snmpmodelconstructdevices
-    */
-      $newTable = "glpi_plugin_fusioninventory_snmpmodelconstructdevices";
-      $migration->renameTable("glpi_plugin_fusinvsnmp_constructdevices",
-                        $newTable);
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "have_someinformations",
-                                 "have_someinformations",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "have_importantinformations",
-                                 "have_importantinformations",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "have_ports",
-                                 "have_ports",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "have_portsconnections",
-                                 "have_portsconnections",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "have_vlan",
-                                 "have_vlan",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "have_trunk",
-                                 "have_trunk",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "released",
-                                 "released",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "snmpmodel_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_models_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "FK_glpi_enterprise",
-                                 "manufacturers_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "type",
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->dropField($newTable, "device");
-         $migration->dropField($newTable, "firmware");
-   $migration->migrationOneTable($newTable);
-      $migration->addField($newTable,
-                           "manufacturers_id",
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "sysdescr",
-                           "text DEFAULT NULL");
-      $migration->addField($newTable,
-                           "itemtype",
-                           "varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL");
-      $migration->addField($newTable,
-                           "plugin_fusioninventory_snmpmodels_id",
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "networkmodel_id",
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "printermodel_id",
-                           "int(11) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "have_someinformations",
-                           "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "have_importantinformations",
-                           "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "have_ports",
-                           "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "have_portsconnections",
-                           "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "have_vlan",
-                           "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "have_trunk",
-                           "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "released",
-                           "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->addField($newTable,
-                           "releasedsnmpmodel_id",
-                           "int(11) NOT NULL DEFAULT '0'");
-   $migration->migrationOneTable($newTable);
-   $DB->list_fields($newTable, FALSE);
-
-
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_snmpmodelconstructdevices_users
-    */
-      $a_table = array();
-      $a_table['name'] = 'glpi_plugin_fusioninventory_snmpmodelconstructdevices_users';
-      $a_table['oldname'] = array('glpi_plugin_fusinvsnmp_constructdevices_users');
-
-      $a_table['fields']  = array();
-      $a_table['fields']['id']       = array('type'    => 'autoincrement',
-                                             'value'   => '');
-      $a_table['fields']['users_id'] = array('type'    => 'integer',
-                                             'value'   => NULL);
-      $a_table['fields']['login']    = array('type'    => 'string',
-                                             'value'   => NULL);
-      $a_table['fields']['password'] = array('type'    => 'string',
-                                             'value'   => NULL);
-      $a_table['fields']['key']      = array('type'    => 'string',
-                                             'value'   => NULL);
-
-      $a_table['oldfields']  = array();
-
-      $a_table['renamefields'] = array();
-
-      $a_table['keys']   = array();
-      $a_table['keys'][] = array('field' => 'users_id', 'name' => '', 'type' => 'INDEX');
-
-      $a_table['oldkeys'] = array();
-
-      migrateTablesFusionInventory($migration, $a_table);
-
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids
-    */
-      $newTable = "glpi_plugin_fusioninventory_snmpmodelconstructdevice_miboids";
-      $migration->renameTable("glpi_plugin_fusinvsnmp_constructdevice_miboids",
-                              $newTable);
-      // Update with mapping
-      if (TableExists($newTable)) {
-         if (FieldExists($newTable, "mapping_name")
-                 AND FieldExists($newTable, "itemtype")) {
-            $query = "SELECT * FROM `".$newTable."`
-               GROUP BY `itemtype`, `mapping_type`";
-            $result=$DB->query($query);
-            while ($data=$DB->fetch_array($result)) {
-               if (!is_numeric($data['mapping_name'])) {
-                  $pfMapping = new PluginFusioninventoryMapping();
-                  $mapping = 0;
-                  $mapping_type = '';
-                  if ($data['itemtype'] == 'glpi_networkequipments') {
-                     $mapping_type = 'NetworkEquipment';
-                  } else if ($data['itemtype'] == 'glpi_printers') {
-                     $mapping_type = 'Printer';
-                  }
-                  if ($mapping = $pfMapping->get($mapping_type, $data['mapping_name'])) {
-                     $data['mapping_name'] = $mapping['id'];
-                     $queryu = "UPDATE `".$newTable."`
-                        SET `mapping_name`='".$mapping['id']."',
-                           `mapping_type`='".$mapping_type."'
-                        WHERE `itemtype`='".$data['itemtype']."'
-                           AND `mapping_name`='".$data['mapping_name']."'";
-                     $DB->query($queryu);
-                  }
-               }
-            }
-         }
-         $migration->changeField($newTable,
-                                 "mapping_name",
-                                 "plugin_fusioninventory_mappings_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-      }
-   $migration->migrationOneTable($newTable);
-      if (!TableExists($newTable)) {
-         $query = "CREATE TABLE `".$newTable."` (
-                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                      PRIMARY KEY (`id`)
-                  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
-         $DB->query($query);
-      }
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "mib_oid_id",
-                                 "plugin_fusioninventory_snmpmodelmiboids_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmiboids_id",
-                                 "plugin_fusioninventory_snmpmodelmiboids_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_miboids_id",
-                                 "plugin_fusioninventory_snmpmodelmiboids_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "construct_device_id",
-                                 "plugin_fusioninventory_snmpmodelconstructdevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_constructdevices_id",
-                                 "plugin_fusioninventory_snmpmodelconstructdevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodelconstructdevices_id",
-                                 "plugin_fusioninventory_snmpmodelconstructdevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_mappings_id",
-                                 "plugin_fusioninventory_mappings_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "oid_port_counter",
-                                 "oid_port_counter",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "oid_port_dyn",
-                                 "oid_port_dyn",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "itemtype",
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-         $migration->changeField($newTable,
-                                 "vlan",
-                                 "vlan",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-      $migration->migrationOneTable($newTable);
-         $migration->dropField($newTable, "mapping_type");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmiboids_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_snmpmodelconstructdevices_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_mappings_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "oid_port_counter",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "oid_port_dyn",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-         $migration->addField($newTable,
-                                 "vlan",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->addKey($newTable,
-                            array("plugin_fusioninventory_snmpmodelmiboids_id",
-                                  "plugin_fusioninventory_snmpmodelconstructdevices_id",
-                                  "plugin_fusioninventory_mappings_id"),
-                            "unicity",
-                            "UNIQUE");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, FALSE);
 
 
 
@@ -3029,320 +2404,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
    /*
-    * Table glpi_plugin_fusioninventory_snmpmodelmibs
-    */
-      $newTable = "glpi_plugin_fusioninventory_snmpmodelmibs";
-      $migration->renameTable("glpi_plugin_fusinvsnmp_modelmibs",
-                              $newTable);
-      $migration->renameTable("glpi_plugin_tracker_mib_networking",
-                              $newTable);
-      if (FieldExists($newTable, "FK_mib_label")) {
-         $query = "UPDATE `".$newTable."`
-            SET `FK_mib_label`='0'
-            WHERE `FK_mib_label` IS NULL";
-         $DB->query($query);
-      }
-      if (FieldExists($newTable, "plugin_fusinvsnmp_miblabels_id")) {
-         $query = "UPDATE `".$newTable."`
-            SET `plugin_fusinvsnmp_miblabels_id`='0'
-            WHERE `plugin_fusinvsnmp_miblabels_id` IS NULL";
-         $DB->query($query);
-      }
-      if (FieldExists($newTable, "plugin_fusinvsnmp_mibobjects_id")) {
-         $query = "UPDATE `".$newTable."`
-            SET `plugin_fusinvsnmp_mibobjects_id`='0'
-            WHERE `plugin_fusinvsnmp_mibobjects_id` IS NULL";
-         $DB->query($query);
-      }
-      if (!TableExists($newTable)) {
-         $DB->query('CREATE TABLE `'.$newTable.'` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
-                        PRIMARY KEY (`id`)
-                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
-      }
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_models_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_miblabels_id",
-                                 "plugin_fusioninventory_snmpmodelmiblabels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_miboids_id",
-                                 "plugin_fusioninventory_snmpmodelmiboids_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_mibobjects_id",
-                                 "plugin_fusioninventory_snmpmodelmibobjects_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-      $migration->migrationOneTable($newTable);
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmiblabels_id",
-                                 "plugin_fusioninventory_snmpmodelmiblabels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmiboids_id",
-                                 "plugin_fusioninventory_snmpmodelmiboids_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmibobjects_id",
-                                 "plugin_fusioninventory_snmpmodelmibobjects_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "oid_port_counter",
-                                 "oid_port_counter",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "oid_port_dyn",
-                                 "oid_port_dyn",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "is_active",
-                                 "is_active",
-                                 "tinyint(1) NOT NULL DEFAULT '1'");
-      $migration->migrationOneTable($newTable);
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "FK_model_infos",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "FK_mib_label",
-                                 "plugin_fusioninventory_snmpmodelmiblabels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_miblabels_id",
-                                 "plugin_fusioninventory_snmpmodelmiblabels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "FK_mib_oid",
-                                 "plugin_fusioninventory_snmpmodelmiboids_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "FK_mib_object",
-                                 "plugin_fusioninventory_snmpmodelmibobjects_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_mibobjects_id",
-                                 "plugin_fusioninventory_snmpmodelmibobjects_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "oid_port_counter",
-                                 "oid_port_counter",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "oid_port_dyn",
-                                 "oid_port_dyn",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                              "plugin_fusioninventory_mappings_id",
-                              "int(11) NOT NULL DEFAULT '0'");
-      $migration->migrationOneTable($newTable);
-
-         // Update with mapping
-         if (FieldExists($newTable, "mapping_type")) {
-            $query = "SELECT * FROM `".$newTable."`
-               GROUP BY `mapping_type`, `mapping_name`";
-            $result=$DB->query($query);
-            while ($data=$DB->fetch_array($result)) {
-               $pfMapping = new PluginFusioninventoryMapping();
-               $mapping = 0;
-               $mapping_type = '';
-               if ($data['mapping_type'] == '2') {
-                  $mapping_type == 'NetworkEquipment';
-               } else if ($data['mapping_type'] == '3') {
-                  $mapping_type == 'Printer';
-               }
-               if ($mapping = $pfMapping->get($mapping_type, $data['mapping_name'])) {
-                  $data['mapping_name'] = $mapping['id'];
-                  $queryu = "UPDATE `".$newTable."`
-                     SET `plugin_fusioninventory_mappings_id`='".$mapping['id']."',
-                        `mapping_type`='".$mapping_type."'
-                     WHERE `mapping_type`='".$data['mapping_type']."'
-                        AND `mapping_name`='".$data['mapping_name']."'";
-                  $DB->query($queryu);
-               }
-            }
-         }
-         $migration->dropField($newTable,
-                               "mapping_type");
-         $migration->dropField($newTable,
-                               "mapping_name");
-         $migration->dropField($newTable,
-                               "name");
-         $migration->dropField($newTable,
-                               "itemtype");
-         $migration->dropField($newTable,
-                               "discovery_key");
-         $migration->dropField($newTable,
-                               "comment");
-         $migration->changeField($newTable,
-                                 "activation",
-                                 "is_active",
-                                 "tinyint(1) NOT NULL DEFAULT '1'");
-         $migration->changeField($newTable,
-                                 "vlan",
-                                 "vlan",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-
-         $migration->dropKey($newTable,
-                             "FK_model_infos");
-         $migration->dropKey($newTable,
-                             "FK_model_infos_2");
-         $migration->dropKey($newTable,
-                             "FK_model_infos_3");
-         $migration->dropKey($newTable,
-                             "FK_model_infos_4");
-         $migration->dropKey($newTable,
-                             "oid_port_dyn");
-         $migration->dropKey($newTable,
-                             "activation");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmiblabels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmiboids_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_snmpmodelmibobjects_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "oid_port_counter",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "oid_port_dyn",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_mappings_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->addField($newTable,
-                                 "is_active",
-                                 "tinyint(1) NOT NULL DEFAULT '1'");
-         $migration->addField($newTable,
-                                 "vlan",
-                                 "tinyint(1) NOT NULL DEFAULT '0'");
-         $migration->addKey($newTable,
-                            "plugin_fusioninventory_snmpmodels_id");
-         $migration->addKey($newTable,
-                            array("plugin_fusioninventory_snmpmodels_id", "oid_port_dyn"),
-                            "plugin_fusioninventory_snmpmodels_id_2");
-         $migration->addKey($newTable,
-                            array("plugin_fusioninventory_snmpmodels_id",
-                                  "oid_port_counter",
-                                  "plugin_fusioninventory_mappings_id"),
-                            "plugin_fusioninventory_snmpmodels_id_3");
-         $migration->addKey($newTable,
-                            array("plugin_fusioninventory_snmpmodels_id",
-                                  "plugin_fusioninventory_mappings_id"),
-                            "plugin_fusioninventory_snmpmodels_id_4");
-         $migration->addKey($newTable,
-                            "oid_port_dyn");
-         $migration->addKey($newTable,
-                            "is_active");
-         $migration->addKey($newTable,
-                            "plugin_fusioninventory_mappings_id");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, FALSE);
-
-
-
-   /*
-    * Table glpi_plugin_fusioninventory_snmpmodels
-    */
-      $newTable = "glpi_plugin_fusioninventory_snmpmodels";
-      $migration->renameTable("glpi_plugin_fusinvsnmp_models",
-                              $newTable);
-      if (!TableExists($newTable)) {
-         $DB->query('CREATE TABLE `'.$newTable.'` (
-                        `id` int(11) NOT NULL AUTO_INCREMENT,
-                        PRIMARY KEY (`id`)
-                   ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
-      }
-         $migration->changeField($newTable,
-                                 "ID",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "id",
-                                 "id",
-                                 "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->changeField($newTable,
-                                 "name",
-                                 "name",
-                                 "varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-         $migration->changeField($newTable,
-                                 "device_type",
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-         $migration->changeField($newTable,
-                                 "itemtype",
-                                 "itemtype",
-                                 "varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-         $migration->changeField($newTable,
-                                 "discovery_key",
-                                 "discovery_key",
-                                 "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->changeField($newTable,
-                                 "comments",
-                                 "comment",
-                                 "text COLLATE utf8_unicode_ci");
-         $migration->changeField($newTable,
-                                 "comment",
-                                 "comment",
-                                 "text COLLATE utf8_unicode_ci");
-      $migration->migrationOneTable($newTable);
-         $migration->dropField($newTable, "deleted");
-         $migration->dropField($newTable, "FK_entities");
-         $migration->dropField($newTable, "activation");
-      $migration->migrationOneTable($newTable);
-         $migration->addField($newTable,
-                              "id",
-                              "int(11) NOT NULL AUTO_INCREMENT");
-         $migration->addField($newTable,
-                              "name",
-                              "varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-         $migration->addField($newTable,
-                              "itemtype",
-                              "varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''");
-         $migration->addField($newTable,
-                              "discovery_key",
-                              "varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                              "comment",
-                              "text COLLATE utf8_unicode_ci");
-         $migration->addKey($newTable,
-                            "name");
-         $migration->addKey($newTable,
-                            "itemtype");
-      $migration->migrationOneTable($newTable);
-      $DB->list_fields($newTable, FALSE);
-
-
-
-   /*
     * Table glpi_plugin_fusioninventory_networkporttypes
     */
       $newTable = "glpi_plugin_fusioninventory_networkporttypes";
@@ -3421,14 +2482,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "sysdescr",
                                  "text COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_models_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_configsecurities_id",
                                  "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
@@ -3454,10 +2507,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "printers_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
-                                 "FK_model_infos",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
                                  "FK_snmp_connection",
                                  "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
@@ -3469,7 +2518,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                              "FK_printers");
          $migration->dropKey($newTable,
                              "FK_snmp_connection");
+         $migration->dropKey($newTable,
+                             "plugin_fusioninventory_snmpmodels_id");
       $migration->migrationOneTable($newTable);
+         $migration->dropField($newTable,
+                             "plugin_fusinvsnmp_models_id");
+         $migration->dropField($newTable,
+                             "plugin_fusioninventory_snmpmodels_id");
+         $migration->dropField($newTable,
+                             "FK_model_infos");
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -3479,9 +2536,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                                  "sysdescr",
                                  "text COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                                  "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
@@ -3498,8 +2552,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                             "plugin_fusioninventory_configsecurities_id");
          $migration->addKey($newTable,
                             "printers_id");
-         $migration->addKey($newTable,
-                            "plugin_fusioninventory_snmpmodels_id");
       $migration->migrationOneTable($newTable);
       $DB->list_fields($newTable, FALSE);
 
@@ -3924,10 +2976,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "sysdescr",
                                  "text COLLATE utf8_unicode_ci DEFAULT NULL");
          $migration->changeField($newTable,
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
                                  "plugin_fusioninventory_configsecurities_id",
                                  "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
@@ -3961,10 +3009,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "networkequipments_id",
                                  "int(11) NOT NULL DEFAULT '0'");
          $migration->changeField($newTable,
-                                 "FK_model_infos",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
                                  "FK_snmp_connection",
                                  "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
@@ -3973,10 +3017,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                  "last_fusioninventory_update",
                                  "datetime DEFAULT NULL");
          $migration->changeField($newTable,
-                                 "plugin_fusinvsnmp_models_id",
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
-         $migration->changeField($newTable,
                                  "plugin_fusinvsnmp_configsecurities_id",
                                  "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
@@ -3984,7 +3024,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                              "FK_networking");
          $migration->dropKey($newTable,
                              "FK_model_infos");
+         $migration->dropKey($newTable,
+                             "plugin_fusioninventory_snmpmodels_id");
       $migration->migrationOneTable($newTable);
+         $migration->dropField($newTable,
+                               "plugin_fusioninventory_snmpmodels_id");
+         $migration->dropField($newTable,
+                               "plugin_fusinvsnmp_models_id");
+         $migration->dropField($newTable,
+                               "FK_model_infos");
          $migration->addField($newTable,
                                  "id",
                                  "int(11) NOT NULL AUTO_INCREMENT");
@@ -3994,9 +3042,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          $migration->addField($newTable,
                                  "sysdescr",
                                  "text COLLATE utf8_unicode_ci DEFAULT NULL");
-         $migration->addField($newTable,
-                                 "plugin_fusioninventory_snmpmodels_id",
-                                 "int(11) NOT NULL DEFAULT '0'");
          $migration->addField($newTable,
                                  "plugin_fusioninventory_configsecurities_id",
                                  "int(11) NOT NULL DEFAULT '0'");
@@ -4020,10 +3065,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                               "longblob");
          $migration->addKey($newTable,
                             "networkequipments_id");
-         $migration->addKey($newTable,
-                            array("plugin_fusioninventory_snmpmodels_id",
-                                  "plugin_fusioninventory_configsecurities_id"),
-                            "plugin_fusioninventory_snmpmodels_id");
       $migration->migrationOneTable($newTable);
       $DB->list_fields($newTable, FALSE);
 
@@ -4108,7 +3149,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             $datas = $DB->fetch_assoc($result);
             $nb = $datas['count(ID)'];
 
-            echo "Move Connections history to another table...";
+            //echo "Move Connections history to another table...";
 
             for ($i=0; $i < $nb; $i = $i + 500) {
                $migration->displayMessage("$i / $nb");
@@ -5594,7 +4635,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     *  Clean old ports deleted but have some informations in SNMP tables
     */
-   echo "Clean ports purged\n";
+   //echo "Clean ports purged\n";
    $query_select = "SELECT `glpi_plugin_fusioninventory_networkports`.`id`
                     FROM `glpi_plugin_fusioninventory_networkports`
                           LEFT JOIN `glpi_networkports`
@@ -5614,7 +4655,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Clean for switch more informations again in DB when switch is purged
     */
-   echo "Clean for switch more informations again in DB when switch is purged\n";
+   //echo "Clean for switch more informations again in DB when switch is purged\n";
    $query_select = "SELECT `glpi_plugin_fusioninventory_networkequipments`.`id`
                     FROM `glpi_plugin_fusioninventory_networkequipments`
                     LEFT JOIN `glpi_networkequipments`
@@ -5632,7 +4673,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     * Clean for printer more informations again in DB when printer is purged
     */
-   "Clean for printer more informations again in DB when printer is purged\n";
+   //echo "Clean for printer more informations again in DB when printer is purged\n";
    $query_select = "SELECT `glpi_plugin_fusioninventory_printers`.`id`
                     FROM `glpi_plugin_fusioninventory_printers`
                           LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
@@ -5649,7 +4690,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     *  Clean printer cartridge not deleted with the printer associated
     */
-   echo "Clean printer cartridge not deleted with the printer associated\n";
+   //echo "Clean printer cartridge not deleted with the printer associated\n";
    $query_select = "SELECT `glpi_plugin_fusioninventory_printercartridges`.`id`
                     FROM `glpi_plugin_fusioninventory_printercartridges`
                           LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
@@ -5666,7 +4707,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    /*
     *  Clean printer history not deleted with printer associated
     */
-   echo "Clean printer history not deleted with printer associated\n";
+   //echo "Clean printer history not deleted with printer associated\n";
    $query_select = "SELECT `glpi_plugin_fusioninventory_printerlogs`.`id`
                     FROM `glpi_plugin_fusioninventory_printerlogs`
                           LEFT JOIN `glpi_printers` ON `glpi_printers`.`id` = `printers_id`
@@ -5696,10 +4737,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
    }
    foreach($a_mappingdouble as $mapping_id=>$mappingkey) {
-      $query = "UPDATE `glpi_plugin_fusioninventory_snmpmodelmibs`
-         SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
-         WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
-      $DB->query($query);
       $query = "UPDATE `glpi_plugin_fusioninventory_printercartridges`
          SET plugin_fusioninventory_mappings_id='".$a_mapping[$mappingkey]."'
          WHERE plugin_fusioninventory_mappings_id='".$mapping_id."'";
@@ -5749,6 +4786,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $sql = "DELETE FROM `glpi_displaypreferences`
       WHERE `itemtype`='5165' ";
    $DB->query($sql);
+   $sql = "DELETE FROM `glpi_displaypreferences`
+      WHERE `itemtype`='5190' ";
+   $DB->query($sql);
 
 
 
@@ -5780,7 +4820,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     */
       $queryd = "DELETE FROM `glpi_displaypreferences`
          WHERE `itemtype`='PluginFusioninventoryUnknownDevice'
-            AND (`num`='11' OR `num`='12')";
+            AND (`num`='11' OR `num`='12' OR `num`='16')";
+      $DB->query($queryd);
+
+   /*
+    * Clean in displaypreference
+    */
+      $queryd = "DELETE FROM `glpi_displaypreferences`
+         WHERE `itemtype`='PluginFusioninventorysnmpModel'";
       $DB->query($queryd);
 
 
@@ -5966,6 +5013,17 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       WHERE `sub_type`='PluginFusioninventoryRuleImportEquipment'";
    $DB->query($query);
 
+   $query = "SELECT * FROM `glpi_rules`
+               WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport'";
+   $result = $DB->query($query);
+   while ($data=$DB->fetch_array($result)) {
+      $querya = "UPDATE glpi_ruleactions SET `value`='1'
+         WHERE `rules_id`='".$data['id']."'
+            AND `value`='0'
+            AND `field`='_fusion'";
+      $DB->query($querya);
+   }
+
    $query = "UPDATE glpi_rules SET `sub_type`='PluginFusioninventoryInventoryRuleEntity'
       WHERE `sub_type`='PluginFusinvinventoryRuleEntity'";
    $DB->query($query);
@@ -6067,7 +5125,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       $input['component_drive']        = 1;
       $input['component_networkdrive'] = 1;
       $input['component_control']      = 1;
-      $input['transfers_id_auto']      = 1;
       $input['states_id_default']      = 0;
       $input['location']               = 0;
       $input['group']                  = 0;
@@ -6159,8 +5216,12 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
     * Add Crontask if not exist
     */
    $crontask = new CronTask();
-   if (!$crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'taskscheduler')) {
-      CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60',
+   if ($crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'taskscheduler')) {
+      $crontask->fields['itemtype'] = 'PluginFusioninventoryTask';
+      $crontask->updateInDB(array('itemtype'));
+   }
+   if (!$crontask->getFromDBbyName('PluginFusioninventoryTask', 'taskscheduler')) {
+      CronTask::Register('PluginFusioninventoryTask', 'taskscheduler', '60',
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
    }
    if ($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstate', 'cleantaskjob')
@@ -6218,6 +5279,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 //   $pfIgnoredimportdevice = new PluginFusioninventoryIgnoredimportdevice();
 //   $pfIgnoredimportdevice->install();
 
+      //Change static & dynamic structure to fit the GLPI framework
+      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 
+                              'groups_id', 
+                              'plugin_fusioninventory_deploygroups_id', 'integer');
+      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_dynamicdatas');
+      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_staticdatas', 
+                              'groups_id', 'plugin_fusioninventory_deploygroups_id', 'integer');
+      $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_staticdatas');
 
 
    // Delete data in glpi_logs(agent problem => ticket http://forge.fusioninventory.org/issues/1546)
@@ -6237,48 +5306,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          AND `id_search_option`='8'
          AND `old_value`=`new_value`";
    $DB->query($query);
-
-   /*
-    * Import / update SNMP models
-    */
-   $mode_cli = (basename($_SERVER['SCRIPT_NAME']) == "cli_install.php");
-
-   PluginFusioninventorySnmpmodel::importAllModels('', $mode_cli);
-
-      // Delete snmpmodels_id on networkequipments and printers which has been
-      //  deleted and so now not exist
-      $query = "SELECT `glpi_plugin_fusioninventory_printers`.`id`
-                      FROM `glpi_plugin_fusioninventory_printers`
-                           LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
-                              ON `glpi_plugin_fusioninventory_printers`.".
-                                    "`plugin_fusioninventory_snmpmodels_id`=
-                                 `glpi_plugin_fusioninventory_snmpmodels`.".
-                                    "`id`
-                      WHERE `glpi_plugin_fusioninventory_snmpmodels`.`id` IS NULL ";
-      $result = $DB->query($query);
-      $pfPrinter = new PluginFusioninventoryPrinter();
-      while ($data=$DB->fetch_array($result)) {
-         $pfPrinter->update(array(
-             'id' => $data['id'],
-             'plugin_fusioninventory_snmpmodels_id' => 0
-         ));
-      }
-      $query = "SELECT `glpi_plugin_fusioninventory_networkequipments`.`id`
-                      FROM `glpi_plugin_fusioninventory_networkequipments`
-                           LEFT JOIN `glpi_plugin_fusioninventory_snmpmodels`
-                              ON `glpi_plugin_fusioninventory_networkequipments`.".
-                                    "`plugin_fusioninventory_snmpmodels_id`=
-                                 `glpi_plugin_fusioninventory_snmpmodels`.".
-                                    "`id`
-                      WHERE `glpi_plugin_fusioninventory_snmpmodels`.`id` IS NULL ";
-      $result = $DB->query($query);
-      $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-      while ($data=$DB->fetch_array($result)) {
-         $pfNetworkEquipment->update(array(
-             'id' => $data['id'],
-             'plugin_fusioninventory_snmpmodels_id' => 0
-         ));
-      }
 
 
    /*
@@ -6311,9 +5338,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
    $pfNetworkporttype->init();
 
-
-   // Update rules
-   PluginFusioninventoryProfile::initProfile();
+   if (TableExists('glpi_plugin_fusioninventory_profiles')) {
+      //Migrate rights to the new system introduction in GLPI 0.85
+      PluginFusioninventoryProfile::migrateProfiles();
+      //Drop old table
+      $migration->dropTable('glpi_plugin_fusioninventory_profiles');
+   }
+   
+   //Create first access to the current profile is needed
+   PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
 
    // Define lastup field of fusion networkports
    $query = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`
@@ -6337,9 +5370,55 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          }
       }
    }
+   //Migrate search params for dynamic groups
+   doDynamicDataSearchParamsMigration();
 }
 
+/**
+* @since 0.85+1.0
+* Migrate search params from the old system to the new one
+* As search engine integration has been improved with GLPI 0.85
+*/
+function doDynamicDataSearchParamsMigration() {
+   global $DB;
+   
+   $query = "SELECT `id`, `fields_array` FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`";
+   foreach ($DB->request($query) as $dynamic_data) {
+      $new_values   = migrationDynamicGroupFields($dynamic_data['fields_array']);
+      $query_update = "UPDATE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` 
+                       SET `fields_array`='$new_values'
+                       WHERE `id`='".$dynamic_data['id']."'";
+      $DB->query($query_update);
+   }
+}
 
+/**
+* @since 0.85+1.0
+* 
+* Migration of one dynamic group
+* @param fields search paramas in old format (serialized)
+* @return search paramas in new format (serialized)
+*/
+function migrationDynamicGroupFields($fields) {
+   $old_fields    = unserialize($fields);
+   $new_fields    = array();
+   $searchOptions = Search::getOptions('Computer');
+   foreach ($old_fields as $key => $value) {
+       
+      if (!empty($value) && $value != 0 && $value != '') {
+         foreach ($searchOptions as $id => $searchOption) {
+            if (is_array($searchOption) && isset ($searchOption['linkfield']) && $searchOption['linkfield'] == $key) {
+               $new_value['value']      = $value;
+               $new_value['field']      = $id;
+               $new_value['searchtype'] = 'equals';
+               $new_fields[]            = $new_value; 
+               break;
+            }
+         }
+      }
+   }
+   return serialize($new_fields);
+}
 
 function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
    static $created=0;
@@ -6366,8 +5445,6 @@ function plugin_fusioninventory_displayMigrationMessage ($id, $msg="") {
    Html::glpi_flush();
 }
 
-
-
 function changeDisplayPreference($olditemtype, $newitemtype) {
    global $DB;
 
@@ -6389,8 +5466,6 @@ function changeDisplayPreference($olditemtype, $newitemtype) {
       WHERE `itemtype`='".$olditemtype."' ";
    $DB->query($sql);
 }
-
-
 
 function pluginFusioninventoryUpdatemapping() {
 
@@ -7558,8 +6633,6 @@ function pluginFusioninventoryUpdatemapping() {
 
 }
 
-
-
 function update213to220_ConvertField($migration) {
    global $DB;
 
@@ -8059,7 +7132,7 @@ function update213to220_ConvertField($migration) {
    $constantsfield['Drucker > Port > Indexnummer'] = 'ifIndex';
 
    if (TableExists("glpi_plugin_tracker_snmp_history")) {
-      echo "Converting history port ...\n";
+      //echo "Converting history port ...\n";
       $i = 0;
       $nb = count($constantsfield);
          $migration->addKey("glpi_plugin_tracker_snmp_history",
@@ -8084,7 +7157,7 @@ function update213to220_ConvertField($migration) {
 
       // Move connections from glpi_plugin_fusioninventory_snmp_history to
       // glpi_plugin_fusioninventory_snmp_history_connections
-      echo "Moving creation connections history\n";
+      //echo "Moving creation connections history\n";
       $query = "SELECT *
                 FROM `glpi_plugin_tracker_snmp_history`
                 WHERE `Field` = '0'
@@ -8140,7 +7213,7 @@ function update213to220_ConvertField($migration) {
          $migration->displayMessage("$i / $nb");
       }
 
-      echo "Moving deleted connections history\n";
+      //echo "Moving deleted connections history\n";
       $query = "SELECT *
                 FROM `glpi_plugin_tracker_snmp_history`
                 WHERE `Field` = '0'
@@ -8217,8 +7290,6 @@ function pluginFusioninventorychangeDisplayPreference($olditemtype, $newitemtype
       }
    }
 }
-
-
 
 function migrateTablesFusionInventory($migration, $a_table) {
    global $DB;
@@ -8511,7 +7582,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
          $fp_res = $DB->query($fp_query);
          if ($DB->numrows($fp_res) > 0) {
-            print("writing file : " . GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}" . "\n");
+            //print("writing file : " . GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}" . "\n");
             $fhandle = fopen(
                GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}",
                'w+'
@@ -8589,36 +7660,36 @@ function migrateTablesFromFusinvDeploy ($migration) {
    foreach( $orders as $order_config ) {
       $pfDeployOrder = new PluginFusioninventoryDeployOrder();
       $json_order = json_decode($order_config['json']);
-      print("deployorders fixer : actual order structure for ID ".$order_config['id']."\n" . print_r($json_order,true) ."\n");
+      //print("deployorders fixer : actual order structure for ID ".$order_config['id']."\n" . print_r($json_order,true) ."\n");
 
       // Checks for /jobs json property
       if( !isset($json_order->jobs) || !is_object($json_order->jobs) ) {
-         print("deployorders fixer : create missing required 'jobs' property\n");
+         //print("deployorders fixer : create missing required 'jobs' property\n");
          $json_order->jobs = new stdClass();
       }
 
       if ( !isset($json_order->jobs->checks) ) {
-         print("deployorders fixer : create missing required '/jobs/checks' array property\n");
+         //print("deployorders fixer : create missing required '/jobs/checks' array property\n");
          $json_order->jobs->checks = array();
       }
       if ( !isset($json_order->jobs->actions) ) {
-         print("deployorders fixer : create missing required '/jobs/actions' array property\n");
+         //print("deployorders fixer : create missing required '/jobs/actions' array property\n");
          $json_order->jobs->actions = array();
       }
       if ( !isset($json_order->jobs->associatedFiles) ) {
-         print("deployorders fixer : create missing required '/jobs/associatedFiles' array property\n");
+         //print("deployorders fixer : create missing required '/jobs/associatedFiles' array property\n");
          $json_order->jobs->associatedFiles = array();
       }
 
       // Checks for /associatedFiles json property
       if( !isset($json_order->associatedFiles) || !is_object($json_order->associatedFiles) ) {
-         print("deployorders fixer : create missing required 'associatedFiles' property\n");
+         //print("deployorders fixer : create missing required 'associatedFiles' property\n");
          $json_order->associatedFiles = new stdClass();
       }
-      print(
-         "deployorders fixer : final order structure for ID ".$order_config['id']."\n" .
-         json_encode($json_order,JSON_PRETTY_PRINT) ."\n"
-      );
+      //print(
+         //"deployorders fixer : final order structure for ID ".$order_config['id']."\n" .
+      //   json_encode($json_order,JSON_PRETTY_PRINT) ."\n"
+      //);
       $pfDeployOrder::updateOrderJson($order_config['id'], $json_order);
    }
 

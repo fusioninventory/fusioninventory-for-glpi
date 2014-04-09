@@ -371,25 +371,6 @@ class PluginFusioninventoryToolbox {
 
 
    /**
-    * Add SNMO model strings to XML node 'MODEL'
-    *
-    * @param type $p_sxml_node
-    * @param type $p_id
-    */
-   function addModel($p_sxml_node, $p_id) {
-      $pfModel = new PluginFusioninventorySnmpmodel();
-      $pfModelMib = new PluginFusioninventorySnmpmodelMib();
-
-      $pfModel->getFromDB($p_id);
-      $sxml_model = $p_sxml_node->addChild('MODEL');
-         $sxml_model->addAttribute('ID', $p_id);
-         $sxml_model->addAttribute('NAME', $pfModel->fields['name']);
-         $pfModelMib->oidList($sxml_model, $p_id);
-   }
-
-
-
-   /**
     * Add GET oids to XML node 'GET'
     *
     * @param type $p_sxml_node
@@ -633,6 +614,79 @@ class PluginFusioninventoryToolbox {
             JSON_PRETTY_PRINT
          );
       }
+   }
+
+
+
+   /**
+    * Dropdown for display hours
+    *
+    * @return type
+    */
+   static function showHours($name, $options=array()) {
+
+      $p['value']          = '';
+      $p['display']        = true;
+      $p['width']          = '80%';
+      $p['step']           = 5;
+      $p['begin']          = 0;
+      $p['end']            = (24 * 3600);
+
+      if (is_array($options) && count($options)) {
+         foreach ($options as $key => $val) {
+            $p[$key] = $val;
+         }
+      }
+
+      if ($p['step'] <= 0) {
+         $p['step'] = 5;
+      }
+
+      $values   = array();
+
+      $p['step'] = $p['step'] * 60; // to have in seconds
+      for ($s=$p['begin'] ; $s<$p['end'] ; $s+=$p['step']) {
+         $values[$s] = PluginFusioninventoryToolbox::getHourMinute($s);
+      }
+      return Dropdown::showFromArray($name, $values, $p);
+   }
+
+   /**
+    * Get hour:minute from number of seconds
+    */
+   static function getHourMinute($seconds) {
+      $hour = floor($seconds / 3600);
+      $minute = (($seconds - ((floor($seconds / 3600)) * 3600)) / 60);
+      return sprintf("%02s", $hour).":".sprintf("%02s", $minute);
+   }
+
+   /**
+    * Get information if allow_url_fopen is activated and display message if not
+    *
+    * @param $wakecomputer boolean (1 if it's for wakeonlan, 0 if it's for task)
+    *
+    * @return boolean
+    */
+   static function isAllowurlfopen($wakecomputer=0) {
+
+      if (!ini_get('allow_url_fopen')) {
+         echo "<center>";
+         echo "<table class='tab_cadre' height='30' width='700'>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'><strong>";
+         if ($wakecomputer == '0') {
+            echo __('PHP allow_url_fopen is off, remote can\'t work')." !";
+         } else {
+            echo __('PHP allow_url_fopen is off, can\'t wake agent to do inventory')." !";
+         }
+         echo "</strong></td>";
+         echo "</tr>";
+         echo "</table>";
+         echo "</center>";
+         echo "<br/>";
+         return FALSE;
+      }
+      return TRUE;
    }
 }
 

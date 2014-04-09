@@ -95,6 +95,11 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
    public function AddNetworkEquipment() {
       global $DB;
 
+      // Load session rights
+      $_SESSION['glpidefault_entity'] = 0;
+      Session::initEntityProfiles(2);
+      Session::changeProfile(4);
+
       $pfCND = new PluginFusioninventoryCommunicationNetworkDiscovery();
       $networkEquipment = new NetworkEquipment();
 
@@ -138,12 +143,18 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
     * @test
     */
    public function UpdateNetworkEquipment() {
+
+      // Load session rights
+      $_SESSION['glpidefault_entity'] = 0;
+      Session::initEntityProfiles(2);
+      Session::changeProfile(4);
+
       // Update 2nd time
       $pfCND = new PluginFusioninventoryCommunicationNetworkDiscovery();
       $networkEquipment = new NetworkEquipment();
 
-      $networkEquipment->getFromDB($this->item_id);
-
+      $networkEquipment->getFromDB(1);
+      
       $_SESSION['SOURCE_XMLDEVICE'] = $this->source_xmldevice;
       $pfCND->importDevice($networkEquipment);
    }

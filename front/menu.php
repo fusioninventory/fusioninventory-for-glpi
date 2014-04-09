@@ -42,7 +42,7 @@
 
 include ("../../../inc/includes.php");
 
-if (Session::haveRight('plugin_fusioninventory_menu', READ)) {
+if (PluginFusioninventoryMenu::canView()) {
    Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
                 "fusioninventory", "menu");
 

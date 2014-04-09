@@ -50,7 +50,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_agent';
 
-
    /**
    * Get name of this type
    *
@@ -106,10 +105,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $tab[7]['table']         = 'glpi_computers';
       $tab[7]['field']         = 'name';
-      $tab[7]['linkfield']     = 'computers_id';
       $tab[7]['name']          = __('Computer link', 'fusioninventory');
       $tab[7]['datatype']      = 'itemlink';
-      $tab[7]['itemlink_type'] = 'Computer';
 
       $tab[8]['table']     = $this->getTable();
       $tab[8]['field']     = 'version';
@@ -165,7 +162,37 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       return $ong;
    }
 
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $CFG_GLPI;
+      $tab_names = array();
+      if ( $this->can("task", "r") ) {
+         if ($item->getType() == 'Computer') {
+            $tab_names[] = __('FusInv', 'fusioninventory').' '. __('Agent');
+         }
 
+      }
+
+      if (!empty($tab_names)) {
+         return $tab_names;
+      } else {
+         return '';
+      }
+   }
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      Toolbox::logDebug($item);
+      if ($item->getType() == 'Computer') {
+
+         // Possibility to remote agent
+         if (PluginFusioninventoryToolbox::isAllowurlfopen(1)) {
+            $pfAgent = new PluginFusioninventoryAgent();
+            if ($pfAgent->getAgentWithComputerid($item->fields['id'])) {
+               $pfAgent->showRemoteStatus($item);
+            }
+         }
+      }
+   }
 
    /**
     * Display personalized comments (in tooltip) of item
@@ -445,6 +472,23 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          return $data['id'];
       }
       return FALSE;
+   }
+
+   /**
+   * Get agent id of a computer
+   *
+   * @param $computers_id integer ID of the computer
+   *
+   * @return agent id or False
+   *
+   **/
+   function getAgentsFromComputers($computer_ids = array()) {
+
+      $computer_ids = "'" . implode("','", $computer_ids) . "'";
+
+      $agents = $this->find("`computers_id` in (".$computer_ids.")", "");
+
+      return $agents;
    }
 
    /**

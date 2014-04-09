@@ -113,14 +113,14 @@ if (($state != "") AND ($state != "0")) {
 $query = "SELECT * FROM (
 SELECT `name`, `last_fusioninventory_update`, `serial`, `otherserial`,
    `networkequipmentmodels_id`, `glpi_networkequipments`.`id` as `network_id`, 0 as `printer_id`,
-   `plugin_fusioninventory_snmpmodels_id`, `plugin_fusioninventory_configsecurities_id`, `ip` FROM `glpi_plugin_fusioninventory_networkequipments`
+   `plugin_fusioninventory_configsecurities_id`, `ip` FROM `glpi_plugin_fusioninventory_networkequipments`
 JOIN `glpi_networkequipments` on `networkequipments_id` = `glpi_networkequipments`.`id`
 WHERE ((NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY) OR last_fusioninventory_update IS NULL)
    ".$state_sql.")
 UNION
 SELECT `glpi_printers`.`name`, `last_fusioninventory_update`, `serial`, `otherserial`,
    `printermodels_id`, 0 as `network_id`, `glpi_printers`.`id` as `printer_id`,
-   `plugin_fusioninventory_snmpmodels_id`, `plugin_fusioninventory_configsecurities_id`, `ip`
+   `plugin_fusioninventory_configsecurities_id`, `ip`
    FROM `glpi_plugin_fusioninventory_printers`
 JOIN `glpi_printers` on `printers_id` = `glpi_printers`.`id`
 LEFT JOIN `glpi_networkports` on `glpi_networkports`.`items_id` = `glpi_printers`.`id`
@@ -138,7 +138,6 @@ echo "<th>".__('IP')."</th>";
 echo "<th>".__('Serial Number')."</th>";
 echo "<th>".__('Inventory number')."</th>";
 echo "<th>".__('Model')."</th>";
-echo "<th>".__('SNMP models')."</th>";
 echo "<th>".__('SNMP authentication')."</th>";
 echo "</tr>";
 
@@ -173,9 +172,6 @@ if ($result=$DB->query($query)) {
       } else if ($data['printer_id'] > 0) {
          echo "<td>".Dropdown::getDropdownName("glpi_printermodels", $data['printermodels_id'])."</td>";
       }
-      echo "<td>";
-      echo Dropdown::getDropdownName("glpi_plugin_fusioninventory_snmpmodels", $data['plugin_fusioninventory_snmpmodels_id']);
-      echo "</td>";
       echo "<td>";
       echo Dropdown::getDropdownName('glpi_plugin_fusioninventory_configsecurities', $data['plugin_fusinvsnmp_configsecurities_id']);
       echo "</td>";

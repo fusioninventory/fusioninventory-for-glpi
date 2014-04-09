@@ -53,7 +53,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
    static function getTypeName($nb=0) {
-      return __('Packages', 'fusioninventory');
+      return __('Package', 'fusioninventory');
    }
 
 
@@ -268,24 +268,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
 
-   function title() {
-      global $CFG_GLPI;
-
-      $buttons = array();
-      $title = __('Packages', 'fusioninventory');
-
-
-      if ($this->canCreate()) {
-         $buttons["deploypackage.form.php?new=1"] = __('Add a package', 'fusioninventory');
-
-         $title = "";
-      }
-
-      Html::displayTitle($CFG_GLPI['root_doc'].
-                           "/plugins/fusioninventory/pics/menu_mini_package.png",
-                         $title, $title, $buttons);
-   }
-
    function showMenu($options=array()) {
 
       $this->displaylist = FALSE;
@@ -295,7 +277,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
    }
 
    function showList() {
-      self::title();
       Search::show('PluginFusioninventoryDeployPackage');
    }
 
@@ -332,9 +313,6 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons($options);
-
-//      echo "<div id='tabcontent'></div>";
-//      echo "<script type='text/javascript'>loadDefaultTab();</script>";
 
       return TRUE;
    }

@@ -125,12 +125,7 @@ if (isset($_GET['allowcreate'])) {
    $allowcreate = $_GET['allowcreate'];
 }
 
-if (isset($_SERVER['HTTP_REFERER'])
-        AND (strstr($_SERVER['HTTP_REFERER'], "wizard.php"))) {
-   Html::redirect($_SERVER['HTTP_REFERER']."&id=".$id);
-}
-
-$iprange->showForm($id, array( "allowcreate" => $allowcreate));
+$iprange->display($_GET);
 
 Html::footer();
 

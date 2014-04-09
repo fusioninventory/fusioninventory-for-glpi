@@ -50,7 +50,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
    const TASK_OK                 = 2;
    const TASK_ERROR_OR_REPLANNED = 3;
    const TASK_ERROR              = 4;
-   const TASK_UNKNOWN            = 5;
+   const TASK_INFO               = 5;
    const TASK_RUNNING            = 6;
    const TASK_PREPARED           = 7;
 
@@ -63,21 +63,22 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
     */
    function dropdownStateValues() {
 
-      $elements = array();
-      $elements[7] = __('Prepared', 'fusioninventory');
+      $elements = array(
 
-      $elements[1] = __('Started', 'fusioninventory');
+         self::TASK_PREPARED => __('Prepared', 'fusioninventory'),
 
-      $elements[6] = __('Running');
+         self::TASK_STARTED => __('Started', 'fusioninventory'),
 
-      $elements[2] = __('Ok', 'fusioninventory');
+         self::TASK_RUNNING => __('Running'),
 
-      $elements[3] = __('Error / rescheduled', 'fusioninventory');
+         self::TASK_OK => __('Ok', 'fusioninventory'),
 
-      $elements[4] = __('Error');
+         self::TASK_ERROR_OR_REPLANNED => __('Error / rescheduled', 'fusioninventory'),
 
-      $elements[5] = __('unknown', 'fusioninventory');
+         self::TASK_ERROR => __('Error'),
 
+         self::TASK_INFO => __('Info', 'fusioninventory'),
+      );
 
       return $elements;
    }
@@ -165,9 +166,12 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       $sopt[8]['name']           = __('Agent', 'fusioninventory');
       $sopt[8]['datatype']       = 'itemlink';
       $sopt[8]['forcegroupby']   = TRUE;
-      $sopt[8]['joinparams']     = array('beforejoin'
-                                          => array('table'      => 'glpi_plugin_fusioninventory_taskjobstates',
-                                                   'joinparams' => array('jointype' => 'child')));
+      $sopt[8]['joinparams']     = array(
+         'beforejoin' => array(
+            'table'      => 'glpi_plugin_fusioninventory_taskjobstates',
+            'joinparams' => array('jointype' => 'child')
+         )
+      );
 
       return $sopt;
    }
@@ -632,19 +636,19 @@ function appear_array(id){
 
       switch ($datas['state']) {
 
-         case 7:
+         case self::TASK_PREPARED :
             $text .= "<td align='center'>";
             $text .= __('Prepared', 'fusioninventory');
 
             break;
 
-         case 1:
+         case self::TASK_STARTED :
             $text .= "<td align='center'>";
             $text .= __('Started', 'fusioninventory');
 
             break;
 
-         case 2:
+         case self::TASK_OK :
             $text .= "<td style='background-color: rgb(0, 255, 0);-moz-border-radius:".
                  " 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
                  "align='center'>";
@@ -652,7 +656,7 @@ function appear_array(id){
             $finish++;
             break;
 
-         case 3:
+         case self::TASK_ERROR_OR_REPLANNED :
             $text .= "<td style='background-color: rgb(255, 120, 0);-moz-border-radius: ".
                  "4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
                  "align='center'>";
@@ -660,7 +664,7 @@ function appear_array(id){
             $finish++;
             break;
 
-         case 4:
+         case self::TASK_ERROR :
             $text .= "<td style='background-color: rgb(255, 0, 0);-moz-border-radius: ".
                  "4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
                  "align='center'>";
@@ -668,15 +672,15 @@ function appear_array(id){
             $finish++;
             break;
 
-         case 5:
+         case self::TASK_INFO :
             $text .= "<td style='background-color: rgb(255, 200, 0);-moz-border-radius: ".
                  "4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
                  "align='center'>";
-            $text .= "<strong>".__('unknown', 'fusioninventory')."</strong>";
+            $text .= "<strong>".__('Info', 'fusioninventory')."</strong>";
             $finish++;
             break;
 
-         case 6:
+         case self::TASK_RUNNING :
             $text .= "<td style='background-color: rgb(255, 200, 0);-moz-border-radius: ".
                  "4px;-webkit-border-radius: 4px;-o-border-radius: 4px;padding: 2px;' ".
                  "align='center'>";
