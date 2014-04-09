@@ -68,6 +68,16 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          return '';
       }
    }
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      global $DB;
+
+
+      if ($item->getType() == 'PluginFusioninventoryTask' ) {
+         $item->showJobLogs();
+      }
+   }
    /**
    * Display state of taskjob
    *

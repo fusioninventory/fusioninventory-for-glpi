@@ -592,49 +592,92 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       return true;
    }
 
-   static function getTasksRunning($methods = array(), $entities_id = null) {
+   static function getJoblogs($task_ids = array()) {
       global $DB;
 
-      $methods_restrict = null;
-      if( !is_array($methods) ) {
-         trigger_error("'methods' must be an array.");
-      } else {
-         if (count($methods_restrict) > 0) {
-            $methods_restrict = "and job.`method` in ('".implode("','",$methods)."')";
-         }
+      //$methods_restrict = null;
+      //if( !is_array($methods) ) {
+      //   trigger_error("'methods' must be an array.");
+      //} else {
+      //   if (count($methods_restrict) > 0) {
+      //      $methods_restrict = "and job.`method` in ('".implode("','",$methods)."')";
+      //   }
+      //}
+
+
+      $where = array();
+      $where[] = "where 1";
+
+      if (isset($_SESSION['glpiactiveentities_string'])) {
+         $where[] = getEntitiesRestrictRequest("AND", 'task');
       }
 
-      $entities_restrict = null;
-      if (!is_null($entities_id) and isset($_SESSION['glpiactiveentities_string'])) {
-         $entities_restrict = getEntitiesRestrictRequest("AND", 'task');
+      if ( is_array($task_ids) and count($task_ids) > 0 ) {
+         $where[] = "and task.`id` in (" . implode(",",$task_ids) . ")";
       }
-
-      $query = implode("\n", array_filter( array(
+      $query = implode("\n", array(
          "select",
          "  task.`id`, task.`name`,",
-         "  job.`id`, job.`name`,",
-         "  run.`id`",
+         "  job.`id`, job.`name`, job.`method`,",
+         "  run.`id`, run.`plugin_fusioninventory_agents_id` as agent_id,",
+         "  run.`state`,",
+         "  agent.`name` , agent.`device_id`,",
+         "  log.`date`, log.`comment`, log.`state`",
          "from `glpi_plugin_fusioninventory_tasks` as task",
          "left join `glpi_plugin_fusioninventory_taskjobs` as job",
          "  on job.`plugin_fusioninventory_tasks_id` = task.`id`",
          "left join `glpi_plugin_fusioninventory_taskjobstates` as run",
          "  on run.`plugin_fusioninventory_taskjobs_id` = job.`id`",
-         "where",
-         "  run.`state` not in (". implode( "," , array(
-            PluginFusioninventoryTaskjobstate::FINISHED,
-            PluginFusioninventoryTaskjobstate::IN_ERROR,
-            PluginFusioninventoryTaskjobstate::CANCELLED
-         )) . ")",
-         (!is_null($methods_restrict)?"  ".$methods_restrict:null),
-         (!empty($entities_restrict)?"  ".$entities_restrict:null),
-      )));
+         "inner join `glpi_plugin_fusioninventory_agents` as agent",
+         "  on run.`plugin_fusioninventory_agents_id` = agent.`id`",
+         "left join `glpi_plugin_fusioninventory_taskjoblogs` as log",
+         "  on log.`plugin_fusioninventory_taskjobstates_id` = run.`id`",
+         implode("\n", array_filter($where)),
+         "order by",
+         "  task.`id`, job.`id`, log.`date` DESC, log.`id` DESC",
+      ));
       $query_result = $DB->query($query);
-      echo $query."\n";
       $results = array();
       if ( $query_result ) {
          $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
       }
-      return $results;
+
+      //Reformat result by task's id then by job's ids then by jobstate's ids
+      $logs = array();
+      foreach($results as $result) {
+         $task_id = $result['task']['id'];
+         if (!array_key_exists($task_id, $logs)) {
+            $logs[$task_id] = array(
+               'task_name' => $result['task']['name'],
+               'jobs' => array()
+            );
+         };
+
+
+         $job_id = $result['job']['id'];
+         $jobs =& $logs[$task_id]['jobs'];
+         if ( !array_key_exists($job_id, $jobs) ) {
+            $jobs[$job_id] = array(
+               'name' => $result['job']['name'],
+               'method' => $result['job']['method'],
+               'runs' => array()
+            );
+         }
+
+         $run_id = $result['run']['id'];
+         $runs =& $logs[$task_id]['jobs'][$job_id]['runs'];
+         if ( !array_key_exists($run_id, $runs) ) {
+            $runs[$run_id] = array(
+               'state'  => $result['run']['state'],
+               'agent'  => $result['agent']['name'],
+               'logs'   => array()
+            );
+         }
+
+         $log = $result['log'];
+         $runs[$run_id]['logs'][] = $log;
+      }
+      return $logs;
    }
 
 
