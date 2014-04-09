@@ -221,28 +221,15 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       // Get timeslot's entries from this list at the time of the request (ie. get entries according
       // to the day of the week)
       $timeslot_entries = array();
-      Toolbox::logDebug("Day of week : ". $now->format("N"));
       $day_of_week = $now->format("N");
 
       $timeslot_ids = array();
       foreach( $results as $result ) {
          $timeslot_ids[$result['task']['timeslot_id']] = 1;
       }
-      Toolbox::logDebug($pfTimeslot->getTimeslotEntries(array_keys($timeslot_ids), $day_of_week));
+      $timeslot_entries = $pfTimeslot->getTimeslotEntries(array_keys($timeslot_ids), $day_of_week);
 
-      foreach( $results as $result ) {
-         $timeslot_id = $result['task']['timeslot_id'];
-         if ( !array_key_exists($timeslot_id, $timeslot_entries) ) {
-            $timeslot_entries[$timeslot_id] = getAllDatasFromTable(
-               "glpi_plugin_fusioninventory_timeslotentries",
-               "`plugin_fusioninventory_timeslots_id`='".$timeslot_id."' ".
-               "AND `day`='".$day_of_week."'",
-               false, ''
-            );
-         }
-      }
-      $today = new Datetime($now->format("Y-m-d 0:0:0"));
-      $timeslot_cursor = date_create('@0')->add($today->diff($now,true))->getTimestamp();
+      $timeslot_cursor = $pfTimeslot->getTimeslotCursor($now);
 
       /**
        * Ensure the agent's jobstates are allowed to run at the time of the agent's request.
@@ -281,7 +268,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $jobstates_to_cancel[$jobstate->fields['id']] = array(
                   'jobstate' => $jobstate,
                   'reason' => __(
-                     "This job can not be executed anymore due to the task's schedule."
+                     "This job can not be executed anymore due to the task\'s schedule."
                   )
                );
                continue;
@@ -289,20 +276,25 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          }
 
          // Cancel the jobstate if it is requested outside of any timeslot.
-         Toolbox::logDebug(var_export($result,true));
          $timeslot_id = $result['task']['timeslot_id'];
-         if ($timeslot_id > 0) {
+
+         // Do nothing if there are no defined timeslots for this jobstate.
+         if ($timeslot_id > 0 ) {
             $timeslot_matched = false;
-            foreach( $timeslot_entries[$timeslot_id] as $timeslot_entry ) {
-               Toolbox::logDebug($timeslot_entry);
-               if (
-                  $timeslot_entry['begin'] <= $timeslot_cursor
-                  and $timeslot_cursor <= $timeslot_entry['end']
-               ) {
-                  //The timeslot cursor (ie. time of request) matched a timeslot entry so we can
-                  //break the loop here.
-                  $timeslot_matched = true;
-                  break;
+
+            // We do nothing if there are no timeslot_entries, meaning this jobstate is not allowed
+            // to be executed at the day of request.
+            if ( array_key_exists($timeslot_id, $timeslot_entries) ) {
+               foreach( $timeslot_entries[$timeslot_id] as $timeslot_entry ) {
+                  if (
+                     $timeslot_entry['begin'] <= $timeslot_cursor
+                     and $timeslot_cursor <= $timeslot_entry['end']
+                  ) {
+                     //The timeslot cursor (ie. time of request) matched a timeslot entry so we can
+                     //break the loop here.
+                     $timeslot_matched = true;
+                     break;
+                  }
                }
             }
             // If no timeslot matched, cancel this jobstate.
@@ -310,7 +302,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $jobstates_to_cancel[$jobstate->fields['id']] = array(
                   'jobstate' => $jobstate,
                   'reason' => __(
-                     "This job can not be executed anymore due to the task's timeslot."
+                     "This job can not be executed anymore due to the task\'s timeslot."
                   )
                );
                continue;
