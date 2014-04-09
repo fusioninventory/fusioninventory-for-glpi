@@ -106,6 +106,13 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       $pfAgent = new PluginFusioninventoryAgent();
       $pfAgent->showInfoForComputer($item->getID());
 
+      if ($a_computerextend['hostid'] != '') {
+         echo '<tr class="tab_bg_1">';
+         echo '<td>'.__('HostID', 'fusioninventory').'</td>';
+         echo '<td>'.$a_computerextend['hostid'].'</td>';
+         echo '</tr>';
+      }
+
       if ($a_computerextend['bios_date'] != '') {
          echo '<tr class="tab_bg_1">';
          echo '<td>'.__('BIOS date', 'fusioninventory').'</td>';

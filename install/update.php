@@ -5592,6 +5592,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       }
 
 
+   $migration->addField('glpi_plugin_fusioninventory_inventorycomputercomputers', 'hostid', 'string');
+   $migration->migrationOneTable('glpi_plugin_fusioninventory_inventorycomputercomputers');
 
    // Update networkports types
    $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
