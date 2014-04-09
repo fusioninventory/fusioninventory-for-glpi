@@ -105,19 +105,38 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
    }
 
    /*
-    * Get Timeslot entries.
+    * Get Timeslot entries according to the requested day of week.
+    * @since 0.85+1.0
     * @param timeslot_ids  A list of timeslot's ids.
-    * @param weekdays      A list of numeric representation of days of week
-    * return The list of timeslots entries organized by timeslots ids.
+    * @param weekdays      The day of week (ISO-8601 numeric representation).
+    * return The list of timeslots entries organized by timeslots ids :
+    *    array(
+    *       [timeslot #0] => array(
+    *          [timeslot_entry #2] => array(
+    *             ...timeslot_entry fields...
+    *          )
+    *          [timeslot_entry #3] => array(
+    *             ...timeslot_entry fields...
+    *          )
+    *       ),
+    *       [timeslot #5] => array(
+    *          [timeslot_entry #9] => array(
+    *             ...timeslot_entry fields...
+    *          )
+    *          [timeslot_entry #66] => array(
+    *             ...timeslot_entry fields...
+    *          )
+    *       )
+    *    )
     */
 
    function getTimeslotEntries($timeslot_ids = array(), $weekdays = null ) {
 
       $condition = array(
-         "`plugin_fusioninventory_timeslots_id` in ('".implode("','",$timeslot_ids)."'",
+         "`plugin_fusioninventory_timeslots_id` in ('".implode("','",$timeslot_ids)."')",
       );
       if ( !is_null($weekdays) ) {
-         $condition[] = "and `day` = '".$weekdays."')";
+         $condition[] = "and `day` = '".$weekdays."'";
       }
 
       $results = array();
@@ -125,11 +144,13 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       $timeslot_entries = getAllDatasFromTable(
          "glpi_plugin_fusioninventory_timeslotentries",
          implode("\n", $condition),
-         false, '');
+         false, ''
+      );
 
-      Toolbox::logDebug($timeslot_entries);
       foreach ( $timeslot_entries as $timeslot_entry ) {
-         Toolbox::logDebug($timeslot_entry);
+         $timeslot_id = $timeslot_entry['plugin_fusioninventory_timeslots_id'];
+         $timeslot_entry_id = $timeslot_entry['id'];
+         $results[$timeslot_id][$timeslot_entry_id] = $timeslot_entry;
       }
 
       return $results;
@@ -143,7 +164,7 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
     */
 
    function getTimeslotCursor(DateTime $datetime = null) {
-      if (is_null($date)) {
+      if (is_null($datetime)) {
          $datetime = new DateTime();
       }
       $dateday = new DateTime( $datetime->format("Y-m-d 0:0:0") );

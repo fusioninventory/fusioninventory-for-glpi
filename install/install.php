@@ -210,8 +210,6 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
     $migration->displayMessage("Initialize profiles");
     PluginFusioninventoryProfile::initProfile();
 
-
-
    /*
     * bug of purge network port when purge unknown devices, so we clean
     */

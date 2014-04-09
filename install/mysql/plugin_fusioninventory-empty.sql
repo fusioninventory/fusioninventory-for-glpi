@@ -116,27 +116,13 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
   `entities_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `date_creation` datetime DEFAULT NULL,
-  `retry_nb` tinyint(2) NOT NULL DEFAULT '0',
-  `retry_time` int(11) NOT NULL DEFAULT '0',
-  `plugins_id` int(11) NOT NULL DEFAULT '0',
   `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `targets` text DEFAULT NULL COLLATE utf8_unicode_ci,
   `actors` text DEFAULT NULL COLLATE utf8_unicode_ci,
   `comment` text DEFAULT NULL,
-  `users_id` int(11) NOT NULL DEFAULT '0',
-  `status` int(11) NOT NULL DEFAULT '0',
-  `rescheduled_taskjob_id` int(11) NOT NULL DEFAULT '0',
-  `statuscomments` text DEFAULT NULL COLLATE utf8_unicode_ci,
-  `periodicity_count` int(6) NOT NULL DEFAULT '0',
-  `periodicity_type` varchar(255) DEFAULT NULL,
-  `execution_id` bigint(20) NOT NULL DEFAULT '0',
-  `ranking` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_tasks_id` (`plugin_fusioninventory_tasks_id`),
   KEY `entities_id` (`entities_id`),
-  KEY `plugins_id` (`plugins_id`),
-  KEY `users_id` (`users_id`),
-  KEY `rescheduled_taskjob_id` (`rescheduled_taskjob_id`),
   KEY `method` (`method`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -174,20 +160,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobstates` (
   KEY `plugin_fusioninventory_taskjobs_id` (`plugin_fusioninventory_taskjobs_id`),
   KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`,`state`),
   KEY `plugin_fusioninventory_taskjob_2` (`plugin_fusioninventory_taskjobs_id`,`state`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-
-
-DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_profiles`;
-
-CREATE TABLE `glpi_plugin_fusioninventory_profiles` (
-   `id` int(11) NOT NULL AUTO_INCREMENT,
-   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-   `right` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `plugins_id` int(11) NOT NULL DEFAULT '0',
-   `profiles_id` int(11) NOT NULL DEFAULT '0',
-   PRIMARY KEY (`id`),
-   UNIQUE KEY `unicity` (`type`, `plugins_id`, `profiles_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
