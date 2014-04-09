@@ -75,16 +75,16 @@ class PluginFusioninventoryProfile extends Profile {
        */
 
    static function getOldRightsMappings() {
-      $types = array ('agent'                  => 'plugin_fusioninventory_agent', 
+      $types = array ('agent'                  => 'plugin_fusioninventory_agent',
                       'remotecontrol'          => 'plugin_fusioninventory_remotecontrol',
-                      'configuration'          => 'plugin_fusioninventory_configuration', 
-                      'wol'                    => 'plugin_fusioninventory_wol', 
+                      'configuration'          => 'plugin_fusioninventory_configuration',
+                      'wol'                    => 'plugin_fusioninventory_wol',
                       'unknowndevice'          => 'plugin_fusioninventory_unknowndevice',
-                      'task'                   => 'plugin_fusioninventory_task', 
+                      'task'                   => 'plugin_fusioninventory_task',
                       'credential'             => 'plugin_fusioninventory_credential',
                       'credentialip'           => 'plugin_fusioninventory_credentialip',
-                      'existantrule'           => array('plugin_fusioninventory_ruleimport', 
-                                                         'plugin_fusioninventory_ruleentity', 
+                      'existantrule'           => array('plugin_fusioninventory_ruleimport',
+                                                         'plugin_fusioninventory_ruleentity',
                                                          'plugin_fusioninventory_rulelocation'),
                       'importxml'              => 'plugin_fusioninventory_importxml',
                       'blacklist'              => 'plugin_fusioninventory_blacklist',
@@ -96,9 +96,9 @@ class PluginFusioninventoryProfile extends Profile {
                       'reportnetworkequipment' => 'plugin_fusioninventory_reportnetworkequipment',
                       'packages'               => 'plugin_fusioninventory_package',
                       'status'                 => 'plugin_fusioninventory_status',
-                      'collect'                => array('plugin_fusioninventory_collect', 
+                      'collect'                => array('plugin_fusioninventory_collect',
                                                         'plugin_fusioninventory_rulecollect'));
-                      
+
       return $types;
    }
 
@@ -251,7 +251,7 @@ class PluginFusioninventoryProfile extends Profile {
           array('itemtype'  => 'PluginFusioninventoryCredentialip',
                 'label'     => __('Remote devices to inventory (VMware)', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_credentialip'),
-          array('rights'    => CommonDBTM::getRights(),
+          array('itemtype'  => 'PluginFusioninventoryCredential',
                 'label'     => __('VMware host', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_esx'),
           array('itemtype'  => 'PluginFusioninventoryConfigSecurity',
@@ -269,10 +269,10 @@ class PluginFusioninventoryProfile extends Profile {
           array('itemtype'  => 'PluginFusioninventoryInventoryComputerImportXML',
                 'label'     => __('computer XML manual import', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_importxml'),
-          array('rights'    => CommonDBTM::getRights(),
+          array('rights'    => array(CREATE  => __('Create')),
                 'label'     => __('Printers report', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_reportprinter'),
-          array('rights'    => CommonDBTM::getRights(),
+          array('rights'    => array(CREATE  => __('Create')),
                 'label'     => __('Network report'),
                 'field'     => 'plugin_fusioninventory_reportnetworkequipment'),
           array('itemtype'  => 'PluginFusioninventoryLock',
@@ -286,13 +286,13 @@ class PluginFusioninventoryProfile extends Profile {
 
    function getRightsGeneral() {
       $rights = array(
-          array('rights'    => CommonDBTM::getRights(),
+          array('rights'    => array(CREATE  => __('Create')),
                 'label'     => __('Menu', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_menu'),
           array('itemtype'  => 'PluginFusioninventoryAgent',
                 'label'     => __('Agents', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_agent'),
-          array('rights'    => CommonDBTM::getRights(),
+          array('rights'    => array(CREATE  => __('Create')),
                 'label'     => __('Agent remote control', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_remotecontrol'),
           array('itemtype'  => 'PluginFusioninventoryConfig',
@@ -301,7 +301,7 @@ class PluginFusioninventoryProfile extends Profile {
           array('itemtype'  => 'PluginFusioninventoryTask',
                 'label'     => _n('Task', 'Tasks', 2, 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_task'),
-          array('rights'    => CommonDBTM::getRights(),
+          array('rights'    => array(CREATE  => __('Create')),
                 'label'     => __('Wake On LAN', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_wol'),
           array('rights'    => CommonDBTM::getRights(),
@@ -310,7 +310,7 @@ class PluginFusioninventoryProfile extends Profile {
       );
       return $rights;
    }
-   
+
    static function addDefaultProfileInfos($profiles_id, $rights) {
       $profileRight = new ProfileRight();
       foreach ($rights as $right => $value) {
@@ -334,7 +334,7 @@ class PluginFusioninventoryProfile extends Profile {
       include_once(GLPI_ROOT."/plugins/fusioninventory/inc/profile.class.php");
       $profile = new self();
       foreach ($profile->getAllRights() as $right) {
-         self::addDefaultProfileInfos($profiles_id, 
+         self::addDefaultProfileInfos($profiles_id,
                                       array($right['field'] => ALLSTANDARDRIGHT));
       }
    }
@@ -344,10 +344,10 @@ class PluginFusioninventoryProfile extends Profile {
       global $DB;
       //Get all rights from the old table
       $profiles = getAllDatasFromTable(getTableForItemType(__CLASS__));
-      
+
       //Load mapping of old rights to their new equivalent
       $oldrights = self::getOldRightsMappings();
-      
+
       //for each old profile : translate old right the new one
       foreach ($profiles as $id => $profile) {
          switch ($profile['right']) {
@@ -365,11 +365,11 @@ class PluginFusioninventoryProfile extends Profile {
          //Write in glpi_profilerights the new fusioninventory right
          if (isset($oldrights[$profile['type']])) {
             if (!is_array($oldrights[$profile['type']])) {
-               self::addDefaultProfileInfos($profile['profiles_id'], 
+               self::addDefaultProfileInfos($profile['profiles_id'],
                                             array($oldrights[$profile['type']] => $value));
             } else {
                foreach ($oldrights[$profile['type']] as $newtype) {
-                  self::addDefaultProfileInfos($profile['profiles_id'], 
+                  self::addDefaultProfileInfos($profile['profiles_id'],
                                                array($newtype => $value));
                }
             }

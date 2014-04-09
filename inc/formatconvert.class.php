@@ -472,7 +472,6 @@ class PluginFusioninventoryFormatconvert {
                                                     array(
                                                        'NAME'          => 'designation',
                                                        'MANUFACTURER'  => 'manufacturers_id',
-                                                       'TYPE'          => 'interfacetypes_id',
                                                        'MACADDR'       => 'mac'));
                      if (isset($a_found['PCIID'])) {
                         $a_PCIData =
@@ -487,6 +486,7 @@ class PluginFusioninventoryFormatconvert {
                         }
                         $array_tmp['designation'] = Toolbox::addslashes_deep($array_tmp['designation']);
                      }
+                     $array_tmp['mac'] = strtolower($array_tmp['mac']);
                      $a_inventory['networkcard'][] = $array_tmp;
 
                      if (isset($a_found['NAME'])) {
@@ -572,6 +572,9 @@ class PluginFusioninventoryFormatconvert {
                            $array_tmp["instantiation_type"] = 'NetworkPortEthernet';
                         } else {
                            $array_tmp["instantiation_type"] = 'NetworkPortLocal';
+                        }
+                        if (isset($array_tmp['ip'])) {
+                           unset($array_tmp['ip']);
                         }
                         $a_networknames[$array_tmp['name'].'-'.$array_tmp['mac']] = $array_tmp;
                      }
