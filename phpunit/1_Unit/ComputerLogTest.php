@@ -47,7 +47,6 @@ class ComputerLog extends RestoreDatabase_TestCase {
    public function testLog() {
       global $DB;
 
-
       $DB->connect();
 
       $pfFormatconvert  = new PluginFusioninventoryFormatconvert();
@@ -107,32 +106,44 @@ class ComputerLog extends RestoreDatabase_TestCase {
 
       $this->a_inventory['processor'] = Array(
             Array(
+                    'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
+                    'nbthreads'         => 2,
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'frequency_default' => 2400
                 ),
             Array(
+                    'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
+                    'nbthreads'         => 2,
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'frequency_default' => 2400
                 ),
             Array(
+                    'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
+                    'nbthreads'         => 2,
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'frequency_default' => 2400
                 ),
             Array(
+                    'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'frequence'         => 2400,
+                    'nbthreads'         => 2,
                     'serial'            => '',
-                    'frequency'         => 2400
+                    'frequency'         => 2400,
+                    'frequency_default' => 2400
                 )
         );
 
@@ -142,21 +153,22 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'serial'               => '98F6FF18',
                     'frequence'            => '1067 MHz',
                     'devicememorytypes_id' => 'DDR3',
-                    'designation'          => 'DDR3 - SODIMM (None)'
+                    'designation'          => 'DDR3 - SODIMM (None)',
+                    'busID'                => 1
                 ),
             Array(
                     'size'                 => 2048,
                     'serial'               => '95F1833E',
                     'frequence'            => '1067 MHz',
                     'devicememorytypes_id' => 'DDR3',
-                    'designation'          => 'DDR3 - SODIMM (None)'
+                    'designation'          => 'DDR3 - SODIMM (None)',
+                    'busID'                => 2
                 )
         );
 
       $this->a_inventory['monitor'] = Array(
             Array(
                     'name'              => '',
-                    'comment'           => '',
                     'serial'            => '',
                     'manufacturers_id'  => ''
                 )
@@ -220,86 +232,38 @@ class ComputerLog extends RestoreDatabase_TestCase {
                     'is_dynamic'             => 1
                 )
           );
+
       $this->a_inventory = $pfFormatconvert->replaceids($this->a_inventory);
 
       $serialized = gzcompress(serialize($this->a_inventory));
       $this->a_inventory['fusioninventorycomputer']['serialized_inventory'] =
                Toolbox::addslashes_deep($serialized);
 
-
       $computer->add(array('serial' => 'XB63J7D',
                            'entities_id' => 0));
 
-      $this->assertGreaterThan(0, 1, FALSE);
+      // truncate glpi_logs
+      $DB->query('TRUNCATE TABLE `glpi_logs`;');
 
+      $this->assertEquals(0, countElementsInTable('glpi_logs'), "Log must be empty (truncate)");
 
       $_SESSION['glpiactive_entity'] = 0;
-      $pfiComputerLib->updateComputer($this->a_inventory, 1, TRUE);
+      $pfiComputerLib->updateComputer($this->a_inventory, 1, TRUE, 0);
 
-      $query = "SELECT * FROM `glpi_logs`
-         WHERE `id` > '114'";
-      $result = $DB->query($query);
-      $a_logs = array();
+      $a_logs = getAllDatasFromTable('glpi_logs');
 
-      while ($data=$DB->fetch_assoc($result)) {
-         unset($data['date_mod']);
-         $a_logs[$data['id']] = $data;
-      }
       $a_reference = array(
-          115 => array(
-              'id'               => '115',
-              'itemtype'         => 'Computer',
-              'items_id'         => '1',
-              'itemtype_link'    => '0',
-              'linked_action'    => '20',
-              'user_name'        => '',
-              'id_search_option' => '0',
-              'old_value'        => '',
-              'new_value'        => ''
-          ),
-          116 => array(
-              'id'               => '116',
-              'itemtype'         => 'Monitor',
-              'items_id'         => '1',
-              'itemtype_link'    => '0',
-              'linked_action'    => '20',
-              'user_name'        => '',
-              'id_search_option' => '0',
-              'old_value'        => '',
-              'new_value'        => ''
-          ),
-          117 => array(
-              'id'               => '117',
-              'itemtype'         => 'Monitor',
-              'items_id'         => '1',
-              'itemtype_link'    => '',
-              'linked_action'    => '0',
-              'user_name'        => '',
-              'id_search_option' => '7',
-              'old_value'        => '',
-              'new_value'        => 'ddurieux'
-          )
       );
 
-      $this->assertEquals($a_reference, $a_logs, "Log may be empty");
+      $this->assertEquals($a_reference, $a_logs, "Log must be empty ".print_r($a_logs, true));
 
-      // To be sure not have 2 same informations
-      $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
+      // Update a second time and must not have any new lines in glpi_logs
+      $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE, 1);
 
-      $query = "SELECT * FROM `glpi_logs`
-      WHERE `id` > '117'";
-      $result = $DB->query($query);
-      $a_logs = array();
+      $a_logs = getAllDatasFromTable('glpi_logs');
       $a_reference = array();
 
-      $this->assertNotNull($result, "Lines above 117 not found");
-      if (!is_null($result) ) {
-         while ($data=$DB->fetch_assoc($result)) {
-            $a_logs[$data['id']] = $data;
-            $a_reference[$data['id']] = array();
-         }
-      }
-      $this->assertEquals($a_reference, $a_logs, "Log may be empty");
+      $this->assertEquals($a_reference, $a_logs, "Log may be empty at second update ".print_r($a_logs, true));
 
 
       // * Modify: contact
@@ -311,13 +275,14 @@ class ComputerLog extends RestoreDatabase_TestCase {
 
       $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
 
-      $query = "SELECT * FROM `glpi_logs`
-      WHERE `id` > '117'";
-      $result = $DB->query($query);
-      $a_logs = array();
+      $a_logs = getAllDatasFromTable('glpi_logs');
+      foreach ($a_logs as $id=>$data) {
+         unset($data['date_mod']);
+         $a_logs[$id] = $data;
+      }
       $a_reference = array(
-          118 => array(
-              'id'               => '118',
+          1 => array(
+              'id'               => '1',
               'itemtype'         => 'Computer',
               'items_id'         => '1',
               'itemtype_link'    => '',
@@ -327,8 +292,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'old_value'        => 'ddurieux',
               'new_value'        => 'root'
           ),
-          119 => array(
-              'id'               => '119',
+          2 => array(
+              'id'               => '2',
               'itemtype'         => 'Monitor',
               'items_id'         => '1',
               'itemtype_link'    => '',
@@ -338,8 +303,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'old_value'        => 'ddurieux',
               'new_value'        => 'root'
           ),
-          120 => array(
-              'id'               => '120',
+          3 => array(
+              'id'               => '3',
               'itemtype'         => 'Computer',
               'items_id'         => '1',
               'itemtype_link'    => 'DeviceProcessor',
@@ -349,8 +314,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'old_value'        => 'Core i3 (1)',
               'new_value'        => ''
           ),
-          121 => array(
-              'id'               => '121',
+          4 => array(
+              'id'               => '4',
               'itemtype'         => 'Computer',
               'items_id'         => '1',
               'itemtype_link'    => 'SoftwareVersion',
@@ -360,8 +325,8 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'old_value'        => 'ORBit2 - 2.14.19 (3)',
               'new_value'        => ''
           ),
-          122 => array(
-              'id'               => '122',
+          5 => array(
+              'id'               => '5',
               'itemtype'         => 'SoftwareVersion',
               'items_id'         => '3',
               'itemtype_link'    => 'Computer',
@@ -373,10 +338,6 @@ class ComputerLog extends RestoreDatabase_TestCase {
           )
       );
 
-      while ($data=$DB->fetch_assoc($result)) {
-         unset($data['date_mod']);
-         $a_logs[$data['id']] = $data;
-      }
       $this->assertEquals($a_reference, $a_logs, "May have 3 logs (update contact, remove processor
          and remove a software)");
 

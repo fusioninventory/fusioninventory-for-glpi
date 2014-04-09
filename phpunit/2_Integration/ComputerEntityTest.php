@@ -43,56 +43,36 @@
 class ComputerEntity extends RestoreDatabase_TestCase {
 
 
-      /*
-       *
-       *      Tests:
-       *
-       *       * (step1) entity rule => entity 1     |  transfers_id_auto = 1
-       *
-       *            * add pc1            => entity 1
-       *            * update pc1         => entity 1
-       *            * transfert manual   => pc1 entity 0
-       *            * update pc1         => entity 1
-       *
-       *       * (step2) entity rule => entity 1     |  transfers_id_auto = 0
-       *
-       *            * add pc1            => entity 1
-       *            * update pc1         => entity 1
-       *            * transfert manual   => pc1 entity 0
-       *            * update pc1         => entity 0
-       *
-       *       * (step3) no entity rule              |  transfers_id_auto = 1
-       *
-       *            * add pc1            => entity 0
-       *            * update pc1         => entity 0
-       *            * transfert manual   => pc1 entity 1
-       *            * update pc1         => entity 1
-       *
-       *
-       */
-
-
    /**
+    * Add computer in entity `ent1` (with rules)
+    *
     * @test
     */
-   public function AddComputerStep1() {
+   public function AddComputer() {
       global $DB;
 
       $DB->connect();
 
       plugin_init_fusioninventory();
 
-      $transfer = new Transfer();
-
       $DB->query("INSERT INTO `glpi_entities`
          (`id`, `name`, `entities_id`, `completename`, `level`)
-         VALUES (1, 'entity1', 0, 'Entité racine > entity1', 2)");
-
+         VALUES (1, 'ent1', 0, 'Entité racine > ent1', 2)");
+      $DB->query("INSERT INTO `glpi_entities`
+         (`id`, `name`, `entities_id`, `completename`, `level`)
+         VALUES (2, 'ent2', 0, 'Entité racine > ent2', 2)");
 
       $_SESSION['glpiactive_entity'] = 0;
       $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
-      $pfConfig = new PluginFusioninventoryConfig();
       $computer = new Computer();
+      $pfEntity = new PluginFusioninventoryEntity();
+
+      $pfEntity->update(array(
+          'id'                => 1,
+          'entities_id'       => 0,
+          'transfers_id_auto' => 1
+      ));
+
 
       $a_inventory = array();
       $a_inventory['CONTENT']['HARDWARE'] = array(
@@ -125,8 +105,6 @@ class ComputerEntity extends RestoreDatabase_TestCase {
          $input['value']         = 1;
          $ruleAction->add($input);
 
-      $pfConfig->updateValue('transfers_id_auto', 1);
-
       // ** Add agent
       $pfAgent = new PluginFusioninventoryAgent();
       $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
@@ -142,7 +120,7 @@ class ComputerEntity extends RestoreDatabase_TestCase {
          $this->AgentEntity(1, 1, 'Add computer on entity 1');
 
       // ** Update
-         $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
+         $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // update
 
          $nbComputers = countElementsInTable("glpi_computers");
          $this->assertEquals(1, $nbComputers, 'Nb computer for update computer');
@@ -151,205 +129,186 @@ class ComputerEntity extends RestoreDatabase_TestCase {
          $this->assertEquals(1, $computer->fields['entities_id'], 'Update computer');
 
          $this->AgentEntity(1, 1, 'Update computer on entity 1 (not changed)');
-
-
-      // ** Transfer to entity 0
-         $transfer->getFromDB(1);
-         $item_to_transfer = array("Computer" => array(1 => 1));
-         $transfer->moveItems($item_to_transfer, 0, $transfer->fields);
-
-         $computer->getFromDB(1);
-         $this->assertEquals(0, $computer->fields['entities_id'], 'manual transfer computer');
-
-         $this->AgentEntity(1, 0, 'Manually transfer computer from entity 1 to 0');
-
-      // ** Update
-         $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
-
-         $nbComputers = countElementsInTable("glpi_computers");
-         $this->assertEquals(1, $nbComputers, 'Nb computer for update computer');
-
-         $computer->getFromDB(1);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'Update computer after '.
-                  'manual transfer');
-
-         $this->AgentEntity(1, 1, 'Auto transfer ()fusion inventory) computer from entity 0 to 1');
-
    }
 
 
 
    /**
+    * Update computer to change entity (transfer allowed)
+    *
     * @test
     */
-   public function AddComputerStep2() {
-      global $DB, $PF_CONFIG;
+   public function updateComputerTranfer() {
+      global $DB;
 
       $DB->connect();
 
-      self::restore_database();
-      $transfer = new Transfer();
+      $transfer       = new Transfer();
+      $computer       = new Computer();
+      $pfiComputerInv = new PluginFusioninventoryInventoryComputerInventory();
 
-      $DB->query("INSERT INTO `glpi_entities`
-         (`id`, `name`, `entities_id`, `completename`, `level`)
-         VALUES (1, 'entity1', 0, 'Entité racine > entity1', 2)");
+      // Manual transfer computer to entity 2
 
+      $transfer->getFromDB(1);
+      $item_to_transfer = array("Computer" => array(1=>1));
+      $transfer->moveItems($item_to_transfer, 2, $transfer->fields);
 
-      $_SESSION['glpiactive_entity'] = 0;
-      $PF_CONFIG = array();
+      $computer->getFromDB(1);
+      $this->assertEquals(2, $computer->fields['entities_id'], 'Transfer move computer');
 
-      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
-      $pfConfig = new PluginFusioninventoryConfig();
-      $computer = new Computer();
+      $this->AgentEntity(1, 2, 'Transfer computer on entity 2');
 
-      $pfConfig->updateValue('transfers_id_auto', 0);
+      // Update computer and computer may be transfered to entity 1 automatically
 
+      $a_inventory = array();
       $a_inventory['CONTENT']['HARDWARE'] = array(
           'NAME' => 'pc1'
       );
 
-      // * Add rule ignore
-         $rule = new Rule();
-         $ruleCriteria = new RuleCriteria();
-         $ruleAction = new RuleAction();
+      $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // Update
 
-         $input = array();
-         $input['sub_type']   = 'PluginFusioninventoryInventoryRuleEntity';
-         $input['name']       = 'pc1';
-         $input['match']      = 'AND';
-         $input['is_active']  = 1;
-         $rules_id = $rule->add($input);
+      $computer->getFromDB(1);
+      $this->assertEquals(1, $computer->fields['entities_id'], 'Automatic transfer computer');
 
-         $input = array();
-         $input['rules_id']   = $rules_id;
-         $input['criteria']   = 'name';
-         $input['condition']  = 0;
-         $input['pattern']    = 'pc1';
-         $ruleCriteria->add($input);
-
-         $input = array();
-         $input['rules_id']      = $rules_id;
-         $input['action_type']   = 'assign';
-         $input['field']         = 'entities_id';
-         $input['value']         = 1;
-         $ruleAction->add($input);
-
-      // ** Add agent
-      $pfAgent = new PluginFusioninventoryAgent();
-      $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
-                                         'device_id' => 'pc-2013-02-13'));
-      $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
-
-      // ** Add
-         $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
-
-         $computer->getFromDB(1);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'Add computer');
-
-      // ** Update
-         $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
-
-         $nbComputers = countElementsInTable("glpi_computers");
-         $this->assertEquals(1, $nbComputers, 'Nb computer for update computer');
-
-         $computer->getFromDB(1);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'Update computer');
-
-
-      // ** Transfer to entity 0
-         $transfer->getFromDB(1);
-         $item_to_transfer = array("Computer" => array(1 => 1));
-         $transfer->moveItems($item_to_transfer, 0, $transfer->fields);
-
-         $computer->getFromDB(1);
-         $this->assertEquals(0, $computer->fields['entities_id'], 'manual transfer computer');
-
-      // ** Update
-         $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
-
-         $nbComputers = countElementsInTable("glpi_computers");
-         $this->assertEquals(2, $nbComputers, 'Nb computer for update computer');
-
-         $computer->getFromDB(1);
-         $this->assertEquals(0, $computer->fields['entities_id'], 'Update computer 1 after '.
-                  'manual transfer');
-
-         $computer->getFromDB(2);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'Update computer 2 after '.
-                  'manual transfer');
+      $this->AgentEntity(1, 1, 'Automatic transfer computer on entity 1');
 
    }
 
 
 
    /**
+    * Update computer to not change entity (transfer not allowed)
+    *
     * @test
     */
-   public function AddComputerStep3() {
-      global $DB, $PF_CONFIG;
+   public function updateComputerNoTranfer() {
+      global $DB;
 
       $DB->connect();
 
-      self::restore_database();
-      $transfer = new Transfer();
+      $transfer       = new Transfer();
+      $computer       = new Computer();
+      $pfiComputerInv = new PluginFusioninventoryInventoryComputerInventory();
+      $pfEntity       = new PluginFusioninventoryEntity();
 
-      $DB->query("INSERT INTO `glpi_entities`
-         (`id`, `name`, `entities_id`, `completename`, `level`)
-         VALUES (1, 'entity1', 0, 'Entité racine > entity1', 2)");
+      // Manual transfer computer to entity 2
 
+      $transfer->getFromDB(1);
+      $item_to_transfer = array("Computer" => array(1=>1));
+      $transfer->moveItems($item_to_transfer, 2, $transfer->fields);
 
-      $_SESSION['glpiactive_entity'] = 0;
-      $PF_CONFIG = array();
+      $computer->getFromDB(1);
+      $this->assertEquals(2, $computer->fields['entities_id'], 'Transfer move computer');
 
-      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
-      $pfConfig = new PluginFusioninventoryConfig();
-      $computer = new Computer();
+      $this->AgentEntity(1, 2, 'Transfer computer on entity 2');
 
-      $pfConfig->updateValue('transfers_id_auto', 1);
+      // Define entity 2 not allowed to transfer
+      $ents_id = $pfEntity->add(array(
+          'entities_id'       => 2,
+          'transfers_id_auto' => 0
+      ));
+      $this->assertEquals(2, $ents_id, 'Entity 2 defined with no transfer');
 
+      // Update computer and computer must not be transfered (keep in entoty 2)
+
+      $a_inventory = array();
       $a_inventory['CONTENT']['HARDWARE'] = array(
-          'NAME' => 'pc2'
+          'NAME' => 'pc1'
       );
 
-      // ** Add agent
-         $pfAgent = new PluginFusioninventoryAgent();
-         $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
-                                            'device_id' => 'pc-2013-02-13'));
-         $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
+      $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // Update
 
-      // ** Add
-         $pfiComputerInv->import("pc2-2013-02-13", "", $a_inventory); // creation
+      $this->assertEquals(1, countElementsInTable('glpi_computers'), 'Must have only 1 computer');
 
-         $computer->getFromDB(1);
-         $this->assertEquals(0, $computer->fields['entities_id'], 'Add computer');
+      $computer->getFromDB(1);
+      $this->assertEquals(2, $computer->fields['entities_id'], 'Computer must not be transfered');
 
-      // ** Update
-         $pfiComputerInv->import("pc2-2013-02-13", "", $a_inventory); // creation
+      $this->AgentEntity(1, 2, 'Agent must stay with entity 2');
 
-         $nbComputers = countElementsInTable("glpi_computers");
-         $this->assertEquals(1, $nbComputers, 'Nb computer for update computer');
-
-         $computer->getFromDB(1);
-         $this->assertEquals(0, $computer->fields['entities_id'], 'Update computer');
+   }
 
 
-      // ** Transfer to entity 1
-         $transfer->getFromDB(1);
-         $item_to_transfer = array("Computer" => array(1 => 1));
-         $transfer->moveItems($item_to_transfer, 1, $transfer->fields);
 
-         $computer->getFromDB(1);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'manual transfer computer');
+   /**
+    * Update computer with restrict entity (in this case computer added)
+    *
+    * @test
+    */
+   public function updateaddComputerRestrictEntity() {
+      global $DB;
 
-      // ** Update
-         $pfiComputerInv->import("pc2-2013-02-13", "", $a_inventory); // creation
+      $DB->connect();
 
-         $nbComputers = countElementsInTable("glpi_computers");
-         $this->assertEquals(1, $nbComputers, 'Nb computer for update computer');
+      $computer = new Computer();
+      $pfiComputerInv = new PluginFusioninventoryInventoryComputerInventory();
 
-         $computer->getFromDB(1);
-         $this->assertEquals(1, $computer->fields['entities_id'], 'Update computer 1 after '.
-                  'manual transfer');
+      // Disable all rules
+      $DB->query("UPDATE `glpi_rules`
+         SET `is_active`='0'
+         WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport'");
+
+      // Add rule name + restrict entity search
+      $rulecollection = new PluginFusioninventoryInventoryRuleImportCollection();
+      $input = array();
+      $input['is_active']=1;
+      $input['name']='Computer name + restrict';
+      $input['match']='AND';
+      $input['sub_type'] = 'PluginFusioninventoryInventoryRuleImport';
+      $input['ranking'] = 1;
+      $rule_id = $rulecollection->add($input);
+
+         // Add criteria
+         $rule = $rulecollection->getRuleClass();
+         $rulecriteria = new RuleCriteria(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "name";
+         $input['pattern']= 1;
+         $input['condition']=10;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "name";
+         $input['pattern']= 1;
+         $input['condition']=8;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "entityrestrict";
+         $input['pattern']= '';
+         $input['condition']=202;
+         $rulecriteria->add($input);
+
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['criteria'] = "itemtype";
+         $input['pattern']= 'Computer';
+         $input['condition']=0;
+         $rulecriteria->add($input);
+
+         // Add action
+         $ruleaction = new RuleAction(get_class($rule));
+         $input = array();
+         $input['rules_id'] = $rule_id;
+         $input['action_type'] = 'assign';
+         $input['field'] = '_fusion';
+         $input['value'] = '1';
+         $ruleaction->add($input);
+
+
+      $a_inventory = array();
+      $a_inventory['CONTENT']['HARDWARE'] = array(
+          'NAME' => 'pc1'
+      );
+
+      $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // Update
+
+      $this->assertEquals(2, countElementsInTable('glpi_computers'), 'Must have only 2 computer');
+
+      $computer->getFromDB(2);
+      $this->assertEquals(1, $computer->fields['entities_id'], 'Second computer added');
 
    }
 
@@ -371,86 +330,5 @@ class ComputerEntity extends RestoreDatabase_TestCase {
       $this->assertEquals($entities_id, $pfAgent->fields['entities_id'], $text);
    }
 
-
-   /**
-    * @test
-    */
-   public function UpdateComputerThroughEntities() {
-      global $DB, $PF_CONFIG;
-
-      $DB->connect();
-
-      self::restore_database();
-//      $PF_CONFIG['extradebug']        = 1;
-      $PF_CONFIG['transfers_id_auto'] = 1;
-
-      $DB->query("INSERT INTO `glpi_entities`
-         (`id`, `name`, `entities_id`, `completename`, `level`)
-         VALUES (1, 'entity1', 0, 'Entité racine > entity1', 2)");
-      $DB->query("INSERT INTO `glpi_entities`
-         (`id`, `name`, `entities_id`, `completename`, `level`)
-         VALUES (2, 'entity2', 0, 'Entité racine > entity2', 2)");
-
-      $_SESSION['glpiactive_entity']   = 0;
-      $_SESSION['glpishowallentities'] = 1;
-
-      $computer = new Computer();
-
-      $input = array(
-          'name'        => 'pc01',
-          'entities_id' => 1
-      );
-      $computer->add($input);
-
-      // * Add rule computer to entity 2
-         $rule = new Rule();
-         $ruleCriteria = new RuleCriteria('PluginFusioninventoryInventoryRuleEntity');
-         $ruleAction = new RuleAction('PluginFusioninventoryInventoryRuleEntity');
-
-         $input = array();
-         $input['sub_type']   = 'PluginFusioninventoryInventoryRuleEntity';
-         $input['name']       = 'pc01';
-         $input['match']      = 'AND';
-         $input['is_active']  = 1;
-         $rules_id = $rule->add($input);
-
-         $input = array();
-         $input['rules_id']   = $rules_id;
-         $input['criteria']   = 'name';
-         $input['condition']  = 0;
-         $input['pattern']    = 'pc01';
-         $ruleCriteria->add($input);
-
-         $input = array();
-         $input['rules_id']      = $rules_id;
-         $input['action_type']   = 'assign';
-         $input['field']         = 'entities_id';
-         $input['value']         = 2;
-         $ruleAction->add($input);
-
-      $a_inventory = array();
-      $a_inventory['CONTENT']['HARDWARE'] = array(
-          'NAME' => 'pc01'
-      );
-
-      // ** Add agent
-      $pfAgent = new PluginFusioninventoryAgent();
-      $a_agents_id = $pfAgent->add(array('name'      => 'pc-2013-02-13',
-                                         'device_id' => 'pc-2013-02-13'));
-      $_SESSION['plugin_fusioninventory_agents_id'] = $a_agents_id;
-
-      $pfiComputerInv  = new PluginFusioninventoryInventoryComputerInventory();
-      $pfiComputerInv->import("pc-2013-02-13", "", $a_inventory); // creation
-
-
-      $a_computers = getAllDatasFromTable("glpi_computers");
-
-      $this->assertEquals(1, count($a_computers));
-
-      $a_computer = current($a_computers);
-
-      $this->assertEquals(2, $a_computer['entities_id'], 'Entity of computer may be changed from 1 to 2');
-
-   }
 }
 ?>

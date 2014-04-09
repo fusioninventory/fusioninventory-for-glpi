@@ -165,7 +165,6 @@ require_once '1_Unit/NetworkEquipmentUpdate.php';
 require_once '1_Unit/NetworkEquipmentUpdateDiscovery.php';
 require_once '1_Unit/ComputerLog.php';
 require_once '1_Unit/AgentChangeDeviceid.php';
-require_once '1_Unit/SNMPModel.php';
 //require_once '1_Unit/Tasks/Task.php';
 //require_once '1_Unit/Tasks/Job.php';
 //require_once '1_Unit/Tasks/Tasks_Jobs.php';
@@ -219,7 +218,6 @@ class AllTests {
          $suite->addTest(NetworkEquipmentUpdate_AllTests::suite());
          $suite->addTest(NetworkEquipmentUpdateDiscovery_AllTests::suite());
          $suite->addTest(ComputerLog_AllTests::suite());
-         $suite->addTest(SNMPModel_AllTests::suite());
 
          $suite->addTest(ComputerEntity_AllTests::suite());
          $suite->addTest(RuleIgnoredImport_AllTests::suite());

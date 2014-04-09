@@ -314,6 +314,7 @@ class ComputerPrinter extends Common_TestCase {
 
       $DB->connect();
 
+      self::restore_database();
 
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
@@ -406,9 +407,6 @@ class ComputerPrinter extends Common_TestCase {
       $input['field'] = 'is_global';
       $input['value'] = '0';
       $ruleaction->add($input);
-
-
-      $a_computerinventory = $this->a_computer1;
 
       $pfici = new PluginFusioninventoryInventoryComputerInventory();
 

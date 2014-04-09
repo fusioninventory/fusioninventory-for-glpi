@@ -175,7 +175,7 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
               'model'            => 'cisco WS-C3750G-24PS',
               'sysdescr'         => 'Cisco IOS Software, C3750 Software (C3750-ADVIPSERVICESK9-M), Version 12.2(46)SE, RELEASE SOFTWARE (fc2)\nCopyright (c) 1986-2008 by Cisco Systems, Inc.\nCompiled Thu 21-Aug-08 15:43 by nachen',
               'name'             => 'CENTRALSWITCH',
-              'logical_number'   => '',	
+              'logical_number'   => '',
               'mac'              => ''
           )
       );
@@ -265,7 +265,6 @@ class NetworkEquipmentUpdate extends RestoreDatabase_TestCase {
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2010 by Cisco Systems, Inc.
 Compiled Fri 26-Mar-10 09:14 by prod_rel_team',
-          'plugin_fusioninventory_snmpmodels_id'        => '0',
           'plugin_fusioninventory_configsecurities_id'  => '0',
           'uptime'                                      => '157 days, 02:14:44.00',
           'cpu'                                         => '5',

@@ -51,13 +51,11 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    public $can_sort=TRUE;
    public $specific_parameters = FALSE;
 
-
+   static $rightname = 'plugin_fusioninventory_ruleentity';
 
    function getTitle() {
       return __('Entity rules', 'fusioninventory');
    }
-
-
 
    function preProcessPreviewResults($output) {
       return $output;

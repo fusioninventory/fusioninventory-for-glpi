@@ -382,7 +382,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                echo "<input type='text' name='filename' id='server_filename$rand'".
                   " style='width:120px;float:left' />";
                echo "<input type='button' class='submit' value='".__("Choose", 'fusioninventory').
-                  "' onclick='fileModal$rand.show();' style='width:50px' />";
+                  "' onclick='fileModal$rand.dialog(\"open\");' />";
                Ajax::createModalWindow("fileModal$rand",
                         $CFG_GLPI['root_doc']."/plugins/fusioninventory/ajax/deployfilemodal.php",
                         array('title' => __('Select the file on server', 'fusioninventory'),
@@ -444,7 +444,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
 
       $rand = $params['rand'];
 
-      echo "<script type='javascript'>";
+      echo "<script type='text/javascript'>";
       echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
          dataUrl:'".$CFG_GLPI["root_doc"]."/plugins/fusioninventory/ajax/serverfilestreesons.php'
       });";
@@ -468,7 +468,7 @@ class PluginFusioninventoryDeployFile extends CommonDBTM {
                if (node.leaf == true) {
                   console.log('server_filename$rand');
                   Ext.get('server_filename$rand').dom.value = node.id;
-                  fileModal$rand.hide();
+                  fileModal$rand.dialog('close');
                }
             }
          }

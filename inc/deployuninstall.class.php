@@ -55,7 +55,10 @@ class PluginFusioninventoryDeployuninstall extends PluginFusioninventoryDeployCo
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       switch(get_class($item)) {
-         case 'PluginFusioninventoryDeployPackage': return __('Uninstallation', 'fusioninventory');
+
+         case 'PluginFusioninventoryDeployPackage':
+            return __('Uninstallation', 'fusioninventory');
+            break;
 
       }
    }

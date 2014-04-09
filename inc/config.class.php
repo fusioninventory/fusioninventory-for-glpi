@@ -89,7 +89,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['component_drive']        = 1;
       $input['component_networkdrive'] = 1;
       $input['component_control']      = 1;
-      $input['transfers_id_auto']      = 1;
       $input['states_id_default']      = 0;
       $input['location']               = 0;
       $input['group']                  = 0;
@@ -603,24 +602,6 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       Dropdown::showYesNo("create_vm", $pfConfig->getValue('create_vm'));
       echo "</td>";
       echo "<td colspan='2'>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr>";
-      echo "<th colspan='4'>".__('Automatic computers transfer', 'fusioninventory');
-
-      echo "</th>";
-      echo "</tr>";
-
-      echo "<td colspan='2'>";
-      echo __('Model for automatic computers transfer in an other entity', 'fusioninventory').
-              "&nbsp:";
-      echo "</td>";
-      echo "<td colspan='2'>";
-      Transfer::dropdown(array('value'      => $pfConfig->getValue('transfers_id_auto'),
-                               'name'       => "transfers_id_auto",
-                               'emptylabel' => __('No automatic transfer')));
-
       echo "</td>";
       echo "</tr>";
 

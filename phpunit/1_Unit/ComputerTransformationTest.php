@@ -451,7 +451,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                     'frequence'         => 2400,
                     'frequency_default' => 2400,
                     'nbcores'           => '',
-                    'nbthreads'         => ''
+                    'nbthreads'         => '0'
           );
 
       $this->assertEquals($a_reference, $a_return['processor']);
@@ -510,14 +510,12 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $a_reference[0] = array(
             'manufacturers_id'   => 'NEC Technologies, Inc.',
             'name'               => 'Écran Plug-and-Play',
-            'comment'            => '27/2001',
             'serial'             => ''
           );
       $a_reference[1] = array(
             'manufacturers_id'   => 'Lenovo',
             'name'               => 'ThinkPad Display 1280x800',
             'serial'             => 'UBYVUTFYEIUI',
-            'comment'            => ''
           );
       $this->assertEquals($a_reference, $a_return['monitor']);
    }

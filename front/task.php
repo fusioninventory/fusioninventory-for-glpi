@@ -53,7 +53,7 @@ Session::checkRight('plugin_fusioninventory_task', READ);
 
 PluginFusioninventoryMenu::displayMenu("mini");
 
-PluginFusioninventoryTaskjob::isAllowurlfopen();
+//PluginFusioninventoryTaskjob::isAllowurlfopen();
 
 $pfTask = new PluginFusioninventoryTask();
 

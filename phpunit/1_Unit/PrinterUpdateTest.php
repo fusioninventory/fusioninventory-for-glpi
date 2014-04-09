@@ -183,7 +183,6 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
          'id'                                           => '1',
          'printers_id'                                  => '1',
          'sysdescr'                                     => 'HP ETHERNET MULTI-ENVIRONMENT',
-         'plugin_fusioninventory_snmpmodels_id'         => '0',
          'plugin_fusioninventory_configsecurities_id'   => '0',
          'frequence_days'                               => '1',
          'serialized_inventory'                         => NULL
@@ -356,8 +355,6 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $a_printerextend = current($a_printerextends);
       $this->assertEquals('1', $a_printerextend['plugin_fusioninventory_configsecurities_id'],
          'SNMPauth may be with id 1');
-      $this->assertGreaterThan(0, $a_printerextend['plugin_fusioninventory_snmpmodels_id'],
-         'models_id not updated');
       $this->assertEquals('Photosmart D7200 series', $a_printerextend['sysdescr'],
          'Sysdescr not updated correctly');
 
@@ -438,8 +435,6 @@ class PrinterUpdate extends RestoreDatabase_TestCase {
       $a_printerextend = current($a_printerextends);
       $this->assertEquals('1', $a_printerextend['plugin_fusioninventory_configsecurities_id'],
          'SNMPauth may be with id 1');
-      $this->assertGreaterThan(0, $a_printerextend['plugin_fusioninventory_snmpmodels_id'],
-         'models_id not updated');
       $this->assertEquals('Photosmart D7200 series', $a_printerextend['sysdescr'],
          'Sysdescr not updated correctly');
 
