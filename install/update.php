@@ -4953,7 +4953,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobs`";
    $result = $DB->query($query);
    while ($data=$DB->fetch_array($result)) {
-      $a_defs = importArrayFromDB($data['definition']);
+      $a_defs = importArrayFromDB($data['targets']);
       foreach ($a_defs as $num=>$a_def) {
          if (key($a_def) == 'PluginFusinvsnmpIPRange') {
             $a_defs[$num] = array('PluginFusioninventoryIPRange'=>current($a_def));
@@ -4962,7 +4962,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          }
       }
       $queryu = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
-         SET `definition`='".exportArrayToDB($a_defs)."'
+         SET `targets`='".exportArrayToDB($a_defs)."'
          WHERE `id`='".$data['id']."'";
       $DB->query($queryu);
    }
@@ -4993,14 +4993,14 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobs`";
    $result = $DB->query($query);
    while ($data=$DB->fetch_array($result)) {
-      $a_defs = importArrayFromDB($data['action']);
+      $a_defs = importArrayFromDB($data['actors']);
       foreach ($a_defs as $num=>$a_def) {
          if (key($a_def) == 'PluginFusinvdeployGroup') {
             $a_defs[$num] = array('PluginFusioninventoryDeployGroup'=>current($a_def));
          }
       }
       $queryu = "UPDATE `glpi_plugin_fusioninventory_taskjobs`
-         SET `action`='".exportArrayToDB($a_defs)."'
+         SET `actors`='".exportArrayToDB($a_defs)."'
          WHERE `id`='".$data['id']."'";
       $DB->query($queryu);
    }
