@@ -39,5 +39,5 @@ $logger->debug($args);
  * Get Running Tasks
  */
 
-$tasks = PluginFusioninventoryTask::getTasksRunning();
-$logger->debug($tasks);
+$logs = PluginFusioninventoryTask::getJobLogs();
+$logger->info($logs);

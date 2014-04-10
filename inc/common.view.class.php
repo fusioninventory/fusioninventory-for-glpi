@@ -123,12 +123,10 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
       return $rand;
    }
 
-   public function showDropdownFromArray($title, $varname, $values = array()) {
+   public function showDropdownFromArray($title, $varname, $values = array(), $options=array()) {
       echo "<label>" . $title."&nbsp;:" . "</label>";
       echo "<div class='input_wrap'>";
-      $options = array(
-         'width'=>'100%'
-      );
+      $options['width'] = '100%';
 
       if (!is_null($varname)) {
          $options['value'] = $this->fields[$varname];

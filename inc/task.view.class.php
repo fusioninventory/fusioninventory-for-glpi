@@ -42,6 +42,12 @@
 
 class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
+   function __construct() {
+      parent::__construct();
+      $this->base_urls = array_merge( $this->base_urls, array(
+         'fi.job.logs' => $this->getBaseUrlFor('fi.ajax') . "/taskjob_logs.php",
+      ));
+   }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       global $CFG_GLPI;
@@ -75,6 +81,61 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          echo "<b>To Be Done</b>";
       }
    }
+
+
+   function showJobLogs() {
+
+      $refresh_intervals = array(
+         "off" => __('Off', 'fusioninventory'),
+         "1"   => '1 ' . _n('second','seconds',1),
+         "5"   => '5 ' . _n('second','seconds',5),
+         "10"  => '10 ' . _n('second', 'seconds', 10),
+         "60"  => '1 ' . _n('minute', 'minutes', 1),
+         "120"  => '2 ' . _n('minute', 'minutes', 2),
+         "300"  => '5 ' . _n('minute', 'minutes', 5),
+         "600"  => '10 ' . _n('minute', 'minutes', 10),
+      );
+
+      $refresh_randid = $this->showDropdownFromArray(
+         __("refresh interval", "fusioninventory"),
+         null,
+         $refresh_intervals,
+         array('value' => '10')
+      );
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $taskjobs = $pfTaskjob->find(
+         "`plugin_fusioninventory_tasks_id`='".$this->fields['id']."'",
+         "id"
+      );
+      foreach($taskjobs as $taskjob) {
+         echo implode("\n", array(
+            "<div id='joblogs_block'>",
+            $taskjob['name'],
+            "</div>"
+         ));
+      }
+
+      echo implode( "\n", array(
+         "<script type='text/javascript'>",
+         "  taskjobs.update_logs_timeout(",
+         "     '".$this->getBaseUrlFor('fi.job.logs')."',",
+         "     ".$this->fields['id'].",",
+         "     'dropdown_".$refresh_randid."'",
+         "  );",
+         "</script>"
+      ));
+   }
+
+   function ajaxGetJobLogs($options) {
+      Toolbox::logDebug($options);
+      $task = new PluginFusioninventoryTask();
+      $task->getFromDB($options['task_id']);
+      $logs = $task::getJoblogs(array($options['task_id']));
+      echo "<div style='text-align:left'><pre>";
+      print_r($logs);
+      echo "</pre></div>";
+   }
+
    /**
     * Display form for task configuration
     *
@@ -89,7 +150,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       $taskjobs = array();
       $new_item = false;
-      Toolbox::logDebug($id);
+
       if ($id > 0) {
          $this->getFromDB($id);
          $taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'", "id");
