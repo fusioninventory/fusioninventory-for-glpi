@@ -400,11 +400,15 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       // Set basic elements of jobstates
       $run_base = array(
          'state' => PluginFusioninventoryTaskjobstate::PREPARED,
+      );
+      $log_base = array(
          'date'  => $now->format("Y-m-d H:i:s"),
+         'state' => PluginFusioninventoryTaskjoblog::TASK_PREPARED,
+         'comment' => ''
       );
 
       $jobstate = new PluginFusioninventoryTaskjobstate();
-
+      $joblog = new PluginFusioninventoryTaskjoblog();
       foreach($results as $index => $result) {
 
          $actors = importArrayFromDB($result['job']['actors']);
@@ -467,7 +471,17 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                      )
                   );
 
-                  $jobstate->add($run);
+                  $run_id = $jobstate->add($run);
+                  if ($run_id !== false) {
+                     $log = array_merge(
+                        $log_base,
+                        array(
+                           'plugin_fusioninventory_taskjobstates_id' => $run_id,
+                           ''
+                        )
+                     );
+                     $joblog->add($log);
+                  }
                }
             }
 
