@@ -150,7 +150,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       $taskjobs = array();
       $new_item = false;
-      Toolbox::logDebug($id);
+
       if ($id > 0) {
          $this->getFromDB($id);
          $taskjobs = $pfTaskjob->find("`plugin_fusioninventory_tasks_id`='".$id."'", "id");
