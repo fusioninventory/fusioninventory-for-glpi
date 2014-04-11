@@ -339,6 +339,7 @@ function pluginFusioninventoryUpdateTasks( $migration , $plugin_id) {
       )
    );
 
+   $table['renamefields'] = array();
    $table['oldfields'] = array(
       'execution_id'
    );
@@ -358,7 +359,7 @@ function pluginFusioninventoryUpdateTasks( $migration , $plugin_id) {
          'name' => '', 'type' => 'INDEX'
       )
    );
-
+   $table['oldkeys'] = array();
    migrateTablesFusionInventory($migration, $table);
    //$DB->list_fields($newTable, FALSE);
 
