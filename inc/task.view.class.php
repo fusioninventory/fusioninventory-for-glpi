@@ -95,13 +95,20 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          "300"  => '5 ' . _n('minute', 'minutes', 5),
          "600"  => '10 ' . _n('minute', 'minutes', 10),
       );
-
+      echo "<div class='fusinv_panel'>";
+      echo "   <div class='fusinv_form large'>";
       $refresh_randid = $this->showDropdownFromArray(
          __("refresh interval", "fusioninventory"),
          null,
          $refresh_intervals,
-         array('value' => '10')
+         array(
+            'value' => '10', // set default to 10 seconds
+            'width' => '20%'
+         )
       );
+      echo "   </div>"; // end of fusinv_form
+      echo "</div>"; // end of fusinv_panel
+
       $pfTaskjob = new PluginFusioninventoryTaskjob();
       $taskjobs = $pfTaskjob->find(
          "`plugin_fusioninventory_tasks_id`='".$this->fields['id']."'",
@@ -110,7 +117,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       foreach($taskjobs as $taskjob) {
          echo implode("\n", array(
             "<div id='joblogs_block'>",
-            $taskjob['name'],
             "</div>"
          ));
       }
@@ -127,13 +133,80 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
    }
 
    function ajaxGetJobLogs($options) {
-      Toolbox::logDebug($options);
       $task = new PluginFusioninventoryTask();
       $task->getFromDB($options['task_id']);
       $logs = $task::getJoblogs(array($options['task_id']));
-      echo "<div style='text-align:left'><pre>";
-      print_r($logs);
-      echo "</pre></div>";
+      $display_list = array();
+      $display_list[] = "<ul class='job_list'>";
+      foreach($logs as $task) {
+         foreach($task['jobs'] as $job) {
+            $display_list[] = "<li class='job_info'>";
+            $display_list[] = "  <h3>".$job['name']."</h3>";
+            foreach($job['targets'] as $target) {
+               $display_list[] = "  <div class='job_target'>";
+               $display_list[] = "     <h4>".$target['name']."</h4>";
+               $display_list[] = "     <ul>";
+
+               $css = count($target['agents_prepared'])?"agents_prepared":"";
+               $display_list[] = "        <li class='$css'>";
+               $display_list[] =
+                  __('Prepared', 'fusioninventory')." : ".
+                  count($target['agents_prepared']);
+               $display_list[] = "        </li>";
+
+               $css = count($target['agents_cancelled'])?"agents_cancelled":"";
+               $display_list[] = "        <li class='$css'>";
+               $display_list[] =
+                  __('Cancelled', 'fusioninventory')." : ".
+                  count($target['agents_cancelled']);
+               $display_list[] = "        </li>";
+
+               $css = count($target['agents_running'])?"agents_running":"";
+               $display_list[] = "        <li class='$css'>";
+               $display_list[] =
+                  __('Running', 'fusioninventory')." : ".
+                  count($target['agents_running']);
+               $display_list[] = "        </li>";
+
+               $css = count($target['agents_success'])?"agents_success":"";
+               $display_list[] = "        <li class='$css'>";
+               $display_list[] =
+                  __('Successful', 'fusioninventory')." : ".
+                  count($target['agents_success']);
+               $display_list[] = "        </li>";
+
+               $css = count($target['agents_error'])?"agents_error":"";
+               $display_list[] = "        <li class='$css'>";
+               $display_list[] =
+                  __('In error', 'fusioninventory')." : ".
+                  count($target['agents_error']);
+               $display_list[] = "        </li>";
+
+               $css = count($target['agents_notdone'])?"agents_notdone":"";
+               $display_list[] = "        <li class='$css'>";
+               $display_list[] =
+                  __('Not done yet', 'fusioninventory')." : ".
+                  count($target['agents_notdone']);
+               $display_list[] = "        </li>";
+               $display_list[] = "     </ul>";
+               $display_list[] = "  </div>";
+            }
+            $display_list[] = "  <ul class='job_info'>";
+
+            $display_list[] = "  </ul>";
+            $display_list[] = "</li>"; // end of job_info
+         }
+      }
+      $display_list[] = "</ul>";
+
+      echo implode("\n", $display_list);
+
+      //Debug logs array
+      echo implode("\n", array(
+         "<pre style='text-align:left'>",
+         var_export($logs,true),
+         "</pre>"
+      ));
    }
 
    /**

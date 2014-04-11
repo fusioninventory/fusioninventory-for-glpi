@@ -122,11 +122,24 @@ td:not(#foo) > input[type=radio]:checked + label {
  * The following css is used with elements from PluginFusioninventoryCommonView
  */
 
+.fusinv_panel {
+   width: 90%;
+   background: #EFEFEF;
+   padding: 10px;
+   border: #AAA solid 1px;
+   border-radius: 5px;
+   margin: 0 auto;
+}
+
 .fusinv_form {
     width: 50%;
     margin: 0 auto;
     display: inline-block;
     vertical-align: top;
+}
+
+.fusinv_form.large {
+   width: 100%;
 }
 
 .fusinv_form label,
@@ -157,7 +170,8 @@ td:not(#foo) > input[type=radio]:checked + label {
     margin: 0 0 0 0;
     margin-bottom: 5px;
     display: inline-block;
-    width:60%
+    width:60%;
+    text-align: left;
 }
 
 /*.fusinv_form label + div.input_wrap > span +i input,*/
@@ -202,4 +216,93 @@ td:not(#foo) > input[type=radio]:checked + label {
    box-shadow: 0 0 2px #777;
    background-color: #777;
    color: white;
+}
+
+#joblogs_block {
+   width: 90%;
+   text-align: left;
+   padding: 10px;
+   margin: 0 auto;
+}
+
+#joblogs_block li.job_info {
+   border: #AAA solid 1px;
+   border-radius: 5px;
+   background: #EFEFEF;
+   padding: 10px;
+   margin: 5px 0;
+}
+
+#joblogs_block li.job_info > h3 {
+   margin: 0;
+}
+
+.job_target {
+   border: #CCC solid 1px;
+   border-radius: 5px;
+   background: #F7F7F7;
+   padding: 10px;
+   margin: 5px 0;
+}
+.job_target h4 {
+   margin:0;
+   padding-bottom: 3px;
+   margin-bottom: 5px;
+   border-bottom: 1px dotted #ccc;
+}
+
+.job_target ul {
+   display: inline;
+   margin: 0 auto;
+}
+
+.job_target > div {
+   margin: 0 auto;
+}
+
+.job_target ul > li {
+   margin: 5px;
+   padding: 5px;
+   border-radius: 3px;
+   background: #CCC;
+   color: #777;
+   display: inline-block;
+   width: 30%;
+   font-style: italic;
+}
+
+.job_target .agents_success {
+   color: green;
+   background: lightgreen;
+   font-weight: bolder;
+   font-style: normal;
+}
+
+.job_target .agents_error {
+   color: white;
+   background: red;
+   font-weight: bolder;
+   font-style: normal;
+}
+
+.job_target .agents_running {
+   color: blue;
+   background: lightblue;
+   font-weight: bolder;
+   font-style: normal;
+}
+
+.job_target .agents_running {
+   color: blue;
+   background: lightblue;
+   font-weight: bolder;
+   font-style: normal;
+}
+
+.job_target .agents_prepared,
+.job_target .agents_cancelled,
+.job_target .agents_notdone {
+   color: black;
+   font-weight: bolder;
+   font-style: normal;
 }

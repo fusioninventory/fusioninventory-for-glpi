@@ -69,6 +69,17 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       }
    }
 
+   static function getStateNames() {
+      return array(
+         self::PREPARED => __('Prepared', 'fusioninventory'),
+         self::SERVER_HAS_SENT_DATA => __('Server has sent data to the agent', 'fusioninventory'),
+         self::AGENT_HAS_SENT_DATA => __('Agent replied with data to the server', 'fusioninventory'),
+         self::FINISHED => __('Finished', 'fusioninventory'),
+         self::IN_ERROR => __('Error' , 'fusioninventory'),
+         self::CANCELLED => __('Cancelled', 'fusioninventory')
+      );
+   }
+
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       global $DB;

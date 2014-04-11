@@ -655,15 +655,16 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "select",
          "  task.`id`, task.`name`,",
          "  job.`id`, job.`name`, job.`method`,",
-         "  run.`id`, run.`plugin_fusioninventory_agents_id` as agent_id,",
-         "  run.`state`,",
-         "  agent.`name` , agent.`device_id`,",
-         "  log.`date`, log.`comment`, log.`state`",
+         "  run.*,",
+         "  agent.*,",
+         "  log.*",
          "from `glpi_plugin_fusioninventory_tasks` as task",
          "left join `glpi_plugin_fusioninventory_taskjobs` as job",
          "  on job.`plugin_fusioninventory_tasks_id` = task.`id`",
          "left join `glpi_plugin_fusioninventory_taskjobstates` as run",
          "  on run.`plugin_fusioninventory_taskjobs_id` = job.`id`",
+         // Filter out entries where agents doesn't exists anymore
+         // TODO: Clean those entries in database by the logcleaner crontask.
          "inner join `glpi_plugin_fusioninventory_agents` as agent",
          "  on run.`plugin_fusioninventory_agents_id` = agent.`id`",
          "left join `glpi_plugin_fusioninventory_taskjoblogs` as log",
@@ -677,9 +678,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       if ( $query_result ) {
          $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
       }
-
       //Reformat result by task's id then by job's ids then by jobstate's ids
       $logs = array();
+      $runclass = new PluginFusioninventoryTaskjobstate();
+      $run_states = $runclass->getStateNames();
+
       foreach($results as $result) {
          $task_id = $result['task']['id'];
          if (!array_key_exists($task_id, $logs)) {
@@ -696,22 +699,141 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $jobs[$job_id] = array(
                'name' => $result['job']['name'],
                'method' => $result['job']['method'],
-               'runs' => array()
+               'targets' => array()
+            );
+         }
+
+         $target_id = $result['run']['itemtype'].'_'.$result['run']['items_id'];
+         $targets =& $jobs[$job_id]['targets'];
+         $agent_state_types = array(
+            'agents_prepared', 'agents_cancelled', 'agents_running',
+            'agents_success', 'agents_error', 'agents_notdone'
+         );
+         if ( !array_key_exists($target_id, $targets) ) {
+            $item_class =$result['run']['itemtype'];
+            $item = new $item_class();
+            $item->getFromDB($result['run']['items_id']);
+            $targets[$target_id] = array(
+               'name' => $item->fields['name'],
+               'item_link' => $item->getLinkUrl(),
+            );
+            // create agent states counter lists
+            foreach($agent_state_types as $type) {
+               $targets[$target_id][$type] = array();
+            }
+
+            $targets[$target_id]['agents'] = array();
+         }
+
+
+         $agent_id = $result['run']['plugin_fusioninventory_agents_id'];
+         $agents =& $targets[$target_id]['agents'];
+         if ( !array_key_exists($agent_id, $agents) ) {
+            $agents[$agent_id] = array_merge(
+               $result['agent'],
+               array(
+                  'runs' => array()
+               )
             );
          }
 
          $run_id = $result['run']['id'];
-         $runs =& $logs[$task_id]['jobs'][$job_id]['runs'];
+         $runs =& $agents[$agent_id]['runs'];
          if ( !array_key_exists($run_id, $runs) ) {
-            $runs[$run_id] = array(
-               'state'  => $result['run']['state'],
-               'agent'  => $result['agent']['name'],
-               'logs'   => array()
+            $runs[$run_id] = array_merge(
+               $result['run'],
+               array(
+                  'state'  => $result['run']['state'],
+                  'state_name' => $run_states[$result['run']['state']],
+                  'agent'  => $result['agent']['name'],
+                  'logs'   => array()
+               )
             );
          }
 
+         // Finally, add logs to the current run
          $log = $result['log'];
          $runs[$run_id]['logs'][] = $log;
+
+         // Update counters
+         // TODO: This should be done after parsing and formatting the result if we sort those logs
+         // by ascending or descending log.`date`
+         $current_target = &$targets[$target_id];
+         switch ($result['run']['state'] ) {
+            case PluginFusioninventoryTaskjobstate::CANCELLED :
+               // We put this agent in the cancelled counter if it does not have any other job
+               // states.
+               if (
+                  !isset( $current_target['agents_prepared'][$agent_id])
+                  and !isset( $current_target['agents_running'][$agent_id])
+               ) {
+                  $current_target['agents_cancelled'][$agent_id] = 1;
+               }
+
+               break;
+            case PluginFusioninventoryTaskjobstate::PREPARED :
+               // We put this agent in the prepared counter if it has not yet completed any job.
+               $current_target['agents_prepared'][$agent_id] = 1;
+               break;
+            case PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA :
+            case PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA :
+               // This agent is running so it must not be in any other counter
+               foreach( $agent_state_types as $type ) {
+                  if ( isset($current_target[$type][$agent_id]) ){
+                     unset($current_target[$type][$agent_id]);
+                  }
+                  $current_target['agents_running'][$agent_id] = 1;
+               }
+
+               break;
+            case PluginFusioninventoryTaskjobstate::IN_ERROR :
+            case PluginFusioninventoryTaskjobstate::FINISHED :
+               if (
+                     !isset($current_target['agents_error'][$agent_id])
+                     and !isset($current_target['agents_success'][$agent_id])
+               ) {
+                  reset($runs[$run_id]['logs']);
+                  $last_log = current($runs[$run_id]['logs']);
+                  $pfLog = new PluginFusioninventoryTaskjoblog();
+                  // This agent is finished so it must not be in any other counter
+                  //foreach( array('agents_success', 'agents_error') as $type ) {
+                  //   if ( isset($current_target[$type][$agent_id]) ){
+                  //      unset($current_target[$type][$agent_id]);
+                  //   }
+                  //}
+                  switch($last_log['state']) {
+                     case $pfLog::TASK_ERROR :
+                        // TODO: The following state can be dropped but we must adapt
+                        // every submodule before removal.
+                     case $pfLog::TASK_ERROR_OR_REPLANNED :
+                        $current_target['agents_error'][$agent_id] = 1;
+                        break;
+
+                     case $pfLog::TASK_OK :
+                        $current_target['agents_success'][$agent_id] = 1;
+                        break;
+
+                  }
+                  if ( isset($current_target['agents_notdone'][$agent_id]) ) {
+                     unset($current_target['agents_notdone'][$agent_id]);
+                  }
+               }
+               break;
+         }
+         if (
+               !isset($current_target['agents_error'][$agent_id])
+            and !isset($current_target['agents_success'][$agent_id])
+         ) {
+            $current_target['agents_notdone'][$agent_id] = 1;
+         }
+         if (
+                  isset($current_target['agents_error'][$agent_id])
+               or isset($current_target['agents_success'][$agent_id])
+               or isset($current_target['agents_running'][$agent_id])
+               or isset($current_target['agents_prepared'][$agent_id])
+         ) {
+            unset($current_target['agents_cancelled'][$agent_id]);
+         }
       }
       return $logs;
    }

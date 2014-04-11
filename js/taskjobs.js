@@ -170,6 +170,7 @@ taskjobs.Queue = $({
    timer : null
 });
 
+
 taskjobs.update_logs = function (data) {
    $("#joblogs_block").html(data);
 }
@@ -233,3 +234,4 @@ taskjobs.queue_refresh_logs = function (ajax_url, task_id) {
       taskjobs.Queue.queue('refresh_logs')[0]();
    }
 }
+
