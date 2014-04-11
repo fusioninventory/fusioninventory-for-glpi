@@ -259,8 +259,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $jobstates_to_cancel[$jobstate->fields['id']] = array(
                'jobstate' => $jobstate,
                'reason'   => __(
-                  "The agent is requesting a configuration that has already been sent to".
-                  "him by the server. It is more likely that the agent is subject to a critical".
+                  "The agent is requesting a configuration that has already been sent to ".
+                  "him by the server. It is more likely that the agent is subject to a critical ".
                   "error."
                )
             );
@@ -698,6 +698,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          if ( !array_key_exists($job_id, $jobs) ) {
             $jobs[$job_id] = array(
                'name' => $result['job']['name'],
+               'id' => $result['job']['method'] . '_'. $result['job']['id'],
                'method' => $result['job']['method'],
                'targets' => array()
             );
@@ -714,21 +715,28 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $item = new $item_class();
             $item->getFromDB($result['run']['items_id']);
             $targets[$target_id] = array(
+               'id'   => $item->fields['id'],
                'name' => $item->fields['name'],
+               'type_name' => $item->getTypeName(),
                'item_link' => $item->getLinkUrl(),
+               'counters' => array()
             );
             // create agent states counter lists
             foreach($agent_state_types as $type) {
-               $targets[$target_id][$type] = array();
+               $targets[$target_id]['counters'][$type] = array();
             }
 
             $targets[$target_id]['agents'] = array();
          }
+         $counters = &$targets[$target_id]['counters'];
 
 
          $agent_id = $result['run']['plugin_fusioninventory_agents_id'];
          $agents =& $targets[$target_id]['agents'];
          if ( !array_key_exists($agent_id, $agents) ) {
+            $agent_class = new PluginFusioninventoryAgent();
+            $agent_class->fields['id'] = $agent_id;
+            $result['agent']['url'] = $agent_class->getLinkUrl();
             $agents[$agent_id] = array_merge(
                $result['agent'],
                array(
@@ -758,39 +766,38 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          // Update counters
          // TODO: This should be done after parsing and formatting the result if we sort those logs
          // by ascending or descending log.`date`
-         $current_target = &$targets[$target_id];
          switch ($result['run']['state'] ) {
             case PluginFusioninventoryTaskjobstate::CANCELLED :
                // We put this agent in the cancelled counter if it does not have any other job
                // states.
                if (
-                  !isset( $current_target['agents_prepared'][$agent_id])
-                  and !isset( $current_target['agents_running'][$agent_id])
+                  !isset( $counters['agents_prepared'][$agent_id])
+                  and !isset( $counters['agents_running'][$agent_id])
                ) {
-                  $current_target['agents_cancelled'][$agent_id] = 1;
+                  $counters['agents_cancelled'][$agent_id] = 1;
                }
 
                break;
             case PluginFusioninventoryTaskjobstate::PREPARED :
                // We put this agent in the prepared counter if it has not yet completed any job.
-               $current_target['agents_prepared'][$agent_id] = 1;
+               $counters['agents_prepared'][$agent_id] = 1;
                break;
             case PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA :
             case PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA :
                // This agent is running so it must not be in any other counter
                foreach( $agent_state_types as $type ) {
-                  if ( isset($current_target[$type][$agent_id]) ){
-                     unset($current_target[$type][$agent_id]);
+                  if ( isset($counters[$type][$agent_id]) ){
+                     unset($counters[$type][$agent_id]);
                   }
-                  $current_target['agents_running'][$agent_id] = 1;
+                  $counters['agents_running'][$agent_id] = 1;
                }
 
                break;
             case PluginFusioninventoryTaskjobstate::IN_ERROR :
             case PluginFusioninventoryTaskjobstate::FINISHED :
                if (
-                     !isset($current_target['agents_error'][$agent_id])
-                     and !isset($current_target['agents_success'][$agent_id])
+                     !isset($counters['agents_error'][$agent_id])
+                     and !isset($counters['agents_success'][$agent_id])
                ) {
                   reset($runs[$run_id]['logs']);
                   $last_log = current($runs[$run_id]['logs']);
@@ -806,33 +813,33 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                         // TODO: The following state can be dropped but we must adapt
                         // every submodule before removal.
                      case $pfLog::TASK_ERROR_OR_REPLANNED :
-                        $current_target['agents_error'][$agent_id] = 1;
+                        $counters['agents_error'][$agent_id] = 1;
                         break;
 
                      case $pfLog::TASK_OK :
-                        $current_target['agents_success'][$agent_id] = 1;
+                        $counters['agents_success'][$agent_id] = 1;
                         break;
 
                   }
-                  if ( isset($current_target['agents_notdone'][$agent_id]) ) {
-                     unset($current_target['agents_notdone'][$agent_id]);
+                  if ( isset($counters['agents_notdone'][$agent_id]) ) {
+                     unset($counters['agents_notdone'][$agent_id]);
                   }
                }
                break;
          }
          if (
-               !isset($current_target['agents_error'][$agent_id])
-            and !isset($current_target['agents_success'][$agent_id])
+               !isset($counters['agents_error'][$agent_id])
+            and !isset($counters['agents_success'][$agent_id])
          ) {
-            $current_target['agents_notdone'][$agent_id] = 1;
+            $counters['agents_notdone'][$agent_id] = 1;
          }
          if (
-                  isset($current_target['agents_error'][$agent_id])
-               or isset($current_target['agents_success'][$agent_id])
-               or isset($current_target['agents_running'][$agent_id])
-               or isset($current_target['agents_prepared'][$agent_id])
+                  isset($counters['agents_error'][$agent_id])
+               or isset($counters['agents_success'][$agent_id])
+               or isset($counters['agents_running'][$agent_id])
+               or isset($counters['agents_prepared'][$agent_id])
          ) {
-            unset($current_target['agents_cancelled'][$agent_id]);
+            unset($counters['agents_cancelled'][$agent_id]);
          }
       }
       return $logs;
