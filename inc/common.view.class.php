@@ -79,7 +79,6 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
    }
 
    public function showList() {
-      Toolbox::logDebug(get_class($this));
       Search::show(get_class($this));
    }
 

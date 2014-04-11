@@ -351,7 +351,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          Html::redirect(str_replace("add=1", "", $_SERVER['HTTP_REFERER'])."?id=".$items_id);
 
       } else if (isset($postvars["purge"])) {
-         Toolbox::logDebug("Start Delete");
 
          Session::checkRight('plugin_fusioninventory_task', PURGE);
 

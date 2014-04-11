@@ -56,7 +56,10 @@ if (isset($_POST['save'])) {
       $item = getAllDatasFromTable($group_item->getTable(), 
                                    "plugin_fusioninventory_deploygroups_id='".$_POST['id']."'");
       $values                 = array_pop($item);
-      $values['fields_array'] = serialize($_POST['criteria']);
+      
+      $criteria = array('criteria'     => $_POST['criteria'], 
+                        'metacriteria' => $_POST['metacriteria']);
+      $values['fields_array'] = serialize($criteria);
       $group_item->update($values);
    }
 

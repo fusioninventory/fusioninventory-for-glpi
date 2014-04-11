@@ -336,7 +336,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
    public function ajaxModuleItemsDropdown($options) {
-      Toolbox::logDebug($options);
       $moduletype = $options['moduletype'];
       $itemtype = $options['itemtype'];
       if ($itemtype === "") {
@@ -558,8 +557,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    **/
    function showForm($id, $options=array()) {
       global $CFG_GLPI;
-
-      Toolbox::logDebug(array($id, $options));
 
       $new_item = false;
       if ($id > 0) {
@@ -960,7 +957,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
     * Submit Form values
     */
    public function submitForm($postvars) {
-      Toolbox::logDebug($postvars);
       if (isset($postvars['definition_add'])) {
          // * Add a definition
          $mytaskjob->getFromDB($postvars['id']);
@@ -1142,16 +1138,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             }
 
             $targets = array();
-            Toolbox::logDebug(
-               var_export(
-                  (
-                     array_key_exists('targets', $postvars)
-                     and is_array($postvars['targets'])
-                     and count($postvars['targets']) > 0
-                  )
-                  ,true
-               )
-            );
             if( array_key_exists('targets', $postvars)
                and is_array($postvars['targets'])
                and count($postvars['targets']) > 0
@@ -1180,7 +1166,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
             //TODO: get rid of plugins_id and just use method
             //$postvars['plugins_id'] = $postvars['method-'.$postvars['method']];
-            Toolbox::logDebug($postvars);
             $this->update($postvars);
          }
 
@@ -1242,7 +1227,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
 
       } elseif (isset($postvars['delete_taskjobs'])) {
-         Toolbox::logDebug();
          foreach($postvars['taskjobs'] as $taskjob_id) {
             $input = array('id'=>$taskjob_id);
             $this->delete($input, true);

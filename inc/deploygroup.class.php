@@ -89,8 +89,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $this->showList();
    }
 
-
-
    function title() {
       global $CFG_GLPI;
 
@@ -105,8 +103,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       Html::displayTitle($CFG_GLPI['root_doc']."/plugins/fusinvdeploy/pics/menu_group.png",
                          $title, $title, $buttons);
    }
-
-
 
    function showForm($ID, $options = array()) {
 
@@ -225,7 +221,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
          // add tow hidden fields to permit delete of (meta)criteria
          echo "<input type='hidden' name='criteria' value=''>";     
-//         echo "<input type='hidden' name='metacriteria' value=''>"; 
+         echo "<input type='hidden' name='metacriteria' value=''>"; 
       } 
 
       echo "<div class='tabs_criteria'>";
@@ -329,17 +325,17 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       global $DB;
       $computers_params = array();
       
+      unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
       //Check criteria from DB
       if (!$check_post_values) {
-         $computers_params['metacriteria'] = array();
          if ($group->fields['type'] == PluginFusioninventoryDeployGroup::DYNAMIC_GROUP) {
             $query = "SELECT `fields_array` 
                      FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` 
                      WHERE `plugin_fusioninventory_deploygroups_id`='".$group->getID()."'";
             $result = $DB->query($query);
             if ($DB->numrows($result) > 0) {
-               $fields_array = $DB->result($result, 0, 'fields_array');
-               $computers_params['criteria'] = unserialize($fields_array);
+               $fields_array     = $DB->result($result, 0, 'fields_array');
+               $computers_params = unserialize($fields_array);
             }
          }
       } else {
