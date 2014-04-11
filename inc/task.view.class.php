@@ -140,59 +140,33 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       $display_list[] = "<ul class='job_list'>";
       foreach($logs as $task) {
          foreach($task['jobs'] as $job) {
-            $display_list[] = "<li class='job_info'>";
+            $display_list[] = "<li class='job_info' id='".$job['id']."'>";
             $display_list[] = "  <h3>".$job['name']."</h3>";
             foreach($job['targets'] as $target) {
+               $counters = $target['counters'];
                $display_list[] = "  <div class='job_target'>";
-               $display_list[] = "     <h4>".$target['name']."</h4>";
+               $display_list[] = "     <h4>";
+               $display_list[] = "     ".$target['type_name'] ;
+               $display_list[] = "        <a target='_blank' href='".$target['item_link']."'>";
+               $display_list[] = "           ".$target['name'];
+               $display_list[] = "        </a>";
+               $display_list[] = "        <span>(ID:" . $target['id'] . ")</span>";
+               $display_list[] = "     </h4>";
                $display_list[] = "     <ul>";
 
-               $css = count($target['agents_prepared'])?"agents_prepared":"";
-               $display_list[] = "        <li class='$css'>";
-               $display_list[] =
-                  __('Prepared', 'fusioninventory')." : ".
-                  count($target['agents_prepared']);
-               $display_list[] = "        </li>";
-
-               $css = count($target['agents_cancelled'])?"agents_cancelled":"";
-               $display_list[] = "        <li class='$css'>";
-               $display_list[] =
-                  __('Cancelled', 'fusioninventory')." : ".
-                  count($target['agents_cancelled']);
-               $display_list[] = "        </li>";
-
-               $css = count($target['agents_running'])?"agents_running":"";
-               $display_list[] = "        <li class='$css'>";
-               $display_list[] =
-                  __('Running', 'fusioninventory')." : ".
-                  count($target['agents_running']);
-               $display_list[] = "        </li>";
-
-               $css = count($target['agents_success'])?"agents_success":"";
-               $display_list[] = "        <li class='$css'>";
-               $display_list[] =
-                  __('Successful', 'fusioninventory')." : ".
-                  count($target['agents_success']);
-               $display_list[] = "        </li>";
-
-               $css = count($target['agents_error'])?"agents_error":"";
-               $display_list[] = "        <li class='$css'>";
-               $display_list[] =
-                  __('In error', 'fusioninventory')." : ".
-                  count($target['agents_error']);
-               $display_list[] = "        </li>";
-
-               $css = count($target['agents_notdone'])?"agents_notdone":"";
-               $display_list[] = "        <li class='$css'>";
-               $display_list[] =
-                  __('Not done yet', 'fusioninventory')." : ".
-                  count($target['agents_notdone']);
-               $display_list[] = "        </li>";
+               foreach($counters as $type=>$list) {
+                  $css = count($list)?$type:"";
+                  $display_list[] = "        <li class='$css'>";
+                  $display_list[] =
+                     $this->getCounterTypeName($type)." : ".
+                     count($list);
+                  $display_list[] = "        </li>";
+               }
                $display_list[] = "     </ul>";
                $display_list[] = "  </div>";
             }
             $display_list[] = "  <ul class='job_info'>";
-
+            $display_list = array_merge($display_list, $this->getAgentsLogs($target['agents'],$counters));
             $display_list[] = "  </ul>";
             $display_list[] = "</li>"; // end of job_info
          }
@@ -201,12 +175,84 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       echo implode("\n", $display_list);
 
-      //Debug logs array
-      echo implode("\n", array(
-         "<pre style='text-align:left'>",
-         var_export($logs,true),
-         "</pre>"
-      ));
+   }
+
+   function getCounterTypeName($type = "") {
+      $typenames = array(
+         "agents_notdone"  => __('Not done yet', 'fusioninventory'),
+         "agents_error"    => __('In error', 'fusioninventory'),
+         "agents_success"   => __('Successful', 'fusioninventory'),
+         "agents_running"  => __('Running', 'fusioninventory'),
+         "agents_prepared" => __('Prepared' , 'fusioninventory'),
+         "agents_cancelled" => __('Cancelled', 'fusioninventory')
+      );
+      if ( isset($typenames[$type]) ) {
+         return $typenames[$type];
+      } else {
+         return __("N/A");
+      }
+   }
+
+   function getAgentsLogs($agents = array(), $counters = array()) {
+      $display_list = array();
+      $display_list[] = "<div class='job_agents'>";
+      $display_list[] = "<ul>";
+
+      foreach ( $agents as $agent ) {
+
+         $display_tags = array();
+         $agent_css = "";
+         foreach($counters as $type=>$list) {
+            if ( isset( $list[$agent['id']] ) ) {
+               $display_tags[] = "<span class='".$type."'>";
+               $display_tags[] = $this->getCounterTypeName($type);
+               $display_tags[] = "</span>";
+               if( in_array($type, array("agents_error", "agents_success", "agents_notdone")) ) {
+                  $agent_css = $type;
+               }
+            }
+         }
+         $display_list[] = "<li class='".$agent_css."'>";
+         $display_list[] = "<div class='agent_block'>";
+         $display_list[] = "<a target='_blank' href='".$agent['url']."'>";
+         $display_list[] = $agent['name'];
+         $display_list[] = "</a>";
+         $display_list = array_merge($display_list, $display_tags);
+         $display_list[] = "</div>"; //end of .agent_block
+         $display_list[] = "<div class='runs_block'>";
+         foreach( $agent['runs'] as $run) {
+            $display_list = array_merge($display_list, $this->getRunLogs($run));
+         }
+         $display_list[] = "</div>"; //end of .run_block
+         $display_list[] = "</li>";
+      }
+      $display_list[] = "</ul>";
+      $display_list[] = "</div>";
+
+      return $display_list;
+   }
+
+   function getRunLogs($run = array()) {
+
+      $logClass = new PluginFusioninventoryTaskjoblog();
+      $display = array();
+      $display[] = "<div class='run_block'>";
+      $display[] = " <h4>" . __('Execution', 'fusioninventory')." ".$run['uniqid']."</h4>";
+      $display[] = " <table class='logs_block'>";
+      foreach( $run['logs'] as $log) {
+         $css_state = $logClass::getStateCSSName($log['state']);
+         $state_name = $logClass::getStateName($log['state']);
+         $display[] = "<tr>";
+         $display[] = "    <td class='log_date'>".$log['date']."</td>";
+         $display[] = "    <td class='log_state'>";
+         $display[] = "       <span class='".$css_state."'>".$state_name."</span>";
+         $display[] = "    </td>";
+         $display[] = "   <td class='log_comment'>".$log['comment']."</td>";
+         $display[] = "</tr>";
+      }
+      $display[] = " </table>";
+      $display[] = "</div>";
+      return $display;
    }
 
    /**

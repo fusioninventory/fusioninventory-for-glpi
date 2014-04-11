@@ -251,6 +251,10 @@ td:not(#foo) > input[type=radio]:checked + label {
    border-bottom: 1px dotted #ccc;
 }
 
+.job_target h4 > a {
+   font-size: inherit;
+}
+
 .job_target ul {
    display: inline;
    margin: 0 auto;
@@ -271,13 +275,15 @@ td:not(#foo) > input[type=radio]:checked + label {
    font-style: italic;
 }
 
+.job_agents span.agents_success,
 .job_target .agents_success {
    color: green;
-   background: lightgreen;
+   background: #AAFFAA;
    font-weight: bolder;
    font-style: normal;
 }
 
+.job_agents span.agents_error,
 .job_target .agents_error {
    color: white;
    background: red;
@@ -285,24 +291,111 @@ td:not(#foo) > input[type=radio]:checked + label {
    font-style: normal;
 }
 
+.job_agents span.agents_running,
 .job_target .agents_running {
-   color: blue;
-   background: lightblue;
+   color: #000077;
+   background: #AAAAFF;
    font-weight: bolder;
    font-style: normal;
 }
 
-.job_target .agents_running {
-   color: blue;
-   background: lightblue;
-   font-weight: bolder;
-   font-style: normal;
-}
 
+.job_agents span.agents_prepared,
 .job_target .agents_prepared,
+.job_agents span.agents_cancelled,
 .job_target .agents_cancelled,
+.job_agents span.agents_notdone,
 .job_target .agents_notdone {
    color: black;
+   background: #CCC;
    font-weight: bolder;
    font-style: normal;
 }
+
+.job_agents span {
+   border-radius: 3px;
+   padding: 5px 10px;
+   right:0;
+   vertical-align: middle;
+   display: inline-block;
+   background: #FFFFFF;
+   font-size: xx-small;
+}
+
+.job_agents li {
+   border-radius: 3px;
+   border: 1px solid #ccc;
+   background: #F7F7F7;
+   margin-top: 5px;
+}
+
+.agent_block {
+   padding: 10px;
+}
+
+.runs_block {
+   background: white;
+   border-top: 1px solid #ccc;
+}
+
+.run_block {
+   padding: 10px;
+}
+
+.run_block h4 {
+   margin: 0;
+}
+
+.run_block table {
+   border-top: 1px dotted black;
+   border-bottom: 1px dotted #ccc;
+   border-collapse:collapse;
+   width: 100%;
+}
+
+.run_block table tr {
+   width: 100%;
+   margin: 5px 0;
+}
+
+.run_block table tr > td {
+   border-bottom: 1px solid #ccc;
+   padding: 5px;
+   vertical-align: top;
+   width: 20%;
+   margin: 3px 0;
+}
+.run_block table tr > td.log_state {
+   width: 10%;
+}
+
+.run_block .log_state span {
+   display: block;
+   text-align: center;
+   background: #F1F1F1;
+   border-radius: 3px;
+   border: 1px solid #DDD;
+   color: #777;
+}
+
+.run_block span.log_error {
+   background: #F22;
+   color: white;
+   font-weight: bolder;
+   border-color: #F66;
+}
+
+.run_block span.log_ok {
+   border-radius: 3px;
+   border-color: #6F6;
+   background: #AFA;
+   color: green;
+   font-weight: bolder;
+}
+
+.run_block table tr > td.log_comment {
+   /* border: 1px solid #CCC; */
+   width: 70%;
+   min-width: 70%;
+}
+
