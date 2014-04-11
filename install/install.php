@@ -207,10 +207,8 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
    /*
     * Manage profiles
     */
-      $migration->displayMessage("Initialize profiles");
-      PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
-
-
+    $migration->displayMessage("Initialize profiles");
+    PluginFusioninventoryProfile::initProfile();
 
    /*
     * bug of purge network port when purge unknown devices, so we clean

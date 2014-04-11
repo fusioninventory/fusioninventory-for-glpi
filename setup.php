@@ -341,10 +341,10 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
 
-      if (PluginFusioninventoryUnknowndevice::canView()) {
+      if (Session::haveRight('plugin_fusioninventory_unknowdevice', READ)) {
          $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['assets'] = 'PluginFusioninventoryUnknowndevice';
       }
-      if (PluginFusioninventoryMenu::canView()) {
+      if (Session::haveRight('plugin_fusioninventory_menu', READ)) {
          $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['plugins'] = 'PluginFusioninventoryMenu';
       }
 
