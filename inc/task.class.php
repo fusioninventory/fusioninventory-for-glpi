@@ -259,8 +259,8 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $jobstates_to_cancel[$jobstate->fields['id']] = array(
                'jobstate' => $jobstate,
                'reason'   => __(
-                  "The agent is requesting a configuration that has already been sent to".
-                  "him by the server. It is more likely that the agent is subject to a critical".
+                  "The agent is requesting a configuration that has already been sent to ".
+                  "him by the server. It is more likely that the agent is subject to a critical ".
                   "error."
                )
             );
