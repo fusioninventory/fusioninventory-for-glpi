@@ -162,3 +162,74 @@ taskjobs.show_moduleitems = function(ajax_url, moduletype, itemtype) {
       }
    });
 }
+
+// Taskjobs logs refresh
+
+taskjobs.Queue = $({
+   refresh : 0,
+   timer : null
+});
+
+taskjobs.update_logs = function (data) {
+   $("#joblogs_block").html(data);
+}
+
+taskjobs.get_logs = function( ajax_url, task_id ) {
+   console.log(ajax_url + ", " + task_id);
+   console.log(taskjobs.Queue.refresh);
+   $.ajax({
+      url: ajax_url,
+      data: {
+         "task_id" : task_id
+      },
+      success: function( data, textStatus, jqXHR) {
+         taskjobs.update_logs(data);
+      },
+      complete: function( ) {
+         taskjobs.Queue.queue("refresh_logs").pop();
+      }
+   });
+}
+
+taskjobs.update_logs_timeout = function( ajax_url, task_id , refresh_id) {
+
+   console.log(refresh_id);
+   console.log('refresh_id: ' + refresh_id);
+   var refresh = $("#" + refresh_id).val();
+
+   $("#"+ refresh_id)
+      .off("change","*")
+      .on("change", function() {
+         console.log("changing timer");
+         taskjobs.update_logs_timeout( ajax_url, task_id, refresh_id )
+      }
+   );
+
+   window.clearTimeout(taskjobs.Queue.timer);
+   taskjobs.queue_refresh_logs(ajax_url, task_id);
+
+   if (refresh != 'off') {
+      taskjobs.Queue.refresh = refresh * 1000;
+      taskjobs.Queue.timer = window.setInterval(
+         function () {
+            taskjobs.queue_refresh_logs(ajax_url, task_id);
+            //taskjobs.update_logs_timeout(ajax_url, task_id, timeout_id);
+         },
+      taskjobs.Queue.refresh);
+   } else {
+      window.clearTimeout(taskjobs.Queue.timer);
+   }
+}
+
+
+taskjobs.queue_refresh_logs = function (ajax_url, task_id) {
+   var n = taskjobs.Queue.queue('refresh_logs');
+
+   console.log(n);
+   if (n.length == 0 ) {
+      taskjobs.Queue.queue('refresh_logs', function( ) {
+         taskjobs.get_logs(ajax_url, task_id);
+      })
+      taskjobs.Queue.queue('refresh_logs')[0]();
+   }
+}

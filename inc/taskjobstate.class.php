@@ -68,6 +68,16 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          return '';
       }
    }
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      global $DB;
+
+
+      if ($item->getType() == 'PluginFusioninventoryTask' ) {
+         $item->showJobLogs();
+      }
+   }
    /**
    * Display state of taskjob
    *
@@ -307,27 +317,27 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $this->getFromDB($taskjobstates_id);
       $input = array();
       $input['id'] = $this->fields['id'];
-      $input['state'] = 3;
+      $input['state'] = self::FINISHED;
 
-      $a_input = array();
+      $log_input = array();
       if ($unknown ==  "1") {
-         $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_UNKNOWN;
+         $log_input['state'] = PluginFusioninventoryTaskjoblog::TASK_UNKNOWN;
          $input['state'] = self::FINISHED;
       } else if ($error == "1") {
-         $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
+         $log_input['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
          $input['state'] = self::IN_ERROR;
       } else {
-         $a_input['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
+         $log_input['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
          $input['state'] = self::FINISHED;
       }
 
       $this->update($input);
-      $a_input['plugin_fusioninventory_taskjobstates_id'] = $taskjobstates_id;
-      $a_input['items_id'] = $items_id;
-      $a_input['itemtype'] = $itemtype;
-      $a_input['date'] = date("Y-m-d H:i:s");
-      $a_input['comment'] = $message;
-      $pfTaskjoblog->add($a_input);
+      $log_input['plugin_fusioninventory_taskjobstates_id'] = $taskjobstates_id;
+      $log_input['items_id'] = $items_id;
+      $log_input['itemtype'] = $itemtype;
+      $log_input['date'] = date("Y-m-d H:i:s");
+      $log_input['comment'] = $message;
+      $pfTaskjoblog->add($log_input);
 
       $pfTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
    }
@@ -342,6 +352,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
          'items_id' => $this->fields['items_id'],
          'itemtype' => $this->fields['itemtype'],
          'date' => date("Y-m-d H:i:s"),
+         'state' => PluginFusioninventoryTaskjoblog::TASK_INFO,
          'comment' => $reason
       );
 
