@@ -364,21 +364,20 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       $item_key_id = $item->getForeignKeyField();
       $dropdown_rand_id = "dropdown_".$item_key_id . $dropdown_rand;
       echo implode( array("\n",
-         "<div class='center'>",
+         "<div class='center' id='add_fusinv_job_item_button'>",
          "<input type='button' class=submit",
          "  value='".__('Add')." $title'",
-         "  onclick='taskjobs.add_item(",
-         "     \"$moduletype\", \"$itemtype\", \"$itemtype_name\", \"$dropdown_rand_id\")'>",
+         "  onclick='javascript:void(0)'>",
          "</input>",
          "</div>"
       ));
-      //return $this->getItemsForModuleItemType($options['method'], $options['moduletype']);
-      /*
-      $module_items_dropdown = $this->showDropdownFromArray(
-         $title, null, $module_types
-      );
-       */
-
+      echo Html::scriptBlock(implode("\n",array(
+         "$('#add_fusinv_job_item_button').on('click', function() {",
+         "  taskjobs.add_item(",
+         "     \"$moduletype\", \"$itemtype\", \"$itemtype_name\", \"$dropdown_rand_id\"",
+         "  );",
+         "});",
+      )));
    }
 
    public function getAddItemtypeButton($title, $itemtype, $method) {
