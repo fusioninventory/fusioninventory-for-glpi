@@ -250,6 +250,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    *
    * @return nothing
    *
+   * TODO: There is no need to pass $id since we should use this method with an instantiated
+   * object!!
    **/
    function changeStatus($id, $state) {
       $input = array();

@@ -173,9 +173,15 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    /**
     * Get the list of taskjobstates
     */
-   function getTaskjobstatesForAgent($agent_id, $methods = array()) {
-
+   function getTaskjobstatesForAgent($agent_id, $methods = array(), $options=array()) {
       global $DB;
+
+      // Check for read only which means we do not change the jobstates state (especially usefull
+      // for the get_agent_jobs.php script).
+      $read_only = false;
+      if ( isset($options['read_only']) ) {
+         $read_only = $options['read_only'];
+      }
 
       $pfJobstate = new PluginFusioninventoryTaskjobstate();
 
@@ -195,7 +201,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "     task.`datetime_start`, task.`datetime_end`,",
          "     task.`plugin_fusioninventory_timeslots_id` as timeslot_id,",
          "     job.`id`, job.`name`, job.`method`, job.`actors`,",
-         "     run.`itemtype`, run.`items_id`,",
+         "     run.`itemtype`, run.`items_id`, run.`state`,",
          "     run.`id`, run.`plugin_fusioninventory_agents_id`",
          "from `glpi_plugin_fusioninventory_taskjobstates` run",
          "left join `glpi_plugin_fusioninventory_taskjobs` job",
@@ -204,7 +210,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "  on task.`id` = job.`plugin_fusioninventory_tasks_id`",
          "where",
          "  job.`method` in ('".implode("','", $methods)."')",
-         "  and run.`state` = ". PluginFusioninventoryTaskjobstate::PREPARED,
+         "  and run.`state` in ( ". implode(' , ', array(
+            PluginFusioninventoryTaskjobstate::PREPARED,
+            PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA,
+         ))." )",
          "  and run.`plugin_fusioninventory_agents_id` = " . $agent_id,
          // order the result by job.id
          // TODO: the result should be ordered by the future job.index field when drag and drop
@@ -245,6 +254,18 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $jobstate = new PluginFusioninventoryTaskjobstate();
          $jobstate->getFromDB($result['run']['id']);
 
+         //Cancel the job it has already been sent to the agent but the agent did not replied
+         if ($result['run']['state'] == $jobstate::SERVER_HAS_SENT_DATA) {
+            $jobstates_to_cancel[$jobstate->fields['id']] = array(
+               'jobstate' => $jobstate,
+               'reason'   => __(
+                  "The agent is requesting a configuration that has already been sent to".
+                  "him by the server. It is more likely that the agent is subject to a critical".
+                  "error."
+               )
+            );
+            continue;
+         }
          //Cancel the jobstate if the related tasks has been deactivated
          if ($result['task']['is_active'] == 0) {
             $jobstates_to_cancel[$jobstate->fields['id']] = array(
@@ -339,6 +360,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       foreach( $jobstates_to_cancel as $jobstate) {
          $jobstate['jobstate']->cancel($jobstate['reason']);
       }
+
       return $jobstates;
    }
 
