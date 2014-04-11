@@ -89,6 +89,10 @@ if (isset($_GET['action'])) {
                         $order->associatedFiles->$hash = $associatedFiles;
                      }
                   }
+                  $taskjobstate->changeStatus(
+                     $taskjobstate->fields['id'] ,
+                     $taskjobstate::SERVER_HAS_SENT_DATA
+                  );
                }
 
                // return an empty dictionnary if there are no jobs.

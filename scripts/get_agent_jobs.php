@@ -55,6 +55,6 @@ foreach($args['<device_ids>'] as $device_id) {
       $logger->info($infos);
    }
    $logger->info("Get prepared jobs for Agent '$device_id'");
-   $jobstates = $task->getTaskjobstatesForAgent($infos['id'], $methods);
+   $jobstates = $task->getTaskjobstatesForAgent($infos['id'], $methods, array('read_only'=>true));
    $logger->info($jobstates);
 }
