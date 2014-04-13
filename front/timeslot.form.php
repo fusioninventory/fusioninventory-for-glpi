@@ -48,8 +48,6 @@ if (!isset($_GET["id"])) {
    $_GET["id"] = "";
 }
 
-
-
 $pfTimeslot = new PluginFusioninventoryTimeslot();
 //Add a new timeslot
 if (isset($_POST["add"])) {
@@ -84,6 +82,8 @@ if (isset($_POST["add"])) {
                 "plugins",
                 "pluginfusioninventorymenu",
                 "timeslot");
+                
+   PluginFusioninventoryMenu::displayMenu("mini");
    $pfTimeslot->display(array('id' => $_GET["id"]));
    Html::footer();
 }
