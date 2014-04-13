@@ -79,11 +79,13 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
          case 0:
             
             $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
+            Toolbox::logDebug($search_params);
             PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
             break;
          case 1:
-            $params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item);
+            $params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
             $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
+            Toolbox::logDebug($params);
             Search::showList('PluginFusioninventoryComputer', $params);
             break;
       }
