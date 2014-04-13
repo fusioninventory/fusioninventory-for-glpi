@@ -183,8 +183,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $read_only = $options['read_only'];
       }
 
-      $pfJobstate = new PluginFusioninventoryTaskjobstate();
-
       $pfTimeslot = new PluginFusioninventoryTimeslot();
 
       $jobstates = array();
@@ -195,30 +193,30 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       // list of jobstates not allowed to run (ie. filtered by schedule and timeslots)
       $jobstates_to_cancel = array();
 
-      $query = implode( "\n", array(
-         "select",
+      $query = implode(" \n", array(
+         "SELECT",
          "     task.`id`, task.`name`, task.`is_active`,",
          "     task.`datetime_start`, task.`datetime_end`,",
          "     task.`plugin_fusioninventory_timeslots_id` as timeslot_id,",
          "     job.`id`, job.`name`, job.`method`, job.`actors`,",
          "     run.`itemtype`, run.`items_id`, run.`state`,",
          "     run.`id`, run.`plugin_fusioninventory_agents_id`",
-         "from `glpi_plugin_fusioninventory_taskjobstates` run",
-         "left join `glpi_plugin_fusioninventory_taskjobs` job",
-         "  on job.`id` = run.`plugin_fusioninventory_taskjobs_id`",
-         "left join `glpi_plugin_fusioninventory_tasks` task",
-         "  on task.`id` = job.`plugin_fusioninventory_tasks_id`",
-         "where",
-         "  job.`method` in ('".implode("','", $methods)."')",
-         "  and run.`state` in ( ". implode(' , ', array(
+         "FROM `glpi_plugin_fusioninventory_taskjobstates` run",
+         "LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` job",
+         "  ON job.`id` = run.`plugin_fusioninventory_taskjobs_id`",
+         "LEFT JOIN `glpi_plugin_fusioninventory_tasks` task",
+         "  ON task.`id` = job.`plugin_fusioninventory_tasks_id`",
+         "WHERE",
+         "  job.`method` IN ('".implode("','", $methods)."')",
+         "  and run.`state` IN ('". implode("','", array(
             PluginFusioninventoryTaskjobstate::PREPARED,
             PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA,
-         ))." )",
-         "  and run.`plugin_fusioninventory_agents_id` = " . $agent_id,
+         ))."')",
+         "  AND run.`plugin_fusioninventory_agents_id` = " . $agent_id,
          // order the result by job.id
          // TODO: the result should be ordered by the future job.index field when drag and drop
          // feature will be properly activated in the taskjobs list.
-         "order by job.`id`",
+         "ORDER BY job.`id`",
       ));
 
       $query_result = $DB->query($query);

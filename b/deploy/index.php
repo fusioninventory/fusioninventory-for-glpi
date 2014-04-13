@@ -49,16 +49,17 @@ if (isset($_GET['action'])) {
    switch ($_GET['action']) {
       case 'getJobs':
          if(isset($_GET['machineid'])) {
-            $pfAgent = new PluginFusioninventoryAgent();
+            $pfAgent        = new PluginFusioninventoryAgent();
+            $pfTask         = new PluginFusioninventoryTask();
+            $pfTaskjob      = new PluginFusioninventoryTaskjob();
             $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-            $pfTaskjob = new PluginFusioninventoryTaskjob();
-            $pfTask = new PluginFusioninventoryTask();
 
             $agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
 
-            if(isset($agent['id'])) {
+            if (isset($agent['id'])) {
                $taskjobstates = $pfTask->getTaskjobstatesForAgent(
-                  $agent['id'], array('deployinstall', 'deployuninstall')
+                  $agent['id'],
+                  array('deployinstall', 'deployuninstall')
                );
 
                //sort taskjobs by key id
@@ -114,20 +115,21 @@ if (isset($_GET['action'])) {
       case 'setStatus':
 
          $partjob_mapping = array(
-            "checking" => __("Checks"),
-            "downloading" => __("Files download"),
-            "prepare"   => __("Files preparation"),
-            "processing" => __("Actions"),
+            "checking"    => __('Checks', 'fusioninventory'),
+            "downloading" => __('Files download', 'fusioninventory'),
+            "prepare"     => __('Files preparation', 'fusioninventory'),
+            "processing"  => __('Actions', 'fusioninventory'),
          );
 
          $error = FALSE;
 
          $params = array(
             'machineid' => $_GET['machineid'],
-            'uuid' => $_GET['uuid']
+            'uuid'      => $_GET['uuid']
          );
 
-         if ( array_key_exists("status", $_GET) && $_GET['status'] == 'ko') {
+         if ( array_key_exists("status", $_GET)
+                 && $_GET['status'] == 'ko') {
             $params['code'] = 'ko';
             if (array_key_exists("currentStep", $_GET)) {
                $params['msg'] = $partjob_mapping[$_GET['currentStep']] . ":" . $_GET['msg'];
@@ -139,7 +141,8 @@ if (isset($_GET['action'])) {
 
 
          if ( $error != TRUE) {
-            if ( array_key_exists("msg", $_GET) && $_GET['msg'] === 'job successfully completed') {
+            if ( array_key_exists("msg", $_GET)
+                    && $_GET['msg'] === 'job successfully completed') {
                //Job is ended and status should be ok
                $params['code'] = 'ok';
                $params['msg'] = $_GET['msg'];
@@ -153,7 +156,6 @@ if (isset($_GET['action'])) {
             }
          }
          if (is_array($params['msg']) ) {
-
 
             if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
                $htmlspecialchars_flags = ENT_SUBSTITUTE | ENT_DISALLOWED;
@@ -186,7 +188,6 @@ if (isset($_GET['action'])) {
    } else {
       echo json_encode((object)array());
    }
-
 }
 
 ?>
