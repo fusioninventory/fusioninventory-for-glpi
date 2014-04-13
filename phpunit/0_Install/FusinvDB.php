@@ -212,7 +212,7 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $result = $DB->query($query);
       while ($data=$DB->fetch_array($result)) {
          $snmprangeip = 0;
-         if (strstr($data['definition'], "PluginFusinvsnmpIPRange")) {
+         if (strstr($data['targets'], "PluginFusinvsnmpIPRange")) {
             $snmprangeip = 1;
          }
          $this->assertEquals($snmprangeip, 0, 'Have some "PluginFusinvsnmpIPRange" items in taskjob definition');
@@ -222,7 +222,7 @@ class FusinvDB extends PHPUnit_Framework_Assert{
        * Verify cron created
        */
       $crontask = new CronTask();
-      $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryTaskjob', 'taskscheduler'),
+      $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryTask', 'taskscheduler'),
               'Cron taskscheduler not created');
       $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryTaskjobstate', 'cleantaskjob'),
               'Cron cleantaskjob not created');

@@ -3991,15 +3991,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             'value' => NULL
          ),
          'groups_id' =>  array(
-            'type' => 'int(11) NOT NULL',
+            'type' => 'integer',
             'value' => NULL
          ),
          'itemtype' =>  array(
-            'type' => 'varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL',
+            'type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
             'value' => NULL
          ),
          'items_id' =>  array(
-            'type' => 'int(11) NOT NULL',
+            'type' => 'integer',
             'value' => NULL
          ),
       );
@@ -4046,11 +4046,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             'value' => NULL
          ),
          'groups_id' =>  array(
-            'type' => 'int(11) NOT NULL',
+            'type' => 'integer',
             'value' => NULL
          ),
          'fields_array' =>  array(
-            'type' => 'text NOT NULL',
+            'type' => 'text',
             'value' => NULL
          ),
       );
@@ -5280,11 +5280,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 //   $pfIgnoredimportdevice->install();
 
       //Change static & dynamic structure to fit the GLPI framework
-      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 
-                              'groups_id', 
+      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas',
+                              'groups_id',
                               'plugin_fusioninventory_deploygroups_id', 'integer');
       $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_dynamicdatas');
-      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_staticdatas', 
+      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_staticdatas',
                               'groups_id', 'plugin_fusioninventory_deploygroups_id', 'integer');
       $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_staticdatas');
 
@@ -5344,7 +5344,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       //Drop old table
       $migration->dropTable('glpi_plugin_fusioninventory_profiles');
    }
-   
+
    //Create first access to the current profile is needed
    PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
 
@@ -5381,11 +5381,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 */
 function doDynamicDataSearchParamsMigration() {
    global $DB;
-   
+
    $query = "SELECT `id`, `fields_array` FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`";
    foreach ($DB->request($query) as $dynamic_data) {
       $new_values   = migrationDynamicGroupFields($dynamic_data['fields_array']);
-      $query_update = "UPDATE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` 
+      $query_update = "UPDATE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
                        SET `fields_array`='$new_values'
                        WHERE `id`='".$dynamic_data['id']."'";
       $DB->query($query_update);
@@ -5394,7 +5394,7 @@ function doDynamicDataSearchParamsMigration() {
 
 /**
 * @since 0.85+1.0
-* 
+*
 * Migration of one dynamic group
 * @param fields search paramas in old format (serialized)
 * @return search paramas in new format (serialized)
