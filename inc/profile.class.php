@@ -295,7 +295,7 @@ class PluginFusioninventoryProfile extends Profile {
           array('rights'    => array(READ => __('Read')),
                 'label'     => __('Agent remote control', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_remotecontrol'),
-          array('rights'    => array(READ => __('Read'), UPDATE => __('Write')), 
+          array('rights'    => array(READ => __('Read'), UPDATE => __('Update')), 
                 'itemtype'  => 'PluginFusioninventoryConfig',
                 'label'     => __('Configuration', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_configuration'),
@@ -370,7 +370,7 @@ class PluginFusioninventoryProfile extends Profile {
       //Load mapping of old rights to their new equivalent
       $oldrights = self::getOldRightsMappings();
 
-      //for each old profile : translate old right the new one
+      //For each old profile : translate old right the new one
       foreach ($profiles as $id => $profile) {
          switch ($profile['right']) {
             case 'r' :
@@ -386,10 +386,12 @@ class PluginFusioninventoryProfile extends Profile {
          }
          //Write in glpi_profilerights the new fusioninventory right
          if (isset($oldrights[$profile['type']])) {
+            //There's one new right corresponding to the old one
             if (!is_array($oldrights[$profile['type']])) {
                self::addDefaultProfileInfos($profile['profiles_id'],
                                             array($oldrights[$profile['type']] => $value));
             } else {
+               //One old right has been splitted into serveral new ones
                foreach ($oldrights[$profile['type']] as $newtype) {
                   self::addDefaultProfileInfos($profile['profiles_id'],
                                                array($newtype => $value));
@@ -399,11 +401,16 @@ class PluginFusioninventoryProfile extends Profile {
       }
    }
    
+   /**
+   * Init profiles during installation :
+   * - add rights in profile table for the current user's profile
+   * - current profile has all rights on the plugin
+   */
    static function initProfile() {
       $pfProfile = new self();
-      $profile = new Profile();
+      $profile   = new Profile();
+      $a_rights  = $pfProfile->getAllRights();
 
-      $a_rights = $pfProfile->getAllRights();
       foreach ($a_rights as $data) {
          if (countElementsInTable("glpi_profilerights", "`name` = '".$data['field']."'") == 0) {
             ProfileRight::addProfileRights(array($data['field']));
@@ -413,12 +420,13 @@ class PluginFusioninventoryProfile extends Profile {
 
       // Add all rights to current profile of the user
       if (isset($_SESSION['glpiactiveprofile'])) {
-         $dataprofile = array();
+         $dataprofile       = array();
          $dataprofile['id'] = $_SESSION['glpiactiveprofile']['id'];
          $profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
          foreach ($a_rights as $info) {
-            if (is_array($info) && ((!empty($info['itemtype'])) || (!empty($info['rights'])))
-                && (!empty($info['label'])) && (!empty($info['field']))) {
+            if (is_array($info) 
+                && ((!empty($info['itemtype'])) || (!empty($info['rights'])))
+                  && (!empty($info['label'])) && (!empty($info['field']))) {
 
                if (isset($info['rights'])) {
                   $rights = $info['rights'];
@@ -427,6 +435,7 @@ class PluginFusioninventoryProfile extends Profile {
                }
                foreach ($rights as $right => $label) {
                   $dataprofile['_'.$info['field']][$right] = 1;
+                  $_SESSION['glpiactiveprofile'][$data['field']] = $right;
                }
             }
          }
