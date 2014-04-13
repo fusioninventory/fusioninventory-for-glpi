@@ -67,7 +67,7 @@ PluginFusioninventoryMenu::displayMenu("mini");
 if (!isset($_GET["id"])) {
    $_GET['id'] = '';
 }
-$pfCollect->showForm($_GET['id']);
+$pfCollect->display($_GET);
 
 Html::footer();
 

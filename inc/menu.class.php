@@ -105,16 +105,16 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $options[$type] = array(
               'title' => $itemtype::getTypeName(),
               'page'  => $itemtype::getSearchURL(false));
-         $options[$type]['links']['search'] = Toolbox::getItemTypeSearchURL($itemtype, false);
+         $options[$type]['links']['search'] = $itemtype::getSearchURL(false);
          if ($itemtype::canCreate()) {
-            $options[$type]['links']['add'] = Toolbox::getItemTypeFormURL($itemtype, false);
+            $options[$type]['links']['add'] = $itemtype::getFormURL(false);
          }
       }
       $options['agent'] = array(
            'title' => PluginFusioninventoryAgent::getTypeName(),
            'page'  => PluginFusioninventoryAgent::getSearchURL(false),
            'links' => array(
-               'search' => Toolbox::getItemTypeSearchURL('PluginFusioninventoryAgent', false)
+               'search' => PluginFusioninventoryAgent::getSearchURL(false)
            ));
       return $options;
    }

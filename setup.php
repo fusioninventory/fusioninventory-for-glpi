@@ -341,7 +341,7 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
 
-      if (Session::haveRight('plugin_fusioninventory_unknowdevice', READ)) {
+      if (Session::haveRight('plugin_fusioninventory_unknowndevice', READ)) {
          $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['assets'] = 'PluginFusioninventoryUnknowndevice';
       }
       if (Session::haveRight('plugin_fusioninventory_menu', READ)) {
