@@ -97,7 +97,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `date_creation` datetime DEFAULT NULL,
   `comment` text DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '0',
-  `permanent` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `datetime_start` datetime DEFAULT NULL,
   `datetime_end` datetime DEFAULT NULL,
   `plugin_fusioninventory_timeslots_id` int(11) NOT NULL DEFAULT '0',
@@ -120,6 +119,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobs` (
   `targets` text DEFAULT NULL COLLATE utf8_unicode_ci,
   `actors` text DEFAULT NULL COLLATE utf8_unicode_ci,
   `comment` text DEFAULT NULL,
+  `rescheduled_taskjob_id` int(11) NOT NULL DEFAULT '0',
+  `statuscomments` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_tasks_id` (`plugin_fusioninventory_tasks_id`),
   KEY `entities_id` (`entities_id`),
@@ -155,7 +156,6 @@ CREATE TABLE `glpi_plugin_fusioninventory_taskjobstates` (
   `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
   `specificity` text DEFAULT NULL,
   `uniqid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `execution_id` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_taskjobs_id` (`plugin_fusioninventory_taskjobs_id`),
   KEY `plugin_fusioninventory_agents_id` (`plugin_fusioninventory_agents_id`,`state`),
@@ -806,9 +806,9 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploygroups_staticdatas`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_staticdatas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL,
-  `itemtype` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `items_id` int(11) NOT NULL,
+  `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
+  `itemtype` varchar(100) DEFAULT NULL,
+  `items_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (  `id` ),
   KEY `plugin_fusioninventory_deploygroups_id` (`plugin_fusioninventory_deploygroups_id`),
   KEY `items_id` (`items_id`)
@@ -820,8 +820,8 @@ DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`;
 
 CREATE TABLE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL,
-  `fields_array` text NOT NULL,
+  `plugin_fusioninventory_deploygroups_id` int(11) NOT NULL DEFAULT '0',
+  `fields_array` text DEFAULT NULL,
   `can_update_group` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `plugin_fusioninventory_deploygroups_id` (`plugin_fusioninventory_deploygroups_id`),
