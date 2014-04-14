@@ -77,9 +77,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch ($tabnum) {
          case 0:
-            
             $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
-            Toolbox::logDebug($search_params);
             PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
             break;
          case 1:

@@ -336,6 +336,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             if ($DB->numrows($result) > 0) {
                $fields_array     = $DB->result($result, 0, 'fields_array');
                $computers_params = unserialize($fields_array);
+               if (isset($computers_params['metacriteria']) && (empty($computers_params['metacriteria']))) {
+                  unset($computers_params['metacriteria']);
+               }
             }
          }
       } else {
