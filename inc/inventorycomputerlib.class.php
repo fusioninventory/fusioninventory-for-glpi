@@ -936,6 +936,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                      $input['totalsize'] = $a_computerinventory['computerdisk'][$key]['totalsize'];
                      $input['freesize'] = $a_computerinventory['computerdisk'][$key]['freesize'];
+                     $input['_no_history'] = TRUE;
                      $computerDisk->update($input, FALSE);
                      unset($simplecomputerdisk[$key]);
                      unset($a_computerinventory['computerdisk'][$key]);
