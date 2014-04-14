@@ -95,6 +95,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $pfInventoryComputerAntivirus = new PluginFusioninventoryInventoryComputerAntivirus();
       $pfConfig                     = new PluginFusioninventoryConfig();
       $pfComputerLicenseInfo        = new PluginFusioninventoryComputerLicenseInfo();
+     $pfComputerOracledb            = new PluginFusioninventoryInventoryComputerOracledb();
 
 //      $pfInventoryComputerStorage   = new PluginFusioninventoryInventoryComputerStorage();
 //      $pfInventoryComputerStorage_Storage =
@@ -784,7 +785,91 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             }
          }
 
-      // * Virtualmachines
+      // * Oracle DB
+            $db_computeroracledb = array();
+            if ($no_history === FALSE) {
+               $query = "SELECT * FROM 
+`glpi_plugin_fusioninventory_inventorycomputeroracledbs`
+                  WHERE `computers_id` = '$computers_id'
+                     AND `is_dynamic`='1'";
+               $result = $DB->query($query);
+               while ($data = $DB->fetch_assoc($result)) {
+                  $idtmp = $data['id'];
+                  unset($data['id']);
+                  $data1 = Toolbox::addslashes_deep($data);
+                  $db_computeroracledb[$idtmp] = $data1;
+               }
+            }
+
+            $simplecomputersoracledb= array();
+            if (isset($a_computerinventory['oracledb'])) {
+               foreach ($a_computerinventory['oracledb'] as 
+$key=>$a_computersoracledb) {
+	    $a_field = array('name', 'version','memory_target',
+			    'sga_target', 'has_advanced_compression', 
+			    'has_active_data_guard',
+			    'has_change_management_pack',
+			    'has_configuration_management',
+			    'has_data_masking_pack',
+			    'has_data_mining',
+			    'has_data_vault',
+			    'has_diagnostic_pack',
+			    'has_exadata',
+			    'has_label_security',
+			    'has_olap',
+			    'has_paritionning',
+			    'has_provisionning_patch_automation_pack',
+			 'has_provisionning_patch_automation_pack_for_database',
+			    'has_real_application_cluster',
+			    'has_real_application_testing',
+			    'has_spatial',
+			    'has_total_recall',
+			    'has_tuning_pack',
+			    'has_weblogic_server_management_pack'
+			    );
+                  foreach ($a_field as $field) {
+                     if (isset($a_computersoracledb[$field])) {
+                        $simplecomputersoracledb[$key][$field] =
+                                    $a_computersoracledb[$field];
+                     }
+                  }
+               }
+            }
+
+            foreach ($simplecomputersoracledb as $key => $arrays) {
+               foreach ($db_computeroracledb as $keydb => $arraydb) {
+                  if ($arrays == $arraydb) {
+                     $input = array();
+                     $input['id'] = $keydb;
+                     $pfComputerOracledb->update($input);
+                     unset($simplecomputersoracledb[$key]);
+                     unset($a_computerinventory['oracledb'][$key]);
+                     unset($db_computeroracledb[$keydb]);
+                     break;
+                  }
+               }
+            }
+            if (count($a_computerinventory['oracledb']) == 0
+               && count($db_computeroracledb) == 0) {
+               // Nothing to do
+            } else {
+               if (count($db_computeroracledb) != 0) {
+                  // Delete virtualmachine in DB
+                  foreach ($db_computeroracledb as $idtmp => $data) {
+                     $pfComputerOracledb->delete(array('id' => $idtmp), 1);
+                  }
+               }
+               if (count($a_computerinventory['oracledb']) != 0) {
+                  foreach($a_computerinventory['oracledb'] as 
+$a_oracledb) {
+                     $a_oracledb['computers_id'] = $computers_id;
+                     $pfComputerOracledb->add($a_oracledb, array(), 
+FALSE);
+                  }
+               }
+            }
+
+// * Virtualmachines
          if ($pfConfig->getValue("import_vm") == 1) {
             $db_computervirtualmachine = array();
             if ($no_history === FALSE) {

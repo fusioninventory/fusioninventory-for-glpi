@@ -195,7 +195,83 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5170]['datatype']      = 'bool';
          $sopt[5170]['massiveaction'] = FALSE;
 
+         $sopt[5280]['table']         = 'glpi_plugin_fusioninventory_inventorycomputeroracledbs';
+         $sopt[5280]['field']         = 'name';
+         $sopt[5280]['name']          = __("Oracle").' - '.__("Name");
+         $sopt[5280]['type']          = 'text';
+         $sopt[5280]['joinparams'] = array('jointype' => 'child');
+         $sopt[5280]['massiveaction'] = FALSE;
+         $sopt[5280]['forcegroupby'] = true;
 
+         $sopt[5281]['table']         = 'glpi_plugin_fusioninventory_inventorycomputeroracledbs';
+         $sopt[5281]['field']         = 'version';
+         $sopt[5281]['name']          = __("Oracle").' - '.__("Version");
+         $sopt[5281]['type']          = 'text';
+         $sopt[5281]['joinparams'] = array('jointype' => 'child');
+         $sopt[5281]['forcegroupby'] = true;
+         $sopt[5281]['massiveaction'] = FALSE;
+
+         $sopt[5282]['table']         = 'glpi_plugin_fusioninventory_inventorycomputeroracledbs';
+         $sopt[5282]['field']         = 'memory_target';
+         $sopt[5282]['name']          = __("Oracle").' - '.__("Memory target");
+         $sopt[5282]['type']          = 'text';
+         $sopt[5282]['joinparams'] = array('jointype' => 'child');
+         $sopt[5282]['massiveaction'] = FALSE;
+         $sopt[5282]['forcegroupby'] = true;
+
+         $sopt[5283]['table']         = 'glpi_plugin_fusioninventory_inventorycomputeroracledbs';
+         $sopt[5283]['field']         = 'sga_target';
+         $sopt[5283]['name']          = __("Oracle").' - '.__("Sga target");
+         $sopt[5283]['type']          = 'text';
+         $sopt[5283]['joinparams'] = array('jointype' => 'child');
+         $sopt[5283]['massiveaction'] = FALSE;
+         $sopt[5283]['forcegroupby'] = true;
+
+      $oracle_options = array('has_advanced_compression' 
+                                 => 'Advanced Compression',
+                              'has_active_data_guard' => 'Active Data Guard',
+                              'has_change_management_pack'
+                                 => 'Change Management Pack',
+                              'has_configuration_management' 
+                                 => 'Configuration Management',
+                              'has_data_masking_pack' 
+                                 => 'Data Masking Pack',
+                              'has_data_mining'
+                                 => 'Data Mining',
+                              'has_data_vault' => 'Data Vault',
+                              'has_diagnostic_pack' => 'Diagnostic Pack',
+                              'has_exadata' => 'Exadata',
+                              'has_label_security' => 'Label Security',
+                              'has_olap' => 'OLAP',
+                              'has_paritionning' => 'Partitionning',
+                              'has_provisionning_patch_automation_pack'
+                                 => 'Provisionning Patch Automation Pack',
+                                    'has_provisionning_patch_automation_pack_for_database'
+                                 => 'Provisionning Patch Automation Pack For Database',
+                              'has_real_application_cluster' 
+                                 => 'Real Application Cluster',
+                              'has_real_application_testing'
+                                 => 'Real Application Testing',
+                              'has_spatial' => 'Spatial',
+                              'has_total_recall' => 'Total Recall',
+                              'has_tuning_pack' => 'Tuning Pack',
+                              'has_weblogic_server_management_pack' 
+                                 => 'Weblogic Server Management Pack for Enterprise',
+                           );
+      $i = 5284;
+      foreach ($oracle_options as $option => $label) {
+         $sopt[$i]['table']         = 
+   'glpi_plugin_fusioninventory_inventorycomputeroracledbs';
+         $sopt[$i]['field']         = $option;
+         $sopt[$i]['name']          = __("Oracle").' - '.__($label);
+         $sopt[$i]['type']          = 'text';
+         $sopt[$i]['joinparams'] = array('jointype' => 'child');
+         $sopt[$i]['massiveaction'] = FALSE;
+         $sopt[$i]['forcegroupby'] = true;
+         $sopt[$i]['datatype']     = 'bool';
+      
+         $i++;
+      }
 
    }
 
