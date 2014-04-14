@@ -99,9 +99,14 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
    
    static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
             $search_params                 = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, true);
-            //$search_params['metacriteria'] = array();
+            Toolbox::logDebug($search_params);
+            //If metacriteria array is empty, remove it as it displays the metacriteria form,
+            //and it's is not we want !
+            if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
+               unset($search_params['metacriteria']);
+            }
             PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
-
+            
             unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
             if (isset($_GET['preview'])) {
                //Add extra parameters for massive action display : only the Add action should be displayed
