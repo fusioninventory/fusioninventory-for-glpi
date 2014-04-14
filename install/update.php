@@ -5400,20 +5400,58 @@ function doDynamicDataSearchParamsMigration() {
 * @return search paramas in new format (serialized)
 */
 function migrationDynamicGroupFields($fields) {
-   $old_fields    = unserialize($fields);
-   $new_fields    = array();
-   $searchOptions = Search::getOptions('Computer');
-   foreach ($old_fields as $key => $value) {
-
-      if (!empty($value) && $value != 0 && $value != '') {
-         foreach ($searchOptions as $id => $searchOption) {
-            if (is_array($searchOption) && isset ($searchOption['linkfield']) && $searchOption['linkfield'] == $key) {
-               $new_value['value']      = $value;
-               $new_value['field']      = $id;
-               $new_value['searchtype'] = 'equals';
-               $new_fields[]            = $new_value;
-               break;
-            }
+   $data       = json_decode($fields, true);
+   $new_fields = array();
+   if (!is_array($data)) {
+      $data   = unserialize($fields);
+   }
+   
+   //We're still in 0.85 or higher, 
+   //no need for migration !
+   if (isset($fields['criteria'])) {
+      return serialize($fields);
+   }
+   
+   //Upgrade from 0.84
+   if (isset($data['field'])) {
+      $count_fields = count ($data['field']);
+      for ($i = 0; $i < $count_fields; $i++) {
+         $new_value = array();
+         $new_value['value']       = $data['contains'][$i];
+         $new_value['field']       = $data['field'][$i];
+         $new_value['searchtype']  = $data['searchtype'][$i];
+         $new_fields['criteria'][] = $new_value;
+      }
+      
+      if (isset($data['field2'])) {
+         $count_fields = count ($data['field2']);
+         for ($i = 0; $i < $count_fields; $i++) {
+            $new_value = array();
+            $new_value['value']           = $data['contains2'][$i];
+            $new_value['field']           = $data['field2'][$i];
+            $new_value['itemtype']        = $data['itemtype2'][$i];
+            $new_value['searchtype']      = $data['searchtype2'][$i];
+            $new_fields['metacriteria'][] = $new_value;
+         }
+      }
+   } elseif(isset($data['itemtype']) && isset($data['name'])) {
+      //Ugrapde from 0.83, where the number of fields to search was fixed
+      $oldfields = array('name'                => 2,
+                         'serial'              => 5,
+                         'otherserial'         => 6,
+                         'locations_id'        => 3,
+                         'operatingsystems_id' => 45,
+                         'room'                => 92,
+                         'building'            => 91);
+      foreach ($oldfields as $name => $id) {
+         $new_value = array();
+         if (isset($data[$name]) && $data[$name] != '') {
+            $new_value['field']       = $id;
+            $new_value['value']       = $data[$name];
+            $new_value['searchtype']  = 'equals';
+         }
+         if (!empty($new_value)) {
+            $new_fields['criteria'][] = $new_value;
          }
       }
    }

@@ -44,7 +44,7 @@ include ("../../../inc/includes.php");
 
 if (PluginFusioninventoryMenu::canView()) {
    Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
-                "fusioninventory", "menu");
+                "pluginfusioninventorymenu");
 
    PluginFusioninventoryMenu::displayMenu();
 } else {

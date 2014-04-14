@@ -122,7 +122,6 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
    }
 
    function getTask() {
-      Toolbox::logDebug($this->fields);
       $pfTask = new PluginFusioninventoryTask();
       $pfTask->getFromDB($this->fields['plugin_fusioninventory_tasks_id']);
       return $pfTask;

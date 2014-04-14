@@ -258,10 +258,8 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       $changestate = 0;
 //      foreach ($taskjobstates as $jobstate) {
          $data = $jobstate->fields;
-         Toolbox::logDebug(var_export($data,true));
          $a_networkPort = $NetworkPort->find("`itemtype`='Computer' AND `items_id`='".
                                                 $data['items_id']."' ");
-         Toolbox::logDebug($a_networkPort);
          $computerip = 0;
          foreach ($a_networkPort as $datanetwork) {
             //if ($datanetwork['ip'] != "127.0.0.1") {

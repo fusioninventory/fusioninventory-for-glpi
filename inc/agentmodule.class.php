@@ -423,7 +423,6 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             $methods_requested = $method_info;
          }
       }
-      Toolbox::logDebug($methods_requested);
    }
 
    /**

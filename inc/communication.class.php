@@ -274,7 +274,6 @@ class PluginFusioninventoryCommunication {
                && $className != "PluginFusioninventoryDeployCommon"
                && $className != "PluginFusioninventoryCollect"
             ) {
-               Toolbox::logDebug($jobstate);
                $class = new $className();
                $sxml_temp = $class->run($jobstate);
                PluginFusioninventoryToolbox::append_simplexml(
