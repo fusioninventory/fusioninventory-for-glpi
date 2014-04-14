@@ -78,12 +78,14 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       switch ($tabnum) {
          case 0:
             $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
+            if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
+               unset($search_params['metacriteria']);
+            }
             PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
             break;
          case 1:
             $params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
             $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
-            Toolbox::logDebug($params);
             Search::showList('PluginFusioninventoryComputer', $params);
             break;
       }

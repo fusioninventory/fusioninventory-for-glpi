@@ -231,7 +231,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       echo "<div id='searchcriteria'>";
       $nb_criteria = count($p['criteria']);
-      if ($nb_criteria == 0) $nb_criteria++;
+      if ($nb_criteria == 0) {
+         $nb_criteria++;
+      }
       $nb_meta_criteria = (isset($p['metacriteria'])?count($p['metacriteria']):0);
       $nbsearchcountvar = 'nbcriteria'.strtolower($itemtype).mt_rand();
       $nbmetasearchcountvar = 'nbmetacriteria'.strtolower($itemtype).mt_rand();
@@ -337,9 +339,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             if ($DB->numrows($result) > 0) {
                $fields_array     = $DB->result($result, 0, 'fields_array');
                $computers_params = unserialize($fields_array);
-               if (isset($computers_params['metacriteria']) && (empty($computers_params['metacriteria']))) {
-                  unset($computers_params['metacriteria']);
-               }
             }
          }
       } else {

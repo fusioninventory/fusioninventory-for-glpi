@@ -49,8 +49,10 @@ if (isset($_POST['save'])) {
    $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
    if (!countElementsInTable($group_item->getTable(),
                              "plugin_fusioninventory_deploygroups_id='".$_POST['id']."'")) {
+      $criteria  = array('criteria'     => $_POST['criteria'],
+                         'metacriteria' => $_POST['metacriteria']);
+      $values['fields_array'] = serialize($criteria);
       $values['plugin_fusioninventory_deploygroups_id'] = $_POST['id'];
-      $values['fields_array'] = serialize($_POST['criteria']);
       $group_item->add($values);
    } else {
       $item = getAllDatasFromTable($group_item->getTable(),
