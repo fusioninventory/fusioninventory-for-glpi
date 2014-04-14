@@ -179,7 +179,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if ($no_history === FALSE) {
                $query = "SELECT `glpi_items_deviceprocessors`.`id`, `designation`,
                      `frequency`, `frequence`, `frequency_default`,
-                     `serial`, `manufacturers_id`, `glpi_items_deviceprocessors`.`nbcores`, 
+                     `serial`, `manufacturers_id`, `glpi_items_deviceprocessors`.`nbcores`,
                      `glpi_items_deviceprocessors`.`nbthreads`
                   FROM `glpi_items_deviceprocessors`
                   LEFT JOIN `glpi_deviceprocessors`
@@ -865,7 +865,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             // Use ComputerVirtualMachine::getUUIDRestrictRequest to get existant
             // vm in computer list
             $computervm = new Computer();
-            if (isset($a_computerinventory['virtualmachine_creation']) 
+            if (isset($a_computerinventory['virtualmachine_creation'])
                && is_array($a_computerinventory['virtualmachine_creation'])) {
                foreach ($a_computerinventory['virtualmachine_creation'] as $a_vm) {
                   // Define location of physical computer (host)

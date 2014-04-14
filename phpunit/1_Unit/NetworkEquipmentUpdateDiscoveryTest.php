@@ -154,7 +154,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
       $networkEquipment = new NetworkEquipment();
 
       $networkEquipment->getFromDB(1);
-      
+
       $_SESSION['SOURCE_XMLDEVICE'] = $this->source_xmldevice;
       $pfCND->importDevice($networkEquipment);
    }

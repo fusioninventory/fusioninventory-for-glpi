@@ -59,7 +59,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    static function canView() {
       $can_display = false;
       $profile     = new PluginFusioninventoryProfile();
-      
+
       foreach ($profile->getAllRights() as $right) {
          if (Session::haveRight($right['field'], READ)) {
             $can_display = true;
@@ -68,11 +68,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
       return $can_display;
    }
-   
+
    static function canCreate() {
       return false;
    }
-   
+
    static function getMenuName() {
       return self::getTypeName();
    }
@@ -101,10 +101,10 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice'
       );
       $options = array();
-      
+
       $options['title'] = self::getTypeName();
       $options['page']  = self::getSearchURL(false);
-      
+
       foreach ($elements as $type => $itemtype) {
          $options[$type] = array(
               'title' => $itemtype::getTypeName(),
@@ -185,7 +185,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[2]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_group.png";
          $a_menu[2]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploygroup.php";
       }
-      
+
       if (Session::haveRight('config', UPDATE) || Session::haveRight('plugin_fusioninventory_configuration', UPDATE)) {
          $a_menu[3]['name'] = __('General configuration', 'fusioninventory');
          $a_menu[3]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_agents.png";
@@ -273,7 +273,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[3]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventoryruleentity.php";
       }
-      
+
       if (Session::haveRight('plugin_fusioninventory_rulelocation', READ)) {
          $a_menu[4]['name'] = __('Computer location rules', 'fusioninventory');
          $a_menu[4]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
@@ -399,7 +399,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_files.png";
          $a_menu[1]['link'] = $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/deploymirror.php";
       }
-      
+
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('Deploy', 'fusioninventory'),
                                                              $a_menu,

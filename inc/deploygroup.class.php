@@ -55,7 +55,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    protected $static_group_types = array('Computer');
 
    public $dohistory = TRUE;
-   
+
    static function getTypeName($nb=0) {
 
       if ($nb>1) {
@@ -75,7 +75,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          );
    }
 
-   
+
    function defineTabs($options=array()) {
       $ong = array();
       $this->addDefaultFormTab($ong);
@@ -108,7 +108,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
-    
+
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -127,11 +127,11 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       self::dropdownGroupType('type', $this->fields['type']);
       echo "</td>";
       echo "</tr>";
-      
+
       $this->showFormButtons($options);
       return TRUE;
    }
-   
+
    function getSearchOptions() {
 
       $tab = array();
@@ -159,11 +159,11 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    function isDynamicGroup() {
       return ($this->fields['type'] == self::DYNAMIC_GROUP);
    }
-   
+
    function isStaticGroup() {
       return ($this->fields['type'] == self::STATIC_GROUP);
    }
-   
+
    static function getSpecificValueToDisplay($field, $values, array $options=array()) {
       $group = new self();
       if (!is_array($values)) {
@@ -211,18 +211,18 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       $is_dynamic = $item->isDynamicGroup();
       $itemtype   = "PluginFusioninventoryComputer";
-      $can_update = $item->canEdit($item->getID()); 
+      $can_update = $item->canEdit($item->getID());
 
       if ($can_update) {
          //show generic search form (duplicated from Search class)
          echo "<form name='group_search_form' method='POST'>";
-         echo "<input type='hidden' name='plugin_fusioninventory_deploygroups_id' value='".$item->getID()."'>";  
-         echo "<input type='hidden' name='id' value='".$item->getID()."'>";  
+         echo "<input type='hidden' name='plugin_fusioninventory_deploygroups_id' value='".$item->getID()."'>";
+         echo "<input type='hidden' name='id' value='".$item->getID()."'>";
 
          // add tow hidden fields to permit delete of (meta)criteria
-         echo "<input type='hidden' name='criteria' value=''>";     
-         echo "<input type='hidden' name='metacriteria' value=''>"; 
-      } 
+         echo "<input type='hidden' name='criteria' value=''>";
+         echo "<input type='hidden' name='metacriteria' value=''>";
+      }
 
       echo "<div class='tabs_criteria'>";
       echo "<table class='tab_cadre_fixe'>";
@@ -261,7 +261,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          }
       }
       echo "</table>\n";
-      echo "</td>"; 
+      echo "</td>";
       echo "</tr>";
       echo "</table>\n";
 
@@ -300,17 +300,17 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       });";
       echo Html::scriptBlock($clean_script);*/
    }
-   
+
    static function getTargetsForGroup($groups_id) {
       $group = new self();
       $group->getFromDB($groups_id);
-      
+
       $results = array();
       if ($group->isStaticGroup()) {
          $staticgroup = new PluginFusioninventoryDeployGroup_Staticdata();
-         foreach ($staticgroup->find("`plugin_fusioninventory_deploygroups_id`='$groups_id' 
+         foreach ($staticgroup->find("`plugin_fusioninventory_deploygroups_id`='$groups_id'
                                 AND `itemtype`='Computer'") as $tmpgroup) {
-            $results[$tmpgroup['items_id']] = $tmpgroup['items_id']; 
+            $results[$tmpgroup['items_id']] = $tmpgroup['items_id'];
          }
       } else {
          $results = PluginFusioninventoryDeployGroup_Dynamicdata::getTargetsByGroup($group);
@@ -324,13 +324,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group, $check_post_values = false) {
       global $DB;
       $computers_params = array();
-      
+
       unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
       //Check criteria from DB
       if (!$check_post_values) {
          if ($group->fields['type'] == PluginFusioninventoryDeployGroup::DYNAMIC_GROUP) {
-            $query = "SELECT `fields_array` 
-                     FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` 
+            $query = "SELECT `fields_array`
+                     FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
                      WHERE `plugin_fusioninventory_deploygroups_id`='".$group->getID()."'";
             $result = $DB->query($query);
             if ($DB->numrows($result) > 0) {
@@ -347,14 +347,14 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       switch ($ma->getAction()) {
          case 'add_to_static_group':
-          Dropdown::show('PluginFusioninventoryDeployGroup', 
+          Dropdown::show('PluginFusioninventoryDeployGroup',
                          array('condition' => "`type`='".PluginFusioninventoryDeployGroup::STATIC_GROUP."'"));
          echo Html::submit(_x('button','Post'), array('name' => 'massiveaction'));
          return true;
     }
       return parent::showMassiveActionsSubForm($ma);
    }
-   
+
    /**
     * @since version 0.85
     *
@@ -363,21 +363,21 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
       global $DB;
-      
+
       switch ($ma->getAction()) {
          case 'add_to_static_group' :
             if ($item->getType() == 'Computer') {
                $group_item = new PluginFusioninventoryDeployGroup_Staticdata();
                foreach ($ids as $id) {
                   //if ($group_item->can($id, UPDATE)) {
-                     if (!countElementsInTable($group_item->getTable(), 
-                                             "`plugin_fusioninventory_deploygroups_id`='".$_POST['plugin_fusioninventory_deploygroups_id']."' 
-                                                AND `itemtype`='Computer' 
+                     if (!countElementsInTable($group_item->getTable(),
+                                             "`plugin_fusioninventory_deploygroups_id`='".$_POST['plugin_fusioninventory_deploygroups_id']."'
+                                                AND `itemtype`='Computer'
                                                 AND `items_id`='$id'")) {
                         $values = array(
                            'plugin_fusioninventory_deploygroups_id' => $_POST['plugin_fusioninventory_deploygroups_id'],
                            'itemtype' => 'Computer',
-                           'items_id' => $id);  
+                           'items_id' => $id);
                         $group_item->add($values);
                         $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
                      } else {

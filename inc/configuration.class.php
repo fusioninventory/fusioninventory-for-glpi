@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryConfiguration extends CommonDBTM {
 
    static $rightname = "plugin_fusioninventory_configuration";
-   
+
    function defineTabs($options=array()){
 
       $tabs = array();

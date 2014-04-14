@@ -82,7 +82,7 @@ if (isset($_POST["add"])) {
                 "plugins",
                 "pluginfusioninventorymenu",
                 "timeslot");
-                
+
    PluginFusioninventoryMenu::displayMenu("mini");
    $pfTimeslot->display(array('id' => $_GET["id"]));
    Html::footer();

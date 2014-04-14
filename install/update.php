@@ -5405,13 +5405,13 @@ function migrationDynamicGroupFields($fields) {
    if (!is_array($data)) {
       $data   = unserialize($fields);
    }
-   
-   //We're still in 0.85 or higher, 
+
+   //We're still in 0.85 or higher,
    //no need for migration !
    if (isset($fields['criteria'])) {
       return serialize($fields);
    }
-   
+
    //Upgrade from 0.84
    if (isset($data['field'])) {
       $count_fields = count ($data['field']);
@@ -5422,7 +5422,7 @@ function migrationDynamicGroupFields($fields) {
          $new_value['searchtype']  = $data['searchtype'][$i];
          $new_fields['criteria'][] = $new_value;
       }
-      
+
       if (isset($data['field2'])) {
          $count_fields = count ($data['field2']);
          for ($i = 0; $i < $count_fields; $i++) {

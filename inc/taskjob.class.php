@@ -311,7 +311,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
     */
 
    function getItemsForModuleItemtype($method, $itemtype) {
-      
+
    }
 
    /**
