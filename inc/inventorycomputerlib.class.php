@@ -179,7 +179,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             if ($no_history === FALSE) {
                $query = "SELECT `glpi_items_deviceprocessors`.`id`, `designation`,
                      `frequency`, `frequence`, `frequency_default`,
-                     `serial`, `manufacturers_id`, `nbcores`, `nbthreads`
+                     `serial`, `manufacturers_id`, `glpi_items_deviceprocessors`.`nbcores`, 
+                     `glpi_items_deviceprocessors`.`nbthreads`
                   FROM `glpi_items_deviceprocessors`
                   LEFT JOIN `glpi_deviceprocessors`
                      ON `deviceprocessors_id`=`glpi_deviceprocessors`.`id`
