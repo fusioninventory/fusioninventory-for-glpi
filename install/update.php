@@ -5346,7 +5346,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    }
 
    //Create first access to the current profile is needed
-   PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
+   if ( isset( $_SESSION['glpiactiveprofile'] ) ) {
+      PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
+   }
 
    // Define lastup field of fusion networkports
    $query = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`
