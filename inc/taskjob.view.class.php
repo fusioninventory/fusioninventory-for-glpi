@@ -218,7 +218,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          "  <span class='" . $itemtype ."'></span>",
          "  <label>",
          "     <span style='font-style:oblique'>" . $itemtype_name ."</span>" ,
-         "     ". $item->fields['name'] ,
+         "     ". $item->getLink(array('linkoption'=>'target="_blank"')) ,
          "  </label>",
          "  <input type='hidden' name='" . $module_type ."[]' value='". $item_fullid ."'>" ,
          "  </input>" ,

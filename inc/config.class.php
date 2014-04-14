@@ -793,7 +793,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       global $DB, $PF_CONFIG;
 
       //Test if table exists before loading cache
-      //The only case where table doesn't exists is when you click on 
+      //The only case where table doesn't exists is when you click on
       //uninstall the plugin and it's already uninstalled
       if (TableExists('glpi_plugin_fusioninventory_configs')) {
          $PF_CONFIG = array();

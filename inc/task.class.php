@@ -384,7 +384,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "FROM `glpi_plugin_fusioninventory_taskjobs` job",
          "LEFT JOIN `glpi_plugin_fusioninventory_tasks` task",
          "  ON task.`id` = job.`plugin_fusioninventory_tasks_id`",
-         "LEF TJOIN `glpi_plugin_fusioninventory_taskjobstates` run",
+         "LEFT JOIN `glpi_plugin_fusioninventory_taskjobstates` run",
          "  ON job.`id` = run.`plugin_fusioninventory_taskjobs_id`",
          "WHERE task.`is_active` = 1",
          "AND (",
@@ -666,7 +666,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          // TODO: Clean those entries in database by the logcleaner crontask.
          "INNER JOIN `glpi_plugin_fusioninventory_agents` as agent",
          "  ON run.`plugin_fusioninventory_agents_id` = agent.`id`",
-         "LEFT JION `glpi_plugin_fusioninventory_taskjoblogs` as log",
+         "LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` as log",
          "  ON log.`plugin_fusioninventory_taskjobstates_id` = run.`id`",
          implode("\n", array_filter($where)),
          "ORDER BY",

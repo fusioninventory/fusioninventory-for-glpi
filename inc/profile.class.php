@@ -295,7 +295,7 @@ class PluginFusioninventoryProfile extends Profile {
           array('rights'    => array(READ => __('Read')),
                 'label'     => __('Agent remote control', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_remotecontrol'),
-          array('rights'    => array(READ => __('Read'), UPDATE => __('Update')), 
+          array('rights'    => array(READ => __('Read'), UPDATE => __('Update')),
                 'itemtype'  => 'PluginFusioninventoryConfig',
                 'label'     => __('Configuration', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_configuration'),
@@ -347,7 +347,7 @@ class PluginFusioninventoryProfile extends Profile {
             unset($_SESSION['glpiactiveprofile'][$right['field']]);
          }
       }
-      
+
       if (isset($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryMenu'])) {
          unset ($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryMenu']);
       }
@@ -400,7 +400,7 @@ class PluginFusioninventoryProfile extends Profile {
          }
       }
    }
-   
+
    /**
    * Init profiles during installation :
    * - add rights in profile table for the current user's profile
@@ -424,7 +424,7 @@ class PluginFusioninventoryProfile extends Profile {
          $dataprofile['id'] = $_SESSION['glpiactiveprofile']['id'];
          $profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
          foreach ($a_rights as $info) {
-            if (is_array($info) 
+            if (is_array($info)
                 && ((!empty($info['itemtype'])) || (!empty($info['rights'])))
                   && (!empty($info['label'])) && (!empty($info['field']))) {
 

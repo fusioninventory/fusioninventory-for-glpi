@@ -59,7 +59,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static function canView() {
       return parent::canView();
    }
-   
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if (!$withtemplate
@@ -68,7 +68,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
       }
       return '';
    }
-   
+
    /**
     * @param $item         CommonGLPI object
     * @param $tabnum       (default 1)
@@ -99,7 +99,7 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    */
    static function getTargetsByGroup(PluginFusioninventoryDeployGroup $group) {
       //Only retrieve computers IDs
-      $results = Search::getDatas('PluginFusioninventoryComputer', 
+      $results = Search::getDatas('PluginFusioninventoryComputer',
                                   PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($group)
                                   );
       $ids     = array();

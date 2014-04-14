@@ -48,7 +48,7 @@ class PluginFusioninventoryCollectRule extends Rule {
 
    // From Rule
    static $rightname = "plugin_fusioninventory_rulecollect";
-   
+
    public $can_sort=TRUE;
    public $specific_parameters = FALSE;
 

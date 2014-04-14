@@ -212,10 +212,11 @@ td:not(#foo) > input[type=radio]:checked + label {
 }
 
 .taskjob_item:hover {
-   border-color: #777;
-   box-shadow: 0 0 2px #777;
-   background-color: #777;
-   color: white;
+   border-color: #CCC;
+   box-shadow: 0 0 2px #CCC;
+   background-color: #D7D7D7;
+   color: black;
+   font-weight: bolder;
 }
 
 #joblogs_block {

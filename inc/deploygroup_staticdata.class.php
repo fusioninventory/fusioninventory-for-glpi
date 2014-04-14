@@ -61,12 +61,12 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if (!$withtemplate
-          && ($item->getType() == 'PluginFusioninventoryDeployGroup') 
+          && ($item->getType() == 'PluginFusioninventoryDeployGroup')
              && $item->fields['type'] == PluginFusioninventoryDeployGroup::STATIC_GROUP) {
-              
+
          $tabs[1] = _n('Criterion', 'Criteria', 2);
-         $count = countElementsInTable(getTableForItemType(__CLASS__), 
-                                  "`itemtype`='Computer' 
+         $count = countElementsInTable(getTableForItemType(__CLASS__),
+                                  "`itemtype`='Computer'
                                     AND `plugin_fusioninventory_deploygroups_id`='".$item->getID()."'");
          if ($_SESSION['glpishow_count_on_tabs']) {
             $tabs[2] = self::createTabEntry(_n('Associated item','Associated items', $count), $count);
@@ -78,7 +78,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
       }
       return '';
    }
-   
+
    /**
     * @param $item         CommonGLPI object
     * @param $tabnum       (default 1)
@@ -96,7 +96,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
 
       return true;
    }
-   
+
    static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
             $search_params                 = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, true);
             //If metacriteria array is empty, remove it as it displays the metacriteria form,
@@ -112,18 +112,18 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
                $search_params['massiveactionparams']['extraparams']['id'] = $item->getID();
                $search_params['massiveactionparams']['extraparams']['custom_action'] = 'add_to_group';
                $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array ('action', 'id');
-               
+
                Search::showList('PluginFusioninventoryComputer', $search_params);
             }
    }
-   
+
    static function showResults(PluginFusioninventoryDeployGroup $group) {
       $computers_params['metacriteria'] = array();
-      $computers_params['criteria'][]   = array('searchtype' => 'equals', 
-                                                'value' => $_GET['id'], 
+      $computers_params['criteria'][]   = array('searchtype' => 'equals',
+                                                'value' => $_GET['id'],
                                                 'field' => 6000);
       $search_params    = Search::manageParams('PluginFusioninventoryComputer', $computers_params);
-      
+
       //Add extra parameters for massive action display : only the Delete action should be displayed
       $search_params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
       $search_params['massiveactionparams']['extraparams']['custom_action'] = 'delete_from_group';
