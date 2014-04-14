@@ -101,6 +101,10 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'ignoredimportdevice'        => 'PluginFusioninventoryIgnoredimportdevice'
       );
       $options = array();
+      
+      $options['title'] = self::getTypeName();
+      $options['page']  = self::getSearchURL(false);
+      
       foreach ($elements as $type => $itemtype) {
          $options[$type] = array(
               'title' => $itemtype::getTypeName(),
