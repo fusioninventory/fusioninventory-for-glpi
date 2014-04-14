@@ -446,10 +446,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          if (count($agent_ids) == 0) {
             continue;
          }
-
+         $saved_agent_ids = $agent_ids;
          $targets = importArrayFromDB($result['job']['targets']);
 
          foreach($targets as $target) {
+            $agent_ids = $saved_agent_ids;
             $item_type = key($target);
             $item_id = current($target);
             $job_id = $result['job']['id'];
