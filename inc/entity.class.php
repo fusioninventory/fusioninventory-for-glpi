@@ -126,7 +126,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
          $params['toadd'] = array('-1' => __('Inheritance of the parent entity'));
       }
       Dropdown::show('Transfer', $params);
-      echo Html::hidden('entities_id', array('value' => $entities_id));
+      echo "<input type='hidden' name='entities_id' value='".$entities_id."' />";
       echo "</td>";
       echo "</tr>";
 
