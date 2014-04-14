@@ -207,6 +207,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   foreach ($db_processors as $keydb => $arraydb) {
                      $frequencedb = $arraydb['frequence'];
                      unset($arraydb['frequence']);
+                     unset($arraydb['frequency']);
                      unset($arraydb['frequency_default']);
                      if ($arrays == $arraydb) {
                         $a_criteria = $deviceProcessor->getImportCriteria();
@@ -935,7 +936,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                      $input['totalsize'] = $a_computerinventory['computerdisk'][$key]['totalsize'];
                      $input['freesize'] = $a_computerinventory['computerdisk'][$key]['freesize'];
-                     $computerDisk->update($input, !$no_history);
+                     $computerDisk->update($input, FALSE);
                      unset($simplecomputerdisk[$key]);
                      unset($a_computerinventory['computerdisk'][$key]);
                      unset($db_computerdisk[$keydb]);
