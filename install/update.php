@@ -2060,6 +2060,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                           "is_active");
       $migration->addKey($newTable,
                           "uptodate");
+      $migration->addKey($newTable,
+                          "computers_id");
       $migration->migrationOneTable($newTable);
       $DB->list_fields($newTable, FALSE);
 
