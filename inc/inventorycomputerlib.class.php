@@ -865,33 +865,36 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             // Use ComputerVirtualMachine::getUUIDRestrictRequest to get existant
             // vm in computer list
             $computervm = new Computer();
-            foreach ($a_computerinventory['virtualmachine_creation'] as $a_vm) {
-               // Define location of physical computer (host)
-               $a_vm['locations_id'] = $computer->fields['locations_id'];
+            if (isset($a_computerinventory['virtualmachine_creation']) 
+               && is_array($a_computerinventory['virtualmachine_creation'])) {
+               foreach ($a_computerinventory['virtualmachine_creation'] as $a_vm) {
+                  // Define location of physical computer (host)
+                  $a_vm['locations_id'] = $computer->fields['locations_id'];
 
-               if (isset($a_vm['uuid'])
-                       && $a_vm['uuid'] != '') {
-                  $query = "SELECT * FROM `glpi_computers`
-                     WHERE `uuid` ".ComputerVirtualMachine::getUUIDRestrictRequest($a_vm['uuid'])."
-                     LIMIT 1"; // TODO: Add entity search
-                  $result = $DB->query($query);
-                  $computers_vm_id = 0;
-                  while ($data = $DB->fetch_assoc($result)) {
-                     $computers_vm_id = $data['id'];
-                  }
-                  if ($computers_vm_id == 0) {
-                     // Add computer
-                     $a_vm['entities_id'] = $computer->fields['entities_id'];
-                     $computers_vm_id = $computervm->add($a_vm, array(), !$no_history);
-                     // Manage networks
-                     $this->manageNetworkPort($a_vm['networkport'], $computers_vm_id, FALSE);
-                  } else {
-                     if ($pfAgent->getAgentWithComputerid($computers_vm_id) === FALSE) {
-                        // Update computer
-                        $a_vm['id'] = $computers_vm_id;
-                        $computervm->update($a_vm, !$no_history);
+                  if (isset($a_vm['uuid'])
+                        && $a_vm['uuid'] != '') {
+                     $query = "SELECT * FROM `glpi_computers`
+                        WHERE `uuid` ".ComputerVirtualMachine::getUUIDRestrictRequest($a_vm['uuid'])."
+                        LIMIT 1"; // TODO: Add entity search
+                     $result = $DB->query($query);
+                     $computers_vm_id = 0;
+                     while ($data = $DB->fetch_assoc($result)) {
+                        $computers_vm_id = $data['id'];
+                     }
+                     if ($computers_vm_id == 0) {
+                        // Add computer
+                        $a_vm['entities_id'] = $computer->fields['entities_id'];
+                        $computers_vm_id = $computervm->add($a_vm, array(), !$no_history);
                         // Manage networks
                         $this->manageNetworkPort($a_vm['networkport'], $computers_vm_id, FALSE);
+                     } else {
+                        if ($pfAgent->getAgentWithComputerid($computers_vm_id) === FALSE) {
+                           // Update computer
+                           $a_vm['id'] = $computers_vm_id;
+                           $computervm->update($a_vm, !$no_history);
+                           // Manage networks
+                           $this->manageNetworkPort($a_vm['networkport'], $computers_vm_id, FALSE);
+                        }
                      }
                   }
                }
