@@ -365,6 +365,11 @@ div.fold.expanded {
    padding: 10px;
 }
 
+.agent_block > a {
+    line-height: 16px;
+    vertical-align: bottom;
+}
+
 .runs_block {
    background: white;
    border-top: 1px solid #ccc;
