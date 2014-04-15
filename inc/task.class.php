@@ -529,7 +529,11 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $itemtype = key($actor);
          $itemid = $actor[$itemtype];
          $item = getItemForItemtype($itemtype);
-         $item->getFromDB($itemid);
+         $dbresult = $item->getFromDB($itemid);
+         // If this item doesn't exists, we continue to the next actor item.
+         // TODO: remove this faulty actor from the list of job actor.
+         if ($dbresult === false) { continue ; }
+
          switch($itemtype) {
             case 'Computer':
                   $computers[$itemid] = 1;
