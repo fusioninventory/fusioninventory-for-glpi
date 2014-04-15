@@ -57,6 +57,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $this->softwareVersion           = new SoftwareVersion();
       $this->computer_SoftwareVersion  = new Computer_SoftwareVersion();
       $this->softcatrule               = new RuleSoftwareCategoryCollection();
+      $this->computer                  = new Computer();
    }
 
 
@@ -129,6 +130,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $inputcomment['_no_history'] = $no_history;
             $computer->update($inputcomment);
          }
+      $this->computer = $computer;
 
       // * Computer fusion (ext)
          $db_computer = array();
@@ -672,7 +674,23 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   if (count($db_software) != 0) {
                      // Delete softwares in DB
                      foreach ($db_software as $idtmp) {
-                        $this->computer_SoftwareVersion->delete(array('id'=>$idtmp), 1);
+                        $this->computer_SoftwareVersion->getFromDB($idtmp);
+                        $this->softwareVersion->getFromDB($this->computer_SoftwareVersion->fields['softwareversions_id']);
+                        $this->computer_SoftwareVersion->delete(array('id'=>$idtmp, '_no_history'=> TRUE), TRUE);
+
+                        if (!$no_history) {
+                           $changes[0] = '0';
+                           $changes[1] = addslashes($this->computer_SoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'delete'));
+                           $changes[2] = "";
+                           $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
+                                        Log::HISTORY_UNINSTALL_SOFTWARE);
+
+                           $changes[0] = '0';
+                           $changes[1] = addslashes($this->computer_SoftwareVersion->getHistoryNameForItem2($this->computer, 'delete'));
+                           $changes[2] = "";
+                           $this->addPrepareLog($idtmp, 'SoftwareVersion', 'Computer', $changes,
+                                        Log::HISTORY_UNINSTALL_SOFTWARE);
+                        }
                      }
                   }
                   if (count($a_computerinventory['software']) != 0) {
@@ -2020,12 +2038,28 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
          }
       }
+      $this->softwareVersion->getFromDB($softwareversions_id);
       $a_software['computers_id']         = $computers_id;
       $a_software['softwareversions_id']  = $softwareversions_id;
       $a_software['is_dynamic']           = 1;
-      $a_software['_no_history']          = $no_history;
+      $a_software['_no_history']          = TRUE;
 
-      $this->computer_SoftwareVersion->add($a_software, $options);
+      if ($this->computer_SoftwareVersion->add($a_software, $options, FALSE)) {
+//      $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
+         if (!$no_history) {
+            $changes[0] = '0';
+            $changes[1] = "";
+            $changes[2] = addslashes($this->computer_SoftwareVersion->getHistoryNameForItem1($this->softwareVersion, 'add'));
+            $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
+                         Log::HISTORY_INSTALL_SOFTWARE);
+
+            $changes[0] = '0';
+            $changes[1] = "";
+            $changes[2] = addslashes($this->computer_SoftwareVersion->getHistoryNameForItem2($this->computer, 'add'));
+            $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
+                         Log::HISTORY_INSTALL_SOFTWARE);
+         }
+      }
    }
 
 
@@ -2343,8 +2377,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
 
 
-   function addPrepareLog($items_id, $itemtype, $itemtype_link='') {
-      $this->log_add[] = array($items_id, $itemtype, $itemtype_link, $_SESSION["glpi_currenttime"]);
+   function addPrepareLog($items_id, $itemtype, $itemtype_link='', $changes=array('0', '', ''), $linked_action=Log::HISTORY_CREATE_ITEM) {
+      $this->log_add[] = array($items_id, $itemtype, $itemtype_link, $_SESSION["glpi_currenttime"], $changes, $linked_action);
    }
 
 
@@ -2356,15 +2390,24 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
          $dataLog = array();
          foreach ($this->log_add as $data) {
-            $dataLog[] = "('".implode("', '", $data)."', '".Log::HISTORY_CREATE_ITEM."',
-                           '".$username."', '', '')";
+            $changes = $data[4];
+            unset($data[4]);
+            $id_search_option = $changes[0];
+            $old_value = $changes[1];
+            $new_value = $changes[2];
+
+            $dataLog[] = "('".implode("', '", $data)."', '".$id_search_option."',
+                           '".$old_value."', '".$new_value."',
+                           '".$username."')";
          }
 
          // Build query
+
          $query = "INSERT INTO `glpi_logs`
                           (`items_id`, `itemtype`, `itemtype_link`, `date_mod`, `linked_action`,
-                            `user_name`, `old_value`, `new_value`)
-                   VALUES ".implode(", ", $dataLog);
+                          `id_search_option`, `old_value`, `new_value`,
+                            `user_name`)
+                   VALUES ".implode(", \n", $dataLog);
 
          $DB->query($query);
 
