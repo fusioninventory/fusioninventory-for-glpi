@@ -2133,7 +2133,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       $a_software['_no_history']          = TRUE;
 
       if ($this->computer_SoftwareVersion->add($a_software, $options, FALSE)) {
-//      $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
          if (!$no_history) {
             $changes[0] = '0';
             $changes[1] = "";
