@@ -231,7 +231,11 @@ td:not(#foo) > input[type=radio]:checked + label {
    border-radius: 5px;
    background: #EFEFEF;
    padding: 10px;
-   margin: 5px 0;
+   margin-bottom:10px;
+}
+
+.agents_block {
+   display: none;
 }
 
 #joblogs_block li.job_info > h3 {
@@ -252,32 +256,59 @@ td:not(#foo) > input[type=radio]:checked + label {
    border-bottom: 1px dotted #ccc;
 }
 
+div.fold {
+    display: inline-block;
+    background-image: url('../pics/toggle-expand.png');
+    width: 16px;
+    height: 16px;
+    vertical-align: bottom;
+}
+
+div.fold.expanded {
+    background-image: url('../pics/toggle.png');
+}
+
 .job_target h4 > a {
    font-size: inherit;
 }
 
-.job_target ul {
-   display: inline;
+.job_target div.stats {
+   display: block;
    margin: 0 auto;
 }
+
+/*
+.job_target ul {
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    display: block;
+}
+*/
 
 .job_target > div {
    margin: 0 auto;
+   text-align: center;
 }
 
-.job_target ul > li {
-   margin: 5px;
-   padding: 5px;
+.job_target > div.stats > div {
+   margin: 2px;
+   padding: 2px;
    border-radius: 3px;
    background: #CCC;
    color: #777;
    display: inline-block;
    width: 30%;
    font-style: italic;
+   font-size:80%;
+   padding-left: 5px;
+   text-align: left;
+   font-family: monospace;
 }
 
+
 .job_agents span.agents_success,
-.job_target .agents_success {
+.job_target > div.stats > .agents_success {
    color: green;
    background: #AAFFAA;
    font-weight: bolder;
@@ -285,7 +316,7 @@ td:not(#foo) > input[type=radio]:checked + label {
 }
 
 .job_agents span.agents_error,
-.job_target .agents_error {
+.job_target > div.stats > .agents_error {
    color: white;
    background: red;
    font-weight: bolder;
@@ -293,7 +324,7 @@ td:not(#foo) > input[type=radio]:checked + label {
 }
 
 .job_agents span.agents_running,
-.job_target .agents_running {
+.job_target > div.stats > .agents_running {
    color: #000077;
    background: #AAAAFF;
    font-weight: bolder;
@@ -302,11 +333,11 @@ td:not(#foo) > input[type=radio]:checked + label {
 
 
 .job_agents span.agents_prepared,
-.job_target .agents_prepared,
+.job_target > div.stats > .agents_prepared,
 .job_agents span.agents_cancelled,
-.job_target .agents_cancelled,
+.job_target > div.stats > .agents_cancelled,
 .job_agents span.agents_notdone,
-.job_target .agents_notdone {
+.job_target > div.stats > .agents_notdone {
    color: black;
    background: #CCC;
    font-weight: bolder;
@@ -337,6 +368,7 @@ td:not(#foo) > input[type=radio]:checked + label {
 .runs_block {
    background: white;
    border-top: 1px solid #ccc;
+   display:none;
 }
 
 .run_block {
@@ -345,13 +377,18 @@ td:not(#foo) > input[type=radio]:checked + label {
 
 .run_block h4 {
    margin: 0;
+   font-family: monospace;
+   border-bottom: 1px dotted black;
 }
 
 .run_block table {
-   border-top: 1px dotted black;
    border-bottom: 1px dotted #ccc;
    border-collapse:collapse;
    width: 100%;
+}
+
+.run_block .logs_block {
+ /*  display:none; */
 }
 
 .run_block table tr {
@@ -398,5 +435,6 @@ td:not(#foo) > input[type=radio]:checked + label {
    /* border: 1px solid #CCC; */
    width: 70%;
    min-width: 70%;
+   font-family: monospace;
 }
 

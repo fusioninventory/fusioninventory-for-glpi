@@ -170,14 +170,95 @@ taskjobs.Queue = $({
    timer : null
 });
 
-
-taskjobs.update_logs = function (data) {
-   $("#joblogs_block").html(data);
+taskjobs.unfolds = {
+   targets : {},
+   agents : {},
+   executions : {}
 }
 
+taskjobs.toggle_target_fold = function( element ) {
+
+   // Get the closest job_target class for the current element
+   job_target = $(element).closest('.job_target');
+
+   // Just in case we could not find the parent .job_target
+   if (job_target.length > 0 ) {
+      id = job_target[0].id;
+      //Toggle the folding state
+      current_state = taskjobs.unfolds.targets[id];
+      current_state = !current_state;
+      taskjobs.unfolds.targets[id] = current_state;
+
+      // If the state is collapsed, remove class and hide agents infos.
+      if( current_state == false) {
+         $('#joblogs_block #' + id + " > h4").children('.fold.expanded').removeClass('expanded');
+         $('#joblogs_block #' + id + " > h4").siblings(".agents_block").hide();
+      }
+   }
+   // Finally, update the joblogs block
+   taskjobs.update_folds($('#joblogs_block'));
+}
+
+taskjobs.toggle_agent_fold = function( element ) {
+
+   // Get the closest agent
+   job_agent = $(element).closest('.agent_block');
+
+   if (job_agent.length > 0 ) {
+      id = job_agent[0].id;
+      //Toggle the folding state
+      current_state = taskjobs.unfolds.agents[id];
+      current_state = !current_state;
+      taskjobs.unfolds.agents[id] = current_state;
+
+      if ( current_state == false ) {
+         $('#joblogs_block #' + id).children('.fold.expanded').removeClass('expanded');
+         $('#joblogs_block #' + id).siblings(".runs_block").hide();
+      }
+   }
+   // Finally, update the joblogs block
+   taskjobs.update_folds($('#joblogs_block'));
+}
+
+
+taskjobs.get_unfolded_targets = function () {
+   return $.map(taskjobs.unfolds.targets, function (v,i) {
+      if(v == true) {
+         return "#" + i + " > h4";
+      }
+   })
+}
+
+taskjobs.get_unfolded_agents = function () {
+   return $.map(taskjobs.unfolds.agents, function (v,i) {
+      if(v == true) {
+         return "#" + i;
+      }
+   })
+}
+
+taskjobs.update_folds = function(data) {
+   var unfolded_items = [];
+   unfolded_items = $.merge(unfolded_items, taskjobs.get_unfolded_targets());
+   unfolded_items = $.merge(unfolded_items, taskjobs.get_unfolded_agents());
+
+   // replace .fold items with the correct class by taking in account ids that are already unfolded
+   unfolded_items = unfolded_items.join(',');
+   data.find(unfolded_items).children('.fold').addClass('expanded');
+   data.find(unfolded_items).siblings('.agents_block, .runs_block').show();
+
+}
+
+taskjobs.update_logs = function (data) {
+   data = $(data);
+   taskjobs.update_folds(data);
+   $("#joblogs_block")
+       .html(data.html());
+}
+
+
+
 taskjobs.get_logs = function( ajax_url, task_id ) {
-   console.log(ajax_url + ", " + task_id);
-   console.log(taskjobs.Queue.refresh);
    $.ajax({
       url: ajax_url,
       data: {
@@ -194,14 +275,11 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
 
 taskjobs.update_logs_timeout = function( ajax_url, task_id , refresh_id) {
 
-   console.log(refresh_id);
-   console.log('refresh_id: ' + refresh_id);
    var refresh = $("#" + refresh_id).val();
 
    $("#"+ refresh_id)
       .off("change","*")
       .on("change", function() {
-         console.log("changing timer");
          taskjobs.update_logs_timeout( ajax_url, task_id, refresh_id )
       }
    );
@@ -214,7 +292,6 @@ taskjobs.update_logs_timeout = function( ajax_url, task_id , refresh_id) {
       taskjobs.Queue.timer = window.setInterval(
          function () {
             taskjobs.queue_refresh_logs(ajax_url, task_id);
-            //taskjobs.update_logs_timeout(ajax_url, task_id, timeout_id);
          },
       taskjobs.Queue.refresh);
    } else {
@@ -226,7 +303,6 @@ taskjobs.update_logs_timeout = function( ajax_url, task_id , refresh_id) {
 taskjobs.queue_refresh_logs = function (ajax_url, task_id) {
    var n = taskjobs.Queue.queue('refresh_logs');
 
-   console.log(n);
    if (n.length == 0 ) {
       taskjobs.Queue.queue('refresh_logs', function( ) {
          taskjobs.get_logs(ajax_url, task_id);

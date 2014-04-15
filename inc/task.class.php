@@ -698,7 +698,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          if ( !array_key_exists($job_id, $jobs) ) {
             $jobs[$job_id] = array(
                'name'    => $result['job']['name'],
-               'id'      => $result['job']['method'] . '_'. $result['job']['id'],
+               'id'      => $result['job']['id'],
                'method'  => $result['job']['method'],
                'targets' => array()
             );

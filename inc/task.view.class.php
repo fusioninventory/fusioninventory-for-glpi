@@ -133,44 +133,90 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
    }
 
    function ajaxGetJobLogs($options) {
+
       $task = new PluginFusioninventoryTask();
       $task->getFromDB($options['task_id']);
+
       $logs = $task::getJoblogs(array($options['task_id']));
+
       $display_list = array();
       $display_list[] = "<ul class='job_list'>";
+
       foreach($logs as $task) {
          foreach($task['jobs'] as $job) {
-            $display_list[] = "<li class='job_info' id='".$job['id']."'>";
+            $job_id = "job_".$job['id'];
+            $display_list[] = "<li class='job_info' id='".$job_id."'>";
             $display_list[] = "  <h3>".$job['name']."</h3>";
             foreach($job['targets'] as $target) {
-               $counters = $target['counters'];
-               $display_list[] = "  <div class='job_target'>";
-               $display_list[] = "     <h4>";
-               $display_list[] = "     ".$target['type_name'] ;
-               $display_list[] = "        <a target='_blank' href='".$target['item_link']."'>";
-               $display_list[] = "           ".$target['name'];
-               $display_list[] = "        </a>";
-               $display_list[] = "        <span>(ID:" . $target['id'] . ")</span>";
-               $display_list[] = "     </h4>";
-               $display_list[] = "     <ul>";
 
-               foreach($counters as $type=>$list) {
-                  $css = count($list)?$type:"";
-                  $display_list[] = "        <li class='$css'>";
-                  $display_list[] =
-                     $this->getCounterTypeName($type)." : ".
-                     count($list);
-                  $display_list[] = "        </li>";
+               $counters = $target['counters'];
+               $target_id = $job_id."_target_".$target['id'];
+               $display_list[] = " <div class='job_target' id='".$target_id."'>";
+
+               // Target Title
+               $display_list[] = "<h4>";
+               $display_list[] = " <div ";
+               $display_list[] = "  class='fold'";
+               $display_list[] = "  title='".__("Show/Hide Target details","fusioninventory")."'";
+               $display_list[] = "  onclick='taskjobs.toggle_target_fold(this)'";
+               $display_list[] = " ></div>";
+               $display_list[] = " ".$target['type_name'] ;
+               $display_list[] = " <a ";
+               $display_list[] = "  target='_blank' href='".$target['item_link']."'";
+               $display_list[] = " >";
+               $display_list[] = "  ".$target['name'];
+               $display_list[] = " </a>";
+               $display_list[] = " <span>(ID:" . $target['id'] . ")</span>";
+               $display_list[] = "</h4>";
+
+               $stats_lines = array(
+                  array(
+                     "agents_prepared",
+                     "agents_cancelled",
+                     "agents_running"
+                  ),
+                  array(
+                     "agents_success",
+                     "agents_error",
+                     "agents_notdone"
+                  )
+               );
+
+               foreach($stats_lines as $stat_line) {
+
+                  $display_list[] = "     <div class='stats'>";
+
+                  foreach($stat_line as $type) {
+
+                     $list = $counters[$type];
+                     $css = count($list)?$type:"";
+
+                     $display_list[] =
+                        "<div class='$css'>".
+                        $this->getCounterTypeName($type)." : " . count($list).
+                        "</div>";
+                  }
+
+                  $display_list[] = "     </div>";
+
                }
-               $display_list[] = "     </ul>";
+
+               $display_list[] = "  <ul class='agents_block'>";
+               $display_list = array_merge(
+                  $display_list,
+                  $this->getAgentsLogs($target['agents'],$counters, $target_id)
+               );
+               $display_list[] = "  </ul>";
                $display_list[] = "  </div>";
+
             }
-            $display_list[] = "  <ul class='job_info'>";
-            $display_list = array_merge($display_list, $this->getAgentsLogs($target['agents'],$counters));
-            $display_list[] = "  </ul>";
+
             $display_list[] = "</li>"; // end of job_info
+
          }
+
       }
+
       $display_list[] = "</ul>";
 
       echo implode("\n", $display_list);
@@ -179,13 +225,14 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
    function getCounterTypeName($type = "") {
       $typenames = array(
-         "agents_notdone"  => __('Not done yet', 'fusioninventory'),
-         "agents_error"    => __('In error', 'fusioninventory'),
+         "agents_notdone"   => __('Not done yet', 'fusioninventory'),
+         "agents_error"     => __('In error', 'fusioninventory'),
          "agents_success"   => __('Successful', 'fusioninventory'),
-         "agents_running"  => __('Running', 'fusioninventory'),
-         "agents_prepared" => __('Prepared' , 'fusioninventory'),
+         "agents_running"   => __('Running', 'fusioninventory'),
+         "agents_prepared"  => __('Prepared' , 'fusioninventory'),
          "agents_cancelled" => __('Cancelled', 'fusioninventory')
       );
+
       if ( isset($typenames[$type]) ) {
          return $typenames[$type];
       } else {
@@ -193,13 +240,13 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       }
    }
 
-   function getAgentsLogs($agents = array(), $counters = array()) {
+   function getAgentsLogs($agents = array(), $counters = array(), $target_id = "") {
       $display_list = array();
       $display_list[] = "<div class='job_agents'>";
       $display_list[] = "<ul>";
 
       foreach ( $agents as $agent ) {
-
+         $agent_id = $target_id . "_agent_".$agent['id'];
          $display_tags = array();
          $agent_css = "";
          foreach($counters as $type=>$list) {
@@ -213,7 +260,14 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             }
          }
          $display_list[] = "<li class='".$agent_css."'>";
-         $display_list[] = "<div class='agent_block'>";
+         $display_list[] = "<div class='agent_block' id='".$agent_id."'>";
+         //Add fold/unfold icon
+         $display_list[] = " <div ";
+         $display_list[] = "  class='fold'";
+         $display_list[] = "  title='".__("Show/Hide Agent details","fusioninventory")."'";
+         $display_list[] = "  onclick='taskjobs.toggle_agent_fold(this)'";
+         $display_list[] = " ></div>";
+
          $display_list[] = "<a target='_blank' href='".$agent['url']."'>";
          $display_list[] = $agent['name'];
          $display_list[] = "</a>";
