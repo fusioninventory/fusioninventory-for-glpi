@@ -700,13 +700,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      if ($nb_unicity == 0) {
                         $options['disable_unicity_check'] = TRUE;
                      }
+                     foreach ($a_computerinventory['software'] as $keysoft=>$a_software) {
+                        $a_softwareInventory[$a_software['name']] = $a_software['name'];
+                        $a_softwareVersionInventory[$a_software['version']] =
+                                       $a_software['version'];
+                     }
                      $ret = $DB->query("SELECT GET_LOCK('software', 3000)");
                      if ($DB->result($ret, 0, 0) == 1) {
-                        foreach ($a_computerinventory['software'] as $keysoft=>$a_software) {
-                           $a_softwareInventory[$a_software['name']] = $a_software['name'];
-                           $a_softwareVersionInventory[$a_software['version']] =
-                                          $a_software['version'];
-                        }
                         if (count($a_computerinventory['software']) > 50) {
                            $this->loadSoftwares($entities_id,
                                                 $a_softwareInventory,
