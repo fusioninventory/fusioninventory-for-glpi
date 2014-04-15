@@ -153,7 +153,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      if ($this->definitionFiltered("PluginFusioninventoryDeployGroupDynamic", $definitions_filter)) {
                         break;
                      }
-                     
+
                      //$definitions_filter is NULL = update by crontask !
                      if ($definitions_filter != NULL) {
                         $where = " AND `can_update_group`='1'";
@@ -309,7 +309,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
       //get order by type and package id
       $order = new PluginFusioninventoryDeployOrder($order_type, $taskjob['items_id']);
       //decode order data
-      $order_data = json_decode($order->fields['json'], TRUE);
+      $order_data = Html::entity_decode_deep(json_decode($order->fields['json'], TRUE));
 
       /* TODO:
        * This has to be done properly in each corresponding classes.
