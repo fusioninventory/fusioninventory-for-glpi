@@ -634,15 +634,15 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                               $lastSoftwareVid);
                   foreach ($a_computerinventory['software'] as $a_software) {
                      $a_software['_no_message'] = TRUE;
-                     if (count($a_computerinventory['software']) > 50) {
+//                     if (count($a_computerinventory['software']) > 50) {
                         if (isset($this->softList[$a_software['name']."$$$$".
                                  $a_software['manufacturers_id']])) {
                            $a_software['softwares_id'] = $this->softList[$a_software['name']."$$$$".
                                  $a_software['manufacturers_id']];
                         }
-                     } else {
-                        $a_software['softwares_id'] = -1;
-                     }
+//                     } else {
+//                        $a_software['softwares_id'] = -1;
+//                     }
                      $this->addSoftware($a_software,
                                         $computers_id,
                                         $no_history,
@@ -1911,10 +1911,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       $whereid = '';
       if ($lastid > 0) {
-         $whereid = ' AND `id` > "'.$lastid.'"';
-      } else {
-         $whereid = " AND `name` IN ('".  implode("', '", $a_soft)."')";
+         $whereid .= ' AND `id` > "'.$lastid.'"';
       }
+      $whereid .= " AND `name` IN ('".  implode("', '", $a_soft)."')";
 
       $sql = "SELECT max( id ) AS max FROM `glpi_softwares`";
       $result = $DB->query($sql);
@@ -1949,10 +1948,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
       $whereid = '';
       if ($lastid > 0) {
-         $whereid = ' AND `id` > "'.$lastid.'"';
-      } else {
-         $whereid = " AND `name` IN ('".  implode("', '", $a_softVersion)."')";
+         $whereid .= ' AND `id` > "'.$lastid.'"';
       }
+      $whereid .= " AND `name` IN ('".  implode("', '", $a_softVersion)."')";
 
       $sql = "SELECT max( id ) AS max FROM `glpi_softwareversions`";
       $result = $DB->query($sql);
