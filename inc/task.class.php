@@ -535,22 +535,31 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          if ($dbresult === false) { continue ; }
 
          switch($itemtype) {
+
             case 'Computer':
                   $computers[$itemid] = 1;
                break;
-            case 'PluginFusioninventoryDeployGroup':
 
+            case 'PluginFusioninventoryDeployGroup':
+               $config = new PluginFusioninventoryConfig();
+               $user   = new User();
                // Force user and active entity Session since Search class can't live without it.
                // (cf. DeployGroupDynamicData)
                $OLD_SESSION = array();
+               if (isset($_SESSION['glpiID'])) {
+                  $OLD_SESSION['glpiID'] = $_SESSION['glpiID'];
+               }
                if (isset($_SESSION['glpiname'])) {
                   $OLD_SESSION['glpiname'] = $_SESSION['glpiname'];
                }
                if (isset($_SESSION['glpiactiveentities_string'])) {
                   $OLD_SESSION['glpiactiveentities_string'] = $_SESSION['glpiactiveentities_string'];
                }
-               $_SESSION['glpiname'] = 'Plugin_FusionInventory';
-               $_SESSION['glpiactiveentities_string'] = '0';
+               $users_id  = $config->getValue('users_id');
+               $user->getFromDB($users_id);
+               $_SESSION['glpiID']   = $users_id;
+               $_SESSION["glpiname"] = $user->getField('name');
+               $_SESSION['glpiactiveentities_string'] = "'".implode("', '", getSonsOf('glpi_entities', 0))."'";
 
                foreach(
                   PluginFusioninventoryDeployGroup::getTargetsForGroup($itemid) as $computerid
@@ -558,6 +567,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   $computers[$computerid] = 1;
                }
                // Get back to original session variable
+               if (isset($OLD_SESSION['glpiID'])) {
+                  $_SESSION['glpiID'] = $OLD_SESSION['glpiID'];
+               }
                if (isset($OLD_SESSION['glpiname'])) {
                   $_SESSION['glpiname'] = $OLD_SESSION['glpiname'];
                }
@@ -565,6 +577,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                   $_SESSION['glpiactiveentities_string'] = $OLD_SESSION['glpiactiveentities_string'];
                }
                break;
+
             case 'Group':
 
                //find computers by user associated with this group
@@ -587,7 +600,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                foreach($computer_from_group as $computer_entry) {
                   $computers[$computer_entry['id']] = 1;
                }
-
                break;
 
             /**
@@ -623,6 +635,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
    *
    **/
    static function cronTaskscheduler() {
+
+      ini_set("max_execution_time", "0");
+
       $task = new self();
       $methods = array();
       foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {

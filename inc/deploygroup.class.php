@@ -324,7 +324,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    /**
    *
    */
-   static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group, $check_post_values = false) {
+   static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group, $check_post_values=FALSE, $getAll=FALSE) {
       global $DB;
       $computers_params = array();
 
@@ -343,6 +343,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          }
       } else {
          $computers_params = $_GET;
+      }
+      if ($getAll) {
+         $computers_params['export_all'] = true;
       }
       return Search::manageParams('PluginFusioninventoryComputer', $computers_params);
    }
