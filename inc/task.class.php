@@ -211,6 +211,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "  and run.`state` IN ('". implode("','", array(
             PluginFusioninventoryTaskjobstate::PREPARED,
             PluginFusioninventoryTaskjobstate::SERVER_HAS_SENT_DATA,
+            PluginFusioninventoryTaskjobstate::AGENT_HAS_SENT_DATA,
          ))."')",
          "  AND run.`plugin_fusioninventory_agents_id` = " . $agent_id,
          // order the result by job.id
@@ -253,7 +254,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          $jobstate->getFromDB($result['run']['id']);
 
          //Cancel the job it has already been sent to the agent but the agent did not replied
-         if ($result['run']['state'] == $jobstate::SERVER_HAS_SENT_DATA) {
+         if (
+            $result['run']['state'] == $jobstate::SERVER_HAS_SENT_DATA
+            or $result['run']['state'] == $jobstate::AGENT_HAS_SENT_DATA
+         ) {
             $jobstates_to_cancel[$jobstate->fields['id']] = array(
                'jobstate' => $jobstate,
                'reason'   => __(
