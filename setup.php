@@ -273,6 +273,7 @@ function plugin_init_fusioninventory() {
              "lib/REDIPS_drag/drag_table_rows.js",
              "lib/plusbutton.js",
              "js/taskjobs.js",
+             "lib/mustache.js-0.8.1/mustache.js"
          );
       }
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
