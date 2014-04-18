@@ -52,14 +52,6 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static public $itemtype = 'PluginFusioninventoryDeployGroup';
    static public $items_id = 'plugin_fusioninventory_deploygroups_id';
 
-   static function canCreate() {
-      return parent::canCreate();
-   }
-
-   static function canView() {
-      return parent::canView();
-   }
-
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if (!$withtemplate

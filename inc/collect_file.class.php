@@ -46,13 +46,14 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryCollect_File extends CommonDBTM {
 
+   const FILE = 'file';
+   const DIR  = 'dir';
+
    static $rightname = 'plugin_fusioninventory_collect';
 
    static function getTypeName($nb=0) {
       return __('Find file', 'fusioninventory');
    }
-
-
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
@@ -63,8 +64,6 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       }
       return array();
    }
-
-
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
@@ -130,7 +129,7 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
          echo "<td align='center'>
             <form name='form_bundle_item' action='".Toolbox::getItemTypeFormURL(__CLASS__).
                    "' method='post'>";
-            Html::hidden('id', array('value' => $data['id']));
+            echo Html::hidden('id', array('value' => $data['id']));
             echo "<input type='image' name='delete' src='../pics/drop.png'>";
          Html::closeForm();
          echo "</td>";
@@ -154,17 +153,18 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo __('Name');
       echo "</td>";
       echo "<td>";
-      Html::hidden('plugin_fusioninventory_collects_id',
-                   array('value' => $contents_id));
+      echo Html::hidden('plugin_fusioninventory_collects_id',
+                        array('value' => $contents_id));
       echo "<input type='text' name='name' value='' />";
       echo "</td>";
       echo "<td>".__('Limit', 'fusioninventory')."</td>";
       echo "<td>";
-      Dropdown::showNumber('limit', array(
-          'min'   => 1,
-          'max'   => 100,
-          'value' => 50
-      ));
+      Dropdown::showNumber('limit', 
+                           array('min'   => 1,
+                                 'max'   => 100,
+                                 'value' => 5
+                                 )
+                           );
       echo "</td>";
       echo "</tr>\n";
 
@@ -241,10 +241,11 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo __('Type', 'fusioninventory');
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray('type', array(
-          'file' => __('File', 'fusioninventory'),
-          'dir'  => __('Folder', 'fusioninventory')
-      ));
+      Dropdown::showFromArray('type', 
+         array(self::FILE => __('File', 'fusioninventory'),
+               self::DIR  => __('Folder', 'fusioninventory')
+         )
+      );
       echo "</td>";
       echo "</tr>\n";
 

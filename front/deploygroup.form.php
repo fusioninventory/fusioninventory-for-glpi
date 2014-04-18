@@ -73,13 +73,13 @@ if (isset($_POST['save'])) {
    Html::redirect(Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup")."?id=".$newID);
 
 } else if (isset($_POST["delete"])) {
-   $group->check($_POST['id'], DELETE);
+//   $group->check($_POST['id'], DELETE);
    $ok = $group->delete($_POST);
 
    $group->redirectToList();
 
 } else if (isset($_POST["purge"])) {
-   $group->check($_POST['id'], DELETE);
+//   $group->check($_POST['id'], DELETE);
    $ok = $group->delete($_REQUEST, 1);
 
    $group->redirectToList();

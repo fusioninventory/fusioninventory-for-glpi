@@ -104,7 +104,12 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $options['title'] = self::getTypeName();
       $options['page']  = self::getSearchURL(false);
-
+      
+      $options['menu']['title'] = self::getTypeName();
+      $options['menu']['page']  = self::getSearchURL(false);
+      if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {
+         $options['menu']['links']['config']  = PluginFusioninventoryConfig::getFormURL(false);
+      }
       foreach ($elements as $type => $itemtype) {
          $options[$type] = array(
               'title' => $itemtype::getTypeName(),
@@ -113,6 +118,9 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          if ($itemtype::canCreate()) {
             $options[$type]['links']['add'] = $itemtype::getFormURL(false);
          }
+         if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {
+            $options[$type]['links']['config']  = PluginFusioninventoryConfig::getFormURL(false);
+         }
       }
       $options['agent'] = array(
            'title' => PluginFusioninventoryAgent::getTypeName(),
@@ -120,6 +128,9 @@ class PluginFusioninventoryMenu extends CommonGLPI {
            'links' => array(
                'search' => PluginFusioninventoryAgent::getSearchURL(false)
            ));
+      if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {
+         $options['agent']['links']['config']  = PluginFusioninventoryConfig::getFormURL(false);
+      }
       return $options;
    }
 
@@ -233,6 +244,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[11]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
          $a_menu[11]['link'] = Toolbox::getItemTypeSearchURL('PluginFusioninventoryCollect');
       }
+
       if(Session::haveRight('plugin_fusioninventory_task', READ)) {
          $a_menu[12]['name'] = __('Time slot', 'fusioninventory');
          $a_menu[12]['pic']  = "";

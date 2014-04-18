@@ -223,14 +223,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
-      if ($tabnum == '0') {
-         $item->showForm();
-      } else if ($tabnum == '1') {
-         $item->showFormInventory();
-      } else if ($tabnum == '2') {
-         $item->showFormNetworkInventory();
-      } else if ($tabnum == '3') {
-         $item->showFormDeploy();
+      switch ($tabnum) {
+         case 0:
+            $item->showForm();
+            break;
+         case 1:
+            $item->showFormInventory();
+            break;
+         case 2:
+            $item->showFormNetworkInventory();
+            break;
+         case 3:
+            $item->showFormDeploy();
+            break;
       }
       return TRUE;
    }
@@ -624,7 +629,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    static function showFormNetworkInventory($options=array()) {
       global $CFG_GLPI;
 
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig     = new PluginFusioninventoryConfig();
       $pfsnmpConfig = new self();
 
       $pfsnmpConfig->fields['id'] = 1;
@@ -646,6 +651,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'max'   => 400)
       );
       echo "</td>";
+      
       echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
@@ -655,6 +661,8 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'max'   => 60)
       );
       echo "</td>";
+      
+      echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
