@@ -1372,7 +1372,7 @@ class PluginFusioninventoryFormatconvert {
                                "$$$$".strtolower($array_tmp['version']).
                                "$$$$".$array_tmp['entities_id'];
 
-                  if ($array_tmp['manufacturers_id'] == '') {
+                  if ($array_tmp['manufacturers_id'] == 0) {
                      $softwareWithoutManufacturer[$comp_key_simple] = $array_tmp;
                   } else {
                      if (!isset($a_inventory['software'][$comp_key])) {
