@@ -1261,6 +1261,14 @@ class PluginFusioninventoryFormatconvert {
 
    function computerSoftwareTransformation($a_inventory, $entities_id) {
 
+   /*
+    * Sometimes we can have 2 same software, but one without manufacturer and
+    * one with. So in this case, delete the software without manufacturer
+    */
+
+      $softwareWithManufacturer = array();
+      $softwareWithoutManufacturer = array();
+
       $entities_id_software = Entity::getUsedConfig('entities_id_software',
                                                     $entities_id);
       $is_software_recursive = 0;
@@ -1359,10 +1367,31 @@ class PluginFusioninventoryFormatconvert {
                                "$$$$".strtolower($array_tmp['version']).
                                "$$$$".$array_tmp['manufacturers_id'].
                                "$$$$".$array_tmp['entities_id'];
-                  if (!isset($a_inventory['software'][$comp_key])) {
-                     $a_inventory['software'][$comp_key] = $array_tmp;
+
+                  $comp_key_simple = strtolower($array_tmp['name']).
+                               "$$$$".strtolower($array_tmp['version']).
+                               "$$$$".$array_tmp['entities_id'];
+
+                  if ($array_tmp['manufacturers_id'] == '') {
+                     $softwareWithoutManufacturer[$comp_key_simple] = $array_tmp;
+                  } else {
+                     if (!isset($a_inventory['software'][$comp_key])) {
+                        $softwareWithManufacturer[$comp_key_simple] = 1;
+                        $a_inventory['software'][$comp_key] = $array_tmp;
+                     }
                   }
                }
+            }
+         }
+      }
+      foreach ($softwareWithoutManufacturer as $key=>$array_tmp) {
+         if (!isset($softwareWithManufacturer[$key])) {
+            $comp_key = strtolower($array_tmp['name']).
+                         "$$$$".strtolower($array_tmp['version']).
+                         "$$$$".$array_tmp['manufacturers_id'].
+                         "$$$$".$array_tmp['entities_id'];
+            if (!isset($a_inventory['software'][$comp_key])) {
+               $a_inventory['software'][$comp_key] = $array_tmp;
             }
          }
       }
