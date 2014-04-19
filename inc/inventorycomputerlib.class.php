@@ -600,11 +600,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
 
                if (count($a_computerinventory['software']) > 50) {
-                  $lastSoftwareid = $this->loadSoftwares($entities_id,
-                                                         $a_softwareInventory,
-                                                         $lastSoftwareid);
                   $ret = $DB->query("SELECT GET_LOCK('softwareversion', 3000)");
                   if ($DB->result($ret, 0, 0) == 1) {
+                     $lastSoftwareid = $this->loadSoftwares($entities_id,
+                                                            $a_softwareInventory,
+                                                            $lastSoftwareid);
                      $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
                                                                     $a_softwareVersionInventory,
                                                                     $lastSoftwareVid);
