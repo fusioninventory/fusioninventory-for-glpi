@@ -680,6 +680,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $a_softwareVersionInventory[$a_software['version']] = $a_software['version'];
                }
 
+               $lastSoftwareid = $this->loadSoftwares($entities_id, $a_softwareInventory, $lastSoftwareid);
                $ret = $DB->query("SELECT GET_LOCK('software', 3000)");
                if ($DB->result($ret, 0, 0) == 1) {
                   $this->loadSoftwares($entities_id, $a_softwareInventory, $lastSoftwareid);
@@ -693,6 +694,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $DB->request("SELECT RELEASE_LOCK('software')");
                }
 
+               $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
+                                              $a_softwareVersionInventory,
+                                              $lastSoftwareVid);
                $ret = $DB->query("SELECT GET_LOCK('softwareversion', 3000)");
                if ($DB->result($ret, 0, 0) == 1) {
                   $this->loadSoftwareVersions($entities_id,
@@ -758,7 +762,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      foreach ($db_software as $idtmp) {
                         $this->computer_SoftwareVersion->getFromDB($idtmp);
                         $this->softwareVersion->getFromDB($this->computer_SoftwareVersion->fields['softwareversions_id']);
-                        $this->computer_SoftwareVersion->delete(array('id'=>$idtmp, '_no_history'=> TRUE), TRUE);
+                        $this->computer_SoftwareVersion->delete(array('id'=>$idtmp, '_no_history'=> TRUE), FALSE);
 
                         if (!$no_history) {
                            $changes[0] = '0';
@@ -787,6 +791,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                         $a_softwareVersionInventory[$a_software['version']] = $a_software['version'];
                      }
 
+                     $lastSoftwareid = $this->loadSoftwares($entities_id, $a_softwareInventory, $lastSoftwareid);
                      $ret = $DB->query("SELECT GET_LOCK('software', 3000)");
                      if ($DB->result($ret, 0, 0) == 1) {
                         $this->loadSoftwares($entities_id, $a_softwareInventory, $lastSoftwareid);
@@ -800,6 +805,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                        $DB->request("SELECT RELEASE_LOCK('software')");
                      }
 
+                     $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
+                                                    $a_softwareVersionInventory,
+                                                    $lastSoftwareVid);
                      $ret = $DB->query("SELECT GET_LOCK('softwareversion', 3000)");
                      if ($DB->result($ret, 0, 0) == 1) {
                         $this->loadSoftwareVersions($entities_id,
