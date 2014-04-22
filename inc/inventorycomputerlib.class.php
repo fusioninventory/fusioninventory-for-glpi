@@ -651,7 +651,23 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $lastSoftwareid = 0;
             $lastSoftwareVid = 0;
 
-            if (count($db_software) == 0) {
+            /*
+             * TODO for better perf
+             *
+             * LOCK software
+             * 1/ Add all software
+             * RELEASE software
+             *
+             * LOCK softwareversion
+             * 2/ Add all software versions
+             * RELEASE softwareversion
+             *
+             * 3/ add version to computer
+             *
+             */
+
+
+            if (count($db_software) == 0) { // there are no software associated with computer
                $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software", $entities_id));
                $options = array();
                if ($nb_unicity == 0) {
@@ -665,67 +681,68 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $a_softwareVersionInventory[$a_software['version']] = $a_software['version'];
                }
 
-               if (count($a_computerinventory['software']) > 50) {
-                  $lastSoftwareid = $this->loadSoftwares($entities_id,
-                                                         $a_softwareInventory,
-                                                         $lastSoftwareid);
-                  $ret = $DB->query("SELECT GET_LOCK('softwareversion', 3000)");
-                  if ($DB->result($ret, 0, 0) == 1) {
-                     $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
-                                                                    $a_softwareVersionInventory,
-                                                                    $lastSoftwareVid);
-                     foreach ($a_computerinventory['software'] as $keysoft=>$a_software) {
-                        if (isset($this->softList[$a_software['name']."$$$$".
-                                 $a_software['manufacturers_id']])) {
-                           $a_software['softwares_id'] = $this->softList[$a_software['name']."$$$$".
-                                 $a_software['manufacturers_id']];
-                           $a_software['_no_message'] = TRUE;
-                           $this->addSoftware($a_software,
-                                              $computers_id,
-                                              $no_history,
-                                              $options);
-                           unset($a_computerinventory['software'][$keysoft]);
-                        }
-                     }
-                     $ret = $DB->query("SELECT RELEASE_LOCK('softwareversion')");
-                  }
-               }
                $ret = $DB->query("SELECT GET_LOCK('software', 3000)");
                if ($DB->result($ret, 0, 0) == 1) {
-                  if (count($a_computerinventory['software']) > 50) {
-                     $this->loadSoftwares($entities_id, $a_softwareInventory, $lastSoftwareid);
+                  $this->loadSoftwares($entities_id, $a_softwareInventory, $lastSoftwareid);
+                  foreach ($a_computerinventory['software'] as $a_software) {
+                     if (!isset($this->softList[$a_software['name']."$$$$".
+                              $a_software['manufacturers_id']])) {
+                        $this->addSoftware($a_software,
+                                           $options);
+                     }
                   }
+                  $DB->request("SELECT RELEASE_LOCK('software')");
+               }
+
+               $ret = $DB->query("SELECT GET_LOCK('softwareversion', 3000)");
+               if ($DB->result($ret, 0, 0) == 1) {
                   $this->loadSoftwareVersions($entities_id,
                                               $a_softwareVersionInventory,
                                               $lastSoftwareVid);
                   foreach ($a_computerinventory['software'] as $a_software) {
-                     $a_software['_no_message'] = TRUE;
-//                     if (count($a_computerinventory['software']) > 50) {
-                        if (isset($this->softList[$a_software['name']."$$$$".
-                                 $a_software['manufacturers_id']])) {
-                           $a_software['softwares_id'] = $this->softList[$a_software['name']."$$$$".
-                                 $a_software['manufacturers_id']];
-                        }
-//                     } else {
-//                        $a_software['softwares_id'] = -1;
-//                     }
-                     $this->addSoftware($a_software,
-                                        $computers_id,
-                                        $no_history,
-                                        $options);
+                     $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+                     if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id])) {
+                        $this->addSoftwareVersion($a_software, $softwares_id);
+                     }
                   }
-                  $DB->request("SELECT RELEASE_LOCK('software')");
+                 $DB->request("SELECT RELEASE_LOCK('softwareversion')");
                }
+
+               $a_toinsert = array();
+               foreach ($a_computerinventory['software'] as $a_software) {
+                  $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+                  $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id];
+                  $a_tmp = array(
+                      'computers_id'        => $computers_id,
+                      'softwareversions_id' => $softwareversions_id,
+                      'is_dynamic'          => 1,
+                      'entities_id'         => $a_software['entities_id']
+                      );
+                  $a_toinsert[] = "('".implode("','", $a_tmp)."')";
+               }
+               $this->addSoftwareVersionsComputer($a_toinsert);
+
+               if (!$no_history) {
+                  foreach ($a_computerinventory['software'] as $a_software) {
+                     $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+                     $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id];
+
+                     $changes[0] = '0';
+                     $changes[1] = "";
+                     $changes[2] = sprintf(__('%1$s (%2$s)'), $a_software['version'], $softwareversions_id);
+                     $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
+                                  Log::HISTORY_INSTALL_SOFTWARE);
+
+                     $changes[0] = '0';
+                     $changes[1] = "";
+                     $changes[2] = sprintf(__('%1$s (%2$s)'), $a_computerinventory['Computer']['name'], $computers_id);
+                     $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
+                                  Log::HISTORY_INSTALL_SOFTWARE);
+                  }
+               }
+
+
             } else {
-//               foreach ($a_computerinventory['software'] as $key => $arrayslower) {
-//                  foreach ($db_software as $keydb => $arraydb) {
-//                     if ($arrayslower == $arraydb) {
-//                        unset($a_computerinventory['software'][$key]);
-//                        unset($db_software[$keydb]);
-//                        break;
-//                     }
-//                  }
-//               }
                foreach ($a_computerinventory['software'] as $key => $arrayslower) {
                   if (isset($db_software[$key])) {
                      unset($a_computerinventory['software'][$key]);
@@ -737,7 +754,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   && count($db_software) == 0) {
                   // Nothing to do
                } else {
-                  if (count($db_software) != 0) {
+//                  if (count($db_software) > 0) {
                      // Delete softwares in DB
                      foreach ($db_software as $idtmp) {
                         $this->computer_SoftwareVersion->getFromDB($idtmp);
@@ -758,8 +775,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                         Log::HISTORY_UNINSTALL_SOFTWARE);
                         }
                      }
-                  }
-                  if (count($a_computerinventory['software']) != 0) {
+//                  }
+                  if (count($a_computerinventory['software']) > 0) {
                      $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software",
                                                                               $entities_id));
                      $options = array();
@@ -768,36 +785,67 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
                      foreach ($a_computerinventory['software'] as $keysoft=>$a_software) {
                         $a_softwareInventory[$a_software['name']] = $a_software['name'];
-                        $a_softwareVersionInventory[$a_software['version']] =
-                                       $a_software['version'];
+                        $a_softwareVersionInventory[$a_software['version']] = $a_software['version'];
                      }
+
                      $ret = $DB->query("SELECT GET_LOCK('software', 3000)");
                      if ($DB->result($ret, 0, 0) == 1) {
-                        if (count($a_computerinventory['software']) > 50) {
-                           $this->loadSoftwares($entities_id,
-                                                $a_softwareInventory,
-                                                $lastSoftwareid);
+                        $this->loadSoftwares($entities_id, $a_softwareInventory, $lastSoftwareid);
+                        foreach ($a_computerinventory['software'] as $a_software) {
+                           if (!isset($this->softList[$a_software['name']."$$$$".
+                                    $a_software['manufacturers_id']])) {
+                              $this->addSoftware($a_software,
+                                                 $options);
+                           }
                         }
+                       $DB->request("SELECT RELEASE_LOCK('software')");
+                     }
+
+                     $ret = $DB->query("SELECT GET_LOCK('softwareversion', 3000)");
+                     if ($DB->result($ret, 0, 0) == 1) {
                         $this->loadSoftwareVersions($entities_id,
                                                     $a_softwareVersionInventory,
                                                     $lastSoftwareVid);
-                        foreach($a_computerinventory['software'] as $a_software) {
-                           $a_software['_no_message'] = TRUE;
-                           if (count($a_computerinventory['software']) > 50) {
-                              if (isset($this->softList[$a_software['name']."$$$$".
-                                       $a_software['manufacturers_id']])) {
-                                 $a_software['softwares_id'] = $this->softList[$a_software['name'].
-                                       "$$$$".$a_software['manufacturers_id']];
-                              }
-                           } else {
-                              $a_software['softwares_id'] = -1;
+                        foreach ($a_computerinventory['software'] as $a_software) {
+                           $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+                           if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id])) {
+                              $this->addSoftwareVersion($a_software, $softwares_id);
                            }
-                           $this->addSoftware($a_software,
-                                              $computers_id,
-                                              $no_history,
-                                              $options);
                         }
-                        $DB->request("SELECT RELEASE_LOCK('software')");
+                       $DB->request("SELECT RELEASE_LOCK('softwareversion')");
+                     }
+
+                     $a_toinsert = array();
+                     foreach ($a_computerinventory['software'] as $a_software) {
+                        $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+                        $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id];
+                        $a_tmp = array(
+                            'computers_id'        => $computers_id,
+                            'softwareversions_id' => $softwareversions_id,
+                            'is_dynamic'          => 1,
+                            'entities_id'         => $a_software['entities_id']
+                            );
+                        $a_toinsert[] = "('".implode("','", $a_tmp)."')";
+                     }
+                     $this->addSoftwareVersionsComputer($a_toinsert);
+
+                     if (!$no_history) {
+                        foreach ($a_computerinventory['software'] as $a_software) {
+                           $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+                           $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id];
+
+                           $changes[0] = '0';
+                           $changes[1] = "";
+                           $changes[2] = sprintf(__('%1$s (%2$s)'), $a_software['version'], $softwareversions_id);
+                           $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
+                                        Log::HISTORY_INSTALL_SOFTWARE);
+
+                           $changes[0] = '0';
+                           $changes[1] = "";
+                           $changes[2] = sprintf(__('%1$s (%2$s)'), $a_computerinventory['Computer']['name'], $computers_id);
+                           $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
+                                        Log::HISTORY_INSTALL_SOFTWARE);
+                        }
                      }
                   }
                }
@@ -2043,6 +2091,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $whereid .= ' AND `id` > "'.$lastid.'"';
       }
       $whereid .= " AND `name` IN ('".  implode("', '", $a_softVersion)."')";
+      $whereid .= " AND `softwares_id` IN ('".  implode("', '", $this->softList)."')";
 
       $sql = "SELECT max( id ) AS max FROM `glpi_softwareversions`";
       $result = $DB->query($sql);
@@ -2066,73 +2115,59 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
     * @global type $DB
     *
     * @param array $a_software
-    * @param integer $computers_id id of the computer
-    * @param boolean $no_history set TRUE if not want history
     * @param array $options
     *
     * @return nothing
     */
-   function addSoftware($a_software, $computers_id, $no_history, $options) {
-      global $DB;
+   function addSoftware($a_software, $options) {
 
-      $new = 0;
-      $add = 0;
-      if (isset($a_software['softwares_id'])) {
-         if ($a_software['softwares_id'] == "-1") {
-            //Look for the software by his name in GLPI for a specific entity
-            $sql = "SELECT `id` FROM `glpi_softwares`
-                    WHERE `manufacturers_id` = '".$a_software['manufacturers_id']."'
-                          AND `name` = '".$a_software['name']."' " .
-                          getEntitiesRestrictRequest('AND', 'glpi_softwares', 'entities_id',
-                                                     $a_software['entities_id'], TRUE).
-                    " LIMIT 1";
+      $a_softwares_id = $this->software->add($a_software, $options, FALSE);
+      $this->addPrepareLog($a_softwares_id, 'Software');
 
-            $res_soft = $DB->query($sql);
-            if ($DB->numrows($res_soft) > 0) {
-               $soft = $DB->fetch_assoc($res_soft);
-               $a_software['softwares_id'] = $soft["id"];
-            } else {
-               $add = 1;
-            }
-         } else {
-            // It's ok
-         }
-      } else {
-         // notin DB, add new
-         $add = 1;
-      }
+      $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']] = $a_softwares_id;
+   }
 
-      if ($add == 1) {
-         $a_software['softwares_id'] = $this->software->add($a_software, $options, !$no_history);
-         $this->addPrepareLog($a_software['softwares_id'], 'Software');
-         $new = 1;
-      }
+
+
+   function addSoftwareVersion($a_software, $softwares_id) {
 
       $options = array();
       $options['disable_unicity_check'] = TRUE;
-      if ($new == 1) {
-         $a_software['name'] = $a_software['version'];
-         $a_software['_no_history'] = $no_history;
-         $softwareversions_id = $this->softwareVersion->add($a_software, $options, !$no_history);
-         $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
-      } else {
-         $softwareversions_id = 0;
-         if (isset($this->softVersionList[strtolower($a_software['version'])."$$$$".
-                  $a_software['softwares_id']])) {
-            $softwareversions_id =
-               $this->softVersionList[strtolower($a_software['version'])."$$$$".$a_software['softwares_id']];
-         } else {
-            $a_software['name'] = $a_software['version'];
-            $a_software['_no_history'] = $no_history;
-            $softwareversions_id = $this->softwareVersion->add($a_software, $options, !$no_history);
-            $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
-         }
-      }
+
+      $a_software['name']         = $a_software['version'];
+      $a_software['softwares_id'] = $softwares_id;
+      $a_software['_no_history']  = TRUE;
+      $softwareversions_id = $this->softwareVersion->add($a_software, $options, FALSE);
+      $this->addPrepareLog($softwareversions_id, 'SoftwareVersion');
+      $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id] = $softwareversions_id;
+   }
+
+
+   function addSoftwareVersionsComputer($a_input) {
+      global $DB;
+
+      $query = 'INSERT INTO `glpi_computers_softwareversions` (`computers_id`,`softwareversions_id`,`is_dynamic`,`entities_id`) ';
+      $query .= ' VALUES '.implode(',', $a_input);
+      $DB->query($query);
+   }
+
+
+
+   function addSoftwareVersionComputer($a_software, $computers_id, $no_history, $options) {
+
+      $options['disable_unicity_check'] = TRUE;
+
+      $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+      $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id];
+
       $this->softwareVersion->getFromDB($softwareversions_id);
       $a_software['computers_id']         = $computers_id;
       $a_software['softwareversions_id']  = $softwareversions_id;
       $a_software['is_dynamic']           = 1;
+      $a_software['is_template_computer'] = FALSE;
+      $a_software['is_deleted_computer']  = FALSE;
       $a_software['_no_history']          = TRUE;
+      $a_software['entities_id']          = $a_software['entities_id'];
 
       if ($this->computer_SoftwareVersion->add($a_software, $options, FALSE)) {
          if (!$no_history) {
