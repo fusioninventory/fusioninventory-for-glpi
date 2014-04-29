@@ -586,7 +586,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $lastSoftwareVid = 0;
 
             /*
-             * TODO for better perf
+             * Schema
              *
              * LOCK software
              * 1/ Add all software
@@ -610,15 +610,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $a_softwareInventory = array();
                $a_softwareVersionInventory = array();
 
-               foreach ($a_computerinventory['software'] as $keysoft=>$a_software) {
-                  $a_softwareInventory[$a_software['name']] = $a_software['name'];
-                  $a_softwareVersionInventory[$a_software['version']] = $a_software['version'];
-               }
-
-               $lastSoftwareid = $this->loadSoftwares($entities_id, $a_softwareInventory, $lastSoftwareid);
+               $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
                $ret = $DB->query("SELECT GET_LOCK('software', 3000)");
                if ($DB->result($ret, 0, 0) == 1) {
-                  $this->loadSoftwares($entities_id, $a_softwareInventory, $lastSoftwareid);
+                  $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
                   foreach ($a_computerinventory['software'] as $a_software) {
                      if (!isset($this->softList[$a_software['name']."$$$$".
                               $a_software['manufacturers_id']])) {
@@ -630,12 +625,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                }
 
                $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
-                                              $a_softwareVersionInventory,
+                                              $a_computerinventory['software'],
                                               $lastSoftwareVid);
                $ret = $DB->query("SELECT GET_LOCK('softwareversion', 3000)");
                if ($DB->result($ret, 0, 0) == 1) {
                   $this->loadSoftwareVersions($entities_id,
-                                              $a_softwareVersionInventory,
+                                              $a_computerinventory['software'],
                                               $lastSoftwareVid);
                   foreach ($a_computerinventory['software'] as $a_software) {
                      $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
@@ -692,12 +687,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   && count($db_software) == 0) {
                   // Nothing to do
                } else {
-//                  if (count($db_software) > 0) {
+                  if (count($db_software) > 0) {
                      // Delete softwares in DB
+                     $a_delete = array();
                      foreach ($db_software as $idtmp) {
                         $this->computer_SoftwareVersion->getFromDB($idtmp);
                         $this->softwareVersion->getFromDB($this->computer_SoftwareVersion->fields['softwareversions_id']);
-                        $this->computer_SoftwareVersion->delete(array('id'=>$idtmp, '_no_history'=> TRUE), FALSE);
+//                        $this->computer_SoftwareVersion->delete(array('id'=>$idtmp, '_no_history'=> TRUE), FALSE);
 
                         if (!$no_history) {
                            $changes[0] = '0';
@@ -707,13 +703,16 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                         Log::HISTORY_UNINSTALL_SOFTWARE);
 
                            $changes[0] = '0';
-                           $changes[1] = addslashes($this->computer_SoftwareVersion->getHistoryNameForItem2($this->computer, 'delete'));
+                           $changes[1] = sprintf(__('%1$s (%2$s)'), $a_computerinventory['Computer']['name'], $computers_id);
                            $changes[2] = "";
                            $this->addPrepareLog($idtmp, 'SoftwareVersion', 'Computer', $changes,
                                         Log::HISTORY_UNINSTALL_SOFTWARE);
                         }
                      }
-//                  }
+                     $query = "DELETE FROM `glpi_computers_softwareversions` "
+                             ."WHERE `id` IN ('".implode("', '", $db_software)."')";
+                     $DB->query($query);
+                  }
                   if (count($a_computerinventory['software']) > 0) {
                      $nb_unicity = count(FieldUnicity::getUnicityFieldsConfig("Software",
                                                                               $entities_id));
@@ -721,15 +720,11 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      if ($nb_unicity == 0) {
                         $options['disable_unicity_check'] = TRUE;
                      }
-                     foreach ($a_computerinventory['software'] as $keysoft=>$a_software) {
-                        $a_softwareInventory[$a_software['name']] = $a_software['name'];
-                        $a_softwareVersionInventory[$a_software['version']] = $a_software['version'];
-                     }
 
-                     $lastSoftwareid = $this->loadSoftwares($entities_id, $a_softwareInventory, $lastSoftwareid);
+                     $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
                      $ret = $DB->query("SELECT GET_LOCK('software', 3000)");
                      if ($DB->result($ret, 0, 0) == 1) {
-                        $this->loadSoftwares($entities_id, $a_softwareInventory, $lastSoftwareid);
+                        $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
                         foreach ($a_computerinventory['software'] as $a_software) {
                            if (!isset($this->softList[$a_software['name']."$$$$".
                                     $a_software['manufacturers_id']])) {
@@ -741,12 +736,12 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
 
                      $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
-                                                    $a_softwareVersionInventory,
+                                                    $a_computerinventory['software'],
                                                     $lastSoftwareVid);
                      $ret = $DB->query("SELECT GET_LOCK('softwareversion', 3000)");
                      if ($DB->result($ret, 0, 0) == 1) {
                         $this->loadSoftwareVersions($entities_id,
-                                                    $a_softwareVersionInventory,
+                                                    $a_computerinventory['software'],
                                                     $lastSoftwareVid);
                         foreach ($a_computerinventory['software'] as $a_software) {
                            $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
@@ -1969,14 +1964,33 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       if ($lastid > 0) {
          $whereid .= ' AND `id` > "'.$lastid.'"';
       }
-      $whereid .= " AND `name` IN ('".  implode("', '", $a_soft)."')";
+      $a_softSearch = array();
+      $nbSoft = 0;
+      if (count($this->softList) == 0) {
+         foreach ($a_soft as $a_software) {
+            $a_softSearch[] = "(`name`='".$a_software['name']."' AND `manufacturers_id`='".$a_software['manufacturers_id']."')";
+         }
+         $nbSoft++;
+      } else {
+         foreach ($a_soft as $a_software) {
+            if (!isset($this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']])) {
+               $a_softSearch[] = "(`name`='".$a_software['name']."' AND `manufacturers_id`='".$a_software['manufacturers_id']."')";
+               $nbSoft++;
+            }
+         }
+      }
+      $whereid .= " AND (".implode(" OR ", $a_softSearch).")";
 
       $sql = "SELECT max( id ) AS max FROM `glpi_softwares`";
       $result = $DB->query($sql);
       $data = $DB->fetch_assoc($result);
       $lastid = $data['max'];
+      $whereid .= " AND `id` <= '".$lastid."'";
+      if ($nbSoft == 0) {
+         return $lastid;
+      }
 
-      $sql = "SELECT * FROM `glpi_softwares`
+      $sql = "SELECT `id`, `name`, `manufacturers_id` FROM `glpi_softwares`
       WHERE `entities_id`='".$entities_id."'".$whereid;
       $result = $DB->query($sql);
 
@@ -2006,15 +2020,36 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       if ($lastid > 0) {
          $whereid .= ' AND `id` > "'.$lastid.'"';
       }
-      $whereid .= " AND `name` IN ('".  implode("', '", $a_softVersion)."')";
-      $whereid .= " AND `softwares_id` IN ('".  implode("', '", $this->softList)."')";
+      $arr = array();
+      $a_versions = array();
+      foreach ($a_softVersion as $a_software) {
+         $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+         if (!isset($this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id])) {
+            $a_versions[$a_software['version']][] = $softwares_id;
+         }
+      }
+
+      $nbVersions = 0;
+      foreach ($a_versions as $name=>$a_softwares_id) {
+         $arr[] = " (`name`='".$name."' AND `softwares_id` IN ('".  implode("', '", $a_softwares_id)."'))";
+         $nbVersions++;
+      }
+      $whereid .= " AND ( ";
+      $whereid .= implode(' OR ', $arr);
+      $whereid .= " ) ";
+
 
       $sql = "SELECT max( id ) AS max FROM `glpi_softwareversions`";
       $result = $DB->query($sql);
       $data = $DB->fetch_assoc($result);
       $lastid = $data['max'];
+      $whereid .= " AND `id` <= '".$lastid."'";
 
-      $sql = "SELECT * FROM `glpi_softwareversions`
+      if ($nbVersions == 0) {
+         return $lastid;
+      }
+
+      $sql = "SELECT `id`, `name`, `softwares_id` FROM `glpi_softwareversions`
       WHERE `entities_id`='".$entities_id."'".$whereid;
       $result = $DB->query($sql);
       while ($data = $DB->fetch_assoc($result)) {
