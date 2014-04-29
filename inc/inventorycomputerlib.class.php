@@ -728,7 +728,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                         $changes[0] = '0';
                         $changes[1] = "";
-                        $changes[2] = sprintf(__('%1$s (%2$s)'), $a_software['version'], $softwareversions_id);
+                        $changes[2] = $a_software['name']." - ".
+                                sprintf(__('%1$s (%2$s)'), $a_software['version'], $softwareversions_id);
                         $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
                                      Log::HISTORY_INSTALL_SOFTWARE);
 
@@ -839,7 +840,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
                            $changes[0] = '0';
                            $changes[1] = "";
-                           $changes[2] = sprintf(__('%1$s (%2$s)'), $a_software['version'], $softwareversions_id);
+                           $changes[2] = $a_software['name']." - ".
+                                 sprintf(__('%1$s (%2$s)'), $a_software['version'], $softwareversions_id);
                            $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
                                         Log::HISTORY_INSTALL_SOFTWARE);
 
