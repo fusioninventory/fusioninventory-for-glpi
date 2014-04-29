@@ -653,27 +653,28 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                       );
                   $a_toinsert[] = "('".implode("','", $a_tmp)."')";
                }
-               $this->addSoftwareVersionsComputer($a_toinsert);
+               if (count($a_toinsert) > 0) {
+                  $this->addSoftwareVersionsComputer($a_toinsert);
 
-               if (!$no_history) {
-                  foreach ($a_computerinventory['software'] as $a_software) {
-                     $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
-                     $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id];
+                  if (!$no_history) {
+                     foreach ($a_computerinventory['software'] as $a_software) {
+                        $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
+                        $softwareversions_id = $this->softVersionList[strtolower($a_software['version'])."$$$$".$softwares_id];
 
-                     $changes[0] = '0';
-                     $changes[1] = "";
-                     $changes[2] = sprintf(__('%1$s (%2$s)'), $a_software['version'], $softwareversions_id);
-                     $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
-                                  Log::HISTORY_INSTALL_SOFTWARE);
+                        $changes[0] = '0';
+                        $changes[1] = "";
+                        $changes[2] = sprintf(__('%1$s (%2$s)'), $a_software['version'], $softwareversions_id);
+                        $this->addPrepareLog($computers_id, 'Computer', 'SoftwareVersion', $changes,
+                                     Log::HISTORY_INSTALL_SOFTWARE);
 
-                     $changes[0] = '0';
-                     $changes[1] = "";
-                     $changes[2] = sprintf(__('%1$s (%2$s)'), $a_computerinventory['Computer']['name'], $computers_id);
-                     $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
-                                  Log::HISTORY_INSTALL_SOFTWARE);
+                        $changes[0] = '0';
+                        $changes[1] = "";
+                        $changes[2] = sprintf(__('%1$s (%2$s)'), $a_computerinventory['Computer']['name'], $computers_id);
+                        $this->addPrepareLog($softwareversions_id, 'SoftwareVersion', 'Computer', $changes,
+                                     Log::HISTORY_INSTALL_SOFTWARE);
+                     }
                   }
                }
-
 
             } else {
                foreach ($a_computerinventory['software'] as $key => $arrayslower) {
@@ -1969,8 +1970,8 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
       if (count($this->softList) == 0) {
          foreach ($a_soft as $a_software) {
             $a_softSearch[] = "(`name`='".$a_software['name']."' AND `manufacturers_id`='".$a_software['manufacturers_id']."')";
+            $nbSoft++;
          }
-         $nbSoft++;
       } else {
          foreach ($a_soft as $a_software) {
             if (!isset($this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']])) {
