@@ -367,7 +367,8 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerantiviruses` (
   KEY `name` (`name`),
   KEY `version` (`version`),
   KEY `is_active` (`is_active`),
-  KEY `uptodate` (`uptodate`)
+  KEY `uptodate` (`uptodate`),
+  KEY `computers_id` (`computers_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 

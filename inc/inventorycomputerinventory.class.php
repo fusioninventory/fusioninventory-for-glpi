@@ -58,12 +58,24 @@ class PluginFusioninventoryInventoryComputerInventory {
    * @return nothing (import ok) / error string (import ko)
    **/
    function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
+      global $DB;
 
       $errors = '';
       $_SESSION["plugin_fusioninventory_entity"] = -1;
 
-      $this->sendCriteria($p_DEVICEID, $arrayinventory);
+      // Prevent 2 computers with same name (Case of have the computer inventory 2 times in same time
+      // and so we don't want it create 2 computers instead one)
+      $name = '';
+      if (isset($arrayinventory['CONTENT']['HARDWARE']['NAME'])) {
+         $name = strtolower($arrayinventory['CONTENT']['HARDWARE']['NAME']);
+      }
+      $ret = $DB->query("SELECT GET_LOCK('inventoryname".$name."', 3000)");
+      if ($DB->result($ret, 0, 0) == 1) {
 
+         $this->sendCriteria($p_DEVICEID, $arrayinventory);
+
+         $DB->request("SELECT RELEASE_LOCK('inventoryname".$name."')");
+      }
       return $errors;
    }
 
@@ -451,7 +463,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          // * For benchs
          //$start = microtime(TRUE);
 
-         $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 300)");
+         $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 3000)");
          if ($DB->result($ret, 0, 0) == 1) {
 
             $pfInventoryComputerLib->updateComputer(
