@@ -463,6 +463,8 @@ class PluginFusioninventoryInventoryComputerInventory {
          // * For benchs
          //$start = microtime(TRUE);
 
+         PluginFusioninventoryInventoryComputerStat::increment();
+
          $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 3000)");
          if ($DB->result($ret, 0, 0) == 1) {
 

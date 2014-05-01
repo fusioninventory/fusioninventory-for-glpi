@@ -47,6 +47,7 @@ if (PluginFusioninventoryMenu::canView()) {
                 "fusioninventory", "menu");
 
    PluginFusioninventoryMenu::displayMenu();
+   PluginFusioninventoryMenu::board();
 } else {
    Html::displayRightError();
 }

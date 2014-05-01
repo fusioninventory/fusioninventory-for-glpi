@@ -445,9 +445,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "</tr>";
       echo "</table>";
       echo "</div><br/><br/><br/>";
-
-      self::board();
-      self::displayMenu2();
    }
 
 
@@ -518,227 +515,6 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "</table>";
 
       return $width_status;
-   }
-
-
-
-   static function displayMenu2() {
-      global $CFG_GLPI;
-
-      /*
-       * menus
-       *
-         * computer inventory
-       *
-         * computer collect
-       *
-         * Network discovery
-       *
-         * network inventory (SNMP)
-       *
-         * ESX inventory
-       *
-         * software deployment
-       *
-         * Wake on Lan
-       *
-       */
-
-
-      echo "<table>";
-      echo "<tr>";
-      echo "<td valign='top'>";
-      // * Computer inventory
-         echo "<table class='tab_cadre' width='200'>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<th>";
-         echo __('Computer inventory', 'fusioninventory');
-         echo "</th>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Configuration', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo _n('Blacklist', 'Blacklists', 1);
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Entity rules', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Equipment import and link rules', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Computer location rules', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Additional computer information rules', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Ignored import devices', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<th>";
-         echo __('Server url for agents', 'fusioninventory');
-         echo "</th>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         $split = explode('front/', $_SERVER['PHP_SELF']);
-         $port = '';
-         $ports = '';
-         if ($_SERVER['SERVER_PORT'] != 80
-                 && $_SERVER['SERVER_PORT'] != 443) {
-            $port = $_SERVER['SERVER_PORT'];
-         }
-         echo 'http://'.$_SERVER['SERVER_NAME'].$port.$split[0];
-         echo "<br/>".__('or')."<br/>";
-         echo 'https://'.$_SERVER['SERVER_NAME'].$ports.$split[0];
-         echo "</td>";
-         echo "</tr>";
-
-         echo "</table>";
-
-      echo "</td>";
-      echo "<td valign='top'>";
-
-      // * Computer collect
-         echo "<table class='tab_cadre' width='200'>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<th>";
-         echo __('Additional computer information', 'fusioninventory');
-         echo "</th>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Additional computer information', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Additional computer information rules', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "</table>";
-
-      echo "</td>";
-      echo "<td valign='top'>";
-
-      // * Network discovery
-         echo "<table class='tab_cadre' width='200'>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<th>";
-         echo __('Network discovery', 'fusioninventory');
-         echo "</th>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('SNMP authentication', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('IP ranges', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Equipment import and link rules', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Task management', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Discovery status', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "</table>";
-
-      echo "</td>";
-      echo "<td valign='top'>";
-
-      // * Network inventory (SNMP)
-         echo "<table class='tab_cadre' width='200'>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<th>";
-         echo __('Network inventory (SNMP)', 'fusioninventory');
-         echo "</th>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('SNMP authentication', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('IP ranges', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Equipment import and link rules', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Task management', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>";
-         echo __('Network inventory status', 'fusioninventory');
-         echo "</td>";
-         echo "</tr>";
-
-         echo "</table>";
-
-      echo "</td>";
-      echo "</table>";
-
    }
 
 
@@ -838,6 +614,10 @@ class PluginFusioninventoryMenu extends CommonGLPI {
           'color' => '#feffc9'
       );
 
+      // Number of computer inventories in last hour, 6 hours, 24 hours
+      $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastTwelveHours();
+
+
 
       echo "<table align='center'>";
       echo "<tr height='280'>";
@@ -845,7 +625,8 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       self::showChart('computers', $dataComputer);
       echo "</td>";
       echo "<td width='380'>";
-
+      $title = __('Number of computer inventories of last hours', 'fusioninventory');
+      self::showChartBar('nbinventory', $dataInventory, $title);
       echo "</td>";
       echo "<td width='380'>";
       self::showChart('deploy', $dataDeploy);
@@ -870,7 +651,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
    static function showChart($name, $data) {
 
-      echo '<svg id="'.$name.'"></svg>';
+      echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
 
       echo "<script>
 var testdata".$name." = ".  json_encode($data).";
@@ -882,7 +663,7 @@ var testdata".$name." = ".  json_encode($data).";
 
     var chart = nv.models.pieChart()
         .x(function(d) { return d.key })
-        .values(function(d) { return d })
+        .values(function(d) { return d.value })
         .showLabels(false)
         .color(function(d) {return d.data.color})
         .width(width)
@@ -893,9 +674,8 @@ var testdata".$name." = ".  json_encode($data).";
         .startAngle(function(d) { return d.startAngle/2 -Math.PI/2 })
         .endAngle(function(d) { return d.endAngle/2 -Math.PI/2 });
 
-
       d3.select('#".$name."')
-          .datum([testdata".$name."])
+          .datum(testdata".$name.")
         .transition().duration(1200)
           .attr('width', width)
           .attr('height', height)
@@ -904,8 +684,44 @@ var testdata".$name." = ".  json_encode($data).";
     return chart;
 });
 </script>";
+   }
 
 
+   static function showChartBar($name, $data, $title='') {
+      echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
+
+      echo "<script>
+var testdata".$name." = ".  json_encode($data).";
+
+      nv.addGraph(function() {
+
+
+    var chart = nv.models.discreteBarChart()
+      .x(function(d) { return d.label })
+      .y(function(d) { return d.value })
+      .staggerLabels(true)
+      .tooltips(false)
+      .showValues(false)
+
+  d3.select('#".$name."')
+      .datum([testdata".$name."])
+      .call(chart);
+";
+if ($title != '') {
+   echo "d3.select('#".$name."')
+  .append('text')
+  .attr('x', 200)
+  .attr('y', 12)
+  .attr('text-anchor', 'middle')
+  .style('font-weight', 'bold')
+  .text('".$title."');";
+
+}
+
+echo "
+    return chart;
+});
+</script>";
    }
 }
 
