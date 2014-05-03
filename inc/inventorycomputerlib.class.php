@@ -205,6 +205,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                foreach ($a_computerinventory['processor'] as $key => $arrays) {
                   $frequence = $arrays['frequence'];
                   unset($arrays['frequence']);
+                  unset($arrays['frequency']);
                   unset($arrays['frequency_default']);
                   foreach ($db_processors as $keydb => $arraydb) {
                      $frequencedb = $arraydb['frequence'];
