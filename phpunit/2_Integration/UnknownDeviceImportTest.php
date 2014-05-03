@@ -163,8 +163,8 @@ class UnknownDeviceImportTest extends Common_TestCase {
           'binary_3'    => '3232240641',
           'is_deleted'  => '0',
           'is_dynamic'  => '1',
-         'mainitems_id'  => '1',
-         'mainitemtype'  => 'NetworkEquipment'
+          'mainitems_id'  => '1',
+          'mainitemtype'  => 'NetworkEquipment'
       );
       $this->assertEquals($a_reference, $iPAddress->fields, "IPAddress");
 
