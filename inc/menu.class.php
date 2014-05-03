@@ -654,35 +654,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
 
       echo "<script>
-var testdata".$name." = ".  json_encode($data).";
-
-      nv.addGraph(function() {
-
-    var width = 400,
-        height = 400;
-
-    var chart = nv.models.pieChart()
-        .x(function(d) { return d.key })
-        .values(function(d) { return d.value })
-        .showLabels(false)
-        .color(function(d) {return d.data.color})
-        .width(width)
-        .height(height)
-        .donut(true);
-
-    chart.pie
-        .startAngle(function(d) { return d.startAngle/2 -Math.PI/2 })
-        .endAngle(function(d) { return d.endAngle/2 -Math.PI/2 });
-
-      d3.select('#".$name."')
-          .datum(testdata".$name.")
-        .transition().duration(1200)
-          .attr('width', width)
-          .attr('height', height)
-          .call(chart);
-
-    return chart;
-});
+         statHalfDonut('".$name."', '".json_encode($data)."');
 </script>";
    }
 
@@ -691,36 +663,7 @@ var testdata".$name." = ".  json_encode($data).";
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
 
       echo "<script>
-var testdata".$name." = ".  json_encode($data).";
-
-      nv.addGraph(function() {
-
-
-    var chart = nv.models.discreteBarChart()
-      .x(function(d) { return d.label })
-      .y(function(d) { return d.value })
-      .staggerLabels(true)
-      .tooltips(false)
-      .showValues(false)
-
-  d3.select('#".$name."')
-      .datum([testdata".$name."])
-      .call(chart);
-";
-if ($title != '') {
-   echo "d3.select('#".$name."')
-  .append('text')
-  .attr('x', 200)
-  .attr('y', 12)
-  .attr('text-anchor', 'middle')
-  .style('font-weight', 'bold')
-  .text('".$title."');";
-
-}
-
-echo "
-    return chart;
-});
+         statBar('".$name."', '".json_encode($data)."', '".$title."');
 </script>";
    }
 }

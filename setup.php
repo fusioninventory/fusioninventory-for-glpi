@@ -262,6 +262,9 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
               "lib/timeslot.js";
 
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+              "js/stats.js";
+
       if (Session::haveRight('plugin_fusioninventory_configuration', READ)
               || Session::haveRight('profile', UPDATE)) {// Config page
          $PLUGIN_HOOKS['config_page']['fusioninventory'] = 'front/config.form.php'.
