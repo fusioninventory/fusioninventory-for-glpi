@@ -53,6 +53,7 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
 
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $pfiComputerLib  = new PluginFusioninventoryInventoryComputerLib();
       $computer = new Computer();
@@ -136,6 +137,7 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
 
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $pfiComputerLib  = new PluginFusioninventoryInventoryComputerLib();
       $computer = new Computer();
@@ -235,6 +237,7 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_inventory = array(
           'Computer' => array(

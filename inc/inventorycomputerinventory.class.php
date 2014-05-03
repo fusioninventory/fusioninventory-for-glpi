@@ -475,7 +475,6 @@ class PluginFusioninventoryInventoryComputerInventory {
                     $setdynamic);
 
             $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
-            $pfInventoryComputerLib->addLog();
 
             $plugin = new Plugin();
             if ($plugin->isActivated('monitoring')) {

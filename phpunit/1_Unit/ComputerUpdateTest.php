@@ -59,6 +59,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_inventory = array(
           'fusioninventorycomputer' => Array(
@@ -1085,7 +1086,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
-
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_inventory = array(
           'fusioninventorycomputer' => Array(

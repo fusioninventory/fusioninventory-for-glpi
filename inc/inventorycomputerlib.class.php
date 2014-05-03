@@ -298,7 +298,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   // Nothing to do
                } else {
                   if (count($db_memories) != 0) {
-                     // Delete processor in DB
+                     // Delete memory in DB
                      foreach ($db_memories as $idtmp => $data) {
                         $item_DeviceMemory->delete(array('id'=>$idtmp), 1);
                      }
@@ -1660,7 +1660,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 //
 //         }
 
-
+      $this->addLog();
    }
 
 
@@ -2581,6 +2581,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
          $DB->query($query);
 
+         $this->log_add = array();
       }
    }
 

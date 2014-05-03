@@ -58,6 +58,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $this->a_inventory = array(
           'fusioninventorycomputer' => Array(
@@ -248,17 +249,88 @@ class ComputerLog extends RestoreDatabase_TestCase {
       $this->assertEquals(0, countElementsInTable('glpi_logs'), "Log must be empty (truncate)");
 
       $_SESSION['glpiactive_entity'] = 0;
-      $pfiComputerLib->updateComputer($this->a_inventory, 1, TRUE, 0);
+      $pfiComputerLib->updateComputer($this->a_inventory, 1, TRUE);
 
       $a_logs = getAllDatasFromTable('glpi_logs');
+      foreach ($a_logs as $id=>$data) {
+         unset($data['date_mod']);
+         $a_logs[$id] = $data;
+      }
 
       $a_reference = array(
+          1 => array(
+              'id'               => 1,
+              'itemtype'         => 'Software',
+              'items_id'         => 1,
+              'itemtype_link'    => '',
+              'linked_action'    => 20,
+              'user_name'        => 'Plugin_FusionInventory',
+              'id_search_option' => 0,
+              'old_value'        => '',
+              'new_value'        => ''
+              ),
+          2 => array(
+              'id'               => 2,
+              'itemtype'         => 'Software',
+              'items_id'         => 2,
+              'itemtype_link'    => '',
+              'linked_action'    => 20,
+              'user_name'        => 'Plugin_FusionInventory',
+              'id_search_option' => 0,
+              'old_value'        => '',
+              'new_value'        => ''
+              ),
+          3 => array(
+              'id'               => 3,
+              'itemtype'         => 'Software',
+              'items_id'         => 3,
+              'itemtype_link'    => '',
+              'linked_action'    => 20,
+              'user_name'        => 'Plugin_FusionInventory',
+              'id_search_option' => 0,
+              'old_value'        => '',
+              'new_value'        => ''
+              ),
+          4 => array(
+              'id'               => 4,
+              'itemtype'         => 'SoftwareVersion',
+              'items_id'         => 1,
+              'itemtype_link'    => '',
+              'linked_action'    => 20,
+              'user_name'        => 'Plugin_FusionInventory',
+              'id_search_option' => 0,
+              'old_value'        => '',
+              'new_value'        => ''
+              ),
+          5 => array(
+              'id'               => 5,
+              'itemtype'         => 'SoftwareVersion',
+              'items_id'         => 2,
+              'itemtype_link'    => '',
+              'linked_action'    => 20,
+              'user_name'        => 'Plugin_FusionInventory',
+              'id_search_option' => 0,
+              'old_value'        => '',
+              'new_value'        => ''
+              ),
+          6 => array(
+              'id'               => 6,
+              'itemtype'         => 'SoftwareVersion',
+              'items_id'         => 3,
+              'itemtype_link'    => '',
+              'linked_action'    => 20,
+              'user_name'        => 'Plugin_FusionInventory',
+              'id_search_option' => 0,
+              'old_value'        => '',
+              'new_value'        => ''
+              )
       );
 
-      $this->assertEquals($a_reference, $a_logs, "Log must be empty ".print_r($a_logs, true));
+      $this->assertEquals($a_reference, $a_logs, "Log must be 6 ".print_r($a_logs, true));
+      $DB->query('TRUNCATE `glpi_logs`');
 
       // Update a second time and must not have any new lines in glpi_logs
-      $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE, 1);
+      $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
 
       $a_logs = getAllDatasFromTable('glpi_logs');
       $a_reference = array();
@@ -273,6 +345,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
       unset($this->a_inventory['processor'][3]);
       unset($this->a_inventory['software']['orbit2$$$$2.14.19$$$$3$$$$0']);
 
+      $DB->query('TRUNCATE `glpi_logs`');
       $pfiComputerLib->updateComputer($this->a_inventory, 1, FALSE);
 
       $a_logs = getAllDatasFromTable('glpi_logs');
@@ -320,7 +393,7 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'items_id'         => '1',
               'itemtype_link'    => 'SoftwareVersion',
               'linked_action'    => '5',
-              'user_name'        => '',
+              'user_name'        => 'Plugin_FusionInventory',
               'id_search_option' => '0',
               'old_value'        => 'ORBit2 - 2.14.19 (3)',
               'new_value'        => ''
@@ -331,14 +404,14 @@ class ComputerLog extends RestoreDatabase_TestCase {
               'items_id'         => '3',
               'itemtype_link'    => 'Computer',
               'linked_action'    => '5',
-              'user_name'        => '',
+              'user_name'        => 'Plugin_FusionInventory',
               'id_search_option' => '0',
               'old_value'        => 'pc (1)',
               'new_value'        => ''
           )
       );
 
-      $this->assertEquals($a_reference, $a_logs, "May have 3 logs (update contact, remove processor
+      $this->assertEquals($a_reference, $a_logs, "May have 5 logs (update contact, remove processor
          and remove a software)");
 
    }

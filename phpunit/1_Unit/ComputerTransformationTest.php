@@ -52,6 +52,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -147,6 +148,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -224,6 +226,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -320,6 +323,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -406,6 +410,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -468,6 +473,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -531,6 +537,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -584,6 +591,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(

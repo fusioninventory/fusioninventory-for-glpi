@@ -138,6 +138,7 @@ class UnknownDeviceKnowDeviceTest extends Common_TestCase {
       global $DB;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_inventory = array(
          'fusioninventorycomputer' => Array(
