@@ -432,6 +432,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          if ($items_id == '0') {
             $input = array();
             $input['entities_id'] = $entities_id;
+            PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
             $items_id = $computer->add($input);
             $no_history = TRUE;
             $setdynamic = 0;

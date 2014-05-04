@@ -123,6 +123,7 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
             $history = FALSE;
          }
          $input['_no_history'] = $no_history;
+         PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
          $computer->update($input, !$no_history);
 
          if (isset($input['comment'])) {
@@ -2589,6 +2590,13 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
 
    function setDynamicLinkItems($computers_id) {
       global $DB;
+
+      $computer = new Computer();
+      $input = array(
+          'id' => $computers_id
+      );
+      PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
+      $computer->update($input);
 
       $DB->query("UPDATE `glpi_computerdisks` SET `is_dynamic`='1'
                      WHERE `computers_id`='".$computers_id."'");
