@@ -39,7 +39,7 @@ function statBar(svgname, jsondata, title) {
           .y(function(d) { return d.value })
           .staggerLabels(true)
           .tooltips(false)
-          .showValues(false)
+          .showValues(false);
 
       d3.select('#' + svgname)
          .datum([JSON.parse(jsondata)])
@@ -52,7 +52,10 @@ function statBar(svgname, jsondata, title) {
          .attr('text-anchor', 'middle')
          .style('font-weight', 'bold')
          .text(title);
- 
+
+nv.utils.windowResize(chart.update);
+
+      
       return chart;
    });
 }
