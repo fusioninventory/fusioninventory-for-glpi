@@ -733,8 +733,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $a_toinsert[] = "('".implode("','", $a_tmp)."')";
                }
                if (count($a_toinsert) > 0) {
-               Toolbox::logInFile($computers_id.".id", print_r($datatoto, true), true);
-
                   $this->addSoftwareVersionsComputer($a_toinsert);
 
                   if (!$no_history) {
