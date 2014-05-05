@@ -518,7 +518,6 @@ class PluginFusioninventoryInventoryComputerInventory {
             while(!$memcache->add("lock:inventory".$items_id, "1", 300000)) {
                usleep(1000);
             }
-            Toolbox::logInFile($items_id.".id", "start\n", true);
 
             $pfInventoryComputerLib->updateComputer(
                     $a_computerinventory,
@@ -526,7 +525,6 @@ class PluginFusioninventoryInventoryComputerInventory {
                     $no_history,
                     $setdynamic);
 
-            Toolbox::logInFile($items_id.".id", "end\n", true);
             $memcache->delete("lock:inventory".$items_id);
 
             $plugin = new Plugin();
