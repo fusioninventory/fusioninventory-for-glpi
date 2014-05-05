@@ -457,8 +457,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                   $this->addNetworkCard($a_networkcard, $computers_id, $no_history);
                }
             } else {
-               Toolbox::logInFile('TOTO', print_r($a_computerinventory['networkcard'], true));
-               Toolbox::logInFile('TOTO', print_r($db_networkcards, true));
                // Check all fields from source: 'designation', 'mac'
                foreach ($a_computerinventory['networkcard'] as $key => $arrays) {
                   $arrays['designation'] = strtolower($arrays['designation']);
