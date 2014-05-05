@@ -622,8 +622,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                $a_softwareVersionInventory = array();
 
                $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
-               while(!$memcache->add("lock:software", "1", 300000)) {
-                  usleep(1000);
+               if ($pfConfig->getValue('memcached')) {
+                  while(!$memcache->add("lock:software", "1", 300000)) {
+                     usleep(1000);
+                  }
                }
                $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
                foreach ($a_computerinventory['software'] as $a_software) {
@@ -633,13 +635,16 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                         $options);
                   }
                }
-               $memcache->delete("lock:software");
-
+               if ($pfConfig->getValue('memcached')) {
+                  $memcache->delete("lock:software");
+               }
                $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
                                               $a_computerinventory['software'],
                                               $lastSoftwareVid);
-               while(!$memcache->add("lock:softwareversion", "1", 300000)) {
-                  usleep(1000);
+               if ($pfConfig->getValue('memcached')) {
+                  while(!$memcache->add("lock:softwareversion", "1", 300000)) {
+                     usleep(1000);
+                  }
                }
                $this->loadSoftwareVersions($entities_id,
                                            $a_computerinventory['software'],
@@ -650,8 +655,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      $this->addSoftwareVersion($a_software, $softwares_id);
                   }
                }
-               $memcache->delete("lock:softwareversion");
-
+               if ($pfConfig->getValue('memcached')) {
+                  $memcache->delete("lock:softwareversion");
+               }
                $a_toinsert = array();
                foreach ($a_computerinventory['software'] as $a_software) {
                   $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
@@ -737,8 +743,10 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                      }
 
                      $lastSoftwareid = $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
-                     while(!$memcache->add("lock:software", "1", 300000)) {
-                        usleep(1000);
+                     if ($pfConfig->getValue('memcached')) {
+                        while(!$memcache->add("lock:software", "1", 300000)) {
+                           usleep(1000);
+                        }
                      }
                      $this->loadSoftwares($entities_id, $a_computerinventory['software'], $lastSoftwareid);
                      foreach ($a_computerinventory['software'] as $a_software) {
@@ -748,13 +756,17 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                                               $options);
                         }
                      }
-                     $memcache->delete("lock:software");
+                     if ($pfConfig->getValue('memcached')) {
+                        $memcache->delete("lock:software");
+                     }
 
                      $lastSoftwareVid = $this->loadSoftwareVersions($entities_id,
                                                     $a_computerinventory['software'],
                                                     $lastSoftwareVid);
-                     while(!$memcache->add("lock:softwareversion", "1", 300000)) {
-                        usleep(1000);
+                     if ($pfConfig->getValue('memcached')) {
+                        while(!$memcache->add("lock:softwareversion", "1", 300000)) {
+                           usleep(1000);
+                        }
                      }
                      $this->loadSoftwareVersions($entities_id,
                                                  $a_computerinventory['software'],
@@ -765,8 +777,9 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
                            $this->addSoftwareVersion($a_software, $softwares_id);
                         }
                      }
-                     $memcache->delete("lock:softwareversion");
-
+                     if ($pfConfig->getValue('memcached')) {
+                        $memcache->delete("lock:softwareversion");
+                     }
                      $a_toinsert = array();
                      foreach ($a_computerinventory['software'] as $a_software) {
                         $softwares_id = $this->softList[$a_software['name']."$$$$".$a_software['manufacturers_id']];
