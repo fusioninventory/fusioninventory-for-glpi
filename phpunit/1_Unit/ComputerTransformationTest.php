@@ -455,7 +455,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                     'frequency'         => 2400,
                     'frequence'         => 2400,
                     'frequency_default' => 2400,
-                    'nbcores'           => '',
+                    'nbcores'           => '0',
                     'nbthreads'         => '0'
           );
 
