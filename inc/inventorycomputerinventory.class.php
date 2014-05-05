@@ -60,6 +60,8 @@ class PluginFusioninventoryInventoryComputerInventory {
    function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
       global $DB;
 
+      $pfConfig = new PluginFusioninventoryConfig();
+
       $errors = '';
       $_SESSION["plugin_fusioninventory_entity"] = -1;
 
@@ -69,12 +71,18 @@ class PluginFusioninventoryInventoryComputerInventory {
       if (isset($arrayinventory['CONTENT']['HARDWARE']['NAME'])) {
          $name = strtolower($arrayinventory['CONTENT']['HARDWARE']['NAME']);
       }
-      $ret = $DB->query("SELECT GET_LOCK('inventoryname".$name."', 3000)");
-      if ($DB->result($ret, 0, 0) == 1) {
 
+      if ($pfConfig->getValue('memcached')) {
+         $memcache = new Memcached();
+         $memcache->addServer($pfConfig->getValue('memcached'), 11211);
+
+         while(!$memcache->add("lock:inventoryname".$name, "1", 300000)) {
+            usleep(1000);
+         }
          $this->sendCriteria($p_DEVICEID, $arrayinventory);
-
-         $DB->request("SELECT RELEASE_LOCK('inventoryname".$name."')");
+         $memcache->delete("lock:inventoryname".$name);
+      } else {
+         $this->sendCriteria($p_DEVICEID, $arrayinventory);
       }
       return $errors;
    }
@@ -450,15 +458,23 @@ class PluginFusioninventoryInventoryComputerInventory {
          if (!$PF_ESXINVENTORY) {
             $pfAgent->setAgentWithComputerid($items_id, $this->device_id, $entities_id);
          }
-         $ret = $DB->query("SELECT IS_USED_LOCK('inventory".$items_id."')");
-         if (!is_null($DB->result($ret, 0, 0))) {
-            $communication = new PluginFusioninventoryCommunication();
-            $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
-      <REPLY>
-      <ERROR>ERROR: SAME COMPUTER IS CURRENTLY UPDATED</ERROR>
-      </REPLY>");
-            $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
-            exit;
+
+         $pfConfig = new PluginFusioninventoryConfig();
+
+         if ($pfConfig->getValue('memcached')) {
+            $memcache = new Memcached();
+            $memcache->addServer($pfConfig->getValue('memcached'), 11211);
+
+            if ($memcache->get("lock:inventory".$items_id)) {
+
+               $communication = new PluginFusioninventoryCommunication();
+               $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
+         <REPLY>
+         <ERROR>ERROR: SAME COMPUTER IS CURRENTLY UPDATED</ERROR>
+         </REPLY>");
+               $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
+               exit;
+            }
          }
 
          // * For benchs
@@ -466,8 +482,14 @@ class PluginFusioninventoryInventoryComputerInventory {
 
          PluginFusioninventoryInventoryComputerStat::increment();
 
-         $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 3000)");
-         if ($DB->result($ret, 0, 0) == 1) {
+         if ($pfConfig->getValue('memcached')) {
+            $memcache = new Memcached();
+            $memcache->addServer($pfConfig->getValue('memcached'), 11211);
+
+            while(!$memcache->add("lock:inventory".$items_id, "1", 300000)) {
+               usleep(1000);
+            }
+            Toolbox::logInFile($items_id.".id", "start\n", true);
 
             $pfInventoryComputerLib->updateComputer(
                     $a_computerinventory,
@@ -475,7 +497,8 @@ class PluginFusioninventoryInventoryComputerInventory {
                     $no_history,
                     $setdynamic);
 
-            $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
+            Toolbox::logInFile($items_id.".id", "end\n", true);
+            $memcache->delete("lock:inventory".$items_id);
 
             $plugin = new Plugin();
             if ($plugin->isActivated('monitoring')) {
