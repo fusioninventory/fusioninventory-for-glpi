@@ -117,7 +117,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
-          'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'freebsd',
           'operatingsystemversions_id'       => '9.1-RELEASE',
@@ -195,7 +194,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
-          'comment'                          => '',
           'users_id'                         => 0,
           'operatingsystems_id'              => '',
           'operatingsystemversions_id'       => '',
@@ -292,7 +290,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'comment'                          => '',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
           'operatingsystemversions_id'       => '5.1.2600',
@@ -379,7 +376,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'comment'                          => '',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
           'operatingsystemversions_id'       => '5.1.2600',
@@ -663,7 +659,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'comment'                          => '',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
           'operatingsystemversions_id'       => '5.1.2600',

@@ -242,7 +242,6 @@ class ComputerDynamic extends RestoreDatabase_TestCase {
       $a_inventory = array(
           'Computer' => array(
              'name'                             => 'pcxxx1',
-             'comment'                          => 'amd64/-1-11-30 22:04:44',
              'users_id'                         => 0,
              'operatingsystems_id'              => 0,
              'operatingsystemversions_id'       => 0,

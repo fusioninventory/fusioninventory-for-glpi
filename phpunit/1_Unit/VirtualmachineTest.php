@@ -76,7 +76,6 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
           );
       $a_inventory['Computer'] = array(
           'name'                             => 'pc',
-          'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'freebsd',
           'operatingsystemversions_id'       => '9.1-RELEASE',
