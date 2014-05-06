@@ -210,7 +210,6 @@ class PluginFusioninventoryFormatconvert {
                                         'WINPRODKEY'     => 'os_license_number',
                                         'WORKGROUP'      => 'domains_id',
                                         'UUID'           => 'uuid',
-                                        'DESCRIPTION'    => 'comment',
                                         'LASTLOGGEDUSER' => 'users_id',
                                         'operatingsystemservicepacks_id' =>
                                                       'operatingsystemservicepacks_id',

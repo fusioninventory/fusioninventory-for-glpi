@@ -120,9 +120,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          $input = $a_computerinventory['Computer'];
 
          $input['id'] = $computers_id;
-         if (isset($input['comment'])) {
-            unset($input['comment']);
-         }
          $history = TRUE;
          if ($no_history) {
             $history = FALSE;
@@ -131,13 +128,6 @@ class PluginFusioninventoryInventoryComputerLib extends CommonDBTM {
          PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
          $computer->update($input, !$no_history);
 
-         if (isset($input['comment'])) {
-            $inputcomment = array();
-            $inputcomment['comment'] = $input['comment'];
-            $inputcomment['id'] = $computers_id;
-            $inputcomment['_no_history'] = $no_history;
-            $computer->update($inputcomment, !$no_history);
-         }
       $this->computer = $computer;
 
       // * Computer fusion (ext)
