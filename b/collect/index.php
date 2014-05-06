@@ -66,7 +66,7 @@ if (isset($_GET['action'])) {
                         foreach ($array as $data) {
                            $out = $class->run($data, $a_agent);
                            if (count($out) > 0) {
-                              $response[] = $out;
+                              $response['jobs'][] = $out;
                            }
                            $pfTaskjobstate->changeStatus(
                                    $data['id'],

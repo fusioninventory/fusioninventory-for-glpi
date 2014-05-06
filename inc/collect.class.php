@@ -50,8 +50,8 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       return __('Collect information', 'fusioninventory');
    }
 
-   
-   
+
+
    static function canCreate() {
       return PluginFusioninventoryProfile::haveRight("collect", "w");
    }
@@ -76,17 +76,17 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    }
 
 
-   
+
    static function getTypes() {
       $elements = array();
       $elements['registry'] = __('Registry', 'fusioninventory');
       $elements['wmi'] = __('WMI', 'fusioninventory');
       $elements['file'] = __('Find file', 'fusioninventory');
-      
+
       return $elements;
    }
-   
-   
+
+
 
    function showForm($ID, $options=array()) {
 
@@ -103,12 +103,12 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       echo "</td>";
       echo "<td>".__('Type')."</td>";
       echo "<td>";
-      Dropdown::showFromArray('type', 
+      Dropdown::showFromArray('type',
                               PluginFusioninventoryCollect::getTypes(),
                               array('value' => $this->fields['type']));
       echo "</td>";
       echo "</tr>\n";
-      
+
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
       echo __('Comments');
@@ -128,9 +128,9 @@ class PluginFusioninventoryCollect extends CommonDBTM {
 
       return TRUE;
    }
-   
-   
-   
+
+
+
    function prepareRun($taskjobs_id) {
       global $DB;
 
@@ -157,11 +157,11 @@ class PluginFusioninventoryCollect extends CommonDBTM {
          $items_id = current($action);
 
          switch($itemtype) {
-            
+
             case 'Computer':
                $computers[] = $items_id;
                break;
-            
+
             case 'Group':
                $computer_object = new Computer();
 
@@ -193,13 +193,13 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                //merge two previous array and deduplicate entries
                $computers = array_unique(array_merge($computers_a_1, $computers_a_2));
                break;
-               
+
             case 'PluginFusioninventoryDeployGroup':
                $group = new PluginFusioninventoryDeployGroup;
                $group->getFromDB($items_id);
 
                switch ($group->getField('type')) {
-                  
+
                   case 'STATIC':
                      $query = "SELECT items_id
                      FROM glpi_plugin_fusioninventory_deploygroups_staticdatas
@@ -210,7 +210,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                         $computers[] = $row['items_id'];
                      }
                      break;
-                     
+
                   case 'DYNAMIC':
                      $query = "SELECT fields_array
                      FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
@@ -251,10 +251,10 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      }
 
                      break;
-                     
+
                }
                break;
-               
+
          }
       }
 
@@ -282,7 +282,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                $pfCollect->getFromDB($definition['PluginFusioninventoryCollect']);
 
                switch ($pfCollect->fields['type']) {
-                  
+
                   case 'registry':
                      // get all registry
                      $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
@@ -311,7 +311,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                         $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
                         $taskvalid++;
                         $joblog->add($c_input);
-                     }  
+                     }
                      break;
 
                   case 'wmi':
@@ -342,7 +342,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                         $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
                         $taskvalid++;
                         $joblog->add($c_input);
-                     }  
+                     }
                      break;
 
                   case 'file':
@@ -373,10 +373,10 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                         $c_input['state']= PluginFusioninventoryTaskjoblog::TASK_PREPARED;
                         $taskvalid++;
                         $joblog->add($c_input);
-                     }  
+                     }
                      break;
 
-                     
+
                }
             }
          }
@@ -389,13 +389,13 @@ class PluginFusioninventoryCollect extends CommonDBTM {
          $job->reinitializeTaskjobs($job->fields['plugin_fusioninventory_tasks_id']);
       }
    }
-   
-   
-   
+
+
+
    function run($taskjob, $agent) {
       $output = array();
       switch ($taskjob['itemtype']) {
-         
+
          case 'PluginFusioninventoryCollect_Registry':
             $pfCollect_Registry = new PluginFusioninventoryCollect_Registry();
             $pfCollect_Registry->getFromDB($taskjob['items_id']);
@@ -451,7 +451,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
             $output['uuid'] = $taskjob['uniqid'];
             break;
 
-         
+
       }
       return $output;
    }
