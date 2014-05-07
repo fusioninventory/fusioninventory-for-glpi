@@ -5378,6 +5378,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       $a_input = array();
       $a_input['version'] = PLUGIN_FUSIONINVENTORY_VERSION;
+      $config->addValues($a_input, TRUE);
+      $a_input = array();
       $a_input['ssl_only'] = 0;
       if (isset($prepare_Config['ssl_only'])) {
          $a_input['ssl_only'] = $prepare_Config['ssl_only'];
