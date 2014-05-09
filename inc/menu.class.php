@@ -158,7 +158,7 @@ class PluginFusioninventoryMenu {
          $a_menu[0]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventorycomputerimportxml.php";
       }
-      
+
       if (PluginFusioninventoryProfile::haveRight("collect", "r")) {
          $a_menu[11]['name'] = __('Additional computer information', 'fusioninventory');
          $a_menu[11]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_task.png";
@@ -206,7 +206,7 @@ class PluginFusioninventoryMenu {
          $a_menu[4]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/inventoryrulelocation.php";
       }
-      
+
       if (PluginFusioninventoryProfile::haveRight("existantrule", "r")) {
          $a_menu[5]['name'] = __('Additional computer information rules', 'fusioninventory');
          $a_menu[5]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
@@ -295,14 +295,6 @@ class PluginFusioninventoryMenu {
             'name' => __('SNMP models', 'fusioninventory'),
             'pic'  => $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_models.png",
             'link' => $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/snmpmodel.php"
-         );
-      }
-
-      if (PluginFusioninventoryProfile::haveRight("model", "r")) {
-         $a_menu[] = array(
-            'name' => __('SNMP models creation', 'fusioninventory'),
-            'pic'  => $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_constructmodel.png",
-            'link' => $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/constructmodel.php"
          );
       }
 

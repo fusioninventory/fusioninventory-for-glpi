@@ -164,8 +164,6 @@ function plugin_init_fusioninventory() {
               array('classname'=>'glpi_networkports'));
       Plugin::registerClass('PluginFusioninventoryStateDiscovery');
       Plugin::registerClass('PluginFusioninventoryPrinterLogReport');
-      Plugin::registerClass('PluginFusioninventorySnmpmodelConstructdevice_User',
-              array('addtabon' => array('User')));
 
       $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] =
                                                       "glpi_plugin_fusioninventory_printers";
