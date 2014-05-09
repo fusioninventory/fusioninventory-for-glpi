@@ -188,7 +188,7 @@ class PluginFusioninventoryFormatconvert {
     * Modify Computer inventory
     */
    static function computerInventoryTransformation($array) {
-      global $DB, $PF_ESXINVENTORY;
+      global $DB, $PF_ESXINVENTORY, $CFG_GLPI;
 
       $a_inventory = array();
       $thisc = new self();
@@ -341,6 +341,9 @@ class PluginFusioninventoryFormatconvert {
       if (isset($array['BIOS']['BMANUFACTURER'])) {
          $a_inventory['fusioninventorycomputer']['bios_manufacturers_id'] = $array['BIOS']['BMANUFACTURER'];
       }
+
+      $CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$a_inventory['Computer']['manufacturers_id']] = $a_inventory['Computer']['manufacturers_id'];
+
 
       // * OPERATINGSYSTEM
       if (isset($array['OPERATINGSYSTEM'])) {
@@ -1551,6 +1554,7 @@ class PluginFusioninventoryFormatconvert {
 
 
    function replaceids($array) {
+      global $CFG_GLPI;
 
       foreach ($array as $key=>$value) {
          if (!is_int($key)
@@ -1566,6 +1570,14 @@ class PluginFusioninventoryFormatconvert {
                        || $key == "bios_manufacturers_id") {
                   $manufacturer = new Manufacturer();
                   $array[$key]  = $manufacturer->processName($value);
+                  if ($key == 'bios_manufacturers_id') {
+                     $this->foreignkey_itemtype[$key] =
+                              getItemTypeForTable(getTableNameForForeignKeyField('manufacturers_id'));
+                  } else {
+                     if (isset($CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$value])) {
+                        $CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$value] = $array[$key];
+                     }
+                  }
                }
                if (!is_numeric($key)) {
                   if ($key == "bios_manufacturers_id") {
@@ -1576,11 +1588,18 @@ class PluginFusioninventoryFormatconvert {
                                                              $value);
                   } else if (isForeignKeyField($key)
                           && $key != "users_id") {
-
                      $this->foreignkey_itemtype[$key] =
                                  getItemTypeForTable(getTableNameForForeignKeyField($key));
-                     $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                             $value);
+                     if ($key == 'computermodels_id') {
+                        $manufacturer = current($CFG_GLPI['plugin_fusioninventory_computermanufacturer']);
+                        $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
+                                                                $value,
+                                                                '-1',
+                                                                array('manufacturer' => $manufacturer));
+                     } else {
+                        $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
+                                                                $value);
+                     }
                   }
                }
             }
