@@ -42,7 +42,7 @@
 
 include ("../../../inc/includes.php");
 
-Session::checkRight("entity", "w");
+//Session::checkRight("entity", "w");
 
 if (isset($_GET['id'])
         && isset($_GET['lock'])) {
