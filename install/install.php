@@ -339,6 +339,10 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
    $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
    $pfNetworkporttype->init();
 
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerstat.class.php");
+   PluginFusioninventoryInventoryComputerStat::init();
+
+
    $mode_cli = (basename($_SERVER['SCRIPT_NAME']) == "cli_install.php");
 
 }
