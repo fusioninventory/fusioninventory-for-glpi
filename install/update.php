@@ -2239,6 +2239,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                                             'value'   => NULL);
       $a_table['fields']['serialized_inventory']   = array('type'    => 'longblob',
                                                            'value'   => "");
+      $a_table['fields']['is_entitylocked']        = array('type'    => 'bool',
+                                                           'value'   => "0");
 
       $a_table['oldfields']  = array();
 

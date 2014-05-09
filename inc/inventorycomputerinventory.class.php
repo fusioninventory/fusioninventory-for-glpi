@@ -418,7 +418,14 @@ class PluginFusioninventoryInventoryComputerInventory {
 
             if ($computer->fields['entities_id'] != $entities_id) {
                $pfEntity = new PluginFusioninventoryEntity();
+               $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+               $moveentity = FALSE;
                if ($pfEntity->getValue('transfers_id_auto', $computer->fields['entities_id']) > 0) {
+                  if (!$pfInventoryComputerComputer->getLock($items_id)) {
+                     $moveentity = TRUE;
+                  }
+               }
+               if ($moveentity) {
                   $pfEntity = new PluginFusioninventoryEntity();
                   $transfer = new Transfer();
                   $transfer->getFromDB($pfEntity->getValue('transfers_id_auto', $entities_id));
