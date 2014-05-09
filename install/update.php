@@ -2208,6 +2208,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                                             'value'   => NULL);
       $a_table['fields']['serialized_inventory']   = array('type'    => 'longblob',
                                                            'value'   => "");
+      $a_table['fields']['is_entitylocked']        = array('type'    => 'bool',
+                                                           'value'   => "0");
 
       $a_table['oldfields']  = array();
 
@@ -5947,7 +5949,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       WHERE `sub_type`='PluginFusioninventoryRuleImportEquipment'";
    $DB->query($query);
 
-   $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobs`
+   $query = "SELECT * FROM `glpi_rules`
                WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport'";
    $result = $DB->query($query);
    while ($data=$DB->fetch_array($result)) {

@@ -79,6 +79,7 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
     * @param type $computers_id
     */
    static function showInfo($item) {
+      global $CFG_GLPI;
 
       $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
       $a_computerextend = current($pfInventoryComputerComputer->find(
@@ -157,6 +158,27 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
          echo '<td>'.$a_computerextend['wincompany'].'</td>';
          echo '</tr>';
       }
+
+      // Display automatic entity transfer
+      echo '<tr class="tab_bg_1">';
+      echo '<td>'.__('Automatic entity transfer', 'fusioninventory').'</td>';
+      echo '<td>';
+      $pfEntity = new PluginFusioninventoryEntity();
+      if ($pfEntity->getValue('transfers_id_auto', $item->fields['entities_id']) == 0) {
+         echo __('No, locked (by entity configuration)', 'fusioninventory');
+      } else {
+         if ($a_computerextend['is_entitylocked'] == 1) {
+            echo __('No, locked manually', 'fusioninventory');
+            echo " [ <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/computerentitylock.form.php?id=".
+                  $a_computerextend['id']."&lock=0'>".__('Unlock it', 'fusioninventory')."</a> ]";
+         } else {
+            echo __('Yes');
+            echo " [ <a href='".$CFG_GLPI['root_doc']."/plugins/fusioninventory/front/computerentitylock.form.php?id=".
+                  $a_computerextend['id']."&lock=1'>".__('Lock it', 'fusioninventory')."</a> ]";
+         }
+      }
+      echo '</td>';
+      echo '</tr>';
 
       echo '</table>';
    }
@@ -247,6 +269,19 @@ class PluginFusioninventoryInventoryComputerComputer extends CommonDBTM {
       if (!empty($a_computerextend)) {
          $pfInventoryComputerComputer->delete($a_computerextend);
       }
+   }
+
+
+   function getLock($computers_id) {
+
+      $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+      $a_computerextend = current($pfInventoryComputerComputer->find(
+                                              "`computers_id`='".$computers_id."'",
+                                              "", 1));
+      if (empty($a_computerextend)) {
+         return FALSE;
+      }
+      return $a_computerextend['is_entitylocked'];
    }
 }
 
