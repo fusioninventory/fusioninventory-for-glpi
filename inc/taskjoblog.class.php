@@ -162,7 +162,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
       $sopt[8]['table']          = "glpi_plugin_fusioninventory_agents";
       $sopt[8]['field']          = 'name';
-      $sopt[8]['name']           = __('Agent', 'fusioninventory');      
+      $sopt[8]['name']           = __('Agent', 'fusioninventory');
       $sopt[8]['datatype']       = 'itemlink';
       $sopt[8]['forcegroupby']   = TRUE;
       $sopt[8]['joinparams']     = array('beforejoin'
@@ -222,10 +222,23 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
 
          echo "<table class='tab_cadre' style='width: ".$width."px'>";
          echo "<tr class='tab_bg_1'>";
-         echo "<th width='32'>";
+         echo "<th width='32' rowspan='2'>";
          echo "<img src='".$CFG_GLPI['root_doc'].
                   "/plugins/fusioninventory/pics/task_running.png'/>";
          echo "</th>";
+         echo "<th>";
+         if ($DB->numrows($result) > 0) {
+            echo "<form name='form' method='post' action='".
+                    $CFG_GLPI['root_doc']."/plugins/fusioninventory/front/taskjob.form.php'>";
+            echo "<input type='hidden' name='taskjobs_id' value='".
+                    $taskjobs_id."' />";
+            echo '<input name="forceend" value="'.__('Force the end', 'fusioninventory').'"
+                class="submit" type="submit">';
+            Html::closeForm();
+         }
+         echo "</th>";
+         echo "</tr>";
+         echo "<tr class='tab_bg_1'>";
          echo "<td>";
          if ($DB->numrows($result) > 0) {
             echo "<table class='tab_cadre'>";

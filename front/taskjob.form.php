@@ -275,21 +275,41 @@ if (isset($_POST['definition_add'])) {
    Html::back();
 
 } elseif (isset($_POST['forceend'])) {
-   $mytaskjobstate = new PluginFusioninventoryTaskjobstate();
-   $pfTaskjob = new PluginFusioninventoryTaskjob();
-   $mytaskjobstate->getFromDB($_POST['taskjobstates_id']);
-   $jobstate = $mytaskjobstate->fields;
-   $a_taskjobstates = $mytaskjobstate->find("`uniqid`='".$mytaskjobstate->fields['uniqid']."'");
-   foreach($a_taskjobstates as $data) {
-      if ($data['state'] != PluginFusioninventoryTaskjobstate::FINISHED) {
-         $mytaskjobstate->changeStatusFinish($data['id'], 
-                                             0, '', 1, "Action cancelled by user", 0, 0);
+   if (isset($_POST['taskjobstates_id'])) {
+      $mytaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      $mytaskjobstate->getFromDB($_POST['taskjobstates_id']);
+      $jobstate = $mytaskjobstate->fields;
+      $a_taskjobstates = $mytaskjobstate->find("`uniqid`='".$mytaskjobstate->fields['uniqid']."'");
+      foreach($a_taskjobstates as $data) {
+         if ($data['state'] != PluginFusioninventoryTaskjobstate::FINISHED) {
+            $mytaskjobstate->changeStatusFinish($data['id'],
+                                                0, '', 1, "Action cancelled by user", 0, 0);
+         }
       }
+      $pfTaskjob->getFromDB($jobstate['plugin_fusioninventory_taskjobs_id']);
+      $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
+   } else {
+      $query = 'SELECT * FROM `glpi_plugin_fusioninventory_taskjobstates`
+         WHERE `plugin_fusioninventory_taskjobs_id`="'.$_POST['taskjobs_id'].'"
+            AND `state`!="3"
+         GROUP BY uniqid, plugin_fusioninventory_agents_id
+         ORDER BY `id` DESC';
+      $result = $DB->query($query);
+      $mytaskjobstate = new PluginFusioninventoryTaskjobstate();
+      $pfTaskjob = new PluginFusioninventoryTaskjob();
+      while ($data=$DB->fetch_array($result)) {
+         $a_taskjobstates = $mytaskjobstate->find("`uniqid`='".$data['uniqid']."'");
+         foreach($a_taskjobstates as $datast) {
+            if ($datast['state'] != PluginFusioninventoryTaskjobstate::FINISHED) {
+               $mytaskjobstate->changeStatusFinish($datast['id'],
+                                                   0, '', 1, "Action cancelled by user", 0, 0);
+            }
+         }
+      }
+      $pfTaskjob->getFromDB($_POST['taskjobs_id']);
+      $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
    }
-
-   $pfTaskjob->getFromDB($jobstate['plugin_fusioninventory_taskjobs_id']);
-   $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
-
    Html::back();
 }
 
