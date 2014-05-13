@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Kaya Zeren <kayazeren@gmail.com>, 2013
+# Kaya Zeren <kayazeren@gmail.com>, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-06 23:54+0200\n"
-"PO-Revision-Date: 2014-05-06 21:55+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"POT-Creation-Date: 2014-05-07 00:42+0200\n"
+"PO-Revision-Date: 2014-05-07 18:18+0000\n"
+"Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/projects/p/FusionInventory/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -63,7 +63,7 @@ msgstr "Mimari"
 
 #: hook.php:144
 msgid "Conformité (configuration management)"
-msgstr ""
+msgstr "Uyumluluk (ayar yönetimi)"
 
 #: hook.php:152 hook.php:159 hook.php:166 hook.php:173 hook.php:180
 #: hook.php:187 hook.php:194 hook.php:900 inc/agent.class.php:147
@@ -80,19 +80,19 @@ msgstr "Yayım"
 
 #: hook.php:159
 msgid "WakeOnLan"
-msgstr ""
+msgstr "WakeOnLan"
 
 #: hook.php:166
 msgid "Local inventory"
-msgstr ""
+msgstr "Yerel envanter"
 
 #: hook.php:173
 msgid "ESX/VMWare"
-msgstr ""
+msgstr "ESX/VMWare"
 
 #: hook.php:180
 msgid "Network inventory"
-msgstr ""
+msgstr "Ağ envanteri"
 
 #: hook.php:187 hook.php:905 inc/agent.class.php:294 inc/agent.class.php:304
 #: inc/config.class.php:644 inc/config.class.php:653
@@ -102,7 +102,7 @@ msgstr "Ağ keşfi"
 
 #: hook.php:194
 msgid "Collect"
-msgstr ""
+msgstr "Toplayın"
 
 #: hook.php:242 hook.php:250 hook.php:282 inc/menu.class.php:328
 #: inc/networkequipment.class.php:447 inc/printer.class.php:168
@@ -165,7 +165,7 @@ msgstr "Durmaya zorlayın"
 #: inc/profile.class.php:302
 msgid "Task"
 msgid_plural "Tasks"
-msgstr[0] ""
+msgstr[0] "Görevler"
 
 #: hook.php:1059 inc/deployreport.class.php:121
 #: inc/deploystaticmisc.class.php:87
@@ -244,7 +244,7 @@ msgstr "Belgeler"
 
 #: setup.php:461
 msgid "Your GLPI version not compatible, require 0.85"
-msgstr ""
+msgstr "Bu uygulama eki GLPI 0.84 ve üzerindeki sürümlerle çalışır"
 
 #: setup.php:466
 msgid "fileinfo extension (PHP) is required..."
@@ -260,21 +260,21 @@ msgstr "Lütfen glpi/plugins/ içindeki %s klasörünü silin"
 #: inc/configurationmanagement.class.php:340
 #: inc/configurationmanagement.class.php:423
 msgid "In referentiel + alert"
-msgstr ""
+msgstr "Referans + uyarı"
 
 #: ajax/configurationamanagement_action.php:56
 #: inc/configurationmanagement.class.php:258
 #: inc/configurationmanagement.class.php:341
 #: inc/configurationmanagement.class.php:424
 msgid "In referentiel - alert"
-msgstr ""
+msgstr "Referans - uyarı"
 
 #: ajax/configurationamanagement_action.php:57
 #: inc/configurationmanagement.class.php:259
 #: inc/configurationmanagement.class.php:342
 #: inc/configurationmanagement.class.php:425
 msgid "Not in referentiel"
-msgstr ""
+msgstr "Referens değil"
 
 #: front/agent.form.php:58
 msgid "The agent is running"
@@ -359,7 +359,7 @@ msgstr "Bilgisayar bağlantısı"
 #: inc/agent.class.php:303 inc/agent.class.php:330 inc/config.class.php:652
 #: inc/config.class.php:670
 msgid "SNMP timeout"
-msgstr ""
+msgstr "SNMP zaman aşımı"
 
 #: inc/agent.class.php:599
 msgid "Agent state"
@@ -685,11 +685,11 @@ msgstr "Hizmet İnternet Adresi"
 
 #: inc/config.class.php:355
 msgid "Clean agents not have contacted server since (in days)"
-msgstr ""
+msgstr "Sunucuya şu kadar gün bağlanmayan ajanlar silinsin"
 
 #: inc/config.class.php:364
 msgid "Memcached server address (empty to disable it)"
-msgstr ""
+msgstr "Önbellekteki sunucu adresi (devre dışı bırakmak için boş bırakın)"
 
 #: inc/config.class.php:396 inc/wizard.class.php:340
 msgid "Import options"
@@ -792,21 +792,21 @@ msgstr "Veri için kullanılacak şifreleme yöntemi"
 
 #: inc/configurationmanagement.class.php:62 inc/menu.class.php:434
 msgid "Configuration management"
-msgstr ""
+msgstr "Ayar yönetimi"
 
 #: inc/configurationmanagement.class.php:82
 msgid "conform"
-msgstr ""
+msgstr "uyan"
 
 #: inc/configurationmanagement.class.php:88
 msgid "SHA of referential"
-msgstr ""
+msgstr "SHA ya da referans"
 
 #: inc/configurationmanagement.class.php:274
 #: inc/configurationmanagement.class.php:379
 #: inc/configurationmanagement.class.php:462
 msgid "View actions"
-msgstr ""
+msgstr "Eylemlere bakın"
 
 #: inc/credential.class.php:56 inc/credential.class.php:143
 #: inc/credentialip.class.php:97 inc/credentialip.class.php:110
@@ -1210,7 +1210,7 @@ msgstr "İşlem"
 
 #: inc/entity.class.php:67
 msgid "Fusioninventory"
-msgstr ""
+msgstr "Fusioninventory"
 
 #: inc/entity.class.php:110
 msgid "Model for automatic computers transfer in an other entity"
@@ -1290,6 +1290,14 @@ msgstr "Bilgisayar GLPI içine eklendi"
 msgid "Entity rules"
 msgstr "Birim kuralları"
 
+#: inc/inventoryruleentity.class.php:132
+msgid "IP Address"
+msgstr "IP Adresi"
+
+#: inc/inventoryruleentity.class.php:135
+msgid "Computer's name"
+msgstr "Bilgisayar adı"
+
 #: inc/inventoryruleentity.class.php:164
 #: inc/inventoryrulelocation.class.php:170
 msgid "Ignore in FusionInventory import"
@@ -1314,7 +1322,7 @@ msgstr "Duruma göre GLPI aygıtı arama"
 
 #: inc/inventoryruleimport.class.php:169
 msgid "Restrict search in defined entity"
-msgstr ""
+msgstr "Yalnız belirtilen kurumda aransın"
 
 #: inc/inventoryruleimport.class.php:181
 msgid "FusionInventory link"
@@ -1322,7 +1330,7 @@ msgstr "FusionInventory bağlantısı"
 
 #: inc/inventoryruleimport.class.php:197
 msgid "Link"
-msgstr ""
+msgstr "Bağlantı"
 
 #: inc/inventoryruleimport.class.php:199 inc/inventoryruleimport.class.php:948
 #: inc/inventoryruleimportcollection.class.php:115
@@ -2311,7 +2319,7 @@ msgstr "Görev yönetimi"
 
 #: inc/menu.class.php:213
 msgid "Monitoring / Logs"
-msgstr ""
+msgstr "İzleme / Günlükler"
 
 #: inc/menu.class.php:220
 msgid "Import agent XML file"
@@ -2324,7 +2332,7 @@ msgstr "Ek bilgisayar bilgileri"
 #: inc/menu.class.php:233 inc/timeslot.class.php:61 inc/timeslot.class.php:70
 #: inc/timeslotentry.class.php:70
 msgid "Time slot"
-msgstr ""
+msgstr "Zaman aralığı"
 
 #: inc/menu.class.php:239
 msgid "Tasks"
@@ -2364,19 +2372,19 @@ msgstr "Ağ"
 
 #: inc/menu.class.php:414
 msgid "Not conform"
-msgstr ""
+msgstr "uymayan"
 
 #: inc/menu.class.php:421
 msgid "To be validated"
-msgstr ""
+msgstr "Onay bekleyen"
 
 #: inc/menu.class.php:426
 msgid "Models"
-msgstr ""
+msgstr "Modeller"
 
 #: inc/menu.class.php:628
 msgid "Number of computer inventories of last hours"
-msgstr ""
+msgstr "Son saatlerdeki bilgisayar envanterinin sayısı"
 
 #: inc/networkequipment.class.php:54 inc/printer.class.php:65
 msgid "FusionInventory SNMP"
@@ -2568,11 +2576,11 @@ msgstr "Görüntülenemeyecek kadar çok veri var"
 
 #: inc/profile.class.php:154
 msgid "Inventory"
-msgstr ""
+msgstr "Envanter"
 
 #: inc/profile.class.php:159
 msgid "Software deployment"
-msgstr ""
+msgstr "Yazılım geliştirme"
 
 #: inc/profile.class.php:209
 msgid "Fields blacklist"
@@ -2749,7 +2757,7 @@ msgstr "ay"
 
 #: inc/task.view.class.php:194
 msgid "Advanced mode"
-msgstr ""
+msgstr "Gelişmiş kip"
 
 #: inc/taskjob.class.php:146 inc/taskjob.class.php:267
 #: inc/taskjob.class.php:271
@@ -2825,7 +2833,7 @@ msgstr "Bu görevi yeniden çalıştırın"
 
 #: inc/taskjob.class.php:2398
 msgid "Action"
-msgstr ""
+msgstr "Eylem"
 
 #: inc/taskjoblog.class.php:79 inc/taskjoblog.class.php:675
 #: inc/taskjoblog.class.php:1017
@@ -2884,7 +2892,7 @@ msgstr "Ajan durdu/çöktü"
 
 #: inc/taskjoblog.class.php:1168
 msgid "Completion"
-msgstr ""
+msgstr "Tamamlanma"
 
 #: inc/taskjobstate.class.php:143
 msgid "Running tasks"
@@ -2892,15 +2900,15 @@ msgstr "Çalışan görevler"
 
 #: inc/timeslotentry.class.php:61
 msgid "Time slot entry"
-msgstr ""
+msgstr "Zaman aralığı kaydı"
 
 #: inc/timeslotentry.class.php:108
 msgid "Start time"
-msgstr ""
+msgstr "Başlangıç zamanı"
 
 #: inc/timeslotentry.class.php:134
 msgid "End time"
-msgstr ""
+msgstr "Bitiş zamanı"
 
 #: inc/unknowndevice.class.php:56 inc/unknowndevice.class.php:78
 msgid "Unknown device"

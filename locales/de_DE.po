@@ -3,13 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Mathieu Simon <mathieu.sim@gmail.com>, 2014
+# Megachip <www.transifex.com@megskywalker.de>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-06 23:54+0200\n"
-"PO-Revision-Date: 2014-05-06 21:55+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"POT-Creation-Date: 2014-05-07 00:42+0200\n"
+"PO-Revision-Date: 2014-05-07 05:05+0000\n"
+"Last-Translator: Mathieu Simon <mathieu.sim@gmail.com>\n"
 "Language-Team: German (Germany) (http://www.transifex.com/projects/p/FusionInventory/language/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -79,7 +81,7 @@ msgstr "Verteilung"
 
 #: hook.php:159
 msgid "WakeOnLan"
-msgstr ""
+msgstr "Wake on LAN"
 
 #: hook.php:166
 msgid "Local inventory"
@@ -87,11 +89,11 @@ msgstr ""
 
 #: hook.php:173
 msgid "ESX/VMWare"
-msgstr ""
+msgstr "ESX/VMWare"
 
 #: hook.php:180
 msgid "Network inventory"
-msgstr ""
+msgstr "Netzwerkinventar"
 
 #: hook.php:187 hook.php:905 inc/agent.class.php:294 inc/agent.class.php:304
 #: inc/config.class.php:644 inc/config.class.php:653
@@ -101,7 +103,7 @@ msgstr "Netzwerkdiscovery"
 
 #: hook.php:194
 msgid "Collect"
-msgstr ""
+msgstr "Sammeln"
 
 #: hook.php:242 hook.php:250 hook.php:282 inc/menu.class.php:328
 #: inc/networkequipment.class.php:447 inc/printer.class.php:168
@@ -129,7 +131,7 @@ msgstr[1] "Sperrungen"
 
 #: hook.php:862 hook.php:868
 msgid "Target a task"
-msgstr ""
+msgstr "Wähle einen Task"
 
 #: hook.php:876 hook.php:887
 msgid "Load the correct SNMP model"
@@ -175,7 +177,7 @@ msgstr "Paket"
 
 #: hook.php:1072
 msgid "Create a job for each computer"
-msgstr ""
+msgstr "Job pro Computer erstellen"
 
 #: hook.php:1074
 msgid "Create a job for each group"
@@ -237,7 +239,7 @@ msgstr "Anzahl Tage seite der letzten Inventarisierung"
 
 #: setup.php:347 report/computer_last_inventory.php:67
 msgid "Computers not inventoried since xx days"
-msgstr ""
+msgstr "Computer, welche seit xx Tagen nicht inventorisiert wurden"
 
 #: setup.php:361 setup.php:362
 msgid "Documentation"
@@ -254,7 +256,7 @@ msgstr ""
 #: setup.php:479
 #, php-format
 msgid "Please remove folder %s in glpi/plugins/"
-msgstr ""
+msgstr "Bitte den Ordner %s im Verzeichnis glpi/plugins löschen"
 
 #: ajax/configurationamanagement_action.php:55
 #: inc/configurationmanagement.class.php:257
@@ -360,7 +362,7 @@ msgstr "Computerverbindung"
 #: inc/agent.class.php:303 inc/agent.class.php:330 inc/config.class.php:652
 #: inc/config.class.php:670
 msgid "SNMP timeout"
-msgstr ""
+msgstr "SNMP timeout"
 
 #: inc/agent.class.php:599
 msgid "Agent state"
@@ -415,7 +417,7 @@ msgstr ""
 
 #: inc/collect_file.class.php:87
 msgid "Find file associated"
-msgstr ""
+msgstr "Finde zugehörige Datei"
 
 #: inc/collect_file.class.php:91 inc/collect_file.class.php:161
 msgid "Limit"
@@ -500,7 +502,7 @@ msgstr "Gross-/Kleinschreibung beachten"
 #: inc/collect_file_content.class.php:52 inc/collect_file_content.class.php:73
 #: inc/collect_file_content.class.php:79
 msgid "Find file content"
-msgstr ""
+msgstr "Finde Dateiinhalt"
 
 #: inc/collect_file_content.class.php:188
 msgid "Path/file"
@@ -687,11 +689,11 @@ msgstr "Dienst-URL"
 
 #: inc/config.class.php:355
 msgid "Clean agents not have contacted server since (in days)"
-msgstr ""
+msgstr "Agents ohne Serverkontakt (in Tagen) bereinigen"
 
 #: inc/config.class.php:364
 msgid "Memcached server address (empty to disable it)"
-msgstr ""
+msgstr "memcached Serveradresse (leer = deaktiviert)"
 
 #: inc/config.class.php:396 inc/wizard.class.php:340
 msgid "Import options"
@@ -794,7 +796,7 @@ msgstr "Verschlüsselungmethode für Daten"
 
 #: inc/configurationmanagement.class.php:62 inc/menu.class.php:434
 msgid "Configuration management"
-msgstr ""
+msgstr "Konfigurationsverwaltung"
 
 #: inc/configurationmanagement.class.php:82
 msgid "conform"
@@ -844,7 +846,7 @@ msgstr "Ausgabe des Kommandos enthält"
 
 #: inc/deployaction.class.php:55
 msgid "Command output does not contains"
-msgstr ""
+msgstr "Ausgabe des Kommandos enthält nicht"
 
 #: inc/deployaction.class.php:71
 msgid "Command"
@@ -1043,7 +1045,7 @@ msgstr "Vorhaltezeit in Tagen"
 
 #: inc/deployfile.class.php:684
 msgid "Transfer error: the file size is too big"
-msgstr ""
+msgstr "Übertragunsfehler: Die Datei ist zu groß"
 
 #: inc/deployfile.class.php:687
 msgid "The uploaded file was only partially uploaded"
@@ -1213,7 +1215,7 @@ msgstr "Fortschritt"
 
 #: inc/entity.class.php:67
 msgid "Fusioninventory"
-msgstr ""
+msgstr "FusionInventory"
 
 #: inc/entity.class.php:110
 msgid "Model for automatic computers transfer in an other entity"
@@ -1293,6 +1295,14 @@ msgstr "Computer wurde in GLPI importiert"
 msgid "Entity rules"
 msgstr "Entitätsregeln"
 
+#: inc/inventoryruleentity.class.php:132
+msgid "IP Address"
+msgstr "IP-Adresse"
+
+#: inc/inventoryruleentity.class.php:135
+msgid "Computer's name"
+msgstr "Computername"
+
 #: inc/inventoryruleentity.class.php:164
 #: inc/inventoryrulelocation.class.php:170
 msgid "Ignore in FusionInventory import"
@@ -1325,7 +1335,7 @@ msgstr "FusionInventory-Verbindung"
 
 #: inc/inventoryruleimport.class.php:197
 msgid "Link"
-msgstr ""
+msgstr "Verknüpfung"
 
 #: inc/inventoryruleimport.class.php:199 inc/inventoryruleimport.class.php:948
 #: inc/inventoryruleimportcollection.class.php:115
@@ -2314,7 +2324,7 @@ msgstr "Aufgabenverwaltung"
 
 #: inc/menu.class.php:213
 msgid "Monitoring / Logs"
-msgstr ""
+msgstr "Monitoring / Logs"
 
 #: inc/menu.class.php:220
 msgid "Import agent XML file"
@@ -2335,7 +2345,7 @@ msgstr "Audits"
 
 #: inc/menu.class.php:259
 msgid "Ignored import devices"
-msgstr ""
+msgstr "Nicht importierte Geräte"
 
 #: inc/menu.class.php:267
 msgid "Computer entity rules"
@@ -2375,7 +2385,7 @@ msgstr ""
 
 #: inc/menu.class.php:426
 msgid "Models"
-msgstr ""
+msgstr "Modelle"
 
 #: inc/menu.class.php:628
 msgid "Number of computer inventories of last hours"
@@ -2571,11 +2581,11 @@ msgstr "Zu viele Datenfür die Anzeige"
 
 #: inc/profile.class.php:154
 msgid "Inventory"
-msgstr ""
+msgstr "Inventar"
 
 #: inc/profile.class.php:159
 msgid "Software deployment"
-msgstr ""
+msgstr "Softwareverteilung"
 
 #: inc/profile.class.php:209
 msgid "Fields blacklist"
@@ -2752,7 +2762,7 @@ msgstr "Kommunikationsmodus"
 
 #: inc/task.view.class.php:194
 msgid "Advanced mode"
-msgstr ""
+msgstr "Erweiterter Modus"
 
 #: inc/taskjob.class.php:146 inc/taskjob.class.php:267
 #: inc/taskjob.class.php:271
@@ -2828,7 +2838,7 @@ msgstr "Aufgabe erneut ausführen"
 
 #: inc/taskjob.class.php:2398
 msgid "Action"
-msgstr ""
+msgstr "Aktion"
 
 #: inc/taskjoblog.class.php:79 inc/taskjoblog.class.php:675
 #: inc/taskjoblog.class.php:1017
@@ -2899,11 +2909,11 @@ msgstr ""
 
 #: inc/timeslotentry.class.php:108
 msgid "Start time"
-msgstr ""
+msgstr "Startzeit"
 
 #: inc/timeslotentry.class.php:134
 msgid "End time"
-msgstr ""
+msgstr "Endzeit"
 
 #: inc/unknowndevice.class.php:56 inc/unknowndevice.class.php:78
 msgid "Unknown device"
