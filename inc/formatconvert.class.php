@@ -308,18 +308,31 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * Type of computer
-      if (isset($array['HARDWARE']['CHASSIS_TYPE'])
-              && !empty($array['HARDWARE']['CHASSIS_TYPE'])) {
-         $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['CHASSIS_TYPE'];
-      } else  if (isset($array['BIOS']['TYPE'])
-              && !empty($array['BIOS']['TYPE'])) {
-         $a_inventory['Computer']['computertypes_id'] = $array['BIOS']['TYPE'];
-      } else if (isset($array['BIOS']['MMODEL'])
-              && !empty($array['BIOS']['MMODEL'])) {
-         $a_inventory['Computer']['computertypes_id'] = $array['BIOS']['MMODEL'];
-      } else if (isset($array['HARDWARE']['VMSYSTEM'])
-              && !empty($array['HARDWARE']['VMSYSTEM'])) {
+      
+      //First the HARDWARE/VMSYSTEM is not Physical : then it's a virtual machine
+      if (isset($array['HARDWARE']['VMSYSTEM']) 
+            && $array['HARDWARE']['VMSYSTEM'] != '' 
+               && $array['HARDWARE']['VMSYSTEM'] != 'Physical') {
          $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['VMSYSTEM'];
+      } else {
+         //It's not a virtual machine, then check : 
+         //1 - HARDWARE/CHASSIS_TYPE
+         //2 - BIOS/TYPE
+         //3 - BIOS/MMODEL
+         //4 - HARDWARE/VMSYSTEM (should not go there)
+         if (isset($array['HARDWARE']['CHASSIS_TYPE'])
+               && !empty($array['HARDWARE']['CHASSIS_TYPE'])) {
+            $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['CHASSIS_TYPE'];
+         } else  if (isset($array['BIOS']['TYPE'])
+               && !empty($array['BIOS']['TYPE'])) {
+            $a_inventory['Computer']['computertypes_id'] = $array['BIOS']['TYPE'];
+         } else if (isset($array['BIOS']['MMODEL'])
+               && !empty($array['BIOS']['MMODEL'])) {
+            $a_inventory['Computer']['computertypes_id'] = $array['BIOS']['MMODEL'];
+         } else if (isset($array['HARDWARE']['VMSYSTEM'])
+               && !empty($array['HARDWARE']['VMSYSTEM'])) {
+            $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['VMSYSTEM'];
+         }
       }
 
 //      if (isset($array['BIOS']['SKUNUMBER'])) {
