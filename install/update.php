@@ -1921,7 +1921,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          'Unknow',
          'System Serial Number',
          'MB-1234567890',
-         '0');
+         '0',
+         'empty');
          foreach ($a_input as $value) {
             $query = "SELECT * FROM `".$newTable."`
                WHERE `plugin_fusioninventory_criterium_id`='".$a_criteria['ssn']."'
