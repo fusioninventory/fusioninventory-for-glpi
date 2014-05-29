@@ -247,7 +247,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
        */
       $a_menu = array();
 
-      if (Session::haveRight('plugin_fusioninventory_rule_import', READ)) {
+      if (Session::haveRight('plugin_fusioninventory_ruleimport', READ)) {
          $a_menu[1]['name'] = __('Equipment import and link rules', 'fusioninventory');
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL(
