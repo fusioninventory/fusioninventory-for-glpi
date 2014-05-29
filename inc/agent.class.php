@@ -262,8 +262,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $oComputer = new Computer();
          $oComputer->getFromDB($this->fields["computers_id"]);
          echo $oComputer->getLink(1);
-         Html::hidden('computers_id',
-                      array('value' => $this->fields["computers_id"]));
+         echo Html::hidden('computers_id',
+                           array('value' => $this->fields["computers_id"]));
       } else {
          Computer_Item::dropdownConnect("Computer", "Computer", 'computers_id',
                                         $_SESSION['glpiactive_entity']);

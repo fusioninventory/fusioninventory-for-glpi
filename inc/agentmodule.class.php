@@ -188,7 +188,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
          echo "</table>";
-         Html::hidden('id', array('value' => $data['id']));
+         echo Html::hidden('id', array('value' => $data['id']));
          Html::closeForm();
          echo "<br/>";
       }
@@ -284,7 +284,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       if ($canedit) {
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='4'>";
-         Html::hidden('id', array('value' => $items_id));
+         echo Html::hidden('id', array('value' => $items_id));
          echo "<input type='submit' name='updateexceptions' ".
                  "value=\"".__('Update')."\" class='submit'>";
          echo "</td>";
