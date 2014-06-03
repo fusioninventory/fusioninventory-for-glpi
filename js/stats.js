@@ -30,13 +30,17 @@ function statHalfDonut(svgname, jsondata) {
 }
 
 
-function statBar(svgname, jsondata, title) {
+function statBar(svgname, jsondata, title, width) {
    
    nv.addGraph(function() {
 
+      var height = 280;
+          
       var chart = nv.models.discreteBarChart()
           .x(function(d) { return d.label })
           .y(function(d) { return d.value })
+          .width(width)
+          .height(height)
           .staggerLabels(true)
           .tooltips(false)
           .showValues(false);
@@ -53,8 +57,7 @@ function statBar(svgname, jsondata, title) {
          .style('font-weight', 'bold')
          .text(title);
 
-nv.utils.windowResize(chart.update);
-
+      nv.utils.windowResize(chart.update);
       
       return chart;
    });

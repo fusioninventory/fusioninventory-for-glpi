@@ -86,14 +86,14 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
 
 
 
-   static function getLastTwelveHours() {
+   static function getLastHours($nb=11) {
       global $DB;
 
       $a_counters = array();
       $a_counters['key'] = 'test';
 
       $timestamp = date('U');
-      for ($i=12; $i>=0; $i--) {
+      for ($i=$nb; $i>=0; $i--) {
          $timestampSearch = $timestamp - ($i * 3600);
          $query = "SELECT * FROM `glpi_plugin_fusioninventory_inventorycomputerstats` "
                     ."WHERE `day`='".date('z', $timestampSearch)."' "

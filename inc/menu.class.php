@@ -121,6 +121,26 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
 
+   static function getAdditionalMenuContent() {
+      global $CFG_GLPI;
+
+      $menu = array();
+
+      $menu['fusioninventory_inventory']['title'] = "FI> ".__('Computer inv.', 'fusioninventory');
+      $menu['fusioninventory_inventory']['page']  = "/plugins/fusioninventory/front/menu_inventory.php";
+
+      $menu['fusioninventory_inventorySNMP']['title'] = "FI> ".__('SNMP inv.', 'fusioninventory');
+      $menu['fusioninventory_inventorySNMP']['page']  = '/plugins/fusioninventory/front/menu_snmpinventory.php';
+
+      $menu['fusioninventory_inventoryESX']['title'] = "FI> ".__('ESX inv.', 'fusioninventory');
+      $menu['fusioninventory_inventoryESX']['page']  = '/plugins/fusioninventory/front/menu_esxinventory.php';
+
+      $menu['fusioninventory_deploy']['title'] = "FI> ".__('Soft. deploy', 'fusioninventory');
+      $menu['fusioninventory_deploy']['page']  = '/plugins/fusioninventory/front/menu_deploy.php';
+      return $menu;
+   }
+
+
    /**
    * Display the menu of FusionInventory
    *
@@ -450,6 +470,79 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
    /**
+    * Menu for computer inventory
+    */
+   static function displayMenuInventory() {
+      global $CFG_GLPI;
+
+      $pfConfig = new PluginFusioninventoryConfig();
+
+
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>";
+      echo __('This is the steps to configure FusionInventory plugin for computer inventory', 'fusioninventory');
+      echo "</th>";
+      echo "</tr>";
+
+      $a_steps = array(
+          array(
+              'text' => __('Configure frequency of agent contact (and so each inventory)', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/config.form.php?forcetab=PluginFusioninventoryConfig$0"
+          ),
+          array(
+              'text' => __('Configure inventory options', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/config.form.php?forcetab=PluginFusioninventoryConfig$1"
+          ),
+          array(
+              'text' => __('Define rules for entity', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/inventoryruleentity.php"
+          ),
+          array(
+              'text' => __('Define rules for location', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/inventoryrulelocation.php"
+          ),
+          array(
+              'text' => __('Define rules for import : merge and create new computer (CAUTION: same rules for SNMP inventory)', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/inventoryruleimport.php"
+          )
+      );
+
+      $i = 1;
+      foreach ($a_steps as $data) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<th width='20'>";
+         echo $i.".";
+         echo "</th>";
+         echo "<td>";
+         echo '<a href="'.$data['url'].'" target="_blank">'.$data['text'].'</a>';
+         echo "</td>";
+         echo "</tr>";
+         $i++;
+      }
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>";
+      echo __('Statistics', 'fusioninventory')." / ".__('Number of computer inventories of last hours', 'fusioninventory');
+      echo "</th>";
+      echo "</tr>";
+      $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours(23);
+      echo "<tr class='tab_bg_1' height='280'>";
+      echo "<td colspan='2' height='280'>";
+      self::showChartBar('nbinventory', $dataInventory, '', 940);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "</table>";
+   }
+
+
+
+   /**
     * htmlMenu
     *
     *@param $menu_name value of the menu
@@ -615,7 +708,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       );
 
       // Number of computer inventories in last hour, 6 hours, 24 hours
-      $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastTwelveHours();
+      $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours();
 
 
 
@@ -626,6 +719,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "</td>";
       echo "<td width='380'>";
       $title = __('Number of computer inventories of last hours', 'fusioninventory');
+      $title = '';
       self::showChartBar('nbinventory', $dataInventory, $title);
       echo "</td>";
       echo "<td width='380'>";
@@ -659,11 +753,11 @@ class PluginFusioninventoryMenu extends CommonGLPI {
    }
 
 
-   static function showChartBar($name, $data, $title='') {
+   static function showChartBar($name, $data, $title='', $width=370) {
       echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
 
       echo "<script>
-         statBar('".$name."', '".json_encode($data)."', '".$title."');
+         statBar('".$name."', '".json_encode($data)."', '".$title."', '".$width."');
 </script>";
    }
 }
