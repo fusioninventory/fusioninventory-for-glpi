@@ -88,12 +88,10 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
       $query  = "SELECT `id`, `wakeup_agent_counter`, `wakeup_agent_time`, `last_agent_wakeup` 
                  FROM `glpi_plugin_fusioninventory_tasks` 
                  WHERE `wakeup_agent_time` > 0 
+                    AND `wakeup_agent_counter` > 0
                     AND `is_active`='1'";
 
       foreach ($DB->request($query) as $task) {
-         if (!$continue) {
-            break;
-         }
          if (!is_null($task['wakeup_agent_time'])) {
             //Do not wake up is last wake up in inferior to the minimum wake up interval
             $interval   = time() - strtotime($task['last_agent_wakeup']);
@@ -102,7 +100,8 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
             }
          }
          
-         //For each task, get a number of taskjobs at the PREPARED state (the maximum is defined in wakeup_agent_counter)
+         //For each task, get a number of taskjobs at the PREPARED state 
+         //(the maximum is defined in wakeup_agent_counter)
          $query_states = "SELECT `taskjobstates`.`plugin_fusioninventory_agents_id`, 
                                  `tasks`.`id` as `taskID`, 
                                  `tasks`.`wakeup_agent_time`,
@@ -122,7 +121,7 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
                $wakeupArray[$state['plugin_fusioninventory_agents_id']] = $state['plugin_fusioninventory_agents_id'];
                $counter++;
             }
-            //Store task ID and last wake up time
+            //Store task ID
             if (!in_array($state['taskID'], $tasks)) {
                $tasks[] = $state['taskID'];
             }
@@ -134,6 +133,11 @@ class PluginFusioninventoryAgentWakeup extends  CommonDBTM {
                break;
             }
          }
+         //We've reached the maximum number of agents to wake up !
+         if (!$continue) {
+            break;
+         }
+
       }
 
       //Number of agents successfully woken up

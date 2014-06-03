@@ -425,17 +425,6 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       );
    */
 
-   if (!TableExists('glpi_plugin_fusioninventory_agentwakeups')) {
-      $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_fusioninventory_agentwakeups` (
-         `id` int(11) NOT NULL AUTO_INCREMENT,
-         `plugin_fusioninventory_agents_id` int(11) NOT NULL DEFAULT '0',
-         `max_wakeup_time` date NOT NULL,
-         PRIMARY KEY (`id`)
-         ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-      ";
-      $result=$DB->query($query);
-   }
-   
    //Push task functionnality
    $migration->addField('glpi_plugin_fusioninventory_tasks', 'last_agent_wakeup', 'datetime');
    $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_counter', 'int');
