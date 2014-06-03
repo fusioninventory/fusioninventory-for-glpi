@@ -70,6 +70,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['users_id']               = $users_id;
       $input['agent_base_url']         = '';
       $input['agents_old_days']        = '0';
+      $input['wakeup_agent_max']       = '10';
 
       $input['import_monitor']         = 2;
       $input['import_printer']         = 2;
@@ -360,7 +361,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'toadd' => array('0'=>__('Disabled')))
          );
       echo "</td>";
-      echo "<td></td>";
+      echo "<td>".__('Maximum number of agents to wake up in a task', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td width='20%'>";
+      Dropdown::showNumber("wakeup_agent_max", array(
+             'value' => $this->getValue('wakeup_agent_max'),
+             'min' => 1,
+             'max' => 100)
+         );
+      echo "</td>";
       echo "<td>";
       echo "</td>";
       echo "</tr>";
