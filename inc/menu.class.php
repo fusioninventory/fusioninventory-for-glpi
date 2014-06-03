@@ -481,6 +481,18 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='2'>";
+      echo __('Statistics', 'fusioninventory')." / ".__('Number of computer inventories of last hours', 'fusioninventory');
+      echo "</th>";
+      echo "</tr>";
+      $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours(23);
+      echo "<tr class='tab_bg_1' height='280'>";
+      echo "<td colspan='2' height='280'>";
+      self::showChartBar('nbinventory', $dataInventory, '', 940);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>";
       echo __('This is the steps to configure FusionInventory plugin for computer inventory', 'fusioninventory');
       echo "</th>";
       echo "</tr>";
@@ -516,7 +528,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $i = 1;
       foreach ($a_steps as $data) {
          echo "<tr class='tab_bg_1'>";
-         echo "<th width='20'>";
+         echo "<th width='25'>";
          echo $i.".";
          echo "</th>";
          echo "<td>";
@@ -525,17 +537,116 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          echo "</tr>";
          $i++;
       }
+
+      echo "</table>";
+   }
+
+
+
+   /**
+    * Menu for SNMP inventory
+    */
+   static function displayMenuSNMPInventory() {
+      global $CFG_GLPI;
+
+      $pfConfig = new PluginFusioninventoryConfig();
+
+
+      echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='2'>";
-      echo __('Statistics', 'fusioninventory')." / ".__('Number of computer inventories of last hours', 'fusioninventory');
+      echo __('Statistics', 'fusioninventory');
       echo "</th>";
       echo "</tr>";
-      $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours(23);
-      echo "<tr class='tab_bg_1' height='280'>";
-      echo "<td colspan='2' height='280'>";
-      self::showChartBar('nbinventory', $dataInventory, '', 940);
+//      $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours(23);
+      echo "<tr class='tab_bg_1' height='100'>";
+      echo "<td colspan='2' height='100'>";
+//      self::showChartBar('nbinventory', $dataInventory, '', 940);
       echo "</td>";
       echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>";
+      echo __('This is the steps to configure FusionInventory plugin for SNMP inventory (swicth, router, network printer)', 'fusioninventory');
+      echo "</th>";
+      echo "</tr>";
+
+      $a_steps = array(
+          array(
+              'text' => __('Configure SNMP credentials', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/configsecurity.php"
+          ),
+          array(
+              'text' => __('Define rules for import : merge and create new devices (CAUTION: same rules for computer inventory)', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/inventoryruleimport.php"
+          ),
+          array(
+              'text' => __('`Network Discovery`, used to discover the devices on the network', 'fusioninventory'),
+              'url'  => "",
+              'title'=> TRUE
+          ),
+          array(
+              'text' => __('Define IP Ranges of your network', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/iprange.php"
+          ),
+          array(
+              'text' => __('Define an agent allowed to discover the network', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/config.form.php?forcetab=PluginFusioninventoryAgentmodule$1"
+          ),
+          array(
+              'text' => __('Create a new Task with discovery module and the agent defined previously', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/task.php"
+          ),
+          array(
+              'text' => __('If you have devices not typed, import them from unknown devices', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/unknowndevice.php"
+          ),
+          array(
+              'text' => __('`Network Inventory`, used to complete inventory the discovered devices', 'fusioninventory'),
+              'url'  => "",
+              'title'=> TRUE
+          ),
+          array(
+              'text' => __('Define an agent allowed to inventory the network by SNMP', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/config.form.php?forcetab=PluginFusioninventoryAgentmodule$1"
+          ),
+          array(
+              'text' => __('Create a new Task with network inventory module and the agent defined previously', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/task.php"
+          ),
+      );
+
+      $i = 1;
+      foreach ($a_steps as $data) {
+         echo "<tr class='tab_bg_1'>";
+         if (isset($data['title'])
+                 && $data['title']) {
+            echo "<th colspan='2'>";
+            echo $data['text'];
+            echo "</th>";
+         } else {
+            echo "<th width='25'>";
+            echo $i.".";
+            echo "</th>";
+            echo "<td>";
+            if ($data['url'] == '') {
+               echo $data['text'];
+            } else {
+               echo '<a href="'.$data['url'].'" target="_blank">'.$data['text'].'</a>';
+            }
+            echo "</td>";
+            $i++;
+         }
+         echo "</tr>";
+      }
 
       echo "</table>";
    }
