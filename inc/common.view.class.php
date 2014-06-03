@@ -95,6 +95,19 @@ class PluginFusioninventoryCommonView extends CommonDBTM {
 
    }
 
+   /**
+    * Basic display elements
+    */
+
+   public function showIntegerField($title, $varname, $options = array()) {
+
+      echo "<label>".$title."&nbsp;:</label>";
+      echo "<div class='input_wrap'>";
+      Dropdown::showNumber($varname, $options);
+      echo "</div>";
+
+   }
+
    public function showCheckboxField($title, $varname, $options = array()) {
       echo "<label>" . $title."&nbsp;:" . "</label>";
       $options['name'] = $varname;

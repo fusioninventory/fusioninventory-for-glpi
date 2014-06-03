@@ -228,6 +228,8 @@ class FusinvDB extends PHPUnit_Framework_Assert{
               'Cron cleantaskjob not created');
       $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryNetworkPortLog', 'cleannetworkportlogs'),
               'Cron cleannetworkportlogs not created');
+      $this->assertTrue($crontask->getFromDBbyName('PluginFusioninventoryAgentWakeup', 'wakeupAgents'),
+              'Cron wakeupAgents not created');
 
 
       /*

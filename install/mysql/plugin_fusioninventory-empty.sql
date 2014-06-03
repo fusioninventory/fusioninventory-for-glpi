@@ -103,9 +103,13 @@ CREATE TABLE `glpi_plugin_fusioninventory_tasks` (
   `datetime_start` datetime DEFAULT NULL,
   `datetime_end` datetime DEFAULT NULL,
   `plugin_fusioninventory_timeslots_id` int(11) NOT NULL DEFAULT '0',
+  `last_agent_wakeup` datetime DEFAULT NULL,
+  `wakeup_agent_counter` int(11) NOT NULL DEFAULT '0',
+  `wakeup_agent_time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `entities_id` (`entities_id`),
-  KEY `is_active` (`is_active`)
+  KEY `is_active` (`is_active`),
+  KEY `wakeup_agent_counter` (`wakeup_agent_counter`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
