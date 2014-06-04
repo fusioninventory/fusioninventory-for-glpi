@@ -21,6 +21,8 @@ include ("./docopt.php");
 
 require ("./logging.php");
 
+$_SESSION["glpicronuserrunning"] = 1;
+
 /**
  * Process arguments passed to the script
  */
