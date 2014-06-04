@@ -107,9 +107,11 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          )
       );
       echo "   </div>"; // end of fusinv_form
+
+      // Add a manual refresh button
       echo "   <div class='fusinv_form large'>";
       echo "      <div id='refresh_button' class='button'>";
-      echo "      <span>Refresh manually</span></div>";
+      echo "      <span></span></div>";
       echo "   </div>";
       echo "</div>"; // end of fusinv_panel
 
