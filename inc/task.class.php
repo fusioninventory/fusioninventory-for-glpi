@@ -243,7 +243,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
 
       // Merge agents into one list
-      $agents = [];
+      $agents = array();
       foreach($actors as $key=>$agents_list) {
          //Toolbox::logDebug(array("agents_list count" => count($agents_list)));
          //Toolbox::logDebug(array("agents_list" => $agents_list));
