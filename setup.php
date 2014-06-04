@@ -277,7 +277,9 @@ function plugin_init_fusioninventory() {
          );
       }
 
-      if (  script_endswith("task.form.php") )
+      if (  script_endswith("task.form.php")
+         or script_endswith("taskjob.php")
+      )
       {
          $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'],

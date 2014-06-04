@@ -900,20 +900,23 @@ taskjobs.update_progressbar = function( chart ) {
 
 
 taskjobs.get_logs = function( ajax_url, task_id ) {
-   $('#refresh_button').find('span').toggleClass('loading', true).text('Refreshing ...');
-   $.ajax({
-      url: ajax_url,
-      data: {
-         "task_id" : task_id
-      },
-      success: function( data, textStatus, jqXHR) {
-         taskjobs.update_logs(data);
-      },
-      complete: function( ) {
-         taskjobs.Queue.queue("refresh_logs").pop();
-         $('#refresh_button').find('span').toggleClass('loading', false).text('Manual refresh');
-      }
-   });
+    $('#refresh_button').find('span').toggleClass('loading', true).text('Refreshing ...');
+    var data = {
+        "task_id" : task_id
+    };
+
+    console.debug(task_id)
+    $.ajax({
+        url: ajax_url,
+        data: data,
+        success: function( data, textStatus, jqXHR) {
+            taskjobs.update_logs(data);
+        },
+        complete: function( ) {
+            taskjobs.Queue.queue("refresh_logs").pop();
+            $('#refresh_button').find('span').toggleClass('loading', false).text('Manual refresh');
+        }
+    });
 }
 
 taskjobs.init_refresh_form = function( ajax_url, task_id, refresh_id) {

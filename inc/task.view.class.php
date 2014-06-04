@@ -115,11 +115,11 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo "   </div>";
       echo "</div>"; // end of fusinv_panel
 
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $taskjobs = $pfTaskjob->find(
-         "`plugin_fusioninventory_tasks_id`='".$this->fields['id']."'",
-         "id"
-      );
+      //$pfTaskjob = new PluginFusioninventoryTaskjob();
+      //$taskjobs = $pfTaskjob->find(
+      //   "`plugin_fusioninventory_tasks_id`='".$this->fields['id']."'",
+      //   "id"
+      //);
 
       // Template structure for tasks' blocks
       echo implode("\n", array(
@@ -243,17 +243,22 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 //         "<pre class='debuglogs' style='text-align:left;'></pre>"
       ));
 
+      if (isset($this->fields['id']) ){
+         $task_id = $this->fields['id'];
+      } else {
+         $task_id = json_encode(array());
+      }
       echo implode( "\n", array(
          "<script type='text/javascript'>",
          "  taskjobs.init_templates();",
          "  taskjobs.init_refresh_form(",
          "     '".$this->getBaseUrlFor('fi.job.logs')."',",
-         "     ".$this->fields['id'].",",
+         "     ".$task_id.",",
          "     'dropdown_".$refresh_randid."'",
          "  );",
          "  taskjobs.update_logs_timeout(",
          "     '".$this->getBaseUrlFor('fi.job.logs')."',",
-         "     ".$this->fields['id'].",",
+         "     ".$task_id.",",
          "     'dropdown_".$refresh_randid."'",
          "  );",
          "</script>"
@@ -267,92 +272,99 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
    // TODO: Move this method in task.class
    function ajaxGetJobLogs($options) {
 
-//      $task->getFromDB($options['task_id']);
-
-      $logs = $this->getJoblogs(array($options['task_id']));
+      if (isset($options['task_id'])) {
+         if (is_array($options['task_id'])) {
+            $task_ids = $options['task_id'];
+         } else {
+            $task_ids = array($options['task_id']);
+         }
+      } else {
+         $task_ids = array();
+      }
+      $logs = $this->getJoblogs($task_ids);
       echo json_encode($logs);
       return;
 
-      $display_list = array();
-      $display_list[] = "<ul class='job_list'>";
+      //$display_list = array();
+      //$display_list[] = "<ul class='job_list'>";
 
-      foreach($logs as $task) {
-         foreach($task['jobs'] as $job) {
-            $job_id = "job_".$job['id'];
-            $display_list[] = "<li class='job_info' id='".$job_id."'>";
-            $display_list[] = "  <h3>".$job['name']."</h3>";
-            foreach($job['targets'] as $target) {
+      //foreach($logs as $task) {
+      //   foreach($task['jobs'] as $job) {
+      //      $job_id = "job_".$job['id'];
+      //      $display_list[] = "<li class='job_info' id='".$job_id."'>";
+      //      $display_list[] = "  <h3>".$job['name']."</h3>";
+      //      foreach($job['targets'] as $target) {
 
-               $counters = $target['counters'];
-               $target_id = $job_id."_target_".$target['id'];
-               $display_list[] = " <div class='job_target' id='".$target_id."'>";
+      //         $counters = $target['counters'];
+      //         $target_id = $job_id."_target_".$target['id'];
+      //         $display_list[] = " <div class='job_target' id='".$target_id."'>";
 
-               // Target Title
-               $display_list[] = "<h4>";
-               $display_list[] = " ".$target['type_name'] ;
-               $display_list[] = " <a ";
-               $display_list[] = "  target='_blank' href='".$target['item_link']."'";
-               $display_list[] = " >";
-               $display_list[] = "  ".$target['name'];
-               $display_list[] = " </a>";
-               $display_list[] = " <span>(ID:" . $target['id'] . ")</span>";
-               $display_list[] = "</h4>";
+      //         // Target Title
+      //         $display_list[] = "<h4>";
+      //         $display_list[] = " ".$target['type_name'] ;
+      //         $display_list[] = " <a ";
+      //         $display_list[] = "  target='_blank' href='".$target['item_link']."'";
+      //         $display_list[] = " >";
+      //         $display_list[] = "  ".$target['name'];
+      //         $display_list[] = " </a>";
+      //         $display_list[] = " <span>(ID:" . $target['id'] . ")</span>";
+      //         $display_list[] = "</h4>";
 
-               $stats_lines = array(
-                  array(
-                     "agents_prepared",
-                     "agents_cancelled",
-                     "agents_running"
-                  ),
-                  array(
-                     "agents_success",
-                     "agents_error",
-                     "agents_notdone"
-                  )
-               );
+      //         $stats_lines = array(
+      //            array(
+      //               "agents_prepared",
+      //               "agents_cancelled",
+      //               "agents_running"
+      //            ),
+      //            array(
+      //               "agents_success",
+      //               "agents_error",
+      //               "agents_notdone"
+      //            )
+      //         );
 
-               foreach($stats_lines as $stat_line) {
+      //         foreach($stats_lines as $stat_line) {
 
-                  $display_list[] = "     <div class='stats'>";
+      //            $display_list[] = "     <div class='stats'>";
 
-                  foreach($stat_line as $type) {
+      //            foreach($stat_line as $type) {
 
-                     $list = $counters[$type];
-                     $css = count($list)?"":"empty";
+      //               $list = $counters[$type];
+      //               $css = count($list)?"":"empty";
 
-                     $display_list[] = " <a";
-                     $display_list[] = "  class='$type $css'";
-                     $display_list[] = "  title='".__("Show/Hide Target details","fusioninventory")."'";
-                     $display_list[] = "  onclick='taskjobs.toggle_target_fold(this)'";
-                     $display_list[] = " >";
-                     $display_list[] =
-                        $this->getCounterTypeName($type)." : " . count($list);
-                     $display_list[] = " </a>";
-                  }
+      //               $display_list[] = " <a";
+      //               $display_list[] = "  class='$type $css'";
+      //               $display_list[] = "  title='".__("Show/Hide Target details","fusioninventory")."'";
+      //               $display_list[] = "  onclick='taskjobs.toggle_target_fold(this)'";
+      //               $display_list[] = " >";
+      //               $display_list[] =
+      //                  $this->getCounterTypeName($type)." : " . count($list);
+      //               $display_list[] = " </a>";
+      //            }
 
-                  $display_list[] = "     </div>";
+      //            $display_list[] = "     </div>";
 
-               }
+      //         }
 
-               $display_list[] = "  <ul class='agents_block'>";
-               $display_list = array_merge(
-                  $display_list,
-                  $this->getAgentsLogs($target['agents'],$counters, $target_id)
-               );
-               $display_list[] = "  </ul>";
-               $display_list[] = "  </div>";
+      //         $display_list[] = "  <ul class='agents_block'>";
+      //         $display_list = array_merge(
+      //            $display_list,
+      //            $this->getAgentsLogs($target['agents'],$counters, $target_id)
+      //         );
+      //         $display_list[] = "  </ul>";
+      //         $display_list[] = "  </div>";
 
-            }
+      //      }
 
-            $display_list[] = "</li>"; // end of job_info
+      //      $display_list[] = "</li>"; // end of job_info
 
-         }
+      //   }
 
-      }
+      //}
 
-      $display_list[] = "</ul>";
+      //$display_list[] = "</ul>";
 
-      echo implode("\n", $display_list);
+      //echo implode("\n", $display_list);
 
    }
 
