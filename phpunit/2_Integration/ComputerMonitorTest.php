@@ -162,6 +162,7 @@ class ComputerMonitor extends Common_TestCase {
 
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $pfConfig         = new PluginFusioninventoryConfig();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
@@ -250,6 +251,7 @@ class ComputerMonitor extends Common_TestCase {
 
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $pfConfig         = new PluginFusioninventoryConfig();
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();

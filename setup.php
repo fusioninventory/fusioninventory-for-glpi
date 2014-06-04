@@ -138,6 +138,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventorySetup');
       Plugin::registerClass('PluginFusioninventoryIPRange');
       Plugin::registerClass('PluginFusioninventoryCredential');
+      Plugin::registerClass('PluginFusioninventoryTimeslot');
       Plugin::registerClass('PluginFusioninventoryLock',
               array('addtabon' => array('Computer', 'Printer', 'NetworkEquipment')));
 
@@ -249,32 +250,6 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
 
-      /**
-       * Load the relevant javascript files only on pages that need them.
-       */
-      if (  script_endswith("deploypackage.form.php") ) {
-
-         $PLUGIN_HOOKS['add_css']['fusioninventory'][]="lib/extjs/resources/css/ext-all.css";
-
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array(
-             "lib/extjs/adapter/ext/ext-base.js",
-             "lib/extjs/ext-all-debug.js",
-             "lib/REDIPS_drag/redips-drag-source.js",
-             "lib/REDIPS_drag/drag_table_rows.js",
-             "lib/plusbutton.js",
-             "lib/deploy_editsubtype.js",
-         );
-      }
-
-      if (  script_endswith("task.form.php") )
-      {
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array(
-             "lib/REDIPS_drag/redips-drag-source.js",
-             "lib/REDIPS_drag/drag_table_rows.js",
-             "lib/plusbutton.js",
-             "js/taskjobs.js",
-         );
-      }
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
          "lib/d3-3.4.3/d3.min.js";
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
@@ -282,7 +257,50 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
          "js/expanding.js";
+      /**
+       * Load the relevant javascript files only on pages that need them.
+       */
+      if (  script_endswith("deploypackage.form.php") ) {
 
+         $PLUGIN_HOOKS['add_css']['fusioninventory'][]="lib/extjs/resources/css/ext-all.css";
+
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(
+            $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
+            array(
+               "lib/extjs/adapter/ext/ext-base.js",
+               "lib/extjs/ext-all-debug.js",
+               "lib/REDIPS_drag/redips-drag-source.js",
+               "lib/REDIPS_drag/drag_table_rows.js",
+               "lib/plusbutton.js",
+               "lib/deploy_editsubtype.js",
+            )
+         );
+      }
+
+      if (  script_endswith("task.form.php") )
+      {
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(
+            $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
+            array(
+               "lib/lazy.js-0.3.2/lazy.js",
+               "lib/mustache.js-0.8.1/mustache.js",
+               "lib/REDIPS_drag/redips-drag-source.js",
+               "lib/REDIPS_drag/drag_table_rows.js",
+               "lib/plusbutton.js",
+               "js/taskjobs.js",
+            )
+         );
+      }
+
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+              "lib/d3-3.4.3/d3.min.js";
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+              "lib/nvd3/nv.d3.min.js";
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+              "lib/timeslot.js";
+
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+              "js/stats.js";
 
       if (Session::haveRight('plugin_fusioninventory_configuration', READ)
               || Session::haveRight('profile', UPDATE)) {// Config page
@@ -397,7 +415,8 @@ function plugin_init_fusioninventory() {
             }
          }
          // Load nvd3 for printerpage counter graph
-         if (strstr($_SERVER['PHP_SELF'], '/front/printer.form.php')) {
+         if (strstr($_SERVER['PHP_SELF'], '/front/printer.form.php')
+                 || strstr($_SERVER['PHP_SELF'], '/front/menu.php')) {
             echo '<link href="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
                     '/src/nv.d3.css" rel="stylesheet" type="text/css" />
                <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.

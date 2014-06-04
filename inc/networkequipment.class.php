@@ -62,9 +62,12 @@ class PluginFusioninventoryNetworkEquipment extends CommonDBTM {
 
       if ($item->getID() > 0) {
          $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
-         $pfNetworkEquipment->showForm($item,
-              array('target'=>$CFG_GLPI['root_doc'].
-                                 '/plugins/fusioninventory/front/switch_info.form.php'));
+//         $pfNetworkEquipment->showForm($item,
+//              array('target'=>$CFG_GLPI['root_doc'].
+//                                 '/plugins/fusioninventory/front/switch_info.form.php'));
+         $pfNetworkEquipment->showNetworkEquipmentInformation($item,
+                                                              array('target'=>$CFG_GLPI['root_doc'].
+                                                                    '/plugins/fusioninventory/front/switch_info.form.php'));
       }
 
       return TRUE;

@@ -5,7 +5,7 @@ $doc = <<<DOC
 get_agent_jobs.php
 
 Usage:
-   get_agent_jobs.php [-h | -q | -d ] [--methods=methods] <device_ids>...
+   get_agent_jobs.php [-h | -q | -d ] [--methods=methods] [<device_ids>...]
 
 -h, --help     show this help
 -q, --quiet    run quietly
@@ -45,16 +45,26 @@ foreach($staticmisc_methods as $method) {
    $methods[$method['method']] = $method['method'];
 }
 
-foreach($args['<device_ids>'] as $device_id) {
-   $logger->info("Get infos for Agent '$device_id' ...");
-   $infos = $agent->InfosByKey($device_id);
-   $logger->debug($infos);
-   if ( count($infos) == 0 ) {
-      $logger->error("Agent $device_id not found");
-   } else {
-      $logger->info($infos);
-   }
+$device_ids = array();
+
+if (count($args['<device_ids>']) == 0) {
+   $agents = array_values($agent->find());
+   $randid = rand(0,count($agents));
+   $device_ids = array($agents[$randid]['device_id']);
+} else {
+   //$agents = $agent->find("device_id in ('".implode("','", $args['<device_ids>'])."')");
+   //$device_ids[] = $agent_data['device_id'];
+   $device_ids = $args['<device_ids>'];
+}
+
+//$logger->debug($device_ids);
+
+foreach($device_ids as $device_id) {
    $logger->info("Get prepared jobs for Agent '$device_id'");
-   $jobstates = $task->getTaskjobstatesForAgent($infos['id'], $methods, array('read_only'=>true));
-   $logger->info($jobstates);
+//   $jobstates = $task->getTaskjobstatesForAgent($device_id, $methods, array('read_only'=>true));
+   //   $jobstates = $task->getTaskjobstatesForAgent($device_id, $methods);
+   $time = microtime(true);
+   file_get_contents("http://glpi.kroy-laptop.sandbox/glpi/plugins/fusioninventory/b/deploy/?action=getJobs&machineid=".$device_id);
+   $time = microtime(true) - $time;
+   $logger->info("Get prepared jobs for Agent '$device_id' : $time s");
 }

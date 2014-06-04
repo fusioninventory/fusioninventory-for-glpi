@@ -356,6 +356,26 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    }
 
 
+   function fail($reason='') {
+      $log = new PluginFusioninventoryTaskjoblog();
+
+      $log_input = array(
+         'plugin_fusioninventory_taskjobstates_id' => $this->fields['id'],
+         'items_id' => $this->fields['items_id'],
+         'itemtype' => $this->fields['itemtype'],
+         'date' => date("Y-m-d H:i:s"),
+         'state' => PluginFusioninventoryTaskjoblog::TASK_ERROR,
+         'comment' => $reason
+      );
+
+      $log->add($log_input);
+
+      $this->update(array(
+         'id' => $this->fields['id'],
+         'state' => self::IN_ERROR
+         ));
+   }
+
    function cancel($reason='') {
 
       $log = new PluginFusioninventoryTaskjoblog();

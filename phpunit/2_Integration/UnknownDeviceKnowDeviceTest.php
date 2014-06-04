@@ -138,6 +138,7 @@ class UnknownDeviceKnowDeviceTest extends Common_TestCase {
       global $DB;
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_inventory = array(
          'fusioninventorycomputer' => Array(
@@ -164,7 +165,6 @@ class UnknownDeviceKnowDeviceTest extends Common_TestCase {
       );
       $a_inventory['Computer'] = array(
          'name'                             => 'pc',
-         'comment'                          => 'amd64/-1-11-30 22:04:44',
          'users_id'                         => 0,
          'operatingsystems_id'              => 1,
          'operatingsystemversions_id'       => 1,

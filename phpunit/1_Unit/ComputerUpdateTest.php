@@ -59,6 +59,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_inventory = array(
           'fusioninventorycomputer' => Array(
@@ -88,7 +89,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           );
       $a_inventory['Computer'] = array(
           'name'                             => 'pc',
-          'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'freebsd',
           'operatingsystemversions_id'       => '9.1-RELEASE',
@@ -355,7 +355,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'winowner'                                  => 'test',
           'wincompany'                                => 'siprossii',
           'remote_addr'                               => NULL,
-          'plugin_fusioninventory_computerarchs_id'   => 0
+          'plugin_fusioninventory_computerarchs_id'   => 0,
+          'is_entitylocked'                           => 0
       );
 
       $this->assertEquals($a_reference, $a_computer);
@@ -403,7 +404,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'users_id_tech'           => '0',
           'groups_id_tech'          => '0',
           'is_update'               => '0',
-          'softwares_id'            => '-1',
+          'softwares_id'            => '0',
           'manufacturers_id'        => '1',
           'is_deleted'              => '0',
           'is_template'             => '0',
@@ -443,7 +444,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'users_id_tech'           => '0',
           'groups_id_tech'          => '0',
           'is_update'               => '0',
-          'softwares_id'            => '-1',
+          'softwares_id'            => '0',
           'manufacturers_id'        => '2',
           'is_deleted'              => '0',
           'is_template'             => '0',
@@ -483,7 +484,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'users_id_tech'           => '0',
           'groups_id_tech'          => '0',
           'is_update'               => '0',
-          'softwares_id'            => '-1',
+          'softwares_id'            => '0',
           'manufacturers_id'        => '3',
           'is_deleted'              => '0',
           'is_template'             => '0',
@@ -1085,7 +1086,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
-
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_inventory = array(
           'fusioninventorycomputer' => Array(

@@ -48,6 +48,8 @@ Html::header(__('FusionInventory', 'fusioninventory'),
              "pluginfusioninventorymenu",
              "collect");
 
+Session::checkRight("plugin_fusioninventory_collect", READ);
+
 PluginFusioninventoryMenu::displayMenu("mini");
 
 Search::show('PluginFusioninventoryCollect');

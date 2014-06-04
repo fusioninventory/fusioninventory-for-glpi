@@ -98,19 +98,22 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
    }
 
    static function showCriteriaAndSearch(PluginFusioninventoryDeployGroup $item) {
-            $search_params                 = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, true);
-            //$search_params['metacriteria'] = array();
-            PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
-
-            unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
-            if (isset($_GET['preview'])) {
-               //Add extra parameters for massive action display : only the Add action should be displayed
-               $search_params['massiveactionparams']['extraparams']['id'] = $item->getID();
-               $search_params['massiveactionparams']['extraparams']['custom_action'] = 'add_to_group';
-               $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array ('action', 'id');
-
-               Search::showList('PluginFusioninventoryComputer', $search_params);
-            }
+      $search_params                 = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, true);
+      //If metacriteria array is empty, remove it as it displays the metacriteria form,
+      //and it's is not we want !
+      if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
+         unset($search_params['metacriteria']);
+      }
+      PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
+            
+      unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
+      if (isset($_GET['preview'])) {
+         //Add extra parameters for massive action display : only the Add action should be displayed
+         $search_params['massiveactionparams']['extraparams']['id'] = $item->getID();
+         $search_params['massiveactionparams']['extraparams']['custom_action'] = 'add_to_group';
+         $search_params['massiveactionparams']['extraparams']['massive_action_fields'] = array ('action', 'id');
+         Search::showList('PluginFusioninventoryComputer', $search_params);
+      }
    }
 
    static function showResults(PluginFusioninventoryDeployGroup $group) {

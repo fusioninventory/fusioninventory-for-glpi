@@ -49,8 +49,10 @@ if (isset($_POST['save'])) {
    $group_item = new PluginFusioninventoryDeployGroup_Dynamicdata();
    if (!countElementsInTable($group_item->getTable(),
                              "plugin_fusioninventory_deploygroups_id='".$_POST['id']."'")) {
+      $criteria  = array('criteria'     => $_POST['criteria'],
+                         'metacriteria' => $_POST['metacriteria']);
+      $values['fields_array'] = serialize($criteria);
       $values['plugin_fusioninventory_deploygroups_id'] = $_POST['id'];
-      $values['fields_array'] = serialize($_POST['criteria']);
       $group_item->add($values);
    } else {
       $item = getAllDatasFromTable($group_item->getTable(),
@@ -71,13 +73,13 @@ if (isset($_POST['save'])) {
    Html::redirect(Toolbox::getItemTypeFormURL("PluginFusioninventoryDeployGroup")."?id=".$newID);
 
 } else if (isset($_POST["delete"])) {
-   $group->check($_POST['id'], DELETE);
+//   $group->check($_POST['id'], DELETE);
    $ok = $group->delete($_POST);
 
    $group->redirectToList();
 
 } else if (isset($_POST["purge"])) {
-   $group->check($_POST['id'], DELETE);
+//   $group->check($_POST['id'], DELETE);
    $ok = $group->delete($_REQUEST, 1);
 
    $group->redirectToList();

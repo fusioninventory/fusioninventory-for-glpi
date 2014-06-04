@@ -307,8 +307,12 @@ class PluginFusioninventoryProfile extends Profile {
                 'field'     => 'plugin_fusioninventory_wol'),
           array('itemtype'  => 'PluginFusioninventoryDeployGroup',
                 'label'     => __('Groups of computers', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_group')
+                'field'     => 'plugin_fusioninventory_group'),
+          array('itemtype'  => 'PluginFusioninventoryCollect',
+                'label'     => __('Additional computer information', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_collect')
       );
+
       return $rights;
    }
 

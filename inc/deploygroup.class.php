@@ -231,13 +231,16 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       echo "<div id='searchcriteria'>";
       $nb_criteria = count($p['criteria']);
-      if ($nb_criteria == 0) $nb_criteria++;
+      if ($nb_criteria == 0) {
+         $nb_criteria++;
+      }
+      $nb_meta_criteria = (isset($p['metacriteria'])?count($p['metacriteria']):0);
       $nbsearchcountvar = 'nbcriteria'.strtolower($itemtype).mt_rand();
       $nbmetasearchcountvar = 'nbmetacriteria'.strtolower($itemtype).mt_rand();
       $searchcriteriatableid = 'criteriatable'.strtolower($itemtype).mt_rand();
       // init criteria count
       $js = "var $nbsearchcountvar=".$nb_criteria.";";
-      $js .= "var $nbmetasearchcountvar=".count($p['metacriteria']).";";
+      $js .= "var $nbmetasearchcountvar=".$nb_meta_criteria.";";
       echo Html::scriptBlock($js);
 
       echo "<table class='tab_format' id='$searchcriteriatableid'>";
@@ -253,7 +256,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $linked =  Search::getMetaItemtypeAvailable('Computer');
 
       if (is_array($linked) && (count($linked) > 0)) {
-         for ($i=0 ; $i<count($p['metacriteria']) ; $i++) {
+         for ($i=0 ; $i<$nb_meta_criteria ; $i++) {
 
             $_POST['itemtype'] = $itemtype;
             $_POST['num'] = $i ;
@@ -321,7 +324,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
    /**
    *
    */
-   static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group, $check_post_values = false) {
+   static function getSearchParamsAsAnArray(PluginFusioninventoryDeployGroup $group, $check_post_values=FALSE, $getAll=FALSE) {
       global $DB;
       $computers_params = array();
 
@@ -340,6 +343,9 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          }
       } else {
          $computers_params = $_GET;
+      }
+      if ($getAll) {
+         $computers_params['export_all'] = true;
       }
       return Search::manageParams('PluginFusioninventoryComputer', $computers_params);
    }
@@ -391,6 +397,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          }
          parent::processMassiveActionsForOneItemtype($ma, $item, $ids);
       }
+   }
+   
+   function cleanDBOnPurge() {
+      $dynamic_group = new PluginFusioninventoryDeployGroup_Dynamicdata();
+      $static_group  = new PluginFusioninventoryDeployGroup_Staticdata();
+      $dynamic_group->deleteByCriteria(array('plugin_fusioninventory_deploygroups_id' => $this->getID()));
+      $static_group->deleteByCriteria(array('plugin_fusioninventory_deploygroups_id' => $this->getID()));      
    }
 }
 ?>

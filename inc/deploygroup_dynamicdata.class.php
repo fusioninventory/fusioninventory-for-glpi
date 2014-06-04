@@ -52,14 +52,6 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static public $itemtype = 'PluginFusioninventoryDeployGroup';
    static public $items_id = 'plugin_fusioninventory_deploygroups_id';
 
-   static function canCreate() {
-      return parent::canCreate();
-   }
-
-   static function canView() {
-      return parent::canView();
-   }
-
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if (!$withtemplate
@@ -77,16 +69,17 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       switch ($tabnum) {
          case 0:
-
             $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
-            Toolbox::logDebug($search_params);
+            if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
+               unset($search_params['metacriteria']);
+            }
             PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
             break;
          case 1:
             $params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
             $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
-            Toolbox::logDebug($params);
-            Search::showList('PluginFusioninventoryComputer', $params);
+            $params['sort'] = '';
+            Search::showList('PluginFusioninventoryComputer', $params, array('2'));
             break;
       }
 
@@ -100,10 +93,19 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    * @return an array of computer ids
    */
    static function getTargetsByGroup(PluginFusioninventoryDeployGroup $group) {
+      $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($group, false,true);
+      if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
+         unset($search_params['metacriteria']);
+      }
+      $search_params['sort'] = '';
+
       //Only retrieve computers IDs
-      $results = Search::getDatas('PluginFusioninventoryComputer',
-                                  PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($group)
-                                  );
+      $results = Search::getDatas(
+         'PluginFusioninventoryComputer',
+         $search_params,
+         array('2')
+      );
+
       $ids     = array();
       foreach ($results['data']['rows'] as $id => $row) {
          $ids[$row['id']] = $row['id'];
