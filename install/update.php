@@ -430,6 +430,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
    $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_counter', 'int');
    $migration->addField('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_time', 'int');
    $migration->addKey('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_counter');
+   $migration->addKey('glpi_plugin_fusioninventory_tasks', 'wakeup_agent_time');
    $migration->migrationOneTable('glpi_plugin_fusioninventory_tasks');
    /*
     *  Table glpi_plugin_fusioninventory_agents
