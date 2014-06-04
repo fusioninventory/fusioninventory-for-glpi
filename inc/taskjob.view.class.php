@@ -708,7 +708,8 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             __('Targets', 'fusioninventory'),
             'targets', $this->fields['method']
          );
-         echo "<br/><span style='font-size:50%;font-style:italic'>";
+         //echo "<br/><span class='description' style='font-size:50%;font-style:italic'>";
+         echo "<br/><span class='description'>";
          echo __('The items that should be applied for this job.', 'fusioninventory');
          echo "</span>";
          echo "</div>";
@@ -718,7 +719,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             __('Actors', 'fusioninventory'),
             'actors', $this->fields['method']
          );
-         echo "<br/><span style='font-size:50%;font-style:italic'>";
+         echo "<br/><span class='description'>";
          echo __('The items that should carry out those targets.', 'fusioninventory');
          echo "</span>";
          echo "</div>";
