@@ -357,10 +357,21 @@ function pluginFusioninventoryUpdateTasks( $migration , $plugin_id) {
             'state'
          ),
          'name' => '', 'type' => 'INDEX'
-      )
+      ),
+      array(
+         'field' => array(
+            'plugin_fusioninventory_agents_id',
+            'plugin_fusioninventory_taskjobs_id',
+            'items_id',
+            'itemtype',
+            'id',
+            'state'
+         ),
+         'name' => 'plugin_fusioninventory_agents_items_states',
+         'type' => 'INDEX'
+      ),
    );
    $table['oldkeys'] = array();
    migrateTablesFusionInventory($migration, $table);
-   //$DB->list_fields($newTable, FALSE);
 
 }
