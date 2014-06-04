@@ -153,7 +153,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "<td>";
             echo "<table>";
             echo "<tr>";
-            echo "<td>";
+            echo "<td width='45%'>";
             $a_agentList = importArrayFromDB($data['exceptions']);
             $a_used = array();
             foreach ($a_agentList as $agent_id) {
@@ -169,7 +169,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             echo "<input type='submit' class='submit' name='agent_delete' value='<< " .
                __s('Delete') . "'>";
             echo "</td>";
-            echo "<td>";
+            echo "<td width='45%'>";
 
             echo "<select size='6' name='agent_to_delete[]'>";
             foreach ($a_agentList as $agent_id) {

@@ -138,6 +138,7 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventorySetup');
       Plugin::registerClass('PluginFusioninventoryIPRange');
       Plugin::registerClass('PluginFusioninventoryCredential');
+      Plugin::registerClass('PluginFusioninventoryTimeslot');
       Plugin::registerClass('PluginFusioninventoryLock',
               array('addtabon' => array('Computer', 'Printer', 'NetworkEquipment')));
 
@@ -291,6 +292,15 @@ function plugin_init_fusioninventory() {
          );
       }
 
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+              "lib/d3-3.4.3/d3.min.js";
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+              "lib/nvd3/nv.d3.min.js";
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+              "lib/timeslot.js";
+
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+              "js/stats.js";
 
       if (Session::haveRight('plugin_fusioninventory_configuration', READ)
               || Session::haveRight('profile', UPDATE)) {// Config page
@@ -405,7 +415,8 @@ function plugin_init_fusioninventory() {
             }
          }
          // Load nvd3 for printerpage counter graph
-         if (strstr($_SERVER['PHP_SELF'], '/front/printer.form.php')) {
+         if (strstr($_SERVER['PHP_SELF'], '/front/printer.form.php')
+                 || strstr($_SERVER['PHP_SELF'], '/front/menu.php')) {
             echo '<link href="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
                     '/src/nv.d3.css" rel="stylesheet" type="text/css" />
                <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.

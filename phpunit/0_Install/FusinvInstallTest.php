@@ -87,16 +87,6 @@ class FusinvInstallTest extends Common_TestCase {
       $FusinvDBTest = new FusinvDB();
       $FusinvDBTest->checkInstall("fusioninventory", "install new version");
 
-
-      $this->assertFileExists(GLPI_ROOT."/files/_plugins/fusioninventory/discovery.xml",
-         'Discovery file (SNMP MODELS) not created');
-      $file = file_get_contents(GLPI_ROOT."/files/_plugins/fusioninventory/discovery.xml");
-      $a_lines = explode("\n", $file);
-
-      // TODO: Use assertTag or assertEqualXMLStructure in order to test the discovery.xml file
-      $this->assertGreaterThan(20, count($a_lines), 'Discovery.xml file not right generated (nb lines)');
-
-
       PluginFusioninventoryConfig::loadCache();
    }
 }

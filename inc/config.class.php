@@ -70,6 +70,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['users_id']               = $users_id;
       $input['agent_base_url']         = '';
       $input['agents_old_days']        = '0';
+      $input['memcached']              = '';
 
       $input['import_monitor']         = 2;
       $input['import_printer']         = 2;
@@ -365,8 +366,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'toadd' => array('0'=>__('Disabled')))
          );
       echo "</td>";
-      echo "<td></td>";
-      echo "<td>";
+      echo "<td>".__('Memcached server address (empty to disable it)', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td width='20%'>";
+      echo "<input type='text' name='memcached' size='50' ".
+               "value='".$this->getValue('memcached')."'/>";
       echo "</td>";
       echo "</tr>";
 
@@ -406,7 +409,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showYesNo("import_volume", $pfConfig->getValue('import_volume'));
       echo "</td>";
-      echo "<th colspan='2'>";
+      echo "<th colspan='2' width='30%'>";
       echo _n('Component', 'Components', 2);
       echo "</th>";
       echo "</tr>";
@@ -651,18 +654,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'max'   => 400)
       );
       echo "</td>";
-      
-      echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
-              "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showNumber("timeout_networkdiscovery", array(
-             'value' => $pfConfig->getValue('timeout_networkdiscovery'),
-             'min'   => 1,
-             'max'   => 60)
-      );
-      echo "</td>";
-      
-      echo "<tr class='tab_bg_1'>";
+
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
@@ -670,6 +662,18 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'value' => $pfConfig->getValue('threads_networkinventory'),
              'min'   => 1,
              'max'   => 400)
+      );
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
+              "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showNumber("timeout_networkdiscovery", array(
+             'value' => $pfConfig->getValue('timeout_networkdiscovery'),
+             'min'   => 1,
+             'max'   => 60)
       );
       echo "</td>";
       echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".

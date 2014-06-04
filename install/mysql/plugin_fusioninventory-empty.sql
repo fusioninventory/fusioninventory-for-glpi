@@ -402,9 +402,22 @@ CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputercomputers` (
   `remote_addr` varchar(255) DEFAULT NULL,
   `plugin_fusioninventory_computerarchs_id` int(11) NOT NULL DEFAULT '0',
   `serialized_inventory` longblob,
+  `is_entitylocked` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`),
   KEY `last_fusioninventory_update` (`last_fusioninventory_update`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_fusioninventory_inventorycomputerstats`;
+
+CREATE TABLE `glpi_plugin_fusioninventory_inventorycomputerstats` (
+ `id` smallint(3) NOT NULL AUTO_INCREMENT,
+ `day` smallint(3) NOT NULL DEFAULT '0',
+ `hour` tinyint(2) NOT NULL DEFAULT '0',
+ `counter` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
@@ -1161,7 +1174,8 @@ INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerblacklists`
 (57, 3, '00:50:56:C0:00:08'),
 (58, 3, '02:80:37:EC:02:00'),
 (59, 1, 'MB-1234567890'),
-(60, 1, '0');
+(60, 1, '0'),
+(61, 1, 'empty');
 
 
 

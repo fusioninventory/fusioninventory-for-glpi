@@ -270,16 +270,22 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'users_id' not added in config");
 
-      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
+      $query = "SELECT * FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='version'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'version' not added in config");
+      $data = $DB->fetch_assoc($result);
+      $this->assertEquals($data['value'], '0.85+1.0', "Field 'version' not with right version");
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='otherserial'";
       $result = $DB->query($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'otherserial' not added in config");
 
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
+         WHERE `type`='memcached'";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 1, "type 'memcached' not added in config");
 
       // TODO : test glpi_displaypreferences, rules, bookmark...
 
@@ -293,6 +299,13 @@ class FusinvDB extends PHPUnit_Framework_Assert{
       $this->assertEquals($DB->numrows($result), 10, "Number of criteria not right in table".
               " glpi_plugin_fusioninventory_inventorycomputercriterias ".$when);
 
+
+      /*
+       * Verify table `glpi_plugin_fusioninventory_inventorycomputerstats` filed with data
+       */
+      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_inventorycomputerstats`";
+      $result = $DB->query($query);
+      $this->assertEquals($DB->numrows($result), 8760, "Must have table `glpi_plugin_fusioninventory_inventorycomputerstats` not empty");
 
 
    }

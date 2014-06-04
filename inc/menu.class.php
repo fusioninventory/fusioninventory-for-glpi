@@ -136,6 +136,26 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
 
+   static function getAdditionalMenuContent() {
+      global $CFG_GLPI;
+
+      $menu = array();
+
+      $menu['fusioninventory_inventory']['title'] = "FI> ".__('Computer inv.', 'fusioninventory');
+      $menu['fusioninventory_inventory']['page']  = "/plugins/fusioninventory/front/menu_inventory.php";
+
+      $menu['fusioninventory_inventorySNMP']['title'] = "FI> ".__('SNMP inv.', 'fusioninventory');
+      $menu['fusioninventory_inventorySNMP']['page']  = '/plugins/fusioninventory/front/menu_snmpinventory.php';
+
+      $menu['fusioninventory_inventoryESX']['title'] = "FI> ".__('ESX inv.', 'fusioninventory');
+      $menu['fusioninventory_inventoryESX']['page']  = '/plugins/fusioninventory/front/menu_esxinventory.php';
+
+      $menu['fusioninventory_deploy']['title'] = "FI> ".__('Soft. deploy', 'fusioninventory');
+      $menu['fusioninventory_deploy']['page']  = '/plugins/fusioninventory/front/menu_deploy.php';
+      return $menu;
+   }
+
+
    /**
    * Display the menu of FusionInventory
    *
@@ -263,7 +283,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
        */
       $a_menu = array();
 
-      if (Session::haveRight('plugin_fusioninventory_rule_import', READ)) {
+      if (Session::haveRight('plugin_fusioninventory_ruleimport', READ)) {
          $a_menu[1]['name'] = __('Equipment import and link rules', 'fusioninventory');
          $a_menu[1]['pic']  = $CFG_GLPI['root_doc']."/plugins/fusioninventory/pics/menu_rules.png";
          $a_menu[1]['link'] = Toolbox::getItemTypeSearchURL(
@@ -466,6 +486,190 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
 
    /**
+    * Menu for computer inventory
+    */
+   static function displayMenuInventory() {
+      global $CFG_GLPI;
+
+      $pfConfig = new PluginFusioninventoryConfig();
+
+
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>";
+      echo __('Statistics', 'fusioninventory')." / ".__('Number of computer inventories of last hours', 'fusioninventory');
+      echo "</th>";
+      echo "</tr>";
+      $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours(23);
+      echo "<tr class='tab_bg_1' height='280'>";
+      echo "<td colspan='2' height='280'>";
+      self::showChartBar('nbinventory', $dataInventory, '', 940);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>";
+      echo __('This is the steps to configure FusionInventory plugin for computer inventory', 'fusioninventory');
+      echo "</th>";
+      echo "</tr>";
+
+      $a_steps = array(
+          array(
+              'text' => __('Configure frequency of agent contact (and so each inventory)', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/config.form.php?forcetab=PluginFusioninventoryConfig$0"
+          ),
+          array(
+              'text' => __('Configure inventory options', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/config.form.php?forcetab=PluginFusioninventoryConfig$1"
+          ),
+          array(
+              'text' => __('Define rules for entity', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/inventoryruleentity.php"
+          ),
+          array(
+              'text' => __('Define rules for location', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/inventoryrulelocation.php"
+          ),
+          array(
+              'text' => __('Define rules for import : merge and create new computer (CAUTION: same rules for SNMP inventory)', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/inventoryruleimport.php"
+          )
+      );
+
+      $i = 1;
+      foreach ($a_steps as $data) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<th width='25'>";
+         echo $i.".";
+         echo "</th>";
+         echo "<td>";
+         echo '<a href="'.$data['url'].'" target="_blank">'.$data['text'].'</a>';
+         echo "</td>";
+         echo "</tr>";
+         $i++;
+      }
+
+      echo "</table>";
+   }
+
+
+
+   /**
+    * Menu for SNMP inventory
+    */
+   static function displayMenuSNMPInventory() {
+      global $CFG_GLPI;
+
+      $pfConfig = new PluginFusioninventoryConfig();
+
+
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>";
+      echo __('Statistics', 'fusioninventory');
+      echo "</th>";
+      echo "</tr>";
+//      $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours(23);
+      echo "<tr class='tab_bg_1' height='100'>";
+      echo "<td colspan='2' height='100'>";
+//      self::showChartBar('nbinventory', $dataInventory, '', 940);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>";
+      echo __('This is the steps to configure FusionInventory plugin for SNMP inventory (swicth, router, network printer)', 'fusioninventory');
+      echo "</th>";
+      echo "</tr>";
+
+      $a_steps = array(
+          array(
+              'text' => __('Configure SNMP credentials', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/configsecurity.php"
+          ),
+          array(
+              'text' => __('Define rules for import : merge and create new devices (CAUTION: same rules for computer inventory)', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/inventoryruleimport.php"
+          ),
+          array(
+              'text' => __('`Network Discovery`, used to discover the devices on the network', 'fusioninventory'),
+              'url'  => "",
+              'title'=> TRUE
+          ),
+          array(
+              'text' => __('Define IP Ranges of your network', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/iprange.php"
+          ),
+          array(
+              'text' => __('Define an agent allowed to discover the network', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/config.form.php?forcetab=PluginFusioninventoryAgentmodule$1"
+          ),
+          array(
+              'text' => __('Create a new Task with discovery module and the agent defined previously', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/task.php"
+          ),
+          array(
+              'text' => __('If you have devices not typed, import them from unknown devices', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/unknowndevice.php"
+          ),
+          array(
+              'text' => __('`Network Inventory`, used to complete inventory the discovered devices', 'fusioninventory'),
+              'url'  => "",
+              'title'=> TRUE
+          ),
+          array(
+              'text' => __('Define an agent allowed to inventory the network by SNMP', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/config.form.php?forcetab=PluginFusioninventoryAgentmodule$1"
+          ),
+          array(
+              'text' => __('Create a new Task with network inventory module and the agent defined previously', 'fusioninventory'),
+              'url'  => $CFG_GLPI['root_doc'].
+                                 "/plugins/fusioninventory/front/task.php"
+          ),
+      );
+
+      $i = 1;
+      foreach ($a_steps as $data) {
+         echo "<tr class='tab_bg_1'>";
+         if (isset($data['title'])
+                 && $data['title']) {
+            echo "<th colspan='2'>";
+            echo $data['text'];
+            echo "</th>";
+         } else {
+            echo "<th width='25'>";
+            echo $i.".";
+            echo "</th>";
+            echo "<td>";
+            if ($data['url'] == '') {
+               echo $data['text'];
+            } else {
+               echo '<a href="'.$data['url'].'" target="_blank">'.$data['text'].'</a>';
+            }
+            echo "</td>";
+            $i++;
+         }
+         echo "</tr>";
+      }
+
+      echo "</table>";
+   }
+
+
+
+   /**
     * htmlMenu
     *
     *@param $menu_name value of the menu
@@ -531,6 +735,157 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "</table>";
 
       return $width_status;
+   }
+
+
+
+   static function board() {
+      global $DB;
+
+      // Computers
+      $fusionComputers = countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers');
+      $allComputers    = countElementsInTable('glpi_computers',
+                                              "`is_deleted`='0' AND `is_template`='0'");
+
+      $dataComputer = array();
+      $dataComputer[] = array(
+          'key' => 'FusionInventory computers : '.$fusionComputers,
+          'y'   => $fusionComputers,
+          'color' => '#3dff7d'
+      );
+      $dataComputer[] = array(
+          'key' => 'Other computers : '.($allComputers - $fusionComputers),
+          'y'   => ($allComputers - $fusionComputers),
+          'color' => "#dedede"
+      );
+
+
+      // SNMP
+      $networkequipment = countElementsInTable('glpi_plugin_fusioninventory_networkequipments');
+      $printer    = countElementsInTable('glpi_plugin_fusioninventory_printers');
+
+      $dataSNMP = array();
+      $dataSNMP[] = array(
+          'key' => 'NetworkEquipments (SNMP) : '.$networkequipment,
+          'y'   => $networkequipment,
+          'color' => '#3d94ff'
+      );
+      $dataSNMP[] = array(
+          'key' => 'Printers (SNMP) : '.$printer,
+          'y'   => $printer,
+          'color' => '#3dff7d'
+      );
+
+
+      // switches ports
+      $allSwitchesPortSNMP = countElementsInTable('glpi_plugin_fusioninventory_networkports');
+      $query = "SELECT `glpi_networkports`.`id` FROM `glpi_networkports`
+              LEFT JOIN `glpi_plugin_fusioninventory_networkports`
+                 ON `glpi_plugin_fusioninventory_networkports`.`networkports_id` = `glpi_networkports`.`id`
+              LEFT JOIN glpi_networkports_networkports
+                  ON (`networkports_id_1`=`glpi_networkports`.`id`
+                     OR `networkports_id_2`=`glpi_networkports`.`id`)
+              WHERE `glpi_plugin_fusioninventory_networkports`.`id` IS NOT NULL
+                  AND `glpi_networkports_networkports`.`id` IS NOT NULL";
+      $result = $DB->query($query);
+      $networkPortsLinked = $DB->numrows($result);
+
+      $dataPortL = array();
+      $dataPortL[] = array(
+          'key' => 'SNMP switch network ports linked : '.$networkPortsLinked,
+          'y'   => $networkPortsLinked,
+          'color' => '#3dff7d'
+      );
+      $dataPortL[] = array(
+          'key' => 'SNMP switch network ports not linked : '.($allSwitchesPortSNMP - $networkPortsLinked),
+          'y'   => ($allSwitchesPortSNMP - $networkPortsLinked),
+          'color' => '#dedede'
+      );
+
+      // Ports connected at last SNMP inventory
+      $networkPortsConnected = countElementsInTable('glpi_plugin_fusioninventory_networkports',
+                                                    "`ifstatus`='1' OR `ifstatus`='up'");
+      $dataPortC = array();
+      $dataPortC[] = array(
+          'key' => 'Ports connected : '.$networkPortsConnected,
+          'y'   => $networkPortsConnected,
+          'color' => '#3dff7d'
+      );
+      $dataPortC[] = array(
+          'key' => 'Ports not connected : '.($allSwitchesPortSNMP - $networkPortsConnected),
+          'y'   => ($allSwitchesPortSNMP - $networkPortsConnected),
+          'color' => '#dedede'
+      );
+
+      $dataDeploy = array();
+      $dataDeploy[] = array(
+          'key' => 'Deployment successfull : 400',
+          'y'   => 400,
+          'color' => '#3dff7d'
+      );
+      $dataDeploy[] = array(
+          'key' => 'Deployment in error : 55',
+          'y'   => 55,
+          'color' => '#ff3d3d'
+      );
+      $dataDeploy[] = array(
+          'key' => 'Deployment prepared and waiting : 568',
+          'y'   => 568,
+          'color' => '#feffc9'
+      );
+
+      // Number of computer inventories in last hour, 6 hours, 24 hours
+      $dataInventory = PluginFusioninventoryInventoryComputerStat::getLastHours();
+
+
+
+      echo "<table align='center'>";
+      echo "<tr height='280'>";
+      echo "<td width='380'>";
+      self::showChart('computers', $dataComputer);
+      echo "</td>";
+      echo "<td width='380'>";
+      $title = __('Number of computer inventories of last hours', 'fusioninventory');
+      $title = '';
+      self::showChartBar('nbinventory', $dataInventory, $title);
+      echo "</td>";
+      echo "<td width='380'>";
+      self::showChart('deploy', $dataDeploy);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr height='280'>";
+      echo "<td>";
+      self::showChart('snmp', $dataSNMP);
+      echo "</td>";
+      echo "<td>";
+      self::showChart('ports', $dataPortL);
+      echo "</td>";
+      echo "<td>";
+      self::showChart('portsconnected', $dataPortC);
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+
+   }
+
+
+   static function showChart($name, $data) {
+
+      echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
+
+      echo "<script>
+         statHalfDonut('".$name."', '".json_encode($data)."');
+</script>";
+   }
+
+
+   static function showChartBar($name, $data, $title='', $width=370) {
+      echo '<svg style="background-color: #f3f3f3;" id="'.$name.'"></svg>';
+
+      echo "<script>
+         statBar('".$name."', '".json_encode($data)."', '".$title."', '".$width."');
+</script>";
    }
 }
 

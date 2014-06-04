@@ -1650,7 +1650,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          'Unknow',
          'System Serial Number',
          'MB-1234567890',
-         '0');
+         '0',
+         'empty');
          foreach ($a_input as $value) {
             $query = "SELECT * FROM `".$newTable."`
                WHERE `plugin_fusioninventory_criterium_id`='".$a_criteria['ssn']."'
@@ -1968,6 +1969,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                                             'value'   => NULL);
       $a_table['fields']['serialized_inventory']   = array('type'    => 'longblob',
                                                            'value'   => "");
+      $a_table['fields']['is_entitylocked']        = array('type'    => 'bool',
+                                                           'value'   => "0");
 
       $a_table['oldfields']  = array();
 
@@ -2011,6 +2014,39 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       $migration->dropTable('glpi_plugin_fusinvinventory_libserialization');
 
+
+   /*
+    * Table glpi_plugin_fusioninventory_inventorycomputerstats
+    */
+
+      if (!TableExists("glpi_plugin_fusioninventory_inventorycomputerstats")) {
+         $a_table = array();
+         $a_table['name'] = 'glpi_plugin_fusioninventory_inventorycomputerstats';
+         $a_table['oldname'] = array();
+
+         $a_table['fields']  = array();
+         $a_table['fields']['id']      = array('type'    => "smallint(3) NOT NULL AUTO_INCREMENT",
+                                                            'value'   => '');
+         $a_table['fields']['day']     = array('type'    => "smallint(3) NOT NULL DEFAULT '0'",
+                                                            'value'   => '');
+         $a_table['fields']['hour']    = array('type'    => "tinyint(2) NOT NULL DEFAULT '0'",
+                                                            'value'   => '');
+         $a_table['fields']['counter'] = array('type'    => 'integer',
+                                                            'value'   => NULL);
+
+         $a_table['oldfields']  = array();
+
+         $a_table['renamefields'] = array();
+
+         $a_table['keys']   = array();
+
+         $a_table['oldkeys'] = array();
+
+         migrateTablesFusionInventory($migration, $a_table);
+
+         require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerstat.class.php");
+         PluginFusioninventoryInventoryComputerStat::init();
+      }
 
 
    /*
@@ -5074,6 +5110,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       $a_input = array();
       $a_input['version'] = PLUGIN_FUSIONINVENTORY_VERSION;
+      $config->addValues($a_input, TRUE);
+      $a_input = array();
       $a_input['ssl_only'] = 0;
       if (isset($prepare_Config['ssl_only'])) {
          $a_input['ssl_only'] = $prepare_Config['ssl_only'];
