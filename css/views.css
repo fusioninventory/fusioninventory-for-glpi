@@ -490,7 +490,7 @@ a.expanded > div.fold {
 
 .agent_block.agent_success{
    background: #AFA;
-   border-color: #ABA;
+   border-color: green;
    color: green;
 }
 .agent_block.agent_success > a {
