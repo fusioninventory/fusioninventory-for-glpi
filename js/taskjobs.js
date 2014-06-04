@@ -485,7 +485,12 @@ taskjobs.update_logs = function (data) {
             // Create agents' chart data
             agents_selector = [target_selector, ".agents_block"].join(' > ');
 
-            target_v.agents = Lazy(target_v.agents);
+            var agents = null;
+            if (Object.keys(target_v.agents).length > 0) {
+                agents = Lazy(target_v.agents);
+            } else {
+                agents = Lazy(new Object);
+            }
 
             //create the agents chart object if it doesn't exist
             if (!taskjobs.agents_chart[chart_id]) {
@@ -498,7 +503,7 @@ taskjobs.update_logs = function (data) {
                }, 1000)
             }
             // update agents chart object with new data
-            taskjobs.agents_chart[chart_id].agents = target_v.agents;
+            taskjobs.agents_chart[chart_id].agents = agents;
             taskjobs.agents_chart[chart_id].counters = target_v.counters_computed;
             agents_dispatch.view(chart_id);
 
