@@ -219,7 +219,8 @@ function agents_chart() {
                names.enter().append('a')
                   .attr('class', 'name');
                names.exit().remove()
-               names.attr('href', 'javascript:void(0)')
+               names.attr('href', taskjobs.agents_url + '?id='+ d[0])
+                  .attr('target', '_blank')
                   .text(taskjobs.data.agents[d[0]]);
 
             });

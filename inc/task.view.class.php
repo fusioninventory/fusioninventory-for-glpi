@@ -248,8 +248,10 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       } else {
          $task_id = json_encode(array());
       }
+      $pfAgent = new PluginFusioninventoryAgent();
       echo implode( "\n", array(
          "<script type='text/javascript'>",
+         "  taskjobs.agents_url = '". $pfAgent->getFormUrl()."'",
          "  taskjobs.init_templates();",
          "  taskjobs.init_refresh_form(",
          "     '".$this->getBaseUrlFor('fi.job.logs')."',",
