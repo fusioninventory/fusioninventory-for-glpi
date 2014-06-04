@@ -475,38 +475,46 @@ a.expanded > div.fold {
 
 
 .agent_block {
-   border-radius: 2px;
    border: 1px solid #CCC;
+   border-left-width: 5px;
    padding: 2px 5px;
    margin: 2px;
    right:0;
    vertical-align: bottom;
    display: block;
-   background: #DDD;
+   background: #EEE;
    font-size: xx-small;
+   color: #777;
 }
 
+
 .agent_block.agent_success{
-   background: #EEFEEE;
+   background: #AFA;
    border-color: #ABA;
+   color: green;
+}
+.agent_block.agent_success > a {
+   color: green;
 }
 
 .agent_block.agent_error{
-   background: #FEEEEE;
-   border-color: #DAA;
+   background: #FDD;
+   border-color: red;
+   color: red;
+}
+
+.agent_block.agent_error > a {
+    color: red;
 }
 
 .agent_block.agent_prepared,
 .agent_block.agent_cancelled {
-   background: inherit;
-   border-color: inherit;
+   border-color: #AAA;
 }
 
 .agent_block.agent_running {
-   background: #AAAAFF;
-   border-color: #DDA;
+   border-color: blue;
 }
-
 
 
 .agent_block > *
@@ -519,6 +527,7 @@ a.expanded > div.fold {
 .agent_block > a {
     line-height: 16px;
     vertical-align: bottom;
+    color: #777;
 }
 
 .runs_block {
