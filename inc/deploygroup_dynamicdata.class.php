@@ -78,7 +78,8 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
          case 1:
             $params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($item, false);
             $params['massiveactionparams']['extraparams']['id'] = $_GET['id'];
-            Search::showList('PluginFusioninventoryComputer', $params);
+            $params['sort'] = '';
+            Search::showList('PluginFusioninventoryComputer', $params, array('2'));
             break;
       }
 
@@ -92,10 +93,19 @@ class PluginFusioninventoryDeployGroup_Dynamicdata extends CommonDBChild {
    * @return an array of computer ids
    */
    static function getTargetsByGroup(PluginFusioninventoryDeployGroup $group) {
+      $search_params = PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($group, false,true);
+      if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
+         unset($search_params['metacriteria']);
+      }
+      $search_params['sort'] = '';
+
       //Only retrieve computers IDs
-      $results = Search::getDatas('PluginFusioninventoryComputer',
-                                  PluginFusioninventoryDeployGroup::getSearchParamsAsAnArray($group, FALSE, TRUE)
-                                  );
+      $results = Search::getDatas(
+         'PluginFusioninventoryComputer',
+         $search_params,
+         array('2')
+      );
+
       $ids     = array();
       foreach ($results['data']['rows'] as $id => $row) {
          $ids[$row['id']] = $row['id'];
