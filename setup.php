@@ -83,6 +83,13 @@ function plugin_init_fusioninventory() {
 
    $Plugin = new Plugin();
    $moduleId = 0;
+
+   if ( isset($_SESSION['glpi_use_mode']) ) {
+      $debug_mode = ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE);
+   } else {
+      $debug_mode = false;
+   }
+
    if ($Plugin->isActivated('fusioninventory')) { // check if plugin is active
 
       // Register classes into GLPI plugin factory
@@ -251,7 +258,9 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
 
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
-         "lib/d3-3.4.3/d3.min.js";
+         $debug_mode?"lib/d3-3.4.3/d3.js":"lib/d3-3.4.3/d3.min.js";
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+         $debug_mode?"lib/nvd3/nv.d3.js":"lib/nvd3/nv.d3.min.js";
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
          "lib/timeslot.js";
 
@@ -294,12 +303,6 @@ function plugin_init_fusioninventory() {
          );
       }
 
-      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
-              "lib/d3-3.4.3/d3.min.js";
-      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
-              "lib/nvd3/nv.d3.min.js";
-      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
-              "lib/timeslot.js";
 
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
               "js/stats.js";
