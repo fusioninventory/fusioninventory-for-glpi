@@ -104,7 +104,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
       $options['title'] = self::getTypeName();
       $options['page']  = self::getSearchURL(false);
-      
+
       $options['menu']['title'] = self::getTypeName();
       $options['menu']['page']  = self::getSearchURL(false);
       if (Session::haveRight('plugin_fusioninventory_configuration', READ)) {
@@ -179,7 +179,8 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       }
 
       $config = new PluginFusioninventoryConfig();
-      if (strlen($config->getValue('agent_base_url'))<10) {
+      if (strlen($config->getValue('agent_base_url'))<10
+              && !strstr($_SERVER['PHP_SELF'], 'front/config.form.php')) {
          echo "<div class='msgboxmonit msgboxmonit-red'>";
          print "<center><a href=\"config.form.php\">";
          print __('The server needs to kown the URL the agents use to access the server. Please '.

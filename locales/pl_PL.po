@@ -3,7 +3,8 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Geraldziu <maciejhelt@gmail.com>, 2013
+# Translators:
+# Maciej Helt <maciejhelt@gmail.com>, 2013
 # mirekgab <mirekgab@wp.pl>, 2014
 # wolvverine <wolvverinepld@gmail.com>, 2013
 msgid ""
@@ -11,7 +12,7 @@ msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-04 14:13+0200\n"
-"PO-Revision-Date: 2014-06-04 13:55+0000\n"
+"PO-Revision-Date: 2014-06-04 14:18+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: Polish (Poland) (http://www.transifex.com/projects/p/FusionInventory/language/pl_PL/)\n"
 "MIME-Version: 1.0\n"
@@ -781,19 +782,6 @@ msgctxt "fusioninventory"
 msgid "Unattended element in"
 msgstr "Element bez nadzoru w"
 
-#: inc/computer.class.php:87 inc/computer.class.php:93
-#: inc/computer.class.php:171 inc/deployaction.class.php:435
-#: inc/deploycheck.class.php:415 inc/deployfile.class.php:434
-#: inc/networkequipment.class.php:157
-msgctxt "button"
-msgid "Add"
-msgstr ""
-
-#: inc/computer.class.php:89 inc/computer.class.php:96
-msgctxt "button"
-msgid "Delete permanently"
-msgstr ""
-
 #: inc/computerlicenseinfo.class.php:63
 msgctxt "fusioninventory"
 msgid "Software licenses"
@@ -1135,13 +1123,6 @@ msgctxt "fusioninventory"
 msgid "Execution checks"
 msgstr ""
 
-#: inc/deployaction.class.php:432 inc/deploycheck.class.php:412
-#: inc/deployfile.class.php:431 inc/deploygroup.class.php:279
-#: inc/deploypackage.class.php:485 inc/profile.class.php:164
-msgctxt "button"
-msgid "Save"
-msgstr ""
-
 #: inc/deploycheck.class.php:51
 msgctxt "fusioninventory"
 msgid "Registry key exists"
@@ -1384,11 +1365,6 @@ msgctxt "fusioninventory"
 msgid "Add group"
 msgstr "Dodaj grupę"
 
-#: inc/deploygroup.class.php:358
-msgctxt "button"
-msgid "Post"
-msgstr ""
-
 #: inc/deployinstall.class.php:50 inc/deployinstall.class.php:60
 msgctxt "fusioninventory"
 msgid "Installation"
@@ -1520,11 +1496,6 @@ msgstr "Odinstalowanie"
 msgctxt "fusioninventory"
 msgid "Progress"
 msgstr "Postęp"
-
-#: inc/entity.class.php:67
-msgctxt "monitoring"
-msgid "Fusioninventory"
-msgstr ""
 
 #: inc/entity.class.php:110
 msgctxt "fusioninventory"
@@ -3430,11 +3401,6 @@ msgstr "Importuj informacje"
 msgctxt "fusioninventory"
 msgid "Rule import logs"
 msgstr "Logi zasad importu"
-
-#: inc/search.class.php:460
-msgctxt "button"
-msgid "Search"
-msgstr ""
 
 #: inc/snmpmodelimportexport.class.php:134
 msgctxt "fusioninventory"

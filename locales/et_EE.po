@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Translators:
 # pexy <pexyyy@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-04 14:13+0200\n"
-"PO-Revision-Date: 2014-06-04 14:00+0000\n"
+"PO-Revision-Date: 2014-06-04 14:18+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: Estonian (Estonia) (http://www.transifex.com/projects/p/FusionInventory/language/et_EE/)\n"
 "MIME-Version: 1.0\n"
@@ -776,19 +777,6 @@ msgctxt "fusioninventory"
 msgid "Unattended element in"
 msgstr ""
 
-#: inc/computer.class.php:87 inc/computer.class.php:93
-#: inc/computer.class.php:171 inc/deployaction.class.php:435
-#: inc/deploycheck.class.php:415 inc/deployfile.class.php:434
-#: inc/networkequipment.class.php:157
-msgctxt "button"
-msgid "Add"
-msgstr ""
-
-#: inc/computer.class.php:89 inc/computer.class.php:96
-msgctxt "button"
-msgid "Delete permanently"
-msgstr ""
-
 #: inc/computerlicenseinfo.class.php:63
 msgctxt "fusioninventory"
 msgid "Software licenses"
@@ -1130,13 +1118,6 @@ msgctxt "fusioninventory"
 msgid "Execution checks"
 msgstr "Käivitamise kontrollid"
 
-#: inc/deployaction.class.php:432 inc/deploycheck.class.php:412
-#: inc/deployfile.class.php:431 inc/deploygroup.class.php:279
-#: inc/deploypackage.class.php:485 inc/profile.class.php:164
-msgctxt "button"
-msgid "Save"
-msgstr ""
-
 #: inc/deploycheck.class.php:51
 msgctxt "fusioninventory"
 msgid "Registry key exists"
@@ -1379,11 +1360,6 @@ msgctxt "fusioninventory"
 msgid "Add group"
 msgstr ""
 
-#: inc/deploygroup.class.php:358
-msgctxt "button"
-msgid "Post"
-msgstr ""
-
 #: inc/deployinstall.class.php:50 inc/deployinstall.class.php:60
 msgctxt "fusioninventory"
 msgid "Installation"
@@ -1513,11 +1489,6 @@ msgstr "Eemaldamine"
 #: inc/display.class.php:174
 msgctxt "fusioninventory"
 msgid "Progress"
-msgstr ""
-
-#: inc/entity.class.php:67
-msgctxt "monitoring"
-msgid "Fusioninventory"
 msgstr ""
 
 #: inc/entity.class.php:110
@@ -3423,11 +3394,6 @@ msgstr ""
 #: inc/rulematchedlog.class.php:152 inc/rulematchedlog.class.php:218
 msgctxt "fusioninventory"
 msgid "Rule import logs"
-msgstr ""
-
-#: inc/search.class.php:460
-msgctxt "button"
-msgid "Search"
 msgstr ""
 
 #: inc/snmpmodelimportexport.class.php:134

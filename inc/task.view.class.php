@@ -78,7 +78,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($item->getType() == 'Computer') {
-         echo "<b>To Be Done</b>";
+         echo "<b>".__('To Be Done', 'fusioninventory')."</b>";
       }
    }
 
@@ -304,7 +304,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       if ( isset($typenames[$type]) ) {
          return $typenames[$type];
       } else {
-         return __("N/A");
+         return __('N/A', 'fusioninventory');
       }
    }
 
