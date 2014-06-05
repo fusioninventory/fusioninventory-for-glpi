@@ -3,21 +3,23 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Translators:
 # Asmodojo <asmodojo@outlook.com>, 2013
 # David Durieux <d.durieux@siprossii.com>, 2014
 # EmmanuelLeNormand <emmanuel@le-normand.org>, 2013
 # Gonéri Le Bouder <goneri@rulezlan.org>, 2013
 # kiniou <kiniou@gmail.com>, 2013
-# lostprophet91 <lostprophet91@gmail.com>, 2013
+# Alexandre Brianceau <lostprophet91@gmail.com>, 2013
 # Mathieu Simon <mathieu.sim@gmail.com>, 2013
-# oviri <tamaoviri@gmail.com>, 2013
+# Tamatoa Davio <tamaoviri@gmail.com>, 2013
+# Walid Nouh, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-04 14:13+0200\n"
-"PO-Revision-Date: 2014-06-04 13:59+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"PO-Revision-Date: 2014-06-04 16:46+0000\n"
+"Last-Translator: Walid Nouh\n"
 "Language-Team: French (France) (http://www.transifex.com/projects/p/FusionInventory/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -168,7 +170,7 @@ msgstr "Cibler une tâche"
 #: hook.php:870
 msgctxt "fusioninventory"
 msgid "Add to static group"
-msgstr ""
+msgstr "Ajouter au groupe statique"
 
 #: hook.php:884 hook.php:895
 msgctxt "fusioninventory"
@@ -769,12 +771,12 @@ msgstr "Taille du fichier"
 #: inc/common.view.class.php:188
 msgctxt "fusioninventory"
 msgid "Warning:"
-msgstr ""
+msgstr "Warning :"
 
 #: inc/common.view.class.php:192
 msgctxt "fusioninventory"
 msgid "Error:"
-msgstr ""
+msgstr "Erreur :"
 
 #: inc/communication.class.php:224
 #: inc/communicationnetworkinventory.class.php:208
@@ -782,19 +784,6 @@ msgstr ""
 msgctxt "fusioninventory"
 msgid "Unattended element in"
 msgstr "Elément inattendu dans"
-
-#: inc/computer.class.php:87 inc/computer.class.php:93
-#: inc/computer.class.php:171 inc/deployaction.class.php:435
-#: inc/deploycheck.class.php:415 inc/deployfile.class.php:434
-#: inc/networkequipment.class.php:157
-msgctxt "button"
-msgid "Add"
-msgstr ""
-
-#: inc/computer.class.php:89 inc/computer.class.php:96
-msgctxt "button"
-msgid "Delete permanently"
-msgstr ""
 
 #: inc/computerlicenseinfo.class.php:63
 msgctxt "fusioninventory"
@@ -1137,13 +1126,6 @@ msgctxt "fusioninventory"
 msgid "Execution checks"
 msgstr "Exécution des contrôles"
 
-#: inc/deployaction.class.php:432 inc/deploycheck.class.php:412
-#: inc/deployfile.class.php:431 inc/deploygroup.class.php:279
-#: inc/deploypackage.class.php:485 inc/profile.class.php:164
-msgctxt "button"
-msgid "Save"
-msgstr ""
-
 #: inc/deploycheck.class.php:51
 msgctxt "fusioninventory"
 msgid "Registry key exists"
@@ -1386,11 +1368,6 @@ msgctxt "fusioninventory"
 msgid "Add group"
 msgstr "Ajouter un groupe"
 
-#: inc/deploygroup.class.php:358
-msgctxt "button"
-msgid "Post"
-msgstr ""
-
 #: inc/deployinstall.class.php:50 inc/deployinstall.class.php:60
 msgctxt "fusioninventory"
 msgid "Installation"
@@ -1522,11 +1499,6 @@ msgctxt "fusioninventory"
 msgid "Progress"
 msgstr "Progression"
 
-#: inc/entity.class.php:67
-msgctxt "monitoring"
-msgid "Fusioninventory"
-msgstr ""
-
 #: inc/entity.class.php:110
 msgctxt "fusioninventory"
 msgid "Model for automatic computers transfer in an other entity"
@@ -1578,7 +1550,7 @@ msgstr "Version du BIOS"
 #: inc/inventorycomputercomputer.class.php:158
 msgctxt "fusioninventory"
 msgid "Automatic entity transfer"
-msgstr ""
+msgstr "Transfer automatique d'entité"
 
 #: inc/inventorycomputercomputer.class.php:162
 msgctxt "fusioninventory"
@@ -2963,7 +2935,7 @@ msgstr "Information additionnelle de l'ordinateur"
 #: inc/timeslotentry.class.php:70
 msgctxt "fusioninventory"
 msgid "Time slot"
-msgstr ""
+msgstr "Créneau horaire"
 
 #: inc/menu.class.php:275
 msgctxt "fusioninventory"
@@ -3431,11 +3403,6 @@ msgstr "Informations d'import"
 msgctxt "fusioninventory"
 msgid "Rule import logs"
 msgstr "Règles d'import des logs"
-
-#: inc/search.class.php:460
-msgctxt "button"
-msgid "Search"
-msgstr ""
 
 #: inc/snmpmodelimportexport.class.php:134
 msgctxt "fusioninventory"
