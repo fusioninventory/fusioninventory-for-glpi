@@ -154,7 +154,9 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          "  </div>",
          "  <div class='progressbar'></div>",
          "  </div>",
+         "  <div class='show_more'></div>",
          "  <div class='agents_block'></div>",
+         "  <div class='show_more'></div>",
          "</script>"
       ));
 
