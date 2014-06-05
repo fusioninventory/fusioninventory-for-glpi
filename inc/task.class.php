@@ -294,7 +294,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                'reason'   => __(
                   "The agent is requesting a configuration that has already been sent to ".
                   "him by the server. It is more likely that the agent is subject to a critical ".
-                  "error."
+                  "error.", 'fusioninventory'
                ),
                'code' => $jobstate::IN_ERROR
             );
@@ -304,7 +304,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          if ($result['task']['is_active'] == 0) {
             $jobstates_to_cancel[$jobstate->fields['id']] = array(
                'jobstate' => $jobstate,
-               'reason' => __('The task has been deactivated after preparation of this job.')
+               'reason' => __('The task has been deactivated after preparation of this job.', 'fusioninventory')
             );
             continue;
          };
@@ -323,7 +323,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $jobstates_to_cancel[$jobstate->fields['id']] = array(
                   'jobstate' => $jobstate,
                   'reason' => __(
-                     "This job can not be executed anymore due to the task\'s schedule."
+                     "This job can not be executed anymore due to the task's schedule.", 'fusioninventory'
                   )
                );
                continue;
@@ -357,7 +357,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                $jobstates_to_cancel[$jobstate->fields['id']] = array(
                   'jobstate' => $jobstate,
                   'reason' => __(
-                     "This job can not be executed anymore due to the task\'s timeslot."
+                     "This job can not be executed anymore due to the task's timeslot.", 'fusioninventory'
                   )
                );
                continue;
@@ -376,7 +376,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $jobstates_to_cancel[$jobstate->fields['id']] = array(
                'jobstate' => $jobstate,
                'reason' => __(
-                  'This agent does not belong anymore in the actors defined in the job.'
+                  'This agent does not belong anymore in the actors defined in the job.', 'fusioninventory'
                )
             );
             continue;
