@@ -40,7 +40,6 @@
    ------------------------------------------------------------------------
  */
 
-
 class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
    static $rightname = 'plugin_fusioninventory_task';
@@ -732,7 +731,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       return "${hours}h ${minutes}m ${seconds}s ${micro}µs";
    }
 
-   static function getJoblogs($task_ids = array()) {
+   function getJoblogs($task_ids = array()) {
       global $DB;
 
       $debug_mode = ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE);
@@ -799,7 +798,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          )),
          'result' => null
       );
-
 
       $data_structure['result'] = $DB->query($data_structure['query']);
 
@@ -875,7 +873,10 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          array( 'run.itemtype'   , 'run.`itemtype`'),
          array( 'run.items_id'   , 'run.`items_id`'),
          array( 'run.state'      , 'run.`state`'),
-         array( 'log.last_date'  , 'MAX(log.`date`)')
+         array( 'log.last_date'  , 'MAX(log.`date`)'),
+         array( 'log.last_timestamp'  , 'UNIX_TIMESTAMP(log.`date`)'),
+         array( 'log.last_id'  , 'MAX(log.`id`)'),
+         array( 'log.last_comment'  , 'log.`comment`'),
       );
       $fieldmap = array();
       foreach($query_fields  as $index => $key) {
@@ -1024,6 +1025,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
                $agent_id = $result[$fieldmap['agent.id']];
                $agents[$agent_id] = $result[$fieldmap['agent.name']];
+
                if ( ! isset($targets[$target_id]['agents'][$agent_id]) ) {
                   $targets[$target_id]['agents'][$agent_id] = array();
                }
@@ -1103,14 +1105,19 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                }
 
                $targets[$target_id]['agents'][$agent_id][] = array(
+                  'agent_id' => $agent_id,
                   'numstate' => $result[$fieldmap['run.state']],
                   'state' => $agent_state,
                   'jobstate_id' => $result[$fieldmap['run.id']],
+                  'last_log_id' => $result[$fieldmap['log.last_id']],
                   'last_log_date' => $result[$fieldmap['log.last_date']],
+                  'timestamp' => $result[$fieldmap['log.last_timestamp']],
+                  'last_log' => $result[$fieldmap['log.last_comment']]
                );
             }
          }
       }
+
       $format_chrono['end'] = microtime(true);
       if ($debug_mode) {
 
@@ -1126,8 +1133,6 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
       }
       return array('tasks' => $logs, 'agents' => $agents);
    }
-
-
 
    function getTasksPlanned($tasks_id=0) {
       global $DB;
