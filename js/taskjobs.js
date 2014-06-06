@@ -983,7 +983,11 @@ taskjobs.update_progressbar = function( chart ) {
 
 
 taskjobs.get_logs = function( ajax_url, task_id ) {
-    $('#refresh_button').find('span').toggleClass('loading', true).text('Refreshing ...');
+    $('.refresh_button')
+        .find('span')
+        .toggleClass('fetching', true)
+        .toggleClass('computing', false);
+
     var data = {
         "task_id" : task_id
     };
@@ -992,21 +996,39 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
         url: ajax_url,
         data: data,
         success: function( data, textStatus, jqXHR) {
+            $('.refresh_button')
+                .find('span')
+                .toggleClass('fetching', false)
+                .toggleClass('computing', true);
             taskjobs.update_logs(data);
         },
         complete: function( ) {
+            taskjobs.update_refresh_buttons( ajax_url, task_id);
             taskjobs.Queue.queue("refresh_logs").pop();
-            $('#refresh_button').find('span').toggleClass('loading', false).text('Manual refresh');
+            $('.refresh_button')
+                .find('span')
+                .toggleClass('loading', false)
+                .toggleClass('computing', false);
         }
     });
 }
 
-taskjobs.init_refresh_form = function( ajax_url, task_id, refresh_id) {
-   $('#refresh_button')
+taskjobs.update_refresh_buttons = function( ajax_url, task_id) {
+
+   $('.refresh_button')
+      .off("click");
+   $('.refresh_button')
       .on('click', function(e) {
-         taskjobs.update_logs_timeout( ajax_url, task_id, refresh_id )
+          console.debug(e)
+         taskjobs.queue_refresh_logs( ajax_url, task_id )
       });
 
+}
+
+taskjobs.init_refresh_form = function( ajax_url, task_id, refresh_id) {
+
+   $("#"+ refresh_id)
+      .off("change");
    $("#"+ refresh_id)
       .on("change", function() {
          taskjobs.update_logs_timeout( ajax_url, task_id, refresh_id )
@@ -1019,6 +1041,7 @@ taskjobs.update_logs_timeout = function( ajax_url, task_id , refresh_id) {
 
 
    taskjobs.refresh = $("#" + refresh_id).val();
+
 
    window.clearTimeout(taskjobs.Queue.timer);
    taskjobs.queue_refresh_logs(ajax_url, task_id);
