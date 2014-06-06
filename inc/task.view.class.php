@@ -106,14 +106,12 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
             'width' => '20%'
          )
       );
+      // Add a manual refresh button
+      echo "      <div class='refresh_button submit'>";
+      echo "      <span></span></div>";
       echo "   </div>"; // end of fusinv_form
 
-      // Add a manual refresh button
-      echo "   <div class='fusinv_form large'>";
-      echo "      <div id='refresh_button' class='button'>";
-      echo "      <span></span></div>";
-      echo "   </div>";
-      echo "</div>"; // end of fusinv_panel
+      echo "</div>";
 
       //$pfTaskjob = new PluginFusioninventoryTaskjob();
       //$taskjobs = $pfTaskjob->find(
@@ -135,6 +133,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo implode("\n", array(
          "<script id='template_job' type='x-tmpl-mustache'>",
          "<div id='{{job_id}}' class='job_block'>",
+         "  <div class='refresh_button submit'><span></span></div>",
          "  <h3 class='job_name'></h3>",
          "  <div class='targets_block'></div>",
          "</div>",
@@ -240,7 +239,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       // Display empty block for each jobs display which will be rendered later by mustache.js
       echo implode("\n", array(
-         "<div id='tasks_block'>",
+         "<div class='tasks_block'>",
          "</div>",
 //         "<pre class='debuglogs' style='text-align:left;'></pre>"
       ));
