@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-05 20:07+0200\n"
-"PO-Revision-Date: 2014-06-05 18:09+0000\n"
-"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
+"POT-Creation-Date: 2014-06-06 15:29+0200\n"
+"PO-Revision-Date: 2014-06-05 18:25+0000\n"
+"Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/projects/p/FusionInventory/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -263,47 +263,47 @@ msgctxt "fusioninventory"
 msgid "FusionInventory"
 msgstr "FusionInventory"
 
-#: setup.php:374 inc/printerlog.class.php:474
+#: setup.php:377 inc/printerlog.class.php:474
 msgctxt "fusioninventory"
 msgid "Printed page counter"
 msgstr "Basılmış sayfa sayacı"
 
-#: setup.php:378
+#: setup.php:381
 msgctxt "fusioninventory"
 msgid "Switchs ports history"
 msgstr "Switch kapılarının geçmişi"
 
-#: setup.php:380
+#: setup.php:383
 msgctxt "fusioninventory"
 msgid "Unused switchs ports"
 msgstr "Kullanılmayan switch kapıları"
 
-#: setup.php:382
+#: setup.php:385
 msgctxt "fusioninventory"
 msgid "Number of days since last inventory"
 msgstr "Son envanterden sonra geçen gün"
 
-#: setup.php:386 report/computer_last_inventory.php:67
+#: setup.php:389 report/computer_last_inventory.php:67
 msgctxt "fusioninventory"
 msgid "Computers not inventoried since xx days"
 msgstr "Bilgisayarların xx gündür envanter sayımı yapılmadı"
 
-#: setup.php:400 setup.php:401
+#: setup.php:403 setup.php:404
 msgctxt "fusioninventory"
 msgid "Documentation"
 msgstr "Belgeler"
 
-#: setup.php:500
+#: setup.php:503
 msgctxt "fusioninventory"
 msgid "Your GLPI version not compatible, require 0.85"
 msgstr "Bu uygulama eki GLPI 0.84 ve üzerindeki sürümlerle çalışır"
 
-#: setup.php:505
+#: setup.php:508
 msgctxt "fusioninventory"
 msgid "fileinfo extension (PHP) is required..."
 msgstr "fileinfo eklentisi (PHP) gerekli..."
 
-#: setup.php:518
+#: setup.php:521
 #, php-format
 msgctxt "fusioninventory"
 msgid "Please remove folder %s in glpi/plugins/"
@@ -1428,8 +1428,8 @@ msgid "Error / rescheduled"
 msgstr "Hata / yeniden zamanlanmış"
 
 #: inc/deploystate.class.php:143 inc/statediscovery.class.php:205
-#: inc/stateinventory.class.php:150 inc/task.view.class.php:223
-#: inc/task.view.class.php:377 inc/taskjoblog.class.php:68
+#: inc/stateinventory.class.php:150 inc/task.view.class.php:225
+#: inc/task.view.class.php:300 inc/taskjoblog.class.php:68
 #: inc/taskjoblog.class.php:673 inc/taskjoblog.class.php:1019
 #: inc/taskjobstate.class.php:74
 msgctxt "fusioninventory"
@@ -2898,7 +2898,7 @@ msgctxt "fusioninventory"
 msgid "General"
 msgstr "Genel"
 
-#: inc/menu.class.php:245 inc/task.class.php:55
+#: inc/menu.class.php:245 inc/task.class.php:54
 msgctxt "fusioninventory"
 msgid "Task management"
 msgstr "Görev yönetimi"
@@ -3499,48 +3499,48 @@ msgctxt "fusioninventory"
 msgid "Fusinv"
 msgstr "Fusinv"
 
-#: inc/task.class.php:82 inc/task.view.class.php:502
+#: inc/task.class.php:81 inc/task.view.class.php:425
 msgctxt "fusioninventory"
 msgid "Schedule start"
 msgstr "Zamanlama başlangıcı"
 
-#: inc/task.class.php:88 inc/task.view.class.php:508
+#: inc/task.class.php:87 inc/task.view.class.php:431
 msgctxt "fusioninventory"
 msgid "Schedule end"
 msgstr "Zamanlama bitişi"
 
-#: inc/task.class.php:295
+#: inc/task.class.php:294
 msgctxt "fusioninventory"
 msgid ""
 "The agent is requesting a configuration that has already been sent to him by"
 " the server. It is more likely that the agent is subject to a critical "
 "error."
-msgstr ""
+msgstr "Ajan zaten sunucu tarafından kendisine gönderilmiş ayarları istiyor. Ajanda kritik bir hata oluşmuş olma olasılığı daha yüksek. "
 
-#: inc/task.class.php:307
+#: inc/task.class.php:306
 msgctxt "fusioninventory"
 msgid "The task has been deactivated after preparation of this job."
-msgstr ""
+msgstr "Bu işin hazırlanmasından sonra görev devre dışı bırakıldı."
 
-#: inc/task.class.php:326
+#: inc/task.class.php:325
 msgctxt "fusioninventory"
 msgid "This job can not be executed anymore due to the task's schedule."
-msgstr ""
+msgstr "Görev zamanlaması nedeniyle bu iş bir daha yürütülemeyecek."
 
-#: inc/task.class.php:360
+#: inc/task.class.php:359
 msgctxt "fusioninventory"
 msgid "This job can not be executed anymore due to the task's timeslot."
-msgstr ""
+msgstr "Görevin zaman aralığı nedeniyle bu iş bir daha yürütülemeyecek."
 
-#: inc/task.class.php:379
+#: inc/task.class.php:378
 msgctxt "fusioninventory"
 msgid "This agent does not belong anymore in the actors defined in the job."
-msgstr ""
+msgstr "Bu ajan artık işin içinde tanımlanmış aktörlere bağlı değil."
 
 #: inc/task.view.class.php:81
 msgctxt "fusioninventory"
 msgid "To Be Done"
-msgstr ""
+msgstr "Yapılacak"
 
 #: inc/task.view.class.php:89
 msgctxt "fusioninventory"
@@ -3552,53 +3552,53 @@ msgctxt "fusioninventory"
 msgid "refresh interval"
 msgstr "yenileme aralığı"
 
-#: inc/task.view.class.php:185
+#: inc/task.view.class.php:187
 msgctxt "fusioninventory"
 msgid "Show/Hide details"
 msgstr "Ayrıntılar Görüntülensin/Gizlensin"
 
-#: inc/task.view.class.php:219 inc/task.view.class.php:373
+#: inc/task.view.class.php:221 inc/task.view.class.php:296
 msgctxt "fusioninventory"
 msgid "Not done yet"
 msgstr "Henüz yapılmadı"
 
-#: inc/task.view.class.php:220 inc/task.view.class.php:374
+#: inc/task.view.class.php:222 inc/task.view.class.php:297
 msgctxt "fusioninventory"
 msgid "In error"
 msgstr "Hata"
 
-#: inc/task.view.class.php:221 inc/task.view.class.php:375
+#: inc/task.view.class.php:223 inc/task.view.class.php:298
 msgctxt "fusioninventory"
 msgid "Successful"
 msgstr "Başarılı"
 
-#: inc/task.view.class.php:222 inc/task.view.class.php:376
+#: inc/task.view.class.php:224 inc/task.view.class.php:299
 msgctxt "fusioninventory"
 msgid "Running"
 msgstr "Çalışıyor"
 
-#: inc/task.view.class.php:224 inc/task.view.class.php:378
+#: inc/task.view.class.php:226 inc/task.view.class.php:301
 #: inc/taskjobstate.class.php:79
 msgctxt "fusioninventory"
 msgid "Cancelled"
 msgstr "İptal edildi"
 
-#: inc/task.view.class.php:384
+#: inc/task.view.class.php:307
 msgctxt "fusioninventory"
 msgid "N/A"
-msgstr ""
+msgstr "Kullanılamaz"
 
-#: inc/task.view.class.php:412
+#: inc/task.view.class.php:335
 msgctxt "fusioninventory"
 msgid "Show/Hide Agent details"
 msgstr "Ajan Ayrıntıları Görüntülensin/Gizlensin"
 
-#: inc/task.view.class.php:439
+#: inc/task.view.class.php:362
 msgctxt "fusioninventory"
 msgid "Execution"
 msgstr "Yürütme"
 
-#: inc/task.view.class.php:514
+#: inc/task.view.class.php:437
 msgctxt "fusioninventory"
 msgid "Timeslot"
 msgstr "Zaman aralığı"
@@ -3644,7 +3644,7 @@ msgstr "Zamanlanan tarih"
 #: inc/taskjob.class.php:1155
 msgctxt "fusioninventory"
 msgid "Periodicity"
-msgstr ""
+msgstr "Yinelenirlik"
 
 #: inc/taskjob.class.php:1380 inc/taskjob.class.php:1413
 msgctxt "fusioninventory"

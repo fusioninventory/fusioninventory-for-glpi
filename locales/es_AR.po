@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-05 20:07+0200\n"
+"POT-Creation-Date: 2014-06-06 15:29+0200\n"
 "PO-Revision-Date: 2014-06-05 18:09+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: Spanish (Argentina) (http://www.transifex.com/projects/p/FusionInventory/language/es_AR/)\n"
@@ -267,47 +267,47 @@ msgctxt "fusioninventory"
 msgid "FusionInventory"
 msgstr "FusionInventory"
 
-#: setup.php:374 inc/printerlog.class.php:474
+#: setup.php:377 inc/printerlog.class.php:474
 msgctxt "fusioninventory"
 msgid "Printed page counter"
 msgstr "Contador de páginas impresas"
 
-#: setup.php:378
+#: setup.php:381
 msgctxt "fusioninventory"
 msgid "Switchs ports history"
 msgstr "Historial de puertos del conmutador de red"
 
-#: setup.php:380
+#: setup.php:383
 msgctxt "fusioninventory"
 msgid "Unused switchs ports"
 msgstr "Puertos no usados en conmutadores de red"
 
-#: setup.php:382
+#: setup.php:385
 msgctxt "fusioninventory"
 msgid "Number of days since last inventory"
 msgstr "Número de días desde último inventario"
 
-#: setup.php:386 report/computer_last_inventory.php:67
+#: setup.php:389 report/computer_last_inventory.php:67
 msgctxt "fusioninventory"
 msgid "Computers not inventoried since xx days"
 msgstr "Ordenadores no inventariados desde hace n días"
 
-#: setup.php:400 setup.php:401
+#: setup.php:403 setup.php:404
 msgctxt "fusioninventory"
 msgid "Documentation"
 msgstr "Documentación"
 
-#: setup.php:500
+#: setup.php:503
 msgctxt "fusioninventory"
 msgid "Your GLPI version not compatible, require 0.85"
 msgstr ""
 
-#: setup.php:505
+#: setup.php:508
 msgctxt "fusioninventory"
 msgid "fileinfo extension (PHP) is required..."
 msgstr "se requiere extensión (PHP) fileinfo"
 
-#: setup.php:518
+#: setup.php:521
 #, php-format
 msgctxt "fusioninventory"
 msgid "Please remove folder %s in glpi/plugins/"
@@ -1434,8 +1434,8 @@ msgid "Error / rescheduled"
 msgstr "Error / nuevamente planificado"
 
 #: inc/deploystate.class.php:143 inc/statediscovery.class.php:205
-#: inc/stateinventory.class.php:150 inc/task.view.class.php:223
-#: inc/task.view.class.php:377 inc/taskjoblog.class.php:68
+#: inc/stateinventory.class.php:150 inc/task.view.class.php:225
+#: inc/task.view.class.php:300 inc/taskjoblog.class.php:68
 #: inc/taskjoblog.class.php:673 inc/taskjoblog.class.php:1019
 #: inc/taskjobstate.class.php:74
 msgctxt "fusioninventory"
@@ -2904,7 +2904,7 @@ msgctxt "fusioninventory"
 msgid "General"
 msgstr "General"
 
-#: inc/menu.class.php:245 inc/task.class.php:55
+#: inc/menu.class.php:245 inc/task.class.php:54
 msgctxt "fusioninventory"
 msgid "Task management"
 msgstr "Gestión de tareas"
@@ -3505,17 +3505,17 @@ msgctxt "fusioninventory"
 msgid "Fusinv"
 msgstr "FusionInventory"
 
-#: inc/task.class.php:82 inc/task.view.class.php:502
+#: inc/task.class.php:81 inc/task.view.class.php:425
 msgctxt "fusioninventory"
 msgid "Schedule start"
 msgstr ""
 
-#: inc/task.class.php:88 inc/task.view.class.php:508
+#: inc/task.class.php:87 inc/task.view.class.php:431
 msgctxt "fusioninventory"
 msgid "Schedule end"
 msgstr ""
 
-#: inc/task.class.php:295
+#: inc/task.class.php:294
 msgctxt "fusioninventory"
 msgid ""
 "The agent is requesting a configuration that has already been sent to him by"
@@ -3523,22 +3523,22 @@ msgid ""
 "error."
 msgstr ""
 
-#: inc/task.class.php:307
+#: inc/task.class.php:306
 msgctxt "fusioninventory"
 msgid "The task has been deactivated after preparation of this job."
 msgstr ""
 
-#: inc/task.class.php:326
+#: inc/task.class.php:325
 msgctxt "fusioninventory"
 msgid "This job can not be executed anymore due to the task's schedule."
 msgstr ""
 
-#: inc/task.class.php:360
+#: inc/task.class.php:359
 msgctxt "fusioninventory"
 msgid "This job can not be executed anymore due to the task's timeslot."
 msgstr ""
 
-#: inc/task.class.php:379
+#: inc/task.class.php:378
 msgctxt "fusioninventory"
 msgid "This agent does not belong anymore in the actors defined in the job."
 msgstr ""
@@ -3558,53 +3558,53 @@ msgctxt "fusioninventory"
 msgid "refresh interval"
 msgstr ""
 
-#: inc/task.view.class.php:185
+#: inc/task.view.class.php:187
 msgctxt "fusioninventory"
 msgid "Show/Hide details"
 msgstr ""
 
-#: inc/task.view.class.php:219 inc/task.view.class.php:373
+#: inc/task.view.class.php:221 inc/task.view.class.php:296
 msgctxt "fusioninventory"
 msgid "Not done yet"
 msgstr ""
 
-#: inc/task.view.class.php:220 inc/task.view.class.php:374
+#: inc/task.view.class.php:222 inc/task.view.class.php:297
 msgctxt "fusioninventory"
 msgid "In error"
 msgstr ""
 
-#: inc/task.view.class.php:221 inc/task.view.class.php:375
+#: inc/task.view.class.php:223 inc/task.view.class.php:298
 msgctxt "fusioninventory"
 msgid "Successful"
 msgstr ""
 
-#: inc/task.view.class.php:222 inc/task.view.class.php:376
+#: inc/task.view.class.php:224 inc/task.view.class.php:299
 msgctxt "fusioninventory"
 msgid "Running"
 msgstr ""
 
-#: inc/task.view.class.php:224 inc/task.view.class.php:378
+#: inc/task.view.class.php:226 inc/task.view.class.php:301
 #: inc/taskjobstate.class.php:79
 msgctxt "fusioninventory"
 msgid "Cancelled"
 msgstr ""
 
-#: inc/task.view.class.php:384
+#: inc/task.view.class.php:307
 msgctxt "fusioninventory"
 msgid "N/A"
 msgstr ""
 
-#: inc/task.view.class.php:412
+#: inc/task.view.class.php:335
 msgctxt "fusioninventory"
 msgid "Show/Hide Agent details"
 msgstr ""
 
-#: inc/task.view.class.php:439
+#: inc/task.view.class.php:362
 msgctxt "fusioninventory"
 msgid "Execution"
 msgstr ""
 
-#: inc/task.view.class.php:514
+#: inc/task.view.class.php:437
 msgctxt "fusioninventory"
 msgid "Timeslot"
 msgstr ""
