@@ -293,7 +293,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       foreach ($a_taskjobstates as $data) {
          // Get job and data to send to agent
          if ($pfTaskjob->getFromDB($data['plugin_fusioninventory_taskjobs_id'])) {
-
+Toolbox::logDebug($data);
             $pluginName = PluginFusioninventoryModule::getModuleName($pfTaskjob->fields['plugins_id']);
             if ($pluginName) {
                $className = "Plugin".ucfirst($pluginName).ucfirst($pfTaskjob->fields['method']);

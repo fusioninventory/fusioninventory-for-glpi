@@ -55,21 +55,42 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
    switch ($_GET['action']) {
 
       case 'getJobs':
-         $response = array('jobs' => array());
-         //Specific to ESX
-         $pfAgent = new PluginFusioninventoryAgent();
+         $pfAgent        = new PluginFusioninventoryAgent();
+         $pfTask         = new PluginFusioninventoryTask();
+         $pfTaskjob      = new PluginFusioninventoryTaskjob();
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-
+      
          $agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
-         $modules = $pfTaskjobstate->getTaskjobsAgent($agent['id']);
-         foreach ($modules as $module => $configurations) {
-            if (class_exists($module)) {
-               if ($module == "PluginFusioninventoryInventoryComputerESX") {
-                  $class = new $module();
-                  $response = $class->run($configurations);
-               }
+
+         if (isset($agent['id'])) {
+            $taskjobstates = $pfTask->getTaskjobstatesForAgent(
+               $agent['id'],
+               array('InventoryComputerESX')
+            );
+            
+            ////start of json response
+            $order = new stdClass;
+            $order->jobs = array();
+            
+            $module = new PluginFusioninventoryInventoryComputerESX();
+            foreach ($taskjobstates as $taskjobstate) {
+               $order->jobs[] = $module->run($taskjobstate);
+               
+               $taskjobstate->changeStatus(
+                  $taskjobstate->fields['id'] ,
+                  $taskjobstate::SERVER_HAS_SENT_DATA
+               );
+            }
+
+            Toolbox::logDebug($order);
+            // return an empty dictionnary if there are no jobs.
+            if ( count($order->jobs) == 0) {
+               $response = "{}";
+            } else {
+               $response = json_encode($order);
             }
          }
+
          break;
 
       case 'setLog':
@@ -78,12 +99,11 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          break;
    }
 
-   if ($response) {
-      echo json_encode($response);
+   if ($response !== FALSE) {
+      echo $response;
    } else {
       echo json_encode((object)array());
-    }
-
+   }
 }
 
 ?>
