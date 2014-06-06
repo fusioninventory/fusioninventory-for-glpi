@@ -257,13 +257,10 @@ taskjobs.update_agents_view = function (chart_id) {
 
       var filtered_agents = Lazy([]);
       var agents = chart.agents.toObject();
+
       //Filter agents chart view
       Lazy(Object.keys(chart.type_selected))
          .each( function(d) {
-            //var t = Lazy(chart.counters[d])
-            //                .map(function(data) {
-            //                    return [data, agents[data]]
-            //                });
             filtered_agents = filtered_agents.union(chart.counters[d]);
          });
      filtered_agents = filtered_agents.map(function(d) { return [d,true]; } ).toObject();
@@ -277,19 +274,9 @@ taskjobs.update_agents_view = function (chart_id) {
      });
      var agents_to_view = total_agents_to_view.first(chart.view_limit);
 
-
-     console.debug(Object.keys(filtered_agents).length)
-
-//      agents = agents.sortBy( function(agent) {
-//         var date = new Date(agent[1][0].last_log_date);
-//         return date.getTime();
-//      }).reverse();
-
-      //taskjobs.agents_chart[chart_id].filtered_agents = filtered_agents;
-
-      taskjobs.agents_chart[chart_id].filtered_agents = filtered_agents;
-      taskjobs.agents_chart[chart_id].agents_to_view = agents_to_view.toArray();
-      taskjobs.agents_chart[chart_id].total_agents_to_view = total_agents_to_view.size();
+     taskjobs.agents_chart[chart_id].filtered_agents = filtered_agents;
+     taskjobs.agents_chart[chart_id].agents_to_view = agents_to_view.toArray();
+     taskjobs.agents_chart[chart_id].total_agents_to_view = total_agents_to_view.size();
    }
    taskjobs.agents_chart[chart_id].display_agents = true;
 }
@@ -303,20 +290,14 @@ taskjobs.display_agents_view = function(chart_id) {
          d3.select(chart.selector)
             .datum(agents)
             .call(agents_chart());
-         //console.debug("current number of agents viewed : " + agents.length );
-         //console.debug("total of agents : " + chart.agents.size());
-         //console.debug("view limit : " + chart.view_limit);
-         //console.debug("may show more agents: " + (agents.length < chart.agents.size()));
          var agents_hidden = chart.total_agents_to_view - agents.length;
          if (agents_hidden <= 0) {
             taskjobs.agents_chart[chart_id].view_limit = 10;
          }
-         console.debug("agents hidden " + agents_hidden);
          var limit_to_add = 10;
          var button_text = []
          if (agents_hidden > 0) {
              limit_to_add = Math.min(agents_hidden, 10);
-             console.debug(limit_to_add)
          } else {
             limit_to_add = 0;
          }
@@ -326,8 +307,6 @@ taskjobs.display_agents_view = function(chart_id) {
                  'limit' : limit_to_add
              }
          ]
-         console.debug("current limit : " + chart.view_limit);
-         console.debug("new limit : " + limit_to_add);
          var chart_anchor = $(chart.selector).parent()[0]
 
          var show_more = d3.select(chart_anchor).selectAll("div.show_more")
@@ -339,7 +318,6 @@ taskjobs.display_agents_view = function(chart_id) {
              .attr('type', 'button')
              .attr('class', 'submit more_button')
              .on('click', function(e) {
-                 console.debug(e);
                  taskjobs.agents_chart[chart_id].view_limit += e.limit;
                  taskjobs.update_agents_view(chart_id);
              });
@@ -356,7 +334,6 @@ taskjobs.display_agents_view = function(chart_id) {
              .attr('type', 'button')
              .attr('class', 'submit reset_button')
              .on('click', function(e) {
-                 console.debug(e);
                  taskjobs.agents_chart[chart_id].view_limit = 10;
                  taskjobs.update_agents_view(chart_id);
              });
@@ -738,8 +715,6 @@ taskjobs.compute_data = function() {
                 if (Object.keys(target_v.agents).length > 0 ) {
 
                     target_v.agents = Lazy(target_v.agents).sortBy( function(agent) {
-                        //var date = new Date(agent[1][0].last_log_date);
-                        //return date.getTime();
                         return agent[1][0].timestamp;
                     }).reverse();
 
@@ -1013,7 +988,6 @@ taskjobs.get_logs = function( ajax_url, task_id ) {
         "task_id" : task_id
     };
 
-    console.debug(task_id)
     $.ajax({
         url: ajax_url,
         data: data,
