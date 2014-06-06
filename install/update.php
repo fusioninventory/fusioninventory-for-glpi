@@ -1019,7 +1019,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                'value'   => NULL);
       $a_table['fields']['plugin_fusioninventory_configsecurities_id']   = array('type'    => 'integer',
                                                'value'   => NULL);
-      $a_table['fields']['rank']       = array('type'    => 'integnker',
+      $a_table['fields']['rank']       = array('type'    => 'integer',
                                                'value'   => '1');
 
       $a_table['oldfields']    = array();
