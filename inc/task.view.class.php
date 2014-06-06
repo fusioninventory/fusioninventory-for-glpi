@@ -240,7 +240,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
       // Display empty block for each jobs display which will be rendered later by mustache.js
       echo implode("\n", array(
-         "<div id='tasks_block'>",
+         "<div class='tasks_block'>",
          "</div>",
 //         "<pre class='debuglogs' style='text-align:left;'></pre>"
       ));

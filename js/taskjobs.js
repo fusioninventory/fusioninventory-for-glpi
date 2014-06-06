@@ -460,7 +460,7 @@ taskjobs.update_logs = function (data) {
       agents_chart : [],
    }
    tasks = taskjobs.data['tasks'];
-   tasks_selector = '#tasks_block';
+   tasks_selector = '.tasks_block';
    //console.debug(tasks_placeholder);
    $.each(tasks, function(task_i, task_v) {
       task_id = 'task_' + task_v.task_id;
@@ -1038,7 +1038,8 @@ taskjobs.update_logs_timeout = function( ajax_url, task_id , refresh_id) {
 taskjobs.queue_refresh_logs = function (ajax_url, task_id) {
    var n = taskjobs.Queue.queue('refresh_logs');
 
-   if ( $("#tasks_block:visible").length == 0 ) {
+   $('.tasks_block:hidden').remove();
+   if ( $(".tasks_block:visible").length == 0 ) {
       window.clearTimeout(taskjobs.Queue.timer);
    }
    if (n.length == 0 ) {
