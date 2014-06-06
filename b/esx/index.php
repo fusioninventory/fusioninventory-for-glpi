@@ -82,7 +82,6 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
                );
             }
 
-            Toolbox::logDebug($order);
             // return an empty dictionnary if there are no jobs.
             if ( count($order->jobs) == 0) {
                $response = "{}";

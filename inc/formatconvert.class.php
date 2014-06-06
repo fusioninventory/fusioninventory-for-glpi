@@ -470,7 +470,8 @@ class PluginFusioninventoryFormatconvert {
                   if (isset($array['CONTROLLERS'])) {
                      foreach ($array['CONTROLLERS'] as $a_controllers) {
                         if (count($a_found) == 0) {
-                           if (($a_netcards['DESCRIPTION'] == $a_controllers['TYPE']
+                           if (isset($a_controllers['TYPE']) 
+                              && ($a_netcards['DESCRIPTION'] == $a_controllers['TYPE']
                                    || strtolower($a_netcards['DESCRIPTION']." controller") ==
                                           strtolower($a_controllers['TYPE']))
                                  && !isset($ignorecontrollers[$a_controllers['NAME']])) {
