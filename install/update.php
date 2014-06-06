@@ -1006,6 +1006,35 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
    /*
+    * Table glpi_plugin_fusioninventory_ipranges_configsecurities
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_ipranges_configsecurities';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement',
+                                               'value'   => '');
+      $a_table['fields']['plugin_fusioninventory_ipranges_id']   = array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['plugin_fusioninventory_configsecurities_id']   = array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['rank']       = array('type'    => 'integnker',
+                                               'value'   => '1');
+
+      $a_table['oldfields']    = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']         = array();
+
+      $a_table['oldkeys']      = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+
+
+   /*
     * Table glpi_plugin_fusioninventory_mappings
     */
       $a_table = array();
