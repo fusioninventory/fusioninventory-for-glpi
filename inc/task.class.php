@@ -501,7 +501,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          }
          $saved_agent_ids = $agent_ids;
          $targets = importArrayFromDB($result['job']['targets']);
-
+         $limit = 0;
          foreach($targets as $target) {
             $agent_ids = $saved_agent_ids;
             $item_type = key($target);
@@ -534,7 +534,14 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             }
 
             foreach($agent_ids as $agent_id => $agent_not_running) {
+
                if( $agent_not_running) {
+
+                  $limit += 1;
+                  if ($limit > 500) {
+                     $limit = 0;
+                     break;
+                  }
                   $run = array_merge(
                      $run_base,
                      array(
@@ -874,9 +881,9 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          array( 'run.items_id'   , 'run.`items_id`'),
          array( 'run.state'      , 'run.`state`'),
          array( 'log.last_date'  , 'MAX(log.`date`)'),
-         array( 'log.last_timestamp'  , 'UNIX_TIMESTAMP(log.`date`)'),
+         array( 'log.last_timestamp'  , 'UNIX_TIMESTAMP(MAX(log.`date`))'),
          array( 'log.last_id'  , 'MAX(log.`id`)'),
-         array( 'log.last_comment'  , 'log.`comment`'),
+         array( 'log.last_comment'  , 'MAX(log.`comment`)'),
       );
       $fieldmap = array();
       foreach($query_fields  as $index => $key) {
@@ -909,7 +916,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "  ON max_run.`max_id` = run.`id`",
       ));
       $query_joins['log'] = implode( "\n", array(
-         "INNER JOIN `glpi_plugin_fusioninventory_taskjoblogs` as log",
+         "LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs` as log",
          "  ON log.`plugin_fusioninventory_taskjobstates_id` = run.`id`",
       ));
       $query_joins['job'] = implode( "\n", array(

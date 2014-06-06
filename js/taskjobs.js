@@ -200,12 +200,17 @@ function agents_chart() {
                var classes = [
                   'agent_block',
                ];
-               for(i=0; i < d[1].length; i++) {
-                  classes.push('agent_' + d[1][i]['state']);
+               var num_classes = d[1].length;
+               for(i=1; i <= num_classes; i++) {
+                  classes.push('agent_' + d[1][num_classes - i]['state']);
                }
                return classes.join(' ');
             }).each( function(d) {
-
+                //TODO: instead of using d3.selection.each, we should prepare
+                //an agent DOM node from Mustache.js templates (defined in GLPI
+                //code) and use jquery .clone() and .repaceWith() in order to
+                //speed things up and getting translated elemenet from
+                //templates.
 
                 var names = d3.select(this).selectAll('a.name').data([d]);
 
@@ -220,12 +225,18 @@ function agents_chart() {
                 var dates = d3.select(this).selectAll('span.date').data([d]);
                 dates.enter().append('span')
                     .attr('class', 'date');
-                dates.text( [ d[1][0].last_log_date].join());
+                dates.html( [
+                    d[1][0].last_log_date,
+//                    [d[1][0].last_log_id,d[1][0].timestamp].join(','),
+                ].join("<br/>"));
 
                 var log = d3.select(this).selectAll('span.comment').data([d]);
                 log.enter().append('span')
                     .attr('class', 'comment');
-                log.text(function(d) {return d[1][0].last_log;});
+                log.text(function(d) { return [
+//                    d[1][0].jobstate_id,
+                    d[1][0].last_log
+                ].join(',');});
                 log.exit().remove();
             });
          div.exit().remove();
@@ -246,13 +257,10 @@ taskjobs.update_agents_view = function (chart_id) {
 
       var filtered_agents = Lazy([]);
       var agents = chart.agents.toObject();
+
       //Filter agents chart view
       Lazy(Object.keys(chart.type_selected))
          .each( function(d) {
-            //var t = Lazy(chart.counters[d])
-            //                .map(function(data) {
-            //                    return [data, agents[data]]
-            //                });
             filtered_agents = filtered_agents.union(chart.counters[d]);
          });
      filtered_agents = filtered_agents.map(function(d) { return [d,true]; } ).toObject();
@@ -266,19 +274,9 @@ taskjobs.update_agents_view = function (chart_id) {
      });
      var agents_to_view = total_agents_to_view.first(chart.view_limit);
 
-
-     console.debug(Object.keys(filtered_agents).length)
-
-//      agents = agents.sortBy( function(agent) {
-//         var date = new Date(agent[1][0].last_log_date);
-//         return date.getTime();
-//      }).reverse();
-
-      //taskjobs.agents_chart[chart_id].filtered_agents = filtered_agents;
-
-      taskjobs.agents_chart[chart_id].filtered_agents = filtered_agents;
-      taskjobs.agents_chart[chart_id].agents_to_view = agents_to_view.toArray();
-      taskjobs.agents_chart[chart_id].total_agents_to_view = total_agents_to_view.size();
+     taskjobs.agents_chart[chart_id].filtered_agents = filtered_agents;
+     taskjobs.agents_chart[chart_id].agents_to_view = agents_to_view.toArray();
+     taskjobs.agents_chart[chart_id].total_agents_to_view = total_agents_to_view.size();
    }
    taskjobs.agents_chart[chart_id].display_agents = true;
 }
@@ -292,20 +290,14 @@ taskjobs.display_agents_view = function(chart_id) {
          d3.select(chart.selector)
             .datum(agents)
             .call(agents_chart());
-         //console.debug("current number of agents viewed : " + agents.length );
-         //console.debug("total of agents : " + chart.agents.size());
-         //console.debug("view limit : " + chart.view_limit);
-         //console.debug("may show more agents: " + (agents.length < chart.agents.size()));
          var agents_hidden = chart.total_agents_to_view - agents.length;
          if (agents_hidden <= 0) {
             taskjobs.agents_chart[chart_id].view_limit = 10;
          }
-         console.debug("agents hidden " + agents_hidden);
          var limit_to_add = 10;
          var button_text = []
          if (agents_hidden > 0) {
              limit_to_add = Math.min(agents_hidden, 10);
-             console.debug(limit_to_add)
          } else {
             limit_to_add = 0;
          }
@@ -315,8 +307,6 @@ taskjobs.display_agents_view = function(chart_id) {
                  'limit' : limit_to_add
              }
          ]
-         console.debug("current limit : " + chart.view_limit);
-         console.debug("new limit : " + limit_to_add);
          var chart_anchor = $(chart.selector).parent()[0]
 
          var show_more = d3.select(chart_anchor).selectAll("div.show_more")
@@ -328,7 +318,6 @@ taskjobs.display_agents_view = function(chart_id) {
              .attr('type', 'button')
              .attr('class', 'submit more_button')
              .on('click', function(e) {
-                 console.debug(e);
                  taskjobs.agents_chart[chart_id].view_limit += e.limit;
                  taskjobs.update_agents_view(chart_id);
              });
@@ -345,7 +334,6 @@ taskjobs.display_agents_view = function(chart_id) {
              .attr('type', 'button')
              .attr('class', 'submit reset_button')
              .on('click', function(e) {
-                 console.debug(e);
                  taskjobs.agents_chart[chart_id].view_limit = 10;
                  taskjobs.update_agents_view(chart_id);
              });
@@ -472,7 +460,7 @@ taskjobs.update_logs = function (data) {
       agents_chart : [],
    }
    tasks = taskjobs.data['tasks'];
-   tasks_selector = '#tasks_block';
+   tasks_selector = '.tasks_block';
    //console.debug(tasks_placeholder);
    $.each(tasks, function(task_i, task_v) {
       task_id = 'task_' + task_v.task_id;
@@ -727,8 +715,6 @@ taskjobs.compute_data = function() {
                 if (Object.keys(target_v.agents).length > 0 ) {
 
                     target_v.agents = Lazy(target_v.agents).sortBy( function(agent) {
-                        //var date = new Date(agent[1][0].last_log_date);
-                        //return date.getTime();
                         return agent[1][0].timestamp;
                     }).reverse();
 
@@ -997,31 +983,51 @@ taskjobs.update_progressbar = function( chart ) {
 
 
 taskjobs.get_logs = function( ajax_url, task_id ) {
-    $('#refresh_button').find('span').toggleClass('loading', true).text('Refreshing ...');
+    $('.refresh_button')
+        .find('span')
+        .toggleClass('fetching', true)
+        .toggleClass('computing', false);
+
     var data = {
         "task_id" : task_id
     };
 
-    console.debug(task_id)
     $.ajax({
         url: ajax_url,
         data: data,
         success: function( data, textStatus, jqXHR) {
+            $('.refresh_button')
+                .find('span')
+                .toggleClass('fetching', false)
+                .toggleClass('computing', true);
             taskjobs.update_logs(data);
         },
         complete: function( ) {
+            taskjobs.update_refresh_buttons( ajax_url, task_id);
             taskjobs.Queue.queue("refresh_logs").pop();
-            $('#refresh_button').find('span').toggleClass('loading', false).text('Manual refresh');
+            $('.refresh_button')
+                .find('span')
+                .toggleClass('loading', false)
+                .toggleClass('computing', false);
         }
     });
 }
 
-taskjobs.init_refresh_form = function( ajax_url, task_id, refresh_id) {
-   $('#refresh_button')
+taskjobs.update_refresh_buttons = function( ajax_url, task_id) {
+
+   $('.refresh_button')
+      .off("click");
+   $('.refresh_button')
       .on('click', function(e) {
-         taskjobs.update_logs_timeout( ajax_url, task_id, refresh_id )
+         taskjobs.queue_refresh_logs( ajax_url, task_id )
       });
 
+}
+
+taskjobs.init_refresh_form = function( ajax_url, task_id, refresh_id) {
+
+   $("#"+ refresh_id)
+      .off("change");
    $("#"+ refresh_id)
       .on("change", function() {
          taskjobs.update_logs_timeout( ajax_url, task_id, refresh_id )
@@ -1034,6 +1040,7 @@ taskjobs.update_logs_timeout = function( ajax_url, task_id , refresh_id) {
 
 
    taskjobs.refresh = $("#" + refresh_id).val();
+
 
    window.clearTimeout(taskjobs.Queue.timer);
    taskjobs.queue_refresh_logs(ajax_url, task_id);
@@ -1053,7 +1060,8 @@ taskjobs.update_logs_timeout = function( ajax_url, task_id , refresh_id) {
 taskjobs.queue_refresh_logs = function (ajax_url, task_id) {
    var n = taskjobs.Queue.queue('refresh_logs');
 
-   if ( $("#tasks_block:visible").length == 0 ) {
+   $('.tasks_block:hidden').remove();
+   if ( $(".tasks_block:visible").length == 0 ) {
       window.clearTimeout(taskjobs.Queue.timer);
    }
    if (n.length == 0 ) {
