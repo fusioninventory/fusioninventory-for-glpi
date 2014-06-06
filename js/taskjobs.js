@@ -200,12 +200,17 @@ function agents_chart() {
                var classes = [
                   'agent_block',
                ];
-               for(i=0; i < d[1].length; i++) {
-                  classes.push('agent_' + d[1][i]['state']);
+               var num_classes = d[1].length;
+               for(i=1; i <= num_classes; i++) {
+                  classes.push('agent_' + d[1][num_classes - i]['state']);
                }
                return classes.join(' ');
             }).each( function(d) {
-
+                //TODO: instead of using d3.selection.each, we should prepare
+                //an agent DOM node from Mustache.js templates (defined in GLPI
+                //code) and use jquery .clone() and .repaceWith() in order to
+                //speed things up and getting translated elemenet from
+                //templates.
 
                 var names = d3.select(this).selectAll('a.name').data([d]);
 
@@ -220,12 +225,18 @@ function agents_chart() {
                 var dates = d3.select(this).selectAll('span.date').data([d]);
                 dates.enter().append('span')
                     .attr('class', 'date');
-                dates.text( [ d[1][0].last_log_date].join());
+                dates.html( [
+                    d[1][0].last_log_date,
+//                    [d[1][0].last_log_id,d[1][0].timestamp].join(','),
+                ].join("<br/>"));
 
                 var log = d3.select(this).selectAll('span.comment').data([d]);
                 log.enter().append('span')
                     .attr('class', 'comment');
-                log.text(function(d) {return d[1][0].last_log;});
+                log.text(function(d) { return [
+//                    d[1][0].jobstate_id,
+                    d[1][0].last_log
+                ].join(',');});
                 log.exit().remove();
             });
          div.exit().remove();

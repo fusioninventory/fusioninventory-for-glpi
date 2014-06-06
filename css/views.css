@@ -427,6 +427,13 @@ a.expanded > div.fold {
    font-style: normal;
 }
 
+.target_block  div.target_stats .agents_cancelled {
+   color: white;
+   background: #9c7964;
+   font-weight: bolder;
+   font-style: normal;
+}
+
 .target_block > div {
    display: inline-block;
    vertical-align: top;
@@ -492,29 +499,40 @@ a.expanded > div.fold {
 .agent_block.agent_success{
    background: #AFA;
    border-color: green;
-   color: green;
 }
-.agent_block.agent_success > a {
+.agent_block.agent_success > * {
    color: green;
 }
 
 .agent_block.agent_error{
    background: #FDD;
    border-color: red;
-   color: red;
 }
 
-.agent_block.agent_error > a {
+.agent_block.agent_error > * {
     color: red;
 }
 
-.agent_block.agent_prepared,
-.agent_block.agent_cancelled {
-   border-color: #AAA;
+.agent_block.agent_prepared {
+   border-color: #777;
 }
 
+.agent_block.agent_prepared > *{
+   color: #444;
+}
+
+.agent_block.agent_cancelled {
+   border-color: #785036;
+}
+.agent_block.agent_cancelled > *{
+   color: #785036;
+
+}
 .agent_block.agent_running {
-   border-color: blue;
+   border-color: #7777EE;
+}
+.agent_block.agent_running > * {
+   color: blue;
 }
 
 
@@ -528,7 +546,6 @@ a.expanded > div.fold {
 .agent_block > a {
     line-height: 16px;
     vertical-align: bottom;
-    color: #777;
     display: block;
     padding: 0;
     margin: 0;
@@ -539,7 +556,8 @@ a.expanded > div.fold {
    font-weight: lighter;
 }
 
-.agent_block:hover > span.comment {
+.agent_block:hover > * {
+   color: black;
    opacity: 1.0;
 }
 
