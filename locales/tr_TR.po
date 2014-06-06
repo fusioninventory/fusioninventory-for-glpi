@@ -3,15 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Translators:
 # Kaya Zeren <kayazeren@gmail.com>, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-04 14:13+0200\n"
-"PO-Revision-Date: 2014-06-04 19:06+0000\n"
-"Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
+"POT-Creation-Date: 2014-06-05 20:07+0200\n"
+"PO-Revision-Date: 2014-06-05 18:09+0000\n"
+"Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/projects/p/FusionInventory/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -84,7 +83,7 @@ msgctxt "fusioninventory"
 msgid "Module"
 msgstr "Modül"
 
-#: hook.php:152 inc/menu.class.php:436
+#: hook.php:152 inc/menu.class.php:437
 msgctxt "fusioninventory"
 msgid "Deploy"
 msgstr "Yayım"
@@ -126,7 +125,7 @@ msgctxt "fusioninventory"
 msgid "Static group"
 msgstr "Durağan grup"
 
-#: hook.php:253 hook.php:261 hook.php:293 inc/menu.class.php:364
+#: hook.php:253 hook.php:261 hook.php:293 inc/menu.class.php:365
 #: inc/networkequipment.class.php:450 inc/printer.class.php:168
 #: inc/profile.class.php:258 inc/unknowndevice.class.php:159
 #: inc/unknowndevice.class.php:370
@@ -264,47 +263,47 @@ msgctxt "fusioninventory"
 msgid "FusionInventory"
 msgstr "FusionInventory"
 
-#: setup.php:372 inc/printerlog.class.php:474
+#: setup.php:374 inc/printerlog.class.php:474
 msgctxt "fusioninventory"
 msgid "Printed page counter"
 msgstr "Basılmış sayfa sayacı"
 
-#: setup.php:376
+#: setup.php:378
 msgctxt "fusioninventory"
 msgid "Switchs ports history"
 msgstr "Switch kapılarının geçmişi"
 
-#: setup.php:378
+#: setup.php:380
 msgctxt "fusioninventory"
 msgid "Unused switchs ports"
 msgstr "Kullanılmayan switch kapıları"
 
-#: setup.php:380
+#: setup.php:382
 msgctxt "fusioninventory"
 msgid "Number of days since last inventory"
 msgstr "Son envanterden sonra geçen gün"
 
-#: setup.php:384 report/computer_last_inventory.php:67
+#: setup.php:386 report/computer_last_inventory.php:67
 msgctxt "fusioninventory"
 msgid "Computers not inventoried since xx days"
 msgstr "Bilgisayarların xx gündür envanter sayımı yapılmadı"
 
-#: setup.php:398 setup.php:399
+#: setup.php:400 setup.php:401
 msgctxt "fusioninventory"
 msgid "Documentation"
 msgstr "Belgeler"
 
-#: setup.php:498
+#: setup.php:500
 msgctxt "fusioninventory"
 msgid "Your GLPI version not compatible, require 0.85"
 msgstr "Bu uygulama eki GLPI 0.84 ve üzerindeki sürümlerle çalışır"
 
-#: setup.php:503
+#: setup.php:505
 msgctxt "fusioninventory"
 msgid "fileinfo extension (PHP) is required..."
 msgstr "fileinfo eklentisi (PHP) gerekli..."
 
-#: setup.php:516
+#: setup.php:518
 #, php-format
 msgctxt "fusioninventory"
 msgid "Please remove folder %s in glpi/plugins/"
@@ -717,7 +716,7 @@ msgid "Property"
 msgstr "Varlık"
 
 #: inc/collectrule.class.php:57 inc/collectrulecollection.class.php:57
-#: inc/menu.class.php:317 inc/profile.class.php:213
+#: inc/menu.class.php:318 inc/profile.class.php:213
 msgctxt "fusioninventory"
 msgid "Additional computer information rules"
 msgstr "Ek bilgisayar bilgileri kuralları"
@@ -809,7 +808,7 @@ msgctxt "fusioninventory"
 msgid "Network Inventory"
 msgstr "Ağ Envanteri"
 
-#: inc/config.class.php:207 inc/menu.class.php:421
+#: inc/config.class.php:207 inc/menu.class.php:422
 msgctxt "fusioninventory"
 msgid "Package management"
 msgstr "Paket yönetimi"
@@ -976,7 +975,7 @@ msgctxt "fusioninventory"
 msgid "Encryption protocol for data"
 msgstr "Veri için kullanılacak şifreleme yöntemi"
 
-#: inc/configurationmanagement.class.php:62 inc/menu.class.php:470
+#: inc/configurationmanagement.class.php:62 inc/menu.class.php:471
 msgctxt "fusioninventory"
 msgid "Configuration management"
 msgstr "Ayar yönetimi"
@@ -1000,7 +999,7 @@ msgstr "Eylemlere bakın"
 
 #: inc/credential.class.php:56 inc/credential.class.php:143
 #: inc/credentialip.class.php:97 inc/credentialip.class.php:110
-#: inc/credentialip.class.php:130 inc/menu.class.php:374
+#: inc/credentialip.class.php:130 inc/menu.class.php:375
 #: inc/profile.class.php:249
 msgctxt "fusioninventory"
 msgid "Authentication for remote devices (VMware)"
@@ -1011,7 +1010,7 @@ msgctxt "fusioninventory"
 msgid "VMware host"
 msgstr "VMware sunucusu"
 
-#: inc/credential.class.php:364 inc/menu.class.php:355
+#: inc/credential.class.php:364 inc/menu.class.php:356
 #: inc/profile.class.php:252 inc/wizard.class.php:1014
 msgctxt "fusioninventory"
 msgid "Remote devices to inventory (VMware)"
@@ -1062,7 +1061,7 @@ msgstr "Kopyalansın"
 #: inc/networkequipment.class.php:1008 inc/networkequipment.class.php:1009
 #: inc/networkportlog.class.php:193 inc/networkporttype.class.php:389
 #: inc/printerlog.class.php:354 inc/printerlog.class.php:551
-#: inc/taskjob.class.php:170 inc/taskjob.class.php:1788
+#: inc/taskjob.class.php:165 inc/taskjob.class.php:1783
 #: inc/taskjob.view.class.php:264 inc/taskjob.view.class.php:443
 #: inc/taskjob.view.class.php:455
 msgctxt "fusioninventory"
@@ -1085,7 +1084,7 @@ msgid "return codes saved for this command"
 msgstr "bu komut için kaydedilmiş geri dönüş kodları"
 
 #: inc/deployaction.class.php:209 inc/deploycheck.class.php:185
-#: inc/deployfile.class.php:272 inc/taskjob.class.php:1776
+#: inc/deployfile.class.php:272 inc/taskjob.class.php:1771
 msgctxt "fusioninventory"
 msgid "drag"
 msgstr "sürükleyin"
@@ -1342,7 +1341,7 @@ msgid "Mio"
 msgstr "MB"
 
 #: inc/deploygroup.class.php:64 inc/deploytaskjob.class.php:170
-#: inc/menu.class.php:215 inc/profile.class.php:309
+#: inc/menu.class.php:216 inc/profile.class.php:309
 msgctxt "fusioninventory"
 msgid "Groups of computers"
 msgstr "Bilgisayar grupları"
@@ -1362,7 +1361,7 @@ msgctxt "fusioninventory"
 msgid "Installation"
 msgstr "Yükleme"
 
-#: inc/deploymirror.class.php:54 inc/menu.class.php:430
+#: inc/deploymirror.class.php:54 inc/menu.class.php:431
 #: inc/profile.class.php:228
 msgctxt "fusioninventory"
 msgid "Mirror servers"
@@ -1430,7 +1429,7 @@ msgstr "Hata / yeniden zamanlanmış"
 
 #: inc/deploystate.class.php:143 inc/statediscovery.class.php:205
 #: inc/stateinventory.class.php:150 inc/task.view.class.php:223
-#: inc/task.view.class.php:365 inc/taskjoblog.class.php:68
+#: inc/task.view.class.php:377 inc/taskjoblog.class.php:68
 #: inc/taskjoblog.class.php:673 inc/taskjoblog.class.php:1019
 #: inc/taskjobstate.class.php:74
 msgctxt "fusioninventory"
@@ -1681,7 +1680,7 @@ msgctxt "fusioninventory"
 msgid "Device created"
 msgstr "Aygıt oluşturuldu"
 
-#: inc/inventoryruleimportcollection.class.php:57 inc/menu.class.php:287
+#: inc/inventoryruleimportcollection.class.php:57 inc/menu.class.php:288
 msgctxt "fusioninventory"
 msgid "Equipment import and link rules"
 msgstr "Aygıt alma ve bağlama kuralları"
@@ -1702,7 +1701,7 @@ msgctxt "fusioninventory"
 msgid "See all informations of task"
 msgstr "Görevin tüm bilgilerine bakın"
 
-#: inc/iprange.class.php:70 inc/iprange.class.php:74 inc/menu.class.php:346
+#: inc/iprange.class.php:70 inc/iprange.class.php:74 inc/menu.class.php:347
 #: inc/staticmisc.class.php:366 inc/staticmisc.class.php:387
 #: inc/wizard.class.php:376 inc/wizard.class.php:425 inc/wizard.class.php:955
 msgctxt "fusioninventory"
@@ -1741,7 +1740,7 @@ msgctxt "fusioninventory"
 msgid "Values of last inventory"
 msgstr "Son envanter değerleri"
 
-#: inc/lock.class.php:240 inc/taskjob.class.php:58 inc/taskjob.class.php:809
+#: inc/lock.class.php:240 inc/taskjob.class.php:58 inc/taskjob.class.php:804
 #: inc/taskjoblog.class.php:171 inc/taskjobstate.class.php:224
 #: inc/unknowndevice.class.php:185
 msgctxt "fusioninventory"
@@ -2877,213 +2876,213 @@ msgctxt "fusioninventory"
 msgid "Soft. deploy"
 msgstr "Yazl. yayınlama"
 
-#: inc/menu.class.php:185
+#: inc/menu.class.php:186
 msgctxt "fusioninventory"
 msgid ""
 "The server needs to kown the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
 msgstr "Sunucu, ajanların kendisine erişmek için kullandığı İnternet adresini bilmelidir. Lütfen genel ayarlar sayfasından bu adresi ayarlayın."
 
-#: inc/menu.class.php:209
+#: inc/menu.class.php:210
 msgctxt "fusioninventory"
 msgid "Agents management"
 msgstr "Ajan yönetimi"
 
-#: inc/menu.class.php:221
+#: inc/menu.class.php:222
 msgctxt "fusioninventory"
 msgid "General configuration"
 msgstr "Genel ayarlar"
 
-#: inc/menu.class.php:228 inc/profile.class.php:144
+#: inc/menu.class.php:229 inc/profile.class.php:144
 msgctxt "fusioninventory"
 msgid "General"
 msgstr "Genel"
 
-#: inc/menu.class.php:244 inc/task.class.php:55
+#: inc/menu.class.php:245 inc/task.class.php:55
 msgctxt "fusioninventory"
 msgid "Task management"
 msgstr "Görev yönetimi"
 
-#: inc/menu.class.php:248
+#: inc/menu.class.php:249
 msgctxt "fusioninventory"
 msgid "Monitoring / Logs"
 msgstr "İzleme / Günlükler"
 
-#: inc/menu.class.php:255
+#: inc/menu.class.php:256
 msgctxt "fusioninventory"
 msgid "Import agent XML file"
 msgstr "Ajan XML dosyasını alın"
 
-#: inc/menu.class.php:263 inc/profile.class.php:312
+#: inc/menu.class.php:264 inc/profile.class.php:312
 msgctxt "fusioninventory"
 msgid "Additional computer information"
 msgstr "Ek bilgisayar bilgileri"
 
-#: inc/menu.class.php:269 inc/timeslot.class.php:61 inc/timeslot.class.php:70
+#: inc/menu.class.php:270 inc/timeslot.class.php:61 inc/timeslot.class.php:70
 #: inc/timeslotentry.class.php:70
 msgctxt "fusioninventory"
 msgid "Time slot"
 msgstr "Zaman aralığı"
 
-#: inc/menu.class.php:275
+#: inc/menu.class.php:276
 msgctxt "fusioninventory"
 msgid "Tasks"
 msgstr "Görevler"
 
-#: inc/menu.class.php:295
+#: inc/menu.class.php:296
 msgctxt "fusioninventory"
 msgid "Ignored import devices"
 msgstr "Alınırken yoksayılan aygıtlar"
 
-#: inc/menu.class.php:303
+#: inc/menu.class.php:304
 msgctxt "fusioninventory"
 msgid "Computer entity rules"
 msgstr "Bilgisayar birim kuralları"
 
-#: inc/menu.class.php:310
+#: inc/menu.class.php:311
 msgctxt "fusioninventory"
 msgid "Computer location rules"
 msgstr "Bilgisayar konum kuralları"
 
-#: inc/menu.class.php:333
+#: inc/menu.class.php:334
 msgctxt "fusioninventory"
 msgid "Rules"
 msgstr "Kurallar"
 
-#: inc/menu.class.php:383
+#: inc/menu.class.php:384
 msgctxt "fusioninventory"
 msgid "Discovery status"
 msgstr "Keşif durumu"
 
-#: inc/menu.class.php:391
+#: inc/menu.class.php:392
 msgctxt "fusioninventory"
 msgid "Network inventory status"
 msgstr "Ağ envanteri durumu"
 
-#: inc/menu.class.php:401
+#: inc/menu.class.php:402
 msgctxt "fusioninventory"
 msgid "SNMP models creation"
 msgstr "SNMP modeli oluşturma"
 
-#: inc/menu.class.php:408
+#: inc/menu.class.php:409
 msgctxt "fusioninventory"
 msgid "Networking"
 msgstr "Ağ"
 
-#: inc/menu.class.php:450
+#: inc/menu.class.php:451
 msgctxt "fusioninventory"
 msgid "Not conform"
 msgstr "uymayan"
 
-#: inc/menu.class.php:457
+#: inc/menu.class.php:458
 msgctxt "fusioninventory"
 msgid "To be validated"
 msgstr "Onay bekleyen"
 
-#: inc/menu.class.php:462
+#: inc/menu.class.php:463
 msgctxt "fusioninventory"
 msgid "Models"
 msgstr "Modeller"
 
-#: inc/menu.class.php:500 inc/menu.class.php:574
+#: inc/menu.class.php:501 inc/menu.class.php:575
 msgctxt "fusioninventory"
 msgid "Statistics"
 msgstr "İstatistikler"
 
-#: inc/menu.class.php:500 inc/menu.class.php:848
+#: inc/menu.class.php:501 inc/menu.class.php:849
 msgctxt "fusioninventory"
 msgid "Number of computer inventories of last hours"
 msgstr "Son saatlerdeki bilgisayar envanterinin sayısı"
 
-#: inc/menu.class.php:512
+#: inc/menu.class.php:513
 msgctxt "fusioninventory"
 msgid ""
 "This is the steps to configure FusionInventory plugin for computer inventory"
 msgstr "Bilgisayar envanteri için FusionInventory uygulama ekini ayarlama adımları"
 
-#: inc/menu.class.php:518
+#: inc/menu.class.php:519
 msgctxt "fusioninventory"
 msgid "Configure frequency of agent contact (and so each inventory)"
 msgstr "Ajan ile iletişim sıklığını ayarlayın (ve her bir envanteri)"
 
-#: inc/menu.class.php:523
+#: inc/menu.class.php:524
 msgctxt "fusioninventory"
 msgid "Configure inventory options"
 msgstr "Envanter ayarlarını yapın"
 
-#: inc/menu.class.php:528
+#: inc/menu.class.php:529
 msgctxt "fusioninventory"
 msgid "Define rules for entity"
 msgstr "Kurum kurallarını belirleyin"
 
-#: inc/menu.class.php:533
+#: inc/menu.class.php:534
 msgctxt "fusioninventory"
 msgid "Define rules for location"
 msgstr "Konum kurallarını belirleyin"
 
-#: inc/menu.class.php:538
+#: inc/menu.class.php:539
 msgctxt "fusioninventory"
 msgid ""
 "Define rules for import : merge and create new computer (CAUTION: same rules"
 " for SNMP inventory)"
 msgstr "Alma kurallarını belirleyin : yeni bilgisayarlar aktarılsın ve oluşturulsun (DİKKAT: SNMP envanteri ile aynı kurallar)"
 
-#: inc/menu.class.php:586
+#: inc/menu.class.php:587
 msgctxt "fusioninventory"
 msgid ""
 "This is the steps to configure FusionInventory plugin for SNMP inventory "
 "(swicth, router, network printer)"
 msgstr "SNMP envanteri için FusionInventory uygulama ekini ayarlama adımları (ağ anahtarı, yöneltici, ağ yazıcısı)"
 
-#: inc/menu.class.php:592
+#: inc/menu.class.php:593
 msgctxt "fusioninventory"
 msgid "Configure SNMP credentials"
 msgstr "SNMP oturum bilgilerini ayarlayın"
 
-#: inc/menu.class.php:597
+#: inc/menu.class.php:598
 msgctxt "fusioninventory"
 msgid ""
 "Define rules for import : merge and create new devices (CAUTION: same rules "
 "for computer inventory)"
 msgstr "Alma kurallarını belirleyin : yeni bilgisayarlar aktarılsın ve oluşturulsun (DİKKAT: Bilgisayar envanteri ile aynı kurallar)"
 
-#: inc/menu.class.php:602
+#: inc/menu.class.php:603
 msgctxt "fusioninventory"
 msgid "`Network Discovery`, used to discover the devices on the network"
 msgstr "Ağdaki aygıtları bulmak için `Ağ Keşfi` kullanıldı"
 
-#: inc/menu.class.php:607
+#: inc/menu.class.php:608
 msgctxt "fusioninventory"
 msgid "Define IP Ranges of your network"
 msgstr "Ağınızın IP aralıklarını belirleyin"
 
-#: inc/menu.class.php:612
+#: inc/menu.class.php:613
 msgctxt "fusioninventory"
 msgid "Define an agent allowed to discover the network"
 msgstr "Ağı keşfetmesine izin verilecek bir ajan belirleyin"
 
-#: inc/menu.class.php:617
+#: inc/menu.class.php:618
 msgctxt "fusioninventory"
 msgid ""
 "Create a new Task with discovery module and the agent defined previously"
 msgstr "Keşif modülünde önceden belirlediğiniz ajan ile yeni bir görev oluşturun"
 
-#: inc/menu.class.php:622
+#: inc/menu.class.php:623
 msgctxt "fusioninventory"
 msgid "If you have devices not typed, import them from unknown devices"
 msgstr "Tipi bilinmeyen aygıtlarınız varsa, bilinmeyen aygıtlar olarak alın"
 
-#: inc/menu.class.php:627
+#: inc/menu.class.php:628
 msgctxt "fusioninventory"
 msgid "`Network Inventory`, used to complete inventory the discovered devices"
 msgstr "Bulunan aygıtları envantere tamamlamak için `Ağ Envanteri` kullanıldı"
 
-#: inc/menu.class.php:632
+#: inc/menu.class.php:633
 msgctxt "fusioninventory"
 msgid "Define an agent allowed to inventory the network by SNMP"
 msgstr "Ağ üzerinden SNMP kullanarak envanter toplayacak bir ajan belirleyin"
 
-#: inc/menu.class.php:637
+#: inc/menu.class.php:638
 msgctxt "fusioninventory"
 msgid ""
 "Create a new Task with network inventory module and the agent defined "
@@ -3125,17 +3124,17 @@ msgctxt "fusioninventory"
 msgid "Uptime"
 msgstr "Açık olduğu süre"
 
-#: inc/networkequipment.class.php:562 inc/taskjob.class.php:1192
+#: inc/networkequipment.class.php:562 inc/taskjob.class.php:1187
 msgctxt "fusioninventory"
 msgid "day(s)"
 msgstr "gün"
 
-#: inc/networkequipment.class.php:563 inc/taskjob.class.php:1186
+#: inc/networkequipment.class.php:563 inc/taskjob.class.php:1181
 msgctxt "fusioninventory"
 msgid "hour(s)"
 msgstr "saat"
 
-#: inc/networkequipment.class.php:564 inc/taskjob.class.php:1180
+#: inc/networkequipment.class.php:564 inc/taskjob.class.php:1175
 msgctxt "fusioninventory"
 msgid "Minute(s)"
 msgstr "dakika"
@@ -3489,8 +3488,8 @@ msgid "Collect data"
 msgstr "Verileri toplayın"
 
 #: inc/staticmisc.class.php:431 inc/staticmisc.class.php:437
-#: inc/taskjob.class.php:184 inc/taskjob.class.php:510
-#: inc/taskjob.class.php:1223 inc/taskjob.view.class.php:415
+#: inc/taskjob.class.php:179 inc/taskjob.class.php:505
+#: inc/taskjob.class.php:1218 inc/taskjob.view.class.php:415
 msgctxt "fusioninventory"
 msgid "Auto managenement dynamic of agents"
 msgstr "Ajanların otomatik yönetim devinimi"
@@ -3500,15 +3499,48 @@ msgctxt "fusioninventory"
 msgid "Fusinv"
 msgstr "Fusinv"
 
-#: inc/task.class.php:82 inc/task.view.class.php:490
+#: inc/task.class.php:82 inc/task.view.class.php:502
 msgctxt "fusioninventory"
 msgid "Schedule start"
 msgstr "Zamanlama başlangıcı"
 
-#: inc/task.class.php:88 inc/task.view.class.php:496
+#: inc/task.class.php:88 inc/task.view.class.php:508
 msgctxt "fusioninventory"
 msgid "Schedule end"
 msgstr "Zamanlama bitişi"
+
+#: inc/task.class.php:295
+msgctxt "fusioninventory"
+msgid ""
+"The agent is requesting a configuration that has already been sent to him by"
+" the server. It is more likely that the agent is subject to a critical "
+"error."
+msgstr ""
+
+#: inc/task.class.php:307
+msgctxt "fusioninventory"
+msgid "The task has been deactivated after preparation of this job."
+msgstr ""
+
+#: inc/task.class.php:326
+msgctxt "fusioninventory"
+msgid "This job can not be executed anymore due to the task's schedule."
+msgstr ""
+
+#: inc/task.class.php:360
+msgctxt "fusioninventory"
+msgid "This job can not be executed anymore due to the task's timeslot."
+msgstr ""
+
+#: inc/task.class.php:379
+msgctxt "fusioninventory"
+msgid "This agent does not belong anymore in the actors defined in the job."
+msgstr ""
+
+#: inc/task.view.class.php:81
+msgctxt "fusioninventory"
+msgid "To Be Done"
+msgstr ""
 
 #: inc/task.view.class.php:89
 msgctxt "fusioninventory"
@@ -3525,113 +3557,119 @@ msgctxt "fusioninventory"
 msgid "Show/Hide details"
 msgstr "Ayrıntılar Görüntülensin/Gizlensin"
 
-#: inc/task.view.class.php:219 inc/task.view.class.php:361
+#: inc/task.view.class.php:219 inc/task.view.class.php:373
 msgctxt "fusioninventory"
 msgid "Not done yet"
 msgstr "Henüz yapılmadı"
 
-#: inc/task.view.class.php:220 inc/task.view.class.php:362
+#: inc/task.view.class.php:220 inc/task.view.class.php:374
 msgctxt "fusioninventory"
 msgid "In error"
 msgstr "Hata"
 
-#: inc/task.view.class.php:221 inc/task.view.class.php:363
+#: inc/task.view.class.php:221 inc/task.view.class.php:375
 msgctxt "fusioninventory"
 msgid "Successful"
 msgstr "Başarılı"
 
-#: inc/task.view.class.php:222 inc/task.view.class.php:364
+#: inc/task.view.class.php:222 inc/task.view.class.php:376
 msgctxt "fusioninventory"
 msgid "Running"
 msgstr "Çalışıyor"
 
-#: inc/task.view.class.php:224 inc/task.view.class.php:366
+#: inc/task.view.class.php:224 inc/task.view.class.php:378
 #: inc/taskjobstate.class.php:79
 msgctxt "fusioninventory"
 msgid "Cancelled"
 msgstr "İptal edildi"
 
-#: inc/task.view.class.php:325
+#: inc/task.view.class.php:384
 msgctxt "fusioninventory"
-msgid "Show/Hide Target details"
-msgstr "Hedef Ayrıntıları Görüntülensin/Gizlensin"
+msgid "N/A"
+msgstr ""
 
-#: inc/task.view.class.php:400
+#: inc/task.view.class.php:412
 msgctxt "fusioninventory"
 msgid "Show/Hide Agent details"
 msgstr "Ajan Ayrıntıları Görüntülensin/Gizlensin"
 
-#: inc/task.view.class.php:427
+#: inc/task.view.class.php:439
 msgctxt "fusioninventory"
 msgid "Execution"
 msgstr "Yürütme"
 
-#: inc/task.view.class.php:502
+#: inc/task.view.class.php:514
 msgctxt "fusioninventory"
 msgid "Timeslot"
 msgstr "Zaman aralığı"
 
-#: inc/taskjob.class.php:149 inc/taskjob.class.php:1161
-#: inc/taskjob.class.php:1740 inc/taskjoblog.class.php:569
+#: inc/taskjob.class.php:144 inc/taskjob.class.php:1156
+#: inc/taskjob.class.php:1735 inc/taskjoblog.class.php:569
 msgctxt "fusioninventory"
 msgid "Definition"
 msgstr "Açıklama"
 
-#: inc/taskjob.class.php:187 inc/taskjob.class.php:512
-#: inc/taskjob.class.php:1227 inc/taskjob.view.class.php:420
+#: inc/taskjob.class.php:146 inc/taskjob.class.php:1157
+#: inc/taskjob.class.php:1752
+msgctxt "fusioninventory"
+msgid "Action"
+msgstr "Eylem"
+
+#: inc/taskjob.class.php:182 inc/taskjob.class.php:507
+#: inc/taskjob.class.php:1222 inc/taskjob.view.class.php:420
 msgctxt "fusioninventory"
 msgid "Auto managenement dynamic of agents (same subnet)"
 msgstr "Ajanların otomatik yönetim devinimi (aynı altağda)"
 
-#: inc/taskjob.class.php:204
+#: inc/taskjob.class.php:199
 msgctxt "fusioninventory"
 msgid "Selection"
 msgstr "Seçim"
 
-#: inc/taskjob.class.php:732
+#: inc/taskjob.class.php:727
 msgctxt "fusioninventory"
 msgid "Unable to run task because some jobs is running yet!"
 msgstr "Henüz bazı işler yapılmakta olduğundan bu görev çalıştırılamıyor!"
 
-#: inc/taskjob.class.php:802
+#: inc/taskjob.class.php:797
 msgctxt "fusioninventory"
 msgid "Action on this device"
 msgstr "Bu aygıta yapılacak işlem"
 
-#: inc/taskjob.class.php:830 inc/taskjob.class.php:1159
+#: inc/taskjob.class.php:825 inc/taskjob.class.php:1154
 msgctxt "fusioninventory"
 msgid "Scheduled date"
 msgstr "Zamanlanan tarih"
 
-#: inc/taskjob.class.php:1385 inc/taskjob.class.php:1418
+#: inc/taskjob.class.php:1155
+msgctxt "fusioninventory"
+msgid "Periodicity"
+msgstr ""
+
+#: inc/taskjob.class.php:1380 inc/taskjob.class.php:1413
 msgctxt "fusioninventory"
 msgid "Force start"
 msgstr "Başlatmaya zorlayın"
 
-#: inc/taskjob.class.php:1603
+#: inc/taskjob.class.php:1598
 msgctxt "fusioninventory"
 msgid "Action after finish running task"
 msgstr "Görev tamamlandıktan sonra yapılacak işlem"
 
-#: inc/taskjob.class.php:1608
+#: inc/taskjob.class.php:1603
 msgctxt "fusioninventory"
 msgid "Delete this task and finish"
 msgstr "Bu görevi silip tamamlayın"
 
-#: inc/taskjob.class.php:1613 inc/wizard.class.php:248
+#: inc/taskjob.class.php:1608 inc/wizard.class.php:248
 msgctxt "fusioninventory"
 msgid "Finish"
 msgstr "Tamamlayın"
 
-#: inc/taskjob.class.php:1618
+#: inc/taskjob.class.php:1613
 msgctxt "fusioninventory"
 msgid "Run again this task"
 msgstr "Bu görevi yeniden çalıştırın"
-
-#: inc/taskjob.class.php:1757
-msgctxt "fusioninventory"
-msgid "Action"
-msgstr "Eylem"
 
 #: inc/taskjob.view.class.php:60
 msgctxt "fusioninventory"
@@ -3926,8 +3964,3 @@ msgstr "Ağ aygıtları ve yazıcılar"
 msgctxt "fusioninventory"
 msgid "Credential"
 msgstr "Kimlik bilgileri"
-
-#: report/computer_last_inventory.php:73
-msgctxt "fusioninventory"
-msgid "Number of days (minimum) since last inventory"
-msgstr "Son envanterden sonra geçen (en az) gün"
