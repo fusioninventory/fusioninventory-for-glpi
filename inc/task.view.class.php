@@ -78,7 +78,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($item->getType() == 'Computer') {
-         echo "<b>To Be Done</b>";
+         echo "<b>".__('To Be Done', 'fusioninventory')."</b>";
       }
    }
 
@@ -154,7 +154,9 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          "  </div>",
          "  <div class='progressbar'></div>",
          "  </div>",
+         "  <div class='show_more'></div>",
          "  <div class='agents_block'></div>",
+         "  <div class='show_more'></div>",
          "</script>"
       ));
 
@@ -248,8 +250,10 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       } else {
          $task_id = json_encode(array());
       }
+      $pfAgent = new PluginFusioninventoryAgent();
       echo implode( "\n", array(
          "<script type='text/javascript'>",
+         "  taskjobs.agents_url = '". $pfAgent->getFormUrl()."'",
          "  taskjobs.init_templates();",
          "  taskjobs.init_refresh_form(",
          "     '".$this->getBaseUrlFor('fi.job.logs')."',",
@@ -285,87 +289,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       echo json_encode($logs);
       return;
 
-      //$display_list = array();
-      //$display_list[] = "<ul class='job_list'>";
-
-      //foreach($logs as $task) {
-      //   foreach($task['jobs'] as $job) {
-      //      $job_id = "job_".$job['id'];
-      //      $display_list[] = "<li class='job_info' id='".$job_id."'>";
-      //      $display_list[] = "  <h3>".$job['name']."</h3>";
-      //      foreach($job['targets'] as $target) {
-
-      //         $counters = $target['counters'];
-      //         $target_id = $job_id."_target_".$target['id'];
-      //         $display_list[] = " <div class='job_target' id='".$target_id."'>";
-
-      //         // Target Title
-      //         $display_list[] = "<h4>";
-      //         $display_list[] = " ".$target['type_name'] ;
-      //         $display_list[] = " <a ";
-      //         $display_list[] = "  target='_blank' href='".$target['item_link']."'";
-      //         $display_list[] = " >";
-      //         $display_list[] = "  ".$target['name'];
-      //         $display_list[] = " </a>";
-      //         $display_list[] = " <span>(ID:" . $target['id'] . ")</span>";
-      //         $display_list[] = "</h4>";
-
-      //         $stats_lines = array(
-      //            array(
-      //               "agents_prepared",
-      //               "agents_cancelled",
-      //               "agents_running"
-      //            ),
-      //            array(
-      //               "agents_success",
-      //               "agents_error",
-      //               "agents_notdone"
-      //            )
-      //         );
-
-      //         foreach($stats_lines as $stat_line) {
-
-      //            $display_list[] = "     <div class='stats'>";
-
-      //            foreach($stat_line as $type) {
-
-      //               $list = $counters[$type];
-      //               $css = count($list)?"":"empty";
-
-      //               $display_list[] = " <a";
-      //               $display_list[] = "  class='$type $css'";
-      //               $display_list[] = "  title='".__("Show/Hide Target details","fusioninventory")."'";
-      //               $display_list[] = "  onclick='taskjobs.toggle_target_fold(this)'";
-      //               $display_list[] = " >";
-      //               $display_list[] =
-      //                  $this->getCounterTypeName($type)." : " . count($list);
-      //               $display_list[] = " </a>";
-      //            }
-
-      //            $display_list[] = "     </div>";
-
-      //         }
-
-      //         $display_list[] = "  <ul class='agents_block'>";
-      //         $display_list = array_merge(
-      //            $display_list,
-      //            $this->getAgentsLogs($target['agents'],$counters, $target_id)
-      //         );
-      //         $display_list[] = "  </ul>";
-      //         $display_list[] = "  </div>";
-
-      //      }
-
-      //      $display_list[] = "</li>"; // end of job_info
-
-      //   }
-
-      //}
-
-      //$display_list[] = "</ul>";
-
-      //echo implode("\n", $display_list);
-
    }
 
    function getCounterTypeName($type = "") {
@@ -381,7 +304,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
       if ( isset($typenames[$type]) ) {
          return $typenames[$type];
       } else {
-         return __("N/A");
+         return __('N/A', 'fusioninventory');
       }
    }
 

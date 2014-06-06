@@ -485,12 +485,13 @@ a.expanded > div.fold {
    background: #EEE;
    font-size: xx-small;
    color: #777;
+   position:relative;
 }
 
 
 .agent_block.agent_success{
    background: #AFA;
-   border-color: #ABA;
+   border-color: green;
    color: green;
 }
 .agent_block.agent_success > a {
@@ -528,6 +529,24 @@ a.expanded > div.fold {
     line-height: 16px;
     vertical-align: bottom;
     color: #777;
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+.agent_block > span.comment {
+   opacity: 0.8;
+   font-weight: lighter;
+}
+
+.agent_block:hover > span.comment {
+   opacity: 1.0;
+}
+
+.agent_block > span.date {
+   position: absolute;
+   top: 0;
+   right: 0;
 }
 
 .runs_block {
@@ -601,5 +620,24 @@ a.expanded > div.fold {
    width: 70%;
    min-width: 70%;
    font-family: monospace;
+}
+
+.show_more {
+   width: 100%;
+   display: block;
+}
+
+.show_more > .more_button {
+   display: block;
+   float: left;
+   margin: 2px;
+   padding: 5px;
+}
+
+.show_more > .reset_button {
+   display: block;
+   float: right;
+   margin: 2px;
+   padding: 5px;
 }
 
