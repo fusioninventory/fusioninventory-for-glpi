@@ -501,7 +501,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          }
          $saved_agent_ids = $agent_ids;
          $targets = importArrayFromDB($result['job']['targets']);
-
+         $limit = 0;
          foreach($targets as $target) {
             $agent_ids = $saved_agent_ids;
             $item_type = key($target);
@@ -534,7 +534,14 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             }
 
             foreach($agent_ids as $agent_id => $agent_not_running) {
+
                if( $agent_not_running) {
+
+                  $limit += 1;
+                  if ($limit > 500) {
+                     $limit = 0;
+                     break;
+                  }
                   $run = array_merge(
                      $run_base,
                      array(
