@@ -104,7 +104,73 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
       return $ong;
    }
 
+   /*
+    * Get Timeslot entries according to the requested day of week.
+    * @since 0.85+1.0
+    * @param timeslot_ids  A list of timeslot's ids.
+    * @param weekdays      The day of week (ISO-8601 numeric representation).
+    * return The list of timeslots entries organized by timeslots ids :
+    *    array(
+    *       [timeslot #0] => array(
+    *          [timeslot_entry #2] => array(
+    *             ...timeslot_entry fields...
+    *          )
+    *          [timeslot_entry #3] => array(
+    *             ...timeslot_entry fields...
+    *          )
+    *       ),
+    *       [timeslot #5] => array(
+    *          [timeslot_entry #9] => array(
+    *             ...timeslot_entry fields...
+    *          )
+    *          [timeslot_entry #66] => array(
+    *             ...timeslot_entry fields...
+    *          )
+    *       )
+    *    )
+    */
 
+   function getTimeslotEntries($timeslot_ids = array(), $weekdays = null ) {
+
+      $condition = array(
+         "`plugin_fusioninventory_timeslots_id` in ('".implode("','",$timeslot_ids)."')",
+      );
+      if ( !is_null($weekdays) ) {
+         $condition[] = "and `day` = '".$weekdays."'";
+      }
+
+      $results = array();
+
+      $timeslot_entries = getAllDatasFromTable(
+         "glpi_plugin_fusioninventory_timeslotentries",
+         implode("\n", $condition),
+         false, ''
+      );
+
+      foreach ( $timeslot_entries as $timeslot_entry ) {
+         $timeslot_id = $timeslot_entry['plugin_fusioninventory_timeslots_id'];
+         $timeslot_entry_id = $timeslot_entry['id'];
+         $results[$timeslot_id][$timeslot_entry_id] = $timeslot_entry;
+      }
+
+      return $results;
+   }
+
+   /**
+    * Get Timeslot cursor (ie. seconds since 00:00) according to a certain datetime
+    * @param date    The date and time we want to transform into cursor. If null the default value
+    *                is now()
+    * @since 0.85+1.0
+    */
+
+   function getTimeslotCursor(DateTime $datetime = null) {
+      if (is_null($datetime)) {
+         $datetime = new DateTime();
+      }
+      $dateday = new DateTime( $datetime->format("Y-m-d 0:0:0") );
+      $timeslot_cursor = date_create('@0')->add($dateday->diff($datetime,true))->getTimestamp();
+      return $timeslot_cursor;
+   }
 
    /**
    * Display form for agent configuration
@@ -138,9 +204,10 @@ class PluginFusioninventoryTimeslot extends CommonDBTM {
 
       $this->showFormButtons($options);
 
-      $pf = new PluginFusioninventoryTimeslotEntry();
-      $pf->formEntry($ID);
-
+      if ($ID > 0) {
+         $pf = new PluginFusioninventoryTimeslotEntry();
+         $pf->formEntry($ID);
+      }
       return true;
    }
 }

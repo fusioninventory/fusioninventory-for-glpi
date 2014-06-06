@@ -51,13 +51,11 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
    public $can_sort=TRUE;
    public $specific_parameters = FALSE;
 
-
+   static $rightname = 'plugin_fusioninventory_ruleentity';
 
    function getTitle() {
       return __('Entity rules', 'fusioninventory');
    }
-
-
 
    function preProcessPreviewResults($output) {
       return $output;
@@ -131,10 +129,10 @@ class PluginFusioninventoryInventoryRuleEntity extends Rule {
       $criterias['subnet']['name']      = __('Subnet');
 
       $criterias['ip']['field']     = 'name';
-      $criterias['ip']['name']      = __('Address')." ".__('IP');
+      $criterias['ip']['name']      = __('IP Address', 'fusioninventory');
 
       $criterias['name']['field']     = 'name';
-      $criterias['name']['name']      = __('Computer\'s name');
+      $criterias['name']['name']      = __("Computer's name", 'fusioninventory');
 
       $criterias['serial']['field']     = 'name';
       $criterias['serial']['name']      = __('Serial Number');

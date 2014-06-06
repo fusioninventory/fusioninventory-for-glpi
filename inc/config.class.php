@@ -70,6 +70,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $input['users_id']               = $users_id;
       $input['agent_base_url']         = '';
       $input['agents_old_days']        = '0';
+      $input['memcached']              = '';
 
       $input['import_monitor']         = 2;
       $input['import_printer']         = 2;
@@ -223,14 +224,19 @@ class PluginFusioninventoryConfig extends CommonDBTM {
     */
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
-      if ($tabnum == '0') {
-         $item->showForm();
-      } else if ($tabnum == '1') {
-         $item->showFormInventory();
-      } else if ($tabnum == '2') {
-         $item->showFormNetworkInventory();
-      } else if ($tabnum == '3') {
-         $item->showFormDeploy();
+      switch ($tabnum) {
+         case 0:
+            $item->showForm();
+            break;
+         case 1:
+            $item->showFormInventory();
+            break;
+         case 2:
+            $item->showFormNetworkInventory();
+            break;
+         case 3:
+            $item->showFormDeploy();
+            break;
       }
       return TRUE;
    }
@@ -360,8 +366,10 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'toadd' => array('0'=>__('Disabled')))
          );
       echo "</td>";
-      echo "<td></td>";
-      echo "<td>";
+      echo "<td>".__('Memcached server address (empty to disable it)', 'fusioninventory')."&nbsp;:</td>";
+      echo "<td width='20%'>";
+      echo "<input type='text' name='memcached' size='50' ".
+               "value='".$this->getValue('memcached')."'/>";
       echo "</td>";
       echo "</tr>";
 
@@ -401,7 +409,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       echo "<td>";
       Dropdown::showYesNo("import_volume", $pfConfig->getValue('import_volume'));
       echo "</td>";
-      echo "<th colspan='2'>";
+      echo "<th colspan='2' width='30%'>";
       echo _n('Component', 'Components', 2);
       echo "</th>";
       echo "</tr>";
@@ -624,7 +632,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    static function showFormNetworkInventory($options=array()) {
       global $CFG_GLPI;
 
-      $pfConfig = new PluginFusioninventoryConfig();
+      $pfConfig     = new PluginFusioninventoryConfig();
       $pfsnmpConfig = new self();
 
       $pfsnmpConfig->fields['id'] = 1;
@@ -646,15 +654,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'max'   => 400)
       );
       echo "</td>";
-      echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
-              "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
-      echo "<td align='center'>";
-      Dropdown::showNumber("timeout_networkdiscovery", array(
-             'value' => $pfConfig->getValue('timeout_networkdiscovery'),
-             'min'   => 1,
-             'max'   => 60)
-      );
-      echo "</td>";
+
       echo "<td>".__('Threads number', 'fusioninventory')."&nbsp;".
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
@@ -662,6 +662,18 @@ class PluginFusioninventoryConfig extends CommonDBTM {
              'value' => $pfConfig->getValue('threads_networkinventory'),
              'min'   => 1,
              'max'   => 400)
+      );
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
+              "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
+      echo "<td align='center'>";
+      Dropdown::showNumber("timeout_networkdiscovery", array(
+             'value' => $pfConfig->getValue('timeout_networkdiscovery'),
+             'min'   => 1,
+             'max'   => 60)
       );
       echo "</td>";
       echo "<td>".__('SNMP timeout', 'fusioninventory')."&nbsp;".
@@ -792,11 +804,14 @@ class PluginFusioninventoryConfig extends CommonDBTM {
    static function loadCache() {
       global $DB, $PF_CONFIG;
 
-      $PF_CONFIG = array();
-      $query = "SELECT * FROM `glpi_plugin_fusioninventory_configs`";
-      $result = $DB->query($query);
-      while ($data=$DB->fetch_array($result)) {
-         $PF_CONFIG[$data['type']] = $data['value'];
+      //Test if table exists before loading cache
+      //The only case where table doesn't exists is when you click on
+      //uninstall the plugin and it's already uninstalled
+      if (TableExists('glpi_plugin_fusioninventory_configs')) {
+         $PF_CONFIG = array();
+         foreach ($DB->request('glpi_plugin_fusioninventory_configs') as $data) {
+            $PF_CONFIG[$data['type']] = $data['value'];
+         }
       }
    }
 }

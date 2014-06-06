@@ -50,7 +50,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_agent';
 
-
    /**
    * Get name of this type
    *
@@ -106,10 +105,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $tab[7]['table']         = 'glpi_computers';
       $tab[7]['field']         = 'name';
-      $tab[7]['linkfield']     = 'computers_id';
       $tab[7]['name']          = __('Computer link', 'fusioninventory');
       $tab[7]['datatype']      = 'itemlink';
-      $tab[7]['itemlink_type'] = 'Computer';
 
       $tab[8]['table']     = $this->getTable();
       $tab[8]['field']     = 'version';
@@ -184,7 +181,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
-      Toolbox::logDebug($item);
       if ($item->getType() == 'Computer') {
 
          // Possibility to remote agent
@@ -263,8 +259,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
          $oComputer = new Computer();
          $oComputer->getFromDB($this->fields["computers_id"]);
          echo $oComputer->getLink(1);
-         Html::hidden('computers_id',
-                      array('value' => $this->fields["computers_id"]));
+         echo Html::hidden('computers_id',
+                           array('value' => $this->fields["computers_id"]));
       } else {
          Computer_Item::dropdownConnect("Computer", "Computer", 'computers_id',
                                         $_SESSION['glpiactive_entity']);
@@ -478,6 +474,23 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    }
 
    /**
+   * Get agent id of a computer
+   *
+   * @param $computers_id integer ID of the computer
+   *
+   * @return agent id or False
+   *
+   **/
+   function getAgentsFromComputers($computer_ids = array()) {
+
+      $computer_ids = "'" . implode("','", $computer_ids) . "'";
+
+      $agents = $this->find("`computers_id` in (".$computer_ids.")", "");
+
+      return $agents;
+   }
+
+   /**
    * Get Computer associated with this agent
    *
    * @return A Computer object or False
@@ -620,7 +633,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
 
       $agentStatus = $this->getStatus();
 
-      Toolbox::logDebug($agentStatus);
       switch($agentStatus['message']) {
 
          case 'executing scheduled tasks':
@@ -707,8 +719,6 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $error = ob_get_contents();
       ob_end_clean();
       $this->restoreDebug();
-      Toolbox::logDebug($url_headers);
-
 
       $status = array(
          "url_ok" => $url_ok,

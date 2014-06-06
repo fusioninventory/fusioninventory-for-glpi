@@ -76,7 +76,6 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
           );
       $a_inventory['Computer'] = array(
           'name'                             => 'pc',
-          'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'freebsd',
           'operatingsystemversions_id'       => '9.1-RELEASE',
@@ -128,6 +127,7 @@ class VirtualmachineTest extends RestoreDatabase_TestCase {
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_inventory = $this->computer_inventory;
 

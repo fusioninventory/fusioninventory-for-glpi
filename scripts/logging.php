@@ -3,18 +3,24 @@
  * Logging facility
  */
 
+error_reporting( E_ALL  );
+ini_set("display_errors", 'stderr');
+ini_set("log_errors", true);
 
 class Logging {
-   public static $LOG_DEBUG = array('level'=>2, 'name'=>'DEBUG ');
-   public static $LOG_INFO  = array('level'=>1, 'name'=>'INFO  ');
-   public static $LOG_QUIET = array('level'=>0, 'name'=>'QUIET ');
+   public static $LOG_CRITICAL = array('level'=>50, 'name'=>'CRITICAL ');
+   public static $LOG_ERROR    = array('level'=>40, 'name'=>'ERROR    ');
+   public static $LOG_QUIET    = array('level'=>35,  'name'=>'QUIET    ');
+   public static $LOG_WARNING  = array('level'=>30, 'name'=>'WARNING  ');
+   public static $LOG_INFO     = array('level'=>20, 'name'=>'INFO     ');
+   public static $LOG_DEBUG    = array('level'=>10, 'name'=>'DEBUG    ');
 
    public $loglevel;
 
    public function __construct($loglevel = NULL) {
 
       if( is_null($loglevel) ) {
-         $this->loglevel = self::LOG_INFO;
+         $this->loglevel = self::$LOG_INFO;
       } else {
          $this->loglevel = $loglevel;
       }
@@ -45,7 +51,7 @@ class Logging {
             var_export($loglevel['level'],true) . "\n"
          );
        */
-      if ($this->loglevel['level'] >= $loglevel['level']) {
+      if ($this->loglevel['level'] <= $loglevel['level']) {
          print( $this->formatlog($msg, $loglevel) . PHP_EOL );
       }
    }
@@ -54,8 +60,21 @@ class Logging {
       $this->printlog($msg, self::$LOG_INFO);
    }
 
+   function error($msg) {
+      $this->printlog($msg, self::$LOG_ERROR);
+   }
+
    function debug($msg) {
       $this->printlog($msg, self::$LOG_DEBUG);
+   }
+
+   function setLevelFromArgs($quiet=false, $debug=false) {
+      $this->loglevel = self::$LOG_INFO;
+      if          ( $quiet ) {
+         $this->loglevel = self::$LOG_QUIET;
+      } else if   ( $debug ) {
+         $this->loglevel = self::$LOG_DEBUG;
+      }
    }
 }
 

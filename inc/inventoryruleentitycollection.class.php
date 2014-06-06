@@ -51,6 +51,8 @@ class PluginFusioninventoryInventoryRuleEntityCollection extends RuleCollection 
    //public $right='rule_import';
    public $menu_option='test';
 
+   static $rightname = 'plugin_fusioninventory_ruleentity';
+
    function getTitle() {
       return __('Entity rules', 'fusioninventory');
    }

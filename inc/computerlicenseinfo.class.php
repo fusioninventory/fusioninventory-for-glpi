@@ -54,17 +54,6 @@ class PluginFusioninventoryComputerLicenseInfo extends CommonDBTM {
       return __('License');
    }
 
-   static function canCreate() {
-      return Session::haveRight('computer', 'w');
-   }
-
-
-   static function canView() {
-      return Session::haveRight('computer', 'r');
-   }
-
-
-
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getID() > 0) {

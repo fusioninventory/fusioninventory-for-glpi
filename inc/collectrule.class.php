@@ -47,10 +47,10 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryCollectRule extends Rule {
 
    // From Rule
-   //public $right='rule_import';
+   static $rightname = "plugin_fusioninventory_rulecollect";
+
    public $can_sort=TRUE;
    public $specific_parameters = FALSE;
-
 
 
    function getTitle() {

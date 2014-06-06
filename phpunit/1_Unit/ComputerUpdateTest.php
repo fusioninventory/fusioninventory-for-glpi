@@ -59,6 +59,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_inventory = array(
           'fusioninventorycomputer' => Array(
@@ -88,7 +89,6 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           );
       $a_inventory['Computer'] = array(
           'name'                             => 'pc',
-          'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'freebsd',
           'operatingsystemversions_id'       => '9.1-RELEASE',
@@ -107,35 +107,43 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
 
       $a_inventory['processor'] = Array(
             Array(
+                    'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'serial'            => '',
                     'frequency'         => 2400,
                     'frequence'         => 2400,
+                    'nbthreads'         => 2,
                     'frequency_default' => 2400
                 ),
             Array(
+                    'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'serial'            => '',
                     'frequency'         => 2400,
                     'frequence'         => 2400,
+                    'nbthreads'         => 2,
                     'frequency_default' => 2400
                 ),
             Array(
+                    'nbcores'           => 4,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'serial'            => '',
                     'frequency'         => 2405,
                     'frequence'         => 2405,
+                    'nbthreads'         => 4,
                     'frequency_default' => 2405
                 ),
             Array(
+                    'nbcores'           => 2,
                     'manufacturers_id'  => 'Intel Corporation',
                     'designation'       => 'Core i3',
                     'serial'            => '',
                     'frequency'         => 2600,
                     'frequence'         => 2600,
+                    'nbthreads'         => 4,
                     'frequency_default' => 2600
                 )
         );
@@ -146,35 +154,38 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                     'serial'               => '98F6FF18',
                     'frequence'            => '1067 MHz',
                     'devicememorytypes_id' => 'DDR3',
-                    'designation'          => 'DDR3 - SODIMM (None)'
+                    'designation'          => 'DDR3 - SODIMM (None)',
+                    'busID'                => 1
                 ),
             Array(
                     'size'                 => 2048,
                     'serial'               => '95F1833E',
                     'frequence'            => '1067 MHz',
                     'devicememorytypes_id' => 'DDR3',
-                    'designation'          => 'DDR3 - SODIMM (None)'
+                    'designation'          => 'DDR3 - SODIMM (None)',
+                    'busID'                => 2
                 ),
             Array(
                     'size'                 => 2048,
                     'serial'               => '95F1833G',
                     'frequence'            => '1066 MHz',
                     'devicememorytypes_id' => 'DDR3',
-                    'designation'          => 'DDR3 - SODIMM (None)'
+                    'designation'          => 'DDR3 - SODIMM (None)',
+                    'busID'                => 3
                 ),
             Array(
                     'size'                 => 2048,
                     'serial'               => '95F1833H',
                     'frequence'            => '1333 MHz',
                     'devicememorytypes_id' => 'DDR3',
-                    'designation'          => 'DDR3 - SODIMM (None)'
+                    'designation'          => 'DDR3 - SODIMM (None)',
+                    'busID'                => 4
                 )
         );
 
       $a_inventory['monitor'] = Array(
             Array(
                     'name'              => 'ThinkPad Display 1280x800',
-                    'comment'           => '',
                     'serial'            => 'UBYVUTFYEIUI',
                     'manufacturers_id'  => 'Lenovo'
                 )
@@ -344,7 +355,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'winowner'                                  => 'test',
           'wincompany'                                => 'siprossii',
           'remote_addr'                               => NULL,
-          'plugin_fusioninventory_computerarchs_id'   => 0
+          'plugin_fusioninventory_computerarchs_id'   => 0,
+          'is_entitylocked'                           => 0
       );
 
       $this->assertEquals($a_reference, $a_computer);
@@ -392,7 +404,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'users_id_tech'           => '0',
           'groups_id_tech'          => '0',
           'is_update'               => '0',
-          'softwares_id'            => '-1',
+          'softwares_id'            => '0',
           'manufacturers_id'        => '1',
           'is_deleted'              => '0',
           'is_template'             => '0',
@@ -432,7 +444,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'users_id_tech'           => '0',
           'groups_id_tech'          => '0',
           'is_update'               => '0',
-          'softwares_id'            => '-1',
+          'softwares_id'            => '0',
           'manufacturers_id'        => '2',
           'is_deleted'              => '0',
           'is_template'             => '0',
@@ -472,7 +484,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
           'users_id_tech'           => '0',
           'groups_id_tech'          => '0',
           'is_update'               => '0',
-          'softwares_id'            => '-1',
+          'softwares_id'            => '0',
           'manufacturers_id'        => '3',
           'is_deleted'              => '0',
           'is_template'             => '0',
@@ -720,8 +732,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'serial'                => '',
                      'is_deleted'            => '0',
                      'is_dynamic'            => '1',
-                     'nbcores'               => NULL,
-                     'nbthreads'             => NULL,
+                     'nbcores'               => 2,
+                     'nbthreads'             => 2,
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
                      'busID'                 => NULL
@@ -735,8 +747,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'serial'                => '',
                      'is_deleted'            => '0',
                      'is_dynamic'            => '1',
-                     'nbcores'               => NULL,
-                     'nbthreads'             => NULL,
+                     'nbcores'               => 2,
+                     'nbthreads'             => 2,
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
                      'busID'                 => NULL
@@ -750,8 +762,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'serial'                => '',
                      'is_deleted'            => '0',
                      'is_dynamic'            => '1',
-                     'nbcores'               => NULL,
-                     'nbthreads'             => NULL,
+                     'nbcores'               => 4,
+                     'nbthreads'             => 4,
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
                      'busID'                 => NULL
@@ -765,8 +777,8 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'serial'                => '',
                      'is_deleted'            => '0',
                      'is_dynamic'            => '1',
-                     'nbcores'               => NULL,
-                     'nbthreads'             => NULL,
+                     'nbcores'               => 2,
+                     'nbthreads'             => 4,
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
                      'busID'                 => NULL
@@ -840,7 +852,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'size'                  => '2048',
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
-                     'busID'                 => NULL
+                     'busID'                 => 1
                  ),
           '2' => array(
                      'id' => '2',
@@ -853,7 +865,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'size'                  => '2048',
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
-                     'busID'                 => NULL
+                     'busID'                 => 2
                  ),
           '3' => array(
                      'id' => '3',
@@ -866,7 +878,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'size'                  => '2048',
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
-                     'busID'                 => NULL
+                     'busID'                 => 3
                  ),
           '4' => array(
                      'id' => '4',
@@ -879,7 +891,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
                      'size'                  => '2048',
                      'entities_id'           => '0',
                      'is_recursive'          => '0',
-                     'busID'                 => NULL
+                     'busID'                 => 4
                  )
       );
 
@@ -1074,7 +1086,7 @@ class ComputerUpdateTest extends RestoreDatabase_TestCase {
       $_SESSION["plugin_fusioninventory_entity"] = 0;
       $_SESSION['glpiactiveentities_string'] = 0;
       $_SESSION['glpishowallentities'] = 1;
-
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_inventory = array(
           'fusioninventorycomputer' => Array(

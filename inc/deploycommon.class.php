@@ -297,19 +297,19 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
 
 
-   // When agent contact server, this function send datas to agent
+   // When agent contact server, this function prepare data to be sent
    /*
     * $itemtype = type of device in definition
     * $array = array with different ID
     *
     */
-   function run($taskjob, $agent) {
+   function run($taskjobstate) {
       //get order type label
-      $order_type_label = str_replace("PluginFusioninventoryDeploy", "", get_class($this));
+      $order_type_label = str_replace("deploy", "", $taskjobstate->method);
       //get numeric order type from label
       $order_type = PluginFusioninventoryDeployOrder::getRender($order_type_label);
       //get order by type and package id
-      $order = new PluginFusioninventoryDeployOrder($order_type, $taskjob['items_id']);
+      $order = new PluginFusioninventoryDeployOrder($order_type, $taskjobstate->fields['items_id']);
       //decode order data
       $order_data = json_decode($order->fields['json'], TRUE);
 
@@ -319,7 +319,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
        */
       $order_job = $order_data['jobs'];
       //add uniqid to response data
-      $order_job['uuid'] = $taskjob['uniqid'];
+      $order_job['uuid'] = $taskjobstate->fields['uniqid'];
 
       /* TODO:
        * Orders should only contain job data and associatedFiles should be retrieved from the
@@ -337,7 +337,9 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
 
 
       //Add mirrors to associatedFiles
-      $mirrors = PluginFusioninventoryDeployMirror::getList($agent);
+      $mirrors = PluginFusioninventoryDeployMirror::getList(
+         $taskjobstate->fields['plugin_fusioninventory_agents_id']
+      );
       foreach($order_files as $hash => $params) {
          $order_files[$hash]['mirrors'] = $mirrors;
          $manifest = GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/".$hash;

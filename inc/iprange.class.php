@@ -50,6 +50,10 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_iprange';
 
+   static function canCreate() {
+      return true;
+   }
+
    static function getTypeName($nb=0) {
 
       if (isset($_SERVER['HTTP_REFERER']) AND strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
@@ -222,6 +226,8 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons($options);
+
+      return true;
    }
 
 

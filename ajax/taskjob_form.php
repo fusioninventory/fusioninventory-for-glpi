@@ -51,6 +51,7 @@ Session::checkCentralAccess();
 // $_GET['taskjobs_id'] => update taskjob
 // $_GET['tasks_id'] => add new taskjob
 
-echo "test";
+$pfTaskjob = new PluginFusioninventoryTaskjob();
 
+$pfTaskjob->ajaxGetForm($_GET);
 ?>

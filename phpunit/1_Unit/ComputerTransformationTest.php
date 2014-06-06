@@ -52,6 +52,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -116,7 +117,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
-          'comment'                          => 'amd64/-1-11-30 22:04:44',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'freebsd',
           'operatingsystemversions_id'       => '9.1-RELEASE',
@@ -147,6 +147,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -193,7 +194,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'pc',
-          'comment'                          => '',
           'users_id'                         => 0,
           'operatingsystems_id'              => '',
           'operatingsystemversions_id'       => '',
@@ -224,6 +224,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -289,7 +290,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'comment'                          => '',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
           'operatingsystemversions_id'       => '5.1.2600',
@@ -320,6 +320,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -375,7 +376,6 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'comment'                          => '',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
           'operatingsystemversions_id'       => '5.1.2600',
@@ -406,6 +406,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -450,7 +451,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
                     'frequency'         => 2400,
                     'frequence'         => 2400,
                     'frequency_default' => 2400,
-                    'nbcores'           => '',
+                    'nbcores'           => '0',
                     'nbthreads'         => '0'
           );
 
@@ -468,6 +469,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -531,6 +533,7 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -578,12 +581,13 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
    /**
     * @test
     */
-   public function ComputerBios() {
+   public function ComputerBiosVirtual() {
       global $DB;
 
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_computer = array();
       $a_computer['HARDWARE'] = array(
@@ -655,7 +659,107 @@ class ComputerTransformation extends RestoreDatabase_TestCase {
           );
       $a_reference['Computer'] = array(
           'name'                             => 'vbox-winxp',
-          'comment'                          => '',
+          'users_id'                         => 0,
+          'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
+          'operatingsystemversions_id'       => '5.1.2600',
+          'uuid'                             => '',
+          'domains_id'                       => 'WORKGROUP',
+          'os_licenseid'                     => '76413-OEM-0054453-04701',
+          'os_license_number'                => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
+          'operatingsystemservicepacks_id'   => 'Service Pack 3',
+          'manufacturers_id'                 => 'Dell Inc.',
+          'computermodels_id'                => 'Dell DXP051',
+          'serial'                           => '6PkkD1K',
+          'computertypes_id'                 => 'VirtualBox',
+          'is_dynamic'                       => 1,
+          'contact'                          => ''
+     );
+      // users_id = 0 because user notin DB
+      $this->assertEquals($a_reference, $a_return);
+   }
+
+
+   /**
+    * @test
+    */
+   public function ComputerBiosPhysical() {
+      global $DB;
+
+      $DB->connect();
+
+      $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
+
+      $a_computer = array();
+      $a_computer['HARDWARE'] = array(
+                'NAME'           => 'vbox-winxp',
+                'ARCHNAME'       => 'MSWin32-x86-multi-thread',
+                'CHASSIS_TYPE'   => '',
+                'DESCRIPTION'    => '',
+                'OSCOMMENTS'     => 'Service Pack 3',
+                'OSNAME'         => 'Microsoft Windows XP Professionnel',
+                'OSVERSION'      => '5.1.2600',
+                'VMSYSTEM'       => 'Physical',
+                'WINCOMPANY'     => 'siprossii',
+                'WINLANG'        => '1036',
+                'WINOWNER'       => 'test',
+                'WINPRODID'      => '76413-OEM-0054453-04701',
+                'WINPRODKEY'     => 'BW728-6G2PM-2MCWP-VCQ79-DCWX3',
+                'WORKGROUP'      => 'WORKGROUP'
+            );
+
+      $a_computer['BIOS'] = array(
+          'ASSETTAG'      => '',
+          'BDATE'         => '05/30/2006',
+          'BMANUFACTURER' => 'Dell Inc.',
+          'BVERSION'      => 'A05',
+          'MMANUFACTURER' => 'Dell Inc.',
+          'MMODEL'        => '0FJ030',
+          'MSN'           => '..CN7082166DF04E.',
+          'SKUNUMBER'     => '',
+          'SMANUFACTURER' => 'Dell Inc.',
+          'SMODEL'        => 'Dell DXP051',
+          'SSN'           => '6PkkD1K');
+
+      $pfFormatconvert = new PluginFusioninventoryFormatconvert();
+
+      $a_return = $pfFormatconvert->computerInventoryTransformation($a_computer);
+      $date = date('Y-m-d H:i:s');
+      if (isset($a_return['fusioninventorycomputer'])
+              && isset($a_return['fusioninventorycomputer']['last_fusioninventory_update'])) {
+         $date = $a_return['fusioninventorycomputer']['last_fusioninventory_update'];
+      }
+      $a_reference = array(
+          'fusioninventorycomputer' => Array(
+              'winowner'                                 => 'test',
+              'wincompany'                               => 'siprossii',
+              'operatingsystem_installationdate'         => 'NULL',
+              'last_fusioninventory_update'              => $date,
+              'bios_date'                                => '2006-05-30',
+              'bios_version'                             => 'A05',
+              'bios_assettag'                            => '',
+              'bios_manufacturers_id'                    => 'Dell Inc.'
+          ),
+          'soundcard'               => array(),
+          'graphiccard'             => array(),
+          'controller'              => array(),
+          'processor'               => array(),
+          'computerdisk'            => array(),
+          'memory'                  => array(),
+          'monitor'                 => array(),
+          'printer'                 => array(),
+          'peripheral'              => array(),
+          'networkport'             => array(),
+          'SOFTWARES'               => array(),
+          'harddrive'               => array(),
+          'virtualmachine'          => array(),
+          'antivirus'               => array(),
+          'storage'                 => array(),
+          'licenseinfo'             => array(),
+          'networkcard'             => array()
+          );
+      $a_reference['Computer'] = array(
+          'name'                             => 'vbox-winxp',
           'users_id'                         => 0,
           'operatingsystems_id'              => 'Microsoft Windows XP Professionnel',
           'operatingsystemversions_id'       => '5.1.2600',

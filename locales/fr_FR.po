@@ -3,23 +3,21 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# lostprophet91 <lostprophet91@gmail.com>, 2013
 # Asmodojo <asmodojo@outlook.com>, 2013
-# David Durieux <d.durieux@siprossii.com>, 2012-2013
+# David Durieux <d.durieux@siprossii.com>, 2014
 # EmmanuelLeNormand <emmanuel@le-normand.org>, 2013
 # Gonéri Le Bouder <goneri@rulezlan.org>, 2013
 # kiniou <kiniou@gmail.com>, 2013
-# kiniou <kiniou@gmail.com>, 2013
-# lostprophet91 <lostprophet91@gmail.com>, 2013
+# Alexandre Brianceau <lostprophet91@gmail.com>, 2013
 # Mathieu Simon <mathieu.sim@gmail.com>, 2013
-# oviri <tamaoviri@gmail.com>, 2013
-# oviri <tamaoviri@gmail.com>, 2013
+# Tamatoa Davio <tamaoviri@gmail.com>, 2013
+# Walid Nouh, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - plugin FusionInventory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-16 13:28+0100\n"
-"PO-Revision-Date: 2013-12-16 21:50+0000\n"
+"POT-Creation-Date: 2014-06-05 20:07+0200\n"
+"PO-Revision-Date: 2014-06-05 18:09+0000\n"
 "Last-Translator: David Durieux <d.durieux@siprossii.com>\n"
 "Language-Team: French (France) (http://www.transifex.com/projects/p/FusionInventory/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
@@ -28,146 +26,218 @@ msgstr ""
 "Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: hook.php:51 hook.php:148 hook.php:155 hook.php:164 hook.php:171
-#: hook.php:177 hook.php:190 hook.php:198 hook.php:209 hook.php:225
-#: hook.php:236 hook.php:243 hook.php:251 inc/taskjob.class.php:125
+#: hook.php:51 hook.php:218 hook.php:225 hook.php:234 hook.php:241
+#: hook.php:252 hook.php:260 hook.php:271 hook.php:292 hook.php:299
+#: hook.php:307 inc/agent.class.php:170 inc/task.view.class.php:59
+msgctxt "fusioninventory"
 msgid "FusInv"
 msgstr "FusInv"
 
-#: hook.php:52 hook.php:210 hook.php:244
-#: inc/inventorycomputercomputer.class.php:98
-#: inc/inventorycomputercomputer.class.php:194
-#: inc/networkequipment.class.php:551 inc/networkequipment.class.php:1092
-#: inc/printer.class.php:162 inc/printer.class.php:240
+#: hook.php:52 hook.php:272 hook.php:300
+#: inc/inventorycomputercomputer.class.php:93
+#: inc/inventorycomputercomputer.class.php:210
+#: inc/networkequipment.class.php:526 inc/networkequipment.class.php:1067
+#: inc/printer.class.php:156 inc/printer.class.php:210
+msgctxt "fusioninventory"
 msgid "Last inventory"
 msgstr "Dernier inventaire"
 
 #: hook.php:89 hook.php:98
+msgctxt "fusioninventory"
 msgid "BIOS"
 msgstr "BIOS"
 
-#: hook.php:113 inc/inventorycomputercomputer.class.php:149
+#: hook.php:113 inc/inventorycomputercomputer.class.php:144
+msgctxt "fusioninventory"
 msgid "Owner"
 msgstr "Propriétaire"
 
-#: hook.php:118 inc/inventorycomputercomputer.class.php:156
+#: hook.php:118 inc/inventorycomputercomputer.class.php:151
+msgctxt "fusioninventory"
 msgid "Company"
 msgstr "Entreprise"
 
-#: hook.php:124 inc/agent.class.php:140 inc/agent.class.php:186
-#: inc/agent.class.php:282 inc/agent.class.php:805
+#: hook.php:124 inc/agent.class.php:128 inc/agent.class.php:201
+#: inc/agent.class.php:310 inc/agent.class.php:1041
+msgctxt "fusioninventory"
 msgid "Useragent"
 msgstr "Useragent"
 
-#: hook.php:131 inc/agent.class.php:146 inc/agent.class.php:306
-#: inc/agent.class.php:810 inc/config.class.php:527 inc/config.class.php:545
-#: inc/config.class.php:578 inc/inventoryruleentity.class.php:125
+#: hook.php:131 inc/agent.class.php:134 inc/agent.class.php:344
+#: inc/agent.class.php:1046 inc/config.class.php:543 inc/config.class.php:561
+#: inc/config.class.php:594 inc/inventoryruleentity.class.php:123
 #: inc/inventoryruleimport.class.php:143
-#: inc/inventoryrulelocation.class.php:126
+#: inc/inventoryrulelocation.class.php:128
+msgctxt "fusioninventory"
 msgid "FusionInventory tag"
 msgstr "Étiquette FusionInventory"
 
 #: hook.php:135 inc/computerarch.class.php:51
+msgctxt "fusioninventory"
 msgid "Architecture"
 msgstr "Architecture"
 
-#: hook.php:178 hook.php:226 inc/menu.class.php:295
-#: inc/networkequipment.class.php:448 inc/printer.class.php:171
-#: inc/snmpmodel.class.php:57 inc/snmpmodel.class.php:77
-#: inc/unknowndevice.class.php:169 inc/unknowndevice.class.php:382
-msgid "SNMP models"
-msgstr "Modèles SNMP"
+#: hook.php:144
+msgctxt "fusioninventory"
+msgid "Conformité (configuration management)"
+msgstr "Conformité (gestion des configurations)"
 
-#: hook.php:191 hook.php:199 hook.php:237 inc/menu.class.php:258
-#: inc/networkequipment.class.php:475 inc/printer.class.php:189
-#: inc/staticmisc.class.php:239 inc/unknowndevice.class.php:174
-#: inc/unknowndevice.class.php:395
+#: hook.php:152 hook.php:159 hook.php:166 hook.php:173 hook.php:180
+#: hook.php:187 hook.php:194 hook.php:908 inc/agent.class.php:145
+#: inc/agentmodule.class.php:110 inc/agentmodule.class.php:219
+#: inc/agentmodule.class.php:221 inc/ignoredimportdevice.class.php:118
+#: inc/rulematchedlog.class.php:171 inc/rulematchedlog.class.php:241
+msgctxt "fusioninventory"
+msgid "Module"
+msgstr "Module"
+
+#: hook.php:152 inc/menu.class.php:437
+msgctxt "fusioninventory"
+msgid "Deploy"
+msgstr "Déployer"
+
+#: hook.php:159
+msgctxt "fusioninventory"
+msgid "WakeOnLan"
+msgstr "WakeOnLan"
+
+#: hook.php:166
+msgctxt "fusioninventory"
+msgid "Local inventory"
+msgstr "Inventaire local"
+
+#: hook.php:173
+msgctxt "fusioninventory"
+msgid "ESX/VMWare"
+msgstr "ESX/VMWare"
+
+#: hook.php:180
+msgctxt "fusioninventory"
+msgid "Network inventory"
+msgstr "Inventaire réseau"
+
+#: hook.php:187 hook.php:913 inc/agent.class.php:291 inc/agent.class.php:301
+#: inc/config.class.php:649 inc/config.class.php:671
+#: inc/staticmisc.class.php:86
+msgctxt "fusioninventory"
+msgid "Network discovery"
+msgstr "Découverte réseau"
+
+#: hook.php:194
+msgctxt "fusioninventory"
+msgid "Collect"
+msgstr "Collecte"
+
+#: hook.php:198 inc/computer.class.php:55 inc/deploygroup.class.php:73
+msgctxt "fusioninventory"
+msgid "Static group"
+msgstr "Groupe statique"
+
+#: hook.php:253 hook.php:261 hook.php:293 inc/menu.class.php:365
+#: inc/networkequipment.class.php:450 inc/printer.class.php:168
+#: inc/profile.class.php:258 inc/unknowndevice.class.php:159
+#: inc/unknowndevice.class.php:370
+msgctxt "fusioninventory"
 msgid "SNMP authentication"
 msgstr "authentification SNMP"
 
-#: hook.php:217 hook.php:259 inc/networkequipment.class.php:442
-#: inc/printer.class.php:153 inc/snmpmodel.class.php:107
-#: inc/unknowndevice.class.php:163 inc/unknowndevice.class.php:376
+#: hook.php:279 hook.php:315 inc/networkequipment.class.php:438
+#: inc/printer.class.php:147 inc/unknowndevice.class.php:153
+#: inc/unknowndevice.class.php:358
+msgctxt "fusioninventory"
 msgid "Sysdescr"
 msgstr "Sysdescr"
 
-#: hook.php:252 inc/networkequipment.class.php:486
+#: hook.php:308 inc/networkequipment.class.php:461
+msgctxt "fusioninventory"
 msgid "CPU usage (in %)"
 msgstr "Utilisation du CPU (en %)"
 
-#: hook.php:835 hook.php:848 hook.php:859 inc/lock.class.php:167
+#: hook.php:867 hook.php:882 hook.php:893 inc/lock.class.php:159
+#: inc/profile.class.php:279
+msgctxt "fusioninventory"
 msgid "Lock"
 msgid_plural "Locks"
 msgstr[0] "verrou"
 msgstr[1] "verrous"
 
-#: hook.php:836 hook.php:842
+#: hook.php:868 hook.php:876
+msgctxt "fusioninventory"
 msgid "Target a task"
 msgstr "Cibler une tâche"
 
-#: hook.php:850 hook.php:861
+#: hook.php:870
+msgctxt "fusioninventory"
+msgid "Add to static group"
+msgstr "Ajouter au groupe statique"
+
+#: hook.php:884 hook.php:895
+msgctxt "fusioninventory"
 msgid "Load the correct SNMP model"
 msgstr "Charger le bon modèle SNMP"
 
-#: hook.php:851 hook.php:862 hook.php:899
+#: hook.php:885 hook.php:896 hook.php:933
+msgctxt "fusioninventory"
 msgid "Assign SNMP model"
 msgstr "Assigner un modèle SNMP"
 
-#: hook.php:853 hook.php:864 hook.php:895
+#: hook.php:887 hook.php:898 hook.php:929
+msgctxt "fusioninventory"
 msgid "Assign SNMP authentication"
 msgstr "Assigner une authentification SNMP"
 
-#: hook.php:874 inc/agent.class.php:157 inc/agentmodule.class.php:109
-#: inc/agentmodule.class.php:218 inc/agentmodule.class.php:220
-#: inc/ignoredimportdevice.class.php:124 inc/rulematchedlog.class.php:179
-#: inc/rulematchedlog.class.php:249 inc/taskjob.class.php:237
-msgid "Module"
-msgstr "Module"
-
-#: hook.php:878 hook.php:882 inc/agent.class.php:272 inc/agent.class.php:289
-#: inc/config.class.php:650 inc/config.class.php:659
-#: inc/statediscovery.class.php:147 inc/stateinventory.class.php:99
+#: hook.php:912 hook.php:916 inc/agent.class.php:290 inc/agent.class.php:317
+#: inc/config.class.php:648 inc/config.class.php:658
+#: inc/statediscovery.class.php:142 inc/stateinventory.class.php:96
+msgctxt "fusioninventory"
 msgid "Threads number"
 msgstr "Nombre de threads"
 
-#: hook.php:879 inc/agent.class.php:273 inc/config.class.php:651
-#: inc/staticmisc.class.php:83
-msgid "Network discovery"
-msgstr "Découverte réseau"
-
-#: hook.php:884 inc/agent.class.php:290 inc/agentmodule.class.php:134
-#: inc/agentmodule.class.php:244 inc/config.class.php:660
-#: inc/staticmisc.class.php:88
+#: hook.php:918 inc/agent.class.php:318 inc/agent.class.php:328
+#: inc/agentmodule.class.php:135 inc/agentmodule.class.php:245
+#: inc/config.class.php:659 inc/config.class.php:680
+#: inc/staticmisc.class.php:92
+msgctxt "fusioninventory"
 msgid "Network inventory (SNMP)"
 msgstr "Inventaire réseau (SNMP)"
 
-#: hook.php:915 inc/taskjoblog.class.php:442 inc/taskjoblog.class.php:885
-#: inc/taskjoblog.class.php:943
+#: hook.php:949 inc/taskjoblog.class.php:478 inc/taskjoblog.class.php:921
+#: inc/taskjoblog.class.php:979
+msgctxt "fusioninventory"
 msgid "Force the end"
 msgstr "Forcer l'arrêt"
 
-#: hook.php:1033 inc/deploytask.class.php:56 inc/deploytask.class.php:114
+#: hook.php:1049 inc/deploytask.class.php:56 inc/deploytask.class.php:114
+#: inc/profile.class.php:303 inc/task.view.class.php:128
+msgctxt "fusioninventory"
 msgid "Task"
-msgstr "Tâche"
+msgid_plural "Tasks"
+msgstr[0] "Tâche"
+msgstr[1] "Tâches"
 
-#: hook.php:1051 inc/deployreport.class.php:121
+#: hook.php:1067 inc/deploypackage.class.php:56 inc/deployreport.class.php:121
 #: inc/deploystaticmisc.class.php:87
+msgctxt "fusioninventory"
 msgid "Package"
 msgstr "Paquetage"
 
-#: hook.php:1063
+#: hook.php:1080
+msgctxt "fusioninventory"
 msgid "Create a job for each computer"
 msgstr "Créer une tâche sur chaque ordinateur"
 
-#: hook.php:1065
+#: hook.php:1082
+msgctxt "fusioninventory"
 msgid "Create a job for each group"
 msgstr "Créer une tâche pour chaque groupes"
 
-#: hook.php:1294 front/unknowndevice.form.php:105
+#: hook.php:1288 front/unknowndevice.form.php:105
+msgctxt "fusioninventory"
 msgid "Number of imported devices"
 msgstr "Nombre de matériels importés"
 
-#: hook.php:1297 front/unknowndevice.form.php:107
+#: hook.php:1291 front/unknowndevice.form.php:107
+msgctxt "fusioninventory"
 msgid "Number of devices not imported because type not defined"
 msgstr "Nombre de matériels non importés car type non défini"
 
@@ -175,1155 +245,1392 @@ msgstr "Nombre de matériels non importés car type non défini"
 #: front/agentmodule.form.php:45 front/collect.php:45
 #: front/collectrule.form.php:45 front/collectrule.php:46
 #: front/configsecurity.form.php:50 front/configsecurity.php:45
-#: front/constructmodel.php:50 front/documentation.php:45
-#: front/ignoredimportdevice.php:45
+#: front/configurationmanagement.form.php:45
+#: front/configurationmanagement_model.form.php:45
+#: front/configurationmanagement_model.php:45
+#: front/configurationmanagement_notconform.php:45
+#: front/configurationmanagement_tobevalidated.php:45
+#: front/documentation.php:45 front/ignoredimportdevice.php:45
 #: front/inventorycomputerblacklist.form.php:45
 #: front/inventorycomputerblacklist.php:45
 #: front/inventorycomputerimportxml.php:45
 #: front/inventoryruleentity.form.php:45 front/inventoryruleentity.php:46
 #: front/inventoryruleimport.form.php:45 front/inventoryruleimport.php:45
 #: front/inventoryrulelocation.form.php:45 front/inventoryrulelocation.php:46
-#: front/iprange.form.php:47 front/iprange.php:45 front/menu.php:52
-#: front/printerlogreport.php:48 front/snmpmodel.form.php:51
-#: front/snmpmodel.php:45 front/snmpmodelconstructdevice.form.php:47
-#: front/snmpmodelconstructdevice.php:45
-#: front/snmpmodelconstructdevice_user.form.php:49 front/statediscovery.php:45
-#: front/stateinventory.php:45 front/task.form.php:47 front/task.php:45
+#: front/iprange.form.php:47 front/iprange.php:45 front/menu.php:46
+#: front/menu_inventory.php:46 front/menu_snmpinventory.php:46
+#: front/printerlogreport.php:48 front/statediscovery.php:45
+#: front/stateinventory.php:45 front/task.form.php:47 front/task.php:46
 #: front/taskjob.form.php:47 front/taskjob.php:45 front/taskjoblog.php:45
-#: front/tasksummary.php:45 front/unknowndevice.form.php:48
+#: front/timeslot.php:48 front/unknowndevice.form.php:48
 #: front/unknowndevice.php:45 front/wizard.php:45
 #: front/wizard_inventory.php:45 front/wizard_inventorycomputeroptions.php:45
-#: inc/inventorycomputercomputer.class.php:93
-#: inc/networkequipment.class.php:546 inc/profile.class.php:293
-#: report/computer_last_inventory.php:49 report/not_queried_recently.php:51
-#: report/ports_date_connections.php:49 report/switch_ports.history.php:50
+#: inc/inventorycomputercomputer.class.php:88
+#: inc/networkequipment.class.php:521 report/computer_last_inventory.php:49
+#: report/not_queried_recently.php:51 report/ports_date_connections.php:49
+#: report/switch_ports.history.php:50
+msgctxt "fusioninventory"
 msgid "FusionInventory"
 msgstr "FusionInventory"
 
-#: setup.php:292 inc/printerlog.class.php:474
+#: setup.php:374 inc/printerlog.class.php:474
+msgctxt "fusioninventory"
 msgid "Printed page counter"
 msgstr "Compteurs d'impression"
 
-#: setup.php:296
+#: setup.php:378
+msgctxt "fusioninventory"
 msgid "Switchs ports history"
 msgstr "Historique des ports de switchs"
 
-#: setup.php:298
+#: setup.php:380
+msgctxt "fusioninventory"
 msgid "Unused switchs ports"
 msgstr "Ports de switchs inutilisés"
 
-#: setup.php:300
+#: setup.php:382
+msgctxt "fusioninventory"
 msgid "Number of days since last inventory"
 msgstr "Nombre de jours depuis dernier inventaire"
 
-#: setup.php:304 report/computer_last_inventory.php:67
+#: setup.php:386 report/computer_last_inventory.php:67
+msgctxt "fusioninventory"
 msgid "Computers not inventoried since xx days"
 msgstr "Machines non inventoriées depuis xx jours"
 
-#: setup.php:409 setup.php:410
+#: setup.php:400 setup.php:401
+msgctxt "fusioninventory"
 msgid "Documentation"
 msgstr "Documentation"
 
-#: setup.php:417
-msgid "Menu"
-msgstr "Menu"
+#: setup.php:500
+msgctxt "fusioninventory"
+msgid "Your GLPI version not compatible, require 0.85"
+msgstr "Votre version de GLPI n'est pas compatible, il faut la 0.85"
 
-#: setup.php:420 inc/menu.class.php:135 inc/menu.class.php:142
-#: inc/task.class.php:53 inc/task.class.php:810 inc/task.class.php:819
-msgid "Task management"
-msgstr "Gestion des tâches"
-
-#: setup.php:423 inc/menu.class.php:148
-msgid "Running jobs"
-msgstr "Actions en cours d'exécution"
-
-#: setup.php:426 inc/menu.class.php:100
-msgid "Agents management"
-msgstr "Gestion des agents"
-
-#: setup.php:432 inc/menu.class.php:106 inc/unknowndevice.class.php:54
-#: inc/unknowndevice.class.php:72
-msgid "Unknown device"
-msgstr "Matériel inconnu"
-
-#: setup.php:435 inc/inventoryruleimportcollection.class.php:57
-#: inc/menu.class.php:181
-msgid "Equipment import and link rules"
-msgstr "Règles d'import et de liaison des matériels"
-
-#: setup.php:438
-msgid "Wizard"
-msgstr "Assistant"
-
-#: setup.php:441 inc/iprange.class.php:95 inc/staticmisc.class.php:218
-msgid "IP range configuration"
-msgstr "Plages IP"
-
-#: setup.php:444 inc/deploypackage.class.php:54
-#: inc/deploypackage.class.php:287
-msgid "Packages"
-msgstr "Paquets"
-
-#: setup.php:447 inc/deploygroup.class.php:58 inc/deploygroup.class.php:107
-#: inc/deploytaskjob.class.php:170 inc/menu.class.php:112
-msgid "Groups of computers"
-msgstr "Groupe d'ordinateurs"
-
-#: setup.php:450 inc/ignoredimportdevice.class.php:51
-msgid "Equipment ignored on import"
-msgstr "Equipement ignoré à l'import"
-
-#: setup.php:456 inc/inventoryruleentity.class.php:57
-#: inc/inventoryruleentitycollection.class.php:55
-msgid "Entity rules"
-msgstr "Règles d'entités"
-
-#: setup.php:459 inc/inventoryrulelocation.class.php:57
-#: inc/inventoryrulelocationcollection.class.php:56
-msgid "Location rules"
-msgstr "Règles de lieu"
-
-#: setup.php:462 inc/menu.class.php:155
-msgid "Import agent XML file"
-msgstr "Importer un fichier XML de l'agent"
-
-#: setup.php:471 inc/menu.class.php:277
-msgid "Discovery status"
-msgstr "Etat des découvertes"
-
-#: setup.php:474
-msgid "Inventory status"
-msgstr "Statut de l'inventaire"
-
-#: setup.php:477 inc/deploymirror.class.php:52 inc/menu.class.php:331
-msgid "Mirror servers"
-msgstr "Serveurs mirroirs"
-
-#: setup.php:577
-msgid "Your GLPI version not compatible, require 0.84"
-msgstr "Votre version de GLPI n'est pas compatible, la version 0.84 est requise"
-
-#: setup.php:582
+#: setup.php:505
+msgctxt "fusioninventory"
 msgid "fileinfo extension (PHP) is required..."
 msgstr "Le module fileinfo (PHP) est requis..."
 
-#: setup.php:595
+#: setup.php:518
 #, php-format
+msgctxt "fusioninventory"
 msgid "Please remove folder %s in glpi/plugins/"
 msgstr "Merci de supprimer le dossier %s dans glpi/plugins/"
 
-#: ajax/dropdownsnmpmodelconstruct_progressbar.php:53
-msgid "Printer cartridges"
-msgstr "Cartouches d'encre d'imprimantes"
+#: ajax/configurationamanagement_action.php:55
+#: inc/configurationmanagement.class.php:257
+#: inc/configurationmanagement.class.php:340
+#: inc/configurationmanagement.class.php:423
+msgctxt "fusioninventory"
+msgid "In referentiel + alert"
+msgstr ""
+
+#: ajax/configurationamanagement_action.php:56
+#: inc/configurationmanagement.class.php:258
+#: inc/configurationmanagement.class.php:341
+#: inc/configurationmanagement.class.php:424
+msgctxt "fusioninventory"
+msgid "In referentiel - alert"
+msgstr ""
+
+#: ajax/configurationamanagement_action.php:57
+#: inc/configurationmanagement.class.php:259
+#: inc/configurationmanagement.class.php:342
+#: inc/configurationmanagement.class.php:425
+msgctxt "fusioninventory"
+msgid "Not in referentiel"
+msgstr ""
 
 #: front/agent.form.php:58
+msgctxt "fusioninventory"
 msgid "The agent is running"
 msgstr "L'agent s'exécute"
 
-#: front/agent.form.php:61 inc/agent.class.php:566
+#: front/agent.form.php:61 inc/agent.class.php:644
+msgctxt "fusioninventory"
 msgid "Impossible to communicate with agent!"
 msgstr "Impossible de joindre l'agent!"
 
 #: front/collect.form.php:45
+msgctxt "fusioninventory"
 msgid "Collect management"
 msgstr "Gestion des collectes"
 
 #: front/config.form.php:47 front/configlogfield.form.php:47
+msgctxt "fusioninventory"
 msgid "Features"
 msgstr "Fonctionnalités"
 
-#: front/constructsendmodel.php:52
-msgid "Importing SNMP models finished."
-msgstr "L'import des modèles SNMP est terminé."
-
 #: front/inventorycomputerimportxml.php:68
+msgctxt "fusioninventory"
 msgid "Can't read zip file!"
 msgstr "Impossible de lire l'archive"
 
 #: front/inventorycomputerimportxml.php:93
+msgctxt "fusioninventory"
 msgid "No file to import!"
 msgstr "Fichier manquant !"
 
 #: front/popup.php:64
+msgctxt "fusioninventory"
 msgid "Cache informations"
 msgstr "Informations en cache"
 
 #: front/popup.php:69
+msgctxt "fusioninventory"
 msgid "Network ports display options"
 msgstr "Options d'affichage des ports réseaux"
 
-#: front/printerlogreport.php:92 inc/statediscovery.class.php:144
-#: inc/stateinventory.class.php:95
+#: front/printerlogreport.php:92 inc/statediscovery.class.php:139
+#: inc/stateinventory.class.php:92
+msgctxt "fusioninventory"
 msgid "Starting date"
 msgstr "Date de départ"
 
-#: front/printerlogreport.php:100 inc/statediscovery.class.php:145
-#: inc/stateinventory.class.php:96
+#: front/printerlogreport.php:100 inc/statediscovery.class.php:140
+#: inc/stateinventory.class.php:93
+msgctxt "fusioninventory"
 msgid "Ending date"
 msgstr "Date de fin"
 
 #: front/rule.common.php:176
+msgctxt "fusioninventory"
 msgid "Rules applied"
 msgstr "Règles utilisées"
 
 #: front/rule.common.php:187
+msgctxt "fusioninventory"
 msgid "Local rules"
 msgstr "Règles locales"
 
-#: front/snmpmodelconstructdevice.php:72
-msgid "Automatic creation of models"
-msgstr "Creation automatique des modèles"
-
-#: front/snmpmodelconstructdevice.php:74
-msgid "Delete models non used"
-msgstr "Supprimer modèles non utilisés"
-
-#: front/snmpmodelconstructdevice.php:76
-msgid "Re-create models comments"
-msgstr "Regénérer les commentaires de modèles"
-
-#: front/snmpmodelconstructdevice.php:82
-msgid "Generate discovery file"
-msgstr "Générer le fichier de découverte"
-
-#: front/snmpmodelconstructdevice.php:84
-msgid "Export all models"
-msgstr "Exporter tous les modèles"
-
 #: front/unknowndevice.form.php:84
+msgctxt "fusioninventory"
 msgid "restoration of the item"
 msgstr "Restauration de l'élément"
 
-#: inc/agent.class.php:58 inc/agent.class.php:79 inc/agent.class.php:535
-#: inc/agent.class.php:800 inc/rulematchedlog.class.php:175
-#: inc/statediscovery.class.php:142 inc/stateinventory.class.php:93
-#: inc/taskjoblog.class.php:165 inc/taskjoblog.class.php:236
-#: inc/taskjoblog.class.php:303 inc/taskjoblog.class.php:511
-#: inc/taskjobstate.class.php:194
+#: inc/agent.class.php:60 inc/agent.class.php:69 inc/agent.class.php:619
+#: inc/agent.class.php:1036 inc/configurationmanagement.class.php:71
+#: inc/ignoredimportdevice.class.php:59 inc/rulematchedlog.class.php:167
+#: inc/statediscovery.class.php:137 inc/stateinventory.class.php:90
+#: inc/taskjoblog.class.php:198 inc/taskjoblog.class.php:272
+#: inc/taskjoblog.class.php:339 inc/taskjoblog.class.php:547
+#: inc/taskjobstate.class.php:225
+msgctxt "fusioninventory"
 msgid "Agent"
 msgstr "Agent"
 
-#: inc/agent.class.php:100 inc/agent.class.php:187 inc/agent.class.php:298
+#: inc/agent.class.php:90 inc/agent.class.php:202 inc/agent.class.php:336
+msgctxt "fusioninventory"
 msgid "Last contact"
 msgstr "Dernier contact"
 
-#: inc/agent.class.php:106 inc/agent.class.php:258
+#: inc/agent.class.php:96 inc/agent.class.php:276
+msgctxt "fusioninventory"
 msgid "locked"
 msgstr "Verrouillé"
 
-#: inc/agent.class.php:112 inc/agent.class.php:231
+#: inc/agent.class.php:102 inc/agent.class.php:249
+msgctxt "fusioninventory"
 msgid "Device_id"
 msgstr "Device_id"
 
-#: inc/agent.class.php:119 inc/agent.class.php:238
+#: inc/agent.class.php:108 inc/agent.class.php:256
+msgctxt "fusioninventory"
 msgid "Computer link"
 msgstr "Lié à l'ordinateur"
 
-#: inc/agent.class.php:529
+#: inc/agent.class.php:300 inc/agent.class.php:327 inc/config.class.php:670
+#: inc/config.class.php:679
+msgctxt "fusioninventory"
+msgid "SNMP timeout"
+msgstr "Timeout SNMP"
+
+#: inc/agent.class.php:613
+msgctxt "fusioninventory"
 msgid "Agent state"
 msgstr "Etat de l'agent"
 
-#: inc/agent.class.php:588
+#: inc/agent.class.php:669
+msgctxt "fusioninventory"
 msgid "Force inventory"
 msgstr "Forcer l'inventaire"
 
-#: inc/agent.class.php:744
+#: inc/agent.class.php:980
+msgctxt "fusioninventory"
 msgid "Informations for agent configuration"
 msgstr "Informations pour la configuration de l'agent"
 
-#: inc/agent.class.php:754
+#: inc/agent.class.php:990
+msgctxt "fusioninventory"
 msgid "Communication url of the server"
 msgstr "Url de communication du serveur"
 
-#: inc/agentmodule.class.php:61 inc/agentmodule.class.php:63
-#: inc/configuration.class.php:56
+#: inc/agentmodule.class.php:62 inc/agentmodule.class.php:64
+#: inc/configuration.class.php:57
+msgctxt "fusioninventory"
 msgid "Agents modules"
 msgstr "Modules des agents"
 
-#: inc/agentmodule.class.php:110
+#: inc/agentmodule.class.php:111
+msgctxt "fusioninventory"
 msgid "Activation (by default)"
 msgstr "Activation (par défaut)"
 
-#: inc/agentmodule.class.php:111
+#: inc/agentmodule.class.php:112
+msgctxt "fusioninventory"
 msgid "Exceptions"
 msgstr "Exceptions"
 
-#: inc/agentmodule.class.php:139 inc/agentmodule.class.php:249
+#: inc/agentmodule.class.php:140 inc/agentmodule.class.php:250
 #: inc/deploystaticmisc.class.php:56
+msgctxt "fusioninventory"
 msgid "Package deployment"
 msgstr "Déploiement du paquetage"
 
-#: inc/collect.class.php:50 inc/staticmisc.class.php:707
+#: inc/collect.class.php:52 inc/staticmisc.class.php:658
+msgctxt "fusioninventory"
 msgid "Collect information"
 msgstr "Informations de collecte"
 
-#: inc/collect.class.php:82
+#: inc/collect.class.php:65
+msgctxt "fusioninventory"
 msgid "Registry"
 msgstr "Base de registre"
 
-#: inc/collect.class.php:83
+#: inc/collect.class.php:66
+msgctxt "fusioninventory"
 msgid "WMI"
 msgstr "WMI"
 
-#: inc/collect.class.php:84 inc/collect_file.class.php:50
-#: inc/collect_file.class.php:72
+#: inc/collect.class.php:67 inc/collect_file.class.php:55
+#: inc/collect_file.class.php:62
+msgctxt "fusioninventory"
 msgid "Find file"
 msgstr "Recherche de fichier"
 
-#: inc/collect_file.class.php:98
+#: inc/collect_file.class.php:86
+msgctxt "fusioninventory"
 msgid "Find file associated"
 msgstr "Chercher le fichier associé"
 
-#: inc/collect_file.class.php:102 inc/collect_file.class.php:172
+#: inc/collect_file.class.php:90 inc/collect_file.class.php:160
+msgctxt "fusioninventory"
 msgid "Limit"
 msgstr "Limite"
 
-#: inc/collect_file.class.php:103 inc/collect_file.class.php:138
-#: inc/collect_file.class.php:257
+#: inc/collect_file.class.php:91 inc/collect_file.class.php:126
+#: inc/collect_file.class.php:246
+msgctxt "fusioninventory"
 msgid "Folder"
 msgstr "Dossier"
 
-#: inc/collect_file.class.php:104
+#: inc/collect_file.class.php:92
+msgctxt "fusioninventory"
 msgid "Recursive"
 msgstr "Récursif"
 
-#: inc/collect_file.class.php:105 inc/collect_file.class.php:205
+#: inc/collect_file.class.php:93 inc/collect_file.class.php:194
+msgctxt "fusioninventory"
 msgid "Regex"
 msgstr "Expression régulière"
 
-#: inc/collect_file.class.php:106 inc/collect_file.class.php:211
-#: inc/collect_file_content.class.php:200
-#: inc/collect_file_content.class.php:238
+#: inc/collect_file.class.php:94 inc/collect_file.class.php:200
+#: inc/collect_file_content.class.php:189
+#: inc/collect_file_content.class.php:227
+msgctxt "fusioninventory"
 msgid "Size"
 msgstr "Taille"
 
-#: inc/collect_file.class.php:107 inc/collect_file.class.php:226
+#: inc/collect_file.class.php:95 inc/collect_file.class.php:215
+msgctxt "fusioninventory"
 msgid "Checksum SHA512"
 msgstr "Checksum SHA512"
 
-#: inc/collect_file.class.php:108 inc/collect_file.class.php:232
+#: inc/collect_file.class.php:96 inc/collect_file.class.php:221
+msgctxt "fusioninventory"
 msgid "Checksum SHA2"
 msgstr "Checksum SHA2"
 
-#: inc/collect_file.class.php:109
+#: inc/collect_file.class.php:97
+msgctxt "fusioninventory"
 msgid "Name"
 msgstr "Nom"
 
-#: inc/collect_file.class.php:110
+#: inc/collect_file.class.php:98
+msgctxt "fusioninventory"
 msgid "Iname"
 msgstr "Iname"
 
-#: inc/collect_file.class.php:111 inc/collect_file.class.php:252
+#: inc/collect_file.class.php:99 inc/collect_file.class.php:241
 #: inc/deployaction.class.php:255 inc/deploycheck.class.php:224
+msgctxt "fusioninventory"
 msgid "Type"
 msgstr "Type"
 
-#: inc/collect_file.class.php:136 inc/collect_file.class.php:256
+#: inc/collect_file.class.php:124 inc/collect_file.class.php:245
 #: inc/deploycheck.class.php:280 inc/deploycheck.class.php:286
-#: inc/deploycheck.class.php:291 inc/deployfile.class.php:386
+#: inc/deploycheck.class.php:291 inc/deployfile.class.php:372
+msgctxt "fusioninventory"
 msgid "File"
 msgstr "Fichier"
 
-#: inc/collect_file.class.php:184
+#: inc/collect_file.class.php:173
+msgctxt "fusioninventory"
 msgid "Filter"
 msgid_plural "Filters"
 msgstr[0] "Filtres"
 msgstr[1] "Filtres"
 
-#: inc/collect_file.class.php:190
+#: inc/collect_file.class.php:179
+msgctxt "fusioninventory"
 msgid "Base folder"
 msgstr "Dossier de base"
 
-#: inc/collect_file.class.php:196
+#: inc/collect_file.class.php:185
+msgctxt "fusioninventory"
 msgid "Folder recursive"
 msgstr "Dossier récursif"
 
-#: inc/collect_file.class.php:215 inc/collect_file.class.php:245
+#: inc/collect_file.class.php:204 inc/collect_file.class.php:234
+msgctxt "fusioninventory"
 msgid "Disabled"
 msgstr "Désactivé"
 
-#: inc/collect_file.class.php:241
+#: inc/collect_file.class.php:230
+msgctxt "fusioninventory"
 msgid "Filename"
 msgstr "nom du fichier"
 
-#: inc/collect_file.class.php:246
+#: inc/collect_file.class.php:235
+msgctxt "fusioninventory"
 msgid "Non sentitive case"
 msgstr "Non sensible à la casse"
 
-#: inc/collect_file.class.php:247
+#: inc/collect_file.class.php:236
+msgctxt "fusioninventory"
 msgid "Sentitive case"
 msgstr "Sensible à la casse"
 
-#: inc/collect_file_content.class.php:50 inc/collect_file_content.class.php:84
-#: inc/collect_file_content.class.php:90
+#: inc/collect_file_content.class.php:52 inc/collect_file_content.class.php:73
+#: inc/collect_file_content.class.php:79
+msgctxt "fusioninventory"
 msgid "Find file content"
 msgstr "Contenu du fichier trouvé"
 
-#: inc/collect_file_content.class.php:199
+#: inc/collect_file_content.class.php:188
+msgctxt "fusioninventory"
 msgid "Path/file"
 msgstr "Chemin/fichier"
 
-#: inc/collect_file_content.class.php:237
+#: inc/collect_file_content.class.php:226
+msgctxt "fusioninventory"
 msgid "pathfile"
 msgstr "chemin du fichier"
 
-#: inc/collect_registry.class.php:50 inc/collect_registry.class.php:72
+#: inc/collect_registry.class.php:52 inc/collect_registry.class.php:61
+msgctxt "fusioninventory"
 msgid "Windows registry"
 msgstr "Base de registre Windows"
 
-#: inc/collect_registry.class.php:112
+#: inc/collect_registry.class.php:101
+msgctxt "fusioninventory"
 msgid "Windows registry associated"
 msgstr "Base de registre Windows associée"
 
-#: inc/collect_registry.class.php:116 inc/collect_registry.class.php:158
+#: inc/collect_registry.class.php:105 inc/collect_registry.class.php:147
+msgctxt "fusioninventory"
 msgid "Hive"
 msgstr "Ruche"
 
-#: inc/collect_registry.class.php:117
+#: inc/collect_registry.class.php:106
+msgctxt "fusioninventory"
 msgid "Path/key"
 msgstr "Chemin/clé"
 
-#: inc/collect_registry.class.php:118
-#: inc/collect_registry_content.class.php:190
-#: inc/collect_registry_content.class.php:234
-#: inc/collect_wmi_content.class.php:192 inc/collect_wmi_content.class.php:237
+#: inc/collect_registry.class.php:107
+#: inc/collect_registry_content.class.php:179
+#: inc/collect_registry_content.class.php:223
+#: inc/collect_wmi_content.class.php:181 inc/collect_wmi_content.class.php:226
 #: inc/deploycheck.class.php:287 inc/deploycheck.class.php:292
 #: inc/deploycheck.class.php:297
+msgctxt "fusioninventory"
 msgid "Value"
 msgstr "Valeur"
 
-#: inc/collect_registry.class.php:166
-#: inc/collect_registry_content.class.php:189
+#: inc/collect_registry.class.php:155
+#: inc/collect_registry_content.class.php:178
+msgctxt "fusioninventory"
 msgid "Path"
 msgstr "Chemin"
 
-#: inc/collect_registry.class.php:172 inc/deploycheck.class.php:271
+#: inc/collect_registry.class.php:161 inc/deploycheck.class.php:271
 #: inc/deploycheck.class.php:275
+msgctxt "fusioninventory"
 msgid "Key"
 msgstr "Clé"
 
-#: inc/collect_registry_content.class.php:50
-#: inc/collect_registry_content.class.php:84
-#: inc/collect_registry_content.class.php:90
+#: inc/collect_registry_content.class.php:52
+#: inc/collect_registry_content.class.php:73
+#: inc/collect_registry_content.class.php:79
+msgctxt "fusioninventory"
 msgid "Windows registry content"
 msgstr "Contenu de la base de registre Windows"
 
-#: inc/collect_registry_content.class.php:191
-#: inc/collect_registry_content.class.php:235
+#: inc/collect_registry_content.class.php:180
+#: inc/collect_registry_content.class.php:224
+msgctxt "fusioninventory"
 msgid "Data"
 msgstr "Donnée"
 
-#: inc/collect_wmi.class.php:50 inc/collect_wmi.class.php:72
+#: inc/collect_wmi.class.php:52 inc/collect_wmi.class.php:61
+msgctxt "fusioninventory"
 msgid "Windows WMI"
 msgstr "WMI Windows"
 
-#: inc/collect_wmi.class.php:98
+#: inc/collect_wmi.class.php:87
+msgctxt "fusioninventory"
 msgid "Windows WMI associated"
 msgstr "WMI Windows associé"
 
-#: inc/collect_wmi.class.php:102 inc/collect_wmi_content.class.php:189
+#: inc/collect_wmi.class.php:91 inc/collect_wmi_content.class.php:178
+msgctxt "fusioninventory"
 msgid "Moniker"
 msgstr "Surnom"
 
-#: inc/collect_wmi.class.php:103 inc/collect_wmi.class.php:152
-#: inc/collect_wmi_content.class.php:190
+#: inc/collect_wmi.class.php:92 inc/collect_wmi.class.php:141
+#: inc/collect_wmi_content.class.php:179
+msgctxt "fusioninventory"
 msgid "Class"
 msgstr "Classe"
 
-#: inc/collect_wmi.class.php:104 inc/collect_wmi.class.php:158
+#: inc/collect_wmi.class.php:93 inc/collect_wmi.class.php:147
+msgctxt "fusioninventory"
 msgid "Properties"
 msgstr "Propriétés"
 
-#: inc/collect_wmi.class.php:144
+#: inc/collect_wmi.class.php:133
+msgctxt "fusioninventory"
 msgid "moniker"
 msgstr "surnom"
 
-#: inc/collect_wmi_content.class.php:50 inc/collect_wmi_content.class.php:84
-#: inc/collect_wmi_content.class.php:90
+#: inc/collect_wmi_content.class.php:52 inc/collect_wmi_content.class.php:73
+#: inc/collect_wmi_content.class.php:79
+msgctxt "fusioninventory"
 msgid "Windows WMI content"
 msgstr "Contenu du WMI Windows"
 
-#: inc/collect_wmi_content.class.php:191 inc/collect_wmi_content.class.php:236
+#: inc/collect_wmi_content.class.php:180 inc/collect_wmi_content.class.php:225
+msgctxt "fusioninventory"
 msgid "Property"
 msgstr "Propriété"
 
-#: inc/collectrule.class.php:57 inc/collectrulecollection.class.php:55
-#: inc/menu.class.php:211
+#: inc/collectrule.class.php:57 inc/collectrulecollection.class.php:57
+#: inc/menu.class.php:318 inc/profile.class.php:213
+msgctxt "fusioninventory"
 msgid "Additional computer information rules"
 msgstr "Règles additionnelles d'information de l'ordinateur"
 
 #: inc/collectrule.class.php:125
+msgctxt "fusioninventory"
 msgid "Registry key"
 msgstr "Clé du registre"
 
 #: inc/collectrule.class.php:129
+msgctxt "fusioninventory"
 msgid "Registry value"
 msgstr "Valeur du registre"
 
 #: inc/collectrule.class.php:132
+msgctxt "fusioninventory"
 msgid "WMI property"
 msgstr "Propriété du WMI"
 
 #: inc/collectrule.class.php:136
+msgctxt "fusioninventory"
 msgid "WMI value"
 msgstr "Valeur du WMI"
 
 #: inc/collectrule.class.php:139
+msgctxt "fusioninventory"
 msgid "File name"
 msgstr "Nom de fichier"
 
 #: inc/collectrule.class.php:142
+msgctxt "fusioninventory"
 msgid "File path"
 msgstr "Chemin du fichier"
 
 #: inc/collectrule.class.php:145
+msgctxt "fusioninventory"
 msgid "File size"
 msgstr "Taille du fichier"
 
+#: inc/common.view.class.php:188
+msgctxt "fusioninventory"
+msgid "Warning:"
+msgstr "Warning :"
+
+#: inc/common.view.class.php:192
+msgctxt "fusioninventory"
+msgid "Error:"
+msgstr "Erreur :"
+
 #: inc/communication.class.php:224
-#: inc/communicationnetworkinventory.class.php:219
-#: inc/communicationnetworkinventory.class.php:290
+#: inc/communicationnetworkinventory.class.php:208
+#: inc/communicationnetworkinventory.class.php:279
+msgctxt "fusioninventory"
 msgid "Unattended element in"
 msgstr "Elément inattendu dans"
 
-#: inc/computerlicenseinfo.class.php:70
+#: inc/computerlicenseinfo.class.php:63
+msgctxt "fusioninventory"
 msgid "Software licenses"
 msgstr "Licences logiciel"
 
-#: inc/computerlicenseinfo.class.php:125
+#: inc/computerlicenseinfo.class.php:117
+msgctxt "fusioninventory"
 msgid "Serial number"
 msgstr "Numéro de série"
 
-#: inc/computerlicenseinfo.class.php:130
+#: inc/computerlicenseinfo.class.php:122
+msgctxt "fusioninventory"
 msgid "Full name"
 msgstr "Nom complet"
 
-#: inc/computerlicenseinfo.class.php:132
+#: inc/computerlicenseinfo.class.php:124
+msgctxt "fusioninventory"
 msgid "Option"
 msgstr "Option"
 
-#: inc/computerlicenseinfo.class.php:156
+#: inc/computerlicenseinfo.class.php:148
+msgctxt "fusioninventory"
 msgid "Union between computer and license"
 msgstr "Liaison entre ordinateur et licence"
 
-#: inc/config.class.php:209 inc/staticmisc.class.php:69
+#: inc/config.class.php:203 inc/staticmisc.class.php:70
+msgctxt "fusioninventory"
 msgid "Computer Inventory"
 msgstr "Inventaire ordinateur"
 
-#: inc/config.class.php:211
+#: inc/config.class.php:205
+msgctxt "fusioninventory"
 msgid "Network Inventory"
 msgstr "Inventaire réseau"
 
-#: inc/config.class.php:213 inc/menu.class.php:323
+#: inc/config.class.php:207 inc/menu.class.php:422
+msgctxt "fusioninventory"
 msgid "Package management"
 msgstr "Gestion de paquets"
 
-#: inc/config.class.php:300
+#: inc/config.class.php:299
+msgctxt "fusioninventory"
 msgid "SSL-only for agent"
 msgstr "SSL seulement pour l'agent"
 
-#: inc/config.class.php:304
+#: inc/config.class.php:303
+msgctxt "fusioninventory"
 msgid "Inventory frequency (in hours)"
 msgstr "Fréquence des inventaire (en heures)"
 
-#: inc/config.class.php:315
+#: inc/config.class.php:314
+msgctxt "fusioninventory"
 msgid "Delete tasks after"
 msgstr "Effacer les tâches terminées après"
 
-#: inc/config.class.php:325
+#: inc/config.class.php:324
+msgctxt "fusioninventory"
 msgid "Agent port"
 msgstr "Port de l'agent"
 
-#: inc/config.class.php:332
+#: inc/config.class.php:331
+msgctxt "fusioninventory"
 msgid "Extra-debug"
 msgstr "Extra-debug"
 
-#: inc/config.class.php:337
+#: inc/config.class.php:336
+msgctxt "fusioninventory"
 msgid "Service URL"
 msgstr "URL d'accès au service"
 
-#: inc/config.class.php:385 inc/wizard.class.php:340
+#: inc/config.class.php:360
+msgctxt "fusioninventory"
+msgid "Clean agents not have contacted server since (in days)"
+msgstr "Nettoyer les agents qui n'ont pas contactés le serveur depuis (en jours)"
+
+#: inc/config.class.php:369
+msgctxt "fusioninventory"
+msgid "Memcached server address (empty to disable it)"
+msgstr "Addresse du serveur Memcached (vide pour le désactiver)"
+
+#: inc/config.class.php:401 inc/wizard.class.php:340
+msgctxt "fusioninventory"
 msgid "Import options"
 msgstr "Options d'import"
 
-#: inc/config.class.php:423 inc/config.class.php:433
+#: inc/config.class.php:439 inc/config.class.php:449
+msgctxt "fusioninventory"
 msgid "Global import"
 msgstr "Import global"
 
-#: inc/config.class.php:424 inc/config.class.php:436
+#: inc/config.class.php:440 inc/config.class.php:452
+msgctxt "fusioninventory"
 msgid "Unique import"
 msgstr "Import unique"
 
-#: inc/config.class.php:425 inc/config.class.php:438
+#: inc/config.class.php:441 inc/config.class.php:454
+msgctxt "fusioninventory"
 msgid "Unique import on serial number"
 msgstr "Import unique sur numéro de série"
 
-#: inc/config.class.php:432
+#: inc/config.class.php:448
+msgctxt "fusioninventory"
 msgid "This option will not import this item"
 msgstr "Cette option ne va pas importer l'élément"
 
-#: inc/config.class.php:434
+#: inc/config.class.php:450
+msgctxt "fusioninventory"
 msgid ""
 "This option will merge items with same name to reduce number of items if "
 "this management isn't important"
-msgstr "Cette option va fusionner les objets qui ont le même nom, afin de réduire le nombre d'objets si cette gestion n'est pas importante"
+msgstr ""
 
-#: inc/config.class.php:437
+#: inc/config.class.php:453
+msgctxt "fusioninventory"
 msgid "This option will create one item for each item found"
 msgstr "Cette option va créer un élément pour chaque élément trouvé"
 
-#: inc/config.class.php:439
+#: inc/config.class.php:455
+msgctxt "fusioninventory"
 msgid "This option will create one item for each item have serial number"
 msgstr "Cette option va créer un élément pour chaque élément qui a un numéro de série"
 
-#: inc/config.class.php:496
+#: inc/config.class.php:512
+msgctxt "fusioninventory"
 msgid "Virtual network card"
 msgstr "Carte réseau virtuelle"
 
-#: inc/config.class.php:506 inc/inventorycomputerantivirus.class.php:50
-#: inc/inventorycomputerantivirus.class.php:86
-#: inc/inventorycomputerantivirus.class.php:142
-#: inc/inventorycomputerbatteries.class.php:123
+#: inc/config.class.php:522 inc/inventorycomputerantivirus.class.php:53
+#: inc/inventorycomputerantivirus.class.php:80
+#: inc/inventorycomputerantivirus.class.php:136
+#: inc/inventorycomputerbatteries.class.php:117
+msgctxt "fusioninventory"
 msgid "Antivirus"
 msgstr "Antivirus"
 
-#: inc/config.class.php:557
+#: inc/config.class.php:573
+msgctxt "fusioninventory"
 msgid "Default status"
 msgstr "Statut par défaut"
 
-#: inc/config.class.php:564
+#: inc/config.class.php:580
+msgctxt "fusioninventory"
 msgid "Network drives"
 msgstr "Lecteurs réseau"
 
-#: inc/config.class.php:591
+#: inc/config.class.php:607
+msgctxt "fusioninventory"
 msgid ""
 "Create computer based on virtual machine information ( only when the virtual"
 " machine has no inventory agent ! )"
-msgstr "Création d'ordinateur basé sur les informations de la machine virtuelle ( uniauement lorsque la machine virtuelle n'a pas d'agent ! )"
+msgstr ""
 
-#: inc/config.class.php:601
-msgid "Automatic computers transfer"
-msgstr "Transfert automatique d'ordinateurs"
-
-#: inc/config.class.php:607
-msgid "Model for automatic computers transfer in an other entity"
-msgstr "Modèle pour le transfert automatique d'ordinateurs dans une autre entité"
-
-#: inc/config.class.php:645
+#: inc/config.class.php:643
+msgctxt "fusioninventory"
 msgid "Network options"
 msgstr "Options réseau"
 
-#: inc/config.class.php:700
+#: inc/config.class.php:720
+msgctxt "fusioninventory"
 msgid "Root folder for sending files from server"
 msgstr "Chemin du dossier téléversant des fichiers du serveur"
 
-#: inc/config.class.php:708
+#: inc/config.class.php:728
+msgctxt "fusioninventory"
 msgid "Use this GLPI server as a mirror server"
 msgstr "Utiliser ce serveur GLPI comme un serveur mirroir"
 
 #: inc/configlogfield.class.php:145
+msgctxt "fusioninventory"
 msgid "History configuration"
 msgstr "Configuration de l'historique"
 
 #: inc/configlogfield.class.php:152
+msgctxt "fusioninventory"
 msgid "List of fields for which to keep history"
 msgstr "Liste des champs à historiser"
 
 #: inc/configlogfield.class.php:156
+msgctxt "fusioninventory"
 msgid "Retention in days"
 msgstr "Rétention en jours"
 
-#: inc/configsecurity.class.php:90
+#: inc/configsecurity.class.php:82
+msgctxt "fusioninventory"
 msgid "SNMP version"
 msgstr "Rétention en jours"
 
-#: inc/configsecurity.class.php:102
+#: inc/configsecurity.class.php:94
+msgctxt "fusioninventory"
 msgid "Community"
 msgstr "Communauté"
 
-#: inc/configsecurity.class.php:115
+#: inc/configsecurity.class.php:107
+msgctxt "fusioninventory"
 msgid "Encryption protocol for authentication "
-msgstr "Protocole de cryptage pour authentification "
+msgstr "Protocole de chiffrement pour authentification "
 
-#: inc/configsecurity.class.php:133
+#: inc/configsecurity.class.php:125
+msgctxt "fusioninventory"
 msgid "Encryption protocol for data"
-msgstr "Protocole de cryptage pour les données"
+msgstr "Protocole de chiffrement pour les données"
 
-#: inc/constructmodel.class.php:343
-msgid "Get SNMP model"
-msgstr "Récupérer le modèle SNMP"
+#: inc/configurationmanagement.class.php:62 inc/menu.class.php:471
+msgctxt "fusioninventory"
+msgid "Configuration management"
+msgstr ""
 
-#: inc/constructmodel.class.php:349
-msgid "Import SNMP model"
-msgstr "Importer le modèle SNMP"
+#: inc/configurationmanagement.class.php:82
+msgctxt "fusioninventory"
+msgid "conform"
+msgstr ""
 
-#: inc/constructmodel.class.php:702
-msgid "Sorted by"
-msgstr "Trié par"
+#: inc/configurationmanagement.class.php:88
+msgctxt "fusioninventory"
+msgid "SHA of referential"
+msgstr "SHA du référentiel"
 
-#: inc/constructmodel.class.php:976 inc/constructmodel.class.php:982
-msgid "Download SNMP models, please wait..."
-msgstr "Téléchargement des modèles SNMP, veuillez patienter..."
+#: inc/configurationmanagement.class.php:274
+#: inc/configurationmanagement.class.php:379
+#: inc/configurationmanagement.class.php:462
+msgctxt "fusioninventory"
+msgid "View actions"
+msgstr "Voir les actions"
 
-#: inc/credential.class.php:53 inc/credential.class.php:148
-#: inc/credentialip.class.php:109 inc/credentialip.class.php:122
-#: inc/credentialip.class.php:142 inc/menu.class.php:268
-#: inc/staticmisc.class.php:221
+#: inc/credential.class.php:56 inc/credential.class.php:143
+#: inc/credentialip.class.php:97 inc/credentialip.class.php:110
+#: inc/credentialip.class.php:130 inc/menu.class.php:375
+#: inc/profile.class.php:249
+msgctxt "fusioninventory"
 msgid "Authentication for remote devices (VMware)"
 msgstr "Authentification pour les matériels distants (VMware)"
 
-#: inc/credential.class.php:254 inc/staticmisc.class.php:236
+#: inc/credential.class.php:249 inc/profile.class.php:255
+msgctxt "fusioninventory"
 msgid "VMware host"
 msgstr "Hôte VMware"
 
-#: inc/credential.class.php:369 inc/menu.class.php:249
-#: inc/staticmisc.class.php:224 inc/wizard.class.php:1014
+#: inc/credential.class.php:364 inc/menu.class.php:356
+#: inc/profile.class.php:252 inc/wizard.class.php:1014
+msgctxt "fusioninventory"
 msgid "Remote devices to inventory (VMware)"
 msgstr "Matériels distants à inventorier (VMware)"
 
-#: inc/credentialip.class.php:54
+#: inc/credentialip.class.php:56
+msgctxt "fusioninventory"
 msgid "Remote device inventory"
 msgstr "Inventaire du matériel à distance "
 
 #: inc/deployaction.class.php:52
+msgctxt "fusioninventory"
 msgid "Return code is equal to"
 msgstr "Le code de retour est "
 
 #: inc/deployaction.class.php:53
+msgctxt "fusioninventory"
 msgid "Return code is not equal to"
 msgstr "Le code de retour n'est pas"
 
 #: inc/deployaction.class.php:54
+msgctxt "fusioninventory"
 msgid "Command output contains"
 msgstr "La sortie de la commande contient"
 
 #: inc/deployaction.class.php:55
+msgctxt "fusioninventory"
 msgid "Command output does not contains"
 msgstr "La sortie de la commande ne contient pas"
 
 #: inc/deployaction.class.php:71
+msgctxt "fusioninventory"
 msgid "Command"
 msgstr "Commande"
 
 #: inc/deployaction.class.php:72
+msgctxt "fusioninventory"
 msgid "Move"
 msgstr "Déplacer"
 
 #: inc/deployaction.class.php:73
+msgctxt "fusioninventory"
 msgid "Copy"
 msgstr "Copier"
 
 #: inc/deployaction.class.php:74 inc/deployaction.class.php:220
-#: inc/deploycheck.class.php:196 inc/deployfile.class.php:296
-#: inc/networkequipment.class.php:1033 inc/networkequipment.class.php:1034
+#: inc/deploycheck.class.php:196 inc/deployfile.class.php:282
+#: inc/networkequipment.class.php:1008 inc/networkequipment.class.php:1009
 #: inc/networkportlog.class.php:193 inc/networkporttype.class.php:389
 #: inc/printerlog.class.php:354 inc/printerlog.class.php:551
-#: inc/snmpmodel.class.php:200 inc/snmpmodelmib.class.php:213
-#: inc/taskjob.class.php:442 inc/taskjob.class.php:685
-#: inc/taskjob.class.php:697
+#: inc/taskjob.class.php:165 inc/taskjob.class.php:1783
+#: inc/taskjob.view.class.php:264 inc/taskjob.view.class.php:443
+#: inc/taskjob.view.class.php:455
+msgctxt "fusioninventory"
 msgid "Delete"
 msgstr "Suppression"
 
 #: inc/deployaction.class.php:75
+msgctxt "fusioninventory"
 msgid "Make directory"
 msgstr "Créer un répertoire"
 
 #: inc/deployaction.class.php:183
+msgctxt "fusioninventory"
 msgid "Command to execute"
 msgstr " Commande à exécuter"
 
 #: inc/deployaction.class.php:197
+msgctxt "fusioninventory"
 msgid "return codes saved for this command"
 msgstr "retourne le code sauvegardé de cette commande"
 
 #: inc/deployaction.class.php:209 inc/deploycheck.class.php:185
-#: inc/deployfile.class.php:286
+#: inc/deployfile.class.php:272 inc/taskjob.class.php:1771
+msgctxt "fusioninventory"
 msgid "drag"
 msgstr "prendre"
 
 #: inc/deployaction.class.php:317
+msgctxt "fusioninventory"
 msgid "From"
 msgstr "Provenant de"
 
 #: inc/deployaction.class.php:319
+msgctxt "fusioninventory"
 msgid "To"
 msgstr "Vers"
 
 #: inc/deployaction.class.php:327
+msgctxt "fusioninventory"
 msgid "exec"
 msgstr "exec"
 
 #: inc/deployaction.class.php:340
+msgctxt "fusioninventory"
 msgid "path"
 msgstr "Chemin"
 
 #: inc/deployaction.class.php:379
+msgctxt "fusioninventory"
 msgid "Execution checks"
 msgstr "Exécution des contrôles"
 
 #: inc/deploycheck.class.php:51
+msgctxt "fusioninventory"
 msgid "Registry key exists"
 msgstr "La clef de registre existe"
 
 #: inc/deploycheck.class.php:52
+msgctxt "fusioninventory"
 msgid "Registry key missing"
 msgstr "La clef de registre n'existe pas"
 
 #: inc/deploycheck.class.php:53
+msgctxt "fusioninventory"
 msgid "Registry key value equals to"
 msgstr "La clef de registre est égale"
 
 #: inc/deploycheck.class.php:54
+msgctxt "fusioninventory"
 msgid "File exists"
 msgstr "Le fichier existe"
 
 #: inc/deploycheck.class.php:55
+msgctxt "fusioninventory"
 msgid "File is missing"
 msgstr "Le fichier n'existe pas"
 
 #: inc/deploycheck.class.php:56
+msgctxt "fusioninventory"
 msgid "File size is greater than"
 msgstr "Taille du fichier supérieure à"
 
 #: inc/deploycheck.class.php:57
+msgctxt "fusioninventory"
 msgid "File size is equal to"
 msgstr "Taille du fichier égale à"
 
 #: inc/deploycheck.class.php:58
+msgctxt "fusioninventory"
 msgid "File size is lower than"
 msgstr "Taille du fichier inférieure à"
 
 #: inc/deploycheck.class.php:59
+msgctxt "fusioninventory"
 msgid "SHA-512 hash value is"
 msgstr "Hash SHA-512 du fichier est"
 
 #: inc/deploycheck.class.php:60
+msgctxt "fusioninventory"
 msgid "Free space is greater than"
 msgstr "Taille de l'espace libre est supérieure à"
 
 #: inc/deploycheck.class.php:80
+msgctxt "fusioninventory"
 msgid "B"
 msgstr "O"
 
 #: inc/deploycheck.class.php:81
+msgctxt "fusioninventory"
 msgid "KiB"
 msgstr "KiO"
 
 #: inc/deploycheck.class.php:82
+msgctxt "fusioninventory"
 msgid "MiB"
 msgstr "MiO"
 
 #: inc/deploycheck.class.php:83
+msgctxt "fusioninventory"
 msgid "GiB"
 msgstr "GiO"
 
 #: inc/deploycheck.class.php:276
+msgctxt "fusioninventory"
 msgid "Key value"
 msgstr "Valeur de la clé"
 
 #: inc/deploycheck.class.php:296
+msgctxt "fusioninventory"
 msgid "Disk or directory"
 msgstr "Disque ou emplacement"
 
 #: inc/deploycheck.class.php:374
+msgctxt "fusioninventory"
 msgid "Unit"
 msgstr "Unité"
 
 #: inc/deploycheck.class.php:400
+msgctxt "fusioninventory"
 msgid "In case of error"
 msgstr "En cas d'erreur"
 
-#: inc/deploycheck.class.php:403 inc/deploystate.class.php:127
+#: inc/deploycheck.class.php:403 inc/deploystate.class.php:139
+#: inc/taskjobstate.class.php:78
+msgctxt "fusioninventory"
 msgid "Error"
 msgstr "Erreur"
 
 #: inc/deploycheck.class.php:404
+msgctxt "fusioninventory"
 msgid "Ignore"
 msgstr "Ignorer"
 
 #: inc/deploycommand.class.php:50
+msgctxt "fusioninventory"
 msgid "Execute a command"
 msgstr "Exécuter une commande"
 
-#: inc/deployfile.class.php:70
+#: inc/deployfile.class.php:56
+msgctxt "fusioninventory"
 msgid "Upload from computer"
 msgstr "Télécharger depuis votre ordinateur"
 
-#: inc/deployfile.class.php:71
+#: inc/deployfile.class.php:57
+msgctxt "fusioninventory"
 msgid "Upload from server"
 msgstr "Télécharger depuis le serveur"
 
-#: inc/deployfile.class.php:234
+#: inc/deployfile.class.php:220
+msgctxt "fusioninventory"
 msgid "p2p"
 msgstr "p2p"
 
-#: inc/deployfile.class.php:235
+#: inc/deployfile.class.php:221
+msgctxt "fusioninventory"
 msgid "retention"
 msgstr "rétention"
 
-#: inc/deployfile.class.php:237
+#: inc/deployfile.class.php:223
+msgctxt "fusioninventory"
 msgid "days"
 msgstr "jours"
 
-#: inc/deployfile.class.php:250
+#: inc/deployfile.class.php:236
+msgctxt "fusioninventory"
 msgid "uncompress"
 msgstr "décompresser"
 
-#: inc/deployfile.class.php:329
+#: inc/deployfile.class.php:315
+msgctxt "fusioninventory"
 msgid "Source"
 msgstr "Source"
 
-#: inc/deployfile.class.php:392
+#: inc/deployfile.class.php:378
+msgctxt "fusioninventory"
 msgid "filename"
 msgstr "Nome du fichier"
 
-#: inc/deployfile.class.php:398
+#: inc/deployfile.class.php:384
+msgctxt "fusioninventory"
 msgid "Choose"
 msgstr "Choisir"
 
-#: inc/deployfile.class.php:402
+#: inc/deployfile.class.php:388
+msgctxt "fusioninventory"
 msgid "Select the file on server"
 msgstr "Choisissez le fichier sur le serveur"
 
-#: inc/deployfile.class.php:417
+#: inc/deployfile.class.php:403
+msgctxt "fusioninventory"
 msgid "Uncompress"
 msgstr "Décompresser"
 
-#: inc/deployfile.class.php:422
+#: inc/deployfile.class.php:408
+msgctxt "fusioninventory"
 msgid "P2P"
 msgstr "P2P"
 
-#: inc/deployfile.class.php:429
+#: inc/deployfile.class.php:415
+msgctxt "fusioninventory"
 msgid "retention days"
 msgstr "Jours de rétentions"
 
-#: inc/deployfile.class.php:698
+#: inc/deployfile.class.php:684
+msgctxt "fusioninventory"
 msgid "Transfer error: the file size is too big"
 msgstr "Erreur de Transfert : Le fichier est trop gros"
 
-#: inc/deployfile.class.php:701
+#: inc/deployfile.class.php:687
+msgctxt "fusioninventory"
 msgid "The uploaded file was only partially uploaded"
 msgstr "Le fichier n'est qu'en partie uploadé"
 
-#: inc/deployfile.class.php:704
+#: inc/deployfile.class.php:690
+msgctxt "fusioninventory"
 msgid "No file was uploaded"
 msgstr "Aucun fichier n'a été téléchargé"
 
-#: inc/deployfile.class.php:707
+#: inc/deployfile.class.php:693
+msgctxt "fusioninventory"
 msgid "Missing a temporary folder"
 msgstr "Manque d'un dossier temporaire"
 
-#: inc/deployfile.class.php:710
+#: inc/deployfile.class.php:696
+msgctxt "fusioninventory"
 msgid "Failed to write file to disk"
 msgstr "Impossible d'écrire le fichier sur le disque"
 
-#: inc/deployfile.class.php:713
+#: inc/deployfile.class.php:699
+msgctxt "fusioninventory"
 msgid "PHP extension stopped the file upload"
 msgstr "L'extension PHP à stoppé le fichier uploadé"
 
-#: inc/deployfile.class.php:740 inc/deployfile.class.php:785
+#: inc/deployfile.class.php:726 inc/deployfile.class.php:771
+msgctxt "fusioninventory"
 msgid "File saved!"
 msgstr "Fichier bien enregistré!"
 
-#: inc/deployfile.class.php:743 inc/deployfile.class.php:788
+#: inc/deployfile.class.php:729 inc/deployfile.class.php:774
+msgctxt "fusioninventory"
 msgid "Failed to copy file"
 msgstr "Erreur lors de la copie du fichier"
 
-#: inc/deployfile.class.php:747 inc/deployfile.class.php:792
+#: inc/deployfile.class.php:733 inc/deployfile.class.php:778
+msgctxt "fusioninventory"
 msgid "File missing"
 msgstr "Fichier Perdu"
 
-#: inc/deployfile.class.php:1034
+#: inc/deployfile.class.php:1018
+msgctxt "fusioninventory"
 msgid "Max file size"
 msgstr "Taille maximum de fichier"
 
-#: inc/deployfile.class.php:1036
+#: inc/deployfile.class.php:1020
+msgctxt "fusioninventory"
 msgid "Mio"
 msgstr "Mio"
 
-#: inc/deploygroup.class.php:75 inc/deploygroup_staticdata.class.php:74
-msgid "Static group"
-msgstr "Groupe statique"
+#: inc/deploygroup.class.php:64 inc/deploytaskjob.class.php:170
+#: inc/menu.class.php:216 inc/profile.class.php:309
+msgctxt "fusioninventory"
+msgid "Groups of computers"
+msgstr "Groupe d'ordinateurs"
 
-#: inc/deploygroup.class.php:76 inc/deploygroup_dynamicdata.class.php:63
+#: inc/deploygroup.class.php:74
+msgctxt "fusioninventory"
 msgid "Dynamic group"
 msgstr "Groupe dynamique"
 
-#: inc/deploygroup.class.php:110
+#: inc/deploygroup.class.php:99
+msgctxt "fusioninventory"
 msgid "Add group"
 msgstr "Ajouter un groupe"
 
-#: inc/deployinstall.class.php:50 inc/deployinstall.class.php:58
+#: inc/deployinstall.class.php:50 inc/deployinstall.class.php:60
+msgctxt "fusioninventory"
 msgid "Installation"
 msgstr "Installation"
 
-#: inc/deploymirror.class.php:137 inc/deploymirror.class.php:198
+#: inc/deploymirror.class.php:54 inc/menu.class.php:431
+#: inc/profile.class.php:228
+msgctxt "fusioninventory"
+msgid "Mirror servers"
+msgstr "Serveurs mirroirs"
+
+#: inc/deploymirror.class.php:133 inc/deploymirror.class.php:194
+msgctxt "fusioninventory"
 msgid "Mirror server address"
 msgstr "Adresse du serveur mirroir"
 
-#: inc/deploymirror.class.php:143
+#: inc/deploymirror.class.php:139
+msgctxt "fusioninventory"
 msgid "Mirror location"
 msgstr "Emplacement miroir"
 
 #: inc/deployorder.class.php:193
+msgctxt "fusioninventory"
 msgid "The modified JSON contained a syntax error :"
 msgstr "Le JSON modifié contient une erreur de syntaxe : <br/>"
 
-#: inc/deploypackage.class.php:120
+#: inc/deploypackage.class.php:108
+msgctxt "fusioninventory"
 msgid "Modification Denied"
 msgstr "Modification Refusée"
 
-#: inc/deploypackage.class.php:125
+#: inc/deploypackage.class.php:113
+msgctxt "fusioninventory"
 msgid "The following task is running with this package"
 msgid_plural "The following tasks are running with this package"
 msgstr[0] "La tâche suivante est éxécutée avec ce paquet"
 msgstr[1] "Les tâches suivantes sont éxécutées avec ce paquet"
 
-#: inc/deploypackage.class.php:291
-msgid "Add a package"
-msgstr "Ajouter un Paquetage"
-
-#: inc/deploypackage.class.php:370
+#: inc/deploypackage.class.php:329
+msgctxt "fusioninventory"
 msgid "Audits"
 msgstr "Audits"
 
-#: inc/deploypackage.class.php:371
+#: inc/deploypackage.class.php:330
+msgctxt "fusioninventory"
 msgid "Files"
 msgstr "Fichiers"
 
-#: inc/deploypackage.class.php:372
+#: inc/deploypackage.class.php:331
+msgctxt "fusioninventory"
 msgid "Actions"
 msgstr "Actions"
 
-#: inc/deploypackage.class.php:694
+#: inc/deploypackage.class.php:653
+msgctxt "fusioninventory"
 msgid "Item successfully added"
 msgstr "Objet correctement ajouté"
 
-#: inc/deploystate.class.php:119 inc/taskjoblog.class.php:73
-#: inc/taskjoblog.class.php:651 inc/taskjoblog.class.php:768
-#: inc/taskjoblog.class.php:995
+#: inc/deploystate.class.php:131 inc/taskjoblog.class.php:74
+#: inc/taskjoblog.class.php:687 inc/taskjoblog.class.php:804
+#: inc/taskjoblog.class.php:1031
+msgctxt "fusioninventory"
 msgid "Ok"
 msgstr "Ok"
 
-#: inc/deploystate.class.php:123 inc/deploystate.class.php:136
-#: inc/taskjoblog.class.php:75 inc/taskjoblog.class.php:659
-#: inc/taskjoblog.class.php:769 inc/taskjoblog.class.php:1002
+#: inc/deploystate.class.php:135 inc/deploystate.class.php:148
+#: inc/taskjoblog.class.php:76 inc/taskjoblog.class.php:695
+#: inc/taskjoblog.class.php:805 inc/taskjoblog.class.php:1038
+msgctxt "fusioninventory"
 msgid "Error / rescheduled"
 msgstr "Erreur / replannifié"
 
-#: inc/deploystate.class.php:131 inc/statediscovery.class.php:210
-#: inc/stateinventory.class.php:153 inc/taskjoblog.class.php:67
-#: inc/taskjoblog.class.php:637 inc/taskjoblog.class.php:983
+#: inc/deploystate.class.php:143 inc/statediscovery.class.php:205
+#: inc/stateinventory.class.php:150 inc/task.view.class.php:223
+#: inc/task.view.class.php:377 inc/taskjoblog.class.php:68
+#: inc/taskjoblog.class.php:673 inc/taskjoblog.class.php:1019
+#: inc/taskjobstate.class.php:74
+msgctxt "fusioninventory"
 msgid "Prepared"
 msgstr "Préparé"
 
-#: inc/deploystaticmisc.class.php:61 inc/staticmisc.class.php:100
+#: inc/deploystaticmisc.class.php:61 inc/staticmisc.class.php:106
+msgctxt "fusioninventory"
 msgid "Package uninstall"
 msgstr "Désinstallation du Paquetage"
 
 #: inc/deploystaticmisc.class.php:94 inc/deploytask.class.php:54
+msgctxt "fusioninventory"
 msgid "Group of computers"
 msgstr "Groupe d'ordianteurs"
 
 #: inc/deploystaticmisc.class.php:230
+msgctxt "fusioninventory"
 msgid "Manage packages"
 msgstr "Gérer les paquets"
 
 #: inc/deploystaticmisc.class.php:233
+msgctxt "fusioninventory"
 msgid "Deployment status"
 msgstr "Statut du déploiement"
 
 #: inc/deploytask.class.php:85
+msgctxt "fusioninventory"
 msgid "Order list"
 msgstr "Trier la liste"
 
 #: inc/deploytask.class.php:118
+msgctxt "fusioninventory"
 msgid "Add task"
 msgstr "Ajouter une tâche"
 
 #: inc/deploytask.class.php:145
+msgctxt "fusioninventory"
 msgid "Edit impossible, this task is active"
 msgstr "Impossible d'éditer cette tâche car elle est active"
 
 #: inc/deploytask.class.php:175
+msgctxt "fusioninventory"
 msgid "This task is active. delete denied"
 msgstr "Impossible de supprimer cette tâche car elle est active"
 
-#: inc/deployuninstall.class.php:50 inc/deployuninstall.class.php:58
+#: inc/deployuninstall.class.php:50 inc/deployuninstall.class.php:60
+msgctxt "fusioninventory"
 msgid "Uninstallation"
 msgstr "Désinstaller"
 
 #: inc/display.class.php:174
+msgctxt "fusioninventory"
 msgid "Progress"
 msgstr "Progression"
 
-#: inc/inventorycomputerantivirus.class.php:171
-#: inc/inventorycomputerbatteries.class.php:152
+#: inc/entity.class.php:110
+msgctxt "fusioninventory"
+msgid "Model for automatic computers transfer in an other entity"
+msgstr "Modèle pour le transfert automatique d'ordinateurs dans une autre entité"
+
+#: inc/ignoredimportdevice.class.php:52
+msgctxt "fusioninventory"
+msgid "Equipment ignored on import"
+msgstr "Equipement ignoré à l'import"
+
+#: inc/inventorycomputerantivirus.class.php:165
+#: inc/inventorycomputerbatteries.class.php:146
+msgctxt "fusioninventory"
 msgid "Up to date"
 msgstr "A jour"
 
-#: inc/inventorycomputerbatteries.class.php:50
-#: inc/inventorycomputerbatteries.class.php:86
+#: inc/inventorycomputerbatteries.class.php:53
+#: inc/inventorycomputerbatteries.class.php:80
+msgctxt "fusioninventory"
 msgid "Batterie"
 msgstr "Batterie"
 
-#: inc/inventorycomputerblacklist.class.php:75
-#: inc/inventorycomputerblacklist.class.php:125
+#: inc/inventorycomputerblacklist.class.php:68
+#: inc/inventorycomputerblacklist.class.php:118
+msgctxt "fusioninventory"
 msgid "blacklisted value"
 msgstr "Valeur en liste noire"
 
-#: inc/inventorycomputerchemistry.class.php:53
+#: inc/inventorycomputerchemistry.class.php:55
+msgctxt "fusioninventory"
 msgid "Chemistry"
 msgstr "Chimie"
 
-#: inc/inventorycomputercomputer.class.php:107
+#: inc/inventorycomputercomputer.class.php:102
+msgctxt "fusioninventory"
 msgid "Public contact address"
 msgstr "Adresse publique de contact"
 
-#: inc/inventorycomputercomputer.class.php:117
+#: inc/inventorycomputercomputer.class.php:112
+msgctxt "fusioninventory"
 msgid "BIOS date"
 msgstr "Date du BIOS"
 
-#: inc/inventorycomputercomputer.class.php:124
+#: inc/inventorycomputercomputer.class.php:119
+msgctxt "fusioninventory"
 msgid "BIOS version"
 msgstr "Version du BIOS"
 
-#: inc/inventorycomputercomputer.class.php:201
-#: inc/networkequipment.class.php:1099 inc/printer.class.php:247
+#: inc/inventorycomputercomputer.class.php:158
+msgctxt "fusioninventory"
+msgid "Automatic entity transfer"
+msgstr "Transfer automatique d'entité"
+
+#: inc/inventorycomputercomputer.class.php:162
+msgctxt "fusioninventory"
+msgid "No, locked (by entity configuration)"
+msgstr ""
+
+#: inc/inventorycomputercomputer.class.php:165
+msgctxt "fusioninventory"
+msgid "No, locked manually"
+msgstr ""
+
+#: inc/inventorycomputercomputer.class.php:167
+msgctxt "fusioninventory"
+msgid "Unlock it"
+msgstr ""
+
+#: inc/inventorycomputercomputer.class.php:171
+msgctxt "fusioninventory"
+msgid "Lock it"
+msgstr ""
+
+#: inc/inventorycomputercomputer.class.php:217
+#: inc/networkequipment.class.php:1074 inc/printer.class.php:217
+msgctxt "fusioninventory"
 msgid "Download"
 msgstr "Téléchargement"
 
-#: inc/inventorycomputercomputer.class.php:210
+#: inc/inventorycomputercomputer.class.php:226
+msgctxt "fusioninventory"
 msgid "PHP Array"
 msgstr "Tableau PHP"
 
-#: inc/inventorycomputerimportxml.class.php:68
+#: inc/inventorycomputerimportxml.class.php:79
+msgctxt "fusioninventory"
 msgid "Import XML file from an Agent"
 msgstr "Import de fichier XML provenant de l'agent"
 
-#: inc/inventorycomputerimportxml.class.php:74
+#: inc/inventorycomputerimportxml.class.php:85
+msgctxt "fusioninventory"
 msgid ""
 "You can use this menu to upload XML generated by an agent. The file must "
 "have .xml or .ocs extension. It's also possible to upload <b>ZIP</b> archive"
 " directly with a collection of XML files. Read you agent documentation to "
 "see how to generate such XML file"
-msgstr "Vous pouvez utiliser ce menu pour uploader le fichier XML généré par l'agent. Le fichier doit avoir l'extension .xml ou .ocs. Il est également possible d'uploader une archive <b>ZIP</b> contenant une collection de fichiers XML. Se reporter à la documentation de l'agent pour savoir comment générer un fichier XML"
+msgstr ""
 
-#: inc/inventorycomputerstorage.class.php:51
-#: inc/inventorycomputerstorage_storage.class.php:51
+#: inc/inventorycomputerstorage.class.php:53
+#: inc/inventorycomputerstorage_storage.class.php:53
+msgctxt "fusioninventory"
 msgid "Storage"
 msgstr "Stockage"
 
-#: inc/inventorycomputerstoragetype.class.php:50
+#: inc/inventorycomputerstoragetype.class.php:53
+msgctxt "fusioninventory"
 msgid "Storage type"
 msgstr "Type de Stockage"
 
 #: inc/inventorycomputerwebservice.class.php:74
+msgctxt "fusioninventory"
 msgid "Computer injected into GLPI"
 msgstr "Ordinateur importé dans GLPI"
 
-#: inc/inventoryruleentity.class.php:166
-#: inc/inventoryrulelocation.class.php:168
+#: inc/inventoryruleentity.class.php:57
+#: inc/inventoryruleentitycollection.class.php:57 inc/profile.class.php:201
+msgctxt "fusioninventory"
+msgid "Entity rules"
+msgstr "Règles d'entités"
+
+#: inc/inventoryruleentity.class.php:132
+msgctxt "fusioninventory"
+msgid "IP Address"
+msgstr "Adresse IP"
+
+#: inc/inventoryruleentity.class.php:135
+msgctxt "fusioninventory"
+msgid "Computer's name"
+msgstr "Nom d'ordinateur"
+
+#: inc/inventoryruleentity.class.php:164
+#: inc/inventoryrulelocation.class.php:170
+msgctxt "fusioninventory"
 msgid "Ignore in FusionInventory import"
 msgstr "Ignorer lors de l'import FusionInventory"
 
@@ -1332,1673 +1639,2340 @@ msgstr "Ignorer lors de l'import FusionInventory"
 #: inc/inventoryruleimport.class.php:120 inc/inventoryruleimport.class.php:132
 #: inc/inventoryruleimport.class.php:135 inc/inventoryruleimport.class.php:139
 #: inc/inventoryruleimport.class.php:142 inc/inventoryruleimport.class.php:146
-#: inc/inventoryruleimport.class.php:150
+#: inc/inventoryruleimport.class.php:150 inc/inventoryruleimport.class.php:160
+msgctxt "fusioninventory"
 msgid "Assets to import"
 msgstr "Matériel à importer"
 
 #: inc/inventoryruleimport.class.php:87
+msgctxt "fusioninventory"
 msgid "Destination of equipment entity"
 msgstr "Entité de destination de la machine"
 
 #: inc/inventoryruleimport.class.php:103
+msgctxt "fusioninventory"
 msgid "Search GLPI equipment with the status"
 msgstr "Chercher les matériels GLPI ayant le statut"
 
-#: inc/inventoryruleimport.class.php:165
+#: inc/inventoryruleimport.class.php:169
+msgctxt "fusioninventory"
+msgid "Restrict search in defined entity"
+msgstr "Restreindre la recherche dans l'entité définie"
+
+#: inc/inventoryruleimport.class.php:181
+msgctxt "fusioninventory"
 msgid "FusionInventory link"
 msgstr "Liaison FusionInventory"
 
-#: inc/inventoryruleimport.class.php:181
-msgid "Link if possible, else create device"
-msgstr "Liaison si possible, sinon création du matériel"
+#: inc/inventoryruleimport.class.php:197
+msgctxt "fusioninventory"
+msgid "Link"
+msgstr "Liaison"
 
-#: inc/inventoryruleimport.class.php:184
-msgid "Link if possible, else import denied"
-msgstr "Liaison si possible, sinon import refusé"
-
-#: inc/inventoryruleimport.class.php:186 inc/inventoryruleimport.class.php:906
+#: inc/inventoryruleimport.class.php:199 inc/inventoryruleimport.class.php:948
 #: inc/inventoryruleimportcollection.class.php:115
-#: inc/taskjoblog.class.php:1097
+#: inc/taskjoblog.class.php:1133
+msgctxt "fusioninventory"
 msgid "Import denied"
 msgstr "Import refusé"
 
-#: inc/inventoryruleimport.class.php:216
+#: inc/inventoryruleimport.class.php:229
+msgctxt "fusioninventory"
 msgid "equal"
 msgstr "égal"
 
-#: inc/inventoryruleimport.class.php:218
+#: inc/inventoryruleimport.class.php:231
+msgctxt "fusioninventory"
 msgid "empty"
 msgstr "Vide"
 
-#: inc/inventoryruleimport.class.php:901
+#: inc/inventoryruleimport.class.php:943
 #: inc/inventoryruleimportcollection.class.php:110
+msgctxt "fusioninventory"
 msgid "Device created"
 msgstr "Matériel créé"
 
-#: inc/iprange.class.php:57
+#: inc/inventoryruleimportcollection.class.php:57 inc/menu.class.php:288
+msgctxt "fusioninventory"
+msgid "Equipment import and link rules"
+msgstr "Règles d'import et de liaison des matériels"
+
+#: inc/inventoryrulelocation.class.php:59
+#: inc/inventoryrulelocationcollection.class.php:58
+msgctxt "fusioninventory"
+msgid "Location rules"
+msgstr "Règles de lieu"
+
+#: inc/iprange.class.php:63
+msgctxt "fusioninventory"
 msgid "Communication mode"
 msgstr "Mode de communication"
 
-#: inc/iprange.class.php:61
+#: inc/iprange.class.php:67
+msgctxt "fusioninventory"
 msgid "See all informations of task"
 msgstr "Voir les informations complètes de la tâche"
 
-#: inc/iprange.class.php:64 inc/iprange.class.php:68 inc/menu.class.php:240
-#: inc/staticmisc.class.php:415 inc/staticmisc.class.php:436
+#: inc/iprange.class.php:70 inc/iprange.class.php:74 inc/menu.class.php:347
+#: inc/staticmisc.class.php:366 inc/staticmisc.class.php:387
 #: inc/wizard.class.php:376 inc/wizard.class.php:425 inc/wizard.class.php:955
+msgctxt "fusioninventory"
 msgid "IP Ranges"
 msgstr "Plage IP"
 
-#: inc/iprange.class.php:114 inc/iprange.class.php:160
-#: inc/iprange.class.php:267 inc/wizard.class.php:961
+#: inc/iprange.class.php:91 inc/profile.class.php:246
+msgctxt "fusioninventory"
+msgid "IP range configuration"
+msgstr "Plages IP"
+
+#: inc/iprange.class.php:110 inc/iprange.class.php:155
+#: inc/iprange.class.php:263 inc/wizard.class.php:961
+msgctxt "fusioninventory"
 msgid "Start of IP range"
 msgstr "Début de la plage IP"
 
-#: inc/iprange.class.php:120 inc/iprange.class.php:185
-#: inc/iprange.class.php:270 inc/wizard.class.php:962
+#: inc/iprange.class.php:116 inc/iprange.class.php:180
+#: inc/iprange.class.php:266 inc/wizard.class.php:962
+msgctxt "fusioninventory"
 msgid "End of IP range"
 msgstr "Fin de la plage IP"
 
-#: inc/iprange.class.php:265
+#: inc/iprange.class.php:261
+msgctxt "fusioninventory"
 msgid "Bad IP"
 msgstr "IP incorrecte"
 
-#: inc/lock.class.php:164
+#: inc/lock.class.php:156
+msgctxt "fusioninventory"
 msgid "Values GLPI"
 msgstr "Valeurs GLPI"
 
-#: inc/lock.class.php:165
+#: inc/lock.class.php:157
+msgctxt "fusioninventory"
 msgid "Values of last inventory"
 msgstr "Valeurs du dernier inventaire"
 
-#: inc/lock.class.php:248 inc/taskjob.class.php:52 inc/taskjob.class.php:1470
-#: inc/taskjoblog.class.php:138 inc/taskjobstate.class.php:193
-#: inc/unknowndevice.class.php:199
+#: inc/lock.class.php:240 inc/taskjob.class.php:58 inc/taskjob.class.php:804
+#: inc/taskjoblog.class.php:171 inc/taskjobstate.class.php:224
+#: inc/unknowndevice.class.php:185
+msgctxt "fusioninventory"
 msgid "Job"
 msgstr "Action"
 
-#: inc/lock.class.php:252
+#: inc/lock.class.php:244
+msgctxt "fusioninventory"
 msgid "Add locks"
 msgstr "Ajouter les verrous"
 
-#: inc/lock.class.php:258
+#: inc/lock.class.php:250
+msgctxt "fusioninventory"
 msgid "Delete locks"
 msgstr "Supprimer les verrous"
 
 #: inc/mapping.class.php:112
+msgctxt "fusioninventory"
 msgid "networking > location"
 msgstr "réseau > lieu"
 
 #: inc/mapping.class.php:116
+msgctxt "fusioninventory"
 msgid "networking > firmware"
 msgstr "réseaux > firmware"
 
 #: inc/mapping.class.php:120
+msgctxt "fusioninventory"
 msgid "networking > uptime"
 msgstr "réseaux > uptime"
 
 #: inc/mapping.class.php:124
+msgctxt "fusioninventory"
 msgid "networking > port > mtu"
 msgstr "réseaux > port > mtu"
 
 #: inc/mapping.class.php:128
+msgctxt "fusioninventory"
 msgid "networking > port > speed"
 msgstr "réseaux > port > vitesse"
 
 #: inc/mapping.class.php:132
+msgctxt "fusioninventory"
 msgid "networking > port > internal status"
 msgstr "réseaux > port > statut interne"
 
 #: inc/mapping.class.php:136
+msgctxt "fusioninventory"
 msgid "networking > ports > last change"
 msgstr "réseau > ports > dernier changement"
 
 #: inc/mapping.class.php:140
+msgctxt "fusioninventory"
 msgid "networking > port > number of bytes entered"
 msgstr "réseaux > port > nombre d'octets en entrée"
 
 #: inc/mapping.class.php:144
+msgctxt "fusioninventory"
 msgid "networking > port > number of bytes out"
 msgstr "réseaux > port > nombre d'octets en sortie"
 
 #: inc/mapping.class.php:148
+msgctxt "fusioninventory"
 msgid "networking > port > number of input errors"
 msgstr "réseaux > port > nombre d'erreurs en entrée"
 
 #: inc/mapping.class.php:152
+msgctxt "fusioninventory"
 msgid "networking > port > number of errors output"
 msgstr "réseaux > port > nombre d'erreurs en sortie"
 
 #: inc/mapping.class.php:156
+msgctxt "fusioninventory"
 msgid "networking > CPU usage"
 msgstr "réseaux > utilisation du CPU"
 
 #: inc/mapping.class.php:160
+msgctxt "fusioninventory"
 msgid "networking > serial number"
 msgstr "réseaux > numéro de série"
 
 #: inc/mapping.class.php:164
+msgctxt "fusioninventory"
 msgid "networking > port > connection status"
 msgstr "réseaux > port > statut de la connexion"
 
 #: inc/mapping.class.php:168
+msgctxt "fusioninventory"
 msgid "networking > port > MAC address"
 msgstr "réseaux > port > adresse MAC"
 
 #: inc/mapping.class.php:172
+msgctxt "fusioninventory"
 msgid "networking > port > name"
 msgstr "réseaux > port > nom"
 
 #: inc/mapping.class.php:176
+msgctxt "fusioninventory"
 msgid "networking > model"
 msgstr "réseaux > modèle"
 
 #: inc/mapping.class.php:180
+msgctxt "fusioninventory"
 msgid "networking > port > type"
 msgstr "réseau > port > type"
 
 #: inc/mapping.class.php:184
+msgctxt "fusioninventory"
 msgid "networking > VLAN"
 msgstr "réseaux > VLAN"
 
 #: inc/mapping.class.php:188
+msgctxt "fusioninventory"
 msgid "networking > name"
 msgstr "réseaux > nom"
 
 #: inc/mapping.class.php:192
+msgctxt "fusioninventory"
 msgid "networking > total memory"
 msgstr "réseaux > mémoire totale"
 
 #: inc/mapping.class.php:196
+msgctxt "fusioninventory"
 msgid "networking > free memory"
 msgstr "réseaux > mémoire libre"
 
 #: inc/mapping.class.php:200
+msgctxt "fusioninventory"
 msgid "networking > port > port description"
 msgstr "réseaux > port > description du port"
 
 #: inc/mapping.class.php:204
+msgctxt "fusioninventory"
 msgid "printer > name"
 msgstr "imprimante > nom"
 
 #: inc/mapping.class.php:208
+msgctxt "fusioninventory"
 msgid "printer > model"
 msgstr "imprimante > modèle"
 
 #: inc/mapping.class.php:212
+msgctxt "fusioninventory"
 msgid "printer > total memory"
 msgstr "imprimante > mémoire totale"
 
 #: inc/mapping.class.php:216
+msgctxt "fusioninventory"
 msgid "printer > serial number"
 msgstr "imprimante > numéro de série"
 
 #: inc/mapping.class.php:220
+msgctxt "fusioninventory"
 msgid "printer > meter > total number of printed pages"
 msgstr "imprimante > compteur > nombre total de pages imprimées"
 
 #: inc/mapping.class.php:224
+msgctxt "fusioninventory"
 msgid "printer > meter > number of printed black and white pages"
 msgstr "imprimante > compteur > nombre de pages noir et blanc imprimées"
 
 #: inc/mapping.class.php:228
+msgctxt "fusioninventory"
 msgid "printer > meter > number of printed color pages"
 msgstr "imprimante > compteur > nombre de pages couleur imprimées"
 
 #: inc/mapping.class.php:232
+msgctxt "fusioninventory"
 msgid "printer > meter > number of printed monochrome pages"
 msgstr "imprimante > compteur > nombre de pages monochrome imprimées"
 
 #: inc/mapping.class.php:236
+msgctxt "fusioninventory"
 msgid "networking > port > duplex type"
 msgstr "réseaux > port > type de duplex"
 
 #: inc/mapping.class.php:240
+msgctxt "fusioninventory"
 msgid "printer > consumables > black cartridge (%)"
 msgstr "imprimante > consommables > cartouche noir (%)"
 
 #: inc/mapping.class.php:244
+msgctxt "fusioninventory"
 msgid "printer > consumables > photo black cartridge (%)"
 msgstr "imprimante > consommables > cartouche noir photo (%)"
 
 #: inc/mapping.class.php:248
+msgctxt "fusioninventory"
 msgid "printer > consumables > cyan cartridge (%)"
 msgstr "imprimante > consommables > cartouche cyan (%)"
 
 #: inc/mapping.class.php:252
+msgctxt "fusioninventory"
 msgid "printer > consumables > yellow cartridge (%)"
 msgstr "imprimante > consommables > cartouche jaune (%)"
 
 #: inc/mapping.class.php:256
+msgctxt "fusioninventory"
 msgid "printer > consumables > magenta cartridge (%)"
 msgstr "imprimante > consommables > cartouche magenta (%)"
 
 #: inc/mapping.class.php:260
+msgctxt "fusioninventory"
 msgid "printer > consumables > light cyan cartridge (%)"
 msgstr "imprimante > consommables > cartouche cyan clair (%)"
 
 #: inc/mapping.class.php:264
+msgctxt "fusioninventory"
 msgid "printer > consumables > light magenta cartridge (%)"
 msgstr "imprimante > consommables > cartouche magenta clair (%)"
 
 #: inc/mapping.class.php:268
+msgctxt "fusioninventory"
 msgid "printer > consumables > photoconductor (%)"
 msgstr "imprimante > consommables > photoconducteur (%)"
 
 #: inc/mapping.class.php:272
+msgctxt "fusioninventory"
 msgid "printer > consumables > black photoconductor (%)"
 msgstr "imprimante > consommables > photoconducteur noir (%)"
 
 #: inc/mapping.class.php:276
+msgctxt "fusioninventory"
 msgid "printer > consumables > color photoconductor (%)"
 msgstr "imprimante > consommables > photoconducteur couleur (%)"
 
 #: inc/mapping.class.php:280
+msgctxt "fusioninventory"
 msgid "printer > consumables > cyan photoconductor (%)"
 msgstr "imprimante > consommables > photoconducteur cyan (%)"
 
 #: inc/mapping.class.php:284
+msgctxt "fusioninventory"
 msgid "printer > consumables > yellow photoconductor (%)"
 msgstr "imprimante > consommables > photoconducteur jaune (%)"
 
 #: inc/mapping.class.php:288
+msgctxt "fusioninventory"
 msgid "printer > consumables > magenta photoconductor (%)"
 msgstr "imprimante > consommables > photoconducteur magenta (%)"
 
 #: inc/mapping.class.php:292
+msgctxt "fusioninventory"
 msgid "printer > consumables > black transfer unit (%)"
 msgstr "imprimante > consommables > unité de transfert noir (%)"
 
 #: inc/mapping.class.php:296
+msgctxt "fusioninventory"
 msgid "printer > consumables > cyan transfer unit (%)"
 msgstr "imprimante > consommables > unité de transfert cyan (%)"
 
 #: inc/mapping.class.php:300
+msgctxt "fusioninventory"
 msgid "printer > consumables > yellow transfer unit (%)"
 msgstr "imprimante > consommables > unité de transfert jaune (%)"
 
 #: inc/mapping.class.php:304
+msgctxt "fusioninventory"
 msgid "printer > consumables > magenta transfer unit (%)"
 msgstr "imprimante > consommables > unité de transfert magenta (%)"
 
 #: inc/mapping.class.php:308
+msgctxt "fusioninventory"
 msgid "printer > consumables > waste bin (%)"
 msgstr "imprimante > consommables > bac récupérateur de déchet (%)"
 
 #: inc/mapping.class.php:312
+msgctxt "fusioninventory"
 msgid "printer > consumables > four (%)"
 msgstr "imprimante > consommables > four (%)"
 
 #: inc/mapping.class.php:316
+msgctxt "fusioninventory"
 msgid "printer > consumables > cleaning module (%)"
 msgstr "imprimante > consommables > module de nettoyage (%)"
 
 #: inc/mapping.class.php:320
+msgctxt "fusioninventory"
 msgid "printer > meter > number of printed duplex pages"
 msgstr "imprimante > compteur > nombre de pages recto/verso imprimées"
 
 #: inc/mapping.class.php:324
+msgctxt "fusioninventory"
 msgid "printer > meter > nomber of scanned pages"
 msgstr "imprimante > compteur > nombre de pages scannées"
 
 #: inc/mapping.class.php:328
+msgctxt "fusioninventory"
 msgid "printer > location"
 msgstr "imprimante > lieu"
 
 #: inc/mapping.class.php:332
+msgctxt "fusioninventory"
 msgid "printer > port > name"
 msgstr "imprimante > port > nom"
 
 #: inc/mapping.class.php:336
+msgctxt "fusioninventory"
 msgid "printer > port > MAC address"
 msgstr "imprimante > port > adresse MAC"
 
 #: inc/mapping.class.php:340
+msgctxt "fusioninventory"
 msgid "printer > consumables > black cartridge (max ink)"
 msgstr "imprimante > consommables > cartouche noir (encre max)"
 
 #: inc/mapping.class.php:344
+msgctxt "fusioninventory"
 msgid "printer > consumables > black cartridge (remaining ink )"
 msgstr "imprimante > consommables > cartouche noir (encre restant)"
 
 #: inc/mapping.class.php:348
+msgctxt "fusioninventory"
 msgid "printer > consumables > cyan cartridge (max ink)"
 msgstr "imprimante > consommables > cartouche cyan (encre max)"
 
 #: inc/mapping.class.php:352
+msgctxt "fusioninventory"
 msgid "printer > consumables > cyan cartridge (remaining ink)"
 msgstr "imprimante > consommables > cartouche cyan (encre restant)"
 
 #: inc/mapping.class.php:356
+msgctxt "fusioninventory"
 msgid "printer > consumables > yellow cartridge (max ink)"
 msgstr "imprimante > consommables > cartouche jaune (encre max)"
 
 #: inc/mapping.class.php:360
+msgctxt "fusioninventory"
 msgid "printer > consumables > yellow cartridge (remaining ink)"
 msgstr "imprimante > consommables > cartouche jaune (encre restant)"
 
 #: inc/mapping.class.php:364
+msgctxt "fusioninventory"
 msgid "printer > consumables > magenta cartridge (max ink)"
 msgstr "imprimante > consommables > cartouche magenta (encre max)"
 
 #: inc/mapping.class.php:368
+msgctxt "fusioninventory"
 msgid "printer > consumables > magenta cartridge (remaining ink)"
 msgstr "imprimante > consommables > cartouche magenta (encre restant)"
 
 #: inc/mapping.class.php:372
+msgctxt "fusioninventory"
 msgid "printer > consumables > light cyan cartridge (max ink)"
 msgstr "imprimante > consommables > cartouche cyan clair (encre max)"
 
 #: inc/mapping.class.php:376
+msgctxt "fusioninventory"
 msgid "printer > consumables > light cyan cartridge (remaining ink)"
 msgstr "imprimante > consommables > cartouche cyan clair (encre restant)"
 
 #: inc/mapping.class.php:380
+msgctxt "fusioninventory"
 msgid "printer > consumables > light magenta cartridge (max ink)"
 msgstr "imprimante > consommables > cartouche magenta clair (encre max)"
 
 #: inc/mapping.class.php:384
+msgctxt "fusioninventory"
 msgid "printer > consumables > light magenta cartridge (remaining ink)"
 msgstr "imprimante > consommables > cartouche magenta clair (encre restant)"
 
 #: inc/mapping.class.php:388
+msgctxt "fusioninventory"
 msgid "printer > consumables > photoconductor (max ink)"
 msgstr "imprimante > consommables > photoconducteur (encre max)"
 
 #: inc/mapping.class.php:392
+msgctxt "fusioninventory"
 msgid "printer > consumables > photoconductor (remaining ink)"
 msgstr "imprimante > consommables > photoconducteur (encre restant)"
 
 #: inc/mapping.class.php:396
+msgctxt "fusioninventory"
 msgid "printer > consumables > black photoconductor (max ink)"
 msgstr "imprimante > consommables > photoconducteur noir (encre max)"
 
 #: inc/mapping.class.php:400
+msgctxt "fusioninventory"
 msgid "printer > consumables > black photoconductor (remaining ink)"
 msgstr "imprimante > consommables > photoconducteur noir (encre restant)"
 
 #: inc/mapping.class.php:404
+msgctxt "fusioninventory"
 msgid "printer > consumables > color photoconductor (max ink)"
 msgstr "imprimante > consommables > photoconducteur couleur (encre max)"
 
 #: inc/mapping.class.php:408
+msgctxt "fusioninventory"
 msgid "printer > consumables > color photoconductor (remaining ink)"
 msgstr "imprimante > consommables > photoconducteur couleur (encre restant)"
 
 #: inc/mapping.class.php:412
+msgctxt "fusioninventory"
 msgid "printer > consumables > cyan photoconductor (max ink)"
 msgstr "imprimante > consommables > photoconducteur cyan (encre max)"
 
 #: inc/mapping.class.php:416
+msgctxt "fusioninventory"
 msgid "printer > consumables > cyan photoconductor (remaining ink)"
 msgstr "imprimante > consommables > photoconducteur cyan (encre restant)"
 
 #: inc/mapping.class.php:420
+msgctxt "fusioninventory"
 msgid "printer > consumables > yellow photoconductor (max ink)"
 msgstr "imprimante > consommables > photoconducteur jaune (encre max)"
 
 #: inc/mapping.class.php:424
+msgctxt "fusioninventory"
 msgid "printer > consumables > yellow photoconductor (remaining ink)"
 msgstr "imprimante > consommables > photoconducteur jaune (encre restant)"
 
 #: inc/mapping.class.php:428
+msgctxt "fusioninventory"
 msgid "printer > consumables > magenta photoconductor (max ink)"
 msgstr "imprimante > consommables > photoconducteur magenta (encre max)"
 
 #: inc/mapping.class.php:432
+msgctxt "fusioninventory"
 msgid "printer > consumables > magenta photoconductor (remaining ink)"
 msgstr "imprimante > consommables > photoconducteur magenta (encre restant)"
 
 #: inc/mapping.class.php:436
+msgctxt "fusioninventory"
 msgid "printer > consumables > black transfer unit (max ink)"
 msgstr "imprimante > consommables > unité de transfert noir (encre max)"
 
 #: inc/mapping.class.php:440
+msgctxt "fusioninventory"
 msgid "printer > consumables > black transfer unit (remaining ink)"
 msgstr "imprimante > consommables > unité de transfert noir (encre restant)"
 
 #: inc/mapping.class.php:444
+msgctxt "fusioninventory"
 msgid "printer > consumables > cyan transfer unit (max ink)"
 msgstr "imprimante > consommables > unité de transfert cyan (encre max)"
 
 #: inc/mapping.class.php:448
+msgctxt "fusioninventory"
 msgid "printer > consumables > cyan transfer unit (remaining ink)"
 msgstr "imprimante > consommables > unité de transfert cyan (encre restant)"
 
 #: inc/mapping.class.php:452
+msgctxt "fusioninventory"
 msgid "printer > consumables > yellow transfer unit (max ink)"
 msgstr "imprimante > consommables > unité de transfert jaune (encre max)"
 
 #: inc/mapping.class.php:456
+msgctxt "fusioninventory"
 msgid "printer > consumables > yellow transfer unit (remaining ink)"
 msgstr "imprimante > consommables > unité de transfert jaune (encre restant)"
 
 #: inc/mapping.class.php:460
+msgctxt "fusioninventory"
 msgid "printer > consumables > magenta transfer unit (max ink)"
 msgstr "imprimante > consommables > unité de transfert magenta (encre max)"
 
 #: inc/mapping.class.php:464
+msgctxt "fusioninventory"
 msgid "printer > consumables > magenta transfer unit (remaining ink)"
 msgstr "imprimante > consommables > unité de transfert magenta (encre restant)"
 
 #: inc/mapping.class.php:468
+msgctxt "fusioninventory"
 msgid "printer > consumables > waste bin (max ink)"
 msgstr "imprimante > consommables > bac récupérateur de déchet (encre max)"
 
 #: inc/mapping.class.php:472
+msgctxt "fusioninventory"
 msgid "printer > consumables > waste bin (remaining ink)"
 msgstr "imprimante > consommables > bac récupérateur de déchet (encre restant)"
 
 #: inc/mapping.class.php:476
+msgctxt "fusioninventory"
 msgid "printer > consumables > four (max ink)"
 msgstr "imprimante > consommables > four (encre max)"
 
 #: inc/mapping.class.php:480
+msgctxt "fusioninventory"
 msgid "printer > consumables > four (remaining ink)"
 msgstr "imprimante > consommables > four (encre restant)"
 
 #: inc/mapping.class.php:484
+msgctxt "fusioninventory"
 msgid "printer > consumables > cleaning module (max ink)"
 msgstr "imprimante > consommables > module de nettoyage (encre max)"
 
 #: inc/mapping.class.php:488
+msgctxt "fusioninventory"
 msgid "printer > consumables > cleaning module (remaining ink)"
 msgstr "imprimante > consommables > module de nettoyage (encre restant)"
 
 #: inc/mapping.class.php:492
+msgctxt "fusioninventory"
 msgid "printer > port > type"
 msgstr "imprimante > port > type"
 
 #: inc/mapping.class.php:496
+msgctxt "fusioninventory"
 msgid "printer > consumables > maintenance kit (max)"
 msgstr "imprimante > consommables > kit de maintenance (max)"
 
 #: inc/mapping.class.php:500
+msgctxt "fusioninventory"
 msgid "printer > consumables > maintenance kit (remaining)"
 msgstr "imprimante > consommables > kit de maintenance (restant)"
 
 #: inc/mapping.class.php:504
+msgctxt "fusioninventory"
 msgid "printer > consumables > maintenance kit (%)"
 msgstr "imprimante > consommables > kit de maintenance (%)"
 
 #: inc/mapping.class.php:508
+msgctxt "fusioninventory"
 msgid "networking > CPU user"
 msgstr "réseaux > CPU user"
 
 #: inc/mapping.class.php:512
+msgctxt "fusioninventory"
 msgid "networking > CPU system"
 msgstr "réseaux > CPU système"
 
 #: inc/mapping.class.php:516
+msgctxt "fusioninventory"
 msgid "networking > contact"
 msgstr "réseaux > contact"
 
 #: inc/mapping.class.php:520
+msgctxt "fusioninventory"
 msgid "networking > comments"
 msgstr "réseaux > description"
 
 #: inc/mapping.class.php:524
+msgctxt "fusioninventory"
 msgid "printer > contact"
 msgstr "imprimante > contact"
 
 #: inc/mapping.class.php:528
+msgctxt "fusioninventory"
 msgid "printer > comments"
 msgstr "imprimante > description"
 
 #: inc/mapping.class.php:532
+msgctxt "fusioninventory"
 msgid "printer > port > IP address"
 msgstr "imprimante > port > adresse IP"
 
 #: inc/mapping.class.php:536
+msgctxt "fusioninventory"
 msgid "networking > port > index number"
 msgstr "réseaux > port > numéro index"
 
 #: inc/mapping.class.php:540
+msgctxt "fusioninventory"
 msgid "networking > Address CDP"
 msgstr "réseaux > Adresse CDP"
 
 #: inc/mapping.class.php:544
+msgctxt "fusioninventory"
 msgid "networking > Port CDP"
 msgstr "réseaux > port CDP"
 
 #: inc/mapping.class.php:548
+msgctxt "fusioninventory"
 msgid "networking > port > trunk/tagged"
 msgstr "réseaux > port > trunk/tagged"
 
 #: inc/mapping.class.php:552
+msgctxt "fusioninventory"
 msgid "networking > MAC address filters (dot1dTpFdbAddress)"
 msgstr "réseaux > Adresses mac filtrées (dot1dTpFdbAddress)"
 
 #: inc/mapping.class.php:556
+msgctxt "fusioninventory"
 msgid "networking > Physical addresses in memory (ipNetToMediaPhysAddress)"
 msgstr "réseaux > adresses physiques mémorisées (ipNetToMediaPhysAddress)"
 
 #: inc/mapping.class.php:560
+msgctxt "fusioninventory"
 msgid "networking > instances de ports (dot1dTpFdbPort)"
 msgstr "réseaux > instances de ports (dot1dTpFdbPort)"
 
 #: inc/mapping.class.php:568
+msgctxt "fusioninventory"
 msgid "printer > port > index number"
 msgstr "imprimante > port > numéro index"
 
 #: inc/mapping.class.php:572
+msgctxt "fusioninventory"
 msgid "networking > MAC address"
 msgstr "réseaux > adresse MAC"
 
 #: inc/mapping.class.php:576
+msgctxt "fusioninventory"
 msgid "printer > Inventory number"
 msgstr "imprimante > numéro d'inventaire"
 
 #: inc/mapping.class.php:580
+msgctxt "fusioninventory"
 msgid "networking > Inventory number"
 msgstr "réseaux > numéro d'inventaire"
 
 #: inc/mapping.class.php:584
+msgctxt "fusioninventory"
 msgid "printer > manufacturer"
 msgstr "imprimante > fabricant"
 
 #: inc/mapping.class.php:588
+msgctxt "fusioninventory"
 msgid "networking > IP addresses"
 msgstr "réseaux > addresses IP"
 
 #: inc/mapping.class.php:592
+msgctxt "fusioninventory"
 msgid "networking > PVID (port VLAN ID)"
 msgstr "réseaux > pvid (port vlan id)"
 
 #: inc/mapping.class.php:596
+msgctxt "fusioninventory"
 msgid "printer > meter > total number of printed pages (print)"
 msgstr "imprimante > compteur > nombre total de pages imprimées (impression)"
 
 #: inc/mapping.class.php:600
+msgctxt "fusioninventory"
 msgid "printer > meter > number of printed black and white pages (print)"
 msgstr "imprimante > compteur > nombre de pages noir et blanc imprimées (impression)"
 
 #: inc/mapping.class.php:604
+msgctxt "fusioninventory"
 msgid "printer > meter > number of printed color pages (print)"
 msgstr "imprimante > compteur > nombre de pages couleur imprimées (impression)"
 
 #: inc/mapping.class.php:608
+msgctxt "fusioninventory"
 msgid "printer > meter > total number of printed pages (copy)"
 msgstr "imprimante > compteur > nombre total de pages imprimées (copie)"
 
 #: inc/mapping.class.php:612
+msgctxt "fusioninventory"
 msgid "printer > meter > number of printed black and white pages (copy)"
 msgstr "imprimante > compteur > nombre de pages noir et blanc imprimées (copie)"
 
 #: inc/mapping.class.php:616
+msgctxt "fusioninventory"
 msgid "printer > meter > number of printed color pages (copy)"
 msgstr "imprimante > compteur > nombre de pages couleur imprimées (copie)"
 
 #: inc/mapping.class.php:620
+msgctxt "fusioninventory"
 msgid "printer > meter > total number of printed pages (fax)"
 msgstr "imprimante > compteur > nombre total de pages imprimées (fax)"
 
 #: inc/mapping.class.php:624
+msgctxt "fusioninventory"
 msgid "networking > port > vlan"
 msgstr "réseaux > port > vlan"
 
 #: inc/mapping.class.php:628
+msgctxt "fusioninventory"
 msgid "networking > CDP remote sysdescr"
 msgstr "réseaux > CDP sysdescr distant"
 
 #: inc/mapping.class.php:632
+msgctxt "fusioninventory"
 msgid "networking > CDP remote id"
 msgstr "réseaux > CDP id distant"
 
 #: inc/mapping.class.php:636
+msgctxt "fusioninventory"
 msgid "networking > CDP remote model device"
 msgstr "réseaux > CDP modèle du matériel distant"
 
 #: inc/mapping.class.php:640
+msgctxt "fusioninventory"
 msgid "networking > LLDP remote sysdescr"
 msgstr "réseau > LLDP sysdescr distant"
 
 #: inc/mapping.class.php:644
+msgctxt "fusioninventory"
 msgid "networking > LLDP remote id"
 msgstr "réseaux > LLDP id distant"
 
 #: inc/mapping.class.php:648
+msgctxt "fusioninventory"
 msgid "networking > LLDP remote port description"
 msgstr "réseaux > LLDP description du port distant"
 
-#: inc/mapping.class.php:653 inc/networkequipment.class.php:672
+#: inc/mapping.class.php:653 inc/networkequipment.class.php:647
 #: inc/networkport.class.php:77
+msgctxt "fusioninventory"
 msgid "MTU"
 msgstr "MTU"
 
-#: inc/mapping.class.php:661 inc/networkequipment.class.php:680
+#: inc/mapping.class.php:661 inc/networkequipment.class.php:655
 #: inc/networkport.class.php:85
+msgctxt "fusioninventory"
 msgid "Internal status"
 msgstr "Statut Interne"
 
-#: inc/mapping.class.php:665 inc/networkequipment.class.php:684
+#: inc/mapping.class.php:665 inc/networkequipment.class.php:659
+msgctxt "fusioninventory"
 msgid "Last Change"
 msgstr "Dernier changement"
 
 #: inc/mapping.class.php:669
+msgctxt "fusioninventory"
 msgid "Number of received bytes"
 msgstr "Nb d'octets recus"
 
 #: inc/mapping.class.php:673
+msgctxt "fusioninventory"
 msgid "Number of outgoing bytes"
 msgstr "Nb d'octets envoyés"
 
 #: inc/mapping.class.php:677
+msgctxt "fusioninventory"
 msgid "Number of input errors"
 msgstr "Nb d'erreurs en entrée"
 
 #: inc/mapping.class.php:681
+msgctxt "fusioninventory"
 msgid "Number of output errors"
 msgstr "Nb d'erreurs en sortie"
 
 #: inc/mapping.class.php:685
+msgctxt "fusioninventory"
 msgid "CPU usage"
 msgstr "Utilisation du CPU"
 
-#: inc/mapping.class.php:693 inc/networkequipment.class.php:700
+#: inc/mapping.class.php:693 inc/networkequipment.class.php:675
 #: inc/networkport.class.php:105
+msgctxt "fusioninventory"
 msgid "Internal MAC address"
 msgstr "MAC interne"
 
-#: inc/mapping.class.php:713 inc/networkequipment.class.php:720
+#: inc/mapping.class.php:713 inc/networkequipment.class.php:695
 #: inc/networkport.class.php:125
+msgctxt "fusioninventory"
 msgid "Alias"
 msgstr "Alias"
 
 #: inc/mapping.class.php:717 inc/printerlog.class.php:145
+msgctxt "fusioninventory"
 msgid "Total number of printed pages"
 msgstr "Nombre total de pages imprimées"
 
 #: inc/mapping.class.php:721 inc/printerlog.class.php:150
+msgctxt "fusioninventory"
 msgid "Number of printed black and white pages"
 msgstr "Nombre de pages noir et blanc imprimées"
 
 #: inc/mapping.class.php:725 inc/printerlog.class.php:155
+msgctxt "fusioninventory"
 msgid "Number of printed color pages"
 msgstr "Nombre de pages couleur imprimées"
 
 #: inc/mapping.class.php:729
+msgctxt "fusioninventory"
 msgid "Number of printed monochrome pages"
 msgstr "Nombre de pages monochrome imprimées"
 
 #: inc/mapping.class.php:733
+msgctxt "fusioninventory"
 msgid "Black cartridge"
 msgstr "Cartouche noir"
 
 #: inc/mapping.class.php:737
+msgctxt "fusioninventory"
 msgid "Photo black cartridge"
 msgstr "Cartouche noir photo"
 
 #: inc/mapping.class.php:741
+msgctxt "fusioninventory"
 msgid "Cyan cartridge"
 msgstr "Cartouche cyan"
 
 #: inc/mapping.class.php:745
+msgctxt "fusioninventory"
 msgid "Yellow cartridge"
 msgstr "Cartouche jaune"
 
 #: inc/mapping.class.php:749
+msgctxt "fusioninventory"
 msgid "Magenta cartridge"
 msgstr "Cartouche magenta"
 
 #: inc/mapping.class.php:753
+msgctxt "fusioninventory"
 msgid "Light cyan cartridge"
 msgstr "Cartouche cyan clair"
 
 #: inc/mapping.class.php:757
+msgctxt "fusioninventory"
 msgid "Light magenta cartridge"
 msgstr "Cartouche magenta clair"
 
 #: inc/mapping.class.php:761
+msgctxt "fusioninventory"
 msgid "Photoconductor"
 msgstr "Photoconducteur"
 
 #: inc/mapping.class.php:765
+msgctxt "fusioninventory"
 msgid "Black photoconductor"
 msgstr "Photoconducteur noir"
 
 #: inc/mapping.class.php:769
+msgctxt "fusioninventory"
 msgid "Color photoconductor"
 msgstr "Photoconducteur couleur"
 
 #: inc/mapping.class.php:773
+msgctxt "fusioninventory"
 msgid "Cyan photoconductor"
 msgstr "Photoconducteur cyan"
 
 #: inc/mapping.class.php:777
+msgctxt "fusioninventory"
 msgid "Yellow photoconductor"
 msgstr "Photoconducteur jaune"
 
 #: inc/mapping.class.php:781
+msgctxt "fusioninventory"
 msgid "Magenta photoconductor"
 msgstr "Photoconducteur magenta"
 
 #: inc/mapping.class.php:785
+msgctxt "fusioninventory"
 msgid "Black transfer unit"
 msgstr "Unité de transfert noir"
 
 #: inc/mapping.class.php:789
+msgctxt "fusioninventory"
 msgid "Cyan transfer unit"
 msgstr "Unité de transfert cyan"
 
 #: inc/mapping.class.php:793
+msgctxt "fusioninventory"
 msgid "Yellow transfer unit"
 msgstr "Unité de transfert jaune"
 
 #: inc/mapping.class.php:797
+msgctxt "fusioninventory"
 msgid "Magenta transfer unit"
 msgstr "Unité de transfert magenta"
 
 #: inc/mapping.class.php:801
+msgctxt "fusioninventory"
 msgid "Waste bin"
 msgstr "Bac récupérateur de déchet"
 
 #: inc/mapping.class.php:805
+msgctxt "fusioninventory"
 msgid "Four"
 msgstr "Four"
 
 #: inc/mapping.class.php:809
+msgctxt "fusioninventory"
 msgid "Cleaning module"
 msgstr "Module de nettoyage"
 
 #: inc/mapping.class.php:813 inc/printerlog.class.php:160
+msgctxt "fusioninventory"
 msgid "Number of pages printed duplex"
 msgstr "Nombre de pages recto/verso imprimées"
 
 #: inc/mapping.class.php:817 inc/printerlog.class.php:165
+msgctxt "fusioninventory"
 msgid "Number of scanned pages"
 msgstr "Nombre de pages scannées"
 
 #: inc/mapping.class.php:821
+msgctxt "fusioninventory"
 msgid "Maintenance kit"
 msgstr "Kit de maintenance"
 
 #: inc/mapping.class.php:825
+msgctxt "fusioninventory"
 msgid "Black toner"
 msgstr "Toner Noir"
 
 #: inc/mapping.class.php:829
+msgctxt "fusioninventory"
 msgid "Cyan toner"
 msgstr "Toner Cyan"
 
 #: inc/mapping.class.php:833
+msgctxt "fusioninventory"
 msgid "Magenta toner"
 msgstr "Toner Magenta"
 
 #: inc/mapping.class.php:837
+msgctxt "fusioninventory"
 msgid "Yellow toner"
 msgstr "Toner Jaune"
 
 #: inc/mapping.class.php:841
+msgctxt "fusioninventory"
 msgid "Black drum"
 msgstr "Tambour Noir"
 
 #: inc/mapping.class.php:845
+msgctxt "fusioninventory"
 msgid "Cyan drum"
 msgstr "Tambour Cyan"
 
 #: inc/mapping.class.php:849
+msgctxt "fusioninventory"
 msgid "Magenta drum"
 msgstr "Tambour Magenta"
 
 #: inc/mapping.class.php:853
+msgctxt "fusioninventory"
 msgid "Yellow drum"
 msgstr "Tambour Jaune"
 
 #: inc/mapping.class.php:857
+msgctxt "fusioninventory"
 msgid "Many informations grouped"
 msgstr "Informations diverses regroupées"
 
 #: inc/mapping.class.php:861
+msgctxt "fusioninventory"
 msgid "Black toner 2"
 msgstr "Toner Noir 2"
 
 #: inc/mapping.class.php:865
+msgctxt "fusioninventory"
 msgid "Black toner Utilisé"
 msgstr "Toner Noir Utilisé"
 
 #: inc/mapping.class.php:869
+msgctxt "fusioninventory"
 msgid "Black toner Restant"
 msgstr "Toner Noir Restant"
 
 #: inc/mapping.class.php:873
+msgctxt "fusioninventory"
 msgid "Cyan toner Max"
 msgstr "Toner Cyan Max"
 
 #: inc/mapping.class.php:877
+msgctxt "fusioninventory"
 msgid "Cyan toner Utilisé"
 msgstr "Toner Cyan Utilisé"
 
 #: inc/mapping.class.php:881
+msgctxt "fusioninventory"
 msgid "Cyan toner Restant"
 msgstr "Toner Cyan Restant"
 
 #: inc/mapping.class.php:885
+msgctxt "fusioninventory"
 msgid "Magenta toner Max"
 msgstr "Toner Magenta Max"
 
 #: inc/mapping.class.php:889
+msgctxt "fusioninventory"
 msgid "Magenta toner Utilisé"
 msgstr "Toner Magenta Utilisé"
 
 #: inc/mapping.class.php:893
+msgctxt "fusioninventory"
 msgid "Magenta toner Restant"
 msgstr "Toner Magenta Restant"
 
 #: inc/mapping.class.php:897
+msgctxt "fusioninventory"
 msgid "Yellow toner Max"
 msgstr "Toner Jaune Max"
 
 #: inc/mapping.class.php:901
+msgctxt "fusioninventory"
 msgid "Yellow toner Utilisé"
 msgstr "Toner Jaune Utilisé"
 
 #: inc/mapping.class.php:905
+msgctxt "fusioninventory"
 msgid "Yellow toner Restant"
 msgstr "Toner Jaune Restant"
 
 #: inc/mapping.class.php:909
+msgctxt "fusioninventory"
 msgid "Black drum Max"
 msgstr "Tambour Noir Max"
 
 #: inc/mapping.class.php:913
+msgctxt "fusioninventory"
 msgid "Black drum Utilisé"
 msgstr "Tambour Noir Utilisé"
 
 #: inc/mapping.class.php:917
+msgctxt "fusioninventory"
 msgid "Black drum Restant"
 msgstr "Tambour Noir Restant"
 
 #: inc/mapping.class.php:921
+msgctxt "fusioninventory"
 msgid "Cyan drum Max"
 msgstr "Tambour Cyan Max"
 
 #: inc/mapping.class.php:925
+msgctxt "fusioninventory"
 msgid "Cyan drum Utilisé"
 msgstr "Tambour Cyan Utilisé"
 
 #: inc/mapping.class.php:929
+msgctxt "fusioninventory"
 msgid "Cyan drumRestant"
 msgstr "Tambour Cyan Restant"
 
 #: inc/mapping.class.php:933
+msgctxt "fusioninventory"
 msgid "Magenta drum Max"
 msgstr "Tambour Magenta Max"
 
 #: inc/mapping.class.php:937
+msgctxt "fusioninventory"
 msgid "Magenta drum Utilisé"
 msgstr "Tambour Magenta Utilisé"
 
 #: inc/mapping.class.php:941
+msgctxt "fusioninventory"
 msgid "Magenta drum Restant"
 msgstr "Tambour Magenta Restant"
 
 #: inc/mapping.class.php:945
+msgctxt "fusioninventory"
 msgid "Yellow drum Max"
 msgstr "Tambour Jaune Max"
 
 #: inc/mapping.class.php:949
+msgctxt "fusioninventory"
 msgid "Yellow drum Utilisé"
 msgstr "Tambour Jaune Utilisé"
 
 #: inc/mapping.class.php:953
+msgctxt "fusioninventory"
 msgid "Yellow drum Restant"
 msgstr "Tambour Jaune Restant"
 
 #: inc/mapping.class.php:957
+msgctxt "fusioninventory"
 msgid "Waste bin Max"
 msgstr "Bac récupérateur de déchet Max"
 
 #: inc/mapping.class.php:961
+msgctxt "fusioninventory"
 msgid "Waste bin Utilisé"
 msgstr "Bac récupérateur de déchet Utilisé"
 
 #: inc/mapping.class.php:965
+msgctxt "fusioninventory"
 msgid "Waste bin Restant"
 msgstr "Bac récupérateur de déchet Restant"
 
 #: inc/mapping.class.php:969
+msgctxt "fusioninventory"
 msgid "Maintenance kit Max"
 msgstr "Kit de maintenance Max"
 
 #: inc/mapping.class.php:973
+msgctxt "fusioninventory"
 msgid "Maintenance kit Utilisé"
 msgstr "Kit de maintenance Utilisé"
 
 #: inc/mapping.class.php:977
+msgctxt "fusioninventory"
 msgid "Maintenance kit Restant"
 msgstr "Kit de maintenance Restant"
 
 #: inc/mapping.class.php:981
+msgctxt "fusioninventory"
 msgid "Grey ink cartridge"
 msgstr "Cartouche grise"
 
 #: inc/mapping.class.php:986 inc/printerlog.class.php:170
+msgctxt "fusioninventory"
 msgid "Total number of printed pages (print)"
 msgstr "Nombre total de pages imprimées (impression)"
 
 #: inc/mapping.class.php:990 inc/printerlog.class.php:175
+msgctxt "fusioninventory"
 msgid "Number of printed black and white pages (print)"
 msgstr "Nombre de pages noir et blanc imprimées (impression)"
 
 #: inc/mapping.class.php:994 inc/printerlog.class.php:180
+msgctxt "fusioninventory"
 msgid "Number of printed color pages (print)"
 msgstr "Nombre de pages couleur imprimées (impression)"
 
 #: inc/mapping.class.php:998 inc/printerlog.class.php:185
+msgctxt "fusioninventory"
 msgid "Total number of printed pages (copy)"
 msgstr "Nombre total de pages imprimées (copie)"
 
 #: inc/mapping.class.php:1002 inc/printerlog.class.php:190
+msgctxt "fusioninventory"
 msgid "Number of printed black and white pages (copy)"
 msgstr "Nombre de pages noir et blanc imprimées (copie)"
 
 #: inc/mapping.class.php:1006 inc/printerlog.class.php:195
+msgctxt "fusioninventory"
 msgid "Number of printed color pages (copy)"
 msgstr "Nombre de pages couleur imprimées (copie)"
 
 #: inc/mapping.class.php:1010 inc/printerlog.class.php:200
+msgctxt "fusioninventory"
 msgid "Total number of printed pages (fax)"
 msgstr "Nombre total de pages imprimées (fax)"
 
 #: inc/mapping.class.php:1014
+msgctxt "fusioninventory"
 msgid "Total number of large printed pages"
 msgstr "Nombre total de pages larges imprimées"
 
-#: inc/menu.class.php:76
+#: inc/menu.class.php:144
+msgctxt "fusioninventory"
+msgid "Computer inv."
+msgstr ""
+
+#: inc/menu.class.php:147
+msgctxt "fusioninventory"
+msgid "SNMP inv."
+msgstr ""
+
+#: inc/menu.class.php:150
+msgctxt "fusioninventory"
+msgid "ESX inv."
+msgstr ""
+
+#: inc/menu.class.php:153
+msgctxt "fusioninventory"
+msgid "Soft. deploy"
+msgstr ""
+
+#: inc/menu.class.php:186
+msgctxt "fusioninventory"
 msgid ""
 "The server needs to kown the URL the agents use to access the server. Please"
 " configure it in the General Configuration page."
-msgstr "Le serveur a besoin de connaître l'URL que les agents utilisent pour accéder au serveur. Veuillez configurer dans la page de configuration générale"
+msgstr "Le serveur a besoin de connaître l'URL avec laquelle les agents vont accéder au serveur. Merci de la configurer dans la page de configuration générale."
 
-#: inc/menu.class.php:117
+#: inc/menu.class.php:210
+msgctxt "fusioninventory"
+msgid "Agents management"
+msgstr "Gestion des agents"
+
+#: inc/menu.class.php:222
+msgctxt "fusioninventory"
 msgid "General configuration"
 msgstr "Configuration générale"
 
-#: inc/menu.class.php:124
+#: inc/menu.class.php:229 inc/profile.class.php:144
+msgctxt "fusioninventory"
 msgid "General"
 msgstr "Général"
 
-#: inc/menu.class.php:163
+#: inc/menu.class.php:245 inc/task.class.php:55
+msgctxt "fusioninventory"
+msgid "Task management"
+msgstr "Gestion des tâches"
+
+#: inc/menu.class.php:249
+msgctxt "fusioninventory"
+msgid "Monitoring / Logs"
+msgstr "Monitoring / Logs"
+
+#: inc/menu.class.php:256
+msgctxt "fusioninventory"
+msgid "Import agent XML file"
+msgstr "Importer un fichier XML de l'agent"
+
+#: inc/menu.class.php:264 inc/profile.class.php:312
+msgctxt "fusioninventory"
 msgid "Additional computer information"
 msgstr "Information additionnelle de l'ordinateur"
 
-#: inc/menu.class.php:169
+#: inc/menu.class.php:270 inc/timeslot.class.php:61 inc/timeslot.class.php:70
+#: inc/timeslotentry.class.php:70
+msgctxt "fusioninventory"
+msgid "Time slot"
+msgstr "Créneau horaire"
+
+#: inc/menu.class.php:276
+msgctxt "fusioninventory"
 msgid "Tasks"
 msgstr "Tâches"
 
-#: inc/menu.class.php:189
+#: inc/menu.class.php:296
+msgctxt "fusioninventory"
 msgid "Ignored import devices"
 msgstr "Matériels ignorés à l'import"
 
-#: inc/menu.class.php:197
+#: inc/menu.class.php:304
+msgctxt "fusioninventory"
 msgid "Computer entity rules"
 msgstr "Règles sur l'entité \"ordinateur\""
 
-#: inc/menu.class.php:204
+#: inc/menu.class.php:311
+msgctxt "fusioninventory"
 msgid "Computer location rules"
 msgstr "Règles de lieu ordinateur"
 
-#: inc/menu.class.php:227
+#: inc/menu.class.php:334
+msgctxt "fusioninventory"
 msgid "Rules"
 msgstr "Règles"
 
-#: inc/menu.class.php:285
+#: inc/menu.class.php:384
+msgctxt "fusioninventory"
+msgid "Discovery status"
+msgstr "Etat des découvertes"
+
+#: inc/menu.class.php:392
+msgctxt "fusioninventory"
 msgid "Network inventory status"
 msgstr "Statut de l'inventaire réseau"
 
-#: inc/menu.class.php:303
+#: inc/menu.class.php:402
+msgctxt "fusioninventory"
 msgid "SNMP models creation"
 msgstr "Création de modèles SNMP"
 
-#: inc/menu.class.php:310
+#: inc/menu.class.php:409
+msgctxt "fusioninventory"
 msgid "Networking"
 msgstr "Réseau"
 
-#: inc/menu.class.php:336
-msgid "Deploy"
-msgstr "Déployer"
+#: inc/menu.class.php:451
+msgctxt "fusioninventory"
+msgid "Not conform"
+msgstr ""
 
-#: inc/networkequipment.class.php:64 inc/printer.class.php:71
+#: inc/menu.class.php:458
+msgctxt "fusioninventory"
+msgid "To be validated"
+msgstr "A valider"
+
+#: inc/menu.class.php:463
+msgctxt "fusioninventory"
+msgid "Models"
+msgstr "Modèles"
+
+#: inc/menu.class.php:501 inc/menu.class.php:575
+msgctxt "fusioninventory"
+msgid "Statistics"
+msgstr "Statistiques"
+
+#: inc/menu.class.php:501 inc/menu.class.php:849
+msgctxt "fusioninventory"
+msgid "Number of computer inventories of last hours"
+msgstr "Nombre d'ordinateurs inventoriés dans les dernières heures"
+
+#: inc/menu.class.php:513
+msgctxt "fusioninventory"
+msgid ""
+"This is the steps to configure FusionInventory plugin for computer inventory"
+msgstr ""
+
+#: inc/menu.class.php:519
+msgctxt "fusioninventory"
+msgid "Configure frequency of agent contact (and so each inventory)"
+msgstr ""
+
+#: inc/menu.class.php:524
+msgctxt "fusioninventory"
+msgid "Configure inventory options"
+msgstr ""
+
+#: inc/menu.class.php:529
+msgctxt "fusioninventory"
+msgid "Define rules for entity"
+msgstr ""
+
+#: inc/menu.class.php:534
+msgctxt "fusioninventory"
+msgid "Define rules for location"
+msgstr ""
+
+#: inc/menu.class.php:539
+msgctxt "fusioninventory"
+msgid ""
+"Define rules for import : merge and create new computer (CAUTION: same rules"
+" for SNMP inventory)"
+msgstr ""
+
+#: inc/menu.class.php:587
+msgctxt "fusioninventory"
+msgid ""
+"This is the steps to configure FusionInventory plugin for SNMP inventory "
+"(swicth, router, network printer)"
+msgstr ""
+
+#: inc/menu.class.php:593
+msgctxt "fusioninventory"
+msgid "Configure SNMP credentials"
+msgstr ""
+
+#: inc/menu.class.php:598
+msgctxt "fusioninventory"
+msgid ""
+"Define rules for import : merge and create new devices (CAUTION: same rules "
+"for computer inventory)"
+msgstr ""
+
+#: inc/menu.class.php:603
+msgctxt "fusioninventory"
+msgid "`Network Discovery`, used to discover the devices on the network"
+msgstr ""
+
+#: inc/menu.class.php:608
+msgctxt "fusioninventory"
+msgid "Define IP Ranges of your network"
+msgstr ""
+
+#: inc/menu.class.php:613
+msgctxt "fusioninventory"
+msgid "Define an agent allowed to discover the network"
+msgstr ""
+
+#: inc/menu.class.php:618
+msgctxt "fusioninventory"
+msgid ""
+"Create a new Task with discovery module and the agent defined previously"
+msgstr ""
+
+#: inc/menu.class.php:623
+msgctxt "fusioninventory"
+msgid "If you have devices not typed, import them from unknown devices"
+msgstr ""
+
+#: inc/menu.class.php:628
+msgctxt "fusioninventory"
+msgid "`Network Inventory`, used to complete inventory the discovered devices"
+msgstr ""
+
+#: inc/menu.class.php:633
+msgctxt "fusioninventory"
+msgid "Define an agent allowed to inventory the network by SNMP"
+msgstr ""
+
+#: inc/menu.class.php:638
+msgctxt "fusioninventory"
+msgid ""
+"Create a new Task with network inventory module and the agent defined "
+"previously"
+msgstr ""
+
+#: inc/networkequipment.class.php:54 inc/printer.class.php:65
+msgctxt "fusioninventory"
 msgid "FusionInventory SNMP"
 msgstr "FusionInventory SNMP"
 
-#: inc/networkequipment.class.php:130
+#: inc/networkequipment.class.php:123
+msgctxt "fusioninventory"
 msgid "Display the view"
 msgstr "Affiche la vue"
 
-#: inc/networkequipment.class.php:132
+#: inc/networkequipment.class.php:125
+msgctxt "fusioninventory"
 msgid "If you prefer, you can display the view"
 msgstr "Si vous préférez, vous pouvez afficher la vue"
 
-#: inc/networkequipment.class.php:435 inc/printer.class.php:146
+#: inc/networkequipment.class.php:431 inc/printer.class.php:140
+msgctxt "fusioninventory"
 msgid "SNMP information"
 msgstr "Informations SNMP"
 
-#: inc/networkequipment.class.php:470 inc/printer.class.php:199
-msgid "Load the correct model"
-msgstr "Charger le bon modèle"
-
-#: inc/networkequipment.class.php:494
+#: inc/networkequipment.class.php:469
+msgctxt "fusioninventory"
 msgid "Memory usage (in %)"
 msgstr "Utilisation de la mémoire (en %)"
 
-#: inc/networkequipment.class.php:508
+#: inc/networkequipment.class.php:483
+msgctxt "fusioninventory"
 msgid "Datas not available"
 msgstr "Données non disponibles"
 
-#: inc/networkequipment.class.php:560
+#: inc/networkequipment.class.php:535
+msgctxt "fusioninventory"
 msgid "Uptime"
 msgstr "Uptime"
 
-#: inc/networkequipment.class.php:587 inc/task.class.php:282
-#: inc/taskjob.class.php:309 inc/taskjob.class.php:1888
-#: inc/taskjob.class.php:2023
+#: inc/networkequipment.class.php:562 inc/taskjob.class.php:1187
+msgctxt "fusioninventory"
 msgid "day(s)"
 msgstr "jour(s)"
 
-#: inc/networkequipment.class.php:588 inc/task.class.php:280
-#: inc/taskjob.class.php:307 inc/taskjob.class.php:1882
-#: inc/taskjob.class.php:2021
+#: inc/networkequipment.class.php:563 inc/taskjob.class.php:1181
+msgctxt "fusioninventory"
 msgid "hour(s)"
 msgstr "heure(s)"
 
-#: inc/networkequipment.class.php:589 inc/task.class.php:278
-#: inc/taskjob.class.php:305 inc/taskjob.class.php:1876
-#: inc/taskjob.class.php:2019
+#: inc/networkequipment.class.php:564 inc/taskjob.class.php:1175
+msgctxt "fusioninventory"
 msgid "Minute(s)"
 msgstr "Minute(s)"
 
-#: inc/networkequipment.class.php:590
+#: inc/networkequipment.class.php:565
+msgctxt "fusioninventory"
 msgid "sec(s)"
 msgstr "sec(s)"
 
-#: inc/networkequipment.class.php:610
+#: inc/networkequipment.class.php:585
+msgctxt "fusioninventory"
 msgid "Ports array"
 msgstr "Tableau des ports"
 
-#: inc/networkequipment.class.php:634
+#: inc/networkequipment.class.php:609
+msgctxt "fusioninventory"
 msgid "Legend"
 msgstr "Légende"
 
-#: inc/networkequipment.class.php:644
+#: inc/networkequipment.class.php:619
+msgctxt "fusioninventory"
 msgid "Connection with a switch or a server in trunk or tagged mode"
 msgstr "Connexion avec un switch or un serveur en mode trunk ou taggé"
 
-#: inc/networkequipment.class.php:650
+#: inc/networkequipment.class.php:625
+msgctxt "fusioninventory"
 msgid "Other connections (with a computer, a printer...)"
 msgstr "Connexion autre (avec un ordinateur, une imprimante...)"
 
-#: inc/networkequipment.class.php:664
+#: inc/networkequipment.class.php:639
+msgctxt "fusioninventory"
 msgid "Monitoring"
 msgstr "Monitoring"
 
-#: inc/networkequipment.class.php:688
+#: inc/networkequipment.class.php:663
+msgctxt "fusioninventory"
 msgid "Traffic received/sent"
 msgstr "Trafic reçu/envoyer"
 
-#: inc/networkequipment.class.php:692
+#: inc/networkequipment.class.php:667
+msgctxt "fusioninventory"
 msgid "Errors received/sent"
 msgstr "Erreurs reçues/encoyées"
 
-#: inc/networkequipment.class.php:696 inc/networkport.class.php:101
+#: inc/networkequipment.class.php:671 inc/networkport.class.php:101
+msgctxt "fusioninventory"
 msgid "Duplex"
 msgstr "Duplex"
 
-#: inc/networkequipment.class.php:716 inc/networkport.class.php:121
+#: inc/networkequipment.class.php:691 inc/networkport.class.php:121
+msgctxt "fusioninventory"
 msgid "Port not connected since"
 msgstr "Port pas connecté depuis"
 
 #: inc/networkport.class.php:89
+msgctxt "fusioninventory"
 msgid "Last change"
 msgstr "Dernière modification"
 
 #: inc/networkport.class.php:93
+msgctxt "fusioninventory"
 msgid "Number of bytes received / Number of bytes sent"
 msgstr "Nombre d'octets reçus / Nombre d'octets envoyés"
 
 #: inc/networkport.class.php:97
+msgctxt "fusioninventory"
 msgid "Number of input errors / Number of errors in reception"
 msgstr "Nombre d'erreurs en entrée / Nombre d'erreurs en sorties"
 
 #: inc/networkportconnectionlog.class.php:59
+msgctxt "fusioninventory"
 msgid "PID"
 msgstr "PID"
 
 #: inc/networkportconnectionlog.class.php:134
 #: inc/networkportconnectionlog.class.php:160 inc/networkportlog.class.php:448
 #: inc/networkportlog.class.php:469
+msgctxt "fusioninventory"
 msgid "on"
 msgstr "sur"
 
 #: inc/networkportlog.class.php:62
+msgctxt "fusioninventory"
 msgid "FusionInventory historical"
 msgstr "Historique de FusionInventory"
 
 #: inc/networkportlog.class.php:127
+msgctxt "fusioninventory"
 msgid "List of fields to history"
 msgstr "Liste des champs à historiser"
 
 #: inc/networkportlog.class.php:212
+msgctxt "fusioninventory"
 msgid "Clean history"
 msgstr "Nettoyage de l'historique"
 
 #: inc/networkporttype.class.php:358
+msgctxt "fusioninventory"
 msgid "Ports types to import (for network equipments)"
 msgstr "Types de ports à importer (pour des équipements réseaux)"
 
 #: inc/printercartridge.class.php:64
+msgctxt "fusioninventory"
 msgid "Cartridge(s)"
 msgstr "Cartouche(s)"
 
 #: inc/printerlog.class.php:53 inc/printerlog.class.php:323
+msgctxt "fusioninventory"
 msgid "History meter printer"
 msgstr "Historique des compteurs imprimante"
 
 #: inc/printerlog.class.php:287
+msgctxt "fusioninventory"
 msgid "Total printed pages"
 msgstr "Pages imprimées totales"
 
 #: inc/printerlog.class.php:291
+msgctxt "fusioninventory"
 msgid "Pages / day"
 msgstr "Pages / jour"
 
 #: inc/printerlog.class.php:328
+msgctxt "fusioninventory"
 msgid "Meter"
 msgstr "Compteur"
 
-#: inc/printerlog.class.php:350 inc/snmpmodelmib.class.php:206
+#: inc/printerlog.class.php:350
+msgctxt "fusioninventory"
 msgid "Check All"
 msgstr "Tout examiner"
 
-#: inc/printerlog.class.php:353 inc/snmpmodelmib.class.php:209
+#: inc/printerlog.class.php:353
+msgctxt "fusioninventory"
 msgid "Uncheck All"
 msgstr "Ne rien Examiner"
 
 #: inc/printerlog.class.php:483
+msgctxt "fusioninventory"
 msgid "Time unit"
 msgstr "Unité de temps"
 
 #: inc/printerlog.class.php:491
+msgctxt "fusioninventory"
 msgid "year"
 msgstr "année"
 
 #: inc/printerlog.class.php:503
+msgctxt "fusioninventory"
 msgid "Display"
 msgstr "Affichage"
 
 #: inc/printerlog.class.php:505
+msgctxt "fusioninventory"
 msgid "Total counter"
 msgstr "Compteur total"
 
 #: inc/printerlog.class.php:507
+msgctxt "fusioninventory"
 msgid "pages per day"
 msgstr "pages par jour"
 
 #: inc/printerlog.class.php:522
+msgctxt "fusioninventory"
 msgid "Printers to compare"
 msgstr "Imprimantes à comparer"
 
 #: inc/printerlog.class.php:530
+msgctxt "fusioninventory"
 msgid "Add a printer"
 msgstr "Ajouter une imprimante"
 
 #: inc/printerlog.class.php:545
+msgctxt "fusioninventory"
 msgid "Remove a printer"
 msgstr "Supprimer une imprimante"
 
 #: inc/printerlog.class.php:671
+msgctxt "fusioninventory"
 msgid "Too datas to display"
 msgstr "Trop de données à afficher"
 
-#: inc/profile.class.php:292
-msgid "Rights management"
-msgstr "Gestion des droits"
+#: inc/profile.class.php:154
+msgctxt "fusioninventory"
+msgid "Inventory"
+msgstr "Inventaire"
 
-#: inc/rulematchedlog.class.php:82 inc/rulematchedlog.class.php:87
+#: inc/profile.class.php:159
+msgctxt "fusioninventory"
+msgid "Software deployment"
+msgstr "Déploiement d'application"
+
+#: inc/profile.class.php:209
+msgctxt "fusioninventory"
+msgid "Fields blacklist"
+msgstr "Liste noire de champs"
+
+#: inc/profile.class.php:261
+msgctxt "fusioninventory"
+msgid "Network equipment SNMP"
+msgstr "SNMP des équipements réseaux"
+
+#: inc/profile.class.php:264
+msgctxt "fusioninventory"
+msgid "Printer SNMP"
+msgstr "SNMP des imprimantes"
+
+#: inc/profile.class.php:267
+msgctxt "fusioninventory"
+msgid "Unknown devices"
+msgstr "Matériel inconnu"
+
+#: inc/profile.class.php:270
+msgctxt "fusioninventory"
+msgid "computer XML manual import"
+msgstr "Import manuel du XML de la machine"
+
+#: inc/profile.class.php:273
+msgctxt "fusioninventory"
+msgid "Printers report"
+msgstr "Rapport imprimantes"
+
+#: inc/profile.class.php:290
+msgctxt "fusioninventory"
+msgid "Menu"
+msgstr "Menu"
+
+#: inc/profile.class.php:293 inc/staticmisc.class.php:287
+msgctxt "fusioninventory"
+msgid "Agents"
+msgstr "Agents"
+
+#: inc/profile.class.php:296
+msgctxt "fusioninventory"
+msgid "Agent remote control"
+msgstr "Controle à distance des agents"
+
+#: inc/profile.class.php:300
+msgctxt "fusioninventory"
+msgid "Configuration"
+msgstr "Configuration"
+
+#: inc/profile.class.php:306 inc/staticmisc.class.php:62
+msgctxt "fusioninventory"
+msgid "Wake On LAN"
+msgstr "WakeOnLan"
+
+#: inc/rulematchedlog.class.php:74 inc/rulematchedlog.class.php:79
+msgctxt "fusioninventory"
 msgid "Import information"
 msgstr "Informations d'import"
 
-#: inc/rulematchedlog.class.php:160 inc/rulematchedlog.class.php:226
+#: inc/rulematchedlog.class.php:152 inc/rulematchedlog.class.php:218
+msgctxt "fusioninventory"
 msgid "Rule import logs"
 msgstr "Règles d'import des logs"
 
-#: inc/snmpmodel.class.php:96
-msgid "Key of model discovery"
-msgstr "Clé modèle pour la découverte"
-
-#: inc/snmpmodel.class.php:133
-msgid "Create SNMP model"
-msgstr "Création de modèle SNMP"
-
-#: inc/snmpmodel.class.php:134
-msgid "Edit SNMP model"
-msgstr "Edition de modèle SNMP"
-
-#: inc/snmpmodel.class.php:175
-msgid "Discovery key"
-msgstr "Clé de découverte"
-
-#: inc/snmpmodel.class.php:424 inc/snmpmodel.class.php:429
-#: inc/snmpmodelimportexport.class.php:490
-#: inc/snmpmodelimportexport.class.php:495
-msgid "Importing SNMP models, please wait..."
-msgstr "Importation des modèles SNMP, veuillez patienter ..."
-
-#: inc/snmpmodelconstructdevice.class.php:58
-msgid "Back to device form information"
-msgstr "Retour au formulaire d'information du matériel"
-
-#: inc/snmpmodelconstructdevice.class.php:531 inc/snmpmodelmib.class.php:103
-#: inc/snmpmodelmib.class.php:252
-msgid "Port Counters"
-msgstr "Compteur de ports"
-
-#: inc/snmpmodelconstructdevice.class.php:541 inc/snmpmodelmib.class.php:104
-#: inc/snmpmodelmib.class.php:253
-msgid "Dynamic port (.x)"
-msgstr "Port dynamique (.x)"
-
 #: inc/snmpmodelimportexport.class.php:134
+msgctxt "fusioninventory"
 msgid "SNMP model import"
 msgstr "Import de modèle SNMP"
 
 #: inc/snmpmodelimportexport.class.php:161
+msgctxt "fusioninventory"
 msgid "Mass import of models"
 msgstr "Importation en masse de modèles"
 
 #: inc/snmpmodelimportexport.class.php:165
+msgctxt "fusioninventory"
 msgid "Mass import of models in folder plugins/fusioninventory/snmpmodels/"
 msgstr "Import de masse de modèles dans le dossier plugins/fusioninventory/snmpmodels/"
 
 #: inc/snmpmodelimportexport.class.php:217
+msgctxt "fusioninventory"
 msgid "Model already exists"
 msgstr "Modèle déjà existant"
 
-#: inc/snmpmodelmib.class.php:96
-msgid "OID list"
-msgstr "Liste des oid"
+#: inc/snmpmodelimportexport.class.php:490
+#: inc/snmpmodelimportexport.class.php:495
+msgctxt "fusioninventory"
+msgid "Importing SNMP models, please wait..."
+msgstr "Importation des modèles SNMP, veuillez patienter ..."
 
-#: inc/snmpmodelmib.class.php:100 inc/snmpmodelmib.class.php:249
-msgid "MIB Label"
-msgstr "Label MIB"
-
-#: inc/snmpmodelmib.class.php:101 inc/snmpmodelmib.class.php:250
-msgid "Object"
-msgstr "Objet"
-
-#: inc/snmpmodelmib.class.php:102 inc/snmpmodelmib.class.php:251
-msgid "OID"
-msgstr "oid"
-
-#: inc/snmpmodelmib.class.php:105 inc/snmpmodelmib.class.php:254
-msgid "Linked fields"
-msgstr "Liaison champs"
-
-#: inc/snmpmodelmib.class.php:244
-msgid "add an OID..."
-msgstr "Ajouter un oid..."
-
-#: inc/statediscovery.class.php:141 inc/stateinventory.class.php:92
-#: inc/taskjoblog.class.php:155 inc/taskjoblog.class.php:234
-#: inc/taskjoblog.class.php:302 inc/taskjobstate.class.php:192
+#: inc/statediscovery.class.php:136 inc/stateinventory.class.php:89
+#: inc/taskjoblog.class.php:188 inc/taskjoblog.class.php:270
+#: inc/taskjoblog.class.php:338 inc/taskjobstate.class.php:223
+msgctxt "fusioninventory"
 msgid "Unique id"
 msgstr "id unique"
 
-#: inc/statediscovery.class.php:148
+#: inc/statediscovery.class.php:143
+msgctxt "fusioninventory"
 msgid "Total discovery devices"
 msgstr "Total de matériels découverts"
 
-#: inc/statediscovery.class.php:149
+#: inc/statediscovery.class.php:144
+msgctxt "fusioninventory"
 msgid "Devices not imported"
 msgstr "Equipements non importés"
 
-#: inc/statediscovery.class.php:150
+#: inc/statediscovery.class.php:145
+msgctxt "fusioninventory"
 msgid "Devices linked"
 msgstr "Equipements liés"
 
-#: inc/statediscovery.class.php:151
+#: inc/statediscovery.class.php:146
+msgctxt "fusioninventory"
 msgid "Devices imported"
 msgstr "Equipements importés"
 
-#: inc/statediscovery.class.php:215 inc/stateinventory.class.php:158
-#: inc/taskjoblog.class.php:69 inc/taskjoblog.class.php:643
-#: inc/taskjoblog.class.php:767 inc/taskjoblog.class.php:988
+#: inc/statediscovery.class.php:210 inc/stateinventory.class.php:155
+#: inc/taskjoblog.class.php:70 inc/taskjoblog.class.php:679
+#: inc/taskjoblog.class.php:803 inc/taskjoblog.class.php:1024
+msgctxt "fusioninventory"
 msgid "Started"
 msgstr "Démarré"
 
-#: inc/statediscovery.class.php:219 inc/stateinventory.class.php:162
-#: inc/taskjobstate.class.php:150
+#: inc/statediscovery.class.php:214 inc/stateinventory.class.php:159
+#: inc/taskjobstate.class.php:181
+msgctxt "fusioninventory"
 msgid "Finished tasks"
 msgstr "Tâches terminées"
 
-#: inc/stateinventory.class.php:98
+#: inc/stateinventory.class.php:95
+msgctxt "fusioninventory"
 msgid "Number per second"
 msgstr "Nombre par seconde"
 
-#: inc/stateinventory.class.php:100
+#: inc/stateinventory.class.php:97
+msgctxt "fusioninventory"
 msgid "To inventory"
 msgstr "A inventorier"
 
-#: inc/stateinventory.class.php:101
+#: inc/stateinventory.class.php:98
+msgctxt "fusioninventory"
 msgid "Error(s)"
 msgstr "Erreur(s)"
 
-#: inc/staticmisc.class.php:61 inc/staticmisc.class.php:209
-msgid "Wake On LAN"
-msgstr "WakeOnLan"
-
-#: inc/staticmisc.class.php:76
+#: inc/staticmisc.class.php:78
+msgctxt "fusioninventory"
 msgid "VMware host remote inventory"
 msgstr "Inventaire distant des hôtes VMware"
 
-#: inc/staticmisc.class.php:93
+#: inc/staticmisc.class.php:98
+msgctxt "fusioninventory"
 msgid "Package install"
 msgstr "Installation d'un paquet"
 
-#: inc/staticmisc.class.php:107
+#: inc/staticmisc.class.php:114
+msgctxt "fusioninventory"
 msgid "Collect data"
 msgstr "Collecte de donnée"
 
-#: inc/staticmisc.class.php:200 inc/staticmisc.class.php:336
-msgid "Agents"
-msgstr "Agents"
-
-#: inc/staticmisc.class.php:203
-msgid "Agent remote control"
-msgstr "Controle à distance des agents"
-
-#: inc/staticmisc.class.php:206
-msgid "Configuration"
-msgstr "Configuration"
-
-#: inc/staticmisc.class.php:212
-msgid "Unknown devices"
-msgstr "Matériel inconnu"
-
-#: inc/staticmisc.class.php:227
-msgid "Existance criteria"
-msgstr "Règles d'existence"
-
-#: inc/staticmisc.class.php:230
-msgid "computer XML manual import"
-msgstr "Import manuel du XML de la machine"
-
-#: inc/staticmisc.class.php:233
-msgid "Fields blacklist"
-msgstr "Liste noire de champs"
-
-#: inc/staticmisc.class.php:242
-msgid "Network equipment SNMP"
-msgstr "SNMP des équipements réseaux"
-
-#: inc/staticmisc.class.php:245
-msgid "Printer SNMP"
-msgstr "SNMP des imprimantes"
-
-#: inc/staticmisc.class.php:248
-msgid "SNMP model"
-msgstr "Modèles SNMP"
-
-#: inc/staticmisc.class.php:251
-msgid "Printers report"
-msgstr "Rapport imprimantes"
-
-#: inc/staticmisc.class.php:263
-msgid "Additional computer information finder"
-msgstr "Chercheur d'information additionnelle de l'ordinateur"
-
-#: inc/staticmisc.class.php:480 inc/staticmisc.class.php:486
-#: inc/taskjob.class.php:456 inc/taskjob.class.php:657
-#: inc/taskjob.class.php:909 inc/taskjob.class.php:1919
+#: inc/staticmisc.class.php:431 inc/staticmisc.class.php:437
+#: inc/taskjob.class.php:179 inc/taskjob.class.php:505
+#: inc/taskjob.class.php:1218 inc/taskjob.view.class.php:415
+msgctxt "fusioninventory"
 msgid "Auto managenement dynamic of agents"
 msgstr "Gestion dynamique des agents"
 
-#: inc/staticmisc.class.php:584
+#: inc/staticmisc.class.php:535
+msgctxt "fusioninventory"
 msgid "Fusinv"
 msgstr "FusInv"
 
-#: inc/task.class.php:86 inc/task.class.php:240 inc/taskjob.class.php:1491
-#: inc/taskjob.class.php:1855
-msgid "Scheduled date"
-msgstr "Date d'exécution"
+#: inc/task.class.php:82 inc/task.view.class.php:502
+msgctxt "fusioninventory"
+msgid "Schedule start"
+msgstr "Heure de démarrage programmée"
 
-#: inc/task.class.php:112 inc/task.class.php:255 inc/taskjob.class.php:1999
-msgid "Communication type"
-msgstr "Communication"
+#: inc/task.class.php:88 inc/task.view.class.php:508
+msgctxt "fusioninventory"
+msgid "Schedule end"
+msgstr "Heure de fin programmée"
 
-#: inc/task.class.php:210 inc/taskjob.class.php:2080
-#: inc/taskjob.class.php:2113
-msgid "Force start"
-msgstr "Forcer le démarrage"
+#: inc/task.class.php:295
+msgctxt "fusioninventory"
+msgid ""
+"The agent is requesting a configuration that has already been sent to him by"
+" the server. It is more likely that the agent is subject to a critical "
+"error."
+msgstr ""
 
-#: inc/task.class.php:230
-msgid "Reinitialization"
-msgstr "Réinitialiser"
+#: inc/task.class.php:307
+msgctxt "fusioninventory"
+msgid "The task has been deactivated after preparation of this job."
+msgstr ""
 
-#: inc/task.class.php:258 inc/task.class.php:565 inc/taskjob.class.php:2002
-msgid "Server contacts the agent (push)"
-msgstr "Le serveur initie le contact avec l'agent (push)"
+#: inc/task.class.php:326
+msgctxt "fusioninventory"
+msgid "This job can not be executed anymore due to the task's schedule."
+msgstr ""
 
-#: inc/task.class.php:260 inc/task.class.php:568 inc/taskjob.class.php:2004
-msgid "Agent contacts the server (pull)"
-msgstr "L'agent initie le contact avec le serveur (pull)"
+#: inc/task.class.php:360
+msgctxt "fusioninventory"
+msgid "This job can not be executed anymore due to the task's timeslot."
+msgstr ""
 
-#: inc/task.class.php:284 inc/taskjob.class.php:2025
-msgid "month(s)"
-msgstr "Mode de communication"
+#: inc/task.class.php:379
+msgctxt "fusioninventory"
+msgid "This agent does not belong anymore in the actors defined in the job."
+msgstr ""
 
-#: inc/task.class.php:430
-msgid "Planned for running"
-msgstr "Planifié pour exécution"
+#: inc/task.view.class.php:81
+msgctxt "fusioninventory"
+msgid "To Be Done"
+msgstr ""
 
-#: inc/task.class.php:448
+#: inc/task.view.class.php:89
+msgctxt "fusioninventory"
+msgid "Off"
+msgstr "Arrêté"
+
+#: inc/task.view.class.php:101
+msgctxt "fusioninventory"
+msgid "refresh interval"
+msgstr "Intervalle de rafraîchissement"
+
+#: inc/task.view.class.php:185
+msgctxt "fusioninventory"
+msgid "Show/Hide details"
+msgstr "Montre/cache les détails"
+
+#: inc/task.view.class.php:219 inc/task.view.class.php:373
+msgctxt "fusioninventory"
+msgid "Not done yet"
+msgstr "Par encore terminé"
+
+#: inc/task.view.class.php:220 inc/task.view.class.php:374
+msgctxt "fusioninventory"
 msgid "In error"
-msgstr " En erreur"
+msgstr "En erreur"
 
-#: inc/taskjob.class.php:217 inc/taskjob.class.php:220
-msgid "New action"
-msgstr "Nouvelle action"
+#: inc/task.view.class.php:221 inc/task.view.class.php:375
+msgctxt "fusioninventory"
+msgid "Successful"
+msgstr "Succès"
 
-#: inc/taskjob.class.php:271 inc/taskjob.class.php:421
-#: inc/taskjob.class.php:1857 inc/taskjoblog.class.php:533
+#: inc/task.view.class.php:222 inc/task.view.class.php:376
+msgctxt "fusioninventory"
+msgid "Running"
+msgstr "En cours"
+
+#: inc/task.view.class.php:224 inc/task.view.class.php:378
+#: inc/taskjobstate.class.php:79
+msgctxt "fusioninventory"
+msgid "Cancelled"
+msgstr "Annulé"
+
+#: inc/task.view.class.php:384
+msgctxt "fusioninventory"
+msgid "N/A"
+msgstr ""
+
+#: inc/task.view.class.php:412
+msgctxt "fusioninventory"
+msgid "Show/Hide Agent details"
+msgstr "Montrer/cacher les détails des agents"
+
+#: inc/task.view.class.php:439
+msgctxt "fusioninventory"
+msgid "Execution"
+msgstr "Exécution"
+
+#: inc/task.view.class.php:514
+msgctxt "fusioninventory"
+msgid "Timeslot"
+msgstr "Créneau horaire"
+
+#: inc/taskjob.class.php:144 inc/taskjob.class.php:1156
+#: inc/taskjob.class.php:1735 inc/taskjoblog.class.php:569
+msgctxt "fusioninventory"
 msgid "Definition"
 msgstr "Périmètre"
 
-#: inc/taskjob.class.php:275
-msgid "Action targets: what the action aims"
-msgstr "Cible de l'action : ce que l'action vise"
+#: inc/taskjob.class.php:146 inc/taskjob.class.php:1157
+#: inc/taskjob.class.php:1752
+msgctxt "fusioninventory"
+msgid "Action"
+msgstr "Action"
 
-#: inc/taskjob.class.php:285
-msgid "Action actor: what do the action"
-msgstr "Acteur de l'action : Qui exécute l'action"
-
-#: inc/taskjob.class.php:295
-msgid "Time between task start and start this action"
-msgstr "Temps entre le démarrage de la tâche et le démarrage de cette action"
-
-#: inc/taskjob.class.php:338
-msgid "Number of trials"
-msgstr "Nombre d'essais"
-
-#: inc/taskjob.class.php:349
-msgid "Time between 2 trials (in minutes)"
-msgstr "Temps entre 2 essais (en minutes)"
-
-#: inc/taskjob.class.php:374
-msgid "Purge"
-msgstr "Purge"
-
-#: inc/taskjob.class.php:376
-msgid "Confirm the final deletion ?"
-msgstr "Confirmez vous la suppression totale ?"
-
-#: inc/taskjob.class.php:459 inc/taskjob.class.php:662
-#: inc/taskjob.class.php:911 inc/taskjob.class.php:1923
+#: inc/taskjob.class.php:182 inc/taskjob.class.php:507
+#: inc/taskjob.class.php:1222 inc/taskjob.view.class.php:420
+msgctxt "fusioninventory"
 msgid "Auto managenement dynamic of agents (same subnet)"
 msgstr "Gestion dynamique des agents (même sous-réseau)"
 
-#: inc/taskjob.class.php:476
+#: inc/taskjob.class.php:199
+msgctxt "fusioninventory"
 msgid "Selection"
 msgstr "Selectionnez"
 
-#: inc/taskjob.class.php:1233
+#: inc/taskjob.class.php:727
+msgctxt "fusioninventory"
 msgid "Unable to run task because some jobs is running yet!"
 msgstr "Impossible de lancer la tâche car il reste des actions en cours!"
 
-#: inc/taskjob.class.php:1463
+#: inc/taskjob.class.php:797
+msgctxt "fusioninventory"
 msgid "Action on this device"
 msgstr "Action sur ce matériel"
 
-#: inc/taskjob.class.php:2325
+#: inc/taskjob.class.php:825 inc/taskjob.class.php:1154
+msgctxt "fusioninventory"
+msgid "Scheduled date"
+msgstr "Date d'exécution"
+
+#: inc/taskjob.class.php:1155
+msgctxt "fusioninventory"
+msgid "Periodicity"
+msgstr ""
+
+#: inc/taskjob.class.php:1380 inc/taskjob.class.php:1413
+msgctxt "fusioninventory"
+msgid "Force start"
+msgstr "Forcer le démarrage"
+
+#: inc/taskjob.class.php:1598
+msgctxt "fusioninventory"
 msgid "Action after finish running task"
 msgstr "Action après la fin d'exécution de la tâche"
 
-#: inc/taskjob.class.php:2330
+#: inc/taskjob.class.php:1603
+msgctxt "fusioninventory"
 msgid "Delete this task and finish"
 msgstr "Supprimer cette tâche et fin"
 
-#: inc/taskjob.class.php:2335 inc/wizard.class.php:248
+#: inc/taskjob.class.php:1608 inc/wizard.class.php:248
+msgctxt "fusioninventory"
 msgid "Finish"
 msgstr "Fin"
 
-#: inc/taskjob.class.php:2340
+#: inc/taskjob.class.php:1613
+msgctxt "fusioninventory"
 msgid "Run again this task"
 msgstr "Exécuter encore une fois cette tâche"
 
-#: inc/taskjoblog.class.php:79 inc/taskjoblog.class.php:675
-#: inc/taskjoblog.class.php:1017
-msgid "unknown"
-msgstr "Inconnu"
+#: inc/taskjob.view.class.php:60
+msgctxt "fusioninventory"
+msgid "Jobs configuration"
+msgstr "Configuration des jobs"
 
-#: inc/taskjoblog.class.php:235 inc/taskjoblog.class.php:495
+#: inc/taskjob.view.class.php:183
+msgctxt "fusioninventory"
+msgid "Add a job"
+msgstr "Ajouter un job"
+
+#: inc/taskjob.view.class.php:310
+msgctxt "fusioninventory"
+msgid "Actor Type"
+msgstr "Type d'acteur"
+
+#: inc/taskjob.view.class.php:314
+msgctxt "fusioninventory"
+msgid "Target Type"
+msgstr "Type de cible"
+
+#: inc/taskjob.view.class.php:346
+msgctxt "fusioninventory"
+msgid "Actor Item"
+msgstr "Acteur"
+
+#: inc/taskjob.view.class.php:350
+msgctxt "fusioninventory"
+msgid "Target Item"
+msgstr "Cible"
+
+#: inc/taskjob.view.class.php:609 inc/taskjob.view.class.php:613
+msgctxt "fusioninventory"
+msgid "New action"
+msgstr "Nouvelle action"
+
+#: inc/taskjob.view.class.php:666
+msgctxt "fusioninventory"
+msgid "Module method"
+msgstr ""
+
+#: inc/taskjob.view.class.php:708 inc/taskjob.view.class.php:738
+msgctxt "fusioninventory"
+msgid "Targets"
+msgstr "Cibles"
+
+#: inc/taskjob.view.class.php:713
+msgctxt "fusioninventory"
+msgid "The items that should be applied for this job."
+msgstr "Ces éléments s'appliqueront pour ce job"
+
+#: inc/taskjob.view.class.php:719 inc/taskjob.view.class.php:760
+msgctxt "fusioninventory"
+msgid "Actors"
+msgstr "Acteurs"
+
+#: inc/taskjob.view.class.php:723
+msgctxt "fusioninventory"
+msgid "The items that should carry out those targets."
+msgstr ""
+
+#: inc/taskjob.view.class.php:746 inc/taskjob.view.class.php:768
+msgctxt "fusioninventory"
+msgid "Clear list"
+msgstr "Vider la liste"
+
+#: inc/taskjob.view.class.php:750 inc/taskjob.view.class.php:772
+msgctxt "fusioninventory"
+msgid "Delete selected items"
+msgstr "Supprimer les éléments sélectionnés"
+
+#: inc/taskjob.view.class.php:875
+msgctxt "fusioninventory"
+msgid "Cancel modifications"
+msgstr "Annuler les modifications"
+
+#: inc/taskjob.view.class.php:881
+msgctxt "fusioninventory"
+msgid "Purge"
+msgstr "Purge"
+
+#: inc/taskjob.view.class.php:883
+msgctxt "fusioninventory"
+msgid "Confirm the final deletion ?"
+msgstr "Confirmez vous la suppression totale ?"
+
+#: inc/taskjoblog.class.php:80 inc/taskjoblog.class.php:711
+msgctxt "fusioninventory"
+msgid "Info"
+msgstr ""
+
+#: inc/taskjoblog.class.php:271 inc/taskjoblog.class.php:531
+msgctxt "fusioninventory"
 msgid "Process number"
 msgstr "Numéro de process"
 
-#: inc/taskjoblog.class.php:879 inc/taskjoblog.class.php:930
+#: inc/taskjoblog.class.php:915 inc/taskjoblog.class.php:966
+msgctxt "fusioninventory"
 msgid "View logs of this execution"
 msgstr "Voir les logs de cette exécution"
 
-#: inc/taskjoblog.class.php:900 inc/taskjoblog.class.php:955
+#: inc/taskjoblog.class.php:936 inc/taskjoblog.class.php:991
+msgctxt "fusioninventory"
 msgid "See all executions"
 msgstr "Voir toutes les exécutions"
 
-#: inc/taskjoblog.class.php:1088
+#: inc/taskjoblog.class.php:1053
+msgctxt "fusioninventory"
+msgid "unknown"
+msgstr "Inconnu"
+
+#: inc/taskjoblog.class.php:1124
+msgctxt "fusioninventory"
 msgid "devices queried"
 msgstr "périphériques interrogés"
 
-#: inc/taskjoblog.class.php:1089
+#: inc/taskjoblog.class.php:1125
+msgctxt "fusioninventory"
 msgid "devices found"
 msgstr "périphériques trouvés"
 
-#: inc/taskjoblog.class.php:1090
+#: inc/taskjoblog.class.php:1126
+msgctxt "fusioninventory"
 msgid ""
 "SNMP equipment definition isn't up to date on agent. For the next run, it "
 "will get new version from server."
-msgstr "Les définitions d'équipements SNMP ne sont plus à jour sur l'agent. Au prochain démarrage, il obtiendra la nouvelle version depuis le serveur."
+msgstr ""
 
-#: inc/taskjoblog.class.php:1091
+#: inc/taskjoblog.class.php:1127
+msgctxt "fusioninventory"
 msgid "Add the item"
 msgstr "Ajouter un objet"
 
-#: inc/taskjoblog.class.php:1092
+#: inc/taskjoblog.class.php:1128
+msgctxt "fusioninventory"
 msgid "Update the item"
 msgstr "Mise à jour de l'objet"
 
-#: inc/taskjoblog.class.php:1093
+#: inc/taskjoblog.class.php:1129
+msgctxt "fusioninventory"
 msgid "Inventory started"
 msgstr "Inventaire débuté"
 
-#: inc/taskjoblog.class.php:1094
+#: inc/taskjoblog.class.php:1130
+msgctxt "fusioninventory"
 msgid "Detail"
 msgstr "Détail"
 
-#: inc/taskjoblog.class.php:1095
+#: inc/taskjoblog.class.php:1131
+msgctxt "fusioninventory"
 msgid "Agent communication error, impossible to start agent"
 msgstr "Erreur de communication de l'agent, impossible de lancer l'agent"
 
-#: inc/taskjoblog.class.php:1096
+#: inc/taskjoblog.class.php:1132
+msgctxt "fusioninventory"
 msgid "Agent stopped/crashed"
 msgstr "Agent arrêté/crashé"
 
-#: inc/taskjobstate.class.php:143
+#: inc/taskjoblog.class.php:1204
+msgctxt "fusioninventory"
+msgid "Completion"
+msgstr ""
+
+#: inc/taskjobstate.class.php:75
+msgctxt "fusioninventory"
+msgid "Server has sent data to the agent"
+msgstr "Le serveur a envoyé les données à l'agent"
+
+#: inc/taskjobstate.class.php:76
+msgctxt "fusioninventory"
+msgid "Agent replied with data to the server"
+msgstr "L'agent a répondu en envoyant des données au serveur"
+
+#: inc/taskjobstate.class.php:77
+msgctxt "fusioninventory"
+msgid "Finished"
+msgstr "Terminé"
+
+#: inc/taskjobstate.class.php:174
+msgctxt "fusioninventory"
 msgid "Running tasks"
 msgstr "Tâches en cours"
 
-#: inc/unknowndevice.class.php:113 inc/unknowndevice.class.php:347
+#: inc/timeslotentry.class.php:61
+msgctxt "fusioninventory"
+msgid "Time slot entry"
+msgstr ""
+
+#: inc/timeslotentry.class.php:108
+msgctxt "fusioninventory"
+msgid "Start time"
+msgstr "Heure de début"
+
+#: inc/timeslotentry.class.php:134
+msgctxt "fusioninventory"
+msgid "End time"
+msgstr "Heure de fin"
+
+#: inc/unknowndevice.class.php:56 inc/unknowndevice.class.php:78
+msgctxt "fusioninventory"
+msgid "Unknown device"
+msgstr "Matériel inconnu"
+
+#: inc/unknowndevice.class.php:116 inc/unknowndevice.class.php:333
+msgctxt "fusioninventory"
 msgid "Network hub"
 msgstr "Hub réseau"
 
-#: inc/unknowndevice.class.php:335
+#: inc/unknowndevice.class.php:321
+msgctxt "fusioninventory"
 msgid "Approved devices"
 msgstr "Matériel approuvé"
 
-#: inc/unknowndevice.class.php:436
+#: inc/unknowndevice.class.php:411
+msgctxt "fusioninventory"
 msgid "Import unknown device into asset"
 msgstr "Matériel inconnu à importer dans l'inventaire"
 
 #: inc/wizard.class.php:74
+msgctxt "fusioninventory"
 msgid "Breadcrumb"
 msgstr "Fil d'ariane"
 
 #: inc/wizard.class.php:338 inc/wizard.class.php:356 inc/wizard.class.php:374
 #: inc/wizard.class.php:394 inc/wizard.class.php:409
+msgctxt "fusioninventory"
 msgid "Action choice"
 msgstr "Choix de l'action"
 
 #: inc/wizard.class.php:339 inc/wizard.class.php:357 inc/wizard.class.php:375
 #: inc/wizard.class.php:410
+msgctxt "fusioninventory"
 msgid "Type of device to inventory"
 msgstr "Type de matériel à inventorier"
 
 #: inc/wizard.class.php:343
+msgctxt "fusioninventory"
 msgid "Agent configuration"
 msgstr "Configuration des agents"
 
 #: inc/wizard.class.php:358
+msgctxt "fusioninventory"
 msgid "ESX servers management"
 msgstr "Gestion des serveurs ESX"
 
 #: inc/wizard.class.php:359 inc/wizard.class.php:380 inc/wizard.class.php:429
+msgctxt "fusioninventory"
 msgid "Run tasks"
 msgstr "Exécutions de tâches"
 
 #: inc/wizard.class.php:360 inc/wizard.class.php:381 inc/wizard.class.php:430
+msgctxt "fusioninventory"
 msgid "Tasks running result"
 msgstr "Résultats d'exécution des tâches"
 
 #: inc/wizard.class.php:361 inc/wizard.class.php:382 inc/wizard.class.php:431
+msgctxt "fusioninventory"
 msgid "End Task"
 msgstr "Terminer la tâche"
 
 #: inc/wizard.class.php:411
+msgctxt "fusioninventory"
 msgid "Choice (netdiscovery or inventory)"
 msgstr "Choix (Découverte réseau ou inventaire)"
 
 #: inc/wizard.class.php:452
+msgctxt "fusioninventory"
 msgid "Discover the network"
 msgstr "Découvrir le réseau"
 
 #: inc/wizard.class.php:457
+msgctxt "fusioninventory"
 msgid "Inventory devices"
 msgstr "Inventorier le matériel"
 
 #: inc/wizard.class.php:462
+msgctxt "fusioninventory"
 msgid "Welcome in FusionInventory. Begin configuration?"
 msgstr "Bienvenue dans FusionInventory. Commençons à configurer?"
 
 #: inc/wizard.class.php:488
+msgctxt "fusioninventory"
 msgid "ESX servers"
 msgstr "Serveurs ESX"
 
 #: inc/wizard.class.php:492
+msgctxt "fusioninventory"
 msgid "Network devices and printers"
 msgstr "Equipements et imprimantes réseau"
 
 #: inc/wizard.class.php:1020
+msgctxt "fusioninventory"
 msgid "Credential"
 msgstr "Connexion"
-
-#: report/computer_last_inventory.php:73
-msgid "Number of days (minimum) since last inventory"
-msgstr "Nombre de jours (minimum) depuis le dernier inventaire"

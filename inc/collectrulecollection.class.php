@@ -46,6 +46,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginFusioninventoryCollectRuleCollection extends RuleCollection {
 
+   static $rightname = "plugin_fusioninventory_rulecollect";
+
    // From RuleCollection
    public $stop_on_first_match=FALSE;
    //public $right='rule_import';
