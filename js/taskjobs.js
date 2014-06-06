@@ -1019,7 +1019,6 @@ taskjobs.update_refresh_buttons = function( ajax_url, task_id) {
       .off("click");
    $('.refresh_button')
       .on('click', function(e) {
-          console.debug(e)
          taskjobs.queue_refresh_logs( ajax_url, task_id )
       });
 
