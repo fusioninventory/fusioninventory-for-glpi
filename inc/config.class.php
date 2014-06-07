@@ -166,6 +166,7 @@ class PluginFusioninventoryConfig extends CommonDBTM {
       $moduleTabs = array();
       $this->addStandardTab("PluginFusioninventoryConfig", $ong, $options);
       $this->addStandardTab("PluginFusioninventoryAgentmodule", $ong, $options);
+      $this->addStandardTab("PluginFusioninventoryLock", $ong, $options);
 
       if (isset($_SESSION['glpi_plugin_fusioninventory']['configuration']['moduletabforms'])) {
          $fusionTabs = $ong;
