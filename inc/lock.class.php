@@ -626,6 +626,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
       $exclude[] = "is_template";
       $exclude[] = "template_name";
       $exclude[] = "comment";
+      $exclude[] = "ticket_tco";
       return $exclude;
    }
 
@@ -756,6 +757,21 @@ class PluginFusioninventoryLock extends CommonDBTM{
          }
       }
       return $val;
+   }
+
+
+
+   static function showLockIcon($itemtype) {
+      global $PLUGIN_HOOKS;
+
+      if (isset($_GET['id'])
+              && $_GET['id'] > 0) {
+         $pfLock = new self();
+         $a_locks = $pfLock->getLockFields(getTableForItemType($itemtype), $_GET['id']);
+         foreach ($a_locks as $field) {
+            $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/lock".strtolower($itemtype)."/".$field.".css";
+         }
+      }
    }
 }
 
