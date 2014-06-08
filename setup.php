@@ -418,14 +418,14 @@ function plugin_init_fusioninventory() {
 
          // Hack for NetworkEquipment display ports
          if (strstr($_SERVER['PHP_SELF'], '/ajax/common.tabs.php')) {
-            if (isset($_POST['target'])
-                    && strstr($_POST['target'], '/front/networkequipment.form.php')
-                    && $_POST['itemtype'] == 'NetworkEquipment') {
+            if (isset($_GET['_target'])
+                    && strstr($_GET['_target'], '/front/networkequipment.form.php')
+                    && $_GET['_itemtype'] == 'NetworkEquipment') {
 
-               if ($_POST['glpi_tab'] == 'NetworkPort$1') {
-                  $_POST['glpi_tab'] = 'PluginFusioninventoryNetworkEquipment$1';
-               } else if ($_POST['glpi_tab'] == 'PluginFusioninventoryNetworkEquipment$1') {
-                  $_POST['displaysnmpinfo'] = 1;
+               if ($_GET['_glpi_tab'] == 'NetworkPort$1') {
+                  $_GET['_glpi_tab'] = 'PluginFusioninventoryNetworkEquipment$1';
+               } else if ($_GET['_glpi_tab'] == 'PluginFusioninventoryNetworkEquipment$1') {
+                  $_GET['displaysnmpinfo'] = 1;
                }
             }
          }
