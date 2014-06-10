@@ -398,12 +398,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          parent::processMassiveActionsForOneItemtype($ma, $item, $ids);
       }
    }
-   
+
    function cleanDBOnPurge() {
       $dynamic_group = new PluginFusioninventoryDeployGroup_Dynamicdata();
       $static_group  = new PluginFusioninventoryDeployGroup_Staticdata();
       $dynamic_group->deleteByCriteria(array('plugin_fusioninventory_deploygroups_id' => $this->getID()));
-      $static_group->deleteByCriteria(array('plugin_fusioninventory_deploygroups_id' => $this->getID()));      
+      $static_group->deleteByCriteria(array('plugin_fusioninventory_deploygroups_id' => $this->getID()));
    }
 }
 ?>

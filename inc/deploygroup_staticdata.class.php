@@ -105,7 +105,7 @@ class PluginFusioninventoryDeployGroup_Staticdata extends CommonDBRelation{
          unset($search_params['metacriteria']);
       }
       PluginFusioninventoryDeployGroup::showCriteria($item, true, $search_params);
-            
+
       unset($_SESSION['glpisearch']['PluginFusioninventoryComputer']);
       if (isset($_GET['preview'])) {
          //Add extra parameters for massive action display : only the Add action should be displayed
