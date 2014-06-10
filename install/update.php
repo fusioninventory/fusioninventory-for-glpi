@@ -1726,7 +1726,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             '00:50:56:C0:00:01',
             '00:50:56:C0:00:08',
             '02:80:37:EC:02:00',
-            '50:50:54:50:30:30');
+            '50:50:54:50:30:30',
+            '24:b6:20:52:41:53');
          foreach ($a_input as $value) {
             $query = "SELECT * FROM `".$newTable."`
                WHERE `plugin_fusioninventory_criterium_id`='".$a_criteria['macAddress']."'

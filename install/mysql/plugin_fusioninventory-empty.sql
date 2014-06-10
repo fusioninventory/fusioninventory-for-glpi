@@ -1188,7 +1188,8 @@ INSERT INTO `glpi_plugin_fusioninventory_inventorycomputerblacklists`
 (58, 3, '02:80:37:EC:02:00'),
 (59, 1, 'MB-1234567890'),
 (60, 1, '0'),
-(61, 1, 'empty');
+(61, 1, 'empty'),
+(62, 3, '24:b6:20:52:41:53');
 
 
 
