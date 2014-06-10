@@ -163,7 +163,7 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
 
       $credentialip->getFromDB($taskjobstate->fields['items_id']);
       $credential->getFromDB($credentialip->fields['plugin_fusioninventory_credentials_id']);
-      
+
       $order['uuid'] = $taskjobstate->fields['uniqid'];
       $order['host'] = $credentialip->fields['ip'];
       $order['user'] = $credential->fields['username'];

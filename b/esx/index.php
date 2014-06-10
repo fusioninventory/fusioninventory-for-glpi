@@ -59,7 +59,7 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
          $pfTask         = new PluginFusioninventoryTask();
          $pfTaskjob      = new PluginFusioninventoryTaskjob();
          $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      
+
          $agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
 
          if (isset($agent['id'])) {
@@ -67,15 +67,15 @@ if (isset($_GET['action']) && isset($_GET['machineid'])) {
                $agent['id'],
                array('InventoryComputerESX')
             );
-            
+
             ////start of json response
             $order = new stdClass;
             $order->jobs = array();
-            
+
             $module = new PluginFusioninventoryInventoryComputerESX();
             foreach ($taskjobstates as $taskjobstate) {
                $order->jobs[] = $module->run($taskjobstate);
-               
+
                $taskjobstate->changeStatus(
                   $taskjobstate->fields['id'] ,
                   $taskjobstate::SERVER_HAS_SENT_DATA

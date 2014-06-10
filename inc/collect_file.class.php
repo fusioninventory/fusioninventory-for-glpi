@@ -159,7 +159,7 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo "</td>";
       echo "<td>".__('Limit', 'fusioninventory')."</td>";
       echo "<td>";
-      Dropdown::showNumber('limit', 
+      Dropdown::showNumber('limit',
                            array('min'   => 1,
                                  'max'   => 100,
                                  'value' => 5
@@ -241,7 +241,7 @@ class PluginFusioninventoryCollect_File extends CommonDBTM {
       echo __('Type', 'fusioninventory');
       echo "</td>";
       echo "<td>";
-      Dropdown::showFromArray('type', 
+      Dropdown::showFromArray('type',
          array(self::FILE => __('File', 'fusioninventory'),
                self::DIR  => __('Folder', 'fusioninventory')
          )

@@ -180,7 +180,7 @@ class PluginFusioninventoryIPRange_ConfigSecurity extends CommonDBRelation {
 
 
    function post_purgeItem() {
-      
+
    }
 }
 
