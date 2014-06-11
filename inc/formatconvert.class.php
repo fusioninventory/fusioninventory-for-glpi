@@ -287,6 +287,14 @@ class PluginFusioninventoryFormatconvert {
                }
             }
          }
+         if ((isset($array['BIOS']['MMANUFACTURER']))
+                      AND (!empty($array['BIOS']['MMANUFACTURER']))) {
+            $a_inventory['Computer']['mmanufacturer'] = $array['BIOS']['MMANUFACTURER'];
+         }
+         if ((isset($array['BIOS']['BMANUFACTURER']))
+                      AND (!empty($array['BIOS']['BMANUFACTURER']))) {
+            $a_inventory['Computer']['bmanufacturer'] = $array['BIOS']['BMANUFACTURER'];
+         }
 
          if (isset($array['BIOS']['SMODEL']) AND $array['BIOS']['SMODEL'] != '') {
             $a_inventory['Computer']['computermodels_id'] = $array['BIOS']['SMODEL'];
@@ -308,14 +316,14 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * Type of computer
-      
+
       //First the HARDWARE/VMSYSTEM is not Physical : then it's a virtual machine
-      if (isset($array['HARDWARE']['VMSYSTEM']) 
-            && $array['HARDWARE']['VMSYSTEM'] != '' 
+      if (isset($array['HARDWARE']['VMSYSTEM'])
+            && $array['HARDWARE']['VMSYSTEM'] != ''
                && $array['HARDWARE']['VMSYSTEM'] != 'Physical') {
          $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['VMSYSTEM'];
       } else {
-         //It's not a virtual machine, then check : 
+         //It's not a virtual machine, then check :
          //1 - HARDWARE/CHASSIS_TYPE
          //2 - BIOS/TYPE
          //3 - BIOS/MMODEL
