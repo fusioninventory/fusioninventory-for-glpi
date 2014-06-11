@@ -287,14 +287,6 @@ function plugin_init_fusioninventory() {
             )
          );
       }
-      if (  script_endswith("/computer.form.php") ) {
-         PluginFusioninventoryLock::showLockIcon('Computer');
-      } else if (  script_endswith("/printer.form.php") ) {
-         PluginFusioninventoryLock::showLockIcon('Printer');
-      } else if (  script_endswith("/networkequipment.form.php") ) {
-         PluginFusioninventoryLock::showLockIcon('NetworkEquipment');
-      }
-
 
       if (  script_endswith("task.form.php")
          or script_endswith("taskjob.php")
@@ -327,6 +319,8 @@ function plugin_init_fusioninventory() {
             'Computer' =>  array('PluginFusioninventoryInventoryComputerComputer',
                                  'showInfo'),
             'NetworkEquipment' => array('PluginFusioninventoryNetworkEquipment',
+                                        'showInfo'),
+            'Printer' => array('PluginFusioninventoryPrinter',
                                         'showInfo'));
 
       $PLUGIN_HOOKS['use_massive_action']['fusioninventory'] = 1;
