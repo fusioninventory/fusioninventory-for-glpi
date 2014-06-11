@@ -269,10 +269,10 @@ class PluginFusioninventoryProfile extends Profile {
           array('itemtype'  => 'PluginFusioninventoryInventoryComputerImportXML',
                 'label'     => __('computer XML manual import', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_importxml'),
-          array('rights'    => array(CREATE  => __('Create')),
+          array('rights'    => array(READ => __('Read')),
                 'label'     => __('Printers report', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_reportprinter'),
-          array('rights'    => array(CREATE  => __('Create')),
+          array('rights'    => array(READ => __('Read')),
                 'label'     => __('Network report'),
                 'field'     => 'plugin_fusioninventory_reportnetworkequipment'),
           array('itemtype'  => 'PluginFusioninventoryLock',
@@ -286,28 +286,33 @@ class PluginFusioninventoryProfile extends Profile {
 
    function getRightsGeneral() {
       $rights = array(
-          array('rights'    => array(CREATE  => __('Create')),
+          array('rights'    => array(READ => __('Read')),
                 'label'     => __('Menu', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_menu'),
           array('itemtype'  => 'PluginFusioninventoryAgent',
                 'label'     => __('Agents', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_agent'),
-          array('rights'    => array(CREATE  => __('Create')),
+          array('rights'    => array(READ => __('Read')),
                 'label'     => __('Agent remote control', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_remotecontrol'),
-          array('itemtype'  => 'PluginFusioninventoryConfig',
+          array('rights'    => array(READ => __('Read'), UPDATE => __('Update')),
+                'itemtype'  => 'PluginFusioninventoryConfig',
                 'label'     => __('Configuration', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_configuration'),
           array('itemtype'  => 'PluginFusioninventoryTask',
                 'label'     => _n('Task', 'Tasks', 2, 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_task'),
-          array('rights'    => array(CREATE  => __('Create')),
+          array('rights'    => array(READ => __('Read')),
                 'label'     => __('Wake On LAN', 'fusioninventory'),
                 'field'     => 'plugin_fusioninventory_wol'),
-          array('rights'    => CommonDBTM::getRights(),
+          array('itemtype'  => 'PluginFusioninventoryDeployGroup',
                 'label'     => __('Groups of computers', 'fusioninventory'),
-                'field'     => 'plugin_fusioninventory_group')
+                'field'     => 'plugin_fusioninventory_group'),
+          array('itemtype'  => 'PluginFusioninventoryCollect',
+                'label'     => __('Additional computer information', 'fusioninventory'),
+                'field'     => 'plugin_fusioninventory_collect')
       );
+
       return $rights;
    }
 
@@ -339,6 +344,27 @@ class PluginFusioninventoryProfile extends Profile {
       }
    }
 
+   static function removeRightsFromSession() {
+      $profile = new self();
+      foreach ($profile->getAllRights() as $right) {
+         if (isset($_SESSION['glpiactiveprofile'][$right['field']])) {
+            unset($_SESSION['glpiactiveprofile'][$right['field']]);
+         }
+      }
+
+      if (isset($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryMenu'])) {
+         unset ($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryMenu']);
+      }
+      if (isset($_SESSION['glpimenu']['plugins']['content']['pluginfusioninventorymenu'])) {
+         unset ($_SESSION['glpimenu']['plugins']['content']['pluginfusioninventorymenu']);
+      }
+      if (isset($_SESSION['glpimenu']['assets']['types']['PluginFusioninventoryUnknowndevice'])) {
+         unset ($_SESSION['glpimenu']['plugins']['types']['PluginFusioninventoryUnknowndevice']);
+      }
+      if (isset($_SESSION['glpimenu']['assets']['content']['pluginfusioninventoryunknowndevice'])) {
+         unset ($_SESSION['glpimenu']['assets']['content']['pluginfusioninventoryunknowndevice']);
+      }
+   }
 
    static function migrateProfiles() {
       global $DB;
@@ -348,7 +374,7 @@ class PluginFusioninventoryProfile extends Profile {
       //Load mapping of old rights to their new equivalent
       $oldrights = self::getOldRightsMappings();
 
-      //for each old profile : translate old right the new one
+      //For each old profile : translate old right the new one
       foreach ($profiles as $id => $profile) {
          switch ($profile['right']) {
             case 'r' :
@@ -364,16 +390,60 @@ class PluginFusioninventoryProfile extends Profile {
          }
          //Write in glpi_profilerights the new fusioninventory right
          if (isset($oldrights[$profile['type']])) {
+            //There's one new right corresponding to the old one
             if (!is_array($oldrights[$profile['type']])) {
                self::addDefaultProfileInfos($profile['profiles_id'],
                                             array($oldrights[$profile['type']] => $value));
             } else {
+               //One old right has been splitted into serveral new ones
                foreach ($oldrights[$profile['type']] as $newtype) {
                   self::addDefaultProfileInfos($profile['profiles_id'],
                                                array($newtype => $value));
                }
             }
          }
+      }
+   }
+
+   /**
+   * Init profiles during installation :
+   * - add rights in profile table for the current user's profile
+   * - current profile has all rights on the plugin
+   */
+   static function initProfile() {
+      $pfProfile = new self();
+      $profile   = new Profile();
+      $a_rights  = $pfProfile->getAllRights();
+
+      foreach ($a_rights as $data) {
+         if (countElementsInTable("glpi_profilerights", "`name` = '".$data['field']."'") == 0) {
+            ProfileRight::addProfileRights(array($data['field']));
+            $_SESSION['glpiactiveprofile'][$data['field']] = 0;
+         }
+      }
+
+      // Add all rights to current profile of the user
+      if (isset($_SESSION['glpiactiveprofile'])) {
+         $dataprofile       = array();
+         $dataprofile['id'] = $_SESSION['glpiactiveprofile']['id'];
+         $profile->getFromDB($_SESSION['glpiactiveprofile']['id']);
+         foreach ($a_rights as $info) {
+            if (is_array($info)
+                && ((!empty($info['itemtype'])) || (!empty($info['rights'])))
+                  && (!empty($info['label'])) && (!empty($info['field']))) {
+
+               if (isset($info['rights'])) {
+                  $rights = $info['rights'];
+               } else {
+                  $rights = $profile->getRightsFor($info['itemtype']);
+               }
+               foreach ($rights as $right => $label) {
+                  $dataprofile['_'.$info['field']][$right] = 1;
+                  $_SESSION['glpiactiveprofile'][$data['field']] = $right;
+               }
+            }
+         }
+         $profile->update($dataprofile);
       }
    }
 }

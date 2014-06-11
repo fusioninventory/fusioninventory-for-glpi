@@ -77,6 +77,9 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
          'binary_3'      => '1667435018',
          'is_deleted'    => '0',
          'is_dynamic'    => '0',
+         'mainitems_id'  => '1',
+         'mainitemtype'  => 'NetworkEquipment'
+
       )
    );
 
@@ -154,7 +157,7 @@ class NetworkEquipmentUpdateDiscovery extends RestoreDatabase_TestCase {
       $networkEquipment = new NetworkEquipment();
 
       $networkEquipment->getFromDB(1);
-      
+
       $_SESSION['SOURCE_XMLDEVICE'] = $this->source_xmldevice;
       $pfCND->importDevice($networkEquipment);
    }

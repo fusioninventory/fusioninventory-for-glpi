@@ -188,7 +188,7 @@ class PluginFusioninventoryFormatconvert {
     * Modify Computer inventory
     */
    static function computerInventoryTransformation($array) {
-      global $DB, $PF_ESXINVENTORY;
+      global $DB, $PF_ESXINVENTORY, $CFG_GLPI;
 
       $a_inventory = array();
       $thisc = new self();
@@ -210,7 +210,6 @@ class PluginFusioninventoryFormatconvert {
                                         'WINPRODKEY'     => 'os_license_number',
                                         'WORKGROUP'      => 'domains_id',
                                         'UUID'           => 'uuid',
-                                        'DESCRIPTION'    => 'comment',
                                         'LASTLOGGEDUSER' => 'users_id',
                                         'operatingsystemservicepacks_id' =>
                                                       'operatingsystemservicepacks_id',
@@ -309,18 +308,31 @@ class PluginFusioninventoryFormatconvert {
       }
 
       // * Type of computer
-      if (isset($array['HARDWARE']['CHASSIS_TYPE'])
-              && !empty($array['HARDWARE']['CHASSIS_TYPE'])) {
-         $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['CHASSIS_TYPE'];
-      } else  if (isset($array['BIOS']['TYPE'])
-              && !empty($array['BIOS']['TYPE'])) {
-         $a_inventory['Computer']['computertypes_id'] = $array['BIOS']['TYPE'];
-      } else if (isset($array['BIOS']['MMODEL'])
-              && !empty($array['BIOS']['MMODEL'])) {
-         $a_inventory['Computer']['computertypes_id'] = $array['BIOS']['MMODEL'];
-      } else if (isset($array['HARDWARE']['VMSYSTEM'])
-              && !empty($array['HARDWARE']['VMSYSTEM'])) {
+
+      //First the HARDWARE/VMSYSTEM is not Physical : then it's a virtual machine
+      if (isset($array['HARDWARE']['VMSYSTEM'])
+            && $array['HARDWARE']['VMSYSTEM'] != ''
+               && $array['HARDWARE']['VMSYSTEM'] != 'Physical') {
          $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['VMSYSTEM'];
+      } else {
+         //It's not a virtual machine, then check :
+         //1 - HARDWARE/CHASSIS_TYPE
+         //2 - BIOS/TYPE
+         //3 - BIOS/MMODEL
+         //4 - HARDWARE/VMSYSTEM (should not go there)
+         if (isset($array['HARDWARE']['CHASSIS_TYPE'])
+               && !empty($array['HARDWARE']['CHASSIS_TYPE'])) {
+            $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['CHASSIS_TYPE'];
+         } else  if (isset($array['BIOS']['TYPE'])
+               && !empty($array['BIOS']['TYPE'])) {
+            $a_inventory['Computer']['computertypes_id'] = $array['BIOS']['TYPE'];
+         } else if (isset($array['BIOS']['MMODEL'])
+               && !empty($array['BIOS']['MMODEL'])) {
+            $a_inventory['Computer']['computertypes_id'] = $array['BIOS']['MMODEL'];
+         } else if (isset($array['HARDWARE']['VMSYSTEM'])
+               && !empty($array['HARDWARE']['VMSYSTEM'])) {
+            $a_inventory['Computer']['computertypes_id'] = $array['HARDWARE']['VMSYSTEM'];
+         }
       }
 
 //      if (isset($array['BIOS']['SKUNUMBER'])) {
@@ -342,6 +354,9 @@ class PluginFusioninventoryFormatconvert {
       if (isset($array['BIOS']['BMANUFACTURER'])) {
          $a_inventory['fusioninventorycomputer']['bios_manufacturers_id'] = $array['BIOS']['BMANUFACTURER'];
       }
+
+      $CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$a_inventory['Computer']['manufacturers_id']] = $a_inventory['Computer']['manufacturers_id'];
+
 
       // * OPERATINGSYSTEM
       if (isset($array['OPERATINGSYSTEM'])) {
@@ -455,7 +470,8 @@ class PluginFusioninventoryFormatconvert {
                   if (isset($array['CONTROLLERS'])) {
                      foreach ($array['CONTROLLERS'] as $a_controllers) {
                         if (count($a_found) == 0) {
-                           if (($a_netcards['DESCRIPTION'] == $a_controllers['TYPE']
+                           if (isset($a_controllers['TYPE'])
+                              && ($a_netcards['DESCRIPTION'] == $a_controllers['TYPE']
                                    || strtolower($a_netcards['DESCRIPTION']." controller") ==
                                           strtolower($a_controllers['TYPE']))
                                  && !isset($ignorecontrollers[$a_controllers['NAME']])) {
@@ -1284,6 +1300,14 @@ class PluginFusioninventoryFormatconvert {
 
    function computerSoftwareTransformation($a_inventory, $entities_id) {
 
+   /*
+    * Sometimes we can have 2 same software, but one without manufacturer and
+    * one with. So in this case, delete the software without manufacturer
+    */
+
+      $softwareWithManufacturer = array();
+      $softwareWithoutManufacturer = array();
+
       $entities_id_software = Entity::getUsedConfig('entities_id_software',
                                                     $entities_id);
       $is_software_recursive = 0;
@@ -1382,10 +1406,31 @@ class PluginFusioninventoryFormatconvert {
                                "$$$$".strtolower($array_tmp['version']).
                                "$$$$".$array_tmp['manufacturers_id'].
                                "$$$$".$array_tmp['entities_id'];
-                  if (!isset($a_inventory['software'][$comp_key])) {
-                     $a_inventory['software'][$comp_key] = $array_tmp;
+
+                  $comp_key_simple = strtolower($array_tmp['name']).
+                               "$$$$".strtolower($array_tmp['version']).
+                               "$$$$".$array_tmp['entities_id'];
+
+                  if ($array_tmp['manufacturers_id'] == 0) {
+                     $softwareWithoutManufacturer[$comp_key_simple] = $array_tmp;
+                  } else {
+                     if (!isset($a_inventory['software'][$comp_key])) {
+                        $softwareWithManufacturer[$comp_key_simple] = 1;
+                        $a_inventory['software'][$comp_key] = $array_tmp;
+                     }
                   }
                }
+            }
+         }
+      }
+      foreach ($softwareWithoutManufacturer as $key=>$array_tmp) {
+         if (!isset($softwareWithManufacturer[$key])) {
+            $comp_key = strtolower($array_tmp['name']).
+                         "$$$$".strtolower($array_tmp['version']).
+                         "$$$$".$array_tmp['manufacturers_id'].
+                         "$$$$".$array_tmp['entities_id'];
+            if (!isset($a_inventory['software'][$comp_key])) {
+               $a_inventory['software'][$comp_key] = $array_tmp;
             }
          }
       }
@@ -1526,7 +1571,8 @@ class PluginFusioninventoryFormatconvert {
          'pages_total_print', 'pages_n_b_print', 'pages_color_print', 'pages_total_copy',
          'pages_n_b_copy', 'pages_color_copy', 'pages_total_fax',
          'cpu', 'trunk', 'is_active', 'uptodate', 'nbthreads', 'vcpu', 'ram',
-         'ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu', 'speed');
+         'ifinerrors', 'ifinoctets', 'ifouterrors', 'ifoutoctets', 'ifmtu', 'speed',
+         'nbcores', 'nbthreads');
 
       foreach ($a_key as $key=>$value) {
          if (!isset($a_return[$value])
@@ -1545,6 +1591,7 @@ class PluginFusioninventoryFormatconvert {
 
 
    function replaceids($array) {
+      global $CFG_GLPI;
 
       foreach ($array as $key=>$value) {
          if (!is_int($key)
@@ -1560,6 +1607,14 @@ class PluginFusioninventoryFormatconvert {
                        || $key == "bios_manufacturers_id") {
                   $manufacturer = new Manufacturer();
                   $array[$key]  = $manufacturer->processName($value);
+                  if ($key == 'bios_manufacturers_id') {
+                     $this->foreignkey_itemtype[$key] =
+                              getItemTypeForTable(getTableNameForForeignKeyField('manufacturers_id'));
+                  } else {
+                     if (isset($CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$value])) {
+                        $CFG_GLPI['plugin_fusioninventory_computermanufacturer'][$value] = $array[$key];
+                     }
+                  }
                }
                if (!is_numeric($key)) {
                   if ($key == "bios_manufacturers_id") {
@@ -1570,11 +1625,18 @@ class PluginFusioninventoryFormatconvert {
                                                              $value);
                   } else if (isForeignKeyField($key)
                           && $key != "users_id") {
-
                      $this->foreignkey_itemtype[$key] =
                                  getItemTypeForTable(getTableNameForForeignKeyField($key));
-                     $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
-                                                             $value);
+                     if ($key == 'computermodels_id') {
+                        $manufacturer = current($CFG_GLPI['plugin_fusioninventory_computermanufacturer']);
+                        $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
+                                                                $value,
+                                                                '-1',
+                                                                array('manufacturer' => $manufacturer));
+                     } else {
+                        $array[$key] = Dropdown::importExternal($this->foreignkey_itemtype[$key],
+                                                                $value);
+                     }
                   }
                }
             }

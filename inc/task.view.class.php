@@ -78,7 +78,7 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($item->getType() == 'Computer') {
-         echo "<b>To Be Done</b>";
+         echo "<b>".__('To Be Done', 'fusioninventory')."</b>";
       }
    }
 
@@ -102,111 +102,278 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          null,
          $refresh_intervals,
          array(
-            'value' => '10', // set default to 10 seconds
+            'value' => 'off', // set default to 10 seconds
             'width' => '20%'
          )
       );
+      // Add a manual refresh button
+      echo "      <div class='refresh_button submit'>";
+      echo "      <span></span></div>";
       echo "   </div>"; // end of fusinv_form
-      echo "</div>"; // end of fusinv_panel
 
-      $pfTaskjob = new PluginFusioninventoryTaskjob();
-      $taskjobs = $pfTaskjob->find(
-         "`plugin_fusioninventory_tasks_id`='".$this->fields['id']."'",
-         "id"
-      );
-      foreach($taskjobs as $taskjob) {
-         echo implode("\n", array(
-            "<div id='joblogs_block'>",
-            "</div>"
-         ));
+      echo "</div>";
+
+      //$pfTaskjob = new PluginFusioninventoryTaskjob();
+      //$taskjobs = $pfTaskjob->find(
+      //   "`plugin_fusioninventory_tasks_id`='".$this->fields['id']."'",
+      //   "id"
+      //);
+
+      // Template structure for tasks' blocks
+      echo implode("\n", array(
+         "<script id='template_task' type='x-tmpl-mustache'>",
+         "<div id='{{task_id}}' class='task_block'>",
+         "  <h3>".__("Task",'fusioninventory')." <span class='task_name'></span></h3>",
+         "  <div class='jobs_block'></div>",
+         "</div>",
+         "</script>"
+      ));
+
+      // Template structure for jobs' blocks
+      echo implode("\n", array(
+         "<script id='template_job' type='x-tmpl-mustache'>",
+         "<div id='{{job_id}}' class='job_block'>",
+         "  <div class='refresh_button submit'><span></span></div>",
+         "  <h3 class='job_name'></h3>",
+         "  <div class='targets_block'></div>",
+         "</div>",
+         "</script>"
+      ));
+
+      // Template structure for targets' blocks
+      echo implode("\n", array(
+         "<script id='template_target' type='x-tmpl-mustache'>",
+         "<div id='{{target_id}}' class='target_block'>",
+         "  <div class='target_details'>",
+         "  <div class='target_infos'>",
+         "     <h4 class='target_name'>",
+         "     </h4>",
+         "     <div class='target_stats'>",
+         "     </div>",
+         "  </div>",
+         "  <div class='progressbar'></div>",
+         "  </div>",
+         "  <div class='show_more'></div>",
+         "  <div class='agents_block'></div>",
+         "  <div class='show_more'></div>",
+         "</script>"
+      ));
+
+      // Template structure for targets' statistics
+      echo implode("\n", array(
+         "<script id='template_target_stats' type='x-tmp-mustache'>",
+         "  <div class='{{stats_type}} stats_block'>",
+         "  </div>",
+         "</script>",
+      ));
+
+      // Template content for targets' name
+      echo implode("\n", array(
+         "<script id='template_target_name' type='x-tmpl-mustache'>",
+         "<a target='_blank' href={{target_link}}>",
+         "  {{target_name}}",
+         "</a>",
+         "</script>",
+      ));
+
+      // Template for counters' blocks
+      echo implode("\n", array(
+         "<script id='template_counter_block' type='x-tmpl-mustache'>",
+         "<div class='counter_block {{counter_type}} {{#counter_empty}}empty{{/counter_empty}}'>",
+         "<a",
+         "  href='javascript:void(0)'",
+         "  class='' ",
+         "  title='".__("Show/Hide details","fusioninventory")."'",
+         "  onclick='taskjobs.toggle_details_type(this, \"{{counter_type}}\", \"{{chart_id}}\")'",
+         ">",
+         "</a>",
+         "</div>",
+         "</script>"
+      ));
+
+      echo implode("\n", array(
+         "<script id='template_counter_content' type='x-tmpl-mustache'>",
+         "<div class='fold'></div>",
+         "<span class='counter_name'>{{counter_type_name}}</span>",
+         "<span class='counter_value'>{{counter_value}}</span>",
+         "</script>"
+      ));
+
+      /*
+       * List of counter names
+       */
+      echo implode("\n", array(
+         "<script type='text/javascript'>",
+         "  taskjobs.statuses_order = {",
+         "     last_executions : [",
+         "        'agents_prepared',",
+         "        'agents_running',",
+         "        'agents_cancelled'",
+         "     ],",
+         "     last_finish_states : [",
+         "        'agents_notdone',",
+         "        'agents_success',",
+         "        'agents_error'",
+         "     ]",
+         "  };",
+         "  taskjobs.statuses_names = {",
+         "     'agents_notdone'   : '". __('Not done yet', 'fusioninventory')."',",
+         "     'agents_error'     : '". __('In error', 'fusioninventory') . "',",
+         "     'agents_success'   : '". __('Successful', 'fusioninventory')."',",
+         "     'agents_running'   : '". __('Running', 'fusioninventory')."',",
+         "     'agents_prepared'  : '". __('Prepared' , 'fusioninventory')."',",
+         "     'agents_cancelled' : '". __('Cancelled', 'fusioninventory')."',",
+         "  };",
+         "</script>",
+      ));
+
+      // Template for agents' blocks
+      echo implode("\n", array(
+         "<script id='template_agent' type='x-tmpl-mustache'>",
+         "<div class='agent_block' id='{{agent_id}}'>",
+         "  <div class='status {{status.last_exec}}'></span>",
+         "  <div class='status {{status.last_finish}}'></span>",
+         "</div>",
+         "</script>"
+      ));
+
+      // Display empty block for each jobs display which will be rendered later by mustache.js
+      echo implode("\n", array(
+         "<div class='tasks_block'>",
+         "</div>",
+//         "<pre class='debuglogs' style='text-align:left;'></pre>"
+      ));
+
+      if (isset($this->fields['id']) ){
+         $task_id = $this->fields['id'];
+      } else {
+         $task_id = json_encode(array());
       }
-
+      $pfAgent = new PluginFusioninventoryAgent();
       echo implode( "\n", array(
          "<script type='text/javascript'>",
+         "  taskjobs.agents_url = '". $pfAgent->getFormUrl()."'",
+         "  taskjobs.init_templates();",
+         "  taskjobs.init_refresh_form(",
+         "     '".$this->getBaseUrlFor('fi.job.logs')."',",
+         "     ".$task_id.",",
+         "     'dropdown_".$refresh_randid."'",
+         "  );",
          "  taskjobs.update_logs_timeout(",
          "     '".$this->getBaseUrlFor('fi.job.logs')."',",
-         "     ".$this->fields['id'].",",
+         "     ".$task_id.",",
          "     'dropdown_".$refresh_randid."'",
          "  );",
          "</script>"
       ));
    }
 
+   function ajaxGetJobs($options) {
+
+   }
+
+   // TODO: Move this method in task.class
    function ajaxGetJobLogs($options) {
-      $task = new PluginFusioninventoryTask();
-      $task->getFromDB($options['task_id']);
-      $logs = $task::getJoblogs(array($options['task_id']));
-      $display_list = array();
-      $display_list[] = "<ul class='job_list'>";
-      foreach($logs as $task) {
-         foreach($task['jobs'] as $job) {
-            $display_list[] = "<li class='job_info'>";
-            $display_list[] = "  <h3>".$job['name']."</h3>";
-            foreach($job['targets'] as $target) {
-               $display_list[] = "  <div class='job_target'>";
-               $display_list[] = "     <h4>".$target['name']."</h4>";
-               $display_list[] = "     <ul>";
 
-               $css = count($target['agents_prepared'])?"agents_prepared":"";
-               $display_list[] = "        <li class='$css'>";
-               $display_list[] =
-                  __('Prepared', 'fusioninventory')." : ".
-                  count($target['agents_prepared']);
-               $display_list[] = "        </li>";
-
-               $css = count($target['agents_cancelled'])?"agents_cancelled":"";
-               $display_list[] = "        <li class='$css'>";
-               $display_list[] =
-                  __('Cancelled', 'fusioninventory')." : ".
-                  count($target['agents_cancelled']);
-               $display_list[] = "        </li>";
-
-               $css = count($target['agents_running'])?"agents_running":"";
-               $display_list[] = "        <li class='$css'>";
-               $display_list[] =
-                  __('Running', 'fusioninventory')." : ".
-                  count($target['agents_running']);
-               $display_list[] = "        </li>";
-
-               $css = count($target['agents_success'])?"agents_success":"";
-               $display_list[] = "        <li class='$css'>";
-               $display_list[] =
-                  __('Successful', 'fusioninventory')." : ".
-                  count($target['agents_success']);
-               $display_list[] = "        </li>";
-
-               $css = count($target['agents_error'])?"agents_error":"";
-               $display_list[] = "        <li class='$css'>";
-               $display_list[] =
-                  __('In error', 'fusioninventory')." : ".
-                  count($target['agents_error']);
-               $display_list[] = "        </li>";
-
-               $css = count($target['agents_notdone'])?"agents_notdone":"";
-               $display_list[] = "        <li class='$css'>";
-               $display_list[] =
-                  __('Not done yet', 'fusioninventory')." : ".
-                  count($target['agents_notdone']);
-               $display_list[] = "        </li>";
-               $display_list[] = "     </ul>";
-               $display_list[] = "  </div>";
-            }
-            $display_list[] = "  <ul class='job_info'>";
-
-            $display_list[] = "  </ul>";
-            $display_list[] = "</li>"; // end of job_info
+      if (isset($options['task_id'])) {
+         if (is_array($options['task_id'])) {
+            $task_ids = $options['task_id'];
+         } else {
+            $task_ids = array($options['task_id']);
          }
+      } else {
+         $task_ids = array();
+      }
+      $logs = $this->getJoblogs($task_ids);
+      echo json_encode($logs);
+      return;
+
+   }
+
+   function getCounterTypeName($type = "") {
+      $typenames = array(
+         "agents_notdone"   => __('Not done yet', 'fusioninventory'),
+         "agents_error"     => __('In error', 'fusioninventory'),
+         "agents_success"   => __('Successful', 'fusioninventory'),
+         "agents_running"   => __('Running', 'fusioninventory'),
+         "agents_prepared"  => __('Prepared' , 'fusioninventory'),
+         "agents_cancelled" => __('Cancelled', 'fusioninventory')
+      );
+
+      if ( isset($typenames[$type]) ) {
+         return $typenames[$type];
+      } else {
+         return __('N/A', 'fusioninventory');
+      }
+   }
+
+   function getAgentsLogs($agents = array(), $counters = array(), $target_id = "") {
+      $display_list = array();
+      $display_list[] = "<div class='job_agents'>";
+      $display_list[] = "<ul>";
+
+      foreach ( $agents as $agent ) {
+         $agent_id = $target_id . "_agent_".$agent['id'];
+         $display_tags = array();
+         $agent_css = array();
+         foreach($counters as $type=>$list) {
+            if ( isset( $list[$agent['id']] ) ) {
+               $display_tags[] = "<span class='".$type."'>";
+               $display_tags[] = $this->getCounterTypeName($type);
+               $display_tags[] = "</span>";
+               //if( in_array($type, array("agents_error", "agents_success", "agents_notdone")) ) {
+                  $agent_css[] = $type;
+               //}
+            }
+         }
+         $display_list[] = "<li class='".implode(" ", $agent_css)."'>";
+         $display_list[] = "<div class='agent_block' id='".$agent_id."'>";
+         //Add fold/unfold icon
+         $display_list[] = " <div ";
+         $display_list[] = "  class='fold'";
+         $display_list[] = "  title='".__("Show/Hide Agent details","fusioninventory")."'";
+         $display_list[] = "  onclick='taskjobs.toggle_agent_fold(this)'";
+         $display_list[] = " ></div>";
+
+         $display_list[] = "<a target='_blank' href='".$agent['url']."'>";
+         $display_list[] = $agent['name'];
+         $display_list[] = "</a>";
+         $display_list = array_merge($display_list, $display_tags);
+         $display_list[] = "</div>"; //end of .agent_block
+         $display_list[] = "<div class='runs_block'>";
+         foreach( $agent['runs'] as $run) {
+            $display_list = array_merge($display_list, $this->getRunLogs($run));
+         }
+         $display_list[] = "</div>"; //end of .run_block
+         $display_list[] = "</li>";
       }
       $display_list[] = "</ul>";
+      $display_list[] = "</div>";
 
-      echo implode("\n", $display_list);
+      return $display_list;
+   }
 
-      //Debug logs array
-      echo implode("\n", array(
-         "<pre style='text-align:left'>",
-         var_export($logs,true),
-         "</pre>"
-      ));
+   function getRunLogs($run = array()) {
+
+      $logClass = new PluginFusioninventoryTaskjoblog();
+      $display = array();
+      $display[] = "<div class='run_block'>";
+      $display[] = " <h4>" . __('Execution', 'fusioninventory')." ".$run['uniqid']."</h4>";
+      $display[] = " <table class='logs_block'>";
+      foreach( $run['logs'] as $log) {
+         $css_state = $logClass::getStateCSSName($log['state']);
+         $state_name = $logClass::getStateName($log['state']);
+         $display[] = "<tr>";
+         $display[] = "    <td class='log_date'>".$log['date']."</td>";
+         $display[] = "    <td class='log_state'>";
+         $display[] = "       <span class='".$css_state."'>".$state_name."</span>";
+         $display[] = "    </td>";
+         $display[] = "   <td class='log_comment'>".$log['comment']."</td>";
+         $display[] = "</tr>";
+      }
+      $display[] = " </table>";
+      $display[] = "</div>";
+      return $display;
    }
 
    /**
@@ -305,7 +472,6 @@ class PluginFusioninventoryTaskView extends PluginFusioninventoryCommonView {
          Html::redirect(str_replace("add=1", "", $_SERVER['HTTP_REFERER'])."?id=".$items_id);
 
       } else if (isset($postvars["purge"])) {
-         Toolbox::logDebug("Start Delete");
 
          Session::checkRight('plugin_fusioninventory_task', PURGE);
 

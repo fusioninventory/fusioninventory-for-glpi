@@ -61,7 +61,7 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
     *
     * @return array with all elements
     */
-   function dropdownStateValues() {
+   static function dropdownStateValues() {
 
       $elements = array(
 
@@ -83,6 +83,38 @@ class PluginFusioninventoryTaskjoblog extends CommonDBTM {
       return $elements;
    }
 
+   static function getStateName($state=-1) {
+      $state_names = self::dropdownStateValues();
+      if(isset($state_names[$state])) {
+         return $state_names[$state];
+      } else {
+         return "N/A";
+      }
+   }
+
+   //TODO: move this in the view class
+   static function getStateCSSName($state=-1) {
+      $cssnames = array(
+         self::TASK_PREPARED => "log_prepared",
+
+         self::TASK_STARTED => "log_started",
+
+         self::TASK_RUNNING => "log_running",
+
+         self::TASK_OK => "log_ok",
+
+         self::TASK_ERROR_OR_REPLANNED => "log_error_replanned",
+
+         self::TASK_ERROR => "log_error",
+
+         self::TASK_INFO => "log_info",
+      );
+      if (isset($cssnames[$state]) ) {
+         return $cssnames[$state];
+      } else {
+         return "";
+      }
+   }
 
 
    /**

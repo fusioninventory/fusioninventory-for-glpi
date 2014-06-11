@@ -157,33 +157,18 @@ class PluginFusioninventoryInventoryComputerESX extends PluginFusioninventoryCom
     *
     * @return $response array
     */
-   function run($configurations) {
-      $response      = array(
-         'jobs' => array()
-      );
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
-      $credential    = new PluginFusioninventoryCredential();
-      $credentialip  = new PluginFusioninventoryCredentialIp();
+   function run($taskjobstate) {
+      $credential     = new PluginFusioninventoryCredential();
+      $credentialip   = new PluginFusioninventoryCredentialIp();
 
-      foreach ($configurations as $configuration) {
-         $credentialip->getFromDB($configuration['items_id']);
-         $credential->getFromDB($credentialip->fields['plugin_fusioninventory_credentials_id']);
-         $response['jobs'][] = array(
-            'uuid'      => $configuration['uniqid'],
-            'host'      => $credentialip->fields['ip'],
-            'user'      => $credential->fields['username'],
-            'password'  => $credential->fields['password']
-         );
+      $credentialip->getFromDB($taskjobstate->fields['items_id']);
+      $credential->getFromDB($credentialip->fields['plugin_fusioninventory_credentials_id']);
 
-         $pfTaskjobstate->changeStatus($configuration['id'], 1);
-         $pfTaskjoblog->addTaskjoblog($configuration['id'],
-                                 '0',
-                                 'PluginFusioninventoryAgent',
-                                 '1',
-                                 '');
-      }
-      return $response;
+      $order['uuid'] = $taskjobstate->fields['uniqid'];
+      $order['host'] = $credentialip->fields['ip'];
+      $order['user'] = $credential->fields['username'];
+      $order['password'] = $credential->fields['password'];
+      return $order;
    }
 }
 

@@ -83,6 +83,13 @@ function plugin_init_fusioninventory() {
 
    $Plugin = new Plugin();
    $moduleId = 0;
+
+   if ( isset($_SESSION['glpi_use_mode']) ) {
+      $debug_mode = ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE);
+   } else {
+      $debug_mode = false;
+   }
+
    if ($Plugin->isActivated('fusioninventory')) { // check if plugin is active
 
       // Register classes into GLPI plugin factory
@@ -137,7 +144,10 @@ function plugin_init_fusioninventory() {
               array('addtabon' => array('Entity')));
       Plugin::registerClass('PluginFusioninventorySetup');
       Plugin::registerClass('PluginFusioninventoryIPRange');
+      Plugin::registerClass('PluginFusioninventoryIPRange_ConfigSecurity',
+              array('addtabon' => 'PluginFusioninventoryIPRange'));
       Plugin::registerClass('PluginFusioninventoryCredential');
+      Plugin::registerClass('PluginFusioninventoryTimeslot');
       Plugin::registerClass('PluginFusioninventoryLock',
               array('addtabon' => array('Computer', 'Printer', 'NetworkEquipment')));
 
@@ -251,6 +261,15 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
 
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+         $debug_mode?"lib/d3-3.4.3/d3.js":"lib/d3-3.4.3/d3.min.js";
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+         $debug_mode?"lib/nvd3/nv.d3.js":"lib/nvd3/nv.d3.min.js";
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+         "lib/timeslot.js";
+
+      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
+         "js/expanding.js";
       /**
        * Load the relevant javascript files only on pages that need them.
        */
@@ -258,33 +277,47 @@ function plugin_init_fusioninventory() {
 
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="lib/extjs/resources/css/ext-all.css";
 
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array(
-             "lib/extjs/adapter/ext/ext-base.js",
-             "lib/extjs/ext-all-debug.js",
-             "lib/REDIPS_drag/redips-drag-source.js",
-             "lib/REDIPS_drag/drag_table_rows.js",
-             "lib/plusbutton.js",
-             "lib/deploy_editsubtype.js",
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(
+            $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
+            array(
+               "lib/extjs/adapter/ext/ext-base.js",
+               "lib/extjs/ext-all-debug.js",
+               "lib/REDIPS_drag/redips-drag-source.js",
+               "lib/REDIPS_drag/drag_table_rows.js",
+               "lib/plusbutton.js",
+               "lib/deploy_editsubtype.js",
+            )
          );
       }
+      if (  script_endswith("/computer.form.php") ) {
+         PluginFusioninventoryLock::showLockIcon('Computer');
+      } else if (  script_endswith("/printer.form.php") ) {
+         PluginFusioninventoryLock::showLockIcon('Printer');
+      } else if (  script_endswith("/networkequipment.form.php") ) {
+         PluginFusioninventoryLock::showLockIcon('NetworkEquipment');
+      }
 
-      if (  script_endswith("task.form.php") )
+
+      if (  script_endswith("task.form.php")
+         or script_endswith("taskjob.php")
+      )
       {
-         $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array(
-             "lib/REDIPS_drag/redips-drag-source.js",
-             "lib/REDIPS_drag/drag_table_rows.js",
-             "lib/plusbutton.js",
-             "js/taskjobs.js",
+         $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(
+            $PLUGIN_HOOKS['add_javascript']['fusioninventory'],
+            array(
+               "lib/lazy.js-0.3.2/lazy.js",
+               "lib/mustache.js-0.8.1/mustache.js",
+               "lib/REDIPS_drag/redips-drag-source.js",
+               "lib/REDIPS_drag/drag_table_rows.js",
+               "lib/plusbutton.js",
+               "js/taskjobs.js",
+            )
          );
       }
-      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
-         "lib/d3-3.4.3/d3.min.js";
-      $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
-         "lib/timeslot.js";
+
 
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'][] =
-         "js/expanding.js";
-
+              "js/stats.js";
 
       if (Session::haveRight('plugin_fusioninventory_configuration', READ)
               || Session::haveRight('profile', UPDATE)) {// Config page
@@ -343,10 +376,10 @@ function plugin_init_fusioninventory() {
 
       $PLUGIN_HOOKS['item_transfer']['fusioninventory'] = 'plugin_item_transfer_fusioninventory';
 
-      if (PluginFusioninventoryUnknowndevice::canView()) {
+      if (Session::haveRight('plugin_fusioninventory_unknowndevice', READ)) {
          $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['assets'] = 'PluginFusioninventoryUnknowndevice';
       }
-      if (PluginFusioninventoryMenu::canView()) {
+      if (Session::haveRight('plugin_fusioninventory_menu', READ)) {
          $PLUGIN_HOOKS["menu_toadd"]['fusioninventory']['plugins'] = 'PluginFusioninventoryMenu';
       }
 
@@ -387,19 +420,20 @@ function plugin_init_fusioninventory() {
 
          // Hack for NetworkEquipment display ports
          if (strstr($_SERVER['PHP_SELF'], '/ajax/common.tabs.php')) {
-            if (isset($_POST['target'])
-                    && strstr($_POST['target'], '/front/networkequipment.form.php')
-                    && $_POST['itemtype'] == 'NetworkEquipment') {
+            if (isset($_GET['_target'])
+                    && strstr($_GET['_target'], '/front/networkequipment.form.php')
+                    && $_GET['_itemtype'] == 'NetworkEquipment') {
 
-               if ($_POST['glpi_tab'] == 'NetworkPort$1') {
-                  $_POST['glpi_tab'] = 'PluginFusioninventoryNetworkEquipment$1';
-               } else if ($_POST['glpi_tab'] == 'PluginFusioninventoryNetworkEquipment$1') {
-                  $_POST['displaysnmpinfo'] = 1;
+               if ($_GET['_glpi_tab'] == 'NetworkPort$1') {
+                  $_GET['_glpi_tab'] = 'PluginFusioninventoryNetworkEquipment$1';
+               } else if ($_GET['_glpi_tab'] == 'PluginFusioninventoryNetworkEquipment$1') {
+                  $_GET['displaysnmpinfo'] = 1;
                }
             }
          }
          // Load nvd3 for printerpage counter graph
-         if (strstr($_SERVER['PHP_SELF'], '/front/printer.form.php')) {
+         if (strstr($_SERVER['PHP_SELF'], '/front/printer.form.php')
+                 || strstr($_SERVER['PHP_SELF'], '/front/menu.php')) {
             echo '<link href="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.
                     '/src/nv.d3.css" rel="stylesheet" type="text/css" />
                <script src="'.$CFG_GLPI['root_doc'].'/plugins/fusioninventory/lib/nvd3'.

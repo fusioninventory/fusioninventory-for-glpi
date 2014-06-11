@@ -568,12 +568,27 @@ class PluginFusioninventoryNetworkinventory extends PluginFusioninventoryCommuni
 
 
       $changestate = 0;
-      $taskjobstatedatas = $taskjobstate->fields;
+      $taskjobstatedatas = $jobstate->fields;
       $sxml_device = $sxml_option->addChild('DEVICE');
-      $a_specificity = importArrayFromDB($taskjobstatedatas['specificity']);
-      foreach($a_specificity as $key=>$value) {
-         $sxml_device->addAttribute($key, $value);
+
+      $a_extended = array('plugin_fusioninventory_configsecurities_id' => 0);
+      if ($jobstate->fields['itemtype'] == 'Printer') {
+         $sxml_device->addAttribute('TYPE', 'PRINTER');
+         $pfPrinter = new PluginFusioninventoryPrinter();
+         $a_extended = current($pfPrinter->find("`printers_id`='".$jobstate->fields['items_id']."'", '', 1));
+      } else if ($jobstate->fields['itemtype'] == 'NetworkEquipment') {
+         $sxml_device->addAttribute('TYPE', 'NETWORKING');
+         $pfNetworkEquipment = new PluginFusioninventoryNetworkEquipment();
+         $a_extended = current($pfNetworkEquipment->find("`networkequipments_id`='".$jobstate->fields['items_id']."'", '', 1));
       }
+      $sxml_device->addAttribute('ID', $jobstate->fields['items_id']);
+
+      $ip = current(PluginFusioninventoryToolbox::getIPforDevice(
+              $jobstate->fields['itemtype'],
+              $jobstate->fields['items_id']));
+
+      $sxml_device->addAttribute('IP', $ip);
+      $sxml_device->addAttribute('AUTHSNMP_ID', $a_extended['plugin_fusioninventory_configsecurities_id']);
 
       if ($changestate == '0') {
          $pfTaskjobstate->changeStatus($taskjobstatedatas['id'], 1);

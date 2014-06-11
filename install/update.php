@@ -1006,6 +1006,35 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
 
    /*
+    * Table glpi_plugin_fusioninventory_ipranges_configsecurities
+    */
+      $a_table = array();
+      $a_table['name'] = 'glpi_plugin_fusioninventory_ipranges_configsecurities';
+      $a_table['oldname'] = array();
+
+      $a_table['fields']  = array();
+      $a_table['fields']['id']         = array('type'    => 'autoincrement',
+                                               'value'   => '');
+      $a_table['fields']['plugin_fusioninventory_ipranges_id']   = array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['plugin_fusioninventory_configsecurities_id']   = array('type'    => 'integer',
+                                               'value'   => NULL);
+      $a_table['fields']['rank']       = array('type'    => 'integer',
+                                               'value'   => '1');
+
+      $a_table['oldfields']    = array();
+
+      $a_table['renamefields'] = array();
+
+      $a_table['keys']         = array();
+
+      $a_table['oldkeys']      = array();
+
+      migrateTablesFusionInventory($migration, $a_table);
+
+
+
+   /*
     * Table glpi_plugin_fusioninventory_mappings
     */
       $a_table = array();
@@ -1650,7 +1679,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
          'Unknow',
          'System Serial Number',
          'MB-1234567890',
-         '0');
+         '0',
+         'empty');
          foreach ($a_input as $value) {
             $query = "SELECT * FROM `".$newTable."`
                WHERE `plugin_fusioninventory_criterium_id`='".$a_criteria['ssn']."'
@@ -1696,7 +1726,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             '00:50:56:C0:00:01',
             '00:50:56:C0:00:08',
             '02:80:37:EC:02:00',
-            '50:50:54:50:30:30');
+            '50:50:54:50:30:30',
+            '24:b6:20:52:41:53');
          foreach ($a_input as $value) {
             $query = "SELECT * FROM `".$newTable."`
                WHERE `plugin_fusioninventory_criterium_id`='".$a_criteria['macAddress']."'
@@ -1789,6 +1820,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                           "is_active");
       $migration->addKey($newTable,
                           "uptodate");
+      $migration->addKey($newTable,
+                          "computers_id");
       $migration->migrationOneTable($newTable);
       $DB->list_fields($newTable, FALSE);
 
@@ -1966,6 +1999,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
                                                                             'value'   => NULL);
       $a_table['fields']['serialized_inventory']   = array('type'    => 'longblob',
                                                            'value'   => "");
+      $a_table['fields']['is_entitylocked']        = array('type'    => 'bool',
+                                                           'value'   => "0");
 
       $a_table['oldfields']  = array();
 
@@ -2009,6 +2044,39 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       $migration->dropTable('glpi_plugin_fusinvinventory_libserialization');
 
+
+   /*
+    * Table glpi_plugin_fusioninventory_inventorycomputerstats
+    */
+
+      if (!TableExists("glpi_plugin_fusioninventory_inventorycomputerstats")) {
+         $a_table = array();
+         $a_table['name'] = 'glpi_plugin_fusioninventory_inventorycomputerstats';
+         $a_table['oldname'] = array();
+
+         $a_table['fields']  = array();
+         $a_table['fields']['id']      = array('type'    => "smallint(3) NOT NULL AUTO_INCREMENT",
+                                                            'value'   => '');
+         $a_table['fields']['day']     = array('type'    => "smallint(3) NOT NULL DEFAULT '0'",
+                                                            'value'   => '');
+         $a_table['fields']['hour']    = array('type'    => "tinyint(2) NOT NULL DEFAULT '0'",
+                                                            'value'   => '');
+         $a_table['fields']['counter'] = array('type'    => 'integer',
+                                                            'value'   => NULL);
+
+         $a_table['oldfields']  = array();
+
+         $a_table['renamefields'] = array();
+
+         $a_table['keys']   = array();
+
+         $a_table['oldkeys'] = array();
+
+         migrateTablesFusionInventory($migration, $a_table);
+
+         require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerstat.class.php");
+         PluginFusioninventoryInventoryComputerStat::init();
+      }
 
 
    /*
@@ -3991,15 +4059,15 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             'value' => NULL
          ),
          'groups_id' =>  array(
-            'type' => 'int(11) NOT NULL',
+            'type' => 'integer',
             'value' => NULL
          ),
          'itemtype' =>  array(
-            'type' => 'varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL',
+            'type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
             'value' => NULL
          ),
          'items_id' =>  array(
-            'type' => 'int(11) NOT NULL',
+            'type' => 'integer',
             'value' => NULL
          ),
       );
@@ -4046,11 +4114,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
             'value' => NULL
          ),
          'groups_id' =>  array(
-            'type' => 'int(11) NOT NULL',
+            'type' => 'integer',
             'value' => NULL
          ),
          'fields_array' =>  array(
-            'type' => 'text NOT NULL',
+            'type' => 'text',
             'value' => NULL
          ),
       );
@@ -5072,6 +5140,8 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 
       $a_input = array();
       $a_input['version'] = PLUGIN_FUSIONINVENTORY_VERSION;
+      $config->addValues($a_input, TRUE);
+      $a_input = array();
       $a_input['ssl_only'] = 0;
       if (isset($prepare_Config['ssl_only'])) {
          $a_input['ssl_only'] = $prepare_Config['ssl_only'];
@@ -5280,11 +5350,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 //   $pfIgnoredimportdevice->install();
 
       //Change static & dynamic structure to fit the GLPI framework
-      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas', 
-                              'groups_id', 
+      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_dynamicdatas',
+                              'groups_id',
                               'plugin_fusioninventory_deploygroups_id', 'integer');
       $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_dynamicdatas');
-      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_staticdatas', 
+      $migration->changeField('glpi_plugin_fusioninventory_deploygroups_staticdatas',
                               'groups_id', 'plugin_fusioninventory_deploygroups_id', 'integer');
       $migration->migrationOneTable('glpi_plugin_fusioninventory_deploygroups_staticdatas');
 
@@ -5383,9 +5453,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
       //Drop old table
       $migration->dropTable('glpi_plugin_fusioninventory_profiles');
    }
-   
+
    //Create first access to the current profile is needed
-   PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
+   if ( isset( $_SESSION['glpiactiveprofile'] ) ) {
+      PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
+   }
 
    // Define lastup field of fusion networkports
    $query = "SELECT * FROM `glpi_plugin_fusioninventory_mappings`
@@ -5420,11 +5492,11 @@ function pluginFusioninventoryUpdate($current_version, $migrationname='Migration
 */
 function doDynamicDataSearchParamsMigration() {
    global $DB;
-   
+
    $query = "SELECT `id`, `fields_array` FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`";
    foreach ($DB->request($query) as $dynamic_data) {
       $new_values   = migrationDynamicGroupFields($dynamic_data['fields_array']);
-      $query_update = "UPDATE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas` 
+      $query_update = "UPDATE `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
                        SET `fields_array`='$new_values'
                        WHERE `id`='".$dynamic_data['id']."'";
       $DB->query($query_update);
@@ -5433,26 +5505,64 @@ function doDynamicDataSearchParamsMigration() {
 
 /**
 * @since 0.85+1.0
-* 
+*
 * Migration of one dynamic group
 * @param fields search paramas in old format (serialized)
 * @return search paramas in new format (serialized)
 */
 function migrationDynamicGroupFields($fields) {
-   $old_fields    = unserialize($fields);
-   $new_fields    = array();
-   $searchOptions = Search::getOptions('Computer');
-   foreach ($old_fields as $key => $value) {
-       
-      if (!empty($value) && $value != 0 && $value != '') {
-         foreach ($searchOptions as $id => $searchOption) {
-            if (is_array($searchOption) && isset ($searchOption['linkfield']) && $searchOption['linkfield'] == $key) {
-               $new_value['value']      = $value;
-               $new_value['field']      = $id;
-               $new_value['searchtype'] = 'equals';
-               $new_fields[]            = $new_value; 
-               break;
-            }
+   $data       = json_decode($fields, true);
+   $new_fields = array();
+   if (!is_array($data)) {
+      $data   = unserialize($fields);
+   }
+
+   //We're still in 0.85 or higher,
+   //no need for migration !
+   if (isset($fields['criteria'])) {
+      return serialize($fields);
+   }
+
+   //Upgrade from 0.84
+   if (isset($data['field'])) {
+      $count_fields = count ($data['field']);
+      for ($i = 0; $i < $count_fields; $i++) {
+         $new_value = array();
+         $new_value['value']       = $data['contains'][$i];
+         $new_value['field']       = $data['field'][$i];
+         $new_value['searchtype']  = $data['searchtype'][$i];
+         $new_fields['criteria'][] = $new_value;
+      }
+
+      if (isset($data['field2'])) {
+         $count_fields = count ($data['field2']);
+         for ($i = 0; $i < $count_fields; $i++) {
+            $new_value = array();
+            $new_value['value']           = $data['contains2'][$i];
+            $new_value['field']           = $data['field2'][$i];
+            $new_value['itemtype']        = $data['itemtype2'][$i];
+            $new_value['searchtype']      = $data['searchtype2'][$i];
+            $new_fields['metacriteria'][] = $new_value;
+         }
+      }
+   } elseif(isset($data['itemtype']) && isset($data['name'])) {
+      //Ugrapde from 0.83, where the number of fields to search was fixed
+      $oldfields = array('name'                => 2,
+                         'serial'              => 5,
+                         'otherserial'         => 6,
+                         'locations_id'        => 3,
+                         'operatingsystems_id' => 45,
+                         'room'                => 92,
+                         'building'            => 91);
+      foreach ($oldfields as $name => $id) {
+         $new_value = array();
+         if (isset($data[$name]) && $data[$name] != '') {
+            $new_value['field']       = $id;
+            $new_value['value']       = $data[$name];
+            $new_value['searchtype']  = 'equals';
+         }
+         if (!empty($new_value)) {
+            $new_fields['criteria'][] = $new_value;
          }
       }
    }

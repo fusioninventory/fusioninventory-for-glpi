@@ -310,32 +310,32 @@ function pluginFusioninventoryUpdateTasks( $migration , $plugin_id) {
          'value' => '0'
       ),
       'plugin_fusioninventory_taskjobs_id' => array(
-         'type' => 'int(11) not null',
-         'value' => '0'
+         'type' => 'integer',
+         'value' => NULL
       ),
       'items_id' => array(
-         'type' => 'int(11) not null',
-         'value' => '0'
+         'type' => 'integer',
+         'value' => NULL
       ),
       'itemtype' => array(
-         'type' => 'varchar(100)',
+         'type' => 'varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL',
          'value' => null
       ),
       'plugin_fusioninventory_agents_id' => array(
-         'type' => 'int(11) not null',
-         'value' => '0'
+         'type' => 'integer',
+         'value' => NULL
       ),
       'specificity' => array(
          'type' => 'text',
          'value' => null
       ),
       'uniqid' => array(
-         'type' => 'varchar(255) collate utf8_unicode_ci',
+         'type' => 'string',
          'value' => null
       ),
       'state' => array(
-         'type' => 'int(11) not null',
-         'value' => '0'
+         'type' => 'integer',
+         'value' => NULL
       )
    );
 
@@ -357,10 +357,21 @@ function pluginFusioninventoryUpdateTasks( $migration , $plugin_id) {
             'state'
          ),
          'name' => '', 'type' => 'INDEX'
-      )
+      ),
+      array(
+         'field' => array(
+            'plugin_fusioninventory_agents_id',
+            'plugin_fusioninventory_taskjobs_id',
+            'items_id',
+            'itemtype',
+            'id',
+            'state'
+         ),
+         'name' => 'plugin_fusioninventory_agents_items_states',
+         'type' => 'INDEX'
+      ),
    );
    $table['oldkeys'] = array();
    migrateTablesFusionInventory($migration, $table);
-   //$DB->list_fields($newTable, FALSE);
 
 }

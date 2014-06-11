@@ -218,7 +218,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          "  <span class='" . $itemtype ."'></span>",
          "  <label>",
          "     <span style='font-style:oblique'>" . $itemtype_name ."</span>" ,
-         "     ". $item->fields['name'] ,
+         "     ". $item->getLink(array('linkoption'=>'target="_blank"')) ,
          "  </label>",
          "  <input type='hidden' name='" . $module_type ."[]' value='". $item_fullid ."'>" ,
          "  </input>" ,
@@ -336,7 +336,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    }
 
    public function ajaxModuleItemsDropdown($options) {
-      Toolbox::logDebug($options);
       $moduletype = $options['moduletype'];
       $itemtype = $options['itemtype'];
       if ($itemtype === "") {
@@ -364,21 +363,20 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
       $item_key_id = $item->getForeignKeyField();
       $dropdown_rand_id = "dropdown_".$item_key_id . $dropdown_rand;
       echo implode( array("\n",
-         "<div class='center'>",
+         "<div class='center' id='add_fusinv_job_item_button'>",
          "<input type='button' class=submit",
          "  value='".__('Add')." $title'",
-         "  onclick='taskjobs.add_item(",
-         "     \"$moduletype\", \"$itemtype\", \"$itemtype_name\", \"$dropdown_rand_id\")'>",
+         "  onclick='javascript:void(0)'>",
          "</input>",
          "</div>"
       ));
-      //return $this->getItemsForModuleItemType($options['method'], $options['moduletype']);
-      /*
-      $module_items_dropdown = $this->showDropdownFromArray(
-         $title, null, $module_types
-      );
-       */
-
+      echo Html::scriptBlock(implode("\n",array(
+         "$('#add_fusinv_job_item_button').on('click', function() {",
+         "  taskjobs.add_item(",
+         "     \"$moduletype\", \"$itemtype\", \"$itemtype_name\", \"$dropdown_rand_id\"",
+         "  );",
+         "});",
+      )));
    }
 
    public function getAddItemtypeButton($title, $itemtype, $method) {
@@ -560,8 +558,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
    function showForm($id, $options=array()) {
       global $CFG_GLPI;
 
-      Toolbox::logDebug(array($id, $options));
-
       $new_item = false;
       if ($id > 0) {
          if ($this->getFromDB($id)) {
@@ -712,7 +708,8 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             __('Targets', 'fusioninventory'),
             'targets', $this->fields['method']
          );
-         echo "<br/><span style='font-size:50%;font-style:italic'>";
+         //echo "<br/><span class='description' style='font-size:50%;font-style:italic'>";
+         echo "<br/><span class='description'>";
          echo __('The items that should be applied for this job.', 'fusioninventory');
          echo "</span>";
          echo "</div>";
@@ -722,7 +719,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             __('Actors', 'fusioninventory'),
             'actors', $this->fields['method']
          );
-         echo "<br/><span style='font-size:50%;font-style:italic'>";
+         echo "<br/><span class='description'>";
          echo __('The items that should carry out those targets.', 'fusioninventory');
          echo "</span>";
          echo "</div>";
@@ -961,7 +958,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
     * Submit Form values
     */
    public function submitForm($postvars) {
-      Toolbox::logDebug($postvars);
       if (isset($postvars['definition_add'])) {
          // * Add a definition
          $mytaskjob->getFromDB($postvars['id']);
@@ -1143,16 +1139,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
             }
 
             $targets = array();
-            Toolbox::logDebug(
-               var_export(
-                  (
-                     array_key_exists('targets', $postvars)
-                     and is_array($postvars['targets'])
-                     and count($postvars['targets']) > 0
-                  )
-                  ,true
-               )
-            );
             if( array_key_exists('targets', $postvars)
                and is_array($postvars['targets'])
                and count($postvars['targets']) > 0
@@ -1181,7 +1167,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
 
             //TODO: get rid of plugins_id and just use method
             //$postvars['plugins_id'] = $postvars['method-'.$postvars['method']];
-            Toolbox::logDebug($postvars);
             $this->update($postvars);
          }
 
@@ -1243,7 +1228,6 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
          $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
 
       } elseif (isset($postvars['delete_taskjobs'])) {
-         Toolbox::logDebug();
          foreach($postvars['taskjobs'] as $taskjob_id) {
             $input = array('id'=>$taskjob_id);
             $this->delete($input, true);
