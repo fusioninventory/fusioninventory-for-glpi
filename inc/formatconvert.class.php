@@ -287,6 +287,14 @@ class PluginFusioninventoryFormatconvert {
                }
             }
          }
+         if ((isset($array['BIOS']['MMANUFACTURER']))
+                      AND (!empty($array['BIOS']['MMANUFACTURER']))) {
+            $a_inventory['Computer']['mmanufacturer'] = $array['BIOS']['MMANUFACTURER'];
+         }
+         if ((isset($array['BIOS']['BMANUFACTURER']))
+                      AND (!empty($array['BIOS']['BMANUFACTURER']))) {
+            $a_inventory['Computer']['bmanufacturer'] = $array['BIOS']['BMANUFACTURER'];
+         }
 
          if (isset($array['BIOS']['SMODEL']) AND $array['BIOS']['SMODEL'] != '') {
             $a_inventory['Computer']['computermodels_id'] = $array['BIOS']['SMODEL'];
