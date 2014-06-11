@@ -53,7 +53,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
 
 
    static function getTypeName($nb=0) {
-      return __('Packages', 'fusioninventory');
+      return __('Package', 'fusioninventory');
    }
 
 

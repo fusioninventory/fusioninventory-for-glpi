@@ -241,7 +241,7 @@ class SoftwareEntityCreationTest extends Common_TestCase {
       $this->mark_incomplete();
       return;
       // TODO: recode this test
-      
+
       $DB->connect();
 
       $DB->query("UPDATE `glpi_entities`

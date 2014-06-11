@@ -44,9 +44,10 @@ include ("../../../inc/includes.php");
 
 if (PluginFusioninventoryMenu::canView()) {
    Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"], "plugins",
-                "fusioninventory", "menu");
+                "pluginfusioninventorymenu", "menu");
 
    PluginFusioninventoryMenu::displayMenu();
+   PluginFusioninventoryMenu::board();
 } else {
    Html::displayRightError();
 }

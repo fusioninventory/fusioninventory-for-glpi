@@ -46,6 +46,9 @@ Session::checkLoginUser();
 
 if(isset($_POST["unlock_field_fusioninventory"])){
    $typeright = strtolower($_POST['type']);
+   if ($typeright == "networkequipment") {
+      $typeright = "networking";
+   }
    if (Session::haveRight($typeright, UPDATE)) {
       if (isset($_POST["lockfield_fusioninventory"])
               && count($_POST["lockfield_fusioninventory"])){

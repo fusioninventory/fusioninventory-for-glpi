@@ -247,21 +247,35 @@ class PluginFusioninventoryCommunication {
     **/
    function getTaskAgent($agent_id) {
 
-      $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-      $moduleRun = $pfTaskjobstate->getTaskjobsAgent($agent_id);
-      foreach ($moduleRun as $className => $array) {
+      $pfTask = new PluginFusioninventoryTask();
+
+      /**
+       * TODO: the following must be definitely done differently !
+       * (... but i'm kind in a hurry right now ;-) )
+       */
+      $methods = array();
+      $classnames = array();
+      foreach( PluginFusioninventoryStaticmisc::getmethods() as $method) {
+         if (isset($method['classname'])) {
+            $methods[] = $method['method'];
+            $classnames[$method['method']] = $method['classname'];
+         }
+      }
+
+      $jobstates = $pfTask->getTaskjobstatesForAgent($agent_id,$methods);
+      foreach ($jobstates as $jobstate) {
+         $className = $classnames[$jobstate->method];
          if (class_exists($className)) {
             /*
              * TODO: check if use_rest is enabled in Staticmisc::get_methods.
              * Also, this get_methods function need to be reviewed
              */
             if (  $className != "PluginFusioninventoryInventoryComputerESX"
-               && $className != "PluginFusioninventoryDeployinstall"
-               && $className != "PluginFusioninventoryDeployuninstall"
+               && $className != "PluginFusioninventoryDeployCommon"
                && $className != "PluginFusioninventoryCollect"
             ) {
                $class = new $className();
-               $sxml_temp = $class->run($array);
+               $sxml_temp = $class->run($jobstate);
                PluginFusioninventoryToolbox::append_simplexml(
                   $this->message, $sxml_temp
                );

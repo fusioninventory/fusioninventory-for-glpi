@@ -58,12 +58,32 @@ class PluginFusioninventoryInventoryComputerInventory {
    * @return nothing (import ok) / error string (import ko)
    **/
    function import($p_DEVICEID, $a_CONTENT, $arrayinventory) {
+      global $DB;
+
+      $pfConfig = new PluginFusioninventoryConfig();
 
       $errors = '';
       $_SESSION["plugin_fusioninventory_entity"] = -1;
 
-      $this->sendCriteria($p_DEVICEID, $arrayinventory);
+      // Prevent 2 computers with same name (Case of have the computer inventory 2 times in same time
+      // and so we don't want it create 2 computers instead one)
+      $name = '';
+      if (isset($arrayinventory['CONTENT']['HARDWARE']['NAME'])) {
+         $name = strtolower($arrayinventory['CONTENT']['HARDWARE']['NAME']);
+      }
 
+      if ($pfConfig->getValue('memcached')) {
+         $memcache = new Memcached();
+         $memcache->addServer($pfConfig->getValue('memcached'), 11211);
+
+         while(!$memcache->add("lock:inventoryname".$name, "1", 300000)) {
+            usleep(1000);
+         }
+         $this->sendCriteria($p_DEVICEID, $arrayinventory);
+         $memcache->delete("lock:inventoryname".$name);
+      } else {
+         $this->sendCriteria($p_DEVICEID, $arrayinventory);
+      }
       return $errors;
    }
 
@@ -398,7 +418,14 @@ class PluginFusioninventoryInventoryComputerInventory {
 
             if ($computer->fields['entities_id'] != $entities_id) {
                $pfEntity = new PluginFusioninventoryEntity();
+               $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+               $moveentity = FALSE;
                if ($pfEntity->getValue('transfers_id_auto', $computer->fields['entities_id']) > 0) {
+                  if (!$pfInventoryComputerComputer->getLock($items_id)) {
+                     $moveentity = TRUE;
+                  }
+               }
+               if ($moveentity) {
                   $pfEntity = new PluginFusioninventoryEntity();
                   $transfer = new Transfer();
                   $transfer->getFromDB($pfEntity->getValue('transfers_id_auto', $entities_id));
@@ -420,6 +447,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          if ($items_id == '0') {
             $input = array();
             $input['entities_id'] = $entities_id;
+            PluginFusioninventoryInventoryComputerInventory::addDefaultStateIfNeeded($input);
             $items_id = $computer->add($input);
             $no_history = TRUE;
             $setdynamic = 0;
@@ -437,22 +465,37 @@ class PluginFusioninventoryInventoryComputerInventory {
          if (!$PF_ESXINVENTORY) {
             $pfAgent->setAgentWithComputerid($items_id, $this->device_id, $entities_id);
          }
-         $ret = $DB->query("SELECT IS_USED_LOCK('inventory".$items_id."')");
-         if (!is_null($DB->result($ret, 0, 0))) {
-            $communication = new PluginFusioninventoryCommunication();
-            $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
-      <REPLY>
-      <ERROR>ERROR: SAME COMPUTER IS CURRENTLY UPDATED</ERROR>
-      </REPLY>");
-            $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
-            exit;
+
+         $pfConfig = new PluginFusioninventoryConfig();
+
+         if ($pfConfig->getValue('memcached')) {
+            $memcache = new Memcached();
+            $memcache->addServer($pfConfig->getValue('memcached'), 11211);
+
+            if ($memcache->get("lock:inventory".$items_id)) {
+
+               $communication = new PluginFusioninventoryCommunication();
+               $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
+         <REPLY>
+         <ERROR>ERROR: SAME COMPUTER IS CURRENTLY UPDATED</ERROR>
+         </REPLY>");
+               $communication->sendMessage($_SESSION['plugin_fusioninventory_compressmode']);
+               exit;
+            }
          }
 
          // * For benchs
          //$start = microtime(TRUE);
 
-         $ret = $DB->query("SELECT GET_LOCK('inventory".$items_id."', 300)");
-         if ($DB->result($ret, 0, 0) == 1) {
+         PluginFusioninventoryInventoryComputerStat::increment();
+
+         if ($pfConfig->getValue('memcached')) {
+            $memcache = new Memcached();
+            $memcache->addServer($pfConfig->getValue('memcached'), 11211);
+
+            while(!$memcache->add("lock:inventory".$items_id, "1", 300000)) {
+               usleep(1000);
+            }
 
             $pfInventoryComputerLib->updateComputer(
                     $a_computerinventory,
@@ -460,44 +503,48 @@ class PluginFusioninventoryInventoryComputerInventory {
                     $no_history,
                     $setdynamic);
 
-            $DB->request("SELECT RELEASE_LOCK('inventory".$items_id."')");
-            $pfInventoryComputerLib->addLog();
+            $memcache->delete("lock:inventory".$items_id);
+         } else {
+            $pfInventoryComputerLib->updateComputer(
+                    $a_computerinventory,
+                    $items_id,
+                    $no_history,
+                    $setdynamic);
+         }
 
-            $plugin = new Plugin();
-            if ($plugin->isActivated('monitoring')) {
-               Plugin::doOneHook("monitoring", "ReplayRulesForItem", array('Computer', $items_id));
-            }
+         $plugin = new Plugin();
+         if ($plugin->isActivated('monitoring')) {
+            Plugin::doOneHook("monitoring", "ReplayRulesForItem", array('Computer', $items_id));
+         }
+         // * For benchs
+         //Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
+         //  memory_get_usage()."\n".
+         //  memory_get_usage(TRUE)."\n".
+         //  memory_get_peak_usage()."\n".
+         //  memory_get_peak_usage()."\n");
 
-            // * For benchs
-            //Toolbox::logInFile("exetime", (microtime(TRUE) - $start)." (".$items_id.")\n".
-            //  memory_get_usage()."\n".
-            //  memory_get_usage(TRUE)."\n".
-            //  memory_get_peak_usage()."\n".
-            //  memory_get_peak_usage()."\n");
-
-            if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
-               $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
-               $inputrulelog = array();
-               $inputrulelog['date'] = date('Y-m-d H:i:s');
-               $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
-               if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
-                  $inputrulelog['plugin_fusioninventory_agents_id'] =
-                                 $_SESSION['plugin_fusioninventory_agents_id'];
-               }
-               $inputrulelog['items_id'] = $items_id;
-               $inputrulelog['itemtype'] = $itemtype;
-               $inputrulelog['method'] = 'inventory';
-               $pfRulematchedlog->add($inputrulelog, array(), FALSE);
-               $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
-               unset($_SESSION['plugin_fusioninventory_rules_id']);
+         if (isset($_SESSION['plugin_fusioninventory_rules_id'])) {
+            $pfRulematchedlog = new PluginFusioninventoryRulematchedlog();
+            $inputrulelog = array();
+            $inputrulelog['date'] = date('Y-m-d H:i:s');
+            $inputrulelog['rules_id'] = $_SESSION['plugin_fusioninventory_rules_id'];
+            if (isset($_SESSION['plugin_fusioninventory_agents_id'])) {
+               $inputrulelog['plugin_fusioninventory_agents_id'] =
+                              $_SESSION['plugin_fusioninventory_agents_id'];
             }
-            // Write XML file
-            if (!empty($PLUGIN_FUSIONINVENTORY_XML)) {
-               PluginFusioninventoryToolbox::writeXML(
-                       $items_id,
-                       $PLUGIN_FUSIONINVENTORY_XML->asXML(),
-                       'computer');
-            }
+            $inputrulelog['items_id'] = $items_id;
+            $inputrulelog['itemtype'] = $itemtype;
+            $inputrulelog['method'] = 'inventory';
+            $pfRulematchedlog->add($inputrulelog, array(), FALSE);
+            $pfRulematchedlog->cleanOlddata($items_id, $itemtype);
+            unset($_SESSION['plugin_fusioninventory_rules_id']);
+         }
+         // Write XML file
+         if (!empty($PLUGIN_FUSIONINVENTORY_XML)) {
+            PluginFusioninventoryToolbox::writeXML(
+                    $items_id,
+                    $PLUGIN_FUSIONINVENTORY_XML->asXML(),
+                    'computer');
          }
       } else if ($itemtype == 'PluginFusioninventoryUnknownDevice') {
 

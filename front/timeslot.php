@@ -44,8 +44,11 @@ include ("../../../inc/includes.php");
 
 Session::checkRight('plugin_fusioninventory_task', READ);
 
+
 Html::header(__('FusionInventory', 'fusioninventory'), $_SERVER["PHP_SELF"],
         "plugins", "pluginfusioninventorymenu", "timeslot");
+
+PluginFusioninventoryMenu::displayMenu("mini");
 
 Search::show('PluginFusioninventoryTimeslot');
 

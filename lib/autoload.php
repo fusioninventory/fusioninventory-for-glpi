@@ -2,7 +2,7 @@
 
 use Zend\Loader\SplAutoloader;
 
-class ModifiedIncludePathAutoloader implements SplAutoloader
+class FusioninventoryIncludePathAutoloader implements SplAutoloader
 {
    protected $paths = array();
 
@@ -27,57 +27,50 @@ class ModifiedIncludePathAutoloader implements SplAutoloader
       return $this;
    }
 
+   public function processClassname($classname)
+   {
+      preg_match("/Plugin([A-Z][a-z0-9]+)([A-Z]\w+)([A-Z]\w+)/",$classname,$matches);
+
+      if (count($matches) < 4) {
+         return false;
+      } else {
+         return $matches;
+      }
+
+   }
+
    public function autoload($classname)
    {
-      Toolbox::logDebug($classname);
+//      Toolbox::logDebug($classname);
 
-      $parts = explode('\\', $classname);
-      Toolbox::logDebug($parts);
+      $matches = $this->processClassname($classname);
 
-      $filename = null;
+      if($matches !== false) {
+         $plugin_name = strtolower($matches[1]);
+         $class_name = strtolower($matches[2]);
+         $class_category = strtolower($matches[3]);
 
-      /**
-       * The namespaces of Fusioninventory classes to load must be respect the following format:
-       *    Fusioninventory\<Type>\<Class>
-       */
+//         Toolbox::logDebug($matches);
+//         Toolbox::logDebug($plugin_name);
+         if ( $plugin_name !== "fusioninventory" ) {
+            return false;
+         }
 
-      if (count($parts) < 3) {
-         return false;
-      }
+         $filename = implode(".", array(
+            $class_name,
+            $class_category,
+            "class",
+            "php"
+         ));
 
-      if ( $parts[0] !== "Fusioninventory" ) {
-         return false;
-      }
+//         Toolbox::logDebug($filename);
 
-      if ( ! preg_match("|PluginFusioninventory|", $parts[2]) ){
-         return false;
-      }
-
-      switch ($parts[1]) {
-         case "View":
-            $filename = strtolower(
-               implode (
-                  ".",
-                  array(
-                     str_replace("Plugin".$parts[0].$parts[1], "", $parts[2]),
-                     $parts[1],
-                     "class",
-                     "php"
-                  )
-               )
-            );
-            break;
-         case "Model":
-            $filename = "";
-            break;
-      }
-      Toolbox::logDebug($filename);
-
-      foreach ($this->paths as $path) {
-         $test = $path . DIRECTORY_SEPARATOR . $filename;
-         Toolbox::logDebug($test);
-         if (file_exists($test)) {
-            return include($test);
+         foreach ($this->paths as $path) {
+            $test = $path . DIRECTORY_SEPARATOR . $filename;
+            //Toolbox::logDebug($test);
+            if (file_exists($test)) {
+               return include($test);
+            }
          }
       }
       return false;

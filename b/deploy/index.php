@@ -49,55 +49,51 @@ if (isset($_GET['action'])) {
    switch ($_GET['action']) {
       case 'getJobs':
          if(isset($_GET['machineid'])) {
-            $pfAgent = new PluginFusioninventoryAgent();
+            $pfAgent        = new PluginFusioninventoryAgent();
+            $pfTask         = new PluginFusioninventoryTask();
+            $pfTaskjob      = new PluginFusioninventoryTaskjob();
             $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
-            $pfTaskjob = new PluginFusioninventoryTaskjob();
 
-            $a_agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
+            $agent = $pfAgent->InfosByKey(Toolbox::addslashes_deep($_GET['machineid']));
 
-            if(isset($a_agent['id'])) {
-               $methods = $pfTaskjobstate->getTaskjobsAgent($a_agent['id']);
+            if (isset($agent['id'])) {
+               $taskjobstates = $pfTask->getTaskjobstatesForAgent(
+                  $agent['id'],
+                  array('deployinstall', 'deployuninstall')
+               );
 
-
-               $new_taskjobs = array();
-               //Reconstruct taskjobs list by id and not by classname
-               foreach ($methods as $className => $taskjobs) {
-                  if (class_exists($className)) {
-                     if (     $className == "PluginFusioninventoryDeployinstall"
-                           || $className == "PluginFusioninventoryDeployuninstall"
-                     ) {
-                        //For each taskjob, add classname information
-                        foreach($taskjobs as $id => $taskjob) {
-                           $taskjob['class_name'] = $className;
-                           $new_taskjobs[$taskjob['id']] = $taskjob;
-                        }
-                     }
-                  }
-               }
                //sort taskjobs by key id
-               ksort($new_taskjobs);
-
-               //start of json response
+               /**
+                * TODO: sort taskjobs by 'index' field in the taskjob query since it can be
+                * manipulated by drad and drop (cf. Task::getTaskjobsForAgent() ).
+                */
+               ////start of json response
                $order = new stdClass;
                $order->jobs = array();
                $order->associatedFiles = new stdClass;
 
-               //aggregate json orders in a single json response
-               foreach ($new_taskjobs as $taskjob) {
-                  //Get method associated to the taskjob
-                  $classname = $taskjob['class_name'];
-                  $class = new $classname();
-                  //Get taskjob json order
-                  $taskjob_order = $class->run($taskjob, $a_agent);
+               ////aggregate json orders in a single json response
+               foreach ($taskjobstates as $taskjobstate) {
 
-                  //Append order to the final json
-                  $order->jobs[] = $taskjob_order['job'];
-                  //Update associated files list
-                  foreach( $taskjob_order['associatedFiles'] as $hash=>$associatedFiles) {
+                  // TODO: The run() method should be renamed as getData() and moved to the Package
+                  // class since we want package configuration (Order class may be useless ... needs
+                  // some thinking)
+                  $deploycommon = new PluginFusioninventoryDeployCommon();
+                  // Get taskjob json order
+                  $jobstate_order = $deploycommon->run($taskjobstate);
+
+                  // Append order to the final json
+                  $order->jobs[] = $jobstate_order['job'];
+                  // Update associated files list
+                  foreach( $jobstate_order['associatedFiles'] as $hash=>$associatedFiles) {
                      if(!array_key_exists($hash, $order->associatedFiles) ) {
                         $order->associatedFiles->$hash = $associatedFiles;
                      }
                   }
+                  $taskjobstate->changeStatus(
+                     $taskjobstate->fields['id'] ,
+                     $taskjobstate::SERVER_HAS_SENT_DATA
+                  );
                }
 
                // return an empty dictionnary if there are no jobs.
@@ -119,20 +115,21 @@ if (isset($_GET['action'])) {
       case 'setStatus':
 
          $partjob_mapping = array(
-            "checking" => __("Checks"),
-            "downloading" => __("Files download"),
-            "prepare"   => __("Files preparation"),
-            "processing" => __("Actions"),
+            "checking"    => __('Checks', 'fusioninventory'),
+            "downloading" => __('Files download', 'fusioninventory'),
+            "prepare"     => __('Files preparation', 'fusioninventory'),
+            "processing"  => __('Actions', 'fusioninventory'),
          );
 
          $error = FALSE;
 
          $params = array(
             'machineid' => $_GET['machineid'],
-            'uuid' => $_GET['uuid']
+            'uuid'      => $_GET['uuid']
          );
 
-         if ( array_key_exists("status", $_GET) && $_GET['status'] == 'ko') {
+         if ( array_key_exists("status", $_GET)
+                 && $_GET['status'] == 'ko') {
             $params['code'] = 'ko';
             if (array_key_exists("currentStep", $_GET)) {
                $params['msg'] = $partjob_mapping[$_GET['currentStep']] . ":" . $_GET['msg'];
@@ -144,7 +141,8 @@ if (isset($_GET['action'])) {
 
 
          if ( $error != TRUE) {
-            if ( array_key_exists("msg", $_GET) && $_GET['msg'] === 'job successfully completed') {
+            if ( array_key_exists("msg", $_GET)
+                    && $_GET['msg'] === 'job successfully completed') {
                //Job is ended and status should be ok
                $params['code'] = 'ok';
                $params['msg'] = $_GET['msg'];
@@ -158,7 +156,6 @@ if (isset($_GET['action'])) {
             }
          }
          if (is_array($params['msg']) ) {
-
 
             if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
                $htmlspecialchars_flags = ENT_SUBSTITUTE | ENT_DISALLOWED;
@@ -191,7 +188,6 @@ if (isset($_GET['action'])) {
    } else {
       echo json_encode((object)array());
    }
-
 }
 
 ?>

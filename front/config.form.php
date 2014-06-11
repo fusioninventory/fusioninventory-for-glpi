@@ -47,6 +47,9 @@ Session::checkRight('plugin_fusioninventory_configuration', READ);
 Html::header(__('Features', 'fusioninventory'), $_SERVER["PHP_SELF"],
              "plugins", "pluginfusioninventorymenu", "config");
 
+
+PluginFusioninventoryMenu::displayMenu("mini");
+
 $pfConfig = new PluginFusioninventoryConfig();
 
 if (isset($_POST['update'])) {

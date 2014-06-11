@@ -35,59 +35,27 @@
               http://www.gnu.org/licenses/agpl-3.0-standalone.html
    @link      http://www.fusioninventory.org/
    @link      http://forge.fusioninventory.org/projects/fusioninventory-for-glpi/
-   @since     2013
+   @since     2014
 
    ------------------------------------------------------------------------
  */
 
 include ("../../../inc/includes.php");
 
-Html::header(__('Features'), $_SERVER["PHP_SELF"],
-             "plugins", "pluginfusioninventorymenu", "deploygroup");
+$pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
 
+if (isset ($_POST["add"])) {
 
-$pfDeployGroup = new PluginFusioninventoryDeployGroup();
-$pfDeployGroup_Dynamicdata = new PluginFusioninventoryDeployGroup_Dynamicdata();
-
-if (isset($_GET['updaterule'])) {
-   if (!isset($_GET['contains'])
-        AND !isset($_GET['reset'])) {
-
-   } else {
-      $_POST = $_GET;
-      $input = array();
-      $input['id'] = $_POST['plugin_fusioninventory_deploygroup_dynamicdatas_id'];
-      unset($_POST['_glpi_csrf_token']);
-      unset($_POST['start']);
-      $input['fields_array'] = exportArrayToDB($_POST);
-      $pfDeployGroup_Dynamicdata->update($input);
-      Html::back();
+   $a_data = current(getAllDatasFromTable('glpi_plugin_fusioninventory_ipranges_configsecurities',
+                                 "`plugin_fusioninventory_ipranges_id`='".$_POST['plugin_fusioninventory_ipranges_id']."'",
+                                 false,
+                                 '`rank` DESC'));
+   $_POST['rank'] = 1;
+   if (isset($a_data['rank'])) {
+      $_POST['rank'] = $a_data['rank'] + 1;
    }
-} else if (isset($_GET['contains'])
-        OR isset($_GET['reset'])) {
-
-   if (isset($_SESSION['plugin_fusioninventory_dynamicgroup'])) {
-      unset($_SESSION['plugin_fusioninventory_dynamicgroup']);
-   }
-   $_SESSION['plugin_fusioninventory_dynamicgroup'] = $_GET;
-   $_SESSION['plugin_fusioninventory_dynamicgroup_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
+   $pfIPRange_ConfigSecurity->add($_POST);
    Html::back();
 }
-if (isset($_POST['update_group'])) {
-   $pfDeployGroup_Dynamicdata->update($_POST);
-   Html::back();
-}
-if (isset($_POST['name'])) {
-   $a_construct = array();
-   foreach ($_POST as $key=>$value) {
-      $a_construct[] = $key."=".$value;
-   }
-   $_SERVER['REQUEST_URI'] = $_SERVER['REQUEST_URI']."?".implode("&", $a_construct);
-   Html::redirect($_SERVER['REQUEST_URI']);
-}
-
-$pfDeployGroup->showForm($_GET['id']);
-
-Html::footer();
 
 ?>

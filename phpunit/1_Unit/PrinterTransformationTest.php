@@ -52,6 +52,7 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_printer = array();
       $a_printer['INFO'] = array(
@@ -112,6 +113,7 @@ class PrinterTransformation extends RestoreDatabase_TestCase {
       $DB->connect();
 
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $a_printer = array();
       $a_printer['INFO'] = array(
