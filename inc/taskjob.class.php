@@ -326,7 +326,7 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
 
          $a_methods = PluginFusioninventoryStaticmisc::getmethods();
          foreach ($a_methods as $datas) {
-            echo 
+            echo
                "<input type='hidden' name='method-".$datas['method']."' "
                ."value='".PluginFusioninventoryModule::getModuleId($datas['module'])
                ."' />";
@@ -410,8 +410,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "<td>".__('Number of trials', 'fusioninventory')."&nbsp;:</td>";
          echo "<td>";
          Dropdown::showNumber("retry_nb", array(
-                'value' => $this->fields['retry_nb'], 
-                'min'   => 0, 
+                'value' => $this->fields['retry_nb'],
+                'min'   => 0,
                 'max'   => 30)
          );
          echo "</td>";
@@ -421,8 +421,8 @@ class PluginFusioninventoryTaskjob extends CommonDBTM {
          echo "<td>".__('Time between 2 trials (in minutes)', 'fusioninventory')."&nbsp;:</td>";
          echo "<td>";
          Dropdown::showNumber("retry_time", array(
-                'value' => $this->fields['retry_time'], 
-                'min'   => 0, 
+                'value' => $this->fields['retry_time'],
+                'min'   => 0,
                 'max'   => 360)
        );
          echo "</td>";
@@ -2090,7 +2090,9 @@ return namelist;
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
-      echo "<td><input type='text' name='name' value='".$this->fields['name']."' /></td>";
+      echo "<td>";
+      Html::autocompletionTextField($this,'name');
+      echo "</td>";
       echo "<td>".__('Active')."&nbsp;:</td>";
       echo "<td>";
       Dropdown::showYesNo("is_active", $pfTask->fields['is_active']);
@@ -2119,8 +2121,8 @@ return namelist;
       echo "<td>".__('Periodicity')."&nbsp;:</td>";
       echo "<td>";
       Dropdown::showNumber("periodicity_count", array(
-                'value' => $this->fields['periodicity_count'], 
-                'min'   => 0, 
+                'value' => $this->fields['periodicity_count'],
+                'min'   => 0,
                 'max'   => 300)
       );
       $a_time = array();

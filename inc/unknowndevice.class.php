@@ -59,7 +59,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       return PluginFusioninventoryProfile::haveRight("unknowndevice", "w");
    }
 
-   
+
    static function canView() {
       return PluginFusioninventoryProfile::haveRight("unknowndevice", "r");
    }
@@ -167,12 +167,12 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       $tab[16]['field']     = 'name';
       $tab[16]['linkfield'] = 'plugin_fusioninventory_snmpmodels_id';
       $tab[16]['name']      = __('SNMP models', 'fusioninventory');
-      
+
       $tab[17]['table']     = 'glpi_plugin_fusioninventory_configsecurities';
       $tab[17]['field']     = 'name';
       $tab[17]['linkfield'] = 'plugin_fusioninventory_configsecurities_id';
       $tab[17]['name']      = __('SNMP authentication', 'fusioninventory');
-      
+
       $tab += NetworkPort::getSearchOptionsToAdd("PluginFusioninventoryUnknownDevice");
 
       return $tab;
@@ -275,7 +275,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>" . __('Name') . "&nbsp;:</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='name' value='" . $this->fields["name"] . "' size='35'/>";
+      Html::autocompletionTextField($this,'name', array('size' => 35));
       echo "</td>";
 
       if (Session::isMultiEntitiesMode()) {
@@ -311,7 +311,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<td align='center'>" . __('Alternate username') . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='contact' value='" . $this->fields["contact"] . "' size='35'/>";
+      Html::autocompletionTextField($this,'contact', array('size' => 35));
       echo "</td>";
       echo "</tr>";
 
@@ -339,7 +339,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<td align='center'>" . __('Serial Number') . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='serial' value='" . $this->fields["serial"] . "' size='35'/>";
+      Html::autocompletionTextField($this,'serial', array('size' => 35));
       echo "</td>";
       echo "</tr>";
 
@@ -351,8 +351,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
       echo "<td align='center'>" . __('Inventory number') . "&nbsp;:</td>";
       echo "</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='otherserial' value='" . $this->fields["otherserial"].
-              "' size='35'/>";
+      Html::autocompletionTextField($this,'otherserial', array('size' => 35));
       echo "</td>";
       echo "</tr>";
 
@@ -360,7 +359,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>" . __('IP') . " :</td>";
          echo "<td align='center'>";
-         echo "<input type='text' name='ip' value='" . $this->fields["ip"] . "' size='35'/>";
+         Html::autocompletionTextField($this,'ip', array('size' => 35));
          echo "</td>";
 
          echo "<td colspan='2'></td>";
@@ -479,7 +478,7 @@ class PluginFusioninventoryUnknownDevice extends CommonDBTM {
    }
 
 
-   
+
 // ************************* Hub Management ************************ //
 
    /**

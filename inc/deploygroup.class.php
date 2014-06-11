@@ -138,7 +138,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')."&nbsp;:</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='name' size='40' value='".$this->fields["name"]."'/>";
+      Html::autocompletionTextField($this,'name', array('size' => 40));
       echo "</td>";
 
       echo "<td rowspan='2'>".__('Comments')."&nbsp;:</td>";
@@ -153,7 +153,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       self::dropdownGroupType('type', $this->fields['type']);
       echo "</td>";
       echo "</tr>";
-      
+
       $this->showFormButtons($options);
 
       switch($this->fields['type']) {
@@ -335,7 +335,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       global $DB, $CFG_GLPI;
 
       $pfDeployGroup_Dynamicdata = new PluginFusioninventoryDeployGroup_Dynamicdata();
-      
+
       $ID = $this->fields['id'];
 
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
@@ -343,7 +343,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
          LIMIT 1";
       $result=$DB->query($query);
       $plugin_fusioninventory_deploygroup_dynamicdatas_id = 0;
-      
+
       if ($DB->numrows($result) == 1) {
          $data = $DB->fetch_assoc($result);
          $plugin_fusioninventory_deploygroup_dynamicdatas_id = $data['id'];
@@ -356,12 +356,12 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       }
 
       $pfDeployGroup_Dynamicdata->getFromDB($plugin_fusioninventory_deploygroup_dynamicdatas_id);
-      if (isset($_SESSION['plugin_fusioninventory_dynamicgroup']) && 
-         $_SESSION['plugin_fusioninventory_dynamicgroup']['plugin_fusioninventory_deploygroup_dynamicdatas_id'] 
+      if (isset($_SESSION['plugin_fusioninventory_dynamicgroup']) &&
+         $_SESSION['plugin_fusioninventory_dynamicgroup']['plugin_fusioninventory_deploygroup_dynamicdatas_id']
               == $plugin_fusioninventory_deploygroup_dynamicdatas_id
       ) {
          $_GET = $_SESSION['plugin_fusioninventory_dynamicgroup'];
-         $array_delete = array('add_search_count', 'delete_search_count', 
+         $array_delete = array('add_search_count', 'delete_search_count',
                                'add_search_count2', 'delete_search_count2');
          foreach ($array_delete as $value_delete) {
             if (isset($_SESSION['plugin_fusioninventory_dynamicgroup'][$value_delete])) {
@@ -399,7 +399,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $_GET['itemtype'] = 'Computer';
 //      unset($_SESSION["glpisearchcount"]['Computer']);
 //      unset($_SESSION["glpisearch"]);
-      
+
       Search::manageGetValues('Computer', FALSE);
       $pfSearch = new PluginFusioninventorySearch();
       $pfSearch->formurl            = $CFG_GLPI['root_doc'].'/plugins/fusioninventory/front/deploygroup_dynamicdata.form.php';
@@ -421,7 +421,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       echo "</td></tr>";
       echo "</table>";
       Html::closeForm();
-      
+
       $_GET[$pfSearch->customIdVar] = $plugin_fusioninventory_deploygroup_dynamicdatas_id;
       $_GET['id'] = $plugin_fusioninventory_deploygroup_dynamicdatas_id;
       $pfSearch->showGenericSearch('Computer', $_GET);
@@ -951,7 +951,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
 
       return $tab;
    }
-   
+
    static function getSpecificValueToDisplay($field, $values, array $options=array()) {
       $group = new self();
       if (!is_array($values)) {
@@ -971,13 +971,13 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
       $group = new self();
       return Dropdown::showFromArray($name, $group->grouptypes, array('value'=>$value));
    }
-   
+
    static function getSpecificValueToSelect($field, $name='', $values='', array $options=array()) {
 
       if (!is_array($values)) {
          $values = array($field => $values);
       }
-      
+
       $options['display'] = false;
       switch ($field) {
          case 'type':
@@ -986,6 +986,6 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             break;
       }
       return parent::getSpecificValueToSelect($field, $name, $values, $options);
-   }   
+   }
 }
 ?>

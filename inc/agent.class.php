@@ -206,7 +206,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
    **/
    function showForm($computers_id, $options=array()) {
 
-      
+
       if ($computers_id!='') {
          $this->getFromDB($computers_id);
       } else {
@@ -226,7 +226,7 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Name')." :</td>";
       echo "<td align='center'>";
-      echo "<input type='text' name='name' value='".$this->fields["name"]."' size='30'/>";
+      Html::autocompletionTextField($this,'name', array('size' => 40));
       echo "</td>";
       echo "<td>".__('Device_id', 'fusioninventory')."&nbsp;:</td>";
       echo "<td align='center'>";
@@ -273,8 +273,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
               "(".strtolower(__('Network discovery', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showNumber("threads_networkdiscovery", array(
-             'value' => $this->fields["threads_networkdiscovery"], 
-             'min' => 1, 
+             'value' => $this->fields["threads_networkdiscovery"],
+             'min' => 1,
              'max' => 400)
          );
 
@@ -290,8 +290,8 @@ class PluginFusioninventoryAgent extends CommonDBTM {
               "(".strtolower(__('Network inventory (SNMP)', 'fusioninventory')).")&nbsp;:</td>";
       echo "<td align='center'>";
       Dropdown::showNumber("threads_networkinventory", array(
-             'value' => $this->fields["threads_networkinventory"], 
-             'min' => 1, 
+             'value' => $this->fields["threads_networkinventory"],
+             'min' => 1,
              'max' => 400)
       );
       echo "</td>";
@@ -623,11 +623,11 @@ class PluginFusioninventoryAgent extends CommonDBTM {
       $this->update($input);
    }
 
-   
-   
+
+
    /**
     * Get agent version
-    * 
+    *
     * @param type $agent_id
     */
    function getAgentVersion($agent_id) {
