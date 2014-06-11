@@ -140,7 +140,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       global $CFG_GLPI;
 
       $menu = array();
-
+      /*
       $menu['fusioninventory_inventory']['title'] = "FI> ".__('Computer inv.', 'fusioninventory');
       $menu['fusioninventory_inventory']['page']  = "/plugins/fusioninventory/front/menu_inventory.php";
 
@@ -151,7 +151,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       $menu['fusioninventory_inventoryESX']['page']  = '/plugins/fusioninventory/front/menu_esxinventory.php';
 
       $menu['fusioninventory_deploy']['title'] = "FI> ".__('Soft. deploy', 'fusioninventory');
-      $menu['fusioninventory_deploy']['page']  = '/plugins/fusioninventory/front/menu_deploy.php';
+      $menu['fusioninventory_deploy']['page']  = '/plugins/fusioninventory/front/menu_deploy.php';*/
       return $menu;
    }
 
@@ -444,7 +444,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
        * Configuration management
        */
       $a_menu = array();
-
+      /*
       if (Session::haveRight('config', UPDATE)) {
          $nb = countElementsInTable("glpi_plugin_fusioninventory_configurationmanagements",
                                     "`conform`='0'");
@@ -465,7 +465,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
          $a_menu[2]['link'] = $CFG_GLPI['root_doc'].
                                  "/plugins/fusioninventory/front/configurationmanagement_model.php";
 
-      }
+      }*/
 
       if (!empty($a_menu)) {
          $width_status = PluginFusioninventoryMenu::htmlMenu(__('Configuration management', 'fusioninventory'),
@@ -742,7 +742,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
 
    static function board() {
       global $DB;
-
+      /*
       // Computers
       $fusionComputers = countElementsInTable('glpi_plugin_fusioninventory_inventorycomputercomputers');
       $allComputers    = countElementsInTable('glpi_computers',
@@ -867,7 +867,7 @@ class PluginFusioninventoryMenu extends CommonGLPI {
       echo "</td>";
       echo "</tr>";
       echo "</table>";
-
+      */
    }
 
 
