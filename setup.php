@@ -216,16 +216,13 @@ function plugin_init_fusioninventory() {
       Plugin::registerClass('PluginFusioninventoryPrinterLogReport');
       Plugin::registerClass('PluginFusioninventorySnmpmodelConstructdevice_User',
               array('addtabon' => array('User')));
-<<<<<<< HEAD
       Plugin::registerClass('PluginFusioninventoryInventoryComputerOracledb',
               array('addtabon' => array('Computer')));
-=======
       Plugin::registerClass('PluginFusioninventoryDeployGroup');
       Plugin::registerClass('PluginFusioninventoryDeployGroup_Staticdata',
               array('addtabon' => array('PluginFusioninventoryDeployGroup')));
       Plugin::registerClass('PluginFusioninventoryDeployGroup_Dynamicdata',
               array('addtabon' => array('PluginFusioninventoryDeployGroup')));
->>>>>>> 43c3091808d3d2d5c23741b5f51be55370e171b1
 
       $CFG_GLPI['glpitablesitemtype']["PluginFusioninventoryPrinterLogReport"] =
                                                       "glpi_plugin_fusioninventory_printers";

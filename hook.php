@@ -195,7 +195,6 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
          $sopt[5170]['datatype']      = 'bool';
          $sopt[5170]['massiveaction'] = FALSE;
 
-<<<<<<< HEAD
          $sopt[5280]['table']         = 'glpi_plugin_fusioninventory_inventorycomputeroracledbs';
          $sopt[5280]['field']         = 'name';
          $sopt[5280]['name']          = __("Oracle").' - '.__("Name");
@@ -273,7 +272,7 @@ function plugin_fusioninventory_getAddSearchOptions($itemtype) {
       
          $i++;
       }
-=======
+
          $sopt[5171]['name']          = __('Static group', 'fusioninventory');
          $sopt[5171]['table']         = getTableForItemType('PluginFusioninventoryDeployGroup');
          $sopt[5171]['massiveaction'] = FALSE;
