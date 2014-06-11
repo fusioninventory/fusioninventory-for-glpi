@@ -1,0 +1,5 @@
+#mainformtable > tbody > tr:nth-child(15) > td:nth-child(1) {
+   background-image: url('../../../../plugins/fusioninventory/pics/lock.png');
+   background-repeat: no-repeat; 
+   background-position: right;
+}

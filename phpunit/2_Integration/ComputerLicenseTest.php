@@ -116,6 +116,7 @@ class ComputerLicenseTest extends RestoreDatabase_TestCase {
 
       $_SESSION['glpiactive_entity'] = 0;
       $_SESSION["plugin_fusioninventory_entity"] = 0;
+      $_SESSION["glpiname"] = 'Plugin_FusionInventory';
 
       $pfiComputerLib   = new PluginFusioninventoryInventoryComputerLib();
       $computer         = new Computer();

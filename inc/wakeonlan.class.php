@@ -246,7 +246,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
    /**
     *  When agent contact server, this function send datas to agent
     */
-   function run($a_Taskjobstates) {
+   function run($jobstate) {
 
       $pfTaskjobstate = new PluginFusioninventoryTaskjobstate();
       $pfTaskjoblog = new PluginFusioninventoryTaskjoblog();
@@ -256,12 +256,13 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
       $sxml_option->addChild('NAME', 'WAKEONLAN');
 
       $changestate = 0;
-      foreach ($a_Taskjobstates as $data) {
+//      foreach ($taskjobstates as $jobstate) {
+         $data = $jobstate->fields;
          $a_networkPort = $NetworkPort->find("`itemtype`='Computer' AND `items_id`='".
                                                 $data['items_id']."' ");
          $computerip = 0;
          foreach ($a_networkPort as $datanetwork) {
-            if ($datanetwork['ip'] != "127.0.0.1") {
+            //if ($datanetwork['ip'] != "127.0.0.1") {
                if ($datanetwork['mac'] != '') {
                   $computerip++;
                   $sxml_param = $sxml_option->addChild('PARAM');
@@ -292,7 +293,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                                                       'WakeOnLan have not return state',
                                                       1);
                }
-            }
+            //}
          }
          if ($computerip == '0') {
             $pfTaskjobstate->changeStatusFinish($data['id'],
@@ -302,7 +303,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                                                 "No IP found on the computer");
 
          }
-      }
+      //}
       return $this->message;
    }
 

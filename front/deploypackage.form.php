@@ -94,8 +94,7 @@ $id = "";
 if (isset($_GET["id"])) {
    $id = $_GET["id"];
 }
-$package->display(array('id' => $id));
-
+$package->display($_GET);
 Html::footer();
 
 ?>

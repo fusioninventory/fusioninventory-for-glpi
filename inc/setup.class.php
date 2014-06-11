@@ -54,7 +54,7 @@ class PluginFusioninventorySetup {
       PluginFusioninventoryProfile::uninstallProfile();
 
       $pfSetup  = new PluginFusioninventorySetup();
-      $user = new User();
+      $user     = new User();
 
       if (class_exists('PluginFusioninventoryConfig')) {
          $fusioninventory_config      = new PluginFusioninventoryConfig();
@@ -81,17 +81,16 @@ class PluginFusioninventorySetup {
          }
       }
 
-      $query="DELETE FROM `glpi_displaypreferences`
-              WHERE `itemtype` LIKE 'PluginFusioninventory%';";
+      $query= "DELETE FROM `glpi_displaypreferences`
+               WHERE `itemtype` LIKE 'PluginFusioninventory%';";
       $DB->query($query) or die($DB->error());
 
       // Delete rules
       $Rule = new Rule();
-      $a_rules = $Rule->find("`sub_type`='PluginFusioninventoryInventoryRuleImport'");
-      foreach ($a_rules as $data) {
-         $Rule->delete($data);
-      }
+      $Rule->deleteByCriteria(array('sub_type' => 'PluginFusioninventoryInventoryRuleImport'));
 
+      //Remove informations related to profiles from the session (to clean menu and breadcrumb)
+      PluginFusioninventoryProfile::removeRightsFromSession();
       return TRUE;
    }
 

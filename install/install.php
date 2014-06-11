@@ -207,10 +207,8 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
    /*
     * Manage profiles
     */
-      $migration->displayMessage("Initialize profiles");
-      PluginFusioninventoryProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
-
-
+    $migration->displayMessage("Initialize profiles");
+    PluginFusioninventoryProfile::initProfile();
 
    /*
     * bug of purge network port when purge unknown devices, so we clean
@@ -291,7 +289,7 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
     * Add cron task
     */
       $migration->displayMessage("Initialize cron task");
-      CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60',
+      CronTask::Register('PluginFusioninventoryTask', 'taskscheduler', '60',
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
       Crontask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
                          array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
@@ -330,14 +328,16 @@ function pluginFusioninventoryInstall($version, $migrationname='Migration') {
       $pfLock->importFromOcs();
 
 
-   CronTask::Register('PluginFusioninventoryTaskjob', 'taskscheduler', '60',
-                      array('mode' => 2, 'allowmode' => 3, 'logs_lifetime'=> 30));
    Crontask::Register('PluginFusioninventoryTaskjobstate', 'cleantaskjob', (3600 * 24),
                       array('mode' => 2, 'allowmode' => 3, 'logs_lifetime' => 30));
 
 
    $pfNetworkporttype = new PluginFusioninventoryNetworkporttype();
    $pfNetworkporttype->init();
+
+   require_once(GLPI_ROOT . "/plugins/fusioninventory/inc/inventorycomputerstat.class.php");
+   PluginFusioninventoryInventoryComputerStat::init();
+
 
    $mode_cli = (basename($_SERVER['SCRIPT_NAME']) == "cli_install.php");
 

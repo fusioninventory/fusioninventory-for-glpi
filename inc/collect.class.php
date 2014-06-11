@@ -52,25 +52,19 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       return __('Collect information', 'fusioninventory');
    }
 
-
-
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       return array();
    }
-
-
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       return TRUE;
    }
 
-
-
    static function getTypes() {
-      $elements = array();
+      $elements             = array();
       $elements['registry'] = __('Registry', 'fusioninventory');
-      $elements['wmi'] = __('WMI', 'fusioninventory');
-      $elements['file'] = __('Find file', 'fusioninventory');
+      $elements['wmi']      = __('WMI', 'fusioninventory');
+      $elements['file']     = __('Find file', 'fusioninventory');
 
       return $elements;
    }
@@ -80,7 +74,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
    function showForm($ID, $options=array()) {
 
       $this->initForm($ID, $options);
-      $this->showTabs($options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
@@ -113,7 +106,6 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       echo "</tr>\n";
 
       $this->showFormButtons($options);
-      $this->addDivForTabs();
 
       return TRUE;
    }
@@ -126,19 +118,17 @@ class PluginFusioninventoryCollect extends CommonDBTM {
       $task       = new PluginFusioninventoryTask();
       $job        = new PluginFusioninventoryTaskjob();
       $joblog     = new PluginFusioninventoryTaskjoblog();
-      $jobstate  = new PluginFusioninventoryTaskjobstate();
+      $jobstate   = new PluginFusioninventoryTaskjobstate();
       $agent      = new PluginFusioninventoryAgent();
-
-      $uniqid= uniqid();
+      $uniqid     = uniqid();
 
       $job->getFromDB($taskjobs_id);
       $task->getFromDB($job->fields['plugin_fusioninventory_tasks_id']);
 
-      $communication= $task->fields['communication'];
-
-      $actions     = importArrayFromDB($job->fields['action']);
+      $communication = $task->fields['communication'];
+      $actions       = importArrayFromDB($job->fields['action']);
       $definitions   = importArrayFromDB($job->fields['definition']);
-      $taskvalid = 0;
+      $taskvalid     = 0;
 
       $computers = array();
       foreach ($actions as $action) {

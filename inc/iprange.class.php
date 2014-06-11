@@ -50,6 +50,10 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
    static $rightname = 'plugin_fusioninventory_iprange';
 
+   static function canCreate() {
+      return true;
+   }
+
    static function getTypeName($nb=0) {
 
       if (isset($_SERVER['HTTP_REFERER']) AND strstr($_SERVER['HTTP_REFERER'], 'iprange')) {
@@ -132,12 +136,6 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
 
 
    function showForm($id, $options=array()) {
-
-      if ($id!='') {
-         $this->getFromDB($id);
-      } else {
-         $this->getEmpty();
-      }
 
       $this->initForm($id, $options);
       $this->showFormHeader($options);
@@ -228,6 +226,8 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       echo "</tr>";
 
       $this->showFormButtons($options);
+
+      return true;
    }
 
 
@@ -282,6 +282,22 @@ class PluginFusioninventoryIPRange extends CommonDBTM {
       }
       return $int;
    }
+
+
+
+   function post_deleteItem() {
+
+      $pfIPRange_ConfigSecurity = new PluginFusioninventoryIPRange_ConfigSecurity();
+      $a_data = getAllDatasFromTable('glpi_plugin_fusioninventory_ipranges_configsecurities',
+                                     "`plugin_fusioninventory_ipranges_id`='".$this->fields['id']."'");
+      foreach ($a_data as $data) {
+         $pfIPRange_ConfigSecurity->delete($data);
+      }
+
+      parent::post_deleteItem();
+   }
+
+
 }
 
 ?>

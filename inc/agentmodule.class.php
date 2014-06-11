@@ -47,7 +47,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginFusioninventoryAgentmodule extends CommonDBTM {
 
    static $rightname = "plugin_fusioninventory_agent";
-   
+
    /**
     * Display tab
     *
@@ -153,7 +153,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "<td>";
             echo "<table>";
             echo "<tr>";
-            echo "<td>";
+            echo "<td width='45%'>";
             $a_agentList = importArrayFromDB($data['exceptions']);
             $a_used = array();
             foreach ($a_agentList as $agent_id) {
@@ -169,7 +169,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
             echo "<input type='submit' class='submit' name='agent_delete' value='<< " .
                __s('Delete') . "'>";
             echo "</td>";
-            echo "<td>";
+            echo "<td width='45%'>";
 
             echo "<select size='6' name='agent_to_delete[]'>";
             foreach ($a_agentList as $agent_id) {
@@ -188,7 +188,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
          echo "</table>";
-         Html::hidden('id', array('value' => $data['id']));
+         echo Html::hidden('id', array('value' => $data['id']));
          Html::closeForm();
          echo "<br/>";
       }
@@ -284,7 +284,7 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       if ($canedit) {
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='4'>";
-         Html::hidden('id', array('value' => $items_id));
+         echo Html::hidden('id', array('value' => $items_id));
          echo "<input type='submit' name='updateexceptions' ".
                  "value=\"".__('Update')."\" class='submit'>";
          echo "</td>";
@@ -406,7 +406,24 @@ class PluginFusioninventoryAgentmodule extends CommonDBTM {
       }
    }
 
+   /**
+    * agent's ids with module activations.
+    * @since 0.85+1.0
+    * @param $agent_ids List of agent's ids.
+    * @param $methods Methods requested.
+    * @return The list filtered by activated on the requested methods.
+    */
+   function filterAgentsByMethods($agent_ids, $methods=array()) {
 
+      $available_methods = PluginFusioninventoryStaticmisc::task_methods();
+      $methods_requested = array();
+
+      foreach($available_methods as $method_info) {
+         if (in_array($method_info, $methods)){
+            $methods_requested = $method_info;
+         }
+      }
+   }
 
    /**
    * Get URL for module (for REST)

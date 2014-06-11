@@ -43,21 +43,52 @@
 class PluginFusioninventoryTaskjobstate extends CommonDBTM {
 
    /*
-    * Define different state
-    *
-    * 0 : task prepared : not data yet sent
-    * 1 : server has sent data to agent
-    * 2 : return of agent data and update glpi
-    * 3 : finish
+    * Taskjobstate status definitions
     */
 
-   const PREPARED             = 0;
-   const SERVER_HAS_SENT_DATA = 1;
-   const AGENT_HAS_SENT_DATA  = 2;
-   const FINISHED             = 3;
+   const PREPARED             = 0;  // the job is just prepared and waiting for agent request
+   const SERVER_HAS_SENT_DATA = 1;  // the job is running and the server sent the job config
+   const AGENT_HAS_SENT_DATA  = 2;  // the job is running and the agent sent reply to the server
+   const FINISHED             = 3;  // the agent completed successfully the job
+   const IN_ERROR             = 4;  // the agent failed to complete the job
+   const CANCELLED            = 5;  // the job has been cancelled either by a user or the agent
+                                    // himself (eg. if it has been forbidden to run this taskjob)
+
+   public $method = '';
+
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $CFG_GLPI;
+
+      $tab_names = array();
+      $tab_names[] = __("Job executions");
+      //Return tab names if list is not empty
+      if (!empty($tab_names)) {
+         return $tab_names;
+      } else {
+         return '';
+      }
+   }
+
+   static function getStateNames() {
+      return array(
+         self::PREPARED => __('Prepared', 'fusioninventory'),
+         self::SERVER_HAS_SENT_DATA => __('Server has sent data to the agent', 'fusioninventory'),
+         self::AGENT_HAS_SENT_DATA => __('Agent replied with data to the server', 'fusioninventory'),
+         self::FINISHED => __('Finished', 'fusioninventory'),
+         self::IN_ERROR => __('Error' , 'fusioninventory'),
+         self::CANCELLED => __('Cancelled', 'fusioninventory')
+      );
+   }
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      global $DB;
 
 
-
+      if ($item->getType() == 'PluginFusioninventoryTask' ) {
+         $item->showJobLogs();
+      }
+   }
    /**
    * Display state of taskjob
    *
@@ -230,6 +261,8 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
    *
    * @return nothing
    *
+   * TODO: There is no need to pass $id since we should use this method with an instantiated
+   * object!!
    **/
    function changeStatus($id, $state) {
       $input = array();
@@ -297,76 +330,72 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
       $this->getFromDB($taskjobstates_id);
       $input = array();
       $input['id'] = $this->fields['id'];
-      $input['state'] = 3;
-      $this->update($input);
+      $input['state'] = self::FINISHED;
 
-      $a_input = array();
+      $log_input = array();
       if ($unknown ==  "1") {
-         $a_input['state'] = 5;
+         $log_input['state'] = PluginFusioninventoryTaskjoblog::TASK_UNKNOWN;
+         $input['state'] = self::FINISHED;
       } else if ($error == "1") {
-         // Check if we have retry
-         $pfTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
-         if($pfTaskjob->fields['retry_nb'] > 0) {
-            // 1. Calculate start timeof the task
-            $period = 0;
-            $period = $pfTaskjob->periodicityToTimestamp(
-                    $pfTaskjob->fields['periodicity_type'],
-                    $pfTaskjob->fields['periodicity_count']);
-            $query = "SELECT *, UNIX_TIMESTAMP(date_scheduled) as date_scheduled_timestamp
-                  FROM `".$pfTask->getTable()."`
-               WHERE `id`='".$pfTaskjob->fields['plugin_fusioninventory_tasks_id']."'
-                  LIMIT 1";
-            $result = $DB->query($query);
-            $data_task = $DB->fetch_assoc($result);
-            $start_taskjob = $data_task['date_scheduled_timestamp'] + $period;
-            // 2. See how errors in taskjobstate
-            $query = "SELECT * FROM `".$this->getTable()."`
-               LEFT JOIN `glpi_plugin_fusioninventory_taskjoblogs`
-                  ON `plugin_fusioninventory_taskjobstates_id` = `".$this->getTable()."`.`id`
-               WHERE `plugin_fusioninventory_taskjobs_id`='".
-                        $this->fields['plugin_fusioninventory_taskjobs_id']."'
-                     AND `uniqid` != '".$this->fields['uniqid']."'
-                     AND `glpi_plugin_fusioninventory_taskjoblogs`.`state`='3'
-                     AND `date`>='".date("Y-m-d H:i:s", $start_taskjob)."'
-               GROUP BY `uniqid`";
-            $result = $DB->query($query);
-            if ($DB->numrows($result) >= ($pfTaskjob->fields['retry_nb'] - 1)) {
-               $a_input['state'] = 4;
-            } else {
-               // Replanification
-               $a_input['state'] = 3;
-            }
-         } else {
-          $a_input['state'] = 4;
-         }
+         $log_input['state'] = PluginFusioninventoryTaskjoblog::TASK_ERROR;
+         $input['state'] = self::IN_ERROR;
       } else {
-         $a_input['state'] = 2;
+         $log_input['state'] = PluginFusioninventoryTaskjoblog::TASK_OK;
+         $input['state'] = self::FINISHED;
       }
-      $a_input['plugin_fusioninventory_taskjobstates_id'] = $taskjobstates_id;
-      $a_input['items_id'] = $items_id;
-      $a_input['itemtype'] = $itemtype;
-      $a_input['date'] = date("Y-m-d H:i:s");
-      $a_input['comment'] = $message;
-      $pfTaskjoblog->add($a_input);
+
+      $this->update($input);
+      $log_input['plugin_fusioninventory_taskjobstates_id'] = $taskjobstates_id;
+      $log_input['items_id'] = $items_id;
+      $log_input['itemtype'] = $itemtype;
+      $log_input['date'] = date("Y-m-d H:i:s");
+      $log_input['comment'] = $message;
+      $pfTaskjoblog->add($log_input);
 
       $pfTaskjob->getFromDB($this->fields['plugin_fusioninventory_taskjobs_id']);
-
-      $a_taskjobstates = $this->find("`plugin_fusioninventory_taskjobs_id`='".
-                              $this->fields['plugin_fusioninventory_taskjobs_id']."'
-                           AND `state` != '3'
-                           AND `uniqid`='".$this->fields['uniqid']."'");
-      if (count($a_taskjobstates) == '0') {
-         $input = array();
-         $input['id'] = $this->fields['plugin_fusioninventory_taskjobs_id'];
-         $input['status'] = 0;
-         $pfTaskjob->update($input);
-         if ($reinitialize == '1') {
-            $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_fusioninventory_tasks_id']);
-         }
-      }
    }
 
 
+   function fail($reason='') {
+      $log = new PluginFusioninventoryTaskjoblog();
+
+      $log_input = array(
+         'plugin_fusioninventory_taskjobstates_id' => $this->fields['id'],
+         'items_id' => $this->fields['items_id'],
+         'itemtype' => $this->fields['itemtype'],
+         'date' => date("Y-m-d H:i:s"),
+         'state' => PluginFusioninventoryTaskjoblog::TASK_ERROR,
+         'comment' => $reason
+      );
+
+      $log->add($log_input);
+
+      $this->update(array(
+         'id' => $this->fields['id'],
+         'state' => self::IN_ERROR
+         ));
+   }
+
+   function cancel($reason='') {
+
+      $log = new PluginFusioninventoryTaskjoblog();
+
+      $log_input = array(
+         'plugin_fusioninventory_taskjobstates_id' => $this->fields['id'],
+         'items_id' => $this->fields['items_id'],
+         'itemtype' => $this->fields['itemtype'],
+         'date' => date("Y-m-d H:i:s"),
+         'state' => PluginFusioninventoryTaskjoblog::TASK_INFO,
+         'comment' => $reason
+      );
+
+      $log->add($log_input);
+
+      $this->update(array(
+         'id' => $this->fields['id'],
+         'state' => self::CANCELLED
+         ));
+   }
 
    /**
     * Cron for clean taskjob
